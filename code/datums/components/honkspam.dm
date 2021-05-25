@@ -16,6 +16,7 @@
 	limiting_spam = FALSE
 
 /datum/component/honkspam/proc/interact(mob/user)
+	SIGNAL_HANDLER
 	if(!limiting_spam)
 		limiting_spam = TRUE
 		var/obj/item/parent_item = parent
