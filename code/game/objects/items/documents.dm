@@ -76,6 +76,8 @@
 	throw_speed = 1
 	///time required to print a report
 	var/print_time = 5 SECONDS
+	///determines the sound that plays when printing a report
+	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
@@ -91,9 +93,6 @@
 	var/obj/item/paper/report/slip = new(get_turf(src))
 	slip.generate_report(get_area(src))
 
-/obj/item/inspector/proc/play_sound()
-	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
-
 /**
  * Prints out a report for bounty purposes, and plays a short audio blip.
  *
@@ -101,7 +100,19 @@
 */
 /obj/item/inspector/proc/print_report()
 	create_slip()
-	play_sound()
+	switch(print_sound_mode)
+		if(INSPECTOR_PRINT_SOUND_MODE_NORMAL)
+			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
+			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
+			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
+			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
+			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
+		if(BANANIUM_INSPECTOR_PRINT_SOUND_MODE_BWOINK)
+			playsound(src, 'sound/effects/adminhelp.ogg', 50, FALSE)
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -148,8 +159,6 @@
  * Can be crafted into a bananium HONK-spect scanner
  */
 /obj/item/inspector/clown
-	///determines the sound that plays when printing a report
-	var/print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
@@ -176,27 +185,12 @@
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
 	print_sound_mode++
 	if(print_sound_mode > max_mode)
-		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL
+		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	balloon_alert(user, "You set the device's bleep setting to [mode_names[print_sound_mode]] mode")
 
 /obj/item/inspector/clown/create_slip()
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
 	slip.generate_report(get_area(src))
-
-/obj/item/inspector/clown/play_sound()
-	switch(print_sound_mode)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)
-			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
-			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
-			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
-			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
-			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
-		if(BANANIUM_INSPECTOR_PRINT_SOUND_MODE_BWOINK)
-			playsound(src, 'sound/effects/adminhelp.ogg', 50, FALSE)
 
 /**
  * # Bananium HONK-spect scanner
@@ -216,7 +210,7 @@
 	max_mode = BANANIUM_INSPECTOR_PRINT_SOUND_MODE_LAST
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
-	if((print_sound_mode == CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
+	if((print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
 		say("Setting combination forbidden by Geneva convention revision CXXIII selected, reverting to defaults")
 		print_time = 5 SECONDS
 		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
