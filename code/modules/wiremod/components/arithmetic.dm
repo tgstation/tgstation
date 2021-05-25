@@ -45,6 +45,7 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 	var/list/ports = input_ports.Copy()
 	var/datum/port/input/first_port = ports[1]
 	ports -= first_port
+	ports -= trigger_input
 	var/result = first_port.input_value
 
 	for(var/datum/port/input/input_port as anything in ports)
