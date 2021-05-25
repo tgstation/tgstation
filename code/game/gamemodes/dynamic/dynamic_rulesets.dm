@@ -3,6 +3,8 @@
 
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
+	// If you want to change this variable name, the force latejoin/midround rulesets
+	// to not use sortNames.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
 	var/ruletype = ""
@@ -76,13 +78,15 @@
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
 
-
 /datum/dynamic_ruleset/New()
+	// Rulesets can be instantiated more than once, such as when an admin clicks
+	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
+	// side effects here. Dynamic rulesets should be stateless anyway.
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	mode = SSticker.mode
+
 	..()
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
-		mode = SSticker.mode
-	else if (!SSticker.is_mode("dynamic")) // This is here to make roundstart forced ruleset function.
-		qdel(src)
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"

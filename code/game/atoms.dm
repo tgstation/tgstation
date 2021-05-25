@@ -223,7 +223,8 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
-	update_greyscale()
+	if(greyscale_config && greyscale_colors)
+		update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -471,6 +472,7 @@
 
 ///Check if this atoms eye is still alive (probably)
 /atom/proc/check_eye(mob/user)
+	SIGNAL_HANDLER
 	return
 
 /atom/proc/Bumped(atom/movable/AM)
@@ -737,7 +739,7 @@
 	greyscale_colors = colors
 	if(!greyscale_config)
 		return
-	if(update)
+	if(update && greyscale_config && greyscale_colors)
 		update_greyscale()
 
 /// Checks if the greyscale config given is different and if so causes a greyscale icon update
@@ -745,13 +747,12 @@
 	if(greyscale_config == new_config)
 		return
 	greyscale_config = new_config
-	if(update)
+	if(update && greyscale_config && greyscale_colors)
 		update_greyscale()
 
 /// Checks if this atom uses the GAS system and if so updates the icon
 /atom/proc/update_greyscale()
-	if(greyscale_config && greyscale_colors)
-		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
@@ -1217,7 +1218,7 @@
 
 		if(reagents)
 			var/chosen_id
-			switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+			switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
 				if("Search")
 					var/valid_id
 					while(!valid_id)
@@ -1288,7 +1289,7 @@
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
-		if(newname && !(CHAT_FILTER_CHECK(newname) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") != "Confirm"))
+		if(newname && !(CHAT_FILTER_CHECK(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))

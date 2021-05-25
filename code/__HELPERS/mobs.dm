@@ -581,30 +581,29 @@ GLOBAL_LIST_EMPTY(species_list)
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
 	. = list()
-	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
-		if(R.connected_ai || R.shell)
+	for(var/mob/living/silicon/robot/borg in GLOB.silicon_mobs)
+		if(borg.connected_ai || borg.shell)
 			continue
-		if(R.stat == DEAD)
+		if(borg.stat == DEAD)
 			continue
-		if(R.emagged || R.scrambledcodes)
+		if(borg.emagged || borg.scrambledcodes)
 			continue
-		. += R
+		. += borg
 
 //Returns a list of AI's
 /proc/active_ais(check_mind=FALSE, z = null)
 	. = list()
-	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
-		if(A.stat == DEAD)
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
+		if(ai.stat == DEAD)
 			continue
-		if(A.control_disabled)
+		if(ai.control_disabled)
 			continue
 		if(check_mind)
-			if(!A.mind)
+			if(!ai.mind)
 				continue
-		if(z && !(z == A.z) && (!is_station_level(z) || !is_station_level(A.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
 			continue
-		. += A
-	return .
+		. += ai
 
 //Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
 /proc/select_active_ai_with_fewest_borgs(z)

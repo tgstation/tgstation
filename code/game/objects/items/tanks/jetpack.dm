@@ -79,6 +79,7 @@
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
+	SIGNAL_HANDLER
 	if(!on)//If jet dont work, it dont work
 		return
 	if(!user || !user.client)//Don't allow jet self using
@@ -95,6 +96,7 @@
 		allow_thrust(0.01, user)
 
 /obj/item/tank/jetpack/proc/pre_move_react(mob/user)
+	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(src)
 
 /obj/item/tank/jetpack/proc/spacemove_react(mob/user, movement_dir)

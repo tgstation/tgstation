@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "simple_flying now removes itself from a mob when the mob deletes"

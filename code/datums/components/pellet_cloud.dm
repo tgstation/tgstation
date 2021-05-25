@@ -260,6 +260,7 @@
 
 ///One of our pellets disappeared due to hitting their max range (or just somehow got qdel'd), remove it from our list and check if we're done (terminated == num_pellets)
 /datum/component/pellet_cloud/proc/pellet_range(obj/projectile/P)
+	SIGNAL_HANDLER
 	pellets -= P
 	terminated++
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))

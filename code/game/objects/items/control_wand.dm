@@ -23,6 +23,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
 
 /obj/item/door_remote/proc/bad_signal(datum/source, datum/netdata/data, error_code)
+	SIGNAL_HANDLER
 	if(QDELETED(data.user))
 		return // can't send a message to a missing user
 	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
@@ -32,6 +33,7 @@
 
 
 /obj/item/door_remote/proc/good_signal(datum/source, datum/netdata/data, error_code)
+	SIGNAL_HANDLER
 	if(QDELETED(data.user))
 		return
 	var/toggled = data.data["data"]
