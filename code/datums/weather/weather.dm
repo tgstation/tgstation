@@ -111,7 +111,7 @@
 	START_PROCESSING(SSweather, src)
 	update_areas()
 	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_z_level[z_level])
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
 			var/turf/mob_turf = get_turf(player)
 			if(!mob_turf)
 				continue
@@ -135,7 +135,7 @@
 	stage = MAIN_STAGE
 	update_areas()
 	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_z_level[z_level])
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
 			var/turf/mob_turf = get_turf(player)
 			if(!mob_turf)
 				continue
@@ -160,7 +160,7 @@
 	stage = WIND_DOWN_STAGE
 	update_areas()
 	for(var/z_level in impacted_z_levels)
-		for(var/mob/player as anything in SSmobs.clients_by_z_level[z_level])
+		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
 			var/turf/mob_turf = get_turf(player)
 			if(!mob_turf)
 				continue

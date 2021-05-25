@@ -20,8 +20,8 @@ SUBSYSTEM_DEF(weather)
 		if(our_event.aesthetic || our_event.stage != MAIN_STAGE)
 			continue
 		for(var/mob/act_on as anything in GLOB.mob_living_list)
-				if(our_event.can_weather_act(act_on))
-					our_event.weather_act(act_on)
+			if(our_event.can_weather_act(act_on))
+				our_event.weather_act(act_on)
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(weather)
 		run_weather(our_event, list(text2num(z)))
 		eligible_zlevels -= z
 		var/randTime = rand(3000, 6000)
-		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, .proc/make_eligible, z, possible_weather), randTime + initial(W.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
+		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, .proc/make_eligible, z, possible_weather), randTime + initial(our_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	for(var/V in subtypesof(/datum/weather))
