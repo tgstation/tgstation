@@ -237,8 +237,7 @@
  * * user - The user to show the experiment configuration panel to
  */
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/ui_interact, user)
+	ui_interact(user)
 
 /**
  * Attempts to show the user the experiment configuration panel

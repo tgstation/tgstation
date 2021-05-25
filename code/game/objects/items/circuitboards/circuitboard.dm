@@ -19,8 +19,9 @@
 	var/onstation = TRUE
 
 /obj/item/circuitboard/Initialize()
-	set_greyscale(new_config=/datum/greyscale_config/circuit)
-	return ..()
+	set_greyscale_config(/datum/greyscale_config/circuit)
+	set_greyscale_colors(greyscale_colors)
+	. = ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
 	if(LAZYLEN(M.component_parts))

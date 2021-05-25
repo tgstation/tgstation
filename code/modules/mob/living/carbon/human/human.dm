@@ -598,7 +598,6 @@
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
  */
 /mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
-	SIGNAL_HANDLER
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 

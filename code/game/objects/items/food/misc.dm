@@ -192,7 +192,6 @@
 
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
-	SIGNAL_HANDLER
 	return COMPONENT_HANDLED_GRILLING
 
 /obj/item/food/carrotfries

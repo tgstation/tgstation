@@ -431,8 +431,14 @@
 	if(istype(W, /obj/item/rupee))
 		to_chat(user, "<span class='warning'>Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!</span>")
 		return
-	else if(iscash(W))
+	else if(istype(W, /obj/item/holochip))
 		insert_money(W, user)
+		return
+	else if(istype(W, /obj/item/stack/spacecash))
+		insert_money(W, user, TRUE)
+		return
+	else if(istype(W, /obj/item/coin))
+		insert_money(W, user, TRUE)
 		return
 	else if(istype(W, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = W
@@ -452,11 +458,7 @@
  * user - The user inserting the item.
  * physical_currency - Boolean, whether this is a physical currency such as a coin and not a holochip.
  */
-/obj/item/card/id/proc/insert_money(obj/item/money, mob/user)
-	var/physical_currency
-	if(istype(money, /obj/item/stack/spacecash) || istype(money, /obj/item/coin))
-		physical_currency = TRUE
-
+/obj/item/card/id/proc/insert_money(obj/item/money, mob/user, physical_currency)
 	if(!registered_account)
 		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [money] into!</span>")
 		return
@@ -782,7 +784,6 @@
 	update_label()
 
 /obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/computer_hardware/card_slot/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
 	if(istype(old_loc, /obj/item/modular_computer/tablet))
 		UnregisterSignal(old_loc, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
 

@@ -305,7 +305,6 @@
 
 /// Something fishy is going on here...
 /datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
-	SIGNAL_HANDLER
 	slap_item = null
 
 //this effect gives the user an alert they can use to surrender quickly
@@ -526,7 +525,6 @@
 	current_cycle++
 
 /datum/status_effect/eigenstasium/proc/remove_clone_from_var()
-	SIGNAL_HANDLER
 	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
 
 /datum/status_effect/eigenstasium/on_remove()

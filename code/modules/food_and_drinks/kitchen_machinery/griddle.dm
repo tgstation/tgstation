@@ -101,7 +101,6 @@
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
-	SIGNAL_HANDLER
 	I.flags_1 &= ~IS_ONTOP_1
 	griddled_objects -= I
 	vis_contents -= I

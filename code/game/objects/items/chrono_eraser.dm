@@ -35,11 +35,11 @@
 				qdel(PA)
 			else
 				PA = new(src)
-				INVOKE_ASYNC(user, /mob.proc/put_in_hands, PA)
+				user.put_in_hands(PA)
 
 /obj/item/chrono_eraser/item_action_slot_check(slot, mob/user)
 	if(slot == ITEM_SLOT_BACK)
-		return TRUE
+		return 1
 
 /obj/item/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"

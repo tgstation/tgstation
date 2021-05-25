@@ -35,7 +35,6 @@
 
 /// Handles beginning processing objects.
 /datum/element/obj_regen/proc/on_take_damage(obj/target, damage_amt)
-	SIGNAL_HANDLER
 	if(!damage_amt)
 		return
 	if(!length(processing))

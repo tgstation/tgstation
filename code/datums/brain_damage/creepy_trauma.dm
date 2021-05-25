@@ -78,7 +78,6 @@
 		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/special/obsessed/proc/on_hug(mob/living/hugger, mob/living/hugged)
-	SIGNAL_HANDLER
 	if(hugged == obsession)
 		obsession_hug_count++
 

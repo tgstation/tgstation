@@ -232,12 +232,11 @@
 		lastangle = angle
 
 /obj/item/gun/energy/beam_rifle/proc/on_mob_move()
-	SIGNAL_HANDLER
 	check_user()
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
 		process_aim()
-		INVOKE_ASYNC(src, .proc/aiming_beam, TRUE)
+		aiming_beam(TRUE)
 
 /obj/item/gun/energy/beam_rifle/proc/start_aiming()
 	aiming_time_left = aiming_time

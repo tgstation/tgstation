@@ -29,7 +29,6 @@
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/megaphone/proc/handle_speech(mob/living/carbon/user, list/speech_args)
-	SIGNAL_HANDLER
 	if (user.get_active_held_item() == src)
 		if(spamcheck > world.time)
 			to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")

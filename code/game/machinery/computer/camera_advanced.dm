@@ -215,11 +215,11 @@
 		return TRUE
 	return FALSE
 
-/mob/camera/ai_eye/remote/setLoc(destination)
+/mob/camera/ai_eye/remote/setLoc(T)
 	if(eye_user)
-		destination = get_turf(destination)
-		if (destination)
-			abstract_move(destination)
+		T = get_turf(T)
+		if (T)
+			forceMove(T)
 		else
 			moveToNullspace()
 

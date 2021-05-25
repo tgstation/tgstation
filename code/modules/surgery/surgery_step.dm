@@ -149,21 +149,21 @@
 
 	if(require_all_chems)
 		. = TRUE
-		for(var/reagent in chems_needed)
-			if(!target.reagents.has_reagent(reagent))
+		for(var/R in chems_needed)
+			if(!target.reagents.has_reagent(R))
 				return FALSE
 	else
 		. = FALSE
-		for(var/reagent in chems_needed)
-			if(target.reagents.has_reagent(reagent))
+		for(var/R in chems_needed)
+			if(target.reagents.has_reagent(R))
 				return TRUE
 
 /datum/surgery_step/proc/get_chem_list()
 	if(!LAZYLEN(chems_needed))
 		return
 	var/list/chems = list()
-	for(var/reagent in chems_needed)
-		var/datum/reagent/temp = GLOB.chemical_reagents_list[reagent]
+	for(var/R in chems_needed)
+		var/datum/reagent/temp = GLOB.chemical_reagents_list[R]
 		if(temp)
 			var/chemname = temp.name
 			chems += chemname

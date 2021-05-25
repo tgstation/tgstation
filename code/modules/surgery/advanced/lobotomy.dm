@@ -16,19 +16,15 @@
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!target_brain)
+	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
 		return FALSE
 	return TRUE
 
 /datum/surgery_step/lobotomize
 	name = "perform lobotomy"
-	implements = list(
-		TOOL_SCALPEL = 85,
-		/obj/item/melee/transforming/energy/sword = 55,
-		/obj/item/kitchen/knife = 35,
-		/obj/item/shard = 25,
-		/obj/item = 20)
+	implements = list(TOOL_SCALPEL = 85, /obj/item/melee/transforming/energy/sword = 55, /obj/item/kitchen/knife = 35,
+		/obj/item/shard = 25, /obj/item = 20)
 	time = 100
 
 /datum/surgery_step/lobotomize/tool_check(mob/user, obj/item/tool)
@@ -61,12 +57,12 @@
 	return ..()
 
 /datum/surgery_step/lobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(target_brain)
+	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
 		display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
 			"<span class='notice'>[user] successfully lobotomizes [target]!</span>",
 			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
-		target_brain.applyOrganDamage(80)
+		B.applyOrganDamage(80)
 		switch(rand(1,3))
 			if(1)
 				target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)

@@ -75,10 +75,8 @@
 	return ..()
 
 /datum/status_effect/slimerecall/proc/resistField()
-	SIGNAL_HANDLER
 	interrupted = TRUE
 	owner.remove_status_effect(src)
-
 /datum/status_effect/slimerecall/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	owner.cut_overlay(bluespace)

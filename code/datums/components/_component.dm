@@ -202,6 +202,8 @@
 		else // Many other things have registered here
 			lookup[sig_type][src] = TRUE
 
+	datum_flags |= DF_SIGNAL_ENABLED
+
 /**
  * Stop listening to a given signal from target
  *
@@ -310,11 +312,18 @@
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
-		var/datum/listening_datum = target
-		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		var/datum/C = target
+		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
+			return NONE
+		var/proctype = C.signal_procs[src][sigtype]
+		return NONE | call(C, proctype)(arglist(arguments))
 	. = NONE
-	for(var/datum/listening_datum as anything in target)
-		. |= call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+	for(var/I in target)
+		var/datum/C = I
+		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
+			continue
+		var/proctype = C.signal_procs[src][sigtype]
+		. |= call(C, proctype)(arglist(arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -437,8 +446,9 @@
 					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
-					for(var/datum/component/existing_component as anything in GetComponents(new_type))
-						if(existing_component.CheckDupeComponent(arglist(arguments)))
+					for(var/i in GetComponents(new_type))
+						var/datum/component/C = i
+						if(C.CheckDupeComponent(arglist(arguments)))
 							make_new_component = FALSE
 							QDEL_NULL(new_comp)
 							break

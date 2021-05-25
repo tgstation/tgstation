@@ -34,10 +34,6 @@
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
-/// a trapdoor remote has sent out a signal to link with a trapdoor
-#define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
-	///successfully linked to a trapdoor!
-	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 
@@ -386,9 +382,6 @@
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
 
-///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
-#define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
-
 // /atom/movable signals
 
 ///from base of atom/movable/Moved(): (/atom)
@@ -670,10 +663,6 @@
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
-
-// simple_animal signals
-/// called when a simplemob is given sentience from a potion (target = person who sentienced)
-#define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
 
 // /mob/living/simple_animal/hostile signals
 ///before attackingtarget has happened, source is the attacker and target is the attacked
@@ -1268,18 +1257,3 @@
 // Exosca signals
 /// Sent on exoscan failure/manual interruption: ()
 #define COMSIG_EXOSCAN_INTERRUPTED "exoscan_interrupted"
-
-// Component signals
-/// From /datum/port/output/set_output: (output_value)
-#define COMSIG_PORT_SET_OUTPUT "port_set_output"
-/// From /datum/port/input/set_input: (input_value)
-#define COMSIG_PORT_SET_INPUT "port_set_input"
-/// Sent when a port calls disconnect(). From /datum/port/disconnect: ()
-#define COMSIG_PORT_DISCONNECT "port_disconnect"
-/// Sent on the output port when an input port registers on it: (datum/port/input/registered_port)
-#define COMSIG_PORT_OUTPUT_CONNECT "port_output_connect"
-
-/// Sent when a [/obj/item/circuit_component] is added to a circuit.
-#define COMSIG_CIRCUIT_ADD_COMPONENT "circuit_add_component"
-	/// Cancels adding the component to the circuit.
-	#define COMPONENT_CANCEL_ADD_COMPONENT (1<<0)

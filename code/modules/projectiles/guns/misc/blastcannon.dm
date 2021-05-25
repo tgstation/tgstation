@@ -134,7 +134,6 @@
  * - [blastwave_data][/list]: A list containing all of the data for the blastwave.
  */
 /obj/item/gun/blastcannon/proc/channel_blastwave(atom/source, list/arguments)
-	SIGNAL_HANDLER
 	. = COMSIG_CANCEL_EXPLOSION
 
 	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
@@ -146,15 +145,15 @@
 		return
 
 	if(!ismob(loc))
-		INVOKE_ASYNC(src, .proc/fire_dropped, heavy, medium, light)
+		fire_dropped(heavy, medium, light)
 		return
 
 	var/mob/holding = loc
 	var/target = cached_target?.resolve()
 	if(target && (holding.get_active_held_item() == src) && cached_firer && (holding == cached_firer.resolve()))
-		INVOKE_ASYNC(src, .proc/fire_intentionally, target, holding, heavy, medium, light, cached_modifiers)
+		fire_intentionally(target, holding, heavy, medium, light, cached_modifiers)
 	else
-		INVOKE_ASYNC(src, .proc/fire_accidentally, holding, heavy, medium, light)
+		fire_accidentally(holding, heavy, medium, light)
 	return
 
 /**

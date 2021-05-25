@@ -74,11 +74,7 @@ type DroneBasicData = {
   ref: string,
 }
 
-export type AdventureDataProvider = {
-  adventure_data?: AdventureData;
-}
-
-type ExodroneConsoleData = AdventureDataProvider & {
+type ExodroneConsoleData = {
   signal_lost: boolean,
   drone: boolean,
   all_drones?: Array<DroneBasicData>
@@ -748,13 +744,8 @@ const EventScreen = (props, context) => {
   );
 };
 
-
-type AdventureScreenProps = {
-  hide_status?: boolean
-}
-
-export const AdventureScreen = (props: AdventureScreenProps, context) => {
-  const { act, data } = useBackend<AdventureDataProvider>(context);
+const AdventureScreen = (props, context) => {
+  const { act, data } = useBackend<ExodroneConsoleData>(context);
   const {
     adventure_data,
   } = data;
@@ -764,7 +755,7 @@ export const AdventureScreen = (props: AdventureScreenProps, context) => {
     <Section
       fill
       title="Exploration"
-      buttons={!props.hide_status && <DroneStatus />}>
+      buttons={<DroneStatus />}>
       <Stack>
         <Stack.Item>
           <BlockQuote style={{ "white-space": "pre-wrap" }}>{adventure_data.description}</BlockQuote>

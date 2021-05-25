@@ -37,9 +37,10 @@
 		if(zone == BODY_ZONE_CHEST)
 			returnorg = getorganszone(BODY_ZONE_PRECISE_GROIN)
 
-	for(var/obj/item/organ/organ as anything in internal_organs)
-		if(zone == organ.zone)
-			returnorg += organ
+	for(var/X in internal_organs)
+		var/obj/item/organ/O = X
+		if(zone == O.zone)
+			returnorg += O
 	return returnorg
 
 /mob/living/carbon/getorganslot(slot)

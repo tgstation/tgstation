@@ -47,12 +47,10 @@
 
 /// triggered on wield of two handed item
 /obj/item/kinetic_crusher/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/kinetic_crusher/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
 	wielded = FALSE
 
 /obj/item/kinetic_crusher/examine(mob/living/user)

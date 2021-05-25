@@ -83,7 +83,7 @@
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
-	INVOKE_ASYNC(src, .proc/toggle_paddles)
+	toggle_paddles()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)

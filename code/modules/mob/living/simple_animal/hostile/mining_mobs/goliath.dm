@@ -102,19 +102,16 @@
 	loot = list()
 	stat_attack = HARD_CRIT
 	robust_searching = 1
-
-	var/can_saddle = FALSE
+	food_type = list(/obj/item/food/grown/ash_flora)//use lavaland plants to feed the lavaland monster
+	tame_chance = 10
+	bonus_tame_chance = 5
 	var/saddled = FALSE
-
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/Initialize()
-	. = ..()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(!istype(O, /obj/item/saddle) || saddled)
 		return ..()
 
-	if(can_saddle && do_after(user,55,target=src))
+	if(tame && do_after(user,55,target=src))
 		user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
 		qdel(O)
 		saddled = TRUE
@@ -125,9 +122,6 @@
 	else
 		user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
 	..()
-
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/proc/tamed(mob/living/tamer)
-	can_saddle = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
 	. = ..()

@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - qol: "atmospherics dept on delta, icebox, and meta got cleaned up. Pipes and pumps near the tanks got switched. Incinerator on box rerouted. Delta waste release added."
+  - bugfix: "Removed instances of duplicated pipes in icebox atmos."

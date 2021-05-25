@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 #endif
 	for(var/mob_content in mob_occupant)
 		var/obj/item/item_content = mob_content
-		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
+		if(!istype(item_content))
 			continue
 
 		mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)

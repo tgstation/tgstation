@@ -144,6 +144,15 @@
 	///convenience var for forcibly waking up an idling AI on next check.
 	var/shouldwakeup = FALSE
 
+	///Domestication.
+	var/tame = FALSE
+	///What the mob eats, typically used for taming or animal husbandry.
+	var/list/food_type
+	///Starting success chance for taming.
+	var/tame_chance
+	///Added success chance after every failed tame attempt.
+	var/bonus_tame_chance
+
 	///I don't want to confuse this with client registered_z.
 	var/my_z
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
@@ -188,9 +197,9 @@
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
-	if(!isnull(unsuitable_cold_damage))
+	if(!unsuitable_cold_damage)
 		unsuitable_cold_damage = unsuitable_atmos_damage
-	if(!isnull(unsuitable_heat_damage))
+	if(!unsuitable_heat_damage)
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
 /mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
@@ -214,6 +223,26 @@
 	//Walking counts as a reference, putting this here because most things don't walk, clean this up once walk() procs are dead
 	walk(src, 0)
 	return ..()
+
+/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
+	if(!is_type_in_list(O, food_type))
+		return ..()
+	if(stat == DEAD)
+		to_chat(user, "<span class='warning'>[src] is dead!</span>")
+		return
+	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+	qdel(O)
+	if(tame)
+		return
+	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+		tame = TRUE
+		tamed(user)
+	else
+		tame_chance += bonus_tame_chance
+
+///Extra effects to add when the mob is tamed, such as adding a riding component
+/mob/living/simple_animal/proc/tamed(whomst)
+	tame = TRUE
 
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()

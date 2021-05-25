@@ -15,8 +15,7 @@
 								"Weapons",
 								"Ammo",
 								"Firing Pins",
-								"Computer Parts",
-								"Circuitry"
+								"Computer Parts"
 								)
 	production_animation = "protolathe_n"
 	allowed_buildtypes = PROTOLATHE
