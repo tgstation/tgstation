@@ -397,7 +397,7 @@
 	M.client.screen |= boxes
 	M.client.screen |= closer
 	M.client.screen |= real_location.contents
-	M.active_storage = src
+	M.set_active_storage(src)
 	LAZYOR(is_using, M)
 	return TRUE
 
@@ -409,7 +409,7 @@
 	M.client.screen -= closer
 	M.client.screen -= real_location.contents
 	if(M.active_storage == src)
-		M.active_storage = null
+		M.set_active_storage(null)
 	LAZYREMOVE(is_using, M)
 	return TRUE
 
