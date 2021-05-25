@@ -89,7 +89,6 @@ const CharacterPreview = (props: {
           width="220px"
           height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
           params={{
-            zoom: 0,
             id: props.id,
             type: "map",
           }}

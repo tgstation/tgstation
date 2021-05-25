@@ -324,6 +324,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /atom/movable/screen/character_preview_view
 	name = "character_preview"
 	del_on_map_removal = FALSE
+	layer = GAME_PLANE
+	plane = GAME_PLANE
 
 	/// The body that is displayed
 	var/mob/living/carbon/human/dummy/body
@@ -347,6 +349,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /atom/movable/screen/character_preview_view/proc/setup_body()
 	body = new
+
+	// Without this, it doesn't show up in the menu
+	body.appearance_flags &= ~KEEP_TOGETHER
+
 	update_body()
 
 /// Updates the currently displayed body
