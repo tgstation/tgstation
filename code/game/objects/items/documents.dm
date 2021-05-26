@@ -162,7 +162,7 @@
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
-	var/mode_names = list("normal", "classic", "honk", "bababooey", "bababooey (varied)", "bwoink")
+	var/list/mode_names = list("normal", "classic", "honk", "bababooey", "bababooey (varied)", "bwoink")
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
