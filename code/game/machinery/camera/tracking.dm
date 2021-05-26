@@ -49,9 +49,9 @@
 		track.namecounts[name] = 1
 
 		if(ishuman(L))
-			track.humans[name] = L
+			track.humans[name] = WEAKREF(L)
 		else
-			track.others[name] = L
+			track.others[name] = WEAKREF(L)
 
 	var/list/targets = sortList(track.humans) + sortList(track.others)
 
@@ -67,9 +67,9 @@
 	if(!track.initialized)
 		trackable_mobs()
 
-	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+	var/datum/weakref/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
-	ai_actual_track(target)
+	ai_actual_track(target.resolve())
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))
