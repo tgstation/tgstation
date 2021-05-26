@@ -57,6 +57,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
 
 /obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/I)
+	SIGNAL_HANDLER
 	if(!istype(I, /obj/item/stock_parts/cell))
 		return
 

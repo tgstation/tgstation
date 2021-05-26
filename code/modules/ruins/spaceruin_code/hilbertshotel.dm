@@ -330,7 +330,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
 		for(var/datum/action/peephole_cancel/PHC in user.actions)
-			PHC.Trigger()
+			INVOKE_ASYNC(PHC, /datum/action/peephole_cancel.proc/Trigger)
 
 /datum/action/peephole_cancel
 	name = "Cancel View"
