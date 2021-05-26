@@ -1,3 +1,4 @@
+#define SLIME_CARES_ABOUT(to_check) (to_check && (to_check == Target || to_check == Leader || (to_check in Friends)))
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
@@ -508,42 +509,37 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/slime/proc/set_target(new_target)
-	if(Target)
-		UnregisterSignal(Target, COMSIG_PARENT_QDELETING)
+	var/old_target = Target
 	Target = new_target
+	if(!SLIME_CARES_ABOUT(old_target))
+		UnregisterSignal(old_target, COMSIG_PARENT_QDELETING)
 	if(Target)
-		RegisterSignal(Target, COMSIG_PARENT_QDELETING, .proc/target_deleted)
-
-/mob/living/simple_animal/slime/proc/target_deleted(datum/source)
-	SIGNAL_HANDLER
-	set_target(null)
+		RegisterSignal(Target, COMSIG_PARENT_QDELETING, .proc/clear_memories_of)
 
 /mob/living/simple_animal/slime/proc/set_leader(new_leader)
-	if(Leader)
-		UnregisterSignal(Leader, COMSIG_PARENT_QDELETING)
+	var/old_leader = Leader
 	Leader = new_leader
+	if(!SLIME_CARES_ABOUT(old_leader))
+		UnregisterSignal(old_leader, COMSIG_PARENT_QDELETING)
 	if(Leader)
-		RegisterSignal(Leader, COMSIG_PARENT_QDELETING, .proc/leader_deleted)
-
-/mob/living/simple_animal/slime/proc/leader_deleted(datum/source)
-	SIGNAL_HANDLER
-	set_leader(null)
+		RegisterSignal(Leader, COMSIG_PARENT_QDELETING, .proc/clear_memories_of)
 
 /mob/living/simple_animal/slime/proc/add_friendship(new_friend, amount = 1)
 	if(!Friends[new_friend])
 		Friends[new_friend] = 0
 	Friends[new_friend] += amount
 	if(new_friend)
-		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/leader_deleted)
+		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/clear_memories_of)
 
 /mob/living/simple_animal/slime/proc/set_friendship(new_friend, amount = 1)
 	Friends[new_friend] = amount
 	if(new_friend)
-		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/leader_deleted)
+		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/clear_memories_of)
 
 /mob/living/simple_animal/slime/proc/remove_friend(friend)
 	Friends -= friend
-	UnregisterSignal(friend, COMSIG_PARENT_QDELETING)
+	if(!SLIME_CARES_ABOUT(friend))
+		UnregisterSignal(friend, COMSIG_PARENT_QDELETING)
 
 /mob/living/simple_animal/slime/proc/set_friends(new_buds)
 	clear_friends()
@@ -554,6 +550,8 @@
 	for(var/mob/friend as anything in Friends)
 		remove_friend(friend)
 
-/mob/living/simple_animal/slime/proc/friend_deleted(datum/source)
+/mob/living/simple_animal/slime/proc/clear_memories_of(datum/source)
 	SIGNAL_HANDLER
+	set_target(null)
+	set_leader(null)
 	remove_friend(source)
