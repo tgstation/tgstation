@@ -857,6 +857,7 @@
  */
 /datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
+
 	our_plant.audible_message("<span_class='notice'>[our_plant] lets out burst of laughter.</span>")
 	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
