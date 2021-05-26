@@ -45,7 +45,6 @@
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
-	icon_state = "flower"
 	greyscale_colors = "#fe881f"
 
 	//Spacemans's Trumpet
@@ -103,8 +102,7 @@
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	icon_state = "flower"
-	greyscale_colors = "#17bce7"
+	greyscale_colors = "#1499bb"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
