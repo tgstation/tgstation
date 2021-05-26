@@ -64443,6 +64443,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
+"uSu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/science/research)
 "uSA" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -66866,6 +66870,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/science/mixing)
 "vPp" = (
@@ -117435,7 +117440,7 @@ eTv
 uCm
 qSj
 oab
-der
+uSu
 mHN
 tGx
 ohF
@@ -117692,7 +117697,7 @@ der
 der
 der
 der
-der
+uSu
 fTt
 cbV
 ess
@@ -117949,7 +117954,7 @@ dnN
 dnN
 dnN
 dnN
-mSi
+ote
 cZl
 cbV
 ess
@@ -118463,7 +118468,7 @@ miq
 frL
 oJJ
 awM
-mSi
+ote
 ewC
 cgy
 xDy
