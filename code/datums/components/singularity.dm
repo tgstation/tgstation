@@ -290,6 +290,7 @@
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
+	SIGNAL_HANDLER
 	if (!bsa_targetable)
 		return
 

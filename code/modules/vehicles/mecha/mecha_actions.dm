@@ -36,7 +36,7 @@
 
 	chassis.use_internal_tank = !chassis.use_internal_tank
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
-	to_chat(chassis.occupants, "[icon2html(chassis, owner)]<span class='notice'>Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].</span>")
+	chassis.balloon_alert(owner, "taking air from [chassis.use_internal_tank ? "internal airtank" : "environment"]")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
 	UpdateButtonIcon()
 
@@ -55,11 +55,11 @@
 			available_equipment += equipment
 
 	if(available_equipment.len == 0)
-		to_chat(owner, "[icon2html(chassis, owner)]<span class='warning'>No equipment available!</span>")
+		chassis.balloon_alert(owner, "no equipment available")
 		return
 	if(!chassis.selected)
 		chassis.selected = available_equipment[1]
-		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You select [chassis.selected].</span>")
+		chassis.balloon_alert(owner, "[chassis.selected] selected")
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
 		UpdateButtonIcon()
@@ -71,11 +71,11 @@
 			continue
 		if(available_equipment.len == number)
 			chassis.selected = null
-			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to no equipment.</span>")
+			chassis.balloon_alert(owner, "switched to no equipment")
 			button_icon_state = "mech_cycle_equip_off"
 		else
 			chassis.selected = available_equipment[number+1]
-			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to [chassis.selected].</span>")
+			chassis.balloon_alert(owner, "switched to [chassis.selected]")
 			button_icon_state = "mech_cycle_equip_on"
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		UpdateButtonIcon()
@@ -91,7 +91,7 @@
 		return
 
 	if(!(chassis.mecha_flags & HAS_LIGHTS))
-		to_chat(owner, "<span class='warning'>This mechs lights are destroyed!</span>")
+		chassis.balloon_alert(owner, "the mech lights are broken!")
 		return
 	chassis.mecha_flags ^= LIGHTS_ON
 	if(chassis.mecha_flags & LIGHTS_ON)
@@ -99,7 +99,7 @@
 	else
 		button_icon_state = "mech_lights_off"
 	chassis.set_light_on(chassis.mecha_flags & LIGHTS_ON)
-	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].</span>")
+	chassis.balloon_alert(owner, "toggled lights [chassis.mecha_flags & LIGHTS_ON ? "on":"off"]")
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()
 
@@ -137,12 +137,12 @@
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
 	if(!(mecha_flags & CANSTRAFE))
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>This mecha does not support strafing.</span>")
+		to_chat(occupants, "this mecha doesn't support strafing!")
 		return
 
 	strafe = !strafe
 
-	to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
+	to_chat(occupants, "strafing mode [strafe?"on":"off"].")
 	log_message("Toggled strafing mode [strafe?"on":"off"].", LOG_MECHA)
 
 	for(var/occupant in occupants)
@@ -175,11 +175,11 @@
 	if(chassis.leg_overload_mode)
 		chassis.movedelay = min(1, round(chassis.movedelay * 0.5))
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
-		to_chat(owner, "[icon2html(chassis, owner)]<span class='danger'>You enable leg actuators overload.</span>")
+		chassis.balloon_alert(owner,"leg actuators overloaded")
 	else
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
-		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You disable leg actuators overload.</span>")
+		chassis.balloon_alert(owner, "you disable the overload")
 	UpdateButtonIcon()
 
 /datum/action/vehicle/sealed/mecha/mech_smoke
@@ -225,13 +225,13 @@
 	switch(chassis.damtype)
 		if(TOX)
 			new_damtype = BRUTE
-			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Your exosuit's hands form into fists.</span>")
+			chassis.balloon_alert(owner, "your punches will now deal brute damage")
 		if(BRUTE)
 			new_damtype = BURN
-			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>A torch tip extends from your exosuit's hand, glowing red.</span>")
+			chassis.balloon_alert(owner, "your punches will now deal burn damage")
 		if(BURN)
 			new_damtype = TOX
-			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>A bone-chillingly thick plasteel needle protracts from the exosuit's palm.</span>")
+			chassis.balloon_alert(owner,"your punches will now deal toxin damage")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(chassis, 'sound/mecha/mechmove01.ogg', 50, TRUE)
@@ -246,7 +246,7 @@
 		return
 	chassis.phasing = chassis.phasing ? "" : "phasing"
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
-	to_chat(owner, "[icon2html(chassis, owner)]<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
+	chassis.balloon_alert(owner, "[chassis.phasing ? "enabled" : "disabled"] phasing")
 	UpdateButtonIcon()
 
 ///swap seats, for two person mecha

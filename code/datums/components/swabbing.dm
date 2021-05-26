@@ -42,6 +42,7 @@ This component is used in vat growing to swab for microbiological samples which 
 
 ///Changes examine based on your sample
 /datum/component/swabbing/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
 	if(LAZYLEN(swabbed_items))
 		examine_list += "<span class='nicegreen'>There is a microbiological sample on [parent]!</span>"
 		examine_list += "<span class='notice'>You can see the following micro-organisms:</span>\n"
@@ -53,7 +54,7 @@ This component is used in vat growing to swab for microbiological samples which 
 
 ///Ran when you attack an object, tries to get a swab of the object. if a swabbable surface is found it will run behavior and hopefully
 /datum/component/swabbing/proc/try_to_swab(datum/source, atom/target, mob/user, params)
-	set waitfor = FALSE //This prevents do_after() from making this proc not return it's value.
+	SIGNAL_HANDLER
 
 	if(istype(target, /obj/structure/table))//help how do i do this less shitty
 		return NONE //idk bro pls send help
@@ -96,6 +97,9 @@ This component is used in vat growing to swab for microbiological samples which 
 		return
 
 	to_chat(user, "<span class='notice'>You start swabbing [target] for samples!</span>")
+	INVOKE_ASYNC(src, .proc/async_try_to_swab, target, user)
+
+/datum/component/swabbing/proc/async_try_to_swab(atom/target, mob/user)
 	if(!do_after(user, 3 SECONDS, target)) // Start swabbing boi
 		return
 
@@ -121,8 +125,10 @@ This component is used in vat growing to swab for microbiological samples which 
 
 ///Handle any special overlay cases on the item itself
 /datum/component/swabbing/proc/handle_overlays(datum/source, list/overlays)
+	SIGNAL_HANDLER
 	update_overlays?.Invoke(overlays, swabbed_items)
 
 ///Handle any special icon cases on the item itself
 /datum/component/swabbing/proc/handle_icon(datum/source)
+	SIGNAL_HANDLER
 	update_icons?.Invoke(swabbed_items)

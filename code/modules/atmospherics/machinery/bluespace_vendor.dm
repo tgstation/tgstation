@@ -182,6 +182,7 @@
 
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
+	SIGNAL_HANDLER
 	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
 	LAZYREMOVE(connected_machine.vendors, src)
 	connected_machine = null

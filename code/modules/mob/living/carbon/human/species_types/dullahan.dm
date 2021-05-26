@@ -139,20 +139,24 @@
 		qdel(src)
 
 /obj/item/dullahan_relay/proc/examinate_check(atom/source, mob/user)
+	SIGNAL_HANDLER
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
 //Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
+	SIGNAL_HANDLER
 	if(!QDELETED(owner))
 		hearers += owner
 
 //Stops dullahans from gibbing when regenerating limbs
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_zones)
+	SIGNAL_HANDLER
 	excluded_zones |= BODY_ZONE_HEAD
 
 //Retrieving the owner's head for better ahealing.
 /obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+	SIGNAL_HANDLER
 	if(admin_revive)
 		var/obj/item/bodypart/head/H = loc
 		var/turf/T = get_turf(owner)

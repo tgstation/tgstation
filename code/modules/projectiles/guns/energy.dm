@@ -46,6 +46,32 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
+/obj/item/gun/energy/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_energy)
+
+/**
+ *
+ * Outputs type-specific weapon stats for energy-based firearms based on its firing modes
+ * and the stats of those firing modes. Esoteric firing modes like ion are currently not supported
+ * but can be added easily
+ *
+ */
+/obj/item/gun/energy/proc/add_notes_energy()
+	var/list/readout = list("")
+	// Make sure there is something to actually retrieve
+	if(!ammo_type)
+		return
+	var/obj/projectile/exam_proj
+	readout += "Standard models of this projectile weapon have <span class='warning'>[ammo_type.len]</span> mode\s"
+	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
+	for(var/obj/item/ammo_casing/energy/for_ammo in ammo_type)
+		exam_proj = for_ammo.loaded_projectile
+		if(exam_proj.damage > 0) // Don't divide by 0!!!!!
+			readout += "<span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shot\s on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
+		else
+			readout += "an infinite number of shots on <span class='warning'>[for_ammo.select_name] mode</span>."
+	return readout.Join("\n") // Sending over the singular string, rather than the whole list
+
 /obj/item/gun/energy/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
@@ -250,6 +276,7 @@
 			. = "<span class='danger'>[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.</span>"
 
 /obj/item/gun/energy/proc/instant_recharge()
+	SIGNAL_HANDLER
 	if(!cell)
 		return
 	cell.charge = cell.maxcharge

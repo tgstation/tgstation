@@ -1,5 +1,0 @@
-author: "InsaneRed"
-delete-after: True
-changes: 
-  - qol: "Delta station toxins has been cleaned up  to remove excess piping"
-  - bugfix: "The delta station toxin  thermomachines are now properly linked to waste and the chamber vents should no longer connect to the output pipes."
