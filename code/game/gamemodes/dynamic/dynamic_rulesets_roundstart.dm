@@ -261,63 +261,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//                BLOOD CULT                //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/bloodcult
-	name = "Blood Cult"
-	antag_flag = ROLE_CULTIST
-	antag_datum = /datum/antagonist/cult
-	minimum_required_age = 14
-	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
-	required_candidates = 2
-	weight = 3
-	cost = 20
-	requirements = list(100,90,80,60,40,30,10,10,10,10)
-	flags = HIGH_IMPACT_RULESET
-	antag_cap = list("denominator" = 20, "offset" = 1)
-	var/datum/team/cult/main_cult
-
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
-	required_candidates = get_antag_cap(population)
-	. = ..()
-
-/datum/dynamic_ruleset/roundstart/bloodcult/pre_execute(population)
-	. = ..()
-	var/cultists = get_antag_cap(population)
-	for(var/cultists_number = 1 to cultists)
-		if(candidates.len <= 0)
-			break
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.special_role = ROLE_CULTIST
-		M.mind.restricted_roles = restricted_roles
-		GLOB.pre_setup_antags += M.mind
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/bloodcult/execute()
-	main_cult = new
-	for(var/datum/mind/M in assigned)
-		var/datum/antagonist/cult/new_cultist = new antag_datum()
-		new_cultist.cult_team = main_cult
-		new_cultist.give_equipment = TRUE
-		M.add_antag_datum(new_cultist)
-		GLOB.pre_setup_antags -= M
-	main_cult.setup_objectives()
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/bloodcult/round_result()
-	..()
-	if(main_cult.check_cult_victory())
-		SSticker.mode_result = "win - cult win"
-		SSticker.news_report = CULT_SUMMON
-	else
-		SSticker.mode_result = "loss - staff stopped the cult"
-		SSticker.news_report = CULT_FAILURE
-
-//////////////////////////////////////////////
-//                                          //
 //          NUCLEAR OPERATIVES              //
 //                                          //
 //////////////////////////////////////////////
