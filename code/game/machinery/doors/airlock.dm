@@ -77,7 +77,7 @@
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	greyscale_config = /datum/greyscale_config/airlocks/custom
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff"
+	greyscale_colors = "#808080#808080#969696#b2b2b2#5ea52c#5ea52c#777777"
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = AI_WIRE_NORMAL //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -457,10 +457,17 @@
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
 	switch(airlock_state)
-		if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
-			icon_state = ""
-		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
+		if(AIRLOCK_OPEN)
+			icon_state = "open"
+		if(AIRLOCK_CLOSED)
+			icon_state = "closed"
+		if(AIRLOCK_OPENING)
+			icon_state = "opening"
+		if(AIRLOCK_CLOSING)
+			icon_state = "closing"
+		if(AIRLOCK_DENY, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
+	update_greyscale()
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()

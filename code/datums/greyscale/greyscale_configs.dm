@@ -170,25 +170,6 @@
 	icon_file = 'icons/obj/module.dmi'
 	json_config = 'code/datums/greyscale/json_configs/circuit.json'
 
-<<<<<<< HEAD
-/**
- * Airlock configurations.
- * Airlocks with no decorations are under /airlocks
- * Airlocks with see-through windows are under .../window
- * Airlocks with decorative color bands are under .../custom
- */
-
-/datum/greyscale_config/airlocks
-	icon_file = 'icons/obj/doors/airlocks/greyscale_template.dmi'
-	json_config = 'code/datums/greyscale/json_configs/airlock_plain.json'
-
-/datum/greyscale_config/airlocks/window
-	json_config = 'code/datums/greyscale/json_configs/airlock_window.json'
-
-
-/datum/greyscale_config/airlocks/custom
-	json_config = 'code/datums/greyscale/json_configs/airlock_custom.json'
-=======
 /datum/greyscale_config/sombrero
 	name = "Sombrero"
 	icon_file = 'icons/obj/clothing/head/sombrero.dmi'
@@ -221,4 +202,25 @@
 /datum/greyscale_config/sombrero/base_worn
 	name = "Base Worn Sombrero Style"
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
->>>>>>> Ninja/GAGS-debug-clothing-support
+
+
+/**
+ * Airlock configurations.
+ * Airlocks with no decorations are under /airlocks
+ * Airlocks with see-through windows are under .../window
+ * Airlocks with decorative color bands are under .../custom
+ */
+
+/datum/greyscale_config/airlocks
+	name = "Solid Airlock"
+	icon_file = 'icons/obj/doors/airlocks/greyscale_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/airlock_plain.json'
+
+/datum/greyscale_config/airlocks/window
+	name = "Airlock with Window"
+	json_config = 'code/datums/greyscale/json_configs/airlock_window.json'
+
+
+/datum/greyscale_config/airlocks/custom
+	name = "Airlock with Decorations"
+	json_config = 'code/datums/greyscale/json_configs/airlock_custom.json'

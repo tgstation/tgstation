@@ -749,8 +749,10 @@
 	if(update && greyscale_config && greyscale_colors)
 		update_greyscale()
 
-/// Checks if this atom uses the GAS system and if so updates the icon
+/// Checks if this atom uses the GAGS system and if so updates the icon
 /atom/proc/update_greyscale()
+	if(!greyscale_colors)
+		return
 	icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**

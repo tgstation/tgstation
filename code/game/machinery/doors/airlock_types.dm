@@ -6,18 +6,18 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
-	greyscale_colors = "#0071ff#0071ff#1d81ff#1d81ff#3399ff#3399ff#ffffff"
+	greyscale_colors = "#224e81#224e81#2a5b94#2a5b94#3d89be#3d89be#2c5280"
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
-	greyscale_colors = "#cc0000#cc0000#610000#610000#ffa86a#ff9933#990000"
+	greyscale_colors = "#9f2828#9f2828#a51c1c#a51c1c#d27428#d27428#8e2222"
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
-	greyscale_colors = "#b78c0e#b78c0e#b78c0e#b78c0e#7f292f#7f292f#c19b2d"
+	greyscale_colors = "#b78c0e#b78c0e#c2940d#c2940d#7f292f#7f292f#997715"
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
@@ -44,7 +44,7 @@
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
-	greyscale_colors = "#9f6426#9f6426#945818#945818#663300#663300#5b350e"
+	greyscale_colors = "#967032#967032#b3863c#b3863c#78430d#78430d#967032"
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
@@ -63,6 +63,7 @@
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_fre
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#808080#ff0000#ffffff"
 
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'

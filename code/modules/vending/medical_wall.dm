@@ -23,27 +23,9 @@
 	tiltable = FALSE
 	light_mask = "wallmed-light-mask"
 
-<<<<<<< HEAD
 /obj/machinery/vending/wallmed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_mount)
-=======
-/obj/machinery/vending/wallmed/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/vending/wallmed/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/vending/wallmed/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/vending/wallmed/directional/west
-	dir = EAST
-	pixel_x = -32
->>>>>>> Ninja/GAGS-debug-clothing-support
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

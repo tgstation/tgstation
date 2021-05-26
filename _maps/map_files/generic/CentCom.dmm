@@ -3128,9 +3128,6 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/vending/wallmed/directional/north{
-	use_power = 0
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9365,9 +9362,6 @@
 /area/centcom/ferry)
 "CC" = (
 /obj/structure/closet/secure_closet/ert_med,
-/obj/machinery/vending/wallmed/directional/south{
-	use_power = 0
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -14672,10 +14666,6 @@
 "Vv" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/holding)
-"Vz" = (
-/obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "VA" = (
@@ -43505,7 +43495,7 @@ CT
 CT
 CT
 Nd
-Vz
+Fh
 Fh
 YJ
 QT
