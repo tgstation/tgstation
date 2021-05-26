@@ -510,6 +510,7 @@
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
 /obj/item/toy/plush/lizard_plushie/Initialize()
+	. = ..()
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
 		var/generated_lizard_color = "#" + random_color()
@@ -519,12 +520,12 @@
 		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
 			generated_lizard_color = "#66ff33"
 
-		// Set our greyscale color to the lizard color we made with black eyes
-		greyscale_colors = generated_lizard_color + "#000000"
+		// Set our greyscale colors to the lizard color we made + black eyes
+		set_greyscale(colors = list(generated_lizard_color, "#000000"))
 
-	. = ..()
-
+// Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
+	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/space_lizard_plushie
