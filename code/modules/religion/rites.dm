@@ -129,8 +129,7 @@ datum/religion_rites/upgrade_blessing/invoke_effect(mob/living/user, atom/movabl
 		 /obj/item/organ/cyberimp/mouth/breathing_tube,
 		 /obj/item/organ/cyberimp/chest/thrusters,
 		 /obj/item/organ/eyes/robotic/flashlight,
-		 /obj/item/organ/eyes/robotic/glow,
-		 )
+		 /obj/item/organ/eyes/robotic/glow,)
 
 	new blessings(altar_turf)
 	return TRUE
