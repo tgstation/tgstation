@@ -23,7 +23,7 @@
 	seed = /obj/item/seeds/rainbow_bunch
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
-	icon_state = "flower"
+	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
 	force = 0
 	throwforce = 0
