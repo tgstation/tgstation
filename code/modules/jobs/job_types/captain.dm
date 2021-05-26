@@ -68,7 +68,6 @@
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	SSmapping.HACK_LoadMapConfig()
 	var/list/job_changes = SSmapping.config.job_changes
 	if(!length(job_changes))
 		return

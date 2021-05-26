@@ -46,17 +46,7 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
 
-//dlete dis once #39770 is resolved
-/datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
-	if(!config)
-#ifdef FORCE_MAP
-		config = load_map_config(FORCE_MAP)
-#else
-		config = load_map_config(error_if_missing = FALSE)
-#endif
-
 /datum/controller/subsystem/mapping/Initialize(timeofday)
-	HACK_LoadMapConfig()
 	if(initialized)
 		return
 	if(config.defaulted)

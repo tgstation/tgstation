@@ -26,7 +26,6 @@
 
 /datum/job/cook/New()
 	. = ..()
-	SSmapping.HACK_LoadMapConfig()
 	var/list/job_changes = SSmapping.config.job_changes
 
 	if(!length(job_changes))
