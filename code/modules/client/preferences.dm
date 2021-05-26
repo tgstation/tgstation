@@ -70,7 +70,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/underwear_color = "000" //underwear color
 	var/undershirt = "Nude" //undershirt type
 	var/socks = "Nude" //socks type
-	var/backpack = DBACKPACK //backpack type
 	var/jumpsuit_style = PREF_SUIT //suit/skirt
 	var/hairstyle = "Bald" //Hair type
 	var/hair_color = "000" //Hair color
@@ -472,8 +471,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.underwear_color = underwear_color
 	character.undershirt = undershirt
 	character.socks = socks
-
-	character.backpack = backpack
 
 	character.jumpsuit_style = jumpsuit_style
 

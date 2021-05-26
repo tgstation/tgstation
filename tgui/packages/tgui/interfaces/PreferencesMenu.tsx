@@ -10,7 +10,9 @@ const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
+// MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
 const KEYS_TO_NAMES = {
+  backpack: "Backpack",
   underwear: "Underwear",
 };
 
@@ -217,7 +219,7 @@ export const PreferencesMenu = (props, context) => {
                 <Stack
                   vertical
                   fill
-                  style={{ width: `${CLOTHING_CELL_SIZE}px` }}
+                  width={`${CLOTHING_CELL_SIZE}px`}
                 >
                   {Object.entries(data.character_preferences.clothing)
                     .map(([clothingKey, clothing]) => {
@@ -231,7 +233,8 @@ export const PreferencesMenu = (props, context) => {
                               && data.generated_preference_values
                               && data.generated_preference_values[clothingKey])
                             && <ClothingSelection
-                              name={KEYS_TO_NAMES[clothingKey]}
+                              name={KEYS_TO_NAMES[clothingKey]
+                                || `NO NAME FOR ${clothingKey}`}
                               catalog={
                                 data.generated_preference_values[clothingKey]
                               }

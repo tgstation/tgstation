@@ -11,18 +11,22 @@
 		var/list/choices = preference.get_choices()
 		for (var/preference_value in choices)
 			var/create_icon_of = choices[preference_value]
-			var/icon/icon
 
-			if (isatom(create_icon_of))
+			var/icon/icon
+			var/icon_state
+
+			if (ispath(create_icon_of, /atom))
 				var/atom/atom_icon_source = create_icon_of
-				icon = icon(atom_icon_source.icon, atom_icon_source.icon_state)
+				// icon = icon(initial(atom_icon_source.icon), initial(atom_icon_source.icon_state))
+				icon = initial(atom_icon_source.icon)
+				icon_state = initial(atom_icon_source.icon_state)
 			else if (isicon(create_icon_of))
 				icon = create_icon_of
 			else
 				// MOTHBLOCKS TODO: Unit test this
 				CRASH("[create_icon_of] is an invalid preference value.")
 
-			Insert(preference.get_spritesheet_key(preference_value), icon)
+			Insert(preference.get_spritesheet_key(preference_value), icon, icon_state)
 
 	return ..()
 

@@ -1,5 +1,3 @@
-
-	//The mob should have a gender you want before running this proc. Will run fine without H
 /datum/preferences/proc/random_character(gender_override, antag_override = FALSE)
 	// MOTHBLOCKS TODO: random_character
 	// if(randomise[RANDOM_SPECIES])
