@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - balance: "Canister leaks are more consistent rather than jittery, but slower."

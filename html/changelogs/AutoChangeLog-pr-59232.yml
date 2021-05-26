@@ -1,4 +1,0 @@
-author: "Waltermeldron"
-delete-after: True
-changes: 
-  - rscadd: "Adds Integrated Circuits back to science. Circuit Components can be printed off and placed onto these circuits. These circuits can be placed into shells that can be printed at the protolathe."
