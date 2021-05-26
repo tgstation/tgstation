@@ -232,7 +232,7 @@
 	if(C.charge < C.maxcharge)
 		use_power(50 * delta_time)
 		C.give(40 * delta_time)
-		update_appearance()
+		defib.update_power()
 
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount

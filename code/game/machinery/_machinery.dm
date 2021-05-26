@@ -317,9 +317,9 @@
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
 		return FALSE
-	if(use_power == 1)
+	if(use_power == IDLE_POWER_USE)
 		use_power(idle_power_usage,power_channel)
-	else if(use_power >= 2)
+	else if(use_power >= ACTIVE_POWER_USE)
 		use_power(active_power_usage,power_channel)
 	return TRUE
 
