@@ -35,7 +35,6 @@ SUBSYSTEM_DEF(input)
 		user.set_macros()
 
 /datum/controller/subsystem/input/fire()
-	var/list/clients = GLOB.clients // Let's sing the list cache song
-	for(var/i in 1 to clients.len)
-		var/client/C = clients[i]
-		C.keyLoop()
+	for(var/client/user as anything in GLOB.clients)
+		user.holder?.keyLoop(src)
+		user.mob.focus?.keyLoop(src)
