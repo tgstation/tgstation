@@ -233,10 +233,19 @@
 			return FALSE
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
-	L.Jitter(20)
-	L.set_confusion(max(confusion_amt, L.get_confusion()))
-	L.stuttering = max(8, L.stuttering)
-	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE)
+
+	if(trait_check)
+		L.Jitter(5)
+		L.set_confusion(max(confusion_amt * 0.2, L.get_confusion()))
+		L.stuttering = max(2, L.stuttering)
+		L.apply_damage(stamina_loss_amt * 0.2, STAMINA, BODY_ZONE_CHEST)
+	else
+		L.Jitter(20)
+		L.set_confusion(max(confusion_amt, L.get_confusion()))
+		L.stuttering = max(8, L.stuttering)
+		L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
+
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
