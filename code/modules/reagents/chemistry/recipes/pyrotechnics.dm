@@ -136,7 +136,7 @@
 			R.reveal(100)
 			R.adjustHealth(50)
 		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
-			if(iscultist(C))
+			if(IS_CULTIST(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
 				C.Paralyze(40)
 				C.adjust_fire_stacks(5)
@@ -192,7 +192,7 @@
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
 		for(var/i in 1 to bee_amount)
-			var/mob/living/simple_animal/hostile/poison/bees/short/new_bee = new(location)
+			var/mob/living/simple_animal/hostile/bee/short/new_bee = new(location)
 			if(LAZYLEN(beeagents))
 				new_bee.assign_reagent(pick(beeagents))
 

@@ -83,6 +83,7 @@
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		density = FALSE
 		broken = TRUE
@@ -300,6 +301,8 @@
 	if(!user.Adjacent(src)) //no TK museology
 		return
 	if(user.combat_mode)
+		return ..()
+	if(W.tool_behaviour == TOOL_WELDER && !broken)
 		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
@@ -574,6 +577,7 @@
 		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
 
 /obj/structure/displaycase/forsale/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)

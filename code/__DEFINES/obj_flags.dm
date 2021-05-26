@@ -14,6 +14,7 @@
 #define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP (1<<12) // Should this object block z uprise from below?
+#define NO_BUILD (1<<13) // Can we build on this object?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -32,7 +33,6 @@
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define EYE_STAB (1<<13) // Item can be used to eyestab
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.

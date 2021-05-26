@@ -42,7 +42,7 @@
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] attempts to force you to [apply_method] [src].</span>")
-		if(!do_mob(user, M))
+		if(!do_mob(user, M, CHEM_INTERACT_DELAY(3 SECONDS, user)))
 			return FALSE
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces you to [apply_method] [src].</span>")

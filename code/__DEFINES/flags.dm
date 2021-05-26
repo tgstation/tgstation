@@ -14,11 +14,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_USE_TAG (1<<0)
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
-/**
- * Is this datum capable of sending signals?
- * Set when a signal has been registered.
- */
-#define DF_SIGNAL_ENABLED (1<<3)
 
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
@@ -62,6 +57,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define SUPERMATTER_IGNORES_1 (1 << 19)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
 #define CAN_BE_DIRTY_1 (1<<20)
+/// Should we use the initial icon for display? Mostly used by overlay only objects
+#define HTML_USE_INITAL_ICON_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name

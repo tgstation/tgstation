@@ -332,12 +332,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 //For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 //Optional arg 'type' to stop once it reaches a specific type instead of a turf.
 /proc/get_atom_on_turf(atom/movable/M, stop_type)
-	var/atom/loc = M
-	while(loc?.loc && !isturf(loc.loc))
-		loc = loc.loc
-		if(stop_type && istype(loc, stop_type))
+	var/atom/turf_to_check = M
+	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
+		turf_to_check = turf_to_check.loc
+		if(stop_type && istype(turf_to_check, stop_type))
 			break
-	return loc
+	return turf_to_check
 
 //Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)
@@ -427,12 +427,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 
 ///Returns the src and all recursive contents as a list.
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(ignore_flag_1)
 	. = list(src)
 	var/i = 0
 	while(i < length(.))
 		var/atom/A = .[++i]
-		. += A.contents
+		if (!(A.flags_1 & ignore_flag_1))
+			. += A.contents
 
 ///identical to getallcontents but returns a list of atoms of the type passed in the argument.
 /atom/proc/get_all_contents_type(type)
@@ -1501,7 +1502,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	if(!spawn_type)
 		spawn_type = /obj/structure/closet/supplypod/podspawn
 	var/obj/structure/closet/supplypod/podspawn/pod = new spawn_type(null, style)
-	if(!islist(paths_to_spawn))
+	if(paths_to_spawn && !islist(paths_to_spawn))
 		paths_to_spawn = list(paths_to_spawn)
 	for(var/atom/path as anything in paths_to_spawn)
 		path = new path(pod)
@@ -1510,7 +1511,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	specifications -= landing_location
 	specifications -= style
 	specifications -= spawn_type
-	specifications -= paths_to_spawn
+	specifications -= "paths_to_spawn" //list, we remove the key
 
 	//rest of specificiations are edits on the pod
 	for(var/variable_name in specifications)

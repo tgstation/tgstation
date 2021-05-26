@@ -217,8 +217,8 @@
 		force = 5
 		damtype = BURN
 		hitsound = 'sound/items/welder.ogg'
-		attack_verb_continuous = string_list(list("burns", "sings"))
-		attack_verb_simple = string_list(list("burn", "sing"))
+		attack_verb_continuous = string_list(list("burns", "singes"))
+		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"
@@ -310,7 +310,7 @@
 
 /obj/item/thermometer/ui_close(mob/user)
 	. = ..()
-	remove_thermometer(user)
+	INVOKE_ASYNC(src, .proc/remove_thermometer, user)
 
 /obj/item/thermometer/ui_status(mob/user)
 	if(!(in_range(src, user)))

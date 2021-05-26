@@ -178,37 +178,6 @@
 	return part
 
 /**
- * Generates a list of resources / materials available to this Exosuit Fab
- *
- * Returns null if there is no material container available.
- * List format is list(material_name = list(amount = ..., ref = ..., etc.))
- */
-/obj/machinery/mecha_part_fabricator/proc/output_available_resources()
-	var/datum/component/material_container/materials = rmat.mat_container
-
-	var/list/material_data = list()
-
-	if(materials)
-		for(var/mat_id in materials.materials)
-			var/datum/material/M = mat_id
-			var/list/material_info = list()
-			var/amount = materials.materials[mat_id]
-
-			material_info = list(
-				"name" = M.name,
-				"ref" = REF(M),
-				"amount" = amount,
-				"sheets" = round(amount / MINERAL_MATERIAL_AMOUNT),
-				"removable" = amount >= MINERAL_MATERIAL_AMOUNT
-			)
-
-			material_data += list(material_info)
-
-		return material_data
-
-	return null
-
-/**
  * Intended to be called when an item starts printing.
  *
  * Adds the overlay to show the fab working and sets active power usage settings.
@@ -488,7 +457,7 @@
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = output_available_resources()
+	data["materials"] = rmat.mat_container?.ui_data()
 
 	if(being_built)
 		var/list/part = list(
@@ -588,35 +557,17 @@
 					queue.Swap(index,new_index)
 			return
 		if("remove_mat")
-			// Remove a material from the fab
-			var/mat_ref = params["ref"]
+			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-			var/datum/material/mat = locate(mat_ref)
-			eject_sheets(mat, amount)
+
+			if (!amount)
+				return
+
+			// SAFETY: eject_sheets checks for valid mats
+			rmat.eject_sheets(material, amount)
 			return
 
 	return FALSE
-
-/**
- * Eject material sheets.
- *
- * Returns the number of sheets successfully ejected.
- * eject_sheet - Byond REF of the material to eject.
- * eject_amt - Number of sheets to attempt to eject.
- */
-/obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
-	var/datum/component/material_container/mat_container = rmat.mat_container
-	if (!mat_container)
-		say("No access to material storage, please contact the quartermaster.")
-		return 0
-	if (rmat.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
-	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
-	var/list/matlist = list()
-	matlist[eject_sheet] = text2num(eject_amt)
-	rmat.silo_log(src, "ejected", -count, "sheets", matlist)
-	return count
 
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted

@@ -37,7 +37,7 @@
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE //instructs forceMove to NOT reset our trajectory to the new location!
 	/// We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.
-	var/list/impacted
+	var/list/impacted = list()
 	/// If TRUE, we can hit our firer.
 	var/ignore_source_check = FALSE
 	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
@@ -129,6 +129,8 @@
 	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
+	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
+	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/decayedRange //stores original range
@@ -171,6 +173,10 @@
 	decayedRange = range
 	if(embedding)
 		updateEmbedding()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/projectile/proc/Range()
 	range--
@@ -545,8 +551,8 @@
 /**
  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
  */
-/obj/projectile/Crossed(atom/movable/AM)
-	. = ..()
+/obj/projectile/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	scan_crossed_hit(AM)
 
 /**

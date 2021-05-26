@@ -21,6 +21,10 @@
 	. = ..()
 	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
 
+/obj/structure/altar_of_gods/update_overlays()
+	. = ..()
+	. += "convertaltarcandle"
+
 /obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)
 		return ..()
@@ -36,6 +40,21 @@
 	pushed_mob.forceMove(loc)
 	return ..()
 
+/obj/structure/altar_of_gods/examine_more(mob/user)
+	if(!isobserver(user))
+		return ..()
+	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+	if(GLOB.religion)
+		. += list("<span class='notice'>Deity: [GLOB.deity].</span>")
+		. += list("<span class='notice'>Religion: [GLOB.religion].</span>")
+		. += list("<span class='notice'>Bible: [GLOB.bible_name].</span>")
+	if(GLOB.religious_sect)
+		. += list("<span class='notice'>Sect: [GLOB.religious_sect].</span>")
+		. += list("<span class='notice'>Favor: [GLOB.religious_sect.favor].</span>")
+	var/chaplains = get_chaplains()
+	if(isAdminObserver(user) && chaplains)
+		. += list("<span class='notice'>Chaplains: [chaplains].</span>")
+
 /obj/structure/altar_of_gods/proc/reflect_sect_in_icons()
 	if(GLOB.religious_sect)
 		sect_to_altar = GLOB.religious_sect
@@ -43,6 +62,16 @@
 			icon = sect_to_altar.altar_icon
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
+	update_appearance() //Light the candles!
+
+/obj/structure/altar_of_gods/proc/get_chaplains()
+	var/chaplain_string = ""
+	for(var/mob/living/carbon/human/potential_chap in GLOB.player_list)
+		if(potential_chap.key && potential_chap.mind?.assigned_role == "Chaplain")
+			if(chaplain_string)
+				chaplain_string += ", "
+			chaplain_string += "[potential_chap] ([potential_chap.key])"
+	return chaplain_string
 
 /obj/item/ritual_totem
 	name = "ritual totem"

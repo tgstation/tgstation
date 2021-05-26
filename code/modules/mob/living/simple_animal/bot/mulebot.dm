@@ -65,7 +65,6 @@
 	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/check_pre_step)
 	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
 	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over)
 
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 
@@ -114,7 +113,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
-	UnregisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED, COMSIG_MOVABLE_CROSSED_OVER)
+	UnregisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED)
 	unload(0)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
@@ -543,19 +542,11 @@
 	B.setDir(direct)
 	bloodiness--
 
-/**
- * Signal handler for COMSIG_MOVABLE_CROSSED_OVER signals sent by this mulebot.
- *
- * Intended to be used to crush various things.
- */
-/mob/living/simple_animal/bot/mulebot/proc/on_crossed_over(atom/movable/source, atom/movable/crossed_atom)
-	SIGNAL_HANDLER
-
-	if(ishuman(crossed_atom))
-		run_over(crossed_atom)
-
 /mob/living/simple_animal/bot/mulebot/Moved()
 	. = ..()
+
+	for(var/mob/living/carbon/human/future_pancake in loc)
+		run_over(future_pancake)
 
 	diag_hud_set_mulebotcell()
 
@@ -923,6 +914,7 @@
 		return "Unknown"
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
+	SIGNAL_HANDLER
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
 	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
 	unload(0)

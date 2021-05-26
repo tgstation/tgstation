@@ -43,6 +43,7 @@
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
+#include "bloody_footprints.dm"
 #include "breath.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
@@ -53,6 +54,7 @@
 #include "crayons.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
+#include "egg_glands.dm"
 #include "emoting.dm"
 #include "food_edibility_check.dm"
 #include "heretic_knowledge.dm"
@@ -87,8 +89,10 @@
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
+#include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
+#include "wizard.dm"
 
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

@@ -17,7 +17,11 @@
 	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR, HAIR, HAS_FLESH, HAS_BONE) // i mean i guess they have blood so they can have wounds too
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/ethereal
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOHUNGER)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_NOHUNGER,
+	)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
@@ -97,6 +101,7 @@
 	H.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
+	SIGNAL_HANDLER
 	EMPeffect = TRUE
 	spec_updatehealth(H)
 	to_chat(H, "<span class='notice'>You feel the light of your body leave you.</span>")
@@ -107,6 +112,7 @@
 			addtimer(CALLBACK(src, .proc/stop_emp, H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
+	SIGNAL_HANDLER
 	if(emageffect)
 		return
 	emageffect = TRUE

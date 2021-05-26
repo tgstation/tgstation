@@ -89,7 +89,7 @@
 /datum/nanite_program/nanite_debugging
 	name = "Nanite Debugging"
 	desc = "Enables various high-cost diagnostics in the nanites, making them able to communicate their program list to portable scanners. \
-	Doing so uses some power, slightly decreasing their replication speed."
+			Doing so uses some power, slightly decreasing their replication speed."
 	rogue_types = list(/datum/nanite_program/toxic)
 	use_rate = 0.1
 
@@ -241,8 +241,9 @@
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
-	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host.\
-			The replication has also a chance to corrupt the nanite programming due to copy faults - cloud sync is highly recommended."
+	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host; \
+			For every 50 nanite volume in the host, the production rate is increased by 0.5. The replication has also a chance to corrupt the nanite programming \
+			due to copy faults - constant cloud sync is highly recommended."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/toxic)
 

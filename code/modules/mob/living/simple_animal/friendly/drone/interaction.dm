@@ -8,7 +8,7 @@
 
 /mob/living/simple_animal/drone/attack_drone(mob/living/simple_animal/drone/D)
 	if(D != src && stat == DEAD)
-		var/d_input = alert(D,"Perform which action?","Drone Interaction","Reactivate","Cannibalize","Nothing")
+		var/d_input = tgui_alert(D,"Perform which action?","Drone Interaction",list("Reactivate","Cannibalize","Nothing"))
 		if(d_input)
 			switch(d_input)
 				if("Reactivate")

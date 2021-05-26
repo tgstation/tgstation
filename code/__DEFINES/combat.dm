@@ -129,6 +129,7 @@
 #define ATTACK_EFFECT_BOOP "boop" //Honk
 
 //the define for visible message range in combat
+#define SAMETILE_MESSAGE_RANGE 1
 #define COMBAT_MESSAGE_RANGE 3
 #define DEFAULT_MESSAGE_RANGE 7
 
@@ -233,11 +234,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
 
-#define EXPLODE_NONE 0 //Don't even ask me why we need this.
-#define EXPLODE_DEVASTATE 1
-#define EXPLODE_HEAVY 2
-#define EXPLODE_LIGHT 3
-#define EXPLODE_GIB_THRESHOLD 50 //ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
+/// ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
+#define EXPLODE_GIB_THRESHOLD 50
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
@@ -306,3 +304,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
 #define MARTIAL_ATTACK_SUCCESS TRUE
+
+/// IF an object is weak against armor, this is the value that any present armor is multiplied by
+#define ARMOR_WEAKENED_MULTIPLIER 2

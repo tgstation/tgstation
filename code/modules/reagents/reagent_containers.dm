@@ -56,7 +56,7 @@
 					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+				balloon_alert(user, "Transferring [amount_per_transfer_from_this]u")
 				return
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
@@ -131,10 +131,10 @@
 
 	return ..()
 
-/obj/item/reagent_containers/ex_act()
+/obj/item/reagent_containers/ex_act(severity)
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act()
+			R.on_ex_act(severity)
 	if(!QDELETED(src))
 		return ..()
 

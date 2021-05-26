@@ -77,8 +77,10 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
-
 	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(RightClickOn(A))
+			return
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
@@ -301,6 +303,29 @@
 /mob/proc/ranged_secondary_attack(atom/target, modifiers)
 
 /**
+ * Right click
+ *
+ * Used for right-clicking interactions, in similar fashion of AltClick.
+ * Returns [atom/proc/RightClick] on the atom being right-clicked, which checks if the click chain doesn't continue.
+ * Arguments:
+ * * atom/target - The atom being rightclicked.
+ */
+/mob/proc/RightClickOn(atom/target)
+	return target.RightClick(src)
+
+/**
+ * Proc used for right-clicking
+ *
+ * Used for right-click interactions, called by [mob/proc/RightClickOn].
+ * Returns TRUE if the click chain should not continue from a right-click.
+ * Arguments:
+ * * mob/user - The mob right-clicking.
+ */
+/atom/proc/RightClick(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_CLICK_RIGHT, user) & COMPONENT_CANCEL_CLICK_RIGHT)
+		return TRUE
+
+/**
  * Middle click
  * Mainly used for swapping hands
  */
@@ -423,7 +448,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*

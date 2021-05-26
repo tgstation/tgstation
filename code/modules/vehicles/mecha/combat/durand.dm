@@ -69,9 +69,9 @@
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
 /obj/vehicle/sealed/mecha/combat/durand/proc/prehit(obj/projectile/source, list/signal_args)
+	SIGNAL_HANDLER
 	if(defense_check(source.loc) && shield)
 		signal_args[2] = shield
-
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/
@@ -189,12 +189,12 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	if(switching && !signal_args[1])
 		return
 	if(!chassis.defense_mode && (!chassis.cell || chassis.cell.charge < 100)) //If it's off, and we have less than 100 units of power
-		to_chat(currentuser, "[icon2html(src, currentuser)]<span class='warn'>Insufficient power; cannot activate defense mode.</span>")
+		chassis.balloon_alert(owner, "insufficient power")
 		return
 	switching = TRUE
 	chassis.defense_mode = !chassis.defense_mode
 	if(!signal_args[1])
-		to_chat(currentuser, "[icon2html(src, currentuser)]<span class='notice'>Defense mode [chassis.defense_mode?"enabled":"disabled"].</span>")
+		chassis.balloon_alert(owner, "shield [chassis.defense_mode?"enabled":"disabled"]")
 		chassis.log_message("User has toggled defense mode -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
 	else
 		chassis.log_message("defense mode state changed -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
@@ -222,6 +222,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	switching = FALSE
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
+	SIGNAL_HANDLER
 	setDir(newdir)
 
 /obj/durand_shield/take_damage()

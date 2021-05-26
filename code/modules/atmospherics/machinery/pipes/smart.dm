@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)))
-
+//Smart pipes... or are they?
 /obj/machinery/atmospherics/pipe/smart
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "pipe11-3"
@@ -24,8 +24,11 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	icon_state = ""
 	. = ..()
 
-/obj/machinery/atmospherics/pipe/smart/SetInitDirections()
-	initialize_directions = ALL_CARDINALS
+/obj/machinery/atmospherics/pipe/smart/SetInitDirections(init_dir)
+	if(init_dir)
+		initialize_directions =	init_dir
+	else
+		initialize_directions = ALL_CARDINALS
 
 /obj/machinery/atmospherics/pipe/smart/proc/check_connections()
 	var/mutable_appearance/center

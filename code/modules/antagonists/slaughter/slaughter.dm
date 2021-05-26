@@ -81,7 +81,7 @@
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. \
 							You gain strength the more attacks you land on live humanoids, though this resets when you return to the blood zone. You can also \
-							launch a devastating slam attack with ctrl+shift+click, capable of smashing bones in one strike.</B>"
+							launch a devastating slam attack with right-click, capable of smashing bones in one strike.</B>"
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
@@ -110,7 +110,7 @@
 	if(bloodpool)
 		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
 
-/mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
+/mob/living/simple_animal/hostile/imp/slaughter/RightClickOn(atom/A)
 	if(!isliving(A))
 		return ..()
 

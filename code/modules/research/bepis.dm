@@ -20,20 +20,35 @@
 	active_power_usage = 1500
 	circuit = /obj/item/circuitboard/machine/bepis
 
+	///How much cash the UI and machine are depositing at a time.
 	var/banking_amount = 100
-	var/banked_cash = 0 //stored player cash
-	var/datum/bank_account/account //payer's account.
-	var/account_name //name of the payer's account.
+	///How much stored player cash exists within the machine.
+	var/banked_cash = 0
+	///Payer's bank account.
+	var/datum/bank_account/account
+	///Name on the payer's bank account.
+	var/account_name
+	///When the BEPIS fails to hand out any reward, the ERROR cause will be a randomly picked string displayed on the UI.
 	var/error_cause = null
-	//Vars related to probability and chance of success for testing
+
+	//Vars related to probability and chance of success for testing, using gaussian normal distribution.
+	///How much cash you will need to obtain a Major Tech Disk reward.
 	var/major_threshold = MAJOR_THRESHOLD
+	///How much cash you will need to obtain a minor invention reward.
 	var/minor_threshold = MINOR_THRESHOLD
-	var/std = STANDARD_DEVIATION //That's Standard Deviation, what did you think it was?
+	///The standard deviation of the BEPIS's gaussian normal distribution.
+	var/std = STANDARD_DEVIATION
+
 	//Stock part variables
+	///Multiplier that lowers how much the BEPIS' power costs are. Maximum of 1, upgraded to a minimum of 0.7. See RefreshParts.
 	var/power_saver = 1
+	///Variability on the money you actively spend on the BEPIS, with higher inaccuracy making the most change, good and bad to spent cash.
 	var/inaccuracy_percentage = 1.5
+	///How much "cash" is added to your inserted cash efforts for free. Based on manipulator stock part level.
 	var/positive_cash_offset = 0
+	///How much "cost" is removed from both the minor and major threshold costs. Based on laser stock part level.
 	var/negative_cash_offset = 0
+	///List of objects that constitute your minor rewards. All rewards are unique or rare outside of the BEPIS.
 	var/minor_rewards = list(
 		//To add a new minor reward, add it here.
 		/obj/item/stack/circuit_stack/full,
@@ -41,7 +56,6 @@
 		/obj/item/circuitboard/machine/sleeper/party,
 		/obj/item/toy/sprayoncan,
 	)
-	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
@@ -87,70 +101,6 @@
 	for(var/obj/item/stock_parts/scanning_module/Scan in component_parts)
 		S += ((Scan.rating - 1) * 0.25)
 	inaccuracy_percentage = (1.5 - S)
-
-/obj/machinery/rnd/bepis/proc/depositcash()
-	var/deposit_value = 0
-	deposit_value = banking_amount
-	if(deposit_value == 0)
-		update_appearance()
-		say("Attempting to deposit 0 credits. Aborting.")
-		return
-	deposit_value = clamp(round(deposit_value, 1), 1, 10000)
-	if(!account)
-		say("Cannot find user account. Please swipe a valid ID.")
-		return
-	if(!account.has_money(deposit_value))
-		say("You do not possess enough credits.")
-		return
-	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
-	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
-	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
-	banked_cash += deposit_value
-	use_power(1000 * power_saver)
-	return
-
-/obj/machinery/rnd/bepis/proc/calcsuccess()
-	var/turf/dropturf = null
-	var/gauss_major = 0
-	var/gauss_minor = 0
-	var/gauss_real = 0
-	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
-	while(length(turfs))
-		var/turf/T = pick_n_take(turfs)
-		if(T.is_blocked_turf(TRUE))
-			continue
-		else
-			dropturf = T
-			break
-	if (!dropturf)
-		dropturf = drop_location()
-	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset) //This is the randomized profit value that this experiment has to surpass to unlock a tech.
-	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset) //And this is the threshold to instead get a minor prize.
-	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset) //this is the randomized profit value that your experiment expects to give.
-	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
-	flick("chamber_flash",src)
-	update_appearance()
-	banked_cash = 0
-	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
-		say("Experiment concluded with major success. New technology node discovered on technology disc.")
-		new /obj/item/disk/tech_disk/major(dropturf,1)
-		if(SSresearch.techweb_nodes_experimental.len == 0)
-			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
-		return
-	if(gauss_real >= gauss_minor) //Minor Success.
-		var/reward = pick(minor_rewards)
-		new reward(dropturf)
-		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-		return
-	if(gauss_real <= -1) //Critical Failure
-		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
-		new /mob/living/simple_animal/deer(dropturf, 1)
-		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
-		return
-	//Minor Failure
-	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
-	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
-	return
 
 /obj/machinery/rnd/bepis/update_icon_state()
 	if(panel_open == TRUE)
@@ -256,3 +206,77 @@
 			account = null
 			say("Account settings reset.")
 	. = TRUE
+
+/**
+ * Proc that handles the user's account to deposit credits for the BEPIS.
+ * Handles success and fail cases for transferring credits, then logs the transaction and uses small amounts of power.
+ **/
+/obj/machinery/rnd/bepis/proc/depositcash()
+	var/deposit_value = 0
+	deposit_value = banking_amount
+	if(deposit_value == 0)
+		update_appearance()
+		say("Attempting to deposit 0 credits. Aborting.")
+		return
+	deposit_value = clamp(round(deposit_value, 1), 1, 10000)
+	if(!account)
+		say("Cannot find user account. Please swipe a valid ID.")
+		return
+	if(!account.has_money(deposit_value))
+		say("You do not possess enough credits.")
+		return
+	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
+	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
+	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
+	banked_cash += deposit_value
+	use_power(1000 * power_saver)
+	return
+
+/**
+ * Proc used to determine the experiment math and results all in one.
+ * Uses banked_cash and stock part levels to determine minor, major, and real gauss values for the BEPIS to hold.
+ * If by the end real is larger than major, You get a tech disk. If all the disks are earned or you at least beat minor, you get a minor reward.
+ **/
+
+/obj/machinery/rnd/bepis/proc/calcsuccess()
+	var/turf/dropturf = null
+	var/gauss_major = 0
+	var/gauss_minor = 0
+	var/gauss_real = 0
+	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
+	while(length(turfs))
+		var/turf/T = pick_n_take(turfs)
+		if(T.is_blocked_turf(TRUE))
+			continue
+		else
+			dropturf = T
+			break
+	if (!dropturf)
+		dropturf = drop_location()
+	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset) //This is the randomized profit value that this experiment has to surpass to unlock a tech.
+	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset) //And this is the threshold to instead get a minor prize.
+	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset) //this is the randomized profit value that your experiment expects to give.
+	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
+	flick("chamber_flash",src)
+	update_appearance()
+	banked_cash = 0
+	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
+		say("Experiment concluded with major success. New technology node discovered on technology disc.")
+		new /obj/item/disk/tech_disk/major(dropturf,1)
+		if(SSresearch.techweb_nodes_experimental.len == 0)
+			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
+		return
+	if(gauss_real >= gauss_minor) //Minor Success.
+		var/reward = pick(minor_rewards)
+		new reward(dropturf)
+		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
+		return
+	if(gauss_real <= -1) //Critical Failure
+		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
+		new /mob/living/simple_animal/deer(dropturf, 1)
+		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
+		return
+	//Minor Failure
+	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
+	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
+	return

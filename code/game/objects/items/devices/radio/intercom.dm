@@ -120,6 +120,7 @@
  * * source - the area that just had a power change.
  */
 /obj/item/radio/intercom/proc/AreaPowerCheck(datum/source)
+	SIGNAL_HANDLER
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		on = FALSE

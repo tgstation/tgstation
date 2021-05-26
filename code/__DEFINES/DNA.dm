@@ -3,66 +3,67 @@
 #define CHECK_DNA_AND_SPECIES(C) if(!(C.dna?.species)) return
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
-#define HULK /datum/mutation/human/hulk
-#define XRAY /datum/mutation/human/thermal/x_ray
-#define SPACEMUT /datum/mutation/human/space_adaptation
-#define TK /datum/mutation/human/telekinesis
-#define NERVOUS /datum/mutation/human/nervousness
-#define EPILEPSY /datum/mutation/human/epilepsy
-#define MUTATE /datum/mutation/human/bad_dna
-#define COUGH /datum/mutation/human/cough
-#define DWARFISM /datum/mutation/human/dwarfism
-#define GIGANTISM /datum/mutation/human/gigantism
-#define CLOWNMUT /datum/mutation/human/clumsy
-#define TOURETTES /datum/mutation/human/tourettes
-#define DEAFMUT /datum/mutation/human/deaf
-#define BLINDMUT /datum/mutation/human/blind
-#define RACEMUT /datum/mutation/human/race
-#define BADSIGHT /datum/mutation/human/nearsight
-#define LASEREYES /datum/mutation/human/laser_eyes
-#define CHAMELEON /datum/mutation/human/chameleon
-#define WACKY /datum/mutation/human/wacky
-#define MUT_MUTE /datum/mutation/human/mute
-#define STONER /datum/mutation/human/stoner
-#define UNINTELLIGIBLE /datum/mutation/human/unintelligible
-#define SWEDISH /datum/mutation/human/swedish
-#define CHAV /datum/mutation/human/chav
-#define ELVIS /datum/mutation/human/elvis
-#define MEDIEVAL /datum/mutation/human/medieval
-#define RADIOACTIVE /datum/mutation/human/radioactive
-#define GLOWY /datum/mutation/human/glow
+#define ACIDFLESH /datum/mutation/human/acidflesh
+#define ANTENNA /datum/mutation/human/antenna
 #define ANTIGLOWY /datum/mutation/human/glow/anti
-#define TELEPATHY /datum/mutation/human/telepathy
+#define BADBLINK /datum/mutation/human/badblink
+#define BADSIGHT /datum/mutation/human/nearsight
+#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
+#define BLINDMUT /datum/mutation/human/blind
+#define CHAMELEON /datum/mutation/human/chameleon
+#define CHAV /datum/mutation/human/chav
+#define CLOWNMUT /datum/mutation/human/clumsy
+#define COUGH /datum/mutation/human/cough
+#define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define DEAFMUT /datum/mutation/human/deaf
+#define DWARFISM /datum/mutation/human/dwarfism
+#define ELVIS /datum/mutation/human/elvis
+#define EPILEPSY /datum/mutation/human/epilepsy
+#define EXTRASTUN /datum/mutation/human/extrastun
 #define FIREBREATH /datum/mutation/human/firebreath
-#define VOID /datum/mutation/human/void
+#define FIRESWEAT /datum/mutation/human/fire
+#define GELADIKINESIS /datum/mutation/human/geladikinesis
+#define GIGANTISM /datum/mutation/human/gigantism
+#define GLOWY /datum/mutation/human/glow
+#define HARS /datum/mutation/human/headless
+#define HULK /datum/mutation/human/hulk
+#define INSULATED /datum/mutation/human/insulated
+#define LASEREYES /datum/mutation/human/laser_eyes
+#define MARTYRDOM /datum/mutation/human/martyrdom
+#define MEDIEVAL /datum/mutation/human/medieval
+#define MINDREAD /datum/mutation/human/mindreader
+#define MUTATE /datum/mutation/human/bad_dna
+#define MUT_MUTE /datum/mutation/human/mute
+#define NERVOUS /datum/mutation/human/nervousness
+#define OLFACTION /datum/mutation/human/olfaction
+#define PARANOIA /datum/mutation/human/paranoia
+#define RACEMUT /datum/mutation/human/race
+#define RADIOACTIVE /datum/mutation/human/radioactive
+#define AUTONOMY /datum/mutation/human/self_amputation
+#define SHOCKTOUCH /datum/mutation/human/shock
+#define SPACEMUT /datum/mutation/human/space_adaptation
+#define SPASTIC /datum/mutation/human/spastic
+#define SPIDER_WEB /datum/mutation/human/webbing
+#define STIMMED /datum/mutation/human/stimmed
+#define STONER /datum/mutation/human/stoner
+#define STRONG /datum/mutation/human/strong
+#define SWEDISH /datum/mutation/human/swedish
+#define TELEPATHY /datum/mutation/human/telepathy
+#define THERMAL /datum/mutation/human/thermal
+#define TK /datum/mutation/human/telekinesis
 #define TONGUESPIKE /datum/mutation/human/tonguespike
 #define TONGUESPIKECHEM /datum/mutation/human/tongue_spike/chem
-#define STRONG /datum/mutation/human/strong
-#define STIMMED /datum/mutation/human/stimmed
-#define FIRESWEAT /datum/mutation/human/fire
-#define THERMAL /datum/mutation/human/thermal
-#define ANTENNA /datum/mutation/human/antenna
-#define PARANOIA /datum/mutation/human/paranoia
-#define MINDREAD /datum/mutation/human/mindreader
-#define INSULATED /datum/mutation/human/insulated
-#define SHOCKTOUCH /datum/mutation/human/shock
-#define OLFACTION /datum/mutation/human/olfaction
-#define ACIDFLESH /datum/mutation/human/acidflesh
-#define BADBLINK /datum/mutation/human/badblink
-#define SPASTIC /datum/mutation/human/spastic
-#define EXTRASTUN /datum/mutation/human/extrastun
-#define GELADIKINESIS /datum/mutation/human/geladikinesis
-#define CRYOKINESIS /datum/mutation/human/cryokinesis
-#define SPIDER_WEB /datum/mutation/human/webbing
-#define MARTYRDOM /datum/mutation/human/martyrdom
-#define HARS /datum/mutation/human/headless
-#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
+#define TOURETTES /datum/mutation/human/tourettes
+#define UNINTELLIGIBLE /datum/mutation/human/unintelligible
+#define VOID /datum/mutation/human/void
+#define WACKY /datum/mutation/human/wacky
+#define XRAY /datum/mutation/human/xray
 
-#define HONORBOUND /datum/mutation/human/honorbound
 #define BURDENED /datum/mutation/human/burdened
+#define HONORBOUND /datum/mutation/human/honorbound
 
-#define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
+#define UI_CHANGED "ui changed"
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
 
@@ -82,14 +83,14 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
 
-#define DNA_UNI_IDENTITY_BLOCKS 7
-#define DNA_HAIR_COLOR_BLOCK 1
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
-#define DNA_SKIN_TONE_BLOCK 3
 #define DNA_EYE_COLOR_BLOCK 4
-#define DNA_GENDER_BLOCK 5
+#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
 #define DNA_FACIAL_HAIRSTYLE_BLOCK 6
+#define DNA_GENDER_BLOCK 5
+#define DNA_HAIR_COLOR_BLOCK 1
 #define DNA_HAIRSTYLE_BLOCK 7
+#define DNA_SKIN_TONE_BLOCK 3
+#define DNA_UNI_IDENTITY_BLOCKS 7
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -130,44 +131,44 @@
 #define NOAUGMENTS 22
 
 //organ slots
-#define ORGAN_SLOT_BRAIN "brain"
+#define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
-#define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
-#define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
-#define ORGAN_SLOT_STOMACH "stomach"
-#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
+#define ORGAN_SLOT_BRAIN "brain"
+#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
+#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
-#define ORGAN_SLOT_LUNGS "lungs"
 #define ORGAN_SLOT_HEART "heart"
-#define ORGAN_SLOT_ZOMBIE "zombie_infection"
-#define ORGAN_SLOT_THRUSTERS "thrusters"
+#define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_HUD "eye_hud"
 #define ORGAN_SLOT_LIVER "liver"
-#define ORGAN_SLOT_TONGUE "tongue"
-#define ORGAN_SLOT_VOICE "vocal_cords"
-#define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
-#define ORGAN_SLOT_HEART_AID "heartdrive"
-#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
-#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
-#define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_LUNGS "lungs"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 #define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
+#define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
+#define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
+#define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
+#define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_THRUSTERS "thrusters"
+#define ORGAN_SLOT_TONGUE "tongue"
+#define ORGAN_SLOT_VOICE "vocal_cords"
+#define ORGAN_SLOT_ZOMBIE "zombie_infection"
 
 /// Xenomorph organ slots
-#define ORGAN_SLOT_XENO_PLASMAVESSEL "plasma_vessel"
-#define ORGAN_SLOT_XENO_HIVENODE "hive_node"
-#define ORGAN_SLOT_XENO_RESINSPINNER "resin_spinner"
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
-#define ORGAN_SLOT_XENO_NEUROTOXINGLAND "neurotoxin_gland"
 #define ORGAN_SLOT_XENO_EGGSAC "eggsac"
+#define ORGAN_SLOT_XENO_HIVENODE "hive_node"
+#define ORGAN_SLOT_XENO_NEUROTOXINGLAND "neurotoxin_gland"
+#define ORGAN_SLOT_XENO_PLASMAVESSEL "plasma_vessel"
+#define ORGAN_SLOT_XENO_RESINSPINNER "resin_spinner"
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.0005
+#define STANDARD_ORGAN_HEALING 50 / 100000
 /// designed to fail organs when left to decay for ~15 minutes
-#define STANDARD_ORGAN_DECAY 0.00111
+#define STANDARD_ORGAN_DECAY 111 / 100000
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

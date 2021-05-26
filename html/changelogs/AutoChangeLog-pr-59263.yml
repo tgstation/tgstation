@@ -1,0 +1,4 @@
+author: "norill"
+delete-after: True
+changes: 
+  - bugfix: "fixed check plumbing admin verb"

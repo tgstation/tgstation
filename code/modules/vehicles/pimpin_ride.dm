@@ -6,6 +6,7 @@
 	key_type = /obj/item/key/janitor
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
+	movedelay = 1
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()

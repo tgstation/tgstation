@@ -352,7 +352,7 @@ Example config:
 		var/ct = initial(M.config_tag)
 		if(ct && ct == mode_name)
 			return new T
-	return new /datum/game_mode/extended()
+	return new /datum/game_mode/dynamic
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new

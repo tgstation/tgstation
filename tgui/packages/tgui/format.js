@@ -105,7 +105,7 @@ export const formatMoney = (value, precision = 0) => {
  */
 export const formatDb = value => {
   const db = 20 * Math.log(value) / Math.log(10);
-  const sign = db >= 0 ? '+' : db < 0 ? '–' : '';
+  const sign = db >= 0 ? '+' : '–';
   let formatted = Math.abs(db);
   if (formatted === Infinity) {
     formatted = 'Inf';

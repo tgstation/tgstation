@@ -1,12 +1,5 @@
 GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
 
-GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
-// if true, everyone item when created will have its name changed to be
-// more... RPG-like.
-
-GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
-GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
-
 /// Anything you can pick up and hold.
 /obj/item
 	name = "item"
@@ -35,6 +28,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/worn_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
+	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config_worn
+	///The config type to use for greyscaled left inhand sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config_inhand_left
+	///The config type to use for greyscaled right inhand sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config_inhand_right
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -120,6 +119,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
+	///Whether or not our object is easily hindered by the presence of armor
+	var/weak_against_armour = FALSE
 	///What objects the suit storage can store
 	var/list/allowed = null
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
@@ -193,6 +194,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
+	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
+	var/offensive_notes
+	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
+	var/override_notes = FALSE
+
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
@@ -216,6 +222,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(damtype == BRUTE)
 			hitsound = "swing_hit"
 
+	add_weapon_description()
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL //prevent reqdels
 	if(ismob(loc))
@@ -224,6 +234,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/*
+ * Adds the weapon_description element, which shows the warning label for especially dangerous objects.
+ * Made to be overridden by item subtypes that require specific notes outside of the scope of offensive_notes
+ */
+/obj/item/proc/add_weapon_description()
+	AddElement(/datum/element/weapon_description)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -237,19 +254,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/ComponentInitialize()
 	. = ..()
-	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
-	if(!LAZYLEN(embedding))
-		if(GLOB.embedpocalypse)
-			embedding = EMBED_POINTY
-			name = "pointy [name]"
-		else if(GLOB.stickpocalypse)
-			embedding = EMBED_HARMLESS
-			name = "sticky [name]"
-
-	updateEmbedding()
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
@@ -262,6 +266,27 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  */
 /obj/item/proc/suicide_act(mob/user)
 	return
+
+/obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	if(new_worn_config)
+		greyscale_config_worn = new_worn_config
+	if(new_inhand_left)
+		greyscale_config_inhand_left = new_inhand_left
+	if(new_inhand_right)
+		greyscale_config_inhand_right = new_inhand_right
+	return ..()
+
+/// Checks if this atom uses the GAGS system and if so updates the worn and inhand icons
+/obj/item/update_greyscale()
+	. = ..()
+	if(!greyscale_colors)
+		return
+	if(greyscale_config_worn)
+		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
+	if(greyscale_config_inhand_left)
+		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
+	if(greyscale_config_inhand_right)
+		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
@@ -277,8 +302,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			return
 
 	var/turf/T = loc
-	loc = null
-	loc = T
+	abstract_move(null)
+	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
@@ -342,6 +367,64 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/ui_act(action, list/params)
 	add_fingerprint(usr)
 	return ..()
+
+/obj/item/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+
+/obj/item/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
+
+		//gathering all affixes that make sense for this item
+		var/list/prefixes = list()
+		var/list/suffixes = list()
+		for(var/datum/fantasy_affix/affix_choice as anything in subtypesof(/datum/fantasy_affix))
+			affix_choice = new affix_choice()
+			if(!affix_choice.validate(src))
+				qdel(affix_choice)
+			else
+				if(affix_choice.placement & AFFIX_PREFIX)
+					prefixes[affix_choice.name] = affix_choice
+				else
+					suffixes[affix_choice.name] = affix_choice
+
+		//making it more presentable here
+		var/list/affixes = list("---PREFIXES---")
+		affixes.Add(prefixes)
+		affixes.Add("---SUFFIXES---")
+		affixes.Add(suffixes)
+
+		//admin picks, cleanup the ones we didn't do and handle chosen
+		var/picked_affix_name = input(usr, "Choose an affix to add to [src]...", "Enchant [src]") as null|anything in affixes
+		if(!affixes[picked_affix_name] || QDELETED(src))
+			return
+		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
+		affixes.Remove(affix)
+		QDEL_LIST_ASSOC(affixes) //remove the rest, we didn't use them
+		var/fantasy_quality = 0
+		if(affix.alignment & AFFIX_GOOD)
+			fantasy_quality++
+		else
+			fantasy_quality--
+
+		//name gets changed by the component so i want to store it for feedback later
+		var/before_name = name
+		//naming these vars that i'm putting into the fantasy component to make it more readable
+		var/canFail = FALSE
+		var/announce = FALSE
+		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
+		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
+			to_chat(usr, "<span class='warning'>Fantasy component not compatible with [src].</span>")
+			CRASH("fantasy component incompatible with object of type: [type]")
+
+		to_chat(usr, "<span class='notice'>[before_name] now has [picked_affix_name]!</span>")
+		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
+		message_admins("<span class='notice'>[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]</span>")
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -471,7 +554,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
@@ -487,6 +570,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return
 
 /**
+ * To be overwritten to only perform visual tasks;
+ * this is directly called instead of `equipped` on visual-only features like human dummies equipping outfits.
+ *
+ * This separation exists to prevent things like the monkey sentience helmet from
+ * polling ghosts while it's just being equipped as a visual preview for a dummy.
+ */
+/obj/item/proc/visual_equipped(mob/user, slot, initial = FALSE)
+	return
+
+/**
  * Called after an item is placed in an equipment slot.
  *
  * Note that hands count as slots.
@@ -494,10 +587,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  * Arguments:
  * * user is mob that equipped it
  * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
- * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ * * initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	visual_equipped(user, slot, initial)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -560,77 +654,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 /obj/item/proc/IsReflect(def_zone)
 	return FALSE
-
-/obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
-
-	var/is_human_victim
-	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
-	if(ishuman(M))
-		if(!affecting) //no head!
-			return
-		is_human_victim = TRUE
-
-	if(M.is_eyes_covered())
-		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='warning'>You failed to stab [M.p_their()] eyes, you need to remove [M.p_their()] eye protection first!</span>")
-		return
-
-	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
-		return
-
-	if(isbrain(M))
-		to_chat(user, "<span class='warning'>You cannot locate any organic eyes on this brain!</span>")
-		return
-
-	src.add_fingerprint(user)
-
-	playsound(loc, src.hitsound, 30, TRUE, -1)
-
-	user.do_attack_animation(M)
-
-	if(M != user)
-		M.visible_message("<span class='danger'>[user] stabs [M] in the eye with [src]!</span>", \
-							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
-	else
-		user.visible_message( \
-			"<span class='danger'>[user] stabs [user.p_them()]self in the eyes with [src]!</span>", \
-			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
-		)
-	if(is_human_victim)
-		var/mob/living/carbon/human/U = M
-		U.apply_damage(7, BRUTE, affecting)
-
-	else
-		M.take_bodypart_damage(7)
-
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
-
-	log_combat(user, M, "attacked", "[src.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
-
-	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
-		return TRUE
-	M.adjust_blurriness(3)
-	eyes.applyOrganDamage(rand(2,4))
-	if(eyes.damage >= 10)
-		M.adjust_blurriness(15)
-		if(M.stat != DEAD)
-			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.is_blind() || HAS_TRAIT(M, TRAIT_NEARSIGHT)))
-			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
-		M.become_nearsighted(EYE_DAMAGE)
-		if(prob(50))
-			if(M.stat != DEAD)
-				if(M.drop_all_held_items())
-					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
-			M.adjust_blurriness(10)
-			M.Unconscious(20)
-			M.Paralyze(40)
-		if(prob(eyes.damage - 10 + 1))
-			M.become_blind(EYE_DAMAGE)
-			to_chat(M, "<span class='danger'>You go blind!</span>")
-	return TRUE
 
 /obj/item/singularity_pull(S, current_size)
 	..()

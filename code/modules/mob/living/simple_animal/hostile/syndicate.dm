@@ -309,7 +309,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
-	is_flying_animal = TRUE
 	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
@@ -319,4 +318,5 @@
 
 /mob/living/simple_animal/hostile/viscerator/Initialize()
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)

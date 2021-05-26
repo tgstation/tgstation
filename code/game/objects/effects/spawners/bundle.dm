@@ -137,7 +137,7 @@
 /obj/effect/spawner/bundle/costume/marisawizard
 	name = "marisa wizard costume spawner"
 	items = list(
-		/obj/item/clothing/shoes/sandal/marisa,
+		/obj/item/clothing/shoes/sneakers/marisa,
 		/obj/item/clothing/head/wizard/marisa/fake,
 		/obj/item/clothing/suit/wizrobe/marisa/fake)
 
