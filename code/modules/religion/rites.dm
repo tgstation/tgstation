@@ -114,8 +114,8 @@
 	desc = "Receive a blessing from the machine gods to further your ascension"
 	ritual_length = 15 SECONDS
 	ritual_invocations = list("With hammer and faith our bodies were forged",
-	"Oh, Machine-God, We are your instruments of faith",
-	"Let your energy overload our iron-forged blows")
+						"Oh, Machine-God, We are your instruments of faith",
+						"Let your energy overload our iron-forged blows")
 	invoke_msg = "The end of flesh is near!"
 	favor_cost = 2500
 
@@ -605,4 +605,3 @@ datum/religion_rites/upgrade_blessing/invoke_effect(mob/living/user, atom/movabl
 	user.emote("laughs")
 	new /obj/item/ritual_totem(altar_turf)
 	return TRUE
-
