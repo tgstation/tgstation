@@ -90,7 +90,7 @@ const CharacterControls = (props: {
         <Button
           onClick={props.handleRotate}
           fontSize="16px"
-          icon="sync"
+          icon="undo"
         />
       </Stack.Item>
     </Stack>

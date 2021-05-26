@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				generated_preference_values[requested_preference_key] = generate_preference_values(requested_preference)
 				update_static_data(user, ui)
 		if ("rotate")
-			character_preview_view.dir = turn(character_preview_view.dir, 90)
+			character_preview_view.dir = turn(character_preview_view.dir, -90)
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
 			var/value = params["value"]
@@ -266,13 +266,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			// SAFETY: `write_preference` performs validation checks
 			write_preference(requested_preference, value)
+
+			// Preferences could theoretically perform granular updates rather than
+			// recreating the whole thing, but this would complicate the preference
+			// API while adding the potential for drift.
+			character_preview_view.update_body()
+
 			return TRUE
 
 	return TRUE
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)
-	character_preview_view.setup_body()
+	character_preview_view.update_body()
 	user.client?.register_map_obj(character_preview_view)
 
 	// Re-register if they reconnect
@@ -348,18 +354,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	QDEL_NULL(body)
 	preferences = null
 
-/atom/movable/screen/character_preview_view/proc/setup_body()
+/// Updates the currently displayed body
+/atom/movable/screen/character_preview_view/proc/update_body()
+	create_body()
+	preferences.update_preview_icon(body)
+	appearance = body.appearance
+
+/atom/movable/screen/character_preview_view/proc/create_body()
+	QDEL_NULL(body)
+
 	body = new
 
 	// Without this, it doesn't show up in the menu
 	body.appearance_flags &= ~KEEP_TOGETHER
-
-	update_body()
-
-/// Updates the currently displayed body
-/atom/movable/screen/character_preview_view/proc/update_body()
-	preferences.update_preview_icon(body)
-	appearance = body.appearance
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
