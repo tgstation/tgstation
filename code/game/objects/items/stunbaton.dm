@@ -239,7 +239,7 @@
 		L.Jitter(5)
 		L.set_confusion(max(confusion_amt * 0.2, L.get_confusion()))
 		L.stuttering = max(2, L.stuttering)
-		L.apply_damage(stamina_loss_amt * 0.2, STAMINA, BODY_ZONE_CHEST)
+		L.apply_damage(stamina_loss_amt * 2/3, STAMINA, BODY_ZONE_CHEST)
 	else
 		L.Jitter(20)
 		L.set_confusion(max(confusion_amt, L.get_confusion()))
