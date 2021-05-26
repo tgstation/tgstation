@@ -41,6 +41,13 @@
 	update_power()
 	return
 
+/obj/item/defibrillator/examine(mob/user)
+	. = ..()
+	if(cell)
+		. += "<span class='notice'>Alt-click to remove the cell.</span>"
+	else
+		. += "<span class='warning'>It has no power cell!</span>"
+
 /obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(paddles?.loc == src)
@@ -60,6 +67,8 @@
 	else
 		powered = FALSE
 	update_appearance()
+	if(istype(loc, /obj/machinery/defibrillator_mount))
+		loc.update_appearance()
 
 /obj/item/defibrillator/update_overlays()
 	. = ..()
@@ -128,7 +137,6 @@
 			cell = W
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_power()
-
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_appearance()
@@ -138,6 +146,17 @@
 			update_power()
 	else
 		return ..()
+
+/obj/item/defibrillator/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+
+	if(cell)
+		cell.update_appearance()
+		user.put_in_hands(cell)
+		cell = null
+		to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+		update_power()
 
 /obj/item/defibrillator/emag_act(mob/user)
 	if(safety)
@@ -415,8 +434,9 @@
 /obj/item/shockpaddles/attack(mob/M, mob/living/user, params)
 	if(busy)
 		return
+	defib?.update_power()
 	if(req_defib && !defib.powered)
-		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
+		user.visible_message("<span class='warning'>[defib] beeps: Not enough charge!</span>")
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 		return
 	if(!wielded)
