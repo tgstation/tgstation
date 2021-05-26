@@ -206,9 +206,13 @@
 			crushed_wall.ScrapeAway()
 		if(isobj(thing))
 			var/obj/crushed_object = thing
+			if(crushed_object == src)
+				continue
 			crushed_object.take_damage(150) //same as a hulk punch, makes sense to me
 		if(isliving(thing))
 			var/mob/living/crushed_victim = thing
+			if(crushed_victim in occupants)
+				continue
 			if(crushed_victim in landed_on)
 				to_chat(crushed_victim, "<span class='userdanger'>[src] crashes down on you from above!</span>")
 				if(crushed_victim.stat != CONSCIOUS)
@@ -374,13 +378,14 @@
 	layer = BELOW_MOB_LAYER
 	pixel_x = -32
 	pixel_y = -32
+	alpha = 0
 	///reference to mecha following
 	var/obj/vehicle/sealed/mecha/combat/mecha
 
 /obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/combat/mecha)
 	. = ..()
 	src.mecha = mecha
-	animate(src, transform = matrix().Turn(90), time = TOTAL_SKYFALL_LEAP_TIME)
+	animate(src, alpha = 255, TOTAL_SKYFALL_LEAP_TIME/2, easing = CIRCULAR_EASING|EASE_OUT)
 	RegisterSignal(mecha, COMSIG_MOVABLE_MOVED, .proc/follow)
 	QDEL_IN(src, TOTAL_SKYFALL_LEAP_TIME) //when the animations land
 

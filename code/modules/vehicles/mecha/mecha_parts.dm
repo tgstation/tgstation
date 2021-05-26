@@ -430,3 +430,4 @@
 
 /obj/item/circuitboard/mecha/savannah_ivanov/main
 	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"
+	icon_state = "mainboard"
