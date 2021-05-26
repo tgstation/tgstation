@@ -40,6 +40,7 @@
 	COOLDOWN_DECLARE(skyfall_cooldown)
 	///cooldown time between skyfall uses
 	var/skyfall_cooldown_time = 1 MINUTES
+	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
 
 	///ivanov strike ability cooldown
@@ -101,16 +102,16 @@
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 		if(2)
 			visible_message("<span class='warning'>[src] begins to shake, the sounds of electricity growing louder.</span>")
-			shake_for(SKYFALL_SINGLE_CHARGE_TIME-1, 5) // -1 gives space between the animates, so they don't interrupt eachother
+			Shake(5, 5, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 		if(3)
 			visible_message("<span class='warning'>[src] assumes a pose as it rattles violently.</span>")
-			shake_for(SKYFALL_SINGLE_CHARGE_TIME-1, 7) // -1 gives space between the animates, so they don't interrupt eachother
+			Shake(7, 7, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			spark_system.start()
 			update_icon_state()
 		if(4)
 			visible_message("<span class='warning'>[src] sparks and shutters as it finalizes preparation.</span>")
 			playsound(src, 'sound/mecha/skyfall_power_up.ogg', 50, TRUE)
-			shake_for(SKYFALL_SINGLE_CHARGE_TIME-1, 10) // -1 gives space between the animates, so they don't interrupt eachother
+			Shake(10, 10, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			spark_system.start()
 		if(SKYFALL_CHARGELEVEL_LAUNCH)
 			visible_message("<span class='danger'>[src] leaps into the air!</span>")
@@ -118,9 +119,14 @@
 	if(skyfall_charge_level != SKYFALL_CHARGELEVEL_LAUNCH)
 		INVOKE_ASYNC(src, .proc/skyfall_charge_loop, pilot)
 		return
+	COOLDOWN_START(src, skyfall_cooldown, skyfall_cooldown_time)
+	var/datum/action/vehicle/sealed/mecha/savannah_action = occupant_actions[pilot][/datum/action/vehicle/sealed/mecha/skyfall]
+	savannah_action.button_icon_state = "mech_savannah_cooldown"
+	savannah_action.UpdateButtonIcon()
+	addtimer(CALLBACK(savannah_action, /datum/action/vehicle/sealed/mecha/skyfall.proc/reset_button_icon), skyfall_cooldown_time)
 	for(var/mob/living/shaken in range(7, src))
 		shake_camera(shaken, 3, 3)
-	COOLDOWN_START(src, skyfall_cooldown, skyfall_cooldown_time)
+
 	var/turf/launch_turf = get_turf(src)
 	new /obj/effect/hotspot(launch_turf)
 	launch_turf.hotspot_expose(700, 50, 1)
@@ -134,33 +140,6 @@
 	animate(src, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(src, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
 	addtimer(CALLBACK(src, .proc/begin_landing, pilot), 2 SECONDS)
-
-/**
- * ## shake_for
- *
- * Helper to help the mecha shake during the skyfall loop without matrix bugs
- * Calls stop_shaking to fix the matrix after the duration
- * arguments:
- * * duration: how long to animate shaking
- * * amt: the amount of pixel shaking displacement in pixels away from its original position
- */
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/shake_for(duration, amt)
-	var/offset = prob(50) ? -amt : amt
-	var/old_pixel_x = pixel_x
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = -1, flags = ANIMATION_PARALLEL) //start shaking
-	addtimer(CALLBACK(src, .proc/stop_shaking, old_pixel_x), duration)
-
-/**
- * ## stop_shaking
- *
- * Second part of shake_for that sanely ends the animates
- * arguments:
- * * old_px: the pixel_x before the shaking started
- */
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/stop_shaking(old_px)
-	if(skyfall_charge_level == SKYFALL_CHARGELEVEL_LAUNCH)
-		animate(src)
-	pixel_x = old_px
 
 /**
  * ## begin_landing
@@ -238,7 +217,7 @@
 		balloon_alert(pilot, "skyfall aborted")
 	COOLDOWN_START(src, skyfall_cooldown, skyfall_charge_level * 10 SECONDS) //so aborting skyfall later in the process imposes a longer cooldown
 	skyfall_charge_level = 0
-
+	update_icon_state()
 
 /**
  * ## start_missile_targeting
