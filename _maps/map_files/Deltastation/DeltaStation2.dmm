@@ -61288,6 +61288,9 @@
 /area/medical/treatment_center)
 "kQc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/closed/wall/r_wall,
 /area/engineering/storage_shared)
 "kQd" = (
@@ -78391,6 +78394,10 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
+"pca" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "pcq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -135235,7 +135242,7 @@ kQs
 tMQ
 cDC
 nYd
-mLw
+pca
 mLw
 mLw
 mLw
