@@ -43,9 +43,9 @@
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
-	
+
 	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
-	
+
 	stored_gun = new(src)
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
 	toggle_light_action.Grant(src)
@@ -86,11 +86,10 @@
 	Field repairs can be done with a welder."}
 	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
-		for(var/A in stored_gun.modkits)
-			var/obj/item/borg/upgrade/modkit/M = A
-			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
+		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
+			. += "<span class='notice'>There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.</span>"
 
-/mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/I)
+/mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/welder)
 	..()
 	. = TRUE
 	if(mode == MINEDRONE_ATTACK)
@@ -101,25 +100,25 @@
 		to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 		return
 
-	if(I.use_tool(src, user, 0, volume=40))
+	if(welder.use_tool(src, user, 0, volume=40))
 		adjustBruteLoss(-15)
 		to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
 
-/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner))
+/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/item_used, mob/user, params)
+	if(istype(item_used, /obj/item/mining_scanner) || istype(item_used, /obj/item/t_scanner/adv_mining_scanner))
 		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 		DropOre()
 		return
-	if(I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/borg/upgrade/modkit))
-		I.melee_attack_chain(user, stored_gun, params)
+	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
+		item_used.melee_attack_chain(user, stored_gun, params)
 		return
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/death()
-	DropOre(0)
+	DropOre()
 	if(stored_gun)
-		for(var/obj/item/borg/upgrade/modkit/M in stored_gun.modkits)
-			M.uninstall(stored_gun)
+		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
+			modkit.uninstall(stored_gun)
 	deathmessage = "blows apart!"
 	..()
 
@@ -136,16 +135,14 @@
 				to_chat(user, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/O)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/object)
 	. = ..()
-	if(istype(O, /obj/projectile/kinetic))
-		var/obj/projectile/kinetic/K = O
-		if(K.kinetic_gun)
-			for(var/A in K.kinetic_gun.modkits)
-				var/obj/item/borg/upgrade/modkit/M = A
-				if(istype(M, /obj/item/borg/upgrade/modkit/minebot_passthrough))
-					return TRUE
-	if(istype(O, /obj/projectile/destabilizer))
+	if(istype(object, /obj/projectile/kinetic))
+		var/obj/projectile/kinetic/projectile = object
+		if(projectile.kinetic_gun)
+			if (locate(/obj/item/borg/upgrade/modkit/minebot_passthrough) in projectile.kinetic_gun.modkits)
+				return TRUE
+	if(istype(object, /obj/projectile/destabilizer))
 		return TRUE
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
@@ -178,10 +175,10 @@
 		SetOffenseBehavior()
 	return ..()
 
-/mob/living/simple_animal/hostile/mining_drone/OpenFire(atom/A)
-	if(CheckFriendlyFire(A))
+/mob/living/simple_animal/hostile/mining_drone/OpenFire(atom/target)
+	if(CheckFriendlyFire(target))
 		return
-	stored_gun.afterattack(A, src) //of the possible options to allow minebots to have KA mods, would you believe this is the best?
+	stored_gun.afterattack(target, src) //of the possible options to allow minebots to have KA mods, would you believe this is the best?
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	for(var/obj/item/stack/ore/O in range(1, src))
@@ -272,18 +269,19 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+/obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user, proximity)
 	. = ..()
-	if(!istype(M) || !proximity)
+	if(!istype(minebot) || !proximity)
 		return
-	upgrade_bot(M, user)
+	upgrade_bot(minebot, user)
 
-/obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
-	if(M.melee_damage_upper != initial(M.melee_damage_upper))
-		to_chat(user, "<span class='warning'>[src] already has a combat upgrade installed!</span>")
+/obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user)
+	if(minebot.melee_damage_upper != initial(minebot.melee_damage_upper))
+		to_chat(user, "<span class='warning'>[minebot] already has a combat upgrade installed!</span>")
 		return
-	M.melee_damage_lower += 7
-	M.melee_damage_upper += 7
+	minebot.melee_damage_lower += 7
+	minebot.melee_damage_upper += 7
+	to_chat(user, "<span class='notice'>You increase the close-quarter combat abilities of [minebot].")
 	qdel(src)
 
 //Health
@@ -291,12 +289,13 @@
 /obj/item/mine_bot_upgrade/health
 	name = "minebot armor upgrade"
 
-/obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
-	if(M.maxHealth != initial(M.maxHealth))
-		to_chat(user, "<span class='warning'>[src] already has reinforced armor!</span>")
+/obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user)
+	if(minebot.maxHealth != initial(minebot.maxHealth))
+		to_chat(user, "<span class='warning'>[minebot] already has reinforced armor!</span>")
 		return
-	M.maxHealth += 45
-	M.updatehealth()
+	minebot.maxHealth += 45
+	minebot.updatehealth()
+	to_chat(user, "<span class='notice'>You reinforce the armor of [minebot].")
 	qdel(src)
 
 //AI
@@ -312,15 +311,15 @@
 	var/base_speed_add = 1
 	var/base_cooldown_add = 10 //base cooldown isn't reset to normal, it's just added on, since it's not practical to disable the cooldown module
 
-/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/SM)
-	if(istype(SM, /mob/living/simple_animal/hostile/mining_drone))
-		var/mob/living/simple_animal/hostile/mining_drone/M = SM
-		M.maxHealth = initial(M.maxHealth) + base_health_add
-		M.melee_damage_lower = initial(M.melee_damage_lower) + base_damage_add
-		M.melee_damage_upper = initial(M.melee_damage_upper) + base_damage_add
-		M.move_to_delay = initial(M.move_to_delay) + base_speed_add
-		if(M.stored_gun)
-			M.stored_gun.overheat_time += base_cooldown_add
+/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/simple_mob)
+	if(!istype(simple_mob, /mob/living/simple_animal/hostile/mining_drone))
+		return
+	var/mob/living/simple_animal/hostile/mining_drone/minebot = simple_mob
+	minebot.maxHealth = initial(minebot.maxHealth) + base_health_add
+	minebot.melee_damage_lower = initial(minebot.melee_damage_lower) + base_damage_add
+	minebot.melee_damage_upper = initial(minebot.melee_damage_upper) + base_damage_add
+	minebot.move_to_delay = initial(minebot.move_to_delay) + base_speed_add
+	minebot.stored_gun?.overheat_time += base_cooldown_add
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK

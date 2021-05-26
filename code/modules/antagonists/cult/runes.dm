@@ -60,7 +60,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user))
 		if(log_when_erased)
-			var/confirm = alert(user, "Erasing this [cultist_name] rune might be against your goal to summon Nar'Sie.", "Begin to erase the [cultist_name] rune?", "Proceed", "Abort")
+			var/confirm = tgui_alert(user, "Erasing this [cultist_name] rune might be against your goal to summon Nar'Sie.", "Begin to erase the [cultist_name] rune?", list("Proceed", "Abort"))
 			if(confirm != "Proceed")
 				return
 		if(!user.is_holding_item_of_type(/obj/item/melee/cultblade/dagger) || !Adjacent(user) || user.incapacitated() || user.stat == DEAD) //Gee, good thing we made sure cultists can't input stall to grief their team and get banned anyway
@@ -781,7 +781,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	. = ..()
 	var/mob/living/user = invokers[1]
 	var/turf/T = get_turf(src)
-	var/choice = alert(user,"You tear open a connection to the spirit realm...",,"Summon a Cult Ghost","Ascend as a Dark Spirit","Cancel")
+	var/choice = tgui_alert(user,"You tear open a connection to the spirit realm...",,list("Summon a Cult Ghost","Ascend as a Dark Spirit","Cancel"))
 	if(choice == "Summon a Cult Ghost")
 		if(!is_station_level(T.z))
 			to_chat(user, "<span class='cultitalic'><b>The veil is not weak enough here to manifest spirits, you must be on station!</b></span>")

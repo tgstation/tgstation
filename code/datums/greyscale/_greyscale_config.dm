@@ -1,4 +1,7 @@
 /datum/greyscale_config
+	/// User friendly name used in the debug menu
+	var/name
+
 	/// Reference to the json config file
 	var/json_config
 
@@ -33,11 +36,13 @@
 // Sensible error messages that tell you exactly what's wrong is the best way to make this easy to use
 /datum/greyscale_config/New()
 	if(!json_config)
-		CRASH("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
+		stack_trace("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
 	string_json_config = "[json_config]"
 	if(!icon_file)
-		CRASH("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
+		stack_trace("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
 	string_icon_file = "[icon_file]"
+	if(!name)
+		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
@@ -62,7 +67,8 @@
 
 /// Gets the name used for debug purposes
 /datum/greyscale_config/proc/DebugName()
-	return "([icon_file]|[json_config])"
+	var/display_name = name || "MISSING_NAME"
+	return "[display_name] ([icon_file]|[json_config])"
 
 /// Takes the json icon state configuration and puts it into a more processed format
 /datum/greyscale_config/proc/ReadIconStateConfiguration(list/data)
@@ -115,18 +121,31 @@
 	expected_colors = length(color_groups)
 
 /// Actually create the icon and color it in, handles caching
-/datum/greyscale_config/proc/Generate(color_string, list/render_steps)
+/datum/greyscale_config/proc/Generate(color_string)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
-	if(new_icon && !render_steps)
-		var/icon/output = icon(new_icon)
-		output.Scale(width, height)
-		return output
-	var/list/colors = ParseColorString(color_string)
+	if(new_icon)
+		return icon(new_icon)
+
+	var/icon/icon_bundle = GenerateBundle(color_string)
+
+	// This block is done like this because generated icons are unable to be scaled before getting added to the rsc
+	icon_bundle = fcopy_rsc(icon_bundle)
+	icon_bundle = icon(icon_bundle)
+	icon_bundle.Scale(width, height)
+	icon_bundle = fcopy_rsc(icon_bundle)
+
+	icon_cache[key] = icon_bundle
+	var/icon/output = icon(icon_bundle)
+	return output
+
+/// Handles the actual icon manipulation to create the spritesheet
+/datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps)
+	if(!istype(colors))
+		colors = ParseColorString(colors)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
 
-	// We could do this all in one loop but it's easier to debug this way
 	var/list/generated_icons = list()
 	for(var/icon_state in icon_states)
 		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], render_steps)
@@ -135,15 +154,11 @@
 		generated_icon.GetPixel(1, 1)
 		generated_icons[icon_state] = generated_icon
 
-	var/icon/icon_bundle = new
+	var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
 	for(var/icon_state in generated_icons)
 		icon_bundle.Insert(generated_icons[icon_state], icon_state)
 
-	icon_bundle = fcopy_rsc(icon_bundle)
-	icon_cache[key] = icon_bundle
-	var/icon/output = icon(icon_bundle)
-	output.Scale(width, height)
-	return output
+	return icon_bundle
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
@@ -171,7 +186,7 @@
 	var/list/debug_steps = list()
 	output["steps"] = debug_steps
 
-	output["icon"] = Generate(colors, debug_steps)
+	output["icon"] = GenerateBundle(colors, debug_steps)
 	return output
 
 /datum/greyscale_config/proc/ParseColorString(color_string)

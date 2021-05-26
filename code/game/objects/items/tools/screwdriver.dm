@@ -25,6 +25,9 @@
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
+	greyscale_config = /datum/greyscale_config/screwdriver
+	greyscale_config_inhand_left = /datum/greyscale_config/screwdriver_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/screwdriver_inhand_right
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -46,12 +49,9 @@
 
 /obj/item/screwdriver/Initialize()
 	if(random_color)
-		set_greyscale_config(/datum/greyscale_config/screwdriver)
 		var/our_color = pick(screwdriver_colors)
-		set_greyscale_colors(list(screwdriver_colors[our_color]))
+		set_greyscale(colors=list(screwdriver_colors[our_color]))
 		inhand_icon_state = null
-		lefthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors)
-		righthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors)
 		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	. = ..()
 	AddElement(/datum/element/eyestab)

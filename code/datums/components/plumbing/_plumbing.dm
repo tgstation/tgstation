@@ -101,9 +101,14 @@
 		var/datum/component/plumbing/supplier = A
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
+	// Need to ask for each in turn very carefully, making sure we get the total volume. This is to avoid a division that would always round down and become 0
+	var/targetVolume = reagents.total_volume + amount
+	var/suppliersLeft = valid_suppliers.len
 	for(var/A in valid_suppliers)
 		var/datum/component/plumbing/give = A
-		give.transfer_to(src, amount / valid_suppliers.len, reagent, net)
+		var/currentRequest = (targetVolume - reagents.total_volume) / suppliersLeft
+		give.transfer_to(src, currentRequest, reagent, net)
+		suppliersLeft--
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
@@ -211,6 +216,7 @@
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable(obj/object, datum/component/component)
+	SIGNAL_HANDLER
 	if(active || (component && component != src))
 		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
 		return
@@ -297,6 +303,7 @@
 	AM.update_appearance()
 
 /datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
+	SIGNAL_HANDLER
 	ducting_layer = new_layer
 
 	if(ismovable(parent))

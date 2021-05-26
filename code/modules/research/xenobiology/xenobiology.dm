@@ -707,8 +707,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key
 		SM.mind.enslave_mind_to_creator(user)
-		if(!SM.tame)
-			SM.tamed(user)
+		SEND_SIGNAL(SM, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
@@ -771,7 +770,7 @@
 		return
 
 	prompted = 1
-	if(alert("This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,list("Yes","No"))=="No")
 		prompted = 0
 		return
 

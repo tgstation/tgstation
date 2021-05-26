@@ -94,6 +94,7 @@
 			recharge_newshot()
 
 /obj/item/gun/magic/proc/instant_recharge()
+	SIGNAL_HANDLER
 	charges = max_charges
 	recharge_newshot()
 	update_appearance()
