@@ -155,7 +155,7 @@
 		cell.update_appearance()
 		user.put_in_hands(cell)
 		cell = null
-		to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+		balloon_alert(user, "cell removed")
 		update_power()
 
 /obj/item/defibrillator/emag_act(mob/user)
