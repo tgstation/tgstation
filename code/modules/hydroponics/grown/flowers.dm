@@ -85,8 +85,6 @@
 	icon_state = "spacemanstrumpet"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	greyscale_config = null
-	greyscale_colors = null
 
 // Geranium
 /obj/item/seeds/poppy/geranium
