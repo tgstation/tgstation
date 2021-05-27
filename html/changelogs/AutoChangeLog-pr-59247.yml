@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "Fixed multiple piping mistakes in Delta, Meta, and Icebox."

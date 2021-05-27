@@ -34,22 +34,17 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
 	foodtypes = MEAT | GRAIN | GROSS
-	var/subjectname = ""
-	var/subjectjob = null
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
-	var/obj/item/food/meat/M = locate(/obj/item/food/meat/steak/plain/human) in contents
-	if(M)
-		subjectname = M.subjectname
-		subjectjob = M.subjectjob
-		if(subjectname)
-			name = "[subjectname] burger"
-		else if(subjectjob)
-			name = "[subjectjob] burger"
-		qdel(M)
-
+	var/obj/item/food/patty/human/human_patty = locate(/obj/item/food/patty/human) in contents
+	if(LAZYLEN(human_patty.custom_materials))
+		for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
+			if(mob_meat_material.subjectname)
+				name = "[mob_meat_material.subjectname] burger"
+			else if(mob_meat_material.subjectjob)
+				name = "[mob_meat_material.subjectjob] burger"
 
 /obj/item/food/burger/corgi
 	name = "corgi burger"
