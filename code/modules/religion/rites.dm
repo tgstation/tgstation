@@ -109,6 +109,30 @@
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
 
+/datum/religion_rites/upgrade_blessing
+	name = "Receive Blessing"
+	desc = "Receive a blessing from the machine god to further your ascension."
+	ritual_length = 15 SECONDS
+	ritual_invocations = list("With hammer and faith our bodies were forged",
+								"Oh,Machine-god,We are your instruments of faith",
+									"Let your energy overload our iron-forged blows")
+	invoke_msg = "The end of flesh is near!"
+	favor_cost = 2500
+
+/datum/religion_rites/upgrade_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	var/blessing = pick(
+					/obj/item/organ/cyberimp/arm/surgery,
+					/obj/item/organ/cyberimp/eyes/hud/diagnostic,
+					/obj/item/organ/cyberimp/eyes/hud/medical,
+					/obj/item/organ/cyberimp/mouth/breathing_tube,
+					/obj/item/organ/cyberimp/chest/thrusters,
+					/obj/item/organ/eyes/robotic/glow,
+					/obj/item/organ/cyberimp/arm/medibeam)
+
+	new blessing(altar_turf)
+	return TRUE
 
 /**** Pyre God ****/
 
