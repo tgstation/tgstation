@@ -216,5 +216,5 @@
 	start_at = 100
 	stop_at = 0
 	balloon_alert(user, "restrictions lifted")
-	addtimer(CALLBACK(src, .proc/balloon_alert, user, "automatic ejection threshold lowered"), 0.5 SECONDS)
+	addtimer(CALLBACK(src, /atom.proc/balloon_alert, user, "automatic ejection threshold lowered"), 0.5 SECONDS)
 	obj_flags |= EMAGGED
