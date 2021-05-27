@@ -14187,7 +14187,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/toy/plush/lizardplushie{
+/obj/item/toy/plush/lizard_plushie/green{
 	name = "Tends-the-Wounds"
 	},
 /obj/structure/sign/poster/contraband/lizard{
@@ -25739,7 +25739,7 @@
 "gal" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
-/obj/item/toy/plush/lizardplushie/space{
+/obj/item/toy/plush/space_lizard_plushie{
 	desc = "He stared into the void and listened. He didn't expect an answer...";
 	name = "Void-Stares-Back"
 	},
@@ -56062,7 +56062,7 @@
 /area/service/library)
 "qqK" = (
 /obj/structure/rack,
-/obj/item/toy/plush/lizardplushie{
+/obj/item/toy/plush/lizard_plushie/green{
 	name = "Given-As-Compensation"
 	},
 /turf/open/floor/plating,

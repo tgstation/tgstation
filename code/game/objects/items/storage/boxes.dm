@@ -857,7 +857,7 @@
 	/// the plushies that aren't of things trying to kill you
 	var/list/static/approved_by_corporate = list(/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
 		/obj/item/toy/plush/slimeplushie,
-		/obj/item/toy/plush/lizardplushie,
+		/obj/item/toy/plush/lizard_plushie,
 		/obj/item/toy/plush/snakeplushie,
 		/obj/item/toy/plush/plasmamanplushie,
 		/obj/item/toy/plush/beeplushie,

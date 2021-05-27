@@ -107225,7 +107225,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/item/toy/plush/lizardplushie/space{
+/obj/item/toy/plush/space_lizard_plushie{
 	name = "Meets-the-Ore"
 	},
 /turf/open/space/basic,
