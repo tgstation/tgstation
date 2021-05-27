@@ -76,7 +76,7 @@
 	if (isnull(attached_circuit))
 		examine_text += "<span class='notice'>There is a USB port on the front.</span>"
 	else
-		examine_text += "<span class='notice'>[attached_circuit.shell || attached_circuit] is connected to [parent.p_them()] to a USB port.</span>"
+		examine_text += "<span class='notice'>[attached_circuit.shell || attached_circuit] is connected to [parent.p_them()] by a USB port.</span>"
 
 /datum/component/usb_port/proc/on_examine_shell(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
