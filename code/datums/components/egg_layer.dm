@@ -62,7 +62,7 @@
 		if(potentially_dead_horse.stat == DEAD)
 			to_chat(attacker, "<span class='warning'>[parent] is dead!</span>")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
-	if(eggs_left < max_eggs_held)
+	if(eggs_left > max_eggs_held)
 		to_chat(attacker, "<span class='warning'>[parent] doesn't seem hungry!</span>")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	attacker.visible_message("<span class='notice'>[attacker] hand-feeds [food] to [parent].</span>", "<span class='notice'>You hand-feed [food] to [parent].</span>")
@@ -87,4 +87,3 @@
 	egg.pixel_x = rand(-6, 6)
 	egg.pixel_y = rand(-6, 6)
 	egg_laid_callback?.Invoke(egg)
-

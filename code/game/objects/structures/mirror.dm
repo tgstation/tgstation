@@ -89,6 +89,7 @@
 		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
+	. = ..()
 	if(broken || (flags_1 & NODECONSTRUCT_1))
 		return
 	icon_state = "mirror_broke"
