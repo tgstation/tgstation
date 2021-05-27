@@ -3,6 +3,8 @@
 #define OPERATING 2
 
 #define FRACTION_TO_RELEASE 50
+#define ALERT 90
+#define MINIMUM_HEAT 10000
 
 // Powersink - used to drain station power
 
@@ -36,9 +38,8 @@
 	. = ..()
 	if(mode)
 		. += "\The [src] is bolted to the floor."
-	if(in_range(user, src) || isobserver(user))
-		if(internal_heat > max_heat * 0.5)
-			. += "<span class='danger'>[src] is warping the air above it. It must be very hot.</span>"
+	if(in_range(user, src) || isobserver(user) && internal_heat > max_heat * 0.5)
+		. += "<span class='danger'>[src] is warping the air above it. It must be very hot.</span>"
 
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()
@@ -50,7 +51,7 @@
 	switch(value)
 		if(DISCONNECTED)
 			attached = null
-			if(mode == OPERATING && internal_heat < 1000)
+			if(mode == OPERATING && internal_heat < MINIMUM_HEAT)
 				STOP_PROCESSING(SSobj, src)
 				internal_heat = 0
 			set_anchored(FALSE)
@@ -58,7 +59,7 @@
 		if(CLAMPED_OFF)
 			if(!attached)
 				return
-			if(mode == OPERATING && internal_heat < 1000)
+			if(mode == OPERATING && internal_heat < MINIMUM_HEAT)
 				STOP_PROCESSING(SSobj, src)
 				internal_heat = 0
 			set_anchored(TRUE)
@@ -146,7 +147,7 @@
 	if(admins_warned && internal_heat < max_heat * 0.75)
 		admins_warned = FALSE
 		message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has cooled down and will not explode.")
-	if(mode != OPERATING && internal_heat < 1000)
+	if(mode != OPERATING && internal_heat < MINIMUM_HEAT)
 		internal_heat = 0
 		STOP_PROCESSING(SSobj, src)
 
@@ -182,10 +183,10 @@
 
 	drain_power()
 
-	if(internal_heat > max_heat * 0.90)
+	if(internal_heat > max_heat * ALERT / 100)
 		if (!admins_warned)
 			admins_warned = TRUE
-			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached 90% of max heat. Explosion imminent.")
+			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
 		playsound(src, 'sound/effects/screech.ogg', 100, TRUE, TRUE)
 
 	if(internal_heat >= max_heat)
@@ -197,3 +198,5 @@
 #undef CLAMPED_OFF
 #undef OPERATING
 #undef FRACTION_TO_RELEASE
+#undef ALERT
+#undef MINIMUM_HEAT
