@@ -1820,7 +1820,7 @@
 	},
 /area/awaymission/research/interior)
 "eo" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4733,9 +4733,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kQ" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
@@ -4757,7 +4755,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "kU" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "kV" = (
@@ -4910,9 +4908,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lk" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5069,9 +5065,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lA" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
@@ -5683,9 +5677,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "qo" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "qS" = (
@@ -5727,9 +5719,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "ux" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5757,9 +5747,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "wa" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "wM" = (
@@ -5795,9 +5783,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "zs" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "Bx" = (

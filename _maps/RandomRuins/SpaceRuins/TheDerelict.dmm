@@ -983,9 +983,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eD" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eE" = (
@@ -2610,7 +2608,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lg" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lh" = (
@@ -2669,9 +2667,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lp" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/airless,
@@ -3467,9 +3463,7 @@
 /turf/template_noop,
 /area/ruin/space/derelict/medical)
 "sd" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "tc" = (
@@ -3554,9 +3548,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "El" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "Ev" = (

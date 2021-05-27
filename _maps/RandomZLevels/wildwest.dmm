@@ -442,9 +442,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cj" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ck" = (
@@ -452,9 +450,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "cl" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cm" = (
@@ -1720,9 +1716,7 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "Gw" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "Kh" = (

@@ -150,9 +150,7 @@
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/survivalpod)
 "x" = (
-/obj/structure/chair/stool/bar{
-	dir = 1
-	},
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "y" = (

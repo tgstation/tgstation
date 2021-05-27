@@ -248,7 +248,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "gz" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "hA" = (

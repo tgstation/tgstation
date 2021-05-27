@@ -1787,9 +1787,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gr" = (
-/obj/structure/chair/stool/bar{
-	dir = 8
-	},
+/obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -2353,9 +2351,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "hZ" = (
@@ -3120,15 +3116,11 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/security)
 "ko" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
 "kp" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/pool)
@@ -4191,9 +4183,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/custodial)
 "mF" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4317,9 +4307,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "Jk" = (
-/obj/structure/chair/stool/bar{
-	dir = 1
-	},
+/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

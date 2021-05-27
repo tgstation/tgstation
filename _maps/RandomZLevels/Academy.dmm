@@ -82,9 +82,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ax" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ay" = (
@@ -451,9 +449,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ch" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -490,9 +486,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cp" = (
-/obj/structure/chair/stool{
-	dir = 8
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ct" = (
@@ -733,9 +727,7 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "du" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "dv" = (
@@ -1589,9 +1581,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "gO" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1653,9 +1643,7 @@
 /turf/open/floor/iron/white/side,
 /area/awaymission/academy/classrooms)
 "hb" = (
-/obj/structure/chair/stool{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/white/side,
 /area/awaymission/academy/classrooms)
 "hc" = (
@@ -2957,9 +2945,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/academy/headmaster)
 "rl" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "rA" = (
@@ -3264,9 +3250,7 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "Zc" = (
-/obj/structure/chair/stool{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 
