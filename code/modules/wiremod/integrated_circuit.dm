@@ -23,6 +23,10 @@
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = FALSE
 
+/obj/item/integrated_circuit/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
+
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/high(src)
@@ -349,5 +353,9 @@
 				value = "null"
 			balloon_alert(usr, "[port.name] value: [value]")
 			. = TRUE
+
+/obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
+	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
+	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 #undef WITHIN_RANGE
