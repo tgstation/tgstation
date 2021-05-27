@@ -71,7 +71,6 @@
 /obj/item/proc/attack_self_secondary(mob/user, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
-	interact(user)
 
 /**
  * Called on the item before it hits something
