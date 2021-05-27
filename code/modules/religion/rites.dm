@@ -122,14 +122,13 @@
 datum/religion_rites/upgrade_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
-	var/blessings = pick(/obj/item/organ/cyberimp/arm/surgery,
-						 /obj/item/organ/cyberimp/eyes/hud/diagnostic,
-						 /obj/item/organ/cyberimp/eyes/hud/medical,
-						 /obj/item/organ/cyberimp/mouth/breathing_tube,
-						 /obj/item/organ/cyberimp/chest/thrusters,
-						 /obj/item/organ/eyes/robotic/flashlight,
-						 /obj/item/organ/eyes/robotic/glow)
-
+	var/blessings = /obj/item/organ/cyberimp/arm/surgery,
+					/obj/item/organ/cyberimp/eyes/hud/diagnostic,
+					/obj/item/organ/cyberimp/eyes/hud/medical,
+					/obj/item/organ/cyberimp/mouth/breathing_tube,
+					/obj/item/organ/cyberimp/chest/thrusters,
+					/obj/item/organ/eyes/robotic/glow,
+					/obj/item/organ/cyberimp/arm/medibeam)
 	new blessings(altar_turf)
 	return TRUE
 
