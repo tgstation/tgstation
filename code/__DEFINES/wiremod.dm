@@ -94,3 +94,6 @@
 #define SHELL_CAPACITY_MEDIUM 25
 #define SHELL_CAPACITY_LARGE 50
 #define SHELL_CAPACITY_VERY_LARGE 500
+
+/// The maximum range a USB cable can be apart from a source
+#define USB_CABLE_MAX_RANGE 2

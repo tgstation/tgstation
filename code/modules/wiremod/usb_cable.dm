@@ -1,9 +1,10 @@
 /// A cable that can connect integrated circuits to anything with a USB port, such as computers and machines.
+// MOTHBLOCKS TODO: Say too far away when you move too far away
 /obj/item/usb_cable
 	name = "usb cable"
 	desc = "A cable that can connect integrated circuits to anything with a USB port, such as computers and machines."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "coil"
+	icon = 'icons/obj/wiremod.dmi'
+	icon_state = "usb_cable"
 	inhand_icon_state = "coil"
 	base_icon_state = "coil"
 	w_class = WEIGHT_CLASS_TINY
@@ -77,7 +78,7 @@
 /obj/item/usb_cable/proc/on_circuit_moved()
 	SIGNAL_HANDLER
 
-	if (!Adjacent(attached_circuit))
+	if (!IN_GIVEN_RANGE(attached_circuit, src, USB_CABLE_MAX_RANGE))
 		balloon_alert_to_viewers("detached, too far away")
 		unregister_circuit_signals(attached_circuit)
 		attached_circuit = null
@@ -86,3 +87,20 @@
 	SIGNAL_HANDLER
 
 	attached_circuit = null
+
+// MOTHBLOCKS TODO: Remove this
+/mob/proc/give_circuit_shit()
+	var/turf/T = get_turf(src)
+	new /obj/item/integrated_circuit/loaded/circuit_shit(T)
+	new /obj/item/assembly/signaler(T)
+	new /obj/item/screwdriver(T)
+	new /obj/item/multitool(T)
+	new /obj/structure/bot(T)
+	new /obj/item/usb_cable(T)
+
+// MOTHBLOCKS TODO: Remove this
+/obj/item/integrated_circuit/loaded/circuit_shit/Initialize()
+	. = ..()
+
+	var/obj/item/circuit_component/radio/radio = new
+	add_component(radio)
