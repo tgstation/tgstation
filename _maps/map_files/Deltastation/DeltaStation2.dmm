@@ -44751,7 +44751,7 @@
 /obj/item/clothing/head/chefhat,
 /obj/effect/turf_decal/bot,
 /obj/machinery/button/door/directional/south{
-	id = "kitchenwindow";
+	id = "kitchenwindows";
 	name = "Kitchen Privacy Control";
 	req_access_txt = "28"
 	},
