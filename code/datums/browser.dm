@@ -1,4 +1,5 @@
 /datum/browser
+	//This one can harddel too
 	var/mob/user
 	var/title
 	var/window_id // window_id is used as the window name for browse and onclose
@@ -16,8 +17,8 @@
 
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
-
 	user = nuser
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/user_deleted)
 	window_id = nwindow_id
 	if (ntitle)
 		title = format_text(ntitle)
@@ -27,6 +28,10 @@
 		height = nheight
 	if (nref)
 		ref = nref
+
+/datum/browser/proc/user_deleted(datum/source)
+	SIGNAL_HANDLER
+	user = null
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
