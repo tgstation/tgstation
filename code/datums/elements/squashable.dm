@@ -33,6 +33,9 @@
 /datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)
 	SIGNAL_HANDLER
 
+	if(parent == crossing_movable)
+		return
+
 	var/mob/living/parent_as_living = parent
 
 	if(squash_flags & SQUASHED_SHOULD_BE_DOWN && parent_as_living.body_position != LYING_DOWN)

@@ -19,9 +19,7 @@
 "e" = (
 /obj/structure/table,
 /obj/item/radio,
-/obj/item/radio/intercom{
-	pixel_y = 22
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
 "f" = (
@@ -50,9 +48,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "j" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -106,10 +102,7 @@
 "o" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining)
 "p" = (

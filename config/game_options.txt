@@ -569,7 +569,7 @@ MAXFINE 2000
 #DRONE_REQUIRED_ROLE Silicon
 
 ## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
-#DRONE_ROLE_PLAYTIME 40
+#DRONE_ROLE_PLAYTIME 14
 
 ## Uncomment to enable SDQL spells
 ## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.

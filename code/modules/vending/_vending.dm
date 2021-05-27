@@ -939,7 +939,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item = new R.product_path(get_turf(src))
 	if(greyscale_colors)
+<<<<<<< HEAD
 		vended_item.set_greyscale_colors(greyscale_colors)
+=======
+		vended_item.set_greyscale(colors=greyscale_colors)
+>>>>>>> upstream/master
 	R.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
@@ -1077,10 +1081,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
-	icon_state = "robotics"
-	icon_deny = "robotics-deny"
+	icon_state = "custom"
+	icon_deny = "custom-deny"
 	max_integrity = 400
 	payment_department = NO_FREEBIES
+	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
 	/// where the money is sent
 	var/datum/bank_account/private_a
@@ -1261,8 +1266,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
+	icon_state = "greed"
+	icon_deny = "greed-deny"
+	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
-	material_flags = MATERIAL_COLOR //it's grey anyway, let's bling out
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()
@@ -1274,7 +1281,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	name = "[GLOB.deity]'s Consecrated Vendor"
 	desc = "A vending machine created by [GLOB.deity]."
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
-	add_filter("vending_outline", 9, list("type" = "outline", "color" = "#FFFFFF"))
-	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35))
+	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
+	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 

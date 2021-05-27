@@ -23,7 +23,7 @@
 		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
 			if(required_reagent == containg_reagent.type)
 				has_reagent = TRUE
-				if(containg_reagent.volume < chamber.required_reagents[required_reagent])
+				if(containg_reagent.volume + CHEMICAL_QUANTISATION_LEVEL < chamber.required_reagents[required_reagent])
 					process_request(min(chamber.required_reagents[required_reagent] - containg_reagent.volume, MACHINE_REAGENT_TRANSFER) , required_reagent, dir)
 					return
 		if(!has_reagent)
@@ -52,7 +52,7 @@
 	demand_connects = EAST
 	demand_color = "green"
 
-	ducting_layer = SECOND_DUCT_LAYER
+	ducting_layer = FOURTH_DUCT_LAYER
 
 /datum/component/plumbing/alkaline_input/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)

@@ -95,16 +95,6 @@
 	spreadFire(AM)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-		if(!L)
-			return
-		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
-			return
-		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
-		return
-
 	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
 		var/slot = text2num(href_list["item"])
 		if(check_obscured_slots(TRUE) & slot)
@@ -608,6 +598,7 @@
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
  */
 /mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
+	SIGNAL_HANDLER
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
@@ -843,25 +834,25 @@
 	if(href_list[VV_HK_MAKE_MONKEY])
 		if(!check_rights(R_SPAWN))
 			return
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
 			return
 		usr.client.holder.Topic("vv_override", list("monkeyone"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MAKE_CYBORG])
 		if(!check_rights(R_SPAWN))
 			return
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
 			return
 		usr.client.holder.Topic("vv_override", list("makerobot"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MAKE_ALIEN])
 		if(!check_rights(R_SPAWN))
 			return
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
 			return
 		usr.client.holder.Topic("vv_override", list("makealien"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MAKE_SLIME])
 		if(!check_rights(R_SPAWN))
 			return
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
 			return
 		usr.client.holder.Topic("vv_override", list("makeslime"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_SET_SPECIES])

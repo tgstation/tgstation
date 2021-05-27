@@ -56,6 +56,21 @@
 ///Amount of successful hits in a row this item has had
 #define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
 
+///Cursed item controller defines
+
+//defines
+///how far a cursed item will still try to chase a target
+#define CURSED_VIEW_RANGE 7
+#define CURSED_ITEM_TELEPORT_CHANCE 4
+//blackboards
+
+///Actual mob the item is haunting at the moment
+#define BB_CURSE_TARGET "BB_haunt_target"
+///Where the item wants to land on
+#define BB_TARGET_SLOT "BB_target_slot"
+///Amount of successful hits in a row this item has had
+#define BB_CURSED_THROW_ATTEMPT_COUNT "BB_cursed_throw_attempt_count"
+
 ///Vending machine AI controller blackboard keys
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"
 #define BB_VENDING_TILT_COOLDOWN "BB_vending_tilt_cooldown"

@@ -6,9 +6,11 @@
 
 /datum/surgery_step/replace_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100, /obj/item/borg/apparatus/organ_storage = 100)
+	implements = list(
+		/obj/item/bodypart = 100,
+		/obj/item/borg/apparatus/organ_storage = 100)
 	time = 32
-	var/obj/item/bodypart/L = null // L because "limb"
+	var/obj/item/bodypart/target_limb
 
 
 /datum/surgery_step/replace_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -24,8 +26,8 @@
 	if(aug.body_zone != target_zone)
 		to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 		return -1
-	L = surgery.operated_bodypart
-	if(L)
+	target_limb = surgery.operated_bodypart
+	if(target_limb)
 		display_results(user, target, "<span class='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
 			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].</span>",
 			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)].</span>")
@@ -37,7 +39,11 @@
 
 /datum/surgery/augmentation
 	name = "Augmentation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace_limb)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/replace_limb)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
@@ -45,7 +51,7 @@
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/replace_limb/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if(L)
+	if(target_limb)
 		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 			tool.icon_state = initial(tool.icon_state)
 			tool.desc = initial(tool.desc)
