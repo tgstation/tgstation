@@ -11,9 +11,6 @@
 #define VAULT_SPEED "Leg Muscle Stimulus"
 #define VAULT_QUICK "Arm Muscle Stimulus"
 
-/// List of available station goals for the crew to be working on
-GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
-
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
 	var/animal_count

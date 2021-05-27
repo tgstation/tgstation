@@ -1,3 +1,6 @@
+/// List of available station goals for the crew to be working on
+GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
+
 /datum/station_goal
 	var/name = "Generic Goal"
 	var/weight = 1 //In case of multiple goals later.
