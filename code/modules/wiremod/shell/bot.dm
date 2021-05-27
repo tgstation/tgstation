@@ -14,5 +14,5 @@
 
 /obj/structure/bot/Initialize()
 	. = ..()
-	AddComponent(/datum/component/shell, null, SHELL_CAPACITY_LARGE)
+	AddComponent(/datum/component/shell, capacity = SHELL_CAPACITY_LARGE, shell_flags = SHELL_FLAG_USB_PORT)
 

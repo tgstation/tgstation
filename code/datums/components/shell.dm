@@ -6,7 +6,7 @@
 	var/obj/item/integrated_circuit/attached_circuit
 
 	/// Flags containing what this shell can do
-	var/shell_flags = 0
+	var/shell_flags = NONE
 
 	/// The capacity of the shell.
 	var/capacity = INFINITY
@@ -35,6 +35,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
+	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 /datum/component/shell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -43,7 +44,8 @@
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
 		COMSIG_PARENT_EXAMINE,
-		COMSIG_ATOM_ATTACK_GHOST
+		COMSIG_ATOM_ATTACK_GHOST,
+		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -66,6 +68,8 @@
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
 
+	if (shell_flags & SHELL_FLAG_USB_PORT)
+		examine_text += "<span class='notice'>There is a <b>USB port</b> on the front.</span>"
 
 /**
  * Called when the shell is wrenched.
@@ -181,3 +185,19 @@
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
 	attached_circuit = null
+
+/datum/component/shell/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
+	SIGNAL_HANDLER
+
+	var/atom/atom_parent = parent
+
+	if (!(shell_flags & SHELL_FLAG_USB_PORT))
+		atom_parent.balloon_alert(user, "this shell has no usb ports")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
+	if (isnull(attached_circuit))
+		atom_parent.balloon_alert(user, "no circuit inside")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
+	usb_cable.attached_circuit = attached_circuit
+	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
