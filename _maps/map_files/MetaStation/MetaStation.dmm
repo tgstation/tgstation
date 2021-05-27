@@ -2288,8 +2288,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aqy" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
+/obj/structure/chair/stool/directional/south{
+	pixel_y = 6
 	},
 /obj/machinery/camera/autoname{
 	dir = 4
@@ -19713,9 +19713,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "edM" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -22633,9 +22631,7 @@
 /turf/open/floor/iron,
 /area/commons/storage/art)
 "eXe" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/break_room)
@@ -23181,9 +23177,7 @@
 /turf/open/floor/wood,
 /area/commons/dorms)
 "fhc" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -45185,9 +45179,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "mOq" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -52325,9 +52317,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/iron,
@@ -56720,9 +56710,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "qCv" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "qCy" = (
@@ -59330,9 +59318,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "rtm" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -60029,9 +60015,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "rEi" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/west,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/commons/dorms)
@@ -71038,9 +71022,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "vjh" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
+/obj/structure/chair/stool/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -78189,6 +78171,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/brig)
+"xGf" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron,
+/area/commons/dorms)
 "xGp" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/red{
@@ -116580,7 +116566,7 @@ eYQ
 kXf
 oyS
 oyS
-qCv
+xGf
 rRF
 uWp
 fEM

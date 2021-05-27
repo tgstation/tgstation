@@ -261,9 +261,11 @@
 
 /obj/structure/chair/stool/directional/north
 	dir = SOUTH
+	pixel_y = 6
 
 /obj/structure/chair/stool/directional/south
 	dir = NORTH
+	pixel_y = 6
 
 /obj/structure/chair/stool/directional/east
 	dir = WEST
