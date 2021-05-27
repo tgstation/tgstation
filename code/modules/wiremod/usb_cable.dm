@@ -25,7 +25,7 @@
 	. = ..()
 
 	if (!isnull(attached_circuit))
-		. += "<span class='notice'>It is attached to [get_atom_on_turf(attached_circuit, /obj/structure)].</span>"
+		. += "<span class='notice'>It is attached to [attached_circuit.shell || attached_circuit].</span>"
 
 // Look, I'm not happy about this either, but moving an object doesn't call Moved if it's inside something else.
 // There's good reason for this, but there's no element or similar yet to track it as far as I know.
