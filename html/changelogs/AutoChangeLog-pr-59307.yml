@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "the borg disabler cooler only is in tech places if secborgs arent disabled"

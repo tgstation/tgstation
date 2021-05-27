@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "Some duplicate pipes in kilo atmospherics have been fixed."
+  - qol: "Various piping improvements in kilo atmospherics."

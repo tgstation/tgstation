@@ -73,6 +73,11 @@
 	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
+	var/flying_speed = throwingdatum?.speed || weapon.throw_speed
+
+	if(!forced && (flying_speed < EMBED_THROWSPEED_THRESHOLD && !ignore_throwspeed_threshold)) // check if it's a forced embed, and if not, if it's going fast enough to proc embedding
+		return
+
 	var/actual_chance = embed_chance
 	var/penetrative_behaviour = 1 //Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
 	if(weapon.weak_against_armour)
@@ -91,9 +96,7 @@
 				victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor, unable to embed!</span>", "<span class='notice'>[weapon] bounces off your armor, unable to embed!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 				return
 
-	var/roll_embed = prob(actual_chance)
-	var/pass = forced || ((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && roll_embed)
-	if(!pass)
+	if(!prob(actual_chance))
 		return
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || pick(victim.bodyparts)

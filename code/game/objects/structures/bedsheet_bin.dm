@@ -49,8 +49,9 @@ LINEN BINS
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
 			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), 3)
-			transfer_fingerprints_to(shreds)
-			shreds.add_fingerprint(user)
+			if(!QDELETED(shreds)) //stacks merged
+				transfer_fingerprints_to(shreds)
+				shreds.add_fingerprint(user)
 		qdel(src)
 		to_chat(user, "<span class='notice'>You tear [src] up.</span>")
 	else

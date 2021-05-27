@@ -680,3 +680,24 @@
   - bugfix: Fixes the jumpskirt in hand icon displaying an error
   vincentiusvin:
   - bugfix: Fixed multiple piping mistakes in Delta, Meta, and Icebox.
+2021-05-27:
+  BraveMole:
+  - bugfix: Jatum handles better non-assoc list
+  Mickyan:
+  - bugfix: you can knock cigarettes out of people's mouths again, hooray!
+  - balance: objects that can be knocked off now have a chance to fall whenever the
+      wearer is knocked down
+  - balance: Prescription glasses can now be knocked off. Careful where you step,
+      those things are fragile!
+  - balance: Broken prescription glasses can be repaired using cloth or a welding
+      tool
+  - balance: Increased point cost of Nearsighted quirk from -1 to -4
+  PositiveEntropy, Twaticus, AdipemDragon:
+  - imageadd: Replaces the old stool sprites with new and improved ones made by Twaticus
+      and AdipemDragon!
+  - imageadd: Ports new and improved Tau Ceti bookshelf sprites!
+  Watermelon914:
+  - bugfix: Fixed UIs like the cargo chatroom console and the genetics console not
+      opening.
+  norill:
+  - bugfix: fixed check plumbing admin verb

@@ -13,6 +13,9 @@
 	/// The rate at which gas leaks, you probably want this *very* low. From 0 to 1
 	var/leak_rate
 
+	/// Mirror of the machine var signifying whether this is live in the air subsystem
+	var/atmos_processing = FALSE
+
 /datum/component/gas_leaker/Initialize(integrity_leak_percent=0.9, leak_rate=1)
 	. = ..()
 	if(istype(parent, /obj/machinery/atmospherics/components))
@@ -26,6 +29,10 @@
 
 	src.integrity_leak_percent = integrity_leak_percent
 	src.leak_rate = leak_rate
+
+/datum/component/gas_leaker/Destroy(force, silent)
+	SSair.stop_processing_machine(src)
+	return ..()
 
 /datum/component/gas_leaker/RegisterWithParent()
 	. = ..()
@@ -49,7 +56,7 @@
 	SIGNAL_HANDLER
 	// Hello fellow atmospherics machines, I too am definitely an atmos machine like you!
 	// This component needs to tick at the same rate as the atmos system
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 
 /datum/component/gas_leaker/proc/process_obj(obj/master, list/airs=list())
 	airs += master.return_air()

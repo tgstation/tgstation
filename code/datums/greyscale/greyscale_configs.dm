@@ -203,6 +203,12 @@
 	name = "Base Worn Sombrero Style"
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
 
+
+/datum/greyscale_config/plush_lizard
+	name = "Plushie Lizard"
+	icon_file = 'icons/obj/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
 /datum/greyscale_config/flower_simple
 	name = "Flower"
 	icon_file = 'icons/obj/hydroponics/harvest.dmi'
