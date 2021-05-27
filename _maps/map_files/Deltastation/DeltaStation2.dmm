@@ -12413,6 +12413,13 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/entry)
+"bOU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "bOV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -44744,19 +44751,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
-"gmi" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/item/storage/box/donkpockets,
-/obj/item/clothing/head/chefhat,
-/obj/effect/turf_decal/bot,
-/obj/machinery/button/door/directional/south{
-	id = "kitchenwindows";
-	name = "Kitchen Privacy Control";
-	req_access_txt = "28"
-	},
-/turf/open/floor/iron,
-/area/service/kitchen)
 "gmN" = (
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
@@ -52957,6 +52951,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"izU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "izY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden,
@@ -61286,10 +61284,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"kQc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/r_wall,
-/area/engineering/storage_shared)
 "kQd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -106610,6 +106604,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/research)
+"wzd" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/clothing/head/chefhat,
+/obj/effect/turf_decal/bot,
+/obj/machinery/button/door/directional/south{
+	id = "kitchenwindows";
+	name = "Kitchen Privacy Control";
+	req_access_txt = "28"
+	},
+/turf/open/floor/iron,
+/area/service/kitchen)
 "wzi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -135235,7 +135242,7 @@ kQs
 tMQ
 cDC
 nYd
-mLw
+izU
 mLw
 mLw
 mLw
@@ -135492,7 +135499,7 @@ nCC
 exw
 kdz
 ldU
-kQc
+bOU
 bCl
 njj
 fFv
@@ -148848,7 +148855,7 @@ qRY
 kEi
 eQB
 jTU
-gmi
+wzd
 kEi
 wxO
 rAe

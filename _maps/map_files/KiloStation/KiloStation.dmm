@@ -2870,6 +2870,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
+"aiY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/closed/wall,
+/area/science/storage)
 "aiZ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -46138,6 +46142,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"faC" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/science/storage)
 "faV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -67446,10 +67454,6 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
-"ovn" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall/rust,
-/area/science/storage)
 "ovp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -72182,6 +72186,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"qyL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/closed/wall/rust,
+/area/science/storage)
 "qyZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/newscaster/security_unit/directional/east,
@@ -78315,10 +78323,6 @@
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"trO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/science/storage)
 "tsd" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "custodialwagon";
@@ -131036,7 +131040,7 @@ aUO
 aOw
 bbW
 chg
-bba
+aiY
 fyH
 beq
 jZo
@@ -131293,8 +131297,8 @@ aXJ
 aOD
 bcd
 kAC
-ovn
-trO
+qyL
+faC
 eUP
 bba
 bbc
