@@ -49,6 +49,8 @@
 	var/strike_cooldown_time = 40 SECONDS
 	///toggled by ivanov strike, TRUE when signals are hooked to intercept clicks.
 	var/aiming_ivanov = FALSE
+	///how many rockets can we send with ivanov strike
+	var/rockets_left = 0
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/get_mecha_occupancy_state()
 	var/driver_present = driver_amount() != 0
@@ -231,6 +233,7 @@
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/start_missile_targeting(mob/gunner)
 	balloon_alert(gunner, "missile mode on (click to target)")
 	aiming_ivanov = TRUE
+	rockets_left = 3
 	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
 	RegisterSignal(src, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
 	gunner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
@@ -249,6 +252,7 @@
  */
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/end_missile_targeting(mob/gunner)
 	aiming_ivanov = FALSE
+	rockets_left = 0
 	UnregisterSignal(src, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
 	gunner.client.mouse_override_icon = null
 	gunner.update_mouse_pointer()
@@ -278,14 +282,16 @@
  * * target_turf: turf of the atom that was clicked on
  */
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/drop_missile(mob/gunner, turf/target_turf)
-	end_missile_targeting(gunner)
+	rockets_left -= 1
+	if(rockets_left <= 0)
+		end_missile_targeting(gunner)
 	SEND_SOUND(gunner, 'sound/machines/triple_beep.ogg')
 	COOLDOWN_START(src, strike_cooldown, strike_cooldown_time)
 	podspawn(list(
 		"target" = target_turf,
 		"style" = STYLE_MISSILE,
 		"effectMissile" = TRUE,
-		"explosionSize" = list(0,0,3,3)
+		"explosionSize" = list(0,0,1,2)
 	))
 	var/datum/action/vehicle/sealed/mecha/strike_action = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/ivanov_strike]
 	strike_action.button_icon_state = "mech_ivanov_cooldown"
