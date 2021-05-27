@@ -36,6 +36,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
+	///Whether the product can be recolored by the GAGS system
+	var/colorable
 
 /**
  * # vending machines
@@ -323,6 +325,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
 		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
+		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors))
 		recordlist += R
 
 /**
@@ -791,7 +794,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 			.["user"]["department"] = "No Department"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
-		.["stock"][R.name] = R.amount
+		var/list/product_data = list(
+			name = R.name,
+			amount = R.amount,
+			colorable = R.colorable,
+		)
+		.["stock"][R.name] = product_data
 	.["extended_inventory"] = extended_inventory
 
 /obj/machinery/vending/ui_act(action, params)
@@ -800,96 +808,145 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	switch(action)
 		if("vend")
-			. = TRUE
-			if(!vend_ready)
-				return
-			if(panel_open)
-				to_chat(usr, "<span class='warning'>The vending machine cannot dispense products while its service panel is open!</span>")
-				return
-			vend_ready = FALSE //One thing at a time!!
-			var/datum/data/vending_product/R = locate(params["ref"])
-			var/list/record_to_check = product_records + coin_records
-			if(extended_inventory)
-				record_to_check = product_records + coin_records + hidden_records
-			if(!R || !istype(R) || !R.product_path)
-				vend_ready = TRUE
-				return
-			var/price_to_use = default_price
-			if(R.custom_price)
-				price_to_use = R.custom_price
-			if(R in hidden_records)
-				if(!extended_inventory)
-					vend_ready = TRUE
-					return
-			else if (!(R in record_to_check))
-				vend_ready = TRUE
-				message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
-				return
-			if (R.amount <= 0)
-				say("Sold out of [R.name].")
-				flick(icon_deny,src)
-				vend_ready = TRUE
-				return
-			if(onstation)
-				var/obj/item/card/id/C
-				if(isliving(usr))
-					var/mob/living/L = usr
-					C = L.get_idcard(TRUE)
-				if(!C)
-					say("No card found.")
-					flick(icon_deny,src)
-					vend_ready = TRUE
-					return
-				else if (!C.registered_account)
-					say("No account found.")
-					flick(icon_deny,src)
-					vend_ready = TRUE
-					return
-				else if(!C.registered_account.account_job)
-					say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
-					flick(icon_deny, src)
-					vend_ready = TRUE
-					return
-				else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
-					say("You are not of legal age to purchase [R.name].")
-					if(!(usr in GLOB.narcd_underages))
-						Radio.set_frequency(FREQ_SECURITY)
-						Radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
-						GLOB.narcd_underages += usr
-					flick(icon_deny,src)
-					vend_ready = TRUE
-					return
-				var/datum/bank_account/account = C.registered_account
-				if(account.account_job && account.account_job.paycheck_department == payment_department)
-					price_to_use = max(round(price_to_use * VENDING_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
-				if(coin_records.Find(R) || hidden_records.Find(R))
-					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
-				if(price_to_use && !account.adjust_money(-price_to_use))
-					say("You do not possess the funds to purchase [R.name].")
-					flick(icon_deny,src)
-					vend_ready = TRUE
-					return
-				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-				if(D)
-					D.adjust_money(price_to_use)
-					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
-			if(last_shopper != usr || purchase_message_cooldown < world.time)
-				say("Thank you for shopping with [src]!")
-				purchase_message_cooldown = world.time + 5 SECONDS
-				last_shopper = usr
-			use_power(5)
-			if(icon_vend) //Show the vending animation if needed
-				flick(icon_vend,src)
-			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-			var/obj/item/vended_item = new R.product_path(get_turf(src))
-			R.amount--
-			if(usr.CanReach(src) && usr.put_in_hands(vended_item))
-				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
-			else
-				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
-			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
+			. = vend(params)
+		if("select_colors")
+			. = select_colors(params)
+
+/obj/machinery/vending/proc/can_vend(user, silent=FALSE)
+	. = FALSE
+	if(!vend_ready)
+		return
+	if(panel_open)
+		to_chat(user, "<span class='warning'>The vending machine cannot dispense products while its service panel is open!</span>")
+		return
+	return TRUE
+
+/obj/machinery/vending/proc/select_colors(list/params)
+	. = TRUE
+	if(!can_vend(usr))
+		return
+	var/datum/data/vending_product/product = locate(params["ref"])
+	var/atom/fake_atom = product.product_path
+
+	var/list/allowed_configs = list()
+	var/config = initial(fake_atom.greyscale_config)
+	if(!config)
+		return
+	allowed_configs += "[config]"
+	if(ispath(fake_atom, /obj/item))
+		var/obj/item/item = fake_atom
+		if(initial(item.greyscale_config_worn))
+			allowed_configs += "[initial(item.greyscale_config_worn)]"
+		if(initial(item.greyscale_config_inhand_left))
+			allowed_configs += "[initial(item.greyscale_config_inhand_left)]"
+		if(initial(item.greyscale_config_inhand_right))
+			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
+
+	var/datum/greyscale_modify_menu/menu = new(
+		src, usr, allowed_configs, CALLBACK(src, .proc/vend_greyscale, params),
+		starting_icon_state=initial(fake_atom.icon_state),
+		starting_config=initial(fake_atom.greyscale_config),
+		starting_colors=initial(fake_atom.greyscale_colors)
+	)
+	menu.ui_interact(usr)
+
+/obj/machinery/vending/proc/vend_greyscale(list/params, datum/greyscale_modify_menu/menu)
+	if(usr != menu.user)
+		return
+	if(!menu.target.can_interact(usr))
+		return
+	vend(params, menu.split_colors)
+
+/obj/machinery/vending/proc/vend(list/params, list/greyscale_colors)
+	. = TRUE
+	if(!can_vend(usr))
+		return
+	vend_ready = FALSE //One thing at a time!!
+	var/datum/data/vending_product/R = locate(params["ref"])
+	var/list/record_to_check = product_records + coin_records
+	if(extended_inventory)
+		record_to_check = product_records + coin_records + hidden_records
+	if(!R || !istype(R) || !R.product_path)
+		vend_ready = TRUE
+		return
+	var/price_to_use = default_price
+	if(R.custom_price)
+		price_to_use = R.custom_price
+	if(R in hidden_records)
+		if(!extended_inventory)
 			vend_ready = TRUE
+			return
+	else if (!(R in record_to_check))
+		vend_ready = TRUE
+		message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
+		return
+	if (R.amount <= 0)
+		say("Sold out of [R.name].")
+		flick(icon_deny,src)
+		vend_ready = TRUE
+		return
+	if(onstation)
+		var/obj/item/card/id/C
+		if(isliving(usr))
+			var/mob/living/L = usr
+			C = L.get_idcard(TRUE)
+		if(!C)
+			say("No card found.")
+			flick(icon_deny,src)
+			vend_ready = TRUE
+			return
+		else if (!C.registered_account)
+			say("No account found.")
+			flick(icon_deny,src)
+			vend_ready = TRUE
+			return
+		else if(!C.registered_account.account_job)
+			say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
+			flick(icon_deny, src)
+			vend_ready = TRUE
+			return
+		else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
+			say("You are not of legal age to purchase [R.name].")
+			if(!(usr in GLOB.narcd_underages))
+				Radio.set_frequency(FREQ_SECURITY)
+				Radio.talk_into(src, "SECURITY ALERT: Underaged crewmember [usr] recorded attempting to purchase [R.name] in [get_area(src)]. Please watch for substance abuse.", FREQ_SECURITY)
+				GLOB.narcd_underages += usr
+			flick(icon_deny,src)
+			vend_ready = TRUE
+			return
+		var/datum/bank_account/account = C.registered_account
+		if(account.account_job && account.account_job.paycheck_department == payment_department)
+			price_to_use = max(round(price_to_use * VENDING_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
+		if(coin_records.Find(R) || hidden_records.Find(R))
+			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
+		if(price_to_use && !account.adjust_money(-price_to_use))
+			say("You do not possess the funds to purchase [R.name].")
+			flick(icon_deny,src)
+			vend_ready = TRUE
+			return
+		var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+		if(D)
+			D.adjust_money(price_to_use)
+			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+			log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
+	if(last_shopper != usr || purchase_message_cooldown < world.time)
+		say("Thank you for shopping with [src]!")
+		purchase_message_cooldown = world.time + 5 SECONDS
+		last_shopper = usr
+	use_power(5)
+	if(icon_vend) //Show the vending animation if needed
+		flick(icon_vend,src)
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+	var/obj/item/vended_item = new R.product_path(get_turf(src))
+	if(greyscale_colors)
+		vended_item.set_greyscale(colors=greyscale_colors)
+	R.amount--
+	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
+		to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
+	else
+		to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
+	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
+	vend_ready = TRUE
 
 /obj/machinery/vending/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -1020,10 +1077,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
-	icon_state = "robotics"
-	icon_deny = "robotics-deny"
+	icon_state = "custom"
+	icon_deny = "custom-deny"
 	max_integrity = 400
 	payment_department = NO_FREEBIES
+	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
 	/// where the money is sent
 	var/datum/bank_account/private_a
@@ -1204,8 +1262,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
+	icon_state = "greed"
+	icon_deny = "greed-deny"
+	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
-	material_flags = MATERIAL_COLOR //it's grey anyway, let's bling out
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()
@@ -1217,7 +1277,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	name = "[GLOB.deity]'s Consecrated Vendor"
 	desc = "A vending machine created by [GLOB.deity]."
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
-	add_filter("vending_outline", 9, list("type" = "outline", "color" = "#FFFFFF"))
-	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35))
+	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
+	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 

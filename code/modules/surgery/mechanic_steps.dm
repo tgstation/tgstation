@@ -13,7 +13,7 @@
 			"<span class='notice'>[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].</span>")
 
-/datum/surgery_step/mechanic_incise/tool_check(mob/user, obj/item/tool)
+/datum/surgery_step/mechanic_open/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
 		return FALSE
 
@@ -82,7 +82,7 @@
 //open hatch
 /datum/surgery_step/open_hatch
 	name = "open the hatch"
-	accept_hand = 1
+	accept_hand = TRUE
 	time = 10
 
 /datum/surgery_step/open_hatch/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

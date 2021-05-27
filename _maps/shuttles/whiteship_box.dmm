@@ -43,9 +43,7 @@
 "ai" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 1
-	},
+/obj/machinery/light/small/built/directional/north,
 /obj/structure/bed,
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
@@ -69,9 +67,7 @@
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ak" = (
@@ -224,9 +220,7 @@
 /area/shuttle/abandoned/crew)
 "ay" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
@@ -302,12 +296,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/small/built{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/light/small/built/directional/north,
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -409,13 +399,8 @@
 /area/shuttle/abandoned/medbay)
 "aJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/light/small/built/directional/east,
+/obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -555,9 +540,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/donkpockets,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -603,7 +586,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/light/small/built,
+/obj/machinery/light/small/built/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aW" = (
@@ -719,9 +702,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bh" = (
-/obj/machinery/light/small/built{
-	dir = 1
-	},
+/obj/machinery/light/small/built/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bi" = (
@@ -766,10 +747,7 @@
 /area/shuttle/abandoned/engine)
 "bo" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -783,9 +761,7 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
-/obj/machinery/light/small/built{
-	dir = 1
-	},
+/obj/machinery/light/small/built/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -892,9 +868,7 @@
 /area/shuttle/abandoned/medbay)
 "bA" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /obj/structure/closet/secure_closet/medical2{
 	anchored = 1
 	},
@@ -910,12 +884,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/sleeper,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/light/small/built/directional/west,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "bC" = (
@@ -949,9 +919,7 @@
 /area/shuttle/abandoned/medbay)
 "bF" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /turf/open/floor/iron/white/side{
@@ -976,9 +944,7 @@
 /area/shuttle/abandoned/medbay)
 "bH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -991,11 +957,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/crowbar,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Hospital Ship Medbay APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
@@ -1033,6 +995,7 @@
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bN" = (
@@ -1098,7 +1061,6 @@
 /area/shuttle/abandoned/medbay)
 "bT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
@@ -1202,16 +1164,11 @@
 "ce" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /obj/structure/closet/secure_closet/medical3{
 	anchored = 1
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -1226,9 +1183,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "cg" = (
@@ -1250,11 +1205,7 @@
 /area/shuttle/abandoned/medbay)
 "ci" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1;
-	name = "Connector Port (Air Supply)"
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "cj" = (
@@ -1262,9 +1213,7 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer{
 	dir = 1
 	},
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 6
 	},
@@ -1273,19 +1222,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/emcloset/anchored,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
 "cl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1299,27 +1243,20 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/obj/machinery/button/door{
-	id = "whiteship_windows";
-	name = "Windows Blast Door Control";
-	pixel_x = -5;
-	pixel_y = -24
-	},
-/obj/machinery/button/door{
-	id = "whiteship_bridge";
-	name = "Bridge Blast Door Control";
-	pixel_x = 5;
-	pixel_y = -24
-	},
+/obj/machinery/light/small/built/directional/west,
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/button/door/directional/south{
+	id = "whiteship_windows";
+	name = "Windows Blast Door Control";
+	pixel_x = -6
+	},
+/obj/machinery/button/door/directional/south{
+	id = "whiteship_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_x = 6
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
@@ -1350,7 +1287,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bridge)
 "cp" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cq" = (
@@ -1370,9 +1307,7 @@
 /area/shuttle/abandoned/engine)
 "cs" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1397,6 +1332,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cw" = (
@@ -1500,9 +1436,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/machinery/light/small/built{
-	dir = 1
-	},
+/obj/machinery/light/small/built/directional/north,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white/side{
 	dir = 1
@@ -1553,9 +1487,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cJ" = (
@@ -1566,7 +1498,7 @@
 	},
 /obj/item/soap,
 /obj/structure/curtain,
-/obj/machinery/light/small/built,
+/obj/machinery/light/small/built/directional/south,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cK" = (
@@ -1612,11 +1544,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Hospital Ship Engineering APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -1718,9 +1646,7 @@
 "cX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /obj/structure/table,
 /obj/machinery/door/window/westleft{
 	name = "Medical Equipment Storage"
@@ -1842,11 +1768,8 @@
 "dh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/small,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -1889,11 +1812,8 @@
 "dl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/machinery/light/small,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/firealarm/directional/south,
 /obj/item/folder/white{
 	pixel_x = -5;
 	pixel_y = 5
@@ -1916,9 +1836,7 @@
 /area/shuttle/abandoned/medbay)
 "dn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -1965,9 +1883,7 @@
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "dt" = (
@@ -1983,18 +1899,12 @@
 /obj/item/storage/box/zipties,
 /obj/item/assembly/flash/handheld,
 /obj/item/melee/classic_baton/telescopic,
-/obj/machinery/light/small/built{
-	dir = 8
-	},
+/obj/machinery/light/small/built/directional/west,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Hospital Ship Bridge APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -2007,17 +1917,39 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
+"kG" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
+/turf/template_noop,
+/area/shuttle/abandoned/engine)
 "vk" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
+"AX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
+"Hf" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/medbay)
 "JU" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Pp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "Tw" = (
 /obj/structure/shuttle/engine/propulsion/left{
@@ -2187,7 +2119,7 @@ ar
 at
 bm
 at
-aa
+kG
 at
 bm
 at
@@ -2206,7 +2138,7 @@ as
 aT
 bn
 at
-aa
+kG
 at
 cr
 cy
@@ -2225,7 +2157,7 @@ at
 aU
 bo
 at
-aa
+kG
 at
 cs
 cz
@@ -2244,7 +2176,7 @@ at
 bl
 aV
 at
-aa
+kG
 at
 bp
 bl
@@ -2263,7 +2195,7 @@ aF
 aW
 bq
 at
-ah
+Hf
 at
 cu
 cB
@@ -2283,8 +2215,8 @@ aX
 at
 at
 bM
-at
-at
+Pp
+Pp
 cC
 aG
 at
@@ -2322,7 +2254,7 @@ al
 bA
 bO
 ce
-al
+AX
 cE
 cO
 cZ
@@ -2341,7 +2273,7 @@ al
 al
 bP
 al
-al
+AX
 cF
 cP
 da
@@ -2360,7 +2292,7 @@ al
 bB
 bQ
 cf
-al
+AX
 cG
 cQ
 db
@@ -2379,7 +2311,7 @@ bs
 bC
 bR
 cg
-al
+AX
 cH
 cR
 dc
@@ -2398,7 +2330,7 @@ bt
 bD
 bS
 ch
-al
+AX
 al
 cS
 dd
@@ -2417,7 +2349,7 @@ bu
 bE
 bT
 ci
-al
+AX
 cI
 cT
 de
@@ -2436,7 +2368,7 @@ bI
 bF
 bU
 cj
-al
+AX
 cJ
 al
 df

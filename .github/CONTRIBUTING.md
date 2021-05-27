@@ -463,7 +463,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
@@ -568,9 +568,13 @@ Bad:
 Good:
 ```dm
 /obj/machine/update_overlays(var/blah)
-	var/static/on_overlay = iconstate2appearance(icon, "on")
-	var/static/off_overlay = iconstate2appearance(icon, "off")
-	var/static/broken_overlay = icon2appearance(broken_icon)
+	var/static/on_overlay
+	var/static/off_overlay
+	var/static/broken_overlay
+	if(isnull(on_overlay)) //static vars initialize with global variables, meaning src is null and this won't pass integration tests unless you check.
+		on_overlay = iconstate2appearance(icon, "on")
+		off_overlay = iconstate2appearance(icon, "off")
+		broken_overlay = icon2appearance(broken_icon)
 	if (stat & broken)
 		add_overlay(broken_overlay) 
 		return
@@ -591,7 +595,9 @@ Associated lists that could instead be variables or statically defined number in
 Bad:
 ```dm
 /obj/machine/update_overlays(var/blah)
-	var/static/our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
+	var/static/our_overlays
+	if(isnull(our_overlays)
+		our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
 	if (stat & broken)
 		add_overlay(our_overlays["broken"]) 
 		return
@@ -603,8 +609,10 @@ Good:
 #define OUR_ON_OVERLAY 1
 #define OUR_OFF_OVERLAY 2
 #define OUR_BROKEN_OVERLAY 3
-/obj/machine/update_overlays(var/blah)
-	var/static/our_overlays = list(iconstate2appearance(overlay_icon, "on"), iconstate2appearance(overlay_icon, "off"), iconstate2appearance(overlay_icon, "broken"))
+/obj/machine/update_overlays(var/blah
+	var/static/our_overlays
+	if(isnull(our_overlays)
+		our_overlays = list(iconstate2appearance(overlay_icon, "on"), iconstate2appearance(overlay_icon, "off"), iconstate2appearance(overlay_icon, "broken"))
 	if (stat & broken)
 		add_overlay(our_overlays[OUR_BROKEN_OVERLAY])
 		return
@@ -619,9 +627,13 @@ Storing these in a flat (non-associated) list saves on memory, and using defines
 Also good:
 ```dm
 /obj/machine/update_overlays(var/blah)
-	var/static/on_overlay = iconstate2appearance(overlay_icon, "on")
-	var/static/off_overlay = iconstate2appearance(overlay_icon, "off")
-	var/static/broken_overlay = iconstate2appearance(overlay_icon, "broken")
+	var/static/on_overlay
+	var/static/off_overlay
+	var/static/broken_overlay
+	if(isnull(on_overlay))
+		on_overlay = iconstate2appearance(overlay_icon, "on")
+		off_overlay = iconstate2appearance(overlay_icon, "off")
+		broken_overlay = iconstate2appearance(overlay_icon, "broken")
 	if (stat & broken)
 		add_overlay(broken_overlay)
 		return

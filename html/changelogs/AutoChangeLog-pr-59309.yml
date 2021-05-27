@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - balance: "Powersinks now generate heat when absorbing energy, and are a lot easier to counter with the SM than before."

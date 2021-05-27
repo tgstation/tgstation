@@ -410,6 +410,7 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
+	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
 	explosion(src, devastation_range = (dist), heavy_impact_range = (dist*2), light_impact_range = (dist*4))
 	qdel(src)
 	return gain

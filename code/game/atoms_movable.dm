@@ -2,6 +2,9 @@
 	layer = OBJ_LAYER
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
+
+	///how many times a this movable was moved since Moved() was last called
+	var/move_stacks = 0
 	var/last_move = null
 	var/last_move_time = 0
 	var/anchored = FALSE
@@ -359,18 +362,9 @@
  * most of the time you want forceMove()
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
-	var/atom/old_loc = update_loc(new_loc)
-	Moved(old_loc)
-
-/**
- * meant to be used for all location changes. any instances of setting loc directly (for movables) should instead use this
- * do NOT use this directly, use either Move() or abstract_move() or forceMove()
- */
-/atom/movable/proc/update_loc(atom/new_loc)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	var/old_loc = loc
+	var/atom/old_loc = loc
 	loc = new_loc
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, old_loc)
+	Moved(old_loc)
 
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
@@ -400,8 +394,9 @@
 	var/atom/oldloc = loc
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
+	move_stacks++
 
-	update_loc(newloc)
+	loc = newloc
 
 	. = TRUE
 	oldloc.Exited(src, newloc)
@@ -411,6 +406,8 @@
 	newloc.Entered(src, oldloc)
 	if(oldarea != newarea)
 		newarea.Entered(src, oldloc)
+
+	Moved(oldloc, direct)
 
 ////////////////////////////////////////
 
@@ -487,8 +484,6 @@
 		last_move = 0
 		return
 
-	if(.)
-		Moved(oldloc, direct)
 	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
 		if(pulling.anchored)
 			stop_pulling()
@@ -517,12 +512,18 @@
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
+
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
+
+	move_stacks--
+	if(move_stacks > 0)
+		return
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 
 	return TRUE
 
@@ -634,16 +635,18 @@
 
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
+	move_stacks++
+	var/atom/oldloc = loc
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
-		var/atom/oldloc = loc
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		update_loc(destination)
 		moving_diagonally = 0
+
+		loc = destination
 
 		if(!same_loc)
 			if(oldloc)
@@ -660,19 +663,19 @@
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
 
-		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
-		var/atom/oldloc = loc
-		if (loc)
+		loc = null
+		if (oldloc)
 			var/area/old_area = get_area(oldloc)
 			oldloc.Exited(src, null)
 			if(old_area)
 				old_area.Exited(src, null)
-		update_loc(null)
+
+	Moved(oldloc, NONE, TRUE)
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
@@ -1124,7 +1127,7 @@
 		return
 
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
-		if(alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", "Allow", "Cancel") == "Cancel")
+		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) == "Cancel")
 			return
 
 		// Alert is async, so quick sanity check to make sure we should still be doing this.

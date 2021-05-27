@@ -914,6 +914,7 @@
 		return "Unknown"
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
+	SIGNAL_HANDLER
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
 	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
 	unload(0)
