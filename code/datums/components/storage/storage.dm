@@ -14,6 +14,7 @@
 
 	var/can_hold_description
 
+	//Harddel source, I think hide_from() might be being used improperly
 	var/list/mob/is_using //lazy list of mobs looking at the contents of this storage.
 
 	var/locked = FALSE //when locked nothing can see inside or use it.
@@ -399,7 +400,12 @@
 	M.client.screen |= real_location.contents
 	M.set_active_storage(src)
 	LAZYOR(is_using, M)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/mob_deleted)
 	return TRUE
+
+/datum/component/storage/proc/mob_deleted(datum/source)
+	SIGNAL_HANDLER
+	hide_from(source)
 
 /datum/component/storage/proc/hide_from(mob/M)
 	if(!M.client)
@@ -411,6 +417,7 @@
 	if(M.active_storage == src)
 		M.set_active_storage(null)
 	LAZYREMOVE(is_using, M)
+	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 	return TRUE
 
 /datum/component/storage/proc/close(mob/M)
@@ -489,6 +496,7 @@
 			cansee |= M
 		else
 			LAZYREMOVE(is_using, M)
+			UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 	return cansee
 
 //Tries to dump content
