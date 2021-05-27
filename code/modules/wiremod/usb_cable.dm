@@ -121,12 +121,3 @@
 
 	attached_circuit = null
 	STOP_PROCESSING(SSobj, src)
-
-// MOTHBLOCKS TODO: Remove this
-/mob/proc/give_circuit_shit()
-	var/turf/T = get_turf(src)
-	new /obj/item/integrated_circuit/loaded(T)
-	new /obj/item/screwdriver(T)
-	new /obj/item/multitool(T)
-	new /obj/structure/bot(T)
-	new /obj/item/usb_cable(T)
