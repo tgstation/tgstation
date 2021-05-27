@@ -133,6 +133,10 @@
 	travelling_output = add_output_port("Travelling", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/tram_controls/Destroy()
+	new_destination = null
+	trigger_move = null
+	location = null
+	travelling_output = null
 	computer = null
 	return ..()
 

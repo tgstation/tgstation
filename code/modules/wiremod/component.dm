@@ -69,8 +69,10 @@
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
-		parent.remove_component(src)
+		// Prevents a Destroy() recursion
+		var/obj/item/integrated_circuit/old_parent = parent
 		parent = null
+		old_parent.remove_component(src)
 
 	trigger_input = null
 	trigger_output = null
