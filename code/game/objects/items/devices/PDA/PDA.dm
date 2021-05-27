@@ -405,8 +405,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 							dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
 						dat += "</li></ul>"
 			if(21)
-				if(icon_alert)
+				if(icon_alert && !istext(icon_alert))
 					cut_overlay(icon_alert)
+					icon_alert = initial(icon_alert)
 
 				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Clear'>[PDAIMG(blank)]Clear Messages</a>"
@@ -845,7 +846,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
 	update_appearance()
-	add_overlay(icon_alert)
+	if(istext(icon_alert))
+		icon_alert = mutable_appearance(initial(icon), icon_alert)
+		add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
 	if (last_everyone && world.time < last_everyone + PDA_SPAM_DELAY)
@@ -1070,6 +1073,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
+	// Check to see if we have an ID inside, and a valid input for money
+	else if(id && iscash(C))
+		id.attackby(C, user) // If we do, try and put that attacking object in
 	else
 		return ..()
 
@@ -1256,6 +1262,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		. += P
 
 /obj/item/pda/proc/pda_no_detonate()
+	SIGNAL_HANDLER
 	return COMPONENT_PDA_NO_DETONATE
 
 #undef PDA_SCANNER_NONE

@@ -1,13 +1,14 @@
 /datum/surgery/advanced/bioware/vein_threading
 	name = "Vein Threading"
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/thread_veins,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/thread_veins,
+		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_CIRCULATION
 

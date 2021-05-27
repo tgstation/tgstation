@@ -83,6 +83,7 @@
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		density = FALSE
 		broken = TRUE
@@ -576,6 +577,7 @@
 		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
 
 /obj/structure/displaycase/forsale/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)

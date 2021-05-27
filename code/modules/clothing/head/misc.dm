@@ -57,7 +57,7 @@
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
 		magician.visible_message("<span class='notice'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!</span>", "<span class='notice'>You tap [src] with your [hitby_wand.name] and pull out a cute bunny!</span>")
-		var/mob/living/simple_animal/chicken/rabbit/empty/bunbun = new(get_turf(magician))
+		var/mob/living/simple_animal/rabbit/empty/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 
 #undef RABBIT_CD_TIME
@@ -447,6 +447,7 @@
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/clothing/head/frenchberet/proc/handle_speech(datum/source, mob/speech_args)
+	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = " [message]"
