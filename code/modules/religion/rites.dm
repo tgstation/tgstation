@@ -119,7 +119,7 @@
 	invoke_msg = "The end of flesh is near!"
 	favor_cost = 2500
 
-datum/religion_rites/upgrade_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
+/datum/religion_rites/upgrade_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
 	var/blessings = pick(
