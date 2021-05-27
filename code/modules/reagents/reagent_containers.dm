@@ -69,7 +69,7 @@
 					amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len]
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[i-1]
-				balloon_alert(user, "Transferring [amount_per_transfer_from_this]u")
+				balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 				return TRUE
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
