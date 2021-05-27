@@ -1,8 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "you can knock cigarettes out of people's mouths again, hooray!"
-  - balance: "objects that can be knocked off now have a chance to fall whenever the wearer is knocked down"
-  - balance: "Prescription glasses can now be knocked off. Careful where you step, those things are fragile!"
-  - balance: "Broken prescription glasses can be repaired using cloth or a welding tool"
-  - balance: "Increased point cost of Nearsighted quirk from -1 to -4"
