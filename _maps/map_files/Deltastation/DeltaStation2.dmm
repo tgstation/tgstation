@@ -5114,9 +5114,6 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/port/fore)
 "aJP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6953,6 +6950,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
@@ -19307,9 +19307,6 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "czo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
@@ -98063,19 +98060,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"ujj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/corner,
-/area/maintenance/disposal/incinerator)
 "ujH" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -105314,9 +105298,6 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "who" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -111883,9 +111864,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "xZZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
@@ -135218,7 +135196,7 @@ aFr
 aGT
 aIt
 eDo
-ujj
+pPs
 jEV
 ipq
 ipq
