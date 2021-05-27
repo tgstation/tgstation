@@ -59,6 +59,19 @@
 				balloon_alert(user, "Transferring [amount_per_transfer_from_this]u")
 				return
 
+/obj/item/reagent_containers/attack_self_secondary(mob/user)
+	if(possible_transfer_amounts.len)
+		var/i=0
+		for(var/A in possible_transfer_amounts)
+			i++
+			if(A == amount_per_transfer_from_this)
+				if(i==1)
+					amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len]
+				else
+					amount_per_transfer_from_this = possible_transfer_amounts[i-1]
+				balloon_alert(user, "Transferring [amount_per_transfer_from_this]u")
+				return TRUE
+
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, DO_NOT_SPLASH))
 		return ..()
