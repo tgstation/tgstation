@@ -969,8 +969,7 @@
 	},
 /obj/structure/chair/stool/bar{
 	dir = 8;
-	item_chair = null;
-	resistance_flags = 64
+	
 	},
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
