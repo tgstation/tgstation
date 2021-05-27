@@ -1136,11 +1136,11 @@
 		club.update_appearance()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
-	holder.update_action_buttons_icon()
+	owner.update_action_buttons_icon()
 
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, TRUE)
-	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
+	to_chat(owner, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
 
 /obj/item/hierophant_club
 	name = "hierophant club"
@@ -1175,6 +1175,10 @@
 /obj/item/hierophant_club/Initialize()
 	. = ..()
 	blink = new(src)
+
+/obj/item/hierophant_club/Destroy()
+	. = ..()
+	QDEL_NULL(blink)
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()
