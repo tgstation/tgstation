@@ -233,9 +233,8 @@
 			return FALSE
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
-	var/trait_check = HAS_TRAIT(L, TRAIT_STUNRESISTANCE)
 
-	if(trait_check)
+	if(HAS_TRAIT(L, TRAIT_STUNRESISTANCE))
 		L.Jitter(5)
 		L.set_confusion(max(confusion_amt * 0.2, L.get_confusion()))
 		L.stuttering = max(2, L.stuttering)
