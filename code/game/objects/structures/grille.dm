@@ -265,7 +265,6 @@
 	..()
 
 /obj/structure/grille/obj_break()
-	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "brokengrille"
 		density = FALSE

@@ -225,8 +225,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///called after the obj takes damage and integrity is below integrity_failure level
 /obj/proc/obj_break(damage_flag)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_BREAK)
+	return
 
 ///what happens when the obj's integrity reaches zero.
 /obj/proc/obj_destruction(damage_flag)

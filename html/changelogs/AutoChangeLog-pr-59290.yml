@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - qol: "door remotes now use balloon alerts instead of chat messages"

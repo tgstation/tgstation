@@ -362,7 +362,6 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/alien/egg/obj_break(damage_flag)
-	. = ..()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)

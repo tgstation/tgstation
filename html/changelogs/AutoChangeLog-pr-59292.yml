@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Certain objects that were migrated to a new greyscale system could no longer be colored via washing machine. This has been fixed."

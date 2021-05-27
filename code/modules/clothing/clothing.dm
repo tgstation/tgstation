@@ -397,7 +397,6 @@
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
-	. = ..()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
 	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone

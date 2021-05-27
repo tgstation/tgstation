@@ -248,7 +248,6 @@
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
-	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
