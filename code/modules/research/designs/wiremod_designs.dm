@@ -184,7 +184,7 @@
 
 /datum/design/bot_shell
 	name = "Bot Shell"
-	desc = "An immobile shell that can store more components."
+	desc = "An immobile shell that can store more components. Has a USB port to be able to connect to computers and machines."
 	id = "bot_shell"
 	build_path = /obj/item/shell/bot
 	build_type = PROTOLATHE | COMPONENT_PRINTER
