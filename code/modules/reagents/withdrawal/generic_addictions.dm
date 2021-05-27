@@ -217,15 +217,17 @@
 		return
 	if(DT_PROB(65, delta_time))
 		return
-	if(affected_carbon.stat <= SOFT_CRIT)
-		var/obj/item/organ/organ = pick(affected_carbon.internal_organs)
-		if(organ.low_threshold)
-			to_chat(affected_carbon, organ.low_threshold_passed)
-			return
-		else if (organ.high_threshold_passed)
-			to_chat(affected_carbon, organ.high_threshold_passed)
-			return
-		to_chat(affected_carbon, "<span class='warning'>You feel a dull pain in your [organ.name].</span>")
+	if(affected_carbon.stat >= SOFT_CRIT)
+		return
+
+	var/obj/item/organ/organ = pick(affected_carbon.internal_organs)
+	if(organ.low_threshold)
+		to_chat(affected_carbon, organ.low_threshold_passed)
+		return
+	else if (organ.high_threshold_passed)
+		to_chat(affected_carbon, organ.high_threshold_passed)
+		return
+	to_chat(affected_carbon, "<span class='warning'>You feel a dull pain in your [organ.name].</span>")
 
 /datum/addiction/medicine/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
