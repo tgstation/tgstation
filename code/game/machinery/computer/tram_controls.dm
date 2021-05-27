@@ -132,6 +132,10 @@
 	location = add_output_port("Location", PORT_TYPE_STRING)
 	travelling_output = add_output_port("Travelling", PORT_TYPE_NUMBER)
 
+/obj/item/circuit_component/tram_controls/Destroy()
+	computer = null
+	return ..()
+
 /obj/item/circuit_component/tram_controls/input_received(datum/port/input/port)
 	. = ..()
 	if (.)
