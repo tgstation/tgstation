@@ -131,7 +131,8 @@
 	if(broken)
 		return
 	icon_state = pick(broken_states)
-	broken = 1
+	SEND_SIGNAL(src, COMSIG_TURF_BROKEN)
+	broken = TRUE
 
 /turf/open/floor/burn_tile()
 	if(broken || burnt)
@@ -140,7 +141,8 @@
 		icon_state = pick(burnt_states)
 	else
 		icon_state = pick(broken_states)
-	burnt = 1
+	SEND_SIGNAL(src, COMSIG_TURF_BURNED)
+	burnt = TRUE
 
 /turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
