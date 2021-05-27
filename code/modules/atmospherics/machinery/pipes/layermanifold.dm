@@ -27,16 +27,12 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
-	var/list/obj/machinery/atmospherics/needs_nullifying = get_all_connected_nodes()
+	for(var/obj/machinery/atmospherics/A in nodes)
+		A.disconnect(src)
+		SSair.add_to_rebuild_queue(A)
 	front_nodes = null
 	back_nodes = null
 	nodes = list()
-	for(var/obj/machinery/atmospherics/A in needs_nullifying)
-		A.disconnect(src)
-		SSair.add_to_rebuild_queue(A)
-
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	return front_nodes + back_nodes + nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_layer()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
@@ -77,18 +73,18 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
 	front_nodes = list()
 	back_nodes = list()
-	var/list/new_nodes = list()
+	nodes = list()
 	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 		var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter)
 		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
 		front_nodes += foundfront
 		back_nodes += foundback
 		if(foundfront && !QDELETED(foundfront))
-			new_nodes += foundfront
+			nodes += foundfront
 		if(foundback && !QDELETED(foundback))
-			new_nodes += foundback
+			nodes += foundback
 	update_appearance()
-	return new_nodes
+	return nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
 	normalize_cardinal_directions()
@@ -98,21 +94,20 @@
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
-	return get_all_connected_nodes()
+	return nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	while(reference in get_all_connected_nodes())
-		if(reference in nodes)
-			var/i = nodes.Find(reference)
-			nodes[i] = null
-		if(reference in front_nodes)
-			var/i = front_nodes.Find(reference)
+	while(reference in nodes)
+		var/i = nodes.Find(reference)
+		nodes[i] = null
+		i = front_nodes.Find(reference)
+		if(i)
 			front_nodes[i] = null
-		if(reference in back_nodes)
-			var/i = back_nodes.Find(reference)
+		i = back_nodes.Find(reference)
+		if(i)
 			back_nodes[i] = null
 	update_appearance()
 

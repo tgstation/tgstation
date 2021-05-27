@@ -658,3 +658,46 @@
       less confusing by adding balloon messages describing what is happening. Changed
       the firelock examine text to explain that right-click opens it permanently and
       left-click opens it temporarily
+2021-05-26:
+  FlamingLily:
+  - bugfix: Muscled Veins is now correctly labelled as muscled veins, and not threaded
+      veins.
+  - bugfix: Gastrectomy now correctly has a surgery failure message
+  RandomGamer123:
+  - rscdel: Removed the toggle intent selection style preference
+  Waltermeldron:
+  - rscadd: Adds Integrated Circuits back to science. Circuit Components can be printed
+      off and placed onto these circuits. These circuits can be placed into shells
+      that can be printed at the protolathe.
+  dragomagol:
+  - qol: door remotes now use balloon alerts instead of chat messages
+  ninjanomnom:
+  - bugfix: Certain objects that were migrated to a new greyscale system could no
+      longer be colored via washing machine. This has been fixed.
+  - bugfix: You can select the config again in the greyscale debug menu with admin
+      controls enabled
+  - balance: Canister leaks are more consistent rather than jittery, but slower.
+  - bugfix: Fixes the jumpskirt in hand icon displaying an error
+  vincentiusvin:
+  - bugfix: Fixed multiple piping mistakes in Delta, Meta, and Icebox.
+2021-05-27:
+  BraveMole:
+  - bugfix: Jatum handles better non-assoc list
+  Mickyan:
+  - bugfix: you can knock cigarettes out of people's mouths again, hooray!
+  - balance: objects that can be knocked off now have a chance to fall whenever the
+      wearer is knocked down
+  - balance: Prescription glasses can now be knocked off. Careful where you step,
+      those things are fragile!
+  - balance: Broken prescription glasses can be repaired using cloth or a welding
+      tool
+  - balance: Increased point cost of Nearsighted quirk from -1 to -4
+  PositiveEntropy, Twaticus, AdipemDragon:
+  - imageadd: Replaces the old stool sprites with new and improved ones made by Twaticus
+      and AdipemDragon!
+  - imageadd: Ports new and improved Tau Ceti bookshelf sprites!
+  Watermelon914:
+  - bugfix: Fixed UIs like the cargo chatroom console and the genetics console not
+      opening.
+  norill:
+  - bugfix: fixed check plumbing admin verb
