@@ -373,8 +373,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	if(obj_flags & EMAGGED)
 		return
 	if(!LAZYLEN(emag_programs))
-		balloon_alert(user, "no programs to corrupt")
-		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
+		balloon_alert(user, "no programs to corrupt!")
 		return
 	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED

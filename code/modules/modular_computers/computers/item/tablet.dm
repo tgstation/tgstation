@@ -51,7 +51,6 @@
 /obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
 	if(!enabled)
 		balloon_alert(user, "turn it on first!")
-		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
 		return FALSE
 	balloon_alert(user, "code injection rejected!")
 	return FALSE
