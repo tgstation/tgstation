@@ -50,7 +50,7 @@
 /obj/item/screwdriver/Initialize()
 	if(random_color)
 		var/our_color = pick(screwdriver_colors)
-		set_greyscale_colors(list(screwdriver_colors[our_color]))
+		set_greyscale(colors=list(screwdriver_colors[our_color]))
 		inhand_icon_state = null
 		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	. = ..()

@@ -99,6 +99,7 @@
 		update_appearance()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_appearance()
 		broken = TRUE
