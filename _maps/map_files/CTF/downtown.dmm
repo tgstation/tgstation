@@ -301,6 +301,14 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/ctf)
+"go" = (
+/obj/structure/chair/stool/bar{
+	dir = 4;
+	item_chair = null;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "gv" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/red,
@@ -376,6 +384,14 @@
 	resistance_flags = 64
 	},
 /turf/closed/wall/mineral/iron,
+/area/ctf)
+"hU" = (
+/obj/structure/chair/stool/bar{
+	dir = 8;
+	item_chair = null;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
 /area/ctf)
 "hZ" = (
 /obj/effect/turf_decal/trimline/blue/line,
@@ -847,6 +863,7 @@
 "qJ" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/chair/stool/bar{
+	dir = 8;
 	item_chair = null;
 	resistance_flags = 64
 	},
@@ -1599,8 +1616,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/chair/stool/bar{
-	item_chair = null;
-	resistance_flags = 64
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ctf)
@@ -3672,9 +3688,9 @@ xs
 td
 Bh
 ql
-bs
+go
 ql
-bs
+go
 QC
 td
 mB
@@ -3747,9 +3763,9 @@ El
 BH
 Lr
 Ug
-bs
+hU
 ql
-bs
+hU
 ql
 QC
 oq
@@ -3824,9 +3840,9 @@ BH
 Lr
 Ug
 ql
-bs
+go
 ql
-bs
+go
 QC
 Lr
 Ad
@@ -3899,9 +3915,9 @@ BH
 El
 td
 mP
-bs
+hU
 ql
-bs
+hU
 ql
 QC
 td
@@ -4169,7 +4185,7 @@ dO
 sZ
 Dm
 ql
-bs
+go
 td
 qT
 yX

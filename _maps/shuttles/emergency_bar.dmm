@@ -167,7 +167,8 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/chair/stool{
-	can_buckle = 1
+	can_buckle = 1;
+	dir = 8
 	},
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
@@ -216,8 +217,7 @@
 /area/shuttle/escape/brig)
 "aN" = (
 /obj/structure/chair/stool/bar{
-	can_buckle = 1;
-	name = "buckleable bar stool"
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -617,6 +617,18 @@
 /obj/machinery/stasis,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"en" = (
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	dir = 4;
+	name = "buckleable bar stool"
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "EL" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -778,13 +790,13 @@ an
 az
 aE
 aE
-aN
-aN
-aN
-aN
-aN
-aN
-aN
+en
+en
+en
+en
+en
+en
+en
 aE
 ca
 ae

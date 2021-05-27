@@ -4,7 +4,9 @@
 /area/template_noop)
 "ab" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -143,7 +145,9 @@
 /area/shuttle/abandoned/bar)
 "ar" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 8
+	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -305,7 +309,9 @@
 /area/shuttle/abandoned/crew)
 "aH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{

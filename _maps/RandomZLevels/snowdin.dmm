@@ -7462,6 +7462,16 @@
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/cavern2)
+"uo" = (
+/obj/structure/chair/stool{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/cave)
 "uq" = (
 /obj/effect/light_emitter{
 	name = "outdoor light";
@@ -13915,6 +13925,16 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
+"TH" = (
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/cave)
 "TK" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -14093,6 +14113,16 @@
 	},
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
+"VS" = (
+/obj/structure/chair/stool{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/cave)
 "VW" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/fans/tiny,
@@ -45448,7 +45478,7 @@ tI
 aj
 wu
 vQ
-ww
+uo
 wv
 aj
 aj
@@ -45706,7 +45736,7 @@ aj
 vQ
 ww
 wy
-ww
+TH
 vQ
 wA
 aj
@@ -45962,7 +45992,7 @@ tI
 aj
 wv
 vQ
-ww
+VS
 vQ
 vQ
 wA

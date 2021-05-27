@@ -659,7 +659,9 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "afd" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -920,7 +922,9 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "agO" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -1195,7 +1199,9 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "ais" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /obj/machinery/camera{
 	c_tag = "Prison Visitation";
 	network = list("ss13","prison")
@@ -1477,7 +1483,9 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "aku" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 8
 	},
@@ -3941,7 +3949,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "aDz" = (
@@ -11621,7 +11631,9 @@
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "cjt" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cjw" = (
@@ -13250,7 +13262,9 @@
 	},
 /area/medical/break_room)
 "cwp" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/medical/break_room)
@@ -13301,7 +13315,9 @@
 	},
 /area/medical/break_room)
 "cxf" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/white,
 /area/medical/break_room)
@@ -16868,7 +16884,9 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "diJ" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -19225,6 +19243,13 @@
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/iron,
 /area/commons/locker)
+"dUS" = (
+/obj/structure/chair/stool{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/security/prison)
 "dVf" = (
 /obj/effect/turf_decal/arrows/white{
 	color = "#0000FF";
@@ -19391,7 +19416,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "dYJ" = (
@@ -21146,7 +21173,9 @@
 /area/cargo/warehouse)
 "eBl" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 1
+	},
 /obj/item/storage/crayons,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -22375,7 +22404,9 @@
 	},
 /area/service/kitchen)
 "eSY" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -25270,6 +25301,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
+"fQw" = (
+/obj/structure/chair/stool{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "fQU" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple,
@@ -26907,7 +26944,9 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/computer/gateway_control,
+/obj/machinery/computer/gateway_control{
+	dir = 8
+	},
 /turf/open/floor/iron{
 	dir = 1
 	},
@@ -28638,7 +28677,9 @@
 /area/space/nearstation)
 "hgv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
 	},
@@ -29851,7 +29892,9 @@
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "hFl" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30780,7 +30823,9 @@
 /area/service/hydroponics)
 "hTo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
@@ -31705,7 +31750,9 @@
 /turf/closed/wall,
 /area/commons/vacant_room/office)
 "ikT" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -34175,6 +34222,14 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
+"jea" = (
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/maintenance/port/aft)
 "jeg" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -35109,7 +35164,9 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/satellite)
 "jvd" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "jvt" = (
@@ -37215,6 +37272,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
+"kgF" = (
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "khc" = (
 /obj/machinery/hydroponics/constructable,
 /obj/structure/disposalpipe/segment{
@@ -41539,7 +41603,9 @@
 /area/science/research)
 "lGf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -44585,7 +44651,9 @@
 /turf/open/floor/iron,
 /area/security/warden)
 "mES" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24
@@ -46442,6 +46510,7 @@
 /area/maintenance/port/fore)
 "nil" = (
 /obj/structure/chair/stool{
+	dir = 1;
 	name = "Jim Norton's Quebecois Coffee stool"
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -46472,7 +46541,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "niI" = (
@@ -48915,7 +48986,9 @@
 /turf/open/floor/iron/white,
 /area/hallway/primary/central)
 "nVz" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -55380,6 +55453,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/cytology)
+"qfk" = (
+/obj/structure/chair/stool{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/secondary)
 "qfw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -57394,7 +57473,9 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "qNO" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -59065,7 +59146,9 @@
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "rqD" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -64190,7 +64273,9 @@
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "sXn" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 4
 	},
@@ -66957,7 +67042,9 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
 "tTw" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 8
+	},
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -93756,7 +93843,7 @@ wOn
 ckP
 ckP
 auR
-cjt
+fQw
 crh
 vDb
 ckN
@@ -94522,7 +94609,7 @@ dux
 wGG
 ckP
 tTw
-cjt
+fQw
 eSY
 diJ
 ckP
@@ -94777,7 +94864,7 @@ aob
 dix
 dux
 eDt
-eSY
+jea
 ckP
 ckP
 dvt
@@ -95291,7 +95378,7 @@ uQQ
 bXx
 dux
 nZb
-qNO
+kgF
 ckP
 obv
 ckP
@@ -101111,7 +101198,7 @@ aaa
 aep
 aaw
 ikT
-agO
+dUS
 aaw
 wyY
 vrL
@@ -118685,7 +118772,7 @@ wZK
 xaY
 ozE
 aqe
-dwQ
+qfk
 cnb
 cou
 cpK

@@ -983,7 +983,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eD" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eE" = (
@@ -2667,7 +2669,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lp" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/airless,
@@ -3462,6 +3466,12 @@
 "rK" = (
 /turf/template_noop,
 /area/ruin/space/derelict/medical)
+"sd" = (
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "tc" = (
 /obj/item/wallframe/airalarm,
 /turf/open/floor/plating/airless,
@@ -3543,6 +3553,12 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
+"El" = (
+/obj/structure/chair/stool{
+	dir = 8
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "Ev" = (
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
@@ -7033,7 +7049,7 @@ lf
 lq
 lI
 lr
-lg
+sd
 go
 fZ
 hD
@@ -7146,7 +7162,7 @@ lg
 lr
 lr
 lr
-lg
+sd
 go
 fZ
 gn
@@ -7256,7 +7272,7 @@ gc
 kD
 go
 go
-lg
+El
 go
 go
 go

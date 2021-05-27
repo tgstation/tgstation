@@ -4733,7 +4733,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kQ" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
@@ -4908,7 +4910,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lk" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5065,7 +5069,9 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lA" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	dir = 1
+	},
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
@@ -5217,7 +5223,9 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lU" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/randomarcade{
+	dir = 8
+	},
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
@@ -5674,6 +5682,12 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
+"qo" = (
+/obj/structure/chair/stool{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/research/interior/dorm)
 "qS" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -5712,6 +5726,22 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
+"ux" = (
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/research/interior/security)
 "va" = (
 /obj/machinery/door/airlock/research{
 	name = "Cryogenetics Research";
@@ -5726,6 +5756,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
+"wa" = (
+/obj/structure/chair/stool{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/research/interior/dorm)
 "wM" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -5758,6 +5794,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"zs" = (
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/research/interior/dorm)
 "Bx" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Room";
@@ -39213,7 +39255,7 @@ iX
 jn
 kS
 kR
-kU
+zs
 kc
 iX
 lP
@@ -39725,7 +39767,7 @@ jC
 jV
 iX
 jn
-kU
+qo
 jF
 jF
 kc
@@ -41012,7 +41054,7 @@ ks
 jn
 jF
 jF
-kU
+zs
 kc
 lM
 jk
@@ -42040,7 +42082,7 @@ kt
 kE
 jF
 jF
-kU
+qo
 jF
 jF
 jF
@@ -42300,8 +42342,8 @@ jF
 jF
 jF
 jF
-kU
-kU
+wa
+wa
 kc
 iX
 hD
@@ -47668,7 +47710,7 @@ aO
 do
 dF
 dT
-eo
+ux
 hF
 fr
 fW
@@ -48696,7 +48738,7 @@ aO
 do
 dF
 dT
-eo
+ux
 hF
 fr
 fY

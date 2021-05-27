@@ -155,7 +155,9 @@
 	},
 /area/template_noop)
 "C" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	dir = 8
+	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "D" = (
