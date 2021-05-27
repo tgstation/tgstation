@@ -12,8 +12,8 @@ const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 // MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
 const KEYS_TO_NAMES = {
-  backpack: "Backpack",
-  underwear: "Underwear",
+  backpack: "backpack",
+  underwear: "underwear",
 };
 
 enum Gender {
@@ -21,6 +21,23 @@ enum Gender {
   Female = "female",
   Other = "plural",
 }
+
+const GENDERS = {
+  [Gender.Male]: {
+    icon: "male",
+    text: "Male",
+  },
+
+  [Gender.Female]: {
+    icon: "female",
+    text: "Female",
+  },
+
+  [Gender.Other]: {
+    icon: "egg", // MOTHBLOCKS TODO: Unisex icon
+    text: "Other",
+  },
+};
 
 type CharacterProfile = {
   name: string;
@@ -81,8 +98,56 @@ const CharacterProfiles = (props: {
   );
 };
 
+const GenderButton = (props: {
+  handleSetGender: (gender: Gender) => void,
+  gender: Gender,
+}, context) => {
+  const [genderMenuOpen, setGenderMenuOpen] = useLocalState(context, "genderMenuOpen", false);
+
+  return (
+    <Popper options={{
+      placement: "right-end",
+    }} popperContent={(
+      genderMenuOpen
+        && (
+          <Stack backgroundColor="white" ml={0.5} p={0.3}>
+            {[Gender.Male, Gender.Female, Gender.Other].map(gender => {
+              return (
+                <Stack.Item key={gender}>
+                  <Button
+                    selected={gender === props.gender}
+                    onClick={() => {
+                      props.handleSetGender(gender);
+                      setGenderMenuOpen(false);
+                    }}
+                    fontSize="16px"
+                    icon={GENDERS[gender].icon}
+                    tooltip={GENDERS[gender].text}
+                    tooltipPosition="top"
+                  />
+                </Stack.Item>
+              );
+            })}
+          </Stack>
+        )
+    )}>
+      <Button
+        onClick={() => {
+          setGenderMenuOpen(!genderMenuOpen);
+        }}
+        fontSize="16px"
+        icon={GENDERS[props.gender].icon}
+        tooltip="Gender"
+        tooltipPosition="top"
+      />
+    </Popper>
+  );
+};
+
 const CharacterControls = (props: {
   handleRotate: () => void,
+  gender: Gender,
+  setGender: (gender: Gender) => void,
 }) => {
   return (
     <Stack>
@@ -92,6 +157,10 @@ const CharacterControls = (props: {
           fontSize="16px"
           icon="undo"
         />
+      </Stack.Item>
+
+      <Stack.Item>
+        <GenderButton gender={props.gender} handleSetGender={props.setGender} />
       </Stack.Item>
     </Stack>
   );
@@ -204,9 +273,13 @@ export const PreferencesMenu = (props, context) => {
               <Stack.Item>
                 <Stack vertical>
                   <Stack.Item>
-                    <CharacterControls handleRotate={() => {
-                      act("rotate");
-                    }} />
+                    <CharacterControls
+                      gender={data.character_preferences.misc.gender}
+                      handleRotate={() => {
+                        act("rotate");
+                      }}
+                      setGender={createSetPreference(act, "gender")}
+                    />
                   </Stack.Item>
 
                   <Stack.Item>
