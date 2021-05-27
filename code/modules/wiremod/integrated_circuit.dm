@@ -110,9 +110,8 @@
 	if(to_add.parent)
 		return
 
-	// MOTHBLOCKS TODO: Bring back
-	// if(SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
-	// 	return
+	if(SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
+		return
 
 	var/success = FALSE
 	if(user)

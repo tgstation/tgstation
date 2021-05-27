@@ -125,16 +125,8 @@
 // MOTHBLOCKS TODO: Remove this
 /mob/proc/give_circuit_shit()
 	var/turf/T = get_turf(src)
-	new /obj/item/integrated_circuit/loaded/circuit_shit(T)
-	new /obj/item/assembly/signaler(T)
+	new /obj/item/integrated_circuit/loaded(T)
 	new /obj/item/screwdriver(T)
 	new /obj/item/multitool(T)
 	new /obj/structure/bot(T)
 	new /obj/item/usb_cable(T)
-
-// MOTHBLOCKS TODO: Remove this
-/obj/item/integrated_circuit/loaded/circuit_shit/Initialize()
-	. = ..()
-
-	var/obj/item/circuit_component/radio/radio = new
-	add_component(radio)

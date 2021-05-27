@@ -63,6 +63,7 @@
 
 	for(var/circuit_component_type in circuit_component_types)
 		var/obj/item/circuit_component/circuit_component = new circuit_component_type(parent)
+		circuit_component.insertable_through_shells = TRUE
 		circuitboard.add_component(circuit_component)
 		created_circuit_components += circuit_component
 		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)

@@ -145,7 +145,9 @@
 
 /datum/component/shell/proc/on_circuit_add_component(datum/source, obj/item/circuit_component/added_comp)
 	SIGNAL_HANDLER
-	return COMPONENT_CANCEL_ADD_COMPONENT
+
+	if (!added_comp.insertable_through_shells)
+		return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.

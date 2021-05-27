@@ -49,6 +49,9 @@
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
+	// Whether or not a component is allowed to be inserted into a circuitboard after it is inside a shell
+	var/insertable_through_shells = FALSE
+
 /obj/item/circuit_component/Initialize()
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
