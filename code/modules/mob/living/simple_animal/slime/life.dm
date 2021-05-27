@@ -181,9 +181,10 @@
 	if(M.stat == DEAD) // our victim died
 		if(!client)
 			if(!rabid && !attacked)
-				if(M.LAssailant && M.LAssailant != M)
+				var/mob/last_to_hurt = M.LAssailant?.resolve()
+				if(last_to_hurt && last_to_hurt != M)
 					if(DT_PROB(30, delta_time))
-						add_friendship(M.LAssailant, 1)
+						add_friendship(last_to_hurt, 1)
 		else
 			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
