@@ -1,3 +1,6 @@
+/**
+ * The contestant represents one player
+ */
 /datum/contestant
 	/// The ckey we try to match with
 	var/ckey
@@ -18,7 +21,7 @@
 	ckey = new_ckey
 	current_mob = get_mob_by_ckey(ckey)
 
-
+	GLOB.global_roster.insert_contestant(user=null, new_kid=src) // check if success?
 	if(!current_mob)
 		return
 	matched_owner = TRUE
@@ -30,9 +33,13 @@
 	. = ..()
 
 
+/**
+ * Event teams are teams that are constantly being made and remade
+ */
 /datum/event_team
 	var/list/members
 
+	var/rostered_id
 
 /datum/event_team/Destroy(force, ...)
 	for(var/datum/contestant/iter_member in members)
@@ -57,10 +64,10 @@
 	if(!dead_kid)
 		CRASH("tried removing invalid contestant")
 	if(!dead_kid.current_team)
-		testing("[new_kid.ckey] isn't on a team")
+		testing("[dead_kid.ckey] isn't on a team")
 		return
-	if(new_kid.current_team != src)
-		testing("[new_kid.ckey] is on a differnet team")
+	if(dead_kid.current_team != src)
+		testing("[dead_kid.ckey] is on a differnet team")
 		return
 
 	dead_kid.current_team = null

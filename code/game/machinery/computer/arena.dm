@@ -71,6 +71,8 @@
 
 	var/ui_target
 
+	var/list/loaded_teams
+
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
@@ -282,6 +284,17 @@
 	if(!user.client.holder) // Should it require specific perm ?
 		return
 
+	if(href_list["change_page"])
+		switch(href_list["change_page"])
+			if("main" )
+				ui_mode = "main"
+			if("match")
+				ui_mode = "match"
+			if("team")
+				ui_mode = "team"
+			if("contestant")
+				ui_mode = "contestant"
+
 	if(href_list["upload"])
 		add_new_arena_template(user)
 	if(href_list["change_arena"])
@@ -342,11 +355,12 @@
 		if(ARENA_UI_MAIN)
 			dat += "<b>Main menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
-			dat += "<a href='?src=[REF(src)];change_page=loadteam;team=[team]'>Load team</a>"
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
-			dat += "<a href='?src=[REF(src)];change_page=loadteam;team=[team]'>Load team</a>"
+			for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
+				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
+			dat += "<a href='?src=[REF(src)];match_add_team'>Add team</a>"
 		if(ARENA_UI_TEAMS)
 			dat += "<b>Team menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=main'>Back to Main</a>"
@@ -354,6 +368,11 @@
 			dat += "<b>Main menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=main'>Back to Main</a>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Back to Teams</a>"
+
+
+	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
+	popup.set_content(dat.Join())
+	popup.open()
 	/*
 	for(var/team in teams)
 		dat += "<h2>[capitalize(team)] team:</h2>"
