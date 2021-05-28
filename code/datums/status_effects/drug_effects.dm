@@ -92,5 +92,5 @@
 
 /atom/movable/screen/alert/status_effect/stoned
 	name = "Stoned"
-	desc = "nigga u high as shit"
+	desc = "dood u high as shit"
 	icon_state = "stoned"
