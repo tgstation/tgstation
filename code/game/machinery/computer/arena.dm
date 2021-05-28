@@ -4,6 +4,11 @@
 #define ARENA_CORNER_A "cornerA"
 #define ARENA_CORNER_B "cornerB"
 
+#define ARENA_UI_MAIN 0
+#define ARENA_UI_MATCH 1
+#define ARENA_UI_TEAMS 2
+#define ARENA_UI_INDIV 3
+
 /// Arena related landmarks
 /obj/effect/landmark/arena
 	name = "arena landmark"
@@ -61,6 +66,10 @@
 	//Sound played when the fight starts.
 	var/start_sound = 'sound/items/airhorn2.ogg'
 	var/start_sound_volume = 50
+
+	var/ui_mode = ARENA_UI_MAIN
+
+	var/ui_target
 
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -328,6 +337,24 @@
 	var/list/dat = list()
 	dat += "<div>Spawning is currently [ready_to_spawn ? "<span class='good'>enabled</span>" : "<span class='bad'>disabled</span>"] <a href='?src=[REF(src)];toggle_spawn=1'>Toggle</a></div>"
 	dat += "<div><a href='?src=[REF(src)];start=1'>[start_time ? "Stop countdown" : "Start!"]</a></div>"
+
+	switch(ui_mode)
+		if(ARENA_UI_MAIN)
+			dat += "<b>Main menu</b>"
+			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
+			dat += "<a href='?src=[REF(src)];change_page=loadteam;team=[team]'>Load team</a>"
+		if(ARENA_UI_MATCH)
+			dat += "<b>Match menu</b>"
+			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
+			dat += "<a href='?src=[REF(src)];change_page=loadteam;team=[team]'>Load team</a>"
+		if(ARENA_UI_TEAMS)
+			dat += "<b>Team menu</b>"
+			dat += "<a href='?src=[REF(src)];change_page=main'>Back to Main</a>"
+		if(ARENA_UI_INDIV)
+			dat += "<b>Main menu</b>"
+			dat += "<a href='?src=[REF(src)];change_page=main'>Back to Main</a>"
+			dat += "<a href='?src=[REF(src)];change_page=team'>Back to Teams</a>"
+	/*
 	for(var/team in teams)
 		dat += "<h2>[capitalize(team)] team:</h2>"
 		dat += "<ul>"
@@ -367,6 +394,7 @@
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
 	popup.set_content(dat.Join())
 	popup.open()
+	*/
 
 /// Arena spawnpoint
 /obj/machinery/arena_spawn
