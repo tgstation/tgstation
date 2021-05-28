@@ -34,12 +34,24 @@
 
 /datum/material/meat/mob_meat
 	init_flags = MATERIAL_INIT_BESPOKE
+	var/subjectname = ""
+	var/subjectjob = null
 
 /datum/material/meat/mob_meat/Initialize(_id, mob/living/source)
 	if(!istype(source))
 		return FALSE
 
 	name = "[source?.name ? "[source.name]'s" : "mystery"] [initial(name)]"
+
+	if(source.real_name)
+		subjectname = source.real_name
+	else if(source.name)
+		subjectname = source.name
+
+	if(ishuman(source))
+		var/mob/living/carbon/human/human_source = source
+		subjectjob = human_source.job
+
 	return ..()
 
 /datum/material/meat/species_meat

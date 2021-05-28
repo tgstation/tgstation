@@ -5114,9 +5114,6 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/port/fore)
 "aJP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6953,6 +6950,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
@@ -12413,6 +12413,13 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/entry)
+"bOU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "bOV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -19300,9 +19307,6 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "czo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
@@ -44744,19 +44748,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
-"gmi" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/donkpockets,
-/obj/item/storage/box/donkpockets,
-/obj/item/clothing/head/chefhat,
-/obj/effect/turf_decal/bot,
-/obj/machinery/button/door/directional/south{
-	id = "kitchenwindow";
-	name = "Kitchen Privacy Control";
-	req_access_txt = "28"
-	},
-/turf/open/floor/iron,
-/area/service/kitchen)
 "gmN" = (
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
@@ -52957,6 +52948,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"izU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "izY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden,
@@ -61286,10 +61281,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"kQc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/r_wall,
-/area/engineering/storage_shared)
 "kQd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -98069,19 +98060,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"ujj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/corner,
-/area/maintenance/disposal/incinerator)
 "ujH" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -105320,9 +105298,6 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "who" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -106610,6 +106585,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/research)
+"wzd" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/clothing/head/chefhat,
+/obj/effect/turf_decal/bot,
+/obj/machinery/button/door/directional/south{
+	id = "kitchenwindows";
+	name = "Kitchen Privacy Control";
+	req_access_txt = "28"
+	},
+/turf/open/floor/iron,
+/area/service/kitchen)
 "wzi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -107237,7 +107225,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/item/toy/plush/lizardplushie/space{
+/obj/item/toy/plush/space_lizard_plushie{
 	name = "Meets-the-Ore"
 	},
 /turf/open/space/basic,
@@ -111876,9 +111864,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "xZZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
@@ -135211,7 +135196,7 @@ aFr
 aGT
 aIt
 eDo
-ujj
+pPs
 jEV
 ipq
 ipq
@@ -135235,7 +135220,7 @@ kQs
 tMQ
 cDC
 nYd
-mLw
+izU
 mLw
 mLw
 mLw
@@ -135492,7 +135477,7 @@ nCC
 exw
 kdz
 ldU
-kQc
+bOU
 bCl
 njj
 fFv
@@ -148848,7 +148833,7 @@ qRY
 kEi
 eQB
 jTU
-gmi
+wzd
 kEi
 wxO
 rAe
