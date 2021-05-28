@@ -78,10 +78,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/old_dynamic_lighting = dynamic_lighting
 	var/old_lighting_object = lighting_object
-	var/old_lighting_corner_NE
-	var/old_lighting_corner_SE
-	var/old_lighting_corner_SW
-	var/old_lighting_corner_NW
+	var/old_lighting_corner_NE = lighting_corner_NE
+	var/old_lighting_corner_SE = lighting_corner_SE
+	var/old_lighting_corner_SW = lighting_corner_SW
+	var/old_lighting_corner_NW = lighting_corner_NW
 	var/old_directional_opacity = directional_opacity
 	var/old_rcd_memory = rcd_memory
 
@@ -112,12 +112,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	W.blueprint_data = old_bp
 	W.rcd_memory = old_rcd_memory
 
+	lighting_corner_NE = old_lighting_corner_NE
+	lighting_corner_SE = old_lighting_corner_SE
+	lighting_corner_SW = old_lighting_corner_SW
+	lighting_corner_NW = old_lighting_corner_NW
+
 	if(SSlighting.initialized)
 		lighting_object = old_lighting_object
-		lighting_corner_NE = old_lighting_corner_NE
-		lighting_corner_SE = old_lighting_corner_SE
-		lighting_corner_SW = old_lighting_corner_SW
-		lighting_corner_NW = old_lighting_corner_NW
+
 		directional_opacity = old_directional_opacity
 		recalculate_directional_opacity()
 

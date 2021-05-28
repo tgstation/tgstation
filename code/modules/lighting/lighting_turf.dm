@@ -8,11 +8,6 @@
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
 		qdel(lighting_object, TRUE)
-	lighting_corners_initialised = FALSE
-	lighting_corner_NE?.self_destruct_if_idle()
-	lighting_corner_SE?.self_destruct_if_idle()
-	lighting_corner_SW?.self_destruct_if_idle()
-	lighting_corner_NW?.self_destruct_if_idle()
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
@@ -24,9 +19,6 @@
 		return
 
 	new/atom/movable/lighting_object(src)
-
-	if (!lighting_corners_initialised)
-		generate_missing_corners(recalc=TRUE)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -112,28 +104,17 @@
 			else
 				lighting_clear_overlay()
 
-/turf/proc/generate_missing_corners(recalc = FALSE)
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return
-
+/turf/proc/generate_missing_corners()
 	if (!lighting_corner_NE)
 		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
-		if (recalc)
-			lighting_corner_NE.full_update()
 	
 	if (!lighting_corner_SE)
 		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
-		if (recalc)
-			lighting_corner_SE.full_update()
 	
 	if (!lighting_corner_SW)
 		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
-		if (recalc)
-			lighting_corner_SW.full_update()
 	
 	if (!lighting_corner_NW)
 		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
-		if (recalc)
-			lighting_corner_NW.full_update()
 	
 	lighting_corners_initialised = TRUE
