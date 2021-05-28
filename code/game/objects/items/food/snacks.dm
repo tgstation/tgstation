@@ -209,12 +209,38 @@
 			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
 			tastes = list("peanuts" = 2, "bbq sauce" = 1)
 
-/obj/item/food/chocoloco
-	name = "\improper Chocoloco candy"
-	desc = "A taste so crazy you'll go loco!"
+/obj/item/food/cnds
+	name = "\improper C&Ds"
+	desc = "Legally, we cannot say that these won't melt in your hands."
 	icon_state = "chocoloco"
-	trash_type = /obj/item/trash/chocoloco
+	trash_type = /obj/item/trash/cnds
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1)
 	tastes = list("chocolate candy" = 3)
 	foodtypes = JUNKFOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cnds/filled/Initialize()
+	. = ..()
+	var/candy_flavour = pick("caramel", "pretzel", "peanut butter", "banana")
+	switch(candy_flavour)
+		if("caramel")
+			name = "caramel C&Ds"
+			desc = "Legally, we cannot say that these won't melt in your hands. Stuffed with sugary sweet caramel."
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/caramel = 1)
+			tastes = list("chocolate candy" = 2, "caramel" = 1)
+		if("pretzel")
+			name = "pretzel C&Ds"
+			desc = "Legally, we cannot say that these won't melt in your hands. Now 80% more German."
+			food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/coco = 1)
+			tastes = list("chocolate candy" = 2, "pretzel" = 1)
+			foodtypes = JUNKFOOD | GRAIN
+		if("peanut butter")
+			name = "peanut butter C&Ds"
+			desc = "Legally, we cannot say that these won't melt in your hands. Loved by aliens."
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/peanut_butter = 1)
+			tastes = list("chocolate candy" = 2, "peanut butter" = 1)
+		if("banana")
+			name = "banana honk C&Ds"
+			desc = "Legally, we cannot say that these won't melt in your hands. Honk honk!"
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/banana = 1)
+			tastes = list("chocolate candy" = 2, "banana" = 1)
