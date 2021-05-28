@@ -53,6 +53,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(sting_action(user, target))
 		sting_feedback(user, target)
 		c.chem_charges -= chemical_cost
+		user.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 	return FALSE
 

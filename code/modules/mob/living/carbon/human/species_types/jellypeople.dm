@@ -635,6 +635,7 @@
 	return TRUE
 
 /datum/species/jelly/stargazer/proc/unlink_mob(mob/living/M)
+	SIGNAL_HANDLER
 	var/link_id = linked_mobs.Find(M)
 	if(!(link_id))
 		return

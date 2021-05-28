@@ -52,6 +52,8 @@
 	var/author_ckey
 	var/icon_generated = FALSE
 	var/icon/generated_icon
+	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
+	var/no_save = FALSE
 
 	// Painting overlay offset when framed
 	var/framed_offset_x = 11
@@ -372,7 +374,7 @@
 	update_appearance()
 
 /obj/structure/sign/painting/proc/save_persistent()
-	if(!persistence_id || !current_canvas)
+	if(!persistence_id || !current_canvas || current_canvas.no_save)
 		return
 	if(sanitize_filename(persistence_id) != persistence_id)
 		stack_trace("Invalid persistence_id - [persistence_id]")

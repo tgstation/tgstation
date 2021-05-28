@@ -59,9 +59,9 @@
 		var/objective = stripped_input(admin, "Add an objective, or leave empty to finish.", "Brainwashing", null, MAX_MESSAGE_LEN)
 		if(objective)
 			objectives += objective
-	while(alert(admin,"Add another objective?","More Brainwashing","Yes","No") == "Yes")
+	while(tgui_alert(admin,"Add another objective?","More Brainwashing",list("Yes","No")) == "Yes")
 
-	if(alert(admin,"Confirm Brainwashing?","Are you sure?","Yes","No") == "No")
+	if(tgui_alert(admin,"Confirm Brainwashing?","Are you sure?",list("Yes","No")) == "No")
 		return
 
 	if(!LAZYLEN(objectives))

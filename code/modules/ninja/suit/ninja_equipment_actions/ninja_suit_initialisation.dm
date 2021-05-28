@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 	if (!ninja || !ninja.mind)
 		s_busy = FALSE
 		return
-	if (phase == 0 && alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No") == "No")
+	if (phase == 0 && tgui_alert(usr, "Are you certain you wish to remove the suit? This will take time and remove all abilities.",,list("Yes","No")) == "No")
 		s_busy = FALSE
 		return
 

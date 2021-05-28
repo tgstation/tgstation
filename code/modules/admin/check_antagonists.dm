@@ -134,7 +134,7 @@
 
 /datum/admins/proc/check_antagonists()
 	if(!SSticker.HasRoundStarted())
-		alert("The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>")
 	if(SSticker.mode.replacementmode)

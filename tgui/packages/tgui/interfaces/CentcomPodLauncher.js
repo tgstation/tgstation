@@ -962,8 +962,8 @@ const StylePage = (props, context) => {
           height="45px"
           tooltipPosition={
             i >= STYLES.length-2
-              ? (i%2===1 ? "top-left" : "top-right")
-              : (i%2===1 ? "bottom-left" : "bottom-right")
+              ? (i%2===1 ? "top-start" : "top-end")
+              : (i%2===1 ? "bottom-start" : "bottom-end")
           }
           tooltip={page.title}
           style={{
@@ -1019,7 +1019,7 @@ const Bays = (props, context) => {
         <Button
           key={i}
           content={bay.title}
-          tooltipPosition={"bottom-right"}
+          tooltipPosition="bottom-end"
           selected={data.bayNumber === ""+(i+1)}
           onClick={() => act('switchBay', { bayNumber: (""+(i+1)) })} />
       ))}
