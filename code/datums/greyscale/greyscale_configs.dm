@@ -238,12 +238,12 @@
 	icon_file = 'icons/obj/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage3.json'
 
-/datum/greyscale_config/giftdeliverypackage4
+/datum/greyscale_config/giftdeliverypackage2
 	name = "Gift Package 2"
 	icon_file = 'icons/obj/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage2.json'
 
-/datum/greyscale_config/giftdeliverypackage4
+/datum/greyscale_config/giftdeliverypackage1
 	name = "Gift Package 1 (Smallest)"
 	icon_file = 'icons/obj/storage.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
