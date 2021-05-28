@@ -725,6 +725,8 @@
 #include "code\datums\elements\food\food_trash.dm"
 #include "code\datums\elements\food\processable.dm"
 #include "code\datums\elements\food\venue_price.dm"
+#include "code\datums\event\roster.dm"
+#include "code\datums\event\team.dm"
 #include "code\datums\greyscale\_greyscale_config.dm"
 #include "code\datums\greyscale\greyscale_configs.dm"
 #include "code\datums\greyscale\layer.dm"
