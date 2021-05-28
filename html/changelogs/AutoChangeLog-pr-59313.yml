@@ -1,0 +1,4 @@
+author: "antropod"
+delete-after: True
+changes: 
+  - bugfix: "Fixed reagent multiplication exploit with 1u foam"
