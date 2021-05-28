@@ -9,6 +9,7 @@
 	desc = "Wrap packages with this festive paper to make gifts."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
+	greyscale_config = /datum/greyscale_config/wrap_paper
 	item_flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
