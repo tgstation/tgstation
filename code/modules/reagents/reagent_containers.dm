@@ -27,6 +27,11 @@
 
 	add_initial_reagents()
 
+/obj/item/reagent_containers/examine()
+	. = ..()
+	if(possible_transfer_amounts.len > 1)
+		. += "<span class='notice'>Left-click to increase or right-click to decrease its transfer amount in-hand.</span>"
+
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
@@ -47,31 +52,32 @@
 		reagents.add_reagent_list(list_reagents)
 
 /obj/item/reagent_containers/attack_self(mob/user)
-	if(possible_transfer_amounts.len)
-		var/i=0
-		for(var/A in possible_transfer_amounts)
-			i++
-			if(A == amount_per_transfer_from_this)
-				if(i<possible_transfer_amounts.len)
-					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
-				else
-					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				balloon_alert(user, "Transferring [amount_per_transfer_from_this]u")
-				return
+	if(!possible_transfer_amounts.len)
+		return
+	var/iteration=0
+	for(var/transfer_amount in possible_transfer_amounts)
+		iteration++
+		if(transfer_amount == amount_per_transfer_from_this)
+			if(iteration<possible_transfer_amounts.len)
+				amount_per_transfer_from_this = possible_transfer_amounts[iteration+1]
+			else
+				amount_per_transfer_from_this = possible_transfer_amounts[1]
+			balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
+			return
 
 /obj/item/reagent_containers/attack_self_secondary(mob/user)
 	if(!possible_transfer_amounts.len)
-	    return
-  var/i=0
-  for(var/A in possible_transfer_amounts)
-	  i++
-	  if(A == amount_per_transfer_from_this)
-		  if(i==1)
-			  amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len]
-		  else
-			  amount_per_transfer_from_this = possible_transfer_amounts[i-1]
-		  balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
-		  return TRUE
+		return
+	var/iteration=0
+	for(var/transfer_amount in possible_transfer_amounts)
+		iteration++
+		if(transfer_amount == amount_per_transfer_from_this)
+			if(iteration==1)
+				amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len]
+			else
+				amount_per_transfer_from_this = possible_transfer_amounts[iteration-1]
+			balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
+			return TRUE
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, DO_NOT_SPLASH))
