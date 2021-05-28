@@ -646,6 +646,19 @@ Note: While there has historically been a strong impulse to use associated lists
 ### When passing vars through New() or Initialize()'s arguments, use src.var
 Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
 
+This is very bad:
+```DM
+var/atom/thing
+	var/is_red
+
+var/atom/thing/Initialize(mapload, enable_red)
+	is_red = enable_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, enable_red = TRUE)
+```
+
+Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
 
 This is bad:
 ```DM
@@ -659,7 +672,7 @@ var/atom/thing/Initialize(mapload, _is_red)
 	new /atom/thing(null, _is_red = TRUE)
 ```
 
-`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other setter args.
+`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
 
 This is good:
 ```DM
@@ -673,7 +686,7 @@ var/atom/thing/Initialize(mapload, is_red)
 	new /atom/thing(null, is_red = TRUE)
 ```
 
-setting `is_red` in args is simple, and directly names the variable the argument sets.
+Setting `is_red` in args is simple, and directly names the variable the argument sets.
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
