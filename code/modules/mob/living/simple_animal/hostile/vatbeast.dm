@@ -23,16 +23,12 @@
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
 
-	var/tentacle_coodown = 0
+	var/tentacle_cooldown = 0
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize()
 	. = ..()
 	add_cell_sample()
 	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
-
-/mob/living/simple_animal/hostile/vatbeast/Destroy()
-	. = ..()
-	QDEL_NULL(tentacle_slap)
 
 /mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
@@ -51,12 +47,12 @@
 		return
 
 	if(world.time - tentacle_cooldown < 12 SECONDS)
-		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
+		to_chat(src, "<span class='notice'>This ability is still on cooldown.</span>")
 		return
 
 	visible_message("<span class='warning>[src] slaps [target] with its tentacle!</span>", "<span class='notice'>You slap [target] with your tentacle.</span>")
-	playsound(owner, 'sound/effects/assslap.ogg', 90)
+	playsound(src, 'sound/effects/assslap.ogg', 90)
 	var/atom/throw_target = get_edge_target_turf(target, dir)
 	target.throw_at(throw_target, 6, 4, src)
 	target.apply_damage(30)
-	current_cooldown = world.time + cooldown
+	tentacle_cooldown = world.time
