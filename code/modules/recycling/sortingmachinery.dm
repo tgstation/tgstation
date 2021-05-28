@@ -78,6 +78,9 @@
 			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
+			if(!greyscale_colors)
+				greyscale_config = "/datum/greyscale_config/gift[icon_state].json"
+				set_greyscale(colors = list(WP.base_color,WP.ribbon_color))
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
@@ -266,9 +269,12 @@
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(1))
-			icon_state = "gift[icon_state]"
-			giftwrapped = 1
 			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			giftwrapped = TRUE
+			icon_state = "gift[icon_state]"
+			if(!greyscale_colors)
+				greyscale_config = "/datum/greyscale_config/gift[icon_state].json"
+				set_greyscale(colors = list(WP.base_color,WP.ribbon_color))
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
