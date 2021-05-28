@@ -648,7 +648,7 @@ Using src.var + naming the arguments the same as the var is the most readable an
 
 This is very bad:
 ```DM
-var/atom/thing
+/atom/thing
 	var/is_red
 
 var/atom/thing/Initialize(mapload, enable_red)
@@ -662,7 +662,7 @@ Future coders using this code will have to remember two differently named variab
 
 This is bad:
 ```DM
-var/atom/thing
+/atom/thing
 	var/is_red
 
 var/atom/thing/Initialize(mapload, _is_red)
@@ -676,7 +676,7 @@ var/atom/thing/Initialize(mapload, _is_red)
 
 This is good:
 ```DM
-var/atom/thing
+/atom/thing
 	var/is_red
 
 var/atom/thing/Initialize(mapload, is_red)
