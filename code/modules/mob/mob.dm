@@ -16,7 +16,11 @@
  *
  * qdels any client colours in place on this mob
  *
+ * Clears any refs to the mob inside its current location
+ *
  * Ghostizes the client attached to this mob
+ *
+ * If our mind still exists, clear its current var to prevent harddels
  *
  * Parent call
  */
@@ -38,7 +42,9 @@
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	clear_client_in_contents() //Gotta do this here as well as Logout, since client will be null by the time it gets there, cause of that ghostize
-	ghostize()
+	ghostize() //False, since we're deleting it currently
+	if(mind) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
+		mind.current = null
 	return ..()
 
 
