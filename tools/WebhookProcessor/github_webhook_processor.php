@@ -698,7 +698,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'adds':
 			case 'rscadd':
 				if($item != 'Added new things' && $item != 'Added more things') {
-					$tags[] = 'Feature';
+					$tags[] = 'Mechanic';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}
 				break;
@@ -745,15 +745,9 @@ function checkchangelog($payload, $compile = true) {
 				}
 				break;
 			case 'expansion':
-				if($item != 'expands upon existing features'){
-					$tags[] = 'Expansion';
+				if($item != 'Expands content of an existing feature'){
+					$tags[] = 'Content Expansion';
 					$currentchangelogblock[] = array('type' => 'expansion', 'body' => $item);
-				}
-				break;
-			case 'jobtent':
-				if($item != 'adds new content to job specific features features'){
-					$tags[] = 'Jobtent';
-					$currentchangelogblock[] = array('type' => 'jobtent', 'body' => $item);
 				}
 				break;
 			case 'refactor':

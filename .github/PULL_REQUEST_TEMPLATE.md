@@ -11,10 +11,9 @@
 
 ## Changelog
 :cl:
-add: Added new things
+add: Added new mechanics or gameplay changes
 add: Added more things
-expansion: Expanded an existing thing
-jobtent: Expanded an existing job
+expansion: Expands content of an existing thing
 del: Removed old things
 qol: made something easier to use
 balance: rebalanced something

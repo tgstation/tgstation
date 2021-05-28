@@ -54,7 +54,6 @@ validPrefixes = [
     'imageadd',
     'imagedel',
     'expansion',
-    'jobtent',
     'spellcheck',
     'experiment',
     'balance',
