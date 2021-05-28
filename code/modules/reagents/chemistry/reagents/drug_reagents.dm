@@ -34,6 +34,26 @@
 		M.hallucination += 5
 	..()
 
+/datum/reagent/drug/cannabis
+	name = "Cannabis"
+	description = "A psychoactive drug from the Cannabis plant used for recreational purposes."
+	color = "#059033"
+	overdose_threshold = INFINITY
+	ph = 6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/cannabis/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.apply_status_effect(/datum/status_effect/stoned)
+	if(DT_PROB(0.5, delta_time))
+		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","Your mouth feels dry.","You feel like you could use a glass of water.","Your heart beats quickly.","You feel clumsy.","You crave junk food.", "You move more slowly.")
+		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+	if(DT_PROB(1, delta_time))
+		M.emote(pick("chuckle","smile","laugh","giggle"))
+	M.adjust_nutrition(-0.5 * REM * delta_time) //munchies
+	..()
+	. = TRUE
+
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."

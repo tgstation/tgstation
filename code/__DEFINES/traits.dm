@@ -295,6 +295,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
 /// Special examine if eyes are visible
 #define CULT_EYES "cult_eyes"
+/// Special examine if eyes are visible
+#define BLOODSHOT_EYES "BLOODSHOT_EYES"
 /// This mob should never close UI even if it doesn't have a client
 #define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
 

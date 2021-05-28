@@ -12,8 +12,7 @@
 
 /datum/movespeed_modifier/reagent/monkey_energy
 	multiplicative_slowdown = -0.35
-
-/datum/movespeed_modifier/reagent/changelinghaste
+datum/movespeed_modifier/reagent/changelinghaste
 	multiplicative_slowdown = -0.8
 
 /datum/movespeed_modifier/reagent/methamphetamine
@@ -21,6 +20,9 @@
 
 /datum/movespeed_modifier/reagent/nitryl
 	multiplicative_slowdown = -0.65
+
+/datum/movespeed_modifier/reagent/cannabis
+	multiplicative_slowdown = 0.4
 
 /datum/movespeed_modifier/reagent/freon
 	multiplicative_slowdown = 1.6
