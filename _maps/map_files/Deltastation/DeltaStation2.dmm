@@ -39507,7 +39507,6 @@
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "eMI" = (
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
