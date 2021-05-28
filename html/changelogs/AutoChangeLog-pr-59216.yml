@@ -1,4 +1,0 @@
-author: "norill"
-delete-after: True
-changes: 
-  - bugfix: "fixed backpack firefighter tank nozzle refilling not working in extinguisher mode"

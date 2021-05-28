@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the pda alert using the wrong overlay and displaying an error state"
