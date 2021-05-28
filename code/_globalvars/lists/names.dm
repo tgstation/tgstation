@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(megacarp_last_names, world.file2list("strings/names/megacarp2.t
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(ing_verbs, world.file2list("strings/names/ing_verbs.txt"))
+GLOBAL_LIST_INIT(martial_prefix, world.file2list("strings/names/martial_prefix.txt"))
 GLOBAL_LIST_INIT(adverbs, world.file2list("strings/names/adverbs.txt"))
 GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))
 GLOBAL_LIST_INIT(gross_adjectives,  world.file2list("strings/names/gross_adjectives.txt"))

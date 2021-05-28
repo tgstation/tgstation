@@ -46,12 +46,36 @@
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has enabled anonymous names. THEME: [SSticker.anonymousnames].</span>")
 
+GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
+
+/* Datum singleton initialized by the client proc to hold the naming generation */
+/datum/anonymous_theme
+	///name of the anonymous theme, seen by admins pressing buttons to enable this
+	var/name = "Randomized Names"
+	///announcement text that triggers when you turn on anonymous themes midround.
+	var/announcement_alert = "A recent bureaucratic error in the Organic Resources Department has resulted in a necessary full recall of all identities and names until further notice."
+	///extra non-name related fluff that is optional for admins to enable. One example is the wizard theme giving everyone random robes.
+	var/extra_theming
+
+/datum/anonymous_theme/New(extra_theming = FALSE)
+	. = ..()
+	src.extra_theming = extra_theming
+	if(extra_theming)
+		add_extra_theming()
+	anonymous_all_players()
+
+/datum/anonymous_theme/Destroy(force, ...)
+	. = ..()
+	if(extra_theming)
+		remove_extra_theming()
+	restore_all_players()
+
 /**
  * anonymous_all_players: sets all crewmembers on station anonymous.
  *
- * why is this a proc instead of just part of above? events use this as well.
+ * called when the anonymous theme is created regardless of extra theming
  */
-/proc/anonymous_all_players()
+/datum/anonymous_theme/proc/anonymous_all_players()
 	var/datum/anonymous_theme/theme = SSticker.anonymousnames
 	for(var/mob/living/player in GLOB.player_list)
 		if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
@@ -63,10 +87,22 @@
 			randomize_human(player) //do this first so the special name can be given
 			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
 
-/* Datum singleton initialized by the client proc to hold the naming generation */
-/datum/anonymous_theme
-	var/name = "Randomized Names"
-	var/announcement_alert = "A recent bureaucratic error in the Organic Resources Department has resulted in a necessary full recall of all identities and names until further notice."
+/**
+ * anonymous_all_players: sets all crewmembers on station anonymous.
+ *
+ * called when the anonymous theme is removed regardless of extra theming
+ */
+/datum/anonymous_theme/proc/restore_all_players()
+	var/datum/anonymous_theme/theme = SSticker.anonymousnames
+	for(var/mob/living/player in GLOB.player_list)
+		if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
+			continue
+		if(issilicon(player))
+			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
+		else
+			var/original_name = player.real_name //id will not be changed if you do not do this
+			randomize_human(player) //do this first so the special name can be given
+			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
 
 /**
  * anonymous_name: generates a random name, based off of whatever the round's anonymousnames is set to.
@@ -74,11 +110,12 @@
  * examples:
  * Employee = "Employee Q5460Z"
  * Wizards = "Gulstaff of Void"
+ * Spider Clan = "Initiate Hazuki"
  * Arguments:
- * * M - mob for preferences and gender
+ * * target - mob for preferences and gender
  */
-/datum/anonymous_theme/proc/anonymous_name(mob/M)
-	return M.client.prefs.pref_species.random_name(M.gender,1)
+/datum/anonymous_theme/proc/anonymous_name(mob/target)
+	return target.client.prefs.pref_species.random_name(target.gender,1)
 
 /**
  * anonymous_ai_name: generates a random name, based off of whatever the round's anonymousnames is set to (but for sillycones).
@@ -96,8 +133,8 @@
 	name = "Employees"
 	announcement_alert = "As punishment for this station's poor productivity when compared to neighbor stations, names and identities will be restricted until further notice."
 
-/datum/anonymous_theme/employees/anonymous_name(mob/M)
-	var/is_head_of_staff = (M.mind.assigned_role in GLOB.command_positions)
+/datum/anonymous_theme/employees/anonymous_name(mob/target)
+	var/is_head_of_staff = (target.mind.assigned_role in GLOB.command_positions)
 	var/name = "[is_head_of_staff ? "Manager" : "Employee"] "
 	for(var/i in 1 to 6)
 		if(prob(30) || i == 1)
@@ -115,10 +152,26 @@
 	name = "Wizard Academy"
 	announcement_alert = "Your station has been caught by a Wizard Federation Memetic Hazard. You are not y0urself, and yo% a2E 34!NOT4--- Welcome to the Academy, apprentices!"
 
-/datum/anonymous_theme/wizards/anonymous_name(mob/M)
+/datum/anonymous_theme/wizards/anonymous_name(mob/target)
 	var/wizard_name_first = pick(GLOB.wizard_first)
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	return "[wizard_name_first] [wizard_name_second]"
 
 /datum/anonymous_theme/wizards/anonymous_ai_name(is_ai = FALSE)
 	return "Crystallized Knowledge [is_ai ? "Nexus" : "Sliver"] +[rand(1,99)]" //Could two people roll the same number? Yeah, probably. Do I CARE? Nawww
+
+/datum/anonymous_theme/station
+	name = "Stations?"
+	announcement_alert = "Confirmed level 9 reality error event near [station_name()]. All personnel must try their best to carry on, as to not trigger more reality events by accident."
+
+/datum/anonymous_theme/station/anonymous_name(mob/target)
+	return "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
+
+/datum/anonymous_theme/station/anonymous_ai_name(is_ai = FALSE)
+	var/posibrain_name = pick(GLOB.posibrain_names)
+	if(is_ai)
+		return "Shaolin Templemaster [posibrain_name]"
+	else
+		var/martial_prefix = capitalize(pick(GLOB.martial_prefix))
+		var/martial_style = pick("Monkey", "Tiger", "Viper", "Mantis", "Crane", "Panda", "Bat", "Bear", "Centipede", "Frog")
+		return "\"[martial_prefix] [martial_style]\" [posibrain_name]"
