@@ -1,20 +1,20 @@
 /**
- * The contestant represents one player
+ * The contestant represents one player.
  */
 /datum/contestant
 	/// The ckey we try to match with
 	var/ckey
 	/// Whether or not someone has been associated with this datum
-	var/matched_owner
-
+	var/claimed
+	/// What client
 	var/client/matched_client
-
+	/// What mob (follows the client/player, not the mob), may not be needed
 	var/mob/current_mob
-
+	/// How many rounds this contestant has survived participating in (contestants with the least number of rounds won will be prioritized for being slotted into teams for the next round, so you can't get a bye for multiple rounds)
 	var/rounds_won
-
+	/// Probably unneeded
 	var/rounds_participated
-
+	/// What team datum we're on right now
 	var/datum/event_team/current_team
 
 /datum/contestant/New(new_ckey)
@@ -24,7 +24,7 @@
 	GLOB.global_roster.insert_contestant(user=null, new_kid=src) // check if success?
 	if(!current_mob)
 		return
-	matched_owner = TRUE
+	claimed = TRUE
 	matched_client = current_mob.client
 
 /datum/contestant/Destroy(force, ...)
