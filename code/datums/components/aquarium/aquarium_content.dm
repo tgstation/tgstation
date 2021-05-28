@@ -4,7 +4,7 @@
 	var/datum/aquarium_behaviour/properties
 
 	/// Keeps track of our current aquarium.
-	var/obj/structure/aquarium/current_aquarium
+	var/datum/component/aquarium/current_aquarium
 
 	//This is visual effect holder that will end up in aquarium's vis_contents
 	var/obj/effect/vc_obj
@@ -50,6 +50,10 @@
 
 /datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
+
+	///the lazy way is to make this
+
+
 	var/atom/movable/movable_parent = parent
 	if(istype(movable_parent.loc, /obj/structure/aquarium))
 		on_inserted(movable_parent.loc)
@@ -83,8 +87,10 @@
 	set_vc_base_position()
 	generate_animation()
 
-	//Finally add it to to objects vis_contents
-	current_aquarium.vis_contents |= vc_obj
+	//Finally add it to to objects vis_contents.
+	//also, interesting byond bug here, did you know that /atom doesn't recognize the atom level vis_contents?
+	var/obj/aquarium_atom = current_aquarium.parent
+	aquarium_atom.vis_contents |= vc_obj
 
 /// Aquarium surface changed in some way, we need to recalculate base position and aninmation
 /datum/component/aquarium_content/proc/on_surface_changed()
@@ -107,7 +113,9 @@
 	properties.on_fluid_changed()
 
 /datum/component/aquarium_content/proc/remove_visual_from_aquarium()
-	current_aquarium.vis_contents -= vc_obj
+	//interesting byond bug here, did you know that /atom doesn't recognize the atom level vis_contents?
+	var/obj/aquarium_atom = current_aquarium.parent
+	aquarium_atom.vis_contents -= vc_obj
 	if(base_layer)
 		current_aquarium.free_layer(base_layer)
 

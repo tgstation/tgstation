@@ -385,6 +385,10 @@
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
+///when a turf breaks! ()
+#define COMSIG_TURF_BROKEN "turf_broken"
+///when a turf chars! ()
+#define COMSIG_TURF_BURNED "turf_burned"
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
 #define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"

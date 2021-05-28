@@ -40,11 +40,14 @@
 
 /datum/component/aquarium/Initialize(aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py)
 	. = ..()
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
+	var/atom/aquarium_atom = parent
 	src.aquarium_zone_min_px = aquarium_zone_min_px
 	src.aquarium_zone_max_px = aquarium_zone_max_px
 	src.aquarium_zone_min_py = aquarium_zone_min_py
 	src.aquarium_zone_max_py = aquarium_zone_max_py
-	parent.update_appearance()
+	aquarium_atom.update_appearance()
 
 /datum/component/aquarium/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -54,6 +57,8 @@
 	RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, .proc/on_interact)
 	if(isobj(parent))
 		RegisterSignal(parent, COMSIG_OBJ_BREAK, .proc/on_break)
+	if(isturf(parent))
+		RegisterSignal(parent, list(COMSIG_TURF_BROKEN, COMSIG_TURF_BURNED), .proc/on_break)
 
 /datum/component/aquarium/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -62,7 +67,9 @@
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_CLICK_ALT,
 		COMSIG_ATOM_UI_INTERACT,
-		COMSIG_OBJ_BREAK
+		COMSIG_OBJ_BREAK,
+		COMSIG_TURF_BROKEN,
+		COMSIG_TURF_BURNED
 	))
 
 /**
@@ -75,14 +82,15 @@
  * min_offset + max_offset + 1 = this is used for glass overlay
 */
 /datum/component/aquarium/proc/request_layer(layer_type)
+	var/atom/aquarium_atom = parent
 	switch(layer_type)
 		if(AQUARIUM_LAYER_MODE_BOTTOM)
-			return layer + AQUARIUM_MIN_OFFSET
+			return aquarium_atom.layer + AQUARIUM_MIN_OFFSET
 		if(AQUARIUM_LAYER_MODE_TOP)
-			return layer + AQUARIUM_MAX_OFFSET
+			return aquarium_atom.layer + AQUARIUM_MAX_OFFSET
 		if(AQUARIUM_LAYER_MODE_AUTO)
-			var/chosen_layer = layer + AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
-			while((chosen_layer in used_layers) && (chosen_layer <= layer + AQUARIUM_MAX_OFFSET))
+			var/chosen_layer = aquarium_atom.layer + AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
+			while((chosen_layer in used_layers) && (chosen_layer <= aquarium_atom.layer + AQUARIUM_MAX_OFFSET))
 				chosen_layer += AQUARIUM_LAYER_STEP
 			used_layers += chosen_layer
 			return chosen_layer
@@ -110,9 +118,13 @@
 	if(panel_open)
 		overlays += panel_overlay
 
+	///layer=AQUARIUM_MAX_OFFSET-1
+
 	//Glass overlay goes on top of everything else.
-	if(broken) ? broken_glass_icon_state : glass_icon_state,layer=AQUARIUM_MAX_OFFSET-1)
-	overlays += glass_overlay
+	if(broken)
+		overlays += glass_broken_overlay
+	else
+		overlays += glass_healthy_overlay
 
 ///signal called by parent getting examined
 /datum/component/aquarium/proc/on_examine(datum/source, mob/user, list/examine_text)
@@ -121,30 +133,24 @@
 
 /datum/component/aquarium/proc/on_alt_click(datum/source, mob/user)
 	SIGNAL_HANDLER
+	var/atom/aquarium_atom = parent
 	if(!user.canUseTopic(parent, BE_CLOSE))
-		return ..()
+		return
 	panel_open = !panel_open
-	parent.update_appearance()
+	aquarium_atom.update_appearance()
+	return COMPONENT_CANCEL_CLICK_ALT
 
 ///signal from when the aquarium is attacked with an item
 /datum/component/aquarium/proc/on_attackby(datum/source, obj/item/attacked_with, mob/user)
 	SIGNAL_HANDLER
-
 	var/atom/aquarium_atom = parent
-
 	if(broken && istype(attacked_with, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass = attacked_with
 		if(glass.get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
+			to_chat(user, "<span class='warning'>You need two glass sheets to fix [parent]!</span>")
 			return
 		to_chat(user, "<span class='notice'>You start fixing [parent]...</span>")
-		if(!do_after(user, 2 SECONDS, target = src))
-			user.balloon_alert(user, "interrupted!")
-			return
-		glass.use(2)
-		broken = FALSE
-		obj_integrity = max_integrity
-		aquarium_atom.update_appearance()
+		INVOKE_ASYNC(src, .proc/attempt_fix, user, attacked_with)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(istype(attacked_with, /obj/item/fish_feed))
@@ -153,12 +159,27 @@
 
 	// This signal exists so we common items instead of adding component on init can just register creation of one in response.
 	// This way we can avoid the cost of 9999 aquarium components on rocks that will never see water in their life.
-	SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
-	var/datum/component/aquarium_content/content_component = I.GetComponent(/datum/component/aquarium_content)
-	if(content_component && content_component.is_ready_to_insert(src))
-		if(user.transferItemToLoc(I,src))
-			update_appearance()
+	SEND_SIGNAL(attacked_with, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,aquarium_atom)
+	var/datum/component/aquarium_content/content_component = attacked_with.GetComponent(/datum/component/aquarium_content)
+	if(content_component && content_component.is_ready_to_insert(aquarium_atom))
+		if(user.transferItemToLoc(attacked_with, aquarium_atom))
+			aquarium_atom.update_appearance()
 			return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/aquarium/proc/attempt_fix(mob/user, obj/item/stack/sheet/glass/glass)
+	var/atom/aquarium_atom = parent
+	if(!do_after(user, 2 SECONDS, target = aquarium_atom))
+		user.balloon_alert(user, "interrupted!")
+		return
+	glass.use(2)
+	broken = FALSE
+	if(isobj(aquarium_atom))
+		var/obj/aquarium_obj = aquarium_atom
+		aquarium_obj.obj_integrity = aquarium_obj.max_integrity
+	if(isfloorturf(aquarium_atom))
+		var/turf/open/floor/aquarium_turf = aquarium_atom
+		aquarium_turf.broken = FALSE
+	aquarium_atom.update_appearance()
 
 /datum/component/aquarium/proc/on_interact(datum/source, mob/user)
 	if(!broken && user.pulling && isliving(user.pulling))
@@ -168,12 +189,13 @@
 		if(content_component && content_component.is_ready_to_insert(src))
 			try_to_put_mob_in(user)
 	else if(panel_open)
-		interact(user) //interact with the component instead
+		ui_interact(user) //interact with the component instead
 	else
 		admire(user)
 
 /// Tries to put mob pulled by the user in the aquarium after a delay
 /datum/component/aquarium/proc/try_to_put_mob_in(mob/user)
+	var/atom/aquarium_atom = parent
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
@@ -188,7 +210,7 @@
 				return
 			user.visible_message("<span class='danger'>[user] stuffs [living_pulled] into [src]!</span>")
 			living_pulled.forceMove(src)
-			update_appearance()
+			aquarium_atom.update_appearance()
 
 ///Apply mood bonus depending on aquarium status
 /datum/component/aquarium/proc/admire(mob/user)
@@ -205,11 +227,12 @@
 
 /datum/component/aquarium/ui_data(mob/user)
 	. = ..()
+	var/atom/aquarium_atom = parent
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allow_breeding"] = allow_breeding
 	var/list/content_data = list()
-	for(var/atom/movable/fish in contents)
+	for(var/atom/movable/fish in aquarium_atom.contents)
 		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
 	.["contents"] = content_data
 
@@ -224,6 +247,7 @@
 	. = ..()
 	if(.)
 		return
+	var/atom/aquarium_atom = parent
 	var/mob/user = usr
 	switch(action)
 		if("temperature")
@@ -240,7 +264,7 @@
 			allow_breeding = !allow_breeding
 			. = TRUE
 		if("remove")
-			var/atom/movable/inside = locate(params["ref"]) in contents
+			var/atom/movable/inside = locate(params["ref"]) in aquarium_atom.contents
 			if(inside)
 				if(isitem(inside))
 					user.put_in_hands(inside)
@@ -250,32 +274,35 @@
 
 /datum/component/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	var/atom/aquarium_atom = parent
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Aquarium", name)
+		ui = new(user, src, "Aquarium", aquarium_atom.name)
 		ui.open()
 
-/datum/component/aquarium/on_break(damage_flag)
-	. = ..()
+///signal called from various ways an atom "breaks" from a gameplay standpoint
+/datum/component/aquarium/proc/on_break(damage_flag)
+	SIGNAL_HANDLER
 	if(!broken)
 		aquarium_smash()
 
 /datum/component/aquarium/proc/aquarium_smash()
 	broken = TRUE
+	var/atom/aquarium_atom = parent
 	var/possible_destinations_for_fish = list()
-	var/droploc = drop_location()
+	var/droploc = aquarium_atom.drop_location()
 	if(isturf(droploc))
 		possible_destinations_for_fish = get_adjacent_open_turfs(droploc)
 	else
 		possible_destinations_for_fish = list(droploc)
 	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
-	for(var/atom/movable/fish in contents)
+	for(var/atom/movable/fish in aquarium_atom.contents)
 		fish.forceMove(pick(possible_destinations_for_fish))
 	if(fluid_type != AQUARIUM_FLUID_AIR)
 		var/datum/reagents/reagent_splash = new()
 		reagent_splash.add_reagent(/datum/reagent/water, 30)
 		chem_splash(droploc, 3, list(reagent_splash))
-	update_appearance()
+	aquarium_atom.update_appearance()
 
 #undef AQUARIUM_LAYER_STEP
 #undef AQUARIUM_MIN_OFFSET

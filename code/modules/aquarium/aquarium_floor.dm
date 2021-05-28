@@ -3,7 +3,7 @@
 /turf/open/floor/aquarium
 	name = "aquarium floor"
 	desc = "Ooooh! Look at the fishies!"
-	icon = 'icons/obj/aquarium_structure.dmi'
+	icon = 'icons/obj/aquarium/aquarium_floor.dmi'
 	icon_state = "base"
 	intact = FALSE //this means wires go on top
 	footstep = FOOTSTEP_PLATING

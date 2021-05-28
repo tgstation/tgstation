@@ -4,7 +4,7 @@
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "Autogenerates nutritious fish feed based on sample inside."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/aquarium_items.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -93,14 +93,28 @@
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/aquarium_items.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/aquarium_kit/attack_self(mob/user)
 	. = ..()
-	to_chat(user,"<span class='notice'>There's instruction and tools necessary to build aquarium inside. All you need is to start crafting.</span>")
+	examine(user)
 
+/obj/item/aquarium_kit/examine(mob/user)
+	. = ..()
+	. += "<span class='bold notice'>For building a traditional aquarium tank structure:</span>"
+	. += "<span class='notice'>There's instruction and tools necessary to build aquarium inside. All you need is to start crafting.</span>"
+	. += "<span class='notice'>For building an aquarium tank embedded into the floor:</span>"
+	. += "<span class='notice'>Try to use the kit on some glass flooring.</span>"
+
+/obj/item/aquarium_kit/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(istype(target, /turf/open/floor/glass))
+		var/turf/open/target_turf = target
+		balloon_alert(user, "aquarium kit used!")
+		target_turf.ChangeTurf(/turf/open/floor/aquarium, CHANGETURF_INHERIT_AIR)
+		qdel(src)
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
