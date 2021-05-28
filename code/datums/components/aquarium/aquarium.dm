@@ -21,16 +21,19 @@
 	var/allow_breeding = FALSE
 	///when the thing this aquarium is attached to is broken, basically. means different things for different types
 	var/broken = FALSE
-	///This is the area where fish can swim
+	///if the panel is open for the aquarium
+	var/panel_open = FALSE
 
+	///This is the area where fish can swim
 	var/aquarium_zone_min_px
 	var/aquarium_zone_max_px
 	var/aquarium_zone_min_py
 	var/aquarium_zone_max_py
 
+	///replacement for parent's contents list as turfs store objects on themselves, not in themselves.
+	var/list/aquarium_contents = list()
+
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
-	///if the panel is open for the aquarium
-	var/panel_open = TRUE
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 	///number of living fish in the tank

@@ -1,5 +1,4 @@
 
-
 /turf/open/floor/aquarium
 	name = "aquarium floor"
 	desc = "Ooooh! Look at the fishies!"
@@ -14,6 +13,10 @@
 /turf/open/floor/aquarium/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/aquarium, 2, 31, 2, 31)
+
+/turf/open/floor/aquarium/LateInitialize()
+	. = ..()
+	AddElement(/datum/element/turf_z_transparency, TRUE)
 
 /turf/open/floor/aquarium/setup_broken_states()
 	return list("base") //the aquarium glass will be cracked instead of the floor changing

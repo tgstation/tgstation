@@ -51,7 +51,7 @@
 /datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 
-	///the lazy way is to make this
+	///the lazy way is to make this to get component, i hate that so instead this should be handled on aquarium component's attackby
 
 
 	var/atom/movable/movable_parent = parent
@@ -88,8 +88,7 @@
 	generate_animation()
 
 	//Finally add it to to objects vis_contents.
-	//also, interesting byond bug here, did you know that /atom doesn't recognize the atom level vis_contents?
-	var/obj/aquarium_atom = current_aquarium.parent
+	var/atom/movable/aquarium_atom = current_aquarium.parent
 	aquarium_atom.vis_contents |= vc_obj
 
 /// Aquarium surface changed in some way, we need to recalculate base position and aninmation
@@ -113,8 +112,7 @@
 	properties.on_fluid_changed()
 
 /datum/component/aquarium_content/proc/remove_visual_from_aquarium()
-	//interesting byond bug here, did you know that /atom doesn't recognize the atom level vis_contents?
-	var/obj/aquarium_atom = current_aquarium.parent
+	var/atom/movable/aquarium_atom = current_aquarium.parent
 	aquarium_atom.vis_contents -= vc_obj
 	if(base_layer)
 		current_aquarium.free_layer(base_layer)
