@@ -320,6 +320,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
 
+/// Trait used by fugu glands to avoid double buffing
+#define TRAIT_FUGU_GLANDED "fugu_glanded"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
