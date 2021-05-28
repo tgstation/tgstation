@@ -143,11 +143,10 @@
 	SIGNAL_HANDLER
 	remove_circuit()
 
-/datum/component/shell/proc/on_circuit_add_component(datum/source, obj/item/circuit_component/added_comp)
+/datum/component/shell/proc/on_circuit_add_component_manually(datum/source, obj/item/circuit_component/added_comp)
 	SIGNAL_HANDLER
 
-	if (!added_comp.insertable_through_shells)
-		return COMPONENT_CANCEL_ADD_COMPONENT
+	return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.
@@ -161,7 +160,7 @@
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
-	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT, .proc/on_circuit_add_component)
+	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
 	attached_circuit.set_shell(parent)
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
@@ -188,17 +187,15 @@
 		to_remove.moveToNullspace()
 	attached_circuit = null
 
-/datum/component/shell/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
+/datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER
 
-	var/atom/atom_parent = parent
-
 	if (!(shell_flags & SHELL_FLAG_USB_PORT))
-		atom_parent.balloon_alert(user, "this shell has no usb ports")
+		source.balloon_alert(user, "this shell has no usb ports")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (isnull(attached_circuit))
-		atom_parent.balloon_alert(user, "no circuit inside")
+		source.balloon_alert(user, "no circuit inside")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	usb_cable.attached_circuit = attached_circuit

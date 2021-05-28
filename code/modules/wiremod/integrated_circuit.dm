@@ -49,7 +49,7 @@
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/circuit_component))
-		add_component(I, user)
+		add_component_manually(I, user)
 		return
 
 	if(istype(I, /obj/item/stock_parts/cell))
@@ -135,6 +135,15 @@
 
 	if(shell)
 		to_add.register_shell(shell)
+
+/**
+ * Adds a component to the circuitboard through a manual action.
+ */
+/obj/item/integrated_circuit/proc/add_component_manually(obj/item/circuit_component/to_add, mob/living/user)
+	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
+		return
+
+	add_component(to_add, user)
 
 /obj/item/integrated_circuit/proc/component_move_handler(obj/item/circuit_component/source)
 	SIGNAL_HANDLER

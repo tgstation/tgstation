@@ -1290,6 +1290,10 @@
 	/// Cancels adding the component to the circuit.
 	#define COMPONENT_CANCEL_ADD_COMPONENT (1<<0)
 
+/// Sent when a [/obj/item/circuit_component] is added to a circuit manually, by putting the item inside directly.
+/// Accepts COMPONENT_CANCEL_ADD_COMPONENT.
+#define COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY "circuit_add_component_manually"
+
 /// Sent when a circuit is removed from its shell
 #define COMSIG_CIRCUIT_SHELL_REMOVED "circuit_shell_removed"
 
