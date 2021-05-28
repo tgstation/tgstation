@@ -701,3 +701,44 @@
       opening.
   norill:
   - bugfix: fixed check plumbing admin verb
+2021-05-28:
+  Fikou:
+  - qol: the borg disabler cooler only is in tech places if secborgs arent disabled
+  InsaneRed:
+  - bugfix: the extra vent on deltastations incinerator has been removed
+  - bugfix: Deltastations kitchen's privacy shutters work again
+  - bugfix: Thermomachines across all maps have now been properly linked to waste
+      and will work properly now. Trit huffers rejoice
+  - bugfix: The SM pipe on metastation will no longer connect to waste and burn up
+      the entire mix if your newly-chosen engineer friend accidently uses a grey pipe.
+  - bugfix: Box whiteship now has a proper thermomachine setup for its cryo.
+  - bugfix: Metastations xenobiology freezer is now properly connected.
+  - bugfix: Icebox Supermatter setup's thermomachines are no longer connected to the
+      injector and should no longer empty all of waste.
+  - bugfix: Fixes up some randomly visible adaptors on metastation toxins and connects
+      its freezer to waste.
+  - bugfix: Kilostation's toxin freezers are now connected properly.
+  - bugfix: Deltastation's supply freezer is now connected properly.
+  - bugfix: Metastation's supply freezer is now connected properly.
+  - bugfix: Tramstation's toxin freezers are now linked up to waste correctly
+  - bugfix: Icebox N2 to pure pipe is now named correctly
+  - bugfix: Fixed the duplicate piping infront of the n2 pipe on icebox
+  Maurukas:
+  - bugfix: Some debris leftover from extending Kilostation have been cleared
+  Melbert:
+  - rscadd: GAGS Lizard Plushes. Now, lizard plushes get a randomly generated lizard
+      color when they're made.
+  Ryll/Shaps:
+  - bugfix: Embeddable items like ninja stars can once again embed in people
+  Skoglol:
+  - balance: Powersinks now generate heat when absorbing energy, and are a lot easier
+      to counter with the SM than before.
+  - bugfix: Organ damage messages are now only sent if you are conscious.
+  Watermelon914:
+  - bugfix: Blob camera no longer falls through zlevels.
+  - code_imp: Added an optimization to the input subsystem.
+  cacogen:
+  - bugfix: Human burgers can name themselves after their ingredient sources again
+  vincentiusvin:
+  - bugfix: Some duplicate pipes in kilo atmospherics have been fixed.
+  - qol: Various piping improvements in kilo atmospherics.
