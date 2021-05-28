@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Some screwdriver inhand icons have been fixed to not show an error"
+  - bugfix: "Some prison jumpsuit inhand icons have been fixed to not show an error"
