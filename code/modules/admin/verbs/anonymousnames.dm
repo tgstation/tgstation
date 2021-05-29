@@ -30,8 +30,8 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	var/alert_players = "No"
 	if(SSticker.current_state > GAME_STATE_PREGAME) //before anonnames is done, for asking a sleep
 		if(initial(chosen_theme.extras_enabled))
-			extras_enabled = tgui_alert(usr, extras_enabled, "2016 admins didn't miss roundstart", list("Yes", "No"))
-		alert_players = tgui_alert(usr, "Alert crew? These are IC Themed FROM centcom.", "2016 admins didn't miss roundstart", list("Yes", "No"))
+			extras_enabled = tgui_alert(usr, extras_enabled, "extras", list("Yes", "No"))
+		alert_players = tgui_alert(usr, "Alert crew? These are IC Themed FROM centcom.", "announcement", list("Yes", "No"))
 	//turns "Yes" and "No" into TRUE and FALSE
 	extras_enabled = extras_enabled == "Yes"
 	alert_players = alert_players == "Yes"
