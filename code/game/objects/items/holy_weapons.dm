@@ -573,6 +573,10 @@
 	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches")
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 
+/obj/item/nullrod/hammer/Initialize()
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
@@ -622,6 +626,10 @@
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
 	hitsound = 'sound/weapons/blade1.ogg'
+
+/obj/item/nullrod/pride_hammer/Initialize()
+	. = ..()
+	AddElement(/datum/element/kneejerk)
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()

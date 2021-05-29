@@ -1367,7 +1367,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ux" = (
-/obj/item/toy/plush/lizardplushie{
+/obj/item/toy/plush/lizard_plushie/green{
 	name = "Soaks-The-Rays"
 	},
 /turf/open/floor/carpet/orange,

@@ -133,11 +133,8 @@
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, tanktype) && target.Adjacent(user))
-		var/safety_save = safety
-		safety = TRUE
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
-			safety = safety_save
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
@@ -148,7 +145,6 @@
 				R.cooling_temperature = cooling_power
 		else
 			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")
-		safety = safety_save
 		return TRUE
 	else
 		return FALSE

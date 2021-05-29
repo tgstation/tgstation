@@ -190,6 +190,7 @@
 	ui_interact(user)
 
 /mob/proc/unset_machine()
+	SIGNAL_HANDLER
 	if(!machine)
 		return
 	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)

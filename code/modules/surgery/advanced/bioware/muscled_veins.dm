@@ -30,8 +30,8 @@
 	return ..()
 
 /datum/bioware/muscled_veins
-	name = "Threaded Veins"
-	desc = "The circulatory system is woven into a mesh, severely reducing the amount of blood lost from wounds."
+	name = "Muscled Veins"
+	desc = "The circulatory system is affixed with a muscled membrane, allowing the veins to pump blood without the need for a heart."
 	mod_type = BIOWARE_CIRCULATION
 
 /datum/bioware/muscled_veins/on_gain()

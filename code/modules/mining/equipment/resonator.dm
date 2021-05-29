@@ -101,6 +101,7 @@
 	resonance_damage *= damage_multiplier
 
 /obj/effect/temp_visual/resonance/proc/burst()
+	SIGNAL_HANDLER
 	rupturing = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/resonance_crush(T)
