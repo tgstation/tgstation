@@ -131,7 +131,7 @@
 	var/obj/item/thrown_thing = carbon_thrower.get_active_held_item()
 	if(!isitem(thrown_thing))
 		return
-	if(blackboard[BB_FETCH_IGNORE_LIST][thrown_thing])
+	if(blackboard[BB_FETCH_IGNORE_LIST][WEAKREF(thrown_thing)])
 		return
 
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, .proc/listen_throw_land)
@@ -160,7 +160,7 @@
 			befriend(user)
 		// if the dog has something in their mouth that they're not bringing to someone for whatever reason, have them drop it when pet by a friend
 		var/list/friends = blackboard[BB_DOG_FRIENDS]
-		if(blackboard[BB_SIMPLE_CARRY_ITEM] && !current_movement_target && friends[user])
+		if(blackboard[BB_SIMPLE_CARRY_ITEM] && !current_movement_target && friends[WEAKREF(user)])
 			var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 			pawn.visible_message("<span='danger'>[pawn] drops [carried_item] at [user]'s feet!</span>")
 			// maybe have a dedicated proc for dropping things
@@ -170,18 +170,19 @@
 /// Someone is being nice to us, let's make them a friend!
 /datum/ai_controller/dog/proc/befriend(mob/living/new_friend)
 	var/list/friends = blackboard[BB_DOG_FRIENDS]
-	if(friends[new_friend])
+	var/datum/weak_reference/friend_ref = new_friend
+	if(friends[friend_ref])
 		return
 	if(in_range(pawn, new_friend))
 		new_friend.visible_message("<b>[pawn]</b> licks at [new_friend] in a friendly manner!", "<span class='notice'>[pawn] licks at you in a friendly manner!</span>")
-	friends[new_friend] = TRUE
+	friends[friend_ref] = TRUE
 	RegisterSignal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
 	RegisterSignal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
 
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/dog/proc/unfriend(mob/living/ex_friend)
 	var/list/friends = blackboard[BB_DOG_FRIENDS]
-	friends -= ex_friend
+	friends -= WEAKREF(ex_friend)
 	UnregisterSignal(ex_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 
 /// Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend
@@ -191,7 +192,7 @@
 	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 	if(carried_item)
 		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
-	if(blackboard[BB_DOG_FRIENDS][user])
+	if(blackboard[BB_DOG_FRIENDS][WEAKREF(user)])
 		var/mob/living/living_pawn = pawn
 		if(!IS_DEAD_OR_INCAP(living_pawn))
 			examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
@@ -216,7 +217,7 @@
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
-	if(!istype(clicker) || !blackboard[BB_DOG_FRIENDS][clicker])
+	if(!istype(clicker) || !blackboard[BB_DOG_FRIENDS][WEAKREF(clicker)])
 		return
 	. = COMPONENT_CANCEL_CLICK_ALT
 	INVOKE_ASYNC(src, .proc/command_radial, clicker)
@@ -246,7 +247,7 @@
 /datum/ai_controller/dog/proc/check_verbal_command(mob/speaker, speech_args)
 	SIGNAL_HANDLER
 
-	if(!blackboard[BB_DOG_FRIENDS][speaker])
+	if(!blackboard[BB_DOG_FRIENDS][WEAKREF(speaker)])
 		return
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
@@ -327,7 +328,7 @@
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!</span>")
 			current_movement_target = pointed_movable
-			blackboard[BB_DOG_HARASS_TARGET] = pointed_movable
+			blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(pointed_movable)
 			if(living_pawn.buckled)
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/harass)
