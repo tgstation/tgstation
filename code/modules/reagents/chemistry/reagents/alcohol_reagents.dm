@@ -1146,7 +1146,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink from Valhalla."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethan/mead/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/mead/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
     holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
     if(DT_PROB(33, delta_time))
         M.adjustBruteLoss(-1, 0)
@@ -2529,4 +2529,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Godmother"
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
