@@ -651,7 +651,7 @@ This is very bad:
 /atom/thing
 	var/is_red
 
-var/atom/thing/Initialize(mapload, enable_red)
+/atom/thing/Initialize(mapload, enable_red)
 	is_red = enable_red
 
 /proc/make_red_thing()
@@ -665,7 +665,7 @@ This is bad:
 /atom/thing
 	var/is_red
 
-var/atom/thing/Initialize(mapload, _is_red)
+/atom/thing/Initialize(mapload, _is_red)
 	is_red = _is_red
 
 /proc/make_red_thing()
@@ -679,7 +679,7 @@ This is good:
 /atom/thing
 	var/is_red
 
-var/atom/thing/Initialize(mapload, is_red)
+/atom/thing/Initialize(mapload, is_red)
 	src.is_red = is_red
 
 /proc/make_red_thing()
