@@ -74,11 +74,11 @@
 
 	new_snapshot.remaining_threat = mid_round_budget
 	new_snapshot.time = world.time
-	new_snapshot.alive_players = current_players[CURRENT_LIVING_PLAYERS].len
-	new_snapshot.dead_players = current_players[CURRENT_DEAD_PLAYERS].len
-	new_snapshot.observers = current_players[CURRENT_OBSERVERS].len
+	new_snapshot.alive_players = GLOB.alive_player_list.len
+	new_snapshot.dead_players = GLOB.dead_player_list.len
+	new_snapshot.observers = GLOB.current_observers_list.len
 	new_snapshot.total_players = new_snapshot.alive_players + new_snapshot.dead_players + new_snapshot.observers
-	new_snapshot.alive_antags = current_players[CURRENT_LIVING_ANTAGS].len
+	new_snapshot.alive_antags = GLOB.current_living_antags.len
 	new_snapshot.ruleset_chosen = new /datum/dynamic_snapshot_ruleset(ruleset_chosen)
 
 	LAZYADD(snapshots, new_snapshot)

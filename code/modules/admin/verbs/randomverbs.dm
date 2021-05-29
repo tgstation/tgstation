@@ -81,52 +81,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_mod_antag_rep(client/C in GLOB.clients, operation)
-	set category = "null"
-	set name = "Modify Antagonist Reputation"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/msg = ""
-	var/log_text = ""
-
-	if(operation == "zero")
-		log_text = "Set to 0"
-		SSpersistence.antag_rep -= C.ckey
-	else
-		var/prompt = "Please enter the amount of reputation to [operation]:"
-
-		if(operation == "set")
-			prompt = "Please enter the new reputation value:"
-
-		msg = input("Message:", prompt) as num|null
-
-		if (!msg)
-			return
-
-		var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
-
-		if(operation == "set")
-			log_text = "Set to [num2text(msg)]"
-			SSpersistence.antag_rep[C.ckey] = max(0, min(msg, ANTAG_REP_MAXIMUM))
-		else if(operation == "add")
-			log_text = "Added [num2text(msg)]"
-			SSpersistence.antag_rep[C.ckey] = min(SSpersistence.antag_rep[C.ckey]+msg, ANTAG_REP_MAXIMUM)
-		else if(operation == "subtract")
-			log_text = "Subtracted [num2text(msg)]"
-			SSpersistence.antag_rep[C.ckey] = max(SSpersistence.antag_rep[C.ckey]-msg, 0)
-		else
-			to_chat(src, "Invalid operation for antag rep modification: [operation] by user [key_name(usr)]", confidential = TRUE)
-			return
-
-		if(SSpersistence.antag_rep[C.ckey] <= 0)
-			SSpersistence.antag_rep -= C.ckey
-
-	log_admin("[key_name(usr)]: Modified [key_name(C)]'s antagonist reputation [log_text]")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)]: Modified [key_name(C)]'s antagonist reputation ([log_text])</span>")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Modify Antagonist Reputation") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/cmd_admin_world_narrate()
 	set category = "Admin.Events"
 	set name = "Global Narrate"
@@ -1037,7 +991,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /datum/admins/proc/modify_goals()
 	var/dat = ""
-	for(var/datum/station_goal/S in SSticker.mode.station_goals)
+	for(var/datum/station_goal/S in GLOB.station_goals)
 		dat += "[S.name] - <a href='?src=[REF(S)];[HrefToken()];announce=1'>Announce</a> | <a href='?src=[REF(S)];[HrefToken()];remove=1'>Remove</a><br>"
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
