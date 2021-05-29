@@ -139,11 +139,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/datum/excited_group/stashed_group = excited_group
 		. = ..() //If path == type this will return us, don't bank on making a new type
 		if (!.) // changeturf failed or didn't do anything
-			QDEL_NULL(stashed_air)
 			return
 		var/turf/open/newTurf = .
 		newTurf.air.copy_from(stashed_air)
-		QDEL_NULL(stashed_air)
 		newTurf.excited = stashed_state
 		newTurf.excited_group = stashed_group
 		#ifdef VISUALIZE_ACTIVE_TURFS
