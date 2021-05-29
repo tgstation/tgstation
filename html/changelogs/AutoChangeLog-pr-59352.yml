@@ -1,0 +1,6 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Smoking no longer spills spaghetti from your pockets"
+  - bugfix: "Lit cigarettes no longer keep falling off"
+  - spellcheck: "Removed extra \"the\" from item knockdown messages"
