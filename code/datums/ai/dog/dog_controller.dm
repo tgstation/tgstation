@@ -170,7 +170,7 @@
 /// Someone is being nice to us, let's make them a friend!
 /datum/ai_controller/dog/proc/befriend(mob/living/new_friend)
 	var/list/friends = blackboard[BB_DOG_FRIENDS]
-	var/datum/weak_reference/friend_ref = new_friend
+	var/datum/weak_reference/friend_ref = WEAKREF(new_friend)
 	if(friends[friend_ref])
 		return
 	if(in_range(pawn, new_friend))
