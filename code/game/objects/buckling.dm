@@ -156,7 +156,7 @@
 	if(anchored)
 		REMOVE_TRAIT(buckled_mob, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 	if(!length(buckled_mobs))
-		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
+		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
 	post_unbuckle_mob(.)
