@@ -28,6 +28,8 @@ GLOBAL_VAR(test_log)
 	//internal shit
 	var/focus = FALSE
 	var/succeeded = TRUE
+	//Do we have our own handling?
+	var/snowflake = FALSE
 	var/list/allocated
 	var/list/fail_reasons
 
@@ -78,43 +80,51 @@ GLOBAL_VAR(test_log)
 	allocated += instance
 	return instance
 
+/proc/RunUnitTest(test_path, list/test_results)
+	var/datum/unit_test/test = new test_path
+
+	GLOB.current_test = test
+	var/duration = REALTIMEOFDAY
+
+	test.Run()
+
+	duration = REALTIMEOFDAY - duration
+	GLOB.current_test = null
+	GLOB.failed_any_test |= !test.succeeded
+
+	var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [test_path] [duration / 10]s")
+	var/list/fail_reasons = test.fail_reasons
+
+	for(var/J in 1 to LAZYLEN(fail_reasons))
+		log_entry += "\tREASON #[J]: [fail_reasons[J]]"
+	var/message = log_entry.Join("\n")
+	log_test(message)
+
+	test_results[test_path] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = test_path)
+
+	qdel(test)
+
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	var/tests_to_run = subtypesof(/datum/unit_test)
+	var/list/tests_to_run = subtypesof(/datum/unit_test)
 	for (var/_test_to_run in tests_to_run)
 		var/datum/unit_test/test_to_run = _test_to_run
+		if(initial(test_to_run.snowflake))
+			tests_to_run -= test_to_run
+			continue
 		if (initial(test_to_run.focus))
 			tests_to_run = list(test_to_run)
 			break
 
 	var/list/test_results = list()
 
-	for(var/I in tests_to_run)
-		var/datum/unit_test/test = new I
-
-		GLOB.current_test = test
-		var/duration = REALTIMEOFDAY
-
-		test.Run()
-
-		duration = REALTIMEOFDAY - duration
-		GLOB.current_test = null
-		GLOB.failed_any_test |= !test.succeeded
-
-		var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [I] [duration / 10]s")
-		var/list/fail_reasons = test.fail_reasons
-
-		for(var/J in 1 to LAZYLEN(fail_reasons))
-			log_entry += "\tREASON #[J]: [fail_reasons[J]]"
-		var/message = log_entry.Join("\n")
-		log_test(message)
-
-		test_results[I] = list("status" = test.succeeded ? UNIT_TEST_PASSED : UNIT_TEST_FAILED, "message" = message, "name" = I)
-
-		qdel(test)
-
+	for(var/unit_path in tests_to_run)
+		RunUnitTest(unit_path, test_results)
 		CHECK_TICK
+
+	//Fuck you, fight me
+	RunUnitTest(/datum/unit_test/del_test, test_results)
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)
