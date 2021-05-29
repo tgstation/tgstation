@@ -15,8 +15,8 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
-	var/base_color = "#CC0000"
-	var/ribbon_color = "#009900"
+	var/base_color = "#00FF00"
+	var/ribbon_color = "#FF0000"
 
 /obj/item/stack/wrapping_paper/Initialize()
 	.=..()
@@ -29,9 +29,9 @@
 
 		//If colors are too dark, set to original colors
 		if(ReadHSV(temp_base_hsv)[3] < ReadHSV("7F7F7F")[3])
-			generated_base_color = "#009900"
+			generated_base_color = "#00FF00"
 		if(ReadHSV(temp_ribbon_hsv)[3] < ReadHSV("7F7F7F")[3])
-			generated_ribbon_color = "#CC0000"
+			generated_ribbon_color = "#FF0000"
 
 		//Set layers to these colors, base then ribbon
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
@@ -40,7 +40,7 @@
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
-	greyscale_colors = "#009900#CC0000"
+	greyscale_colors = "#00FF00#FF0000"
 
 /obj/item/stack/wrapping_paper/use(used, transfer)
 	var/turf/T = get_turf(src)
