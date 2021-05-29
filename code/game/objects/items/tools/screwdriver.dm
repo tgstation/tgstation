@@ -50,8 +50,7 @@
 /obj/item/screwdriver/Initialize()
 	if(random_color)
 		var/our_color = pick(screwdriver_colors)
-		set_greyscale_colors(list(screwdriver_colors[our_color]))
-		inhand_icon_state = null
+		set_greyscale(colors=list(screwdriver_colors[our_color]))
 		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	. = ..()
 	AddElement(/datum/element/eyestab)
@@ -71,6 +70,8 @@
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
@@ -95,6 +96,8 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.7
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/screwdriver/power/examine()
 	. = ..()

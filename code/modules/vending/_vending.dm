@@ -939,7 +939,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item = new R.product_path(get_turf(src))
 	if(greyscale_colors)
-		vended_item.set_greyscale_colors(greyscale_colors)
+		vended_item.set_greyscale(colors=greyscale_colors)
 	R.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")

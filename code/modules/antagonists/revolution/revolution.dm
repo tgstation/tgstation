@@ -549,8 +549,5 @@
 	heads_report += "</table>"
 	return common_part + heads_report
 
-/datum/team/revolution/is_gamemode_hero()
-	return SSticker.mode.name == "revolution"
-
 #undef DECONVERTER_STATION_WIN
 #undef DECONVERTER_REVS_WIN

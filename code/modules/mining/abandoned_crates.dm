@@ -182,7 +182,7 @@
 		if(75 to 76)
 			new /obj/item/bikehorn/airhorn(src)
 		if(77 to 78)
-			new /obj/item/toy/plush/lizardplushie(src)
+			new /obj/item/toy/plush/lizard_plushie(src)
 		if(79 to 80)
 			new /obj/item/stack/sheet/mineral/bananium(src, 10)
 		if(81 to 82)
