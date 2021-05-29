@@ -16,7 +16,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 /datum/triple_ai_controller/proc/on_occupations_divided(datum/source)
 	SIGNAL_HANDLER
 
-	for(var/datum/job/ai/ai_datum in SSJob.occupations)
+	for(var/datum/job/ai/ai_datum in SSjob.occupations)
 		ai_datum.spawn_positions = 3
 	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 		secondary_ai_spawn.latejoin_active = TRUE
@@ -40,6 +40,9 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 		to_chat(usr, "Unable to locate the AI job", confidential = TRUE)
 		return
 
-	GLOB.triple_ai_controller = new()
+	if(!GLOB.triple_ai_controller)
+		GLOB.triple_ai_controller = new()
+	else
+		QDEL_NULL(GLOB.triple_ai_controller)
 	to_chat(usr, "There will [GLOB.triple_ai_controller ? "" : "not"] be an AI Triumvirate at round start.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has toggled [GLOB.triple_ai_controller ? "on" : "off"] triple AIs at round start.</span>")
