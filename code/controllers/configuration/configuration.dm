@@ -42,7 +42,6 @@
 	if(entries)
 		CRASH("/datum/controller/configuration/Load() called more than once!")
 	InitEntries()
-	LoadModes()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
 		for(var/I in legacy_configs)
@@ -221,35 +220,6 @@
 		return
 	return E.ValidateAndSet("[new_val]")
 
-/datum/controller/configuration/proc/LoadModes()
-	gamemode_cache = typecacheof(/datum/game_mode, TRUE)
-	modes = list()
-	mode_names = list()
-	mode_reports = list()
-	mode_false_report_weight = list()
-	votable_modes = list()
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	for(var/T in gamemode_cache)
-		// I wish I didn't have to instance the game modes in order to look up
-		// their information, but it is the only way (at least that I know of).
-		var/datum/game_mode/M = new T()
-
-		if(M.config_tag)
-			if(!(M.config_tag in modes)) // ensure each mode is added only once
-				modes += M.config_tag
-				mode_names[M.config_tag] = M.name
-				probabilities[M.config_tag] = M.probability
-				mode_reports[M.report_type] = M.generate_report()
-				if(probabilities[M.config_tag]>0)
-					mode_false_report_weight[M.report_type] = M.false_report_weight
-				else
-					//"impossible" modes will still falsly show up occasionally, else they'll stick out like a sore thumb if an admin decides to force a disabled gamemode.
-					mode_false_report_weight[M.report_type] = min(1, M.false_report_weight)
-				if(M.votable)
-					votable_modes += M.config_tag
-		qdel(M)
-	votable_modes += "secret"
-
 /datum/controller/configuration/proc/LoadMOTD()
 	motd = file2text("[directory]/motd.txt")
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
@@ -341,71 +311,6 @@ Example config:
 				currentmap = null
 			else
 				log_config("Unknown command in map vote config: '[command]'")
-
-
-/datum/controller/configuration/proc/pick_mode(mode_name)
-	// I wish I didn't have to instance the game modes in order to look up
-	// their information, but it is the only way (at least that I know of).
-	// ^ This guy didn't try hard enough
-	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = T
-		var/ct = initial(M.config_tag)
-		if(ct && ct == mode_name)
-			return new T
-	return new /datum/game_mode/dynamic
-
-/datum/controller/configuration/proc/get_runnable_modes()
-	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
-	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
-	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = new T()
-		if(!(M.config_tag in modes))
-			qdel(M)
-			continue
-		if(probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if(min_pop[M.config_tag])
-			M.required_players = min_pop[M.config_tag]
-		if(max_pop[M.config_tag])
-			M.maximum_players = max_pop[M.config_tag]
-		if(M.can_start())
-			var/final_weight = probabilities[M.config_tag]
-			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
-				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
-				var/adjustment = 0
-				while(recent_round)
-					adjustment += repeated_mode_adjust[recent_round]
-					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
-				final_weight *= ((100-adjustment)/100)
-			runnable_modes[M] = final_weight
-	return runnable_modes
-
-/datum/controller/configuration/proc/get_runnable_midround_modes(crew)
-	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
-	for(var/T in (gamemode_cache - SSticker.mode.type))
-		var/datum/game_mode/M = new T()
-		if(!(M.config_tag in modes))
-			qdel(M)
-			continue
-		if(probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if(min_pop[M.config_tag])
-			M.required_players = min_pop[M.config_tag]
-		if(max_pop[M.config_tag])
-			M.maximum_players = max_pop[M.config_tag]
-		if(M.required_players <= crew)
-			if(M.maximum_players >= 0 && M.maximum_players < crew)
-				continue
-			runnable_modes[M] = probabilities[M.config_tag]
-	return runnable_modes
 
 /datum/controller/configuration/proc/LoadChatFilter()
 	var/list/in_character_filter = list()

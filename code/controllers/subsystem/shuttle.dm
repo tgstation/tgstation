@@ -325,7 +325,7 @@ SUBSYSTEM_DEF(shuttle)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
-	if(!emergency || emergency.mode != SHUTTLE_CALL || adminEmergencyNoRecall || emergencyNoRecall || SSticker.mode.name == "meteor")
+	if(!emergency || emergency.mode != SHUTTLE_CALL || adminEmergencyNoRecall || emergencyNoRecall)
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
