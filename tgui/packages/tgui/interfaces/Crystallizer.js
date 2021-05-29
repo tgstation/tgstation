@@ -68,9 +68,7 @@ export const Crystallizer = (props, context) => {
                 }} />
             </LabeledList.Item>
             <LabeledList.Item label="Recipe">
-              <Box m={1} style={{
-                'white-space': 'pre-wrap',
-              }}>
+              <Box m={1} preserveWhitespace>
                 {requirements}
               </Box>
             </LabeledList.Item>

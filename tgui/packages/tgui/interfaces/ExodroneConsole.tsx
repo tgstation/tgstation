@@ -717,7 +717,7 @@ const EventScreen = (props, context) => {
             </Stack.Item>
             <Stack.Item >
               <BlockQuote
-                style={{ "white-space": "pre-wrap" }}>
+                preserveWhitespace>
                 {event.description}
               </BlockQuote>
             </Stack.Item>
@@ -767,7 +767,7 @@ export const AdventureScreen = (props: AdventureScreenProps, context) => {
       buttons={!props.hide_status && <DroneStatus />}>
       <Stack>
         <Stack.Item>
-          <BlockQuote style={{ "white-space": "pre-wrap" }}>{adventure_data.description}</BlockQuote>
+          <BlockQuote preserveWhitespace>{adventure_data.description}</BlockQuote>
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>

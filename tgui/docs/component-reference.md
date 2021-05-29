@@ -186,6 +186,7 @@ all available horizontal space.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
 - `nowrap: boolean` - Stops text from wrapping.
+- `preserveWhitespace: boolean` - Preserves line-breaks and spacing in text.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
