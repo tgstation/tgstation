@@ -165,7 +165,10 @@
 	SEND_SIGNAL(attacked_with, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,aquarium_atom)
 	var/datum/component/aquarium_content/content_component = attacked_with.GetComponent(/datum/component/aquarium_content)
 	if(content_component && content_component.is_ready_to_insert(aquarium_atom))
-		if(user.transferItemToLoc(attacked_with, aquarium_atom))
+		if(user.transferItemToLoc(attacked_with, null))
+			aquarium_contents += attacked_with
+			content_component.current_aquarium = src
+			content_component.on_inserted()
 			aquarium_atom.update_appearance()
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -217,8 +220,8 @@
 
 ///Apply mood bonus depending on aquarium status
 /datum/component/aquarium/proc/admire(mob/user)
-	to_chat(user,"<span class='notice'>You take a moment to watch [src].</span>")
-	if(do_after(user, 5 SECONDS, target = src))
+	to_chat(user,"<span class='notice'>You take a moment to watch [parent].</span>")
+	if(do_after(user, 5 SECONDS, target = parent))
 		//Check if there are live fish - good mood
 		//All fish dead - bad mood.
 		//No fish - nothing.
@@ -230,12 +233,11 @@
 
 /datum/component/aquarium/ui_data(mob/user)
 	. = ..()
-	var/atom/aquarium_atom = parent
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allow_breeding"] = allow_breeding
 	var/list/content_data = list()
-	for(var/atom/movable/fish in aquarium_atom.contents)
+	for(var/atom/movable/fish in aquarium_contents)
 		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
 	.["contents"] = content_data
 
@@ -250,7 +252,6 @@
 	. = ..()
 	if(.)
 		return
-	var/atom/aquarium_atom = parent
 	var/mob/user = usr
 	switch(action)
 		if("temperature")
@@ -267,7 +268,7 @@
 			allow_breeding = !allow_breeding
 			. = TRUE
 		if("remove")
-			var/atom/movable/inside = locate(params["ref"]) in aquarium_atom.contents
+			var/atom/movable/inside = locate(params["ref"]) in aquarium_contents
 			if(inside)
 				if(isitem(inside))
 					user.put_in_hands(inside)
@@ -299,7 +300,7 @@
 	else
 		possible_destinations_for_fish = list(droploc)
 	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
-	for(var/atom/movable/fish in aquarium_atom.contents)
+	for(var/atom/movable/fish in aquarium_contents)
 		fish.forceMove(pick(possible_destinations_for_fish))
 	if(fluid_type != AQUARIUM_FLUID_AIR)
 		var/datum/reagents/reagent_splash = new()

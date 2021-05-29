@@ -71,9 +71,8 @@
 				return FALSE
 	return TRUE
 
-/datum/component/aquarium_content/proc/on_inserted(atom/aquarium)
-	current_aquarium = aquarium
-	RegisterSignal(current_aquarium, COMSIG_ATOM_EXITED, .proc/on_removed)
+/datum/component/aquarium_content/proc/on_inserted()
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_removed)
 	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_SURFACE_CHANGED, .proc/on_surface_changed)
 	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_FLUID_CHANGED,.proc/on_fluid_changed)
 	RegisterSignal(current_aquarium, COMSIG_PARENT_ATTACKBY, .proc/attack_reaction)
@@ -253,15 +252,13 @@
 	base_layer = current_aquarium.request_layer(properties.layer_mode)
 	vc_obj.layer = base_layer
 
-/datum/component/aquarium_content/proc/on_removed(datum/source, atom/movable/mover)
+/datum/component/aquarium_content/proc/on_removed(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	if(mover != parent)
-		return
 	remove_from_aquarium()
 
 /datum/component/aquarium_content/proc/remove_from_aquarium()
 	properties.before_removal()
-	UnregisterSignal(current_aquarium, list(COMSIG_AQUARIUM_SURFACE_CHANGED, COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_EXITED))
+	UnregisterSignal(current_aquarium, list(COMSIG_AQUARIUM_SURFACE_CHANGED, COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_MOVED))
 	remove_visual_from_aquarium()
 	current_aquarium = null
 
