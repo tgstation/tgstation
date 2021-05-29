@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Starlight condensation now heals you on glass tiles exposed to space, multi-z stations, lavaland, and unroofed structures correctly."
