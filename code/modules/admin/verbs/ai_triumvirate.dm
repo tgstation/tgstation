@@ -16,7 +16,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 /datum/triple_ai_controller/proc/on_occupations_divided(datum/source)
 	SIGNAL_HANDLER
 
-	for(var/datum/job/ai/ai_datum in occupations)
+	for(var/datum/job/ai/ai_datum in SSJob.occupations)
 		ai_datum.spawn_positions = 3
 	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 		secondary_ai_spawn.latejoin_active = TRUE
