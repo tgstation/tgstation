@@ -1581,12 +1581,6 @@
 	color = "#FFFFFF00" // white + no alpha
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/colorful_reagent/powder/invisible/Destroy()
-	//WEEE WOOOOOO REMOVE THIS BEFORE A MERGEEEEEEEEEEEEEEEEEEEEEE
-	stack_trace("Crayon deleted, what caused it? There's a harddel in here somewhere")
-	//WOOOO WEEEEEEEEEEEEEEEEEEEEEEEEE
-	return ..()
-
 /datum/reagent/colorful_reagent/powder/black
 	name = "Black Powder"
 	colorname = "black"

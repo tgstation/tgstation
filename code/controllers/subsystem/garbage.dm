@@ -49,8 +49,6 @@ SUBSYSTEM_DEF(garbage)
 	var/list/queues
 	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	//We default to true so the game can just "continue working" if there's no one to read the data
-	var/ref_search_stop = TRUE
 	#endif
 
 
@@ -172,17 +170,19 @@ SUBSYSTEM_DEF(garbage)
 
 		// Something's still referring to the qdel'd object.
 		fail_counts[level]++
+
 		#ifdef REFERENCE_TRACKING
 		var/ref_searching = FALSE
 		#endif
+
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
-				if(reference_find_on_fail[refID] && !ref_search_stop)
+				if(reference_find_on_fail[refID])
 					INVOKE_ASYNC(D, /datum/proc/find_references)
 					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
-				else if (!ref_search_stop)
+				else
 					INVOKE_ASYNC(D, /datum/proc/find_references)
 					ref_searching = TRUE
 				#endif

@@ -134,7 +134,6 @@
 		UnregisterSignal(target, signal_procs[target])
 	//END: ECS SHIT
 
-	//Memes
 	return QDEL_HINT_QUEUE
 
 #ifdef DATUMVAR_DEBUGGING_MODE

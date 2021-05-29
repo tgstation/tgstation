@@ -1,39 +1,6 @@
 #ifdef REFERENCE_TRACKING
-/*
-/client/proc/find_refs()
-	set src in world
-	set category = "Debug"
-	set name = "Find References"
-	if(!check_rights(R_DEBUG))
-		return
-
-	find_references(FALSE)
-
-/client/proc/qdel_then_find_references()
-	set src in world
-	set category = "Debug"
-	set name = "qdel() then Find References"
-	if(!check_rights(R_DEBUG))
-		return
-
-	qdel(src, TRUE) //force a qdel
-	if(!running_find_references)
-		find_references(TRUE)
-
-
-/client/proc/qdel_then_if_fail_find_references()
-	set src in world
-	set category = "Debug"
-	set name = "qdel() then Find References if GC failure"
-	if(!check_rights(R_DEBUG))
-		return
-
-	qdel_and_find_ref_if_fail(src, TRUE)
-	*/
 
 /datum/proc/find_references(skip_alert)
-	if(SSgarbage.ref_search_stop)
-		return
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
@@ -64,26 +31,20 @@
 	log_world("Finished searching globals")
 
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
-		if(SSgarbage.ref_search_stop)
-			break
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
-
 	log_world("Finished searching atoms")
 
 	for(var/datum/thing) //datums
-		if(SSgarbage.ref_search_stop)
-			break
 		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
-
 	log_world("Finished searching datums")
 
-	//for(var/client/thing) //clients
-	//	if(SSgarbage.ref_search_stop)
-	//		break
-	//	DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
-	//log_world("Finished searching clients")
+	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
+	for(var/client/thing) //clients
+		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
+	log_world("Finished searching clients")
 
 	log_world("Completed search for references to a [type].")
+
 	if(usr?.client)
 		usr.client.running_find_references = null
 	running_find_references = null
@@ -98,7 +59,7 @@
 		found_refs = list()
 	#endif
 
-	if((usr?.client && !usr.client.running_find_references) || SSgarbage.ref_search_stop)
+	if(usr?.client && !usr.client.running_find_references)
 		return
 
 	if(!recursive_limit)

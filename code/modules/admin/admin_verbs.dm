@@ -183,13 +183,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/export_dynamic_json,
 	/client/proc/run_dynamic_simulations,
 	#endif
-	/*
-	#ifdef REFERENCE_TRACKING
-	/client/proc/find_refs,
-	/client/proc/qdel_then_find_references,
-	/client/proc/qdel_then_if_fail_find_references,
-	#endif
-	*/
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/check_timer_sources,
 	/client/proc/toggle_cdn,
