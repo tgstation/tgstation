@@ -181,7 +181,7 @@
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/dog/proc/unfriend(mob/living/ex_friend)
 	var/list/friends = blackboard[BB_DOG_FRIENDS]
-	friends[ex_friend] = null
+	friends -= ex_friend
 	UnregisterSignal(ex_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 
 /// Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend
