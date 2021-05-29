@@ -288,6 +288,15 @@
 		data["is_crayon"] = FALSE
 		data["stamp_icon_state"] = "FAKE"
 		data["stamp_class"] = "FAKE"
+	if(istype(loc, /obj/structure/noticeboard))
+		var/obj/structure/noticeboard/noticeboard = loc
+		if(!noticeboard.allowed(user))
+			data["edit_mode"] = MODE_READING
+			data["pen_font"] = "FAKE"
+			data["pen_color"] = "FAKE"
+			data["is_crayon"] = FALSE
+			data["stamp_icon_state"] = "FAKE"
+			data["stamp_class"] = "FAKE"
 	data["field_counter"] = field_counter
 	data["form_fields"] = form_fields
 
