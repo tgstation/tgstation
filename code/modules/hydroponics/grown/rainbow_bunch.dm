@@ -37,46 +37,48 @@
 
 /obj/item/food/grown/rainbow_flower/Initialize()
 	. = ..()
-	if(!greyscale_colors)
-		var/flower_color = rand(1,8)
-		switch(flower_color)
-			if(1)
-				set_greyscale("#c50b0b")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/red, 3)
-				dye_color = DYE_RED
-				desc += " This one is in a bright red color."
-			if(2)
-				set_greyscale("#f76f07")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/orange, 3)
-				dye_color = DYE_ORANGE
-				desc += " This one is in a citrus orange color."
-			if(3)
-				set_greyscale("#d8ce13")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/yellow, 3)
-				dye_color = DYE_YELLOW
-				desc += " This one is in a bright yellow color."
-			if(4)
-				set_greyscale("#a0da23")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/green, 3)
-				dye_color = DYE_GREEN
-				desc += " This one is in a grassy green color."
-			if(5)
-				set_greyscale("#0862c1")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/blue, 3)
-				dye_color = DYE_BLUE
-				desc += " This one is in a soothing blue color."
-			if(6)
-				set_greyscale("#ad00cc")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/purple, 3)
-				dye_color = DYE_PURPLE
-				desc += " This one is in a vibrant purple color."
-			if(7)
-				set_greyscale("#161616")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/black, 3)
-				dye_color = DYE_BLACK
-				desc += " This one is in a midnight black color."
-			if(8)
-				set_greyscale("#FFFFFF")
-				reagents.add_reagent(/datum/reagent/colorful_reagent/powder/white, 3)
-				dye_color = DYE_WHITE
-				desc += " This one is in a pure white color."
+	if(greyscale_colors)
+		return
+
+	var/flower_color = rand(1,8)
+	switch(flower_color)
+		if(1)
+			set_greyscale("#c50b0b")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/red, 3)
+			dye_color = DYE_RED
+			desc += " This one is in a bright red color."
+		if(2)
+			set_greyscale("#f76f07")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/orange, 3)
+			dye_color = DYE_ORANGE
+			desc += " This one is in a citrus orange color."
+		if(3)
+			set_greyscale("#d8ce13")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/yellow, 3)
+			dye_color = DYE_YELLOW
+			desc += " This one is in a bright yellow color."
+		if(4)
+			set_greyscale("#a0da23")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/green, 3)
+			dye_color = DYE_GREEN
+			desc += " This one is in a grassy green color."
+		if(5)
+			set_greyscale("#0862c1")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/blue, 3)
+			dye_color = DYE_BLUE
+			desc += " This one is in a soothing blue color."
+		if(6)
+			set_greyscale("#ad00cc")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/purple, 3)
+			dye_color = DYE_PURPLE
+			desc += " This one is in a vibrant purple color."
+		if(7)
+			set_greyscale("#161616")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/black, 3)
+			dye_color = DYE_BLACK
+			desc += " This one is in a midnight black color."
+		if(8)
+			set_greyscale("#FFFFFF")
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/white, 3)
+			dye_color = DYE_WHITE
+			desc += " This one is in a pure white color."
