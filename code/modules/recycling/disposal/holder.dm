@@ -84,6 +84,9 @@
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
+	//Moved to nullspace gang
+	if(!loc)
+		return
 	if(!pipes_typecache[loc.type])
 		var/turf/T = get_turf(loc)
 		if(T)

@@ -218,7 +218,6 @@ SUBSYSTEM_DEF(job)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
-			SSpersistence.antag_rep_change[player.ckey] = 0
 	SetupOccupations()
 	unassigned = list()
 	return
@@ -259,30 +258,27 @@ SUBSYSTEM_DEF(job)
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
 
-/datum/controller/subsystem/job/proc/FillAIPosition()
-	var/ai_selected = FALSE
-	var/datum/job/job = GetJob("AI")
-	if(!job)
-		return FALSE
-	for(var/i = job.total_positions, i > 0, i--)
+/// Attempts to fill out all available AI positions.
+/datum/controller/subsystem/job/proc/fill_ai_positions()
+	var/datum/job/ai_job = GetJob("AI")
+	if(!ai_job)
+		return
+	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
+	for(var/i in ai_job.current_positions to ai_job.total_positions - 1)
 		for(var/level in level_order)
 			var/list/candidates = list()
-			candidates = FindOccupationCandidates(job, level)
+			candidates = FindOccupationCandidates(ai_job, level)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
 				if(AssignRole(candidate, "AI"))
-					ai_selected++
 					break
-	if(ai_selected)
-		return TRUE
-	return FALSE
 
 
 /** Proc DivideOccupations
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations(list/required_jobs)
+/datum/controller/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO")
 
@@ -302,8 +298,6 @@ SUBSYSTEM_DEF(job)
 	initial_players_to_assign = unassigned.len
 
 	JobDebug("DO, Len: [unassigned.len]")
-	if(unassigned.len == 0)
-		return validate_required_jobs(required_jobs)
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -341,9 +335,9 @@ SUBSYSTEM_DEF(job)
 	FillHeadPosition()
 	JobDebug("DO, Head Check end")
 
-	//Check for an AI
+	// Fill out any remaining AI positions.
 	JobDebug("DO, Running AI Check")
-	FillAIPosition()
+	fill_ai_positions()
 	JobDebug("DO, AI Check end")
 
 	//Other jobs are now checked
@@ -413,25 +407,7 @@ SUBSYSTEM_DEF(job)
 			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 
-	return validate_required_jobs(required_jobs)
-
-/datum/controller/subsystem/job/proc/validate_required_jobs(list/required_jobs)
-	if(!required_jobs.len)
-		return TRUE
-	for(var/required_group in required_jobs)
-		var/group_ok = TRUE
-		for(var/rank in required_group)
-			var/datum/job/J = GetJob(rank)
-			if(!J)
-				SSticker.mode.setup_error = "Invalid job [rank] in gamemode required jobs."
-				return FALSE
-			if(J.current_positions < required_group[rank])
-				group_ok = FALSE
-				break
-		if(group_ok)
-			return TRUE
-	SSticker.mode.setup_error = "Required jobs not present."
-	return FALSE
+	return TRUE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
@@ -521,8 +497,6 @@ SUBSYSTEM_DEF(job)
 				newplayer.new_character = living_mob
 			else
 				M = living_mob
-
-		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
 		if(M.client.holder)
 			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))

@@ -167,7 +167,7 @@
 				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>", confidential = TRUE)
 				use_db = FALSE
 			else
-				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
+				use_db = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
 				if(use_db == "Cancel")
 					return
 				if(use_db == "Permanent")
@@ -249,7 +249,7 @@
 		qdel(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/D)
-	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
+	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		GLOB.admin_datums -= admin_ckey
 		GLOB.deadmins -= admin_ckey
 		if(D)
@@ -494,7 +494,7 @@
 		to_chat(usr, "<span class='danger'>Error: Rank deletion attempted while rank still used; Tell a coder, this shouldn't happen.</span>", confidential = TRUE)
 		return
 	qdel(query_admins_with_rank)
-	if(alert("Are you sure you want to remove [admin_rank]?","Confirm Removal","Do it","Cancel") == "Do it")
+	if(tgui_alert(usr,"Are you sure you want to remove [admin_rank]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		var/m1 = "[key_name_admin(usr)] removed rank [admin_rank] permanently"
 		var/m2 = "[key_name(usr)] removed rank [admin_rank] permanently"
 		var/datum/db_query/query_add_rank = SSdbcore.NewQuery(

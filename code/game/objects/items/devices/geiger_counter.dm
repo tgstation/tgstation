@@ -37,7 +37,7 @@
 /obj/item/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(soundloop)
-	
+
 	return ..()
 
 /obj/item/geiger_counter/process(delta_time)
@@ -211,6 +211,7 @@
 	listeningTo = user
 
 /obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
+	SIGNAL_HANDLER
 	rad_act(amount)
 
 /obj/item/geiger_counter/cyborg/dropped()

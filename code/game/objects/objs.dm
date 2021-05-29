@@ -190,6 +190,7 @@
 	ui_interact(user)
 
 /mob/proc/unset_machine()
+	SIGNAL_HANDLER
 	if(!machine)
 		return
 	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
@@ -280,14 +281,14 @@
 				message_admins("<span class='notice'>[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]</span>")
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
-			var/action_type = alert("Strict type ([type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
 			if(action_type == "Cancel" || !action_type)
 				return
 
-			if(alert("Are you really sure you want to delete all objects of type [type]?",,"Yes","No") != "Yes")
+			if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [type]?",,list("Yes","No")) != "Yes")
 				return
 
-			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+			if(tgui_alert(usr, "Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
 				return
 
 			var/O_type = type

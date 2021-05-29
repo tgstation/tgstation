@@ -167,6 +167,7 @@ SUBSYSTEM_DEF(statpanels)
 	mc_data_encoded = url_encode(json_encode(mc_data))
 
 /atom/proc/remove_from_cache()
+	SIGNAL_HANDLER
 	SSstatpanels.cached_images -= REF(src)
 
 /// verbs that send information from the browser UI

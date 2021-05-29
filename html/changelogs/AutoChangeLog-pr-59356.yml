@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "Mime crayons don't make you multicolored when you eat them."

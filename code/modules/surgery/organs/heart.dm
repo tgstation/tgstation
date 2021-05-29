@@ -15,7 +15,7 @@
 	high_threshold_cleared = "<span class='info'>The pain in your chest has died down, and your breathing becomes more relaxed.</span>"
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
-	var/beating = 1
+	var/beating = TRUE
 	attack_verb_continuous = list("beats", "thumps")
 	attack_verb_simple = list("beat", "thump")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
@@ -26,7 +26,7 @@
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/Remove(mob/living/carbon/heartless, special = 0)
 	..()
 	if(!special)
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
@@ -44,14 +44,14 @@
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 
 /obj/item/organ/heart/proc/Stop()
-	beating = 0
+	beating = FALSE
 	update_appearance()
-	return 1
+	return TRUE
 
 /obj/item/organ/heart/proc/Restart()
-	beating = 1
+	beating = TRUE
 	update_appearance()
-	return 1
+	return TRUE
 
 /obj/item/organ/heart/OnEatFrom(eater, feeder)
 	. = ..()
@@ -69,23 +69,23 @@
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
-		var/mob/living/carbon/H = owner
+		var/mob/living/carbon/heart_owner = owner
 
 
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
+		if(heart_owner.health <= heart_owner.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			heart_owner.playsound_local(get_turf(heart_owner), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			to_chat(owner, "<span class='notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+		if(beat == BEAT_SLOW && heart_owner.health > heart_owner.crit_threshold)
+			heart_owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-		if(H.jitteriness)
-			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		if(heart_owner.jitteriness)
+			if(heart_owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+				heart_owner.playsound_local(get_turf(heart_owner), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			heart_owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
 	if(organ_flags & ORGAN_FAILING && !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
@@ -95,8 +95,8 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-/obj/item/organ/heart/get_availability(datum/species/S)
-	return !(NOBLOOD in S.species_traits)
+/obj/item/organ/heart/get_availability(datum/species/owner_species)
+	return !(NOBLOOD in owner_species.species_traits)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -116,8 +116,8 @@
 	var/heal_oxy = 0
 
 
-/obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
-	if(H == user && istype(H))
+/obj/item/organ/heart/cursed/attack(mob/living/carbon/human/accursed, mob/living/carbon/human/user, obj/target)
+	if(accursed == user && istype(accursed))
 		playsound(user,'sound/effects/singlebeat.ogg',40,TRUE)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		Insert(user)
@@ -127,24 +127,24 @@
 /obj/item/organ/heart/cursed/on_life(delta_time, times_fired)
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
-			var/mob/living/carbon/human/H = owner
-			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-				H.blood_volume = max(H.blood_volume - blood_loss, 0)
-				to_chat(H, "<span class='userdanger'>You have to keep pumping your blood!</span>")
+			var/mob/living/carbon/human/accursed_human = owner
+			if(accursed_human.dna && !(NOBLOOD in accursed_human.dna.species.species_traits))
+				accursed_human.blood_volume = max(accursed_human.blood_volume - blood_loss, 0)
+				to_chat(accursed_human, "<span class='userdanger'>You have to keep pumping your blood!</span>")
 				if(add_colour)
-					H.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
+					accursed_human.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
 					add_colour = FALSE
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
-/obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/cursed/Insert(mob/living/carbon/accursed, special = 0)
 	..()
 	if(owner)
 		to_chat(owner, "<span class='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 
-/obj/item/organ/heart/cursed/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/cursed/Remove(mob/living/carbon/accursed, special = 0)
 	..()
-	M.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
@@ -163,15 +163,15 @@
 		playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
 		to_chat(owner, "<span class='notice'>Your heart beats.</span>")
 
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
-				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+		var/mob/living/carbon/human/accursed = owner
+		if(istype(accursed))
+			if(accursed.dna && !(NOBLOOD in accursed.dna.species.species_traits))
+				accursed.blood_volume = min(accursed.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
+				accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
-				H.adjustBruteLoss(-cursed_heart.heal_brute)
-				H.adjustFireLoss(-cursed_heart.heal_burn)
-				H.adjustOxyLoss(-cursed_heart.heal_oxy)
+				accursed.adjustBruteLoss(-cursed_heart.heal_brute)
+				accursed.adjustFireLoss(-cursed_heart.heal_burn)
+				accursed.adjustOxyLoss(-cursed_heart.heal_oxy)
 
 
 /datum/client_colour/cursed_heart_blood
@@ -279,16 +279,16 @@
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
 
-/obj/item/organ/heart/ethereal/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = 0)
 	. = ..()
-	RegisterSignal(M, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
-	RegisterSignal(M, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
-	RegisterSignal(M, COMSIG_PARENT_PREQDELETED, .proc/owner_deleted)
+	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
+	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
+	RegisterSignal(heart_owner, COMSIG_PARENT_PREQDELETED, .proc/owner_deleted)
 
-/obj/item/organ/heart/ethereal/Remove(mob/living/carbon/M, special = 0)
-	UnregisterSignal(M, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_PREQDELETED))
-	REMOVE_TRAIT(M, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
-	stop_crystalization_process(M)
+/obj/item/organ/heart/ethereal/Remove(mob/living/carbon/heart_owner, special = 0)
+	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_PREQDELETED))
+	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+	stop_crystalization_process(heart_owner)
 	QDEL_NULL(current_crystal)
 	return ..()
 
@@ -299,7 +299,7 @@
 	. += shine
 
 
-/obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/C, admin_heal)
+/obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, admin_heal)
 	SIGNAL_HANDLER
 
 	QDEL_NULL(current_crystal) //Kicks out the ethereal

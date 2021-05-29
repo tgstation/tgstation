@@ -442,18 +442,22 @@
 
 /datum/id_trim/job/security_officer/supply
 	assignment = "Security Officer (Cargo)"
+	trim_state = "trim_securityofficer_car"
 	department_access = list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_CARGO, ACCESS_AUX_BASE)
 
 /datum/id_trim/job/security_officer/engineering
 	assignment = "Security Officer (Engineering)"
+	trim_state = "trim_securityofficer_engi"
 	department_access = list(ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE)
 
 /datum/id_trim/job/security_officer/medical
 	assignment = "Security Officer (Medical)"
+	trim_state = "trim_securityofficer_med"
 	department_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 
 /datum/id_trim/job/security_officer/science
 	assignment = "Security Officer (Science)"
+	trim_state = "trim_securityofficer_sci"
 	department_access = list(ACCESS_RESEARCH, ACCESS_RND, ACCESS_AUX_BASE)
 
 /datum/id_trim/job/shaft_miner

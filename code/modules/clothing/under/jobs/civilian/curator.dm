@@ -31,6 +31,7 @@
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon_state = "jumpsuit"
+	inhand_icon_state = "jumpsuit"
 	greyscale_colors = "#3f3f3f"
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
