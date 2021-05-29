@@ -128,13 +128,11 @@
 	name = "nutrient sac"
 
 /obj/item/udder/gutlunch/initial_conditions()
+	if(!udder_mob)
+		return
 	if(udder_mob.gender == FEMALE)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_mob_attacking)
-
-/obj/item/udder/gutlunch/Destroy()
-	. = ..()
-	UnregisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 
 /obj/item/udder/gutlunch/process(delta_time)
 	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_mob

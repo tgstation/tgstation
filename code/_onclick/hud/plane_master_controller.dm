@@ -6,8 +6,11 @@
 	var/datum/hud/owner_hud
 
 ///Ensures that all the planes are correctly in the controlled_planes list.
-/atom/movable/plane_master_controller/New(hud)
+/atom/movable/plane_master_controller/New(datum/hud/hud)
 	. = ..()
+	if(!istype(hud))
+		return
+
 	owner_hud = hud
 	var/assoc_controlled_planes = list()
 	for(var/i in controlled_planes)
