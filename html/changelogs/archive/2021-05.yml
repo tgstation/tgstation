@@ -742,3 +742,7 @@
   vincentiusvin:
   - bugfix: Some duplicate pipes in kilo atmospherics have been fixed.
   - qol: Various piping improvements in kilo atmospherics.
+2021-05-29:
+  ninjanomnom:
+  - bugfix: Some screwdriver inhand icons have been fixed to not show an error
+  - bugfix: Some prison jumpsuit inhand icons have been fixed to not show an error
