@@ -211,6 +211,22 @@
 	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
 	update_appearance()
 
+/obj/item/storage/belt/medical/chief
+	name = "chief medical officer's belt"
+	desc = "Can hold various medical equipment, and comes with experimental tools, entrusted to the Chief Medical Officer for testing."
+	icon_state = "medical_cmo"
+	inhand_icon_state = "medical"
+	worn_icon_state = "medical_cmo"
+
+/obj/item/storage/belt/medical/chief/PopulateContents()
+
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/cautery/advanced(src)
+	new /obj/item/pinpointer/crew(src)
+	new /obj/item/healthanalyzer/advanced(src)
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
