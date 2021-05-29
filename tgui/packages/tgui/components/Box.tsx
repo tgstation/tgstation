@@ -206,7 +206,7 @@ const styleMapperByPropName = {
       style['left'] = 0;
       style['right'] = 0;
     }
-  }
+  },
 };
 
 export const computeBoxProps = (props: BoxProps) => {
