@@ -1,5 +1,6 @@
 #define REFERENCE_TRACKING
 #define GC_FAILURE_HARD_LOOKUP
+#define REFERENCE_TRACKING_LOG
 //#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
