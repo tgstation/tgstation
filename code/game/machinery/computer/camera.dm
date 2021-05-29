@@ -300,7 +300,7 @@
 
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
+/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 	if(on)
 		say(pick(
 			"Feats of bravery live now at the thunderdome!",

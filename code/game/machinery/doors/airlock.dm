@@ -467,7 +467,6 @@
 			icon_state = "closing"
 		if(AIRLOCK_DENY, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
-	update_greyscale()
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
@@ -484,7 +483,7 @@
 	var/notetype = note_type()
 	switch(airlock_state)
 		if(AIRLOCK_CLOSED)
-			frame_overlay = get_airlock_overlay("closed", icon)
+			//frame_overlay = get_airlock_overlay("closed", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
 			else
@@ -513,7 +512,7 @@
 		if(AIRLOCK_DENY)
 			if(!hasPower())
 				return
-			frame_overlay = get_airlock_overlay("closed", icon)
+			//frame_overlay = get_airlock_overlay("closed", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
 			else
@@ -536,7 +535,7 @@
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_EMAG)
-			frame_overlay = get_airlock_overlay("closed", icon)
+			//frame_overlay = get_airlock_overlay("closed", icon)
 			sparks_overlay = get_airlock_overlay("sparks", overlays_file)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
@@ -559,7 +558,7 @@
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_CLOSING)
-			frame_overlay = get_airlock_overlay("closing", icon)
+			//GRILL_FUELUSAGE_IDLEframe_overlay = get_airlock_overlay("closing", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_closing", overlays_file)
 			else
@@ -575,7 +574,7 @@
 				note_overlay = get_airlock_overlay("[notetype]_closing", note_overlay_file)
 
 		if(AIRLOCK_OPEN)
-			frame_overlay = get_airlock_overlay("open", icon)
+			//frame_overlay = get_airlock_overlay("open", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_open", overlays_file)
 			else
@@ -591,7 +590,7 @@
 				note_overlay = get_airlock_overlay("[notetype]_open", note_overlay_file)
 
 		if(AIRLOCK_OPENING)
-			frame_overlay = get_airlock_overlay("opening", icon)
+			//frame_overlay = get_airlock_overlay("opening", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_opening", overlays_file)
 			else
@@ -633,6 +632,7 @@
 			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
 			I.pixel_x = -32
 			. += I
+	update_greyscale()
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)

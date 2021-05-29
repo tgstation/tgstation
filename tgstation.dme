@@ -727,11 +727,8 @@
 #include "code\datums\elements\venomous.dm"
 #include "code\datums\elements\volatile_gas_storage.dm"
 #include "code\datums\elements\waddling.dm"
-<<<<<<< HEAD
 #include "code\datums\elements\wall_mount.dm"
-=======
 #include "code\datums\elements\weapon_description.dm"
->>>>>>> upstream/master
 #include "code\datums\elements\decals\blood.dm"
 #include "code\datums\elements\food\dunkable.dm"
 #include "code\datums\elements\food\food_trash.dm"

@@ -267,9 +267,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/suicide_act(mob/user)
 	return
 
-<<<<<<< HEAD
-/// Checks if this atom uses the GAS system and if so updates the worn and inhand icons
-=======
 /obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
 	if(new_worn_config)
 		greyscale_config_worn = new_worn_config
@@ -280,7 +277,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return ..()
 
 /// Checks if this atom uses the GAGS system and if so updates the worn and inhand icons
->>>>>>> upstream/master
 /obj/item/update_greyscale()
 	. = ..()
 	if(!greyscale_colors)
