@@ -37,7 +37,7 @@
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
-			log_world("CANCELLED search for references to a [usr.client.running_find_references].")
+			log_reftracker("CANCELLED search for references to a [usr.client.running_find_references].")
 			usr.client.running_find_references = null
 			running_find_references = null
 			//restart the garbage collector
@@ -55,35 +55,38 @@
 	if(usr?.client)
 		usr.client.running_find_references = type
 
-	log_world("Beginning search for references to a [type].")
+	log_reftracker("Beginning search for references to a [type].")
 
 	var/starting_time = world.time
 
 	//Time to search the whole game for our ref
 	DoSearchVar(GLOB, "GLOB") //globals
-	log_world("Finished searching globals")
+
+	log_reftracker("Finished searching globals")
 
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
 		if(SSgarbage.ref_search_stop)
 			break
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 
-	log_world("Finished searching atoms")
+	log_reftracker("Finished searching atoms")
 
 	for(var/datum/thing) //datums
 		if(SSgarbage.ref_search_stop)
 			break
 		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 
-	log_world("Finished searching datums")
+	log_reftracker("Finished searching datums")
 
 	//for(var/client/thing) //clients
 	//	if(SSgarbage.ref_search_stop)
 	//		break
 	//	DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
-	//log_world("Finished searching clients")
+	//log_reftracker("Finished searching clients")
 
-	log_world("Completed search for references to a [type].")
+	log_reftracker("Completed search for references to a [type].")
+
+
 	if(usr?.client)
 		usr.client.running_find_references = null
 	running_find_references = null
@@ -102,7 +105,7 @@
 		return
 
 	if(!recursive_limit)
-		log_world("Recursion limit reached. [container_name]")
+		log_reftracker("Recursion limit reached. [container_name]")
 		return
 
 	//Check each time you go down a layer. This makes it a bit slow, but it won't effect the rest of the game at all
@@ -130,7 +133,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[varname] = TRUE
 				#endif
-				log_world("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				log_reftracker("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
 				continue
 
 			if(islist(variable))
@@ -148,7 +151,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[potential_cache] = TRUE
 				#endif
-				log_world("Found [type] \ref[src] in list [container_name].")
+				log_reftracker("Found [type] \ref[src] in list [container_name].")
 				continue
 
 			var/assoc_val = null
@@ -159,7 +162,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[potential_cache] = TRUE
 				#endif
-				log_world("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
+				log_reftracker("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 				continue
 			//We need to run both of these checks, since our object could be hiding in either of them
 			//Check normal sublists
