@@ -122,6 +122,7 @@
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
 	greyscale_config = null
+	greyscale_config_worn = null
 	greyscale_colors = null
 
 // Harebell
