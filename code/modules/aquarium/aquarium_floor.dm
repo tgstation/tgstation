@@ -12,7 +12,8 @@
 
 /turf/open/floor/aquarium/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium, 2, 31, 2, 31)
+	AddComponent(/datum/component/aquarium, 3, 30, 3, 30)
+	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/aquarium/LateInitialize()
 	. = ..()

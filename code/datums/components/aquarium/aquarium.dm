@@ -3,6 +3,10 @@
 #define AQUARIUM_MIN_OFFSET 0.01
 #define AQUARIUM_MAX_OFFSET 1
 
+#define CACHED_OVERLAY_PANEL_APPEARANCE 1
+#define CACHED_OVERLAY_GLASS_APPEARANCE 2
+#define CACHED_OVERLAY_BROKENGLASS_APPEARANCE 3
+
 /**
  * ## aquarium component!
  *
@@ -40,6 +44,8 @@
 	var/alive_fish = 0
 	///number of dead fish in the tank
 	var/dead_fish = 0
+
+	var/static/list/created_overlays = list()
 
 /datum/component/aquarium/Initialize(aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py)
 	. = ..()
@@ -108,26 +114,32 @@
 	.[AQUARIUM_PROPERTIES_PY_MIN] = aquarium_zone_min_py
 	.[AQUARIUM_PROPERTIES_PY_MAX] = aquarium_zone_max_py
 
-///signal called by overlays updating
+///
+/**
+ * signal called by overlays updating
+ *
+ * created_overlays is an assoc list, icon file name = list("panel" icon state, "glass" icon state, "glass_broken" icon state)
+ */
 /datum/component/aquarium/proc/on_update_overlays(datum/source, list/overlays)
 	SIGNAL_HANDLER
 	var/atom/aquarium_atom = parent
 
-	var/static/panel_overlay
-	var/static/glass_healthy_overlay
-	var/static/glass_broken_overlay
-	if(isnull(panel_overlay))
-		panel_overlay = iconstate2appearance(aquarium_atom.icon, "panel")
+	var/list/this_aquarium_overlays = created_overlays[aquarium_atom.icon]
+	if(!this_aquarium_overlays)
+		var/list/new_cache = list()
+		new_cache[CACHED_OVERLAY_PANEL_APPEARANCE] = iconstate2appearance(aquarium_atom.icon, "panel")
+		new_cache[CACHED_OVERLAY_GLASS_APPEARANCE] = layerediconstate2appearance(aquarium_atom.icon, "glass", layer = AQUARIUM_MAX_OFFSET-1)
+		new_cache[CACHED_OVERLAY_BROKENGLASS_APPEARANCE] = layerediconstate2appearance(aquarium_atom.icon, "glass_broken", layer = AQUARIUM_MAX_OFFSET-1)
+		created_overlays[aquarium_atom.icon] = new_cache
+		this_aquarium_overlays = new_cache
 	if(panel_open)
-		overlays += panel_overlay
-
-	///layer=AQUARIUM_MAX_OFFSET-1
+		overlays += this_aquarium_overlays[CACHED_OVERLAY_PANEL_APPEARANCE]
 
 	//Glass overlay goes on top of everything else.
-	if(broken)
-		overlays += glass_broken_overlay
+	if(!broken)
+		overlays += this_aquarium_overlays[CACHED_OVERLAY_GLASS_APPEARANCE]
 	else
-		overlays += glass_healthy_overlay
+		overlays += this_aquarium_overlays[CACHED_OVERLAY_BROKENGLASS_APPEARANCE]
 
 ///signal called by parent getting examined
 /datum/component/aquarium/proc/on_examine(datum/source, mob/user, list/examine_text)

@@ -64,11 +64,18 @@ SUBSYSTEM_DEF(overlays)
 	stringbro.icon = icon
 	stringbro.icon_state = iconstate
 	return stringbro.appearance
-	
+
 /proc/icon2appearance(icon)
 	var/static/image/iconbro = new()
 	iconbro.icon = icon
 	return iconbro.appearance
+
+/proc/layerediconstate2appearance(icon, iconstate, layer)
+	var/static/image/stringbro = new()
+	stringbro.icon = icon
+	stringbro.icon_state = iconstate
+	stringbro.layer = layer
+	return stringbro.appearance
 
 /atom/proc/build_appearance_list(old_overlays)
 	var/static/image/appearance_bro = new()
