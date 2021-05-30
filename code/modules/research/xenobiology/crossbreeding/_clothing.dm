@@ -117,6 +117,14 @@ Slimecrossing Armor
 			return
 	return ..()
 
+/obj/item/clothing/head/peaceflower/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		if(src_location == C.head)
+			to_chat(usr, "<span class='warning'>You feel at peace. <b style='color:pink'>Why would you want anything else?</b></span>")
+			return
+	return ..()
+
 /obj/item/clothing/suit/armor/heavy/adamantine
 	name = "adamantine armor"
 	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
