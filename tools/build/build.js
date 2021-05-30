@@ -25,7 +25,7 @@ if (NODE_VERSION < NODE_VERSION_TARGET) {
 // --------------------------------------------------------
 
 const fs = require('fs');
-const Juke = require('./cbt/juke');
+const Juke = require('./juke');
 const { yarn } = require('./cbt/yarn');
 const { dm } = require('./cbt/dm');
 

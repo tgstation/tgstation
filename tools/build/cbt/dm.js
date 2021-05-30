@@ -1,5 +1,5 @@
+const { exec } = require('../juke');
 const { stat } = require('./fs');
-const { exec } = require('./juke');
 const { regQuery } = require('./winreg');
 const fs = require('fs');
 

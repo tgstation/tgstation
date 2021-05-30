@@ -6488,7 +6488,7 @@ const logger = {
     console.log(_chalk.default.bold(_chalk.default.yellowBright('=>'), _chalk.default.whiteBright(...args)));
   },
   info: (...args) => {
-    console.log(_chalk.default.bold(_chalk.default.yellowBright('::'), _chalk.default.whiteBright(...args)));
+    console.log(_chalk.default.bold(_chalk.default.blueBright('::'), _chalk.default.whiteBright(...args)));
   },
   debug: (...args) => {
     if (process.env.DEBUG) {
@@ -7003,7 +7003,7 @@ module.exports = require("util");;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -7017,17 +7017,17 @@ module.exports = require("util");;
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
@@ -7037,7 +7037,7 @@ module.exports = require("util");;
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -7049,7 +7049,17 @@ var exports = __webpack_exports__;
 
 
 exports.__esModule = true;
-exports.sleep = exports.createParameter = exports.createTarget = exports.setup = void 0;
+exports.resolveGlob = exports.sleep = exports.createParameter = exports.createTarget = exports.setup = void 0;
+
+var _chalk = _interopRequireDefault(__webpack_require__(/*! chalk */ "./.yarn/cache/chalk-npm-4.1.1-f1ce6bae57-445c12db7a.zip/node_modules/chalk/source/index.js"));
+
+exports.chalk = _chalk.default;
+
+var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ "fs"));
+
+var _glob = _interopRequireDefault(__webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/glob.js"));
+
+exports.glob = _glob.default;
 
 var _exec = __webpack_require__(/*! ./exec */ "./src/exec.ts");
 
@@ -7064,6 +7074,8 @@ var _parameter = __webpack_require__(/*! ./parameter */ "./src/parameter.ts");
 var _runner = __webpack_require__(/*! ./runner */ "./src/runner.ts");
 
 var _target = __webpack_require__(/*! ./target */ "./src/target.ts");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const autoParameters = [];
 const autoTargets = [];
@@ -7104,8 +7116,34 @@ const createParameter = config => {
 exports.createParameter = createParameter;
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+/**
+ * Resolves a glob pattern and returns files that are safe
+ * to call `stat` on.
+ */
+
 
 exports.sleep = sleep;
+
+const resolveGlob = globPath => {
+  const unsafePaths = _glob.default.sync(globPath, {
+    strict: false,
+    silent: true
+  });
+
+  const safePaths = [];
+
+  for (let path of unsafePaths) {
+    try {
+      _fs.default.statSync(path);
+
+      safePaths.push(path);
+    } catch {}
+  }
+
+  return safePaths;
+};
+
+exports.resolveGlob = resolveGlob;
 })();
 
 /******/ 	return __webpack_exports__;

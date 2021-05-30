@@ -1,5 +1,4 @@
-const { exec } = require('./juke');
-const { resolveGlob } = require('./fs');
+const { exec, resolveGlob } = require('../juke');
 
 let yarnPath;
 
