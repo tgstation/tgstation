@@ -4,10 +4,10 @@
 #define ARENA_CORNER_A "cornerA"
 #define ARENA_CORNER_B "cornerB"
 
-#define ARENA_UI_MAIN 0
-#define ARENA_UI_MATCH 1
-#define ARENA_UI_TEAMS 2
-#define ARENA_UI_INDIV 3
+#define ARENA_UI_MAIN "main"
+#define ARENA_UI_MATCH "match"
+#define ARENA_UI_TEAMS "team"
+#define ARENA_UI_INDIV "contestant"
 
 /// Arena related landmarks
 /obj/effect/landmark/arena
@@ -284,16 +284,23 @@
 	if(!user.client.holder) // Should it require specific perm ?
 		return
 
+	if(href_list["see_roster"])
+		testing("see roster [user]")
+		user.client.debug_variables(GLOB.global_roster)
+
 	if(href_list["change_page"])
 		switch(href_list["change_page"])
-			if("main" )
-				ui_mode = "main"
+			if("main")
+				ui_mode = ARENA_UI_MAIN
 			if("match")
-				ui_mode = "match"
+				ui_mode = ARENA_UI_MATCH
 			if("team")
-				ui_mode = "team"
+				ui_mode = ARENA_UI_TEAMS
 			if("contestant")
-				ui_mode = "contestant"
+				ui_mode = ARENA_UI_INDIV
+
+	if(href_list["load_roster"])
+		GLOB.global_roster.load_contestants_from_file(usr, "sample_roster.json")
 
 	if(href_list["upload"])
 		add_new_arena_template(user)
@@ -348,13 +355,18 @@
 /obj/machinery/computer/arena/ui_interact(mob/user)
 	. = ..()
 	var/list/dat = list()
-	dat += "<div>Spawning is currently [ready_to_spawn ? "<span class='good'>enabled</span>" : "<span class='bad'>disabled</span>"] <a href='?src=[REF(src)];toggle_spawn=1'>Toggle</a></div>"
+	/*dat += "<div>Spawning is currently [ready_to_spawn ? "<span class='good'>enabled</span>" : "<span class='bad'>disabled</span>"] <a href='?src=[REF(src)];toggle_spawn=1'>Toggle</a></div>"
 	dat += "<div><a href='?src=[REF(src)];start=1'>[start_time ? "Stop countdown" : "Start!"]</a></div>"
+	*/
+	dat += "<a href='?src=[REF(src)];see_roster=1'>See Roster</a>"
+	if(ui_mode != ARENA_UI_MAIN)
+		dat += "<a href='?src=[REF(src)];change_page=main'>\<\<Back to Main</a>"
 
 	switch(ui_mode)
 		if(ARENA_UI_MAIN)
 			dat += "<b>Main menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
+			dat += "<a href='?src=[REF(src)];change_page=contestant'>Go to Contestant List</a>"
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
@@ -363,15 +375,29 @@
 			dat += "<a href='?src=[REF(src)];match_add_team'>Add team</a>"
 		if(ARENA_UI_TEAMS)
 			dat += "<b>Team menu</b>"
-			dat += "<a href='?src=[REF(src)];change_page=main'>Back to Main</a>"
+
+			for(var/datum/event_team/iter_team in GLOB.global_roster.active_teams)
+				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
+				for(var/datum/contestant/iter_contestant in iter_team.members)
+					var/mob/the_guy = get_mob_by_ckey(iter_contestant.ckey)
+					dat += "\t\t: [the_guy]"
+					//dat += "\t\t: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 		if(ARENA_UI_INDIV)
-			dat += "<b>Main menu</b>"
-			dat += "<a href='?src=[REF(src)];change_page=main'>Back to Main</a>"
-			dat += "<a href='?src=[REF(src)];change_page=team'>Back to Teams</a>"
+			dat += "<b>Contestant menu</b>"
+			dat += "<a href='?src=[REF(src)];load_roster=1'>Load Roster</a>"
+			dat += "<b>Contestants:</b>"
+			for(var/iter_ckey in GLOB.global_roster.all_contestants)
+				var/datum/contestant/iter_contestant = GLOB.global_roster.all_contestants[iter_ckey]
+				var/mob/the_guy = get_mob_by_ckey(iter_contestant.ckey)
+				dat += "\t[iter_ckey] ([the_guy])"
+
+			dat += "<b>Ckeys at large:</b>"
+			for(var/iter_ckey in GLOB.global_roster.ckeys_at_large)
+				dat += "[iter_ckey] ([GLOB.global_roster.ckeys_at_large[iter_ckey]])"
 
 
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
-	popup.set_content(dat.Join())
+	popup.set_content(dat.Join("<br>"))
 	popup.open()
 	/*
 	for(var/team in teams)

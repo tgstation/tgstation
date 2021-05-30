@@ -18,16 +18,18 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
  * The roster is the main handler for all the contestants and teams
  */
 /datum/roster
-	/// An assoc list of all the ckeys we're still looking for to tie to contestant datums
-	var/list/ckeys_at_large
+	/// A list of all the ckeys we're still looking for to tie to contestant datums
+	var/list/ckeys_at_large = list()
 	/// Assoc list, key is the ckey, value is their contestant datum. Continues holding the contestant after they've been eliminated, unlike active
 	var/list/all_contestants
 	/// Holds the datums for all contestants still in contention
-	var/list/active_contestants
+	var/list/active_contestants = list()
 	/// All team datums that are currently active
-	var/list/active_teams
+	var/list/active_teams = list()
 	/// Will be used for which teams are actively marked to be spawned next
-	var/list/rostered_teams
+	var/list/rostered_teams = list()
+
+	var/team_id_tracker
 
 /datum/roster/New()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_ENTER, .proc/check_new_player)
@@ -35,13 +37,13 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	return
 
 /// Will be hooked to new players joining and check if they have a contestant datum with their ckey that should be hooked to their client
-/datum/roster/proc/check_new_player(mob/dead/new_player/joining_player)
+/datum/roster/proc/check_new_player(datum/source, mob/dead/new_player/joining_player)
 	SIGNAL_HANDLER
 
 	if(!joining_player?.ckey)
 		return
 
-	if(!ckeys_at_large[joining_player.ckey])
+	if(!LAZYACCESS(ckeys_at_large, joining_player.ckey))
 		return
 
 	register_contestant(null, joining_player)
@@ -57,16 +59,20 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/datum/contestant/new_kid = new(target.ckey)
 	LAZYADDASSOC(all_contestants, new_kid.ckey, new_kid)
 	LAZYADD(active_contestants, new_kid)
-	ckeys_at_large[target.ckey] = FALSE
+	LAZYREMOVE(ckeys_at_large, target.ckey)
 
 /// Load a .json file with a list of ckeys and
 /datum/roster/proc/load_contestants_from_file(mob/user, filepath)
+	testing("try loading [user] [filepath]")
 	if(!filepath)
 		CRASH("No filepath!")
 
+
 	var/list/incoming_ckeys = strings(filepath, "contestants", directory = "strings/rosters")
 
-	if(active_contestants)
+	testing("Loading strings/rosters/[filepath]")
+	//testing(json_decode(incoming_ckeys))
+	if(length(active_contestants))
 		var/list/options = list("Clear All", "Add New", "Cancel")
 		var/select = input(user, "There are existing contestants! Would you like to clear all existing contestants first, just add new ckeys to the list, or cancel?") as null|anything in options
 
@@ -83,13 +89,15 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	// create contestants for people who are currently connected and don't have a contestant
 	for(var/iter_ckey in incoming_ckeys)
-		if(ckeys_at_large[iter_ckey] || all_contestants[iter_ckey]) //already exist
+		if(LAZYFIND(ckeys_at_large, iter_ckey))
+			continue
+		else if(LAZYACCESS(all_contestants, iter_ckey)) //already exist
 			continue
 		if(GLOB.directory[iter_ckey]) //connected to the server (not sure if currently??) and need a contestant datum
 			register_contestant(null, get_mob_by_key(iter_ckey)) //uhhhhhhh? check what happens to people who connected but are DC'd when this runs, or are still new_player
 			contestants_created++
 		else
-			ckeys_at_large[iter_ckey] = TRUE // otherwise watch for them with signal
+			LAZYADD(ckeys_at_large, iter_ckey) // otherwise watch for them with signal
 			ckeys_added_to_list++
 
 	message_admins("[user] loaded contestants from [filepath], [contestants_created] contestants created, [ckeys_added_to_list] ckeys added to watchlist.")
@@ -117,16 +125,33 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 			else
 				return
 
-	var/num_contestants = len(active_contestants)
-	var/num_teams = number_of_teams
+	var/num_contestants = length(active_contestants)
+	var/num_teams
+	var/num_per
 	var/remainder
 
 	if(team_size)
 		num_teams = round(num_contestants / team_size)
+		num_per = team_size
+	else
+		num_teams = number_of_teams
+		num_per = round(num_contestants / number_of_teams)
 
 	remainder = num_contestants % num_teams
 
+	var/overall_contestant_index = 1
+	for(var/team_index in 1 to num_teams)
+		var/datum/event_team/new_team = create_team()
+		for(var/contestant_index in 1 to num_per)
+			new_team.add_member(active_contestants[overall_contestant_index])
+			overall_contestant_index++
 
+
+/datum/roster/proc/create_team(mob/user)
+	var/datum/event_team/new_team = new(team_id_tracker)
+	active_teams[team_id_tracker] = new_team
+	team_id_tracker++
+	return new_team
 
 /datum/roster/proc/clear_teams(mob/user)
 	for(var/datum/event_team/iter_team in active_teams)
