@@ -35,6 +35,8 @@
 			processed_colors += i
 	return InternalGenerate(processed_colors, render_steps)
 
+/// Override this to implement layers.
+/// The colors var will only contain colors that this layer is configured to use.
 /datum/greyscale_layer/proc/InternalGenerate(list/colors, list/render_steps)
 
 ////////////////////////////////////////////////////////
@@ -49,7 +51,8 @@
 /datum/greyscale_layer/icon_state/New(icon_file, list/json_data)
 	. = ..()
 	var/icon_state = json_data["icon_state"]
-	if(!(icon_state in icon_states(icon_file)))
+	var/list/icon_states = icon_states(icon_file)
+	if(!(icon_state in icon_states))
 		CRASH("Configured icon state \[[icon_state]\] was not found in [icon_file]. Double check your json configuration.")
 	icon = new(icon_file, json_data["icon_state"])
 
@@ -77,4 +80,7 @@
 		CRASH("An unknown greyscale configuration was given to a reference layer: [json_data["reference_type"]]")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
-	return icon(reference_config.Generate(colors.Join(), render_steps), icon_state)
+	if(render_steps)
+		return reference_config.GenerateBundle(colors, render_steps)
+	else
+		return reference_config.Generate(colors.Join())
