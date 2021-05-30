@@ -3,7 +3,8 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "loot_site"
 	///This is the loot table for the spawner. Try to make sure the weights add up to 1000, so it is easy to understand.
-	var/list/loot_table = list(/obj/structure/closet/crate/maint = 765,
+	var/list/loot_table = list(/obj/structure/closet/crate/maint = 510,
+							/obj/structure/trash_pile = 255,
 							/obj/structure/closet/crate/trashcart/filled = 75,
 							/obj/effect/spawner/bundle/moisture_trap = 50,
 							/obj/effect/spawner/bundle/hobo_squat = 30,
