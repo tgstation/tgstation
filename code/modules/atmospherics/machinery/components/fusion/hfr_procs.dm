@@ -114,10 +114,14 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	SIGNAL_HANDLER
-	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+	if(linked_interface)
+		UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+	if(linked_input)
+		UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+	if(linked_output)
+		UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+	if(linked_moderator)
+		UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
 	if(!only_signals)
