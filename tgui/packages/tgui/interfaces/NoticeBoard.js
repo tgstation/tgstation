@@ -5,8 +5,8 @@ import { Window } from "../layouts";
 export const NoticeBoard = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-      allowed,
-      items = {},
+    allowed,
+    items = {},
   } = data;
 
   return (
