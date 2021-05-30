@@ -70,12 +70,13 @@
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
 	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
-	
+
 	var/list/ignore_cache = list()
 	for(var/type in ignore)
 		ignore_cache[type] = TRUE
 
 	var/list/cached_contents = spawn_at.contents.Copy()
+	var/baseturf_count = length(spawn_at.baseturfs)
 
 	for(var/type_path in typesof(/atom/movable, /turf)) //No areas please
 		if(ignore_cache[type_path])
@@ -84,18 +85,21 @@
 			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
 			//We change it back to prevent pain, please don't ask
 			spawn_at.ChangeTurf(/turf/open/floor/wood, /turf/baseturf_skipover)
+			if(baseturf_count != length(spawn_at.baseturfs))
+				Fail("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
+				baseturf_count = length(spawn_at.baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
 			if(QDELETED(creation))
 				continue
 			//Go all in
 			qdel(creation, force = TRUE)
-			if(length(cached_contents ^ spawn_at.contents))
-				var/output = ""
-				for(var/atom/to_print in cached_contents ^ spawn_at.conents)
-					output += "[to_print]\n"
-				Fail("Creating/Deleting [type_path] had side effects [to_print]")
-				cached_contents = spawn_at.contents.Copy()
+			creation = null //????
+
+		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
+		if(length(cached_contents ^ spawn_at.contents))
+			for(var/atom/to_kill in cached_contents ^ spawn_at.contents)
+				qdel(to_kill)
 
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
