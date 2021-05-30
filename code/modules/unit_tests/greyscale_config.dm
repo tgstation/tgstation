@@ -17,3 +17,8 @@
 		var/worn_icon_state = initial(item_path.worn_icon_state) || initial(item_path.icon_state)
 		if(worn && !worn.icon_states[worn_icon_state])
 			Fail("[worn.DebugName()] is missing a sprite for the worn overlay for [item_path]. Expected icon state: '[worn_icon_state]'")
+
+		var/datum/greyscale_config/belt = SSgreyscale.configurations["[initial(item_path.greyscale_config_belt)]"]
+		var/belt_icon_state = initial(item_path.belt_icon_state) || initial(item_path.icon_state)
+		if(belt && !belt.icon_states[belt_icon_state])
+			Fail("[belt.DebugName()] is missing a sprite for the belt overlay for [item_path]. Expected icon state: '[belt_icon_state]'")
