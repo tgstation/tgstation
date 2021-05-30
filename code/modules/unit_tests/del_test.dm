@@ -7,8 +7,6 @@
 	//We'll spawn everything here
 	var/turf/spawn_at = run_loc_floor_bottom_left
 	var/list/ignore = list(
-		//This causes loc fuckery, let's just not
-		/atom,
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
 		//Nother template type, doesn't like being created with no seed
@@ -18,7 +16,19 @@
 		//This should be obvious
 		/obj/machinery/doomsday_device,
 		//Yet more templates
-		/obj/machinery/restaurant_portal
+		/obj/machinery/restaurant_portal,
+		//Template type
+		/obj/effect/mob_spawn,
+		//Template type
+		/obj/structure/holosign/robot_seat,
+		//Say it with me now, type template
+		/obj/effect/mapping_helpers/component_injector,
+		//template type
+		/obj/effect/mapping_helpers/trait_injector,
+		//Singleton
+		/mob/dview,
+		//Template,
+		/obj/effect/mapping_helpers/custom_icon,
 	)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
@@ -37,27 +47,60 @@
 	ignore += typesof(/obj/item/food/grown)
 	//Nothing to hallucinate if there's nothing to hallicinate
 	ignore += typesof(/obj/effect/hallucination)
-
+	//These want fried food to take on the shape of, we can't pass that in
+	ignore += typesof(/obj/item/food/deepfryholder)
+	//Can't pass in a thing to glow
+	ignore += typesof(/obj/effect/abstract/eye_lighting)
+	//It wants a lot more context then we have
+	ignore += typesof(/obj/effect/buildmode_line)
+	//We don't have a pod
+	ignore += typesof(/obj/effect/pod_landingzone_effect)
+	ignore += typesof(/obj/effect/pod_landingzone)
+	//We don't have a disease to pass in
+	ignore += typesof(/obj/effect/mapping_helpers/component_injector/infective)
+	//It's a trapdoor to nowhere
+	ignore += typesof(/obj/effect/mapping_helpers/trapdoor_placer)
+	//There's no shapeshift to hold
+	ignore += typesof(/obj/shapeshift_holder)
+	//No tauma to pass in
+	ignore += typesof(/mob/camera/imaginary_friend)
+	//No pod to gondola
+	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
+	//No heart to give
+	ignore += typesof(/obj/structure/ethereal_crystal)
+	//No linked console
+	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
+	
 	var/list/ignore_cache = list()
 	for(var/type in ignore)
 		ignore_cache[type] = TRUE
 
-	for(var/type_path in typesof(/atom))
+	var/list/cached_contents = spawn_at.contents.Copy()
+
+	for(var/type_path in typesof(/atom/movable, /turf)) //No areas please
 		if(ignore_cache[type_path])
 			continue
 		if(ispath(type_path, /turf))
-			spawn_at.ChangeTurf(type_path)
+			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
 			//We change it back to prevent pain, please don't ask
-			spawn_at.ChangeTurf(/turf/open/floor/wood)
+			spawn_at.ChangeTurf(/turf/open/floor/wood, /turf/baseturf_skipover)
 		else
 			var/atom/creation = new type_path(spawn_at)
+			if(QDELETED(creation))
+				continue
 			//Go all in
 			qdel(creation, force = TRUE)
+			if(length(cached_contents ^ spawn_at.contents))
+				var/output = ""
+				for(var/atom/to_print in cached_contents ^ spawn_at.conents)
+					output += "[to_print]\n"
+				Fail("Creating/Deleting [type_path] had side effects [to_print]")
+				cached_contents = spawn_at.contents.Copy()
 
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
 	//Prevent the garbage subsystem from harddeling anything, if only to save time
-	//SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
+	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
 	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
