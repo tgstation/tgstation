@@ -21,7 +21,7 @@
 	ckey = new_ckey
 	current_mob = get_mob_by_ckey(ckey)
 
-	GLOB.global_roster.insert_contestant(user=null, new_kid=src) // check if success?
+	//GLOB.global_roster.insert_contestant(user=null, new_kid=src) // check if success?
 	if(!current_mob)
 		return
 	claimed = TRUE

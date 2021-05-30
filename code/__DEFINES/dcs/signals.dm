@@ -40,6 +40,8 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// the unique signal for a player becoming available
+#define COMSIG_GLOB_PLAYER_ENTER "!player_enter"
 
 /// signals from globally accessible objects
 
