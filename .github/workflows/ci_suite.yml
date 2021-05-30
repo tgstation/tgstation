@@ -58,9 +58,7 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           python3 tools/ci/template_dm_generator.py
-          tools/build/build
-        env:
-          CBT_BUILD_MODE : ALL_MAPS
+          tools/build/build dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -98,10 +96,8 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build
+          tools/build/build -DCIBUILDING
           bash tools/ci/run_server.sh
-        env:
-          CBT_BUILD_MODE: TEST_RUN
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
