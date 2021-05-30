@@ -229,7 +229,8 @@
 		else
 			new_mail = new /obj/item/mail/envelope(src)
 		var/mob/living/carbon/human/mail_to
-		mail_to = pick(mail_recipients)
+		if(length(mail_recipients))
+			mail_to = pick(mail_recipients)
 		if(mail_to)
 			new_mail.initialize_for_recipient(mail_to)
 			mail_recipients -= mail_to //Once picked, the mail crate will need a new recipient.
