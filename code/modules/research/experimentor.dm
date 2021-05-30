@@ -113,6 +113,8 @@
 		. = 1
 		if(!is_insertion_ready(user))
 			return
+		if(HAS_TRAIT(O, TRAIT_NO_MACHINE_INSERT))
+			return
 		if(!user.transferItemToLoc(O, src))
 			return
 		loaded_item = O

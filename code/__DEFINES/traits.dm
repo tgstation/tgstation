@@ -388,6 +388,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODROP "nodrop"
 /// cannot be inserted in a storage.
 #define TRAIT_NO_STORAGE_INSERT "no_storage_insert"
+/// cannot be inserted into a machine which has storage (currently anything using component/material_container, experimentor and destructive analyser)
+#define TRAIT_NO_MACHINE_INSERT "no_machine_insert"
 /// Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 #define TRAIT_FOOD_GRILLED "food_grilled"
@@ -483,6 +485,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ROUNDSTART_TRAIT "roundstart"
 #define JOB_TRAIT "job"
 #define CYBORG_ITEM_TRAIT "cyborg-item"
+#define DRONE_ITEM_TRAIT "drone-item"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
 #define CHANGELING_TRAIT "changeling"

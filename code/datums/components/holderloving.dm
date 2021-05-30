@@ -38,6 +38,7 @@
 		COMSIG_STORAGE_ENTERED,
 		COMSIG_STORAGE_EXITED,
 	), .proc/check_my_loc)
+	ADD_TRAIT(parent, TRAIT_NO_MACHINE_INSERT, DRONE_ITEM_TRAIT)
 
 /datum/component/holderloving/UnregisterFromParent()
 	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
@@ -47,6 +48,7 @@
 		COMSIG_STORAGE_ENTERED,
 		COMSIG_STORAGE_EXITED,
 	))
+	REMOVE_TRAIT(parent, TRAIT_NO_MACHINE_INSERT, DRONE_ITEM_TRAIT)
 
 /datum/component/holderloving/PostTransfer()
 	if(!isitem(parent))

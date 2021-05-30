@@ -31,6 +31,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
+		if(HAS_TRAIT(O, TRAIT_NO_MACHINE_INSERT))
+			return
 		if(!user.transferItemToLoc(O, src))
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
 			return
