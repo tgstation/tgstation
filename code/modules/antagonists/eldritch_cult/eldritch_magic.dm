@@ -765,7 +765,7 @@
 			continue
 		living_mob.adjustBruteLoss(40)
 
-	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE)
+	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'
