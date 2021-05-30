@@ -171,4 +171,4 @@
 			D.myhead = null
 			owner.gib()
 	owner = null
-	..()
+	return ..()

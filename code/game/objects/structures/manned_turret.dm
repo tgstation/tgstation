@@ -25,7 +25,7 @@
 /obj/machinery/manned_turret/Destroy()
 	target = null
 	target_turf = null
-	..()
+	return ..()
 
 //BUCKLE HOOKS
 
@@ -193,7 +193,7 @@
 
 /obj/item/gun_control/Destroy()
 	turret = null
-	..()
+	return ..()
 
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE

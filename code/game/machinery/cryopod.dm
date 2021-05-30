@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 /obj/machinery/computer/cryopod/Destroy()
 	GLOB.cryopod_computers -= src
-	..()
+	return ..()
 
 /obj/machinery/computer/cryopod/update_icon_state()
 	if(machine_stat & (NOPOWER|BROKEN))
