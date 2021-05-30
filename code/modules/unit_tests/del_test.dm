@@ -6,10 +6,17 @@
 /datum/unit_test/del_test/Run()
 	//We'll spawn everything here
 	var/turf/spawn_at = run_loc_floor_bottom_left
-	var/list/ignore = typecacheof(list(/atom))
+	var/list/ignore = list(
+		//This causes loc fuckery, let's just not
+		/atom = TRUE,
+		//This turf existing is an error in and of itself
+		/turf/baseturf_skipover = TRUE,
+		//Never meant to be created, errors out the ass for mobcode reasons
+		/mob/living/carbon = TRUE
+	)
 
 	for(var/type_path in typesof(/atom))
-		if(is_type_in_typecache(type_path, ignore))
+		if(ignore[type_path])
 			continue
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
