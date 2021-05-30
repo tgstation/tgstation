@@ -577,6 +577,9 @@
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
+		var/client/player_client = GLOB.directory[role.player_key]
+		if(player_client)
+			player_client.prefs.copy_to(H)
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key
