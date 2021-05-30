@@ -99,8 +99,9 @@
 /obj/structure/projected_forcefield/Destroy()
 	visible_message("<span class='warning'>[src] flickers and disappears!</span>")
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
-	generator.current_fields -= src
-	generator = null
+	if(generator)
+		generator.current_fields -= src
+		generator = null
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -109,4 +110,5 @@
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+	if(generator)
+		generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)

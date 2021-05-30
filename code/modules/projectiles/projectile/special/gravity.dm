@@ -50,7 +50,7 @@
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/attract/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
+		power = min(C.gun?.power, 15)
 
 /obj/projectile/gravityattract/on_hit()
 	. = ..()

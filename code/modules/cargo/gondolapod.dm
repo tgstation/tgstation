@@ -30,6 +30,9 @@
 	var/obj/structure/closet/supplypod/centcompod/linked_pod
 
 /mob/living/simple_animal/pet/gondola/gondolapod/Initialize(mapload, pod)
+	if(!pod)
+		stack_trace("Gondola pod created with no pod")
+		return INITIALIZE_HINT_QDEL
 	linked_pod = pod
 	name = linked_pod.name
 	desc = linked_pod.desc
@@ -73,6 +76,6 @@
 	update_appearance()
 
 /mob/living/simple_animal/pet/gondola/gondolapod/death()
-	qdel(linked_pod) //Will cause the open() proc for the linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
+	QDEL_NULL(linked_pod) //Will cause the open() proc for the linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
 	qdel(src)
 	..()

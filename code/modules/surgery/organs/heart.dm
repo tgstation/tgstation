@@ -429,6 +429,9 @@
 
 /obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/heart/ethereal/ethereal_heart)
 	. = ..()
+	if(!ethereal_heart)
+		stack_trace("Our crystal has no related heart")
+		return INITIALIZE_HINT_QDEL
 	src.ethereal_heart = ethereal_heart
 	ethereal_heart.owner.visible_message("<span class='notice'>The crystals fully encase [ethereal_heart.owner]!</span>")
 	to_chat(ethereal_heart.owner, "<span class='notice'>You are encased in a huge crystal!</span>")
