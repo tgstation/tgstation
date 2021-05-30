@@ -136,7 +136,7 @@
 	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/upgrade_blessing)
 	altar_icon_state = "convertaltar-blue"
 
-	max_favor =  2500
+	max_favor = 2500
 
 /datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
 	if(iscyborg(target))
