@@ -8,15 +8,42 @@
 	var/turf/spawn_at = run_loc_floor_bottom_left
 	var/list/ignore = list(
 		//This causes loc fuckery, let's just not
-		/atom = TRUE,
-		//This turf existing is an error in and of itself
-		/turf/baseturf_skipover = TRUE,
+		/atom,
 		//Never meant to be created, errors out the ass for mobcode reasons
-		/mob/living/carbon = TRUE
+		/mob/living/carbon,
+		//Nother template type, doesn't like being created with no seed
+		/obj/item/food/grown,
+		//And another
+		/obj/item/slimecross/recurring,
+		//This should be obvious
+		/obj/machinery/doomsday_device,
+		//Yet more templates
+		/obj/machinery/restaurant_portal
 	)
+	//This turf existing is an error in and of itself
+	ignore += typesof(/turf/baseturf_skipover)
+	ignore += typesof(/turf/baseturf_bottom)
+	//This demands a borg, so we'll let if off easy
+	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
+	//This one demands a computer, ditto
+	ignore += typesof(/obj/item/modular_computer/processor)
+	//Needs special input, let's be nice
+	ignore += typesof(/obj/effect/abstract/proximity_checker)
+	//Very finiky, blacklisting to make things easier
+	ignore += typesof(/obj/item/poster/wanted)
+	//We can't pass a mind into this
+	ignore += typesof(/obj/item/phylactery)
+	//This expects a seed, we can't pass it
+	ignore += typesof(/obj/item/food/grown)
+	//Nothing to hallucinate if there's nothing to hallicinate
+	ignore += typesof(/obj/effect/hallucination)
+
+	var/list/ignore_cache = list()
+	for(var/type in ignore)
+		ignore_cache[type] = TRUE
 
 	for(var/type_path in typesof(/atom))
-		if(ignore[type_path])
+		if(ignore_cache[type_path])
 			continue
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path)
