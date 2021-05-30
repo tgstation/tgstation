@@ -79,17 +79,6 @@ const TguiTarget = Juke.createTarget({
   executes: () => yarn('run', 'webpack-cli', '--mode=production'),
 });
 
-/**
- * Prepends the defines to the .dme.
- * Does not clean them up, as this is intended for TGS which
- * clones new copies anyway.
- */
-const prependDefines = (...defines) => {
-  const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
-  const textToWrite = defines.map(define => `#define ${define}\n`);
-  fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
-};
-
 const DefineParameter = Juke.createParameter({
   type: 'string[]',
   name: 'define',
@@ -127,6 +116,17 @@ const DefaultTarget = Juke.createTarget({
   name: 'default',
   dependsOn: [TguiTarget, TgFontTarget, DmTarget],
 });
+
+/**
+ * Prepends the defines to the .dme.
+ * Does not clean them up, as this is intended for TGS which
+ * clones new copies anyway.
+ */
+ const prependDefines = (...defines) => {
+  const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
+  const textToWrite = defines.map(define => `#define ${define}\n`);
+  fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
+};
 
 const TgsTarget = Juke.createTarget({
   name: 'tgs',
