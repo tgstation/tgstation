@@ -552,6 +552,8 @@
 
 /mob/living/simple_animal/slime/proc/clear_memories_of(datum/source)
 	SIGNAL_HANDLER
-	set_target(null)
-	set_leader(null)
+	if(source == Target)
+		set_target(null)
+	if(source == Leader)
+		set_leader(null)
 	remove_friend(source)
