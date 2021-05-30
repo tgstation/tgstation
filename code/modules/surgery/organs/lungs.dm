@@ -41,6 +41,8 @@
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
 	var/healium_sleep_min = 6
+	///Whether these lungs react negatively to miasma
+	var/suffers_miasma = TRUE
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -379,7 +381,7 @@
 		breath_gases[/datum/gas/hypernoblium][MOLES]-=gas_breathed
 
 	// Miasma
-		if (breath_gases[/datum/gas/miasma])
+		if (breath_gases[/datum/gas/miasma] && suffers_miasma)
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
 
 			//Miasma sickness
@@ -562,3 +564,54 @@
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+
+
+/obj/item/organ/lungs/ashwalker
+	name = "blackened frilled lungs" // blackened from necropolis exposure
+	desc = "Exposure to the necropolis has mutated these lungs to breathe the air of the lava-covered moon below."
+	color = "#964b00" // TODO get proper sprite instead of BROWN
+
+/obj/item/organ/lungs/ashwalker/Initialize()
+	. = ..()
+
+	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
+	// Take a "breath" of the air
+	var/datum/gas_mixture/breath = mix.remove(mix.total_moles() * BREATH_PERCENTAGE)
+
+	var/list/breath_gases = breath.gases
+
+	breath.assert_gases(
+		/datum/gas/oxygen,
+		/datum/gas/plasma,
+		/datum/gas/carbon_dioxide,
+		/datum/gas/nitrogen,
+		/datum/gas/bz,
+		/datum/gas/miasma,
+	)
+
+	var/oxygen_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])
+	var/nitrogen_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
+	var/plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
+	var/carbon_dioxide_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
+	var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
+	var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
+
+	// Normal oxygen is 21 kPa partial pressure, but SS13 humans can tolerate down
+	// to 16 kPa. So it follows that ashwalkers, as humanoids, follow the same rules.
+	var/TOLERANCE = 5
+	safe_oxygen_min = max(0, oxygen_pp - TOLERANCE)
+	safe_nitro_min = max(0, nitrogen_pp - TOLERANCE)
+	safe_toxins_min = max(0, plasma_pp - TOLERANCE)
+
+	// CO2 is always a waste gas, so none is required, but ashwalkers
+	// tolerate the base amount plus 10 (humans tolerate only 10 pp)
+
+	safe_co2_max = carbon_dioxide_pp + TOLERANCE * 2
+
+	// The lung tolerance against BZ is also increased the amount of BZ in the base air
+	BZ_trip_balls_min += bz_pp
+	BZ_brain_damage_min += bz_pp
+
+	// Lungs adapted to a high miasma atmosphere do not process it, and breathe it back out
+	if(miasma_pp)
+		suffers_miasma = FALSE

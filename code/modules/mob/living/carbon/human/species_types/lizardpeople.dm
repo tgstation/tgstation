@@ -116,12 +116,11 @@ Lizard subspecies: ASHWALKERS
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
+	mutantlungs = /obj/item/organ/lungs/ashwalker
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
-		TRAIT_NOBREATH,
-		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 
