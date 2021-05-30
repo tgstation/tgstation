@@ -76,7 +76,7 @@
 	var/roundstart_players = input(usr, "Enter number of round start players") as num
 	var/forced_threat_level = input(usr, "Enter forced threat level, if you want one") as num | null
 
-	SSticker.mode = config.pick_mode("dynamic")
+	SSticker.mode = new /datum/game_mode/dynamic
 	message_admins("Running dynamic simulations...")
 
 	var/list/outputs = list()

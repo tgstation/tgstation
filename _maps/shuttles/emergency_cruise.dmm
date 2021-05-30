@@ -90,7 +90,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "cZ" = (
-/obj/item/toy/plush/lizardplushie{
+/obj/item/toy/plush/lizard_plushie/green{
 	name = "Hides-On-Shuttle"
 	},
 /turf/open/floor/wood,

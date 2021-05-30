@@ -699,6 +699,7 @@
 #include "code\datums\elements\forced_gravity.dm"
 #include "code\datums\elements\haunted.dm"
 #include "code\datums\elements\item_scaling.dm"
+#include "code\datums\elements\kneejerk.dm"
 #include "code\datums\elements\light_blocking.dm"
 #include "code\datums\elements\light_eaten.dm"
 #include "code\datums\elements\light_eater.dm"
