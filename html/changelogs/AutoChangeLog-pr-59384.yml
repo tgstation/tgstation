@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - bugfix: "Chairs no longer runtime when being deconstructed"
