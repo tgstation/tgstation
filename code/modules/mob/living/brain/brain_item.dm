@@ -116,14 +116,17 @@
 	var/healby = 2 //heals 2 damage per unit of mannitol
 	var/pour = "carefully pour"
 	var/onto = "onto"
+	var/valid_container = TRUE
 	if(istype(O, /obj/item/reagent_containers/syringe))
 		healby = 4 //heal 4 damage because PRECISCION
 		pour = "precisely inject"
 		onto = "into"
 	else if(istype(O, /obj/item/reagent_containers/dropper))
 		healby = 4
+	else if(!O.is_drainable())
+		valid_container = FALSE // no pouring from brain burgers pls
 
-	if(O.reagents?.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
+	if(valid_container && O.reagents?.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
 		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")

@@ -878,14 +878,11 @@
 /datum/reagent/medicine/mannitol/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	var/obj/item/organ/brain/exposed_brain = exposed_obj
-	if(!exposed_brain)
+	if(!istype(exposed_brain))
 		return
 
-	if(exposed_brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
-		to_chat(usr, "<span class='warning'>[exposed_brain] is far too damaged, there's nothing else we can do for it!</span>")
-		return
+	exposed_brain.visible_message("<span class='notice'>[exposed_brain] looks slightly better, but not much. Perhaps splashing is not a very precise method.</span>")
 
-	to_chat(usr, "<span class='notice'>[exposed_brain] looks slightly better, but not much. Perhaps splashing is not a very precise method.</span>")
 	var/healby = 1 //heals 1 damage per unit of mannitol
 	healby *= reac_volume
 	healby *= src.purity / REAGENT_STANDARD_PURITY
