@@ -39,8 +39,8 @@
 		ribbon_color = generated_ribbon_color
 
 /obj/item/stack/wrapping_paper/RightClick(mob/user, modifiers)
-	var/new_base = input(usr, "", "Select a base color", color) as color
-	var/new_ribbon = input(usr, "", "Select a ribbon color", color) as color
+	var/new_base = input(user, "", "Select a base color", color) as color
+	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if((new_base && new_base != base_color) || (new_ribbon && new_ribbon != ribbon_color))
