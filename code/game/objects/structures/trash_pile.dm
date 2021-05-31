@@ -82,7 +82,6 @@
 		if(!can_hide_item(item))
 			to_chat(user,"<span class='warning'>The [src] is way too full to fit [item].</span>")
 			return
-			. = ..()
 		else
 			to_chat(user,"<span class='notice'>You begin to stealthily hide [item] in the [src].</span>")
 			if(do_mob(user, user, hide_item_time))
@@ -91,6 +90,8 @@
 						to_chat(user,"<span class='notice'>You hide [item] in the trash.</span>")
 					else
 						to_chat(user, "<span class='warning'>\The [item] is stuck to your hand, you cannot put it in the trash!</span>")
+
+	. = ..()
 
 /obj/structure/trash_pile/Destroy()
 	for(var/atom/movable/atom in src)
