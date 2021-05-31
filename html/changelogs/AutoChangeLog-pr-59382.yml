@@ -1,0 +1,4 @@
+author: "rasepretep"
+delete-after: True
+changes: 
+  - code_imp: "removed the piece of code that causes carpotoxin to qdel temporal scars (hopefully I identified it correctly)"
