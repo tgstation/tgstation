@@ -65,6 +65,7 @@
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
 	QDEL_NULL(aiPDA)
+	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
 	GLOB.silicon_mobs -= src
 	return ..()
