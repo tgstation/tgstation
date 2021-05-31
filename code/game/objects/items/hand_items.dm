@@ -407,8 +407,7 @@
 
 /obj/projectile/kiss/life/harmless_on_hit(mob/living/living_target)
 	. = ..()
-	new /obj/effect/temp_visual/heal(get_turf(target), "#375637")
-	testing("landed life")
+	new /obj/effect/temp_visual/heal(get_turf(living_target), "#375637")
 
 	if(!firer)
 		living_target.adjustBruteLoss(-7.5)
@@ -416,7 +415,6 @@
 		living_target.adjustToxLoss(-5)
 		return
 
-	testing("apply life")
 	living_target.apply_status_effect(/datum/status_effect/kiss_of_life, firer)
 
 /obj/projectile/kiss/rebirth
@@ -425,8 +423,4 @@
 
 /obj/projectile/kiss/rebirth/harmless_on_hit(mob/living/living_target)
 	. = ..()
-	testing("land rebi")
 	living_target.revive(full_heal = TRUE)
-	testing("apply reb")
-
-
