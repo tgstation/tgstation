@@ -65,6 +65,8 @@
 	readout += "Standard models of this projectile weapon have <span class='warning'>[ammo_type.len]</span> mode\s"
 	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
 	for(var/obj/item/ammo_casing/energy/for_ammo in ammo_type)
+		if(!for_ammo.projectile_type)
+			continue
 		exam_proj = new for_ammo.projectile_type() // Initial loaded projectile cannot be used because its initial value is null
 		if(exam_proj.damage > 0) // Don't divide by 0!!!!!
 			readout += "<span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shot\s on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
