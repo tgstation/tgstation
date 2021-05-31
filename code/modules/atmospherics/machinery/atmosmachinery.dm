@@ -169,7 +169,7 @@
 
 	for(var/i in 1 to device_type)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
-			if(can_be_node(target, i))
+			if(can_be_node(target) && target.can_be_node(src))
 				nodes[i] = target
 				break
 	update_appearance()
@@ -194,9 +194,8 @@
  * called on atmosinit()
  * Arguments:
  * * obj/machinery/atmospherics/target - the machine we are connecting to
- * * iteration - the current node we are checking (from 1 to 4)
  */
-/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
 	return connection_check(target, piping_layer)
 
 /**
@@ -511,12 +510,10 @@
 		//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(!(vent_movement & VENTCRAWL_ALLOWED)) // Early return for machines which does not allow ventcrawling at all.
-		return
-	if(istype(L))
+	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
 		L.handle_ventcrawl(src)
 		return
-	..()
+	return ..()
 
 /**
  * Getter of a list of pipenets
