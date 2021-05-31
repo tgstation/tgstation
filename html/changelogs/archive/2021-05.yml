@@ -742,3 +742,40 @@
   vincentiusvin:
   - bugfix: Some duplicate pipes in kilo atmospherics have been fixed.
   - qol: Various piping improvements in kilo atmospherics.
+2021-05-29:
+  antropod:
+  - bugfix: Fixed reagent multiplication exploit with 1u foam
+  ninjanomnom:
+  - bugfix: Some screwdriver inhand icons have been fixed to not show an error
+  - bugfix: Some prison jumpsuit inhand icons have been fixed to not show an error
+2021-05-30:
+  Mickyan:
+  - bugfix: Smoking no longer spills spaghetti from your pockets
+  - bugfix: Lit cigarettes no longer keep falling off
+  - spellcheck: Removed extra "the" from item knockdown messages
+  RandomGamer123:
+  - bugfix: Starlight condensation now heals you on glass tiles exposed to space,
+      multi-z stations, lavaland, and unroofed structures correctly.
+  RaveRadbury:
+  - bugfix: Mime crayons don't make you multicolored when you eat them.
+  Watermelon914:
+  - bugfix: Fixes AND/OR gates not properly functioning because of null inputs.
+  norill:
+  - bugfix: Fixed not being able to add telecomms frequency filters
+  - bugfix: Changed the color of command frequency in telecomms and headset GUI from
+      blue to yellow to match chat color
+2021-05-31:
+  Gamer025:
+  - bugfix: Fixed some incorrect uses of UnregisterSignal
+  - bugfix: Organs without owner no longer runtime
+  Maurukas:
+  - qol: adds a substantial number of fire alarms to Tramstation areas that had few/none
+  - bugfix: Fixed duplicate PunPun in Tramstation bar
+  - bugfix: Fixed duplicated chemistry locker embedded in the Tramstation HPLC machine
+  - bugfix: The Cryopod bays on Icebox, Metastation and Deltastation have been wired
+      into the station's power grid
+  Melbert:
+  - rscadd: GAGS flowers (Rainbow bunch flowers now look prettier!)
+  - refactor: Rainbow bunch flowers now use GAGS instead of their old method of greyscaling
+  ninjanomnom:
+  - bugfix: Screwdrivers no longer cause an error icon while in the belt

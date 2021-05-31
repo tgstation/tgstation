@@ -278,10 +278,6 @@
 
 	return message
 
-
-/datum/antagonist/traitor/is_gamemode_hero()
-	return SSticker.mode.name == "traitor"
-
 #undef HIJACK_PROB
 #undef HIJACK_MIN_PLAYERS
 #undef MARTYR_PROB

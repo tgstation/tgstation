@@ -5,7 +5,7 @@
 	weight = 1
 	earliest_start = 5 MINUTES
 
-/datum/round_event_control/aurora_caelus/canSpawnEvent(players, gamemode)
+/datum/round_event_control/aurora_caelus/canSpawnEvent(players)
 	if(!CONFIG_GET(flag/starlight))
 		return FALSE
 	return ..()

@@ -19014,6 +19014,7 @@
 "cvV" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/landmark/start/hangover,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "cvX" = (
@@ -20384,6 +20385,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
+"cLc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "cLH" = (
@@ -38069,6 +38084,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white/corner,
 /area/commons/fitness/recreation)
 "eqU" = (
@@ -58762,6 +58778,21 @@
 "kgb" = (
 /turf/open/floor/iron/dark,
 /area/commons/cryopods)
+"kgn" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "kgo" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -60804,6 +60835,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -84009,6 +84041,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "qCH" = (
@@ -96288,6 +96321,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "tKS" = (
@@ -97848,6 +97882,10 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
+"ufd" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "uft" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -98870,6 +98908,7 @@
 /area/security/prison)
 "uua" = (
 /obj/machinery/door/airlock/glass,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/commons/cryopods)
 "uuh" = (
@@ -99725,6 +99764,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/commons/cryopods)
 "uDX" = (
@@ -107435,6 +107475,17 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
+"wNc" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "wNi" = (
 /obj/structure/filingcabinet/medical,
 /obj/machinery/light/directional/north,
@@ -166365,7 +166416,7 @@ uhI
 uhI
 trW
 eVR
-auP
+cLc
 sUD
 wZU
 aad
@@ -166622,7 +166673,7 @@ qBh
 nzf
 qsr
 geR
-qBh
+kgn
 tEe
 wZU
 aaa
@@ -167650,7 +167701,7 @@ qBh
 xOD
 qgI
 jYD
-qBh
+kgn
 sAD
 wZU
 aad
@@ -169190,11 +169241,11 @@ cFF
 cFF
 tqX
 aaa
-wZU
+oNH
 uDP
-kgb
-gjd
-sdh
+ufd
+wNc
+wWo
 aad
 mIc
 ajr

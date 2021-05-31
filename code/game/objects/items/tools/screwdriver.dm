@@ -5,6 +5,7 @@
 	icon_state = "screwdriver_map"
 	inhand_icon_state = "screwdriver"
 	worn_icon_state = "screwdriver"
+	belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -28,6 +29,7 @@
 	greyscale_config = /datum/greyscale_config/screwdriver
 	greyscale_config_inhand_left = /datum/greyscale_config/screwdriver_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/screwdriver_inhand_right
+	greyscale_config_belt = /datum/greyscale_config/screwdriver_belt
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -40,8 +42,6 @@
 		"cyan" = "#18a2d5",
 		"yellow" = "#ffa500"
 	)
-	/// Colored belt appearance for adding it as a belt overlay
-	var/mutable_appearance/colored_belt_appearance
 
 /obj/item/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -51,16 +51,8 @@
 	if(random_color)
 		var/our_color = pick(screwdriver_colors)
 		set_greyscale(colors=list(screwdriver_colors[our_color]))
-		inhand_icon_state = null
-		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	. = ..()
 	AddElement(/datum/element/eyestab)
-
-/obj/item/screwdriver/get_belt_overlay()
-	if(random_color)
-		return colored_belt_appearance
-	else
-		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
@@ -71,6 +63,8 @@
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
@@ -95,6 +89,8 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.7
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/screwdriver/power/examine()
 	. = ..()

@@ -141,11 +141,11 @@
 	if(slot & ITEM_SLOT_OCLOTHING)
 		RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
 		return
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
+	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/dropped(mob/user)
 	..()
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
+	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrect(mob/living/carbon/user, new_stat)
 	SIGNAL_HANDLER
