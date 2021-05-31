@@ -170,7 +170,7 @@
 	name = "picoss skewer"
 	desc = "A popular Tiziran streetfood consisting of vinegar-marinated armorfish on a skewer with onion and chillis."
 	icon = 'icons/obj/food/lizard.dmi'
-	icon_state = "picoss_skewers"
+	icon_state = "picoss_skewer"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/vinegar= 1, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
 	foodtypes = MEAT | VEGETABLES
@@ -195,6 +195,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3)
 	tastes = list("fish" = 1)
 	foodtypes = MEAT
+	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/moonfish_demiglace
@@ -299,6 +300,9 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
+/obj/item/food/rootdoughslice/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 30)
+
 /obj/item/food/root_flatbread
 	name = "root flatbread"
 	desc = "A plain root flatbread. Can be topped with a variety of foods that lizards like to eat."
@@ -307,6 +311,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	burns_on_grill = TRUE
 
 /obj/item/food/rootroll
 	name = "rootroll"
