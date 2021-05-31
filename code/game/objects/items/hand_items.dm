@@ -405,27 +405,28 @@
 	name = "kiss of life"
 	color = COLOR_BLUE
 
-/obj/projectile/kiss/life/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/kiss/life/harmless_on_hit(mob/living/living_target)
 	. = ..()
-	if(!isliving(target))
-		return
+	new /obj/effect/temp_visual/heal(get_turf(target), "#375637")
+	testing("landed life")
 
-	var/mob/living/benefactor = target
 	if(!firer)
-		benefactor.adjustBruteLoss(-7.5)
-		benefactor.adjustFireLoss(-7.5)
-		benefactor.adjustToxLoss(-5)
+		living_target.adjustBruteLoss(-7.5)
+		living_target.adjustFireLoss(-7.5)
+		living_target.adjustToxLoss(-5)
 		return
 
-	benefactor.apply_status_effect(/datum/status_effect/kiss_of_life, firer)
+	testing("apply life")
+	living_target.apply_status_effect(/datum/status_effect/kiss_of_life, firer)
 
 /obj/projectile/kiss/rebirth
 	name = "kiss of rebirth"
 	color = COLOR_VIVID_YELLOW
 
-/obj/projectile/kiss/rebirth/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/kiss/rebirth/harmless_on_hit(mob/living/living_target)
 	. = ..()
-	if(!isliving(target))
-		return
-	var/mob/living/benefactor = target
-	benefactor.revive(full_heal = TRUE)
+	testing("land rebi")
+	living_target.revive(full_heal = TRUE)
+	testing("apply reb")
+
+
