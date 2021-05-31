@@ -111,15 +111,12 @@
  * * user - The mob that is trying to get the item removed, if there is one
  */
 /obj/structure/noticeboard/proc/remove_item(obj/item/item, mob/user)
-	if(istype(item))
-		if(user)
-			item.forceMove(drop_location())
-			user.put_in_hands(item)
-			balloon_alert(user, "removed from board")
-		else
-			item.forceMove(loc)
-		notices--
-		icon_state = "nboard0[notices]"
+	item.forceMove(drop_location())
+	if(user)
+		user.put_in_hands(item)
+		balloon_alert(user, "removed from board")
+	notices--
+	icon_state = "nboard0[notices]"
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
