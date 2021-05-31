@@ -10,8 +10,8 @@
 	endurance = 35
 	yield = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_grow = "cocoapod-grow"
-	icon_dead = "cocoapod-dead"
+	icon_grow = "kortanut-grow"
+	icon_dead = "kortanut-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/korta_nut/sweet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
@@ -33,7 +33,7 @@
 	name = "pack of sweet korta nut seeds"
 	desc = "These seeds grow into sweet korta nuts, a mutation of the original species that produces a thick syrup that Tizirans use for desserts."
 	icon_state = "seed-sweetkorta"
-	species = "sweetkortanut"
+	species = "kortanut"
 	plantname = "Sweet Korta Nut Bush"
 	product = /obj/item/food/grown/korta_nut/sweet
 	maturation = 10

@@ -12,7 +12,9 @@
 		            /obj/item/food/sosjerky = 6,
 					/obj/item/food/no_raisin = 6,
 					/obj/item/food/peanuts = 6,
+					/obj/item/food/peanuts/flavoured = 3,
 					/obj/item/food/cnds = 6,
+					/obj/item/food/cnds/filled = 3,
 					/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
 					/obj/item/storage/box/gum = 3,
 					/obj/item/food/energybar = 6)
