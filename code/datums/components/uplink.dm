@@ -10,6 +10,7 @@
 /datum/component/uplink
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/name = "syndicate uplink"
+	var/ui_theme = "syndicate"
 	var/active = FALSE
 	var/lockable = TRUE
 	var/locked = TRUE
@@ -29,10 +30,18 @@
 
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, telecrystals = TELECRYSTALS_DEFAULT, name, ui_theme)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	if(name)
+		src.name = name
+	if(ui_theme)
+		src.ui_theme = ui_theme
+	src.lockable = lockable
+	src.active = active
+	src.uplink_flag = uplink_flag
+	src.telecrystals = telecrystals
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -49,18 +58,15 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	if(_owner)
-		owner = _owner
+	if(owner)
+		src.owner = owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 		if(GLOB.uplink_purchase_logs_by_key[owner])
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
-	lockable = _lockable
-	active = _enabled
-	src.uplink_flag = uplink_flag
 	update_items()
-	telecrystals = starting_tc
+
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -159,6 +165,7 @@
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
+	data["theme"] = ui_theme
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
@@ -221,6 +228,7 @@
 		if("compact_toggle")
 			compact_mode = !compact_mode
 			return TRUE
+		//if("get_more_objectives")
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
 	if(!istype(U))

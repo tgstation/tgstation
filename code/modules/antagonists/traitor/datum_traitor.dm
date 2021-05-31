@@ -1,19 +1,3 @@
-/// Chance that the traitor could roll hijack if the pop limit is met.
-#define HIJACK_PROB 10
-/// Hijack is unavailable as a random objective below this player count.
-#define HIJACK_MIN_PLAYERS 30
-
-/// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
-#define MARTYR_PROB 20
-
-/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
-#define KILL_PROB 50
-/// If a kill objective is rolled, chance that it is to destroy the AI.
-#define DESTROY_AI_PROB(denominator) (100 / denominator)
-/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
-#define MAROON_PROB 30
-/// If it's a steal objective, this is the chance that it'll be a download research notes objective. Science staff can't get this objective. It can only roll once. If any of these fail, they will get a generic steal objective instead.
-#define DOWNLOAD_PROB 15
 
 /datum/antagonist/traitor
 	name = "Traitor"
@@ -23,20 +7,47 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
-	hijack_speed = 0.5 //10 seconds per hijack stage by default
-	var/employer = "The Syndicate"
+	///10 seconds per hijack stage by default
+	hijack_speed = 0.5
+	ui_name = "TraitorInfo"
+	///give this traitor objectives? doesn't include ending objective
 	var/give_objectives = TRUE
-	var/should_give_codewords = TRUE
-	var/should_equip = TRUE
+	///give this traitor codewords? nanotrasen traitors do not.
+	var/give_codewords = TRUE
+	///give this traitor an uplink?
+	var/give_uplink = TRUE
+	///if TRUE, this traitor will always get hijacking as their final objective
+	var/is_hijacker = FALSE
 
+	///the name of the antag flavor this traitor has.
+	var/employer
+
+	///assoc list of strings set up after employer is given
+	var/list/traitor_flavor
+
+	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
+	var/datum/objective/ending_objective
+
+	///datum of the contractor hub, if they decide to become a contractor in the round.
+	///in the future, this should definitely be moved into a component.
 	var/datum/contractor_hub/contractor_hub
+
+	///string instructions for how to unlock the uplink.
+	var/unlock_method
 
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
 	if(give_objectives)
 		forge_traitor_objectives()
+	forge_ending_objective()
 
-	equip()
+	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
+	pick_employer(faction)
+
+	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
+
+	if(give_uplink)
+		owner.give_uplink(silent = TRUE, antag_datum = src, ui_name = traitor_flavor["uplink_name"], ui_theme = traitor_flavor["uplink_theme"])
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -44,22 +55,32 @@
 
 /datum/antagonist/traitor/on_removal()
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='userdanger'>You are no longer the [job_rank]!</span>")
+		to_chat(owner.current,"<span class='userdanger'>You are no longer the [name]!</span>")
 
 	owner.special_role = null
 
 	return ..()
 
-/// Simple helper proc that handles equipping the traitor if necessary.
-/datum/antagonist/traitor/proc/equip()
-	if(should_equip)
-		owner.equip_traitor(employer, silent, src)
+/datum/antagonist/traitor/proc/pick_employer(faction)
+	var/possible_employers = list()
+	switch(faction)
+		if(FACTION_SYNDICATE)
+			possible_employers = GLOB.syndicate_employers.Copy()
+			if(istype(ending_objective, /datum/objective/hijack))
+				possible_employers -= GLOB.normal_employers
+			else //escape or martyrdom
+				possible_employers -= GLOB.hijack_employers
+		if(FACTION_NANOTRASEN)
+			possible_employers = GLOB.nanotrasen_employers.Copy()
+			if(istype(ending_objective, /datum/objective/hijack))
+				possible_employers -= GLOB.normal_employers
+			else //escape or martyrdom
+				possible_employers -= GLOB.hijack_employers
+	employer = pick(possible_employers)
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
-
-	var/is_hijacker = FALSE
 	var/objective_count = 0
 
 	if ((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
@@ -73,17 +94,19 @@
 	for(var/i in objective_count to objective_limit - 1)
 		forge_single_generic_objective()
 
+
+/**
+ * ## forge_ending_objective
+ *
+ * Forges the endgame objective and adds it to this datum's objective list.
+ */
+/datum/antagonist/traitor/proc/forge_ending_objective()
 	if(is_hijacker)
-		var/datum/objective/hijack/hijack_objective = new
-		hijack_objective.owner = owner
-		objectives += hijack_objective
+		ending_objective = new /datum/objective/hijack
+		ending_objective.owner = owner
+		objectives += ending_objective
 		return
 
-	forge_escape_objective()
-
-/// Forges a single escape objective and adds it to this datum's objective list.
-/datum/antagonist/traitor/proc/forge_escape_objective()
-	var/is_martyr = prob(MARTYR_PROB)
 	var/martyr_compatibility = TRUE
 
 	for(var/datum/objective/traitor_objective in objectives)
@@ -91,15 +114,15 @@
 			martyr_compatibility = FALSE
 			break
 
-	if(martyr_compatibility && is_martyr)
-		var/datum/objective/martyr/martyr_objective = new
-		martyr_objective.owner = owner
-		objectives += martyr_objective
+	if(martyr_compatibility && prob(MARTYR_PROB))
+		ending_objective = new /datum/objective/martyr
+		ending_objective.owner = owner
+		objectives += ending_objective
 		return
 
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = owner
-	objectives += escape_objective
+	ending_objective = new /datum/objective/escape
+	ending_objective.owner = owner
+	objectives += ending_objective
 
 /// Adds a generic kill or steal objective to this datum's objective list.
 /datum/antagonist/traitor/proc/forge_single_generic_objective()
@@ -138,14 +161,16 @@
 	objectives += steal_objective
 
 /datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
+	to_chat(owner.current, "<span class='alertsyndie'>[traitor_flavor["introduction"]]</span>")
 	owner.announce_objectives()
-	if(should_give_codewords)
+	if(give_codewords)
 		give_codewords()
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
+
+	antag_memory += "Your allegiances: \"[traitor_flavor["allies"]]\"" + "<br>"
 
 	add_antag_hud(antag_hud_type, antag_hud_name, datum_owner)
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
@@ -269,6 +294,18 @@
 
 	return result
 
+/datum/antagonist/traitor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
+	data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
+	data["uplink"] = traitor_flavor["uplink"]
+	data["theme"] = traitor_flavor["uplink_theme"]
+	data["intro"] = traitor_flavor["introduction"]
+	data["allies"] = traitor_flavor["allies"]
+	data["uplink_unlock_info"] = get_unlock_method()
+	data["objectives"] = get_objectives()
+	return data
+
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
@@ -277,11 +314,3 @@
 					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
 
 	return message
-
-#undef HIJACK_PROB
-#undef HIJACK_MIN_PLAYERS
-#undef MARTYR_PROB
-#undef KILL_PROB
-#undef DESTROY_AI_PROB
-#undef MAROON_PROB
-#undef DOWNLOAD_PROB

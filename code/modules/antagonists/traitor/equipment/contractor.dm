@@ -1,12 +1,17 @@
-/// Support unit gets it's own very basic antag datum for admin logging.
+/**
+ * ## Contractor Support Unit
+ *
+ * A minor supporting role of a traitor created by them contracting.
+ * They are excluded from many things like roundend because that information is given on the main traitor.
+ * The antag datum is given for admin logging.
+ */
 /datum/antagonist/traitor/contractor_support
 	name = "Contractor Support Unit"
 	antag_moodlet = /datum/mood_event/focused
 
-	show_in_roundend = FALSE /// We're already adding them in to the contractor's roundend.
-	give_objectives = TRUE /// We give them their own custom objective.
-	show_in_antagpanel = FALSE /// Not a proper/full antag.
-	should_equip = FALSE /// Don't give them an uplink.
+	show_in_roundend = FALSE
+	show_in_antagpanel = FALSE
+	give_uplink = FALSE
 
 	var/datum/team/contractor_team/contractor_team
 

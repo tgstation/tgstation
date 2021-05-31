@@ -2,13 +2,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	var/name = "Antagonist"
-	var/roundend_category = "other antagonists" //Section of roundend report, datums with same category will be displayed together, also default header for the section
+	///Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/roundend_category = "other antagonists"
 	var/show_in_roundend = TRUE //Set to false to hide the antagonists from roundend report
 	var/prevent_roundtype_conversion = TRUE //If false, the roundtype will still convert with this antag active
-	var/datum/mind/owner //Mind that owns this datum
+	///Mind that owns this datum
+	var/datum/mind/owner
 	var/silent = FALSE //Silent will prevent the gain/lose texts to show
 	var/can_coexist_with_others = TRUE //Whether or not the person will be able to have more than one datum
 	var/list/typecache_datum_blacklist = list() //List of datums this type can't coexist with
+	///role preference reference of this antag, check role_preferences.dm for examples
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
 	var/list/objectives = list()
@@ -23,10 +26,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/soft_antag = FALSE
 
 	//Antag panel properties
-	var/show_in_antagpanel = TRUE //This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
+
+	///This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
+	var/show_in_antagpanel = TRUE
 	var/antagpanel_category = "Uncategorized" //Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
+
+	//ANTAG UI
+
+	///name of the UI that will try to open, right now having nothing means this won't exist but in the future all should.
+	var/ui_name
+	///button to access antag interface
+	var/datum/action/antag_info/info_button
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -109,8 +121,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() without a mind")
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
+	if(ui_name)//in the future, this should entirely replace greet.
+		info_button = new(owner.current, src)
+		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
+		if(ui_name)
+			info_button.Trigger()
+
 	apply_innate_effects()
 	give_antag_moodies()
 	if(is_banned(owner.current) && replace_banned)
@@ -292,3 +310,31 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_name)
+		ui.open()
+
+/datum/antagonist/ui_state(mob/user)
+	return GLOB.always_state
+
+//button for antags to review their descriptions/info
+
+/datum/action/antag_info
+	name = "Open Antag Information:"
+	button_icon_state = "round_end"
+	var/datum/antagonist/antag_datum
+
+/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+	. = ..()
+	src.antag_datum = antag_datum
+	name += " [antag_datum.name]"
+
+/datum/action/antag_info/Trigger()
+	if(antag_datum)
+		antag_datum.ui_interact(owner)
+
+/datum/action/antag_info/IsAvailable()
+	return TRUE

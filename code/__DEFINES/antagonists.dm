@@ -97,6 +97,76 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 	WIZARD_LOADOUT_SOULTAP, \
 )
 
+/// Chance that the traitor could roll hijack if the pop limit is met.
+#define HIJACK_PROB 10
+/// Hijack is unavailable as a random objective below this player count.
+#define HIJACK_MIN_PLAYERS 30
+
+/// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
+#define MARTYR_PROB 20
+
+/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
+#define KILL_PROB 50
+/// If a kill objective is rolled, chance that it is to destroy the AI.
+#define DESTROY_AI_PROB(denominator) (100 / denominator)
+/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
+#define MAROON_PROB 30
+/// If it's a steal objective, this is the chance that it'll be a download research notes objective. Science staff can't get this objective. It can only roll once. If any of these fail, they will get a generic steal objective instead.
+#define DOWNLOAD_PROB 15
+
+///File to the traitor flavor
+#define TRAITOR_FLAVOR_FILE "traitor_flavor.json"
+
+///employers that are from the syndicate
+GLOBAL_LIST_INIT(syndicate_employers, list(
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Cybersun Industries",
+	"MI13",
+	"Gorlex Marauders",
+	"Donk Corporation",
+	"Waffle Corporation",
+))
+///employers that are from nanotrasen
+GLOBAL_LIST_INIT(nanotrasen_employers, list(
+	"Gone Postal",
+	"Internal Affairs Agent",
+	"Corporate Climber",
+	"Legal Trouble"
+))
+
+///employers who hire agents to do the hijack
+GLOBAL_LIST_INIT(hijack_employers, list(
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Gone Postal"
+))
+
+///employers who hire agents to do a task and escape... or martyrdom. whatever
+GLOBAL_LIST_INIT(normal_employers, list(
+	"Cybersun Industries",
+	"MI13",
+	"Gorlex Marauders",
+	"Donk Corporation",
+	"Waffle Corporation",
+	"Internal Affairs Agent",
+	"Corporate Climber",
+	"Legal Trouble"
+))
+
+///all the employers that are syndicate
+#define FACTION_SYNDICATE "syndicate"
+///all the employers that are nanotrasen
+#define FACTION_NANOTRASEN "nanotrasen"
+
+#define UPLINK_THEME_SYNDICATE "syndicate"
+
+#define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
+
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 

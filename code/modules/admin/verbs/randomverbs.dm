@@ -404,11 +404,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
-	if(traitordatum)
+	var/datum/antagonist/traitor/traitor_datum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
+	if(traitor_datum)
 		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-		traitordatum.equip()
-
+		new_character.mind.give_uplink(silent = FALSE, antag_datum = traitor_datum)
 
 	switch(new_character.mind.special_role)
 		if(ROLE_WIZARD)
