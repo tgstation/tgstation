@@ -671,14 +671,6 @@
 /datum/holiday/remembrance_day/getStationPrefix()
 	return pick("Peace", "Armistice", "Poppy")
 
-/datum/holiday/victory_day
-	name = "Victory in Europe Day"
-	begin_month = MAY
-	begin_day = 8
-
-/datum/holiday/victory_day/getStationPrefix()
-	return pick("Liberty", "Victory", "Peace")
-
 /datum/holiday/un_day
 	name = "Anniversary of the Foundation of the United Nations"
 	begin_month = OCTOBER
