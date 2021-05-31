@@ -169,7 +169,7 @@
 
 	for(var/i in 1 to device_type)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
-			if(can_be_node(target) && target.can_be_node(src))
+			if(can_be_node(target, i))
 				nodes[i] = target
 				break
 	update_appearance()
@@ -194,8 +194,9 @@
  * called on atmosinit()
  * Arguments:
  * * obj/machinery/atmospherics/target - the machine we are connecting to
+ * * iteration - the current node we are checking (from 1 to 4)
  */
-/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
 	return connection_check(target, piping_layer)
 
 /**
