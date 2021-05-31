@@ -113,9 +113,9 @@
 /obj/structure/noticeboard/proc/remove_item(obj/item/item, mob/user)
 	if(istype(item))
 		if(user)
-			item.forceMove(user.loc)
+			item.forceMove(drop_location())
 			user.put_in_hands(item)
-			to_chat(user, "<span class='notice'>You remove [item] from [src].</span>")
+			balloon_alert(user, "removed from board")
 		else
 			item.forceMove(loc)
 		notices--

@@ -357,8 +357,7 @@
 
 /obj/item/paper/ui_host(mob/user)
 	if(istype(loc, /obj/structure/noticeboard))
-		var/obj/structure/noticeboard/noticeboard = loc
-		return noticeboard
+		return loc
 	return ..()
 
 /**
