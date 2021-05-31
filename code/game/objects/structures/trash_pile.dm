@@ -12,6 +12,7 @@
 	max_integrity = 50
 
 	var/hide_item_time = 15
+	
 /// Characters that have searched this trashpile, with values of searched time.
 	var/list/searchedby	= list()
 
@@ -69,6 +70,7 @@
 	var/obj/item/item = new lootspawn(get_turf(src))
 	return item
 
+///You can't hide more than 10 items in a trash pile.
 /obj/structure/trash_pile/proc/can_hide_item(obj/item/item)
 	if(contents.len > 10)
 		return FALSE
