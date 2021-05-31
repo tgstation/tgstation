@@ -646,9 +646,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 //traits granted by lipstick that change your *kiss projectile
 /// Blowing kisses actually does damage to the victim
 #define TRAIT_KISS_OF_DEATH "kiss_of_death"
-/// Blowing kisses actually does damage to the victim
+/// Blowing kisses instantly breaks the heart of the victim
 #define TRAIT_KISS_OF_OBLITERATION "kiss_of_obliteration"
-/// Blowing kisses actually does damage to the victim
+/// Blowing kisses provides minor healing to whoever is hit
 #define TRAIT_KISS_OF_LIFE "kiss_of_life"
-/// Blowing kisses actually does damage to the victim
+/// Blowing kisses aheals whoever is hit
 #define TRAIT_KISS_OF_REBIRTH "kiss_of_rebirth"

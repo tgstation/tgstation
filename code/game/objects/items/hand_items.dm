@@ -428,4 +428,4 @@
 	if(!isliving(target))
 		return
 	var/mob/living/benefactor = target
-	benefactor.fully_heal()
+	benefactor.revive(full_heal = TRUE)

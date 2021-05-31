@@ -578,6 +578,7 @@
 	if(!was_in_proximity)
 		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 		was_in_proximity = TRUE
+	new /obj/effect/temp_visual/heal(get_turf(owner), "#375637")
 	owner.adjustBruteLoss(-2)
 	owner.adjustFireLoss(-2)
 	owner.adjustToxLoss(-1)
