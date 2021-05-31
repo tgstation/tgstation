@@ -8,6 +8,10 @@
 	/// Reference to the dmi file for this config
 	var/icon_file
 
+	/// An optional var to set that tells the material system what material this configuration is for.
+	/// Use a typepath here, not an instance.
+	var/datum/material/material_skin
+
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Do not set any further vars, the json file specified above is what generates the object
 
@@ -116,6 +120,8 @@
 	var/list/color_groups = list()
 	for(var/datum/greyscale_layer/layer as anything in all_layers)
 		for(var/id in layer.color_ids)
+			if(!isnum(id))
+				continue
 			color_groups["[id]"] = TRUE
 
 	expected_colors = length(color_groups)
@@ -142,7 +148,7 @@
 /// Handles the actual icon manipulation to create the spritesheet
 /datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps)
 	if(!istype(colors))
-		colors = ParseColorString(colors)
+		colors = SSgreyscale.ParseColorString(colors)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
 
@@ -188,9 +194,3 @@
 
 	output["icon"] = GenerateBundle(colors, debug_steps)
 	return output
-
-/datum/greyscale_config/proc/ParseColorString(color_string)
-	. = list()
-	var/list/split_colors = splittext(color_string, "#")
-	for(var/color in 2 to length(split_colors))
-		. += "#[split_colors[color]]"

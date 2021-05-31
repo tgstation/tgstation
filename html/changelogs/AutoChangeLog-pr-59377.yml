@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fix oversight where Dynamic can assign antag datums to the minds of players who will be forcefully returned to the lobby."

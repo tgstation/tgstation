@@ -1,0 +1,10 @@
+{
+	"default": [
+		{
+			"type": "icon_state",
+			"icon_state": "inhand_left",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

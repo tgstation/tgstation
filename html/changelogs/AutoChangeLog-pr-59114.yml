@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - imageadd: "Better greyscale support has been added to datum materials allowing objects to have more complex compositions of sprites. The golden cleric mace is extra shiny now."

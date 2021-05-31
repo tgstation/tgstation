@@ -1,0 +1,4 @@
+author: "Inept"
+delete-after: True
+changes: 
+  - rscadd: "Some new holidays have been added."
