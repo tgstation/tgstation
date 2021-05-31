@@ -285,8 +285,26 @@
 /obj/item/kisser/death
 	name = "kiss of death"
 	desc = "If looks could kill, they'd be this."
-	color = COLOR_BLACK
+	color = COLOR_DARK
 	kiss_type = /obj/projectile/kiss/death
+
+/obj/item/kisser/obliteration
+	name = "kiss of obliteration"
+	desc = "If looks could kill, they'd be this."
+	color = COLOR_BLACK
+	kiss_type = /obj/projectile/kiss/obliteration
+
+/obj/item/kisser/life
+	name = "kiss of life"
+	desc = "If looks could kill, they'd be this."
+	color = COLOR_BLUE
+	kiss_type = /obj/projectile/kiss/life
+
+/obj/item/kisser/rebirth
+	name = "kiss of rebirth"
+	desc = "If looks could kill, they'd be this."
+	color = COLOR_VIVID_YELLOW
+	kiss_type = /obj/projectile/kiss/rebirth
 
 /obj/projectile/kiss
 	name = "kiss"
@@ -363,14 +381,51 @@
 	name = "kiss of death"
 	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
 	damage = 35
+	wound_bonus = 30
+	sharpness = SHARP_POINTY
+	color = COLOR_DARK
+
+/obj/projectile/kiss/obliteration
+	name = "kiss of obliteration"
+	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
+	damage = 35
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
 
-/obj/projectile/kiss/death/on_hit(atom/target, blocked, pierce_hit)
+/obj/projectile/kiss/obliteration/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
 	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.applyOrganDamage(999)
+
+/obj/projectile/kiss/life
+	name = "kiss of life"
+	color = COLOR_BLUE
+
+/obj/projectile/kiss/life/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+
+	var/mob/living/benefactor = target
+	if(!firer)
+		benefactor.adjustBruteLoss(-7.5)
+		benefactor.adjustFireLoss(-7.5)
+		benefactor.adjustToxLoss(-5)
+		return
+
+	benefactor.apply_status_effect(/datum/status_effect/kiss_of_life, firer)
+
+/obj/projectile/kiss/rebirth
+	name = "kiss of rebirth"
+	color = COLOR_VIVID_YELLOW
+
+/obj/projectile/kiss/rebirth/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/benefactor = target
+	benefactor.fully_heal()

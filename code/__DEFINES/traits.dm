@@ -287,8 +287,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANTICONVULSANT "anticonvulsant"
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE "antennae"
-/// Blowing kisses actually does damage to the victim
-#define TRAIT_KISS_OF_DEATH "kiss_of_death"
 /// Used on limbs in the process of turning a human into a plasmaman while in plasma lava
 #define TRAIT_PLASMABURNT "plasma_burnt"
 /// Addictions don't tick down, basically they're permanently addicted
@@ -644,3 +642,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
+
+//traits granted by lipstick that change your *kiss projectile
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_DEATH "kiss_of_death"
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_OBLITERATION "kiss_of_obliteration"
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_LIFE "kiss_of_life"
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_REBIRTH "kiss_of_rebirth"

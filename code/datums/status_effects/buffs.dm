@@ -522,3 +522,62 @@
 /datum/movespeed_modifier/status_speed_boost
 	multiplicative_slowdown = -1
 
+/atom/movable/screen/alert/status_effect/kiss_of_life
+	name = "Kiss of Life"
+	desc = "You're not sure if this healing is divine'"
+	icon_state = "regenerative_core"
+
+/datum/status_effect/kiss_of_life
+	id = "Kiss of Life"
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/kiss_of_life
+	/// You have to stay near the source to heal
+	var/atom/heal_source
+
+	var/warned_proximity = FALSE
+
+	var/was_in_proximity = FALSE
+
+/datum/status_effect/kiss_of_life/on_creation(mob/living/new_owner, atom/source)
+	if(!source)
+		qdel(src)
+		return
+
+	. = ..()
+
+	heal_source = source
+
+/datum/status_effect/kiss_of_life/on_apply()
+	owner.adjustBruteLoss(-5)
+	owner.adjustFireLoss(-5)
+	owner.bodytemperature = owner.get_body_temp_normal()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humi = owner
+		humi.set_coretemperature(humi.get_body_temp_normal())
+	return TRUE
+
+/datum/status_effect/kiss_of_life/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	heal_source = null
+
+/datum/status_effect/kiss_of_life/tick()
+	if(!heal_source)
+		qdel(src)
+		return
+
+	if(!can_see(owner, heal_source, 7))
+		if(was_in_proximity)
+			REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+			was_in_proximity = FALSE
+		if(!warned_proximity)
+			to_chat(owner, "<span class='warning'>Your body stops mending itself as you lose track of [heal_source]!</span>")
+			warned_proximity = TRUE
+		return
+
+	if(!was_in_proximity)
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+		was_in_proximity = TRUE
+	owner.adjustBruteLoss(-2)
+	owner.adjustFireLoss(-2)
+	owner.adjustToxLoss(-1)

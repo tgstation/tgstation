@@ -205,6 +205,12 @@
 
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/kisser/death
+	else if(HAS_TRAIT(user, TRAIT_KISS_OF_OBLITERATION))
+		kiss_type = /obj/item/kisser/obliteration
+	else if(HAS_TRAIT(user, TRAIT_KISS_OF_LIFE))
+		kiss_type = /obj/item/kisser/life
+	else if(HAS_TRAIT(user, TRAIT_KISS_OF_REBIRTH))
+		kiss_type = /obj/item/kisser/rebirth
 
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))

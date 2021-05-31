@@ -28,6 +28,25 @@
 	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
 
+/obj/item/lipstick/black/obliteration
+	name = "\improper Kiss of Obliteration"
+	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	lipstick_trait = TRAIT_KISS_OF_OBLITERATION
+
+/obj/item/lipstick/blue
+	name = "blue lipstick"
+	colour = "blue"
+
+/obj/item/lipstick/blue/life
+	name = "\improper Kiss of Life"
+	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	lipstick_trait = TRAIT_KISS_OF_LIFE
+
+/obj/item/lipstick/blue/rebirth
+	name = "\improper Kiss of Rebirth"
+	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	lipstick_trait = TRAIT_KISS_OF_REBIRTH
+
 /obj/item/lipstick/random
 	name = "lipstick"
 	icon_state = "random_lipstick"
