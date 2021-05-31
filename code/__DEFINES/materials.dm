@@ -45,7 +45,7 @@
 /// Breakdown flags used when exporting materials.
 #define BREAKDOWN_FLAGS_EXPORT (NONE)
 
-/// Applies the material color to the atom's color. Depreciated, use MATERIAL_GREYSCALE instead
+/// Applies the material color to the atom's color. Deprecated, use MATERIAL_GREYSCALE instead
 #define MATERIAL_COLOR (1<<0)
 /// Whether a prefix describing the material should be added to the name
 #define MATERIAL_ADD_PREFIX (1<<1)
