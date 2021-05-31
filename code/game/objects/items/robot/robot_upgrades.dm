@@ -502,6 +502,7 @@
 	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_defib_instance_qdel_or_moved)
 
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
+	SIGNAL_HANDLER
 	defib_instance = null
 	qdel(src)
 

@@ -7,7 +7,7 @@
 	anchored = TRUE
 	density = TRUE
 	move_resist = INFINITY
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	appearance_flags = LONG_GLIDE
@@ -121,17 +121,17 @@
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
 				qdel(src)
 				return
-			else
-				energy -= round(((energy+1)/2),1)
-		if(2)
-			energy -= round(((energy+1)/3),1)
-		if(3)
-			energy -= round(((energy+1)/4),1)
+
+			energy -= round(((energy + 1) / 2), 1)
+		if(EXPLODE_HEAVY)
+			energy -= round(((energy + 1) / 3), 1)
+		if(EXPLODE_LIGHT)
+			energy -= round(((energy + 1) / 4), 1)
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
@@ -410,7 +410,8 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
+	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
+	explosion(src, devastation_range = (dist), heavy_impact_range = (dist*2), light_impact_range = (dist*4))
 	qdel(src)
 	return gain
 

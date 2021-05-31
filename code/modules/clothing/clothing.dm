@@ -122,15 +122,14 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/attacker, mob/living/user, params)
-	if(!user.combat_mode && ismoth(attacker))
-		if (isnull(moth_snack))
-			moth_snack = new
-			moth_snack.name = name
-			moth_snack.clothing = WEAKREF(src)
-		moth_snack.attack(attacker, user, params)
-	else
+/obj/item/clothing/attack(mob/living/M, mob/living/user, params)
+	if(user.combat_mode || !ismoth(M))
 		return ..()
+	if(isnull(moth_snack))
+		moth_snack = new
+		moth_snack.name = name
+		moth_snack.clothing = WEAKREF(src)
+	moth_snack.attack(M, user, params)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
@@ -398,6 +397,7 @@
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
+	. = ..()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
 	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone
@@ -416,11 +416,11 @@
 	if(!damaged_clothes)
 		return
 
-	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
+	var/index = "[REF(icon)]-[icon_state]"
 	var/static/list/damaged_clothes_icons = list()
 	var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 	if(!damaged_clothes_icon)
-		damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1) //we only want to apply damaged effect to the initial icon_state for each object
+		damaged_clothes_icon = icon(icon, icon_state, , 1)
 		damaged_clothes_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
 		damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 		damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)

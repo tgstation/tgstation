@@ -16,7 +16,7 @@
 	. = ..()
 	if(.)
 		return
-	if(alert(question,name,"Yes","No") == "Yes" && Adjacent(user))
+	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
 		var/turf/T = find_safe_turf(zlevels=zlevels)
 
 		if(T)

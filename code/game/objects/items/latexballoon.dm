@@ -11,9 +11,9 @@
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
-/obj/item/latexballon/ComponentInitialize()
+/obj/item/latexballon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/latexballon/proc/blow(obj/item/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
@@ -44,9 +44,9 @@
 /obj/item/latexballon/ex_act(severity, target)
 	burst()
 	switch(severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			qdel(src)
-		if (2)
+		if (EXPLODE_HEAVY)
 			if (prob(50))
 				qdel(src)
 

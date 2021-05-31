@@ -83,9 +83,22 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(arrival, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
+	else if(message_type == "CRYOSTORAGE")
+		message = "[user][rank ? ", [rank]" : ""] has been moved to cryo storage."
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
+	broadcast(message, channels)
+
+/// Announces a new security officer joining over the radio
+/obj/machinery/announcement_system/proc/announce_officer(mob/officer, department)
+	if (!is_operational)
+		return
+
+	broadcast("Officer [officer.real_name] has been assigned to [department].", list(RADIO_CHANNEL_SECURITY))
+
+/// Sends a message to the appropriate channels.
+/obj/machinery/announcement_system/proc/broadcast(message, list/channels)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null)
 	else

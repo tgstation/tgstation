@@ -24,16 +24,16 @@
 				. =  FALSE
 			switch(dir)
 				if(SOUTHEAST)
-					if(object.dir != SOUTH)
+					if(object.dir != dir)
 						. = FALSE
 				if(SOUTHWEST)
-					if(object.dir != WEST)
+					if(object.dir != dir)
 						. =  FALSE
 				if(NORTHEAST)
-					if(object.dir != EAST)
+					if(object.dir != dir)
 						. =  FALSE
 				if(NORTHWEST)
-					if(object.dir != NORTH)
+					if(object.dir != dir)
 						. =  FALSE
 			corners |= object
 			continue
@@ -113,6 +113,7 @@
  * * only_signals: default FALSE, if true the proc will not call the deactivate() proc
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
+	SIGNAL_HANDLER
 	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
@@ -159,7 +160,18 @@
  * Getter for fusion fuel moles
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_fuel()
-	return (internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
+	if(!selected_fuel)
+		return FALSE
+	if(!internal_fusion.total_moles())
+		return FALSE
+	var/gas_check = 0
+	for(var/gas_type in selected_fuel.requirements)
+		internal_fusion.assert_gas(gas_type)
+		if(internal_fusion.gases[gas_type][MOLES] >= FUSION_MOLE_THRESHOLD)
+			gas_check++
+	if(gas_check == length(selected_fuel.requirements))
+		return TRUE
+	return FALSE
 
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
@@ -171,6 +183,21 @@
 	if(use_power == ACTIVE_POWER_USE)
 		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 	return TRUE
+
+///Checks if the gases in the input are the ones needed by the recipe
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gas_requirements()
+	var/datum/gas_mixture/contents = linked_input.airs[1]
+	for(var/gas_type in selected_fuel.requirements)
+		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+			return FALSE
+	return TRUE
+
+///Removes the gases from the internal gasmix when the recipe is changed
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/dump_gases()
+	var/datum/gas_mixture/remove = internal_fusion.remove(internal_fusion.total_moles())
+	linked_output.airs[1].merge(remove)
+	internal_fusion.garbage_collect()
+	linked_input.airs[1].garbage_collect()
 
 /**
  * Called by alarm() in this file
@@ -283,18 +310,30 @@
  * Create the explosion + the gas emission before deleting the machine core.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
-	explosion(loc, 0, 0, power_level * 5, power_level * 6, 1, 1)
+	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
 	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
-	empulse(loc, power_level * 5, power_level * 7)
-	var/fusion_moles = internal_fusion.total_moles() ? internal_fusion.total_moles() : 0
-	var/moderator_moles = moderator_internal.total_moles() ? moderator_internal.total_moles() : 0
+	empulse(loc, power_level * 5, power_level * 7, TRUE)
+	var/list/around_turfs = circlerangeturfs(src, power_level * 5)
+	for(var/turf/turf as anything in around_turfs)
+		if(isclosedturf(turf) || isspaceturf(turf))
+			around_turfs -= turf
+			continue
 	var/datum/gas_mixture/remove_fusion
 	if(internal_fusion.total_moles() > 0)
-		remove_fusion = internal_fusion.remove(fusion_moles)
-		loc.assume_air(remove_fusion)
+		remove_fusion = internal_fusion.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to 10)
+			remove = remove_fusion.remove_ratio(0.1)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(internal_fusion)
 	var/datum/gas_mixture/remove_moderator
 	if(moderator_internal.total_moles() > 0)
-		remove_moderator = moderator_internal.remove(moderator_moles)
-		loc.assume_air(remove_moderator)
-	air_update_turf(FALSE, FALSE)
+		remove_moderator = moderator_internal.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to 10)
+			remove = remove_moderator.remove_ratio(0.1)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(moderator_internal)
 	qdel(src)

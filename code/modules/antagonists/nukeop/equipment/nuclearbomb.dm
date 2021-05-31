@@ -1,3 +1,6 @@
+GLOBAL_VAR_INIT(station_was_nuked, FALSE)
+GLOBAL_VAR(station_nuke_source)
+
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
 	desc = "You probably shouldn't stick around to see if this is armed."
@@ -69,10 +72,9 @@
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
-	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
 		if(0)
-			if(istype(NM) && !NM.nuke_team.syndies_escaped())
+			if(get_antag_minds(/datum/antagonist/nukeop).len && syndies_escaped())
 				return CINEMATIC_ANNIHILATION
 			else
 				return CINEMATIC_NUKE_WIN
@@ -488,12 +490,13 @@
 	else
 		off_station = NUKE_MISS_STATION
 
-	if(off_station < 2)
+	if(off_station < NUKE_MISS_STATION)
 		SSshuttle.registerHostileEnvironment(src)
 		SSshuttle.lockdown = TRUE
 
 	//Cinematic
-	SSticker.mode.OnNukeExplosion(off_station)
+	GLOB.station_was_nuked = TRUE
+	GLOB.station_nuke_source = off_station
 	really_actually_explode(off_station)
 	SSticker.roundend_check_paused = FALSE
 

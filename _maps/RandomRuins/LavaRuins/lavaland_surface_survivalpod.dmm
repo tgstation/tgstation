@@ -61,9 +61,7 @@
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /obj/structure/tubes,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "n" = (

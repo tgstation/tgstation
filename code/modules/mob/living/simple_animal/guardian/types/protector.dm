@@ -13,12 +13,12 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)
-	if(severity == 1)
+	if(severity >= EXPLODE_DEVASTATE)
 		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
 	else
-		..()
+		. = ..()
 	if(QDELETED(src))
-		return
+		return FALSE
 	if(toggle)
 		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
 

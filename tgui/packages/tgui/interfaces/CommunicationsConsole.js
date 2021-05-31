@@ -299,6 +299,7 @@ const PageMain = (props, context) => {
   const {
     alertLevel,
     alertLevelTick,
+    aprilFools,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -349,7 +350,7 @@ const PageMain = (props, context) => {
                 "You do not have permission to recall the emergency shuttle."
               )
             )}
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act("recallShuttle")}
           />
         ) || (
@@ -362,7 +363,7 @@ const PageMain = (props, context) => {
                 ? shuttleCanEvacOrFailReason
                 : undefined
             }
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => setCallingShuttle(true)}
           />
         )}
@@ -411,6 +412,12 @@ const PageMain = (props, context) => {
             icon="bullhorn"
             content="Make Priority Announcement"
             onClick={() => act("makePriorityAnnouncement")}
+          />}
+
+          {!!aprilFools && !!canMakeAnnouncement && <Button
+            icon="bullhorn"
+            content="Call Emergency Meeting"
+            onClick={() => act("emergency_meeting")}
           />}
 
           {!!canToggleEmergencyAccess && <Button.Confirm

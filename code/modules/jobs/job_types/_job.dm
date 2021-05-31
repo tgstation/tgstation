@@ -43,14 +43,13 @@
 
 	var/outfit = null
 
+	/// The job's outfit that will be assigned for plasmamen.
+	var/plasmaman_outfit = null
+
 	var/exp_requirements = 0
 
 	var/exp_type = ""
 	var/exp_type_department = ""
-
-	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
-	//can be overridden by antag_rep.txt config
-	var/antag_rep = 10
 
 	var/paycheck = PAYCHECK_MINIMAL
 	var/paycheck_department = ACCOUNT_CIV
@@ -63,6 +62,14 @@
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	var/bounty_types = CIV_JOB_BASIC
+
+	/// Goodies that can be received via the mail system.
+	// this is a weighted list.
+	/// Keep the _job definition for this empty and use /obj/item/mail to define general gifts.
+	var/list/mail_goodies = list()
+
+	/// If this job's mail goodies compete with generic goodies.
+	var/exclusive_mail_goodies = FALSE
 
 	///Bitfield of departments this job belongs wit
 	var/departments = NONE
@@ -143,11 +150,6 @@
 //Used for a special check of whether to allow a client to latejoin as this job.
 /datum/job/proc/special_check_latejoin(client/C)
 	return TRUE
-
-/datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
-	if(. == null)
-		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source, is_captain = FALSE)
@@ -298,3 +300,7 @@
 	types += satchel
 	types += duffelbag
 	return types
+
+/// An overridable getter for more dynamic goodies.
+/datum/job/proc/get_mail_goodies(mob/recipient)
+	return mail_goodies

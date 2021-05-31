@@ -6,6 +6,9 @@
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+
+	greyscale_config = /datum/greyscale_config/wirecutters
+
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
@@ -19,11 +22,12 @@
 	usesound = 'sound/items/wirecutter.ogg'
 	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
 	pickup_sound =  'sound/items/handling/wirecutter_pickup.ogg'
-
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
+	/// If the item should be assigned a random color
 	var/random_color = TRUE
+	/// List of possible random colors
 	var/static/list/wirecutter_colors = list(
 		"blue" = "#1861d5",
 		"red" = "#951710",
@@ -34,22 +38,11 @@
 		"yellow" = "#d58c18"
 	)
 
-
 /obj/item/wirecutters/Initialize()
-	. = ..()
-	if(random_color) //random colors!
-		icon_state = "cutters"
+	if(random_color)
 		var/our_color = pick(wirecutter_colors)
-		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
-		update_appearance()
-
-/obj/item/wirecutters/update_overlays()
-	. = ..()
-	if(!random_color) //icon override
-		return
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "cutters_cutty_thingy")
-	base_overlay.appearance_flags = RESET_COLOR
-	. += base_overlay
+		set_greyscale(colors=list(wirecutter_colors[our_color]))
+	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))

@@ -3,11 +3,14 @@
   "name": "tgui",
   "version": "4.3.0",
   "dependencies": {
+    "@popperjs/core": "^2.9.1",
     "common": "workspace:*",
-    "dompurify": "^2.2.6",
+    "dateformat": "^4.5.1",
+    "dompurify": "^2.2.7",
     "inferno": "^7.4.8",
     "inferno-vnode-flags": "^7.4.8",
-    "marked": "^2.0.1",
+    "js-yaml": "^4.1.0",
+    "marked": "^2.0.3",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
   }

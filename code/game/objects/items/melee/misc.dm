@@ -205,6 +205,12 @@
 
 	wound_bonus = 15
 
+/obj/item/melee/classic_baton/Initialize()
+	. = ..()
+	// Adding an extra break for the sake of presentation
+	if(stamina_damage != 0)
+		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only <span class='warning'>[round(100 / stamina_damage, 0.1)] hit\s!</span>"
+
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
@@ -487,8 +493,10 @@
 	balanced = 0
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
-	visible_message("<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	visible_message(
+		"<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",
+		"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>"
+	)
 	consume_everything()
 
 /obj/item/melee/supermatter_sword/acid_act()

@@ -3,6 +3,8 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
+
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
@@ -11,7 +13,6 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = HUD_LAYER //Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
 	inv1 = new /atom/movable/screen/robot/module1()
@@ -148,7 +149,14 @@
 	if(!CONFIG_GET(flag/disable_secborg))
 		model_list["Security"] = /obj/item/robot_model/security
 
-	var/input_model = input("Please, select a model!", "Robot", null, null) as null|anything in sortList(model_list)
+	// Create radial menu for choosing borg model
+	var/list/model_icons = list()
+	for(var/option in model_list)
+		var/obj/item/robot_model/model = model_list[option]
+		var/model_icon = initial(model.cyborg_base_icon)
+		model_icons[option] = image(icon = 'icons/mob/robots.dmi', icon_state = model_icon)
+
+	var/input_model = show_radial_menu(src, src, model_icons, radius = 42)
 	if(!input_model || model.type != /obj/item/robot_model)
 		return
 
@@ -379,9 +387,9 @@
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		QDEL_NULL(mmi)
-		explosion(loc,1,2,4,flame_range = 2)
+		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
 	else
-		explosion(loc,-1,0,2)
+		explosion(src, devastation_range = -1, light_impact_range = 2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -929,6 +937,7 @@
 			aicamera.stored[i] = TRUE
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
+	SIGNAL_HANDLER
 	if(model)
 		model.respawn_consumable(src, amount * 0.005)
 	if(cell)
@@ -972,3 +981,10 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+/mob/living/silicon/robot/get_exp_list(minutes)
+	. = ..()
+
+	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
+
+	.[cyborg_job_ref.title] = minutes

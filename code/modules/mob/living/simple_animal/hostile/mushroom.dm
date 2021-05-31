@@ -4,6 +4,7 @@
 	icon_state = "mushroom_color"
 	icon_living = "mushroom_color"
 	icon_dead = "mushroom_dead"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	speak_chance = 0
 	turns_per_move = 1
 	maxHealth = 10

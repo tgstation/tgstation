@@ -857,7 +857,7 @@
 	/// the plushies that aren't of things trying to kill you
 	var/list/static/approved_by_corporate = list(/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
 		/obj/item/toy/plush/slimeplushie,
-		/obj/item/toy/plush/lizardplushie,
+		/obj/item/toy/plush/lizard_plushie,
 		/obj/item/toy/plush/snakeplushie,
 		/obj/item/toy/plush/plasmamanplushie,
 		/obj/item/toy/plush/beeplushie,
@@ -1205,12 +1205,12 @@
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/food/chewable/bubblegum))
+	STR.set_holdable(list(/obj/item/food/bubblegum))
 	STR.max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/food/chewable/bubblegum(src)
+		new/obj/item/food/bubblegum(src)
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
@@ -1220,7 +1220,7 @@
 
 /obj/item/storage/box/gum/nicotine/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/food/chewable/bubblegum/nicotine(src)
+		new/obj/item/food/bubblegum/nicotine(src)
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"
@@ -1236,7 +1236,7 @@
 
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/food/chewable/bubblegum/happiness(src)
+		new/obj/item/food/bubblegum/happiness(src)
 
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
@@ -1245,7 +1245,7 @@
 
 /obj/item/storage/box/gum/bubblegum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/food/chewable/bubblegum/bubblegum(src)
+		new/obj/item/food/bubblegum/bubblegum(src)
 
 /obj/item/storage/box/shipping
 	name = "box of shipping supplies"
@@ -1287,29 +1287,6 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
-
-/obj/item/storage/box/skillchips/quick
-	name = "box of Ant Hauler skill chips"
-	desc = "Contains Ant Hauler skill chips."
-
-/obj/item/storage/box/skillchips/quick/PopulateContents()
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-
-/obj/item/storage/box/skillchips/quicker
-	name = "box of RES-Q skill chips"
-	desc = "Contains RES-Q skill chips."
-
-/obj/item/storage/box/skillchips/quicker/PopulateContents()
-	new/obj/item/skillchip/quickercarry(src)
-	new/obj/item/skillchip/quickercarry(src)
-	new/obj/item/skillchip/quickercarry(src)
-	new/obj/item/skillchip/quickercarry(src)
 
 /obj/item/storage/box/swab
 	name = "box of microbiological swabs"

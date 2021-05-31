@@ -39,6 +39,11 @@
 	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent
 
+/mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
+	. = ..()
+	if(attack_reagent)
+		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -50,13 +55,6 @@
 		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)
 		new banana_type(pick(adjacent))
 		banana_time = world.time + rand(30,60)
-
-/mob/living/simple_animal/hostile/retaliate/clown/AttackingTarget()
-	. = ..()
-	if(attack_reagent && . && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(attack_reagent, rand(1,5))
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
@@ -311,8 +309,6 @@
 	attack_verb_simple = "slam"
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
 	deathsound = 'sound/misc/sadtrombone.ogg'
-	food_type = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips)
-	tame_chance = 30
 	///This is the list of items we are ready to regurgitate,
 	var/list/prank_pouch = list()
 	///This ability lets you fire a single random item from your pouch.
@@ -323,6 +319,8 @@
 	my_regurgitate = new
 	AddAbility(my_regurgitate)
 	add_cell_sample()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
+
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -376,8 +374,7 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/tamed()
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)

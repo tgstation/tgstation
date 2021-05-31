@@ -15,6 +15,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/banhammer/Initialize()
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+
 /obj/item/banhammer/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
@@ -278,7 +282,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/katana/cursed/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/wirerod
 	name = "wired rod"
@@ -370,11 +374,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = 0
+	var/extended = FALSE
+
+/obj/item/switchblade/Initialize()
+	. = ..()
+	set_extended(extended)
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	set_extended(!extended)
+
+/obj/item/switchblade/proc/set_extended(new_extended)
+	extended = new_extended
 	if(extended)
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
@@ -397,6 +409,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/switchblade/extended
+	extended = TRUE
 
 /obj/item/phone
 	name = "red phone"
@@ -720,7 +735,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize()
 	. = ..()
 	strong_against = typecacheof(list(
-					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/simple_animal/hostile/bee/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/hostile/cockroach,
 					/obj/item/queen_bee,
@@ -732,13 +747,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
-			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
-			if(istype(target, /mob/living/))
-				var/mob/living/bug = target
-				bug.death(1)
-			else
-				qdel(target)
+			if(!HAS_TRAIT(user, TRAIT_PACIFISM))
+				new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+				to_chat(user, "<span class='warning'>You easily splat [target].</span>")
+				if(isliving(target))
+					var/mob/living/bug = target
+					bug.gib()
+				else
+					qdel(target)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))

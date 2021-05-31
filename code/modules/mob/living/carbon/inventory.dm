@@ -45,7 +45,6 @@
 			if(observe.client)
 				observe.client.screen -= I
 	I.forceMove(src)
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
@@ -91,9 +90,13 @@
 	//We cannot call it for items that have not been handled as they are not yet correctly
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
-		I.equipped(src, slot)
+		has_equipped(I, slot, initial)
 
 	return not_handled
+
+/// This proc is called after an item has been successfully handled and equipped to a slot.
+/mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	return item.equipped(src, slot, initial)
 
 /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.
@@ -163,6 +166,10 @@
 	var/obj/item/receiving = get_active_held_item()
 	if(!receiving)
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
+		return
+
+	if(IS_DEAD_OR_INCAP(src))
+		to_chat(src, "<span class='warning'>You're unable to offer anything in your current state!</span>")
 		return
 
 	if(istype(receiving, /obj/item/slapper))

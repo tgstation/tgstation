@@ -37,20 +37,27 @@
 #define UNIT_TEST_FAILED 1
 #define UNIT_TEST_SKIPPED 2
 
+/// A trait source when adding traits through unit tests
+#define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
+
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
+#include "bloody_footprints.dm"
 #include "breath.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "combat.dm"
 #include "component_tests.dm"
+#include "connect_loc.dm"
 #include "confusion.dm"
 #include "crayons.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
+#include "egg_glands.dm"
 #include "emoting.dm"
 #include "food_edibility_check.dm"
+#include "greyscale_config.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
@@ -72,17 +79,25 @@
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
 #include "say.dm"
+#include "security_officer_distribution.dm"
 #include "serving_tray.dm"
 #include "siunit.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
+#include "strippable.dm"
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
+#include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
+#include "wizard.dm"
+
+#ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
+#include "find_reference_sanity.dm"
+#endif
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

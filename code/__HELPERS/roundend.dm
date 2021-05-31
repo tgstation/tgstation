@@ -181,9 +181,9 @@
 
 ///Handles random hardcore point rewarding if it applies.
 /datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
-	if(!ishuman(player_client.mob))
+	if(!ishuman(player_client?.mob))
 		return FALSE
-	var/mob/living/carbon/human/human_mob = player_client.mob
+	var/mob/living/carbon/human/human_mob = player_client?.mob
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
@@ -197,15 +197,15 @@
 					didthegamerwin = FALSE
 		if(!didthegamerwin)
 			return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
+		player_client?.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
 	else if(human_mob.onCentCom())
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		player_client?.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
-	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
+	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
 	log_game("The round has ended.")
 
 	for(var/I in round_end_events)
@@ -218,11 +218,11 @@
 		speed_round = TRUE
 
 	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-			C.RollCredits()
-		C.playtitlemusic(40)
+		if(!C?.credits)
+			C?.RollCredits()
+		C?.playtitlemusic(40)
 		if(speed_round)
-			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
+			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()
@@ -275,8 +275,7 @@
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
 	//Collects persistence features
-	if(mode.allow_persistence_save)
-		SSpersistence.CollectData()
+	SSpersistence.CollectData()
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
@@ -287,7 +286,7 @@
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
-		if(mode.station_was_nuked)
+		if(GLOB.station_was_nuked)
 			Reboot("Station destroyed by Nuclear Device.", "nuke")
 		else
 			Reboot("Round ended.", "proper completion")
@@ -297,11 +296,6 @@
 //Common part of the report
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
 	var/list/parts = list()
-
-	//Gamemode specific things. Should be empty most of the time.
-	parts += mode.special_report()
-
-	CHECK_TICK
 
 	//AI laws
 	parts += law_report()
@@ -334,7 +328,7 @@
 		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
-	parts += "[FOURSPACES]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
+	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
@@ -450,8 +444,9 @@
 	//Silicon laws report
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
-		if(aiPlayer.mind)
-			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
+		var/datum/mind/aiMind = aiPlayer.deployed_shell?.mind || aiPlayer.mind
+		if(aiMind)
+			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiMind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
 		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
@@ -483,10 +478,9 @@
 
 /datum/controller/subsystem/ticker/proc/goal_report()
 	var/list/parts = list()
-	if(mode.station_goals.len)
-		for(var/V in mode.station_goals)
-			var/datum/station_goal/G = V
-			parts += G.get_result()
+	if(GLOB.station_goals.len)
+		for(var/datum/station_goal/goal as anything in GLOB.station_goals)
+			parts += goal.get_result()
 		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
 ///Generate a report for how much money is on station, as well as the richest crewmember on the station.
@@ -660,7 +654,7 @@
 	var/datum/action/report/R = new
 	C.player_details.player_actions += R
 	R.Grant(C.mob)
-	to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report again</a>")
+	to_chat(C,"<span class='infoplain'><a href='?src=[REF(R)];report=1'>Show roundend report again</a></span>")
 
 /datum/action/report
 	name = "Show roundend report"
@@ -718,9 +712,9 @@
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 		count++
 	return objective_parts.Join("<br>")
 

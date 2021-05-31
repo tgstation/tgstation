@@ -37,14 +37,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	msg = emoji_parse(msg)
 
 	if(SSticker.HasRoundStarted() && (msg[1] in list(".",";",":","#") || findtext_char(msg, "say", 1, 5)))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "Yes", "No") != "Yes")
+		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
 			return
 
 	if(!holder)
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
+			to_chat(src, "<span class='boldannounce'><B>Advertising other servers is not allowed.</B></span>")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
@@ -70,18 +70,18 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
-						to_chat(C, "<span class='adminooc'>[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span></font>")
+						to_chat(C, "<span class='adminooc'>[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span>")
 					else
 						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span>")
 				else
 					if(GLOB.OOC_COLOR)
-						to_chat(C, "<font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font>")
+						to_chat(C, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font></span>")
 					else
 						to_chat(C, "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></span>")
 
 			else if(!(key in C.prefs.ignoring))
 				if(GLOB.OOC_COLOR)
-					to_chat(C, "<font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>")
+					to_chat(C, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font></span>")
 				else
 					to_chat(C, "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span>")
 
@@ -93,7 +93,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			return
 	else //otherwise just toggle it
 		GLOB.ooc_allowed = !GLOB.ooc_allowed
-	to_chat(world, "<B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B>")
+	to_chat(world, "<span class='oocplain'><B>The OOC channel has been globally [GLOB.ooc_allowed ? "enabled" : "disabled"].</B></span>")
 
 /proc/toggle_dooc(toggle = null)
 	if(toggle != null)
@@ -130,7 +130,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	if(alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", "Yes", "No") != "Yes")
+	if(tgui_alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
 		return
 	if(!check_rights(R_FUN))
 		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
@@ -188,7 +188,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	var/motd = global.config.motd
 	if(motd)
-		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
+		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
@@ -261,7 +261,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Check if the list is empty
 	if(!players.len)
 		// Express that there are no players we can ignore in chat
-		to_chat(src, "There are no other players you can ignore!")
+		to_chat(src, "<span class='infoplain'>There are no other players you can ignore!</span>")
 
 		// Stop running
 		return
@@ -282,7 +282,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Check if the selected player is on our ignore list
 	if(selection in prefs.ignoring)
 		// Express that the selected player is already on our ignore list in chat
-		to_chat(src, "You are already ignoring [selection]!")
+		to_chat(src, "<span class='infoplain'>You are already ignoring [selection]!</span>")
 
 		// Stop running
 		return
@@ -294,7 +294,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	prefs.save_preferences()
 
 	// Express that we've ignored the selected player in chat
-	to_chat(src, "You are now ignoring [selection] on the OOC channel.")
+	to_chat(src, "<span class='infoplain'>You are now ignoring [selection] on the OOC channel.</span>")
 
 // Unignore verb
 /client/verb/select_unignore()
@@ -305,7 +305,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Check if we've ignored any players
 	if(!prefs.ignoring.len)
 		// Express that we haven't ignored any players in chat
-		to_chat(src, "You haven't ignored any players!")
+		to_chat(src, "<span class='infoplain'>You haven't ignored any players!</span>")
 
 		// Stop running
 		return
@@ -320,7 +320,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Check if the selected player is not on our ignore list
 	if(!(selection in prefs.ignoring))
 		// Express that the selected player is not on our ignore list in chat
-		to_chat(src, "You are not ignoring [selection]!")
+		to_chat(src, "<span class='infoplain'>You are not ignoring [selection]!</span>")
 
 		// Stop running
 		return
@@ -332,7 +332,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	prefs.save_preferences()
 
 	// Express that we've unignored the selected player in chat
-	to_chat(src, "You are no longer ignoring [selection] on the OOC channel.")
+	to_chat(src, "<span class='infoplain'>You are no longer ignoring [selection] on the OOC channel.</span>")
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"

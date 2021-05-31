@@ -10,17 +10,15 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "am" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ao" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Resort Lobby"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "ap" = (
@@ -34,9 +32,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "at" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /mob/living/simple_animal/crab{
 	name = "Eddie"
 	},
@@ -50,9 +46,7 @@
 /area/ruin/powered/beach)
 "av" = (
 /obj/effect/overlay/coconut,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "az" = (
@@ -99,7 +93,7 @@
 /turf/open/floor/iron,
 /area/ruin/powered/beach)
 "aO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -122,7 +116,7 @@
 /area/ruin/powered/beach)
 "aW" = (
 /obj/machinery/deepfryer,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (
@@ -140,9 +134,7 @@
 /obj/item/trash/candy,
 /obj/item/toy/talking/owl,
 /obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/powered/beach)
 "bx" = (
@@ -210,9 +202,7 @@
 /turf/open/floor/iron/stairs/old,
 /area/ruin/powered/beach)
 "bN" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bR" = (
@@ -232,16 +222,14 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "bY" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "cd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "cg" = (
@@ -253,9 +241,7 @@
 	},
 /area/ruin/powered/beach)
 "ch" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cj" = (
@@ -268,7 +254,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "ct" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "cz" = (
@@ -277,9 +263,7 @@
 /area/ruin/powered/beach)
 "cR" = (
 /obj/structure/chair/wood,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cV" = (
@@ -296,7 +280,7 @@
 /area/ruin/powered/beach)
 "de" = (
 /obj/structure/bookcase/random/reference,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -318,10 +302,10 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "eE" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -341,8 +325,8 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "gg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/public/glass{
 	name = "Resort Casino"
 	},
@@ -353,7 +337,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "gC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
@@ -363,9 +347,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "gT" = (
@@ -375,10 +357,10 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron{
@@ -387,7 +369,7 @@
 	},
 /area/ruin/powered/beach)
 "hq" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /obj/item/bedsheet/dorms,
@@ -404,7 +386,7 @@
 	name = "CondiMaster Neo";
 	pixel_x = -4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hF" = (
@@ -425,7 +407,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hX" = (
@@ -443,9 +425,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "kb" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_y = 32
 	},
@@ -458,7 +438,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "kg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
@@ -477,7 +457,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/coastline_b{
 	dir = 10
 	},
@@ -493,10 +473,10 @@
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "lL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -508,17 +488,15 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "mh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "nw" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/washing_machine,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -537,7 +515,7 @@
 /area/ruin/powered/beach)
 "oU" = (
 /obj/machinery/seed_extractor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
@@ -560,13 +538,11 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "pS" = (
-/obj/machinery/light{
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/sand,
@@ -576,9 +552,7 @@
 	},
 /area/ruin/powered/beach)
 "qc" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
+/obj/structure/mirror/directional/west,
 /obj/structure/sink/kitchen{
 	pixel_y = 32
 	},
@@ -590,13 +564,6 @@
 "qf" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/pod/light,
-/area/ruin/powered/beach)
-"qt" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "qx" = (
 /obj/structure/table/wood,
@@ -611,16 +578,14 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "qF" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "qT" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -637,15 +602,13 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "sl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 10
 	},
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "sM" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "bartender's closet";
@@ -684,7 +647,7 @@
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "tg" = (
@@ -722,7 +685,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "tQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/closed/wall/mineral/wood/nonmetal,
@@ -735,7 +698,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/ruin/powered/beach)
 "vf" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/table/wood/poker,
 /obj/item/storage/pill_bottle/dice,
 /obj/item/stack/spacecash/c1000,
@@ -771,15 +734,15 @@
 /area/ruin/powered/beach)
 "xa" = (
 /obj/structure/sign/warning/securearea,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "xe" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall/mineral/wood/nonmetal,
@@ -806,18 +769,16 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "yc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 5
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "yk" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -831,9 +792,7 @@
 /area/ruin/powered/beach)
 "yN" = (
 /obj/machinery/vending/dinnerware,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "zm" = (
@@ -875,9 +834,7 @@
 /area/ruin/powered/beach)
 "Bl" = (
 /obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Bn" = (
@@ -894,19 +851,17 @@
 /turf/open/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
 "BE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "BL" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "BN" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -941,22 +896,22 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "CU" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "CZ" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Dg" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/grimy,
@@ -1016,17 +971,14 @@
 "Fi" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Fr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 10
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -1072,13 +1024,11 @@
 	},
 /area/ruin/powered/beach)
 "Hn" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "Hy" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/stairs/left,
 /area/ruin/powered/beach)
 "HV" = (
@@ -1128,13 +1078,6 @@
 	},
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
-"Ir" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
-	dir = 4
-	},
-/turf/closed/wall/mineral/sandstone,
-/area/ruin/powered/beach)
 "Iv" = (
 /turf/open/floor/iron/stairs/right,
 /area/ruin/powered/beach)
@@ -1142,7 +1085,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/ruin/powered/beach)
 "IJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "IL" = (
@@ -1162,8 +1105,8 @@
 /turf/open/floor/carpet/purple,
 /area/ruin/powered/beach)
 "Jv" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1186,10 +1129,10 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ky" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 1
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -1199,48 +1142,42 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Lp" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Md" = (
-/obj/structure/urinal{
-	pixel_y = 32
-	},
+/obj/structure/urinal/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Mf" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 9
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "MO" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "MZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -1267,18 +1204,16 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "NV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "OE" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "OI" = (
@@ -1290,7 +1225,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Pr" = (
@@ -1313,20 +1248,16 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "QF" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "QS" = (
 /obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Rk" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "RB" = (
@@ -1349,15 +1280,15 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Supply Room"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "SK" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 8
 	},
 /obj/structure/mineral_door/wood{
@@ -1366,10 +1297,10 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "ST" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 8
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -1386,9 +1317,7 @@
 /turf/open/floor/carpet/red,
 /area/ruin/powered/beach)
 "Tu" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/coastline_b{
 	dir = 8
 	},
@@ -1438,14 +1367,14 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ux" = (
-/obj/item/toy/plush/lizardplushie{
+/obj/item/toy/plush/lizard_plushie/green{
 	name = "Soaks-The-Rays"
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/powered/beach)
 "UZ" = (
 /obj/item/stack/sheet/iron/fifty,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating{
@@ -1453,13 +1382,13 @@
 	},
 /area/ruin/powered/beach)
 "Vf" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/coastline_b{
 	dir = 1
 	},
 /area/ruin/powered/beach)
 "Vl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /turf/open/floor/wood,
@@ -1469,16 +1398,14 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Vt" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 8
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "VL" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/closet/crate{
 	name = "fuel crate"
 	},
@@ -1538,27 +1465,25 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Xu" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "XW" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "Zi" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 6
 	},
 /turf/closed/wall/mineral/sandstone,
@@ -1577,8 +1502,8 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "ZA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/effect/spawner/structure/window,
 /obj/structure/curtain,
 /turf/open/floor/plating,
@@ -1594,9 +1519,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/template_noop)
 "ZZ" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 
@@ -2521,9 +2444,9 @@ VL
 aj
 Fr
 BE
-qt
+cd
 BE
-Ir
+CU
 BE
 Mf
 Bp
@@ -2543,8 +2466,8 @@ BE
 BE
 BE
 BE
-Ir
-qt
+CU
+cd
 BE
 BE
 Mf

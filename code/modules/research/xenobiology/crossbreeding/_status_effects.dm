@@ -75,8 +75,10 @@
 	return ..()
 
 /datum/status_effect/slimerecall/proc/resistField()
+	SIGNAL_HANDLER
 	interrupted = TRUE
 	owner.remove_status_effect(src)
+
 /datum/status_effect/slimerecall/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	owner.cut_overlay(bluespace)
@@ -530,6 +532,7 @@
 		if(sheets.len > 0)
 			var/obj/item/stack/sheet/S = pick(sheets)
 			S.amount++
+			S.update_custom_materials()
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
 
@@ -858,7 +861,7 @@
 
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
-		explosion(get_turf(owner),1,2,4,flame_range = 5)
+		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5)
 	return ..()
 
 /datum/status_effect/stabilized/black
@@ -901,6 +904,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_TRAIT)
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -912,6 +916,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_TRAIT)
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

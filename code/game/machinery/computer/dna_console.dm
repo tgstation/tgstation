@@ -176,7 +176,7 @@
 		var/obj/item/dnainjector/activator/A = I
 		if(A.used)
 			to_chat(user,"<span class='notice'>Recycled [I].</span>")
-			if(A.research)
+			if(A.research && A.filled)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
 					var/obj/item/chromosome/CM = new c_typepath (src)
@@ -813,6 +813,11 @@
 
 			// GUARD CHECK - This should not be possible. Unexpected result
 			if(!HM)
+				return
+
+			// Saving temporary or unobtainable mutations leads to gratuitous abuse
+			if(HM.class == MUT_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be saved.")
 				return
 
 			var/datum/mutation/human/A = new HM.type()

@@ -6,15 +6,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
-/obj/item/gun/energy/tesla_revolver
-	name = "tesla gun"
-	desc = "An experimental gun based on an experimental engine, it's about as likely to kill its operator as it is the target."
-	icon_state = "tesla"
-	inhand_icon_state = "tesla"
-	ammo_type = list(/obj/item/ammo_casing/energy/tesla_revolver)
-	can_flashlight = FALSE
-	shaded_charge = 1
-
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."

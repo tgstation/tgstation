@@ -101,11 +101,10 @@
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()
-	if(current_user)
-		current_user.unset_machine()
 	if(eyeobj)
-		qdel(eyeobj)
+		QDEL_NULL(eyeobj)
 	QDEL_LIST(actions)
+	current_user = null
 	return ..()
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
@@ -137,7 +136,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static != USE_STATIC_NONE)
+		if(eyeobj.use_static != FALSE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -196,7 +195,7 @@
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
-	return 1
+	return TRUE
 
 /mob/camera/ai_eye/remote/Destroy()
 	if(origin && eye_user)
@@ -216,16 +215,19 @@
 		return TRUE
 	return FALSE
 
-/mob/camera/ai_eye/remote/setLoc(T)
+/mob/camera/ai_eye/remote/setLoc(destination)
 	if(eye_user)
-		T = get_turf(T)
-		if (T)
-			forceMove(T)
+		destination = get_turf(destination)
+		if (destination)
+			abstract_move(destination)
 		else
 			moveToNullspace()
+
 		update_ai_detect_hud()
-		if(use_static != USE_STATIC_NONE)
+
+		if(use_static)
 			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
+
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image

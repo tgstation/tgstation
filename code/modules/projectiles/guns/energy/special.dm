@@ -59,7 +59,7 @@
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/stock_parts/cell/potato"
+	cell_type = /obj/item/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 
@@ -243,6 +243,7 @@
 	select_fire()
 
 /obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
+	SIGNAL_HANDLER
 	if(P == p_blue)
 		p_blue = null
 	else if(P == p_orange)
@@ -300,6 +301,7 @@
 /obj/item/gun/energy/printer/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
+	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/gun/energy/printer/emp_act()
 	return
@@ -310,7 +312,7 @@
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = "/obj/item/stock_parts/cell/high"
+	cell_type = /obj/item/stock_parts/cell/high
 	pin = null
 
 /obj/item/gun/energy/temperature/security
@@ -342,6 +344,18 @@
 	inhand_icon_state = "instagibblue"
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
 
+/obj/item/gun/energy/laser/instakill/green
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a green design."
+	icon_state = "instagibgreen"
+	inhand_icon_state = "instagibgreen"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/green)
+
+/obj/item/gun/energy/laser/instakill/yellow
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a yellow design."
+	icon_state = "instagibyellow"
+	inhand_icon_state = "instagibyellow"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/yellow)
+
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
 
@@ -369,3 +383,15 @@
 		return FALSE
 	return ..()
 
+/obj/item/gun/energy/tesla_cannon
+	name = "tesla cannon"
+	icon_state = "tesla"
+	inhand_icon_state = "tesla"
+	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
+	shaded_charge = TRUE
+	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/energy/tesla_cannon/Initialize()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)

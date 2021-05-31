@@ -1,3 +1,5 @@
+#define LOCKER_FULL -1
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -39,7 +41,8 @@
 	var/icon_welded = "welded"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-
+	/// true whenever someone with the strong pull component is dragging this, preventing opening
+	var/strong_grab = FALSE
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
@@ -87,7 +90,7 @@
 	if(broken || !secure)
 		return
 	//Overlay is similar enough for both that we can use the same mask for both
-	SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	. += emissive_appearance(icon, "locked", alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
 /obj/structure/closet/examine(mob/user)
@@ -99,7 +102,7 @@
 	if(opened)
 		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
-		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
+		. += "<span class='notice'>Right-click to [locked ? "unlock" : "lock"].</span>"
 
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += "<span class='notice'>If you bump into [p_them()] while running, you will jump inside.</span>"
@@ -114,11 +117,14 @@
 		return TRUE
 	if(welded || locked)
 		return FALSE
+	if(strong_grab)
+		to_chat(user, "<span class='danger'>[pulledby] has an incredibly strong grip on [src], preventing it from opening.</span>")
+		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
-				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
+				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>")
 			return FALSE
 	return TRUE
 
@@ -146,7 +152,7 @@
 /obj/structure/closet/proc/take_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in L)
-		if(AM != src && insert(AM) == -1) // limit reached
+		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
 			break
 	for(var/i in reverseRange(L.GetAllContents()))
 		var/atom/movable/thing = i
@@ -172,14 +178,15 @@
 /obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
 	return
 
-/obj/structure/closet/proc/insert(atom/movable/AM)
-	if(contents.len >= storage_capacity)
-		return -1
-	if(insertion_allowed(AM))
-		AM.forceMove(src)
-		return TRUE
-	else
+/obj/structure/closet/proc/insert(atom/movable/inserted)
+	if(length(contents) >= storage_capacity)
+		return LOCKER_FULL
+	if(!insertion_allowed(inserted))
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted) & COMPONENT_CLOSET_INSERT_INTERRUPT)
+		return TRUE
+	inserted.forceMove(src)
+	return TRUE
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
@@ -241,6 +248,7 @@
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
@@ -440,19 +448,18 @@
 			to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
 
 /obj/structure/closet/proc/bust_open()
+	SIGNAL_HANDLER
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
 	open()
 
-/obj/structure/closet/AltClick(mob/user)
-	..()
+/obj/structure/closet/RightClick(mob/user, modifiers)
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
-	if(opened || !secure)
-		return
-	else
+	if(!opened && secure)
 		togglelock(user)
+	return TRUE
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
@@ -502,14 +509,13 @@
 				req_access += pick(SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
 /obj/structure/closet/contents_explosion(severity, target)
-	for(var/thing in contents)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += thing
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += thing
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += thing
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += contents
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += contents
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += contents
 
 /obj/structure/closet/singularity_act()
 	dump_contents()
@@ -518,6 +524,7 @@
 /obj/structure/closet/AllowDrop()
 	return TRUE
 
-
 /obj/structure/closet/return_temperature()
 	return
+
+#undef LOCKER_FULL

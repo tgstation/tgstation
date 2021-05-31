@@ -1,3 +1,12 @@
+/**
+ * x1, y1, x2, y2 - Represents the bounding box for the ID card's non-transparent portion of its various icon_states.
+ * Used to crop the ID card's transparency away when chaching the icon for better use in tgui chat.
+ */
+#define ID_ICON_BORDERS 1, 9, 32, 24
+
+/// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
+#define INTERN_THRESHOLD_FALLBACK_HOURS 15
+
 /* Cards
  * Contains:
  * DATA CARD
@@ -74,6 +83,9 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	/// Cached icon that has been built for this card. Intended for use in chat.
+	var/icon/cached_flat_icon
+
 	/// How many magical mining Disney Dollars this card has for spending at the mining equipment vendors.
 	var/mining_points = 0
 	/// The name registered on the card (for example: Dr Bryan See)
@@ -83,7 +95,7 @@
 	/// Linked paystand.
 	var/obj/machinery/paystand/my_store
 	/// Registered owner's age.
-	var/registered_age = 13
+	var/registered_age = 30
 
 	/// The job name registered on the card (for example: Assistant).
 	var/assignment
@@ -96,6 +108,9 @@
 
 	/// List of wildcard slot names as keys with lists of wildcard data as values.
 	var/list/wildcard_slots = list()
+
+	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
+	var/is_intern = FALSE
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -118,11 +133,22 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_icon_source(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
-/// Simple helper proc. Returns the source of the icon for this card. Advanced cards can override this to return their icon that has been cached due to using overlays.
-/obj/item/card/id/proc/get_icon_source()
-	return src
+/obj/item/card/id/update_overlays()
+	. = ..()
+
+	cached_flat_icon = null
+
+/// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended only for use displaying ID card icons in chat.
+/obj/item/card/id/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
+	return cached_flat_icon
+
+/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
+	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -350,6 +376,11 @@
 	// Hard reset access
 	access.Cut()
 
+/// Clears the economy account from the ID card.
+/obj/item/card/id/proc/clear_account()
+	registered_account = null
+
+
 /**
  * Helper proc. Creates access lists for the access procs.
  *
@@ -397,21 +428,16 @@
 					SSid_access.apply_trim_to_card(src, trim)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/holochip))
+	if(istype(W, /obj/item/rupee))
+		to_chat(user, "<span class='warning'>Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!</span>")
+		return
+	else if(iscash(W))
 		insert_money(W, user)
-		return
-	else if(istype(W, /obj/item/stack/spacecash))
-		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/coin))
-		insert_money(W, user, TRUE)
 		return
 	else if(istype(W, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = W
 		var/list/money_contained = money_bag.contents
-
 		var/money_added = mass_insert_money(money_contained, user)
-
 		if (money_added)
 			to_chat(user, "<span class='notice'>You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account.</span>")
 		return
@@ -426,7 +452,11 @@
  * user - The user inserting the item.
  * physical_currency - Boolean, whether this is a physical currency such as a coin and not a holochip.
  */
-/obj/item/card/id/proc/insert_money(obj/item/money, mob/user, physical_currency)
+/obj/item/card/id/proc/insert_money(obj/item/money, mob/user)
+	var/physical_currency
+	if(istype(money, /obj/item/stack/spacecash) || istype(money, /obj/item/coin))
+		physical_currency = TRUE
+
 	if(!registered_account)
 		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [money] into!</span>")
 		return
@@ -598,8 +628,18 @@
 
 /// Updates the name based on the card's vars and state.
 /obj/item/card/id/proc/update_label()
-	var/blank = !registered_name
-	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/assignment_string
+
+	if(is_intern)
+		if(assignment)
+			assignment_string = (assignment in SSjob.head_of_staff_jobs) ? " ([assignment]-in-Training)" : " (Intern [assignment])"
+		else
+			assignment_string = " (Intern)"
+	else
+		assignment_string = " ([assignment])"
+
+	name = "[name_string][assignment_string]"
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -688,8 +728,6 @@
 
 	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
-	/// Cached icon that has been built for this card.
-	var/icon/cached_flat_icon
 
 	/// If this is set, will manually override the icon file for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_icon_override
@@ -698,22 +736,91 @@
 	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
 
-/obj/item/card/id/advanced/get_icon_source()
-	return get_cached_flat_icon()
+/obj/item/card/id/advanced/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
-/// If no cached_flat_icon exists, this proc creates it. This proc then returns the cached_flat_icon.
-/obj/item/card/id/advanced/proc/get_cached_flat_icon()
-	if(!cached_flat_icon)
-		cached_flat_icon = getFlatIcon(src)
-	return cached_flat_icon
+/obj/item/card/id/advanced/Destroy()
+	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-/obj/item/card/id/advanced/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+	return ..()
+
+/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!user?.client)
+		return
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		return
+	if(!CONFIG_GET(flag/use_low_living_hour_intern))
+		return
+	if(!SSdbcore.Connect())
+		return
+
+	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
+	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
+
+	if((intern_threshold >= playtime) && (user.mind?.assigned_role in SSjob.station_jobs))
+		is_intern = TRUE
+		update_label()
+		return
+
+	if(!is_intern)
+		return
+
+	is_intern = FALSE
+	update_label()
+
+/obj/item/card/id/advanced/proc/remove_intern_status(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!is_intern)
+		return
+
+	is_intern = FALSE
+	update_label()
+
+/obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/computer_hardware/card_slot/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	if(istype(old_loc, /obj/item/modular_computer/tablet))
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+
+	if(istype(source.loc, /obj/item/modular_computer/tablet))
+		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+
+/obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
+	. = ..()
+
+	if(istype(OldLoc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+
+	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = OldLoc
+
+		UnregisterSignal(OldLoc, COMSIG_MOVABLE_MOVED)
+
+		if(istype(slot.holder, /obj/item/modular_computer/tablet))
+			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
+			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+
+	if(istype(loc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+
+	if(istype(loc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = loc
+
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_holding_card_slot_moved)
+
+		if(istype(slot.holder, /obj/item/modular_computer/tablet))
+			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
+			RegisterSignal(slot_holder, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+			RegisterSignal(slot_holder, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
-
-	cached_flat_icon = null
 
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, assigned_icon_state)
@@ -1051,7 +1158,7 @@
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+		var/popup_input = tgui_alert(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())
 			return
 		if(!user.is_holding(src))
@@ -1071,7 +1178,7 @@
 
 				registered_name = input_name
 
-				var/change_trim = alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", "Yes", "No")
+				var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
 				if(change_trim == "Yes")
 					var/list/blacklist = typecacheof(type) + typecacheof(/obj/item/card/id/advanced/simple_bot)
 					var/list/trim_list = list()
@@ -1146,3 +1253,26 @@
 	name = "simple bot ID card"
 	desc = "An internal ID card used by the station's non-sentient bots. You should report this to a coder if you're holding it."
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
+
+/obj/item/card/id/red
+	name = "Red Team identification card"
+	desc = "A card used to identify members of the red team for CTF"
+	icon_state = "ctf_red"
+
+/obj/item/card/id/blue
+	name = "Blue Team identification card"
+	desc = "A card used to identify members of the blue team for CTF"
+	icon_state = "ctf_blue"
+
+/obj/item/card/id/yellow
+	name = "Yellow Team identification card"
+	desc = "A card used to identify members of the yellow team for CTF"
+	icon_state = "ctf_yellow"
+
+/obj/item/card/id/green
+	name = "Green Team identification card"
+	desc = "A card used to identify members of the green team for CTF"
+	icon_state = "ctf_green"
+
+#undef INTERN_THRESHOLD_FALLBACK_HOURS
+#undef ID_ICON_BORDERS

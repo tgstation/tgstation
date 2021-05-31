@@ -6,7 +6,7 @@
 	between reincarnations grows steadily with use, along with the weakness \
 	that the new skeleton body will experience upon 'birth'. Note that \
 	becoming a lich destroys all internal organs except the brain."
-	school = "necromancy"
+	school = SCHOOL_NECROMANCY
 	charge_max = 10
 	clothes_req = FALSE
 	centcom_cancast = FALSE
@@ -95,14 +95,10 @@
 	active_phylacteries++
 	AddElement(/datum/element/point_of_interest)
 	START_PROCESSING(SSobj, src)
-	if(initial(SSticker.mode.round_ends_with_antag_death))
-		SSticker.mode.round_ends_with_antag_death = FALSE
 
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
-	if(!active_phylacteries)
-		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()
 
 /obj/item/phylactery/process()

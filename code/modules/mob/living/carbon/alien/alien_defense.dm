@@ -102,10 +102,12 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return
-	..()
+		return FALSE
+
+	. = ..()
 	if(QDELETED(src))
 		return
+
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)

@@ -12,7 +12,6 @@
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY
@@ -202,7 +201,7 @@
 	icon_state = "energycake"
 	force = 5
 	hitsound = 'sound/weapons/blade1.ogg'
-	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/pwr_game = 10, /datum/reagent/consumable/liquidelectricity = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/pwr_game = 10, /datum/reagent/consumable/liquidelectricity/enriched = 10)
 	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
 
 /obj/item/food/cake/birthday/energy/MakeProcessable()
@@ -229,7 +228,7 @@
 	icon_state = "energycakeslice"
 	force = 2
 	hitsound = 'sound/weapons/blade1.ogg'
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sprinkles = 2, /datum/reagent/consumable/nutriment/vitamin = 1,  /datum/reagent/consumable/pwr_game = 2, /datum/reagent/consumable/liquidelectricity = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sprinkles = 2, /datum/reagent/consumable/nutriment/vitamin = 1,  /datum/reagent/consumable/pwr_game = 2, /datum/reagent/consumable/liquidelectricity/enriched = 2)
 	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
 
 /obj/item/food/cakeslice/birthday/energy/proc/energy_bite(mob/living/user)
@@ -318,10 +317,10 @@
 	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
-/obj/item/food/cake/bscc // blackbarry strawberries chocolate cake
-	name = "blackberry and strawberry chocolate cake"
-	desc = "A chocolate cake, filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_cake"
+/obj/item/food/cake/bscc // blackbarry strawberries chocolate cake <- this is a relic from before resprite
+	name = "strawberry chocolate cake"
+	desc = "A chocolate cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF."
+	icon_state = "liars_cake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/coco = 5)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
@@ -330,10 +329,10 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/bscc, 5, 30)
 
 /obj/item/food/cakeslice/bscc
-	name = "blackberry and strawberry chocolate cake slice"
-	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_slice"
-	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
+	name = "strawberry chocolate cake slice"
+	desc = "Just a slice of cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF." //yes, I know the one referenced has cherries, but I'm not implementing a new cake today.
+	icon_state = "liars_slice"
+	tastes = list("strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/holy_cake

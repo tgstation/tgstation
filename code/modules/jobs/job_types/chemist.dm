@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/chemist
+	plasmaman_outfit = /datum/outfit/plasmaman/chemist
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -21,6 +22,13 @@
 	departments = DEPARTMENT_MEDICAL
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
+
+	mail_goodies = list(
+		/datum/reagent/flash_powder = 15,
+		/datum/reagent/exotic_stabilizer = 5,
+		/datum/reagent/toxin/leadacetate = 5,
+		/obj/item/paper/secretrecipe = 1
+	)
 
 /datum/outfit/job/chemist
 	name = "Chemist"

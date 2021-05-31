@@ -284,6 +284,8 @@
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
 	if(!mapload)
 		return
 	has_electronics = APC_ELECTRONICS_SECURED
@@ -311,10 +313,6 @@
 	make_terminal()
 
 	addtimer(CALLBACK(src, .proc/update), 5)
-
-/obj/machinery/power/apc/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 2000)
@@ -401,19 +399,19 @@
 	if((machine_stat & (BROKEN|MAINT)) || update_state)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, "apcox-[locked]")
+	. += emissive_appearance(icon, "apcox-[locked]")
+	. += mutable_appearance(icon, "apco3-[charging]")
+	. += emissive_appearance(icon, "apco3-[charging]")
 	if(!operating)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, "apco0-[equipment]")
+	. += emissive_appearance(icon, "apco0-[equipment]")
+	. += mutable_appearance(icon, "apco1-[lighting]")
+	. += emissive_appearance(icon, "apco1-[lighting]")
+	. += mutable_appearance(icon, "apco2-[environ]")
+	. += emissive_appearance(icon, "apco2-[environ]")
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
@@ -582,6 +580,24 @@
 			return TRUE
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
+	if(HAS_TRAIT(W, TRAIT_APC_SHOCKING))
+		var/metal = 0
+		var/shock_source = null
+		metal += LAZYACCESS(W.custom_materials, GET_MATERIAL_REF(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
+
+		if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
+			if(cell && terminal)
+				shock_source = cell.charge > terminal.powernet.avail ? cell : terminal.powernet
+			else
+				shock_source = terminal?.powernet || cell
+
+		if(shock_source && metal && (panel_open || opened)) //Now you're cooking with electricity
+			if(electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
+				do_sparks(5, TRUE, src)
+				user.visible_message("<span class='notice'>[user.name] shoves [W] into the internal components of [src], erupting into a cascade of sparks!</span>")
+				if(shock_source == cell)//If the shock is coming from the cell just fully discharge it, because it's funny
+					cell.use(cell.charge)
+				return
 
 	if(issilicon(user) && get_dist(src,user)>1)
 		return attack_hand(user)
@@ -1175,7 +1191,7 @@
 	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
-	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
+	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
 		to_chat(user, "<span class='danger'>AI denied transfer request. Process terminated.</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		transfer_in_progress = FALSE

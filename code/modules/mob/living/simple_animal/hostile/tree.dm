@@ -7,6 +7,7 @@
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
 	health_doll_icon = "pine_1"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5

@@ -756,3 +756,27 @@
 	build_path = /obj/item/circuitboard/machine/crystallizer
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/exoscanner
+	name = "Machine Design (Scanner Array)"
+	desc = "The circuit board for scanner array."
+	id = "exoscanner"
+	build_path = /obj/item/circuitboard/machine/exoscanner
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/board/exodrone_launcher
+	name = "Machine Design (Exploration Drone Launcher)"
+	desc = "The circuit board for exodrone launcher."
+	id = "exodrone_launcher"
+	build_path = /obj/item/circuitboard/machine/exodrone_launcher
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/board/component_printer
+	name = "Machine Design (Component Printer)"
+	desc = "The circuit board for a component printer"
+	id = "component_printer"
+	build_path = /obj/item/circuitboard/machine/component_printer
+	category = list("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

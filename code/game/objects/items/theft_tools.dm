@@ -91,6 +91,8 @@
 	inhand_icon_state = "screwdriver_nuke"
 	toolspeed = 0.5
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/paper/guides/antag/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
@@ -123,6 +125,7 @@
 	icon_state = "supermatter_sliver"
 	inhand_icon_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
+	layer = ABOVE_MOB_LAYER
 
 
 /obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes

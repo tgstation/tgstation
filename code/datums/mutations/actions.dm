@@ -117,7 +117,7 @@
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
 	desc = "You can breathe fire at a target."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 600
 	clothes_req = FALSE
 	range = 20
@@ -176,7 +176,7 @@
 /obj/effect/proc_holder/spell/self/void
 	name = "Convoke Void" //magic the gathering joke here
 	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	clothes_req = FALSE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
@@ -384,6 +384,16 @@
 	text_gain_indication = "<span class='notice'>Your skin feels webby.</span>"
 	instability = 15
 	power = /obj/effect/proc_holder/spell/self/lay_genetic_web
+
+/datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+
+/datum/mutation/human/webbing/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
 
 /obj/effect/proc_holder/spell/self/lay_genetic_web
 	name = "Lay Web"

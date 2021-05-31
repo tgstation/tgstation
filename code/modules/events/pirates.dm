@@ -6,7 +6,6 @@
 	min_players = 10
 	earliest_start = 30 MINUTES
 	dynamic_should_hijack = TRUE
-	gamemode_blacklist = list("nuclear")
 
 #define PIRATES_ROGUES "Rogues"
 #define PIRATES_SILVERSCALES "Silverscales"
@@ -157,7 +156,7 @@
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
 	if(!active)
-		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
+		if(tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel")) == "Cancel")
 			return
 		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
@@ -192,7 +191,7 @@
 	STOP_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/update_icon_state()
-	icon_state = active ? "dominator-blue" : "dominator"
+	icon_state = active ? "dominator-Blue" : "dominator"
 	return ..()
 
 /obj/machinery/shuttle_scrambler/Destroy()

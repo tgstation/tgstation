@@ -52,6 +52,8 @@
 	var/author_ckey
 	var/icon_generated = FALSE
 	var/icon/generated_icon
+	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
+	var/no_save = FALSE
 
 	// Painting overlay offset when framed
 	var/framed_offset_x = 11
@@ -328,22 +330,30 @@
 	frame.pixel_y = current_canvas.framed_offset_y - 1
 	. += frame
 
+/**
+ * Loads a painting from SSpersistence. Called globally by said subsystem when it inits
+ *
+ * Deleting paintings leaves their json, so this proc will remove the json and try again if it finds one of those.
+ */
 /obj/structure/sign/painting/proc/load_persistent()
-	if(!persistence_id)
+	if(!persistence_id || !SSpersistence.paintings || !SSpersistence.paintings[persistence_id])
 		return
-	if(!SSpersistence.paintings || !SSpersistence.paintings[persistence_id] || !length(SSpersistence.paintings[persistence_id]))
-		return
-	var/list/chosen = pick(SSpersistence.paintings[persistence_id])
-	var/title = chosen["title"]
-	var/author = chosen["ckey"]
-	var/png = "data/paintings/[persistence_id]/[chosen["md5"]].png"
+	var/list/painting_category = SSpersistence.paintings[persistence_id]
+	var/list/painting
+	while(!painting)
+		if(!length(SSpersistence.paintings[persistence_id]))
+			return //aborts loading anything this category has no usable paintings
+		var/list/chosen = pick(painting_category)
+		if(!fexists("data/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
+			painting_category -= list(chosen)
+			continue //and try again
+		painting = chosen
+	var/title = painting["title"]
+	var/author = painting["ckey"]
+	var/png = "data/paintings/[persistence_id]/[painting["md5"]].png"
 	if(!title)
-		title = "Untitled Artwork" //Should prevent NULL named art from loading as NULL, if you're still getting the admin log chances are persistence is broken
-	if(!title)
-		message_admins("<span class='notice'>Painting with NO TITLE loaded on a [persistence_id] frame in [get_area(src)]. Please delete it, it is saved in the database with no name and will create bad assets.</span>")
-	if(!fexists(png))
-		stack_trace("Persistent painting [chosen["md5"]].png was not found in [persistence_id] directory.")
-		return
+		title = "Untitled Artwork" //legacy artwork allowed null names which was bad for the json, lets fix that
+		painting["title"] = title
 	var/icon/I = new(png)
 	var/obj/item/canvas/new_canvas
 	var/w = I.Width()
@@ -364,7 +374,7 @@
 	update_appearance()
 
 /obj/structure/sign/painting/proc/save_persistent()
-	if(!persistence_id || !current_canvas)
+	if(!persistence_id || !current_canvas || current_canvas.no_save)
 		return
 	if(sanitize_filename(persistence_id) != persistence_id)
 		stack_trace("Invalid persistence_id - [persistence_id]")

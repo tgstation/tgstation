@@ -68,6 +68,27 @@
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/wood/tile
+	icon_state = "wood_tile"
+	floor_tile = /obj/item/stack/tile/wood/tile
+
+/turf/open/floor/wood/tile/setup_broken_states()
+	return list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
+
+/turf/open/floor/wood/parquet
+	icon_state = "wood_parquet"
+	floor_tile = /obj/item/stack/tile/wood/parquet
+
+/turf/open/floor/wood/parquet/setup_broken_states()
+	return list("wood_parquet-broken", "wood_parquet-broken2", "wood_parquet-broken3", "wood_parquet-broken4", "wood_parquet-broken5", "wood_parquet-broken6", "wood_parquet-broken7")
+
+/turf/open/floor/wood/large
+	icon_state = "wood_large"
+	floor_tile = /obj/item/stack/tile/wood/large
+
+/turf/open/floor/wood/large/setup_broken_states()
+	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")
+
 /turf/open/floor/grass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
@@ -157,6 +178,9 @@
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
 
+/turf/open/floor/grass/snow/basalt/safe
+	planetary_atmos = FALSE
+
 /turf/open/floor/grass/snow/safe
 	slowdown = 1.5
 	planetary_atmos = FALSE
@@ -222,9 +246,14 @@
 		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
-///Carpet variant for mapping aid, functionally the same as parent after smoothing.
 /turf/open/floor/carpet/lone
-	icon_state = "carpet-0"
+	icon_state = "carpetsymbol"
+	smoothing_flags = NONE
+	floor_tile = /obj/item/stack/tile/carpet/symbol
+
+/turf/open/floor/carpet/lone/star
+	icon_state = "carpetstar"
+	floor_tile = /obj/item/stack/tile/carpet/star
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
@@ -381,6 +410,7 @@
 	desc = "A clever illusion designed to look like a bottomless pit."
 	icon = 'icons/turf/floors/chasms.dmi'
 	icon_state = "chasms-0"
+	floor_tile = /obj/item/stack/tile/fakepit
 	base_icon_state = "chasms"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_TURF_CHASM)

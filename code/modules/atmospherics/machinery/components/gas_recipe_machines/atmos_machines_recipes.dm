@@ -148,3 +148,27 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	energy_release = 2900000
 	requirements = list(/datum/gas/antinoblium = 5, /datum/gas/zauker = 20, /datum/gas/bz = 7.5)
 	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)
+
+/datum/gas_recipe/crystallizer/fuel_pellet
+	id = "fuel_basic"
+	name = "standard fuel pellet"
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 6000000
+	requirements = list(/datum/gas/oxygen = 50, /datum/gas/plasma = 100)
+	products = list(/obj/item/fuel_pellet = 1)
+
+/datum/gas_recipe/crystallizer/fuel_pellet_advanced
+	id = "fuel_advanced"
+	name = "advanced fuel pellet"
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 6000000
+	requirements = list(/datum/gas/tritium = 100, /datum/gas/hydrogen = 100)
+	products = list(/obj/item/fuel_pellet/advanced = 1)
+
+/datum/gas_recipe/crystallizer/fuel_pellet_exotic
+	id = "fuel_exotic"
+	name = "exotic fuel pellet"
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 6000000
+	requirements = list(/datum/gas/hypernoblium = 100, /datum/gas/stimulum = 100)
+	products = list(/obj/item/fuel_pellet/exotic = 1)

@@ -247,7 +247,7 @@
 	base_name = "bronze airlock"
 	airlock_type = /obj/machinery/door/airlock/bronze
 	noglass = TRUE
-	material_type = /obj/item/stack/tile/bronze
+	material_type = /obj/item/stack/sheet/bronze
 
 /obj/structure/door_assembly/door_assembly_bronze/seethru
 	airlock_type = /obj/machinery/door/airlock/bronze/seethru

@@ -25,7 +25,7 @@
 
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return FALSE
-	var/loot = rand(1,21)
+	var/loot = rand(1,20)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -201,7 +201,7 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -330,6 +330,7 @@
 		to_chat(orbits.parent, "<span class='notice'>Your vision returns to normal.</span>")
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
+	SIGNAL_HANDLER
 	user.sight |= sight_flags
 	if(!isnull(lighting_alpha))
 		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
@@ -408,7 +409,11 @@
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
+	sharpness = SHARP_POINTY
 	force = 18
+
+/obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>[src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -416,6 +421,7 @@
 	projectile_type = /obj/projectile/hook
 	caliber = CALIBER_HOOK
 	icon_state = "hook"
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/projectile/hook
 	name = "hook"
@@ -459,9 +465,6 @@
 /obj/item/gun/magic/hook/bounty
 	name = "hook"
 	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
-
-/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook/bounty
 	projectile_type = /obj/projectile/hook/bounty
@@ -702,6 +705,7 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
+	SIGNAL_HANDLER
 	if(!istype(A, /turf/closed/mineral))
 		return
 	A.attackby(src, H)

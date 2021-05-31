@@ -110,20 +110,13 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "ax" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "ay" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plating,
-/area/engineering/atmos)
-"az" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "aD" = (
@@ -132,9 +125,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "aG" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -180,7 +171,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "aP" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -212,9 +203,7 @@
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "aY" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "aZ" = (
@@ -285,7 +274,7 @@
 	dir = 8;
 	pixel_x = -25
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/item/wrench,
@@ -293,14 +282,14 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "bk" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "bl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/meter,
@@ -314,10 +303,10 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "bn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "bo" = (
@@ -328,7 +317,7 @@
 /turf/open/floor/plating,
 /area/engineering/main)
 "bp" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/item/storage/box/lights/mixed,
 /obj/item/lightreplacer,
 /turf/open/floor/plating,
@@ -348,7 +337,7 @@
 /area/engineering/gravity_generator)
 "bt" = (
 /obj/machinery/door/airlock,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -360,7 +349,7 @@
 /turf/open/floor/plating,
 /area/command/bridge)
 "bw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/engineering/main)
 "bx" = (
@@ -372,9 +361,7 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
 "bz" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "bA" = (
@@ -394,7 +381,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bC" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -449,7 +436,7 @@
 	},
 /area/command/bridge)
 "bN" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bO" = (
@@ -492,9 +479,7 @@
 	},
 /area/hallway/secondary/entry)
 "bV" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron{
 	dir = 1
@@ -541,33 +526,29 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "co" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "cp" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron{
 	dir = 10
 	},
 /area/command/bridge)
 "cr" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron{
 	dir = 6
 	},
 /area/command/bridge)
 "ct" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "cv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/command/bridge)
 "cw" = (
@@ -586,17 +567,15 @@
 	},
 /area/hallway/secondary/entry)
 "cA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "cB" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron{
@@ -604,14 +583,14 @@
 	},
 /area/hallway/primary/central)
 "cC" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/iron{
 	dir = 1
 	},
 /area/hallway/primary/central)
 "cD" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -620,24 +599,22 @@
 	},
 /area/hallway/primary/central)
 "cE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron{
 	dir = 1
 	},
 /area/hallway/primary/central)
 "cF" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "cG" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -668,7 +645,7 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "cL" = (
@@ -690,7 +667,7 @@
 /turf/closed/wall/r_wall,
 /area/construction)
 "cP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/construction)
 "cQ" = (
@@ -705,7 +682,7 @@
 /turf/closed/wall/r_wall,
 /area/commons/storage/primary)
 "cU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/commons/storage/primary)
 "cV" = (
@@ -765,9 +742,7 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "de" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dk" = (
@@ -780,9 +755,7 @@
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "dm" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -792,24 +765,18 @@
 /turf/open/floor/plating,
 /area/construction)
 "do" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/construction)
 "dp" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "dx" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "dy" = (
@@ -899,7 +866,7 @@
 /area/commons/storage/primary)
 "dO" = (
 /obj/structure/table,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/item/fireaxe,
 /obj/item/extinguisher,
 /turf/open/floor/iron,
@@ -913,7 +880,7 @@
 /obj/structure/table,
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/tubes,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dR" = (
@@ -967,9 +934,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/engineering/storage)
 "em" = (
@@ -1002,9 +967,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "ez" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron{
 	dir = 8
 	},
@@ -1020,9 +983,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "eE" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "eF" = (
@@ -1030,9 +991,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "eH" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
@@ -1060,13 +1019,11 @@
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 4
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "eN" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "eO" = (
@@ -1099,9 +1056,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/engineering/storage)
 "fo" = (
@@ -1132,7 +1087,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "gY" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1147,7 +1102,7 @@
 /area/construction)
 "hm" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/construction)
 "ho" = (
@@ -1227,15 +1182,11 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "lm" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
@@ -1272,9 +1223,7 @@
 /turf/open/openspace,
 /area/space/nearstation)
 "nz" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/engineering/storage)
 "nF" = (
@@ -1299,18 +1248,14 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "on" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "oA" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "oJ" = (
@@ -1318,9 +1263,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "pi" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/openspace,
 /area/hallway/secondary/service)
 "qo" = (
@@ -1342,13 +1285,11 @@
 /turf/open/floor/plating,
 /area/engineering/storage)
 "rd" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/openspace,
 /area/engineering/storage)
 "rN" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -1391,7 +1332,7 @@
 /area/construction)
 "uv" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/iron{
@@ -1405,9 +1346,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/engineering/storage)
 "vF" = (
@@ -1441,7 +1380,7 @@
 /turf/open/floor/plating,
 /area/engineering/storage)
 "xI" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "xK" = (
@@ -1486,7 +1425,7 @@
 /area/hallway/secondary/service)
 "zC" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/construction)
 "zZ" = (
@@ -1510,9 +1449,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/storage)
 "AI" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1529,9 +1466,7 @@
 /turf/open/openspace,
 /area/space/nearstation)
 "Bm" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -1563,15 +1498,11 @@
 /turf/open/floor/plating,
 /area/construction)
 "Dm" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "DG" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/engineering/storage)
 "DK" = (
@@ -1608,7 +1539,7 @@
 /area/construction)
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
 	dir = 4;
 	icon_state = "pipe11-2"
 	},
@@ -1664,7 +1595,7 @@
 /area/engineering/storage)
 "JH" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1680,7 +1611,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "KM" = (
@@ -1697,7 +1628,7 @@
 /area/hallway/secondary/service)
 "LE" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1707,7 +1638,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ME" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "Ob" = (
@@ -1732,9 +1663,7 @@
 /turf/open/floor/plating,
 /area/engineering/storage)
 "Pz" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/engineering/storage)
 "Qo" = (
@@ -1807,14 +1736,12 @@
 /turf/open/floor/iron,
 /area/engineering/storage)
 "VB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/construction)
 "WN" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "XN" = (
@@ -2788,7 +2715,7 @@ ad
 af
 ah
 am
-az
+bl
 aP
 aP
 bn

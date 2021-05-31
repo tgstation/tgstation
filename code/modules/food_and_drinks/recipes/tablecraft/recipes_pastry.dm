@@ -433,28 +433,18 @@
 	subcategory = CAT_PASTRY
 
 
+/datum/crafting_recipe/food/moffin
+	name = "Moffin"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/food/pastrybase = 1,
+		/obj/item/stack/sheet/cloth = 1,
+	)
+	result = /obj/item/food/muffin/moffin
+	subcategory = CAT_PASTRY
+
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/datum/crafting_recipe/food/hotdog
-	name = "Hot dog"
-	reqs = list(
-		/datum/reagent/consumable/ketchup = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/sausage = 1
-	)
-	result = /obj/item/food/hotdog
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/meatbun
-	name = "Meat bun"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/cabbage = 1
-	)
-	result = /obj/item/food/meatbun
-	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"

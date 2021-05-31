@@ -80,19 +80,19 @@
 	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_a/competitive
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
-/datum/chemical_reaction/prefactor_b/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/prefactor_b/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/bluespace))
 		holder.remove_reagent(/datum/reagent/bluespace, 1)
 		reaction.delta_t *= 5
 
-/datum/chemical_reaction/prefactor_b/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+/datum/chemical_reaction/prefactor_b/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
 	explode_shockwave(holder, equilibrium)
 	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
 	clear_reagents(holder, vol)//Lest we explode forever
 
-/datum/chemical_reaction/prefactor_b/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+/datum/chemical_reaction/prefactor_b/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	explode_fire(holder, equilibrium)
 	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
 	clear_reagents(holder, vol)

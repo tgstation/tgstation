@@ -104,13 +104,10 @@
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
 	flags_inv = NONE
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	inhand_icon_state = "cage"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
 	dynamic_hair_suffix = ""
+	worn_y_offset = 7
 
 /obj/item/storage/box/holy/sentinel
 	name = "Stone Sentinel Kit"
@@ -328,7 +325,7 @@
 /obj/item/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
+		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
 
 /obj/item/nullrod/staff/blue
 	name = "blue holy staff"
@@ -523,7 +520,7 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -576,6 +573,10 @@
 	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches")
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 
+/obj/item/nullrod/hammer/Initialize()
+	. = ..()
+	AddElement(/datum/element/kneejerk)
+
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
@@ -625,6 +626,10 @@
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
 	hitsound = 'sound/weapons/blade1.ogg'
+
+/obj/item/nullrod/pride_hammer/Initialize()
+	. = ..()
+	AddElement(/datum/element/kneejerk)
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()

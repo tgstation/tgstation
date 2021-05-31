@@ -142,7 +142,7 @@
 
 /// Async proc handling the alert input and associated logic for an admin removing this component via the VV dropdown.
 /datum/component/deadchat_control/proc/async_handle_vv_topic(mob/user, list/href_list)
-	if(alert(user, "Remove deadchat control from [parent]?", "Deadchat Plays [parent]", "Remove", "Cancel") == "Remove")
+	if(tgui_alert(user, "Remove deadchat control from [parent]?", "Deadchat Plays [parent]", list("Remove", "Cancel")) == "Remove")
 		// Quick sanity check as this is an async call.
 		if(QDELETED(src))
 			return
@@ -156,6 +156,9 @@
 /// Informs any examiners to the inputs available as part of deadchat control, as well as the current operating mode and cooldowns.
 /datum/component/deadchat_control/proc/on_examine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+
+	if(!isobserver(user))
+		return
 
 	examine_list += "<span class='notice'>[A.p_theyre(TRUE)] currently under deadchat control using the [deadchat_mode] ruleset!</span>"
 

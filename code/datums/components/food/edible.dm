@@ -43,7 +43,7 @@ Behavior that's still missing from this component that original food items had t
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
 	///The type of atom this creates when the object is microwaved.
-	var/microwaved_type
+	var/atom/microwaved_type
 
 /datum/component/edible/Initialize(list/initial_reagents,
 								food_flags = NONE,
@@ -67,8 +67,12 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, .proc/OnCraft)
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -138,6 +142,9 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+
+	if(microwaved_type)
+		examine_list += "[parent] could be <b>microwaved</b> into [initial(microwaved_type.name)]!"
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch (bitecount)
@@ -428,7 +435,7 @@ Behavior that's still missing from this component that original food items had t
 
 
 ///Ability to feed food to puppers
-/datum/component/edible/proc/onCrossed(datum/source, mob/user)
+/datum/component/edible/proc/on_entered(datum/source, mob/user)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)
 
@@ -448,3 +455,4 @@ Behavior that's still missing from this component that original food items had t
 		for (var/t in E.tastes)
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
+

@@ -129,6 +129,7 @@
 #define ATTACK_EFFECT_BOOP "boop" //Honk
 
 //the define for visible message range in combat
+#define SAMETILE_MESSAGE_RANGE 1
 #define COMBAT_MESSAGE_RANGE 3
 #define DEFAULT_MESSAGE_RANGE 7
 
@@ -233,11 +234,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
 
-#define EXPLODE_NONE 0 //Don't even ask me why we need this.
-#define EXPLODE_DEVASTATE 1
-#define EXPLODE_HEAVY 2
-#define EXPLODE_LIGHT 3
-#define EXPLODE_GIB_THRESHOLD 50 //ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
+/// ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
+#define EXPLODE_GIB_THRESHOLD 50
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
@@ -285,6 +283,19 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
+//Autofire component
+/// Compatible firemode is in the gun. Wait until it's held in the user hands.
+#define AUTOFIRE_STAT_IDLE (1<<0)
+/// Gun is active and in the user hands. Wait until user does a valid click.
+#define AUTOFIRE_STAT_ALERT	(1<<1)
+/// Gun is shooting.
+#define AUTOFIRE_STAT_FIRING (1<<2)
+
+#define COMSIG_AUTOFIRE_ONMOUSEDOWN "autofire_onmousedown"
+	#define COMPONENT_AUTOFIRE_ONMOUSEDOWN_BYPASS (1<<0)
+#define COMSIG_AUTOFIRE_SHOT "autofire_shot"
+	#define COMPONENT_AUTOFIRE_SHOT_SUCCESS (1<<0)
+
 /// Martial arts attack requested but is not available, allow a check for a regular attack.
 #define MARTIAL_ATTACK_INVALID -1
 
@@ -293,3 +304,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
 #define MARTIAL_ATTACK_SUCCESS TRUE
+
+/// IF an object is weak against armor, this is the value that any present armor is multiplied by
+#define ARMOR_WEAKENED_MULTIPLIER 2

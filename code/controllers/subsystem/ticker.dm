@@ -14,7 +14,6 @@ SUBSYSTEM_DEF(ticker)
 	var/start_immediately = FALSE
 	var/setup_done = FALSE //All game setup done including mode post setup and
 
-	var/hide_mode = FALSE
 	var/datum/game_mode/mode = null
 
 	var/login_music //music played in pregame lobby
@@ -66,8 +65,6 @@ SUBSYSTEM_DEF(ticker)
 	var/emergency_reason
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
-	load_mode()
-
 	var/list/byond_sound_formats = list(
 		"mid"  = TRUE,
 		"midi" = TRUE,
@@ -154,7 +151,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			to_chat(world, "<span class='notice'><b>Welcome to [station_name()]!</b></span>")
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
@@ -213,50 +210,22 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
-		//Create and announce mode
-	var/list/datum/game_mode/runnable_modes
-	if(GLOB.master_mode == "random" || GLOB.master_mode == "secret")
-		runnable_modes = config.get_runnable_modes()
 
-		if(GLOB.master_mode == "secret")
-			hide_mode = 1
-			if(GLOB.secret_force_mode != "secret")
-				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
-				if(!smode.can_start())
-					message_admins("<span class='notice'>Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
-				else
-					mode = smode
-
-		if(!mode)
-			if(!runnable_modes.len)
-				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-				return FALSE
-			mode = pickweight(runnable_modes)
-			if(!mode) //too few roundtypes all run too recently
-				mode = pick(runnable_modes)
-
-	else
-		mode = config.pick_mode(GLOB.master_mode)
-		if(!mode.can_start())
-			to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby.")
-			qdel(mode)
-			mode = null
-			SSjob.ResetOccupations()
-			return FALSE
+	mode = new /datum/game_mode/dynamic
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup() //Choose antagonists
 	CHECK_TICK
-	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) //Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			log_game("[mode.name] failed pre_setup, cause: [mode.setup_error]")
+			log_game("Game failed pre_setup")
 			QDEL_NULL(mode)
-			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
+			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return FALSE
 	else
@@ -270,14 +239,6 @@ SUBSYSTEM_DEF(ticker)
 	SSid_access.refresh_job_trim_singletons()
 
 	CHECK_TICK
-	if(hide_mode)
-		var/list/modes = new
-		for (var/datum/game_mode/M in runnable_modes)
-			modes += M.name
-		modes = sortList(modes)
-		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
-	else
-		mode.announce()
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
@@ -325,7 +286,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2adminchat("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2adminchat("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]" : ""] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
 	for(var/i in GLOB.start_landmarks_list)
@@ -388,6 +349,11 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
+	GLOB.security_officer_distribution = decide_security_officer_departments(
+		shuffle(GLOB.new_player_list),
+		shuffle(GLOB.available_depts),
+	)
+
 	var/captainless = TRUE
 
 	var/highest_rank = length(SSjob.chain_of_command) + 1
@@ -437,6 +403,31 @@ SUBSYSTEM_DEF(ticker)
 				to_chat(new_player_mob, "<span class='notice'>Captainship not forced on anyone.</span>")
 			CHECK_TICK
 
+/datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
+	list/new_players,
+	list/departments,
+)
+	var/list/officer_mobs = list()
+	var/list/officer_preferences = list()
+
+	for (var/mob/dead/new_player/new_player_mob as anything in new_players)
+		var/mob/living/carbon/human/character = new_player_mob.new_character
+		if (istype(character) && character.mind?.assigned_role == "Security Officer")
+			officer_mobs += character
+
+			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
+			var/preference = client?.prefs?.prefered_security_department || SEC_DEPT_NONE
+			officer_preferences += preference
+
+	var/distribution = get_officer_departments(officer_preferences, departments)
+
+	var/list/output = list()
+
+	for (var/index in 1 to officer_mobs.len)
+		output[REF(officer_mobs[index])] = distribution[index]
+
+	return output
+
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
 	for(var/i in GLOB.new_player_list)
@@ -471,7 +462,7 @@ SUBSYSTEM_DEF(ticker)
 			m = pick(memetips)
 
 	if(m)
-		to_chat(world, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>")
+		to_chat(world, "<span class='oocplain'><span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span></span>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len)
@@ -522,7 +513,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
-	hide_mode = SSticker.hide_mode
 	mode = SSticker.mode
 
 	login_music = SSticker.login_music
@@ -630,23 +620,6 @@ SUBSYSTEM_DEF(ticker)
 		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
 			//Break chain since this has a sleep input in it
 			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
-
-/datum/controller/subsystem/ticker/proc/load_mode()
-	var/mode = trim(file2text("data/mode.txt"))
-	if(mode)
-		GLOB.master_mode = mode
-	else
-		GLOB.master_mode = "extended"
-	log_game("Saved mode is '[GLOB.master_mode]'")
-
-/datum/controller/subsystem/ticker/proc/save_mode(the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	WRITE_FILE(F, the_mode)
-
-/// Returns if either the master mode or the forced secret ruleset matches the mode name.
-/datum/controller/subsystem/ticker/proc/is_mode(mode_name)
-	return GLOB.master_mode == mode_name || GLOB.secret_force_mode == mode_name
 
 /datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
 	set waitfor = FALSE

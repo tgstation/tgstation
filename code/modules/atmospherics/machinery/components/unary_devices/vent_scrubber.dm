@@ -138,13 +138,15 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
-	..()
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
-	scrub(loc)
+	var/turf/open/us = loc
+	if(!istype(us))
+		return
+	scrub(us)
 	if(widenet)
 		for(var/turf/tile in adjacent_turfs)
 			scrub(tile)
@@ -188,7 +190,7 @@
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
-			tile.air_update_turf(FALSE, FALSE)
+			update_parents()
 
 	else //Just siphoning all air
 
@@ -197,9 +199,7 @@
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 
 		air_contents.merge(removed)
-		tile.air_update_turf(FALSE, FALSE)
-
-	update_parents()
+		update_parents()
 
 	return TRUE
 
@@ -279,7 +279,7 @@
 			user.visible_message("<span class='notice'>[user] unwelds the scrubber.</span>", "<span class='notice'>You unweld the scrubber.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = FALSE
 		update_appearance()
-		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+		pipe_vision_img = image(src, loc, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
@@ -302,7 +302,7 @@
 	user.visible_message("<span class='warning'>[user] furiously claws at [src]!</span>", "<span class='notice'>You manage to clear away the stuff blocking the scrubber.</span>", "<span class='hear'>You hear loud scraping noises.</span>")
 	welded = FALSE
 	update_appearance()
-	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img = image(src, loc, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 

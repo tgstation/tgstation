@@ -133,6 +133,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/return_volume()
 	return max(0, volume)
 
+/// Gets the gas visuals for everything in this mixture
+/datum/gas_mixture/proc/return_visuals()
+	var/list/output
+	GAS_OVERLAYS(gases, output)
+	return output
+
 /// Calculate thermal energy in joules
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
@@ -443,52 +449,58 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-///Performs various reactions such as combustion or fusion (LOL)
+///Performs various reactions such as combustion and fabrication
 ///Returns: 1 if any reaction took place; 0 otherwise
 /datum/gas_mixture/proc/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
 		return
-	var/list/reactions = list()
-	for(var/G in SSair.gas_reactions)
-		var/datum/gas_reaction/reaction = G
-		if(cached_gases[reaction.major_gas])
-			reactions += G
+
+	var/list/pre_formation = list()
+	var/list/mid_formation = list()
+	var/list/post_formation = list()
+	var/list/fires = list()
+	var/list/gas_reactions = SSair.gas_reactions
+	for(var/gas_id in cached_gases)
+		var/list/reaction_set = gas_reactions[gas_id]
+		if(!reaction_set)
+			continue
+		pre_formation += reaction_set[1]
+		mid_formation += reaction_set[2]
+		post_formation += reaction_set[3]
+		fires += reaction_set[4]
+
+	var/list/reactions = pre_formation + mid_formation + post_formation + fires
 
 	if(!length(reactions))
 		return
 
+	//Fuck you
+	if(cached_gases[/datum/gas/hypernoblium] && cached_gases[/datum/gas/hypernoblium][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
+		return STOP_REACTIONS
+
 	reaction_results = new
-	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be careful
+	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
-	var/ener = THERMAL_ENERGY(src)
-
 	reaction_loop:
-		for(var/r in reactions)
-			var/datum/gas_reaction/reaction = r
+		for(var/datum/gas_reaction/reaction as anything in reactions)
 
-			var/list/min_reqs = reaction.min_requirements
-			if( (min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
-				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
-				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
-			)
+			var/list/reqs = reaction.requirements
+			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
 				continue
 
-			for(var/id in min_reqs)
-				if (id == "TEMP" || id == "ENER" || id == "MAX_TEMP")
+			for(var/id in reqs)
+				if (id == "MIN_TEMP" || id == "MAX_TEMP")
 					continue
-				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
+				if(!cached_gases[id] || cached_gases[id][MOLES] < reqs[id])
 					continue reaction_loop
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
-
 			. |= reaction.react(src, holder)
 
-			if (. & STOP_REACTIONS)
-				break
 
-	if(.) //If we changed the mix to any degree, or if we stopped reacting
+	if(.) //If we changed the mix to any degree
 		garbage_collect()
 
 ///Takes the amount of the gas you want to PP as an argument
@@ -513,7 +525,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 **/
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
-/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null)
 	var/output_starting_pressure = output_air.return_pressure()
 
 	if((target_pressure - output_starting_pressure) < 0.01)
@@ -526,13 +538,17 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
+		if(specific_gas)
+			var/datum/gas_mixture/removed = remove_specific(specific_gas, transfer_moles)
+			output_air.merge(removed)
+			return TRUE
 		var/datum/gas_mixture/removed = remove(transfer_moles)
 		output_air.merge(removed)
 		return TRUE
 	return FALSE
 
 /// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
-/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
 
@@ -549,7 +565,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = remove(transfer_moles)
+		var/datum/gas_mixture/removed = remove(transfer_moles * rate)
 		output_air.merge(removed)
 
 		return TRUE

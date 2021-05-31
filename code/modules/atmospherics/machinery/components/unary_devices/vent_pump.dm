@@ -88,7 +88,6 @@
 		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
-	..()
 	if(!is_operational)
 		return
 	if(!nodes[1])
@@ -115,8 +114,11 @@
 				var/transfer_moles = (pressure_delta*environment.volume)/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
+				if(!removed || !removed.total_moles())
+					return
+
 				loc.assume_air(removed)
-				air_update_turf(FALSE, FALSE)
+				update_parents()
 
 	else // external -> internal
 		var/pressure_delta = 10000
@@ -129,12 +131,12 @@
 			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-			if (isnull(removed)) // in space
+
+			if(!removed || !removed.total_moles()) //No venting from space 4head
 				return
 
 			air_contents.merge(removed)
-			air_update_turf(FALSE, FALSE)
-	update_parents()
+			update_parents()
 
 //Radio remote control
 
@@ -266,7 +268,7 @@
 			user.visible_message("<span class='notice'>[user] unwelded the vent.</span>", "<span class='notice'>You unweld the vent.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = FALSE
 		update_appearance()
-		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+		pipe_vision_img = image(src, loc, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
@@ -293,7 +295,7 @@
 	user.visible_message("<span class='warning'>[user] furiously claws at [src]!</span>", "<span class='notice'>You manage to clear away the stuff blocking the vent.</span>", "<span class='hear'>You hear loud scraping noises.</span>")
 	welded = FALSE
 	update_appearance()
-	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img = image(src, loc, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 

@@ -202,6 +202,46 @@
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
 
+/obj/item/clothing/glasses/regular/Initialize()
+	. = ..()
+	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
+
+/obj/item/clothing/glasses/regular/proc/on_entered(datum/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	if(damaged_clothes == CLOTHING_SHREDDED)
+		return
+	if(isliving(movable))
+		var/mob/living/crusher = movable
+		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
+			playsound(src, 'sound/effects/glass_step.ogg', 30, TRUE)
+			visible_message("<span class='warning'>[crusher] steps on [src], damaging it!</span>")
+			take_damage(100, sound_effect = FALSE)
+
+/obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
+	. = ..()
+	vision_correction = FALSE
+
+/obj/item/clothing/glasses/regular/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(damaged_clothes == CLOTHING_PRISTINE)
+		return
+	if(!I.tool_start_check(user, amount=1))
+		return
+	if(I.use_tool(src, user, 10, volume=30, amount=1))
+		user.visible_message("<span class='notice'>[user] welds [src] back together.</span>",\
+					"<span class='notice'>You weld [src] back together.</span>")
+		repair()
+		return TRUE
+
+/obj/item/clothing/glasses/regular/repair()
+	. = ..()
+	vision_correction = TRUE
+
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
@@ -339,7 +379,7 @@
 	inhand_icon_state = "blindfoldwhite"
 	var/colored_before = FALSE
 
-/obj/item/clothing/glasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		update_icon(ALL, user)
 		user.update_inv_glasses() //Color might have been changed by update_icon.
@@ -450,6 +490,18 @@
 	desc = "Hey, you're looking good, senpai!"
 	icon_state = "redglasses"
 	inhand_icon_state = "redglasses"
+	glass_colour_type = /datum/client_colour/glass_colour/red
+
+/obj/item/clothing/glasses/geist_gazers
+	name = "geist gazers"
+	icon_state = "geist_gazers"
+	worn_icon_state = "geist_gazers"
+	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/psych
+	name = "psych glasses"
+	icon_state = "psych_glasses"
+	worn_icon_state = "psych_glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/godeye

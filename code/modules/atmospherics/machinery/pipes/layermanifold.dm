@@ -5,13 +5,13 @@
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
-	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE
+	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
 	volume = 260
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
-	paintable = FALSE
+	paintable = TRUE
 
 	var/list/front_nodes
 	var/list/back_nodes
@@ -27,16 +27,12 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
-	var/list/obj/machinery/atmospherics/needs_nullifying = get_all_connected_nodes()
+	for(var/obj/machinery/atmospherics/A in nodes)
+		A.disconnect(src)
+		SSair.add_to_rebuild_queue(A)
 	front_nodes = null
 	back_nodes = null
 	nodes = list()
-	for(var/obj/machinery/atmospherics/A in needs_nullifying)
-		A.disconnect(src)
-		SSair.add_to_rebuild_queue(A)
-
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	return front_nodes + back_nodes + nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_layer()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE) //This is above everything else.
@@ -54,13 +50,14 @@
 		return
 
 	. = list()
+
 	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-			. += get_attached_image(get_dir(src, A), i)
+			. += get_attached_image(get_dir(src, A), i, COLOR_VERY_LIGHT_GRAY)
 		return
 	. += get_attached_image(get_dir(src, A), A.piping_layer, A.pipe_color)
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color = null)
+/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
 	// Uses pipe-3 because we don't want the vertical shifting
 	var/image/I = getpipeimage(icon, "pipe-3", p_dir, p_color, p_layer)
 	I.layer = layer - 0.01
@@ -73,26 +70,21 @@
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer)
-		return TRUE
-	. = ..()
-
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
 	front_nodes = list()
 	back_nodes = list()
-	var/list/new_nodes = list()
+	nodes = list()
 	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 		var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter)
 		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
 		front_nodes += foundfront
 		back_nodes += foundback
 		if(foundfront && !QDELETED(foundfront))
-			new_nodes += foundfront
+			nodes += foundfront
 		if(foundback && !QDELETED(foundback))
-			new_nodes += foundback
+			nodes += foundback
 	update_appearance()
-	return new_nodes
+	return nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
 	normalize_cardinal_directions()
@@ -102,21 +94,20 @@
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
-	return get_all_connected_nodes()
+	return nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	while(reference in get_all_connected_nodes())
-		if(reference in nodes)
-			var/i = nodes.Find(reference)
-			nodes[i] = null
-		if(reference in front_nodes)
-			var/i = front_nodes.Find(reference)
+	while(reference in nodes)
+		var/i = nodes.Find(reference)
+		nodes[i] = null
+		i = front_nodes.Find(reference)
+		if(i)
 			front_nodes[i] = null
-		if(reference in back_nodes)
-			var/i = back_nodes.Find(reference)
+		i = back_nodes.Find(reference)
+		if(i)
 			back_nodes[i] = null
 	update_appearance()
 

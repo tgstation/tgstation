@@ -3,7 +3,8 @@
 
 /obj/item/defibrillator
 	name = "defibrillator"
-	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
+	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. \
+	Has a rear bracket for attachments to wall mounts and medical cyborgs."
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibunit"
 	inhand_icon_state = "defibunit"
@@ -82,7 +83,7 @@
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
-	toggle_paddles()
+	INVOKE_ASYNC(src, .proc/toggle_paddles)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)

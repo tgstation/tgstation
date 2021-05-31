@@ -1,6 +1,6 @@
 /datum/buildmode_mode/advanced
 	key = "advanced"
-	var/objholder = null
+	var/atom/objholder = null
 
 // FIXME: add logic which adds a button displaying the icon
 // of the currently selected path
@@ -22,11 +22,11 @@
 	if(!ispath(objholder))
 		objholder = pick_closest_path(target_path)
 		if(!objholder)
-			alert("No path was selected")
+			tgui_alert(usr,"No path was selected")
 			return
 		else if(ispath(objholder, /area))
 			objholder = null
-			alert("That path is not allowed.")
+			tgui_alert(usr,"That path is not allowed.")
 			return
 
 /datum/buildmode_mode/advanced/handle_click(client/c, params, obj/object)
@@ -47,6 +47,10 @@
 			log_admin("Build Mode: [key_name(c)] modified [T] in [AREACOORD(object)] to [objholder]")
 			T = T.ChangeTurf(objholder)
 			T.setDir(BM.build_dir)
+		else if(ispath(objholder, /obj/effect/turf_decal))
+			var/turf/T = get_turf(object)
+			T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, FALSE, initial(objholder.color), null, null, initial(objholder.alpha))
+			log_admin("Build Mode: [key_name(c)] in [AREACOORD(object)] added a [initial(objholder.name)] decal with dir [BM.build_dir] to [T]")
 		else if(!isnull(objholder))
 			var/obj/A = new objholder (get_turf(object))
 			A.setDir(BM.build_dir)

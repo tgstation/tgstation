@@ -14,6 +14,7 @@
 	exp_type_department = EXP_TYPE_COMMAND
 
 	outfit = /datum/outfit/job/captain
+	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
@@ -24,6 +25,12 @@
 	departments = DEPARTMENT_COMMAND
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
+
+	mail_goodies = list(
+		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
+		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10
+	)
 
 /datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()
@@ -57,6 +64,29 @@
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
 
 	id_trim = /datum/id_trim/job/captain
+	var/special_charter
+
+/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	SSmapping.HACK_LoadMapConfig()
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!length(job_changes))
+		return
+	var/list/captain_changes = job_changes["captain"]
+	if(!length(captain_changes))
+		return
+	special_charter = captain_changes["special_charter"]
+	if(!special_charter)
+		return
+	backpack_contents.Remove(/obj/item/station_charter)
+	l_hand = /obj/item/station_charter/banner
+
+/datum/outfit/job/captain/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+	. = ..()
+	var/obj/item/station_charter/banner/celestial_charter = equipped.held_items[LEFT_HANDS]
+	if(!celestial_charter)
+		return
+	celestial_charter.name_type = special_charter
 
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"

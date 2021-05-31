@@ -16,8 +16,13 @@ SUBSYSTEM_DEF(job)
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
+	/// Lazylist of mob:occupation_string pairs.
+	var/list/dynamic_forced_occupations
+
 	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
 	var/list/station_jobs
+	/// A list of all Head of Staff jobs.
+	var/list/head_of_staff_jobs
 	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
 	var/list/additional_jobs_with_icons
 	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
@@ -135,6 +140,14 @@ SUBSYSTEM_DEF(job)
 	JobDebug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
 
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	JobDebug("Freeing role: [rank]")
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
 	JobDebug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
@@ -155,6 +168,7 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
+
 		if(player.client.prefs.job_preferences[job.title] == level)
 			JobDebug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -204,7 +218,6 @@ SUBSYSTEM_DEF(job)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
-			SSpersistence.antag_rep_change[player.ckey] = 0
 	SetupOccupations()
 	unassigned = list()
 	return
@@ -245,30 +258,27 @@ SUBSYSTEM_DEF(job)
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
 
-/datum/controller/subsystem/job/proc/FillAIPosition()
-	var/ai_selected = FALSE
-	var/datum/job/job = GetJob("AI")
-	if(!job)
-		return FALSE
-	for(var/i = job.total_positions, i > 0, i--)
+/// Attempts to fill out all available AI positions.
+/datum/controller/subsystem/job/proc/fill_ai_positions()
+	var/datum/job/ai_job = GetJob("AI")
+	if(!ai_job)
+		return
+	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
+	for(var/i in ai_job.current_positions to ai_job.total_positions - 1)
 		for(var/level in level_order)
 			var/list/candidates = list()
-			candidates = FindOccupationCandidates(job, level)
+			candidates = FindOccupationCandidates(ai_job, level)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
 				if(AssignRole(candidate, "AI"))
-					ai_selected++
 					break
-	if(ai_selected)
-		return TRUE
-	return FALSE
 
 
 /** Proc DivideOccupations
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations(list/required_jobs)
+/datum/controller/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO")
 
@@ -288,8 +298,6 @@ SUBSYSTEM_DEF(job)
 	initial_players_to_assign = unassigned.len
 
 	JobDebug("DO, Len: [unassigned.len]")
-	if(unassigned.len == 0)
-		return validate_required_jobs(required_jobs)
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -307,6 +315,10 @@ SUBSYSTEM_DEF(job)
 
 	HandleFeedbackGathering()
 
+	// Dynamic has picked a ruleset that requires enforcing some jobs before others.
+	JobDebug("DO, Assigning Priority Positions: [length(dynamic_forced_occupations)]")
+	assign_priority_positions()
+
 	//People who wants to be the overflow role, sure, go on.
 	JobDebug("DO, Running Overflow Check 1")
 	var/datum/job/overflow = GetJob(SSjob.overflow_role)
@@ -323,9 +335,9 @@ SUBSYSTEM_DEF(job)
 	FillHeadPosition()
 	JobDebug("DO, Head Check end")
 
-	//Check for an AI
+	// Fill out any remaining AI positions.
 	JobDebug("DO, Running AI Check")
-	FillAIPosition()
+	fill_ai_positions()
 	JobDebug("DO, AI Check end")
 
 	//Other jobs are now checked
@@ -395,25 +407,7 @@ SUBSYSTEM_DEF(job)
 			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 
-	return validate_required_jobs(required_jobs)
-
-/datum/controller/subsystem/job/proc/validate_required_jobs(list/required_jobs)
-	if(!required_jobs.len)
-		return TRUE
-	for(var/required_group in required_jobs)
-		var/group_ok = TRUE
-		for(var/rank in required_group)
-			var/datum/job/J = GetJob(rank)
-			if(!J)
-				SSticker.mode.setup_error = "Invalid job [rank] in gamemode required jobs."
-				return FALSE
-			if(J.current_positions < required_group[rank])
-				group_ok = FALSE
-				break
-		if(group_ok)
-			return TRUE
-	SSticker.mode.setup_error = "Required jobs not present."
-	return FALSE
+	return TRUE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
@@ -494,7 +488,7 @@ SUBSYSTEM_DEF(job)
 	if(living_mob.mind)
 		living_mob.mind.assigned_role = rank
 
-	to_chat(M, "<b>You are the [rank].</b>")
+	to_chat(M, "<span class='infoplain'><b>You are the [rank].</b></span>")
 	if(job)
 		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client, is_captain)//silicons override this proc to return a mob
 		if(ismob(new_mob))
@@ -504,18 +498,16 @@ SUBSYSTEM_DEF(job)
 			else
 				M = living_mob
 
-		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
-
 		if(M.client.holder)
 			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
 				M.client.holder.auto_deadmin()
 			else
 				handle_auto_deadmin_roles(M.client, rank)
 
-		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
+		to_chat(M, "<span class='infoplain'><b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b></span>")
 		job.radio_help_message(M)
 		if(job.req_admin_notify)
-			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+			to_chat(M, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
 		if(CONFIG_GET(number/minimal_access_threshold))
 			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 
@@ -636,7 +628,7 @@ SUBSYSTEM_DEF(job)
 	if(PopcapReached())
 		JobDebug("Popcap overflow Check observer located, Player: [player]")
 	JobDebug("Player rejected :[player]")
-	to_chat(player, "<b>You have failed to qualify for any job you desired.</b>")
+	to_chat(player, "<span class='infoplain'><b>You have failed to qualify for any job you desired.</b></span>")
 	unassigned -= player
 	player.ready = PLAYER_NOT_READY
 
@@ -772,6 +764,8 @@ SUBSYSTEM_DEF(job)
 		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
 		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
 
+	head_of_staff_jobs = list("Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Head of Security", "Captain")
+
 	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
 		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \
 		"Security Officer (Cargo)", "Security Officer (Medical)", "Security Officer (Science)")
@@ -835,3 +829,8 @@ SUBSYSTEM_DEF(job)
 	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/paper/fluff/emergency_spare_id_safe_code())
 	safe_code_timer_id = null
 	safe_code_request_loc = null
+
+/// Blindly assigns the required roles to every player in the dynamic_forced_occupations list.
+/datum/controller/subsystem/job/proc/assign_priority_positions()
+	for(var/mob/new_player in dynamic_forced_occupations)
+		AssignRole(new_player, dynamic_forced_occupations[new_player])

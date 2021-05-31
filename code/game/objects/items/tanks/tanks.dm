@@ -1,3 +1,12 @@
+/// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
+#define ASSUME_AIR_DT_FACTOR 1
+
+/**
+ * # Gas Tank
+ *
+ * Handheld gas canisters
+ * Can rupture explosively if overpressurized
+ */
 /obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -16,12 +25,19 @@
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
+	integrity_failure = 0.5
+	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
-	var/distribute_pressure = ONE_ATMOSPHERE
-	var/integrity = 3
+	/// The volume of this tank.
 	var/volume = 70
+	/// Whether the tank is currently leaking.
+	var/leaking = FALSE
+	/// The pressure of the gases this tank supplies to internals.
+	var/distribute_pressure = ONE_ATMOSPHERE
 	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
+	///Used by process() to track if there's a reason to process each tick
+	var/excited = TRUE
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -74,7 +90,7 @@
 		QDEL_NULL(air_contents)
 
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/item/tank/ComponentInitialize()
 	. = ..()
@@ -93,7 +109,7 @@
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -111,25 +127,12 @@
 
 	. += "<span class='notice'>It feels [descriptive].</span>"
 
-/obj/item/tank/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
-		var/turf/location = get_turf(src)
-		if(!location)
-			qdel(src)
-
-		if(air_contents)
-			location.assume_air(air_contents)
-
-		qdel(src)
-
 /obj/item/tank/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		var/turf/T = get_turf(src)
-		if(T)
-			T.assume_air(air_contents)
-			air_update_turf(FALSE, FALSE)
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	qdel(src)
+	var/atom/location = loc
+	if(location)
+		location.assume_air(air_contents)
+		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	return ..()
 
 /obj/item/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -146,9 +149,9 @@
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/assembly_holder))
-		bomb_assemble(W,user)
-	else
-		. = ..()
+		bomb_assemble(W, user)
+		return TRUE
+	return ..()
 
 /obj/item/tank/ui_state(mob/user)
 	return GLOB.hands_state
@@ -203,20 +206,28 @@
 				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
+	START_PROCESSING(SSobj, src)
 	return air_contents.remove(amount)
 
 /obj/item/tank/return_air()
+	START_PROCESSING(SSobj, src)
 	return air_contents
 
 /obj/item/tank/return_analyzable_air()
 	return air_contents
 
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
+	START_PROCESSING(SSobj, src)
 	air_contents.merge(giver)
+	handle_tolerances(ASSUME_AIR_DT_FACTOR)
+	return TRUE
 
-	check_status()
-	return 1
-
+/**
+ * Removes some volume of the tanks gases as the tanks distribution pressure.
+ *
+ * Arguments:
+ * - volume_to_return: The amount of volume to remove from the tank.
+ */
 /obj/item/tank/proc/remove_air_volume(volume_to_return)
 	if(!air_contents)
 		return null
@@ -235,65 +246,89 @@
 
 	return remove_air(moles_needed)
 
-/obj/item/tank/process()
-	//Allow for reactions
-	air_contents.react()
-	check_status()
-
-/obj/item/tank/proc/check_status()
-	//Handle exploding, leaking, and rupturing of the tank
-
+/obj/item/tank/process(delta_time)
 	if(!air_contents)
-		return 0
+		return
+
+	//Allow for reactions
+	excited = (excited | air_contents.react(src))
+	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | leaking)
+
+	if(!excited)
+		STOP_PROCESSING(SSobj, src)
+	excited = FALSE
+
+	if(QDELETED(src) || !leaking || !air_contents)
+		return
+	var/atom/location = loc
+	if(!location)
+		return
+	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
+	location.assume_air(leaked_gas)
+
+/**
+ * Handles the minimum and maximum pressure tolerances of the tank.
+ *
+ * Returns true if it did anything of significance, false otherwise
+ * Arguments:
+ * - delta_time: How long has passed between ticks.
+ */
+/obj/item/tank/proc/handle_tolerances(delta_time)
+	if(!air_contents)
+		return FALSE
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
+	if(temperature >= TANK_MELT_TEMPERATURE)
+		var/temperature_damage_ratio = (temperature - TANK_MELT_TEMPERATURE) / temperature
+		take_damage(max_integrity * temperature_damage_ratio * delta_time, BURN, FIRE, FALSE, NONE)
+		if(QDELETED(src))
+			return TRUE
 
+	if(pressure >= TANK_LEAK_PRESSURE)
+		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
+		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
+		return TRUE
+	return FALSE
+
+/// Handles the tank springing a leak.
+/obj/item/tank/obj_break(damage_flag)
+	. = ..()
+	if(leaking)
+		return
+
+	leaking = TRUE
+	START_PROCESSING(SSobj, src)
+
+	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
+		return
+	visible_message("<span class='warning'>[src] springs a leak!</span>")
+	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
+
+/// Handles rupturing and fragmenting
+/obj/item/tank/obj_destruction(damage_flag)
+	if(!air_contents)
+		return ..()
+
+	/// Handle fragmentation
+	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc, /obj/item/transfer_valve))
+		if(!istype(loc, /obj/item/transfer_valve))
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		var/turf/epicenter = get_turf(loc)
 
-
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc, /obj/item/transfer_valve))
-			qdel(src.loc)
-		else
-			qdel(src)
-
-	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
-		if(integrity <= 0)
-			var/turf/T = get_turf(src)
-			if(!T)
-				return
-			T.assume_air(air_contents)
-			playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-			qdel(src)
-		else
-			integrity--
-
-	else if(pressure > TANK_LEAK_PRESSURE)
-		if(integrity <= 0)
-			var/turf/T = get_turf(src)
-			if(!T)
-				return
-			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
-			T.assume_air(leaked_gas)
-		else
-			integrity--
-
-	else if(integrity < 3)
-		integrity++
+		explosion(src, devastation_range = round(range*0.25), heavy_impact_range = round(range*0.5), light_impact_range = round(range), flash_range = round(range*1.5))
+	return ..()
 
 /obj/item/tank/rad_act(strength)
 	. = ..()
 	var/gas_change = FALSE
 	var/list/cached_gases = air_contents.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide])
+	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air_contents.temperature <= PLUOXIUM_TEMP_CAP)
 		gas_change = TRUE
 		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
@@ -312,3 +347,6 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+		START_PROCESSING(SSobj, src)
+
+#undef ASSUME_AIR_DT_FACTOR

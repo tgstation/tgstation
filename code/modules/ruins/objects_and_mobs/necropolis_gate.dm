@@ -46,6 +46,12 @@
 	dais_overlay.layer = CLOSED_TURF_LAYER
 	add_overlay(dais_overlay)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = .proc/on_exit,
+	)
+
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
 /obj/structure/necropolis_gate/Destroy(force)
 	if(force)
 		qdel(sight_blocker, TRUE)
@@ -61,10 +67,12 @@
 	if(!(get_dir(loc, target) == dir))
 		return TRUE
 
-/obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
-	if(get_dir(O.loc, target) == dir)
-		return !density
-	return 1
+/obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+
+	if (get_dir(leaving.loc, new_location) == dir && density)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
@@ -157,7 +165,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
 	if(!open && !changing_openness)
-		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
+		var/safety = tgui_alert(user, "You think this might be a bad idea...", "Knock on the door?", list("Proceed", "Abort"))
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())
 			return
 		user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
@@ -253,6 +261,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/structure/stone_tile/Destroy(force)
 	if(force || fallen)
@@ -263,8 +275,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/stone_tile/singularity_pull()
 	return
 
-/obj/structure/stone_tile/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/stone_tile/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)
@@ -279,7 +291,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	switch(fall_on_cross)
 		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
 			if((I && I.w_class >= WEIGHT_CLASS_BULKY) || (L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
-				collapse()
+				INVOKE_ASYNC(src, .proc/collapse)
 		if(UNIQUE_EFFECT)
 			crossed_effect(AM)
 

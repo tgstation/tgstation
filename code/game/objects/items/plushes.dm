@@ -473,7 +473,7 @@
 		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
-		explosion(P, 0, 0, 1)
+		explosion(P, light_impact_range = 1)
 		qdel(P)
 		clash_target = null
 	else
@@ -481,7 +481,7 @@
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
-		explosion(src, 0, 0, 1)
+		explosion(src, light_impact_range = 1)
 		qdel(src)
 		P.clashing = FALSE
 
@@ -499,20 +499,43 @@
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
-/obj/item/toy/plush/lizardplushie
+/obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
-	icon_state = "plushie_lizard"
-	inhand_icon_state = "plushie_lizard"
+	icon_state = "map_pushie_lizard"
+	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
-/obj/item/toy/plush/lizardplushie/space
+/obj/item/toy/plush/lizard_plushie/Initialize()
+	. = ..()
+	if(!greyscale_colors)
+		// Generate a random valid lizard color for our plushie friend
+		var/generated_lizard_color = "#" + random_color()
+		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+
+		// If our color is too dark, use the classic green lizard plush color
+		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+			generated_lizard_color = "#66ff33"
+
+		// Set our greyscale colors to the lizard color we made + black eyes
+		set_greyscale(colors = list(generated_lizard_color, "#000000"))
+
+// Preset lizard plushie that uses the original lizard plush green. (Or close to it)
+/obj/item/toy/plush/lizard_plushie/green
+	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
+
+/obj/item/toy/plush/space_lizard_plushie
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
 	icon_state = "plushie_spacelizard"
 	inhand_icon_state = "plushie_spacelizard"
+	// space lizards can't hit people with their tail, it's stuck in their suit
+	attack_verb_continuous = list("claws", "hisses", "bops")
+	attack_verb_simple = list("claw", "hiss", "bops")
+	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -613,3 +636,12 @@
 	attack_verb_continuous = list("hugs", "squeezes")
 	attack_verb_simple = list("hug", "squeeze")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
+
+/obj/item/toy/plush/rouny
+	name = "runner plushie"
+	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
+	icon_state = "rouny"
+	inhand_icon_state = "rouny"
+	attack_verb_continuous = list("slashes", "bites", "charges")
+	attack_verb_simple = list("slash", "bite", "charge")
+	squeak_override = list('sound/items/intents/Help.ogg' = 1)

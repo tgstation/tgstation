@@ -137,6 +137,18 @@
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
 
+// defines for AFK theft
+/// How many messages you can remember while logged out before you stop remembering new ones
+#define AFK_THEFT_MAX_MESSAGES 10
+/// If someone logs back in and there are entries older than this, just tell them they can't remember who it was or when
+#define AFK_THEFT_FORGET_DETAILS_TIME 5 MINUTES
+/// The index of the entry in 'afk_thefts' with the person's visible name at the time
+#define AFK_THEFT_NAME 1
+/// The index of the entry in 'afk_thefts' with the text
+#define AFK_THEFT_MESSAGE 2
+/// The index of the entry in 'afk_thefts' with the time it happened
+#define AFK_THEFT_TIME 3
+
 //Allowed equipment lists for security vests and hardsuits.
 
 GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
@@ -148,7 +160,8 @@ GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
-	/obj/item/tank/internals)))
+	/obj/item/tank/internals,
+	)))
 
 GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/ammo_box,
@@ -160,14 +173,14 @@ GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
-	/obj/item/tank/internals)))
+	/obj/item/tank/internals,
+	)))
 
 GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
 	/obj/item/detective_scanner,
 	/obj/item/flashlight,
-	/obj/item/taperecorder,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/lighter,
@@ -176,8 +189,10 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/storage/fancy/cigarettes,
+	/obj/item/taperecorder,
 	/obj/item/tank/internals/emergency_oxygen,
-	/obj/item/tank/internals/plasmaman)))
+	/obj/item/tank/internals/plasmaman,
+	)))
 
 GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
@@ -191,20 +206,16 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals/emergency_oxygen,
-	/obj/item/tank/internals/plasmaman)))
+	/obj/item/tank/internals/plasmaman,
+	)))
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/flashlight,
-	/obj/item/storage/fancy/cigarettes,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/lighter,
 	/obj/item/melee/baton,
 	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
-	/obj/item/tank/internals/emergency_oxygen,
-	/obj/item/tank/internals/plasmaman,
-	/obj/item/toy)))
+	)))

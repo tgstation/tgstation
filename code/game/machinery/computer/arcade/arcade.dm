@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/goatplushie = 2,
 		/obj/item/toy/plush/moth = 2,
 		/obj/item/toy/plush/pkplush = 2,
+		/obj/item/toy/plush/rouny = 2,
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
@@ -63,7 +64,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
 	var/list/prize_override
@@ -77,7 +78,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
-	SEND_SIGNAL(user, COMSIG_ARCADE_PRIZEVEND, user, prizes)
+	SEND_SIGNAL(src, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
 		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
@@ -122,7 +123,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else
 			empprize = pickweight(GLOB.arcade_prize_pool)
 		new empprize(loc)
-	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 /obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/arcadeticket))
@@ -542,7 +543,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
-				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
+				new /obj/effect/spawner/newbomb/timer(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -598,6 +599,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
 	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
 	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	msg += "\t<span class='info'>magical -> defend until outmagiced</span>"
 	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)

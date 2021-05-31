@@ -43,7 +43,7 @@
 /// Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog
 	name = "Fish Encyclopedia"
-	desc = "Indexes all fish known to mankind (and related species)"
+	desc = "Indexes all fish known to mankind (and related species)."
 	icon_state = "fishbook"
 	dat = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
 
@@ -92,7 +92,7 @@
 
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
-	desc = "Everything you need to build your own aquarium.(Raw materials sold separately)"
+	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
 	icon = 'icons/obj/aquarium.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
@@ -109,7 +109,7 @@
 
 /obj/item/storage/box/aquarium_props
 	name = "aquarium props box"
-	desc = "All you need to make your aquarium look good"
+	desc = "All you need to make your aquarium look good."
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
 	for(var/prop_type in subtypesof(/datum/aquarium_behaviour/prop))

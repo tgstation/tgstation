@@ -49,6 +49,7 @@
 
 ///Used to clean up variables after the card has been removed, unregisters the removal signal, sets inserted ID to null, and updates the icon.
 /obj/machinery/accounting/proc/remove_card()
+	SIGNAL_HANDLER
 	UnregisterSignal(inserted_id, COMSIG_PARENT_QDELETING)
 	inserted_id = null
 	update_appearance()
@@ -58,15 +59,15 @@
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-open", layer, plane, dir, alpha)
+		. += mutable_appearance(icon, "recharger-open", alpha = src.alpha)
 		return
 	if(inserted_id)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		. += mutable_appearance(icon, "recharger-full", alpha = src.alpha)
+		. += emissive_appearance(icon, "recharger-full", alpha = src.alpha)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
-	SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	. += mutable_appearance(icon, "recharger-empty", alpha = src.alpha)
+	. += emissive_appearance(icon, "recharger-empty", alpha = src.alpha)
 
 /obj/machinery/accounting/update_appearance(updates)
 	. = ..()

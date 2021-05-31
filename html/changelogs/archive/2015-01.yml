@@ -1,0 +1,148 @@
+2015-01-06:
+  JJRcop, Nienhaus:
+  - rscadd: Adds emoji to OOC chat.
+2015-01-13:
+  Dannno:
+  - rscadd: Adds a bandanas in basic colors to lockers in the station. Activate in
+      hand to switch between head and mask modes.
+  - rscadd: Adds more colored jumpsuits to the mixed locker.
+  Incoming5643:
+  - bugfix: Player controlled slimes can now change their face to match AI controlled
+      slimes in kawaiiness. use *help as a slime to find the commands.
+  Studley:
+  - bugfix: Fixed NTSL division.
+  - rscadd: Added new NTSL math functions, including 'sin,' 'cos,' 'asin,' 'acos,'
+      and 'log.'
+2015-01-14:
+  Boggart:
+  - rscadd: 'Adds a new spell: Repulse. (Cooldown: 40 seconds, 15 at max upgrade.)
+      Repulse throws objects and creatures within 5 tiles of the caster away and stuns
+      them for a very short time. Distance thrown decreases as the distance from the
+      caster increases. (Max of 5, minimum of 3) Casting it while standing over someone
+      will stun them for longer and cause brute damage but will not throw them.'
+  - bugfix: Fixes the Exosuit Control Console having the unpowered icon state while
+      powered.
+  Iamgootball:
+  - rscadd: Added Goonstation Chemistry!
+  - rscadd: Adds 14 medicines!
+  - rscadd: Adds 3 pyrotechnics!
+  - rscadd: Adds 3 drugs with actual gameplay uses!
+  - rscadd: Adds 7 toxins!
+  - rscadd: Adds a Chemical Heater for some new recipes!
+  - rscadd: Adds Chemical Patches for touch based applications!
+  - rscadd: Adds a Traitor Poison Kit!
+  - rscadd: Adds Morphine Medipens!
+  - rscadd: Adds Morphine bottles to Cargo!
+2015-01-17:
+  Cheridan:
+  - tweak: The lockbox system for R&amp;D has been replaced with a firing pin system.
+      Ask the Warden or HoS for firing pins to allow normal operation of your firearms.
+      Want to test them out at the range? Try printing a test-range pin.
+  - tweak: Nuke Ops have used this new technology to lock some of their heavier weapons
+      so that crew cannot use them. These implants replace their explosive implants.
+  - rscadd: Explosive implants are now purchasable in the uplink, and are much stronger.
+  Firecage:
+  - rscadd: NanoTrasen would like to report that our Mechanical Engineers at NTEngiCore
+      has recently upgraded the capacity of the machines known as Biogenerators. They
+      are now have the added ability to create various belts, and also weed/plantkillers
+      and cartons of milk and cream!
+  Iamgoofball (Look Ma, I didn't mispell my name this time!):
+  - rscadd: Replaced Star Trek chemistry with Goon Chemistry.
+  - rscadd: 'Emergency Medic''s Handbook Tip 1: Styptic Powder = BRUTE, Silver Sulfadiazine
+      = BURN, Charcoal = TOX, Salbutamol = OXY'
+  - rscadd: 'In recipes that used removed reagents, they have been replaced with their
+      goon chemistry counterpart:'
+  - rscadd: Hyperzine -&gt; Morphine
+  - rscadd: Inaprovaline -&gt; Epinephrine
+  - rscadd: Kelotane -&gt; Saline-Glucose Solution
+  - rscadd: Bicardine -&gt; Saline-Glucose Solution
+  - rscadd: Dermaline -&gt; Saline-Glucose Solution
+  - rscadd: Dexalin -&gt; Salbutamol
+  - rscadd: Dexalin Plus -&gt; Salbutamol
+  - rscadd: Tricordrazine -&gt; Omnizine
+  - rscadd: Anti-Toxin -&gt; Charcoal
+  - rscadd: Hydronalin -&gt; Penetic Acid
+  - rscadd: Arithrazine -&gt; Penetic Acid
+  - rscadd: Imidazoline -&gt; Oculine
+  - rscadd: Mannitol -&gt; Alkysine
+  - rscadd: Ryetalyn -&gt; Mutadone
+  Steelpoint:
+  - rscadd: The Emergency Response Team project has been activated by Nanotrasen.
+      The ERT are a seven man squad that can be deployed by the Central Command (admins)
+      to attempt to rescue the station from a overwhelming threat, or to render assistance
+      in dealing with a significant problem.
+  - rscadd: The ERT consists of a single Commander, two Security Officers, two Engineering
+      Officers and two Medical Officers. The Commander is preselected when the squad
+      is being spawned in, however the remaining six officers are free to select their
+      role in the squad.
+  - rscadd: Two new Pulse gun variants have been added to the game. They are the Pulse
+      Carbine and the Pulse Pistol, both have significantly smaller ammunition capacities
+      than the Pulse Rifle, however they both can fit in a backpack and the pistol
+      can fit in a pocket. All ERT Officers have a Pulse Pistol for a sidearm, however
+      the Security Officers get a Pulse Carbine as their primary longarm.
+  phil235:
+  - rscadd: The two library consoles are now real buildable computers. The circuitboard
+      design is available in R&amp;D.
+  sawu-tg:
+  - rscadd: Added a new R&amp;D machine, to replace the telescience room. The Machine
+      is based on RND and various interdepartmental creations.
+2015-01-21:
+  Iamgoofball:
+  - rscadd: Addiction and Overdosing has been added to Chemistry.
+  - rscadd: Deal with Overdosing by purging the ODing chemical with Calomel or Penetic
+      Acid.
+  - rscadd: Deal with Addiction by either going cold turkey on it and weathering the
+      effects, eventually causing the addiction to subside, or by taking more of the
+      addictive substance to keep the effects down.
+  - rscadd: Cryoxadane was heavily buffed. Clonex was removed as it was merged into
+      Cryox.
+  - rscadd: Fixes a shitton of stuff adding Morphine instead of Ephedrine. Sorry,
+      miners.
+  - rscadd: Fixes instances of Alkysine not being replaced with Mannitol. Same with
+      Ryetalyn being replaced with Mutadone.
+  - rscadd: Adds Itching Powder. Welding Fuel and Ammonia.
+  - rscadd: Adds Antihol. Ethanol and Charcoal.
+  - rscadd: Adds Triple Citrus. Lemon Juice, Lime Juice, and Orange Juice.
+  - rscadd: Adds Colorful Reagent. Stable Plasma, Triple Citrus,
+  - rscadd: Morphine replaces sleep toxin now, not Hyperzine. Hyperzine is replaced
+      by Ephedrine now.
+  - rscadd: Cryotubes will now autoeject you once you are fully healed.
+  - rscadd: Synthflesh damage values have been fixed.
+  - rscadd: Charcoal has been buffed to heal 3 TOX damage a cycle and it purges other
+      chemicals faster.
+  - rscadd: Saline-Glucose Solution has been buffed. It now has a 50% chance per cycle
+      to heal 3 BRUTE and BURN per tick.
+  - rscadd: Fixes Strange Reagent revivals dying right after being revived. They'll
+      still need immediate medical treatment, however.
+  - rscadd: Cryoxadone has had a recipe change. It is now Stable Plasma, Acetone,
+      and Unstable Mutagen.
+  - rscadd: Adds 9 new Disabilites and 2 new genetic powers.
+  - rscadd: You can now heat donk pockets once more. Rejoice.
+2015-01-26:
+  Dannno:
+  - rscadd: Added fannypacks of multiple colors, 3 of which are accessible from the
+      clothing vendor.
+  - rscadd: Added dufflebags to multiple lockers throughout the station and to the
+      syndicate shuttle, more storage slots at the cost of move speed.
+  Deantwo:
+  - bugfix: Fixed some bugs in PDA's NTRC Chatroom feature.
+  - rscadd: You can now use PaperBBCode/PenCode when writing news articles on the
+      newscaster.
+  - rscadd: PDA's Notekeeper now uses PaperBBCode/PenCode rather than HTML.
+  - tweak: Scanning paper with your PDA is now more informative.
+  Firecage:
+  - rscadd: We, at NanoTrasen, have recently upgraded the Kitchen Spikes to include
+      the skin of both Monkeys and Aliens when you harvest their flesh!
+  - rscadd: In other news, a station in a nearby Sector has been making monkey and
+      xeno costumes. We are not sure why.
+  - rscadd: Added the ability to reform mineral floortiles back into sheets/bars
+  Ikarrus:
+  - rscadd: Added a new config option MINIMAL_ACCESS_THRESHOLD that can be used to
+      automatically give players more access during low-population rounds. See game_options.txt
+      for more information.
+  Lo6a4evskiy:
+  - rscadd: The kitchen now contains a brand new food cart. It can store foods and
+      liquids, mix them into cocktails and dispense where needed. Food delivery has
+      never been easier!
+  fleure:
+  - rscadd: Added briefcase filled with cash to uplink.

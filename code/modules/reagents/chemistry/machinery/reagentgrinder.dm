@@ -45,21 +45,27 @@
 	QDEL_NULL(beaker)
 	update_appearance()
 
-/obj/machinery/reagentgrinder/Destroy()
-	if(beaker)
-		beaker.forceMove(drop_location())
+/obj/machinery/reagentgrinder/deconstruct()
 	drop_all_items()
+	beaker?.forceMove(drop_location())
+	beaker = null
+	return ..()
+
+/obj/machinery/reagentgrinder/Destroy()
+	QDEL_NULL(beaker)
 	return ..()
 
 /obj/machinery/reagentgrinder/contents_explosion(severity, target)
-	if(beaker)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += beaker
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += beaker
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += beaker
+	if(!beaker)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += beaker
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += beaker
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += beaker
 
 /obj/machinery/reagentgrinder/RefreshParts()
 	speed = 1

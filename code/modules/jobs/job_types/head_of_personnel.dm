@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/hop
+	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
 	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
 
 	paycheck = PAYCHECK_COMMAND
@@ -24,6 +25,11 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
+
+	mail_goodies = list(
+		/obj/item/card/id/advanced/silver = 10,
+		/obj/item/stack/sheet/bone = 5
+	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
 
@@ -53,6 +59,14 @@
 	..()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
+
+//only pet worth reviving
+/datum/job/hop/get_mail_goodies(mob/recipient)
+	. = ..()
+	// Strange Reagent if the pet is dead.
+	for(var/mob/living/simple_animal/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
+		. += list(/datum/reagent/medicine/strange_reagent = 20)
+		break
 
 /obj/item/paper/fluff/ids_for_dummies
 	name = "Memo: New IDs and You"
