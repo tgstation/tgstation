@@ -213,6 +213,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	Radio = new /obj/item/radio(src)
 	Radio.listening = 0
 
+	#ifdef EVENTMODE
+	onstation = FALSE//FREE REAL ESTATE
+	#endif
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)

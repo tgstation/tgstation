@@ -36,11 +36,18 @@
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
 	#endif
+	var/eventturf = FALSE
 
 /turf/open/Initialize()
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
+		#ifdef EVENTMODE
+	var/area/A = src.loc
+	if(A.eventareaair)
+		planetary_atmos = FALSE
+	else
+		planetary_atmos = TRUE
 		if(planetary_atmos)
 			if(!SSair.planetary[initial_gas_mix])
 				var/datum/gas_mixture/immutable/planetary/mix = new
@@ -241,6 +248,15 @@
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
 
+
+	var/planet_atmos = planetary_atmos
+	#ifdef EVENTMODE
+	planet_atmos = TRUE
+	#endif
+
+	if (planet_atmos)
+		adjacent_turfs_length++
+
 	var/datum/gas_mixture/our_air = air
 
 	#ifdef TRACK_MAX_SHARE
@@ -311,6 +327,13 @@
 			our_air.temperature_share(G, OPEN_HEAT_TRANSFER_COEFFICIENT, G.temperature_archived, G.heat_capacity() * 5)
 			G.garbage_collect()
 			PLANET_SHARE_CHECK
+		#ifdef EVENTMODE		
+		///We are below minimums to compare to neighbours, just reset our own turf so we dont have trace amounts of toxins or whatever left lying around
+		else
+			///Default nice breathable atmosphere and temp
+			our_air.copy_from_turf(src)
+			our_air.archive()
+		#endif
 
 	our_air.react(src)
 

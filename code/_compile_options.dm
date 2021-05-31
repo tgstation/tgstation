@@ -1,3 +1,12 @@
+#define EVENTMODE ///Special compiler flag that turns on the event mode
+/*
+List of things this does
+1) all tiles have planetary atmos of a breathable human mix
+2) planetary atmos shares 10 x faster
+3) all areas have non dynamic lighting
+4) all cleanables schedule a 30 second qdel on creation
+5) all vending machines are free
+*/
 //#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 

@@ -294,7 +294,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Copies all gas info from the turf into the gas list along with temperature
 ///Returns: TRUE if we are mutable, FALSE otherwise
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
+	#ifndef EVENTMODE
 	parse_gas_string(model.initial_gas_mix)
+	#endif
+	#ifdef EVENTMODE
 
 	//acounts for changes in temperature
 	var/turf/model_parent = model.parent_type

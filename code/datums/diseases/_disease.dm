@@ -37,6 +37,10 @@
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
+#ifdef EVENTMODE
+/datum/disease/New()
+	QDEL_IN(src, 30)
+#endif
 /datum/disease/Destroy()
 	. = ..()
 	if(affected_mob)
