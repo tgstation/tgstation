@@ -1,0 +1,4 @@
+author: "FlamingLily"
+delete-after: True
+changes: 
+  - qol: "Surgery masks no longer block surgery."
