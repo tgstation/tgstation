@@ -103,3 +103,12 @@
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+
+/obj/item/trash/peanuts
+	name = "\improper Parker's peanuts packet"
+	desc = "The most alliterative garbage around."
+	icon_state = "peanuts"
+
+/obj/item/trash/cnds
+	name = "\improper C&Ds packet"
+	icon_state = "cnds"

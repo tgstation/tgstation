@@ -167,7 +167,7 @@
 /datum/orderable_item/canned_larvae
 	name = "Canned Larvae"
 	category_index = CATEGORY_MILK_EGGS
-	item_instance = /obj/item/food/canned_larvae
+	item_instance = /obj/item/food/larvae
 	cost_per_order = 20
 
 //Reagents

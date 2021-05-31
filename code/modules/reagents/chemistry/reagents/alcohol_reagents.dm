@@ -2528,7 +2528,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#EEC39A"
 	quality = DRINK_GOOD
 	taste_description = "sweet nectar"
-	glass_icon_state = "godmother"
+	glass_icon_state = "irishcreamglass"
 	glass_name = "glass of kortara"
-	glass_desc = "The nectar of the Korta nut, as enjoyed by lizards galaxywide."
+	glass_desc = "The fermented nectar of the Korta nut, as enjoyed by lizards galaxywide."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

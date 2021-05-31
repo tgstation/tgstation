@@ -212,7 +212,7 @@
 /obj/item/food/cnds
 	name = "\improper C&Ds"
 	desc = "Legally, we cannot say that these won't melt in your hands."
-	icon_state = "chocoloco"
+	icon_state = "cnds"
 	trash_type = /obj/item/trash/cnds
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1)
 	tastes = list("chocolate candy" = 3)

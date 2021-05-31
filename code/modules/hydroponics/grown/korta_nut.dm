@@ -10,10 +10,10 @@
 	endurance = 35
 	yield = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_grow = "korta-grow"
-	icon_dead = "korta-dead"
+	icon_grow = "cocoapod-grow"
+	icon_dead = "cocoapod-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/korta/sweet)
+	mutatelist = list(/obj/item/seeds/korta_nut/sweet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/korta_nut
@@ -39,7 +39,7 @@
 	maturation = 10
 	production = 10
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/honey/korta_nectar, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/consumable/korta_nectar, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
 /obj/item/food/grown/korta_nut/sweet
@@ -48,6 +48,6 @@
 	desc = "A sweet treat lizards love to eat."
 	icon_state = "korta_nut"
 	grind_results = list(/datum/reagent/consumable/korta_flour = 0)
-	juice_results = list(/datum/reagent/consumable/korta_milk = 0, /datum/reagent/consumable/honey/korta_nectar = 0)
+	juice_results = list(/datum/reagent/consumable/korta_milk = 0, /datum/reagent/consumable/korta_nectar = 0)
 	tastes = list("peppery sweet" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/kortara
