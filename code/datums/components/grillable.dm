@@ -70,6 +70,9 @@
 	var/atom/original_object = parent
 	var/atom/grilled_result = new cook_result(original_object.loc)
 
+	if(original_object.custom_materials)
+		grilled_result.set_custom_materials(original_object.custom_materials, 1)
+
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 

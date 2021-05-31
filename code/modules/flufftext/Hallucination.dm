@@ -148,6 +148,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
 	. = ..()
+	if(!loc)
+		return
 	Show()
 
 /obj/effect/hallucination/simple/Destroy()

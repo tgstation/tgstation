@@ -80,7 +80,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT)
+	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -188,12 +188,14 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		current_behavior.finish_action(src, FALSE)
 
 /datum/ai_controller/proc/on_sentience_gained()
+	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
 	if(!continue_processing_when_client)
 		set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, .proc/on_sentience_lost)
 
 /datum/ai_controller/proc/on_sentience_lost()
+	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)

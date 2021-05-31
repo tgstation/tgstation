@@ -24,8 +24,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
-	///icon state for mob worn overlays, if null the normal icon_state will be used.
+	///Icon state for mob worn overlays, if null the normal icon_state will be used.
 	var/worn_icon_state
+	///Icon state for the belt overlay, if null the normal icon_state will be used.
+	var/belt_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
 	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
@@ -34,6 +36,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/greyscale_config_inhand_left
 	///The config type to use for greyscaled right inhand sprites. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_inhand_right
+	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config_belt
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -225,6 +229,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	add_weapon_description()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
+	if(LAZYLEN(embedding))
+		updateEmbedding()
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL //prevent reqdels
@@ -267,7 +273,16 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/suicide_act(mob/user)
 	return
 
-/// Checks if this atom uses the GAS system and if so updates the worn and inhand icons
+/obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	if(new_worn_config)
+		greyscale_config_worn = new_worn_config
+	if(new_inhand_left)
+		greyscale_config_inhand_left = new_inhand_left
+	if(new_inhand_right)
+		greyscale_config_inhand_right = new_inhand_right
+	return ..()
+
+/// Checks if this atom uses the GAGS system and if so updates the worn and inhand icons
 /obj/item/update_greyscale()
 	. = ..()
 	if(!greyscale_colors)
@@ -702,8 +717,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, newLoc, TRUE)
 	return FALSE
 
-/obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+/// Returns the icon used for overlaying the object on a belt
+/obj/item/proc/get_belt_overlay()
+	var/icon_state_to_use = belt_icon_state || icon_state
+	if(greyscale_config_belt && greyscale_colors)
+		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
 
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
