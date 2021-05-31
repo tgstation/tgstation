@@ -19,7 +19,7 @@
 	var/ribbon_color = "#FF0000"
 
 /obj/item/stack/wrapping_paper/Initialize()
-	.=..()
+	. = ..()
 	if(!greyscale_colors)
 		//Generate random valid colors for paper and ribbon
 		var/generated_base_color = "#" + random_color()
@@ -39,11 +39,11 @@
 		ribbon_color = generated_ribbon_color
 
 /obj/item/stack/wrapping_paper/RightClick(mob/user, modifiers)
-	var/new_base = input(usr,"","Select a base color",color) as color
-	var/new_ribbon = input(usr,"","Select a ribbon color",color) as color
+	var/new_base = input(usr, "", "Select a base color", color) as color
+	var/new_ribbon = input(usr, "", "Select a ribbon color", color) as color
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if((new_base && new_base != base_color)||(new_ribbon && new_ribbon != ribbon_color))
+	if((new_base && new_base != base_color) || (new_ribbon && new_ribbon != ribbon_color))
 		base_color = new_base
 		ribbon_color = new_ribbon
 		set_greyscale(colors = list(base_color, ribbon_color))

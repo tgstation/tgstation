@@ -79,7 +79,7 @@
 			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
 			greyscale_config = greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
-			set_greyscale(colors = list(WP.base_color,WP.ribbon_color))
+			set_greyscale(colors = list(WP.base_color, WP.ribbon_color))
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
@@ -272,7 +272,7 @@
 			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
 			greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
-			set_greyscale(colors = list(WP.base_color,WP.ribbon_color))
+			set_greyscale(colors = list(WP.base_color, WP.ribbon_color))
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
