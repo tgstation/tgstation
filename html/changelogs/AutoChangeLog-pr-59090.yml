@@ -1,6 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - qol: "adds a substantial number of fire alarms to Tramstation areas that had few/none"
-  - bugfix: "Fixed duplicate PunPun in Tramstation bar"
-  - bugfix: "Fixed duplicated chemistry locker embedded in the Tramstation HPLC machine"

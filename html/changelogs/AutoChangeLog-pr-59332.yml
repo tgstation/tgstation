@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "GAGS flowers (Rainbow bunch flowers now look prettier!)"
-  - refactor: "Rainbow bunch flowers now use GAGS instead of their old method of greyscaling"
