@@ -1,7 +1,7 @@
 /**
  * # Temperature Sensor Component
  *
- * Return enviromental temperature in kelvins
+ * Return environmental temperature in Kelvin
  */
 /obj/item/circuit_component/temperature_sensor
 	display_name = "Temperature Sensor"
@@ -14,7 +14,7 @@
 /obj/item/circuit_component/temperature_sensor/Initialize()
 	. = ..()
 
-	output = add_output_port("Gas Amount", PORT_TYPE_NUMBER)
+	output = add_output_port("Current Temperature", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/temperature_sensor/Destroy()
 	output = null

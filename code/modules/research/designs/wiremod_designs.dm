@@ -155,19 +155,19 @@
 
 /datum/design/component/pressure
 	name = "Pressure Sensor Component"
-	desc = "Returns enviromental pressure in kPa when triggered."
+	desc = "Returns environmental pressure in kPa when triggered."
 	id = "comp_pressure"
 	build_path = /obj/item/circuit_component/pressure
 
 /datum/design/component/gas_amount
 	name = "Gas Sensor Component"
-	desc = "Returns amount of sertain gas in moles when triggered."
+	desc = "Returns amount of the provided gas in moles when triggered."
 	id = "comp_gas_amount"
 	build_path = /obj/item/circuit_component/gas_amount
 
 /datum/design/component/temperature
 	name = "Temperature Sensor Component"
-	desc = "Returns enviromental temperature in kelvins when triggered."
+	desc = "Returns environmental temperature in Kelvin when triggered."
 	id = "comp_temperature"
 	build_path = /obj/item/circuit_component/temperature
 
