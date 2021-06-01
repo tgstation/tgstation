@@ -33,8 +33,7 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
-	AddElement(/datum/element/point_of_interest)
-
+		
 /obj/effect/mob_spawn/drone/allow_spawn(mob/user)
 	var/client/user_client = user.client
 	var/mob/living/simple_animal/drone/drone_type = mob_type
