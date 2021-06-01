@@ -71,8 +71,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon_icon = 'icons/mob/actions/actions_elites.dmi'
 	button_icon_state = ""
 	background_icon_state = "bg_default"
-	///The lavaland elite who owns this action
-	var/mob/living/simple_animal/hostile/asteroid/elite/elite_owner
 	///The displayed message into chat when this attack is selected
 	var/chosen_message
 	///The internal attack ID for the elite's OpenFire() proc to use
@@ -87,9 +85,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	button.maptext_height = 12
 
 /datum/action/innate/elite_attack/process()
-	if(elite_owner == null)
+	if(owner == null)
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
+		return
+	var/mob/living/simple_animal/hostile/asteroid/elite/elite_owner = owner
 	var/timeleft = max(elite_owner.ranged_cooldown - world.time, 0)
 	if(timeleft == 0)
 		button.maptext = ""
@@ -99,12 +99,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /datum/action/innate/elite_attack/Grant(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/asteroid/elite))
-		elite_owner = L
 		START_PROCESSING(SSfastprocess, src)
 		return ..()
 	return FALSE
 
 /datum/action/innate/elite_attack/Activate()
+	var/mob/living/simple_animal/hostile/asteroid/elite/elite_owner = owner
 	elite_owner.chosen_attack = chosen_attack_num
 	to_chat(elite_owner, chosen_message)
 

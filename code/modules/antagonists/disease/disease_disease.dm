@@ -12,6 +12,7 @@
 
 /datum/disease/advance/sentient_disease/Destroy()
 	. = ..()
+	overmind = null
 	GLOB.sentient_disease_instances -= src
 
 /datum/disease/advance/sentient_disease/remove_disease()

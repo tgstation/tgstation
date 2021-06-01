@@ -114,6 +114,12 @@
 	time_between_triggers = 10
 	flare_message = "<span class='warning'>[src] snaps shut!</span>"
 
+/obj/structure/trap/stun/hunter/Destroy()
+	if(!QDELETED(stored_item))
+		qdel(stored_item)
+	stored_item = null
+	return ..()
+
 /obj/structure/trap/stun/hunter/on_entered(datum/source, atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/L = AM
@@ -167,7 +173,9 @@
 	forceMove(stored_trap)//moves item into trap
 
 /obj/item/bountytrap/Destroy()
-	qdel(stored_trap)
+	if(!QDELETED(stored_trap))
+		qdel(stored_trap)
+	stored_trap = null
 	QDEL_NULL(radio)
 	QDEL_NULL(spark_system)
 	. = ..()

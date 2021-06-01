@@ -5,7 +5,7 @@
 /datum/element/point_of_interest/Attach(datum/target)
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	GLOB.poi_list += target
+	GLOB.poi_list |= target //Let's support doing this more then once
 	return ..()
 
 /datum/element/point_of_interest/Detach(datum/target)

@@ -134,6 +134,10 @@
 	if(istype(C))
 		gun = C.gun
 
+/obj/projectile/energy/chrono_beam/Destroy()
+	gun = null
+	return ..()
+
 /obj/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && gun && isliving(target))
 		var/obj/structure/chrono_field/F = new(target.loc, target, gun)
@@ -152,7 +156,9 @@
 		gun = loc
 	. = ..()
 
-
+/obj/item/ammo_casing/energy/chrono_beam/Destroy()
+	gun = null
+	return ..()
 
 
 
