@@ -203,8 +203,6 @@
 	name = "Base Worn Sombrero Style"
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
 
-<<<<<<< HEAD:code/datums/greyscale/greyscale_configs.dm
-//Winter Coats + Winter Hoods
 /datum/greyscale_config/winter_coats
 	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
@@ -220,7 +218,7 @@
 /datum/greyscale_config/winter_hoods/worn
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
-=======
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/plushes.dmi'
@@ -275,4 +273,3 @@
 	name = "Gold Worn Cleric Mace"
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
->>>>>>> upstream/master:code/datums/greyscale/config_types/greyscale_configs.dm
