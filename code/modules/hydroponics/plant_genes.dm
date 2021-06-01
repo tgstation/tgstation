@@ -649,6 +649,7 @@
  * target - the atom being hit on thrown or slipping on our plant
  */
 /datum/plant_gene/trait/stinging/proc/prickles_inject(obj/item/our_plant, atom/target)
+	SIGNAL_HANDLER
 	if(isliving(target) && our_plant.reagents?.total_volume)
 		var/mob/living/living_target = target
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
@@ -810,6 +811,7 @@
  * target - the atom that slipped on the plant
  */
 /datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/our_plant, atom/target)
+	SIGNAL_HANDLER
 	our_plant.audible_message("<span_class='notice'>[our_plant] lets out burst of laughter.</span>")
 	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 

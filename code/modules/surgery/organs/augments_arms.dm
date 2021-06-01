@@ -56,7 +56,7 @@
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
 	if(hand)
-		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/ui_action_click) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
+		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/on_item_attack_self) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
 		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/arm_owner, special = 0)
@@ -65,6 +65,10 @@
 		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
 		UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
 	..()
+
+/obj/item/organ/cyberimp/arm/proc/on_item_attack_self()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/ui_action_click)
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
 	. = ..()
@@ -83,6 +87,7 @@
  * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
 **/
 /obj/item/organ/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
+	SIGNAL_HANDLER
 	if(!host)
 		return //How did we even get here
 	if(hand != host.hand_bodyparts[host.active_hand_index])

@@ -203,6 +203,7 @@
 	name = "Base Worn Sombrero Style"
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
 
+<<<<<<< HEAD:code/datums/greyscale/greyscale_configs.dm
 //Winter Coats + Winter Hoods
 /datum/greyscale_config/winter_coats
 	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
@@ -219,3 +220,59 @@
 /datum/greyscale_config/winter_hoods/worn
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
+=======
+/datum/greyscale_config/plush_lizard
+	name = "Plushie Lizard"
+	icon_file = 'icons/obj/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/flower_simple
+	name = "Flower"
+	icon_file = 'icons/obj/hydroponics/harvest.dmi'
+	json_config = 'code/datums/greyscale/json_configs/simple_flower.json'
+
+/datum/greyscale_config/flower_simple_worn
+	name = "Flower Worn"
+	icon_file = 'icons/mob/clothing/head/hydroponics.dmi'
+	json_config = 'code/datums/greyscale/json_configs/simple_flower_worn.json'
+
+/datum/greyscale_config/cleric_mace
+	name = "Base Cleric Mace"
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace.json'
+
+/datum/greyscale_config/cleric_mace_lefthand
+	name = "Base Held Cleric Mace, Left"
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand.json'
+
+/datum/greyscale_config/cleric_mace_righthand
+	name = "Base Held Cleric Mace, Right"
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand.json'
+
+/datum/greyscale_config/cleric_mace_worn
+	name = "Base Worn Cleric Mace"
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn.json'
+
+/datum/greyscale_config/cleric_mace/gold
+	name = "Gold Cleric Mace"
+	material_skin = /datum/material/gold
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_gold.json'
+
+/datum/greyscale_config/cleric_mace_lefthand/gold
+	name = "Gold Held Cleric Mace, Left"
+	material_skin = /datum/material/gold
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand_gold.json'
+
+/datum/greyscale_config/cleric_mace_righthand/gold
+	name = "Gold Held Cleric Mace, Right"
+	material_skin = /datum/material/gold
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand_gold.json'
+
+/datum/greyscale_config/cleric_mace_worn/gold
+	name = "Gold Worn Cleric Mace"
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
+>>>>>>> upstream/master:code/datums/greyscale/config_types/greyscale_configs.dm

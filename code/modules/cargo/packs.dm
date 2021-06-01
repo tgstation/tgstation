@@ -1148,6 +1148,8 @@
 
 		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
 
+		pack.crate_type = crate_type
+
 		canister_packs += pack
 
 	return canister_packs

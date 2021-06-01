@@ -141,13 +141,14 @@
 	if(slot & ITEM_SLOT_OCLOTHING)
 		RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
 		return
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
+	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/dropped(mob/user)
 	..()
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
+	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrect(mob/living/carbon/user, new_stat)
+	SIGNAL_HANDLER
 	if(new_stat > CONSCIOUS && new_stat < DEAD && COOLDOWN_FINISHED(src, effect_cooldown))
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
 		user.visible_message("<span class='notice'>[user] suddenly revives, as their armor swirls with demonic energy!</span>", "<span class='notice'>You suddenly feel invigorated!</span>")

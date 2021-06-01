@@ -71,6 +71,7 @@
 			flavour?.add_flavour(arglist(flavour_args))
 
 /datum/component/ice_cream_holder/proc/on_update_name(atom/source, updates)
+	SIGNAL_HANDLER
 	var/obj/obj = source
 	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
 		return
@@ -86,6 +87,7 @@
 			source.name = "[english_list(unique_list)] [name_to_use]"
 
 /datum/component/ice_cream_holder/proc/on_update_desc(atom/source, updates)
+	SIGNAL_HANDLER
 	var/obj/obj = source
 	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
 		return
@@ -103,6 +105,7 @@
 		source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
 
 /datum/component/ice_cream_holder/proc/on_examine_more(atom/source, mob/mob, list/examine_list)
+	SIGNAL_HANDLER
 	var/scoops_len = length(scoops)
 	if(scoops_len == 1 || length(uniqueList(scoops)) == 1) /// Only one flavour.
 		var/key = scoops[1]
@@ -115,6 +118,7 @@
 		examine_list += "[source.p_theyre(TRUE)] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
 
 /datum/component/ice_cream_holder/proc/on_update_overlays(atom/source, list/new_overlays)
+	SIGNAL_HANDLER
 	if(!scoops)
 		return
 	var/added_offset = 0
@@ -129,6 +133,7 @@
 
 /// Attack the ice cream vat to get some ice cream. This will change as new ways of getting ice cream are added.
 /datum/component/ice_cream_holder/proc/on_item_attack_obj(obj/item/source, obj/target, mob/user)
+	SIGNAL_HANDLER
 	if(!istype(target, /obj/machinery/icecream_vat))
 		return
 	var/obj/machinery/icecream_vat/dispenser = target
@@ -138,7 +143,7 @@
 			if(flavour.add_flavour(src, dispenser.beaker?.reagents.total_volume ? dispenser.beaker.reagents : null))
 				dispenser.visible_message("[icon2html(dispenser, viewers(source))] <span class='info'>[user] scoops delicious [dispenser.selected_flavour] ice cream into [source].</span>")
 				dispenser.product_types[dispenser.selected_flavour]--
-				dispenser.updateDialog()
+				INVOKE_ASYNC(dispenser, /obj/machinery/icecream_vat.proc/updateDialog)
 		else
 			to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
 	else

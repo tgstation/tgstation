@@ -106,7 +106,7 @@
 				"[config.type]"
 			) as anything in allowed_configs
 			new_config = allowed_configs[new_config]
-			new_config = SSgreyscale.configurations[new_config]
+			new_config = SSgreyscale.configurations[new_config] || new_config
 			if(!isnull(new_config) && config != new_config)
 				config = new_config
 				queue_refresh()
@@ -231,6 +231,4 @@ This is highly likely to cause a lag spike for a few seconds."},
 	unlocked = TRUE
 
 /datum/greyscale_modify_menu/proc/DefaultApply()
-	target.set_greyscale_config(config.type, update=FALSE)
-	target.greyscale_colors = "" // We do this to force an update, in some cases it will think nothing changed when it should be refreshing
-	target.set_greyscale_colors(split_colors)
+	target.set_greyscale(split_colors, config.type)
