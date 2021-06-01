@@ -52,6 +52,8 @@ GLOBAL_LIST_EMPTY(objectives)
 	else
 		target = new_target.mind
 
+	post_find_target()
+
 	update_explanation_text()
 
 /datum/objective/proc/considered_escaped(datum/mind/M)
@@ -170,6 +172,9 @@ GLOBAL_LIST_EMPTY(objectives)
 		target = pick(possible_targets)
 	update_explanation_text()
 	return target
+
+/datum/objective/proc/post_find_target()
+	return
 
 /datum/objective/proc/update_explanation_text()
 	if(team_explanation_text && LAZYLEN(get_owners()) > 1)
@@ -859,7 +864,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	martyr_compatible = TRUE
 
 /datum/objective/destroy/find_target(dupe_search_range)
-	var/list/possible_targets = active_ais(1)
+	var/list/possible_targets = active_ais(check_mind = TRUE)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
 	update_explanation_text()

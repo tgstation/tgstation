@@ -29,7 +29,7 @@
 	var/datum/objective/ending_objective
 
 	///datum of the contractor hub, if they decide to become a contractor in the round.
-	///in the future, this should definitely be moved into a component.
+	///in the future, this should definitely be moved into a component that attaches to these datums
 	var/datum/contractor_hub/contractor_hub
 
 	///string instructions for how to unlock the uplink.
@@ -129,7 +129,7 @@
 	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
-			var/datum/objective/destroy/destroy_objective = new
+			var/datum/objective/smart/destroy_ai/destroy_objective = new
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
 			objectives += destroy_objective
@@ -213,7 +213,7 @@
 
 	result += printplayer(owner)
 
-	var/used_telecrystals = 0
+	var/used_red_telecrystals = 0
 	var/uplink_owned = FALSE
 	var/purchases = ""
 
@@ -221,7 +221,7 @@
 	// Uplinks add an entry to uplink_purchase_logs_by_key on init.
 	var/datum/uplink_purchase_log/purchase_log = GLOB.uplink_purchase_logs_by_key[owner.key]
 	if(purchase_log)
-		used_telecrystals = purchase_log.total_spent
+		used_red_telecrystals = purchase_log.total_spent
 		uplink_owned = TRUE
 		purchases += purchase_log.generate_render(FALSE)
 
@@ -237,8 +237,8 @@
 			count++
 
 	if(uplink_owned)
-		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
-		if((used_telecrystals == 0) && traitor_won)
+		var/uplink_text = "(used [used_red_telecrystals] red TC) [purchases]"
+		if((used_red_telecrystals == 0) && traitor_won)
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
@@ -305,6 +305,16 @@
 	data["uplink_unlock_info"] = get_unlock_method()
 	data["objectives"] = get_objectives()
 	return data
+
+/datum/antagonist/traitor/proc/get_objectives()
+	var/list/objective_data = list()
+	for(var/datum/objective/objective as anything in objectives)
+		objective_data["name"] = objective.name
+		objective_data["explanation"] = objective.explanation_text
+		objective_data["name"] = objective.name
+		objective_data["name"] = objective.name
+		objective_data["name"] = objective.name
+
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")

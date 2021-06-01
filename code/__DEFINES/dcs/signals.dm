@@ -74,6 +74,11 @@
 /// fires on the target datum when an element is attached to it  (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
+/// sent when a smart objective finishes it's objective, however it figures (you killed a target). use source to get the objective
+#define COMSIG_SMART_OBJECTIVE_ACHIEVED "smart_objective_achieved"
+/// sent when a smart objective finishes it's objective, however it figures (your target revived). use source to get the objective
+#define COMSIG_SMART_OBJECTIVE_UNACHIEVED "smart_objective_unachieved"
+
 ///Subsystem signals
 ///From base of datum/controller/subsystem/Initialize: (start_timeofday)
 #define COMSIG_SUBSYSTEM_POST_INITIALIZE "subsystem_post_initialize"

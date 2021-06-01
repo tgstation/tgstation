@@ -628,13 +628,13 @@
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN, 0))
-					var/datum/component/uplink/U = find_syndicate_uplink()
+					var/datum/component/uplink/uplink = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null | num
+						var/crystals = input("Amount of red telecrystals for [key]","Syndicate uplink", uplink.red_telecrystals) as null | num
 						if(!isnull(crystals))
-							U.telecrystals = crystals
-							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
-							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
+							uplink.red_telecrystals = crystals
+							message_admins("[key_name_admin(usr)] changed [current]'s red telecrystal count to [crystals].")
+							log_admin("[key_name(usr)] changed [current]'s red telecrystal count to [crystals].")
 			if("uplink")
 				if(!give_uplink())
 					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")

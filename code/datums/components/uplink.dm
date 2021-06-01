@@ -15,7 +15,10 @@
 	var/lockable = TRUE
 	var/locked = TRUE
 	var/allow_restricted = TRUE
-	var/telecrystals
+	///initial money to spend, non gimmicky and non murdery
+	var/red_telecrystals
+	///money earned via completing objectives, most things cost this
+	var/black_telecrystals
 	var/selected_cat
 	var/owner = null
 	var/uplink_flag

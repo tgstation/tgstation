@@ -1775,6 +1775,7 @@
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\swarmer\swarmer.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"
+#include "code\modules\antagonists\traitor\smart_objectives.dm"
 #include "code\modules\antagonists\traitor\syndicate_contract.dm"
 #include "code\modules\antagonists\traitor\equipment\contractor.dm"
 #include "code\modules\antagonists\traitor\equipment\Malf_Modules.dm"
