@@ -60518,7 +60518,7 @@
 "kEH" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	name = "Education Chamber";
 	req_access_txt = "3"
 	},

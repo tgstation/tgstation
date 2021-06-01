@@ -21596,7 +21596,7 @@
 "egb" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -39249,7 +39249,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
 	req_access_txt = "2";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,

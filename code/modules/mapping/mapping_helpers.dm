@@ -121,10 +121,10 @@
 	icon_state = "airlock_cyclelink_helper"
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.cyclelinkeddir)
-		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+	if(airlock.cycle_linked_dir)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cycle_linked_dir, but it's already set!")
 	else
-		airlock.cyclelinkeddir = dir
+		airlock.cycle_linked_dir = dir
 
 
 /obj/effect/mapping_helpers/airlock/locked
@@ -160,10 +160,10 @@
 	icon_state = "airlock_cutaiwire"
 
 /obj/effect/mapping_helpers/airlock/cutaiwire/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.cutAiWire)
+	if(airlock.cut_ai_wire)
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
-		airlock.cutAiWire = TRUE
+		airlock.cut_ai_wire = TRUE
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)

@@ -2769,7 +2769,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
 	req_access_txt = "2";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /turf/open/floor/plating,
 /area/security/processing)
@@ -3498,7 +3498,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /turf/open/floor/plating,
 /area/security/processing)
@@ -8733,7 +8733,7 @@
 "aWD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	name = "Prisoner Transfer Centre";
 	req_access_txt = "2"
 	},
@@ -44461,7 +44461,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Four";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /turf/open/floor/plating,
 /area/engineering/main)

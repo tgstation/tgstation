@@ -78,7 +78,7 @@
 	var/list/status = list()
 	status += "The door bolts [A.locked ? "have fallen!" : "look up."]"
 	status += "The test light is [A.hasPower() ? "on" : "off"]."
-	status += "The AI connection light is [A.aiControlDisabled || (A.obj_flags & EMAGGED) ? "off" : "on"]."
+	status += "The AI connection light is [A.ai_control_disabled || (A.obj_flags & EMAGGED) ? "off" : "on"]."
 	status += "The check wiring light is [A.safe ? "off" : "on"]."
 	status += "The timer is powered [A.autoclose ? "on" : "off"]."
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
@@ -115,10 +115,10 @@
 					A.emergency = FALSE
 					A.update_appearance()
 		if(WIRE_AI) // Pulse to disable WIRE_AI control for 10 ticks (follows same rules as cutting).
-			if(A.aiControlDisabled == AI_WIRE_NORMAL)
-				A.aiControlDisabled = AI_WIRE_DISABLED
-			else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
-				A.aiControlDisabled = AI_WIRE_HACKED
+			if(A.ai_control_disabled == AI_WIRE_NORMAL)
+				A.ai_control_disabled = AI_WIRE_DISABLED
+			else if(A.ai_control_disabled == AI_WIRE_DISABLED_HACKED)
+				A.ai_control_disabled = AI_WIRE_HACKED
 			addtimer(CALLBACK(A, /obj/machinery/door/airlock.proc/reset_ai_wire), 1 SECONDS)
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
@@ -135,10 +135,10 @@
 			A.update_appearance()
 
 /obj/machinery/door/airlock/proc/reset_ai_wire()
-	if(aiControlDisabled == AI_WIRE_DISABLED)
-		aiControlDisabled = AI_WIRE_NORMAL
-	else if(aiControlDisabled == AI_WIRE_HACKED)
-		aiControlDisabled = AI_WIRE_DISABLED_HACKED
+	if(ai_control_disabled == AI_WIRE_DISABLED)
+		ai_control_disabled = AI_WIRE_NORMAL
+	else if(ai_control_disabled == AI_WIRE_HACKED)
+		ai_control_disabled = AI_WIRE_DISABLED_HACKED
 
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
@@ -162,15 +162,15 @@
 				A.bolt()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
 			if(mend)
-				if(A.aiControlDisabled == AI_WIRE_DISABLED) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
-					A.aiControlDisabled = AI_WIRE_NORMAL
-				else if(A.aiControlDisabled == AI_WIRE_HACKED)
-					A.aiControlDisabled = AI_WIRE_DISABLED_HACKED
+				if(A.ai_control_disabled == AI_WIRE_DISABLED) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
+					A.ai_control_disabled = AI_WIRE_NORMAL
+				else if(A.ai_control_disabled == AI_WIRE_HACKED)
+					A.ai_control_disabled = AI_WIRE_DISABLED_HACKED
 			else
-				if(A.aiControlDisabled == AI_WIRE_NORMAL)
-					A.aiControlDisabled = AI_WIRE_DISABLED
-				else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
-					A.aiControlDisabled = AI_WIRE_HACKED
+				if(A.ai_control_disabled == AI_WIRE_NORMAL)
+					A.ai_control_disabled = AI_WIRE_DISABLED
+				else if(A.ai_control_disabled == AI_WIRE_DISABLED_HACKED)
+					A.ai_control_disabled = AI_WIRE_HACKED
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
 				if(A.secondsElectrified)

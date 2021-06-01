@@ -60478,7 +60478,7 @@
 "rMZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	id_tag = "prisonereducation";
 	name = "Prisoner Education Chamber";
 	req_access_txt = "3"
@@ -77916,8 +77916,8 @@
 /area/ai_monitored/command/storage/eva)
 "xBG" = (
 /obj/machinery/door/airlock/wood{
-	doorClose = 'sound/effects/doorcreaky.ogg';
-	doorOpen = 'sound/effects/doorcreaky.ogg';
+	door_close_sound = 'sound/effects/doorcreaky.ogg';
+	door_open_sound = 'sound/effects/doorcreaky.ogg';
 	name = "The Gobetting Barmaid"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,

@@ -1068,7 +1068,7 @@
 /area/awaymission/research/interior/secure)
 "cR" = (
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 1;
+	ai_disabled_id_scanner = 1;
 	name = "Gateway Access";
 	req_access_txt = "205"
 	},
@@ -1704,7 +1704,7 @@
 "dW" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 1;
+	ai_disabled_id_scanner = 1;
 	name = "Secure Storage C";
 	req_access_txt = "205"
 	},
@@ -1713,7 +1713,7 @@
 "dX" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 1;
+	ai_disabled_id_scanner = 1;
 	name = "Secure Storage D";
 	req_access_txt = "205"
 	},
@@ -2677,7 +2677,7 @@
 /area/awaymission/research/interior/secure)
 "gg" = (
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 1;
+	ai_disabled_id_scanner = 1;
 	name = "Power Storage";
 	req_access_txt = "205"
 	},
@@ -3421,7 +3421,7 @@
 "hI" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 1;
+	ai_disabled_id_scanner = 1;
 	name = "Secure Storage A";
 	req_access_txt = "205"
 	},
@@ -3430,7 +3430,7 @@
 "hJ" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	aiDisabledIdScanner = 1;
+	ai_disabled_id_scanner = 1;
 	name = "Secure Storage B";
 	req_access_txt = "205"
 	},

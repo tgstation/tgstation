@@ -14,7 +14,7 @@
 /area/shuttle/assault_pod)
 "e" = (
 /obj/machinery/door/airlock/centcom{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	name = "Assault Pod";
 	req_access_txt = "150"
 	},
@@ -34,7 +34,7 @@
 /area/shuttle/assault_pod)
 "t" = (
 /obj/machinery/door/airlock/centcom{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	name = "Assault Pod";
 	req_access_txt = "150"
 	},

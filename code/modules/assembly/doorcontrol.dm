@@ -79,7 +79,7 @@
 				if(!D.density)
 					doors_need_closing = TRUE
 			if(specialfunctions & IDSCAN)
-				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
+				D.ai_disabled_id_scanner = !D.ai_disabled_id_scanner
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
 					D.locked = !D.locked

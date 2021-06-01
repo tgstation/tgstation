@@ -256,7 +256,7 @@
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
-	doorOpen = 'sound/items/bikehorn.ogg'
+	door_open_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/bananium/glass
 	opacity = FALSE
@@ -436,8 +436,8 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	damage_deflection = 30
 	explosion_block = 3
-	hackProof = TRUE
-	aiControlDisabled = AI_WIRE_DISABLED
+	hack_proof = TRUE
+	ai_control_disabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
 
@@ -451,8 +451,8 @@
 	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
-	hackProof = TRUE
-	aiControlDisabled = AI_WIRE_DISABLED
+	hack_proof = TRUE
+	ai_control_disabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door

@@ -24161,7 +24161,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
 	req_access_txt = "2";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28028,7 +28028,7 @@
 "bUP" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37548,7 +37548,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
 	req_access_txt = "2";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -37603,7 +37603,7 @@
 "cxz" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
-	shuttledocked = 1
+	shuttle_docked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -54358,7 +54358,7 @@
 "iPQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	id_tag = "justicedoor_2";
 	name = "Justice Chamber";
 	req_access_txt = "3"
@@ -57955,7 +57955,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 1;
+	ai_control_disabled = 1;
 	id_tag = "justicedoor";
 	name = "Justice Chamber";
 	req_access_txt = "3"
