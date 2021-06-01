@@ -7,9 +7,9 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/starting_tc = 0
 
-/obj/item/implant/uplink/Initialize(mapload, _owner)
+/obj/item/implant/uplink/Initialize(mapload, _owner, ui_name, ui_theme)
 	. = ..()
-	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
+	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc, ui_name, ui_theme, "Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it.")
 	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
 
 /**

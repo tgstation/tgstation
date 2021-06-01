@@ -33,7 +33,10 @@
 
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_red_telecrystals = RED_TELECRYSTALS_DEFAULT, name, ui_theme)
+	///Instructions on how to access the uplink based on location
+	var/unlock_text
+
+/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_telecrystals = RED_TELECRYSTALS_DEFAULT, name, ui_theme, unlock_text)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -45,6 +48,7 @@
 	src.active = active
 	src.uplink_flag = uplink_flag
 	src.red_telecrystals = red_telecrystals
+	src.unlock_text = unlock_text
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)

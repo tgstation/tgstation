@@ -1,10 +1,11 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Section, Stack } from '../components';
+import { BlockQuote, Box, Section, Stack } from '../components';
+import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
-const boldstyle = {
+const allystyle = {
   fontWeight: 'bold',
-  color: 'lightgreen',
+  color: 'yellow',
 };
 
 const badstyle = {
@@ -17,8 +18,16 @@ const goalstyle = {
   fontWeight: 'bold',
 };
 
+const employerstyle = {
+  fontWeight: 'bold',
+};
+
 type Objective = {
-  explanation: string;
+  count: number,
+  name: string,
+  explanation: string,
+  complete: BooleanLike,
+  reward: number,
 }
 
 type Info = {
@@ -28,9 +37,50 @@ type Info = {
   allies: string;
   goal: string;
   intro: string;
-  uplink: string;
+  has_uplink: BooleanLike;
+  uplink_intro: string;
   uplink_unlock_info: string;
-  objectives: Array<Objective>;
+  objectives: Objective[];
+};
+
+const ObjectivePrintout = (props, context) => {
+  const { act, data } = useBackend<Info>(context);
+  const {
+    objectives,
+  } = data;
+  return (
+    <Stack vertical>
+      <Stack.Item bold>
+        Your current objectives:
+      </Stack.Item>
+      <Stack.Item>
+        {!objectives && "None!"
+        || objectives.map(objective => (
+          <>
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+            {!objective.complete && (
+              <>
+                <Stack.Item textColor="red">
+                  Incomplete.
+                </Stack.Item>
+                {!!objective.reward && (
+                  <Stack.Item textColor="lightgrey">
+                    Reward of {objective.reward} black TC upon completion.
+                  </Stack.Item>
+                )}
+              </>
+            ) || (
+              <Stack.Item textColor="green">
+                Complete!
+              </Stack.Item>
+            )}
+          </>
+        )) }
+      </Stack.Item>
+    </Stack>
+  );
 };
 
 const IntroductionSection = (props, context) => {
@@ -38,31 +88,52 @@ const IntroductionSection = (props, context) => {
   const {
     intro,
     allies,
-    objectives,
+    goal,
   } = data;
   return (
-    <Section title="Intro">
-      <Stack vertical>
+    <Section fill title="Intro">
+      <Stack vertical fill>
         <Stack.Item fontSize="25px">
           {intro}
         </Stack.Item>
-        <Stack.Item>
-          Your current objectives:
+        <Stack.Item grow>
+          <ObjectivePrintout />
         </Stack.Item>
-        <Stack.Item>
-          {!objectives && "None!" || "Found!" }
-        </Stack.Item>
-        <Stack.Item>
-          <span style={boldstyle}>
-            Your allegiances:&ensp;
-          </span>
-          &quot;{allies}&quot;
-        </Stack.Item>
-        <Stack.Item>
-          <span style={goalstyle}>
-            Your goals:&ensp;
-          </span>
-          &quot;WIP&quot;
+      </Stack>
+    </Section>
+  );
+};
+
+const EmployerSection = (props, context) => {
+  const { act, data } = useBackend<Info>(context);
+  const {
+    intro,
+    allies,
+    goal,
+  } = data;
+  return (
+    <Section fill title="Employer">
+      <Stack vertical fill>
+        <Stack.Item grow>
+          <Stack vertical>
+            <Stack.Item>
+              <span style={allystyle}>
+                Your allegiances:<br />
+              </span>
+              <BlockQuote>
+                {allies}
+              </BlockQuote>
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item>
+              <span style={goalstyle}>
+                Employer thoughts:<br />
+              </span>
+              <BlockQuote>
+                {goal}
+              </BlockQuote>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       </Stack>
     </Section>
@@ -72,20 +143,20 @@ const IntroductionSection = (props, context) => {
 const UplinkSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const {
-    uplink,
+    uplink_intro,
     uplink_unlock_info,
   } = data;
   return (
-    <Section title="Uplink" fill>
-      <Stack vertical textAlign="center" fill>
-        <Stack.Item bold grow>
-          {uplink}
+    <Section title="Uplink">
+      <Stack fill>
+        <Stack.Item bold>
+          {uplink_intro}
         </Stack.Item>
-        <Stack.Item grow>
-          How to unlock your uplink:
-        </Stack.Item>
+        <Stack.Divider />
         <Stack.Item>
-          {uplink_unlock_info}
+          <BlockQuote grow>
+            {uplink_unlock_info}
+          </BlockQuote>
         </Stack.Item>
       </Stack>
     </Section>
@@ -148,12 +219,19 @@ export const TraitorInfo = (props, context) => {
       width={620}
       height={580}
       theme={theme}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Stack vertical fill>
-          <Stack.Item>
-            <IntroductionSection />
-          </Stack.Item>
           <Stack.Item grow>
+            <Stack fill>
+              <Stack.Item width="70%">
+                <IntroductionSection />
+              </Stack.Item>
+              <Stack.Item width="30%">
+                <EmployerSection />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item>
             <UplinkSection />
           </Stack.Item>
           <Stack.Item>

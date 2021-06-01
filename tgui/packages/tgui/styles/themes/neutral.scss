@@ -28,13 +28,15 @@
      'color-default-fill': $neutral,
      'background-color': rgba(0, 0, 0, 0.5),
    ));
-   @include meta.load-css('../components/Section.scss');
+   @include meta.load-css('../components/Section.scss', $with: (
+    'background-color': rgba(0, 0, 0, 0.5),
+  ));
 
    // Layouts
    @include meta.load-css('../layouts/Layout.scss');
    @include meta.load-css('../layouts/Window.scss');
    @include meta.load-css('../layouts/TitleBar.scss', $with: (
-     'background-color': color.scale($neutral, $lightness: -25%),
+     'background-color': color.scale($neutral, $lightness: 5%),
    ));
 
    .Layout__content {

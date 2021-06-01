@@ -32,7 +32,7 @@
 	///in the future, this should definitely be moved into a component that attaches to these datums
 	var/datum/contractor_hub/contractor_hub
 
-	///string instructions for how to unlock the uplink.
+	///reference to the uplink this traitor was given, if they were.
 	var/datum/component/uplink/uplink
 
 /datum/antagonist/traitor/on_gain()
@@ -155,9 +155,6 @@
 
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>[traitor_flavor["introduction"]]</span>")
-	owner.announce_objectives()
-	if(give_codewords)
-		give_codewords()
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -178,26 +175,6 @@
 
 	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
 		component.delete_if_from_source(src)
-
-/// Outputs this shift's codewords and responses to the antag's chat and copies them to their memory.
-/datum/antagonist/traitor/proc/give_codewords()
-	if(!owner.current)
-		return
-
-	var/mob/traitor_mob = owner.current
-
-	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
-	var/responses = jointext(GLOB.syndicate_code_response, ", ")
-
-	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
-	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='blue'>[phrases]</span>")
-	to_chat(traitor_mob, "<B>Code Response</B>: <span class='red'>[responses]</span>")
-
-	antag_memory += "<b>Code Phrase</b>: <span class='blue'>[phrases]</span><br>"
-	antag_memory += "<b>Code Response</b>: <span class='red'>[responses]</span><br>"
-
-	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	to_chat(traitor_mob, "<span class='alertwarning'>You memorize the codewords, allowing you to recognise them when heard.</span>")
 
 /datum/antagonist/traitor/roundend_report()
 	var/list/result = list()
@@ -291,24 +268,22 @@
 	var/list/data = list()
 	data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
 	data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
-	data["uplink"] = traitor_flavor["uplink"]
 	data["theme"] = traitor_flavor["uplink_theme"]
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
-	data["allies"] = traitor_flavor["goal"]
-	data["uplink_unlock_info"] = get_unlock_method()
+	data["goal"] = traitor_flavor["goal"]
+	data["has_uplink"] = uplink ? TRUE : FALSE
+	if(uplink)
+		data["uplink_intro"] = traitor_flavor["uplink"]
+		data["uplink_unlock_info"] = uplink.unlock_text
 	data["objectives"] = get_objectives()
 	return data
 
-/datum/antagonist/traitor/proc/get_unlock_method()
-	return "uplink unlock"
-
 /datum/antagonist/traitor/proc/get_objectives()
-	///to_chat(current, "<span class='notice'></span>")
 	var/obj_count = 1
 	var/list/objective_data = list()
 	//all obj
-	for(var/datum/objective/smart/objective as anything in objectives)
+	for(var/datum/objective/smart/objective in objectives)
 		objective_data += list(list(
 			"count" = obj_count,
 			"name" = objective.objective_name,

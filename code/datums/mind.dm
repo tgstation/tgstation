@@ -391,24 +391,25 @@
 		implant = TRUE
 
 	if(implant)
-		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
+		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob, ui_name, ui_theme)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
 			to_chat(traitor_mob, "<span class='boldnotice'>Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it.</span>")
 		return new_implant
 	. = uplink_loc
-	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key, name = ui_name, ui_theme = ui_theme)
+	var/unlock_text
+	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key, name = ui_name, ui_theme = ui_theme, unlock_text = unlock_text)
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
+	if(uplink_loc == R)
+		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
+	else if(uplink_loc == PDA)
+		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features."
+	else if(uplink_loc == P)
+		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
 	if(!silent)
-		if(uplink_loc == R)
-			to_chat(traitor_mob, "<span class='boldnotice'>Your a Syndicate Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features.</span>")
-		else if(uplink_loc == PDA)
-			to_chat(traitor_mob, "<span class='boldnotice'>Your a Syndicate Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features.</span>")
-		else if(uplink_loc == P)
-			to_chat(traitor_mob, "<span class='boldnotice'>Your a Syndicate Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features.</span>")
-
+		to_chat(traitor_mob, "<span class='boldnotice'>[unlock_text]</span>")
 	if(antag_datum)
 		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 	else
