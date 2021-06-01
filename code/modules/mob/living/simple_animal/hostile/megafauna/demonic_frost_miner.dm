@@ -445,6 +445,10 @@ Difficulty: Extremely Hard
 	GLOB.frost_miner_prisms |= src
 	set_prism_light(LIGHT_COLOR_BLUE, 5)
 
+/obj/structure/frost_miner_prism/Destroy()
+	GLOB.frost_miner_prisms -= src
+	return ..()
+
 /obj/structure/frost_miner_prism/proc/set_prism_light(new_color, new_range)
 	color = new_color
 	set_light_color(new_color)
