@@ -1,0 +1,30 @@
+2021-06-01:
+  Arkatos:
+  - refactor: Notice board now uses tgui.
+  - bugfix: Notice boards will now properly drop their contents upon destruction.
+  FlamingLily:
+  - qol: Surgery masks no longer block surgery.
+  Gamer025:
+  - bugfix: Offering an item multiple times no longer causes runtimes
+  - bugfix: Chairs no longer runtime when being deconstructed
+  Inept:
+  - rscadd: Some new holidays have been added.
+  JohnFulpWillard:
+  - qol: Microwaves now use Right Click instead of Alt click to turn on.
+  Krysonism:
+  - imageadd: The desk, green and banana lamps have been resprited.
+  Mothblocks:
+  - bugfix: Fixed dynamic latejoins.
+  Timberpoes:
+  - bugfix: Fix oversight where Dynamic can assign antag datums to the minds of players
+      who will be forcefully returned to the lobby.
+  ninjanomnom:
+  - imageadd: Better greyscale support has been added to datum materials allowing
+      objects to have more complex compositions of sprites. The golden cleric mace
+      is extra shiny now.
+  - bugfix: Mime shoes no longer runtime when generating their icon. This may fix
+      some graphical oddity or do nothing at all since they get colored pure white
+      anyway.
+  rasepretep:
+  - code_imp: removed the piece of code that causes carpotoxin to qdel temporal scars
+      (hopefully I identified it correctly)

@@ -1,4 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - bugfix: "Offering an item multiple times no longer causes runtimes"

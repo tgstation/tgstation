@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - refactor: "Notice board now uses tgui."
-  - bugfix: "Notice boards will now properly drop their contents upon destruction."
