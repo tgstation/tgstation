@@ -41,6 +41,9 @@
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 
+/// a tech disk is ejected from a rdconsole. seems weird, but important for objectives. (obj/item/disk/tech_disk/tech_disk)
+#define COMSIG_GLOB_TECHDISK_EJECTED "!techdisk_ejected"
+
 /// signals from globally accessible objects
 
 ///from SSsun when the sun changes position : (azimuth)

@@ -12,6 +12,15 @@ const badstyle = {
   fontWeight: 'bold',
 };
 
+const goalstyle = {
+  color: 'lightblue',
+  fontWeight: 'bold',
+};
+
+type Objective = {
+  explanation: string;
+}
+
 type Info = {
   phrases: string;
   responses: string;
@@ -21,6 +30,7 @@ type Info = {
   intro: string;
   uplink: string;
   uplink_unlock_info: string;
+  objectives: Array<Objective>;
 };
 
 const IntroductionSection = (props, context) => {
@@ -28,21 +38,31 @@ const IntroductionSection = (props, context) => {
   const {
     intro,
     allies,
+    objectives,
   } = data;
   return (
-    <Section title="Intro" fill>
+    <Section title="Intro">
       <Stack vertical>
         <Stack.Item fontSize="25px">
           {intro}
         </Stack.Item>
         <Stack.Item>
-          uplink flavor, uplink location
+          Your current objectives:
+        </Stack.Item>
+        <Stack.Item>
+          {!objectives && "None!" || "Found!" }
         </Stack.Item>
         <Stack.Item>
           <span style={boldstyle}>
             Your allegiances:&ensp;
           </span>
           &quot;{allies}&quot;
+        </Stack.Item>
+        <Stack.Item>
+          <span style={goalstyle}>
+            Your goals:&ensp;
+          </span>
+          &quot;WIP&quot;
         </Stack.Item>
       </Stack>
     </Section>
@@ -53,12 +73,19 @@ const UplinkSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const {
     uplink,
+    uplink_unlock_info,
   } = data;
   return (
-    <Section title="Uplink">
-      <Stack fill>
-        <Stack.Item grow>
+    <Section title="Uplink" fill>
+      <Stack vertical textAlign="center" fill>
+        <Stack.Item bold grow>
           {uplink}
+        </Stack.Item>
+        <Stack.Item grow>
+          How to unlock your uplink:
+        </Stack.Item>
+        <Stack.Item>
+          {uplink_unlock_info}
         </Stack.Item>
       </Stack>
     </Section>
@@ -126,7 +153,7 @@ export const TraitorInfo = (props, context) => {
           <Stack.Item>
             <IntroductionSection />
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow>
             <UplinkSection />
           </Stack.Item>
           <Stack.Item>

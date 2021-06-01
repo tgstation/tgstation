@@ -393,6 +393,7 @@ Nothing else in the console has ID requirements.
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
 	if(type == RND_TECH_DISK && t_disk)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TECHDISK_EJECTED, t_disk)
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
 

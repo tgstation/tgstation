@@ -2,17 +2,28 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective
-	var/datum/mind/owner //The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
-	var/datum/team/team //An alternative to 'owner': a team. Use this when writing new code.
-	var/name = "generic objective" //Name for admin prompts
-	var/explanation_text = "Nothing" //What that person is supposed to do.
+	///The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
+	var/datum/mind/owner
+	///An alternative to 'owner': a team. Use this when writing new code.
+	var/datum/team/team
+	///Name for admin prompts
+	var/name = "generic objective"
+	///What that person is supposed to do.
+	var/explanation_text = "Nothing"
 	///name used in printing this objective (Objective #1)
 	var/objective_name = "Objective"
-	var/team_explanation_text //For when there are multiple owners.
-	var/datum/mind/target = null //If they are focused on a particular person.
-	var/target_amount = 0 //If they are focused on a particular number. Steal objectives have their own counter.
-	var/completed = FALSE //currently only used for custom objectives.
-	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	///For when there are multiple owners.
+	var/team_explanation_text
+
+	///If they are focused on a particular person.
+	var/datum/mind/target = null
+	//If they are focused on a particular number. Steal objectives have their own counter.
+	var/target_amount = 0
+
+	///will make the objective count as completed at roundend, regardless of logic. used in smart objectives and custom objectives mainly
+	var/completed = FALSE
+	///If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/martyr_compatible = FALSE
 
 /datum/objective/New(text)
 	GLOB.objectives += src
@@ -572,6 +583,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	return FALSE
 
 GLOBAL_LIST_EMPTY(possible_items)
+
 /datum/objective/steal
 	name = "steal"
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.

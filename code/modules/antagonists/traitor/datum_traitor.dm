@@ -139,7 +139,7 @@
 		add_smart_objective(/datum/objective/smart/assassinate)
 		return
 
-	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
+	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/smart/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
 		add_smart_objective(/datum/objective/smart/download) //note to self: smart objective needs to use a different proc than this one used to
 		return
 
@@ -295,6 +295,7 @@
 	data["theme"] = traitor_flavor["uplink_theme"]
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
+	data["allies"] = traitor_flavor["goal"]
 	data["uplink_unlock_info"] = get_unlock_method()
 	data["objectives"] = get_objectives()
 	return data
@@ -303,12 +304,27 @@
 	return "uplink unlock"
 
 /datum/antagonist/traitor/proc/get_objectives()
+	///to_chat(current, "<span class='notice'></span>")
+	var/obj_count = 1
 	var/list/objective_data = list()
+	//all obj
 	for(var/datum/objective/smart/objective as anything in objectives)
-		objective_data["name"] = objective.name
-		objective_data["explanation"] = objective.explanation_text
-		objective_data["complete"] = objective.completed
-		objective_data["reward"] = objective.black_telecrystal_reward
+		objective_data += list(list(
+			"count" = obj_count,
+			"name" = objective.objective_name,
+			"explanation" = objective.explanation_text,
+			"complete" = objective.completed,
+			"reward" = objective.black_telecrystal_reward
+		))
+		obj_count++
+	//escape obj
+	objective_data += list(list(
+			"count" = obj_count,
+			"name" = ending_objective.objective_name,
+			"explanation" = ending_objective.explanation_text,
+			"complete" = ending_objective.completed,
+		))
+	return objective_data
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
