@@ -590,7 +590,7 @@
 	var/datum/action/innate/link_minds/link_minds
 	var/list/mob/living/linked_mobs = list()
 	var/list/datum/action/innate/linked_speech/linked_actions = list()
-	var/mob/living/carbon/human/slimelink_owner
+	var/datum/weakref/slimelink_owner
 	var/current_link_id = 0
 
 /datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/C)
@@ -599,8 +599,11 @@
 		unlink_mob(M)
 	if(project_thought)
 		project_thought.Remove(C)
+		QDEL_NULL(project_thought)
 	if(link_minds)
 		link_minds.Remove(C)
+		QDEL_NULL(link_minds)
+	slimelink_owner = null
 
 /datum/species/jelly/stargazer/spec_death(gibbed, mob/living/carbon/human/H)
 	..()
@@ -613,7 +616,7 @@
 	project_thought.Grant(C)
 	link_minds = new(src)
 	link_minds.Grant(C)
-	slimelink_owner = C
+	slimelink_owner = WEAKREF(C)
 	link_mob(C)
 
 /datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
@@ -625,8 +628,11 @@
 		return FALSE
 	if(M in linked_mobs)
 		return FALSE
+	var/mob/living/carbon/human/owner = slimelink_owner.resolve()
+	if(!owner)
+		return FALSE
 	linked_mobs.Add(M)
-	to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	to_chat(M, "<span class='notice'>You are now connected to [owner.real_name]'s Slime Link.</span>")
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
@@ -642,9 +648,12 @@
 	UnregisterSignal(M, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
 	action.Remove(M)
-	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	var/mob/living/carbon/human/owner = slimelink_owner.resolve()
+	if(owner)
+		to_chat(M, "<span class='notice'>You are no longer connected to [owner.real_name]'s Slime Link.</span>")
 	linked_mobs[link_id] = null
 	linked_actions[link_id] = null
+	qdel(action)
 
 /datum/action/innate/linked_speech
 	name = "Slimelink"
@@ -657,6 +666,10 @@
 /datum/action/innate/linked_speech/New(_species)
 	..()
 	species = _species
+
+/datum/action/innate/linked_speech/Destroy()
+	species = null
+	return ..()
 
 /datum/action/innate/linked_speech/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -674,9 +687,11 @@
 		Remove(H)
 		return
 
-	if(message)
-		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
-		log_directed_talk(H, species.slimelink_owner, msg, LOG_SAY, "slime link")
+	var/mob/living/carbon/human/star_owner = species.slimelink_owner.resolve()
+
+	if(message && star_owner)
+		var/msg = "<i><font color=#008CA2>\[[star_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
+		log_directed_talk(H, star_owner, msg, LOG_SAY, "slime link")
 		for(var/X in species.linked_mobs)
 			var/mob/living/M = X
 			to_chat(M, msg)
@@ -731,11 +746,6 @@
 	button_icon_state = "mindlink"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
-	var/datum/species/jelly/stargazer/species
-
-/datum/action/innate/link_minds/New(_species)
-	..()
-	species = _species
 
 /datum/action/innate/link_minds/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -748,6 +758,7 @@
 		return
 
 	var/mob/living/target = H.pulling
+	var/datum/species/jelly/stargazer/species = target
 
 	to_chat(H, "<span class='notice'>You begin linking [target]'s mind to yours...</span>")
 	to_chat(target, "<span class='warning'>You feel a foreign presence within your mind...</span>")
