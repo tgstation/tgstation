@@ -1190,10 +1190,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 					S.forceMove(drop_location())
 					loaded_items--
 					use_power(5)
-					if(last_shopper != "\ref[usr]" || purchase_message_cooldown < world.time)
+					if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 						say("Thank you for buying local and purchasing [S]!")
 						purchase_message_cooldown = world.time + 5 SECONDS
-						last_shopper = "\ref[usr]"
+						last_shopper = REF(usr)
 					vend_ready = TRUE
 					updateUsrDialog()
 					return

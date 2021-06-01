@@ -557,3 +557,5 @@
 	if(source == Leader)
 		set_leader(null)
 	remove_friend(source)
+
+#undef SLIME_CARES_ABOUT
