@@ -8,9 +8,6 @@
 	/// Lazylist to keep track of bullet-hole overlays.
 	var/list/bullethole_overlays
 
-/obj/item/target/Initialize()
-	. = ..()
-
 /obj/item/target/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(I.use_tool(src, user, 0, volume=40))
