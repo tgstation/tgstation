@@ -45,12 +45,11 @@
 		//Each pile only generates an item once per user, so we return.
 		if(user.ckey in searchedby)
 			to_chat(user,"<span class='warning'>There's nothing else for you in \the [src]!</span>")
-			return ..()
-	//Nothing else was in the pile, so we generate a new maintloot and blacklist the user from this pile.
-	else
-		produce_item()
-		to_chat(user,"<span class='notice'>You found something!</span>")
-		searchedby += user.ckey
+		//Nothing else was in the pile, so we generate a new maintloot and blacklist the user from this pile.
+		else
+			produce_item()
+			to_chat(user,"<span class='notice'>You found something!</span>")
+			searchedby += user.ckey
 
 /obj/structure/trash_pile/attack_hand(mob/user)
 	//Human mobs only, no borgs allowed.
