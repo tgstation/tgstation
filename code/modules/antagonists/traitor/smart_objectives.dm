@@ -43,7 +43,7 @@
 
 	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_ACHIEVED)
 
-/datum/objective/smart/destroy_ai/proc/on_death(datum/target, old_z, new_z)
+/datum/objective/smart/destroy_ai/proc/on_z_level_changed(datum/target, old_z, new_z)
 	SIGNAL_HANDLER
 
 	if(new_z > 6)

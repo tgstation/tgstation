@@ -57,14 +57,14 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 		UPE.icon_b64 = "[icon2base64html(A)]"
 		UPE.desc = uplink_item.desc
 		UPE.name = uplink_item.name
-		UPE.base_cost = initial(uplink_item.cost)
+		UPE.base_cost = initial(uplink_item.red_cost)
 		UPE.spent_cost = spent_cost
 
 	UPE.amount_purchased++
 	total_spent += spent_cost
 
 /datum/uplink_purchase_log/proc/hash_purchase(datum/uplink_item/uplink_item, spent_cost)
-	return "[uplink_item.type]|[uplink_item.name]|[uplink_item.cost]|[spent_cost]"
+	return "[uplink_item.type]|[uplink_item.name]|[uplink_item.red_cost]|[spent_cost]"
 
 /datum/uplink_purchase_entry
 	var/amount_purchased = 0

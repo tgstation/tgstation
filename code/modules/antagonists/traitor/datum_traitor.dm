@@ -33,7 +33,7 @@
 	var/datum/contractor_hub/contractor_hub
 
 	///string instructions for how to unlock the uplink.
-	var/unlock_method
+	var/datum/component/uplink/uplink
 
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
@@ -48,6 +48,8 @@
 
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src, ui_name = traitor_flavor["uplink_name"], ui_theme = traitor_flavor["uplink_theme"])
+
+	uplink = owner.find_syndicate_uplink()
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -129,36 +131,27 @@
 	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
-			var/datum/objective/smart/destroy_ai/destroy_objective = new
-			destroy_objective.owner = owner
-			destroy_objective.find_target()
-			objectives += destroy_objective
+			add_smart_objective(/datum/objective/smart/destroy_ai)
 			return
-
 		if(prob(MAROON_PROB))
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			objectives += maroon_objective
+			add_smart_objective(/datum/objective/smart/maroon)
 			return
-
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		objectives += kill_objective
+		add_smart_objective(/datum/objective/smart/assassinate)
 		return
 
 	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
-		var/datum/objective/download/download_objective = new
-		download_objective.owner = owner
-		download_objective.gen_amount_goal()
-		objectives += download_objective
+		add_smart_objective(/datum/objective/smart/download) //note to self: smart objective needs to use a different proc than this one used to
 		return
 
-	var/datum/objective/steal/steal_objective = new
-	steal_objective.owner = owner
-	steal_objective.find_target()
-	objectives += steal_objective
+	add_smart_objective(/datum/objective/smart/steal)
+
+/// small helper does all the setup for smart objective adding
+/datum/antagonist/traitor/proc/add_smart_objective(type)
+	var/datum/objective/smart/new_objective = new type
+	new_objective.owner = owner
+	new_objective.find_target()
+	new_objective.post_find_target()
+	objectives += new_objective
 
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>[traitor_flavor["introduction"]]</span>")
@@ -306,15 +299,16 @@
 	data["objectives"] = get_objectives()
 	return data
 
+/datum/antagonist/traitor/proc/get_unlock_method()
+	return "uplink unlock"
+
 /datum/antagonist/traitor/proc/get_objectives()
 	var/list/objective_data = list()
-	for(var/datum/objective/objective as anything in objectives)
+	for(var/datum/objective/smart/objective as anything in objectives)
 		objective_data["name"] = objective.name
 		objective_data["explanation"] = objective.explanation_text
-		objective_data["name"] = objective.name
-		objective_data["name"] = objective.name
-		objective_data["name"] = objective.name
-
+		objective_data["complete"] = objective.completed
+		objective_data["reward"] = objective.black_telecrystal_reward
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")

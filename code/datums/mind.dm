@@ -629,7 +629,7 @@
 			if("crystals")
 				if(check_rights(R_FUN, 0))
 					var/datum/component/uplink/uplink = find_syndicate_uplink()
-					if(U)
+					if(uplink)
 						var/crystals = input("Amount of red telecrystals for [key]","Syndicate uplink", uplink.red_telecrystals) as null | num
 						if(!isnull(crystals))
 							uplink.red_telecrystals = crystals

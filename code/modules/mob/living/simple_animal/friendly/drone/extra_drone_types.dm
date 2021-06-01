@@ -35,7 +35,7 @@
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.telecrystals = 10
+	hidden_uplink.red_telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -45,7 +45,7 @@
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.telecrystals = 30
+	hidden_uplink.black_telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src, force = TRUE)
 

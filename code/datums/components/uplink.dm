@@ -17,7 +17,7 @@
 	var/allow_restricted = TRUE
 	///initial money to spend, non gimmicky and non murdery
 	var/red_telecrystals
-	///money earned via completing objectives, most things cost this
+	///money earned via completing objectives, most things red_cost this
 	var/black_telecrystals
 	var/selected_cat
 	var/owner = null
@@ -33,7 +33,7 @@
 
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, telecrystals = RED_TELECRYSTALS_DEFAULT, name, ui_theme)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_red_telecrystals = RED_TELECRYSTALS_DEFAULT, name, ui_theme)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -44,7 +44,7 @@
 	src.lockable = lockable
 	src.active = active
 	src.uplink_flag = uplink_flag
-	src.telecrystals = telecrystals
+	src.red_telecrystals = red_telecrystals
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -80,7 +80,7 @@
 	lockable |= U.lockable
 	active |= U.active
 	uplink_flag |= U.uplink_flag
-	telecrystals += U.telecrystals
+	red_telecrystals += U.red_telecrystals
 	if(purchase_log && U.purchase_log)
 		purchase_log.MergeWithAndDel(U.purchase_log)
 
@@ -106,9 +106,9 @@
 	if(!silent)
 		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
 	var/amt = TC.amount
-	telecrystals += amt
+	red_telecrystals += amt
 	TC.use(amt)
-	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
+	log_uplink("[key_name(user)] loaded [amt] red_telecrystals into [parent]'s uplink")
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
@@ -121,12 +121,12 @@
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/UI = uplink_items[category][item]
 			var/path = UI.refund_path || UI.item
-			var/cost = UI.refund_amount || UI.cost
+			var/red_cost = UI.refund_amount || UI.red_cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
-				telecrystals += cost
-				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
+				red_telecrystals += red_cost
+				log_uplink("[key_name(user)] refunded [UI] for [red_cost] red_telecrystals using [parent]'s uplink")
 				if(purchase_log)
-					purchase_log.total_spent -= cost
+					purchase_log.total_spent -= red_cost
 				to_chat(user, "<span class='notice'>[I] refunded.</span>")
 				qdel(I)
 				return
@@ -161,7 +161,7 @@
 	if(!user.mind)
 		return
 	var/list/data = list()
-	data["telecrystals"] = telecrystals
+	data["red_telecrystals"] = red_telecrystals
 	data["lockable"] = lockable
 	data["compactMode"] = compact_mode
 	return data
@@ -197,7 +197,7 @@
 						continue
 			cat["items"] += list(list(
 				"name" = I.name,
-				"cost" = I.cost,
+				"red_cost" = I.red_cost,
 				"desc" = I.desc,
 			))
 		data["categories"] += list(cat)
@@ -222,7 +222,7 @@
 		if("lock")
 			active = FALSE
 			locked = TRUE
-			telecrystals += hidden_crystals
+			red_telecrystals += hidden_crystals
 			hidden_crystals = 0
 			SStgui.close_uis(src)
 		if("select")
@@ -239,16 +239,16 @@
 	if (!user || user.incapacitated())
 		return
 
-	if(telecrystals < U.cost || U.limited_stock == 0)
+	if(red_telecrystals < U.red_cost || U.limited_stock == 0)
 		return
-	telecrystals -= U.cost
+	red_telecrystals -= U.red_cost
 
 	U.purchase(user, src)
 
 	if(U.limited_stock > 0)
 		U.limited_stock -= 1
 
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.red_cost]"))
 	return TRUE
 
 // Implant signal responses
@@ -275,7 +275,7 @@
 /datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
 	SIGNAL_HANDLER
 
-	uplink.telecrystals += telecrystals
+	uplink.red_telecrystals += red_telecrystals
 	return COMPONENT_DELETE_NEW_IMPLANT
 
 // PDA signal responses

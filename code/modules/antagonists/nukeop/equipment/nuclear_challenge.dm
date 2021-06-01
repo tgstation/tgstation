@@ -105,12 +105,12 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/list/orphans = list()
 	var/list/uplinks = list()
 
-	for (var/datum/mind/M in get_antag_minds(/datum/antagonist/nukeop))
-		if (iscyborg(M.current))
+	for (var/datum/mind/nukie_mind as anything in get_antag_minds(/datum/antagonist/nukeop))
+		if (iscyborg(nukie_mind.current))
 			continue
-		var/datum/component/uplink/uplink = M.find_syndicate_uplink()
+		var/datum/component/uplink/uplink = nukie_mind.find_syndicate_uplink()
 		if (!uplink)
-			orphans += M.current
+			orphans += nukie_mind.current
 			continue
 		uplinks += uplink
 
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
-		uplink.telecrystals += tc_per_nukie
+		uplink.red_telecrystals += tc_per_nukie
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)
