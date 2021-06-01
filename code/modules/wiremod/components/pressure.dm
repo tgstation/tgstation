@@ -1,7 +1,7 @@
 /**
  * # Pressure Sensor Component
  *
- * When triggered, returns enviromental pressure in kPa
+ * When triggered, returns environmental pressure in kPa
  */
 /obj/item/circuit_component/pressure
 	display_name = "Pressure Sensor"
