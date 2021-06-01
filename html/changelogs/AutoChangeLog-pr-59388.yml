@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Mime shoes no longer runtime when generating their icon. This may fix some graphical oddity or do nothing at all since they get colored pure white anyway."
