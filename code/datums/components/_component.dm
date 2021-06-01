@@ -221,6 +221,8 @@
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
 		if(!signal_procs[target][sig])
+			if(!istext(sig))
+				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue
 		switch(length(lookup[sig]))
 			if(2)
