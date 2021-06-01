@@ -1,7 +1,7 @@
 /**
  * # Temperature Sensor Component
  *
- * Return enviromental temperature in kelvins
+ * Return environmental temperature in Kelvin
  */
 /obj/item/circuit_component/temperature
 	display_name = "Temperature Sensor"
