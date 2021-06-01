@@ -31,6 +31,15 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 			return path
 	return ""
 
+/proc/gas_name2path(name)
+	var/list/meta_gas = GLOB.meta_gas_info
+	if(name in meta_gas)
+		return name
+	for(var/path in meta_gas)
+		if(meta_gas[path][META_GAS_NAME] == name)
+			return path
+	return ""
+
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
 ||||||||||||||||\__________/||||||||||||||||
