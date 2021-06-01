@@ -34,6 +34,7 @@
 	)
 ///Releases stored item or produces maint loot if user hasn't already searched it.
 /obj/structure/trash_pile/proc/do_search(mob/user)
+	//We can only find one item at a time, so we prioritize things that were already hidden in the pile.
 	if(contents.len) //There's something hidden
 		var/atom/stash = contents[contents.len] //Get the most recent hidden thing
 		if (istype(stash, /obj/item))
@@ -41,18 +42,18 @@
 			to_chat(user,"<span class='notice'>You found something!</span>")
 			item.forceMove(src.loc)
 	else
-		//You already searched this one bruh
+		//Each pile only generates an item once per user, so we return.
 		if(user.ckey in searchedby)
 			to_chat(user,"<span class='warning'>There's nothing else for you in \the [src]!</span>")
-			return 
-	//You found an item!
+			return ..()
+	//Nothing else was in the pile, so we generate a new maintloot and blacklist the user from this pile.
 	else
 		produce_item()
 		to_chat(user,"<span class='notice'>You found something!</span>")
 		searchedby += user.ckey
 
 /obj/structure/trash_pile/attack_hand(mob/user)
-	//Human mob
+	//Human mobs only, no borgs allowed.
 	if(!ishuman(user))
 		return ..()
 	else
