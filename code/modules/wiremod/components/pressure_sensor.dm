@@ -3,7 +3,7 @@
  *
  * When triggered, returns enviromental pressure in kPa
  */
-/obj/item/circuit_component/pressure
+/obj/item/circuit_component/pressure_sensor
 	display_name = "Pressure Sensor"
 
 	has_trigger = TRUE
@@ -11,15 +11,15 @@
 	/// Enviromental pressure in kPa
 	var/datum/port/output/output
 
-/obj/item/circuit_component/pressure/Initialize()
+/obj/item/circuit_component/pressure_sensor/Initialize()
 	. = ..()
 	output = add_output_port("Current Pressure", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/pressure/Destroy()
+/obj/item/circuit_component/pressure_sensor/Destroy()
 	output = null
 	return ..()
 
-/obj/item/circuit_component/pressure/input_received(datum/port/input/port)
+/obj/item/circuit_component/pressure_sensor/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return

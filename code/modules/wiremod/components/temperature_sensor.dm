@@ -3,7 +3,7 @@
  *
  * Return enviromental temperature in kelvins
  */
-/obj/item/circuit_component/temperature
+/obj/item/circuit_component/temperature_sensor
 	display_name = "Temperature Sensor"
 
 	/// The result from the output
@@ -11,16 +11,16 @@
 
 	has_trigger = TRUE
 
-/obj/item/circuit_component/temperature/Initialize()
+/obj/item/circuit_component/temperature_sensor/Initialize()
 	. = ..()
 
 	output = add_output_port("Gas Amount", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/temperature/Destroy()
+/obj/item/circuit_component/temperature_sensor/Destroy()
 	output = null
 	return ..()
 
-/obj/item/circuit_component/temperature/input_received(datum/port/input/port)
+/obj/item/circuit_component/temperature_sensor/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
