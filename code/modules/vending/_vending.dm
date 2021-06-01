@@ -929,11 +929,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 			D.adjust_money(price_to_use)
 			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 			log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
-	if(last_shopper != "\ref[usr]" || purchase_message_cooldown < world.time)
+	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		say("Thank you for shopping with [src]!")
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
-		last_shopper = "\ref[usr]"
+		last_shopper = REF(usr)
 	use_power(5)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
@@ -1190,10 +1190,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 					S.forceMove(drop_location())
 					loaded_items--
 					use_power(5)
-					if(last_shopper != "\ref[usr]" || purchase_message_cooldown < world.time)
+					if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 						say("Thank you for buying local and purchasing [S]!")
 						purchase_message_cooldown = world.time + 5 SECONDS
-						last_shopper = "\ref[usr]"
+						last_shopper = REF(usr)
 					vend_ready = TRUE
 					updateUsrDialog()
 					return
