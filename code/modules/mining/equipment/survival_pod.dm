@@ -297,7 +297,7 @@
 						/obj/item/gun/magic/staff/spellblade,
 						/obj/item/gun/magic/wand/death,
 						/obj/item/gun/magic/wand/fireball,
-						/obj/item/stack/telecrystal/twenty,
+						/obj/item/stack/red_telecrystal/twenty,
 						/obj/item/nuke_core,
 						/obj/item/phylactery,
 						/obj/item/banhammer)

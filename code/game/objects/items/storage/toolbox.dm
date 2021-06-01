@@ -108,7 +108,7 @@
 
 /obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
 	var/power = 0
-	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
+	for (var/obj/item/stack/red_telecrystal/TC in GetAllContents())
 		power += TC.amount
 	force = 19 + power
 	throwforce = 22 + power

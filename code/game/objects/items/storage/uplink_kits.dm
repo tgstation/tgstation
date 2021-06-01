@@ -250,7 +250,7 @@
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
 	new /obj/item/gun/ballistic/revolver(src)
 	new /obj/item/implanter/freedom(src)
-	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+	new /obj/item/stack/red_telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"

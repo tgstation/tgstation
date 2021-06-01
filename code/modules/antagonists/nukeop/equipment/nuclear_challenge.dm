@@ -1,4 +1,4 @@
-#define CHALLENGE_TELECRYSTALS 280
+#define CHALLENGE_RED_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT 3000
 #define CHALLENGE_MIN_PLAYERS 50
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			continue
 		uplinks += uplink
 
-	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
+	var/tc_to_distribute = CHALLENGE_RED_TELECRYSTALS
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
@@ -122,14 +122,14 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)
-		var/TC = new /obj/item/stack/telecrystal(L.drop_location(), tc_per_nukie)
+		var/TC = new /obj/item/stack/red_telecrystal(L.drop_location(), tc_per_nukie)
 		to_chat(L, "<span class='warning'>Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"].</span>")
 		tc_to_distribute -= tc_per_nukie
 
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
 		for (var/mob/living/simple_animal/hostile/carp/cayenne/C in GLOB.mob_living_list)
 			if (C.stat != DEAD)
-				var/obj/item/stack/telecrystal/TC = new(C.drop_location(), tc_to_distribute)
+				var/obj/item/stack/red_telecrystal/TC = new(C.drop_location(), tc_to_distribute)
 				TC.throw_at(get_step(C, C.dir), 3, 3)
 				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='notice'>You cough up a half-digested telecrystal!</span>")
 				break
@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 /obj/item/nuclear_challenge/clownops
 	uplink_type = /obj/item/uplink/clownop
 
-#undef CHALLENGE_TELECRYSTALS
+#undef CHALLENGE_RED_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
 #undef CHALLENGE_MIN_PLAYERS
 #undef CHALLENGE_SHUTTLE_DELAY

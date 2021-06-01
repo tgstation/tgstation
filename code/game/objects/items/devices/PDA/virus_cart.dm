@@ -103,14 +103,14 @@
 		hidden_uplink.active = TRUE
 	else
 		to_chat(U, "<span class='alert'>PDA not found.</span>")
-		
+
 /obj/item/cartridge/virus/frame/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(istype(I, /obj/item/stack/telecrystal))
+	if(istype(I, /obj/item/stack/red_telecrystal))
 		if(!charges)
 			to_chat(user, "<span class='notice'>[src] is out of charges, it's refusing to accept [I].</span>")
 			return
-		var/obj/item/stack/telecrystal/telecrystalStack = I
+		var/obj/item/stack/red_telecrystal/telecrystalStack = I
 		telecrystals += telecrystalStack.amount
 		to_chat(user, "<span class='notice'>You slot [telecrystalStack] into [src]. The next time it's used, it will also give telecrystals.</span>")
 		telecrystalStack.use(telecrystalStack.amount)

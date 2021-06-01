@@ -33,7 +33,7 @@
 	imp_type = /obj/item/implant/uplink/precharged
 
 /obj/item/implant/uplink/precharged
-	starting_tc = TELECRYSTALS_PRELOADED_IMPLANT
+	starting_tc = RED_TELECRYSTALS_PRELOADED_IMPLANT
 
 /obj/item/implant/uplink/starting
-	starting_tc = TELECRYSTALS_DEFAULT - UPLINK_IMPLANT_TELECRYSTAL_COST
+	starting_tc = RED_TELECRYSTALS_DEFAULT - UPLINK_IMPLANT_RED_TELECRYSTAL_COST

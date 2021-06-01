@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_tc/telecrystal
 	name = "1 Raw Telecrystal"
 	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal
+	item = /obj/item/stack/red_telecrystal
 	cost = 1
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
@@ -298,13 +298,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_tc/telecrystal/five
 	name = "5 Raw Telecrystals"
 	desc = "Five telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal/five
+	item = /obj/item/stack/red_telecrystal/five
 	cost = 5
 
 /datum/uplink_item/bundles_tc/telecrystal/twenty
 	name = "20 Raw Telecrystals"
 	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal/twenty
+	item = /obj/item/stack/red_telecrystal/twenty
 	cost = 20
 
 // Dangerous Items
@@ -1664,7 +1664,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals and must be charged by the use of physical telecrystals. \
 			Undetectable (except via surgery), and excellent for escaping confinement."
 	item = /obj/item/storage/box/syndie_kit/imp_uplink
-	cost = UPLINK_IMPLANT_TELECRYSTAL_COST
+	cost = UPLINK_IMPLANT_RED_TELECRYSTAL_COST
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
