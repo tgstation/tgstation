@@ -7,6 +7,8 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
+	//A list of typepaths to create and insert into ourself on init
+	var/list/items_to_create = list()
 	/// Used to store a list of all items inside, for multi-item implants.
 	var/list/items_list = list()// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
 	/// You can use this var for item path, it would be converted into an item on New().
@@ -16,10 +18,25 @@
 	. = ..()
 	if(ispath(active_item))
 		active_item = new active_item(src)
+		items_list += WEAKREF(active_item)
+
+	for(var/typepath in items_to_create)
+		var/atom/new_item = new typepath(src)
+		items_list += WEAKREF(new_item)
 
 	update_appearance()
 	SetSlotFromZone()
-	items_list = contents.Copy()
+
+/obj/item/organ/cyberimp/arm/Destroy()
+	hand = null
+	active_item = null
+	for(var/datum/weakref/ref in items_list)
+		var/obj/item/to_del = ref.resolve()
+		if(!to_del)
+			continue
+		qdel(to_del)
+	items_list.Cut()
+	return ..()
 
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
@@ -153,7 +170,11 @@
 			Extend(contents[1])
 		else
 			var/list/choice_list = list()
-			for(var/obj/item/augment_item in items_list)
+			for(var/datum/weakref/augment_ref in items_list)
+				var/obj/item/augment_item = augment_ref.resolve()
+				if(!augment_item)
+					items_list -= augment_ref
+					continue
 				choice_list[augment_item] = image(augment_item)
 			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
 			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !active_item && (choice in contents))
@@ -182,7 +203,7 @@
 	name = "arm-mounted laser implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
-	contents = newlist(/obj/item/gun/energy/laser/mounted)
+	items_to_create = list(/obj/item/gun/energy/laser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = BODY_ZONE_L_ARM
@@ -197,7 +218,7 @@
 	name = "arm-mounted taser implant"
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
-	contents = newlist(/obj/item/gun/energy/e_gun/advtaser/mounted)
+	items_to_create = list(/obj/item/gun/energy/e_gun/advtaser/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = BODY_ZONE_L_ARM
@@ -205,40 +226,46 @@
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
-	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
+	items_to_create = list(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
 		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
 
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user)
-	if(!(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list))
-		to_chat(user, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
-		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
-		return TRUE
-	return FALSE
+	for(var/datum/weakref/created_item in items_list)
+		var/obj/potential_knife = created_item.resolve()
+		if(istype(/obj/item/kitchen/knife/combat/cyborg, potential_knife))
+			return FALSE
+
+	to_chat(user, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+	items_list += WEAKREF(new /obj/item/kitchen/knife/combat/cyborg(src))
+	return TRUE
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
-	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight)
+	items_to_create = list(/obj/item/melee/transforming/energy/blade/hardlight)
 
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
-	contents = newlist(/obj/item/gun/medbeam)
+	items_to_create = list(/obj/item/gun/medbeam)
 
 
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
-	contents = newlist(/obj/item/assembly/flash/armimplant)
+	items_to_create = list(/obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/flash/Initialize()
 	. = ..()
-	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/flash = locate(/obj/item/assembly/flash/armimplant) in items_list
-		flash.I = src // Todo: wipe single letter vars out of assembly code
+	for(var/datum/weakref/created_item in items_list)
+		var/obj/potential_flash = created_item.resolve()
+		if(!istype(/obj/item/assembly/flash/armimplant, potential_flash))
+			continue
+		var/obj/item/assembly/flash/armimplant/flash = potential_flash
+		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
 
 /obj/item/organ/cyberimp/arm/flash/Extend()
 	. = ..()
@@ -252,20 +279,23 @@
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
-	contents = newlist(/obj/item/borg/stun)
+	items_to_create = list(/obj/item/borg/stun)
 
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
+	items_to_create = list(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()
-	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
-		var/obj/item/assembly/flash/armimplant/flash = locate(/obj/item/assembly/flash/armimplant) in items_list
-		flash.I = src // Todo: wipe single letter vars out of assembly code
+	for(var/datum/weakref/created_item in items_list)
+		var/obj/potential_flash = created_item.resolve()
+		if(!istype(/obj/item/assembly/flash/armimplant, potential_flash))
+			continue
+		var/obj/item/assembly/flash/armimplant/flash = potential_flash
+		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
 
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
-	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
+	items_to_create = list(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
