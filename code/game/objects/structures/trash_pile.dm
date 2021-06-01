@@ -44,11 +44,12 @@
 		//You already searched this one bruh
 		if(user.ckey in searchedby)
 			to_chat(user,"<span class='warning'>There's nothing else for you in \the [src]!</span>")
-		//You found an item!
-		else
-			produce_item()
-			to_chat(user,"<span class='notice'>You found something!</span>")
-			searchedby += user.ckey
+			return 
+	//You found an item!
+	else
+		produce_item()
+		to_chat(user,"<span class='notice'>You found something!</span>")
+		searchedby += user.ckey
 
 /obj/structure/trash_pile/attack_hand(mob/user)
 	//Human mob
