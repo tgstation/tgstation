@@ -1,0 +1,13 @@
+2021-06-01:
+  Mickyan:
+  - bugfix: Smoking no longer spills spaghetti from your pockets
+  - bugfix: Lit cigarettes no longer keep falling off
+  - spellcheck: Removed extra "the" from item knockdown messages
+  RaveRadbury:
+  - bugfix: Mime crayons don't make you multicolored when you eat them.
+  Watermelon914:
+  - bugfix: Fixes AND/OR gates not properly functioning because of null inputs.
+  norill:
+  - bugfix: Fixed not being able to add telecomms frequency filters
+  - bugfix: Changed the color of command frequency in telecomms and headset GUI from
+      blue to yellow to match chat color
