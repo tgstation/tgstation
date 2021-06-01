@@ -47,6 +47,11 @@ SUBSYSTEM_DEF(mapping)
 	var/num_of_res_levels = 1
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
+#ifdef FORCE_MAP
+	config = load_map_config(FORCE_MAP)
+#else
+	config = load_map_config(error_if_missing = FALSE)
+#endif
 	if(initialized)
 		return
 	if(config.defaulted)
