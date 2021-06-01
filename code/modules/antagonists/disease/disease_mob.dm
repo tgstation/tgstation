@@ -76,6 +76,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/Destroy()
 	. = ..()
 	QDEL_NULL(adaptation_menu_action)
+	disease_template = null
 	for(var/V in GLOB.sentient_disease_instances)
 		var/datum/disease/advance/sentient_disease/S = V
 		if(S.overmind == src)
