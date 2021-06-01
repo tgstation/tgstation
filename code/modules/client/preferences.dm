@@ -75,6 +75,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/jumpsuit_style = PREF_SUIT //suit/skirt
 	var/hairstyle = "Bald" //Hair type
 	var/hair_color = "000" //Hair color
+	var/grad_style = "None"
+	var/grad_color = "000"
 	var/facial_hairstyle = "Shaved" //Face hair type
 	var/facial_hair_color = "000" //Facial hair color
 	var/skin_tone = "caucasian1" //Skin color
@@ -374,6 +376,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<br><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a>"
 				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HAIR_COLOR]'>[(randomise[RANDOM_HAIR_COLOR]) ? "Lock" : "Unlock"]</A>"
+
+				dat += "<h3>Gradient:</h3>"
+				dat += "<a href='?_src_=prefs;preference=grad_style;task=input'>[grad_style]</a>"
+				dat += "<br><span style='border:1px solid #161616; background-color: #[grad_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=grad_color;task=input'>Change</a>"
 
 				dat += "<BR><h3>Facial Hairstyle</h3>"
 
@@ -1312,6 +1318,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_hairstyle)
 						hairstyle = new_hairstyle
 
+				if("grad_style")
+					var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Preference")  as null|anything in GLOB.hair_gradients_list
+					if(new_grad_style)
+						grad_style = new_grad_style
+
+				if("grad_color")
+					var/new_grad_color = input(user, "Choose your character's secondary hair color:", "Character Preference","#"+grad_color) as color|null
+					if(new_grad_color)
+						grad_color = sanitize_hexcolor(new_grad_color)
+
 				if("next_hairstyle")
 					hairstyle = next_list_item(hairstyle, GLOB.hairstyles_list)
 
@@ -1921,8 +1937,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 
+	character.grad_color = grad_color
+
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
+	character.grad_style = grad_style
 	character.facial_hairstyle = facial_hairstyle
 	character.underwear = underwear
 	character.underwear_color = underwear_color
