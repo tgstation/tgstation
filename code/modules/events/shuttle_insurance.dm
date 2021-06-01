@@ -9,7 +9,7 @@
 /datum/round_event_control/shuttle_insurance/canSpawnEvent(players)
 	if(!SSeconomy.get_dep_account(ACCOUNT_CAR))
 		return FALSE //They can't pay?
-	if(SSshuttle.shuttle_purchased != SHUTTLEPURCHASE_FORCED)
+	if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return FALSE //don't do it if there's nothing to insure
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //catastrophes won't trigger so no point
