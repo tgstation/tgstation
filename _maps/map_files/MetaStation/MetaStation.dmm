@@ -37774,10 +37774,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
-"kri" = (
-/obj/item/wallframe/camera,
-/turf/open/space/basic,
-/area/space)
 "krP" = (
 /obj/structure/sign/directions/evac,
 /obj/structure/sign/directions/medical{
@@ -71331,10 +71327,10 @@
 	pixel_x = 14
 	},
 /obj/machinery/power/apc/auto_name/north,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/service/kitchen/coldroom)
 "vmM" = (
@@ -129529,7 +129525,7 @@ aaa
 aaa
 aaa
 aaa
-kri
+aaa
 aaa
 lMJ
 cRi
@@ -130049,7 +130045,7 @@ aaa
 lMJ
 aaa
 aaa
-nWF
+aaa
 aaa
 aaa
 lMJ
