@@ -161,7 +161,7 @@
 
 /datum/design/component/gas_amount
 	name = "Gas Sensor Component"
-	desc = "Returns amount of sertain gas in moles when triggered."
+	desc = "Returns amount of the provided gas in moles when triggered."
 	id = "comp_gas_amount"
 	build_path = /obj/item/circuit_component/gas_amount
 
