@@ -153,23 +153,23 @@
 	id = "comp_radio"
 	build_path = /obj/item/circuit_component/radio
 
-/datum/design/component/pressure
+/datum/design/component/pressure_sensor
 	name = "Pressure Sensor Component"
 	desc = "Returns environmental pressure in kPa when triggered."
-	id = "comp_pressure"
-	build_path = /obj/item/circuit_component/pressure
+	id = "comp_pressure_sensor"
+	build_path = /obj/item/circuit_component/pressure_sensor
 
-/datum/design/component/gas_amount
+/datum/design/component/gas_sensor
 	name = "Gas Sensor Component"
 	desc = "Returns amount of the provided gas in moles when triggered."
-	id = "comp_gas_amount"
-	build_path = /obj/item/circuit_component/gas_amount
+	id = "comp_gas_sensor"
+	build_path = /obj/item/circuit_component/gas_sensor
 
-/datum/design/component/temperature
+/datum/design/component/temperature_sensor
 	name = "Temperature Sensor Component"
 	desc = "Returns environmental temperature in Kelvin when triggered."
-	id = "comp_temperature"
-	build_path = /obj/item/circuit_component/temperature
+	id = "comp_temperature_sensor"
+	build_path = /obj/item/circuit_component/temperature_sensor
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
