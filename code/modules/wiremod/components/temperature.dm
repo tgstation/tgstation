@@ -14,7 +14,7 @@
 /obj/item/circuit_component/temperature/Initialize()
 	. = ..()
 
-	output = add_output_port("Gas Amount", PORT_TYPE_NUMBER)
+	output = add_output_port("Current Temperature", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/temperature/Destroy()
 	output = null
