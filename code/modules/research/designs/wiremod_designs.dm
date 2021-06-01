@@ -167,7 +167,7 @@
 
 /datum/design/component/temperature
 	name = "Temperature Sensor Component"
-	desc = "Returns enviromental temperature in kelvins when triggered."
+	desc = "Returns environmental temperature in Kelvin when triggered."
 	id = "comp_temperature"
 	build_path = /obj/item/circuit_component/temperature
 
