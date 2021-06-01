@@ -313,8 +313,14 @@
 		var/datum/listening_datum = target
 		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 	. = NONE
+	// This exists so that even if one of the signal receivers unregisters the signal,
+	// all the objects that are receiving the signal get the signal this final time.
+	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
+	var/list/queued_calls = list()
 	for(var/datum/listening_datum as anything in target)
-		. |= call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
+	for(var/datum/listening_datum as anything in queued_calls)
+		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
