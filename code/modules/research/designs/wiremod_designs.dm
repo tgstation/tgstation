@@ -155,7 +155,7 @@
 
 /datum/design/component/pressure
 	name = "Pressure Sensor Component"
-	desc = "Returns enviromental pressure in kPa when triggered."
+	desc = "Returns environmental pressure in kPa when triggered."
 	id = "comp_pressure"
 	build_path = /obj/item/circuit_component/pressure
 
