@@ -22,11 +22,14 @@
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon_state = "poppy"
+	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
+	greyscale_config = /datum/greyscale_config/flower_simple
+	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -42,7 +45,7 @@
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
-	icon_state = "lily"
+	greyscale_colors = "#fe881f"
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -97,7 +100,7 @@
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	icon_state = "geranium"
+	greyscale_colors = "#1499bb"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -118,6 +121,9 @@
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 // Harebell
 /obj/item/seeds/harebell

@@ -74,7 +74,11 @@ type DroneBasicData = {
   ref: string,
 }
 
-type ExodroneConsoleData = {
+export type AdventureDataProvider = {
+  adventure_data?: AdventureData;
+}
+
+type ExodroneConsoleData = AdventureDataProvider & {
   signal_lost: boolean,
   drone: boolean,
   all_drones?: Array<DroneBasicData>
@@ -712,8 +716,7 @@ const EventScreen = (props, context) => {
                 }} />
             </Stack.Item>
             <Stack.Item >
-              <BlockQuote
-                style={{ "white-space": "pre-wrap" }}>
+              <BlockQuote preserveWhitespace>
                 {event.description}
               </BlockQuote>
             </Stack.Item>
@@ -744,8 +747,13 @@ const EventScreen = (props, context) => {
   );
 };
 
-const AdventureScreen = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+
+type AdventureScreenProps = {
+  hide_status?: boolean
+}
+
+export const AdventureScreen = (props: AdventureScreenProps, context) => {
+  const { act, data } = useBackend<AdventureDataProvider>(context);
   const {
     adventure_data,
   } = data;
@@ -755,10 +763,12 @@ const AdventureScreen = (props, context) => {
     <Section
       fill
       title="Exploration"
-      buttons={<DroneStatus />}>
+      buttons={!props.hide_status && <DroneStatus />}>
       <Stack>
         <Stack.Item>
-          <BlockQuote style={{ "white-space": "pre-wrap" }}>{adventure_data.description}</BlockQuote>
+          <BlockQuote preserveWhitespace>
+            {adventure_data.description}
+          </BlockQuote>
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>

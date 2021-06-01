@@ -64,21 +64,21 @@
 		. = FALSE
 
 	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		var/obj/item/surgical_processor/SP = locate() in R.model.modules
-		if(SP) //no early return for !SP since we want to check optable should this not exist.
-			if(replaced_by in SP.advanced_surgeries)
+		var/mob/living/silicon/robot/robo_surgeon = user
+		var/obj/item/surgical_processor/surgical_processor = locate() in robo_surgeon.model.modules
+		if(surgical_processor) //no early return for !surgical_processor since we want to check optable should this not exist.
+			if(replaced_by in surgical_processor.advanced_surgeries)
 				return FALSE
-			if(type in SP.advanced_surgeries)
+			if(type in surgical_processor.advanced_surgeries)
 				return TRUE
 
-	var/turf/T = get_turf(patient)
+	var/turf/patient_turf = get_turf(patient)
 
 	//Get the relevant operating computer
 	var/obj/machinery/computer/operating/opcomputer
-	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
-	if(table?.computer)
-		opcomputer = table.computer
+	var/obj/structure/table/optable/optable = locate(/obj/structure/table/optable, patient_turf)
+	if(optable?.computer)
+		opcomputer = optable.computer
 	if(!opcomputer)
 		return
 	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
@@ -98,10 +98,10 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		try_to_fail = TRUE
 
-	var/datum/surgery_step/S = get_surgery_step()
-	if(S)
+	var/datum/surgery_step/step = get_surgery_step()
+	if(step)
 		var/obj/item/tool = user.get_active_held_item()
-		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
 		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
@@ -144,8 +144,7 @@
 	. = ..()
 	surgeries = list()
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
-	for(var/i in req_tech_surgeries)
-		var/datum/surgery/beep = i
+	for(var/datum/surgery/beep as anything in req_tech_surgeries)
 		if(initial(beep.requires_tech))
 			surgeries += beep
 

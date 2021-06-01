@@ -591,6 +591,7 @@
 
 ///freezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)
+	SIGNAL_HANDLER
 	if(isorgan(I))
 		var/obj/item/organ/organ = I
 		organ.organ_flags |= ORGAN_FROZEN
@@ -604,6 +605,7 @@
 
 ///unfreezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
+	SIGNAL_HANDLER
 	if(isorgan(I))
 		var/obj/item/organ/organ = I
 		organ.organ_flags  &= ~ORGAN_FROZEN

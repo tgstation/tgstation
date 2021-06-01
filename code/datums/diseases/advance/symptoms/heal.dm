@@ -63,6 +63,11 @@
 		"Transmission 6" = "Removes penalty for only being close to space.",
 	)
 
+#define STARLIGHT_CAN_HEAL 2
+#define STARLIGHT_CAN_HEAL_WITH_PENALTY 1
+#define STARLIGHT_CANNOT_HEAL 0
+#define STARLIGHT_MAX_RANGE 2
+
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
@@ -72,14 +77,61 @@
 	if(A.totalStageSpeed() >= 6)
 		power = 2
 
-/datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	if(istype(get_turf(M), /turf/open/space))
-		return power
+/datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
+	if(direction == ZTRAIT_UP)
+		turf_to_check = turf_to_check.above()
+		if(!turf_to_check)
+			return STARLIGHT_CANNOT_HEAL
+	var/area/area_to_check = get_area(turf_to_check)
+	var/levels_of_glass = 0 // Since starlight condensation only works 2 tiles to the side anyways, it shouldn't work with like 100 z-levels of glass
+	while(levels_of_glass <= STARLIGHT_MAX_RANGE)
+		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == ZTRAIT_DOWN)) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions, if there is a floor tile when checking above, that means a roof exists so the outdoors should only work downwards
+			if (levels_of_glass)
+				return STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
+			return STARLIGHT_CAN_HEAL // if can heal fully
+		if(istransparentturf(turf_to_check) && !(istype(turf_to_check, /turf/open/openspace)))
+			levels_of_glass += 1
+		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
+			if(direction == ZTRAIT_UP)
+				turf_to_check = turf_to_check.above()
+			else
+				turf_to_check = turf_to_check.below()
+			if(!turf_to_check && (direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))) // if does not exist, assume its space since space station if below, however when checking upwards, only assume that its space if the area is outdoors
+				if(levels_of_glass)
+					return STARLIGHT_CAN_HEAL_WITH_PENALTY 
+				return STARLIGHT_CAN_HEAL
+			area_to_check = get_area(turf_to_check)
+			continue
+		return STARLIGHT_CANNOT_HEAL // hit a non-space non-transparent turf
+		
+/datum/symptom/heal/starlight/proc/CanTileHeal(turf/original_turf, satisfied_with_penalty)
+	var/current_heal_level = CanTileHealDirectional(original_turf, ZTRAIT_DOWN)
+	if(current_heal_level == STARLIGHT_CAN_HEAL)
+		return current_heal_level
+	if(current_heal_level && satisfied_with_penalty) // do not care if there is a healing penalty or no
+		return current_heal_level
+	var/heal_level_from_above = CanTileHealDirectional(original_turf, ZTRAIT_UP)
+	if(heal_level_from_above > current_heal_level)
+		return heal_level_from_above
 	else
-		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/open/space))
-				return power * nearspace_penalty
+		return current_heal_level
+
+/datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
+	var/mob/living/affected_mob = A.affected_mob
+	var/turf/turf_of_mob = get_turf(affected_mob)
+	switch(CanTileHeal(turf_of_mob, FALSE))
+		if(STARLIGHT_CAN_HEAL_WITH_PENALTY)
+			return power * nearspace_penalty
+		if(STARLIGHT_CAN_HEAL)
+			return power
+	for(var/turf/turf_to_check in view(affected_mob, STARLIGHT_MAX_RANGE))
+		if(CanTileHeal(turf_to_check, TRUE))
+			return power * nearspace_penalty
+
+#undef STARLIGHT_CAN_HEAL
+#undef STARLIGHT_CAN_HEAL_WITH_PENALTY
+#undef STARLIGHT_CANNOT_HEAL
+#undef STARLIGHT_MAX_RANGE
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power

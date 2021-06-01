@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Malfunctioning AIs no longer spawn shiftstart alongside other AIs unless multiple AI spawns are intended."

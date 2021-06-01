@@ -8,6 +8,10 @@
 	/// Reference to the dmi file for this config
 	var/icon_file
 
+	/// An optional var to set that tells the material system what material this configuration is for.
+	/// Use a typepath here, not an instance.
+	var/datum/material/material_skin
+
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Do not set any further vars, the json file specified above is what generates the object
 
@@ -36,11 +40,13 @@
 // Sensible error messages that tell you exactly what's wrong is the best way to make this easy to use
 /datum/greyscale_config/New()
 	if(!json_config)
-		CRASH("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
+		stack_trace("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
 	string_json_config = "[json_config]"
 	if(!icon_file)
-		CRASH("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
+		stack_trace("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
 	string_icon_file = "[icon_file]"
+	if(!name)
+		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
@@ -65,7 +71,8 @@
 
 /// Gets the name used for debug purposes
 /datum/greyscale_config/proc/DebugName()
-	return "([icon_file]|[json_config])"
+	var/display_name = name || "MISSING_NAME"
+	return "[display_name] ([icon_file]|[json_config])"
 
 /// Takes the json icon state configuration and puts it into a more processed format
 /datum/greyscale_config/proc/ReadIconStateConfiguration(list/data)
@@ -113,6 +120,8 @@
 	var/list/color_groups = list()
 	for(var/datum/greyscale_layer/layer as anything in all_layers)
 		for(var/id in layer.color_ids)
+			if(!isnum(id))
+				continue
 			color_groups["[id]"] = TRUE
 
 	expected_colors = length(color_groups)
@@ -139,7 +148,7 @@
 /// Handles the actual icon manipulation to create the spritesheet
 /datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps)
 	if(!istype(colors))
-		colors = ParseColorString(colors)
+		colors = SSgreyscale.ParseColorString(colors)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
 
@@ -151,7 +160,7 @@
 		generated_icon.GetPixel(1, 1)
 		generated_icons[icon_state] = generated_icon
 
-	var/icon/icon_bundle = icon('icons/Testing/greyscale_error.dmi')
+	var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
 	for(var/icon_state in generated_icons)
 		icon_bundle.Insert(generated_icons[icon_state], icon_state)
 
@@ -185,9 +194,3 @@
 
 	output["icon"] = GenerateBundle(colors, debug_steps)
 	return output
-
-/datum/greyscale_config/proc/ParseColorString(color_string)
-	. = list()
-	var/list/split_colors = splittext(color_string, "#")
-	for(var/color in 2 to length(split_colors))
-		. += "#[split_colors[color]]"

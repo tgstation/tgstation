@@ -463,7 +463,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
@@ -643,6 +643,50 @@ Proc variables, static variables, and global variables are resolved at compile t
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
 
+### When passing vars through New() or Initialize()'s arguments, use src.var
+Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
+
+This is very bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, enable_red)
+	is_red = enable_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, enable_red = TRUE)
+```
+
+Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
+
+This is bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, _is_red)
+	is_red = _is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, _is_red = TRUE)
+```
+
+`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
+
+This is good:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, is_red)
+	src.is_red = is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, is_red = TRUE)
+```
+
+Setting `is_red` in args is simple, and directly names the variable the argument sets.
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)

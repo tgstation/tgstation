@@ -23,9 +23,6 @@
 	var/alert_observers = TRUE //should we let the ghosts and admins know this event is firing
 									//should be disabled on events that fire a lot
 
-	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
-	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
-
 	var/triggering //admin cancellation
 
 	/// Whether or not dynamic should hijack this event
@@ -41,7 +38,7 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/proc/canSpawnEvent(players_amt)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
@@ -49,10 +46,6 @@
 	if(wizardevent != SSevents.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
-		return FALSE
-	if(gamemode_blacklist.len && (gamemode in gamemode_blacklist))
-		return FALSE
-	if(gamemode_whitelist.len && !(gamemode in gamemode_whitelist))
 		return FALSE
 	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
@@ -78,9 +71,8 @@
 	if (alert_observers)
 		message_admins("Random Event triggering in [RANDOM_EVENT_ADMIN_INTERVENTION_TIME] seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME SECONDS)
-		var/gamemode = SSticker.mode.config_tag
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-		if(!canSpawnEvent(players_amt, gamemode))
+		if(!canSpawnEvent(players_amt))
 			message_admins("Second pre-condition check for [name] failed, skipping...")
 			return EVENT_INTERRUPTED
 

@@ -113,6 +113,7 @@
  * * only_signals: default FALSE, if true the proc will not call the deactivate() proc
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
+	SIGNAL_HANDLER
 	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)

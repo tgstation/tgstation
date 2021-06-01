@@ -194,7 +194,7 @@
 		INVOKE_ASYNC(src, .proc/quick_empty, M)
 
 /datum/component/storage/proc/preattack_intercept(datum/source, obj/O, mob/M, params)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
@@ -209,19 +209,23 @@
 		return
 	if(!isturf(I.loc))
 		return
-	var/list/things = I.loc.contents.Copy()
+	INVOKE_ASYNC(src, .proc/async_preattack_intercept, I, M)
+
+///async functionality from preattack_intercept
+/datum/component/storage/proc/async_preattack_intercept(obj/item/attack_item, mob/pre_attack_mob)
+	var/list/things = attack_item.loc.contents.Copy()
 	if(collection_mode == COLLECT_SAME)
-		things = typecache_filter_list(things, typecacheof(I.type))
+		things = typecache_filter_list(things, typecacheof(attack_item.type))
 	var/len = length(things)
 	if(!len)
-		to_chat(M, "<span class='warning'>You failed to pick up anything with [parent]!</span>")
+		to_chat(pre_attack_mob, "<span class='warning'>You failed to pick up anything with [parent]!</span>")
 		return
-	var/datum/progressbar/progress = new(M, len, I.loc)
+	var/datum/progressbar/progress = new(pre_attack_mob, len, attack_item.loc)
 	var/list/rejections = list()
-	while(do_after(M, 1 SECONDS, parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
+	while(do_after(pre_attack_mob, 1 SECONDS, parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, attack_item.loc, rejections, progress)))
 		stoplag(1)
 	progress.end_progress()
-	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
+	to_chat(pre_attack_mob, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
 
 /datum/component/storage/proc/handle_mass_item_insertion(list/things, datum/component/storage/src_object, mob/user, datum/progressbar/progress)
 	var/atom/source_real_location = src_object.real_location()
@@ -753,7 +757,7 @@
 	return max(0, max_items - real_location.contents.len)
 
 /datum/component/storage/proc/signal_fill_type(datum/source, type, amount = 20, force = FALSE)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/atom/real_location = real_location()
 	if(!force)
@@ -761,9 +765,8 @@
 	for(var/i in 1 to amount)
 		if(!handle_item_insertion(new type(real_location), TRUE))
 			return i > 1 //return TRUE only if at least one insertion has been successful.
-		if(CHECK_TICK)
-			if(QDELETED(src))
-				return TRUE
+		if(QDELETED(src))
+			return TRUE
 	return TRUE
 
 
@@ -828,7 +831,7 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
@@ -843,15 +846,22 @@
 		playsound(A, "rustle", 50, TRUE, -5)
 		return
 
-	var/obj/item/I = locate() in real_location()
-	if(!I)
+	var/obj/item/to_remove = locate() in real_location()
+	if(!to_remove)
 		return
-	A.add_fingerprint(user)
-	remove_from_storage(I, get_turf(user))
-	if(!user.put_in_hands(I))
-		to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
+
+	INVOKE_ASYNC(src, .proc/attempt_put_in_hands, to_remove, user)
+
+///attempt to put an item from contents into the users hands
+/datum/component/storage/proc/attempt_put_in_hands(obj/item/to_remove, mob/user)
+	var/atom/parent_as_atom = parent
+
+	parent_as_atom.add_fingerprint(user)
+	remove_from_storage(to_remove, get_turf(user))
+	if(!user.put_in_hands(to_remove))
+		to_chat(user, "<span class='notice'>You fumble for [to_remove] and it falls on the floor.</span>")
 		return
-	user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
+	user.visible_message("<span class='warning'>[user] draws [to_remove] from [parent]!</span>", "<span class='notice'>You draw [to_remove] from [parent].</span>")
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
 	SIGNAL_HANDLER

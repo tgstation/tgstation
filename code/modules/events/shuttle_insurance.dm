@@ -6,7 +6,7 @@
 	weight = 200 //you're basically bound to get it
 	max_occurrences = 1
 
-/datum/round_event_control/shuttle_insurance/canSpawnEvent(players, gamemode)
+/datum/round_event_control/shuttle_insurance/canSpawnEvent(players)
 	if(!SSeconomy.get_dep_account(ACCOUNT_CAR))
 		return FALSE //They can't pay?
 	if(SSshuttle.shuttle_purchased != SHUTTLEPURCHASE_FORCED)

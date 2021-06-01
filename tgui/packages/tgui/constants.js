@@ -59,11 +59,12 @@ export const CSS_COLORS = [
   'label',
 ];
 
+/* IF YOU CHANGE THIS KEEP IT IN SYNC WITH CHAT CSS */
 export const RADIO_CHANNELS = [
   {
     name: 'Syndicate',
     freq: 1213,
-    color: '#a52a2a',
+    color: '#8f4a4b',
   },
   {
     name: 'Red Team',
@@ -83,7 +84,7 @@ export const RADIO_CHANNELS = [
   {
     name: 'Yellow Team',
     freq: 1221,
-    color: '#d1ba22',
+    color: '#fdfd34',
   },
   {
     name: 'CentCom',
@@ -108,7 +109,7 @@ export const RADIO_CHANNELS = [
   {
     name: 'Command',
     freq: 1353,
-    color: '#5177ff',
+    color: '#fcdf03',
   },
   {
     name: 'Medical',

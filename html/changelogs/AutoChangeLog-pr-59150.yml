@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - bugfix: "Quirks sort into med records properly again"

@@ -1,4 +1,0 @@
-author: "Celotajs, stylemistake"
-delete-after: True
-changes: 
-  - refactor: "Almost all alert calls have been replaced with its tgui alternative, tgui_alert"
