@@ -62,7 +62,7 @@
 	user.log_message(msg, LOG_EMOTE)
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
-	var/tmp_sound = get_sound(user)
+	var/tmp_sound = get_sound(user, intentional)
 	if(tmp_sound && (!only_forced_audio || !intentional))
 		playsound(user, tmp_sound, 50, vary)
 
@@ -92,7 +92,7 @@
 	user.emotes_used[src] = world.time
 	return TRUE
 
-/datum/emote/proc/get_sound(mob/living/user)
+/datum/emote/proc/get_sound(mob/living/user, intentional)
 	if(!intentional)
 		return sound
 	if(user.emotes_used && user.emotes_used[src] + audio_cooldown > world.time)
