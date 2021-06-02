@@ -96,7 +96,7 @@
 /obj/item/food/soup/mystery/Initialize()
 	. = ..()
 	var/extra_reagent = null
-	extra_reagent = pick(/datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/medicine/omnizine, /datum/reagent/consumable/banana, /datum/reagent/blood, /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, /datum/reagent/consumable/banana, /datum/reagent/carbon, /datum/reagent/medicine/oculine)
+	extra_reagent = pick(/datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/medicine/omnizine, /datum/reagent/consumable/banana, /datum/reagent/blood, /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, /datum/reagent/carbon, /datum/reagent/medicine/oculine)
 	reagents.add_reagent(extra_reagent, 5)
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 6)
 
