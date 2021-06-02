@@ -49,6 +49,8 @@ SUBSYSTEM_DEF(timer)
 	var/static/last_invoke_warning = 0
 	/// Boolean operator controlling if the timer SS will automatically reset buckets if it fails to invoke callbacks for an extended period of time
 	var/static/bucket_auto_reset = TRUE
+	/// How many times bucket was reset
+	var/bucket_reset_count = 0
 
 /datum/controller/subsystem/timer/PreInit()
 	bucket_list.len = BUCKET_LEN
@@ -56,7 +58,7 @@ SUBSYSTEM_DEF(timer)
 	bucket_resolution = world.tick_lag
 
 /datum/controller/subsystem/timer/stat_entry(msg)
-	msg = "B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)]"
+	msg = "B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)] RST:[bucket_reset_count]"
 	return ..()
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
@@ -154,9 +156,11 @@ SUBSYSTEM_DEF(timer)
 		while ((timer = bucket_list[practical_offset]))
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
-				bucket_resolution = null // force bucket recreation
-				CRASH("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], \
-					head_offset: [head_offset], practical_offset: [practical_offset]")
+				stack_trace("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], \
+					head_offset: [head_offset], practical_offset: [practical_offset], bucket_joined: [timer.bucket_joined]")
+				if (!timer.spent)
+					bucket_resolution = null // force bucket recreation
+					return
 
 			timer.bucketEject() //pop the timer off of the bucket list.
 
@@ -223,6 +227,9 @@ SUBSYSTEM_DEF(timer)
  * Destroys the existing buckets and creates new buckets from the existing timed events
  */
 /datum/controller/subsystem/timer/proc/reset_buckets()
+	WARNING("Timer buckets has been reset, this may cause timer to lag")
+	bucket_reset_count++
+
 	var/list/bucket_list = src.bucket_list // Store local reference to datum var, this is faster
 	var/list/alltimers = list()
 
@@ -351,6 +358,8 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/prev
 	/// The timer subsystem this event is associated with
 	var/datum/controller/subsystem/timer/timer_subsystem
+	/// Boolean indicating if timer joined into bucket
+	var/bucket_joined = FALSE
 
 /datum/timedevent/New(datum/callback/callBack, wait, flags, datum/controller/subsystem/timer/timer_subsystem, hash, source)
 	var/static/nextid = 1
@@ -474,6 +483,9 @@ SUBSYSTEM_DEF(timer)
 		callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), \
 		callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""]), source: [source]"
 
+	if (bucket_joined)
+		stack_trace("Bucket already joined! [name]")
+
 	// Check if this timed event should be diverted to the client time bucket, or the secondary queue
 	var/list/L
 	if (flags & TIMER_CLIENT_TIME)
@@ -495,6 +507,7 @@ SUBSYSTEM_DEF(timer)
 	// If there is no timed event at this position, then the bucket is 'empty'
 	// and we can just set this event to that position
 	if (!bucket_head)
+		bucket_joined = TRUE
 		bucket_list[bucket_pos] = src
 		return
 
@@ -502,6 +515,8 @@ SUBSYSTEM_DEF(timer)
 	// circularly doubly-linked list
 	if (!bucket_head.prev)
 		bucket_head.prev = bucket_head
+
+	bucket_joined = TRUE
 	next = bucket_head
 	prev = bucket_head.prev
 	next.prev = src
