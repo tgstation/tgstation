@@ -1,9 +1,7 @@
 //Lizard Foods, for lizards (and weird humans!)
-//I'm going to leave comments with the closest human food reference for each item here for any future spriters who may want to improve my horrific sprites.
 
 //Meat Dishes
 
-//Blood Sausage or Red Pudding
 /obj/item/food/raw_tiziran_sausage
 	name = "raw Tiziran blood sausage"
 	desc = "A raw Tiziran blood sausage, ready to be cured on a drying rack."
@@ -29,7 +27,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_headcheese
-	name = "raw_headcheese block"
+	name = "raw headcheese block"
 	desc = "A common food on Tizira, headcheese is traditionally made of an animal's head, with the organs removed, boiled until it falls apart, at which point it is collected, strained of moisture, salted heavily, packed into blocks, and left to dry and age for several months. The resulting hard block tastes similar to cheese."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "raw_lizard_cheese"
@@ -55,7 +53,7 @@
 /obj/item/food/headcheese/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese/slice, 5, 30)
 
-/obj/item/food/headcheese/slice
+/obj/item/food/headcheese_slice
 	name = "headcheese slice"
 	desc = "A slice of headcheese, useful for making sandwiches and snacks. Or surviving the cold Tiziran winters."
 	icon = 'icons/obj/food/lizard.dmi'
@@ -72,7 +70,7 @@
 	icon_state = "lung_stirfry"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("meat" = 1, "heat" = 1, "veggies" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT | VEGETABLES | GROSS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/tsatsikh
@@ -236,6 +234,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "snail_nizaya"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
+	microwaved_type = null
 	tastes = list("snails" = 1, "wine" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | MEAT | NUTS
 
@@ -245,6 +244,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "garlic_nizaya"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 8)
+	microwaved_type = null
 	tastes = list("garlic" = 1, "oil" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | NUTS
 
@@ -254,6 +254,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "demit_nizaya"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/korta_nectar = 4)
+	microwaved_type = null
 	tastes = list("peppery sweet" = 1, "veggies" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | SUGAR | NUTS
 

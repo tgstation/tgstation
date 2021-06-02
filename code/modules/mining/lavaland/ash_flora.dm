@@ -168,7 +168,7 @@
 
 /obj/item/food/grown/ash_flora
 	name = "mushroom shavings"
-	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
+	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl. Or perhaps they could be ground into a powder?"
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
 	w_class = WEIGHT_CLASS_TINY
@@ -183,6 +183,7 @@
 	pixel_y = base_pixel_y + rand(-4, 4)
 
 /obj/item/food/grown/ash_flora/shavings //So we can't craft bowls from everything.
+	grind_results = list(/datum/reagent/toxin/mushroom_powder = 5)
 
 /obj/item/food/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"

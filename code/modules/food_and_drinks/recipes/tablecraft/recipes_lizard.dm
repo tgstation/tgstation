@@ -108,7 +108,7 @@
 /datum/crafting_recipe/food/crispy_headcheese
 	name = "Crispy breaded headcheese"
 	reqs = list(
-		/obj/item/food/headcheese/slice = 1,
+		/obj/item/food/headcheese_slice = 1,
 		/obj/item/food/breadslice/root = 1
 	)
 	result = /obj/item/food/crispy_headcheese
@@ -245,7 +245,7 @@
 	reqs = list(
 		/obj/item/food/rootroll = 1,
 		/obj/item/food/liver_pate = 1,
-		/obj/item/food/headcheese/slice = 2,
+		/obj/item/food/headcheese_slice = 2,
 		/obj/item/food/moonfish_caviar = 1
 	)
 	result = /obj/item/food/emperor_roll

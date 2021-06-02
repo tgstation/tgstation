@@ -256,7 +256,7 @@
 
 /obj/item/reagent_containers/food/condiment/vinegar
 	name = "vinegar"
-	desc = "Perfect for chips, if you're feeling British."
+	desc = "Perfect for chips, if you're feeling Space British."
 	icon_state = "vinegar"
 	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
 	fill_icon_thresholds = null
