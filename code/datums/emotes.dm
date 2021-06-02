@@ -104,7 +104,7 @@
 	return TRUE
 
 /datum/emote/proc/get_sound(mob/living/user)
-	return sound //by default just return this var
+	return sound //by default just return this var.
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
