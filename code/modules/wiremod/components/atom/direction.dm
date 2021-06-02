@@ -18,7 +18,7 @@
 	var/datum/port/output/east
 	var/datum/port/output/west
 
-	has_trigger = TRUE
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Minimum range for a valid direction to be returned
 	var/min_range = 7
@@ -30,8 +30,8 @@
 	output = add_output_port("Direction", PORT_TYPE_STRING)
 
 	north = add_output_port("North", PORT_TYPE_SIGNAL)
-	south = add_output_port("South", PORT_TYPE_SIGNAL)
 	east = add_output_port("East", PORT_TYPE_SIGNAL)
+	south = add_output_port("South", PORT_TYPE_SIGNAL)
 	west = add_output_port("West", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/direction/Destroy()
@@ -53,8 +53,14 @@
 		output.set_output(null)
 		return
 
-	output.set_output(dir2text(get_dir(location, get_turf(object))))
-	north.set_output(COMPONENT_SIGNAL)
-	south.set_output(COMPONENT_SIGNAL)
-	east.set_output(COMPONENT_SIGNAL)
-	west.set_output(COMPONENT_SIGNAL)
+	var/direction = get_dir(location, get_turf(object))
+	output.set_output(dir2text(direction))
+
+	if(direction & NORTH)
+		north.set_output(COMPONENT_SIGNAL)
+	if(direction & SOUTH)
+		south.set_output(COMPONENT_SIGNAL)
+	if(direction & EAST)
+		east.set_output(COMPONENT_SIGNAL)
+	if(direction & WEST)
+		west.set_output(COMPONENT_SIGNAL)

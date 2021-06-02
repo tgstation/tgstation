@@ -85,7 +85,7 @@
 		attached_component.register_shell(shell)
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
-		attached_component.input_received()
+		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
 
 /**
  * Unregisters the current shell attached to this circuit.

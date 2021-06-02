@@ -41,7 +41,7 @@
 
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()
-	input_received()
+	TRIGGER_CIRCUIT_COMPONENT(src, null)
 
 /obj/item/circuit_component/light/unregister_shell(atom/movable/shell)
 	shell.set_light_on(FALSE)

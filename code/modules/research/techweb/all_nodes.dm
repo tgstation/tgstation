@@ -69,7 +69,7 @@
 	design_ids = list("integrated_circuit", "circuit_multitool", "comp_arithmetic", "comp_clock", "comp_comparison", "comp_delay", "comp_hear",
 			"comp_index", "comp_length", "comp_light", "comp_logic", "comp_not", "comp_ram", "comp_random", "comp_species", "comp_textcase",
 			"comp_speech", "comp_concat", "comp_speech", "comp_self", "comp_radio", "comp_tostring", "comp_typecheck", "compact_remote_shell", "component_printer",
-			"comp_string_contains")
+			"comp_string_contains", "comp_direction", "comp_gps", "comp_health", "comp_combiner")
 
 /////////////////////////Biotech/////////////////////////
 
@@ -304,7 +304,7 @@
 	display_name = "Movable Shell Research"
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
-	design_ids = list("drone_shell")
+	design_ids = list("drone_shell", "comp_pull")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/server_shell_tech

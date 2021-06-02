@@ -153,6 +153,35 @@
 	id = "comp_radio"
 	build_path = /obj/item/circuit_component/radio
 
+/datum/design/component/gps
+	name = "GPS Component"
+	desc = "A component that returns the xyz co-ordinates of itself"
+	id = "comp_gps"
+	build_path = /obj/item/circuit_component/gps
+
+/datum/design/component/direction
+	name = "Direction Component"
+	desc = "A component that returns the direction of itself and an entity"
+	id = "comp_direction"
+	build_path = /obj/item/circuit_component/direction
+
+/datum/design/component/health
+	name = "Health Component"
+	desc = "A component that returns the health of an organism"
+	id = "comp_health"
+	build_path = /obj/item/circuit_component/health
+
+/datum/design/component/combiner
+	name = "Signal Combiner Component"
+	desc = "A component that combines multiple input signals to provide 1 output signal."
+	id = "comp_combiner"
+	build_path = /obj/item/circuit_component/combiner
+
+/datum/design/component/pull
+	name = "Pull Component"
+	desc = "A component that can force the shell to pull entities. Only works for movable shells."
+	id = "comp_pull"
+	build_path = /obj/item/circuit_component/pull
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

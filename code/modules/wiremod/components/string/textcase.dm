@@ -12,7 +12,7 @@
 	/// The result of the text operation
 	var/datum/port/output/output
 
-	has_trigger = TRUE
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 GLOBAL_LIST_INIT(comp_text_operations, list(
 	COMP_TEXT_LOWER,
@@ -47,4 +47,4 @@ GLOBAL_LIST_INIT(comp_text_operations, list(
 			result = uppertext(value)
 
 	output.set_output(result)
-	trigger_output.set_output(COMPONENT_SIGNAL)
+

@@ -12,7 +12,7 @@
 	/// The result from the output
 	var/datum/port/output/output
 
-	has_trigger = TRUE
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/min_range = 5
 
@@ -41,4 +41,4 @@
 			return
 
 	output.set_output("[input_value]")
-	trigger_output.set_output(COMPONENT_SIGNAL)
+

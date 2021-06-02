@@ -8,7 +8,7 @@
 
 	input_port_amount = 1
 
-	has_trigger = TRUE
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 
 GLOBAL_LIST_INIT(comp_typecheck_options, list(
@@ -45,4 +45,4 @@ GLOBAL_LIST_INIT(comp_typecheck_options, list(
 			return ismob(input_val)
 		if(COMP_TYPECHECK_HUMAN)
 			return ishuman(input_val)
-	trigger_output.set_output(COMPONENT_SIGNAL)
+
