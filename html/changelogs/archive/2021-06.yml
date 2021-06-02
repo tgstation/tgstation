@@ -28,3 +28,15 @@
   rasepretep:
   - code_imp: removed the piece of code that causes carpotoxin to qdel temporal scars
       (hopefully I identified it correctly)
+2021-06-02:
+  FernandoJ8:
+  - bugfix: RD's liver now has the TRAIT_ROYAL_METABOLISM trait.
+  ModDownloading:
+  - qol: 'You can be your own character in Mafia again. Don''t worry plasmamen: you
+      don''t die from fire or lack of plasma in the mafia game, so you can be a funny
+      purple skeleton in relative peace.'
+  RandomGamer123:
+  - bugfix: Heretic's reality phase ability is no longer affected by the bag of holding
+  dragomagol:
+  - bugfix: railings drop rods on deconstruction
+  - bugfix: connected the kilo medbay lobby apc to the grid
