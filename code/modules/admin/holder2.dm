@@ -6,6 +6,9 @@ GLOBAL_PROTECT(protected_admins)
 GLOBAL_VAR_INIT(href_token, GenerateToken())
 GLOBAL_PROTECT(href_token)
 
+#define RESULT_2FA_VALID 1
+#define RESULT_2FA_ID 2
+
 /datum/admins
 	var/datum/admin_rank/rank
 
@@ -95,27 +98,43 @@ GLOBAL_PROTECT(href_token)
 		disassociate()
 		add_verb(C, /client/proc/readmin)
 
-/datum/admins/proc/associate(client/C)
+/datum/admins/proc/associate(client/client)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return
 
-	if(istype(C))
-		if(C.ckey != target)
-			var/msg = " has attempted to associate with [target]'s admin datum"
-			message_admins("[key_name_admin(C)][msg]")
-			log_admin("[key_name(C)][msg]")
-			return
-		if (deadmined)
-			activate()
-		owner = C
-		owner.holder = src
-		owner.add_admin_verbs() //TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
-		remove_verb(owner, /client/proc/readmin)
-		owner.init_verbs() //re-initialize the verb list
-		GLOB.admins |= C
+	if(!istype(client))
+		return
+
+	if(client?.ckey != target)
+		var/msg = " has attempted to associate with [target]'s admin datum"
+		message_admins("[key_name_admin(client)][msg]")
+		log_admin("[key_name(client)][msg]")
+		return
+
+	var/result_2fa = check_2fa(client)
+	if (!result_2fa[RESULT_2FA_VALID])
+		var/msg = " is trying to join, but needs to verify their ckey."
+		message_admins("[key_name_admin(client)][msg]")
+		log_admin("[key_name(client)][msg]")
+
+		start_2fa_process(client, result_2fa[RESULT_2FA_ID])
+
+		return
+
+	if (deadmined)
+		activate()
+
+	remove_verb(client, /client/proc/admin_2fa_verify)
+
+	owner = client
+	owner.holder = src
+	owner.add_admin_verbs()
+	remove_verb(owner, /client/proc/readmin)
+	owner.init_verbs() //re-initialize the verb list
+	GLOB.admins |= client
 
 /datum/admins/proc/disassociate()
 	if(IsAdminAdvancedProcCall())
@@ -147,6 +166,76 @@ GLOBAL_PROTECT(href_token)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
 			return TRUE //we have all the rights they have and more
 	return FALSE
+
+/// Returns whether or not the given client has a verified 2FA connection.
+/datum/admins/proc/check_2fa(client/client)
+	var/admin_2fa_url = CONFIG_GET(string/admin_2fa_url)
+
+	// 2FA not being enabled == everyone passes
+	if (isnull(admin_2fa_url) || admin_2fa_url == "")
+		return list(TRUE, null)
+
+	// MOTHBLOCKS TODO: Keep a text file of most recent valid connections for admins
+	// and use that.
+	if (!SSdbcore.Connect())
+		return list(FALSE, null)
+
+	var/datum/db_query/query = SSdbcore.NewQuery({"
+		SELECT id, verification_time FROM [format_table_name("admin_connections")]
+		WHERE ckey = :ckey
+		AND ip = INET_ATON(:ip)
+		AND cid = :cid
+	"}, list(
+		"ckey" = client.ckey,
+		"ip" = client.address,
+		"cid" = client.computer_id,
+	))
+
+	if (!query.Execute())
+		qdel(query)
+		return list(FALSE, null)
+
+	var/is_valid = FALSE
+	var/id = null
+
+	if (query.NextRow())
+		id = query.item[1]
+		is_valid = !isnull(query.item[2])
+
+	qdel(query)
+	return list(is_valid, id)
+
+/datum/admins/proc/start_2fa_process(client/client, id)
+	add_verb(client, /client/proc/admin_2fa_verify)
+	client?.init_verbs()
+
+	var/admin_2fa_url = CONFIG_GET(string/admin_2fa_url)
+
+	if (!SSdbcore.Connect())
+		to_chat(client, "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>")
+		return
+
+	if (isnull(id))
+		var/datum/db_query/insert_query = SSdbcore.NewQuery({"
+			INSERT INTO [format_table_name("admin_connections")] (ckey, ip, cid)
+			VALUES(:ckey, INET_ATON(:ip), :cid)
+		"}, list(
+			"ckey" = client.ckey,
+			"ip" = client.address,
+			"cid" = client.computer_id,
+		))
+
+		if (!insert_query.Execute())
+			qdel(insert_query)
+			to_chat(client, "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>")
+			return
+
+		id = insert_query.last_insert_id
+
+	to_chat(client, "<h1><b class='danger'>You could not be verified.</b></h1>")
+	to_chat(client, "<h2><b class='danger'>Please visit <a href='[replacetextEx(admin_2fa_url, "%ID%", id)]'>this URL</a> to verify.</b></h2>")
+
+	// MOTHBLOCKS TODO: Click to re-check verification.
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
@@ -210,3 +299,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 /proc/HrefTokenFormField(forceGlobal = FALSE)
 	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
+
+#undef RESULT_2FA_VALID
+#undef RESULT_2FA_ID
