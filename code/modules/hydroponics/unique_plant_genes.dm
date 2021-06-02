@@ -463,7 +463,7 @@
 	name = "Powder-filled Bulbs"
 	new_capcity = 125
 
-/// Plants that explode when used.
+/// Plants that explode when used (based on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
 	name = "Explosive Contents"
 	trait_ids = ATTACK_SELF_ID
@@ -474,9 +474,9 @@
 		return
 
 	our_plant.max_integrity = 40 // Max_integrity is lowered so they explode better, or something like that.
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/detonate_plant)
-	RegisterSignal(our_plant, COMSIG_ATOM_EX_ACT, .proc/clean_up_explosion)
-	RegisterSignal(our_plant, COMSIG_OBJ_DECONSTRUCT, .proc/clean_up_deconstruct)
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/trigger_detonation)
+	RegisterSignal(our_plant, COMSIG_ATOM_EX_ACT, .proc/explosion_reaction)
+	RegisterSignal(our_plant, COMSIG_OBJ_DECONSTRUCT, .proc/deconstruct_reaction)
 
 /*
  * Trigger our plant's detonation.
@@ -484,21 +484,28 @@
  * our_plant - the plant that's exploding
  * user - the mob detonating the plant
  */
-/datum/plant_gene/trait/bomb_plant/proc/detonate_plant(obj/item/our_plant, mob/living/user)
+/datum/plant_gene/trait/bomb_plant/proc/trigger_detonation(obj/item/our_plant, mob/living/user)
 	SIGNAL_HANDLER
 
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/obj/item/food/grown/grown_plant = our_plant
+	// If we have an alt icon, use that to show our plant is exploding.
+	if(istype(our_plant) && grown_plant.alt_icon)
+		our_plant.icon_state = grown_plant.alt_icon
+
+	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [our_plant]!</span>", "<span class='userdanger'>You pluck the stem from [our_plant], which begins to hiss loudly!</span>")
 	log_bomber(user, "primed a", our_plant, "for detonation")
 	detonate(our_plant)
 
 /*
- * Clean up after our plant is deconstructed.
+ * Reacting to when the plant is deconstructed.
  * When is a plant ever deconstructed? Apparently, when it burns.
  *
  * our_plant - the plant that's 'deconstructed'
  * disassembled - if it was disassembled when it was deconstructed.
  */
-/datum/plant_gene/trait/bomb_plant/proc/clean_up_deconstruct(obj/item/our_plant, disassembled)
+/datum/plant_gene/trait/bomb_plant/proc/deconstruct_reaction(obj/item/our_plant, disassembled)
 	SIGNAL_HANDLER
 
 	if(!disassembled)
@@ -514,7 +521,7 @@
  * our_plant - the plant that's exploded on
  * severity - severity of the explosion
  */
-/datum/plant_gene/trait/bomb_plant/proc/clean_up_explosion(obj/item/our_plant, severity)
+/datum/plant_gene/trait/bomb_plant/proc/explosion_reaction(obj/item/our_plant, severity)
 	SIGNAL_HANDLER
 
 	qdel(our_plant)
@@ -525,13 +532,6 @@
  * our_plant - the plant that's exploding for real
  */
 /datum/plant_gene/trait/bomb_plant/proc/detonate(obj/item/our_plant)
-	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/obj/item/food/grown/grown_plant = our_plant
-	// If we have an alt icon, use that to show our plant is exploding.
-	if(istype(our_plant) && grown_plant.alt_icon)
-		our_plant.icon_state = grown_plant.alt_icon
-
-	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
 	our_plant.reagents.chem_temp = 1000 //Sets off the gunpowder
 	our_plant.reagents.handle_reactions()
 
@@ -539,7 +539,7 @@
 /datum/plant_gene/trait/bomb_plant/potency_based
 	name = "Explosive Nature"
 
-/datum/plant_gene/trait/bomb_plant/potency_based/detonate_plant(obj/item/our_plant, mob/living/user)
+/datum/plant_gene/trait/bomb_plant/potency_based/trigger_detonation(obj/item/our_plant, mob/living/user)
 	user.visible_message("<span class='warning'>[user] primes [our_plant]!</span>", "<span class='userdanger'>You prime [our_plant]!</span>")
 	log_bomber(user, "primed a", our_plant, "for detonation")
 
