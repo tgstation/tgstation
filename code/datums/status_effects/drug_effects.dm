@@ -76,7 +76,7 @@
 		ADD_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type) //dilates blood vessels in eyes
 		ADD_TRAIT(human_owner, TRAIT_CLUMSY, type) //impairs motor coordination
 		SEND_SIGNAL(human_owner, COMSIG_ADD_MOOD_EVENT, "stoned", /datum/mood_event/stoned) //+15 High on Smokeleaf
-		human_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED //not the most realistic but necessarily immersive
+		human_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED //not the most realistic but immersive
 	return TRUE
 
 /datum/status_effect/stoned/on_remove()
@@ -92,5 +92,5 @@
 
 /atom/movable/screen/alert/status_effect/stoned
 	name = "Stoned"
-	desc = "dood u high as shit"
+	desc = "Cannabis is impairing your speed, motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "stoned"
