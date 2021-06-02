@@ -522,7 +522,6 @@
 		if(AIRLOCK_OPEN)
 			door_state_suffix = "open"
 
-
 	frame_overlay = get_airlock_overlay("[door_state_suffix]", icon)
 	if(airlock_material)
 		filling_overlay = get_airlock_overlay("[airlock_material]_[door_state_suffix]", overlays_file)
@@ -539,28 +538,40 @@
 		seal_overlay = get_airlock_overlay("sealed", overlays_file)
 	if((obj_integrity < integrity_failure * max_integrity) && (!mobile_state))
 		damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
-	else if((obj_integrity < (0.75 * max_integrity)) && (!mobile_state))
+	else if((obj_integrity < (0.75 * max_integrity)) && (!mobile_state) && ((airlock_state != AIRLOCK_OPEN)))
 		damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
+	else if((obj_integrity < (0.75 * max_integrity)) && (!mobile_state))
+		damag_overlay = get_airlock_overlay("sparks_open", overlays_file)
 	if(lights && hasPower())
-		if(mobile_state)
-			lights_overlay = get_airlock_overlay("lights_[light_state_suffix]")
+		if(mobile_state || (airlock_state == AIRLOCK_DENY))
+			lights_overlay = get_airlock_overlay("lights_[light_state_suffix]", overlays_file)
 		if(locked)
 			lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 		else if(emergency)
 			lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
-
+	if(obj_flags & EMAGGED)
+		sparks_overlay = get_airlock_overlay("sparks", overlays_file)
 	if(note)
 		note_overlay = get_airlock_overlay("[notetype]_[door_state_suffix]", note_overlay_file)
 
-	. += frame_overlay
-	. += filling_overlay
-	. += lights_overlay
-	. += panel_overlay
-	. += weld_overlay
-	. += sparks_overlay
-	. += damag_overlay
-	. += note_overlay
-	. += seal_overlay
+	if(frame_overlay)
+		. += frame_overlay
+	if(filling_overlay)
+		. += filling_overlay
+	if(lights_overlay)
+		. += lights_overlay
+	if(panel_overlay)
+		. += panel_overlay
+	if(weld_overlay)
+		. += weld_overlay
+	if(sparks_overlay)
+		. += sparks_overlay
+	if(damag_overlay)
+		. += damag_overlay
+	if(note_overlay)
+		. += note_overlay
+	if(seal_overlay)
+		. += seal_overlay
 
 	if(hasPower() && unres_sides)
 		if(unres_sides & NORTH)
