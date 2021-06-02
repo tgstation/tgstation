@@ -174,6 +174,7 @@
 	turf_type = /turf/open/floor/carpet/black
 	tableVariant = /obj/structure/table/wood/fancy/black
 	merge_type = /obj/item/stack/tile/carpet/black
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
@@ -182,6 +183,7 @@
 	turf_type = /turf/open/floor/carpet/blue
 	tableVariant = /obj/structure/table/wood/fancy/blue
 	merge_type = /obj/item/stack/tile/carpet/blue
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
@@ -190,6 +192,7 @@
 	turf_type = /turf/open/floor/carpet/cyan
 	tableVariant = /obj/structure/table/wood/fancy/cyan
 	merge_type = /obj/item/stack/tile/carpet/cyan
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
@@ -198,6 +201,7 @@
 	turf_type = /turf/open/floor/carpet/green
 	tableVariant = /obj/structure/table/wood/fancy/green
 	merge_type = /obj/item/stack/tile/carpet/green
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
@@ -206,6 +210,7 @@
 	turf_type = /turf/open/floor/carpet/orange
 	tableVariant = /obj/structure/table/wood/fancy/orange
 	merge_type = /obj/item/stack/tile/carpet/orange
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
@@ -214,6 +219,7 @@
 	turf_type = /turf/open/floor/carpet/purple
 	tableVariant = /obj/structure/table/wood/fancy/purple
 	merge_type = /obj/item/stack/tile/carpet/purple
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
@@ -222,6 +228,7 @@
 	turf_type = /turf/open/floor/carpet/red
 	tableVariant = /obj/structure/table/wood/fancy/red
 	merge_type = /obj/item/stack/tile/carpet/red
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/royalblack
 	name = "royal black carpet"
@@ -230,6 +237,7 @@
 	turf_type = /turf/open/floor/carpet/royalblack
 	tableVariant = /obj/structure/table/wood/fancy/royalblack
 	merge_type = /obj/item/stack/tile/carpet/royalblack
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/royalblue
 	name = "royal blue carpet"
@@ -238,6 +246,7 @@
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
 	merge_type = /obj/item/stack/tile/carpet/royalblue
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/executive
 	name = "executive carpet"
@@ -245,6 +254,7 @@
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/executive
 	merge_type = /obj/item/stack/tile/carpet/executive
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/stellar
 	name = "stellar carpet"
@@ -252,6 +262,7 @@
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/stellar
 	merge_type = /obj/item/stack/tile/carpet/stellar
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/donk
 	name = "\improper Donk Co. promotional carpet"
@@ -259,6 +270,7 @@
 	inhand_icon_state = "tile-carpet-orange"
 	turf_type = /turf/open/floor/carpet/donk
 	merge_type = /obj/item/stack/tile/carpet/donk
+	tile_reskin_types = list()
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
