@@ -96,11 +96,11 @@
 /datum/emote/proc/check_audio(mob/living/user, intentional)
 	if(!intentional)
 		return TRUE
-	if(user.emotes_used && user.emotes_used[src] + audio_cooldown > world.time)
+	if(user.audio_emotes_used && user.audio_emotes_used[src] + audio_cooldown > world.time)
 		return FALSE
-	if(!user.emotes_used)
-		user.emotes_used = list()
-	user.emotes_used[src] = world.time
+	if(!user.audio_emotes_used)
+		user.audio_emotes_used = list()
+	user.audio_emotes_used[src] = world.time
 	return TRUE
 
 /datum/emote/proc/get_sound(mob/living/user)
