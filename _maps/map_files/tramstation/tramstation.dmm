@@ -196,10 +196,17 @@
 /area/maintenance/port/central)
 "aaD" = (
 /obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
 /obj/effect/turf_decal/trimline/blue,
 /obj/machinery/airalarm/directional/north,
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/clothing/shoes/magboots{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "aaE" = (
@@ -219,9 +226,16 @@
 /area/security/prison)
 "aaI" = (
 /obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
 /obj/effect/turf_decal/trimline/blue,
+/obj/item/tank/jetpack/carbondioxide{
+	pixel_x = 4;
+	pixel_y = -1
+	},
 /obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide{
+	pixel_x = -4;
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "aaJ" = (
