@@ -41,7 +41,7 @@ type Info = {
 };
 
 const ObjectivePrintout = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>(context);
   const {
     objectives,
   } = data;
@@ -110,7 +110,7 @@ const EmployerSection = (props, context) => {
     goal,
   } = data;
   return (
-    <Section fill title="Employer">
+    <Section fill title="Employer" scrollable>
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack vertical>

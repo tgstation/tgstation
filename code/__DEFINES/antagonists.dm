@@ -72,8 +72,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_VOID "Void"
 
 
-/// How many telecrystals a normal traitor starts with
+/// How many red telecrystals a normal traitor starts with
 #define RED_TELECRYSTALS_DEFAULT 20
+/// How many black telecrystals a normal traitor starts with
+#define BLACK_TELECRYSTALS_DEFAULT 0
+
 /// How many telecrystals mapper/admin only "precharged" uplink implant
 #define RED_TELECRYSTALS_PRELOADED_IMPLANT 10
 /// The normal cost of an uplink implant; used for calcuating how many

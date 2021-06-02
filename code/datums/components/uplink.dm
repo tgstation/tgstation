@@ -36,7 +36,7 @@
 	///Instructions on how to access the uplink based on location
 	var/unlock_text
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_telecrystals = RED_TELECRYSTALS_DEFAULT, name, ui_theme, unlock_text)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_telecrystals = RED_TELECRYSTALS_DEFAULT, black_telecrystals = BLACK_TELECRYSTALS_DEFAULT, name, ui_theme, unlock_text)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -48,6 +48,7 @@
 	src.active = active
 	src.uplink_flag = uplink_flag
 	src.red_telecrystals = red_telecrystals
+	src.black_telecrystals = black_telecrystals
 	src.unlock_text = unlock_text
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
@@ -168,7 +169,7 @@
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Uplink", name)
+		ui = new(user, src, "SyndicateUplink", name)
 		// This UI is only ever opened by one person,
 		// and never is updated outside of user input.
 		ui.set_autoupdate(FALSE)
@@ -217,7 +218,7 @@
 			cat["items"] += list(list(
 				"name" = uplink_item.name,
 				"red_cost" = uplink_item.red_cost,
-				"black_cost" = uplink_item.black_cost
+				"black_cost" = uplink_item.black_cost,
 				"desc" = uplink_item.desc,
 			))
 		data["categories"] += list(cat)
@@ -258,16 +259,18 @@
 	if(!user || user.incapacitated())
 		return
 	if(uplink_item.limited_stock == 0)
-	if(red_telecrystals < uplink_item.red_cost || )
+		return
+	if(red_telecrystals < uplink_item.red_cost || black_telecrystals < uplink_item.black_cost)
 		return
 	red_telecrystals -= uplink_item.red_cost
+	black_telecrystals -= uplink_item.black_cost
 
 	uplink_item.purchase(user, src)
 
 	if(uplink_item.limited_stock > 0)
 		uplink_item.limited_stock -= 1
 
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(uplink_item.name)]", "[uplink_item.red_cost]"))
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(uplink_item.name)]", "[uplink_item.red_cost + uplink_item.black_cost]"))
 	return TRUE
 
 // Implant signal responses
