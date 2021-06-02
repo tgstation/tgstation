@@ -148,6 +148,11 @@
 
 /datum/action/cooldown/domain/Trigger()
 	. = ..()
+	if(!.)
+		return
+	if(owner.stat == DEAD)
+		return
+
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
 	switch (rand(1,10))
@@ -178,6 +183,9 @@
 	. = ..()
 	if(!.)
 		return
+	if(owner.stat == DEAD)
+		return
+
 	var/cap = CONFIG_GET(number/ratcap)
 	var/something_from_nothing = FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
