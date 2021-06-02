@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Section, Stack } from '../components';
+import { BlockQuote, Box, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
@@ -18,17 +18,13 @@ const goalstyle = {
   fontWeight: 'bold',
 };
 
-const employerstyle = {
-  fontWeight: 'bold',
-};
-
 type Objective = {
-  count: number,
-  name: string,
-  explanation: string,
-  complete: BooleanLike,
-  uncompleted: BooleanLike,
-  reward: number,
+  count: number;
+  name: string;
+  explanation: string;
+  complete: BooleanLike;
+  uncompleted: BooleanLike;
+  reward: number;
 }
 
 type Info = {
@@ -92,11 +88,9 @@ const IntroductionSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const {
     intro,
-    allies,
-    goal,
   } = data;
   return (
-    <Section fill title="Intro">
+    <Section fill title="Intro" scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           {intro}
@@ -110,9 +104,8 @@ const IntroductionSection = (props, context) => {
 };
 
 const EmployerSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>(context);
   const {
-    intro,
     allies,
     goal,
   } = data;
@@ -146,30 +139,41 @@ const EmployerSection = (props, context) => {
 };
 
 const UplinkSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>(context);
   const {
+    has_uplink,
     uplink_intro,
     uplink_unlock_info,
   } = data;
   return (
     <Section title="Uplink">
       <Stack fill>
-        <Stack.Item bold>
-          {uplink_intro}
-        </Stack.Item>
-        <Stack.Divider />
-        <Stack.Item>
-          <BlockQuote grow>
-            {uplink_unlock_info}
-          </BlockQuote>
-        </Stack.Item>
+        {!has_uplink && (
+          <Dimmer>
+            <Stack.Item fontSize="18px">
+              You were not supplied with an uplink.
+            </Stack.Item>
+          </Dimmer>
+        ) || (
+          <>
+            <Stack.Item bold>
+              {uplink_intro}
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item>
+              <BlockQuote grow>
+                {uplink_unlock_info}
+              </BlockQuote>
+            </Stack.Item>
+          </>
+        )}
       </Stack>
     </Section>
   );
 };
 
 const CodewordsSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+  const { data } = useBackend<Info>(context);
   const {
     phrases,
     responses,

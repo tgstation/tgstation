@@ -17,7 +17,7 @@
 	var/allow_restricted = TRUE
 	///initial money to spend, non gimmicky and non murdery
 	var/red_telecrystals
-	///money earned via completing objectives, most things red_cost this
+	///money earned via completing objectives, most things cost this
 	var/black_telecrystals
 	var/selected_cat
 	var/owner = null
@@ -80,13 +80,14 @@
 
 	previous_attempts = list()
 
-/datum/component/uplink/InheritComponent(datum/component/uplink/U)
-	lockable |= U.lockable
-	active |= U.active
-	uplink_flag |= U.uplink_flag
-	red_telecrystals += U.red_telecrystals
-	if(purchase_log && U.purchase_log)
-		purchase_log.MergeWithAndDel(U.purchase_log)
+/datum/component/uplink/InheritComponent(datum/component/uplink/uplink_item)
+	lockable |= uplink_item.lockable
+	active |= uplink_item.active
+	uplink_flag |= uplink_item.uplink_flag
+	red_telecrystals += uplink_item.red_telecrystals
+	black_telecrystals += uplink_item.black_telecrystals
+	if(purchase_log && uplink_item.purchase_log)
+		purchase_log.MergeWithAndDel(uplink_item.purchase_log)
 
 /datum/component/uplink/Destroy()
 	purchase_log = null
@@ -106,33 +107,45 @@
 		if (uplink_items[category] != null && updated_items[category] != null)
 			updated_items[category] = uplink_items[category]
 
-/datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/red_telecrystal/TC, silent = FALSE)
+/datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystals, silent = FALSE)
 	if(!silent)
-		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
-	var/amt = TC.amount
-	red_telecrystals += amt
-	TC.use(amt)
-	log_uplink("[key_name(user)] loaded [amt] red_telecrystals into [parent]'s uplink")
+		to_chat(user, "<span class='notice'>You slot [telecrystals] into [parent] and charge its internal uplink.</span>")
+	var/amt = telecrystals.amount
+	if(istype(telecrystals, /obj/item/stack/red_telecrystal))
+		red_telecrystals += amt
+		log_uplink("[key_name(user)] loaded [amt] red telecrystals into [parent]'s uplink")
+	else
+		black_telecrystals += amt
+		log_uplink("[key_name(user)] loaded [amt] black telecrystals into [parent]'s uplink")
+	telecrystals.use(amt)
 
-/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+
+/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/attacked_with, mob/user)
 	SIGNAL_HANDLER
 
 	if(!active)
 		return //no hitting everyone/everything just to try to slot tcs in!
-	if(istype(I, /obj/item/stack/red_telecrystal))
-		LoadTC(user, I)
+	if(istype(attacked_with, /obj/item/stack/red_telecrystal) || istype(attacked_with, /obj/item/stack/black_telecrystal))
+		LoadTC(user, attacked_with)
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
-			var/datum/uplink_item/UI = uplink_items[category][item]
-			var/path = UI.refund_path || UI.item
-			var/red_cost = UI.refund_amount || UI.red_cost
-			if(I.type == path && UI.refundable && I.check_uplink_validity())
-				red_telecrystals += red_cost
-				log_uplink("[key_name(user)] refunded [UI] for [red_cost] red_telecrystals using [parent]'s uplink")
+			var/datum/uplink_item/uplink_item = uplink_items[category][item]
+			var/path = uplink_item.refund_path || uplink_item.item
+			var/red_cost = uplink_item.refund_amount || uplink_item.red_cost
+			var/black_cost = uplink_item.refund_amount || uplink_item.black_cost
+			var/amt_refunded = 0
+			if(attacked_with.type == path && uplink_item.refundable && attacked_with.check_uplink_validity())
+				if(uplink_item.red_cost) //prevents payouts where refund_amount != 0 but red_cost does
+					red_telecrystals += red_cost
+					amt_refunded += red_cost
+				if(uplink_item.black_cost) //see above but for the other one
+					black_telecrystals += black_cost
+					amt_refunded += black_cost
+				log_uplink("[key_name(user)] refunded [uplink_item] for [amt_refunded] telecrystals using [parent]'s uplink")
 				if(purchase_log)
 					purchase_log.total_spent -= red_cost
-				to_chat(user, "<span class='notice'>[I] refunded.</span>")
-				qdel(I)
+				to_chat(user, "<span class='notice'>[attacked_with] refunded.</span>")
+				qdel(attacked_with)
 				return
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
@@ -165,6 +178,8 @@
 	if(!user.mind)
 		return
 	var/list/data = list()
+	data["buy_with_black"] = !(uplink_flag & UPLINK_TRAITORS)
+	data["black_telecrystals"] = black_telecrystals
 	data["red_telecrystals"] = red_telecrystals
 	data["lockable"] = lockable
 	data["compactMode"] = compact_mode
@@ -179,30 +194,31 @@
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
 		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			if(I.limited_stock == 0)
+			var/datum/uplink_item/uplink_item = uplink_items[category][item]
+			if(uplink_item.limited_stock == 0)
 				continue
-			if(I.restricted_roles.len)
+			if(uplink_item.restricted_roles.len)
 				var/is_inaccessible = TRUE
-				for(var/R in I.restricted_roles)
+				for(var/R in uplink_item.restricted_roles)
 					if(R == user.mind.assigned_role || debug)
 						is_inaccessible = FALSE
 				if(is_inaccessible)
 					continue
-			if(I.restricted_species)
+			if(uplink_item.restricted_species)
 				if(ishuman(user))
 					var/is_inaccessible = TRUE
 					var/mob/living/carbon/human/H = user
-					for(var/F in I.restricted_species)
+					for(var/F in uplink_item.restricted_species)
 						if(F == H.dna.species.id || debug)
 							is_inaccessible = FALSE
 							break
 					if(is_inaccessible)
 						continue
 			cat["items"] += list(list(
-				"name" = I.name,
-				"red_cost" = I.red_cost,
-				"desc" = I.desc,
+				"name" = uplink_item.name,
+				"red_cost" = uplink_item.red_cost,
+				"black_cost" = uplink_item.black_cost
+				"desc" = uplink_item.desc,
 			))
 		data["categories"] += list(cat)
 	return data
@@ -220,8 +236,8 @@
 			for(var/category in uplink_items)
 				buyable_items += uplink_items[category]
 			if(item_name in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item_name]
-				MakePurchase(usr, I)
+				var/datum/uplink_item/uplink_item = buyable_items[item_name]
+				MakePurchase(usr, uplink_item)
 				return TRUE
 		if("lock")
 			active = FALSE
@@ -235,24 +251,23 @@
 		if("compact_toggle")
 			compact_mode = !compact_mode
 			return TRUE
-		//if("get_more_objectives")
 
-/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
-	if(!istype(U))
+/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/uplink_item)
+	if(!istype(uplink_item))
 		return
-	if (!user || user.incapacitated())
+	if(!user || user.incapacitated())
 		return
-
-	if(red_telecrystals < U.red_cost || U.limited_stock == 0)
+	if(uplink_item.limited_stock == 0)
+	if(red_telecrystals < uplink_item.red_cost || )
 		return
-	red_telecrystals -= U.red_cost
+	red_telecrystals -= uplink_item.red_cost
 
-	U.purchase(user, src)
+	uplink_item.purchase(user, src)
 
-	if(U.limited_stock > 0)
-		U.limited_stock -= 1
+	if(uplink_item.limited_stock > 0)
+		uplink_item.limited_stock -= 1
 
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.red_cost]"))
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(uplink_item.name)]", "[uplink_item.red_cost]"))
 	return TRUE
 
 // Implant signal responses

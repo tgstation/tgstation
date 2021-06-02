@@ -349,12 +349,13 @@
 		))
 		obj_count++
 	//escape obj
-	objective_data += list(list(
-			"count" = obj_count,
-			"name" = ending_objective.objective_name,
-			"explanation" = ending_objective.explanation_text,
-			"complete" = ending_objective.completed,
-		))
+	if(ending_objective)
+		objective_data += list(list(
+				"count" = obj_count,
+				"name" = ending_objective.objective_name,
+				"explanation" = ending_objective.explanation_text,
+				"complete" = ending_objective.completed,
+			))
 	return objective_data
 
 /datum/antagonist/traitor/roundend_report_footer()

@@ -83,9 +83,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/desc = "item description"
 	var/item = null // Path to the item to spawn.
 	var/refund_path = null // Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
-	///price in red telecrystals
+	///price in red telecrystals (roundstart currency)
 	var/red_cost = 0
-	///price in black telecrystals
+	///price in black telecrystals (earned currency)
 	var/black_cost = 0
 	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE

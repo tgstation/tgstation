@@ -9,7 +9,8 @@ const MAX_SEARCH_RESULTS = 25;
 export const Uplink = (props, context) => {
   const { data } = useBackend(context);
   const {
-    telecrystals,
+    red_telecrystals,
+    black_telecrystals,
     theme,
   } = data;
   return (
@@ -19,7 +20,8 @@ export const Uplink = (props, context) => {
       theme={theme}>
       <Window.Content scrollable>
         <GenericUplink
-          currencyAmount={telecrystals}
+          redCurrencyAmount={red_telecrystals}
+          blackCurrencyAmount={black_telecrystals}
           currencySymbol="TC" />
       </Window.Content>
     </Window>
@@ -28,7 +30,8 @@ export const Uplink = (props, context) => {
 
 export const GenericUplink = (props, context) => {
   const {
-    currencyAmount = 0,
+    redCurrencyAmount = 0,
+    blackCurrencyAmount = 0,
     currencySymbol = 'cr',
   } = props;
   const { act, data } = useBackend(context);
@@ -65,8 +68,8 @@ export const GenericUplink = (props, context) => {
       title={(
         <Box
           inline
-          color={currencyAmount > 0 ? 'good' : 'bad'}>
-          {formatMoney(currencyAmount)} {currencySymbol}
+          color={redCurrencyAmount > 0 ? 'good' : 'bad'}>
+          {formatMoney(redCurrencyAmount)} {currencySymbol}
         </Box>
       )}
       buttons={(
@@ -114,7 +117,7 @@ export const GenericUplink = (props, context) => {
           )}
           <ItemList
             compactMode={searchText.length > 0 || compactMode}
-            currencyAmount={currencyAmount}
+            redCurrencyAmount={redCurrencyAmount}
             currencySymbol={currencySymbol}
             items={items} />
         </Flex.Item>
@@ -126,7 +129,7 @@ export const GenericUplink = (props, context) => {
 const ItemList = (props, context) => {
   const {
     compactMode,
-    currencyAmount,
+    redCurrencyAmount,
     currencySymbol,
   } = props;
   const { act } = useBackend(context);
@@ -134,13 +137,13 @@ const ItemList = (props, context) => {
     hoveredItem,
     setHoveredItem,
   ] = useLocalState(context, 'hoveredItem', {});
-  const hoveredCost = hoveredItem && hoveredItem.cost || 0;
+  const hoveredCost = hoveredItem && hoveredItem.red_cost || 0;
   // Append extra hover data to items
   const items = props.items.map(item => {
     const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = currencyAmount - hoveredCost < item.cost;
+    const notEnoughHovered = redCurrencyAmount - hoveredCost < item.red_cost;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
-    const disabled = currencyAmount < item.cost || disabledDueToHovered;
+    const disabled = redCurrencyAmount < item.red_cost || disabledDueToHovered;
     return {
       ...item,
       disabled,
@@ -159,7 +162,7 @@ const ItemList = (props, context) => {
             <Table.Cell collapsing textAlign="right">
               <Button
                 fluid
-                content={formatMoney(item.cost) + ' ' + currencySymbol}
+                content={formatMoney(item.red_cost) + ' ' + currencySymbol}
                 disabled={item.disabled}
                 tooltip={item.desc}
                 tooltipPosition="left"
@@ -181,7 +184,7 @@ const ItemList = (props, context) => {
       level={2}
       buttons={(
         <Button
-          content={item.cost + ' ' + currencySymbol}
+          content={item.red_cost + ' ' + currencySymbol}
           disabled={item.disabled}
           onmouseover={() => setHoveredItem(item)}
           onmouseout={() => setHoveredItem({})}

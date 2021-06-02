@@ -257,14 +257,17 @@
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
 	var/approved_targets = list()
-	check_items:
-		for(var/datum/objective_item/possible_item in GLOB.possible_items)
-			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
-				continue
-			for(var/datum/mind/M in owners)
-				if(M.current.mind.assigned_role in possible_item.excludefromjob)
-					continue check_items
-			approved_targets += possible_item
+	for(var/datum/objective_item/possible_item in GLOB.possible_items)
+		if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
+			continue
+		var/bad_item = FALSE
+		for(var/datum/mind/M in owners)
+			if(M.current.mind.assigned_role in possible_item.excludefromjob)
+				bad_item = TRUE
+				break
+		if(bad_item)
+			continue
+		approved_targets += possible_item
 	if (length(approved_targets))
 		return set_target(pick(approved_targets))
 	return set_target(null)

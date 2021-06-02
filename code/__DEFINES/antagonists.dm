@@ -158,6 +158,9 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Legal Trouble"
 ))
 
+///codebase limit of the total cost of the red market (items purchasable with red tc)
+#define RED_TELECRYSTAL_LIMIT 80
+
 ///all the employers that are syndicate
 #define FACTION_SYNDICATE "syndicate"
 ///all the employers that are nanotrasen

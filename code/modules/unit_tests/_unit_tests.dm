@@ -77,6 +77,7 @@
 #include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_recipe_collisions.dm"
+#include "red_tc_limit.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "security_officer_distribution.dm"
