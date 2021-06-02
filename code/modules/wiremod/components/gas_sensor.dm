@@ -33,6 +33,6 @@
 
 	var/datum/gas_mixture/air = return_air()
 	var/gas_name = gas_name2path(input_port.input_value)
-	if(gas_name = air.gases)
+	if(gas_name == air.gases)
 		output.set_output(air.gases[gas_name][MOLES])
 		trigger_output.set_output(COMPONENT_SIGNAL)
