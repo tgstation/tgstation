@@ -209,6 +209,41 @@
 			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
 			tastes = list("peanuts" = 2, "bbq sauce" = 1)
 
+/obj/item/food/peanuts/flavoured
+	name = "\improper Parker's flavoured peanuts"
+	desc = "What flavour will you get?"
+
+/obj/item/food/peanuts/flavoured/salted
+	name = "\improper Parker's salted peanuts"
+	desc = "Tastes salty, just like most peanuts."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 1)
+	tastes = list("peanuts" = 2, "salt" = 1)
+
+/obj/item/food/peanuts/flavoured/wasabi
+	name = "\improper Parker's wasabi peanuts"
+	desc = "It's the Heat from the East. Goes well with sushi peanuts."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/capsaicin = 1)
+	tastes = list("peanuts" = 2, "wasabi heat" = 1)
+
+/obj/item/food/peanuts/flavoured/honey_roasted
+	name = "\improper Parker's honey-roasted peanuts"
+	desc = "Tossed in honey and roasted for maximum sugary-savoury flavour."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 1)
+	tastes = list("peanuts" = 2, "honey" = 1)
+
+/obj/item/food/peanuts/flavoured/barbecue
+	name = "\improper Parker's barbecue peanuts"
+	desc = "The pioneers used to ride for miles after eating these."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
+	tastes = list("peanuts" = 2, "bbq sauce" = 1)
+
+/obj/item/food/peanuts/flavoured/random/Initialize()
+	. = ..()
+	var/random_flavour = pick(subtypesof(/obj/item/food/peanuts/flavoured) - /obj/item/food/peanuts/flavoured/random)
+	new random_flavour(loc)
+
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/food/cnds
 	name = "\improper C&Ds"
 	desc = "Legally, we cannot say that these won't melt in your hands."
@@ -219,28 +254,43 @@
 	foodtypes = JUNKFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cnds/filled/Initialize()
+/obj/item/food/cnds/suicide_act(mob/user)
 	. = ..()
-	var/candy_flavour = pick("caramel", "pretzel", "peanut butter", "banana")
-	switch(candy_flavour)
-		if("caramel")
-			name = "caramel C&Ds"
-			desc = "Legally, we cannot say that these won't melt in your hands. Stuffed with sugary sweet caramel."
-			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/caramel = 1)
-			tastes = list("chocolate candy" = 2, "caramel" = 1)
-		if("pretzel")
-			name = "pretzel C&Ds"
-			desc = "Legally, we cannot say that these won't melt in your hands. Now 80% more German."
-			food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/coco = 1)
-			tastes = list("chocolate candy" = 2, "pretzel" = 1)
-			foodtypes = JUNKFOOD | GRAIN
-		if("peanut butter")
-			name = "peanut butter C&Ds"
-			desc = "Legally, we cannot say that these won't melt in your hands. Loved by aliens."
-			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/peanut_butter = 1)
-			tastes = list("chocolate candy" = 2, "peanut butter" = 1)
-		if("banana")
-			name = "banana honk C&Ds"
-			desc = "Legally, we cannot say that these won't melt in your hands. Honk honk!"
-			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/banana = 1)
-			tastes = list("chocolate candy" = 2, "banana" = 1)
+	user.visible_message("<span class='suicide'>[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
+
+/obj/item/food/cnds/filled
+	name = "filled C&Ds"
+	desc = "Filled with one of four delicious flavours!"
+
+/obj/item/food/cnds/filled/caramel
+	name = "caramel C&Ds"
+	desc = "Stuffed with sugary sweet caramel, making them a diabetic's worst nightmare."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/caramel = 1)
+	tastes = list("chocolate candy" = 2, "caramel" = 1)
+
+/obj/item/food/cnds/filled/pretzel
+	name = "pretzel C&Ds"
+	desc = "Eine köstliche Begleitung zu Ihrem Lieblingsbier."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/coco = 1)
+	tastes = list("chocolate candy" = 2, "pretzel" = 1)
+	foodtypes = JUNKFOOD | GRAIN
+
+/obj/item/food/cnds/filled/peanut_butter
+	name = "peanut butter C&Ds"
+	desc = "Beloved by small children and aliens alike."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/peanut_butter = 1)
+	tastes = list("chocolate candy" = 2, "peanut butter" = 1)
+
+/obj/item/food/cnds/filled/banana_honk
+	name = "banana honk C&Ds"
+	desc = "The official candy of clowns everywhere. Honk honk!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/banana = 1)
+	tastes = list("chocolate candy" = 2, "banana" = 1)
+
+/obj/item/food/cnds/filled/random/Initialize()
+	. = ..()
+	var/random_flavour = pick(subtypesof(/obj/item/food/cnds/filled) - /obj/item/food/cnds/filled/random)
+	new random_flavour(loc)
+
+	return INITIALIZE_HINT_QDEL

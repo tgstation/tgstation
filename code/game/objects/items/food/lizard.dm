@@ -184,6 +184,16 @@
 	foodtypes = GROSS | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/mushroomy_stirfry
+	name = "mushroomy stirfry"
+	desc = "A medley of mushrooms, made to meet your monstrous munchies. Marvelous!"
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "mushroomy_stirfry"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("marvelous mushrooms" = 1, "sublime shrooms" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
 //Fish Dishes
 /obj/item/food/grilled_moonfish
 	name = "grilled moonfish"
@@ -207,7 +217,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/lizard_surf_n_turf
-	name = "\improper Zagos surf 'n' turf smorgasbord"
+	name = "\improper Zagosk surf 'n' turf smorgasbord"
 	desc = "A massive platter of Tizira's finest meat and seafood, typically shared by groups at the beach. Of course, nothing's stopping you eating it on your own... fatass."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "surf_n_turf"
@@ -253,10 +263,20 @@
 	desc = "A sweet, creamy nizaya pasta dish made with korta milk and nectar."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "demit_nizaya"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/korta_nectar = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/korta_nectar = 2)
 	microwaved_type = null
 	tastes = list("peppery sweet" = 1, "veggies" = 1, "gnocchi" = 1)
 	foodtypes = VEGETABLES | SUGAR | NUTS
+
+/obj/item/food/spaghetti/mushroom_nizaya
+	name = "mushroom nizaya"
+	desc = "A nizaya pasta dish made with seraka mushrooms and quality oil. Has a pronounced nutty flavour."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "mushroom_nizaya"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	microwaved_type = null
+	tastes = list("savouriness" = 1, "nuttiness" = 1, "gnocchi" = 1)
+	foodtypes = VEGETABLES
 
 //Dough Dishes
 
@@ -400,7 +420,7 @@
 	icon_state = "emperor_roll"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("bread" = 1, "cheese" = 1, "liver" = 1, "caviar" = 1)
-	foodtypes = VEGETABLES | NUTS | MEAT
+	foodtypes = VEGETABLES | NUTS | MEAT | GROSS
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -450,7 +470,7 @@
 	icon_state = "jellyfish_stew"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3)
 	tastes = list("slime" = 1)
-	food_reagents = MEAT | VEGETABLES | GROSS
+	foodtypes = MEAT | VEGETABLES | GROSS
 
 /obj/item/food/soup/rootbread_soup
 	name = "rootbread soup"
@@ -459,6 +479,7 @@
 	icon_state = "rootbread_soup"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bread" = 1, "egg" = 1, "sausage" = 1, "garlic" = 1)
+	foodtypes = MEAT | VEGETABLES
 
 //Egg Dishes
 /obj/item/food/black_eggs
@@ -468,7 +489,7 @@
 	icon_state = "black_eggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("eggs" = 1, "greens" = 1, "blood" = 1)
-	foodtypes = MEAT | BREAKFAST
+	foodtypes = MEAT | BREAKFAST | GROSS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/patzikula
@@ -513,6 +534,15 @@
 	tastes = list("peppery sweet" = 1, "berry" = 1)
 	foodtypes = NUTS | SUGAR | FRUIT
 
+/obj/item/food/kebab/candied_mushrooms
+	name = "candied mushrooms"
+	desc = "A slightly bizarre dish from Tizira, consisting of seraka mushrooms coated with caramel on a skewer. Carries a pronounced 'sweet and savoury' kick."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "candied_mushrooms"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/caramel = 3)
+	tastes = list("savouriness" = 1, "sweetness" = 1)
+	foodtypes = SUGAR | VEGETABLES | GROSS
+
 //Misc Dishes
 /obj/item/food/sauerkraut
 	name = "sauerkraut"
@@ -532,6 +562,16 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/steeped_mushrooms
+	name = "steeped seraka mushrooms"
+	desc = "Seraka mushrooms that have been steeped in alkaline water to remove the extract, thereby making them completely safe to consume."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "steeped_mushrooms"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("savouriness" = 1, "nuttiness" = 1)
+	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/canned_jellyfish

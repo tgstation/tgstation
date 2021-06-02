@@ -167,7 +167,7 @@
 //Tiziran Fish
 /datum/aquarium_behaviour/fish/dwarf_moonfish
 	name = "dwarf moonfish"
-	desc = "Ordinarily in the wild, the Zagosian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
+	desc = "Ordinarily in the wild, the Zagoskian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
 	icon_state = "dwarf_moonfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 2

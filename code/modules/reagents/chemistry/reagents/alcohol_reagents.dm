@@ -2599,7 +2599,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A drink celebrating the Lizard Empire and its military victories. It's popular at bars on Unification Day."
 	boozepwr = 60
 	color = "#FFD700"
-	quality = DRINK_VERYGOOD
+	quality = DRINK_FANTASTIC
 	taste_description = "victory"
 	glass_icon_state = "triumphal_arch"
 	glass_name = "Triumphal Arch"

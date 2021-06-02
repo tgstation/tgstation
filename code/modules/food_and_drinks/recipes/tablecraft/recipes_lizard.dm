@@ -137,6 +137,17 @@
 	result = /obj/item/food/nectar_larvae
 	subcategory = CAT_LIZARD
 
+/datum/crafting_recipe/food/mushroomy_stirfry
+	name = "Mushroomy Stirfry"
+	reqs = list(
+		/obj/item/food/steeped_mushrooms = 1,
+		/obj/item/food/grown/mushroom/plumphelmet = 1,
+		/obj/item/food/grown/mushroom/chanterelle = 1,
+		/datum/reagent/consumable/quality_oil = 5
+	)
+	result = /obj/item/food/mushroomy_stirfry
+	subcategory = CAT_LIZARD
+
 /datum/crafting_recipe/food/moonfish_demiglace
 	name = "Moonfish demiglace"
 	reqs = list(
@@ -150,7 +161,7 @@
 	subcategory = CAT_LIZARD
 
 /datum/crafting_recipe/food/lizard_surf_n_turf
-	name = "Zagos surf n turf smorgasbord"
+	name = "Zagosk surf n turf smorgasbord"
 	reqs = list(
 		/obj/item/food/grilled_moonfish = 1,
 		/obj/item/food/kebab/picoss_skewers = 2,
@@ -204,6 +215,17 @@
 		/datum/reagent/consumable/korta_nectar = 5
 	)
 	result = /obj/item/food/spaghetti/demit_nizaya
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/mushroom_nizaya
+	name = "Mushroom nizaya"
+	reqs = list(
+		/obj/item/food/spaghetti/nizaya = 1,
+		/obj/item/food/steeped_mushrooms = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 5
+	)
+	result = /obj/item/food/spaghetti/mushroom_nizaya
 	subcategory = CAT_LIZARD
 
 /datum/crafting_recipe/food/rustic_flatbread
@@ -370,6 +392,17 @@
 	result = /obj/item/food/snowcones/korta_ice
 	subcategory = CAT_LIZARD
 
+/datum/crafting_recipe/food/candied_mushrooms
+	name = "Candied mushrooms"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/food/steeped_mushrooms = 1,
+		/datum/reagent/consumable/caramel = 5,
+		/datum/reagent/consumable/salt = 1
+	)
+	result = /obj/item/food/kebab/candied_mushrooms
+	subcategory = CAT_LIZARD
+
 /datum/crafting_recipe/food/sauerkraut
 	name = "Sauerkraut"
 	reqs = list(
@@ -386,4 +419,13 @@
 		/datum/reagent/consumable/korta_flour = 5
 	)
 	result = /obj/item/food/lizard_dumplings
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/steeped_mushrooms
+	name = "Steeped mushrooms"
+	reqs = list(
+		/obj/item/food/grown/ash_flora/seraka = 1,
+		/datum/reagent/lye = 5
+	)
+	result = /obj/item/food/steeped_mushrooms
 	subcategory = CAT_LIZARD

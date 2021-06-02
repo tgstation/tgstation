@@ -984,6 +984,12 @@
 	color = "#D9A066"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
+	if(isabductor(M))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
+		M.set_drugginess(15 * REM * delta_time)
+	..()
+
 /datum/reagent/consumable/vinegar
 	name = "Vinegar"
 	description = "Useful for pickling, or putting on chips."
