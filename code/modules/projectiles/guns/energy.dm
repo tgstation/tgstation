@@ -74,6 +74,7 @@
 				readout += "<span class='warning'>[round(100 / (exam_proj.damage + exam_proj.stamina), 0.1)]</span> shot\s on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from immense pain."
 		else
 			readout += "an infinite number of shots on <span class='warning'>[for_ammo.select_name] mode</span>."
+		qdel(exam_proj)
 	return readout.Join("\n") // Sending over the singular string, rather than the whole list
 
 /obj/item/gun/energy/ComponentInitialize()
