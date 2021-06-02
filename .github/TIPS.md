@@ -1,6 +1,7 @@
-# Code Tips
+## Code Tips
+Tips for writing clean code
 
-# All `process` procs need to make use of delta-time and be frame independent
+## All `process` procs need to make use of delta-time and be frame independent
 
 In a lot of our older code, `process()` is frame dependent. Here's some example mob code:
 
@@ -32,10 +33,10 @@ In the above example, we made our health_loss variable a per second value rather
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
-# Dont override type safety checks
+## Dont override type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
-# Do not use text/string based type paths
+## Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
 ```DM
@@ -46,17 +47,17 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
-# Avoid hacky code
+## Avoid hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
 
-# No duplicated code (Don't repeat yourself)
+## No duplicated code (Don't repeat yourself)
 Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
-# Startup/Runtime tradeoffs with lists and the "hidden" init proc
+## Startup/Runtime tradeoffs with lists and the "hidden" init proc
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
 
 There are two key points here:
@@ -67,11 +68,11 @@ There are two key points here:
 
 Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
-# Prefer `Initialize()` over `New()` for atoms
+## Prefer `Initialize()` over `New()` for atoms
 Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166
 While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
-# No magic numbers or strings
+## No magic numbers or strings
 This means stuff like having a "mode" variable for an object set to "1" or "2" with no clear indicator of what that means. Make these #defines with a name that more clearly states what it's for. For instance:
 ````DM
 /datum/proc/do_the_thing(thing_to_do)
@@ -94,7 +95,7 @@ There's no indication of what "1" and "2" mean! Instead, you'd do something like
 ````
 This is clearer and enhances readability of your code! Get used to doing it!
 
-# Use early return
+## Use early return
 Do not enclose a proc in an if-block when returning on a condition is more feasible
 This is bad:
 ````DM
@@ -117,7 +118,7 @@ This is good:
 ````
 This prevents nesting levels from getting deeper then they need to be.
 
-# Use our time defines
+## Use our time defines
 
 The codebase contains some defines which will automatically multiply a number by the correct amount to get a number in deciseconds. Using these is preffered over using a literal amount in deciseconds.
 
@@ -140,7 +141,7 @@ This is good:
 		mob.dothing()
 ````
 
-# Getters and setters
+## Getters and setters
 
 * Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
 
@@ -181,7 +182,7 @@ This is good:
 	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
 
-# Avoid unnecessary type checks and obscuring nulls in lists
+## Avoid unnecessary type checks and obscuring nulls in lists
 Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
 
 If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
@@ -208,7 +209,7 @@ for(var/atom/thing as anything in bag_of_atoms)
 	highest_alpha = thing.alpha
 ```
 
-### Develop Secure Code
+## Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
 
@@ -222,14 +223,14 @@ for(var/atom/thing as anything in bag_of_atoms)
 
 * Where you have code that can cause large-scale modification and *FUN*, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
 
-# Files
+## Files
 * Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
 
 * File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
-# SQL
+## SQL
 * Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
 * All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
@@ -246,14 +247,14 @@ for(var/atom/thing as anything in bag_of_atoms)
 	* ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
 	* if the transformation is user provided (such as allowing a user to edit a string), you should confirm the value being updated did not change in the database in the intervening time before writing the new user provided data by checking the old value with the current value in the database, and if it has changed, allow the user to decide what to do next.
 
-### User Interfaces
+## User Interfaces
 * All new player-facing user interfaces must use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
-# Signal Handlers
+## Signal Handlers
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
 /type/path/proc/signal_callback()
@@ -264,7 +265,7 @@ This is to ensure that it is clear the proc handles signals and turns on a lint 
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
-# Enforcing parent calling
+## Enforcing parent calling
 When adding new signals to root level procs, eg;
 ```
 /atom/proc/setDir(newdir)
@@ -274,10 +275,10 @@ When adding new signals to root level procs, eg;
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
-# Use descriptive and obvious names
+## Use descriptive and obvious names
 Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
-# Don't use abbreviations
+## Don't use abbreviations
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
 
 ```dm
@@ -291,7 +292,7 @@ Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", 
 
 Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
 
-# Naming things when typecasting
+## Naming things when typecasting
 When typecasting, keep your names descriptive:
 ```dm
 var/mob/living/living_target = target
@@ -316,14 +317,14 @@ var/client/client = CLIENT_FROM_VAR(usr)
 client << browse(...)
 ```
 
-# Name things as directly as possible
+## Name things as directly as possible
 `was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
 
-# Avoid negative variable names
+## Avoid negative variable names
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
 This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
 
-# Exceptions to variable names
+## Exceptions to variable names
 
 Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
 
@@ -346,7 +347,7 @@ for (var/month in 1 to 12)
 for (var/i in reagents)
 ```
 
-# Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
+## Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
 BYOND will allow you to use a raw icon file or even an icon datum for underlays, overlays, and what not (you can even use strings to refer to an icon state on the current icon). The issue is these get converted by BYOND to appearances on every overlay insert or removal involving them, and this process requires inserting the new appearance into the global list of appearances, and informing clients about them.
 
 Converting them yourself to appearances and storing this converted value will ensure this process only has to happen once for the lifetime of the round. Helper functions exist to do most of the work for you.
@@ -387,7 +388,7 @@ Good:
 Note: images are appearances with extra steps, and don't incur the overhead in conversion.
 
 
-# Do not abuse associated lists.
+## Do not abuse associated lists.
 Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
 
 
@@ -442,7 +443,7 @@ Proc variables, static variables, and global variables are resolved at compile t
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
 
-# When passing vars through New() or Initialize()'s arguments, use src.var
+## When passing vars through New() or Initialize()'s arguments, use src.var
 Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
 
 This is very bad:
@@ -487,7 +488,7 @@ This is good:
 
 Setting `is_red` in args is simple, and directly names the variable the argument sets.
 
-# Other Notes
+## Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
 * Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
@@ -505,21 +506,21 @@ Setting `is_red` in args is simple, and directly names the variable the argument
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
 
-# Dream Maker Quirks/Tricks
+## Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
-## In-To for-loops
+### In-To for-loops
 `for(var/i = 1, i <= some_value, i++)` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's `for(var/i in 1 to some_value)` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the `to` keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
 
 HOWEVER, if either `some_value` or `i` changes within the body of the for (underneath the `for(...)` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
 
-## `for(var/A in list)` versus `for(var/i in 1 to list.len)`
+### `for(var/A in list)` versus `for(var/i in 1 to list.len)`
 The former is faster than the latter, as shown by the following profile results:
 https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
-## Dot variable
+### Dot variable
 Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
 eg:
 ```DM

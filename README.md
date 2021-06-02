@@ -38,14 +38,10 @@ After it finishes, you can then [setup the server](.github/RUNNING_A_SERVER.md) 
 
 **[How to compile in VSCode and other build options](tools/build/README.md).**
 
-## Requirements for contributors
-[Guidelines for Contributors](.github/CONTRIBUTING.md)
+## Contributors
+[Guides for Contributors](.github/CONTRIBUTING.md)
 
 [/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
-
-[Documenting your code](.github/AUTODOC_GUIDE.md)
-
-[Policy configuration system](.github/POLICYCONFIG.md)
 
 [Interested in some starting lore?](https://github.com/tgstation/common_core)
 
