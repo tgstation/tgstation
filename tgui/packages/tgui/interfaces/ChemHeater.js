@@ -278,9 +278,7 @@ export const ChemHeater = (props, context) => {
         {tutorialMessage && (
           <Section
             title="Tutorial"
-            style={{
-              'white-space': 'pre-wrap',
-            }}>
+            preserveWhitespace>
             <img
               src={resolveAsset("chem_help_advisor.gif")}
               width="30px" />

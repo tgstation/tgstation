@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Switchblades' blades now actually pop out like intended"

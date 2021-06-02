@@ -1,0 +1,4 @@
+author: "SpaceDragon00"
+delete-after: True
+changes: 
+  - bugfix: "Large energy crossbow now sounds like an energy crossbow"

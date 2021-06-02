@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "The Cryopod bays on Icebox, Metastation and Deltastation have been wired into the station's power grid"
