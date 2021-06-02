@@ -20,8 +20,8 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	/// Minimum range for a valid direction to be returned
-	var/min_range = 7
+	/// Maximum range for a valid direction to be returned
+	var/max_range = 7
 
 /obj/item/circuit_component/direction/Initialize()
 	. = ..()
@@ -49,7 +49,7 @@
 		return
 	var/turf/location = get_turf(src)
 
-	if(object.z != location.z || get_dist(location, object) > min_range)
+	if(object.z != location.z || get_dist(location, object) > max_range)
 		output.set_output(null)
 		return
 
