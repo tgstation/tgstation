@@ -175,7 +175,7 @@
 	name = "download"
 	black_telecrystal_reward = 4
 
-/datum/objective/steal/special/find_target()
+/datum/objective/smart/special/find_target(dupe_search_range, blacklist)
 	target_amount = rand(20,40)
 	update_explanation_text()
 	return target_amount

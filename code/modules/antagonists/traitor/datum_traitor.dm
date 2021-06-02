@@ -280,23 +280,29 @@
 	SIGNAL_HANDLER
 
 	if(new_objectives_blocked)
-		if(LAZYFIND(new_objectives_blocked, objective))
-			LAZYREMOVE(new_objectives_blocked, objective)
-			if(new_objectives_blocked)
-				to_chat(owner.current, "<span class='warning'>You have re-accomplished an objective, \
-				but there are still more un-completed objectives for you to complete before you can get more.</span>")
-			else
-				to_chat(owner.current, "<span class='warning'>You have re-accomplished an objective, \
-				and you are ready once again to get more. Any objectives that were waiting will now be added.</span>")
-				for(var/iteration in 1 to objectives_to_add)
-					forge_single_generic_objective()
-				objectives_to_add = 0
-		else
+		if(!LAZYFIND(new_objectives_blocked, objective))
 			objectives_to_add++
 			to_chat(owner.current, "<span class='warning'>You have completed an objective, \
 			but you cannot get more until you make sure previously uncompleted objectives are once again complete!</span>")
+			return
+		LAZYREMOVE(new_objectives_blocked, objective)
+		if(new_objectives_blocked)
+			to_chat(owner.current, "<span class='warning'>You have re-accomplished an objective, \
+			but there are still more un-completed objectives for you to complete before you can get more.</span>")
+			return
+		to_chat(owner.current, "<span class='warning'>You have re-accomplished an objective, \
+		and you are ready once again to get more. Any objectives that were waiting will now be added.</span>")
+		for(var/iteration in 1 to objectives_to_add)
+			if(!additional_objectives_before_escape)
+				if(!ending_objective)
+					to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. An escape objective has been granted.</span>")
+					forge_ending_objective()
+				break
+			forge_single_generic_objective()
+		objectives_to_add = 0
 		return
-	if(additional_objectives_before_escape)
+
+	if(additional_objectives_before_escape && !ending_objective)
 		additional_objectives_before_escape--
 		to_chat(owner.current, "<span class='boldnotice'>You have completed an objective. A new objective has been granted.</span>")
 		uplink?.black_telecrystals += objective.black_telecrystal_reward
