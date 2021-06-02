@@ -25,6 +25,7 @@
 	var/vary = FALSE //used for the honk borg emote
 	var/only_forced_audio = FALSE //can only code call this event instead of the player.
 	var/cooldown = 0.8 SECONDS
+	var/audio_cooldown = 2 SECONDS
 
 /datum/emote/New()
 	if (ispath(mob_type_allowed_typecache))
@@ -92,7 +93,14 @@
 	return TRUE
 
 /datum/emote/proc/get_sound(mob/living/user)
-	return sound //by default just return this var.
+	if(!intentional)
+		return sound
+	if(user.emotes_used && user.emotes_used[src] + audio_cooldown > world.time)
+		return
+	if(!user.emotes_used)
+		user.emotes_used = list()
+	user.emotes_used[src] = world.time
+	return sound
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
