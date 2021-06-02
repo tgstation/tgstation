@@ -51,7 +51,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/headcheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese/slice, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 30)
 
 /obj/item/food/headcheese_slice
 	name = "headcheese slice"
