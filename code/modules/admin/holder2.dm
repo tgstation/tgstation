@@ -175,10 +175,15 @@ GLOBAL_PROTECT(href_token)
 	if (isnull(admin_2fa_url) || admin_2fa_url == "")
 		return list(TRUE, null)
 
-	// MOTHBLOCKS TODO: Keep a text file of most recent valid connections for admins
-	// and use that.
+	// I believe this is only in the case of Dream Seeker.
+	if (isnull(client?.address))
+		return list(TRUE, null)
+
 	if (!SSdbcore.Connect())
-		return list(FALSE, null)
+		if (verify_backup_data(client))
+			return list(TRUE, null)
+		else
+			return list(FALSE, null)
 
 	var/datum/db_query/query = SSdbcore.NewQuery({"
 		SELECT id, verification_time FROM [format_table_name("admin_connections")]
@@ -234,8 +239,27 @@ GLOBAL_PROTECT(href_token)
 
 	to_chat(client, "<h1><b class='danger'>You could not be verified.</b></h1>")
 	to_chat(client, "<h2><b class='danger'>Please visit <a href='[replacetextEx(admin_2fa_url, "%ID%", id)]'>this URL</a> to verify.</b></h2>")
+	to_chat(client, "<h2><b class='danger'>When you are done, click the 'Verify Admin' button in your admin tab.</b></h2>")
 
-	// MOTHBLOCKS TODO: Click to re-check verification.
+/datum/admins/proc/verify_backup_data(client/client)
+	var/backup_file = file2text("data/admins_backup.json")
+	if (isnull(backup_file))
+		log_world("Unable to locate admins backup file.")
+		return FALSE
+
+	var/list/backup_file_json = json_decode(backup_file)
+	var/connections = backup_file_json["connections"]
+
+	// This can happen for older admins_backup.json files
+	if (isnull(connections))
+		return FALSE
+
+	var/most_recent_valid_connection = connections[client?.ckey]
+	if (isnull(most_recent_valid_connection))
+		return FALSE
+
+	return most_recent_valid_connection["cid"] == client?.computer_id \
+		&& most_recent_valid_connection["ip"] == client?.address
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
