@@ -492,6 +492,8 @@
 	// If we have an alt icon, use that to show our plant is exploding.
 	if(istype(our_plant) && grown_plant.alt_icon)
 		our_plant.icon_state = grown_plant.alt_icon
+	else
+		our_plant.color = COLOR_RED
 
 	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [our_plant]!</span>", "<span class='userdanger'>You pluck the stem from [our_plant], which begins to hiss loudly!</span>")
@@ -546,6 +548,8 @@
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(our_plant) && grown_plant.alt_icon)
 		our_plant.icon_state = grown_plant.alt_icon
+	else
+		our_plant.color = COLOR_RED
 
 	playsound(our_plant.drop_location(), 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(src, .proc/detonate, our_plant), rand(1 SECONDS, 6 SECONDS))
