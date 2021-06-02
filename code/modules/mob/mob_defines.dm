@@ -219,6 +219,9 @@
 
 	/// Used for tracking last uses of emotes for cooldown purposes
 	var/list/emotes_used
+	
+	// Used for tracking the last uses of emotes that produce audio for audio cooldowns
+	var/list/audio_emotes_used
 
 	///Whether the mob is updating glide size when movespeed updates or not
 	var/updating_glide_size = TRUE
