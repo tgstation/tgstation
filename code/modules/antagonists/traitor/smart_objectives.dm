@@ -8,6 +8,8 @@
  * (antag datums that care for smart objectives need to listen into them!)
  */
 /datum/objective/smart
+	///this will be false the first time the objective is complete. if it is ever uncompleted, future completions will have this be TRUE
+	var/uncompleted = FALSE
 	///the payout for completing this objective
 	var/black_telecrystal_reward = 0
 
@@ -15,12 +17,13 @@
 	if(completed)
 		return
 	completed = TRUE
-	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_ACHIEVED)
+	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_ACHIEVED, uncompleted)
 
 /datum/objective/smart/proc/uncomplete_objective()
 	if(!completed)
 		return
-	completed = TRUE
+	uncompleted = TRUE
+	completed = FALSE
 	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_UNACHIEVED)
 
 /**

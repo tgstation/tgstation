@@ -25,9 +25,6 @@
 	///assoc list of strings set up after employer is given
 	var/list/traitor_flavor
 
-	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
-	var/datum/objective/ending_objective
-
 	///datum of the contractor hub, if they decide to become a contractor in the round.
 	///in the future, this should definitely be moved into a component that attaches to these datums
 	var/datum/contractor_hub/contractor_hub
@@ -35,11 +32,25 @@
 	///reference to the uplink this traitor was given, if they were.
 	var/datum/component/uplink/uplink
 
+	///how many more objectives past the starting bunch need to get finished before escape objective is unlocked
+	var/additional_objectives_before_escape = 4
+	///if new objectives won't be added because a previously finished objective got unfinished, lazylist reference to uncompleted objectives
+	var/list/new_objectives_blocked
+	///when new objectives are blocked, the objectives to add pile up here
+	var/objectives_to_add = 0
+	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
+	var/datum/objective/ending_objective
+
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
 	if(give_objectives)
 		forge_traitor_objectives()
-	forge_ending_objective()
+	//will be given later
+	//forge_ending_objective()
+	for(var/datum/objective/smart/objective in objectives)
+		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_ACHIEVED, .proc/objective_done)
+		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_UNACHIEVED, .proc/objective_undone)
+
 
 	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 	pick_employer(faction)
@@ -264,6 +275,44 @@
 
 	return result
 
+///signal called by an objective completing
+/datum/antagonist/traitor/proc/objective_done(datum/objective/smart/objective, uncompleted)
+	SIGNAL_HANDLER
+
+	if(new_objectives_blocked)
+		if(LAZYFIND(new_objectives_blocked, objective))
+			LAZYREMOVE(new_objectives_blocked, objective)
+			if(new_objectives_blocked)
+				to_chat(owner.current, "<span class='warning'>You have re-accomplished an objective, \
+				but there are still more un-completed objectives for you to complete before you can get more.</span>")
+			else
+				to_chat(owner.current, "<span class='warning'>You have re-accomplished an objective, \
+				and you are ready once again to get more. Any objectives that were waiting will now be added.</span>")
+				for(var/iteration in 1 to objectives_to_add)
+					forge_single_generic_objective()
+				objectives_to_add = 0
+		else
+			objectives_to_add++
+			to_chat(owner.current, "<span class='warning'>You have completed an objective, \
+			but you cannot get more until you make sure previously uncompleted objectives are once again complete!</span>")
+		return
+	if(additional_objectives_before_escape)
+		additional_objectives_before_escape--
+		to_chat(owner.current, "<span class='boldnotice'>You have completed an objective. A new objective has been granted.</span>")
+		uplink?.black_telecrystals += objective.black_telecrystal_reward
+		forge_single_generic_objective()
+		return
+	to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. An escape objective has been granted.</span>")
+	forge_ending_objective()
+
+///signal called by an objective uncompleting
+/datum/antagonist/traitor/proc/objective_undone(datum/objective/smart/objective)
+	SIGNAL_HANDLER
+
+	to_chat(owner.current, "<span class='boldwarning'>One of your previous objectives is no longer complete. \
+	You are restricted from getting more objectives until you accomplish it.</span>")
+	LAZYADD(new_objectives_blocked, objective)
+
 /datum/antagonist/traitor/ui_static_data(mob/user)
 	var/list/data = list()
 	data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
@@ -289,6 +338,7 @@
 			"name" = objective.objective_name,
 			"explanation" = objective.explanation_text,
 			"complete" = objective.completed,
+			"uncompleted" = objective.uncompleted,
 			"reward" = objective.black_telecrystal_reward
 		))
 		obj_count++
