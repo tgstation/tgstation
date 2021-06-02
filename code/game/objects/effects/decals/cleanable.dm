@@ -21,6 +21,8 @@
 					return INITIALIZE_HINT_QDEL
 	#ifdef EVENTMODE
 	///AUTO CLEAN
+	if(mapload)
+		return .
 	QDEL_IN(src, 30)
 	return . //skip disease handling
 	#endif
