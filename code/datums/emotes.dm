@@ -62,8 +62,9 @@
 	user.log_message(msg, LOG_EMOTE)
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
-	var/tmp_sound = get_sound(user, intentional)
-	if(tmp_sound && (!only_forced_audio || !intentional))
+	var/tmp_sound = get_sound(user)
+	var/tmp_condition = check_audio(user, intentional)
+	if(tmp_sound && tmp_condition && (!only_forced_audio || !intentional))
 		playsound(user, tmp_sound, 50, vary)
 
 	for(var/mob/M in GLOB.dead_mob_list)
@@ -91,15 +92,18 @@
 		user.emotes_used = list()
 	user.emotes_used[src] = world.time
 	return TRUE
-
-/datum/emote/proc/get_sound(mob/living/user, intentional)
+	
+/datum/emote/proc/check_audio(mob/living/user, intentional)
 	if(!intentional)
-		return sound
+		return TRUE
 	if(user.emotes_used && user.emotes_used[src] + audio_cooldown > world.time)
-		return
+		return FALSE
 	if(!user.emotes_used)
 		user.emotes_used = list()
 	user.emotes_used[src] = world.time
+	return TRUE
+
+/datum/emote/proc/get_sound(mob/living/user)
 	return sound
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
