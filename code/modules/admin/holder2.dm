@@ -173,24 +173,30 @@ GLOBAL_PROTECT(href_token)
 			return TRUE //we have all the rights they have and more
 	return FALSE
 
+// TRUE for a vaild connection, null is the id (it is unnecessary)
+#define VALID_2FA_CONNECTION list(TRUE, null)
+
 /// Returns whether or not the given client has a verified 2FA connection.
+/// The output is in the form of a list with the first index being whether or not the
+/// check was successful, the 2nd is the ID of the associated database entry
+/// if its a false result and if one can be found.
 /datum/admins/proc/check_2fa(client/client)
 	if (bypass_2fa)
-		return list(TRUE, null)
+		return VALID_2FA_CONNECTION
 
 	var/admin_2fa_url = CONFIG_GET(string/admin_2fa_url)
 
 	// 2FA not being enabled == everyone passes
 	if (isnull(admin_2fa_url) || admin_2fa_url == "")
-		return list(TRUE, null)
+		return VALID_2FA_CONNECTION
 
 	// I believe this is only in the case of Dream Seeker.
 	if (isnull(client?.address))
-		return list(TRUE, null)
+		return VALID_2FA_CONNECTION
 
 	if (!SSdbcore.Connect())
 		if (verify_backup_data(client))
-			return list(TRUE, null)
+			return VALID_2FA_CONNECTION
 		else
 			return list(FALSE, null)
 
@@ -218,6 +224,8 @@ GLOBAL_PROTECT(href_token)
 
 	qdel(query)
 	return list(is_valid, id)
+
+#undef VALID_2FA_CONNECTION
 
 /datum/admins/proc/start_2fa_process(client/client, id)
 	add_verb(client, /client/proc/admin_2fa_verify)
