@@ -64,6 +64,11 @@
 	var/old_temperature = air_contents.temperature
 	var/other_old_temperature = partnerair_contents.temperature
 
+	if(old_temperature > 1e7)
+		if(try_to_melt(old_temperature))
+			melt()
+			return PROCESS_KILL //we melting anyway, let's stop processing
+
 	if(combined_heat_capacity > 0)
 		var/combined_energy = partnerair_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
 
@@ -76,3 +81,16 @@
 
 	if(abs(other_old_temperature-partnerair_contents.temperature) > 1)
 		partner.update_parents()
+
+///Check if the exchanger can melt under the heat
+/obj/machinery/atmospherics/components/unary/heat_exchanger/proc/try_to_melt(temperature)
+	if(prob(log(6, temperature) * 10)) //~80% at 1e7, 100% at 1e8
+		return TRUE
+	return FALSE
+
+///Releases the gases stored inside and delete the object
+/obj/machinery/atmospherics/components/unary/heat_exchanger/proc/melt()
+	var/datum/gas_mixture/internal_gas = airs[1]
+	if(internal_gas)
+		loc.assume_air(internal_gas.remove_ratio(1))
+	qdel(src)
