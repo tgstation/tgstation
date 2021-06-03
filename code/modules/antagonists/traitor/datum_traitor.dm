@@ -335,30 +335,6 @@
 	data["objectives"] = get_objectives()
 	return data
 
-/datum/antagonist/traitor/proc/get_objectives()
-	var/obj_count = 1
-	var/list/objective_data = list()
-	//all obj
-	for(var/datum/objective/smart/objective in objectives)
-		objective_data += list(list(
-			"count" = obj_count,
-			"name" = objective.objective_name,
-			"explanation" = objective.explanation_text,
-			"complete" = objective.completed,
-			"uncompleted" = objective.uncompleted,
-			"reward" = objective.black_telecrystal_reward
-		))
-		obj_count++
-	//escape obj
-	if(ending_objective)
-		objective_data += list(list(
-				"count" = obj_count,
-				"name" = ending_objective.objective_name,
-				"explanation" = ending_objective.explanation_text,
-				"complete" = ending_objective.completed,
-			))
-	return objective_data
-
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")

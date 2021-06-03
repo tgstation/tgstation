@@ -313,6 +313,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	..()
 
+///ANTAGONIST UI STUFF
+
 /datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -321,6 +323,29 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
+
+///generic helper to send objectives as data through tgui. supports smart objectives too!
+/datum/antagonist/proc/get_objectives()
+	var/objective_count = 1
+	var/list/objective_data = list()
+	//all obj
+	for(var/datum/objective/objective in objectives)
+		var/smart_uncompleted_value
+		var/smart_reward_value
+		if(istype(objective, /datum/objective/smart))
+			var/datum/objective/smart/smart_objective = objective
+			smart_uncompleted_value = smart_objective.uncompleted
+			smart_reward_value = smart_objective.black_telecrystal_reward
+		objective_data += list(list(
+			"count" = objective_count,
+			"name" = objective.objective_name,
+			"explanation" = objective.explanation_text,
+			"complete" = objective.completed,
+			"was_uncompleted" = smart_uncompleted_value,
+			"reward" = smart_reward_value
+		))
+		objective_count++
+	return objective_data
 
 //button for antags to review their descriptions/info
 

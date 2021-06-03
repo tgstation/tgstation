@@ -32,6 +32,7 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
+	ui_name = "BrainwashedInfo"
 
 /datum/antagonist/brainwashed/greet()
 	to_chat(owner, "<span class='warning'>Your mind reels as it begins focusing on a single purpose...</span>")
@@ -41,6 +42,12 @@
 		var/datum/objective/O = X
 		to_chat(owner, "<b>[i].</b> [O.explanation_text]")
 		i++
+
+/datum/antagonist/brainwashed/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/brainwashed/farewell()
 	to_chat(owner, "<span class='warning'>Your mind suddenly clears...</span>")

@@ -23,7 +23,7 @@ type Objective = {
   name: string;
   explanation: string;
   complete: BooleanLike;
-  uncompleted: BooleanLike;
+  was_uncompleted: BooleanLike;
   reward: number;
 }
 
@@ -62,7 +62,7 @@ const ObjectivePrintout = (props, context) => {
                 <Stack.Item textColor="red">
                   Incomplete.
                 </Stack.Item>
-                {!!objective.reward && !objective.uncompleted && (
+                {!!objective.reward && !objective.was_uncompleted && (
                   <Stack.Item textColor="lightgrey">
                     Reward of {objective.reward} Black TC upon completion.
                   </Stack.Item>
