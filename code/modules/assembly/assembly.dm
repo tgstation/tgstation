@@ -39,15 +39,16 @@
 /obj/item/assembly/get_part_rating()
 	return 1
 
+/obj/item/assembly/proc/detach()
+	if(holder)
+		forceMove(holder.drop_location())
+		holder = null
+	on_detach()
+
 /obj/item/assembly/proc/on_attach()
 
 //Call this when detaching it from a device. handles any special functions that need to be updated ex post facto
 /obj/item/assembly/proc/on_detach()
-	if(!holder)
-		return FALSE
-	forceMove(holder.drop_location())
-	holder = null
-	return TRUE
 
 //Called when the holder is moved
 /obj/item/assembly/proc/holder_movement()

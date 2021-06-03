@@ -39,7 +39,7 @@
 
 /obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
+		var/obj/item/shock_kit/A = new /obj/item/shock_kit(user)
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
@@ -75,11 +75,7 @@
 
 		L.Paralyze(100)
 
-	if(master)
-		if(isassembly(master))
-			var/obj/item/assembly/master_as_assembly = master
-			master_as_assembly.pulsed()
-		master.receive_signal()
+	master?.receive_signal()
 
 /obj/item/electropack/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)

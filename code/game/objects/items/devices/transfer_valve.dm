@@ -262,7 +262,7 @@
 				. = TRUE
 		if("remove_device")
 			if(attached_device)
-				attached_device.on_detach()
+				attached_device.detach()
 				attached_device = null
 				. = TRUE
 

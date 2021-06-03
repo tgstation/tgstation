@@ -183,6 +183,7 @@
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
+		S.on_attach()
 		return S
 
 /datum/wires/proc/detach_assembly(color)
@@ -191,6 +192,7 @@
 		assemblies -= color
 		S.connected = null
 		S.forceMove(holder.drop_location())
+		S.on_detach()
 		return S
 
 /// Called from [/atom/proc/emp_act]

@@ -2,7 +2,6 @@
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
-	attachable = TRUE
 	var/id = null
 	var/can_change_id = 0
 	var/cooldown = FALSE //Door cooldowns
@@ -34,11 +33,6 @@
 /obj/item/assembly/control/curtain
 	name = "curtain controller"
 	desc = "A small electronic device able to control a mechanical curtain remotely."
-
-/obj/item/assembly/control/curtain/examine(mob/user)
-	. = ..()
-	if(id)
-		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/curtain/activate()
 	var/openclose

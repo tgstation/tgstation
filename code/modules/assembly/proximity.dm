@@ -11,11 +11,16 @@
 	var/time = 20
 	var/sensitivity = 1
 	var/hearing_range = 3
+	var/ignore_types
 
 /obj/item/assembly/prox_sensor/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 0)
 	START_PROCESSING(SSobj, src)
+	ignore_types = typecacheof(list(
+		/obj/effect/beam,
+	 	/obj/effect/abstract/proximity_checker
+	))
 
 /obj/item/assembly/prox_sensor/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -36,29 +41,28 @@
 	return TRUE
 
 /obj/item/assembly/prox_sensor/on_detach()
-	. = ..()
-	if(!.)
-		return
-	else
-		proximity_monitor.SetHost(src,src)
+	proximity_monitor.SetHost(src, src)
+
+/obj/item/assembly/prox_sensor/on_attach()
+	proximity_monitor.SetHost(loc, src)
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
-		if(scanning)
-			toggle_scan()
-			proximity_monitor.SetHost(src,src)
+		toggle_scan(FALSE)
 		timing = FALSE
 		STOP_PROCESSING(SSobj, src)
 	else
 		START_PROCESSING(SSobj, src)
-		proximity_monitor.SetHost(loc,src)
 	update_appearance()
 	return secured
 
 /obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/effect/beam))
+	if(AM == src || AM == loc) // no self or holder
 		return
+	if(is_type_in_typecache(AM, ignore_types))
+		return
+
 	sense()
 
 /obj/item/assembly/prox_sensor/proc/sense()
@@ -83,17 +87,16 @@
 		time = initial(time)
 
 /obj/item/assembly/prox_sensor/proc/toggle_scan(scan)
-	if(!secured)
+	if(!secured && scan)
 		return FALSE
 	scanning = scan
-	proximity_monitor.SetRange(scanning ? sensitivity : 0)
+	proximity_monitor.SetRange(scanning ? sensitivity : -1)
 	update_appearance()
 
 /obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
 	sensitivity = sense
-	if(scanning && proximity_monitor.SetRange(sense))
-		sense()
+	proximity_monitor.SetRange(sense)
 
 /obj/item/assembly/prox_sensor/update_appearance()
 	. = ..()

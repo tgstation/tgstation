@@ -1,4 +1,4 @@
-/obj/item/assembly/shock_kit
+/obj/item/shock_kit
 	name = "electrohelmet assembly"
 	desc = "This appears to be made from both an electropack and a helmet."
 	icon = 'icons/obj/assemblies.dmi'
@@ -8,12 +8,12 @@
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 
-/obj/item/assembly/shock_kit/Destroy()
+/obj/item/shock_kit/Destroy()
 	QDEL_NULL(helmet_part)
 	QDEL_NULL(electropack_part)
 	return ..()
 
-/obj/item/assembly/shock_kit/Initialize()
+/obj/item/shock_kit/Initialize()
 	. = ..()
 	if(!helmet_part)
 		helmet_part = new(src)
@@ -22,7 +22,11 @@
 		electropack_part = new(src)
 		electropack_part.master = src
 
-/obj/item/assembly/shock_kit/wrench_act(mob/living/user, obj/item/I)
+/obj/item/shock_kit/receive_signal(datum/signal/signal)
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
+	return
+
+/obj/item/shock_kit/wrench_act(mob/living/user, obj/item/I)
 	..()
 	to_chat(user, span_notice("You disassemble [src]."))
 	if(helmet_part)
@@ -36,7 +40,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/assembly/shock_kit/attack_self(mob/user)
+/obj/item/shock_kit/attack_self(mob/user)
 	helmet_part.attack_self(user)
 	electropack_part.attack_self(user)
 	add_fingerprint(user)

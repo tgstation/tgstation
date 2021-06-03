@@ -336,7 +336,7 @@
 //drops and kills the hugger if any is remaining
 /obj/structure/alien/egg/proc/Burst(kill = TRUE)
 	if(status == GROWN || status == GROWING)
-		proximity_monitor.SetRange(0)
+		proximity_monitor.SetRange(-1)
 		status = BURST
 		update_appearance()
 		flick("egg_opening", src)

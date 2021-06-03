@@ -105,10 +105,10 @@
 		return TRUE
 	to_chat(user, span_notice("You disassemble [src]!"))
 	if(a_left)
-		a_left.on_detach()
+		a_left.detach()
 		a_left = null
 	if(a_right)
-		a_right.on_detach()
+		a_right.detach()
 		a_right = null
 	qdel(src)
 	return TRUE

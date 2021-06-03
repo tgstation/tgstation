@@ -4,15 +4,12 @@
 	var/atom/last_host_loc
 	var/list/checkers //list of /obj/effect/abstract/proximity_checkers
 	var/current_range
-	var/ignore_if_not_on_turf //don't check turfs in range if the host's loc isn't a turf
 	var/wire = FALSE
 
-/datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
-	checkers = list()
+/datum/proximity_monitor/New(atom/_host, range)
 	last_host_loc = _host.loc
-	ignore_if_not_on_turf = _ignore_if_not_on_turf
 	current_range = range
-	SetHost(_host)
+	SetHost(_host, _host)
 
 /datum/proximity_monitor/proc/SetHost(atom/H,atom/R)
 	if(H == host)
@@ -21,8 +18,6 @@
 		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 	if(R)
 		hasprox_receiver = R
-	else if(hasprox_receiver == host) //Default case
-		hasprox_receiver = H
 	host = H
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/HandleMove)
 	last_host_loc = host.loc
@@ -35,65 +30,51 @@
 	QDEL_LAZYLIST(checkers)
 	return ..()
 
-/datum/proximity_monitor/proc/HandleMove()
+/datum/proximity_monitor/proc/HandleMove(atom/movable/mover, atom/old_loc)
 	SIGNAL_HANDLER
 
-	var/atom/_host = host
-	var/atom/new_host_loc = _host.loc
+	var/atom/new_host_loc = host.loc
 	if(last_host_loc != new_host_loc)
 		last_host_loc = new_host_loc //hopefully this won't cause GC issues with containers
-		var/curr_range = current_range
-		SetRange(curr_range, TRUE)
-		if(curr_range)
-			testing("HasProx: [host] -> [host]")
-			hasprox_receiver.HasProximity(host) //if we are processing, we're guaranteed to be a movable
+		SetRange(current_range, TRUE)
 
+/**
+ * Sets the detection range.
+ *
+ * Arguments:
+ * * range - how many tiles around host should we detect. 0 means only my own tile, negative values turn the monitor off
+ * * force_rebuild - rebuild the checkers even when the range is the same as before
+ */
 /datum/proximity_monitor/proc/SetRange(range, force_rebuild = FALSE)
 	if(!force_rebuild && range == current_range)
-		return FALSE
-	. = TRUE
-
-	current_range = range
-
-	var/list/checkers_local = checkers
-	var/old_checkers_len = checkers_local.len
-
-	var/atom/_host = host
-
-	var/atom/loc_to_use = ignore_if_not_on_turf ? _host.loc : get_turf(_host)
-	if(wire && !isturf(loc_to_use)) //it makes assemblies attached on wires work
-		loc_to_use = get_turf(loc_to_use)
-	if(!isturf(loc_to_use)) //only check the host's loc
-		if(range)
-			var/obj/effect/abstract/proximity_checker/pc
-			if(old_checkers_len)
-				pc = checkers_local[old_checkers_len]
-				--checkers_local.len
-				QDEL_LAZYLIST(checkers_local)
-			else
-				pc = new(loc_to_use, src)
-
-			checkers_local += pc //only check the host's loc
 		return
 
-	var/list/turfs = RANGE_TURFS(range, loc_to_use)
+	current_range = range
+	var/old_checkers_len = LAZYLEN(checkers)
+
+	var/atom/loc_to_use = host.loc
+	if(!isturf(loc_to_use) || range < 0)
+		QDEL_LAZYLIST(checkers)
+		return
+
+	var/list/turfs = RANGE_TURFS(range, host.loc)
 	var/turfs_len = turfs.len
 	var/old_checkers_used = min(turfs_len, old_checkers_len)
 
 	//reuse what we can
 	for(var/I in 1 to old_checkers_len)
 		if(I <= old_checkers_used)
-			var/obj/effect/abstract/proximity_checker/pc = checkers_local[I]
+			var/obj/effect/abstract/proximity_checker/pc = checkers[I]
 			pc.forceMove(turfs[I])
 		else
-			qdel(checkers_local[I]) //delete the leftovers
+			qdel(checkers[I]) //delete the leftovers
 
 	if(old_checkers_len < turfs_len)
 		//create what we lack
 		for(var/I in (old_checkers_used + 1) to turfs_len)
-			checkers_local += new /obj/effect/abstract/proximity_checker(turfs[I], src)
+			LAZYADD(checkers, new /obj/effect/abstract/proximity_checker(turfs[I], src))
 	else
-		checkers_local.Cut(old_checkers_used + 1, old_checkers_len)
+		checkers.Cut(turfs_len + 1)
 
 /obj/effect/abstract/proximity_checker
 	invisibility = INVISIBILITY_ABSTRACT
@@ -118,7 +99,6 @@
 	return
 
 /obj/effect/abstract/proximity_checker/Destroy()
-	LAZYREMOVE(monitor.checkers, src)
 	monitor = null
 	return ..()
 

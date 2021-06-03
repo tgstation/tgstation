@@ -48,7 +48,6 @@
 	else if(istype(S,/obj/item/assembly/prox_sensor))
 		var/obj/item/grenade/chem_grenade/G = holder
 		G.landminemode = S
-		S.proximity_monitor.wire = TRUE
 	fingerprint = S.fingerprintslast
 	return ..()
 
@@ -67,14 +66,9 @@
 
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
-	var/obj/item/assembly/S = get_attached(color)
-	if(S && istype(S))
-		assemblies -= color
-		S.connected = null
-		S.forceMove(holder.drop_location())
-		var/obj/item/grenade/chem_grenade/G = holder
-		G.landminemode = null
-		return S
+	var/obj/item/grenade/chem_grenade/G = holder
+	G.landminemode = null
+	return ..()
 
 /datum/wires/explosive/c4 // Also includes X4
 	holder_type = /obj/item/grenade/c4

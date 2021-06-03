@@ -204,7 +204,7 @@
 			cut_overlays()
 			set_anchored(FALSE)
 			power_change()
-			proximity_monitor.SetRange(0)
+			proximity_monitor.SetRange(-1)
 
 	else
 		return ..()
