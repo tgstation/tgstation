@@ -1619,6 +1619,7 @@
 #include "code\modules\antagonists\_common\antag_team.dm"
 #include "code\modules\antagonists\abductor\abductor.dm"
 #include "code\modules\antagonists\abductor\ice_abductor.dm"
+#include "code\modules\antagonists\abductor\abductee\abductee.dm"
 #include "code\modules\antagonists\abductor\abductee\abductee_objectives.dm"
 #include "code\modules\antagonists\abductor\equipment\abduction_gear.dm"
 #include "code\modules\antagonists\abductor\equipment\abduction_outfits.dm"
