@@ -411,6 +411,7 @@
 		M.set_active_storage(null)
 	LAZYREMOVE(is_using, M)
 
+	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 	if(!M.client)
 		return TRUE
 	var/atom/real_location = real_location()
