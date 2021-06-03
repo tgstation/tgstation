@@ -58,8 +58,6 @@
 		health.set_output(null)
 		return
 
-	organism.updatehealth()
-
 	brute.set_output(organism.getBruteLoss())
 	burn.set_output(organism.getFireLoss())
 	toxin.set_output(organism.getToxLoss())
