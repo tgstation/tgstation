@@ -677,8 +677,9 @@
 
 /datum/action/toggle_scope_zoom/Trigger()
 	. = ..()
-	if(.)
-		gun.zoom(owner, owner.dir)
+	if(!.)
+		return
+	gun.zoom(owner, owner.dir)
 
 /datum/action/toggle_scope_zoom/IsAvailable()
 	. = ..()
