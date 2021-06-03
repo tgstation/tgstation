@@ -2,6 +2,8 @@
 
 ## Main concepts
 
+TGUI consists of two parts, the backend DM code and the frontend JSX component.
+
 Basic tgui backend code consists of the following vars and procs:
 
 ```dm
@@ -23,7 +25,7 @@ the state of the game.
 with. This may be the standard checks that check if you are in range and
 conscious, or more.
 
-Once backend is in place, you create a new interface component on the
+Once the backend is complete, you create a new interface component on the
 frontend, which will receive this JSON data and render it on screen.
 
 States are easy to write and extend, and what make tgui interactions so
@@ -34,7 +36,7 @@ powerful interactions for embedded objects or remote access.
 
 ### Backend
 
-Let's start with a very basic hello world. We'll use the computer object as a base to make it easier to test.
+Let's start with a very basic example. We'll use the computer object as a base to make it easier to test.
 
 A note about file location. This can be placed anywhere you'd put other DM code. The frontend must be placed in a specific place - more on that below.
 
