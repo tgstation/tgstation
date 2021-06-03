@@ -63,7 +63,14 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	var/tmp_condition = check_audio(user, intentional)
+	var/tmp_condition = TRUE
+	// Only check if we can play a sound if there's actually a sound to play.
+	if(tmp_sound != null)
+		if(user.audio_emotes_used && user.audio_emotes_used[src] + audio_cooldown > world.time)
+			tmp_condition = FALSE
+		if(!user.audio_emotes_used)
+			user.audio_emotes_used = list()
+		user.audio_emotes_used[src] = world.time
 	if(tmp_sound && tmp_condition && (!only_forced_audio || !intentional))
 		playsound(user, tmp_sound, 50, vary)
 
@@ -91,16 +98,6 @@
 	if(!user.emotes_used)
 		user.emotes_used = list()
 	user.emotes_used[src] = world.time
-	return TRUE
-	
-/datum/emote/proc/check_audio(mob/living/user, intentional)
-	if(!intentional)
-		return TRUE
-	if(user.audio_emotes_used && user.audio_emotes_used[src] + audio_cooldown > world.time)
-		return FALSE
-	if(!user.audio_emotes_used)
-		user.audio_emotes_used = list()
-	user.audio_emotes_used[src] = world.time
 	return TRUE
 
 /datum/emote/proc/get_sound(mob/living/user)
