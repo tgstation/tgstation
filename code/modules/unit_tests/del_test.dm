@@ -70,6 +70,30 @@
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
 	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
+	//See above
+	ignore += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
+	ignore += typesof(/obj/effect/anomaly/grav/high)
+	//See above
+	ignore += typesof(/obj/effect/timestop)
+	//Invoke async in init, skippppp
+	ignore += typesof(/mob/living/silicon/robot/model)
+	//This lad also sleeps
+	ignore += typesof(/obj/item/hilbertshotel)
+	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
+	ignore += typesof(/obj/effect/sliding_puzzle)
+	//Stacks baseturfs, can't be tested here
+	ignore += typesof(/obj/effect/temp_visual/lava_warning)
+	//Stacks baseturfs, can't be tested here
+	ignore += typesof(/obj/effect/landmark/ctf)
+	//Our system doesn't support it without warning spam from unregister calls on things that never registered
+	ignore += typesof(/obj/docking_port)
+	//Asks for a shuttle that may not exist, let's leave it alone
+	ignore += typesof(/obj/item/pinpointer/shuttle)
+
+	//Temporary
+	//This are a fucking bitch issue with signals that I'll need to deeply debug soon
+	ignore += typesof(/obj/item/stack/sheet/hauntium)
 
 	var/list/ignore_cache = list()
 	for(var/type in ignore)
@@ -94,17 +118,17 @@
 				continue
 			//Go all in
 			qdel(creation, force = TRUE)
-			creation = null //????
 
 		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
-		if(length(cached_contents ^ spawn_at.contents))
-			for(var/atom/to_kill in cached_contents ^ spawn_at.contents)
+		var/list/to_del = cached_contents ^ spawn_at.contents
+		if(length(to_del))
+			for(var/atom/to_kill in to_del)
 				qdel(to_kill)
 
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
 	//Prevent the garbage subsystem from harddeling anything, if only to save time
-	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
+//	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
 
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
 	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
@@ -127,10 +151,12 @@
 			garbage_queue_processed = TRUE
 			break
 
-		if(world.time > start_time + time_needed + 10 MINUTES)
+		if(world.time > start_time + time_needed + 30 MINUTES)
 			Fail("Something has gone horribly wrong, the garbage queue has been processing for well over 10 minutes. What the hell did you do")
 			return
 
+		//Immediately fire the gc right after
+		SSgarbage.next_fire = 1
 		//Unless you've seriously fucked up, queue processing shouldn't take "that" long. Let her run for a bit, see if anything's changed
 		sleep(20 SECONDS)
 
