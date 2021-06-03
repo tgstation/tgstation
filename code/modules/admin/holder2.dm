@@ -33,6 +33,12 @@ GLOBAL_PROTECT(href_token)
 
 	var/datum/filter_editor/filteriffic
 
+	/// Whether or not the user tried to connect, but was blocked by 2FA
+	var/blocked_by_2fa = FALSE
+
+	/// Whether or not this user can bypass 2FA
+	var/bypass_2fa = FALSE
+
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
@@ -116,13 +122,13 @@ GLOBAL_PROTECT(href_token)
 
 	var/result_2fa = check_2fa(client)
 	if (!result_2fa[RESULT_2FA_VALID])
-		var/msg = " is trying to join, but needs to verify their ckey."
-		message_admins("[key_name_admin(client)][msg]")
-		log_admin("[key_name(client)][msg]")
-
+		blocked_by_2fa = TRUE
+		alert_2fa_necessary(client)
 		start_2fa_process(client, result_2fa[RESULT_2FA_ID])
 
 		return
+
+	blocked_by_2fa = FALSE
 
 	if (deadmined)
 		activate()
@@ -169,6 +175,9 @@ GLOBAL_PROTECT(href_token)
 
 /// Returns whether or not the given client has a verified 2FA connection.
 /datum/admins/proc/check_2fa(client/client)
+	if (bypass_2fa)
+		return list(TRUE, null)
+
 	var/admin_2fa_url = CONFIG_GET(string/admin_2fa_url)
 
 	// 2FA not being enabled == everyone passes
@@ -217,7 +226,13 @@ GLOBAL_PROTECT(href_token)
 	var/admin_2fa_url = CONFIG_GET(string/admin_2fa_url)
 
 	if (!SSdbcore.Connect())
-		to_chat(client, "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>")
+		to_chat(
+			client,
+			type = MESSAGE_TYPE_ADMINLOG,
+			html = "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>",
+			confidential = TRUE,
+		)
+
 		return
 
 	if (isnull(id))
@@ -232,14 +247,27 @@ GLOBAL_PROTECT(href_token)
 
 		if (!insert_query.Execute())
 			qdel(insert_query)
-			to_chat(client, "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>")
+			to_chat(
+				client,
+				type = MESSAGE_TYPE_ADMINLOG,
+				html = "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>",
+				confidential = TRUE,
+			)
+
 			return
 
 		id = insert_query.last_insert_id
 
-	to_chat(client, "<h1><b class='danger'>You could not be verified.</b></h1>")
-	to_chat(client, "<h2><b class='danger'>Please visit <a href='[replacetextEx(admin_2fa_url, "%ID%", id)]'>this URL</a> to verify.</b></h2>")
-	to_chat(client, "<h2><b class='danger'>When you are done, click the 'Verify Admin' button in your admin tab.</b></h2>")
+	to_chat(
+		client,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = {"
+			<h1><b class='danger'>You could not be verified.</b></h1>
+			<h2><b class='danger'>Please visit <a href='[replacetextEx(admin_2fa_url, "%ID%", id)]'>this URL</a> to verify.</b></h2>
+			<h2><b class='danger'>When you are done, click the 'Verify Admin' button in your admin tab.</b></h2>
+		"},
+		confidential = TRUE,
+	)
 
 /datum/admins/proc/verify_backup_data(client/client)
 	var/backup_file = file2text("data/admins_backup.json")
@@ -260,6 +288,25 @@ GLOBAL_PROTECT(href_token)
 
 	return most_recent_valid_connection["cid"] == client?.computer_id \
 		&& most_recent_valid_connection["ip"] == client?.address
+
+/datum/admins/proc/alert_2fa_necessary(client/client)
+	var/msg = " is trying to join, but needs to verify their ckey."
+	message_admins("[key_name_admin(client)][msg]")
+	log_admin("[key_name(client)][msg]")
+
+	for (var/client/admin_client as anything in GLOB.admins)
+		if (admin_client == client)
+			continue
+
+		if (!check_rights_for(admin_client, R_PERMISSIONS))
+			continue
+
+		to_chat(
+			admin_client,
+			type = MESSAGE_TYPE_ADMINLOG,
+			html = "<span class='admin'><span class='prefix'>ADMIN 2FA:</span> You have the ability to verify [key_name_admin(client)] by using the Permissions Panel.</span>",
+			confidential = TRUE,
+		)
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
