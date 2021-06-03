@@ -72,19 +72,19 @@
 	display_name = "Cyborg Construction"
 	description = "Sapient robots with preloaded tool modules and programmable laws."
 	design_ids = list(
-		"robocontrol",
-		"sflash",
-		"borg_suit",
-		"borg_head",
 		"borg_chest",
-		"borg_r_arm",
+		"borg_head",
 		"borg_l_arm",
-		"borg_r_leg",
 		"borg_l_leg",
+		"borg_r_arm",
+		"borg_r_leg",
+		"borg_suit",
+		"borg_upgrade_rename",
+		"borg_upgrade_restart",
 		"borgupload",
 		"cyborgrecharger",
-		"borg_upgrade_restart",
-		"borg_upgrade_rename",
+		"robocontrol",
+		"sflash",
 	)
 
 /datum/techweb_node/mech
