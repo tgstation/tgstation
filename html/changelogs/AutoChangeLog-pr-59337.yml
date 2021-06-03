@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - qol: "Controllers for circuits now use right-click instead of alt-right-click."
