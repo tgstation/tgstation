@@ -302,6 +302,15 @@
 	if(href_list["load_roster"])
 		GLOB.global_roster.load_contestants_from_file(usr, "sample_roster.json")
 
+	if(href_list["try_match_setup"])
+		GLOB.global_roster.try_setup_match(usr)
+
+	if(href_list["load_team_slot"])
+		GLOB.global_roster.try_load_team_slot(usr, href_list["load_team_slot"])
+
+	if(href_list["remove_team_slot"])
+		GLOB.global_roster.try_remove_team_slot(usr, href_list["remove_team_slot"])
+
 	if(href_list["upload"])
 		add_new_arena_template(user)
 	if(href_list["change_arena"])
@@ -370,32 +379,22 @@
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
+			dat += "<a href='?src=[REF(src)];setup_match=1'>Setup Next Match</a>"
 
+			if(GLOB.global_roster.team1)
+				var/datum/event_team/team1 = GLOB.global_roster.team1
+				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>[team1]</a>"
+			else
+				dat += "<a href='?src=[REF(src)];select_team_slot=1'>Select Team 1</a>"
 
+			if(GLOB.global_roster.team2)
+				var/datum/event_team/team2 = GLOB.global_roster.team2
+				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>[team2]</a>"
+			else
+				dat += "<a href='?src=[REF(src)];select_team_slot=2'>Select Team 2</a>"
 
-			var/list/settings = list(
-				"mainsettings" = list(
-					"team_event" = list("desc" = "Team Event?", "type" = "boolean", "value" = "Yes"),
-					"team_num_instead_of_size" = list("desc" = "If teams, divy by team number instead of team size?", "type" = "boolean", "value" = "Yes"),
-					"team_divy_factor" = list("desc" = "If teams, what's the divy factor? (ask if you don't know!)", "type" = "number", "value" = 2)
-				)
-			)
-
-			message_admins("[key_name(user)] is setting up next match...")
-			var/list/prefreturn = presentpreflikepicker(user,"Setup Next Match", "Setup Next Match", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
-
-
-			if (isnull(prefreturn))
-				return FALSE
-
-			if (prefreturn["button"] == 1)
-				var/list/prefs = settings["mainsettings"]
-
-				GLOB.global_roster.setup_match(user, prefs)
-
-
-			for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
-				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
+			/*for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
+				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"*/
 			dat += "<a href='?src=[REF(src)];match_add_team'>Add team</a>"
 		if(ARENA_UI_TEAMS)
 			dat += "<b>Team menu</b>"

@@ -28,9 +28,11 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/list/losers = list()
 	/// All team datums that are currently active
 	var/list/active_teams = list()
-	/// Will be used for which teams are actively marked to be spawned next
-	var/list/rostered_teams = list()
+	/// Teams that are not rostered and still need to play
+	var/list/unrostered_teams = list()
 
+	var/datum/event_team/team1
+	var/datum/event_team/team2
 	var/team_id_tracker
 
 /datum/roster/New()
@@ -187,8 +189,39 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	testing("unclaimed[purge_clientless_too ? " and clientless" : ""] contestants all cleared!")
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
-/datum/roster/proc/roster_team(mob/user)
-	return
+/datum/roster/proc/try_load_team_slot(mob/user, slot)
+	if(!slot  || !length(unrostered_teams))
+		return
+	if((slot == 1 && team1) || (slot == 2 && team2))
+		return
+
+	var/datum/event_team/the_team = input(user, "Choose a team:", "Team", null) in unrostered_teams
+	if(!the_team)
+		return
+
+	set_team_slot(user, the_team, slot)
+
+/// To be used for adding a team to the arena computer's "teams we're spawning" list
+/datum/roster/proc/set_team_slot(mob/user, datum/event_team/the_team, slot)
+	if(slot == 1)
+		team1 = the_team
+	else if(slot == 2)
+		team2 = the_team
+
+	LAZYREMOVE(unrostered_teams, the_team)
+
+/// To be used for adding a team to the arena computer's "teams we're spawning" list
+/datum/roster/proc/try_remove_team_slot(mob/user, slot)
+	var/datum/event_team/removed_team
+	if(slot == 1)
+		removed_team = team1
+		team1 = null
+	else if(slot == 2)
+		removed_team = team2
+		team2 = null
+
+	if(removed_team)
+		LAZYADD(unrostered_teams, removed_team)
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/setup_match(mob/user, list/prefs)
@@ -202,3 +235,26 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		divy_into_teams(user, team_divy_factor, 0, REMAINDER_MODE_BYE)
 	else
 		divy_into_teams(user, 0, team_divy_factor, REMAINDER_MODE_BYE)
+
+/// To be used for adding a team to the arena computer's "teams we're spawning" list
+/datum/roster/proc/try_setup_match(mob/user)
+
+	var/list/settings = list(
+		"mainsettings" = list(
+			"team_event" = list("desc" = "Team Event?", "type" = "boolean", "value" = "Yes"),
+			"team_num_instead_of_size" = list("desc" = "If teams, divy by team number instead of team size?", "type" = "boolean", "value" = "Yes"),
+			"team_divy_factor" = list("desc" = "If teams, what's the divy factor? (ask if you don't know!)", "type" = "number", "value" = 2)
+		)
+	)
+
+	message_admins("[key_name(user)] is setting up next match...")
+	var/list/prefreturn = presentpreflikepicker(user,"Setup Next Match", "Setup Next Match", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+
+
+	if (isnull(prefreturn))
+		return FALSE
+
+	if (prefreturn["button"] == 1)
+		var/list/prefs = settings["mainsettings"]
+
+		setup_match(user, prefs)
