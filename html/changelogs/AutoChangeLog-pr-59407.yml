@@ -1,4 +1,0 @@
-author: "Mordent"
-delete-after: True
-changes: 
-  - refactor: "Split DnaConsole interface into separate files."
