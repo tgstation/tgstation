@@ -108,21 +108,22 @@ Slimecrossing Armor
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
-
-/obj/item/clothing/head/peaceflower/attack_hand(mob/user, list/modifiers)
+/obj/item/clothing/head/peaceflower/proc/AtPeaceCheck(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)
 			to_chat(user, "<span class='warning'>You feel at peace. <b style='color:pink'>Why would you want anything else?</b></span>")
-			return
+			return TRUE
+	return FALSE
+
+/obj/item/clothing/head/peaceflower/attack_hand(mob/user, list/modifiers)
+	if(AtPeaceCheck(user))
+		return
 	return ..()
 
 /obj/item/clothing/head/peaceflower/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(src_location == C.head)
-			to_chat(usr, "<span class='warning'>You feel at peace. <b style='color:pink'>Why would you want anything else?</b></span>")
-			return
+	if(AtPeaceCheck(usr))
+		return
 	return ..()
 
 /obj/item/clothing/suit/armor/heavy/adamantine
