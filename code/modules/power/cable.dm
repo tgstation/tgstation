@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		. += get_power_info(user)
+		. += get_power_info()
 
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
@@ -172,13 +172,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		to_chat(user, get_power_info(user))
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	add_fingerprint(user)
 
 
-/obj/structure/cable/proc/get_power_info(mob/user)
+/obj/structure/cable/proc/get_power_info()
 	if(powernet && (powernet.avail > 0)) // is it powered?
 		return "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>"
 	else
