@@ -5,6 +5,7 @@
 	icon_state = "scanner"
 	base_icon_state = "scanner"
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300

@@ -1,7 +1,7 @@
 /client/proc/forcerandomrotate()
 	set category = "Server"
 	set name = "Trigger Random Map Rotation"
-	var/rotate = alert("Force a random map rotation to trigger?", "Rotate map?", "Yes", "Cancel")
+	var/rotate = tgui_alert(usr,"Force a random map rotation to trigger?", "Rotate map?", list("Yes", "Cancel"))
 	if (rotate != "Yes")
 		return
 	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")
@@ -32,7 +32,7 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in sortList(maprotatechoices)|"Custom"
+	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", sortList(maprotatechoices)|"Custom")
 	if (!chosenmap)
 		return
 
@@ -69,7 +69,7 @@
 
 		qdel(M)
 
-		var/shuttles = alert("Do you want to modify the shuttles?", "Map Shuttles", "Yes", "No")
+		var/shuttles = tgui_alert(usr,"Do you want to modify the shuttles?", "Map Shuttles", list("Yes", "No"))
 		if(shuttles == "Yes")
 			for(var/s in VM.shuttles)
 				var/shuttle = input(s, "Map Shuttles") as null|text

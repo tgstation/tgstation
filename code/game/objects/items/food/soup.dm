@@ -96,7 +96,17 @@
 /obj/item/food/soup/mystery/Initialize()
 	. = ..()
 	var/extra_reagent = null
-	extra_reagent = pick(/datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/medicine/omnizine, /datum/reagent/consumable/banana, /datum/reagent/blood, /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, /datum/reagent/consumable/banana, /datum/reagent/carbon, /datum/reagent/medicine/oculine)
+	extra_reagent = pick(
+		/datum/reagent/blood,
+		/datum/reagent/carbon,
+		/datum/reagent/consumable/banana,
+		/datum/reagent/consumable/capsaicin,
+		/datum/reagent/consumable/frostoil,
+		/datum/reagent/medicine/oculine,
+		/datum/reagent/medicine/omnizine,
+		/datum/reagent/toxin,
+		/datum/reagent/toxin/slimejelly,
+		)
 	reagents.add_reagent(extra_reagent, 5)
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 6)
 
@@ -216,6 +226,7 @@
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
 /obj/item/food/soup/beet/red
 	name = "red beet soup"
 	desc = "Quite a delicacy."
@@ -279,3 +290,11 @@
 	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
 	foodtypes = VEGETABLES | MEAT | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/soup/oatmeal
+	name = "oatmeal"
+	desc = "A nice bowl of oatmeal."
+	icon_state = "oatmeal"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("oats" = 1, "milk" = 1)
+	foodtypes = DAIRY | GRAIN | BREAKFAST

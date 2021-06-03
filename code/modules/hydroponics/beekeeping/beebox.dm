@@ -11,7 +11,7 @@
 	return 0
 
 
-/mob/living/simple_animal/hostile/poison/bees/bee_friendly()
+/mob/living/simple_animal/hostile/bee/bee_friendly()
 	return 1
 
 
@@ -33,7 +33,7 @@
 	icon_state = "beebox"
 	anchored = TRUE
 	density = TRUE
-	var/mob/living/simple_animal/hostile/poison/bees/queen/queen_bee = null
+	var/mob/living/simple_animal/hostile/bee/queen/queen_bee = null
 	var/list/bees = list() //bees owned by the box, not those inside it
 	var/list/honeycombs = list()
 	var/list/honey_frames = list()
@@ -77,7 +77,7 @@
 		honey_frames += HF
 
 	for(var/i in 1 to get_max_bees())
-		var/mob/living/simple_animal/hostile/poison/bees/B = new(src)
+		var/mob/living/simple_animal/hostile/bee/B = new(src)
 		bees += B
 		B.beehome = src
 		B.assign_reagent(R)
@@ -105,7 +105,7 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/simple_animal/hostile/poison/bees/B = new(get_turf(src))
+				var/mob/living/simple_animal/hostile/bee/B = new(get_turf(src))
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
 				bees += B
@@ -177,7 +177,7 @@
 			visible_message("<span class='notice'>[user] sets [qb] down inside the apiary, making it their new home.</span>")
 			var/relocated = 0
 			for(var/b in bees)
-				var/mob/living/simple_animal/hostile/poison/bees/B = b
+				var/mob/living/simple_animal/hostile/bee/B = b
 				if(B.reagent_incompatible(queen_bee))
 					bees -= B
 					B.beehome = null
@@ -201,19 +201,19 @@
 		//Time to get stung!
 		var/bees = FALSE
 		for(var/b in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
-			var/mob/living/simple_animal/hostile/poison/bees/B = b
+			var/mob/living/simple_animal/hostile/bee/B = b
 			if(B.isqueen)
 				continue
 			if(B.loc == src)
 				B.forceMove(drop_location())
-			B.target = user
+			B.GiveTarget(user)
 			bees = TRUE
 		if(bees)
 			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
 		else
 			visible_message("<span class='danger'>[user] disturbs the [name] to no effect!</span>")
 	else
-		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee", "Cancel")
+		var/option = tgui_alert(user, "What action do you wish to perform?","Apiary",list("Remove a Honey Frame","Remove the Queen Bee", "Cancel"))
 		if(!Adjacent(user))
 			return
 		switch(option)
@@ -256,7 +256,7 @@
 
 /obj/structure/beebox/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood (loc, 20)
-	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
+	for(var/mob/living/simple_animal/hostile/bee/B in bees)
 		if(B.loc == src)
 			B.forceMove(drop_location())
 	for(var/obj/item/honey_frame/HF in honey_frames)

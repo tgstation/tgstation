@@ -58,7 +58,8 @@
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bombtank.air_contents.temperature-T0C]")
+		var/datum/gas_mixture/bomb_mix = bombtank.return_air()
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bomb_mix.temperature-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
@@ -78,13 +79,6 @@
 		bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
-
-//Assembly / attached device memes
-
-/obj/item/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
-	. = ..()
-	if(bombassembly)
-		bombassembly.Crossed(AM)
 
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)
@@ -145,29 +139,28 @@
 	return
 
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
-	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
-	air_contents.garbage_collect()
-	var/datum/gas_mixture/bomb_mixture = air_contents.copy()
+	START_PROCESSING(SSobj, src)
+	var/datum/gas_mixture/our_mix = return_air()
+
+	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
+	our_mix.garbage_collect()
+	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
 	var/strength = 1
 
 	var/turf/ground_zero = get_turf(loc)
-
-	if(master)
-		qdel(master)
-	qdel(src)
 
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
 		if(strength >=2)
-			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*3,1), round(strength*4,1))
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1))
 		else if(strength >=1)
-			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*2,1), round(strength*3,1))
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(ground_zero, 0, 1, 2, 4)
+			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4)
 		else if(strength >=0.2)
-			explosion(ground_zero, -1, 0, 1, 2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -176,9 +169,9 @@
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
-			explosion(ground_zero, 0, round(strength,1), round(strength*2,1), round(strength*3,1))
+			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(ground_zero, -1, 0, 1, 2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -187,7 +180,7 @@
 		strength = (fuel_moles/25)
 
 		if(strength >=1)
-			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
+			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1))
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -196,15 +189,17 @@
 		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
 
-	ground_zero.air_update_turf(FALSE, FALSE)
+	if(master)
+		qdel(master)
+	qdel(src)
 
 /obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
-	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+	var/datum/gas_mixture/our_mix = return_air()
+	var/datum/gas_mixture/removed = remove_air(our_mix.total_moles())
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	T.assume_air(removed)
-	air_update_turf(FALSE, FALSE)
 
 /obj/item/onetankbomb/return_analyzable_air()
 	if(bombtank)

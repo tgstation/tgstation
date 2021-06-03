@@ -7,18 +7,25 @@
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
 	anchored = TRUE
 
+/obj/effect/step_trigger/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/Crossed(H as mob|obj)
-	..()
+/obj/effect/step_trigger/proc/on_entered(datum/source, H as mob|obj)
+	SIGNAL_HANDLER
 	if(!H)
 		return
 	if(isobserver(H) && !affect_ghosts)
 		return
 	if(!ismob(H) && mobs_only)
 		return
-	Trigger(H)
+	INVOKE_ASYNC(src, .proc/Trigger, H)
 
 
 /obj/effect/step_trigger/singularity_act()

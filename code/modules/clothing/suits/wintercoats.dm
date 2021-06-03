@@ -129,7 +129,6 @@
 		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/storage/bag/trash,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/janitor
 

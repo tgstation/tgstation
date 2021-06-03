@@ -284,6 +284,8 @@
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
 	if(!mapload)
 		return
 	has_electronics = APC_ELECTRONICS_SECURED
@@ -311,10 +313,6 @@
 	make_terminal()
 
 	addtimer(CALLBACK(src, .proc/update), 5)
-
-/obj/machinery/power/apc/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 2000)
@@ -401,19 +399,19 @@
 	if((machine_stat & (BROKEN|MAINT)) || update_state)
 		return
 
-	. += mutable_appearance(icon, "apcox-[locked]", layer, plane)
-	. += mutable_appearance(icon, "apcox-[locked]", layer, EMISSIVE_PLANE)
-	. += mutable_appearance(icon, "apco3-[charging]", layer, plane)
-	. += mutable_appearance(icon, "apco3-[charging]", layer, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "apcox-[locked]")
+	. += emissive_appearance(icon, "apcox-[locked]")
+	. += mutable_appearance(icon, "apco3-[charging]")
+	. += emissive_appearance(icon, "apco3-[charging]")
 	if(!operating)
 		return
 
-	. += mutable_appearance(icon, "apco0-[equipment]", layer, plane)
-	. += mutable_appearance(icon, "apco0-[equipment]", layer, EMISSIVE_PLANE)
-	. += mutable_appearance(icon, "apco1-[lighting]", layer, plane)
-	. += mutable_appearance(icon, "apco1-[lighting]", layer, EMISSIVE_PLANE)
-	. += mutable_appearance(icon, "apco2-[environ]", layer, plane)
-	. += mutable_appearance(icon, "apco2-[environ]", layer, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "apco0-[equipment]")
+	. += emissive_appearance(icon, "apco0-[equipment]")
+	. += mutable_appearance(icon, "apco1-[lighting]")
+	. += emissive_appearance(icon, "apco1-[lighting]")
+	. += mutable_appearance(icon, "apco2-[environ]")
+	. += emissive_appearance(icon, "apco2-[environ]")
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
@@ -1193,7 +1191,7 @@
 	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
-	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
+	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
 		to_chat(user, "<span class='danger'>AI denied transfer request. Process terminated.</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		transfer_in_progress = FALSE

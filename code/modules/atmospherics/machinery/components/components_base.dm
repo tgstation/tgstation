@@ -43,6 +43,7 @@
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	SIGNAL_HANDLER
 	showpipe = !covered
 	update_appearance()
 
@@ -184,7 +185,6 @@
 			continue
 		to_release.merge(air.remove(shared_loss))
 	T.assume_air(to_release)
-	air_update_turf(FALSE, FALSE)
 
 // Helpers
 

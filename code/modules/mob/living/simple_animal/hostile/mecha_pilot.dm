@@ -69,9 +69,9 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
 		return 0
-	target = null //Target was our mecha, so null it out
+	LoseTarget() //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
-	targets_from = M
+	set_targets_from(M)
 	allow_movement_on_non_turfs = TRUE //duh
 	var/do_ranged = 0
 	for(var/equip in mecha.equipment)
@@ -97,14 +97,14 @@
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
-	targets_from = src
+	set_targets_from(src)
 
 	//Find a new mecha
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/vehicle/sealed/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
-			target = C
+			GiveTarget(C)
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
 			break
 	search_objects = search_aggressiveness
@@ -188,7 +188,7 @@
 				return
 			else
 				if(!CanAttack(M))
-					target = null
+					LoseTarget()
 					return
 
 		return target.attack_animal(src)
@@ -201,7 +201,7 @@
 	if(!mecha)
 		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
 			if(is_valid_mecha(mecha_in_range))
-				target = mecha_in_range //Let's nab it!
+				GiveTarget(mecha_in_range) //Let's nab it!
 				minimum_distance = 1
 				ranged = 0
 				break

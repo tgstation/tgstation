@@ -21,7 +21,7 @@ new /datum/disease_ability/symptom/medium/visionloss,
 new /datum/disease_ability/symptom/medium/deafness,
 new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/medium/fever,
-new /datum/disease_ability/symptom/medium/shivering,
+new /datum/disease_ability/symptom/medium/chills,
 new /datum/disease_ability/symptom/medium/headache,
 new /datum/disease_ability/symptom/medium/nano_boost,
 new /datum/disease_ability/symptom/medium/nano_destroy,
@@ -356,8 +356,8 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/symptom/medium/fever
 	symptoms = list(/datum/symptom/fever)
 
-/datum/disease_ability/symptom/medium/shivering
-	symptoms = list(/datum/symptom/shivering)
+/datum/disease_ability/symptom/medium/chills
+	symptoms = list(/datum/symptom/chills)
 
 /datum/disease_ability/symptom/medium/headache
 	symptoms = list(/datum/symptom/headache)

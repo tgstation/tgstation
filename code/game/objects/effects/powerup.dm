@@ -19,9 +19,13 @@
 	..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/effect/powerup/Crossed(atom/movable/movable_atom)
-	. = ..()
+/obj/effect/powerup/proc/on_entered(datum/source, atom/movable/movable_atom)
+	SIGNAL_HANDLER
 	trigger(movable_atom)
 
 /obj/effect/powerup/Bump(atom/bumped_atom)

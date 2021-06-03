@@ -95,7 +95,7 @@
 	say("Ouch.")
 	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
 	if(!isnull(loc))
-		explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
+		explosion(src, light_impact_range = 1, flame_range = 1, flash_range = 3, smoke = TRUE)
 	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user, list/modifiers)
@@ -230,7 +230,7 @@
 
 /obj/machinery/pinpointer_dispenser/point_at(A)
 	. = ..()
-	visible_message("<span class='name'>[src]</span> points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]")
+	visible_message("<span class='emote'><span class='name'>[src]</span> points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]</span>")
 
 //Pinpointer itself
 /obj/item/pinpointer/wayfinding //Help players new to a station find their way around

@@ -144,7 +144,7 @@
 	. = ..()
 	// Here is the shitty emag functionality.
 	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
-		explosion(src, -1, 1, 3, 2, 0)
+		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 		visible_message("<span class='boldwarning'>[src] explodes!!</span>")
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away

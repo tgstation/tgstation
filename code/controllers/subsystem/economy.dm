@@ -41,14 +41,26 @@ SUBSYSTEM_DEF(economy)
 	var/pack_price_modifier = 1
 	var/market_crashing = FALSE
 
+	/// Total value of exported materials.
+	var/export_total = 0
+	/// Total value of imported goods.
+	var/import_total = 0
+	/// Number of mail items generated.
+	var/mail_waiting = 0
+	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.
+	var/mail_blocked = FALSE
+
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
+	if(time2text(world.timeofday, "DDD") == SUNDAY)
+		mail_blocked = TRUE
 	for(var/A in department_accounts)
 		new /datum/bank_account/department(A, budget_to_hand_out)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
+	var/delta_time = wait / (5 MINUTES)
 	departmental_payouts()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
@@ -61,6 +73,8 @@ SUBSYSTEM_DEF(economy)
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 	if(!market_crashing)
 		price_update()
+	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
+	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.

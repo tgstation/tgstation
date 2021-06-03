@@ -24,16 +24,15 @@
 
 /datum/surgery_step/filter_blood/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin filtering [target]'s blood...</span>",
-		"<span class='notice'>[user] uses [tool] to filter your blood.</span>",
+		"<span class='notice'>[user] uses [tool] to filter [target]'s blood.</span>",
 		"<span class='notice'>[user] uses [tool] on [target]'s chest.</span>")
 
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(target.reagents?.total_volume)
-		for(var/blood_chem in target.reagents.reagent_list)
-			var/datum/reagent/chem = blood_chem
+		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
 			target.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 	display_results(user, target, "<span class='notice'>\The [tool] pings as it finishes filtering [target]'s blood.</span>",
-		"<span class='notice'>\The [tool] pings as it stops pumping your blood.</span>",
+		"<span class='notice'>\The [tool] pings as it stops pumping [target]'s blood.</span>",
 		"\The [tool] pings as it stops pumping.")
 	return ..()
 

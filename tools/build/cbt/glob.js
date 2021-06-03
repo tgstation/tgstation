@@ -1851,7 +1851,7 @@ function mark (self, p) {
 
 // lotta situps...
 function makeAbs (self, f) {
-  var abs = f;
+  var abs;
   if (f.charAt(0) === '/') {
     abs = path__default['default'].join(self.root, f);
   } else if (pathIsAbsolute(f) || f === '') {

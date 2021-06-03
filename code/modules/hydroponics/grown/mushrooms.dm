@@ -1,6 +1,6 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	wine_power = 40
 
@@ -30,7 +30,6 @@
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
-
 
 // Fly Amanita
 /obj/item/seeds/amanita

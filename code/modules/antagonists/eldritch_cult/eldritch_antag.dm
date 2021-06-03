@@ -20,10 +20,9 @@
 
 /datum/antagonist/heretic/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
-	<B>The old ones gave you these tasks to fulfill:</B>")
+	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Heretic!</B></font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>")
+	to_chat(owner, "<span class='warningplain'><span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!</span></span>")
 	var/policy = get_policy(ROLE_HERETIC)
 	if(policy)
 		to_chat(owner, policy)
@@ -98,6 +97,7 @@
 
 ///What happens to the heretic once he dies, used to remove any custom perks
 /datum/antagonist/heretic/proc/on_death()
+	SIGNAL_HANDLER
 
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]

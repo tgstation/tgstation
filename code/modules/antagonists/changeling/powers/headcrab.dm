@@ -9,7 +9,7 @@
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
-	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
+	if(tgui_alert(usr,"Are we sure we wish to kill ourself and create a headslug?",,list("Yes", "No")) == "No")
 		return
 	..()
 	var/datum/mind/M = user.mind
@@ -18,7 +18,7 @@
 	for(var/obj/item/organ/I in organs)
 		I.Remove(user, 1)
 
-	explosion(get_turf(user), 0, 0, 2, 0, TRUE)
+	explosion(user, light_impact_range = 2, adminlog = TRUE)
 	for(var/mob/living/carbon/human/H in range(2,user))
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")

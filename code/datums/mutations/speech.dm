@@ -16,7 +16,7 @@
 	name = "Wacky"
 	desc = "You are not a clown. You are the entire circus."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
+	text_gain_indication = "<span class='infoplain'><span class='sans'>You feel an off sensation in your voicebox.</span></span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)

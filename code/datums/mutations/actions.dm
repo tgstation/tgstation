@@ -385,6 +385,16 @@
 	instability = 15
 	power = /obj/effect/proc_holder/spell/self/lay_genetic_web
 
+/datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+
+/datum/mutation/human/webbing/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+
 /obj/effect/proc_holder/spell/self/lay_genetic_web
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."

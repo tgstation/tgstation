@@ -14,6 +14,15 @@
 	var/mob/living/holder
 	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
 	var/list/slot_whitelist = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_BELT, ITEM_SLOT_NECK)
+	///what we give to connect_loc by default, makes slippable mobs moving over us slip
+	var/static/list/default_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/Slip,
+	)
+
+	///what we give to connect_loc if we're an item and get equipped by a mob. makes slippable mobs moving over our holder slip
+	var/static/list/holder_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/Slip_on_wearer,
+	)
 
 /datum/component/slippery/Initialize(knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
 	src.knockdown_time = max(knockdown, 0)
@@ -23,9 +32,10 @@
 	src.callback = callback
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/Slip)
+	if(ismovable(parent))
+		AddElement(/datum/element/connect_loc, parent, default_connections)
+
 	if(isitem(parent))
-		holder = parent
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else
@@ -58,7 +68,7 @@
 
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
-		RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/Slip_on_wearer)
+		AddElement(/datum/element/connect_loc, holder, holder_connections)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /*
@@ -84,8 +94,9 @@
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
+	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
 	holder = null
-	UnregisterSignal(user, COMSIG_MOVABLE_CROSSED)
 
 /*
  * The slip proc, but for equipped items.
@@ -99,6 +110,12 @@
 
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
 		Slip(source, AM)
+
+/datum/component/slippery/UnregisterFromParent()
+	. = ..()
+	if(holder)
+		RemoveElement(/datum/element/connect_loc, holder, holder_connections)
+	RemoveElement(/datum/element/connect_loc, parent, default_connections)
 
 /// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
 /datum/component/slippery/clowning

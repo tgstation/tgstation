@@ -32,7 +32,7 @@
 
 /atom/movable/screen/alert/status_effect/high_blood_pressure
 	name = "High blood pressure"
-	desc = "This stuff is driving my blood pressure up the wall...I'll probably bleed like crazy."
+	desc = "Your blood pressure is real high right now ... You'd probably bleed like a stuck pig."
 	icon_state = "highbloodpressure"
 
 

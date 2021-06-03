@@ -56,7 +56,7 @@
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
 	if(!operating)
-		. += "<span class='notice'>Alt-click [src] to turn it on.</span>"
+		. += "<span class='notice'>Right-click [src] to turn it on.</span>"
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
@@ -198,7 +198,7 @@
 
 	..()
 
-/obj/machinery/microwave/AltClick(mob/user)
+/obj/machinery/microwave/RightClick(mob/user)
 	if(user.canUseTopic(src, !issilicon(usr)))
 		cook()
 
@@ -333,7 +333,7 @@
 		spark()
 		broken = 2
 		if(prob(max(metal / 2, 33)))
-			explosion(loc, 0, 1, 2)
+			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 	else
 		dump_inventory_contents()
 

@@ -437,10 +437,12 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		qdel(src)
 
 /obj/item/fuel_pellet/advanced
+	name = "advanced fuel pellet"
 	fuel_type = FUEL_ADVANCED
 	icon_state = "fuel_advanced"
 
 /obj/item/fuel_pellet/exotic
+	name = "exotic fuel pellet"
 	fuel_type = FUEL_EXOTIC
 	icon_state = "fuel_exotic"
 

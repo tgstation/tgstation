@@ -52,7 +52,7 @@
 	name = "blumpkin"
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/blumpkinjuice = 0)
 	wine_power = 50

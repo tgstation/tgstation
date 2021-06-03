@@ -84,10 +84,10 @@
 		animate(A, color = oldcolor, time = 3 SECONDS)
 
 
-/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/A, mob/living/D)
-	A.say("APOTHEOSIS!!", forced="plasma fist")
-	if (ishuman(A))
-		var/mob/living/carbon/human/human_attacker = A
+/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
+	user.say("APOTHEOSIS!!", forced="plasma fist")
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
 		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
 		human_attacker.unequip_everything()
@@ -95,20 +95,20 @@
 		human_attacker.undershirt = "Nude"
 		human_attacker.socks = "Nude"
 		human_attacker.update_body()
-	var/turf/boomspot = get_turf(A)
 
+	var/turf/boomspot = get_turf(user)
 	//before ghosting to prevent issues
-	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
-	message_admins("[key_name_admin(A)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
+	log_combat(user, user, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
+	message_admins("[key_name_admin(user)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
 
-	to_chat(A, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
-	A.ghostize(FALSE) //prevents... horrible memes just believe me
+	to_chat(user, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
+	user.ghostize(FALSE) //prevents... horrible memes just believe me
 
-	A.apply_damage(rand(50,70), BRUTE)
+	user.apply_damage(rand(50,70), BRUTE)
 
-	addtimer(CALLBACK(src,.proc/Apotheosis_end, A), 6 SECONDS)
+	addtimer(CALLBACK(src,.proc/Apotheosis_end, user), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)
+	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)

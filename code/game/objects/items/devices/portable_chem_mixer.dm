@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
-	if(severity < EXPLODE_LIGHT)
+	if(severity > EXPLODE_LIGHT)
 		return ..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)

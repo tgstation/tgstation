@@ -63,7 +63,7 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 	if(!machine_stat)
-		. += mutable_appearance(icon, "smartfridge-light-mask", 0, EMISSIVE_PLANE, alpha)
+		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
 
 
 
@@ -449,11 +449,8 @@
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(delta_time)
-	for(var/organ in contents)
-		var/obj/item/organ/O = organ
-		if(!istype(O))
-			return
-		O.applyOrganDamage(-repair_rate * delta_time)
+	for(var/obj/item/organ/organ in contents)
+		organ.applyOrganDamage(-repair_rate * organ.maxHealth * delta_time)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()

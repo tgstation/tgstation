@@ -1,12 +1,19 @@
 /datum/surgery/plastic_surgery
 	name = "Plastic surgery"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/reshape_face, /datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/reshape_face,
+		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 
 //reshape_face
 /datum/surgery_step/reshape_face
 	name = "reshape face"
-	implements = list(TOOL_SCALPEL = 100, /obj/item/kitchen/knife = 50, TOOL_WIRECUTTER = 35)
+	implements = list(
+		TOOL_SCALPEL = 100,
+		/obj/item/kitchen/knife = 50,
+		TOOL_WIRECUTTER = 35)
 	time = 64
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -40,8 +47,8 @@
 			"<span class='notice'>[user] alters [oldname]'s appearance completely, [target.p_they()] is now [newname]!</span>",
 			"<span class='notice'>[user] finishes the operation on [target]'s face.</span>")
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.sec_hud_set_ID()
+		var/mob/living/carbon/human/human_target = target
+		human_target.sec_hud_set_ID()
 	return ..()
 
 /datum/surgery_step/reshape_face/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

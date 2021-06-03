@@ -202,6 +202,7 @@
 
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
+	SIGNAL_HANDLER
 	if(!follow)
 		return
 	gib_trail()
@@ -250,7 +251,7 @@
 			return
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
-	target = targeted_atom
+	GiveTarget(targeted_atom)
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
@@ -261,7 +262,7 @@
 	if(target == back || target == front)
 		return
 	if(back)
-		back.target = target
+		back.GiveTarget(target)
 		back.AttackingTarget()
 	if(!Adjacent(target))
 		return

@@ -4,7 +4,7 @@
  * Used for broken glass, cactuses and four sided dice.
  */
 /datum/element/caltrop
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
 
 	///Minimum damage done when crossed
@@ -19,6 +19,11 @@
 	///Miscelanous caltrop flags; shoe bypassing, walking interaction, silence
 	var/flags
 
+	///given to connect_loc to listen for something moving over target
+	var/static/list/crossed_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+
 /datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE)
 	. = ..()
 	if(!isatom(target))
@@ -29,9 +34,12 @@
 	src.probability = probability
 	src.flags = flags
 
-	RegisterSignal(target, COMSIG_MOVABLE_CROSSED, .proc/Crossed)
+	if(ismovable(target))
+		AddElement(/datum/element/connect_loc, target, crossed_connections)
+	else
+		RegisterSignal(get_turf(target), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-/datum/element/caltrop/proc/Crossed(atom/caltrop, atom/movable/AM)
+/datum/element/caltrop/proc/on_entered(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	if(!prob(probability))
@@ -81,3 +89,8 @@
 
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 	H.Paralyze(60)
+
+/datum/element/caltrop/Detach(datum/target)
+	. = ..()
+	if(ismovable(target))
+		RemoveElement(/datum/element/connect_loc, target, crossed_connections)

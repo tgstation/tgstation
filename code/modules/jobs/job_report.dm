@@ -49,6 +49,7 @@
 
 	data["livingTime"] = play_records[EXP_TYPE_LIVING]
 	data["ghostTime"] = play_records[EXP_TYPE_GHOST]
+	data["adminTime"] = play_records[EXP_TYPE_ADMIN] ? play_records[EXP_TYPE_ADMIN] : 0
 
 	data["isAdmin"] = check_rights(R_ADMIN, show_msg = FALSE)
 

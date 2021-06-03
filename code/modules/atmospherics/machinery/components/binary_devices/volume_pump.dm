@@ -18,6 +18,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
+	vent_movement = NONE
 	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
@@ -74,12 +75,14 @@
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
+	if(!removed.total_moles())
+		return
+
 	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
 		var/turf/open/T = loc
 		if(istype(T))
 			var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
 			T.assume_air(leaked)
-			T.air_update_turf(FALSE, FALSE)
 
 	air2.merge(removed)
 

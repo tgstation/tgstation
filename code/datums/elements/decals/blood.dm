@@ -18,8 +18,8 @@
 		_icon = 'icons/effects/blood.dmi'
 	if(!_icon_state)
 		_icon_state = "itemblood"
-	var/icon = initial(I.icon)
-	var/icon_state = initial(I.icon_state)
+	var/icon = I.icon
+	var/icon_state = I.icon_state
 	if(!icon || !icon_state)
 		// It's something which takes on the look of other items, probably
 		icon = I.icon
@@ -30,10 +30,10 @@
 	pic = blood_splatter_appearances[index]
 
 	if(!pic)
-		var/icon/blood_splatter_icon = icon(initial(I.icon), initial(I.icon_state), , 1) //we only want to apply blood-splatters to the initial icon_state for each object
+		var/icon/blood_splatter_icon = icon(I.icon, I.icon_state, , 1)
 		blood_splatter_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
 		blood_splatter_icon.Blend(icon(_icon, _icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-		pic = mutable_appearance(blood_splatter_icon, initial(I.icon_state))
+		pic = mutable_appearance(blood_splatter_icon, I.icon_state)
 		blood_splatter_appearances[index] = pic
 	return TRUE
 

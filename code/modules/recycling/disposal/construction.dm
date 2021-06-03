@@ -117,8 +117,10 @@
 
 		var/turf/T = get_turf(src)
 		if(T.intact && isfloorturf(T))
-			to_chat(user, "<span class='warning'>You can only attach the [pipename] if the floor plating is removed!</span>")
-			return TRUE
+			var/obj/item/crowbar/held_crowbar = user.is_holding_item_of_type(/obj/item/crowbar)
+			if(!held_crowbar || !T.crowbar_act(user, held_crowbar))
+				to_chat(user, "<span class='warning'>You can only attach the [pipename] if the floor plating is removed!</span>")
+				return TRUE
 
 		if(!ispipe && iswallturf(T))
 			to_chat(user, "<span class='warning'>You can't build [pipename]s on walls, only disposal pipes!</span>")
@@ -131,8 +133,11 @@
 				if(istype(CP, /obj/structure/disposalpipe/broken))
 					pdir = CP.dir
 				if(pdir & dpdir)
-					to_chat(user, "<span class='warning'>There is already a disposal pipe at that location!</span>")
-					return TRUE
+					if(istype(CP, /obj/structure/disposalpipe/broken))
+						qdel(CP)
+					else
+						to_chat(user, "<span class='warning'>There is already a disposal pipe at that location!</span>")
+						return TRUE
 
 		else // Disposal or outlet
 			var/found_trunk = locate(/obj/structure/disposalpipe/trunk) in T

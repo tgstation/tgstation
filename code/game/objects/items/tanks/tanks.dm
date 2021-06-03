@@ -26,7 +26,7 @@
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
 	integrity_failure = 0.5
-	/// The gases this tank contains.
+	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
 	/// The volume of this tank.
 	var/volume = 70
@@ -36,6 +36,8 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
+	///Used by process() to track if there's a reason to process each tick
+	var/excited = TRUE
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -107,7 +109,7 @@
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -126,10 +128,9 @@
 	. += "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
-	var/turf/location = get_turf(src)
+	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
-		location.air_update_turf(FALSE, FALSE)
 		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
@@ -205,15 +206,18 @@
 				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
+	START_PROCESSING(SSobj, src)
 	return air_contents.remove(amount)
 
 /obj/item/tank/return_air()
+	START_PROCESSING(SSobj, src)
 	return air_contents
 
 /obj/item/tank/return_analyzable_air()
 	return air_contents
 
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
+	START_PROCESSING(SSobj, src)
 	air_contents.merge(giver)
 	handle_tolerances(ASSUME_AIR_DT_FACTOR)
 	return TRUE
@@ -247,20 +251,26 @@
 		return
 
 	//Allow for reactions
-	air_contents.react(src)
-	handle_tolerances(delta_time)
+	excited = (excited | air_contents.react(src))
+	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | leaking)
+
+	if(!excited)
+		STOP_PROCESSING(SSobj, src)
+	excited = FALSE
+
 	if(QDELETED(src) || !leaking || !air_contents)
 		return
-	var/turf/location = get_turf(src)
+	var/atom/location = loc
 	if(!location)
 		return
 	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 	location.assume_air(leaked_gas)
-	location.air_update_turf(FALSE, FALSE)
 
 /**
  * Handles the minimum and maximum pressure tolerances of the tank.
  *
+ * Returns true if it did anything of significance, false otherwise
  * Arguments:
  * - delta_time: How long has passed between ticks.
  */
@@ -279,7 +289,8 @@
 	if(pressure >= TANK_LEAK_PRESSURE)
 		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
 		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
-	return TRUE
+		return TRUE
+	return FALSE
 
 /// Handles the tank springing a leak.
 /obj/item/tank/obj_break(damage_flag)
@@ -288,6 +299,8 @@
 		return
 
 	leaking = TRUE
+	START_PROCESSING(SSobj, src)
+
 	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
 	visible_message("<span class='warning'>[src] springs a leak!</span>")
@@ -296,10 +309,6 @@
 /// Handles rupturing and fragmenting
 /obj/item/tank/obj_destruction(damage_flag)
 	if(!air_contents)
-		return ..()
-
-	var/turf/location = get_turf(src)
-	if(!location)
 		return ..()
 
 	/// Handle fragmentation
@@ -312,7 +321,7 @@
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 
-		explosion(location, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(src, devastation_range = round(range*0.25), heavy_impact_range = round(range*0.5), light_impact_range = round(range), flash_range = round(range*1.5))
 	return ..()
 
 /obj/item/tank/rad_act(strength)
@@ -338,5 +347,6 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+		START_PROCESSING(SSobj, src)
 
 #undef ASSUME_AIR_DT_FACTOR

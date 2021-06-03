@@ -77,12 +77,11 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
-	var/datum/gas_mixture/gasused = tank.air_contents.remove(gasperfist * fisto_setting)
+	var/datum/gas_mixture/gasused = tank.remove_air(gasperfist * fisto_setting)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	T.assume_air(gasused)
-	T.air_update_turf(FALSE, FALSE)
 	if(!gasused)
 		to_chat(user, "<span class='warning'>\The [src]'s tank is empty!</span>")
 		target.apply_damage((force / 5), BRUTE)

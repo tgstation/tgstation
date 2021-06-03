@@ -142,6 +142,14 @@
 #define REACTING 1
 #define STOP_REACTIONS 2
 
+//Fusion
+///Max amount of radiation that can be emitted per reaction cycle
+#define FUSION_RAD_MAX 5000
+///Maximum instability before the reaction goes endothermic
+#define FUSION_INSTABILITY_ENDOTHERMALITY 4
+///Maximum reachable fusion temperature
+#define FUSION_MAXIMUM_TEMPERATURE 1e8
+
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define HAZARD_HIGH_PRESSURE 550
@@ -525,6 +533,18 @@
 	out_var = 0;\
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
+	}
+
+GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
+#define GAS_OVERLAYS(gases, out_var)\
+	out_var = list();\
+	for(var/_ID in gases){\
+		if(GLOB.nonoverlaying_gases[_ID]) continue;\
+		var/_GAS = gases[_ID];\
+		var/_GAS_META = _GAS[GAS_META];\
+		if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
+		var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY];\
+		out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
 	}
 
 #ifdef TESTING

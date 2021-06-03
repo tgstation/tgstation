@@ -251,7 +251,7 @@
 		software_error()
 
 /datum/nanite_program/proc/on_shock(shock_damage)
-	if(!program_flags & NANITE_SHOCK_IMMUNE)
+	if(!(program_flags & NANITE_SHOCK_IMMUNE))
 		if(prob(10))
 			host_mob.investigate_log("[src] nanite program received a software error due to shock.", INVESTIGATE_NANITES)
 			software_error()
@@ -260,7 +260,7 @@
 			qdel(src)
 
 /datum/nanite_program/proc/on_minor_shock()
-	if(!program_flags & NANITE_SHOCK_IMMUNE)
+	if(!(program_flags & NANITE_SHOCK_IMMUNE))
 		if(prob(10))
 			host_mob.investigate_log("[src] nanite program received a software error due to minor shock.", INVESTIGATE_NANITES)
 			software_error()

@@ -56,13 +56,13 @@
 			mode = 0
 	switch(mode)
 		if(0)
-			to_chat(user, "Power reset. Hugs!")
+			to_chat(user, "<span class='infoplain'>Power reset. Hugs!</span>")
 		if(1)
-			to_chat(user, "Power increased!")
+			to_chat(user, "<span class='infoplain'>Power increased!</span>")
 		if(2)
-			to_chat(user, "BZZT. Electrifying arms...")
+			to_chat(user, "<span class='warningplain'>BZZT. Electrifying arms...</span>")
 		if(3)
-			to_chat(user, "ERROR: ARM ACTUATORS OVERLOADED.")
+			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user, params)
 	if(M == user)
@@ -796,8 +796,7 @@
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
 /obj/item/borg/apparatus/Destroy()
-	if(stored)
-		qdel(stored)
+	QDEL_NULL(stored)
 	. = ..()
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
@@ -823,13 +822,19 @@
 	stored.forceMove(get_turf(usr))
 	return
 
+/**
+* Attack_self will pass for the stored item.
+*/
 /obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
-	if(!stored)
+	if(!stored || !issilicon(user))
 		return ..()
-	if(user.client?.keys_held["Alt"])
-		stored.forceMove(get_turf(user))
-		return
 	stored.attack_self(user)
+
+//Alt click drops the stored item.
+/obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
+	if(!stored || !issilicon(user))
+		return ..()
+	stored.forceMove(user.drop_location())
 
 /obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
 	if(!stored)
@@ -873,7 +878,7 @@
 
 /obj/item/borg/apparatus/beaker
 	name = "beaker storage apparatus"
-	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
+	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/glass/beaker,
 					/obj/item/reagent_containers/glass/bottle)
@@ -888,7 +893,7 @@
 	if(stored)
 		var/obj/item/reagent_containers/C = stored
 		C.SplashReagents(get_turf(src))
-		qdel(stored)
+	QDEL_NULL(stored)
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/examine()
@@ -901,6 +906,9 @@
 				. += "[R.volume] units of [R.name]"
 		else
 			. += "Nothing."
+
+		. += "<span class='notice'> <i>Right-clicking</i> will splash the beaker on the ground.</span>"
+	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored beaker. </span>"
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -919,12 +927,11 @@
 		arm.pixel_y = arm.pixel_y - 5
 	. += arm
 
-/obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
-	if(stored && !user.client?.keys_held["Alt"] && user.combat_mode)
-		var/obj/item/reagent_containers/C = stored
-		C.SplashReagents(get_turf(user))
-		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
-		return
+/// Secondary attack spills the content of the beaker.
+/obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
+	var/obj/item/reagent_containers/stored_beaker = stored
+	stored_beaker.SplashReagents(drop_location(user))
+	loc.visible_message("<span class='notice'>[user] spills the contents of [stored_beaker] all over the ground.</span>")
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/extra
@@ -933,7 +940,7 @@
 
 /obj/item/borg/apparatus/beaker/service
 	name = "beverage storage apparatus"
-	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
+	desc = "A special apparatus for carrying drinks without spilling the contents. Will resynthesize any drinks you pour out!"
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/food/drinks,
 					/obj/item/reagent_containers/food/condiment)
@@ -965,6 +972,7 @@
 		. += organ.name
 	else
 		. += "Nothing."
+	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored organ. </span>"
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
@@ -983,7 +991,8 @@
 		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
-/obj/item/borg/apparatus/organ_storage/attack_self(mob/user)
+/obj/item/borg/apparatus/organ_storage/AltClick(mob/living/silicon/robot/user)
+	. = ..()
 	if(stored)
 		var/obj/item/organ = stored
 		user.visible_message("<span class='notice'>[user] dumps [organ] from [src].</span>", "<span class='notice'>You dump [organ] from [src].</span>")
@@ -999,7 +1008,7 @@
 
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
+	desc = "A special apparatus for carrying and manipulating circuit boards."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
 				/obj/item/electronics)
@@ -1027,6 +1036,7 @@
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
+	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored circuit. </span>"
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
 	. = ..()

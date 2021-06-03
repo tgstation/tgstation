@@ -91,6 +91,7 @@
  * the supermatter probably don't need constant beeping to distract them.
  */
 /datum/computer_file/program/supermatter_monitor/proc/send_alert()
+	SIGNAL_HANDLER
 	if(!computer.get_ntnet_status())
 		return
 	if(computer.active_program != src)
@@ -107,6 +108,7 @@
  * minimized or closed to avoid double-notifications.
  */
 /datum/computer_file/program/supermatter_monitor/proc/send_start_alert()
+	SIGNAL_HANDLER
 	if(!computer.get_ntnet_status())
 		return
 	if(computer.active_program == src)
@@ -131,9 +133,9 @@
 		data["SM_power"] = active.power
 		data["SM_ambienttemp"] = air.temperature
 		data["SM_ambientpressure"] = air.return_pressure()
-		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency 
+		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency
 		data["SM_moles"] = 0
-		
+
 		var/list/gasdata = list()
 
 		if(air.total_moles())

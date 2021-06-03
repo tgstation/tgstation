@@ -9,7 +9,7 @@
 	set name = "Setup Anonymous Names"
 
 	if(SSticker.anonymousnames)
-		var/response = alert(usr, "Anon mode is currently enabled. Disable?", "cold feet", "Disable Anon Names", "Keep it Enabled")
+		var/response = tgui_alert(usr, "Anon mode is currently enabled. Disable?", "cold feet", list("Disable Anon Names", "Keep it Enabled"))
 		if(response != "Disable Anon Names")
 			return
 		QDEL_NULL(SSticker.anonymousnames)
@@ -38,7 +38,7 @@
 	result = input_list[result]
 	var/alert_players = "No"
 	if(SSticker.current_state > GAME_STATE_PREGAME) //before anonnames is done, for asking a sleep
-		alert_players = alert(usr, "Alert crew? These are IC Themed FROM centcom.", "2016 admins didn't miss roundstart", "Yes", "No")
+		alert_players = tgui_alert(usr, "Alert crew? These are IC Themed FROM centcom.", "2016 admins didn't miss roundstart", list("Yes", "No"))
 	SSticker.anonymousnames = new result()
 	if(alert_players == "Yes")
 		priority_announce(SSticker.anonymousnames.announcement_alert, "Identity Loss", SSstation.announcer.get_rand_alert_sound())

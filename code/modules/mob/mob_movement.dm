@@ -232,7 +232,7 @@
 						return
 				var/target = locate(locx,locy,mobloc.z)
 				if(target)
-					L.loc = target
+					L.forceMove(target)
 					var/limit = 2//For only two trailing shadows.
 					for(var/turf/T in getline(mobloc, L.loc))
 						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
@@ -496,12 +496,13 @@
 
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
+	var/ventcrawling_mob = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING)
 
-	if(can_zFall(above_turf, 1, current_turf, DOWN)) //Will be fall down if we go up?
+	if(can_zFall(above_turf, 1, current_turf, DOWN) && !ventcrawling_mob) //Will be fall down if we go up?
 		to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return
 
-	if(zMove(UP, TRUE))
+	if(zMove(UP, TRUE, ventcrawling_mob))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
 ///Moves a mob down a z level
@@ -509,11 +510,13 @@
 	set name = "Move Down"
 	set category = "IC"
 
-	if(zMove(DOWN, TRUE))
+	var/ventcrawling_mob = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING)
+
+	if(zMove(DOWN, TRUE, ventcrawling_mob))
 		to_chat(src, "<span class='notice'>You move down.</span>")
 
 ///Move a mob between z levels, if it's valid to move z's on this turf
-/mob/proc/zMove(dir, feedback = FALSE)
+/mob/proc/zMove(dir, feedback = FALSE, ventcrawling = FALSE)
 	if(dir != UP && dir != DOWN)
 		return FALSE
 	if(incapacitated())
@@ -525,11 +528,15 @@
 		if(feedback)
 			to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 		return FALSE
-	if(!canZMove(dir, target))
+	if(!canZMove(dir, target) && !ventcrawling)
 		if(feedback)
 			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
 		return FALSE
-	forceMove(target)
+	if(!ventcrawling) //let this be handled in atmosmachinery.dm
+		forceMove(target)
+	else
+		var/obj/machinery/atmospherics/pipe = loc
+		pipe.relaymove(src, dir)
 	return TRUE
 
 /// Can this mob move between z levels

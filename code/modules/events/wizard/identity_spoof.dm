@@ -4,7 +4,7 @@
 	typepath = /datum/round_event/wizard/identity_spoof
 	max_occurrences = 1
 
-/datum/round_event_control/wizard/identity_spoof/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/wizard/identity_spoof/canSpawnEvent(players_amt)
 	. = ..()
 	if(.)
 		return FALSE

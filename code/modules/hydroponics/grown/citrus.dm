@@ -4,7 +4,6 @@
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 30
 
@@ -106,7 +105,6 @@
 	name = "Combustible Lemon"
 	desc = "Made for burning houses down."
 	icon_state = "firelemon"
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 70
 
@@ -133,23 +131,23 @@
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 1)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 1)
 			qdel(src)
 		if(31 to 50)
 			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 2)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 2)
 			qdel(src)
 		if(51 to 70)
 			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 3)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 3)
 			qdel(src)
 		if(71 to 90)
 			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 4)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 4)
 			qdel(src)
 		else
 			update_mob()
-			explosion(src.loc,-1,-1,2, flame_range = 5)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 5)
 			qdel(src)
 
 //3D Orange
@@ -176,6 +174,7 @@
 	name = "extradimensional orange"
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
+	bite_consumption_mod = 2
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/toxin/mindbreaker
 	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)

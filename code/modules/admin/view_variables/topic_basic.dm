@@ -81,7 +81,8 @@
 	if(href_list[VV_HK_MODIFY_GREYSCALE])
 		if(!check_rights(NONE))
 			return
-		var/datum/greyscale_modify_menu/menu = new(target, usr)
+		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations)
+		menu.Unlock()
 		menu.ui_interact(usr)
 	if(href_list[VV_HK_CALLPROC])
 		usr.client.callproc_datum(target)

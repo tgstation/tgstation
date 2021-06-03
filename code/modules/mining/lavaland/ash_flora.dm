@@ -270,7 +270,6 @@
 	desc = "A spikey, round cluster of prickly star cacti. And no, it's not called a star cactus because it's in space."
 	icon_state = "starcactus"
 	filling_color = "#1c801c"
-	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 

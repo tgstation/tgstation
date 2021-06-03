@@ -115,17 +115,25 @@
 	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
 	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 
+/*!
+ * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
+ *
+ * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
+ * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
+ * Emissive overlays and emissive blockers are put onto the same plane.
+ * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
+ * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
+ * This is then used to alpha mask the lighting plane.
+ */
+
 /atom/movable/screen/plane_master/lighting/Initialize()
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
-	add_filter("unblockable_emissives", 2, alpha_mask_filter(render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE))
-	add_filter("object_lighting", 3, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter("object_lighting", 2, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
+
 
 /**
- * Things placed on this mask the lighting plane. Doesn't render directly.
- *
- * Gets masked by blocking plane. Use for things that you want blocked by
- * mobs, items, etc.
+ * Handles emissive overlays and emissive blockers.
  */
 /atom/movable/screen/plane_master/emissive
 	name = "emissive plane master"
@@ -135,30 +143,7 @@
 
 /atom/movable/screen/plane_master/emissive/Initialize()
 	. = ..()
-	add_filter("emissive_block", 1, alpha_mask_filter(render_source = EMISSIVE_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
-
-/**
- * Things placed on this always mask the lighting plane. Doesn't render directly.
- *
- * Always masks the light plane, isn't blocked by anything. Use for on mob glows,
- * magic stuff, etc.
- */
-/atom/movable/screen/plane_master/emissive_unblockable
-	name = "unblockable emissive plane master"
-	plane = EMISSIVE_UNBLOCKABLE_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_target = EMISSIVE_UNBLOCKABLE_RENDER_TARGET
-
-/**
- * Things placed on this layer mask the emissive layer. Doesn't render directly
- *
- * You really shouldn't be directly using this, use atom helpers instead
- */
-/atom/movable/screen/plane_master/emissive_blocker
-	name = "emissive blocker plane master"
-	plane = EMISSIVE_BLOCKER_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_target = EMISSIVE_BLOCKER_RENDER_TARGET
+	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax

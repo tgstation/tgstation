@@ -77,14 +77,13 @@
 		if(summon_objective)
 			summon_objective.summoned = TRUE
 
-	for (var/_cult_mind in SSticker.mode.cult)
-		var/datum/mind/cult_mind = _cult_mind
+	for (var/datum/mind/cult_mind as anything in get_antag_minds(/datum/antagonist/cult))
 		if (isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
 
 	for (var/mob/living/carbon/player in GLOB.player_list)
-		if (player.stat != DEAD && is_station_level(player.loc?.z) && !iscultist(player))
+		if (player.stat != DEAD && is_station_level(player.loc?.z) && !IS_CULTIST(player))
 			souls_needed[player] = TRUE
 
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
@@ -132,7 +131,7 @@
 /obj/narsie/proc/mesmerize()
 	for (var/mob/living/carbon/victim in viewers(NARSIE_CONSUME_RANGE, src))
 		if (victim.stat == CONSCIOUS)
-			if (!iscultist(victim))
+			if (!IS_CULTIST(victim))
 				to_chat(victim, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src]...</span>")
 				victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)
 
@@ -146,7 +145,7 @@
 		if (!pos || (pos.z != z))
 			continue
 
-		if (iscultist(food))
+		if (IS_CULTIST(food))
 			cultists += food
 		else
 			noncultists += food

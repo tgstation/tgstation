@@ -91,6 +91,11 @@
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
+/obj/machinery/atmospherics/components/binary/pressure_valve/relaymove(mob/living/user, direction)
+	if(!on || direction != dir)
+		return
+	. = ..()
+
 /obj/machinery/atmospherics/components/binary/pressure_valve/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

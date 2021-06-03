@@ -49,7 +49,7 @@
 
 /obj/item/sparkler/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/sparkler/ignition_effect(atom/A, mob/user)
 	. = "<span class='notice'>[user] gracefully lights [A] with [src].</span>"
@@ -113,8 +113,7 @@
 /obj/item/grenade/firecracker/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
-	var/explosion_loc = get_turf(src)
+	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2)
 	qdel(src)
-	explosion(explosion_loc,-1,-1,2)
 
 

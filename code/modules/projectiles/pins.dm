@@ -69,7 +69,7 @@
 		if(user)
 			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
 			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
-		explosion(get_turf(gun), -1, 0, 2, 3)
+		explosion(src, devastation_range = -1, light_impact_range = 2, flash_range = 3)
 		if(gun)
 			qdel(gun)
 
@@ -286,7 +286,7 @@
 			return FALSE
 		return TRUE
 	if(credit_card_details && !active_prompt)
-		var/license_request = alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", "Yes", "No")
+		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
 		active_prompt = TRUE
 		if(!user.canUseTopic(src, BE_CLOSE))
 			active_prompt = FALSE

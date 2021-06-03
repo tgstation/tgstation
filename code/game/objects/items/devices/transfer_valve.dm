@@ -19,6 +19,17 @@
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
+/obj/item/transfer_valve/handle_atom_del(atom/deleted_atom)
+	. = ..()
+	if(deleted_atom == tank_one)
+		tank_one = null
+		update_appearance()
+		return
+	if(deleted_atom == tank_two)
+		tank_two = null
+		update_appearance()
+		return
+
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
 		if(tank_one && tank_two)
@@ -50,6 +61,7 @@
 			return
 		attached_device = A
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
+		A.on_attach()
 		A.holder = src
 		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
@@ -70,11 +82,6 @@
 /obj/item/transfer_valve/on_found(mob/finder)
 	if(attached_device)
 		attached_device.on_found(finder)
-
-/obj/item/transfer_valve/Crossed(atom/movable/AM as mob|obj)
-	. = ..()
-	if(attached_device)
-		attached_device.Crossed(AM)
 
 //Triggers mousetraps
 /obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)
@@ -124,29 +131,34 @@
 
 /obj/item/transfer_valve/proc/merge_gases(datum/gas_mixture/target, change_volume = TRUE)
 	var/target_self = FALSE
-	if(!target || (target == tank_one.air_contents))
-		target = tank_two.air_contents
-	if(target == tank_two.air_contents)
+	var/datum/gas_mixture/mix_one = tank_one.return_air()
+	var/datum/gas_mixture/mix_two = tank_two.return_air()
+	if(!target || (target == mix_one))
+		target = mix_two
+	if(target == mix_two)
 		target_self = TRUE
 	if(change_volume)
 		if(!target_self)
 			target.volume += tank_two.volume
-		target.volume += tank_one.air_contents.volume
+		target.volume += mix_one.volume
 	var/datum/gas_mixture/temp
-	temp = tank_one.air_contents.remove_ratio(1)
+	temp = mix_one.remove_ratio(1)
 	target.merge(temp)
 	if(!target_self)
-		temp = tank_two.air_contents.remove_ratio(1)
+		temp = mix_two.remove_ratio(1)
 		target.merge(temp)
 
 /obj/item/transfer_valve/proc/split_gases()
 	if (!valve_open || !tank_one || !tank_two)
 		return
-	var/ratio1 = tank_one.air_contents.volume/tank_two.air_contents.volume
+	var/datum/gas_mixture/mix_one = tank_one.return_air()
+	var/datum/gas_mixture/mix_two = tank_two.return_air()
+
+	var/volume_ratio = mix_one.volume/mix_two.volume
 	var/datum/gas_mixture/temp
-	temp = tank_two.air_contents.remove_ratio(ratio1)
-	tank_one.air_contents.merge(temp)
-	tank_two.air_contents.volume -=  tank_one.air_contents.volume
+	temp = mix_two.remove_ratio(volume_ratio)
+	mix_one.merge(temp)
+	mix_two.volume -= mix_one.volume
 
 /*
 	Exadv1: I know this isn't how it's going to work, but this was just to check

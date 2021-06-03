@@ -93,7 +93,7 @@
 		G.is_burrowed = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
-	target = new_target
+	add_target(new_target)
 	if(target != null)
 		if(istype(target, /obj/item/stack/ore))
 			visible_message("<span class='notice'>The [name] looks at [target.name] with hungry eyes.</span>")

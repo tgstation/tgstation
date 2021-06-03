@@ -526,7 +526,7 @@
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i, i<=3, i++)
 					var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(src))
-					spaceport_security.target = usr
+					spaceport_security.GiveTarget(usr)
 	game.fuel += fuel
 	game.food += food
 

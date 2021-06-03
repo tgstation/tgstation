@@ -432,7 +432,7 @@
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
 	if(!magnification)
 		return
@@ -487,6 +487,7 @@
 		qdel(src)//runs disconnect code
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
+	SIGNAL_HANDLER
 	if(magnification)
 		visible_message("<span class='warning'>[src] falls off of [magnification]'s head as it changes shape!</span>")
 		magnification.dropItemToGround(src)

@@ -1,21 +1,3 @@
-
-#define CART_SECURITY (1<<0)
-#define CART_ENGINE (1<<1)
-#define CART_ATMOS (1<<2)
-#define CART_MEDICAL (1<<3)
-#define CART_MANIFEST (1<<4)
-#define CART_CLOWN (1<<5)
-#define CART_MIME (1<<6)
-#define CART_JANITOR (1<<7)
-#define CART_REAGENT_SCANNER (1<<8)
-#define CART_NEWSCASTER (1<<9)
-#define CART_REMOTE_DOOR (1<<10)
-#define CART_STATUS_DISPLAY (1<<11)
-#define CART_QUARTERMASTER (1<<12)
-#define CART_HYDROPONICS (1<<13)
-#define CART_DRONEPHONE (1<<14)
-
-
 /obj/item/cartridge
 	name = "generic cartridge"
 	desc = "A data cartridge for portable microcomputers."
@@ -160,7 +142,7 @@
 /obj/item/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE | CART_DRONEACCESS
 	bot_access_flags = FLOOR_BOT | FIRE_BOT
 
 /obj/item/cartridge/cmo
@@ -548,7 +530,7 @@ Code:
 			if(!emoji_table)
 				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
-				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
+				for(var/emoji in sortList(icon_states(icon(EMOJI_SET))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")
 					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
 				collate += "</table><br>"
