@@ -74,7 +74,7 @@
 
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
 	#ifdef REFERENCE_TRACKING_DEBUG
-	if(!found_refs)
+	if(!found_refs && SSgarbage.should_save_refs)
 		found_refs = list()
 	#endif
 
@@ -100,7 +100,8 @@
 
 			if(variable == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[varname] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[varname] = TRUE
 				#endif
 				testing("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
 
@@ -113,14 +114,16 @@
 			//Check normal entrys
 			if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_container] = TRUE
 				#endif
 				testing("Found [type] \ref[src] in list [container_name].")
 
 			//Check assoc entrys
 			else if(!isnum(element_in_list) && normal && potential_container[element_in_list] == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_container] = TRUE
 				#endif
 				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 
