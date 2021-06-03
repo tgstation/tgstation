@@ -300,6 +300,8 @@
 
 
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
+	if(QDELETED(src))
+		CRASH("You're trying to change your species post deletion, this is a recipe for madness")
 	if(mrace && has_dna())
 		var/datum/species/new_race
 		if(ispath(mrace))

@@ -1,0 +1,57 @@
+2021-06-01:
+  Arkatos:
+  - refactor: Notice board now uses tgui.
+  - bugfix: Notice boards will now properly drop their contents upon destruction.
+  FlamingLily:
+  - qol: Surgery masks no longer block surgery.
+  Gamer025:
+  - bugfix: Offering an item multiple times no longer causes runtimes
+  - bugfix: Chairs no longer runtime when being deconstructed
+  Inept:
+  - rscadd: Some new holidays have been added.
+  JohnFulpWillard:
+  - qol: Microwaves now use Right Click instead of Alt click to turn on.
+  Krysonism:
+  - imageadd: The desk, green and banana lamps have been resprited.
+  Mothblocks:
+  - bugfix: Fixed dynamic latejoins.
+  Timberpoes:
+  - bugfix: Fix oversight where Dynamic can assign antag datums to the minds of players
+      who will be forcefully returned to the lobby.
+  ninjanomnom:
+  - imageadd: Better greyscale support has been added to datum materials allowing
+      objects to have more complex compositions of sprites. The golden cleric mace
+      is extra shiny now.
+  - bugfix: Mime shoes no longer runtime when generating their icon. This may fix
+      some graphical oddity or do nothing at all since they get colored pure white
+      anyway.
+  rasepretep:
+  - code_imp: removed the piece of code that causes carpotoxin to qdel temporal scars
+      (hopefully I identified it correctly)
+2021-06-02:
+  FernandoJ8:
+  - bugfix: RD's liver now has the TRAIT_ROYAL_METABOLISM trait.
+  ModDownloading:
+  - qol: 'You can be your own character in Mafia again. Don''t worry plasmamen: you
+      don''t die from fire or lack of plasma in the mafia game, so you can be a funny
+      purple skeleton in relative peace.'
+  RandomGamer123:
+  - bugfix: Heretic's reality phase ability is no longer affected by the bag of holding
+  dragomagol:
+  - bugfix: railings drop rods on deconstruction
+  - bugfix: connected the kilo medbay lobby apc to the grid
+2021-06-03:
+  Mordent:
+  - refactor: Split DnaConsole interface into separate files.
+  RandomGamer123:
+  - bugfix: Removes random camera and railing in space near xenobio on metastation
+  - bugfix: Switchblades' blades now actually pop out like intended
+  SpaceDragon00:
+  - bugfix: Large energy crossbow now sounds like an energy crossbow
+  carshalash:
+  - qol: Makes fish affordable to common workers.
+  dragomagol:
+  - qol: newly-resprited stools and barstools are now facing tables
+  zxaber:
+  - bugfix: AIs should no longer occasionally have their lawset randomly and silently
+      returned to Asimov.
