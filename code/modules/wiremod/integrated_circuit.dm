@@ -23,6 +23,9 @@
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = FALSE
 
+	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
+	var/datum/weakref/owner_id
+
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/high(src)
@@ -57,6 +60,11 @@
 		cell = I
 		I.add_fingerprint(user)
 		user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+		return
+
+	if(istype(I, /obj/item/card/id))
+		balloon_alert(user, "owner id set for [I]")
+		owner_id = WEAKREF(I)
 		return
 
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)

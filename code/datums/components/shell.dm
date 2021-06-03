@@ -14,6 +14,8 @@
 	/// A list of components that cannot be removed
 	var/list/obj/item/circuit_component/unremovable_circuit_components
 
+	var/locked = FALSE
+
 /datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags)
 	. = ..()
 	if(!ismovable(parent))
@@ -60,9 +62,11 @@
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!attached_circuit)
+		examine_text += "<span class='notice'>There is no integrated circuit attached.</span>"
 		return
 
 	examine_text += "<span class='notice'>There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].</span>"
+	examine_text += "<span class='notice'>The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].</span>"
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
 
@@ -84,6 +88,11 @@
 	if(istype(item, /obj/item/stock_parts/cell))
 		source.balloon_alert(attacker, "can't pull cell in directly!")
 		return
+
+	if(attached_circuit?.owner_id && item == attached_circuit.owner_id.resolve())
+		locked = !locked
+		source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+		return COMPONENT_NO_AFTERATTACK
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
@@ -108,6 +117,10 @@
 	if(!attached_circuit)
 		return
 
+	if(locked)
+		source.balloon_alert(user, "The cover panel is locked!")
+		return COMPONENT_BLOCK_TOOL_ATTACK
+
 	attached_circuit.interact(user)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -118,6 +131,10 @@
 	SIGNAL_HANDLER
 	if(!attached_circuit)
 		return
+
+	if(locked)
+		source.balloon_alert(user, "The cover panel is locked!")
+		return COMPONENT_BLOCK_TOOL_ATTACK
 
 	tool.play_tool_sound(parent)
 	source.balloon_alert(user, "You unscrew [attached_circuit] from [parent].")
@@ -149,6 +166,7 @@
 /datum/component/shell/proc/attach_circuit(obj/item/integrated_circuit/circuitboard, mob/living/user)
 	if(!user.transferItemToLoc(circuitboard, parent))
 		return
+	locked = FALSE
 	attached_circuit = circuitboard
 	RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
 	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)

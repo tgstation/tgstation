@@ -210,6 +210,15 @@
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
 	category = list("Circuitry", "Shells")
 
+/datum/design/money_bot_shell
+	name = "Money Bot Shell"
+	desc = "An immobile shell that is similar to a regular bot shell, but accepts monetary inputs and can also dispense money."
+	id = "money_bot_shell"
+	build_path = /obj/item/shell/money_bot
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/gold = 50)
+	category = list("Circuitry", "Shells")
+
 /datum/design/drone_shell
 	name = "Drone Shell"
 	desc = "A shell with the ability to move itself around."
