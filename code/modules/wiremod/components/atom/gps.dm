@@ -32,13 +32,8 @@
 		return
 
 	var/turf/location = get_turf(src)
-	if(!location)
-		x_pos.set_output(null)
-		y_pos.set_output(null)
-		z_pos.set_output(null)
-		return
 
-	x_pos.set_output(location.x)
-	y_pos.set_output(location.y)
-	z_pos.set_output(location.z)
+	x_pos.set_output(location?.x)
+	y_pos.set_output(location?.y)
+	z_pos.set_output(location?.z)
 

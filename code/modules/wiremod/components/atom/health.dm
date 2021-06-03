@@ -31,7 +31,7 @@
 	brute = add_output_port("Brute Damage", PORT_TYPE_NUMBER)
 	burn = add_output_port("Burn Damage", PORT_TYPE_NUMBER)
 	toxin = add_output_port("Toxin Damage", PORT_TYPE_NUMBER)
-	oxy = add_output_port("Oxy Damage", PORT_TYPE_NUMBER)
+	oxy = add_output_port("Suffocation Damage", PORT_TYPE_NUMBER)
 	health = add_output_port("Health", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/health/Destroy()
