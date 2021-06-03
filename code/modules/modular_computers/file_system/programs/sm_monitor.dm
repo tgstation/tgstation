@@ -128,6 +128,7 @@
 			active = null
 			return
 
+		data["singlecrystal"] = FALSE
 		data["active"] = TRUE
 		data["SM_integrity"] = active.get_integrity()
 		data["SM_power"] = active.power
@@ -135,6 +136,9 @@
 		data["SM_ambientpressure"] = air.return_pressure()
 		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency
 		data["SM_moles"] = 0
+		data["SM_uid"] = active.uid
+		var/area/active_supermatter_area = get_area(active)
+		data["SM_area_name"] = active_supermatter_area.name
 
 		var/list/gasdata = list()
 
