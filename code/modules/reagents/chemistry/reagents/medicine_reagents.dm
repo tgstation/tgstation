@@ -885,7 +885,7 @@
 
 	var/healby = 1 //heals 1 damage per unit of mannitol
 	healby *= reac_volume
-	healby *= src.purity / REAGENT_STANDARD_PURITY
+	healby *= purity / REAGENT_STANDARD_PURITY
 	exposed_brain.applyOrganDamage(-healby) // clears the failing variable if that was up
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
