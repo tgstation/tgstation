@@ -43,3 +43,15 @@
 2021-06-03:
   Mordent:
   - refactor: Split DnaConsole interface into separate files.
+  RandomGamer123:
+  - bugfix: Removes random camera and railing in space near xenobio on metastation
+  - bugfix: Switchblades' blades now actually pop out like intended
+  SpaceDragon00:
+  - bugfix: Large energy crossbow now sounds like an energy crossbow
+  carshalash:
+  - qol: Makes fish affordable to common workers.
+  dragomagol:
+  - qol: newly-resprited stools and barstools are now facing tables
+  zxaber:
+  - bugfix: AIs should no longer occasionally have their lawset randomly and silently
+      returned to Asimov.
