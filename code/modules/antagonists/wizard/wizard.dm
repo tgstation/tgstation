@@ -7,14 +7,18 @@
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
+	show_to_ghosts = TRUE
+	ui_name = "WizardInfo"
 	var/give_objectives = TRUE
-	var/strip = TRUE //strip before equipping
+	///strip before equipping
+	var/strip = TRUE
 	var/allow_rename = TRUE
-	var/datum/team/wizard/wiz_team //Only created if wizard summons apprentices
+	///Only created if wizard summons apprentices
+	var/datum/team/wizard/wiz_team
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
-	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
-	show_to_ghosts = TRUE
+	///Wizards by nature cannot be too young.
+	var/wiz_age = WIZARD_AGE_MIN
 
 /datum/antagonist/wizard/on_gain()
 	equip_wizard()
@@ -120,16 +124,11 @@
 		H.age = wiz_age
 	H.equipOutfit(outfit_type)
 
-/datum/antagonist/wizard/greet()
-	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Space Wizard!</B></font></span>")
-	to_chat(owner, "<span class='warningplain'><B>The Space Wizards Federation has given you the following tasks:</B></span>")
-	owner.announce_objectives()
-	var/message = "<span class='warningplain'>"
-	message += "<BR>You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	message += "<BR>The spellbook is bound to you, and others cannot use it."
-	message += "<BR>In your pockets you will find a teleport scroll. Use it as needed."
-	message += "<BR><B>Remember:</B> Do not forget to prepare your spells.</span>"
-	to_chat(owner, message)
+/datum/antagonist/wizard/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/wizard/farewell()
 	to_chat(owner, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")

@@ -45,9 +45,11 @@
 	owner.special_role = job_rank
 	if(give_objectives)
 		forge_traitor_objectives()
-	//will be given later
-	//forge_ending_objective()
-	for(var/datum/objective/smart/objective in objectives)
+	//will be actually later
+	forge_ending_objective()
+
+	//this can be 'as anything' at this point in the code as the non-smart ending objective is created but not added
+	for(var/datum/objective/smart/objective as anything in objectives)
 		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_ACHIEVED, .proc/objective_done)
 		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_UNACHIEVED, .proc/objective_undone)
 
@@ -111,13 +113,13 @@
 /**
  * ## forge_ending_objective
  *
- * Forges the endgame objective and adds it to this datum's objective list.
+ * Forges the endgame objective, does NOT add it to this datum's objective list.
+ * ending objective is added when the traitor completes enough objectives to earn the ending objective
  */
 /datum/antagonist/traitor/proc/forge_ending_objective()
 	if(is_hijacker)
 		ending_objective = new /datum/objective/hijack
 		ending_objective.owner = owner
-		objectives += ending_objective
 		return
 
 	var/martyr_compatibility = TRUE
@@ -309,7 +311,7 @@
 		forge_single_generic_objective()
 		return
 	to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. An escape objective has been granted.</span>")
-	forge_ending_objective()
+	objectives += ending_objective
 
 ///signal called by an objective uncompleting
 /datum/antagonist/traitor/proc/objective_undone(datum/objective/smart/objective)

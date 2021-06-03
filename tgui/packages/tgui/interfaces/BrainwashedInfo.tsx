@@ -24,23 +24,14 @@ export const BrainwashedInfo = (props, context) => {
       height={400}
       theme="abductor">
       <Window.Content
-        backgroundColor="#922ea3">
+        backgroundColor="#722e7d">
         <Icon
           size={16}
-          name="brain"
+          name="flushed"
+          color="#3f1945"
           position="absolute"
-          color="purple"
-          top="25%"
-          left="23%" />
-        <Blink>
-          <Icon
-            size={12}
-            name="broadcast-tower"
-            position="absolute"
-            color="red"
-            top="29%"
-            left="27.5%" />
-        </Blink>
+          top="42%"
+          left="26%" />
         <Section fill>
           <Stack align="baseline" vertical fill>
             <Stack.Item fontFamily="Wingdings">
@@ -49,10 +40,10 @@ export const BrainwashedInfo = (props, context) => {
             <Stack.Item mt={-0.25} fontSize="20px">
               Your mind reels...
             </Stack.Item>
-            <Stack.Item grow fontSize="20px">
+            <Stack.Item mt={-0.25} fontSize="20px">
               It is focusing on a single purpose...
             </Stack.Item>
-            <Stack.Item grow={2}>
+            <Stack.Item mt={1.5} grow >
               <ObjectivePrintout />
             </Stack.Item>
             <Stack.Item fontSize="20px">

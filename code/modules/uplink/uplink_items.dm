@@ -959,7 +959,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			an assembly to it in order to alter the way it detonates. It can be attached to almost all objects and has a modifiable timer with a \
 			minimum setting of 10 seconds."
 	item = /obj/item/grenade/c4
-	black_cost = 1
+	red_cost = 1
 
 /datum/uplink_item/explosives/c4bag
 	name = "Bag of C-4 explosives"
@@ -1538,7 +1538,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/encryptionkey/syndicate
-	black_cost = 2
+	red_cost = 2
 	surplus = 75
 	restricted = TRUE
 
