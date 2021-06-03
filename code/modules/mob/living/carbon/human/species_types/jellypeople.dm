@@ -674,10 +674,6 @@
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/linked_speech/Destroy()
-	species = null
-	return ..()
-
 /datum/action/innate/linked_speech/Activate()
 	var/mob/living/carbon/human/H = owner
 	if(H.stat == DEAD)
