@@ -8,9 +8,6 @@
 
 	input_port_amount = 1
 
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
-
-
 GLOBAL_LIST_INIT(comp_typecheck_options, list(
 	PORT_TYPE_STRING,
 	PORT_TYPE_NUMBER,
