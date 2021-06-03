@@ -4,7 +4,7 @@
 
 Basic tgui backend code consists of the following vars and procs:
 
-```
+```dm
 ui_interact(mob/user, datum/tgui/ui)
 ui_data(mob/user)
 ui_act(action, params)
@@ -23,7 +23,7 @@ the state of the game.
 with. This may be the standard checks that check if you are in range and
 conscious, or more.
 
-Once backend is complete, you create an new interface component on the
+Once backend is in place, you create a new interface component on the
 frontend, which will receive this JSON data and render it on screen.
 
 States are easy to write and extend, and what make tgui interactions so
@@ -34,21 +34,25 @@ powerful interactions for embedded objects or remote access.
 
 ### Backend
 
-Let's start with a very basic hello world.
+Let's start with a very basic hello world. We'll use the computer object as a base to make it easier to test.
+
+A note about file location. This can be placed anywhere you'd put other DM code. The frontend must be placed in a specific place - more on that below.
 
 ```dm
-/obj/machinery/my_machine/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/TGUI_Test_Computer
+
+/obj/machinery/computer/TGUI_Test_Computer/ui_interact(mob/user, datum/tgui/ui)
   ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
-    ui = new(user, src, "MyMachine")
+    ui = new(user, src, "SampleInterface")
     ui.open()
 ```
 
-This is the proc that defines our interface. There's a bit going on here, so
-let's break it down. First, we override the ui_interact proc on our object. This
+`ui_interact` the proc that defines our interface. There's a bit going on here, so
+let's break it down. The first line defines a subclass of computer called `TGUI_Test_Computer`. Then, we define the ui_interact proc on our object. This
 will be called by `interact` for you, which is in turn called by `attack_hand`
-(or `attack_self` for items). `ui_interact` is also called to update a UI (hence
-the `try_update_ui`), so we accept an existing UI to update.
+(or `attack_self` for items). This behavior is defined on `machinery` so look there for details.
+`ui_interact` is also called to update a UI (hence the `try_update_ui`), so we accept an existing UI to update.
 
 Inside the `if(!ui)` block (which means we are creating a new UI), we choose our
 template, title, and size; we can also set various options like `style` (for
@@ -56,10 +60,10 @@ themes), or autoupdate. These options will be elaborated on later (as will
 `ui_state`s).
 
 After `ui_interact`, we need to define `ui_data`. This just returns a list of
-data for our object to use. Let's imagine our object has a few vars:
+data for our object to use. This is effectively pseudocode, and we'll make it functional later:
 
 ```dm
-/obj/machinery/my_machine/ui_data(mob/user)
+/obj/machinery/my_machine/ui_data(mob/living/user)
   var/list/data = list()
   data["health"] = health
   data["color"] = color
@@ -71,21 +75,20 @@ The `ui_data` proc is what people often find the hardest about tgui, but its
 really quite simple! You just need to represent your object as numbers, strings,
 and lists, instead of atoms and datums.
 
-Finally, the `ui_act` proc is called by the interface whenever the user used an
-input. The input's `action` and `params` are passed to the proc.
+Finally, the `ui_act` proc is called by the interface whenever the user uses an
+input. The inputs `action` and `params` are passed to the proc.
 
 ```dm
-/obj/machinery/my_machine/ui_act(action, params)
-  . = ..()
-  if(.)
-    return
-  if(action == "change_color")
-    var/new_color = params["color"]
-    if(!(color in allowed_coors))
-      return FALSE
-    color = new_color
-    . = TRUE
-  update_icon()
+/obj/machinery/computer/TGUI_Test_Computer/ui_act(action, params)
+ . = ..()
+ if(.)
+  return
+ if(action == "change_color")
+  ui_color = params["color"]
+  . = TRUE
+
+ update_icon()
+
 ```
 
 The `..()` (parent call) is very important here, as it is how we check that the
@@ -112,6 +115,8 @@ and HTML knowledge, that should ease the learning process, although we
 recommend getting yourself introduced to
 [React and JSX](https://reactjs.org/docs/introducing-jsx.html).
 
+**A note about file location.** For the purposes of this tutorial, place your interface file in `tgui\packages\tgui\interfaces`. This allows TGUI to recognize the interface that you specified above.
+
 A React component is not a regular HTML template. A component is a
 javascript function, which accepts a `props` object (that contains
 properties passed to a component) and a `context` object (which is
@@ -123,39 +128,38 @@ So let's create our first React Component. Create a file with a name
 snippet (make sure component name matches the file name):
 
 ```jsx
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import {useBackend} from '../backend';
+import {Button, LabeledList, Section} from '../components';
+import {Window} from '../layouts';
 
-export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const {
-    health,
-    color,
-  } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">
-              {health}
-            </LabeledList.Item>
-            <LabeledList.Item label="Color">
-              {color}
-            </LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')} />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
-};
+export const SampleInterface = (props, context)=> {
+ const {act,data} = useBackend(context);
+ const{
+  health,
+  color,
+ } = data;
+ return (
+  <Window resizable title="TGUI Sample Interface">
+   <Window.Content scrollable>
+    <Section title="Health status">
+     <LabeledList.Item label = "Health">
+      {health}
+     </LabeledList.Item>
+     <LabeledList.Item label = "Color">
+      {color}
+     </LabeledList.Item>
+     <LabeledList.Item label = "Button">
+      <Button
+       content="Dispatch a 'test' action"
+       onClick={()=>act('change_color',{
+                color:"orange"
+              })}/>
+     </LabeledList.Item>
+    </Section>
+   </Window.Content>
+  </Window>
+ )
+}
 ```
 
 Here are the key variables you get from a `useBackend(context)` function:
@@ -300,63 +304,65 @@ here's what you need (note that you'll probably be forced to clean your shit up
 upon code review):
 
 ```dm
-/obj/copypasta/ui_interact(mob/user, datum/tgui/ui)
-  ui = SStgui.try_update_ui(user, src, ui)
-  if(!ui)
-    ui = new(user, src, "copypasta")
-    ui.open()
+/obj/machinery/computer/TGUI_Test_Computer
+ name = "TGUI_Test_Computer"
+ var/ui_color = "green"
 
-/obj/copypasta/ui_data(mob/user)
-  var/list/data = list()
-  data["var"] = var
-  return data
+/obj/machinery/computer/TGUI_Test_Computer/ui_interact(mob/user, datum/tgui/ui)
+ ui = SStgui.try_update_ui(user, src, ui)
+ if(!ui)
+  ui = new(user, src, "SampleInterface")
+  ui.open()
 
-/obj/copypasta/ui_act(action, params)
-  if(..())
-    return
-  switch(action)
-    if("copypasta")
-      var/newvar = params["var"]
-      // A demo of proper input sanitation.
-      var = CLAMP(newvar, min_val, max_val)
-      . = TRUE
-  update_icon() // Not applicable to all objects.
+/obj/machinery/computer/TGUI_Test_Computer/ui_data(mob/living/user)
+ var/list/data = list()
+ data["health"] = user.getBruteLoss()
+ data["color"] = ui_color
+ return data
+
+/obj/machinery/computer/TGUI_Test_Computer/ui_act(action, params)
+ . = ..()
+ if(.)
+  return
+ if(action == "change_color")
+  ui_color = params["color"]
+  . = TRUE
 ```
 
 And the template:
 
 ```jsx
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import {useBackend} from '../backend';
+import {Button, LabeledList, Section} from '../components';
+import {Window} from '../layouts';
 
-export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const {
-    health,
-    color,
-  } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">
-              {health}
-            </LabeledList.Item>
-            <LabeledList.Item label="Color">
-              {color}
-            </LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')} />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
-};
+export const SampleInterface = (props, context)=> {
+ const {act,data} = useBackend(context);
+ const{
+  health,
+  color,
+ } = data;
+ return (
+  <Window resizable title="TGUI Sample Interface">
+   <Window.Content scrollable>
+    <Section title="Health status">
+     <LabeledList.Item label = "Health">
+      {health}
+     </LabeledList.Item>
+     <LabeledList.Item label = "Color">
+      {color}
+     </LabeledList.Item>
+     <LabeledList.Item label = "Button">
+      <Button
+       content="Dispatch a 'test' action"
+       onClick={()=>act('change_color',{
+                color:"orange"
+              })}/>
+     </LabeledList.Item>
+    </Section>
+   </Window.Content>
+  </Window>
+ )
+}
+
 ```
