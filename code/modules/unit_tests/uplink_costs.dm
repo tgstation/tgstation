@@ -16,7 +16,7 @@
 			total_red_tc += initial(uplink_item.red_cost)
 		if(initial(uplink_item.black_cost))
 			costs_black = TRUE
+		if(costs_red && costs_black)
+			Fail("[initial(uplink_item.name)] costs both red and black telecrystals.")
 	if(total_red_tc > RED_TELECRYSTAL_LIMIT)
 		Fail("The red telecrystal items total cost is at [total_red_tc], greater than the codebase limit of [RED_TELECRYSTAL_LIMIT]")
-	if(costs_red && costs_black)
-		Fail("[initial(uplink_item.name)] costs both red and black telecrystals.")
