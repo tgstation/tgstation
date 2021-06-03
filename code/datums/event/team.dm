@@ -17,6 +17,10 @@
 	/// What team datum we're on right now
 	var/datum/event_team/current_team
 
+	var/flagged_for_elimination = FALSE
+
+	var/flagged_on_death = FALSE
+
 /datum/contestant/New(new_ckey)
 	ckey = new_ckey
 	current_mob = get_mob_by_ckey(ckey)
@@ -32,6 +36,28 @@
 		current_team.remove_member(src)
 	. = ..()
 
+/datum/contestant/proc/get_mob()
+	if(!ckey)
+		return
+
+	return get_mob_by_ckey(ckey)
+
+/datum/contestant/proc/set_flag_on_death(new_mode)
+	if(flagged_on_death == new_mode)
+		return
+
+	flagged_on_death = new_mode
+	var/mob/living/our_boy = get_mob()
+	if(flagged_on_death)
+		RegisterSignal(our_boy, COMSIG_LIVING_DEATH, .proc/on_flagged_death)
+	else
+		UnregisterSignal(our_boy, COMSIG_LIVING_DEATH)
+
+/datum/contestant/proc/on_flagged_death(datum/source)
+	SIGNAL_HANDLER
+
+	flagged_for_elimination = TRUE
+	set_flag_on_death(FALSE)
 
 /**
  * Event teams are teams that are constantly being made and remade

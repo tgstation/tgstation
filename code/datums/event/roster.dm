@@ -24,6 +24,8 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/list/all_contestants
 	/// Holds the datums for all contestants still in contention
 	var/list/active_contestants = list()
+	/// Holds the datums for all contestants who have been eliminated
+	var/list/losers = list()
 	/// All team datums that are currently active
 	var/list/active_teams = list()
 	/// Will be used for which teams are actively marked to be spawned next
@@ -187,3 +189,16 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/roster_team(mob/user)
 	return
+
+/// To be used for adding a team to the arena computer's "teams we're spawning" list
+/datum/roster/proc/setup_match(mob/user, list/prefs)
+	var/teams = prefs["team_event"]
+	var/divy_teams_by_num_not_size = prefs["team_num_instead_of_size"]
+	var/team_divy_factor = prefs["team_divy_factor"]
+
+
+	clear_teams(user)
+	if(divy_teams_by_num_not_size)
+		divy_into_teams(user, team_divy_factor, 0, REMAINDER_MODE_BYE)
+	else
+		divy_into_teams(user, 0, team_divy_factor, REMAINDER_MODE_BYE)

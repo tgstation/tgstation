@@ -370,6 +370,30 @@
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
+
+
+
+			var/list/settings = list(
+				"mainsettings" = list(
+					"team_event" = list("desc" = "Team Event?", "type" = "boolean", "value" = "Yes"),
+					"team_num_instead_of_size" = list("desc" = "If teams, divy by team number instead of team size?", "type" = "boolean", "value" = "Yes"),
+					"team_divy_factor" = list("desc" = "If teams, what's the divy factor? (ask if you don't know!)", "type" = "number", "value" = 2)
+				)
+			)
+
+			message_admins("[key_name(user)] is setting up next match...")
+			var/list/prefreturn = presentpreflikepicker(user,"Setup Next Match", "Setup Next Match", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+
+
+			if (isnull(prefreturn))
+				return FALSE
+
+			if (prefreturn["button"] == 1)
+				var/list/prefs = settings["mainsettings"]
+
+				GLOB.global_roster.setup_match(user, prefs)
+
+
 			for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 			dat += "<a href='?src=[REF(src)];match_add_team'>Add team</a>"
@@ -379,17 +403,30 @@
 			for(var/datum/event_team/iter_team in GLOB.global_roster.active_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 				for(var/datum/contestant/iter_contestant in iter_team.members)
-					var/mob/the_guy = get_mob_by_ckey(iter_contestant.ckey)
+					var/mob/the_guy = iter_contestant.get_mob()
 					dat += "\t\t: [the_guy]"
 					//dat += "\t\t: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 		if(ARENA_UI_INDIV)
 			dat += "<b>Contestant menu</b>"
 			dat += "<a href='?src=[REF(src)];load_roster=1'>Load Roster</a>"
 			dat += "<b>Contestants:</b>"
+
+			var/list/flagged_contestants = list()
 			for(var/iter_ckey in GLOB.global_roster.all_contestants)
 				var/datum/contestant/iter_contestant = GLOB.global_roster.all_contestants[iter_ckey]
+				if(iter_contestant.flagged_for_elimination)
+					flagged_contestants += iter_contestant
+					continue
+
 				var/mob/the_guy = get_mob_by_ckey(iter_contestant.ckey)
 				dat += "\t[iter_ckey] ([the_guy])"
+
+			if(length(flagged_contestants))
+				dat += "<br><b>Contestants Flagged for Elimination:"
+				for(var/datum/contestant/flagged_contestant in flagged_contestants)
+					var/mob/the_guy = flagged_contestant.get_mob()
+					dat += "\t[flagged_contestant.ckey] ([the_guy])"
+
 
 			dat += "<b>Ckeys at large:</b>"
 			for(var/iter_ckey in GLOB.global_roster.ckeys_at_large)
