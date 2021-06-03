@@ -1,6 +1,6 @@
 /obj/item/stack/red_telecrystal
 	name = "red telecrystal"
-	desc = "A beautiful, rare crystal used to illicit purchases. Its red glint gives you a feeling of guile and subterfuge."
+	desc = "A beautiful, rare crystal used to make illicit purchases. Its red glint gives you a feeling of guile and subterfuge."
 	singular_name = "red telecrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "red telecrystal"
@@ -30,7 +30,7 @@
 
 /obj/item/stack/black_telecrystal
 	name = "black telecrystal"
-	desc = "A beautiful, rare crystal used to illicit purchases. Its black gleam gives you a feeling of malevolence."
+	desc = "A beautiful, rare crystal used to make illicit purchases. Its black gleam gives you a feeling of malevolence."
 	singular_name = "black telecrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "red telecrystal"
