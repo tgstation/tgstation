@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - bugfix: "Drone tools can no longer be inserted into an autolathe."
