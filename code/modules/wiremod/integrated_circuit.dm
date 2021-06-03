@@ -11,6 +11,12 @@
 	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
 
+	/// The name that appears on the shell.
+	var/display_name = ""
+
+	/// The max length of the name.
+	var/label_max_length = 24
+
 	/// The power of the integrated circuit
 	var/obj/item/stock_parts/cell/cell
 
@@ -94,6 +100,8 @@
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
 		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
+	if(display_name != "")
+		shell.name = "[initial(shell.name)] ([display_name])"
 
 /**
  * Unregisters the current shell attached to this circuit.
@@ -102,6 +110,7 @@
 	SIGNAL_HANDLER
 	if(!shell)
 		return
+	shell.name = initial(shell.name)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.unregister_shell(shell)
 	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
@@ -201,6 +210,8 @@
 		component_data["options"] = component.options
 		component_data["removable"] = component.removable
 		.["components"] += list(component_data)
+
+	.["display_name"] = display_name
 
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
@@ -354,6 +365,21 @@
 			else if(isnull(value))
 				value = "null"
 			balloon_alert(usr, "[port.name] value: [value]")
+			. = TRUE
+		if("set_display_name")
+			var/new_name = params["display_name"]
+
+			if(new_name)
+				display_name = strip_html(params["display_name"], label_max_length)
+			else
+				display_name = ""
+
+			if(shell)
+				if(display_name != "")
+					shell.name = "[initial(shell.name)] ([display_name])"
+				else
+					shell.name = initial(shell.name)
+
 			. = TRUE
 
 #undef WITHIN_RANGE

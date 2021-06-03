@@ -79,11 +79,6 @@
 	display_name = "Money Bot"
 	var/obj/structure/money_bot/attached_bot
 
-	/// The label that appears on the shell
-	var/datum/port/input/label
-
-	var/label_max_length = 24
-
 	/// Total money in the shell
 	var/datum/port/output/total_money
 	/// Amount of the last money inputted into the shell
@@ -93,8 +88,6 @@
 
 /obj/item/circuit_component/money_bot/Initialize()
 	. = ..()
-	label = add_input_port("Label", PORT_TYPE_STRING)
-
 	total_money = add_output_port("Total Money", PORT_TYPE_NUMBER)
 	money_input = add_output_port("Last Input Money", PORT_TYPE_NUMBER)
 	money_trigger = add_output_port("Money Input", PORT_TYPE_SIGNAL)
@@ -106,14 +99,12 @@
 		total_money.set_output(attached_bot.stored_money)
 		RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_money_insert)
 		RegisterSignal(shell, COMSIG_MONEYBOT_ADD_MONEY, .proc/handle_money_update)
-		TRIGGER_CIRCUIT_COMPONENT(src, null)
 
 /obj/item/circuit_component/money_bot/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_MONEYBOT_ADD_MONEY,
 	))
-	attached_bot.name = initial(attached_bot.name)
 	total_money.set_output(null)
 	attached_bot = null
 	return ..()
@@ -124,15 +115,6 @@
 	money_input = null
 	money_trigger = null
 	return ..()
-
-/obj/item/circuit_component/money_bot/input_received(datum/port/input/port)
-	. = ..()
-	if(. || !attached_bot)
-		return
-
-	var/new_name = strip_html(label.input_value, label_max_length)
-	if(new_name)
-		attached_bot.name = "[initial(attached_bot.name)] ([new_name])"
 
 /obj/item/circuit_component/money_bot/proc/handle_money_insert(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
