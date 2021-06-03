@@ -81,6 +81,7 @@ the new instance inside the host to be updated to the template's stats.
 		var/datum/disease/advance/sentient_disease/S = V
 		if(S.overmind == src)
 			S.overmind = null
+	browser = null
 
 /mob/camera/disease/Login()
 	. = ..()
