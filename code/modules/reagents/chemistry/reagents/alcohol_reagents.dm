@@ -2533,6 +2533,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The fermented nectar of the Korta nut, as enjoyed by lizards galaxywide."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(M.getBruteLoss() && DT_PROB(10, delta_time))
+		M.heal_bodypart_damage(1,0, 0)
+		. = TRUE
+
 /datum/reagent/consumable/ethanol/sea_breeze
 	name = "Sea Breeze"
 	description = "Light and refreshing with a mint and cocoa hit- like mint choc chip ice cream you can drink!"
@@ -2544,6 +2549,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Sea Breeze"
 	glass_desc = "Minty, chocolatey, and creamy. It's like drinkable mint chocolate chip!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.apply_status_effect(/datum/status_effect/throat_soothed)
+	..()
 
 /datum/reagent/consumable/ethanol/white_tiziran
 	name = "White Tiziran"
@@ -2569,6 +2578,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink to make facing death easier."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+	C.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	..()
+
 /datum/reagent/consumable/ethanol/protein_blend
 	name = "Protein Blend"
 	description = "A vile blend of protein, pure grain alcohol, korta flour, and blood. Useful for bulking up, if you can keep it down."
@@ -2581,6 +2595,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Vile, even by lizard standards."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_nutrition(2 * REM * delta_time)
+	if(!islizard(M))
+		M.adjust_disgust(5 * REM * delta_time)
+	else
+		M.adjust_disgust(2 * REM * delta_time)
+	..()
 
 /datum/reagent/consumable/ethanol/mushi_kombucha
 	name = "Mushi Kombucha"
@@ -2605,3 +2627,41 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Triumphal Arch"
 	glass_desc = "A toast to the Empire, long may it stand."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(islizard(M))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+
+/datum/reagent/consumable/ethanol/heresiarch //I SMELL HERESY
+	name = "Heresiarch"
+	description = "A strong drink with a grim past."
+	boozepwr = 100
+	color = "#8A0303"
+	quality = DRINK_FANTASTIC
+	taste_description = "heresy"
+	glass_icon_state = "heresiarch"
+	glass_name = "Heresiarch"
+	glass_desc = "A drink beloved by those who rebel against authority."
+
+/datum/reagent/consumable/ethanol/heresiarch/on_mob_metabolize(mob/living/M)
+	if(!M.mind?.holy_role)
+		M.eye_color = "f00"
+		M.update_body
+	else
+		to_chat(M, "<span class='userdanger'>You're overcome with rage as your body floods with HERESY!</span>")
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "heresy_detected", /datum/mood_event/heresy, name)
+
+/datum/reagent/consumable/ethanol/heresiarch/on_mob_end_metabolize(mob/living/M)
+	if(!M.mind?.holy_role)
+		M.eye_color = initial(M.eye_color)
+		M.update_body
+
+/datum/reagent/consumable/ethanol/heresiarch/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+	if(M.mind?.holy_role)
+		M.adjust_disgust(2 * REM * delta_time)
+		if(prob(5))
+			if(GLOB.deity)
+				M.say("I pray to thee, [GLOB.deity], protect me from these sinners, cruel art thine machinations. Guide me, oh [GLOB.deity], for they attempt to pull me from thou righteous path. Praise be unto you, [GLOB.deity], amen."), forced = /datum/reagent/consumable/ethanol/heresiarch)
+			else
+				M.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Space Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen."), forced = /datum/reagent/consumable/ethanol/heresiarch)
+	return ..()
