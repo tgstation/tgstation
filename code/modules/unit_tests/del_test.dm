@@ -129,7 +129,9 @@
 	SSticker.delay_end = TRUE
 	//Prevent the garbage subsystem from harddeling anything, if only to save time
 //	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
-
+	//Clear it, just in case
+	cached_contents.Cut()
+	
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
 	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
 	var/start_time = world.time
