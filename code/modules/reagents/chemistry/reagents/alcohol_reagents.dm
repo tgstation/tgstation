@@ -2580,7 +2580,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	C.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
 
 /datum/reagent/consumable/ethanol/protein_blend
@@ -2631,37 +2631,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(islizard(M))
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
-
-/datum/reagent/consumable/ethanol/heresiarch //I SMELL HERESY
-	name = "Heresiarch"
-	description = "A strong drink with a grim past."
-	boozepwr = 100
-	color = "#8A0303"
-	quality = DRINK_FANTASTIC
-	taste_description = "heresy"
-	glass_icon_state = "heresiarch"
-	glass_name = "Heresiarch"
-	glass_desc = "A drink beloved by those who rebel against authority."
-
-/datum/reagent/consumable/ethanol/heresiarch/on_mob_metabolize(mob/living/M)
-	if(!M.mind?.holy_role)
-		M.eye_color = "f00"
-		M.update_body
-	else
-		to_chat(M, "<span class='userdanger'>You're overcome with rage as your body floods with HERESY!</span>")
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "heresy_detected", /datum/mood_event/heresy, name)
-
-/datum/reagent/consumable/ethanol/heresiarch/on_mob_end_metabolize(mob/living/M)
-	if(!M.mind?.holy_role)
-		M.eye_color = initial(M.eye_color)
-		M.update_body
-
-/datum/reagent/consumable/ethanol/heresiarch/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	if(M.mind?.holy_role)
-		M.adjust_disgust(2 * REM * delta_time)
-		if(prob(5))
-			if(GLOB.deity)
-				M.say("I pray to thee, [GLOB.deity], protect me from these sinners, cruel art thine machinations. Guide me, oh [GLOB.deity], for they attempt to pull me from thou righteous path. Praise be unto you, [GLOB.deity], amen."), forced = /datum/reagent/consumable/ethanol/heresiarch)
-			else
-				M.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Space Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen."), forced = /datum/reagent/consumable/ethanol/heresiarch)
-	return ..()
