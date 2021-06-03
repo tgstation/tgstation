@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 
 /obj/structure/cable/proc/get_power_info()
-	if(powernet && (powernet.avail > 0)) // is it powered?
+	if(powernet?.avail > 0)
 		return "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>"
 	else
 		return "<span class='danger'>The cable is not powered.</span>"
