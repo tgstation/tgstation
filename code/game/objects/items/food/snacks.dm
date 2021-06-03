@@ -204,18 +204,24 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
 	tastes = list("peanuts" = 2, "bbq sauce" = 1)
 
-/obj/item/random_peanuts
+/obj/item/food/peanuts/random
 	name = "\improper Parker's every-flavour peanuts"
 	desc = "What flavour will you get?"
-	icon = 'icons/obj/food/food.dmi'
 	icon_state = "peanuts"
 
-/obj/item/random_peanuts/Initialize()
-	. = ..()
-	var/random_flavour = pick(subtypesof(/obj/item/food/peanuts))
-	new random_flavour(loc)
+/obj/item/food/peanuts/random/Initialize()
+	// Generate a sample p
+	var/peanut_type = pick(subtypesof(/obj/item/food/peanuts) - /obj/item/food/peanuts/random)
+	var/obj/item/food/sample = new peanut_type(loc)
 
-	return INITIALIZE_HINT_QDEL
+	name = sample.name
+	desc = sample.desc
+	food_reagents = sample.food_reagents
+	tastes = sample.tastes
+
+	qdel(sample)
+
+	. = ..()
 
 /obj/item/food/cnds
 	name = "\improper C&Ds"
@@ -257,15 +263,20 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/banana = 1)
 	tastes = list("chocolate candy" = 2, "banana" = 1)
 
-/obj/item/random_cnds
+/obj/item/food/cnds/random
 	name = "mystery filled C&Ds"
 	desc = "Filled with one of four delicious flavours!"
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "cnds"
 
-/obj/item/random_cnds/Initialize()
+/obj/item/food/cnds/random/Initialize()
+	var/random_flavour = pick(subtypesof(/obj/item/food/cnds) - /obj/item/food/cnds/random)
+
+	var/obj/item/food/sample = new random_flavour(loc)
+
+	name = sample.name
+	desc = sample.desc
+	food_reagents = sample.food_reagents
+	tastes = sample.tastes
+
+	qdel(sample)
+
 	. = ..()
-	var/random_flavour = pick(subtypesof(/obj/item/food/cnds))
-	new random_flavour(loc)
-
-	return INITIALIZE_HINT_QDEL
