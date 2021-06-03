@@ -548,7 +548,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	return FALSE
 
 /// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
-/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
 
@@ -565,7 +565,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = remove(transfer_moles)
+		var/datum/gas_mixture/removed = remove(transfer_moles * rate)
 		output_air.merge(removed)
 
 		return TRUE

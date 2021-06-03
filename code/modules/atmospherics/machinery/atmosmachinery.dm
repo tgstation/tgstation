@@ -511,12 +511,10 @@
 		//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(!(vent_movement & VENTCRAWL_ALLOWED)) // Early return for machines which does not allow ventcrawling at all.
-		return
-	if(istype(L))
+	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
 		L.handle_ventcrawl(src)
 		return
-	..()
+	return ..()
 
 /**
  * Getter of a list of pipenets

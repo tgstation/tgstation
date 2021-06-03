@@ -27,6 +27,7 @@
 
 ///Updates old and new turf loc opacities.
 /datum/element/light_blocking/proc/on_target_move(atom/movable/source, atom/OldLoc, Dir, Forced = FALSE)
+	SIGNAL_HANDLER
 	if(isturf(OldLoc))
 		var/turf/old_turf = OldLoc
 		old_turf.remove_opacity_source(source)

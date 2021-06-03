@@ -247,9 +247,10 @@
 	RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 
 /datum/nanite_program/sensor/voice/on_mob_remove()
-	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
+	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR)
 
 /datum/nanite_program/sensor/voice/proc/on_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
 	var/datum/nanite_extra_setting/sentence = extra_settings[NES_SENTENCE]
 	var/datum/nanite_extra_setting/inclusive = extra_settings[NES_INCLUSIVE_MODE]
 	if(!sentence.get_value())

@@ -5100,7 +5100,7 @@
 /obj/structure/window{
 	dir = 4
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nU" = (

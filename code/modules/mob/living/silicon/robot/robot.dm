@@ -937,6 +937,7 @@
 			aicamera.stored[i] = TRUE
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
+	SIGNAL_HANDLER
 	if(model)
 		model.respawn_consumable(src, amount * 0.005)
 	if(cell)

@@ -162,7 +162,8 @@
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
-	restore()
+	if(morphed)
+		restore()
 
 /mob/living/simple_animal/hostile/morph/LoseAggro()
 	vision_range = initial(vision_range)

@@ -118,13 +118,6 @@
 			holder << browse(dat, "window=lawchanges;size=800x500")
 		if("showailaws")
 			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
-		if("showgm")
-			if(!SSticker.HasRoundStarted())
-				tgui_alert(usr,"The game hasn't started yet!")
-			else if (SSticker.mode)
-				tgui_alert(usr,"The game mode is [SSticker.mode.name]")
-			else
-				tgui_alert(usr,"For some reason there's a SSticker, but not a game mode")
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"

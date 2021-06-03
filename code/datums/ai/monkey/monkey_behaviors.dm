@@ -80,6 +80,10 @@
 
 	var/mob/living/victim = target.loc
 
+	if(!istype(victim))
+		finish_action(controller, FALSE)
+		return
+
 	var/mob/living/living_pawn = controller.pawn
 
 	victim.visible_message("<span class='warning'>[living_pawn] starts trying to take [target] from [victim]!</span>", "<span class='danger'>[living_pawn] tries to take [target]!</span>")

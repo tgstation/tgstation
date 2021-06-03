@@ -156,67 +156,6 @@
 			return
 		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
-
-	else if(href_list["toggle_continuous"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/list/continuous = CONFIG_GET(keyed_list/continuous)
-		if(!continuous[SSticker.mode.config_tag])
-			continuous[SSticker.mode.config_tag] = TRUE
-		else
-			continuous[SSticker.mode.config_tag] = FALSE
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [continuous[SSticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
-		check_antagonists()
-
-	else if(href_list["toggle_midround_antag"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
-		if(!midround_antag[SSticker.mode.config_tag])
-			midround_antag[SSticker.mode.config_tag] = TRUE
-		else
-			midround_antag[SSticker.mode.config_tag] = FALSE
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [midround_antag[SSticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
-		check_antagonists()
-
-	else if(href_list["alter_midround_time_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/timer = input("Enter new maximum time",, CONFIG_GET(number/midround_antag_time_check)) as num|null
-		if(!timer)
-			return
-		CONFIG_SET(number/midround_antag_time_check, timer)
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the maximum midround antagonist time to [timer] minutes.</span>")
-		check_antagonists()
-
-	else if(href_list["alter_midround_life_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num|null
-		if(!ratio)
-			return
-		CONFIG_SET(number/midround_antag_life_check, ratio / 100)
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
-		check_antagonists()
-
-	else if(href_list["toggle_noncontinuous_behavior"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(!SSticker.mode.round_ends_with_antag_death)
-			SSticker.mode.round_ends_with_antag_death = 1
-		else
-			SSticker.mode.round_ends_with_antag_death = 0
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.</span>")
-		check_antagonists()
-
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
@@ -515,8 +454,6 @@
 			return
 		if(SSticker?.mode)
 			return tgui_alert(usr, "The game has already started.")
-		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode.")
 		var/roundstart_rules = list()
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
@@ -551,16 +488,11 @@
 
 		if(SSticker?.mode)
 			return tgui_alert(usr, "The game has already started.")
-		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		dynamic_mode_options(usr)
 	else if(href_list["f_dynamic_force_extended"])
 		if(!check_rights(R_ADMIN))
 			return
-
-		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
 		log_admin("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
@@ -571,9 +503,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!")
-
 		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
 		log_admin("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
 		message_admins("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
@@ -581,9 +510,6 @@
 	else if(href_list["f_dynamic_stacking_limit"])
 		if(!check_rights(R_ADMIN))
 			return
-
-		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
@@ -596,9 +522,6 @@
 
 		if(SSticker?.mode)
 			return tgui_alert(usr, "The game has already started.")
-
-		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
 		if (new_value > 100)
@@ -1730,7 +1653,7 @@
 				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
-		SSticker.mode.station_goals += G
+		GLOB.station_goals += G
 		modify_goals()
 
 	else if(href_list["viewruntime"])
@@ -1825,15 +1748,6 @@
 		var/datum/browser/popup = new(usr, "centcomlookup-[ckey]", "<div align='center'>Central Command Galactic Ban Database</div>", 700, 600)
 		popup.set_content(dat.Join())
 		popup.open(0)
-
-	else if(href_list["modantagrep"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
-		var/client/C = M.client
-		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
-		show_player_panel(M)
 
 	else if(href_list["slowquery"])
 		if(!check_rights(R_ADMIN))

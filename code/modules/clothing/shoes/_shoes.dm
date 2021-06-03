@@ -202,6 +202,7 @@
 
 ///check_trip runs on each step to see if we fall over as a result of our lace status. Knotted laces are a guaranteed trip, while untied shoes are just a chance to stumble
 /obj/item/clothing/shoes/proc/check_trip()
+	SIGNAL_HANDLER
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy)) // are they REALLY /our guy/?
 		return
