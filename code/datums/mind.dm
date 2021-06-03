@@ -345,10 +345,8 @@
  * arguments:
  * * silent: if this should send a message to the mind getting the uplink. traitors do not use this silence, but the silence var on their antag datum.
  * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
- * * ui_name: name argument passed to the new uplink
- * * ui_theme: ui_theme argument passed to the new uplink
  */
-/datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum, ui_name = "syndicate uplink", ui_theme = "syndicate")
+/datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum)
 	if(!current)
 		return
 	var/mob/living/carbon/human/traitor_mob = current
@@ -391,14 +389,14 @@
 		implant = TRUE
 
 	if(implant)
-		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob, ui_name, ui_theme)
+		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
 			to_chat(traitor_mob, "<span class='boldnotice'>Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it.</span>")
 		return new_implant
 	. = uplink_loc
 	var/unlock_text
-	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key, name = ui_name, ui_theme = ui_theme, unlock_text = unlock_text)
+	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
@@ -408,6 +406,7 @@
 		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features."
 	else if(uplink_loc == P)
 		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
+	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, "<span class='boldnotice'>[unlock_text]</span>")
 	if(antag_datum)

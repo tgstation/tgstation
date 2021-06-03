@@ -64,7 +64,7 @@ const ObjectivePrintout = (props, context) => {
                 </Stack.Item>
                 {!!objective.reward && !objective.uncompleted && (
                   <Stack.Item textColor="lightgrey">
-                    Reward of {objective.reward} black TC upon completion.
+                    Reward of {objective.reward} Black TC upon completion.
                   </Stack.Item>
                 ) || (
                   <Stack.Item textColor="lightgrey">
@@ -220,8 +220,6 @@ export const TraitorInfo = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
     theme,
-    allies,
-    intro,
   } = data;
   return (
     <Window

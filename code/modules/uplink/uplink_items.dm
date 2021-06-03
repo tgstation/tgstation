@@ -1225,7 +1225,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	black_cost = 4
+	red_cost = 4
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan

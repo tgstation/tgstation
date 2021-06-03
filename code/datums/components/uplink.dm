@@ -10,7 +10,6 @@
 /datum/component/uplink
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/name = "syndicate uplink"
-	var/ui_theme = "syndicate"
 	var/active = FALSE
 	var/lockable = TRUE
 	var/locked = TRUE
@@ -36,20 +35,17 @@
 	///Instructions on how to access the uplink based on location
 	var/unlock_text
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_telecrystals = RED_TELECRYSTALS_DEFAULT, black_telecrystals = BLACK_TELECRYSTALS_DEFAULT, name, ui_theme, unlock_text)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, active = FALSE, uplink_flag = UPLINK_TRAITORS, red_telecrystals = RED_TELECRYSTALS_DEFAULT, black_telecrystals = BLACK_TELECRYSTALS_DEFAULT, name)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(name)
 		src.name = name
-	if(ui_theme)
-		src.ui_theme = ui_theme
 	src.lockable = lockable
 	src.active = active
 	src.uplink_flag = uplink_flag
 	src.red_telecrystals = red_telecrystals
 	src.black_telecrystals = black_telecrystals
-	src.unlock_text = unlock_text
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -188,7 +184,6 @@
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
-	data["theme"] = ui_theme
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
@@ -238,7 +233,7 @@
 				buyable_items += uplink_items[category]
 			if(item_name in buyable_items)
 				var/datum/uplink_item/uplink_item = buyable_items[item_name]
-				MakePurchase(usr, uplink_item)
+				MakePurchase(usr, uplink_item, params["tc"])
 				return TRUE
 		if("lock")
 			active = FALSE
@@ -253,24 +248,33 @@
 			compact_mode = !compact_mode
 			return TRUE
 
-/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/uplink_item)
+/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/uplink_item, currency)
 	if(!istype(uplink_item))
 		return
 	if(!user || user.incapacitated())
 		return
 	if(uplink_item.limited_stock == 0)
 		return
-	if(red_telecrystals < uplink_item.red_cost || black_telecrystals < uplink_item.black_cost)
-		return
-	red_telecrystals -= uplink_item.red_cost
-	black_telecrystals -= uplink_item.black_cost
+
+	var/currency_spent = 0
+
+	if(currency == RED_TELECRYSTALS)
+		if(red_telecrystals < uplink_item.red_cost)
+			return
+		red_telecrystals -= uplink_item.red_cost
+		currency_spent += uplink_item.red_cost
+	else
+		if(black_telecrystals < uplink_item.black_cost)
+			return
+		black_telecrystals -= uplink_item.black_cost
+		currency_spent += uplink_item.black_cost
 
 	uplink_item.purchase(user, src)
 
 	if(uplink_item.limited_stock > 0)
 		uplink_item.limited_stock -= 1
 
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(uplink_item.name)]", "[uplink_item.red_cost + uplink_item.black_cost]"))
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(uplink_item.name)]", "[currency_spent]"))
 	return TRUE
 
 // Implant signal responses

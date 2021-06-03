@@ -58,7 +58,7 @@
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 	if(give_uplink)
-		owner.give_uplink(silent = TRUE, antag_datum = src, ui_name = traitor_flavor["uplink_name"], ui_theme = traitor_flavor["uplink_theme"])
+		owner.give_uplink(silent = TRUE, antag_datum = src)
 
 	uplink = owner.find_syndicate_uplink()
 
@@ -323,7 +323,8 @@
 	var/list/data = list()
 	data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
 	data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
-	data["theme"] = traitor_flavor["uplink_theme"]
+	data["theme"] = traitor_flavor["ui_theme"]
+	data["code"] = uplink.unlock_code
 	data["intro"] = traitor_flavor["introduction"]
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]

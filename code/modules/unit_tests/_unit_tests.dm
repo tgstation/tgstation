@@ -77,7 +77,6 @@
 #include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_recipe_collisions.dm"
-#include "red_tc_limit.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "security_officer_distribution.dm"
@@ -94,6 +93,7 @@
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
+#include "uplink_costs.dm"
 #include "wizard.dm"
 
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter

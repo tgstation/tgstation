@@ -8,11 +8,10 @@ import { Window } from '../layouts';
 const MAX_SEARCH_RESULTS = 25;
 
 export const SyndicateUplink = (props, context) => {
-  const { data } = useBackend(context);
+  const { act, data } = useBackend(context);
   const {
     red_telecrystals,
     black_telecrystals,
-    theme,
   } = data;
   const {
     compactMode,
@@ -67,9 +66,8 @@ export const SyndicateUplink = (props, context) => {
     <Window
       width={620}
       height={580}
-      theme={theme}>
+      theme="syndicate">
       <Window.Content
-        scrollable
         backgroundColor={market === 1 && "#595959"}>
         <Stack vertical fill>
           <Stack.Item>
@@ -104,22 +102,69 @@ export const SyndicateUplink = (props, context) => {
           </Stack.Item>
           <Stack.Item grow>
             <Stack fill>
-              <Stack.Item grow>
-                <Section fill>
-                  {filteredCategories.map(category => (
-                    <Button
-                      key={category.name}
-                      fluid
-                      onClick={() => setSelectedCategory(category.name)}>
-                      {category.name}
-                    </Button>
-                  ))}
+              <Stack.Item>
+                <Section>
+                  <Stack fill>
+                    <Stack.Item grow>
+                      <Button
+                        fluid
+                        icon={compactMode ? 'list' : 'info'}
+                        content={compactMode ? 'Compact' : 'Detailed'}
+                        onClick={() => act('compact_toggle')} />
+                    </Stack.Item>
+                    <Stack.Item>
+                      {!!lockable && (
+                        <Button
+                          fluid
+                          icon="lock"
+                          content="Lock"
+                          onClick={() => act('lock')} />
+                      )}
+                    </Stack.Item>
+                  </Stack>
                 </Section>
+                <Section
+                  minWidth="154px"
+                  textAlign="center">
+                  Search For an Item...<br />
+                  <Input
+                    autoFocus
+                    value={searchText}
+                    onInput={(e, value) => setSearchText(value)}
+                    mx={1} />
+                </Section>
+                {!searchText&& (
+                  <Section>
+                    {filteredCategories.map(category => (
+                      <Button
+                        key={category.name}
+                        fluid
+                        color={
+                          selectedCategory === category.name
+                          && "black"
+                        }
+                        onClick={() => setSelectedCategory(category.name)}>
+                        {category.name}
+                      </Button>
+                    ))}
+                  </Section>
+                )}
               </Stack.Item>
-              <Stack.Item grow={3}>
-                <Section fill>
-                  <ItemList sortedItems={items} />
-                </Section>
+              <Stack.Item>
+                {!!items.length && (
+                  <Section
+                    mt={!compactMode && "-2px" || undefined}
+                    overflowY="scroll"
+                    overflowX="hidden"
+                    maxHeight="496px"
+                    backgroundColor={
+                      !compactMode
+                      && "rgba(0, 0, 0, 0)"
+                      || "rgba(0, 0, 0, 0.7)"
+                    }>
+                    <ItemList sortedItems={items} />
+                  </Section>
+                )}
               </Stack.Item>
             </Stack>
           </Stack.Item>
@@ -130,7 +175,12 @@ export const SyndicateUplink = (props, context) => {
 };
 
 const ItemList = (props, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend(context);
+  const {
+    red_telecrystals,
+    black_telecrystals,
+    compactMode,
+  } = data;
   const [
     hoveredItem,
     setHoveredItem,
@@ -139,20 +189,43 @@ const ItemList = (props, context) => {
   // Append extra hover data to items
   return props.sortedItems.map(item => (
     <Section
+      width="420px"
+      backgroundColor={!compactMode && "rgba(0, 0, 0, 0.7)" || undefined}
       key={item.name}
       title={item.name}
-      level={2}
       buttons={(
-        <Button
-          content={item.cost + ' TC'}
-          disabled={false}
-          onmouseover={() => setHoveredItem(item)}
-          onmouseout={() => setHoveredItem({})}
-          onClick={() => act('buy', {
-            name: item.name,
-          })} />
+        <>
+          {!!item.red_cost && (
+            <Button
+              disabled={item.red_cost > red_telecrystals}
+              color="red"
+              onmouseover={() => setHoveredItem(item)}
+              onmouseout={() => setHoveredItem({})}
+              onClick={() => act('buy', {
+                name: item.name,
+                tc: "red",
+              })} >
+              {item.red_cost + ' Red TC'}
+            </Button>
+          )}
+          {!!item.black_cost && (
+            <Button
+              disabled={item.black_cost > black_telecrystals}
+              color={item.black_cost > black_telecrystals && "average" || "white"}
+              onmouseover={() => setHoveredItem(item)}
+              onmouseout={() => setHoveredItem({})}
+              onClick={() => act('buy', {
+                name: item.name,
+                tc: "black",
+              })} >
+              {item.black_cost + ' Black TC'}
+            </Button>
+          )}
+        </>
       )}>
-      {decodeHtmlEntities(item.desc)}
+      {!compactMode && (
+        decodeHtmlEntities(item.desc)
+      )}
     </Section>
   ));
 };

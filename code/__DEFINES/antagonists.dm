@@ -71,6 +71,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_FLESH "Flesh"
 #define PATH_VOID "Void"
 
+/// tgui parameter on purchasing with red currency
+#define RED_TELECRYSTALS "red"
+/// tgui parameter on purchasing with black currency
+#define BLACK_TELECRYSTALS "black"
 
 /// How many red telecrystals a normal traitor starts with
 #define RED_TELECRYSTALS_DEFAULT 20
