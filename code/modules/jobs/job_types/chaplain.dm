@@ -71,6 +71,9 @@
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
 		if("servicianism", "partying")
 			B.desc = "Happy, Full, Clean. Live it and give it."
+		else
+			if(new_bible == DEFAULT_BIBLE)
+				new_bible = "The Holy Book of [new_religion]"
 
 	B.name = new_bible
 

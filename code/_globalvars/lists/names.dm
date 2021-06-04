@@ -51,6 +51,6 @@ GLOBAL_LIST_INIT(preferences_custom_names, list(
 	"cyborg" = list("pref_name" = "Cyborg", "qdesc" = "cyborg name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
 	"ai" = list("pref_name" = "AI", "qdesc" = "AI name (leave empty to pick random name)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
 	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion (leave empty to pick random religion)" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
-	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
+	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity (leave empty to pick default name)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
 	"bible" = list("pref_name" = "Chaplain bible name", "qdesc" = "bible name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE)
 	))
