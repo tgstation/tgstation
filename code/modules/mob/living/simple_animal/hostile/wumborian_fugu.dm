@@ -146,22 +146,22 @@
 		return
 	if(!isanimal(target))
 		return
-	var/mob/living/simple_animal/A = target
+	var/mob/living/simple_animal/animal = target
 
-	if(A.stat == DEAD || HAS_TRAIT(A, TRAIT_FAKEDEATH))
+	if(animal.stat == DEAD || HAS_TRAIT(animal, TRAIT_FAKEDEATH))
 		to_chat(user, "<span class='warning'>[src] can only multiply strength, not grant it to the dead.</span>")
 		return
-	if(HAS_TRAIT(A, TRAIT_FUGU_GLANDED))
-		to_chat(user, "<span class='warning'>[A] has already been affected by \a [src].</span>")
+	if(HAS_TRAIT(animal, TRAIT_FUGU_GLANDED))
+		to_chat(user, "<span class='warning'>[animal] has already been affected by \a [src].</span>")
 		return
 
-	ADD_TRAIT(A, TRAIT_FUGU_GLANDED, type)
+	ADD_TRAIT(animal, TRAIT_FUGU_GLANDED, type)
 
-	A.maxHealth *= 1.5
-	A.health = min(A.maxHealth, A.health * 1.5)
-	A.melee_damage_lower = max((A.melee_damage_lower * 2), 10)
-	A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
-	A.transform *= 2
-	A.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
-	to_chat(user, "<span class='info'>You increase the size of [A], giving [A.p_them()] a surge of strength!</span>")
+	animal.maxHealth *= 1.5
+	animal.health = min(animal.maxHealth, animal.health * 1.5)
+	animal.melee_damage_lower = max((animal.melee_damage_lower * 2), 10)
+	animal.melee_damage_upper = max((animal.melee_damage_upper * 2), 10)
+	animal.transform *= 2
+	animal.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
+	to_chat(user, "<span class='info'>You increase the size of [animal], giving [animal.p_them()] a surge of strength!</span>")
 	qdel(src)
