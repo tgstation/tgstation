@@ -90,10 +90,8 @@
 	ignore += typesof(/obj/docking_port)
 	//Asks for a shuttle that may not exist, let's leave it alone
 	ignore += typesof(/obj/item/pinpointer/shuttle)
-
-	//Temporary
-	//This are a fucking bitch issue with signals that I'll need to deeply debug soon
-	ignore += typesof(/obj/item/stack/sheet/hauntium)
+	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
+	ignore += typesof(/obj/structure/alien/resin/flower_bud)
 
 	var/list/ignore_cache = list()
 	for(var/type in ignore)
@@ -118,9 +116,11 @@
 				continue
 			//Go all in
 			qdel(creation, force = TRUE)
+			//This will hold a ref to the last thing we process unless we set it to null
+			creation = null
 
 		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
-		var/list/to_del = cached_contents ^ spawn_at.contents
+		var/list/to_del = spawn_at.contents - cached_contents
 		if(length(to_del))
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill)
@@ -128,10 +128,10 @@
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
 	//Prevent the garbage subsystem from harddeling anything, if only to save time
-//	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
+	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10000 HOURS
 	//Clear it, just in case
 	cached_contents.Cut()
-	
+
 	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
 	var/time_needed = SSgarbage.collection_timeout[GC_QUEUE_CHECK]
 	var/start_time = world.time
@@ -172,6 +172,16 @@
 			Fail("[item.name] failed to respect force deletion [item.no_respect_force] times out of a total del count of [item.qdels]")
 		if(item.no_hint)
 			Fail("[item.name] failed to return a qdel hint [item.no_hint] times out of a total del count of [item.qdels]")
+
+	cache_for_sonic_speed = SSatoms.BadInitializeCalls
+	for(var/path in cache_for_sonic_speed)
+		var/fails = cache_for_sonic_speed[path]
+		if(fails & BAD_INIT_NO_HINT)
+			Fail("[path] didn't return an Initialize hint")
+		if(fails & BAD_INIT_QDEL_BEFORE)
+			Fail("[path] qdel'd in New()")
+		if(fails & BAD_INIT_SLEPT)
+			Fail("[path] slept during Initialize()")
 
 	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
