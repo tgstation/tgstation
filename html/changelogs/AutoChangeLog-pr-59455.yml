@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Coniine no longer makes you suffocate even after it leaves your system"
