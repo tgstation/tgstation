@@ -352,4 +352,4 @@
 /datum/mood_event/watersprayed
 	description = "<span class='boldwarning'>Grrrr, I hate being sprayed with water!</span>\n"
 	mood_change = -5
-	timeout = 1 MINUTES
+	timeout = 30 SECONDS
