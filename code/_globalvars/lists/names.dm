@@ -43,12 +43,12 @@ List of configurable names in preferences and their metadata
 	),
 */
 GLOBAL_LIST_INIT(preferences_custom_names, list(
-	"human" = list("pref_name" = "Backup Human", "qdesc" = "backup human name, used in the event you are assigned a command role as another species", "allow_numbers" = FALSE , "group" = "backup_human", "allow_null" = FALSE),
-	"clown" = list("pref_name" = "Clown" , "qdesc" = "clown name", "allow_numbers" = FALSE , "group" = "fun", "allow_null" = FALSE),
-	"mime" = list("pref_name" = "Mime", "qdesc" = "mime name" , "allow_numbers" = FALSE , "group" = "fun", "allow_null" = FALSE),
-	"cyborg" = list("pref_name" = "Cyborg", "qdesc" = "cyborg name (Leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
-	"ai" = list("pref_name" = "AI", "qdesc" = "ai name", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = FALSE),
-	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = FALSE),
-	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = FALSE),
+	"human" = list("pref_name" = "Backup Human", "qdesc" = "backup human name, used in the event you are assigned a command role as another species (leave empty to pick random name)", "allow_numbers" = FALSE , "group" = "backup_human", "allow_null" = TRUE),
+	"clown" = list("pref_name" = "Clown" , "qdesc" = "clown name (leave empty to pick random name)", "allow_numbers" = FALSE , "group" = "fun", "allow_null" = TRUE),
+	"mime" = list("pref_name" = "Mime", "qdesc" = "mime name (leave empty to pick random name)" , "allow_numbers" = FALSE , "group" = "fun", "allow_null" = TRUE),
+	"cyborg" = list("pref_name" = "Cyborg", "qdesc" = "cyborg name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
+	"ai" = list("pref_name" = "AI", "qdesc" = "AI name (leave empty to pick random name)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
+	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion (Leave empty to use default naming scheme)" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
+	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity (Leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
 	"bible" = list("pref_name" = "Chaplain bible name", "qdesc" = "bible name (Leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE)
 	))
