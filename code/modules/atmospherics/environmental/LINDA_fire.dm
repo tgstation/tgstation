@@ -63,13 +63,14 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
-	/// Hotspot volume will be divided by turf volume to get the ratio.
+	/// Hotspot volume will be divided by turf volume to get the ratio for temperature setting on non bypassing mode. 
+	/// Also some visual stuffs for fainter fires.
 	var/volume = 125
 	/// Temperature handles the initial ignition and the colouring.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	/// Whether the hotspot is new or not. Used for bypass logic.
 	var/just_spawned = TRUE
-	/// Whether the hotspot becomes passive and follows instead of changing the gasmix temperature.
+	/// Whether the hotspot becomes passive and follows the gasmix temp instead of changing it.
 	var/bypassing = FALSE
 	var/visual_update_tick = 0
 
