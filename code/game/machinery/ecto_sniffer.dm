@@ -15,7 +15,7 @@
 
 /obj/machinery/ecto_sniffer/attack_ghost(mob/user)
 	. = ..()
-	if(locate(user) in ghosts_sampled) 	//anti-spam protection, also helps limit the bitrate.
+	if(user in ghosts_sampled) //anti-spam protection, also helps limit the bitrate.
 		return ..()
 
 	if(!is_operational || !on || !sensor_enabled)
@@ -29,7 +29,7 @@
 	use_power(10)
 	if(activator)
 		ghosts_sampled += activator
-		addtimer(CALLBACK(src, /obj/machinery/ecto_sniffer.proc/clear_residue, activator), 15 SECONDS)
+		addtimer(CALLBACK(src, .proc/clear_residue, activator), 15 SECONDS)
 
 /obj/machinery/ecto_sniffer/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -51,10 +51,10 @@
 	. = ..()
 	if (W.tool_behaviour == TOOL_WRENCH)
 		W.play_tool_sound(src, 15)
-		to_chat(user, "<span class ='notice'>You [anchored ? "unanchor" : "anchor"] the sniffer.")
+		to_chat(user, "<span class ='notice'>You [anchored ? "unanchor" : "anchor"] [src].")
 		set_anchored(!anchored)
 
 ///Removes the ghost from the ghosts_sampled list and lets them know they are free to activate the sniffer again.
 /obj/machinery/ecto_sniffer/proc/clear_residue(mob/user)
 	ghosts_sampled -= user
-	to_chat(user, "<span class='nicegreen'>The coating of ectoplasmic residue you left on the sniffer's sensors has decayed.</span>")
+	to_chat(user, "<span class='nicegreen'>The coating of ectoplasmic residue you left on [src]'s sensors has decayed.</span>")
