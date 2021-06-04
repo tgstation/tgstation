@@ -275,7 +275,7 @@
 		else if(prob(1))
 			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
 		else
-			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "bad")
+			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "non-honk-clown-words")
 
 /obj/item/paper/fake_report/examine(mob/user)
 	. = ..()
