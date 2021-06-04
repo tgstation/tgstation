@@ -821,6 +821,14 @@
 	name = "Wavy"
 	icon_state = "wavy"
 
+/datum/sprite_accessory/hair_gradient/long_fade_up
+	name = "Long Fade Up"
+	icon_state = "long_fade_up"
+
+/datum/sprite_accessory/hair_gradient/long_fade_down
+	name = "Long Fade Down"
+	icon_state = "long_fade_down"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
