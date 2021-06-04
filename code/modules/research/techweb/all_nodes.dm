@@ -197,7 +197,7 @@
 		"comp_direction",
 		"comp_gps",
 		"comp_health",
-		"comp_combiner"
+		"comp_combiner",
 		"comp_arithmetic",
 		"comp_clock",
 		"comp_comparison",
