@@ -422,6 +422,7 @@
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"
+	message = null
 
 /datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional)
 	. = ..() && intentional
@@ -434,9 +435,8 @@
 	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
-	. = TRUE
-	var/custom_emote = null
-	var/custom_emote_type = EMOTE_VISIBLE
+	var/custom_emote
+	var/custom_emote_type
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
@@ -463,32 +463,11 @@
 		custom_emote = params
 		if(type_override)
 			custom_emote_type = type_override
-	if(isliving(user))
-		var/mob/living/living_user = user
-		for(var/obj/item/implant/implant in living_user.implants)
-			implant.trigger(key, living_user)
-
-	if(!custom_emote)
-		return
-
-	user.log_message(custom_emote, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [custom_emote]"
-
-	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional))
-		playsound(user, tmp_sound, 50, vary)
-
-	for(var/mob/receiver in GLOB.dead_mob_list)
-		if(!receiver.client || isnewplayer(receiver))
-			continue
-		var/user_turf = get_turf(user)
-		if(receiver.stat == DEAD && receiver.client && user.client && (receiver.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(receiver in viewers(user_turf, null)))
-			receiver.show_message("<span class='emote'>[FOLLOW_LINK(receiver, user)] [dchatmsg]</span>")
-
-	if(custom_emote_type == EMOTE_AUDIBLE)
-		user.audible_message(custom_emote, audible_message_flags = EMOTE_MESSAGE)
-	else
-		user.visible_message(custom_emote, visible_message_flags = EMOTE_MESSAGE)
+	message = custom_emote
+	emote_type = custom_emote_type
+	. = ..()
+	message = null
+	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
