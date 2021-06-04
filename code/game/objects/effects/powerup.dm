@@ -16,7 +16,7 @@
 	COOLDOWN_DECLARE(respawn_cooldown)
 
 /obj/effect/powerup/Initialize()
-	..()
+	. = ..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
 	var/static/list/loc_connections = list(
