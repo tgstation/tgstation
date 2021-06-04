@@ -599,8 +599,8 @@
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/stargazer/Destroy()
-	for(var/M in linked_mobs)
-		unlink_mob(M)
+	for(var/mob/living/link_to_clear as anything in linked_mobs)
+		unlink_mob(link_to_clear)
 	linked_mobs.Cut()
 	QDEL_NULL(project_thought)
 	QDEL_NULL(link_minds)
@@ -609,8 +609,8 @@
 
 /datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/C)
 	..()
-	for(var/M in linked_mobs)
-		unlink_mob(M)
+	for(var/mob/living/link_to_clear as anything in linked_mobs)
+		unlink_mob(link_to_clear)
 	if(project_thought)
 		QDEL_NULL(project_thought)
 	if(link_minds)
@@ -619,8 +619,8 @@
 
 /datum/species/jelly/stargazer/spec_death(gibbed, mob/living/carbon/human/H)
 	..()
-	for(var/M in linked_mobs)
-		unlink_mob(M)
+	for(var/mob/living/link_to_clear as anything in linked_mobs)
+		unlink_mob(link_to_clear)
 
 /datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
