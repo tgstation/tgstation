@@ -12,6 +12,8 @@ GLOBAL_LIST_INIT(lizard_names_male, world.file2list("strings/names/lizard_male.t
 GLOBAL_LIST_INIT(lizard_names_female, world.file2list("strings/names/lizard_female.txt"))
 GLOBAL_LIST_INIT(clown_names, world.file2list("strings/names/clown.txt"))
 GLOBAL_LIST_INIT(mime_names, world.file2list("strings/names/mime.txt"))
+GLOBAL_LIST_INIT(religion_names, world.file2list("strings/names/religion.txt"))
+GLOBAL_LIST_INIT(religion_meme_names, world.file2list("strings/names/religion_meme.txt"))
 GLOBAL_LIST_INIT(carp_names, world.file2list("strings/names/carp.txt"))
 GLOBAL_LIST_INIT(golem_names, world.file2list("strings/names/golem.txt"))
 GLOBAL_LIST_INIT(moth_first, world.file2list("strings/names/moth_first.txt"))
@@ -48,7 +50,7 @@ GLOBAL_LIST_INIT(preferences_custom_names, list(
 	"mime" = list("pref_name" = "Mime", "qdesc" = "mime name (leave empty to pick random name)" , "allow_numbers" = FALSE , "group" = "fun", "allow_null" = TRUE),
 	"cyborg" = list("pref_name" = "Cyborg", "qdesc" = "cyborg name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
 	"ai" = list("pref_name" = "AI", "qdesc" = "AI name (leave empty to pick random name)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
-	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion (leave empty to use default naming scheme)" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
+	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion (leave empty to pick random religion)" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
 	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
 	"bible" = list("pref_name" = "Chaplain bible name", "qdesc" = "bible name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE)
 	))

@@ -1521,3 +1521,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	new /obj/effect/pod_landingzone(landing_location, pod)
 	return pod
 
+/proc/random_religion_name()
+	if(prob(95))
+		. = pick(GLOB.religion_names)
+	else
+		. = pick(GLOB.religion_meme_names)

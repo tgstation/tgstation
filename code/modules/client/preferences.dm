@@ -1976,7 +1976,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if("mime")
 			return pick(GLOB.mime_names)
 		if("religion")
-			return DEFAULT_RELIGION
+			return random_religion_name()
 		if("deity")
 			return DEFAULT_DEITY
 		if("bible")
@@ -2001,3 +2001,91 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+	if(name_id == "religion")
+		update_bible_and_deity_name(custom_names[name_id])
+
+/datum/preferences/proc/update_bible_and_deity_name(religion)
+	switch(lowertext(religion))
+		if("christianity") // DEFAULT_RELIGION
+			custom_names["bible"] = pick("The Holy Bible","The Dead Sea Scrolls")
+			custom_names["deity"] = "Space Jesus"
+		if("buddhism")
+			custom_names["bible"] = "The Sutras"
+			custom_names["deity"] = "Buddha"
+		if("clownism","honkmother","honk","honkism","comedy")
+			custom_names["bible"] = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
+			custom_names["deity"] = "The Honkmother"
+		if("chaos")
+			custom_names["bible"] = "The Book of Lorgar"
+			custom_names["deity"] = pick("Chaos Gods", "Dark Gods", "Ruinous Powers")
+		if("cthulhu")
+			custom_names["bible"] = "The Necronomicon"
+			custom_names["deity"] = pick("Great Old Ones", "Old Ones")
+		if("hinduism")
+			custom_names["bible"] = "The Vedas"
+			custom_names["deity"] = pick("Brahma", "Vishnu", "Shiva")
+		if("homosexuality")
+			custom_names["bible"] = pick("Guys Gone Wild","Coming Out of The Closet")
+		if("imperium")
+			custom_names["bible"] = "Uplifting Primer"
+			custom_names["deity"] = "Astra Militarum"
+		if("islam")
+			custom_names["bible"] = "Quran"
+			custom_names["deity"] = "Allah"
+		if("judaism")
+			custom_names["bible"] = "The Torah"
+			custom_names["deity"] = "Yahweh"
+		if("lampism")
+			custom_names["bible"] = "Fluorescent Incandescence"
+			custom_names["deity"] = "Lamp"
+		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
+			custom_names["bible"] = pick("Woody's Got Wood: The Aftermath", "War of Cocks", "Sweet Bro and Hella Jeff: Expanded Edition", "F.A.T.A.L. Rulebook")
+			switch(custom_names["bible"])
+				if("Woody's Got Wood: The Aftermath")
+					custom_names["deity"] = pick("Woody", "Andy", "Tom Hanks", "Randy Newman")
+				if("War of Cocks")
+					custom_names["deity"] = pick("Dick Powers", "King Cock")
+				if("Sweet Bro and Hella Jeff: Expanded Edition")
+					custom_names["deity"] = pick("Sweet Bro", "Hella Jeff", "Stairs", "Andrew Hussie")
+				if("F.A.T.A.L. Rulebook")
+					custom_names["deity"] = pick("Twenty Ten-Sided Dice", "Bitter Misogyny", "Date Rape", "The Urination Skill")
+		if("monkeyism","apism","gorillism","primatism")
+			custom_names["bible"] = pick("Going Bananas", "Bananas Out For Harambe")
+			custom_names["deity"] = pick("Harambe", "monky")
+		if("mormonism")
+			custom_names["bible"] = "The Book of Mormon"
+			custom_names["deity"] = pick("God", "Elohim", "Godhead")
+		if("pastafarianism")
+			custom_names["bible"] = "The Gospel of the Flying Spaghetti Monster"
+			custom_names["deity"] = "Flying Spaghetti Monster"
+		if("rastafarianism","rasta")
+			custom_names["bible"] = "The Holy Piby"
+			custom_names["deity"] = "Haile Selassie I"
+		if("satanism")
+			custom_names["bible"] = "The Unholy Bible"
+			custom_names["deity"] = "Satan"
+		if("sikhism")
+			custom_names["bible"] = "Guru Granth Sahib"
+			custom_names["deity"] = "Waheguru"
+		if("science")
+			custom_names["bible"] = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			custom_names["deity"] = pick("Albert Einstein", "Stephen Hawking", "Neil deGrasse Tyson", "Carl Sagan", "Richard Dawkins")
+		if("scientology")
+			custom_names["bible"] = pick("The Biography of L. Ron Hubbard","Dianetics")
+			custom_names["deity"] = pick("Money", "Power", "Xenu", "Tom Cruise", "L. Ron Hubbard", "David Miscavige", "John Travolta")
+		if("servicianism", "partying")
+			custom_names["bible"] = "The Tenets of Servicia"
+			custom_names["deity"] = pick("Servicia", "Space Bacchus", "Space Dionysus")
+		if("subgenius")
+			custom_names["bible"] = "Book of the SubGenius"
+			custom_names["deity"] = pick("Jehovah 1", "J. R. \"Bob\" Dobbs")
+		if("toolboxia","greytide")
+			custom_names["bible"] = pick("Toolbox Manifesto","iGlove Assistants")
+			custom_names["deity"] = "Maintenance"
+		if("weeaboo","kawaii")
+			custom_names["bible"] = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
+			custom_names["deity"] = "Anime"
+		else
+			if(custom_names["bible"] == DEFAULT_BIBLE)
+				custom_names["bible"] = "The Holy Book of [religion]"
