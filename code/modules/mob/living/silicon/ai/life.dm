@@ -8,7 +8,7 @@
 
 		handle_status_effects(delta_time, times_fired)
 
-		handle_traits()
+		handle_traits(delta_time, times_fired)
 
 		if(malfhack?.aidisabled)
 			deltimer(malfhacking)

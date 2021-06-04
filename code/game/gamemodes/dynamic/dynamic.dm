@@ -366,7 +366,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
 			roundstart_pop_ready++
 			candidates.Add(player)
 	log_game("DYNAMIC: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
@@ -641,7 +641,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
 		else
 			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (GLOB.dead_player_list > GLOB.alive_player_list.len)
+	if (GLOB.dead_player_list.len > GLOB.alive_player_list.len)
 		chance -= 30 // More than half the crew died? ew, let's calm down on antags
 	if (mid_round_budget > higher_injection_chance_minimum_threat)
 		chance += higher_injection_chance
