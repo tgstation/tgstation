@@ -692,6 +692,7 @@
 #include "code\datums\elements\drag_pickup.dm"
 #include "code\datums\elements\dryable.dm"
 #include "code\datums\elements\earhealing.dm"
+#include "code\datums\elements\easily_fragmented.dm"
 #include "code\datums\elements\embed.dm"
 #include "code\datums\elements\empprotection.dm"
 #include "code\datums\elements\eyestab.dm"
