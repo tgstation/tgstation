@@ -348,3 +348,8 @@
 	description = "<span class='boldwarning'>I have been excommunicated!</span>\n"
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/watersprayed
+	description = "<span class='boldwarning'>Grrrr, I hate being sprayed with water!</span>\n"
+	mood_change = -5
+	timeout = 1 MINUTES
