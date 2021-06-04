@@ -44,21 +44,6 @@
 							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable \
 							of intentionally harming a fellow devil.</B>"
 
-/datum/antagonist/imp
-	name = "Imp"
-	antagpanel_category = "Other"
-	show_in_roundend = FALSE
-
-/datum/antagonist/imp/on_gain()
-	. = ..()
-	give_objectives()
-
-/datum/antagonist/imp/proc/give_objectives()
-	var/datum/objective/newobjective = new
-	newobjective.explanation_text = "Try to get a promotion to a higher devilish rank."
-	newobjective.owner = owner
-	objectives += newobjective
-
 //////////////////The Man Behind The Slaughter
 
 /mob/living/simple_animal/hostile/imp/slaughter
