@@ -311,8 +311,8 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/root_flatbread, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdoughslice
-	name = "rootdough slice"
-	desc = "A slice of root dough. Perfect for making pasta or rolls."
+	name = "rootdough ball"
+	desc = "A ball of root dough. Perfect for making pasta or rolls."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "rootdough_slice"
 	microwaved_type = /obj/item/food/rootroll
@@ -326,7 +326,7 @@
 
 /obj/item/food/root_flatbread
 	name = "root flatbread"
-	desc = "A plain root flatbread. Can be topped with a variety of foods that lizards like to eat."
+	desc = "A plain grilled root flatbread. Can be topped with a variety of foods that lizards like to eat."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "root_flatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
