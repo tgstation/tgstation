@@ -3,7 +3,6 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
-$include antag_rep.txt
 $include resources.txt
 $include interviews.txt
 

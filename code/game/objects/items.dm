@@ -24,8 +24,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
-	///icon state for mob worn overlays, if null the normal icon_state will be used.
+	///Icon state for mob worn overlays, if null the normal icon_state will be used.
 	var/worn_icon_state
+	///Icon state for the belt overlay, if null the normal icon_state will be used.
+	var/belt_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
 	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
@@ -34,6 +36,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/greyscale_config_inhand_left
 	///The config type to use for greyscaled right inhand sprites. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_inhand_right
+	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config_belt
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -713,8 +717,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, newLoc, TRUE)
 	return FALSE
 
-/obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+/// Returns the icon used for overlaying the object on a belt
+/obj/item/proc/get_belt_overlay()
+	var/icon_state_to_use = belt_icon_state || icon_state
+	if(greyscale_config_belt && greyscale_colors)
+		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
 
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))

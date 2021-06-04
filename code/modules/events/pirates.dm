@@ -6,7 +6,6 @@
 	min_players = 10
 	earliest_start = 30 MINUTES
 	dynamic_should_hijack = TRUE
-	gamemode_blacklist = list("nuclear")
 
 #define PIRATES_ROGUES "Rogues"
 #define PIRATES_SILVERSCALES "Silverscales"

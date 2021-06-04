@@ -172,7 +172,7 @@
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
-	if(mess && owner.stat <= SOFT_CRIT)
+	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
