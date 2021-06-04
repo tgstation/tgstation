@@ -926,6 +926,7 @@
 #include "code\game\machinery\dna_scanner.dm"
 #include "code\game\machinery\doppler_array.dm"
 #include "code\game\machinery\droneDispenser.dm"
+#include "code\game\machinery\ecto_sniffer.dm"
 #include "code\game\machinery\electrolyzer.dm"
 #include "code\game\machinery\fat_sucker.dm"
 #include "code\game\machinery\firealarm.dm"
