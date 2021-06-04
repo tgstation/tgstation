@@ -84,7 +84,7 @@
 	set name = "Toggle CDN"
 	set category = "Server"
 	var/static/admin_disabled_cdn_transport = null
-	if (tgui_alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", list("Yes", "No")) != "Yes")
+	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
 		return
 	var/current_transport = CONFIG_GET(string/asset_transport)
 	if (!current_transport || current_transport == "simple")

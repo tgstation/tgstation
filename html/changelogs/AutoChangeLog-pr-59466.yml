@@ -1,0 +1,4 @@
+author: "mozi_h"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a small icon inconsistency with the notice board."

@@ -40,3 +40,36 @@
   dragomagol:
   - bugfix: railings drop rods on deconstruction
   - bugfix: connected the kilo medbay lobby apc to the grid
+2021-06-03:
+  Mordent:
+  - refactor: Split DnaConsole interface into separate files.
+  RandomGamer123:
+  - bugfix: Removes random camera and railing in space near xenobio on metastation
+  - bugfix: Switchblades' blades now actually pop out like intended
+  SpaceDragon00:
+  - bugfix: Large energy crossbow now sounds like an energy crossbow
+  carshalash:
+  - qol: Makes fish affordable to common workers.
+  dragomagol:
+  - qol: newly-resprited stools and barstools are now facing tables
+  zxaber:
+  - bugfix: AIs should no longer occasionally have their lawset randomly and silently
+      returned to Asimov.
+2021-06-04:
+  GoldenAlpharex:
+  - bugfix: Custom outfits will now save their ID trim.
+  JJRcop:
+  - bugfix: Drone tools can no longer be inserted into an autolathe.
+  JohnFulpWillard:
+  - bugfix: Shaft Miners can now access Cargo on Tramstation
+  Mothblocks:
+  - qol: Controllers for circuits now use right-click instead of alt-right-click.
+  SmArtKar:
+  - bugfix: Attacking something as morph no longer floods your chat with "You're already
+      in your normal form!"
+  - bugfix: Fixed banana juice having x2 chance of appearing in mystery soup
+  - bugfix: Fixes AI screen blur not disappearing after getting creampied
+  Y0SH1M4S73R:
+  - bugfix: Local insurance providers have realized that they should advertise their
+      services BEFORE the occurrence of the very accidents they are supposed to insure
+      against.
