@@ -114,7 +114,7 @@
 	if(computer.active_program == src)
 		computer.alert_call(src, "Crystal delamination in progress!")
 
-/datum/computer_file/program/supermatter_monitor/ui_data()
+/datum/computer_file/program/supermatter_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
 
 	if(istype(active))
@@ -128,34 +128,9 @@
 			active = null
 			return
 
+		data += active.ui_data()
 		data["singlecrystal"] = FALSE
-		data["active"] = TRUE
-		data["SM_integrity"] = active.get_integrity()
-		data["SM_power"] = active.power
-		data["SM_ambienttemp"] = air.temperature
-		data["SM_ambientpressure"] = air.return_pressure()
-		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency
-		data["SM_moles"] = 0
-		data["SM_uid"] = active.uid
-		var/area/active_supermatter_area = get_area(active)
-		data["SM_area_name"] = active_supermatter_area.name
-
-		var/list/gasdata = list()
-
-		if(air.total_moles())
-			data["SM_moles"] = air.total_moles()
-			for(var/gasid in air.gases)
-				gasdata.Add(list(list(
-				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
-				"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
-
-		else
-			for(var/gasid in air.gases)
-				gasdata.Add(list(list(
-					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
-					"amount" = 0)))
-
-		data["gases"] = gasdata
+		
 	else
 		var/list/SMS = list()
 		for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
