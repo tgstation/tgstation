@@ -47,12 +47,15 @@
 	if(is_operational && on)
 		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask")
 
-/obj/machinery/ecto_sniffer/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if (W.tool_behaviour == TOOL_WRENCH)
-		W.play_tool_sound(src, 15)
-		to_chat(user, "<span class ='notice'>You [anchored ? "unanchor" : "anchor"] [src].")
-		set_anchored(!anchored)
+	tool.play_tool_sound(src, 15)
+	to_chat(user, "<span class ='notice'>You [anchored ? "unanchor" : "anchor"] [src].")
+	set_anchored(!anchored)
+
+/obj/machinery/ecto_sniffer/Destroy()
+	. = ..()
+	ghosts_sampled = null
 
 ///Removes the ghost from the ghosts_sampled list and lets them know they are free to activate the sniffer again.
 /obj/machinery/ecto_sniffer/proc/clear_residue(mob/user)
