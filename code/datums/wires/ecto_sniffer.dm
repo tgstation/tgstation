@@ -14,5 +14,5 @@
 
 /datum/wires/ecto_sniffer/on_cut(wire, mend)
 	var/obj/machinery/ecto_sniffer/our_sniffer = holder
-	our_sniffer.sensors_enabled = mend ? TRUE : FALSE
+	our_sniffer.sensor_enabled = mend ? TRUE : FALSE
 
