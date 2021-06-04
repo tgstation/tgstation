@@ -68,12 +68,7 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 
 	if(air_contents.temperature > 0)
-		var/transfer_moles = (air_contents.return_pressure() * volume_rate) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-		if(!transfer_moles)
-			return
-
-		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+		var/datum/gas_mixture/removed = air_contents.remove_ratio(volume / volume_rate)
 
 		location.assume_air(removed)
 
@@ -90,12 +85,7 @@
 	flick("inje_inject", src)
 
 	if(air_contents.temperature > 0)
-		var/transfer_moles = (air_contents.return_pressure() * volume_rate) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-		if(!transfer_moles)
-			return
-
-		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+		var/datum/gas_mixture/removed = air_contents.remove_ratio(volume / volume_rate)
 		loc.assume_air(removed)
 		update_parents()
 
