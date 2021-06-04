@@ -272,9 +272,8 @@
 		else
 			SSexplosions.medturf += target
 
-
-
-GLOBAL_VAR(blackbox)
+//There can only ever be one blackbox, and we want to know if there already is one when we spawn
+GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 //Black Box
 /obj/machinery/smartfridge/black_box
 	name = "black box"
