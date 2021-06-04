@@ -695,6 +695,8 @@
 #define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
+///from base of [/obj/proc/update_integrity]: ()
+#define COMSIG_OBJ_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
@@ -705,6 +707,8 @@
 #define COMSIG_OBJ_PAINTED "obj_painted"
 /// from /obj/proc/obj_break: ()
 #define COMSIG_OBJ_BREAK "obj_break"
+/// from base of [/obj/proc/obj_fix]: ()
+#define COMSIG_OBJ_FIX "obj_fix"
 
 // /obj/machinery signals
 

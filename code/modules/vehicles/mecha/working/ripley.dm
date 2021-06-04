@@ -117,7 +117,10 @@
 /obj/vehicle/sealed/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
-	obj_integrity = 75 //Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
+	. = ..()
+	take_damage(125) // Low starting health
 
 /obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
 	. = ..()
@@ -147,7 +150,6 @@
 	icon_state = "hauler"
 	base_icon_state = "hauler"
 	max_equip = 2
-	obj_integrity = 50 //Low starting health
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize()
@@ -158,6 +160,8 @@
 	//Attach hydraulic clamp ONLY
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
 	HC.attach(src)
+
+	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
 
 /obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)

@@ -153,6 +153,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..()
 
 
+/obj/structure/cable/examine(mob/user)
+	. = ..()
+	if(isobserver(user))
+		. += get_power_info()
+
+
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
 	if(T.intact)
@@ -166,13 +172,18 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(powernet && (powernet.avail > 0)) // is it powered?
-			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
-		else
-			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	add_fingerprint(user)
+
+
+/obj/structure/cable/proc/get_power_info()
+	if(powernet?.avail > 0)
+		return "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>"
+	else
+		return "<span class='danger'>The cable is not powered.</span>"
+
 
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
