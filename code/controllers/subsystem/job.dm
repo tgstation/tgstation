@@ -56,7 +56,6 @@ SUBSYSTEM_DEF(job)
 	var/always_promote_captain_job = TRUE
 
 /datum/controller/subsystem/job/Initialize(timeofday)
-	SSmapping.HACK_LoadMapConfig()
 	setup_job_lists()
 	if(!occupations.len)
 		SetupOccupations()
