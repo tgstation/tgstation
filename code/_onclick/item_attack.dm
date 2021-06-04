@@ -68,6 +68,7 @@
 		return TRUE
 	interact(user)
 
+/// Called when the item is in the active hand, and right-clicked. Useful for alternate or opposite functions. At the moment, there is no verb or hotkey.
 /obj/item/proc/attack_self_secondary(mob/user, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
