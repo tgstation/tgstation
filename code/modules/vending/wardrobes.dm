@@ -368,8 +368,8 @@
 	machine_name = "LawDrobe"
 
 /obj/machinery/vending/wardrobe/chap_wardrobe
-	name = "ChapDrobe"
-	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
+	name = "DeusVend"
+	desc = "God wills your purchase."
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the ChapDrobe!"
