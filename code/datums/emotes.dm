@@ -41,7 +41,7 @@
 	var/hands_use_check = FALSE
 	/// Will only work if the emote is EMOTE_AUDIBLE.
 	var/muzzle_ignore = FALSE
-	/// Types that are allowed to use that emote..
+	/// Types that are allowed to use that emote.
 	var/list/mob_type_allowed_typecache = /mob
 	/// Types that are NOT allowed to use that emote.
 	var/list/mob_type_blacklist_typecache
@@ -82,6 +82,8 @@
  * * params - Parameters added after the emote.
  * * type_override - Override to the current emote_type.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ *
+ * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
 	. = TRUE
@@ -121,11 +123,13 @@
 		user.visible_message(msg, blind_message = "<span class='emote'>You hear how <b>[user]</b> [msg]</span>", visible_message_flags = EMOTE_MESSAGE)
 
 /**
- * For handling emote cooldown, return true to allow the emote to happen
+ * For handling emote cooldown, return true to allow the emote to happen.
  *
  * Arguments:
  * * user - Person that is trying to send the emote.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ *
+ * Returns FALSE if the cooldown is not over, TRUE if the cooldown is over.
  */
 /datum/emote/proc/check_cooldown(mob/user, intentional)
 	if(!intentional)
@@ -256,6 +260,8 @@
 * If you need something more complex, make it into a datum emote
 * Arguments:
 * * text - The text to send out
+*
+* Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
 /mob/proc/manual_emote(text) //Just override the song and dance
 	. = TRUE
