@@ -66,7 +66,7 @@
 	if(!attached_bot)
 		return
 
-	var/to_dispense = min(max(dispense_amount.input_value, 0), attached_bot.stored_money)
+	var/to_dispense = clamp(dispense_amount.input_value, 0, attached_bot.stored_money)
 	attached_bot.add_money(-to_dispense)
 	new /obj/item/holochip(drop_location(), to_dispense)
 
@@ -123,11 +123,11 @@
 
 	var/amount_to_insert = item.get_item_credit_value()
 	if(!amount_to_insert)
-		balloon_alert(attacker, "This has no value!")
+		balloon_alert(attacker, "this has no value!")
 		return
 
 	attached_bot.add_money(amount_to_insert)
-	balloon_alert(attacker, "Inserted [amount_to_insert] credits.")
+	balloon_alert(attacker, "inserted [amount_to_insert] credits.")
 	money_input.set_output(amount_to_insert)
 	money_trigger.set_output(COMPONENT_SIGNAL)
 	qdel(item)

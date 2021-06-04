@@ -32,7 +32,7 @@
 	var/datum/port/output/trigger_output
 
 	/// The flags of the circuit to control basic generalised behaviour.
-	var/circuit_flags = 0
+	var/circuit_flags = NONE
 
 	/// Used to determine the x position of the component within the UI
 	var/rel_x = 0

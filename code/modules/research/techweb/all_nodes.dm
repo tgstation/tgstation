@@ -194,15 +194,15 @@
 	description = "Research on how to fully exploit the power of integrated circuits"
 	design_ids = list(
 		"circuit_multitool",
-		"comp_direction",
-		"comp_gps",
-		"comp_health",
-		"comp_combiner",
 		"comp_arithmetic",
 		"comp_clock",
+		"comp_combiner",
 		"comp_comparison",
 		"comp_concat",
 		"comp_delay",
+		"comp_direction",
+		"comp_gps",
+		"comp_health",
 		"comp_hear",
 		"comp_index",
 		"comp_length",
@@ -640,8 +640,8 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
-		"controller_shell",
 		"bot_shell",
+		"controller_shell",
 		"money_bot_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -652,8 +652,8 @@
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
 	design_ids = list(
-		"drone_shell",
 		"comp_pull",
+		"drone_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 

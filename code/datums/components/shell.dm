@@ -35,14 +35,17 @@
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
+		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
+
 
 /datum/component/shell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
+		COMSIG_OBJ_DECONSTRUCT,
 		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST
@@ -53,6 +56,10 @@
 /datum/component/shell/Destroy(force, silent)
 	QDEL_LIST(unremovable_circuit_components)
 	return ..()
+
+/datum/component/shell/proc/on_object_deconstruct()
+	SIGNAL_HANDLER
+	remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
 	SIGNAL_HANDLER
@@ -118,7 +125,7 @@
 		return
 
 	if(locked)
-		source.balloon_alert(user, "The cover panel is locked!")
+		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
 	attached_circuit.interact(user)
@@ -133,11 +140,11 @@
 		return
 
 	if(locked)
-		source.balloon_alert(user, "The cover panel is locked!")
+		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
 	tool.play_tool_sound(parent)
-	source.balloon_alert(user, "You unscrew [attached_circuit] from [parent].")
+	source.balloon_alert(user, "you unscrew [attached_circuit] from [parent].")
 	remove_circuit()
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
