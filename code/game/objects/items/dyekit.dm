@@ -1,27 +1,33 @@
 /obj/item/dyespray
 	name = "hair dye spray"
 	desc = "A spray to dye your hair any gradients you'd like."
-	icon = 'icons/obj/dice.dmi'
-	icon_state = "dicebag"
+	icon = 'icons/obj/dyespray.dmi'
+	icon_state = "dyespray"
 
 /obj/item/dyespray/attack_self(mob/user)
+	dye(user)
 
-	if(!ishuman(user))
+/obj/item/dyespray/pre_attack(atom/target, mob/living/user, params)
+	dye(target)
+	return ..()
+
+/obj/item/dyespray/proc/dye(mob/target)
+	if(!ishuman(target))
 		return
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/human_target = target
 
-	var/new_grad_style = input(user, "Choose a color pattern for your hair:", "Character Preference")  as null|anything in GLOB.hair_gradients_list
+	var/new_grad_style = input(usr, "Choose a color pattern:", "Character Preference")  as null|anything in GLOB.hair_gradients_list
 	if(!new_grad_style)
 		return
 
-	var/new_grad_color = input(user, "Choose your character's secondary hair color:", "Character Preference","#"+H.grad_color) as color|null
+	var/new_grad_color = input(usr, "Choose a secondary hair color:", "Character Preference","#"+human_target.grad_color) as color|null
 	if(!new_grad_color)
 		return
 
-	H.grad_style = new_grad_style
-	H.grad_color = sanitize_hexcolor(new_grad_color)
-	to_chat(H, "<span class='notice'>You apply the hair dye to your hair...</span>")
-	if(!do_after(user, 3 SECONDS, target = user))
+	human_target.grad_style = new_grad_style
+	human_target.grad_color = sanitize_hexcolor(new_grad_color)
+	to_chat(human_target, "<span class='notice'>You apply the hair dye...</span>")
+	if(!do_after(usr, 3 SECONDS, target))
 		return
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	H.update_hair()
+	human_target.update_hair()
