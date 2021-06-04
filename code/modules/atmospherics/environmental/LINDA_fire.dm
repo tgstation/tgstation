@@ -49,7 +49,7 @@
 
 /**
  * Hotspot objects interfaces with the temperature of turf gasmixtures while also providing visual effects. 
- * One important thing to note about hotspots are that they can roughly be divided into two categories based on the bypassing variable, 
+ * One important thing to note about hotspots are that they can roughly be divided into two categories based on the bypassing variable.
  */
 /obj/effect/hotspot
 	anchored = TRUE
@@ -63,8 +63,11 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
-	/// Hotspot volume will be divided by turf volume to get the ratio for temperature setting on non bypassing mode. 
-	/// Also some visual stuffs for fainter fires.
+	/**
+	 * Volume is the representation of how big and healthy a fire is. 
+	 * Hotspot volume will be divided by turf volume to get the ratio for temperature setting on non bypassing mode.
+	 * Also some visual stuffs for fainter fires.
+	 */
 	var/volume = 125
 	/// Temperature handles the initial ignition and the colouring.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
@@ -93,9 +96,9 @@
 /**
  * Perform interactions between the hotspot and the gasmixture.
  *
- * For the first tick, hotspots will take a sample of the air in the turf 
- * (in some implementations the ratio comes out to around 1, so all of the air in the turf),
+ * For the first tick, hotspots will take a sample of the air in the turf,
  * set the temperature equal to a certain amount, and then reacts it. 
+ * In some implementations the ratio comes out to around 1, so all of the air in the turf.
  *
  * Afterwards if the reaction is big enough it mostly just tags along the fire, 
  * copying the temperature and handling the colouring. 
