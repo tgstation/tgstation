@@ -44,5 +44,5 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 		GLOB.triple_ai_controller = new()
 	else
 		QDEL_NULL(GLOB.triple_ai_controller)
-	to_chat(usr, "There will [GLOB.triple_ai_controller ? "" : "not"] be an AI Triumvirate at round start.")
+	to_chat(usr, "There will[GLOB.triple_ai_controller ? "" : "not"] be an AI Triumvirate at round start.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has toggled [GLOB.triple_ai_controller ? "on" : "off"] triple AIs at round start.</span>")
