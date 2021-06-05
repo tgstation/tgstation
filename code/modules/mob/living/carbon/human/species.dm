@@ -621,7 +621,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					//Gradients
 					grad_style = H.grad_style
 					grad_color = H.grad_color
-					if(grad_style && grad_style != "None")
+					if(grad_style)
 						var/datum/sprite_accessory/gradient = GLOB.hair_gradients_list[grad_style]
 						var/icon/temp = icon(gradient.icon, gradient.icon_state)
 						var/icon/temp_hair = icon(hair_file, hair_state)

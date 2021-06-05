@@ -132,11 +132,13 @@
 	desc = "The most important thing you could possibly spend your hard-earned money on."
 	cost = PAYCHECK_EASY * 4
 	contains = list(/obj/item/toy/plush/beeplushie)
+
 /datum/supply_pack/goody/dyespray
 	name = "Hair Dye Spray"
 	desc = "A cool spray to dye your hair with awesome colors!"
 	cost = PAYCHECK_EASY * 2
 	contains = list(/obj/item/dyespray)
+
 /datum/supply_pack/goody/beach_ball
 	name = "Beach Ball"
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
