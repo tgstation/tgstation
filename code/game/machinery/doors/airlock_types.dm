@@ -6,23 +6,23 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
-	greyscale_colors = "#224e81#224e81#2a5b94#2a5b94#3d89be#3d89be#2c5280"
+	greyscale_colors = "#3e7bc1#3e7bc1#2a5b94#2a5b94#369de5#6d6565#2c5280"
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
-	greyscale_colors = "#9f2828#9f2828#a51c1c#a51c1c#d27428#d27428#8e2222"
+	greyscale_colors = "#9f2828#9f2828#a51c1c#a51c1c#d27428#6d6565#8e2222"
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
-	greyscale_colors = "#b78c0e#b78c0e#c2940d#c2940d#7f292f#7f292f#997715"
+	greyscale_colors = "#d8a81b#d8a81b#c2940d#c2940d#7f292f#6d6565#997715"
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#66ccff#ffffff"
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
@@ -44,7 +44,7 @@
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
-	greyscale_colors = "#967032#967032#b3863c#b3863c#78430d#78430d#967032"
+	greyscale_colors = "#c39344#c39344#b3863c#b3863c#78430d#6d6565#967032"
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
@@ -57,23 +57,23 @@
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#974cdc#974cdc#ffffff"
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#974cdc#6d6565#ffffff"
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_fre
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#808080#ff0000#ffffff"
+	greyscale_colors = "#ffffff#ffffff#eaeaea#eaeaea#808080#6d6565#ffffff"
 
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#9966ff#9966ff#ffffff"
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#9966ff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#006600#006600#ffffff"
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#006600#6d6565#ffffff"
 
 //////////////////////////////////
 /*
@@ -211,7 +211,7 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
-	greyscale_colors = "#003300#003300#004400#004400#003300#003300#003300"
+	greyscale_colors = "#003300#003300#004400#004400#00330#6d6565#003300"
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
@@ -233,7 +233,7 @@
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
-	greyscale_colors = "#550066#550066#660066#660066#660066#660066#5d035d"
+	greyscale_colors = "#890e89#890e89#660066#660066#660066#6d6565#5d035d"
 
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
 	. = ..()
@@ -292,7 +292,7 @@
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
-	greyscale_colors = "#876f57#876f57#877869#877869#978471#978471#876f57"
+	greyscale_colors = "#876f57#876f57#877869#877869#978471#6d6565#876f57"
 
 /obj/machinery/door/airlock/sandstone/glass
 	opacity = FALSE
