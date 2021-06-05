@@ -82,14 +82,14 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 
 /**
- * Take all the contestants and divy them up into new random teams based on either number of teams or team size. Must clear existing teams to continue.
+ * Take all the contestants and divvy them up into new random teams based on either number of teams or team size. Must clear existing teams to continue.
  *
  * Args:
  * * user- who called this
  * * number_of_teams- If set, we create this many teams and divide the players evenly
  * * team_size- If set, we try to make as many teams of this size as we can
  */
-/datum/roster/proc/divy_into_teams(mob/user, number_of_teams = 0, team_size = 0)
+/datum/roster/proc/divvy_into_teams(mob/user, number_of_teams = 0, team_size = 0)
 	if(active_teams)
 		var/list/options = list("Clear Existing", "Cancel")
 		var/select = input(user, "There are still existing teams, you must clear them first! Proceed with clearing, or cancel?") as null|anything in options
@@ -129,7 +129,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 			overall_contestant_index++
 		testing("done filling team [new_team]")
 		testing("------")
-	testing("All done divy'ing teams!")
+	testing("All done divvy'ing teams!")
 
 // The direct team modifying/creating/removing procs
 /// Proc for creating a team, returns the new team
@@ -367,19 +367,19 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 // match setup procs
 /**
- * Called by the arena computer, to be used for showing the user the settings for automatically divying up teams. You should only make even numbers of teams without remainder players, as I haven't added handling for those situations.
+ * Called by the arena computer, to be used for showing the user the settings for automatically divvying up teams. You should only make even numbers of teams without remainder players, as I haven't added handling for those situations.
  *
  * These var names and descriptions make no sense because I rushed this and modals are kinda obnoxious with the options you have. I'll make it better, but for now, here's the scoop:
  * * team_event: If TRUE, make events, if FALSE, probably get ready for the battle royale section (not implemented, ask for limit of how many survivors to stop at)
- * * team_num_instead_of_size: If TRUE, we create [team_divy_factor] teams, then spread the contestants evenly. If FALSE, we make as many teams of [team_divy_factor] as we can.
- * * team_divy_factor: Either how many teams, or how many people per team we want.
+ * * team_num_instead_of_size: If TRUE, we create [team_divvy_factor] teams, then spread the contestants evenly. If FALSE, we make as many teams of [team_divvy_factor] as we can.
+ * * team_divvy_factor: Either how many teams, or how many people per team we want.
  */
 /datum/roster/proc/try_setup_match(mob/user)
 	var/list/settings = list(
 		"mainsettings" = list(
 			"team_event" = list("desc" = "Team Event?", "type" = "boolean", "value" = "Yes"),
-			"team_num_instead_of_size" = list("desc" = "If teams, divy by team number instead of team size?", "type" = "boolean", "value" = "Yes"),
-			"team_divy_factor" = list("desc" = "If teams, what's the divy factor? (ask if you don't know!)", "type" = "number", "value" = 2)
+			"team_num_instead_of_size" = list("desc" = "If teams, divvy by team number instead of team size?", "type" = "boolean", "value" = "Yes"),
+			"team_divvy_factor" = list("desc" = "If teams, what's the divvy factor? (ask if you don't know!)", "type" = "number", "value" = 2)
 		)
 	)
 
@@ -395,17 +395,17 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 		setup_match(user, prefs)
 
-/// To be used for interpreting the preflikepicker that defines the rules of the teams we're about to divy up, and leads to divying up the teams
+/// To be used for interpreting the preflikepicker that defines the rules of the teams we're about to divvy up, and leads to divvying up the teams
 /datum/roster/proc/setup_match(mob/user, list/prefs)
 	var/teams = prefs["team_event"]["value"] == "Yes"
-	var/divy_teams_by_num_not_size = prefs["team_num_instead_of_size"]["value"] == "Yes"
-	var/team_divy_factor = prefs["team_divy_factor"]["value"]
+	var/divvy_teams_by_num_not_size = prefs["team_num_instead_of_size"]["value"] == "Yes"
+	var/team_divvy_factor = prefs["team_divvy_factor"]["value"]
 
-	testing("[user] is setting up match with values: [teams] teams, [divy_teams_by_num_not_size] divy mode, [team_divy_factor] divy factor")
-	if(divy_teams_by_num_not_size)
-		divy_into_teams(user, team_divy_factor, 0)
+	testing("[user] is setting up match with values: [teams] teams, [divvy_teams_by_num_not_size] divvy mode, [team_divvy_factor] divvy factor")
+	if(divvy_teams_by_num_not_size)
+		divvy_into_teams(user, team_divvy_factor, 0)
 	else
-		divy_into_teams(user, 0, team_divy_factor)
+		divvy_into_teams(user, 0, team_divvy_factor)
 
 /// Try to resolve a match, this manually asks you which of the two teams won (neither, either, or both). Losing teams will be marked for elimination, winning teams will be marked as proven. Both match team slots will be cleared
 /datum/roster/proc/try_resolve_match(mob/user)
