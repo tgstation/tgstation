@@ -116,6 +116,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "ai_chamber"
 
 /area/ai_monitored/turret_protected/ai/Initialize()
+	. = ..()
 	ambientsounds -= 'sound/ambience/ambimalf.ogg' //This sound is terrible when you hear it constantly, so remove it from the core's sound pool.
 
 /area/ai_monitored/turret_protected/aisat
