@@ -723,7 +723,7 @@ const TechNode = (props, context) => {
             className={`${design_cache[k].class} Techweb__DesignIcon`}
             //tooltip={design_cache[k].name}
             //tooltipPosition={i % 15 < 7 ? "right" : "left"}
-            />
+          />
         ))}
       </Box>
       {required_experiments?.length > 0 && (
