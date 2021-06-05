@@ -78,11 +78,76 @@
 	var/print_time = 5 SECONDS
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
+	///Power cell used to power the scanner. Paths g
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
+	///Cell cover status
+	var/cell_cover_open = FALSE
+	///Power used per print in cell units
+	var/power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+	///Power used to say an error message
+	var/power_to_speak = 1
+
+/obj/item/inspector/Initialize()
+	. = ..()
+	if(ispath(cell))
+		cell = new cell(src)
+
+// Clean up the cell on destroy
+/obj/item/clothing/suit/space/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
+	return ..()
+
+// Clean up the cell on destroy
+/obj/item/inspector/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+	return ..()
+
+// support for items that interact with the cell
+/obj/item/inspector/get_cell()
+	return cell
 
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
 	if(do_after(user, print_time, target = user, progress=TRUE))
-		print_report()
+		print_report(user)
+
+/obj/item/inspector/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_CROWBAR)
+		cell_cover_open = !cell_cover_open
+		to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
+	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+		if(cell)
+			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
+			return
+		if(user.transferItemToLoc(I, src))
+			cell = I
+			to_chat(user, "<span class='notice'>You successfully install \the [cell] into [src].</span>")
+			return
+	return ..()
+
+/obj/item/inspector/CtrlClick(mob/living/user)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		if(cell_cover_open && cell)
+			user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
+			"<span class='notice'>You remove [cell].</span>")
+			cell.add_fingerprint(user)
+			user.put_in_hands(cell)
+			cell = null
+			return
+	return ..()
+
+/obj/item/inspector/examine(mob/user)
+	. = ..()
+	if(cell_cover_open)
+		. += "It's cell cover is open, exposing the cell slot."
+		if(!cell)
+			. += "The slot for a cell is empty."
+		else
+			. += "\The [cell] is firmly in place."
+	else
+		. += "It's cell cover is closed. It looks like it would be rather hard to open it with bare hands. If you want to open it, you should probably use a crowbar."
 
 /**
  * Create our report
@@ -98,18 +163,29 @@
  *
  * Arguments:
 */
-/obj/item/inspector/proc/print_report()
+/obj/item/inspector/proc/print_report(mob/user)
+	if(!cell)
+		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?")
+		return
+	if(cell.charge == 0)
+		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+		return
+	if(!cell.use(power_per_print))
+		if(cell.use(power_to_speak))
+			say("ERROR! POWER CELL CHARGE LEVEL TOO LOW TO PRINT REPORT!")
+		return
+
 	create_slip()
 	switch(print_sound_mode)
 		if(INSPECTOR_PRINT_SOUND_MODE_NORMAL)
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
+		if(INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
 			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
+		if(INSPECTOR_PRINT_SOUND_MODE_HONK)
 			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
+		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
 			playsound(src, pick(list('sound/items/fafafoggy.ogg', 'sound/items/fafafoggy2.ogg')), 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY_ALT)
+		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY_ALT)
 			playsound(src, pick(list('sound/items/fafafoggy.ogg', 'sound/items/fafafoggy2.ogg')), 50, TRUE)
 
 /obj/item/paper/report
@@ -164,13 +240,14 @@
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
-	print_report()
+	print_report(user)
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		cycle_sound(user)
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		cycle_print_time(user)
+	return ..()
 
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
 	if(print_time == 1 SECONDS)
@@ -197,7 +274,8 @@
  *
  * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
- * origami master.
+ * origami master. Printing at full power costs INSPECTOR_POWER_USAGE_HONK cell units
+ * instead of INSPECTOR_POWER_USAGE_NORMAL cell units.
  */
 /obj/item/inspector/clown/bananium
 	name = "\improper Bananium HONK-spect scanner"
@@ -205,7 +283,7 @@
 			prints a clowncrypted report regarding the maintenance of the station. Hard to replace."
 	icon_state = "bananium_inspector"
 	w_class = WEIGHT_CLASS_SMALL
-	max_mode = BANANIUM_INSPECTOR_PRINT_SOUND_MODE_LAST
+	max_mode = BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///How many more times can we print?
 	var/paper_charges = 200
 	///Max value of paper_charges
@@ -215,17 +293,19 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if((print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
-		say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
+		if(cell.use(power_to_speak))
+			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		print_time = 5 SECONDS
-		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
+		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_CLASSIC
+		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
 	..()
 	check_settings_legality()
 	if(istype(I, /obj/item/paper/fake_report)||(paper_charges>=max_paper_charges))
-		to_chat(user, "\The [src] refuses to consume \the [I]!")
+		to_chat(user, "<span class='info'>\The [src] refuses to consume \the [I]!</span>")
 	else if(istype(I, /obj/item/paper))
-		to_chat(user, "\The [src] consumes \the [I]!")
+		to_chat(user, "<span class='info'>\The [src] consumes \the [I]!</span>")
 		paper_charges+=charges_per_paper
 		if(paper_charges>max_paper_charges)
 			paper_charges = max_paper_charges
@@ -242,17 +322,21 @@
 	else
 		..()
 
-/obj/item/inspector/clown/bananium/print_report()
+/obj/item/inspector/clown/bananium/print_report(mob/user)
 	if(print_time != 0.1 SECONDS)
 		..()
 	else if(paper_charges == 0)
-		say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
+		if(cell.use(power_to_speak))
+			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
+		else
+			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
 	else
 		paper_charges--
 		..()
 
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
 	if(print_time == 0.1 SECONDS)
+		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 		print_time = 5 SECONDS
 		balloon_alert(user, "You set the device's scanning speed to SLOW.")
 	else if(print_time == 5 SECONDS)
@@ -260,6 +344,7 @@
 		balloon_alert(user, "You set the device's scanning speed setting to LIGHTNING FAST.")
 	else
 		print_time = 0.1 SECONDS
+		power_per_print = INSPECTOR_POWER_USAGE_HONK
 		balloon_alert(user, "You set the device's scanning speed setting to HONK.")
 
 /obj/item/inspector/clown/bananium/examine_more(mob/user)
