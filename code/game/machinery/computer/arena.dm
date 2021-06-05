@@ -317,11 +317,17 @@
 	if(href_list["setup_match"])
 		GLOB.global_roster.try_setup_match(usr)
 
+	if(href_list["resolve_match"])
+		GLOB.global_roster.try_resolve_match(usr)
+
 	if(href_list["select_team_slot"])
-		GLOB.global_roster.try_load_team_slot(usr, href_list["select_team_slot"])
+		GLOB.global_roster.try_load_team_slot(usr, text2num(href_list["select_team_slot"]))
 
 	if(href_list["remove_team_slot"])
-		GLOB.global_roster.try_remove_team_slot(usr, href_list["remove_team_slot"])
+		GLOB.global_roster.try_remove_team_slot(usr, text2num(href_list["remove_team_slot"]))
+
+	if(href_list["clear_teams"])
+		GLOB.global_roster.clear_teams(usr)
 
 	if(href_list["upload"])
 		add_new_arena_template(user)
@@ -402,23 +408,30 @@
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
 			dat += "<a href='?src=[REF(src)];setup_match=1'>Setup Next Match</a>"
 
-			if(GLOB.global_roster.team1)
-				var/datum/event_team/team1 = GLOB.global_roster.team1
+			var/datum/event_team/team1 = GLOB.global_roster.team1
+			var/datum/event_team/team2 = GLOB.global_roster.team2
+
+			if(team1)
 				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=1'>Select Team 1</a>"
 
-			if(GLOB.global_roster.team2)
-				var/datum/event_team/team2 = GLOB.global_roster.team2
+			if(team2)
 				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2]</a>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=2'>Select Team 2</a>"
 
+
+			if(istype(team1) && istype(team2))
+				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
 			/*for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"*/
 		if(ARENA_UI_TEAMS)
 			dat += "<b>Team menu</b>"
 			dat += "-----------------------------------------"
+			if(LAZYLEN(GLOB.global_roster.active_teams))
+				dat += "<a href='?src=[REF(src)];clear_teams=1'>Clear existing teams</a><br>"
+
 			for(var/datum/event_team/iter_team in GLOB.global_roster.active_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
 				for(var/datum/contestant/iter_contestant in iter_team.members)

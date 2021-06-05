@@ -1,17 +1,3 @@
-
-// the following defines manage what happens if we divy up teams randomly and people are leftover
-/**
- * Those not slotted will get a bye this round, though since their rounds_survived counter won't go up,
- * they will be prioritized for teams next round
- */
-#define REMAINDER_MODE_BYE 0
-/// Lump the leftovers into their own team, even if it has less people than the others
-#define REMAINDER_MODE_SHORT_TEAM 1
-/// Distribute the leftovers randomly onto the other teams, one per
-#define REMAINDER_MODE_LARGE_TEAM 2
-
-
-
 GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 /**
@@ -23,13 +9,13 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	/// Assoc list, key is the ckey, value is their contestant datum. Continues holding the contestant after they've been eliminated, unlike active
 	var/list/all_contestants
 	/// Holds the datums for all contestants still in contention
-	var/list/active_contestants = list()
+	var/list/active_contestants
 	/// Holds the datums for all contestants who have been eliminated
-	var/list/losers = list()
+	var/list/losers
 	/// All team datums that are currently active
-	var/list/active_teams = list()
+	var/list/active_teams
 	/// Teams that are not rostered and still need to play
-	var/list/unrostered_teams = list()
+	var/list/unrostered_teams
 
 	var/datum/event_team/team1
 	var/datum/event_team/team2
@@ -56,7 +42,8 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 /datum/roster/proc/register_contestant(mob/user, mob/target)
 	if(!target?.ckey)
 		CRASH("no contestant or target mob has no ckey")
-	if(all_contestants[target.ckey])
+	if(LAZYACCESS(all_contestants, target.ckey))
+	//if(all_contestants && all_contestants[target.ckey])
 		testing("already in contestants")
 		return
 
@@ -76,7 +63,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	testing("Loading strings/rosters/[filepath]")
 	//testing(json_decode(incoming_ckeys))
-	if(length(active_contestants))
+	if(LAZYLEN(active_contestants))
 		var/list/options = list("Clear All", "Add New", "Cancel")
 		var/select = input(user, "There are existing contestants! Would you like to clear all existing contestants first, just add new ckeys to the list, or cancel?") as null|anything in options
 
@@ -114,12 +101,11 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
  * * user- who called this
  * * number_of_teams- If set, we create this many teams and divide the players evenly
  * * team_size- If set, we try to make as many teams of this size as we can
- * * remainder_mode- See REMAINDER_MODE_BYE and etc defines at top of file
  */
-/datum/roster/proc/divy_into_teams(mob/user, number_of_teams = 0, team_size = 0, remainder_mode = REMAINDER_MODE_BYE)
+/datum/roster/proc/divy_into_teams(mob/user, number_of_teams = 0, team_size = 0)
 	if(active_teams)
-		var/list/options = list("Clear Existing", "Assign Free Agents", "Cancel")
-		var/select = input(user, "There are still existing teams! Would you like to clear existing teams first, create new teams from the current free agents, or cancel?") as null|anything in options
+		var/list/options = list("Clear Existing", "Cancel")
+		var/select = input(user, "There are still existing teams, you must clear them first! Proceed with clearing, or cancel?") as null|anything in options
 
 		switch(select)
 			if("Clear Existing")
@@ -152,14 +138,15 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		for(var/contestant_index in 1 to num_per)
 			var/datum/contestant/iter_contestant = active_contestants[overall_contestant_index]
 			testing(">>>>assigning contestant #[overall_contestant_index] ([iter_contestant.ckey]) to team [team_index]")
-			new_team.add_member(iter_contestant)
+			new_team.add_member(user, iter_contestant)
 			overall_contestant_index++
+		testing("done filling team [new_team]")
 		testing("------")
+	testing("All done divy'ing teams!")
 
 
 /datum/roster/proc/create_team(mob/user)
 	team_id_tracker++
-	testing("creating team [team_id_tracker]")
 	var/datum/event_team/new_team = new(team_id_tracker)
 	LAZYADD(active_teams, new_team)
 	LAZYADD(unrostered_teams, new_team)
@@ -182,9 +169,12 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 /datum/roster/proc/clear_teams(mob/user)
 	for(var/datum/event_team/iter_team in active_teams)
-		qdel(iter_team)
+		remove_team(user, iter_team)
 
 	testing("teams all cleared!")
+
+/datum/roster/proc/try_resolve_match(mob/user)
+	return
 
 /datum/roster/proc/clear_contestants(mob/user)
 	//maybe dump the info in an easily undoable way in case someone fucks up
@@ -193,6 +183,8 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	ckeys_at_large = list()
 	all_contestants = list()
+	active_contestants = list()
+	losers = list()
 
 	testing("contestants all cleared!")
 
@@ -256,19 +248,21 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		testing("already a team in slot [slot]")
 		return
 
-	testing("trying to get team from [user] for slot [slot]")
+	testing("trying to get team from [user] for slot [slot], should be [LAZYLEN(unrostered_teams)] teams")
 	var/list/the_teams = list()
-	var/list/the_team_nums = list()
 
 	var/team_iterator_count = 0
 	for(var/datum/event_team/iter_team in unrostered_teams)
 		team_iterator_count++
+		testing("adding [team_iterator_count] | team [iter_team.rostered_id]")
 		var/i = iter_team.rostered_id
-		the_teams[team_iterator_count] = iter_team
-		the_team_nums[team_iterator_count] = i
+		the_teams["Team [i]"] = iter_team
+		//the_teams[team_iterator_count] = iter_team
+		//the_team_nums[team_iterator_count] = i
 
-	var/selected_index = input(user, "Choose a team:", "Team", null) as null|anything in the_team_nums
+	var/selected_index = input(user, "Choose a team:", "Team", null) as null|anything in the_teams
 
+	testing("chose index [selected_index]")
 	var/datum/event_team/the_team = the_teams[selected_index]
 	if(!istype(the_team))
 		testing("no team")
@@ -278,10 +272,13 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/set_team_slot(mob/user, datum/event_team/the_team, slot)
+	testing("in set team slot with [the_team] for slot [slot]")
 	if(slot == 1)
 		team1 = the_team
+		testing("good for slot 1 [team1]")
 	else if(slot == 2)
 		team2 = the_team
+		testing("good for slot 2 [team2]")
 
 	testing("team [the_team] assigned to slot [slot]")
 	LAZYREMOVE(unrostered_teams, the_team)
@@ -289,6 +286,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/try_remove_team_slot(mob/user, slot)
 	var/datum/event_team/removed_team
+	testing("trying to remove team slot [slot]")
 	if(slot == 1)
 		removed_team = team1
 		team1 = null
@@ -297,19 +295,20 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		team2 = null
 
 	if(removed_team)
+		testing("removed team [removed_team] from slot [slot]")
 		LAZYADD(unrostered_teams, removed_team)
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/setup_match(mob/user, list/prefs)
-	var/teams = prefs["mainsettings"]["team_event"]["value"]
-	var/divy_teams_by_num_not_size = prefs["mainsettings"]["team_num_instead_of_size"]["value"]
-	var/team_divy_factor = prefs["mainsettings"]["team_divy_factor"]["value"]
+	var/teams = prefs["team_event"]["value"] == "Yes"
+	var/divy_teams_by_num_not_size = prefs["team_num_instead_of_size"]["value"] == "Yes"
+	var/team_divy_factor = prefs["team_divy_factor"]["value"]
 
 	testing("[user] is setting up match with values: [teams] teams, [divy_teams_by_num_not_size] divy mode, [team_divy_factor] divy factor")
 	if(divy_teams_by_num_not_size)
-		divy_into_teams(user, team_divy_factor, 0, REMAINDER_MODE_BYE)
+		divy_into_teams(user, team_divy_factor, 0)
 	else
-		divy_into_teams(user, 0, team_divy_factor, REMAINDER_MODE_BYE)
+		divy_into_teams(user, 0, team_divy_factor)
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/try_setup_match(mob/user)

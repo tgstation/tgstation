@@ -74,7 +74,7 @@
 
 /datum/event_team/New(our_number)
 	rostered_id = our_number
-	name = rostered_id
+	name = "Team #[rostered_id]"
 
 /datum/event_team/Destroy(force, ...)
 	for(var/datum/contestant/iter_member in members)
@@ -94,6 +94,7 @@
 
 	new_kid.current_team = src
 	LAZYADD(members, new_kid)
+	testing("successfully added [new_kid] to [src]")
 
 /datum/event_team/proc/remove_member(datum/contestant/dead_kid)
 	if(!dead_kid)
@@ -107,3 +108,4 @@
 
 	dead_kid.current_team = null
 	LAZYREMOVE(members, dead_kid)
+	testing("removed [dead_kid] from [src]")
