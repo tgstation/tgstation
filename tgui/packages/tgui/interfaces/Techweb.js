@@ -721,8 +721,8 @@ const TechNode = (props, context) => {
           <Button
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
-            //tooltip={design_cache[k].name}
-            //tooltipPosition={i % 15 < 7 ? "right" : "left"}
+            // tooltip={design_cache[k].name}
+            // tooltipPosition={i % 15 < 7 ? "right" : "left"}
           />
         ))}
       </Box>
