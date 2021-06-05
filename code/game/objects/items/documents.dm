@@ -116,7 +116,7 @@
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		cell_cover_open = !cell_cover_open
-		to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
+		balloon_alert(user, "You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].")
 	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
@@ -141,13 +141,13 @@
 /obj/item/inspector/examine(mob/user)
 	. = ..()
 	if(cell_cover_open)
-		. += "It's cell cover is open, exposing the cell slot. It looks like it could be pried in, but doing so would require an appropriate tool."
+		. += "It's cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
 		if(!cell)
 			. += "The slot for a cell is empty."
 		else
-			. += "\The [cell] is firmly in place. <span class='info'>Alt-click with an empty hand to remove it.</span>"
+			. += "\The [cell] is firmly in place. <span class='info'>Ctrl-click with an empty hand to remove it.</span>"
 	else
-		. += "It's cell cover is closed. It looks like it could be pried out, but doing so would require an appropriate tool."
+		. += "It's cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
 
 /**
  * Create our report
@@ -256,9 +256,12 @@
 		. += "Two weird settings dials are visible within the battery compartment."
 
 /obj/item/inspector/clown/examine_more(mob/user)
-	return "Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.\n\
-	The first dial is labeled \"SPEED\" and looks a bit like a screw head. Perhaps it can be turned with a screwdriver?\n\
-	The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?"
+	if(cell_cover_open)
+		var/list/msg =  list("<span class='notice'>Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.</span>")
+		msg += "\t<span class='info'>The first dial is labeled \"SPEED\" and looks a bit like a <strong>screw</strong> head.</span>"
+		msg += "\t<span class='info'>The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?</span>"
+		return msg
+	return ..()
 
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
 	var/message = "You turn the screw-like dial, setting the device's scanning speed to "
