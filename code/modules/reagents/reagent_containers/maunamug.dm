@@ -24,6 +24,8 @@
 	. += "<span class='notice'>The status display reads: Current temperature: <b>[reagents.chem_temp]K</b> Current Charge:[cell ? "[cell.charge / cell.maxcharge * 100]%" : "No cell found"].</span>"
 	if(open)
 		. += "<span class='notice'>The battery case is open.</span>"
+	if(cell && cell.charge > 0)
+		. += "<span class='notice'><b>Ctrl+Click</b> to toggle the power.</span>"
 
 /obj/item/reagent_containers/glass/maunamug/process(delta_time)
 	..()
@@ -48,8 +50,7 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-
-/obj/item/reagent_containers/glass/maunamug/attack_self(mob/user)
+/obj/item/reagent_containers/glass/maunamug/CtrlClick(mob/living/user)
 	if(on)
 		change_power_status(FALSE)
 	else

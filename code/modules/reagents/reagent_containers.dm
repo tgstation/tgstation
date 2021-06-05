@@ -14,6 +14,7 @@
 	var/spillable = FALSE
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	var/mode_change_message = ""
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -52,32 +53,35 @@
 		reagents.add_reagent_list(list_reagents)
 
 /obj/item/reagent_containers/attack_self(mob/user)
-	if(!possible_transfer_amounts.len)
-		return
-	var/iteration=0
-	for(var/transfer_amount in possible_transfer_amounts)
-		iteration++
-		if(transfer_amount == amount_per_transfer_from_this)
-			if(iteration<possible_transfer_amounts.len)
-				amount_per_transfer_from_this = possible_transfer_amounts[iteration+1]
-			else
-				amount_per_transfer_from_this = possible_transfer_amounts[1]
-			balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
-			return
+	change_transfer_amount(user, FORWARD)
 
 /obj/item/reagent_containers/attack_self_secondary(mob/user)
+	change_transfer_amount(user, BACKWARD)
+
+/obj/item/reagent_containers/proc/mode_change_message(mob/user)
+	return
+
+/obj/item/reagent_containers/proc/change_transfer_amount(mob/user, direction)
 	if(!possible_transfer_amounts.len)
 		return
-	var/iteration=0
+	var/list_position = 0
 	for(var/transfer_amount in possible_transfer_amounts)
-		iteration++
+		list_position++
 		if(transfer_amount == amount_per_transfer_from_this)
-			if(iteration==1)
-				amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len]
-			else
-				amount_per_transfer_from_this = possible_transfer_amounts[iteration-1]
+			switch(direction)
+				if(FORWARD)
+					if(list_position < possible_transfer_amounts.len) //not at end
+						amount_per_transfer_from_this = possible_transfer_amounts[list_position + 1] //move to next entry
+					else
+						amount_per_transfer_from_this = possible_transfer_amounts[1] //move to list start
+				if(BACKWARD)
+					if(list_position == 1) //at list start
+						amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len] //move to list end
+					else
+						amount_per_transfer_from_this = possible_transfer_amounts[list_position - 1] //move to previous entry
 			balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
-			return TRUE
+			mode_change_message(user)
+			return
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, DO_NOT_SPLASH))

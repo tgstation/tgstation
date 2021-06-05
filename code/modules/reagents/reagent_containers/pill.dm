@@ -23,11 +23,6 @@
 	if(reagents.total_volume && rename_with_volume)
 		name += " ([reagents.total_volume]u)"
 
-
-/obj/item/reagent_containers/pill/attack_self(mob/user)
-	return
-
-
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
 		return FALSE
