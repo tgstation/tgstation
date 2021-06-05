@@ -135,9 +135,14 @@
 
 /datum/supply_pack/goody/beach_ball
 	name = "Beach Ball"
-	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
+	// uses desc from item
 	cost = PAYCHECK_MEDIUM
-	contains = list(/obj/item/toy/beach_ball)
+	contains = list(/obj/item/toy/beach_ball/branded)
+
+/datum/supply_pack/goody/beach_ball/New()
+	..()
+	var/obj/item/toy/beach_ball/branded/beachball_type = /obj/item/toy/beach_ball/branded
+	desc = initial(beachball_type.desc)
 
 /datum/supply_pack/goody/medipen_twopak
 	name = "Medipen Two-Pak"

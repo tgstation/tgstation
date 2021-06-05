@@ -1,0 +1,7 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - bugfix: "The message for new duplicate keybinds should only appear once now"
+  - bugfix: "Resetting your keybinds to classic mode works correctly now"
+  - bugfix: "Hotkey mode is now actually used when new hotkeys with a default setting are added"
+  - bugfix: "You will no longer get a duplicate keybinding conflict message for new hotkeys with no default key, they will just be silently set to unbound"

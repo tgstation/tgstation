@@ -7,12 +7,6 @@
 #define PLAYER_READY_TO_PLAY 1
 #define PLAYER_READY_TO_OBSERVE 2
 
-//Game mode list indexes
-#define CURRENT_LIVING_PLAYERS "living_players_list"
-#define CURRENT_LIVING_ANTAGS "living_antags_list"
-#define CURRENT_DEAD_PLAYERS "dead_players_list"
-#define CURRENT_OBSERVERS "current_observers_list"
-
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"

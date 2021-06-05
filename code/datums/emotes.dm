@@ -99,6 +99,8 @@
 		message = replacetext(message, "their", user.p_their())
 	if(findtext(message, "them"))
 		message = replacetext(message, "them", user.p_them())
+	if(findtext(message, "they"))
+		message = replacetext(message, "they", user.p_they())
 	if(findtext(message, "%s"))
 		message = replacetext(message, "%s", user.p_s())
 	return message

@@ -22,7 +22,7 @@
 
 	rate = _rate
 	RegisterSignal(target, COMSIG_OBJ_TAKE_DAMAGE, .proc/on_take_damage)
-	if(target.obj_integrity < target.max_integrity)
+	if(target.get_integrity() < target.max_integrity)
 		if(!length(processing))
 			START_PROCESSING(SSobj, src)
 		processing |= target
@@ -73,8 +73,7 @@
 				return
 			continue
 
-		regen_obj.obj_integrity = clamp(regen_obj.obj_integrity + (regen_obj.max_integrity * cached_rate), 0, regen_obj.max_integrity)
-		if(regen_obj.obj_integrity == regen_obj.max_integrity)
+		if(!regen_obj.repair_damage(regen_obj.max_integrity * cached_rate))
 			processing -= regen_obj
 			if(!length(processing))
 				STOP_PROCESSING(SSobj, src)
