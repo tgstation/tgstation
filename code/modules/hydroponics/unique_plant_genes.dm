@@ -130,7 +130,7 @@
 		to_chat(user, "<span class='warning'>All the leaves have fallen off [our_plant] from violent whacking.</span>")
 		qdel(our_plant)
 
-/// Deathnettle force + effects on attack (stun) + degradation on attack
+/// Deathnettle force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack/death
 	name = "Aggressive Sharpened Leaves"
 	force_multiplier = 0.4
