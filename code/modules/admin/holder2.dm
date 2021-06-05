@@ -127,6 +127,8 @@ GLOBAL_PROTECT(href_token)
 		start_2fa_process(client, result_2fa[RESULT_2FA_ID])
 
 		return
+	else if (blocked_by_2fa)
+		sync_lastadminrank(client.ckey, client.key)
 
 	blocked_by_2fa = FALSE
 
@@ -227,6 +229,8 @@ GLOBAL_PROTECT(href_token)
 
 #undef VALID_2FA_CONNECTION
 
+#define ERROR_2FA_REQUEST_PERMISSIONS "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact an admin with +PERMISSIONS to grant you permission.</b></h1>"
+
 /datum/admins/proc/start_2fa_process(client/client, id)
 	add_verb(client, /client/proc/admin_2fa_verify)
 	client?.init_verbs()
@@ -237,7 +241,7 @@ GLOBAL_PROTECT(href_token)
 		to_chat(
 			client,
 			type = MESSAGE_TYPE_ADMINLOG,
-			html = "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>",
+			html = ERROR_2FA_REQUEST_PERMISSIONS,
 			confidential = TRUE,
 		)
 
@@ -258,7 +262,7 @@ GLOBAL_PROTECT(href_token)
 			to_chat(
 				client,
 				type = MESSAGE_TYPE_ADMINLOG,
-				html = "<h1><b class='danger'>You could not be verified, and a DB connection couldn't be established. Please contact a higher admin to grant you permission.</b></h1>",
+				html = ERROR_2FA_REQUEST_PERMISSIONS,
 				confidential = TRUE,
 			)
 
@@ -266,16 +270,19 @@ GLOBAL_PROTECT(href_token)
 
 		id = insert_query.last_insert_id
 
+	var/url_for_2fa = replacetextEx(admin_2fa_url, "%ID%", id)
 	to_chat(
 		client,
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = {"
 			<h1><b class='danger'>You could not be verified.</b></h1>
-			<h2><b class='danger'>Please visit <a href='[replacetextEx(admin_2fa_url, "%ID%", id)]'>this URL</a> to verify.</b></h2>
+			<h2><b class='danger'>Please visit <a href='[url_for_2fa]'>[url_for_2fa]</a> to verify.</b></h2>
 			<h2><b class='danger'>When you are done, click the 'Verify Admin' button in your admin tab.</b></h2>
 		"},
 		confidential = TRUE,
 	)
+
+#undef ERROR_2FA_REQUEST_PERMISSIONS
 
 /datum/admins/proc/verify_backup_data(client/client)
 	var/backup_file = file2text("data/admins_backup.json")
