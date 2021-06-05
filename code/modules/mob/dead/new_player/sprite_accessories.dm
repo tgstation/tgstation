@@ -789,6 +789,7 @@
 
 /datum/sprite_accessory/hair_gradient
 	icon = 'icons/mob/hair_gradients.dmi'
+
 /datum/sprite_accessory/hair_gradient/none
 	name = "None"
 	icon_state = "none"

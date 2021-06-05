@@ -29,9 +29,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/hair_color
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
-
+	///The gradient style used for the mob's hair.
 	var/grad_style
-
+	///The gradient color used to color the gradient.
 	var/grad_color
 
 	///Does the species use skintones or not? As of now only used by humans.

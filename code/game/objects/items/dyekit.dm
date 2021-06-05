@@ -11,6 +11,13 @@
 	dye(target)
 	return ..()
 
+/**
+ * Applies a gradient and a gradient color to a mob.
+ *
+ * Arguments:
+ * * target - The mob who we will apply the gradient and gradient color to.
+ */
+
 /obj/item/dyespray/proc/dye(mob/target)
 	if(!ishuman(target))
 		return
