@@ -5,47 +5,37 @@
 	var/name
 	/// The ckey we try to match with
 	var/ckey
-	/// Whether or not someone has been associated with this datum
-	var/claimed
-	/// What client
-	var/client/matched_client
-	/// What mob (follows the client/player, not the mob), may not be needed
-	var/mob/current_mob
-	/// How many rounds this contestant has survived participating in (contestants with the least number of rounds won will be prioritized for being slotted into teams for the next round, so you can't get a bye for multiple rounds)
-	var/rounds_won
-	/// Probably unneeded
+	/// How many rounds this contestant has participated in? Incremented when their team has [/datum/event_team/proc/match_result] called on it
 	var/rounds_participated
 	/// What team datum we're on right now
 	var/datum/event_team/current_team
-
+	/// If we've been marked for elimination
 	var/flagged_for_elimination = FALSE
-
-	var/flagged_on_death = FALSE
-
+	/// If we've actually been eliminated
 	var/eliminated = FALSE
+	/// Set to TRUE with [/datum/contestant/proc/set_flag_on_death] if you want the contestant to be marked for elimination when their current living body dies (must be in body already)
+	var/flagged_on_death = FALSE
 
 /datum/contestant/New(new_ckey)
 	ckey = new_ckey
 	name = ckey
-	current_mob = get_mob_by_ckey(ckey)
 
-	//GLOB.global_roster.insert_contestant(user=null, new_kid=src) // check if success?
-	if(!current_mob)
+	if(!get_mob_by_ckey(ckey))
 		return
-	claimed = TRUE
-	matched_client = current_mob.client
 
 /datum/contestant/Destroy(force, ...)
 	if(current_team)
 		current_team.remove_member(src)
 	. = ..()
 
+/// Helper to return the current mob quickly
 /datum/contestant/proc/get_mob()
 	if(!ckey)
 		return
 
 	return get_mob_by_ckey(ckey)
 
+/// If arg is TRUE, this contestant will be marked for elimination when their current body dies. If arg is FALSE, disables that
 /datum/contestant/proc/set_flag_on_death(new_mode)
 	if(flagged_on_death == new_mode)
 		return
@@ -57,6 +47,7 @@
 	else
 		UnregisterSignal(our_boy, COMSIG_LIVING_DEATH)
 
+/// If we die while we were listening for our death, mark us for elimination then stop listening
 /datum/contestant/proc/on_flagged_death(datum/source)
 	SIGNAL_HANDLER
 
@@ -64,18 +55,19 @@
 	set_flag_on_death(FALSE)
 
 /**
- * Event teams are teams that are constantly being made and remade
+ * Event teams are teams that are constantly being made and deleted. New teams every round.
  */
 /datum/event_team
 	var/name
+	/// Who's in the squad
 	var/list/members
-
+	/// What number team is this in terms of how many the roster has created?
 	var/rostered_id
-
+	/// Flagged for elimination if the team loses a round
 	var/flagged_for_elimination
-
+	/// The team has finished playing a round, if they don't have eliminated set to TRUE, that means they won!
 	var/finished_round
-
+	/// If the team has been eliminated and is waiting for the round to end for this datum to be deleted
 	var/eliminated
 
 /datum/event_team/New(our_number)
@@ -87,7 +79,7 @@
 		remove_member(iter_member)
 	. = ..()
 
- // maybe track the user so we can tell them if there's an issue (if they're already on a team, ask if we should force it?) ((also maybe for logging))
+/// Add a new contestant to this team
 /datum/event_team/proc/add_member(mob/user, datum/contestant/new_kid)
 	if(!new_kid)
 		CRASH("tried adding invalid contestant")
@@ -95,13 +87,14 @@
 		testing("[new_kid.ckey] is already on this team")
 		return
 	if(new_kid.current_team)
-		testing("[new_kid.ckey] is already on a differnet team")
+		testing("[new_kid.ckey] is already on a different team")
 		return
 
 	new_kid.current_team = src
 	LAZYADD(members, new_kid)
 	testing("successfully added [new_kid] to [src]")
 
+/// Remove a contestant from this team
 /datum/event_team/proc/remove_member(datum/contestant/dead_kid)
 	if(!dead_kid)
 		CRASH("tried removing invalid contestant")
@@ -116,9 +109,11 @@
 	LAZYREMOVE(members, dead_kid)
 	testing("removed [dead_kid] from [src]")
 
+/// If the arg is TRUE, mark the team and members as successfully completing a round. If the arg is FALSE, mark them for elimination
 /datum/event_team/proc/match_result(victorious)
-	//if(flagged_for_elimination == new_mode)
 	finished_round = TRUE
 	flagged_for_elimination = !victorious
+
 	for(var/datum/contestant/iter_member in members)
+		iter_member.rounds_participated++
 		iter_member.flagged_for_elimination = !victorious
