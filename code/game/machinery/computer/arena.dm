@@ -4,9 +4,13 @@
 #define ARENA_CORNER_A "cornerA"
 #define ARENA_CORNER_B "cornerB"
 
+/// Main page of the arena computer UI
 #define ARENA_UI_MAIN "main"
+/// The page of the arena computer UI for generating teams and handling matches
 #define ARENA_UI_MATCH "match"
+/// The page of the arena computer UI for managing teams
 #define ARENA_UI_TEAMS "team"
+/// The page of the arena computer UI for managing contestants
 #define ARENA_UI_INDIV "contestant"
 
 /// Arena related landmarks
@@ -66,12 +70,8 @@
 	//Sound played when the fight starts.
 	var/start_sound = 'sound/items/airhorn2.ogg'
 	var/start_sound_volume = 50
-
+	/// What page of the arena UI we're on
 	var/ui_mode = ARENA_UI_MAIN
-
-	var/ui_target
-
-	var/list/loaded_teams
 
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
