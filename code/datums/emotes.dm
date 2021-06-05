@@ -66,10 +66,10 @@
 	var/play_emote_audio = TRUE
 	// Only check if we can play a sound if there's actually a sound to play.
 	if(tmp_sound != null)
-		if(user.audio_emotes_used && user.audio_emotes_used[src] + audio_cooldown > world.time)
-			play_emote_audio = FALSE
 		if(!user.audio_emotes_used)
 			user.audio_emotes_used = list()
+		else if(user.audio_emotes_used[src] + audio_cooldown > world.time)
+			play_emote_audio = FALSE
 		user.audio_emotes_used[src] = world.time
 	if(tmp_sound && play_emote_audio && (!only_forced_audio || !intentional))
 		playsound(user, tmp_sound, 50, vary)
