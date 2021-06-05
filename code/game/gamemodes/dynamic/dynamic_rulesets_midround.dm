@@ -107,9 +107,9 @@
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
-		message_admins("The ruleset [name] received no applications.")
-		log_game("DYNAMIC: The ruleset [name] received no applications.")
+		mode.dynamic_log("The ruleset [name] received no applications.")
 		mode.executed_rules -= src
+		attempt_replacement()
 		return
 
 	message_admins("[candidates.len] players volunteered for the ruleset [name].")
@@ -161,6 +161,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/antagonist/new_role)
 	return
 
+/// Fired when there are no valid candidates. Will spawn a sleeper agent or latejoin traitor.
+/datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
+	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
+
+	// Otherwise, it has a chance to fail. We don't want that, since this is already pretty unlikely.
+	sleeper_agent.randomly_acceptable = FALSE
+
+	mode.configure_ruleset(sleeper_agent)
+
+	if (!mode.picking_specific_rule(sleeper_agent))
+		return
+
+	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+
 //////////////////////////////////////////////
 //                                          //
 //           SYNDICATE TRAITORS             //
@@ -179,6 +193,10 @@
 	requirements = list(50,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
 
+	/// Whether or not this instance of sleeper agent should be randomly acceptable.
+	/// If TRUE, then this has a threat level% chance to succeed.
+	var/randomly_acceptable = TRUE
+
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = GLOB.alive_player_list.len
 	var/antag_count = GLOB.current_living_antags.len
@@ -190,7 +208,7 @@
 		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
 		return FALSE
 
-	if (!prob(mode.threat_level))
+	if (randomly_acceptable && !prob(mode.threat_level))
 		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
 		return FALSE
 
