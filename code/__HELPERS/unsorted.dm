@@ -1522,7 +1522,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return pod
 
 /proc/random_religion_name()
-	if(prob(95))
+	if(prob(99))
 		. = pick(GLOB.religion_names)
 	else
 		. = pick(GLOB.religion_meme_names)
