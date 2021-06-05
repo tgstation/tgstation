@@ -86,7 +86,10 @@
  */
 /datum/blackmarket_item/tool/fake_scanner
 	name = "Clowny N-spect scanner"
-	desc = "This UPGRADED N-spect scanner can play FIVE HIGH-QUALITY SOUNDS (fork required for sound adjustment not included) and print reports LIGHTNING FAST (screwdriver necessary to activate maximum speed not included). We make no claims as to the usefulness of the reports printed by this. Any and all implied warranties are void if the device is touched, moved, kicked, thrown or modified with bananium sheets. Batteries included."
+	desc = "This UPGRADED N-spect scanner can play FIVE HIGH-QUALITY SOUNDS (fork required for sound adjustment not included) and print reports \
+	LIGHTNING FAST (screwdriver necessary to activate maximum speed not included). We make no claims as to the usefulness of the reports printed by this. \
+	Any and all implied warranties are void if the device is touched, moved, kicked, thrown or modified with bananium sheets. Batteries included. \
+	Crowbar necessary to change batteries and adjust settings not included."
 	item = /obj/item/inspector/clown
 
 	price_min = 230
