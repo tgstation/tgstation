@@ -1,5 +1,3 @@
-
-
 ///how much time between charge_level going up by 1
 #define SKYFALL_SINGLE_CHARGE_TIME 2 SECONDS
 ///enough charge level to take off, basically done charging
@@ -82,7 +80,7 @@
  * Proc called by the mecha's ability that starts the skyfall loop
  */
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/begin_skyfall_charge(mob/pilot)
-	to_chat(pilot, "[icon2html(src, pilot)]<span class='notice'>Charging Skyfall. Moving will interrupt the charge.</span>")
+	balloon_alert(pilot, "charging skyfall...")
 	INVOKE_ASYNC(src, .proc/skyfall_charge_loop, pilot)
 
 /**
@@ -341,7 +339,10 @@
 		var/timeleft = COOLDOWN_TIMELEFT(ivanov_mecha, strike_cooldown)
 		to_chat(owner, "<span class='warning'>You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike.</span>")
 		return
-	ivanov_mecha.aiming_ivanov ? ivanov_mecha.end_missile_targeting(owner) : ivanov_mecha.start_missile_targeting(owner)
+	if(ivanov_mecha.aiming_ivanov)
+		ivanov_mecha.end_missile_targeting(owner)
+	else
+		ivanov_mecha.start_missile_targeting(owner)
 
 /**
  * ## reset_button_icon
@@ -383,3 +384,10 @@
 /obj/effect/skyfall_landingzone/proc/follow(datum/source_mecha)
 	SIGNAL_HANDLER
 	forceMove(get_turf(source_mecha))
+
+#undef SKYFALL_SINGLE_CHARGE_TIME
+#undef SKYFALL_CHARGELEVEL_LAUNCH
+
+#undef SKYFALL_LEAP_ARCING_UP
+#undef SKYFALL_LEAP_ARCING_DOWN
+#undef TOTAL_SKYFALL_LEAP_TIME

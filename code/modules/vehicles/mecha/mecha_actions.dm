@@ -259,22 +259,22 @@
 		return
 
 	if(chassis.occupants.len == chassis.max_occupants)
-		to_chat(owner, "<span class='warning'>The other seat already has someone in it! Tell them to leave first!</span>")
+		chassis.balloon_alert(owner, "other seat occupied!")
 		return
 	var/list/drivers = chassis.return_drivers()
-	to_chat(owner, "<span class='notice'>You begin trying to move to the other seat. Equipment is disabled during this process. Hold still to finish swapping.</span>")
+	chassis.balloon_alert(owner, "moving to other seat...")
 	chassis.is_currently_ejecting = TRUE
 	if(!do_after(owner, chassis.has_gravity() ? chassis.exit_delay : 0 , target = chassis))
-		to_chat(owner, "<span class='notice'>You stop trying to move to the other seat. Equipment is enabled again.</span>")
+		chassis.balloon_alert(owner, "interrupted!")
 		chassis.is_currently_ejecting = FALSE
 		return
 	chassis.is_currently_ejecting = FALSE
 	if(owner in drivers)
-		to_chat(owner, "<span class='notice'>You swap to the gunner seat.</span>")
+		chassis.balloon_alert(owner, "controlling gunner seat")
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 	else
-		to_chat(owner, "<span class='notice'>You swap to the pilot seat.</span>")
+		chassis.balloon_alert(owner, "controlling pilot seat")
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 	chassis.update_icon_state()
