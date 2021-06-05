@@ -6,7 +6,7 @@
 	Atoms can only have one instance of this component at a time.
 
 	When a player renames or changes the description of an atom with a pen, this component gets applied to it.
-	If a player resets the name and description, it will be reverted to its state before renaming and the component will be removed.
+	If a player resets the name and description, they will be reverted to their state before being changed and the component will be removed.
  */
 /datum/component/rename
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
