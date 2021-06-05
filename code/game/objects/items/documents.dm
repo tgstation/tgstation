@@ -111,8 +111,6 @@
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
 		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
-		if(BANANIUM_INSPECTOR_PRINT_SOUND_MODE_BWOINK)
-			playsound(src, 'sound/effects/adminhelp.ogg', 50, FALSE)
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -162,7 +160,7 @@
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
-	var/list/mode_names = list("normal", "classic", "honk", "bababooey", "bababooey (varied)", "bwoink")
+	var/list/mode_names = list("normal", "classic", "honk", "bababooey", "bababooey (varied)")
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -211,7 +209,7 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if((print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
-		say("Setting combination forbidden by Geneva convention revision CXXIII selected, reverting to defaults")
+		say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		print_time = 5 SECONDS
 		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
 
