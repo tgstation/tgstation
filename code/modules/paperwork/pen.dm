@@ -177,11 +177,14 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 
-			SEND_SIGNAL(O, COMSIG_ATOM_RESET_PLAYER_RENAME)
+			qdel(O.GetComponent(/datum/component/rename))
+
+			//reapply any label to name
 			var/datum/component/label/label = O.GetComponent(/datum/component/label)
 			if(label)
 				label.remove_label()
 				label.apply_label()
+
 			to_chat(user, "<span class='notice'>You have successfully reset [O]'s name and description.</span>")
 			O.renamedByPlayer = FALSE
 
