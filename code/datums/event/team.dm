@@ -116,9 +116,9 @@
 	LAZYREMOVE(members, dead_kid)
 	testing("removed [dead_kid] from [src]")
 
-/datum/event_team/proc/set_flag_for_elimination(new_mode)
+/datum/event_team/proc/match_result(victorious)
 	//if(flagged_for_elimination == new_mode)
 	finished_round = TRUE
-	flagged_for_elimination = new_mode
+	flagged_for_elimination = !victorious
 	for(var/datum/contestant/iter_member in members)
-		iter_member.flagged_for_elimination = new_mode
+		iter_member.flagged_for_elimination = !victorious

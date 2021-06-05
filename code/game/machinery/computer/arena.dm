@@ -308,6 +308,9 @@
 	if(href_list["eliminate_contestant"])
 		GLOB.global_roster.eliminate_contestant(usr, href_list["eliminate_contestant"])
 
+	if(href_list["unmark_contestant"])
+		GLOB.global_roster.unmark_contestant(usr, href_list["unmark_contestant"])
+
 	if(href_list["delete_contestant"])
 		GLOB.global_roster.delete_contestant(usr, href_list["delete_contestant"])
 
@@ -341,7 +344,7 @@
 		if(!istype(unmark_team) || !LAZYLEN(unmark_team.members))
 			testing("failed to find team")
 			return
-		unmark_team.set_flag_for_elimination(FALSE)
+		unmark_team.match_result(TRUE)
 
 	if(href_list["unteam_member"] && href_list["unteam_team_target"])
 		var/datum/event_team/unteam_team = locate(href_list["unteam_team_target"]) in GLOB.global_roster.active_teams
@@ -513,7 +516,9 @@
 			dat += "<b>Contestants:</b>"
 
 			var/list/flagged_contestants = list()
-			for(var/datum/contestant/iter_contestant in GLOB.global_roster.active_contestants)
+			var/list/still_in = GLOB.global_roster.active_contestants - GLOB.global_roster.losers
+
+			for(var/datum/contestant/iter_contestant in still_in)
 				if(iter_contestant.flagged_for_elimination)
 					flagged_contestants += iter_contestant
 					continue
@@ -525,7 +530,7 @@
 				dat += "<br><b>Contestants Flagged for Elimination:"
 				for(var/datum/contestant/flagged_contestant in flagged_contestants)
 					var/mob/the_guy = flagged_contestant.get_mob()
-					dat += "\t[flagged_contestant.ckey] ([the_guy])"
+					dat += "\t[flagged_contestant.ckey] ([the_guy]) <a href='?src=[REF(src)];eliminate_contestant=[REF(flagged_contestant)]'>Confirm Elimination</a> <a href='?src=[REF(src)];unmark_contestant=[REF(flagged_contestant)]'>Unmark</a>"
 
 			if(LAZYLEN(GLOB.global_roster.losers))
 				dat += "<br><b><span class='danger'>Eliminated Contestants</span></b>:"

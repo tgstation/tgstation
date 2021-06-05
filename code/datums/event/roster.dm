@@ -166,6 +166,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		team1 = null
 	else if(team2 == the_team)
 		team1 = null
+	qdel(the_team)
 
 /datum/roster/proc/eliminate_team(mob/user, datum/event_team/the_team)
 	if(!istype(the_team))
@@ -203,20 +204,22 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	switch(winner)
 		if("Both Lose")
-			team1.set_flag_for_elimination(TRUE)
-			team2.set_flag_for_elimination(TRUE)
+			team1.match_result(FALSE)
+			team2.match_result(FALSE)
 		if("Team 1 Wins")
-			team1.set_flag_for_elimination(FALSE)
-			team2.set_flag_for_elimination(TRUE)
+			team1.match_result(TRUE)
+			team2.match_result(FALSE)
 		if("Team 2 Wins")
-			team1.set_flag_for_elimination(TRUE)
-			team2.set_flag_for_elimination(FALSE)
+			team1.match_result(FALSE)
+			team2.match_result(TRUE)
 		if("Both Win")
-			team1.set_flag_for_elimination(FALSE)
-			team2.set_flag_for_elimination(FALSE)
+			team1.match_result(TRUE)
+			team2.match_result(TRUE)
 		else
 			return
 
+	try_remove_team_slot(user, 1)
+	try_remove_team_slot(user, 2)
 
 /datum/roster/proc/clear_contestants(mob/user)
 	//maybe dump the info in an easily undoable way in case someone fucks up
@@ -225,8 +228,8 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	ckeys_at_large = list()
 	all_contestants = list()
-	active_contestants = list()
-	losers = list()
+	active_contestants = null
+	losers = null
 
 	testing("contestants all cleared!")
 
@@ -248,6 +251,23 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	LAZYADD(losers, target)
 	target.eliminated = TRUE
 	testing("contestant [target.ckey] elim'd!")
+
+/datum/roster/proc/unmark_contestant(mob/user, datum/contestant/target)
+	if(!target)
+		return
+
+	if(!istype(target))
+		target = locate(target) in active_contestants
+		if(!istype(target))
+			testing("couldn't find that target to eliminate")
+			return
+
+	if(LAZYACCESS(losers, target) || target.eliminated)
+		testing("already a loser")
+		return
+
+	target.flagged_for_elimination = FALSE
+	testing("contestant [target.ckey] unmarked!")
 
 /datum/roster/proc/delete_contestant(mob/user, datum/contestant/target)
 	if(!target)
