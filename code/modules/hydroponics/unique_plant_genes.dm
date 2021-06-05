@@ -135,20 +135,6 @@
 	name = "Aggressive Sharpened Leaves"
 	force_multiplier = 0.4
 
-/datum/plant_gene/trait/attack/nettle_attack/death/on_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
-	. = ..()
-
-	to_chat(target, "<span class='danger'>You are stunned by the powerful acid of [our_plant]!</span>")
-	user.visible_message("<span class='danger'>[user] stuns [target] with the powerful acids of [our_plant]!")
-	log_combat(user, target, "attacked with deathnettle", our_plant)
-	our_plant.investigate_log("was used by [key_name(user)] to stun [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
-
-	target.adjust_blurriness(our_plant.force / 7)
-	if(prob(20))
-		target.Unconscious(our_plant.force / 0.3)
-		target.Paralyze(our_plant.force / 0.75)
-	target.drop_all_held_items()
-
 /// Traits for plants with backfire effects. These are negative effects that occur when a plant is handled without gloves/unsafely.
 /datum/plant_gene/trait/backfire
 	name = "Backfire Trait"
