@@ -41,7 +41,7 @@
 
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()
-	input_received()
+	TRIGGER_CIRCUIT_COMPONENT(src, null)
 
 /obj/item/circuit_component/light/unregister_shell(atom/movable/shell)
 	shell.set_light_on(FALSE)
@@ -49,10 +49,10 @@
 
 /obj/item/circuit_component/light/input_received(datum/port/input/port)
 	. = ..()
-	brightness.set_input(min(max(brightness.input_value || 0, 0), max_power), FALSE)
-	red.set_input(min(max(red.input_value, 0), 255), FALSE)
-	blue.set_input(min(max(blue.input_value, 0), 255), FALSE)
-	green.set_input(min(max(green.input_value, 0), 255), FALSE)
+	brightness.set_input(clamp(brightness.input_value || 0, 0, max_power), FALSE)
+	red.set_input(clamp(red.input_value, 0, 255), FALSE)
+	blue.set_input(clamp(blue.input_value, 0, 255), FALSE)
+	green.set_input(clamp(green.input_value, 0, 255), FALSE)
 	var/list/hsl = rgb2hsl(red.input_value || 0, green.input_value || 0, blue.input_value || 0)
 	var/list/light_col = hsl2rgb(hsl[1], hsl[2], max(min_lightness, hsl[3]))
 	shell_light_color = rgb(light_col[1], light_col[2], light_col[3])
