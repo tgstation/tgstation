@@ -150,10 +150,10 @@
 			var/oldname = O.name
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(oldname == input || input == "")
+			if(input == oldname || !input)
 				to_chat(user, "<span class='notice'>You changed [O] to... well... [O].</span>")
 			else
-				O.name = input
+				O.AddComponent(/datum/component/rename, input, O.desc)
 				var/datum/component/label/label = O.GetComponent(/datum/component/label)
 				if(label)
 					label.remove_label()
@@ -166,18 +166,18 @@
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(olddesc == input || input == "")
+			if(input == olddesc || !input)
 				to_chat(user, "<span class='notice'>You decide against changing [O]'s description.</span>")
 			else
-				O.desc = input
+				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, "<span class='notice'>You have successfully changed [O]'s description.</span>")
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			O.desc = initial(O.desc)
-			O.name = initial(O.name)
+
+			SEND_SIGNAL(O, COMSIG_ATOM_RESET_PLAYER_RENAME)
 			var/datum/component/label/label = O.GetComponent(/datum/component/label)
 			if(label)
 				label.remove_label()
