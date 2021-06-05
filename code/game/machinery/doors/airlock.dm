@@ -506,7 +506,9 @@
 	var/light_state_suffix = ""
 	var/mobile_state = FALSE
 	switch(airlock_state)
-		if(AIRLOCK_CLOSED || AIRLOCK_EMAG)
+		if(AIRLOCK_CLOSED)
+			door_state_suffix = "closed"
+		if(AIRLOCK_EMAG)
 			door_state_suffix = "closed"
 		if(AIRLOCK_DENY)
 			door_state_suffix = "closed"
@@ -549,7 +551,7 @@
 			lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 		else if(emergency)
 			lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
-	if(obj_flags & EMAGGED)
+	if((airlock_state == AIRLOCK_EMAG))
 		sparks_overlay = get_airlock_overlay("sparks", overlays_file)
 	if(note)
 		note_overlay = get_airlock_overlay("[notetype]_[door_state_suffix]", note_overlay_file)
