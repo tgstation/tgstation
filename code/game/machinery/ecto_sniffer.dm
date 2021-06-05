@@ -39,7 +39,7 @@
 /obj/machinery/ecto_sniffer/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	add_fingerprint(user)
-	to_chat(user, "<span class ='notice'>You turn the sniffer [on ? "off" : "on"].")
+	balloon_alert(user, "sniffer turned [on ? "off" : "on"]")
 	on = !on
 	update_appearance()
 
@@ -55,7 +55,7 @@
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, 15)
-	to_chat(user, "<span class ='notice'>You [anchored ? "unanchor" : "anchor"] [src].")
+	balloon_alert(user, "sniffer [anchored ? "unanchor" : "anchor"]")
 	set_anchored(!anchored)
 
 /obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/I)
