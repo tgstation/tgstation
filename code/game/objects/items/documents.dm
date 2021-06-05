@@ -107,10 +107,10 @@
 			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
 		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
 			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
-			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
-			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
+			playsound(src, pick(list('sound/items/fafafoggy.ogg', 'sound/items/fafafoggy2.ogg')), 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY_ALT)
+			playsound(src, pick(list('sound/items/fafafoggy.ogg', 'sound/items/fafafoggy2.ogg')), 50, TRUE)
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -160,7 +160,7 @@
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
-	var/list/mode_names = list("normal", "classic", "honk", "bababooey", "bababooey (varied)")
+	var/list/mode_names = list("normal", "classic", "honk", "fafafoggy", "fafafoggy (varied)")
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
