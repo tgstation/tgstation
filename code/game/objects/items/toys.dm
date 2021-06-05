@@ -1153,11 +1153,15 @@
  * Beach ball
  */
 /obj/item/toy/beach_ball
+	name = "beach ball"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "ball"
-	name = "beach ball"
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
+
+/obj/item/toy/beach_ball/branded
+	name = "\improper Nanotrasen-brand beach ball"
+	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
 
 /*
  * Clockwork Watch
