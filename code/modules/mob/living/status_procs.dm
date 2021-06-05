@@ -248,9 +248,7 @@
 
 /mob/living/proc/AmountStartled() //How many deciseconds remain in our Startled status effect
 	var/datum/status_effect/incapacitating/startled/I = IsStartled()
-	if(I)
-		return I.duration - world.time
-	return 0
+	return I?.duration - world.time || 0
 
 /mob/living/proc/Startle(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
