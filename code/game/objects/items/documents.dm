@@ -141,13 +141,13 @@
 /obj/item/inspector/examine(mob/user)
 	. = ..()
 	if(cell_cover_open)
-		. += "It's cell cover is open, exposing the cell slot."
+		. += "It's cell cover is open, exposing the cell slot. It looks like it could be pried in, but doing so would require an appropriate tool."
 		if(!cell)
 			. += "The slot for a cell is empty."
 		else
-			. += "\The [cell] is firmly in place."
+			. += "\The [cell] is firmly in place. <span class='info'>Alt-click with an empty hand to remove it.</span>"
 	else
-		. += "It's cell cover is closed. It looks like it would be rather hard to open it with bare hands. If you want to open it, you should probably use a crowbar."
+		. += "It's cell cover is closed. It looks like it could be pried out, but doing so would require an appropriate tool."
 
 /**
  * Create our report
@@ -243,25 +243,38 @@
 	print_report(user)
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		cycle_sound(user)
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		cycle_print_time(user)
+	if(cell_cover_open)
+		if(istype(I, /obj/item/kitchen/fork))
+			cycle_sound(user)
+		else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+			cycle_print_time(user)
 	return ..()
 
+/obj/item/inspector/clown/examine(mob/user)
+	. = ..()
+	if(cell_cover_open)
+		. += "Two weird settings dials are visible within the battery compartment."
+
+/obj/item/inspector/clown/examine_more(mob/user)
+	return "Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.\n\
+	The first dial is labeled \"SPEED\" and looks a bit like a screw head. Perhaps it can be turned with a screwdriver?\n\
+	The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?"
+
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
+	var/message = "You turn the screw-like dial, setting the device's scanning speed to "
 	if(print_time == 1 SECONDS)
 		print_time = 5 SECONDS
-		balloon_alert(user, "You set the device's scanning speed to SLOW.")
+		message += "SLOW."
 	else
 		print_time = 1 SECONDS
-		balloon_alert(user, "You set the device's scanning speed setting to LIGHTNING FAST.")
+		message += "LIGHTNING FAST."
+	balloon_alert(user, message)
 
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
 	print_sound_mode++
 	if(print_sound_mode > max_mode)
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-	balloon_alert(user, "You set the device's bleep setting to [mode_names[print_sound_mode]] mode")
+	balloon_alert(user, "You turn the dial with holes in it, setting the device's bleep setting to [mode_names[print_sound_mode]] mode.")
 
 /obj/item/inspector/clown/create_slip()
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
@@ -335,20 +348,19 @@
 		..()
 
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
+	var/message = "You turn the screw-like dial, setting the device's scanning speed to "
 	if(print_time == 0.1 SECONDS)
 		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 		print_time = 5 SECONDS
-		balloon_alert(user, "You set the device's scanning speed to SLOW.")
+		message += "SLOW."
 	else if(print_time == 5 SECONDS)
 		print_time = 1 SECONDS
-		balloon_alert(user, "You set the device's scanning speed setting to LIGHTNING FAST.")
+		message += "LIGHTNING FAST."
 	else
 		print_time = 0.1 SECONDS
 		power_per_print = INSPECTOR_POWER_USAGE_HONK
-		balloon_alert(user, "You set the device's scanning speed setting to HONK.")
-
-/obj/item/inspector/clown/bananium/examine_more(mob/user)
-	return list("<span class='info'>You can adjust [src]'s scanning sound with a multitool</span>", "<span class='info'>You can adjust [src]'s scanning speed with a screwdriver</span>")
+		message += "HONK!"
+	balloon_alert(user, message)
 
 /**
  * Reports printed by fake N-spect scanner
