@@ -7,7 +7,6 @@
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
-	antagpanel_category = "IAA"
 
 	var/special_role = "internal affairs agent"
 	var/syndicate = FALSE
