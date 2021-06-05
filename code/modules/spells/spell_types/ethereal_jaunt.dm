@@ -22,6 +22,10 @@
 	var/jaunt_in_type = /obj/effect/temp_visual/wizard
 	/// Visual for exiting the jaunt
 	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
+	///Jaunt start location
+	var/turf/jaunt_start_location
+	/// List of valid exit points
+	var/list/exit_point_list
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast_check(skipcharge = 0,mob/user = usr)
 	. = ..()
@@ -51,11 +55,28 @@
 		ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
 		sleep(jaunt_out_time)
 		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
+	jaunt_start_location = get_turf(target)
+	exit_point_list = new /list(5) //Clear list, if it was still full from the last jaunt
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
 	sleep(jaunt_duration)
 
+	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
 	if(target.loc != holder) //mob warped out of the warp
 		qdel(holder)
 		return
+
+	var/found_exit = FALSE
+	var/turf/exit_point = jaunt_start_location
+	for(var/turf/possible_exit in exit_point_list)
+		if(possible_exit.is_blocked_turf(ignore_climbable = TRUE))
+			continue
+		exit_point = possible_exit
+		found_exit = TRUE
+		break
+	if(!found_exit)
+		to_chat(target, "<span='danger'>Unable to find an unobstructed space, you find yourself ripped back to where you started.</span>")
+	holder.forceMove(exit_point)
+
 	mobloc = get_turf(target.loc)
 	jaunt_steam(mobloc)
 	ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
@@ -74,6 +95,21 @@
 					if(target.Move(T))
 						break
 		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
+
+/**
+ * Updates the exit point of the jaunt
+ *
+ * Called when the jaunting mob holder moves, this updates the backup exit-jaunt
+ * location, in case the jaunt ends with the mob still in a wall. Five
+ * spots are kept in the list, in case the last few changed since we passed
+ * by (doors closing, engineers building walls, etc)
+ */
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/update_exit_point(mob/living/target)
+	var/turf/location = get_turf(target)
+	if(location.is_blocked_turf(ignore_climbable = TRUE))
+		return
+	exit_point_list[5] = null
+	exit_point_list.Insert(1, location)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
