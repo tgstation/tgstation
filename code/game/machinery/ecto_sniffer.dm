@@ -23,8 +23,7 @@
 		return
 
 	for(var/datum/weakref/spirit_residue in ectoplasmic_residues)
-		var/mob/ghostly_apparition = spirit_residue.resolve()
-		if(ghostly_apparition == user)
+		if(IS_WEAKREF_OF(user, spirit_residue))
 			return ..()
 	activate(user)
 
@@ -39,13 +38,16 @@
 /obj/machinery/ecto_sniffer/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	add_fingerprint(user)
-	to_chat(user, "<span class ='notice'>You turn the sniffer [on ? "off" : "on"].")
 	on = !on
+	to_chat(user, "<span class ='notice'>You turn the sniffer [on ? "on" : "off"].")
 	update_appearance()
 
 /obj/machinery/ecto_sniffer/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][(is_operational && on) ? null : "-p"]"
+	if(panel_open)
+		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)][(is_operational && on) ? null : "-p"]"
 
 /obj/machinery/ecto_sniffer/update_overlays()
 	. = ..()
@@ -55,8 +57,8 @@
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, 15)
-	to_chat(user, "<span class ='notice'>You [anchored ? "unanchor" : "anchor"] [src].")
 	set_anchored(!anchored)
+	to_chat(user, "<span class ='notice'>You [anchored ? "anchor" : "unanchor"] [src].")
 
 /obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -70,8 +72,7 @@
 ///Removes the ghost from the ectoplasmic_residues list and lets them know they are free to activate the sniffer again.
 /obj/machinery/ecto_sniffer/proc/clear_residue(mob/haunt)
 	for(var/datum/weakref/spirit_residue in ectoplasmic_residues)
-		var/mob/ghostly_apparition = spirit_residue.resolve()
-		if(ghostly_apparition == haunt)
+		if(IS_WEAKREF_OF(haunt, spirit_residue))
 			ectoplasmic_residues -= spirit_residue
 			break
 
