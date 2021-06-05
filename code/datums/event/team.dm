@@ -72,6 +72,12 @@
 
 	var/rostered_id
 
+	var/flagged_for_elimination
+
+	var/finished_round
+
+	var/eliminated
+
 /datum/event_team/New(our_number)
 	rostered_id = our_number
 	name = "Team #[rostered_id]"
@@ -109,3 +115,10 @@
 	dead_kid.current_team = null
 	LAZYREMOVE(members, dead_kid)
 	testing("removed [dead_kid] from [src]")
+
+/datum/event_team/proc/set_flag_for_elimination(new_mode)
+	//if(flagged_for_elimination == new_mode)
+	finished_round = TRUE
+	flagged_for_elimination = new_mode
+	for(var/datum/contestant/iter_member in members)
+		iter_member.flagged_for_elimination = new_mode

@@ -167,6 +167,20 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	else if(team2 == the_team)
 		team1 = null
 
+/datum/roster/proc/eliminate_team(mob/user, datum/event_team/the_team)
+	if(!istype(the_team))
+		return
+
+	testing("Eliminating team [the_team]")
+	if(team1 == the_team)
+		team1 = null
+	else if(team2 == the_team)
+		team1 = null
+
+	the_team.eliminated = TRUE
+	for(var/datum/contestant/iter_member in the_team.members)
+		eliminate_contestant(user, iter_member)
+
 /datum/roster/proc/clear_teams(mob/user)
 	for(var/datum/event_team/iter_team in active_teams)
 		remove_team(user, iter_team)
@@ -174,7 +188,35 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	testing("teams all cleared!")
 
 /datum/roster/proc/try_resolve_match(mob/user)
-	return
+	var/list/the_teams = list()
+
+	var/team_iterator_count = 0
+	for(var/datum/event_team/iter_team in unrostered_teams)
+		team_iterator_count++
+		testing("adding [team_iterator_count] | team [iter_team.rostered_id]")
+		var/i = iter_team.rostered_id
+		the_teams["Team [i]"] = iter_team
+		//the_teams[team_iterator_count] = iter_team
+		//the_team_nums[team_iterator_count] = i
+
+	var/winner = input(user, "Which teams won?", "Winner!", null) as null|anything in list("Both Lose", "Team 1 Wins", "Team 2 Wins", "Both Win")
+
+	switch(winner)
+		if("Both Lose")
+			team1.set_flag_for_elimination(TRUE)
+			team2.set_flag_for_elimination(TRUE)
+		if("Team 1 Wins")
+			team1.set_flag_for_elimination(FALSE)
+			team2.set_flag_for_elimination(TRUE)
+		if("Team 2 Wins")
+			team1.set_flag_for_elimination(TRUE)
+			team2.set_flag_for_elimination(FALSE)
+		if("Both Win")
+			team1.set_flag_for_elimination(FALSE)
+			team2.set_flag_for_elimination(FALSE)
+		else
+			return
+
 
 /datum/roster/proc/clear_contestants(mob/user)
 	//maybe dump the info in an easily undoable way in case someone fucks up

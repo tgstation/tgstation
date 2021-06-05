@@ -329,6 +329,31 @@
 	if(href_list["clear_teams"])
 		GLOB.global_roster.clear_teams(usr)
 
+	if(href_list["confirm_elim_team"])
+		var/datum/event_team/elim_team = locate(href_list["confirm_elim_team"]) in GLOB.global_roster.active_teams
+		if(!istype(elim_team) || !LAZYLEN(elim_team.members))
+			testing("failed to find team")
+			return
+		GLOB.global_roster.eliminate_team(usr, elim_team)
+
+	if(href_list["unmark_team"])
+		var/datum/event_team/unmark_team = locate(href_list["unmark_team"]) in GLOB.global_roster.active_teams
+		if(!istype(unmark_team) || !LAZYLEN(unmark_team.members))
+			testing("failed to find team")
+			return
+		unmark_team.set_flag_for_elimination(FALSE)
+
+	if(href_list["unteam_member"] && href_list["unteam_team_target"])
+		var/datum/event_team/unteam_team = locate(href_list["unteam_team_target"]) in GLOB.global_roster.active_teams
+		if(!istype(unteam_team) || !LAZYLEN(unteam_team.members))
+			testing("failed to find team")
+			return
+		var/datum/contestant/unteam_member = locate(href_list["unteam_member"]) in unteam_team.members
+		if(!istype(unteam_member))
+			testing("failed to find team member")
+			return
+		unteam_team.remove_member(unteam_member)
+
 	if(href_list["upload"])
 		add_new_arena_template(user)
 	if(href_list["change_arena"])
@@ -387,7 +412,7 @@
 	*/
 	dat += "<a href='?src=[REF(src)];see_roster=1'>See Roster</a>"
 	if(ui_mode != ARENA_UI_MAIN)
-		dat += "<a href='?src=[REF(src)];change_page=main'>\<\<Back to Main</a>"
+		dat += "<a href='?src=[REF(src)];change_page=main'><b>\<\<Back to Main</b></a>"
 
 
 
@@ -410,20 +435,60 @@
 
 			var/datum/event_team/team1 = GLOB.global_roster.team1
 			var/datum/event_team/team2 = GLOB.global_roster.team2
+			dat += ""
 
 			if(team1)
 				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a>"
+				var/i = 0
+				for(var/datum/contestant/iter_member in team1.members)
+					i++
+					var/mob/the_guy = iter_member.get_mob()
+					dat += "\t\tMember #[i]: [iter_member] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_member)];unteam_team_target=[REF(team1)]'>Remove Member</a>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=1'>Select Team 1</a>"
 
 			if(team2)
 				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2]</a>"
+				var/i = 0
+				for(var/datum/contestant/iter_member in team2.members)
+					i++
+					var/mob/the_guy = iter_member.get_mob()
+					dat += "\t\tMember #[i]: [iter_member] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_member)];unteam_team_target=[REF(team2)]'>Remove Member</a>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=2'>Select Team 2</a>"
 
 
 			if(istype(team1) && istype(team2))
 				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
+
+
+			var/list/waiting_teams = list()
+			var/list/finished_teams = list()
+			var/list/marked_teams = list()
+
+			for(var/datum/event_team/iter_team in GLOB.global_roster.unrostered_teams)
+				if(iter_team.finished_round)
+					if(iter_team.flagged_for_elimination)
+						marked_teams += iter_team
+					else
+						finished_teams += iter_team
+				else
+					waiting_teams += iter_team
+
+			if(length(waiting_teams))
+				dat += "<br><b>Waiting Teams:</b>"
+				for(var/datum/event_team/iter_team in waiting_teams)
+					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
+
+			if(length(finished_teams))
+				dat += "<br><b>Proven Teams:</b>"
+				for(var/datum/event_team/iter_team in finished_teams)
+					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
+
+			if(length(marked_teams))
+				dat += "<br><b>Marked Teams:</b>"
+				for(var/datum/event_team/iter_team in marked_teams)
+					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a> <a href='?src=[REF(src)];confirm_elim_team=[REF(iter_team)]'>Confirm Elimination</a> <a href='?src=[REF(src)];unmark_team=[REF(iter_team)]'>Unmark</a>"
 			/*for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"*/
 		if(ARENA_UI_TEAMS)
@@ -434,9 +499,11 @@
 
 			for(var/datum/event_team/iter_team in GLOB.global_roster.active_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
+				var/i = 0
 				for(var/datum/contestant/iter_contestant in iter_team.members)
+					i++
 					var/mob/the_guy = iter_contestant.get_mob()
-					dat += "\t\t: [the_guy]"
+					dat += "\t\tMember #[i]: [iter_contestant] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_contestant)];unteam_team_target=[REF(iter_team)]'>Remove Member</a>"
 
 					//dat += "\t\t: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 		if(ARENA_UI_INDIV)
