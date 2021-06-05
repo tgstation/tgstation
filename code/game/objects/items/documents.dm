@@ -206,6 +206,12 @@
 	icon_state = "bananium_inspector"
 	w_class = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_INSPECTOR_PRINT_SOUND_MODE_LAST
+	///How many more times can we print?
+	var/paper_charges = 200
+	///Max value of paper_charges
+	var/max_paper_charges = 500
+	///How much charges are restored per paper consumed
+	var/charges_per_paper = 25
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if((print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
@@ -216,6 +222,14 @@
 /obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
 	..()
 	check_settings_legality()
+	if(istype(I, /obj/item/paper/fake_report)||(paper_charges>=max_paper_charges))
+		to_chat(user, "\The [src] refuses to consume \the [I]!")
+	else if(istype(I, /obj/item/paper))
+		to_chat(user, "\The [src] consumes \the [I]!")
+		paper_charges+=charges_per_paper
+		if(paper_charges>max_paper_charges)
+			paper_charges = max_paper_charges
+		qdel(I)
 
 /obj/item/inspector/clown/bananium/Initialize()
 	. = ..()
@@ -226,6 +240,15 @@
 		var/obj/item/paper/fake_report/water/slip = new(get_turf(src))
 		slip.generate_report(get_area(src))
 	else
+		..()
+
+/obj/item/inspector/clown/bananium/print_report()
+	if(print_time != 0.1 SECONDS)
+		..()
+	else if(paper_charges == 0)
+		say("ERROR! NO MATERIALS AVAIBLE! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
+	else
+		paper_charges--
 		..()
 
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
