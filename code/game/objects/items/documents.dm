@@ -308,7 +308,7 @@
 		I = new /obj/item/paperplane/syndicate(loc, src)
 		if(user.Adjacent(I))
 			user.put_in_hands(I)
-	else
+	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
 		var/turf/open/target = get_turf(src)
 		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
 		to_chat(user, "<span class='notice'>As you try to fold [src] into the shape of a plane, it disintegrates into water!</span>")
