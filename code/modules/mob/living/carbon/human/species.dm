@@ -623,8 +623,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					grad_color = H.grad_color
 					if(grad_style && grad_style != "None")
 						var/datum/sprite_accessory/gradient = GLOB.hair_gradients_list[grad_style]
-						var/icon/temp = new/icon("icon" = gradient.icon, "icon_state" = gradient.icon_state)
-						var/icon/temp_hair = new/icon("icon" = hair_file, "icon_state" = hair_state)
+						var/icon/temp = icon(gradient.icon, gradient.icon_state)
+						var/icon/temp_hair = icon(hair_file, hair_state)
 						temp.Blend(temp_hair, ICON_ADD)
 						gradient_overlay.icon = temp
 						gradient_overlay.color = "#" + grad_color
