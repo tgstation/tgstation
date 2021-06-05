@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table } from '../components';
+import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table, Divider } from '../components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
@@ -11,11 +11,13 @@ type SpriteData = {
   icon_states: string[];
   finished: string;
   steps: SpriteEntry[];
+  time_spent: Number;
 }
 
 type SpriteEntry = {
   layer: string;
   result: string;
+  config_name: string;
 }
 
 type GreyscaleMenuData = {
@@ -79,6 +81,11 @@ const ColorDisplay = (props, context) => {
       <LabeledList>
         <LabeledList.Item
           label="Full Color String">
+          <Button
+            icon="dice"
+            onClick={() => act("random_all_colors")}
+            tooltip="Randomizes all color groups."
+          />
           <Input
             value={colors.map(item => item.value).join('')}
             onChange={(_, value) => act("recolor_from_string", { color_string: value })}
@@ -97,9 +104,16 @@ const ColorDisplay = (props, context) => {
             <Button
               icon="palette"
               onClick={() => act("pick_color", { color_index: item.index })}
+              tooltip="Brings up a color pick window to replace this color group."
+            />
+            <Button
+              icon="dice"
+              onClick={() => act("random_color", { color_index: item.index })}
+              tooltip="Randomizes the color for this color group."
             />
             <Input
               value={item.value}
+              width={7}
               onChange={(_, value) => act("recolor", { color_index: item.index, new_color: value })}
             />
           </LabeledList.Item>
@@ -145,6 +159,7 @@ const SingleDirection = (props, context) => {
     <Flex.Item grow={1} basis={0}>
       <Button
         content={DirectionAbbreviation[dir]}
+        tooltip={`Sets the direction of the preview sprite to ${dir}`}
         disabled={`${dir}` === data.sprites_dir ? true : false}
         textAlign="center"
         onClick={() => act("change_dir", { new_sprite_dir: dir })}
@@ -205,6 +220,11 @@ const PreviewDisplay = (props, context) => {
         </Table.Row>
       </Table>
       {
+        !!data.generate_full_preview
+          && `Time Spent: ${data.sprites.time_spent}ms`
+      }
+      <Divider />
+      {
         !data.refreshing
           && (
             <Table>
@@ -212,8 +232,9 @@ const PreviewDisplay = (props, context) => {
                 !!data.generate_full_preview && data.sprites.steps !== null
                   && (
                     <Table.Row header>
-                      <Table.Cell textAlign="center">Step Layer</Table.Cell>
-                      <Table.Cell textAlign="center">Step Result</Table.Cell>
+                      <Table.Cell width="50%" textAlign="center">Layer Source</Table.Cell>
+                      <Table.Cell width="25%" textAlign="center">Step Layer</Table.Cell>
+                      <Table.Cell width="25%" textAlign="center">Step Result</Table.Cell>
                     </Table.Row>
                   )
               }
@@ -221,8 +242,13 @@ const PreviewDisplay = (props, context) => {
                 !!data.generate_full_preview && data.sprites.steps !== null
                   && data.sprites.steps.map(item => (
                     <Table.Row key={`${item.result}|${item.layer}`}>
-                      <Table.Cell width="50%"><SingleSprite source={item.result} /></Table.Cell>
-                      <Table.Cell width="50%"><SingleSprite source={item.layer} /></Table.Cell>
+                      <Table.Cell verticalAlign="middle">{item.config_name}</Table.Cell>
+                      <Table.Cell>
+                        <SingleSprite source={item.layer} />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <SingleSprite source={item.result} />
+                      </Table.Cell>
                     </Table.Row>
                   ))
               }
