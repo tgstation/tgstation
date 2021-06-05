@@ -204,18 +204,22 @@
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
 
 /datum/greyscale_config/winter_coats
+	name = "Winter Coat"
 	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
 
 /datum/greyscale_config/winter_coats/worn
+	name = "Winter Coat Worn"
 	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_worn.json'
 
 /datum/greyscale_config/winter_hoods
+	name = "Winter Coat Hood"
 	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood.json'
 
 /datum/greyscale_config/winter_hoods/worn
+	name = "Winter Coat Hood Worn"
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
