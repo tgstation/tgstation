@@ -268,7 +268,7 @@
 *
 * Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
-/mob/proc/manual_emote(text) //Just override the song and dance
+/atom/proc/manual_emote(text) //Just override the song and dance
 	. = TRUE
 	if(findtext(text, "their"))
 		text = replacetext(text, "their", p_their())
@@ -276,9 +276,6 @@
 		text = replacetext(text, "them", p_them())
 	if(findtext(text, "%s"))
 		text = replacetext(text, "%s", p_s())
-
-	if(stat != CONSCIOUS)
-		return
 
 	if(!text)
 		CRASH("Someone passed nothing to manual_emote(), fix it")
@@ -295,3 +292,7 @@
 			ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
 
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
+
+/mob/manual_emote(text)
+	if(stat == CONSCIOUS)
+		return ..()
