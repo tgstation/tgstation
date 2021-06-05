@@ -91,6 +91,21 @@
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
+//STARTLED
+
+/datum/status_effect/incapacitating/startled
+	id = "startled"
+
+/datum/status_effect/incapacitating/startled/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/startled/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
