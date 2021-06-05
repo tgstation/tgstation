@@ -2,6 +2,7 @@
  * The contestant represents one player.
  */
 /datum/contestant
+	var/name
 	/// The ckey we try to match with
 	var/ckey
 	/// Whether or not someone has been associated with this datum
@@ -21,8 +22,11 @@
 
 	var/flagged_on_death = FALSE
 
+	var/eliminated = FALSE
+
 /datum/contestant/New(new_ckey)
 	ckey = new_ckey
+	name = ckey
 	current_mob = get_mob_by_ckey(ckey)
 
 	//GLOB.global_roster.insert_contestant(user=null, new_kid=src) // check if success?
@@ -63,9 +67,14 @@
  * Event teams are teams that are constantly being made and remade
  */
 /datum/event_team
+	var/name
 	var/list/members
 
 	var/rostered_id
+
+/datum/event_team/New(our_number)
+	rostered_id = our_number
+	name = rostered_id
 
 /datum/event_team/Destroy(force, ...)
 	for(var/datum/contestant/iter_member in members)

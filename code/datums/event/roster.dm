@@ -33,7 +33,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	var/datum/event_team/team1
 	var/datum/event_team/team2
-	var/team_id_tracker
+	var/team_id_tracker = 0
 
 /datum/roster/New()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_ENTER, .proc/check_new_player)
@@ -124,8 +124,6 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		switch(select)
 			if("Clear Existing")
 				clear_teams(user)
-			if("Assign Free Agents")
-				testing("ok")
 			else
 				return
 
@@ -137,25 +135,50 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	if(team_size)
 		num_teams = round(num_contestants / team_size)
 		num_per = team_size
-	else
+	else if(number_of_teams)
 		num_teams = number_of_teams
 		num_per = round(num_contestants / number_of_teams)
+	else
+		testing("no team size or num teams defined!")
+		return
 
 	remainder = num_contestants % num_teams
 
+	testing("making [num_teams] teams of [num_per] with remainder [remainder]")
 	var/overall_contestant_index = 1
 	for(var/team_index in 1 to num_teams)
+		testing(">>creating team [team_index]")
 		var/datum/event_team/new_team = create_team()
 		for(var/contestant_index in 1 to num_per)
-			new_team.add_member(active_contestants[overall_contestant_index])
+			var/datum/contestant/iter_contestant = active_contestants[overall_contestant_index]
+			testing(">>>>assigning contestant #[overall_contestant_index] ([iter_contestant.ckey]) to team [team_index]")
+			new_team.add_member(iter_contestant)
 			overall_contestant_index++
+		testing("------")
 
 
 /datum/roster/proc/create_team(mob/user)
-	var/datum/event_team/new_team = new(team_id_tracker)
-	active_teams[team_id_tracker] = new_team
 	team_id_tracker++
+	testing("creating team [team_id_tracker]")
+	var/datum/event_team/new_team = new(team_id_tracker)
+	LAZYADD(active_teams, new_team)
+	LAZYADD(unrostered_teams, new_team)
+
+	testing("created team [team_id_tracker]")
 	return new_team
+
+/datum/roster/proc/remove_team(mob/user, datum/event_team/the_team)
+	if(!istype(the_team))
+		return
+
+	LAZYREMOVE(unrostered_teams, the_team)
+	LAZYREMOVE(active_teams, the_team)
+
+	testing("Deleting team [the_team]")
+	if(team1 == the_team)
+		team1 = null
+	else if(team2 == the_team)
+		team1 = null
 
 /datum/roster/proc/clear_teams(mob/user)
 	for(var/datum/event_team/iter_team in active_teams)
@@ -172,6 +195,43 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	all_contestants = list()
 
 	testing("contestants all cleared!")
+
+/datum/roster/proc/eliminate_contestant(mob/user, datum/contestant/target)
+	if(!target)
+		return
+
+	if(!istype(target))
+		target = locate(target) in active_contestants
+		if(!istype(target))
+			testing("couldn't find that target to eliminate")
+			return
+
+	if(LAZYACCESS(losers, target))
+		testing("already a loser")
+		return
+
+	LAZYREMOVE(active_contestants, target)
+	LAZYADD(losers, target)
+	target.eliminated = TRUE
+	testing("contestant [target.ckey] elim'd!")
+
+/datum/roster/proc/delete_contestant(mob/user, datum/contestant/target)
+	if(!target)
+		return
+
+	if(!istype(target))
+		target = locate(target) in active_contestants
+		if(!istype(target))
+			testing("couldn't find that target to delete")
+			return
+
+	var/the_ckey_for_later = target.ckey
+
+	LAZYREMOVEASSOC(all_contestants, target.ckey, target)
+	LAZYREMOVE(active_contestants, target)
+	LAZYREMOVE(losers, target)
+	qdel(target)
+	testing("contestant [the_ckey_for_later] deleted!")
 
 /**
  * Remove all the contestants who haven't had someone with a valid ckey connect and claim it
@@ -193,10 +253,25 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	if(!slot  || !length(unrostered_teams))
 		return
 	if((slot == 1 && team1) || (slot == 2 && team2))
+		testing("already a team in slot [slot]")
 		return
 
-	var/datum/event_team/the_team = input(user, "Choose a team:", "Team", null) in unrostered_teams
-	if(!the_team)
+	testing("trying to get team from [user] for slot [slot]")
+	var/list/the_teams = list()
+	var/list/the_team_nums = list()
+
+	var/team_iterator_count = 0
+	for(var/datum/event_team/iter_team in unrostered_teams)
+		team_iterator_count++
+		var/i = iter_team.rostered_id
+		the_teams[team_iterator_count] = iter_team
+		the_team_nums[team_iterator_count] = i
+
+	var/selected_index = input(user, "Choose a team:", "Team", null) as null|anything in the_team_nums
+
+	var/datum/event_team/the_team = the_teams[selected_index]
+	if(!istype(the_team))
+		testing("no team")
 		return
 
 	set_team_slot(user, the_team, slot)
@@ -208,6 +283,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	else if(slot == 2)
 		team2 = the_team
 
+	testing("team [the_team] assigned to slot [slot]")
 	LAZYREMOVE(unrostered_teams, the_team)
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
@@ -225,12 +301,11 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 /// To be used for adding a team to the arena computer's "teams we're spawning" list
 /datum/roster/proc/setup_match(mob/user, list/prefs)
-	var/teams = prefs["team_event"]
-	var/divy_teams_by_num_not_size = prefs["team_num_instead_of_size"]
-	var/team_divy_factor = prefs["team_divy_factor"]
+	var/teams = prefs["mainsettings"]["team_event"]["value"]
+	var/divy_teams_by_num_not_size = prefs["mainsettings"]["team_num_instead_of_size"]["value"]
+	var/team_divy_factor = prefs["mainsettings"]["team_divy_factor"]["value"]
 
-
-	clear_teams(user)
+	testing("[user] is setting up match with values: [teams] teams, [divy_teams_by_num_not_size] divy mode, [team_divy_factor] divy factor")
 	if(divy_teams_by_num_not_size)
 		divy_into_teams(user, team_divy_factor, 0, REMAINDER_MODE_BYE)
 	else
@@ -258,3 +333,13 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		var/list/prefs = settings["mainsettings"]
 
 		setup_match(user, prefs)
+
+
+/// To be used for adding a team to the arena computer's "teams we're spawning" list
+/datum/roster/proc/add_empty_contestant(mob/user)
+	var/rand_num = num2text(rand(1,10000))
+	var/datum/contestant/new_kid = new(rand_num)
+	LAZYADDASSOC(all_contestants, rand_num, new_kid)
+	LAZYADD(active_contestants, new_kid)
+	new_kid.ckey = rand_num
+	//LAZYREMOVE(ckeys_at_large, target.ckey)

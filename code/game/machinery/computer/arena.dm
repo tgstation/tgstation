@@ -299,14 +299,26 @@
 			if("contestant")
 				ui_mode = ARENA_UI_INDIV
 
+	if(href_list["add_empty"])
+		if(href_list["add_empty"] == "contestant")
+			GLOB.global_roster.add_empty_contestant(usr)
+		else if(href_list["add_empty"] == "team")
+			GLOB.global_roster.create_team(usr)
+
+	if(href_list["eliminate_contestant"])
+		GLOB.global_roster.eliminate_contestant(usr, href_list["eliminate_contestant"])
+
+	if(href_list["delete_contestant"])
+		GLOB.global_roster.delete_contestant(usr, href_list["delete_contestant"])
+
 	if(href_list["load_roster"])
 		GLOB.global_roster.load_contestants_from_file(usr, "sample_roster.json")
 
-	if(href_list["try_match_setup"])
+	if(href_list["setup_match"])
 		GLOB.global_roster.try_setup_match(usr)
 
-	if(href_list["load_team_slot"])
-		GLOB.global_roster.try_load_team_slot(usr, href_list["load_team_slot"])
+	if(href_list["select_team_slot"])
+		GLOB.global_roster.try_load_team_slot(usr, href_list["select_team_slot"])
 
 	if(href_list["remove_team_slot"])
 		GLOB.global_roster.try_remove_team_slot(usr, href_list["remove_team_slot"])
@@ -371,54 +383,63 @@
 	if(ui_mode != ARENA_UI_MAIN)
 		dat += "<a href='?src=[REF(src)];change_page=main'>\<\<Back to Main</a>"
 
+
+
 	switch(ui_mode)
 		if(ARENA_UI_MAIN)
 			dat += "<b>Main menu</b>"
+			dat += "-----------------------------------------"
+			dat += "<a href='?src=[REF(src)];add_empty=contestant'>Add Empty Contestant</a>"
+			dat += "<a href='?src=[REF(src)];add_empty=team'>Add Empty Team</a>"
+			dat += "-----------------------------------------"
+			dat += "<a href='?src=[REF(src)];change_page=match'>Go to Match</a>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
 			dat += "<a href='?src=[REF(src)];change_page=contestant'>Go to Contestant List</a>"
+
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
+			dat += "-----------------------------------------"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
 			dat += "<a href='?src=[REF(src)];setup_match=1'>Setup Next Match</a>"
 
 			if(GLOB.global_roster.team1)
 				var/datum/event_team/team1 = GLOB.global_roster.team1
-				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>[team1]</a>"
+				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=1'>Select Team 1</a>"
 
 			if(GLOB.global_roster.team2)
 				var/datum/event_team/team2 = GLOB.global_roster.team2
-				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>[team2]</a>"
+				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2]</a>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=2'>Select Team 2</a>"
 
 			/*for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
 				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"*/
-			dat += "<a href='?src=[REF(src)];match_add_team'>Add team</a>"
 		if(ARENA_UI_TEAMS)
 			dat += "<b>Team menu</b>"
-
+			dat += "-----------------------------------------"
 			for(var/datum/event_team/iter_team in GLOB.global_roster.active_teams)
-				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
+				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
 				for(var/datum/contestant/iter_contestant in iter_team.members)
 					var/mob/the_guy = iter_contestant.get_mob()
 					dat += "\t\t: [the_guy]"
+
 					//dat += "\t\t: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 		if(ARENA_UI_INDIV)
 			dat += "<b>Contestant menu</b>"
+			dat += "-----------------------------------------"
 			dat += "<a href='?src=[REF(src)];load_roster=1'>Load Roster</a>"
 			dat += "<b>Contestants:</b>"
 
 			var/list/flagged_contestants = list()
-			for(var/iter_ckey in GLOB.global_roster.all_contestants)
-				var/datum/contestant/iter_contestant = GLOB.global_roster.all_contestants[iter_ckey]
+			for(var/datum/contestant/iter_contestant in GLOB.global_roster.active_contestants)
 				if(iter_contestant.flagged_for_elimination)
 					flagged_contestants += iter_contestant
 					continue
 
-				var/mob/the_guy = get_mob_by_ckey(iter_contestant.ckey)
-				dat += "\t[iter_ckey] ([the_guy])"
+				var/mob/the_guy = iter_contestant.get_mob()
+				dat += "\t[iter_contestant.ckey] ([the_guy]) <a href='?src=[REF(src)];eliminate_contestant=[REF(iter_contestant)]'>Eliminate</a> <a href='?src=[REF(src)];delete_contestant=[REF(iter_contestant)]'>Delete</a>"
 
 			if(length(flagged_contestants))
 				dat += "<br><b>Contestants Flagged for Elimination:"
@@ -426,10 +447,12 @@
 					var/mob/the_guy = flagged_contestant.get_mob()
 					dat += "\t[flagged_contestant.ckey] ([the_guy])"
 
+			if(LAZYLEN(GLOB.global_roster.losers))
+				dat += "<br><b><span class='danger'>Eliminated Contestants</span></b>:"
+				for(var/datum/contestant/iter_loser in GLOB.global_roster.losers)
+					var/mob/the_guy = iter_loser.get_mob()
+					dat += "\t[iter_loser.ckey] ([the_guy]) (Eliminated) <a href='?src=[REF(src)];delete_contestant=[REF(iter_loser)]'>Delete</a>"
 
-			dat += "<b>Ckeys at large:</b>"
-			for(var/iter_ckey in GLOB.global_roster.ckeys_at_large)
-				dat += "[iter_ckey] ([GLOB.global_roster.ckeys_at_large[iter_ckey]])"
 
 
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
