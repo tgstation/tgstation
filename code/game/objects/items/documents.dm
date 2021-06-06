@@ -430,11 +430,7 @@
 		return
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water
-		to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
-		user.temporarilyRemoveItemFromInventory(src)
-		I = new /obj/item/paperplane/syndicate(loc, src)
-		if(user.Adjacent(I))
-			user.put_in_hands(I)
+		make_plane(user, I, /obj/item/paperplane/syndicate)
 	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
 		var/turf/open/target = get_turf(src)
 		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
