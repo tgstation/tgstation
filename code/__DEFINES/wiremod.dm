@@ -3,6 +3,9 @@
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
 
+/// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
+#define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
+
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
@@ -78,6 +81,9 @@
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
 
+// Combiner component
+#define COMP_COMBINER_ANY "any"
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -91,3 +97,9 @@
 #define SHELL_CAPACITY_MEDIUM 25
 #define SHELL_CAPACITY_LARGE 50
 #define SHELL_CAPACITY_VERY_LARGE 500
+
+// Circuit flags
+/// Creates an input trigger that means the component won't be triggered unless the trigger is pulsed.
+#define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
+/// Creates an output trigger that sends a pulse whenever the component is successfully triggered
+#define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)

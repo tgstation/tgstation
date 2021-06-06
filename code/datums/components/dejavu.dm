@@ -56,7 +56,7 @@
 
 	else if(isobj(parent))
 		var/obj/O = parent
-		integrity = O.obj_integrity
+		integrity = O.get_integrity()
 		rewind_type = .proc/rewind_obj
 
 	addtimer(CALLBACK(src, rewind_type), rewind_interval)
@@ -107,5 +107,5 @@
 
 /datum/component/dejavu/proc/rewind_obj()
 	var/obj/master = parent
-	master.obj_integrity = integrity
+	master.update_integrity(integrity)
 	rewind()

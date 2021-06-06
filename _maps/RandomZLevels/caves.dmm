@@ -1628,8 +1628,8 @@
 /area/awaymission/caves/bmp_asteroid)
 "gd" = (
 /obj/item/toy/beach_ball{
-	desc = "Its a beachball with a face crudely drawn onto it with some soot.";
-	name = "wilson"
+	name = "\proper wilson";
+	desc = "It's a beachball with a face crudely drawn onto it with some soot."
 	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
