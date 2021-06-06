@@ -74,8 +74,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
-	///time required to print a report
-	var/print_time = 5 SECONDS
+	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
+	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
+	///Which print time mode we're on.
+	var/time_mode = INSPECTOR_TIME_MODE_SLOW
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	///Power cell used to power the scanner. Paths g
@@ -110,7 +112,7 @@
 
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
-	if(do_after(user, print_time, target = user, progress=TRUE))
+	if(do_after(user, time_list[time_mode], target = user, progress=TRUE))
 		print_report(user)
 
 
@@ -272,11 +274,11 @@
 
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
 	var/message
-	if(print_time == 1 SECONDS)
-		print_time = 5 SECONDS
+	if(time_mode == INSPECTOR_TIME_MODE_FAST)
+		time_mode = INSPECTOR_TIME_MODE_SLOW
 		message = "SLOW."
 	else
-		print_time = 1 SECONDS
+		time_mode = INSPECTOR_TIME_MODE_FAST
 		message = "LIGHTNING FAST."
 
 	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
@@ -316,10 +318,10 @@
 	var/charges_per_paper = 16
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
-	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && print_time < 1 SECONDS)
+	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
 		if(cell.use(power_to_speak))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
-		print_time = 5 SECONDS
+		time_mode = INSPECTOR_TIME_MODE_SLOW
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_CLASSIC
 		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 
@@ -339,14 +341,14 @@
 	playsound(src, 'sound/effects/angryboat.ogg', 150, FALSE)
 
 /obj/item/inspector/clown/bananium/create_slip()
-	if(print_time == 0.1 SECONDS)
+	if(time_mode == INSPECTOR_TIME_MODE_HONK)
 		var/obj/item/paper/fake_report/water/slip = new(get_turf(src))
 		slip.generate_report(get_area(src))
 		return
 	return ..()
 
 /obj/item/inspector/clown/bananium/print_report(mob/user)
-	if(print_time != 0.1 SECONDS)
+	if(time_mode != INSPECTOR_TIME_MODE_HONK)
 		..()
 	else if(paper_charges == 0)
 		if(cell.use(power_to_speak))
@@ -359,16 +361,16 @@
 
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
 	var/message
-	switch(print_time)
-		if(0.1 SECONDS)
+	switch(time_mode)
+		if(INSPECTOR_TIME_MODE_HONK)
 			power_per_print = INSPECTOR_POWER_USAGE_NORMAL
-			print_time = 5 SECONDS
+			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "SLOW."
-		if(5 SECONDS)
-			print_time = 1 SECONDS
+		if(INSPECTOR_TIME_MODE_SLOW)
+			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "LIGHTNING FAST."
 		else
-			print_time = 0.1 SECONDS
+			time_mode = INSPECTOR_TIME_MODE_HONK
 			power_per_print = INSPECTOR_POWER_USAGE_HONK
 			message = "HONK!"
 	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
