@@ -1142,6 +1142,7 @@
 #include "code\game\objects\items\documents.dm"
 #include "code\game\objects\items\door_seal.dm"
 #include "code\game\objects\items\dualsaber.dm"
+#include "code\game\objects\items\dyekit.dm"
 #include "code\game\objects\items\eightball.dm"
 #include "code\game\objects\items\emags.dm"
 #include "code\game\objects\items\etherealdiscoball.dm"
