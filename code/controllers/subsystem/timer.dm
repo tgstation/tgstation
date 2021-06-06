@@ -304,12 +304,11 @@ SUBSYSTEM_DEF(timer)
 			timer.next = null
 			timer.prev = null
 			continue
-		if (!bucket_head.prev)
-			bucket_head.prev = bucket_head
+
+		bucket_head.prev = timer
 		timer.next = bucket_head
-		timer.prev = bucket_head.prev
-		timer.next.prev = timer
-		timer.prev.next = timer
+		timer.prev = null
+		bucket_list[bucket_pos] = timer
 
 	// Cut the timers that are tracked by the buckets from the secondary queue
 	if (i)
@@ -460,12 +459,10 @@ SUBSYSTEM_DEF(timer)
 
 	// Remove the timed event from the bucket, ensuring to maintain
 	// the integrity of the bucket's list if relevant
-	if(prev != next)
+	if (prev && prev.next == src)
 		prev.next = next
+	if (next && next.prev == src)
 		next.prev = prev
-	else
-		prev?.next = null
-		next?.prev = null
 	prev = next = null
 
 /**
@@ -512,15 +509,12 @@ SUBSYSTEM_DEF(timer)
 		return
 
 	// Otherwise, we merely add this timed event into the bucket, which is a
-	// circularly doubly-linked list
-	if (!bucket_head.prev)
-		bucket_head.prev = bucket_head
-
+	// doubly-linked list
 	bucket_joined = TRUE
+	bucket_head.prev = src
 	next = bucket_head
-	prev = bucket_head.prev
-	next.prev = src
-	prev.next = src
+	prev = null
+	bucket_list[bucket_pos] = src
 
 /**
  * Returns a string of the type of the callback for this timer
