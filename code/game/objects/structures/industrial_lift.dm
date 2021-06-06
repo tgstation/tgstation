@@ -172,9 +172,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
-/obj/structure/industrial_lift/attack_hulk(mob/living/carbon/user)//baby hands cannot smash tram
-	return
-
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/potential_rider)
 	SIGNAL_HANDLER
 	RemoveItemFromLift(potential_rider)
@@ -245,7 +242,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	else if(going != UP) //can't really crush something upwards
 		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
 		for(var/obj/structure/victimstructure in destination.contents)
-			if(!QDELETED(victimstructure) && (!istype(victimstructure, /obj/structure/holosign)) && victimstructure.layer >= GAS_PUMP_LAYER) //to avoid wires
+			if(QDELETED(victimstructure))
+				continue
+			if(!istype(victimstructure, /obj/structure/holosign) && victimstructure.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
 				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 				if(victimstructure.anchored && initial(victimstructure.anchored) == TRUE) //prevents you from wrenching lockers/crates to easily break them open
 					visible_message("<span class='danger'>[src] smashes through [victimstructure]!</span>")
@@ -256,7 +255,11 @@ GLOBAL_LIST_EMPTY(lifts)
 					victimstructure.take_damage(rand(20,25))
 					victimstructure.throw_at(throw_target, 200, 4)
 		for(var/obj/machinery/victimmachine in destination.contents)
-			if(!QDELETED(victimmachine) && victimmachine.layer >= GAS_PUMP_LAYER) //to avoid pipes
+			if(QDELETED(victimmachine))
+				continue
+			if(istype(victimmachine, /obj/machinery/field)) //graceful break handles this scenario
+				continue
+			if(victimmachine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
 				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 				visible_message("<span class='danger'>[src] smashes through [victimmachine]!</span>")
 				qdel(victimmachine)
@@ -422,9 +425,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	//kind of a centerpiece of the station, so pretty tough to destroy
-	armor = list(MELEE = 80, BULLET = 80, LASER = 80, ENERGY = 80, BOMB = 100, BIO = 80, RAD = 80, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	//kind of a centerpiece of the station that also gets mad when it breaks so maybe it just shouldn't break normally
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///set by the tram control console in late initialize
 	var/travelling = FALSE
 	var/travel_distance = 0
