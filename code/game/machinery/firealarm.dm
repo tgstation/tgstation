@@ -361,11 +361,11 @@
 		..()
 
 /obj/machinery/firealarm/AICtrlClick(mob/living/silicon/robot/user)
-    if(obj_flags & EMAGGED)
-        to_chat(user, "<span class='warning'>The control circuitry of [src] appears to be malfunctioning.</span>")
-        return
-    detecting = !detecting
-    to_chat(user, "<span class='notice'>You [ detecting ? "enable" : "disable" ] [src]'s detecting unit!</span>")
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The control circuitry of [src] appears to be malfunctioning.</span>")
+		return
+	detecting = !detecting
+	to_chat(user, "<span class='notice'>You [ detecting ? "enable" : "disable" ] [src]'s detecting unit!</span>")
 
 /obj/machinery/firealarm/directional/north
 	pixel_y = 26
