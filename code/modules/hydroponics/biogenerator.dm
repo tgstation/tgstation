@@ -251,7 +251,7 @@
 		return
 
 	if(beaker)
-		to_chat(user, "<span class='notice'>You swap out [beaker] in [src]'s for [inserted_beaker].</span>")
+		to_chat(user, "<span class='notice'>You swap out [beaker] in [src] for [inserted_beaker].</span>")
 		eject_beaker(user, silent = TRUE)
 	else
 		to_chat(user, "<span class='notice'>You add [inserted_beaker] to [src].</span>")
