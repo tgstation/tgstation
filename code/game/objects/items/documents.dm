@@ -368,7 +368,7 @@
 			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "SLOW."
 		if(INSPECTOR_TIME_MODE_SLOW)
-			time_mode = INSPECTOR_TIME_MODE_SLOW
+			time_mode = INSPECTOR_TIME_MODE_FAST
 			message = "LIGHTNING FAST."
 		else
 			time_mode = INSPECTOR_TIME_MODE_HONK
