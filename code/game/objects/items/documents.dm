@@ -113,11 +113,18 @@
 	if(do_after(user, print_time, target = user, progress=TRUE))
 		print_report(user)
 
+
+/obj/item/inspector/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(user.combat_mode)
+		return
+	cell_cover_open = !cell_cover_open
+	balloon_alert(user, "You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].")
+	return TRUE
+
+
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		cell_cover_open = !cell_cover_open
-		balloon_alert(user, "You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].")
-	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
 			return
@@ -128,26 +135,25 @@
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		if(cell_cover_open && cell)
-			user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
-			"<span class='notice'>You remove [cell].</span>")
-			cell.add_fingerprint(user)
-			user.put_in_hands(cell)
-			cell = null
-			return
-	return ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !cell_cover_open || !cell)
+		return ..()
+	user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
+		"<span class='notice'>You remove [cell].</span>")
+	cell.add_fingerprint(user)
+	user.put_in_hands(cell)
+	cell = null
+
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
-	if(cell_cover_open)
-		. += "It's cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
-		if(!cell)
-			. += "The slot for a cell is empty."
-		else
-			. += "\The [cell] is firmly in place. <span class='info'>Ctrl-click with an empty hand to remove it.</span>"
+	if(!cell_cover_open)
+		. += "Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
+		return
+	. += "It's cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
+	if(!cell)
+		. += "The slot for a cell is empty."
 	else
-		. += "It's cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
+		. += "\The [cell] is firmly in place. <span class='info'>Ctrl-click with an empty hand to remove it.</span>"
 
 /**
  * Create our report
@@ -241,13 +247,14 @@
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
 	print_report(user)
+/obj/item/inspector/clown/screwdriver_act(mob/living/user, obj/item/tool)
+		cycle_print_time(user)
+		return TRUE
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open)
-		if(istype(I, /obj/item/kitchen/fork))
-			cycle_sound(user)
-		else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			cycle_print_time(user)
+	if(cell_cover_open && istype(I, /obj/item/kitchen/fork))
+		cycle_sound(user)
+		return
 	return ..()
 
 /obj/item/inspector/clown/examine(mob/user)
@@ -256,22 +263,23 @@
 		. += "Two weird settings dials are visible within the battery compartment."
 
 /obj/item/inspector/clown/examine_more(mob/user)
-	if(cell_cover_open)
-		var/list/msg =  list("<span class='notice'>Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.</span>")
-		msg += "\t<span class='info'>The first dial is labeled \"SPEED\" and looks a bit like a <strong>screw</strong> head.</span>"
-		msg += "\t<span class='info'>The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?</span>"
-		return msg
-	return ..()
+	if(!cell_cover_open)
+		return ..()
+	. = list("<span class='notice'>Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.</span>")
+	. += "\t<span class='info'>The first dial is labeled \"SPEED\" and looks a bit like a <strong>screw</strong> head.</span>"
+	. += "\t<span class='info'>The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?</span>"
+
 
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
-	var/message = "You turn the screw-like dial, setting the device's scanning speed to "
+	var/message
 	if(print_time == 1 SECONDS)
 		print_time = 5 SECONDS
-		message += "SLOW."
+		message = "SLOW."
 	else
 		print_time = 1 SECONDS
-		message += "LIGHTNING FAST."
-	balloon_alert(user, message)
+		message = "LIGHTNING FAST."
+	
+	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
 
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
 	print_sound_mode++
@@ -308,7 +316,7 @@
 	var/charges_per_paper = 25
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
-	if((print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
+	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && print_time < 1 SECONDS)
 		if(cell.use(power_to_speak))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		print_time = 5 SECONDS
@@ -316,15 +324,14 @@
 		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
-	..()
+	. = ..()
 	check_settings_legality()
-	if(istype(I, /obj/item/paper/fake_report)||(paper_charges>=max_paper_charges))
+	if(istype(I, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
 		to_chat(user, "<span class='info'>\The [src] refuses to consume \the [I]!</span>")
-	else if(istype(I, /obj/item/paper))
+		return
+	if(istype(I, /obj/item/paper))
 		to_chat(user, "<span class='info'>\The [src] consumes \the [I]!</span>")
-		paper_charges+=charges_per_paper
-		if(paper_charges>max_paper_charges)
-			paper_charges = max_paper_charges
+		paper_charges = min(paper_charges + charges_per_paper, max_paper_charges)
 		qdel(I)
 
 /obj/item/inspector/clown/bananium/Initialize()
@@ -335,8 +342,8 @@
 	if(print_time == 0.1 SECONDS)
 		var/obj/item/paper/fake_report/water/slip = new(get_turf(src))
 		slip.generate_report(get_area(src))
-	else
-		..()
+		return
+	return ..()
 
 /obj/item/inspector/clown/bananium/print_report(mob/user)
 	if(print_time != 0.1 SECONDS)
@@ -351,19 +358,20 @@
 		..()
 
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
-	var/message = "You turn the screw-like dial, setting the device's scanning speed to "
-	if(print_time == 0.1 SECONDS)
-		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
-		print_time = 5 SECONDS
-		message += "SLOW."
-	else if(print_time == 5 SECONDS)
-		print_time = 1 SECONDS
-		message += "LIGHTNING FAST."
-	else
-		print_time = 0.1 SECONDS
-		power_per_print = INSPECTOR_POWER_USAGE_HONK
-		message += "HONK!"
-	balloon_alert(user, message)
+	var/message
+	switch(print_time)
+		if(0.1 SECONDS)
+			power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+			print_time = 5 SECONDS
+			message = "SLOW."
+		if(5 SECONDS)
+			print_time = 1 SECONDS
+			message = "LIGHTNING FAST."
+		else
+			print_time = 0.1 SECONDS
+			power_per_print = INSPECTOR_POWER_USAGE_HONK
+			message = "HONK!"
+	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
 
 /**
  * Reports printed by fake N-spect scanner
@@ -375,9 +383,9 @@
 	desc = "Contains no information about the station's current status."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "slip"
+	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report
 	var/area/scanned_area
-	show_written_words = FALSE
 
 /obj/item/paper/fake_report/proc/generate_report(area/scan_area)
 	scanned_area = scan_area
@@ -388,15 +396,17 @@
 	characters += GLOB.alphabet_upper
 	characters += GLOB.numerals
 
-	var/length = rand(23, 123)
-	var/i
-	for(i = 0; i<length; i++)
-		if(prob(90))
-			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "honk")
-		else if(prob(1))
-			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
-		else
-			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "non-honk-clown-words")
+	var/new_info = list()
+	for(var/i in 1 to rand(23, 123))
+		var/roll = rand(0, 1000)
+		switch(roll)
+			if(0 to 900)
+				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "honk")
+			if(901 to 999)
+				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "non-honk-clown-words")
+			if(1000)
+				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
+	info += new_info.Join()
 
 /obj/item/paper/fake_report/examine(mob/user)
 	. = ..()
@@ -433,6 +443,6 @@
 			user.put_in_hands(I)
 	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
 		var/turf/open/target = get_turf(src)
-		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
+		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		to_chat(user, "<span class='notice'>As you try to fold [src] into the shape of a plane, it disintegrates into water!</span>")
 		qdel(src)
