@@ -20,7 +20,7 @@
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
-	density = TRUE
+	set_density(TRUE)
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
 		P.pai = null
@@ -67,7 +67,7 @@
 	forceMove(card)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
-	density = FALSE
+	set_density(FALSE)
 	set_light(0)
 	holoform = FALSE
 	set_resting(resting)

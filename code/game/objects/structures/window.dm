@@ -305,7 +305,7 @@
 		set_opacity(initial(opacity))
 
 /obj/structure/window/Destroy()
-	density = FALSE
+	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	update_nearby_icons()
 	return ..()
