@@ -102,6 +102,7 @@
  * by (doors closing, engineers building walls, etc)
  */
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/update_exit_point(mob/living/target)
+	SIGNAL_HANDLER
 	var/turf/location = get_turf(target)
 	if(location.is_blocked_turf(ignore_climbable = TRUE))
 		return
