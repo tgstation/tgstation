@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(overlays)
 	stringbro.icon = icon
 	stringbro.icon_state = iconstate
 	return stringbro.appearance
-	
+
 /proc/icon2appearance(icon)
 	var/static/image/iconbro = new()
 	iconbro.icon = icon
@@ -79,6 +79,13 @@ SUBSYSTEM_DEF(overlays)
 		if(!overlay)
 			continue
 		if (istext(overlay))
+#ifdef UNIT_TESTS
+			// This is too expensive to run normally but running it during CI is a good test
+			var/list/icon_states_available = icon_states(icon)
+			if(!(overlay in icon_states_available))
+				stack_trace("Invalid icon state '[overlay]' attempted to get added as an overlay to [src].")
+				continue
+#endif
 			new_overlays += iconstate2appearance(icon, overlay)
 		else if(isicon(overlay))
 			new_overlays += icon2appearance(overlay)
