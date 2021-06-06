@@ -192,9 +192,7 @@
 		if(INSPECTOR_PRINT_SOUND_MODE_HONK)
 			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
 		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
-			playsound(src, pick(list('sound/items/fafafoggy.ogg', 'sound/items/fafafoggy2.ogg')), 50, FALSE)
-		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY_ALT)
-			playsound(src, pick(list('sound/items/fafafoggy.ogg', 'sound/items/fafafoggy2.ogg')), 50, TRUE)
+			playsound(src, pick(list('sound/items/robofafafoggy.ogg', 'sound/items/robofafafoggy2.ogg')), 50, FALSE)
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -244,7 +242,7 @@
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
-	var/list/mode_names = list("normal", "classic", "honk", "fafafoggy", "fafafoggy (varied)")
+	var/list/mode_names = list("normal", "classic", "honk", "fafafoggy")
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
