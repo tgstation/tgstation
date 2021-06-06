@@ -12,6 +12,26 @@ const robestyle = {
   color: 'lightblue',
 };
 
+const destructionstyle = {
+  color: 'red',
+};
+
+const defensestyle = {
+  color: 'orange',
+};
+
+const transportstyle = {
+  color: 'yellow',
+};
+
+const summonstyle = {
+  color: 'cyan',
+};
+
+const ritualstyle = {
+  color: 'violet',
+};
+
 type Objective = {
   count: number;
   name: string;
@@ -29,12 +49,12 @@ export const WizardInfo = (props, context) => {
   return (
     <Window
       width={620}
-      height={450}
+      height={580}
       theme="wizard">
       <Window.Content>
         <Stack vertical fill>
-          <Stack.Item>
-            <Section fill>
+          <Stack.Item grow>
+            <Section scrollable fill>
               <Stack vertical>
                 <Stack.Item textColor="red" fontSize="20px">
                   You are the Space Wizard!
@@ -45,15 +65,41 @@ export const WizardInfo = (props, context) => {
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item>
             <Section fill title="Spellbook">
-              <Stack>
-                <Stack.Item>
-                  You will find a list of available spells
-                  in your spell book. Choose your magic arsenal carefully.<br />
-                  The spellbook is bound to you, and others cannot use it.<br />
-                  In your pockets you will find a teleport scroll.
-                  Use it as needed.
+              <Stack vertical fill>
+                <Stack.Item grow>
+                  You have a spellbook which is bound to you. You can use it
+                  to choose a magical arsenal.<br />
+                  <span style={destructionstyle}>
+                    The deadly page has the offensive spells, to destroy your
+                    enemies.
+                  </span><br />
+                  <span style={defensestyle}>
+                    The defensive page has defensive spells, to keep yourself
+                    alive. Remember, you may be powerful, but you are still
+                    only human.
+                  </span><br />
+                  <span style={transportstyle}>
+                    The transport page has mobility spells, very important
+                    aspect of staying alive and getting things done.
+                  </span><br />
+                  <span style={summonstyle}>
+                    The summoning page has summoning and other helpful spells
+                    for not fighting alone. Careful, not every summon is on your
+                    side.
+                  </span><br />
+                  <span style={ritualstyle}>
+                    The rituals page has powerful global effects, that will pit
+                    the station against itself. Do mind that these are either
+                    expensive, or just for panache.
+                  </span>
+                </Stack.Item>
+                <Stack.Item textColor="lightgreen">
+                  (If you are unsure what to get or are new to the Federation,
+                  go to the &quot;Wizard Approved Loadouts&quot; section.
+                  There you will find some kits that work fairly well for new
+                  wizards.)
                 </Stack.Item>
               </Stack>
             </Section>

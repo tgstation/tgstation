@@ -34,6 +34,7 @@ type Info = {
   allies: string;
   goal: string;
   intro: string;
+  code: string;
   has_uplink: BooleanLike;
   uplink_intro: string;
   uplink_unlock_info: string;
@@ -144,9 +145,12 @@ const UplinkSection = (props, context) => {
     has_uplink,
     uplink_intro,
     uplink_unlock_info,
+    code,
   } = data;
   return (
-    <Section title="Uplink">
+    <Section
+      title="Uplink"
+      mb={!has_uplink && -1}>
       <Stack fill>
         {!has_uplink && (
           <Dimmer>
@@ -158,6 +162,8 @@ const UplinkSection = (props, context) => {
           <>
             <Stack.Item bold>
               {uplink_intro}
+              <br />
+              <span style={goalstyle}>Code: {code}</span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>

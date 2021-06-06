@@ -1,5 +1,3 @@
-
-
 /**
  * ## smart objectives
  *
@@ -10,6 +8,8 @@
 /datum/objective/smart
 	///this will be false the first time the objective is complete. if it is ever uncompleted, future completions will have this be TRUE
 	var/uncompleted = FALSE
+	///this will be false until the first time an objective becomes either "possible but unreasonable to complete" or "just straight up impossible right now"
+	var/impossible = FALSE
 	///the payout for completing this objective
 	var/black_telecrystal_reward = 0
 
