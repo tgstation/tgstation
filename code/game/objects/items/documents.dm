@@ -250,8 +250,10 @@
 	. = ..()
 	print_report(user)
 /obj/item/inspector/clown/screwdriver_act(mob/living/user, obj/item/tool)
-		cycle_print_time(user)
-		return TRUE
+	if(!cell_cover_open)
+		return ..()
+	cycle_print_time(user)
+	return TRUE
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
 	if(cell_cover_open && istype(I, /obj/item/kitchen/fork))
@@ -326,9 +328,14 @@
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_CLASSIC
 		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 
-/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	check_settings_legality()
+
+/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(cell_cover_open)
+		check_settings_legality()
 	if(istype(I, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
 		to_chat(user, "<span class='info'>\The [src] refuses to consume \the [I]!</span>")
 		return
