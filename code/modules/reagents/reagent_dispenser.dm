@@ -38,7 +38,7 @@
 		reagents.trans_to(new_tank, reagents.total_volume)
 		new_tank.name = "stationary [name]"
 		new_tank.update_appearance(UPDATE_OVERLAYS)
-		new_tank.anchored = anchored
+		new_tank.set_anchored(anchored)
 		qdel(src)
 		return FALSE
 	else

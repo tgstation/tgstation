@@ -81,10 +81,10 @@
 		if(istype(mob_area, game_area))
 			to_chat(M, "<span class='userdanger'>\The [initial(src.name)] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
-	anchored = FALSE //normal checks need this to be FALSE to pass
+	anchored = FALSE // Hacky usage that bypasses set_anchored(), because normal checks need this to be FALSE to pass
 	. = ..() //this is the actual normal item checks
 	if(.) //only apply these flag passives
-		anchored = TRUE
+		anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 		return
 	//passing means the user picked up the flag so we can now apply this
 	user.set_anchored(TRUE)
@@ -92,7 +92,7 @@
 
 /obj/item/ctf/dropped(mob/user)
 	..()
-	user.set_anchored(FALSE)
+	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 20 SECONDS
 	START_PROCESSING(SSobj, src)
@@ -100,7 +100,7 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
 			to_chat(M, "<span class='userdanger'>\The [initial(name)] has been dropped!</span>")
-	anchored = TRUE
+	anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 
 
 /obj/item/ctf/red
