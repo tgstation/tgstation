@@ -344,6 +344,7 @@
 	remove_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/update_visuals(datum/source, olddir, newdir)
+	SIGNAL_HANDLER
 	if(!active)
 		return // Don't update if we're not active!
 	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
@@ -464,9 +465,6 @@
 	eye_icon_state = "eyes_glow"
 	overlay_ignore_lighting = TRUE
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
-
-/obj/item/organ/eyes/night_vision/maintenance_adapted/Initialize()
-	. = ..()
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE)
 	. = ..()

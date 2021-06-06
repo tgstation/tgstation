@@ -1,7 +1,0 @@
-author: "maxymax13"
-delete-after: True
-changes: 
-  - imageadd: "Departmental security officer ID cards show their department on the non-department access color bar, like Lawyers or Psychologists"
-  - imageadd: "The color on the assistant trim's bar has been returned from previous ID card models."
-  - imageadd: "The rainbow ID card has been resprited."
-  - imageadd: "The flames ID card has been slightly improved."

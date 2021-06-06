@@ -310,7 +310,7 @@
 
 /obj/item/thermometer/ui_close(mob/user)
 	. = ..()
-	remove_thermometer(user)
+	INVOKE_ASYNC(src, .proc/remove_thermometer, user)
 
 /obj/item/thermometer/ui_status(mob/user)
 	if(!(in_range(src, user)))

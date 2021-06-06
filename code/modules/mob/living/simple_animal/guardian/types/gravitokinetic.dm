@@ -70,5 +70,6 @@
 	gravito_targets -= target
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/__distance_check(atom/movable/AM, OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
 	if(get_dist(src, AM) > gravity_power_range)
 		remove_gravity(AM)

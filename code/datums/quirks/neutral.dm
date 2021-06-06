@@ -315,3 +315,16 @@
 	)
 	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
 	H.regenerate_icons()
+
+/datum/quirk/colorist
+	name = "Colorist"
+	desc = "You like carrying around a hair dye spray to quickly apply color patterns to your hair."
+	value = 0
+	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
+
+/datum/quirk/colorist/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/dyespray/spraycan = new(get_turf(H))
+	H.put_in_hands(spraycan)
+	H.equip_to_slot(spraycan, ITEM_SLOT_BACKPACK)
+	H.regenerate_icons()

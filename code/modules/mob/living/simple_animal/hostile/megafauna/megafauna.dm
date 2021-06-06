@@ -70,6 +70,9 @@
 		small_action.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/Moved()
+	//Safety check
+	if(!loc)
+		return ..()
 	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
 		var/turf/closest = get_turf(nest.parent)
 		for(var/i = 1 to nest_range)

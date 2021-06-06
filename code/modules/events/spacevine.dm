@@ -291,8 +291,7 @@
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
 		holder.density = TRUE
-	holder.max_integrity = 100
-	holder.obj_integrity = holder.max_integrity
+	holder.modify_max_integrity(100)
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(I?.get_sharpness())

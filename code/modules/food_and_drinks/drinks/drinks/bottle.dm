@@ -603,6 +603,7 @@
 // TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
+	SIGNAL_HANDLER
 	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
 		if(fermentation_timer)
 			fermentation_time_remaining = timeleft(fermentation_timer)

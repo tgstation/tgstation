@@ -1492,7 +1492,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "fB" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/corner{
 	dir = 4
@@ -3797,7 +3797,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kJ" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -3815,7 +3815,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kK" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -3982,7 +3982,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lg" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4149,7 +4149,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "ly" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lz" = (
@@ -4303,7 +4303,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4317,7 +4317,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lV" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4521,7 +4521,9 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "mt" = (
-/obj/machinery/computer/arcade/orion_trail,
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,

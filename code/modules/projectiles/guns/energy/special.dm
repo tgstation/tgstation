@@ -243,6 +243,7 @@
 	select_fire()
 
 /obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
+	SIGNAL_HANDLER
 	if(P == p_blue)
 		p_blue = null
 	else if(P == p_orange)
