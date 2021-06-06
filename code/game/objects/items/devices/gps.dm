@@ -26,6 +26,10 @@
 	icon_state = "gps-s"
 	gpstag = "SCI0"
 
+//Not actually printable as a standalone. Exists as a subtype for MODSuit Mod
+/obj/item/gps/science/mod
+	gpstag = "MOD0"
+
 /obj/item/gps/engineering
 	icon_state = "gps-e"
 	gpstag = "ENG0"
