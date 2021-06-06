@@ -325,7 +325,7 @@
 		if(cell.use(power_to_speak))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		time_mode = INSPECTOR_TIME_MODE_SLOW
-		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_CLASSIC
+		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
