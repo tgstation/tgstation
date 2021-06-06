@@ -25,12 +25,14 @@
 	required_type = /mob/dead/observer
 	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
+	/// The rule needs this many applicants to be properly executed.
+	var/required_applicants = 1
 
 /datum/dynamic_ruleset/midround/trim_candidates()
-	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
-	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
-	dead_players = trim_list(mode.current_players[CURRENT_DEAD_PLAYERS])
-	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
+	living_players = trim_list(GLOB.alive_player_list)
+	living_antags = trim_list(GLOB.current_living_antags)
+	dead_players = trim_list(GLOB.dead_player_list)
+	list_observers = trim_list(GLOB.current_observers_list)
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
@@ -73,7 +75,7 @@
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+			for (var/mob/M in GLOB.alive_player_list)
 				if (M.stat == DEAD || !M.client)
 					continue // Dead/disconnected players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
@@ -117,11 +119,11 @@
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
+	if(candidates.len < required_applicants)
+		mode.executed_rules -= src
+		return
 	for (var/i = 1, i <= required_candidates, i++)
 		if(candidates.len <= 0)
-			if(i == 1)
-				// We have found no candidates so far and we are out of applicants.
-				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)
 		candidates -= applicant
@@ -178,8 +180,8 @@
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
-	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
-	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
+	var/player_count = GLOB.alive_player_list.len
+	var/antag_count = GLOB.current_living_antags.len
 	var/max_traitors = round(player_count / 10) + 1
 
 	// adding traitors if the antag population is getting low
@@ -582,6 +584,7 @@
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
+	required_applicants = 2
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)

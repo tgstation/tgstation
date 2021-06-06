@@ -1431,8 +1431,13 @@
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			var/atom/created_atom = new atom_to_create(drop_location())
-			created_atom.pixel_x = rand(-8, 8)
-			created_atom.pixel_y = rand(-8, 8)
+			if(custom_materials)
+				created_atom.set_custom_materials(custom_materials, 1 / chosen_option[TOOL_PROCESSING_AMOUNT])
+			created_atom.pixel_x = pixel_x
+			created_atom.pixel_y = pixel_y
+			if(i > 1)
+				created_atom.pixel_x += rand(-8,8)
+				created_atom.pixel_y += rand(-8,8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")

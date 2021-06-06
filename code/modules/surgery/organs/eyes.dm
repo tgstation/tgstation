@@ -466,9 +466,6 @@
 	overlay_ignore_lighting = TRUE
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
-/obj/item/organ/eyes/night_vision/maintenance_adapted/Initialize()
-	. = ..()
-
 /obj/item/organ/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE)
 	. = ..()
 	//add lighting

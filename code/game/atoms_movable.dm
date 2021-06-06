@@ -668,12 +668,12 @@
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
-		if (loc)
+		loc = null
+		if (oldloc)
 			var/area/old_area = get_area(oldloc)
 			oldloc.Exited(src, null)
 			if(old_area)
 				old_area.Exited(src, null)
-		loc = null
 
 	Moved(oldloc, NONE, TRUE)
 

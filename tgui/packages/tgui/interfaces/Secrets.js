@@ -76,12 +76,12 @@ const HelpfulTab = (props, context) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <Button
-              icon="clipboard"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={-0.5}
               width={buttonWidthNormal}
-              content="Show Gamemode"
-              onClick={() => act("showgm")} />
+              height={lineHeightNormal}>
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <Button

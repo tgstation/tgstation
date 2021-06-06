@@ -47,14 +47,15 @@
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
 		var/datum/disease/P = new /datum/disease/parasite()
-		carl.ForceContractDisease(P, FALSE, TRUE)
+		carl.ForceContractDisease(P, make_copy=FALSE, del_on_fail=TRUE)
 
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()
-	if(!revelation)
-		to_chat(user, "<span class='notice'>Geeze, you need to get to get your eyes checked. You should look again...</span>")
-		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
+	if(!revelation && !isobserver(user))
+		. += "<span class='notice'>Geeze, you need to get to get your eyes checked. You should look again...</span>"
+
 		name = "South Bronx Parasite bar"
+		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
 		revelation = TRUE
 
 /obj/item/food/sosjerky

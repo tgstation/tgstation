@@ -266,11 +266,55 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += "<span class='danger'>You get headaches just from looking at it.</span>"
-	if(isobserver(user))
-		if(power > 5)
-			. += "<span class='notice'>The supermatter appears active at [power] MeV.</span>"
-		else
-			. += "<span class='notice'>The supermatter appears inactive or outputting minimal power.</span>"
+
+// SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
+/obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
+	if(!isobserver(user))
+		return FALSE
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "SupermatterMonitor")
+		ui.open()
+
+/obj/machinery/power/supermatter_crystal/ui_data(mob/user)
+	var/list/data = list()
+
+	var/turf/local_turf = get_turf(src)
+
+	var/datum/gas_mixture/air = local_turf.return_air()
+
+	// singlecrystal set to true eliminates the back sign on the gases breakdown.
+	data["singlecrystal"] = TRUE
+	data["active"] = TRUE
+	data["SM_integrity"] = get_integrity_percent()
+	data["SM_power"] = power
+	data["SM_ambienttemp"] = air.temperature
+	data["SM_ambientpressure"] = air.return_pressure()
+	data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / gasefficency
+	data["SM_moles"] = 0
+	data["SM_uid"] = uid
+	var/area/active_supermatter_area = get_area(src)
+	data["SM_area_name"] = active_supermatter_area.name
+
+	var/list/gasdata = list()
+
+	if(air.total_moles())
+		data["SM_moles"] = air.total_moles()
+		for(var/gasid in air.gases)
+			gasdata.Add(list(list(
+			"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
+			"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
+
+	else
+		for(var/gasid in air.gases)
+			gasdata.Add(list(list(
+				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
+				"amount" = 0)))
+
+	data["gases"] = gasdata
+
+	return data
 
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/local_turf = get_turf(src)
@@ -280,7 +324,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!air)
 		return SUPERMATTER_ERROR
 
-	var/integrity = get_integrity()
+	var/integrity = get_integrity_percent()
 	if(integrity < SUPERMATTER_DELAM_PERCENT)
 		return SUPERMATTER_DELAMINATING
 
@@ -311,7 +355,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(SUPERMATTER_WARNING)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
-/obj/machinery/power/supermatter_crystal/proc/get_integrity()
+/obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
@@ -483,7 +527,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
-					var/integrity = get_integrity()
+					var/integrity = get_integrity_percent()
 					if(integrity < 10)
 						damage += clamp((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
 					else if(integrity < 25)
@@ -720,7 +764,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 			//Oh shit it's bad, time to freak out
 			if(damage > emergency_point)
-				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity_percent()]%", common_channel)
 				SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
@@ -728,12 +772,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 					has_reached_emergency = TRUE
 			else if(damage >= damage_archived) // The damage is still going up
-				radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+				radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 				SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 
 			else                                                 // Phew, we're safe
-				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
+				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 				lastwarning = REALTIMEOFDAY
 
 			if(power > POWER_PENALTY_THRESHOLD)
@@ -783,8 +827,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!blob || isspaceturf(loc)) //does nothing in space
 		return
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
-	damage += blob.obj_integrity * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
-	if(blob.obj_integrity > 100)
+	damage += blob.get_integrity() * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
+	if(blob.get_integrity() > 100)
 		blob.visible_message("<span class='danger'>\The [blob] strikes at \the [src] and flinches away!</span>",
 			"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 		blob.take_damage(100, BURN)
@@ -1217,9 +1261,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "psy"
 	layer = FLOAT_LAYER - 1
 
-
 /obj/overlay/psy/shard
 	icon_state = "psy_shard"
+
 #undef HALLUCINATION_RANGE
 #undef GRAVITATIONAL_ANOMALY
 #undef FLUX_ANOMALY

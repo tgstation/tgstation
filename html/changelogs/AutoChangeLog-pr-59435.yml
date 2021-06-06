@@ -1,0 +1,5 @@
+author: "Cimika, with thanks to NamelessFairy for additional patterns and AdipemDragon for the spray icon."
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to dye your hair with gradients by using a hair dye spray."
+  - rscadd: "The new Colorist quirk, allowing you to spawn with a hair dye spray."

@@ -30,6 +30,11 @@
 	icon_state = "setup_medium_box-open"
 	shell_to_spawn = /obj/structure/bot
 
+/obj/item/shell/money_bot
+	name = "money bot assembly"
+	icon_state = "setup_large-open"
+	shell_to_spawn = /obj/structure/money_bot
+
 /obj/item/shell/drone
 	name = "drone assembly"
 	icon_state = "setup_medium_med-open"
