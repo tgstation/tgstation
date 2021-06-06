@@ -307,6 +307,7 @@
 	name = "\improper Bananium HONK-spect scanner"
 	desc = "Honkmother-blessed inspection device. Performs inspections according to Clown protocols when activated, then \
 			prints a clowncrypted report regarding the maintenance of the station. Hard to replace."
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "bananium_inspector"
 	w_class = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
