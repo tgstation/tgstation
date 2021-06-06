@@ -278,7 +278,7 @@
 	else
 		print_time = 1 SECONDS
 		message = "LIGHTNING FAST."
-	
+
 	balloon_alert(user, "You turn the screw-like dial, setting the device's scanning speed to [message]")
 
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
@@ -391,12 +391,7 @@
 	scanned_area = scan_area
 	icon_state = "slipfull"
 
-	var/list/characters = list()
-	characters += GLOB.alphabet
-	characters += GLOB.alphabet_upper
-	characters += GLOB.numerals
-
-	var/new_info = list()
+	var/list/new_info = list()
 	for(var/i in 1 to rand(23, 123))
 		var/roll = rand(0, 1000)
 		switch(roll)
@@ -415,7 +410,6 @@
 	else if(scanned_area)
 		. += "<span class='notice'>\The [src] contains no data on a vague area on station, you should throw it away.</span>"
 	else if(info)
-		icon_state = "slipfull"
 		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
 	else
 		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
