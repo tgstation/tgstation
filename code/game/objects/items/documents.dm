@@ -331,6 +331,7 @@
 /obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	check_settings_legality()
+	return TRUE
 
 /obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -357,15 +358,15 @@
 
 /obj/item/inspector/clown/bananium/print_report(mob/user)
 	if(time_mode != INSPECTOR_TIME_MODE_HONK)
-		..()
-	else if(paper_charges == 0)
+		return ..()
+	if(paper_charges == 0)
 		if(cell.use(power_to_speak))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
 			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
-	else
-		paper_charges--
-		..()
+		return
+	paper_charges--
+	return ..()
 
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
 	var/message
