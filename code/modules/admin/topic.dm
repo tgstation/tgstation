@@ -190,8 +190,6 @@
 
 		log_admin("[key_name(usr)] undelayed the round end.")
 		message_admins("[key_name_admin(usr)] undelayed the round end.")
-		if(SSticker.ready_for_reboot) //we undelayed after standard reboot would occur
-			SSticker.standard_reboot()
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
 			return
