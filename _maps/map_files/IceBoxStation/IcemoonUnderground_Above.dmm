@@ -150,7 +150,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron,
 /area/mine/production)
 "aJ" = (
@@ -2916,6 +2916,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"sT" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/mine/storage)
 "sX" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -3654,7 +3657,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "Ac" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -4025,7 +4028,7 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "DR" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_x = -32
 	},
@@ -4724,7 +4727,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "JQ" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /obj/machinery/flasher/directional/west{
 	id = "GulagCell 3"
 	},
@@ -4941,7 +4944,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/production)
@@ -5212,7 +5215,7 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "NP" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "NR" = (
@@ -6399,7 +6402,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Yu" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /obj/machinery/flasher/directional/west{
 	id = "GulagCell 1"
 	},
@@ -6680,7 +6683,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "ZU" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /obj/machinery/flasher/directional/west{
 	id = "GulagCell 2"
 	},
@@ -32018,9 +32021,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+AF
+sT
+AF
 ak
 ak
 ak
@@ -32275,9 +32278,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+sT
+NH
+sT
 ak
 ak
 ak
@@ -32532,9 +32535,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+AF
+sT
+AF
 ak
 ak
 ak
@@ -32789,9 +32792,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+NH
+NH
+NH
 ak
 ak
 ak
@@ -33045,10 +33048,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+NH
+NH
+NH
+NH
 ak
 ak
 ak
@@ -33302,10 +33305,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+NH
+NH
+NH
+NH
 ak
 ak
 ak
@@ -33558,12 +33561,12 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
+NH
+NH
+NH
+NH
+NH
+NH
 ak
 ak
 ak
@@ -33818,9 +33821,9 @@ NH
 NH
 NH
 NH
-ak
-ak
-ak
+NH
+NH
+NH
 ak
 ak
 ak
@@ -34076,8 +34079,8 @@ NH
 NH
 NH
 NH
-ak
-ak
+NH
+NH
 ak
 ak
 ak

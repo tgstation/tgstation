@@ -217,6 +217,9 @@
 		return
 	if(DT_PROB(65, delta_time))
 		return
+	if(affected_carbon.stat >= SOFT_CRIT)
+		return
+
 	var/obj/item/organ/organ = pick(affected_carbon.internal_organs)
 	if(organ.low_threshold)
 		to_chat(affected_carbon, organ.low_threshold_passed)

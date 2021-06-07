@@ -264,6 +264,7 @@
 	F.default_ignite(location,release_amount)
 
 /obj/item/flamethrower/proc/instant_refill()
+	SIGNAL_HANDLER
 	if(ptank)
 		var/datum/gas_mixture/tank_mix = ptank.return_air()
 		tank_mix.assert_gas(/datum/gas/plasma)

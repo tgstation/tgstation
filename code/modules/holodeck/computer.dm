@@ -155,12 +155,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				checked |= emag_programs
 			var/valid = FALSE //dont tell security about this
 
-			for (var/prog in checked)//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
-				var/list/check_list = prog
-				if (check_list["id"] == program_to_load)
+			//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
+			for(var/list/check_list as anything in checked)
+				if(check_list["id"] == program_to_load)
 					valid = TRUE
 					break
-			if (!valid)
+			if(!valid)
 				return FALSE
 			//load the map_template that program_to_load represents
 			if(program_to_load)
@@ -175,8 +175,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
-	for (var/_turf in get_affected_turfs(placement))
-		var/turf/possible_blacklist = _turf
+	for(var/turf/possible_blacklist as anything in get_affected_turfs(placement))
 		if (possible_blacklist.holodeck_compatible)
 			continue
 		input_blacklist += possible_blacklist
@@ -208,21 +207,19 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	program = map_id
 
 	//clear the items from the previous program
-	for (var/_item in spawned)
-		var/obj/holo_item = _item
-		derez(holo_item)
+	for(var/holo_atom in spawned)
+		derez(holo_atom)
 
-	for (var/_effect in effects)
-		var/obj/effect/holodeck_effect/holo_effect = _effect
+	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		effects -= holo_effect
 		holo_effect.deactivate(src)
 
 	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
 	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
-	for (var/turf/closed/holo_turf in linked)
-		for (var/_baseturf in holo_turf.baseturfs)
-			if (ispath(_baseturf, /turf/open/floor/holofloor))
-				holo_turf.baseturfs -= _baseturf
+	for(var/turf/closed/holo_turf in linked)
+		for(var/baseturf in holo_turf.baseturfs)
+			if(ispath(baseturf, /turf/open/floor/holofloor))
+				holo_turf.baseturfs -= baseturf
 				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 
 	template = SSmapping.holodeck_templates[map_id]
@@ -243,58 +240,59 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()
-	//this is used for holodeck effects (like spawners). otherwise they dont do shit
-	//holo effects are taken out of the spawned list and added to the effects list
-	//turfs and overlay objects are taken out of the spawned list
-	//objects get resistance flags added to them
-	for (var/atom/atoms in spawned)
-		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
-		atoms.flags_1 |= HOLOGRAM_1
-
-		if (isholoeffect(atoms))//activates holo effects and transfers them from the spawned list into the effects list
-			var/obj/effect/holodeck_effect/holo_effect = atoms
-			effects += holo_effect
-			spawned -= holo_effect
-			var/atom/active_effect = holo_effect.activate(src)
-			if(istype(active_effect) || islist(active_effect))
-				spawned += active_effect // we want mobs or objects spawned via holoeffects to be tracked as objects
+	for(var/atom/holo_atom as anything in spawned)
+		if(QDELETED(holo_atom))
+			spawned -= holo_atom
 			continue
 
-		if (isobj(atoms))
-			var/obj/holo_object = atoms
+		RegisterSignal(holo_atom, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+		holo_atom.flags_1 |= HOLOGRAM_1
+
+		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
+			var/obj/effect/holodeck_effect/holo_effect = holo_atom
+			effects += holo_effect
+			spawned -= holo_effect
+			var/atom/holo_effect_product = holo_effect.activate(src)//change name
+			if(istype(holo_effect_product) || islist(holo_effect_product))
+				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
+			continue
+
+		if(isobj(holo_atom))
+			var/obj/holo_object = holo_atom
 			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-			if (isstructure(holo_object))
+			if(isstructure(holo_object))
 				holo_object.flags_1 |= NODECONSTRUCT_1
 				continue
 
-			if (ismachinery(holo_object))
-				var/obj/machinery/machines = holo_object
-				machines.flags_1 |= NODECONSTRUCT_1
-				machines.power_change()
+			if(ismachinery(holo_object))
+				var/obj/machinery/holo_machine = holo_object
+				holo_machine.flags_1 |= NODECONSTRUCT_1
+				holo_machine.power_change()
 
-				if(istype(machines, /obj/machinery/button))
-					var/obj/machinery/button/buttons = machines
-					buttons.setup_device()
+				if(istype(holo_machine, /obj/machinery/button))
+					var/obj/machinery/button/holo_button = holo_machine
+					holo_button.setup_device()
+
 	spawning_simulation = FALSE
 
 ///this qdels holoitems that should no longer exist for whatever reason
-/obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
-	spawned -= object
-	if(!object)
+/obj/machinery/computer/holodeck/proc/derez(atom/movable/holo_atom, silent = TRUE, forced = FALSE)
+	spawned -= holo_atom
+	if(!holo_atom)
 		return
-	UnregisterSignal(object, COMSIG_PARENT_PREQDELETED)
-	var/turf/target_turf = get_turf(object)
-	for(var/c in object) //make sure that things inside of a holoitem are moved outside before destroying it
-		var/atom/movable/object_contents = c
-		object_contents.forceMove(target_turf)
+	UnregisterSignal(holo_atom, COMSIG_PARENT_PREQDELETED)
+	var/turf/target_turf = get_turf(holo_atom)
+	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
+		atom_contents.forceMove(target_turf)
 
 	if(!silent)
-		visible_message("<span class='notice'>[object] fades away!</span>")
+		visible_message("<span class='notice'>[holo_atom] fades away!</span>")
 
-	qdel(object)
+	qdel(holo_atom)
 
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
+	SIGNAL_HANDLER
 	spawned -= to_remove
 	UnregisterSignal(to_remove, COMSIG_PARENT_PREQDELETED)
 
@@ -322,8 +320,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		for(var/item in spawned)
 			if(!(get_turf(item) in linked))
 				derez(item)
-	for(var/_effect in effects)
-		var/obj/effect/holodeck_effect/holo_effect = _effect
+	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
@@ -365,8 +362,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		return
 	for(var/obj/item/to_be_nerfed in spawned)
 		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
-	for(var/to_be_nerfed in effects)
-		var/obj/effect/holodeck_effect/holo_effect = to_be_nerfed
+	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.safety(nerf_this)
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)

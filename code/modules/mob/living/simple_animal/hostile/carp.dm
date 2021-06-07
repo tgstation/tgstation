@@ -21,9 +21,6 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	food_type = list(/obj/item/food/meat)
-	tame_chance = 10
-	bonus_tame_chance = 5
 	search_objects = 1
 	wanted_objects = list(/obj/item/storage/cans)
 	harm_intent_damage = 8
@@ -71,14 +68,19 @@
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
 	AddElement(/datum/element/simple_flying)
 	if(random_color)
-		set_greyscale_config(/datum/greyscale_config/carp)
+		set_greyscale(new_config=/datum/greyscale_config/carp)
 		carp_randomify(rarechance)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
 
+
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+
+/mob/living/simple_animal/hostile/carp/proc/make_tameable()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /**
  * Randomly assigns a color to a carp from either a common or rare color variant lists
@@ -90,10 +92,10 @@
 	var/our_color
 	if(prob(rarechance))
 		our_color = pick(carp_colors_rare)
-		set_greyscale_colors(list(carp_colors_rare[our_color]))
+		set_greyscale(colors=list(carp_colors_rare[our_color]))
 	else
 		our_color = pick(carp_colors)
-		set_greyscale_colors(list(carp_colors[our_color]))
+		set_greyscale(colors=list(carp_colors[our_color]))
 
 /mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
@@ -115,8 +117,7 @@
 	if(stat == CONSCIOUS)
 		chomp_plastic()
 
-/mob/living/simple_animal/hostile/carp/tamed()
-	. = ..()
+/mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
@@ -128,9 +129,10 @@
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 	random_color = FALSE
-	food_type = list()
-	tame_chance = 0
-	bonus_tame_chance = 0
+
+
+/mob/living/simple_animal/hostile/carp/holocarp/make_tameable()
+	return
 
 /mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
 	return
@@ -150,9 +152,6 @@
 	base_pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 	random_color = FALSE
-	food_type = list()
-	tame_chance = 0
-	bonus_tame_chance = 0
 
 	obj_damage = 80
 	melee_damage_lower = 20
@@ -168,6 +167,9 @@
 	maxHealth += rand(30,60)
 	move_to_delay = rand(3,7)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/mob/living/simple_animal/hostile/carp/megacarp/make_tameable()
+	return
 
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -206,13 +208,13 @@
 	icon_state = "magicarp"
 	maxHealth = 200
 	random_color = FALSE
-	food_type = list()
-	tame_chance = 0
-	bonus_tame_chance = 0
 
 /mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
+
+/mob/living/simple_animal/hostile/carp/lia/make_tameable()
+	return
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
@@ -223,9 +225,6 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
-	food_type = list()
-	tame_chance = 0
-	bonus_tame_chance = 0
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
@@ -239,6 +238,9 @@
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
+
+/mob/living/simple_animal/hostile/carp/cayenne/make_tameable()
+	return
 
 /mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
 	if(disky)

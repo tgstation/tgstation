@@ -259,7 +259,7 @@
 
 	data["power_level"] = connected_core.power_level
 	data["iron_content"] = connected_core.iron_content
-	data["integrity"] = connected_core.get_integrity()
+	data["integrity"] = connected_core.get_integrity_percent()
 
 	data["start_power"] = connected_core.start_power
 	data["start_cooling"] = connected_core.start_cooling

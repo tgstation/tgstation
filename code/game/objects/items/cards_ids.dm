@@ -431,14 +431,8 @@
 	if(istype(W, /obj/item/rupee))
 		to_chat(user, "<span class='warning'>Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!</span>")
 		return
-	else if(istype(W, /obj/item/holochip))
+	else if(iscash(W))
 		insert_money(W, user)
-		return
-	else if(istype(W, /obj/item/stack/spacecash))
-		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/coin))
-		insert_money(W, user, TRUE)
 		return
 	else if(istype(W, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = W
@@ -458,7 +452,11 @@
  * user - The user inserting the item.
  * physical_currency - Boolean, whether this is a physical currency such as a coin and not a holochip.
  */
-/obj/item/card/id/proc/insert_money(obj/item/money, mob/user, physical_currency)
+/obj/item/card/id/proc/insert_money(obj/item/money, mob/user)
+	var/physical_currency
+	if(istype(money, /obj/item/stack/spacecash) || istype(money, /obj/item/coin))
+		physical_currency = TRUE
+
 	if(!registered_account)
 		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [money] into!</span>")
 		return
@@ -744,7 +742,7 @@
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
 /obj/item/card/id/advanced/Destroy()
-	UnregisterSignal(src, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	return ..()
 
@@ -784,8 +782,9 @@
 	update_label()
 
 /obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/computer_hardware/card_slot/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
 	if(istype(old_loc, /obj/item/modular_computer/tablet))
-		UnregisterSignal(old_loc, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(source.loc, /obj/item/modular_computer/tablet))
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
@@ -795,7 +794,7 @@
 	. = ..()
 
 	if(istype(OldLoc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
-		UnregisterSignal(OldLoc, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
 		var/obj/item/computer_hardware/card_slot/slot = OldLoc
@@ -804,7 +803,7 @@
 
 		if(istype(slot.holder, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
-			UnregisterSignal(slot_holder, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(loc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
@@ -1159,7 +1158,7 @@
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+		var/popup_input = tgui_alert(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())
 			return
 		if(!user.is_holding(src))
@@ -1179,7 +1178,7 @@
 
 				registered_name = input_name
 
-				var/change_trim = alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", "Yes", "No")
+				var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
 				if(change_trim == "Yes")
 					var/list/blacklist = typecacheof(type) + typecacheof(/obj/item/card/id/advanced/simple_bot)
 					var/list/trim_list = list()

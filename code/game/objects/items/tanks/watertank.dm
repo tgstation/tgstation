@@ -268,12 +268,12 @@
 	return
 
 /obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
+	if(AttemptRefill(target, user))
+		return
 	if(nozzle_mode == EXTINGUISHER)
 		..()
 		return
 	var/Adj = user.Adjacent(target)
-	if(Adj)
-		AttemptRefill(target, user)
 	if(nozzle_mode == RESIN_LAUNCHER)
 		if(Adj)
 			return //Safety check so you don't blast yourself trying to refill your tank

@@ -223,7 +223,8 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
-	update_greyscale()
+	if(greyscale_config && greyscale_colors)
+		update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -471,6 +472,7 @@
 
 ///Check if this atoms eye is still alive (probably)
 /atom/proc/check_eye(mob/user)
+	SIGNAL_HANDLER
 	return
 
 /atom/proc/Bumped(atom/movable/AM)
@@ -726,31 +728,25 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
-/// Checks if the colors given are different and if so causes a greyscale icon update
-/// The colors argument can be either a list or the full color string
-/atom/proc/set_greyscale_colors(list/colors, update=TRUE)
+/// Handles updates to greyscale value updates.
+/// The colors argument can be either a list or the full color string.
+/// Child procs should call parent last so the update happens after all changes.
+/atom/proc/set_greyscale(list/colors, new_config)
 	SHOULD_CALL_PARENT(TRUE)
 	if(istype(colors))
 		colors = colors.Join("")
-	if(greyscale_colors == colors)
-		return
-	greyscale_colors = colors
-	if(!greyscale_config)
-		return
-	if(update)
-		update_greyscale()
+	if(!isnull(colors) && greyscale_colors != colors) // If you want to disable greyscale stuff then give a blank string
+		greyscale_colors = colors
 
-/// Checks if the greyscale config given is different and if so causes a greyscale icon update
-/atom/proc/set_greyscale_config(new_config, update=TRUE)
-	if(greyscale_config == new_config)
-		return
-	greyscale_config = new_config
-	if(update)
-		update_greyscale()
+	if(!isnull(new_config) && greyscale_config != new_config)
+		greyscale_config = new_config
 
-/// Checks if this atom uses the GAS system and if so updates the icon
+	update_greyscale()
+
+/// Checks if this atom uses the GAGS system and if so updates the icon
 /atom/proc/update_greyscale()
-	if(greyscale_config && greyscale_colors)
+	SHOULD_CALL_PARENT(TRUE)
+	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
@@ -1217,7 +1213,7 @@
 
 		if(reagents)
 			var/chosen_id
-			switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+			switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
 				if("Search")
 					var/valid_id
 					while(!valid_id)
@@ -1288,7 +1284,7 @@
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
-		if(newname && !(CHAT_FILTER_CHECK(newname) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") != "Confirm"))
+		if(newname && !(CHAT_FILTER_CHECK(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
@@ -1435,8 +1431,13 @@
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			var/atom/created_atom = new atom_to_create(drop_location())
-			created_atom.pixel_x = rand(-8, 8)
-			created_atom.pixel_y = rand(-8, 8)
+			if(custom_materials)
+				created_atom.set_custom_materials(custom_materials, 1 / chosen_option[TOOL_PROCESSING_AMOUNT])
+			created_atom.pixel_x = pixel_x
+			created_atom.pixel_y = pixel_y
+			if(i > 1)
+				created_atom.pixel_x += rand(-8,8)
+				created_atom.pixel_y += rand(-8,8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")

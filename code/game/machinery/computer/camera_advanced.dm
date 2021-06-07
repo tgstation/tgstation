@@ -195,7 +195,7 @@
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
-	return 1
+	return TRUE
 
 /mob/camera/ai_eye/remote/Destroy()
 	if(origin && eye_user)
@@ -215,16 +215,19 @@
 		return TRUE
 	return FALSE
 
-/mob/camera/ai_eye/remote/setLoc(T)
+/mob/camera/ai_eye/remote/setLoc(destination)
 	if(eye_user)
-		T = get_turf(T)
-		if (T)
-			forceMove(T)
+		destination = get_turf(destination)
+		if (destination)
+			abstract_move(destination)
 		else
 			moveToNullspace()
+
 		update_ai_detect_hud()
-		if(use_static != FALSE)
+
+		if(use_static)
 			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
+
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image

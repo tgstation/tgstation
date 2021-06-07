@@ -1,12 +1,13 @@
 /datum/surgery/advanced/viral_bonding
 	name = "Viral Bonding"
 	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/viral_bond,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/viral_bond,
+		/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
@@ -20,7 +21,10 @@
 
 /datum/surgery_step/viral_bond
 	name = "viral bond"
-	implements = list(TOOL_CAUTERY = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
+	implements = list(
+		TOOL_CAUTERY = 100,
+		TOOL_WELDER = 50,
+		/obj/item = 30) // 30% success with any hot item.
 	time = 100
 	chems_needed = list(/datum/reagent/medicine/spaceacillin,/datum/reagent/consumable/virus_food,/datum/reagent/toxin/formaldehyde)
 
@@ -39,7 +43,6 @@
 	display_results(user, target, "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>",
 		"<span class='notice'>[target]'s bone marrow begins pulsing slowly.</span>",
 		"<span class='notice'>[user] finishes the operation.</span>")
-	for(var/X in target.diseases)
-		var/datum/disease/D = X
-		D.carrier = TRUE
+	for(var/datum/disease/infected_disease as anything in target.diseases)
+		infected_disease.carrier = TRUE
 	return TRUE
