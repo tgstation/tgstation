@@ -66,7 +66,7 @@
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
-		return
+		return ..() //this runs the plunger code
 
 	if(discovered)
 		to_chat(user, "<span class='warning'>This geyser has already been discovered!</span>")

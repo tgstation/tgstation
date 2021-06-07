@@ -39,6 +39,19 @@ GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(aiEyes)
 GLOBAL_LIST_EMPTY(suit_sensors_list) //all people with suit sensors on
 GLOBAL_LIST_EMPTY(nanite_sensors_list) //app people with nanite monitoring program
+
+/// All alive mobs with clients.
+GLOBAL_LIST_EMPTY(alive_player_list)
+
+/// All dead mobs with clients. Does not include observers.
+GLOBAL_LIST_EMPTY(dead_player_list)
+
+/// All alive antags with clients.
+GLOBAL_LIST_EMPTY(current_living_antags)
+
+/// All observers with clients that joined as observers.
+GLOBAL_LIST_EMPTY(current_observers_list)
+
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
 

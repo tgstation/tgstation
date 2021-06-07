@@ -116,7 +116,7 @@
 				return
 			current_pad.display_name = new_name
 		if("remove")
-			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
+			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) != "Abort")
 				launchpads -= current_pad
 				selected_id = null
 			. = TRUE

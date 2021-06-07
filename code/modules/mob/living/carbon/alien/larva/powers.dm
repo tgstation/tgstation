@@ -42,7 +42,7 @@
 		to_chat(L, "<span class='name'>Hunters</span> <span class='info'>are the most agile caste, tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>")
 		to_chat(L, "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive. With their ranged spit, invisibility, and high health, they make formidable guardians and acceptable secondhand hunters.</span>")
 		to_chat(L, "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into a praetorian and then queen if no queen exists, and are vital to maintaining a hive with their resin secretion abilities.</span>")
-		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
+		var/alien_caste = tgui_alert(L, "Please choose which alien caste you shall belong to.",,list("Hunter","Sentinel","Drone"))
 
 		if(L.movement_type & VENTCRAWLING)
 			to_chat(user, "<span class='warning'>You cannot evolve while ventcrawling!</span>")

@@ -49,6 +49,7 @@
 
 ///Used to clean up variables after the card has been removed, unregisters the removal signal, sets inserted ID to null, and updates the icon.
 /obj/machinery/accounting/proc/remove_card()
+	SIGNAL_HANDLER
 	UnregisterSignal(inserted_id, COMSIG_PARENT_QDELETING)
 	inserted_id = null
 	update_appearance()

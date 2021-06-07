@@ -523,7 +523,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			else
 				transfered = TRUE
 		//All is good.
-		holo.forceMove(new_turf)
+		holo.abstract_move(new_turf)
 		if(!transfered)
 			update_holoray(user,new_turf)
 	return TRUE

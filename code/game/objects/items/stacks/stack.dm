@@ -63,6 +63,9 @@
 		for(var/obj/item/stack/S in loc)
 			if(can_merge(S))
 				INVOKE_ASYNC(src, .proc/merge, S)
+				//Merge can call qdel on us, so let's be safe yeah?
+				if(QDELETED(src))
+					return
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)

@@ -1,6 +1,0 @@
-author: "Twaticus"
-delete-after: True
-changes: 
-  - imageadd: "New corner variants for the textured and smooth tiles"
-  - imageadd: "New normal, white and dark tile variants"
-  - imageadd: "New dark corner decal"

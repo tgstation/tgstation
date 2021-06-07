@@ -361,62 +361,10 @@
 	///counts time passed since it ate food
 	var/hunger = 0
 
-/obj/item/storage/backpack/duffelbag/cursed/examine(mob/user)
+/obj/item/storage/backpack/duffelbag/cursed/Initialize()
 	. = ..()
-
-	if(hunger > 25)
-		. += "<span class='danger'>The bag is growling for food...</span>"
-
-/obj/item/storage/backpack/duffelbag/cursed/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	START_PROCESSING(SSobj,src)
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-	ADD_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
-	ADD_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
-	ADD_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
-
-/obj/item/storage/backpack/duffelbag/cursed/dropped(mob/living/carbon/human/user)
-	REMOVE_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
-	STOP_PROCESSING(SSobj,src)
-
-	var/turf/T = get_turf(user)
-	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/vomit(T)
-
-	. = ..()
-
-/obj/item/storage/backpack/duffelbag/cursed/process()
-
-	var/mob/living/carbon/user = loc
-	///check hp
-	if(obj_integrity == 0)
-		user.dropItemToGround(src, TRUE)
-	hunger++
-	///check hunger
-	if((hunger > 50) && prob(20))
-		for(var/obj/item/I in contents)
-			if(IS_EDIBLE(I))
-				var/obj/item/food/hunger_breaks = I //If you fed them poundland microwave meals, it probably would kill them
-				hunger_breaks.forceMove(user.loc)
-				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-				///poisoned food damages it
-				if(istype(hunger_breaks, /obj/item/food/badrecipe))
-					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
-					obj_integrity -= 50
-				else
-					to_chat(user, "<span class='notice'>The [name] eats your [hunger_breaks]!</span>")
-				QDEL_NULL(hunger_breaks)
-				hunger = 0
-				return
-		///no food found: it bites you and loses some hp
-		var/affecting = user.get_bodypart(BODY_ZONE_CHEST)
-		user.apply_damage(60, BRUTE, affecting)
-		hunger = initial(hunger)
-		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-		to_chat(user, "<span class='warning'>The [name] eats your back!</span>")
-		obj_integrity -= 25
+	var/add_dropdel = TRUE //clarified boolean
+	AddComponent(/datum/component/curse_of_hunger, add_dropdel)
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"

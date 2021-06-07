@@ -1,7 +1,6 @@
 
 GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
-
 /**
  * The highlander controller handles the admin highlander mode, if enabled.
  * It is first created when "there can only be one" triggers it, and it can be referenced from GLOB.highlander_controller
@@ -73,7 +72,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
  */
 /client/proc/only_one(was_delayed = FALSE)
 	if(!SSticker.HasRoundStarted())
-		alert("The game hasn't started yet!")
+		tgui_alert(usr,"The game hasn't started yet!")
 		return
 
 	if(was_delayed) //sends more accurate logs

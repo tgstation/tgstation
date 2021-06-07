@@ -141,16 +141,17 @@
 	duffelvictim.apply_damage(80, STAMINA)
 	duffelvictim.Knockdown(5 SECONDS)
 
-	if(HAS_TRAIT(target, TRAIT_DUFFEL_CURSED))
+	if(HAS_TRAIT(target, TRAIT_DUFFEL_CURSE_PROOF))
 		to_chat(user, "<span class='warning'>The burden of [duffelvictim]'s duffel bag becomes too much, shoving them to the floor!</span>")
 		to_chat(duffelvictim, "<span class='warning'>The weight of this bag becomes overburdening!</span>")
 		return ..()
-	
-	var/obj/item/storage/backpack/duffelbag/cursed/conjuredduffel= new get_turf(target)
+
+	var/obj/item/storage/backpack/duffelbag/cursed/conjuredduffel = new get_turf(target)
 
 	duffelvictim.visible_message("<span class='danger'>A growling duffel bag appears on [duffelvictim]!</span>", \
 						   "<span class='danger'>You feel something attaching itself to you, and a strong desire to discuss your [elaborate_backstory] at length!</span>")
 
+	ADD_TRAIT(duffelvictim, TRAIT_DUFFEL_CURSE_PROOF, CURSED_ITEM_TRAIT(conjuredduffel.name))
 	if(duffelvictim.dropItemToGround(duffelvictim.back))
 		duffelvictim.equip_to_slot_if_possible(conjuredduffel, ITEM_SLOT_BACK, TRUE, TRUE)
 	else

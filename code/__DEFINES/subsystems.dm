@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 12
+#define DB_MINOR_VERSION 14
 
 
 //! ## Timing subsystem
@@ -189,6 +189,7 @@
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_EXPLOSIONS 666
 #define FIRE_PRIORITY_TIMER 700
+#define FIRE_PRIORITY_SOUND_LOOPS 800
 #define FIRE_PRIORITY_INPUT 1000 // This must always always be the max highest priority. Player input must never be lost.
 
 

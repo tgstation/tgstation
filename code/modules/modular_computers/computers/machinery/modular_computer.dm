@@ -82,7 +82,7 @@
 	else
 		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
 
-	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
+	if(cpu && cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
 		. += "bsod"
 		. += "broken"
 

@@ -6,6 +6,9 @@
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+
+	greyscale_config = /datum/greyscale_config/wirecutters
+
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
@@ -37,9 +40,8 @@
 
 /obj/item/wirecutters/Initialize()
 	if(random_color)
-		set_greyscale_config(/datum/greyscale_config/wirecutters)
 		var/our_color = pick(wirecutter_colors)
-		set_greyscale_colors(list(wirecutter_colors[our_color]))
+		set_greyscale(colors=list(wirecutter_colors[our_color]))
 	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)

@@ -67,7 +67,10 @@
 		objective_count++
 
 	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
-	for(var/i in objective_count to objective_limit)
+
+	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
+	// This does not give them 1 fewer objectives than intended.
+	for(var/i in objective_count to objective_limit - 1)
 		forge_single_generic_objective()
 
 	if(is_hijacker)
@@ -274,10 +277,6 @@
 					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
 
 	return message
-
-
-/datum/antagonist/traitor/is_gamemode_hero()
-	return SSticker.mode.name == "traitor"
 
 #undef HIJACK_PROB
 #undef HIJACK_MIN_PLAYERS

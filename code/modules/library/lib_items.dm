@@ -250,7 +250,7 @@
 		if(!literate)
 			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
 			return
-		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
+		var/choice = tgui_input_list(usr, "What would you like to change?",,list("Title", "Contents", "Author", "Cancel"))
 		if(!user.canUseTopic(src, BE_CLOSE, literate))
 			return
 		switch(choice)

@@ -272,7 +272,7 @@ but only permanently removed with the curator's soapstone.
 		if("delete")
 			if(!is_admin)
 				return
-			var/confirm = alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", "Yes", "No")
+			var/confirm = tgui_alert(user, "Confirm deletion of engraved message?", "Confirm Deletion", list("Yes", "No"))
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)

@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - refactor: "Malf AI and Traitor are now unique antags with a dedicated dynamic ruleset for rolling them and different entries on the traitor panel. The roundstart traitor ruleset can no longer roll malf AIs, which is what the malf AI ruleset does in its place."
-  - bugfix: "Geneticists finally join their fellow members of science in being unable to get the download research notes objective."

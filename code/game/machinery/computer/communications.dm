@@ -211,6 +211,8 @@
 			if (bank_account.account_balance < shuttle.credit_cost)
 				return
 			SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
+			for(var/datum/round_event_control/shuttle_insurance/insurance_event in SSevents.control)
+				insurance_event.weight *= 20
 			SSshuttle.unload_preview()
 			SSshuttle.existing_shuttle = SSshuttle.emergency
 			SSshuttle.action_load(shuttle, replace = TRUE)

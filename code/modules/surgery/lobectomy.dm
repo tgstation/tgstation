@@ -1,15 +1,18 @@
 /datum/surgery/lobectomy
 	name = "Lobectomy" //not to be confused with lobotomy
 	steps = list(
-		/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
-		/datum/surgery_step/lobectomy, /datum/surgery_step/close,
-	)
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/lobectomy,
+		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/lungs/L = target.getorganslot(ORGAN_SLOT_LUNGS)
-	if(L)
-		if(L.damage > 60 && !L.operated)
+	var/obj/item/organ/lungs/target_lungs = target.getorganslot(ORGAN_SLOT_LUNGS)
+	if(target_lungs)
+		if(target_lungs.damage > 60 && !target_lungs.operated)
 			return TRUE
 	return FALSE
 
@@ -17,7 +20,10 @@
 //lobectomy, removes the most damaged lung lobe with a 95% base success chance
 /datum/surgery_step/lobectomy
 	name = "excise damaged lung node"
-	implements = list(TOOL_SCALPEL = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
+	implements = list(
+		TOOL_SCALPEL = 95,
+		/obj/item/melee/transforming/energy/sword = 65,
+		/obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 42
 
@@ -28,21 +34,21 @@
 
 /datum/surgery_step/lobectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
-		L.operated = TRUE
-		H.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
-		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
-			"<span class='notice'>Successfully removes a piece of [H]'s lungs.</span>",
+		var/mob/living/carbon/human/human_target = target
+		var/obj/item/organ/lungs/target_lungs = human_target.getorganslot(ORGAN_SLOT_LUNGS)
+		target_lungs.operated = TRUE
+		human_target.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
+		display_results(user, target, "<span class='notice'>You successfully excise [human_target]'s most damaged lobe.</span>",
+			"<span class='notice'>Successfully removes a piece of [human_target]'s lungs.</span>",
 			"")
 	return ..()
 
 /datum/surgery_step/lobectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		display_results(user, target, "<span class='warning'>You screw up, failing to excise [H]'s damaged lobe!</span>",
+		var/mob/living/carbon/human/human_target = target
+		display_results(user, target, "<span class='warning'>You screw up, failing to excise [human_target]'s damaged lobe!</span>",
 			"<span class='warning'>[user] screws up!</span>",
 			"<span class='warning'>[user] screws up!</span>")
-		H.losebreath += 4
-		H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
+		human_target.losebreath += 4
+		human_target.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
 	return FALSE

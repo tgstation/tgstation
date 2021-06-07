@@ -62,10 +62,7 @@
 	},
 /area/ruin/space/oldteleporter)
 "n" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 
