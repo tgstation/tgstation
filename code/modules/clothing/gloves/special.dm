@@ -32,6 +32,12 @@
 
 	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
 
+/*
+ * Called when the glove is unequipped. Deletes the component if one exists.
+ *
+ * No component being associated on equip is a valid state, as holding the gloves in your hands also counts
+ * as having them equipped, or even in pockets. They only give the component when they're worn on the hands.
+ */
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_unequip(datum/source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
