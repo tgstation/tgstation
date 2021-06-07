@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Players with zero living time will now be caught as expected by a default config soft panic bunker."
