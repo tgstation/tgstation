@@ -290,19 +290,19 @@
 
 /obj/item/kisser/obliteration
 	name = "kiss of obliteration"
-	desc = "If looks could kill, they'd be this."
+	desc = "Guaranteed to shred someone's heart from the inside out."
 	color = COLOR_BLACK
 	kiss_type = /obj/projectile/kiss/obliteration
 
 /obj/item/kisser/life
 	name = "kiss of life"
-	desc = "If looks could kill, they'd be this."
+	desc = "Operates on the same magic that makes mom kisses heal your scraped elbow."
 	color = COLOR_BLUE
 	kiss_type = /obj/projectile/kiss/life
 
 /obj/item/kisser/rebirth
 	name = "kiss of rebirth"
-	desc = "If looks could kill, they'd be this."
+	desc = "Like a bolt of healing, but more loving."
 	color = COLOR_VIVID_YELLOW
 	kiss_type = /obj/projectile/kiss/rebirth
 

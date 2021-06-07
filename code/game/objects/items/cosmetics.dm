@@ -30,7 +30,7 @@
 
 /obj/item/lipstick/black/obliteration
 	name = "\improper Kiss of Obliteration"
-	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	desc = "A lipstick that could only have been dreamed up by the most angsty and heartbroken of country music artists, literally capable of destroying the hearts of anyone hit by one."
 	lipstick_trait = TRAIT_KISS_OF_OBLITERATION
 
 /obj/item/lipstick/blue
@@ -39,12 +39,12 @@
 
 /obj/item/lipstick/blue/life
 	name = "\improper Kiss of Life"
-	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	desc = "A powerful tube of lipstick that grants the wearer the ability to blow kisses that provide healing to the recepients, as long as they don't wander off too far."
 	lipstick_trait = TRAIT_KISS_OF_LIFE
 
 /obj/item/lipstick/blue/rebirth
 	name = "\improper Kiss of Rebirth"
-	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
+	desc = "A unique line of lipstick produced by the Space Wizard's Federation providing an alternative to bulky wands and staves for their revival abilities. Not actually very fashionable, though."
 	lipstick_trait = TRAIT_KISS_OF_REBIRTH
 
 /obj/item/lipstick/random
