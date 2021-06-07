@@ -270,6 +270,7 @@
 	. = list("<span class='notice'>Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.</span>")
 	. += "\t<span class='info'>The first dial is labeled \"SPEED\" and looks a bit like a <strong>screw</strong> head.</span>"
 	. += "\t<span class='info'>The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?</span>"
+	. += "\t<span class='info'>A small bananium part labeled \"ADVANCED WATER CHIP 23000000\" is visible within the battery compartment. It looks completely unlike any other modern electrical part, disturbing it would be rather unwise.</span>"
 
 
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
