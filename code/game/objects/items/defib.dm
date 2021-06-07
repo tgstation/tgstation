@@ -25,6 +25,11 @@
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
+	var/paddle_state = "defibunit-paddles"
+	var/powered_state = "defibunit-powered"
+	var/charge_state = "defibunit-charge"
+	var/nocell_state = "defibunit-nocell"
+	var/emagged_state = "defibunit-emagged"
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -73,18 +78,18 @@
 /obj/item/defibrillator/update_overlays()
 	. = ..()
 
-	if(!on)
-		. += "[initial(icon_state)]-paddles"
-	if(powered)
-		. += "[initial(icon_state)]-powered"
-		if(!QDELETED(cell))
+	if(!on && paddle_state)
+		. += paddle_state
+	if(powered && powered_state)
+		. += powered_state
+		if(!QDELETED(cell) && charge_state)
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
-			. += "[initial(icon_state)]-charge[ratio]"
-	if(!cell)
-		. += "[initial(icon_state)]-nocell"
-	if(!safety)
-		. += "[initial(icon_state)]-emagged"
+			. += "[charge_state][ratio]"
+	if(!cell && nocell_state)
+		. += "[nocell_state]"
+	if(!safety && emagged_state)
+		. += emagged_state
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
@@ -252,6 +257,11 @@
 	worn_icon_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
+	paddle_state = "defibcompact-paddles"
+	powered_state = "defibcompact-powered"
+	charge_state = "defibcompact-charge"
+	nocell_state = "defibcompact-nocell"
+	emagged_state = "defibcompact-emagged"
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())
@@ -272,6 +282,9 @@
 	safety = FALSE
 	cooldown_duration = 2.5 SECONDS
 	paddle_type = /obj/item/shockpaddles/syndicate
+	paddle_state = "defibcombat-paddles"
+	powered_state = null
+	emagged_state = null
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
@@ -290,6 +303,7 @@
 	inhand_icon_state = "defibnt"
 	worn_icon_state = "defibnt"
 	paddle_type = /obj/item/shockpaddles/syndicate/nanotrasen
+	paddle_state = "defibnt-paddles"
 
 //paddles
 

@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
-	modifystate = 1
+	modifystate = TRUE
 	can_flashlight = TRUE
 	ammo_x_offset = 3
 	flight_x_offset = 15
@@ -69,6 +69,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
+	modifystate = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	can_flashlight = FALSE
 	ammo_x_offset = 1

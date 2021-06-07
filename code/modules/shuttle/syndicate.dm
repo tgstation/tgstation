@@ -39,6 +39,7 @@
 	desc = "Controls the drop pod's launch system."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	icon_keyboard = null
 	light_color = LIGHT_COLOR_BLUE
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"

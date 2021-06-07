@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/machines/cryopod.dmi'
 	icon_state = "cellconsole_1"
+	icon_keyboard = null
 	// circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
