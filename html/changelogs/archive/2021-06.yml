@@ -90,3 +90,63 @@
   peptron1:
   - rscadd: Ghosts can now find out how much power is in the network by examining
       cables
+2021-06-07:
+  'ArcaneMusic, Celotajs: ft PowerfulBacon':
+  - rscadd: Modular, GAGS winter coats and sprites.
+  - imageadd: New, high impact winter coat sprites from beestation.
+  Cimika, with thanks to NamelessFairy for additional patterns and AdipemDragon for the spray icon.:
+  - rscadd: Added the ability to dye your hair with gradients by using a hair dye
+      spray.
+  - rscadd: The new Colorist quirk, allowing you to spawn with a hair dye spray.
+  Gamer025:
+  - bugfix: The message for new duplicate keybinds should only appear once now
+  - bugfix: Resetting your keybinds to classic mode works correctly now
+  - bugfix: Hotkey mode is now actually used when new hotkeys with a default setting
+      are added
+  - bugfix: You will no longer get a duplicate keybinding conflict message for new
+      hotkeys with no default key, they will just be silently set to unbound
+  Ghilker:
+  - bugfix: fix temperature pump exploit that allows the users to go over 1e8 limiter.
+      This is done by a power usage equation that become exponential upon reaching
+      3e7 and will eat through the room APC charge (so no makeshift power drain).
+  Krysonism:
+  - imageadd: The circuit multitool has a new sprite.
+  ModDownloading:
+  - rscadd: audio_cooldown, a var for coders to use in new emotes to add a cooldown
+      for sounds when the emote is used voluntarily.
+  - rscadd: Clapping and laughing now have 5-second audio cooldowns.
+  NamelessFairy:
+  - bugfix: DeusVend's name is now consistent across both the vendor and restocking
+      unit
+  SmArtKar:
+  - bugfix: Fixed wrong icons in Orion Trail general market event
+  Watermelon914:
+  - rscadd: Added the Internal GPS, Direction, Health, Pull and Signal Combiner circuit
+      components.
+  - rscadd: Added the Money Bot shell which can dispense and receive money and also
+      added the ability to lock shells by scanning your ID over the circuit and then
+      over the shell once inside the shell.
+  - rscadd: You can now rename integrated circuits so that they appear on the attached
+      shell.
+  - code_imp: Restructured the circuit components folder to be more organised.
+  Y0SH1M4S73R:
+  - spellcheck: The text for the surrender emote is now grammatically consistent.
+  ninjanomnom:
+  - qol: Additional information was added to the greyscale configuration menu in the
+      form of tooltips.
+  - qol: You can now randomize the colors in the greyscale configuration menu.
+  - qol: The configuration that a layer is from is now displayed in the full version
+      of the greyscale configuration menu.
+  - bugfix: The full version of the greyscale configuration menu now properly displays
+      all layer steps again.
+  tralezab:
+  - admin: Sorted the traitor panel a bit.
+  - rscadd: anonymous names feature content
+  - spellcheck: any reference to ai triumvirate as "tripAI" has been obliterated.
+      use the right case next time, jagoff
+  - code_imp: Moved ai triumvirate off SSTicker
+  - refactor: ai triumvirate is now a singleton datum controller
+  - admin: anonymous names has two new themes and some optional enabled theme features
+  vincentiusvin:
+  - qol: Ghosts can open NT CIMS (SM monitor) by clicking the Supermatter Crystal.
+  - rscdel: Removed the EER from the examine text
