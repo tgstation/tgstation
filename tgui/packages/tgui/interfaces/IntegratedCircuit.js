@@ -168,13 +168,21 @@ export class IntegratedCircuit extends Component {
 
   render() {
     const { act, data } = useBackend(this.context);
-    const { components } = data;
+    const { components, display_name } = data;
     const { locations } = this.state;
 
     return (
       <Window
         width={600}
         height={600}
+        buttons={(
+          <Input
+            fluid
+            placeholder="Circuit Name"
+            value={display_name}
+            onChange={(e, value) => act("set_display_name", { display_name: value })}
+          />
+        )}
       >
         <Window.Content
           style={{

@@ -13,7 +13,7 @@
 	/// The result from the output
 	var/datum/port/output/output
 
-	has_trigger = TRUE
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 	COMP_ARITHMETIC_ADD,
@@ -72,4 +72,4 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 				result = min(result, value)
 
 	output.set_output(result)
-	trigger_output.set_output(COMPONENT_SIGNAL)
+

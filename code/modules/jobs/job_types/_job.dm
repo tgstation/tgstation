@@ -99,8 +99,6 @@
 	var/list/splits = splittext(string_type, "/")
 	var/endpart = splits[splits.len]
 
-	SSmapping.HACK_LoadMapConfig()
-
 	var/list/job_changes = SSmapping.config.job_changes
 	if(!(endpart in job_changes))
 		return list()

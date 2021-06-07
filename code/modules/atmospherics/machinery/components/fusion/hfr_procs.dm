@@ -204,7 +204,7 @@
  * Check the integrity level and returns the status of the machine
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_status()
-	var/integrity = get_integrity()
+	var/integrity = get_integrity_percent()
 	if(integrity < HYPERTORUS_MELTING_PERCENT)
 		return HYPERTORUS_MELTING
 
@@ -239,7 +239,7 @@
 /**
  * Getter for the machine integrity
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity_percent()
 	var/integrity = critical_threshold_proximity / melting_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
@@ -257,18 +257,18 @@
 		alarm()
 
 		if(critical_threshold_proximity > emergency_point)
-			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity_percent()]%", common_channel)
 			lastwarning = REALTIMEOFDAY
 			if(!has_reached_emergency)
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
 		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
-			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
 
 		else // Phew, we're safe
-			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
 
 	//Melt

@@ -31,7 +31,8 @@
 	var/datum/port/input/trigger_input
 	var/datum/port/output/trigger_output
 
-	var/has_trigger = FALSE
+	/// The flags of the circuit to control basic generalised behaviour.
+	var/circuit_flags = NONE
 
 	/// Used to determine the x position of the component within the UI
 	var/rel_x = 0
@@ -60,8 +61,9 @@
 
 /obj/item/circuit_component/LateInitialize()
 	. = ..()
-	if(has_trigger)
+	if(circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL)
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL)
+	if(circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/Destroy()
@@ -117,7 +119,7 @@
  */
 /obj/item/circuit_component/proc/set_option(option)
 	current_option = option
-	input_received()
+	TRIGGER_CIRCUIT_COMPONENT(src, null)
 
 /**
  * Matches the output port's datatype with the input port's current connected port.
@@ -165,7 +167,7 @@
 /**
  * Called whenever an input is received from one of the ports.
  *
- * Return value indicates that the circuit should not do anything
+ * Return value indicates that the circuit should not do anything. Also prevents an output signal.
  * Arguments:
  * * port - Can be null. The port that sent the input
  */
@@ -178,5 +180,5 @@
 	if(!cell?.use(power_usage_per_input))
 		return TRUE
 
-	if(has_trigger && !COMPONENT_TRIGGERED_BY(trigger_input, port))
+	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE

@@ -381,7 +381,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	set_extended(extended)
 
 /obj/item/switchblade/attack_self(mob/user)
-	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	set_extended(!extended)
 

@@ -45,6 +45,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "crowbar_cyborg"
 	inhand_icon_state = "crowbar"
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/screwdriver/drone
 	name = "built-in screwdriver"
@@ -52,6 +53,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "screwdriver_cyborg"
 	inhand_icon_state = "screwdriver"
+	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
 
@@ -68,12 +70,14 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wrench_cyborg"
 	inhand_icon_state = "wrench"
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/weldingtool/drone
 	name = "built-in welding tool"
 	desc = "A welding tool built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/wirecutters/drone
 	name = "built-in wirecutters"
@@ -81,5 +85,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wirecutters_cyborg"
 	inhand_icon_state = "cutters"
+	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
