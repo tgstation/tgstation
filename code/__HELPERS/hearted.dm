@@ -74,8 +74,8 @@
 /*
 * Once we've confirmed who we're commending, either set their status now or log it for the end of the round
 *
-* This used to be reversed, with it being called on the mob sending the commendation and the first argument being the heart_recepient, but that was confusing
-* and unintuitive, so now src is the person being commended and the sender is now the first argument.
+* This used to be reversed, being named nominate_heart and being called on the mob sending the commendation and the first argument being
+* the heart_recepient, but that was confusing and unintuitive, so now src is the person being commended and the sender is now the first argument.
 *
 * Arguments:
 * * heart_sender: The reference to the mob who sent the commendation, just for the purposes of logging
