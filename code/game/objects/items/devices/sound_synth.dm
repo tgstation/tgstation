@@ -1,7 +1,8 @@
 /obj/item/device/soundsynth
 	name = "sound synthesizer"
 	desc = "A device that is able to create sounds."
-	icon_state = "soundsynth"
+	icon_state = "radio"
+	icon = 'icons/obj/device.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
 	var/tmp/spam_flag = 0 //To prevent mashing the button to cause annoyance like a huge idiot.
