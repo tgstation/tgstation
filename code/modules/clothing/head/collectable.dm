@@ -59,6 +59,9 @@
 	name = "collectable beret"
 	desc = "A collectable red beret. It smells faintly of garlic."
 	icon_state = "beret"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#8f0000"
 
 	dog_fashion = /datum/dog_fashion/head/beret
 

@@ -58,6 +58,13 @@
 
 	dog_fashion = null
 
+/obj/item/clothing/head/caphat/beret
+	name = "captain's beret"
+	desc = "For the Captains known for their sense of fashion."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#0070B7#FFCE5B"
 
 //Head of Personnel
 /obj/item/clothing/head/hopcap
@@ -120,7 +127,7 @@
 	dynamic_hair_suffix = ""
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
-	greyscale_colors = "#8f0000"
+	greyscale_colors = "#972A2A"
 
 /obj/item/clothing/head/beret/vintage
 	name = "vintage beret"
@@ -140,7 +147,7 @@
 /obj/item/clothing/head/beret/black
 	name = "black beret"
 	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
-	icon_state = "beretblack"
+	icon_state = "beret"
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#3f3c40"
@@ -314,6 +321,17 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+
+//CentCom
+/obj/item/clothing/head/beret/centcom_formal
+	name = "\improper CentCom Formal Beret"
+	desc = "Sometimes, a compromise between fashion and defense needs to be made. Thanks to Central Command's most recent nano-fabric durability enhancements, this time, it's not the case."
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#397F3F#FFCE5B"
+	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, RAD = 90, FIRE = 100, ACID = 90, WOUND = 10)
+	strip_delay = 10 SECONDS
 
 #undef DRILL_DEFAULT
 #undef DRILL_SHOUTING
