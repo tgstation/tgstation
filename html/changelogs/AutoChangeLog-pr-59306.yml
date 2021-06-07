@@ -1,0 +1,6 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - rscadd: "Fake N-spect scanners, buyable via black market uplink (Tools section)."
+  - rscadd: "Bananium HONK-spect scanners, craftable from fake N-spect scanners (Crafting menu, misc section)."
+  - rscadd: "The N-spect scanner now draws power from a removable power cell when printing reports. The cell it starts with has enough power for 100 reports."
