@@ -640,12 +640,14 @@
 	desc = "The symbol of hard labor and dirty jobs."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders_blue"
+	greyscale_colors = "#0000ff"
 
 /obj/item/clothing/suit/toggle/suspenders/gray
 	name = "gray suspenders"
 	desc = "The symbol of hard labor and dirty jobs."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders_gray"
+	greyscale_colors = "#888888"
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"
