@@ -189,7 +189,7 @@
 		SSticker.delay_end = FALSE
 
 		log_admin("[key_name(usr)] undelayed the round end.")
-		message_admins("[key_name_admin(usr)] undelayed the round end.")
+		message_admins("[key_name_admin(usr)] undelayed the round end. You must now manually Reboot World to start the next shift.")
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
 			return
