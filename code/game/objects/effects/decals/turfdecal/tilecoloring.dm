@@ -92,7 +92,7 @@
 
 /obj/effect/turf_decal/tile/purple/edge/corner
 	name = "purple edge corner"
-	icon_state = "tile_edge_edge"
+	icon_state = "tile_edge_corner"
 
 /obj/effect/turf_decal/tile/brown
 	name = "brown corner"
