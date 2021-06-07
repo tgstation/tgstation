@@ -11,14 +11,29 @@
 	undyeable = TRUE
 	var/datum/component/strong_pull/pull_component
 
-/obj/item/clothing/gloves/cargo_gauntlet/equipped(mob/user, slot)
+/obj/item/clothing/gloves/cargo_gauntlet/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_glove_equip)
+	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/on_glove_unequip)
+
+/obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	if(slot != ITEM_SLOT_GLOVES)
 		return
-	to_chat(user, "<span class='notice'>You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!</span>")
-	pull_component = user.AddComponent(/datum/component/strong_pull)
 
-/obj/item/clothing/gloves/cargo_gauntlet/dropped(mob/user)
-	. = ..()
-	to_chat(user, "<span class='warning'>You have lost the grip power of [src]!</span>")
+	if(pull_component)
+		stack_trace("Gloves already have a pull component associated with \[[pull_component.parent]\] when \[[equipper]\] is trying to equip them.")
+		QDEL_NULL(pull_component)
+
+	to_chat(equipper, "<span class='notice'>You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!</span>")
+
+	pull_component = equipper.AddComponent(/datum/component/strong_pull)
+
+/obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_unequip(datum/source, force, atom/newloc, no_move, invdrop, silent)
+	if(!pull_component)
+		return
+
+	to_chat(pull_component.parent, "<span class='warning'>You have lost the grip power of [src]!</span>")
+
 	QDEL_NULL(pull_component)
