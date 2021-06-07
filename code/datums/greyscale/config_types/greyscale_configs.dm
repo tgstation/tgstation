@@ -281,9 +281,9 @@
 /datum/greyscale_config/suspenders
 	name = "Suspenders"
 	icon_file = 'icons/obj/clothing/belts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
+	json_config = 'code/datums/greyscale/json_configs/suspenders.json'
 
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
 	icon_file = 'icons/mob/clothing/suit.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wintercoats_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
