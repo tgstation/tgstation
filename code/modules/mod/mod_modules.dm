@@ -1,7 +1,6 @@
 /obj/item/mod/module
 	name = "MOD module"
 	icon_state = "module"
-	interaction_flags_atom = NONE
 	/// If it can be removed
 	var/removable = TRUE
 	/// If it's passive, active or usable
@@ -755,8 +754,17 @@
 	name = "MOD internal GPS module"
 	desc = "A module that serves as a built-in GPS."
 	module_type = MODULE_USABLE
-	complexity = 1 //It's Just a GPS, pretty basic equipment in many cases
-	idle_power_cost = 2 //Very simple, no reason for this to be a huge powerdraw
+	complexity = 1
+	idle_power_cost = 2
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
-	device = /obj/item/gps/science/mod //Having an actual GPS Item that can extend is probably safer than having to add a component to the suit, and then pull up GPS UI independent of a GPS.
+
+/obj/item/mod/module/gps/Initialize()
+	. = ..()
+	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.inventory_state)
+
+/obj/item/mod/module/gps/on_use()
+	. = ..()
+	if(!.)
+		return
+	ui_interact(mod.wearer)
