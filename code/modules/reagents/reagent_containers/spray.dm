@@ -133,11 +133,11 @@
 	qdel(reagent_puff)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
-	..()
+	. = ..()
 	toggle_stream_mode(user)
 
 /obj/item/reagent_containers/spray/attack_self_secondary(mob/user)
-	..()
+	. = ..()
 	toggle_stream_mode(user)
 
 /obj/item/reagent_containers/spray/proc/toggle_stream_mode(mob/user)
