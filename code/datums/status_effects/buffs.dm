@@ -524,7 +524,7 @@
 
 /atom/movable/screen/alert/status_effect/kiss_of_life
 	name = "Kiss of Life"
-	desc = "You're not sure if this healing is divine'"
+	desc = "You're not sure if this healing is divine, but it definitely feels nice!"
 	icon_state = "regenerative_core"
 
 /datum/status_effect/kiss_of_life
@@ -534,19 +534,18 @@
 	alert_type = /atom/movable/screen/alert/status_effect/kiss_of_life
 	/// You have to stay near the source to heal
 	var/atom/heal_source
-
+	/// The first time the recepient wanders off, remind them they need to stay near the kisser
 	var/warned_proximity = FALSE
-
+	/// Whether they were in proximity to the kisser last tick, for purposes of giving/taking the ignore damage slowdown trait
 	var/was_in_proximity = FALSE
 
 /datum/status_effect/kiss_of_life/on_creation(mob/living/new_owner, atom/source)
 	if(!source)
 		qdel(src)
 		return
-
-	. = ..()
-
 	heal_source = source
+
+	return ..()
 
 /datum/status_effect/kiss_of_life/on_apply()
 	owner.adjustBruteLoss(-5)
@@ -558,7 +557,7 @@
 	return TRUE
 
 /datum/status_effect/kiss_of_life/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
 	heal_source = null
 
 /datum/status_effect/kiss_of_life/tick()
@@ -568,7 +567,7 @@
 
 	if(!can_see(owner, heal_source, 7))
 		if(was_in_proximity)
-			REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+			REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
 			was_in_proximity = FALSE
 		if(!warned_proximity)
 			to_chat(owner, "<span class='warning'>Your body stops mending itself as you lose track of [heal_source]!</span>")
@@ -576,7 +575,7 @@
 		return
 
 	if(!was_in_proximity)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "[STATUS_EFFECT_TRAIT]_[id]")
 		was_in_proximity = TRUE
 	new /obj/effect/temp_visual/heal(get_turf(owner), "#375637")
 	owner.adjustBruteLoss(-2)
