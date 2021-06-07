@@ -109,7 +109,7 @@
 		return ..()
 	else
 		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
-		var/atom/target_from = get_targets_from()
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		var/list/searched_for = oview(vision_range, target_from)
 		for(var/obj/A in searched_for)
 			. += A

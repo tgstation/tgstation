@@ -95,7 +95,7 @@
 		melee_damage_lower = 15
 		melee_damage_upper = 15
 		var/mob_direction = get_dir(src,target)
-		var/atom/target_from = get_targets_from()
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		if(get_dist(src,target) > 1)
 			step(src,mob_direction)
 		if(isturf(target_from.loc) && target.Adjacent(target_from) && isliving(target))

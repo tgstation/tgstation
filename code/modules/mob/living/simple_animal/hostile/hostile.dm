@@ -47,8 +47,9 @@
 	var/stat_attack = CONSCIOUS
 	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
-	//Use set_targets_from to modify this var, and get_targets_from to access it
-	var/datum/weakref/targets_from //all range/attack/etc. calculations should be done from the atom this weakrefs, defaults to the mob itself, useful for Vehicles and such
+	//Use GET_TARGETS_FROM(mob) to access this
+	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
+	var/datum/weakref/targets_from //all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
@@ -69,11 +70,8 @@
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
 	wanted_objects = typecacheof(wanted_objects)
-	if(!targets_from)
-		set_targets_from(src)
 
 /mob/living/simple_animal/hostile/Destroy()
-	set_targets_from(null)
 	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers
 	GiveTarget(null)
 	return ..()
@@ -92,7 +90,7 @@
 		EscapeConfinement()
 
 	if(AICanContinue(possible_targets))
-		var/atom/target_from = get_targets_from()
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		if(!QDELETED(target) && !target_from.Adjacent(target))
 			DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
@@ -147,7 +145,7 @@
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/proc/ListTargets() //Step 1, find out what we can see
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(!search_objects)
 		. = hearers(vision_range, target_from) - src //Remove self, so we don't suicide
 
@@ -195,7 +193,7 @@
 
 /mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
 	if(target != null)//If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets
-		var/atom/target_from = get_targets_from()
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		for(var/pos_targ in Targets)
 			var/atom/A = pos_targ
 			var/target_dist = get_dist(target_from, target)
@@ -278,7 +276,7 @@
 		GainPatience()
 
 /mob/living/simple_animal/hostile/proc/CheckAndAttack()
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(target && isturf(target_from.loc) && target.Adjacent(target_from) && !incapacitated())
 		AttackingTarget()
 
@@ -287,7 +285,7 @@
 	if(!target || !CanAttack(target))
 		LoseTarget()
 		return 0
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(target in possible_targets)
 		var/turf/T = get_turf(src)
 		if(target.z != T.z)
@@ -389,7 +387,7 @@
 /mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
 	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 50, TRUE, -1)
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, target_from))
 		if(faction_check_mob(M, TRUE))
 			if(M.AIStatus == AI_OFF)
@@ -423,7 +421,7 @@
 
 
 /mob/living/simple_animal/hostile/proc/Shoot(atom/targeted_atom)
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(QDELETED(targeted_atom) || targeted_atom == target_from.loc || targeted_atom == target_from )
 		return
 	var/turf/startloc = get_turf(target_from)
@@ -468,7 +466,7 @@
 	dodging = TRUE
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	var/turf/T = get_step(target_from, direction)
 	if(QDELETED(T))
 		return
@@ -486,7 +484,7 @@
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)
 		EscapeConfinement()
-		var/atom/target_from = get_targets_from()
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		var/dir_to_target = get_dir(target_from, target)
 		var/dir_list = list()
 		if(ISDIAGONALDIR(dir_to_target)) //it's diagonal, so we need two directions to hit
@@ -507,7 +505,7 @@
 
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
-	var/atom/target_from = get_targets_from()
+	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(buckled)
 		buckled.attack_animal(src)
 	if(!isturf(target_from.loc) && target_from.loc != null)//Did someone put us in something?
@@ -517,7 +515,7 @@
 /mob/living/simple_animal/hostile/proc/FindHidden()
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		var/atom/A = target.loc
-		var/atom/target_from = get_targets_from()
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		Goto(A,move_to_delay,minimum_distance)
 		if(A.Adjacent(target_from))
 			A.attack_animal(src)
@@ -661,13 +659,10 @@
 			charge_state = FALSE
 			update_icons()
 
-/mob/living/simple_animal/hostile/proc/set_targets_from(atom/target_from)
-	targets_from = WEAKREF(target_from)
-
 /mob/living/simple_animal/hostile/proc/get_targets_from()
 	var/atom/target_from = targets_from.resolve()
 	if(!target_from)
-		set_targets_from(src)
+		targets_from = null
 		return src
 	return target_from
 
