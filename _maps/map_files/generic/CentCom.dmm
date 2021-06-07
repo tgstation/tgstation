@@ -4572,7 +4572,7 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "rf" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -5128,7 +5128,7 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "sh" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/west,
 /obj/effect/landmark/start/nukeop,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -7851,7 +7851,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "yX" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
 "yY" = (
@@ -9557,7 +9557,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "CV" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "CX" = (
@@ -10524,7 +10524,7 @@
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Fe" = (
@@ -14581,7 +14581,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
 "UE" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "UH" = (
@@ -14700,6 +14700,15 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/four)
+"VX" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/landmark/start/nukeop,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/syndicate_mothership/control)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -33463,8 +33472,8 @@ pF
 qa
 pZ
 pZ
-sh
-sh
+VX
+VX
 pZ
 rg
 Qd

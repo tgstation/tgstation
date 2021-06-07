@@ -216,6 +216,7 @@
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable(obj/object, datum/component/component)
+	SIGNAL_HANDLER
 	if(active || (component && component != src))
 		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
 		return
@@ -302,6 +303,7 @@
 	AM.update_appearance()
 
 /datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
+	SIGNAL_HANDLER
 	ducting_layer = new_layer
 
 	if(ismovable(parent))

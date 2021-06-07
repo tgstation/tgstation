@@ -663,12 +663,6 @@
 	newprofile.profile_snapshot = profile_snapshot
 	newprofile.id_icon = id_icon
 
-/datum/antagonist/changeling/xenobio
-	name = "Xenobio Changeling"
-	give_objectives = FALSE
-	show_in_roundend = FALSE //These are here for admin tracking purposes only
-	you_are_greet = FALSE
-
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
 
@@ -698,5 +692,3 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/xenobio/antag_listing_name()
-	return ..() + "(Xenobio)"

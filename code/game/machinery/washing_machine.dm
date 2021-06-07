@@ -190,25 +190,36 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
 	if(undyeable)
 		return FALSE
-	if(dye_key_selector)
-		if(!GLOB.dye_registry[dye_key_selector])
-			log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
-			return FALSE
-		var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
-		if(target_type)
-			icon = initial(target_type.icon)
-			icon_state = initial(target_type.icon_state)
-			lefthand_file = initial(target_type.lefthand_file)
-			righthand_file = initial(target_type.righthand_file)
-			inhand_icon_state = initial(target_type.inhand_icon_state)
-			worn_icon = initial(target_type.worn_icon)
-			worn_icon_state = initial(target_type.worn_icon_state)
-			inhand_x_dimension = initial(target_type.inhand_x_dimension)
-			inhand_y_dimension = initial(target_type.inhand_y_dimension)
-			name = initial(target_type.name)
-			desc = "[initial(target_type.desc)] The colors look a little dodgy."
-			return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
-	return FALSE
+	if(!dye_key_selector)
+		return FALSE
+	if(!GLOB.dye_registry[dye_key_selector])
+		log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
+		return FALSE
+	var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
+	if(!target_type)
+		return FALSE
+	if(initial(target_type.greyscale_config) && initial(target_type.greyscale_colors))
+		set_greyscale(
+			colors=initial(target_type.greyscale_colors),
+			new_config=initial(target_type.greyscale_config),
+			new_worn_config=initial(target_type.greyscale_config_worn),
+			new_inhand_left=initial(target_type.greyscale_config_inhand_left),
+			new_inhand_right=initial(target_type.greyscale_config_inhand_right)
+		)
+	else
+		icon = initial(target_type.icon)
+		lefthand_file = initial(target_type.lefthand_file)
+		righthand_file = initial(target_type.righthand_file)
+		worn_icon = initial(target_type.worn_icon)
+
+	icon_state = initial(target_type.icon_state)
+	inhand_icon_state = initial(target_type.inhand_icon_state)
+	worn_icon_state = initial(target_type.worn_icon_state)
+	inhand_x_dimension = initial(target_type.inhand_x_dimension)
+	inhand_y_dimension = initial(target_type.inhand_y_dimension)
+	name = initial(target_type.name)
+	desc = "[initial(target_type.desc)] The colors look a little dodgy."
+	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
 //what happens to this object when washed inside a washing machine
 /atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM)

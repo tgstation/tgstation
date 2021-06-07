@@ -74,10 +74,11 @@
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
-	
+
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
+	SIGNAL_HANDLER
 	if(!on)//If jet dont work, it dont work
 		return
 	if(!user || !user.client)//Don't allow jet self using
@@ -94,6 +95,7 @@
 		allow_thrust(0.01, user)
 
 /obj/item/tank/jetpack/proc/pre_move_react(mob/user)
+	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(src)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)

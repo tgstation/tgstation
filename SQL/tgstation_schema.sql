@@ -617,6 +617,19 @@ CREATE TABLE `discord_links` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
+--
+-- Table structure for table `text_adventures`
+--
+DROP TABLE IF EXISTS `text_adventures`;
+CREATE TABLE `text_adventures` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`adventure_data` LONGTEXT NOT NULL,
+	`uploader` VARCHAR(32) NOT NULL,
+	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

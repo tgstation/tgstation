@@ -293,6 +293,8 @@
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
 	. = ..()
+	if(!loc)
+		return
 	for(var/mob/living/living_mob in OldLoc.contents)//Kidnap everyone on top
 		living_mob.forceMove(loc)
 	for(var/x in attached_items)

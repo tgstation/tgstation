@@ -15,8 +15,11 @@
 /datum/greyscale_layer/New(icon_file, list/json_data)
 	color_ids = json_data["color_ids"]
 	for(var/i in color_ids)
-		if(!isnum(i))
-			CRASH("Color ids must be a positive integer starting from 1, '[i]' is not valid. Make sure it is not quoted in the json configuration.")
+		if(isnum(i))
+			continue
+		if(istext(i) && i[1] == "#")
+			continue
+		CRASH("Color ids must be a color string or positive integer starting from 1, '[i]' is not valid.")
 	blend_mode = blend_modes[lowertext(json_data["blend_mode"])]
 	if(isnull(blend_mode))
 		CRASH("Greyscale config for [icon_file] is missing a blend mode on a layer.")
@@ -26,9 +29,14 @@
 /datum/greyscale_layer/proc/Generate(list/colors, list/render_steps)
 	var/list/processed_colors = list()
 	for(var/i in color_ids)
-		processed_colors += colors[i]
+		if(isnum(i))
+			processed_colors += colors[i]
+		else
+			processed_colors += i
 	return InternalGenerate(processed_colors, render_steps)
 
+/// Override this to implement layers.
+/// The colors var will only contain colors that this layer is configured to use.
 /datum/greyscale_layer/proc/InternalGenerate(list/colors, list/render_steps)
 
 ////////////////////////////////////////////////////////
@@ -43,7 +51,8 @@
 /datum/greyscale_layer/icon_state/New(icon_file, list/json_data)
 	. = ..()
 	var/icon_state = json_data["icon_state"]
-	if(!(icon_state in icon_states(icon_file)))
+	var/list/icon_states = icon_states(icon_file)
+	if(!(icon_state in icon_states))
 		CRASH("Configured icon state \[[icon_state]\] was not found in [icon_file]. Double check your json configuration.")
 	icon = new(icon_file, json_data["icon_state"])
 
@@ -60,13 +69,18 @@
 /// A layer created by using another greyscale icon's configuration
 /datum/greyscale_layer/reference
 	layer_type = "reference"
+	var/icon_state
 	var/datum/greyscale_config/reference_config
 
 /datum/greyscale_layer/reference/New(icon_file, list/json_data)
 	. = ..()
+	icon_state = json_data["icon_state"] || ""
 	reference_config = SSgreyscale.configurations[json_data["reference_type"]]
 	if(!reference_config)
 		CRASH("An unknown greyscale configuration was given to a reference layer: [json_data["reference_type"]]")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
-	return reference_config.Generate(colors.Join(), render_steps)
+	if(render_steps)
+		return reference_config.GenerateBundle(colors, render_steps)
+	else
+		return reference_config.Generate(colors.Join())

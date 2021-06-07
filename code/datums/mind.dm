@@ -331,6 +331,13 @@
 		if(O)
 			O.unlock_code = null
 
+/// Remove the antagonists that should not persist when being borged
+/datum/mind/proc/remove_antags_for_borging()
+	remove_antag_datum(/datum/antagonist/cult)
+
+	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
+	revolutionary?.remove_revolutionary(borged = TRUE)
+
 /datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
 	if(!current)
 		return

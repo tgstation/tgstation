@@ -128,8 +128,8 @@
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
 
-/obj/item/bodypart/chest/robot/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/bodypart/chest/robot/handle_atom_del(atom/chest_atom)
+	if(chest_atom == cell)
 		cell = null
 	return ..()
 
@@ -137,21 +137,21 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/item/bodypart/chest/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stock_parts/cell))
+/obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>You have already inserted a cell!</span>")
 			return
 		else
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(weapon, src))
 				return
-			cell = W
+			cell = weapon
 			to_chat(user, "<span class='notice'>You insert the cell.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(istype(weapon, /obj/item/stack/cable_coil))
 		if(wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = weapon
 		if (coil.use(1))
 			wired = TRUE
 			to_chat(user, "<span class='notice'>You insert the wire.</span>")
@@ -160,23 +160,23 @@
 	else
 		return ..()
 
-/obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/I)
+/obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/cutter)
 	. = ..()
 	if(!wired)
 		return
 	. = TRUE
-	I.play_tool_sound(src)
+	cutter.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You cut the wires out of [src].</span>")
 	new /obj/item/stack/cable_coil(drop_location(), 1)
 	wired = FALSE
 
-/obj/item/bodypart/chest/robot/screwdriver_act(mob/living/user, obj/item/I)
+/obj/item/bodypart/chest/robot/screwdriver_act(mob/living/user, obj/item/screwtool)
 	..()
 	. = TRUE
 	if(!cell)
 		to_chat(user, "<span class='warning'>There's no power cell installed in [src]!</span>")
 		return
-	I.play_tool_sound(src)
+	screwtool.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>Remove [cell] from [src].</span>")
 	cell.forceMove(drop_location())
 	cell = null
@@ -229,10 +229,10 @@
 	var/obj/item/assembly/flash/handheld/flash2 = null
 
 
-/obj/item/bodypart/head/robot/handle_atom_del(atom/A)
-	if(A == flash1)
+/obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
+	if(head_atom == flash1)
 		flash1 = null
-	if(A == flash2)
+	if(head_atom == flash2)
 		flash2 = null
 	return ..()
 
@@ -255,30 +255,30 @@
 			. += "It has two eye sockets occupied by flashes."
 		. += "<span class='notice'>You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.</span>"
 
-/obj/item/bodypart/head/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/F = W
+/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/assembly/flash/handheld))
+		var/obj/item/assembly/flash/handheld/flash = weapon
 		if(flash1 && flash2)
 			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return
-		else if(F.burnt_out)
+		else if(flash.burnt_out)
 			to_chat(user, "<span class='warning'>You can't use a broken flash!</span>")
 			return
 		else
-			if(!user.transferItemToLoc(F, src))
+			if(!user.transferItemToLoc(flash, src))
 				return
 			if(flash1)
-				flash2 = F
+				flash2 = flash
 			else
-				flash1 = F
+				flash1 = flash
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
 			return
 	return ..()
 
-/obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/I)
+/obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/prytool)
 	..()
 	if(flash1 || flash2)
-		I.play_tool_sound(src)
+		prytool.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
 		if(flash1)
 			flash1.forceMove(drop_location())
