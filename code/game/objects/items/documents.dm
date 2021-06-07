@@ -312,11 +312,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///How many more times can we print?
-	var/paper_charges = 150
+	var/paper_charges = 32
 	///Max value of paper_charges
-	var/max_paper_charges = 400
+	var/max_paper_charges = 32
 	///How much charges are restored per paper consumed
-	var/charges_per_paper = 16
+	var/charges_per_paper = 1
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
