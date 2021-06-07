@@ -116,6 +116,11 @@
 	base_icon_state = "darkcorner"
 	floor_tile = /obj/item/stack/tile/iron/dark_corner
 
+/turf/open/floor/iron/dark/edge
+	icon_state = "darkedge"
+	base_icon_state = "darkedge"
+	floor_tile = /obj/item/stack/tile/iron/dark_edge
+
 /turf/open/floor/iron/checker
 	icon_state = "checker"
 	base_icon_state = "checker"
@@ -195,6 +200,11 @@
 	icon_state = "whitecorner"
 	base_icon_state = "whitecorner"
 	floor_tile = /obj/item/stack/tile/iron/white_corner
+
+/turf/open/floor/iron/white/edge
+	icon_state = "whitehall_edge"
+	base_icon_state = "whitehall_edge"
+	floor_tile = /obj/item/stack/tile/iron/white_edge
 
 /turf/open/floor/iron/cafeteria
 	icon_state = "cafeteria"

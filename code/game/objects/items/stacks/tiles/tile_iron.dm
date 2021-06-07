@@ -33,6 +33,7 @@
 		/obj/item/stack/tile/iron/dark/smooth_large,
 		/obj/item/stack/tile/iron/dark_side,
 		/obj/item/stack/tile/iron/dark_corner,
+		/obj/item/stack/tile/iron/dark_edge,
 		/obj/item/stack/tile/iron/checker,
 		/obj/item/stack/tile/iron/dark/textured,
 		/obj/item/stack/tile/iron/dark/textured_edge,
@@ -46,6 +47,7 @@
 		/obj/item/stack/tile/iron/white/smooth_large,
 		/obj/item/stack/tile/iron/white_side,
 		/obj/item/stack/tile/iron/white_corner,
+		/obj/item/stack/tile/iron/white_edge,
 		/obj/item/stack/tile/iron/cafeteria,
 		/obj/item/stack/tile/iron/white/textured,
 		/obj/item/stack/tile/iron/white/textured_edge,
@@ -213,6 +215,14 @@
 	merge_type = /obj/item/stack/tile/iron/dark_corner
 	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
+/obj/item/stack/tile/iron/dark_edge
+	name = "half dark tile"
+	singular_name = "half dark floor tile"
+	icon_state = "tile_darkedge"
+	turf_type = /turf/open/floor/iron/dark/edge
+	merge_type = /obj/item/stack/tile/iron/dark_edge
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST)
+
 /obj/item/stack/tile/iron/checker
 	name = "checker tile"
 	singular_name = "checker floor tile"
@@ -312,6 +322,14 @@
 	turf_type = /turf/open/floor/iron/white/corner
 	merge_type = /obj/item/stack/tile/iron/white_corner
 	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/iron/white_edge
+	name = "half white tile"
+	singular_name = "half white floor tile"
+	icon_state = "tile_whiteedge"
+	turf_type = /turf/open/floor/iron/white/edge
+	merge_type = /obj/item/stack/tile/iron/white_edge
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST)
 
 /obj/item/stack/tile/iron/cafeteria
 	name = "cafeteria tile"

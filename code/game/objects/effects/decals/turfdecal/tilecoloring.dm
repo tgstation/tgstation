@@ -25,48 +25,127 @@
 	name = "blue corner"
 	color = "#52B4E9"
 
+/obj/effect/turf_decal/tile/blue/edge
+	name = "blue edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/blue/edge/corner
+	name = "blue edge corner"
+	icon_state = "tile_edge_corner"
+
 /obj/effect/turf_decal/tile/green
 	name = "green corner"
 	color = "#9FED58"
+
+/obj/effect/turf_decal/tile/green/edge
+	name = "green edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/green/edge/corner
+	name = "green edge corner"
+	icon_state = "tile_edge_corner"
 
 /obj/effect/turf_decal/tile/yellow
 	name = "yellow corner"
 	color = "#EFB341"
 
+/obj/effect/turf_decal/tile/yellow/edge
+	name = "yellow edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/yellow/edge/corner
+	name = "yellow edge corner"
+	icon_state = "tile_edge_corner"
+
 /obj/effect/turf_decal/tile/red
 	name = "red corner"
 	color = "#DE3A3A"
+
+/obj/effect/turf_decal/tile/red/edge
+	name = "red edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/red/edge/corner
+	name = "red edge corner"
+	icon_state = "tile_edge_corner"
 
 /obj/effect/turf_decal/tile/bar
 	name = "bar corner"
 	color = "#791500"
 	alpha = 130
 
+/obj/effect/turf_decal/tile/bar/edge
+	name = "bar edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/bar/edge/corner
+	name = "bar edge corner"
+	icon_state = "tile_edge_corner"
+
 /obj/effect/turf_decal/tile/purple
 	name = "purple corner"
 	color = "#D381C9"
 
+/obj/effect/turf_decal/tile/purple/edge
+	name = "purple edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/purple/edge/corner
+	name = "purple edge corner"
+	icon_state = "tile_edge_edge"
+
 /obj/effect/turf_decal/tile/brown
 	name = "brown corner"
 	color = "#A46106"
+
+/obj/effect/turf_decal/tile/brown/edge
+	name = "brown edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/brown/edge/corner
+	name = "brown edge corner"
+	icon_state = "tile_edge_corner"
 
 /obj/effect/turf_decal/tile/neutral
 	name = "neutral corner"
 	color = "#D4D4D4"
 	alpha = 50
 
+/obj/effect/turf_decal/tile/neutral/edge
+	name = "neutral edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/neutral/edge/corner
+	name = "neutral edge corner"
+	icon_state = "tile_edge_corner"
+
 /obj/effect/turf_decal/tile/dark
 	name = "dark corner"
 	color = "#0e0f0f"
+
+/obj/effect/turf_decal/tile/dark/edge
+	name = "dark edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/dark/edge/corner
+	name = "dark edge corner"
+	icon_state = "tile_edge_corner"
 
 /obj/effect/turf_decal/tile/random // so many colors
 	name = "colorful corner"
 	color = "#E300FF" //bright pink as default for mapping
 
+/obj/effect/turf_decal/tile/random/edge
+	name = "colorful edge"
+	icon_state = "tile_edge"
+
+/obj/effect/turf_decal/tile/random/edge/corner
+	name = "colorful edge corner"
+	icon_state = "tile_edge_corner"
+
 /obj/effect/turf_decal/tile/random/Initialize()
 	color = "#[random_short_color()]"
 	. = ..()
-
 
 /obj/effect/turf_decal/trimline
 	layer = TURF_PLATING_DECAL_LAYER
