@@ -2,8 +2,7 @@
 	name = "sound synthesizer"
 	desc = "A device that is able to create sounds."
 	icon_state = "soundsynth"
-	item_state = "radio"
-	w_class = W_CLASS_TINY
+	w_class = WEIGHT_CLASS_TINY
 
 	var/tmp/spam_flag = 0 //To prevent mashing the button to cause annoyance like a huge idiot.
 	var/selected_sound = "sound/items/bikehorn.ogg"
