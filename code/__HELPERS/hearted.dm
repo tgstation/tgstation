@@ -4,6 +4,9 @@
 		return
 
 	var/number_to_ask = round(LAZYLEN(GLOB.joined_player_list) * CONFIG_GET(number/commendation_percent_poll)) + rand(0,1)
+	if(number_to_ask == 0)
+		message_admins("Not enough eligible players to poll for commendations.")
+		return
 	message_admins("Polling [number_to_ask] players for commendations.")
 
 	for(var/i in GLOB.joined_player_list)
@@ -31,7 +34,7 @@
 
 /// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up
 /mob/proc/query_heart(attempt=1)
-	if(!mind || !client || attempt > 3)
+	if(!client || attempt > 3)
 		return
 	if(attempt == 1 && tgui_alert(usr, "Was there another character you noticed being kind this round that you would like to anonymously thank?", "<3?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
 		return

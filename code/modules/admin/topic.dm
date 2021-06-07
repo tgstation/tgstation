@@ -1931,10 +1931,10 @@
 
 	else if(href_list["admincommend"])
 		var/mob/heart_recepient = locate(href_list["admincommend"])
-		/*if(!heart_recepient?.ckey)
+		if(!heart_recepient?.ckey)
 			to_chat(usr, "<span class='warning'>This mob either no longer exists or no longer is being controlled by someone!</span>")
 			return
-*/
+
 		switch(tgui_alert(usr, "Would you like the effects to apply immediately or at the end of the round? Applying them now will make it clear it was an admin commendation.", "<3?", list("Apply now", "Apply at round end", "Cancel")))
 			if("Apply now")
 				heart_recepient.receive_heart(usr, instant = TRUE)
