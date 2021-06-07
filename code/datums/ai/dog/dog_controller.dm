@@ -319,7 +319,10 @@
 
 	switch(blackboard[BB_DOG_ORDER_MODE])
 		if(DOG_COMMAND_FETCH)
-			if(!isitem(pointed_movable) || pointed_movable.anchored || (pointed_movable.obj_flags & ABSTRACT))
+			if(!isitem(pointed_movable) || pointed_movable.anchored)
+				return
+			var/obj/item/pointed_item = pointed_movable
+			if(pointed_item.obj_flags & ABSTRACT)
 				return
 			pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and barks excitedly!</span>")
 			current_movement_target = pointed_movable
