@@ -1976,7 +1976,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if("mime")
 			return pick(GLOB.mime_names)
 		if("religion")
-			return random_religion_name()
+			return pick(GLOB.religion_names)
 		if("deity")
 			return DEFAULT_DEITY
 		if("bible")

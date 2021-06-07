@@ -1520,7 +1520,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			stack_trace("WARNING! podspawn vareditting \"[variable_name]\" to \"[variable_value]\" was rejected by the pod!")
 	new /obj/effect/pod_landingzone(landing_location, pod)
 	return pod
-
-/proc/random_religion_name()
-	. = pick(GLOB.religion_names)
-
