@@ -227,7 +227,7 @@
 /obj/item/food/popsicle/Initialize()
 	. = ..()
 	bite_consumption = reagents.total_volume / bite_states
-	update_icon() // make sure the popsical overlay is primed so it's not just a stick until you start eating it
+	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
 /obj/item/food/popsicle/MakeEdible()
 	AddComponent(/datum/component/edible,\
