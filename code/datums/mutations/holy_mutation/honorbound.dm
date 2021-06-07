@@ -160,8 +160,9 @@
 	if(istype(thrown_movable, /obj/item))
 		var/mob/living/honorbound = source
 		var/obj/item/thrown_item = thrown_movable
-		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_item.thrownby))
-			guilty(thrown_item.thrownby)
+		var/mob/thrown_by = thrown_item.thrownby?.resolve()
+		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
+			guilty(thrown_by)
 
 //spell checking
 /datum/mutation/human/honorbound/proc/spell_check(mob/user, obj/effect/proc_holder/spell/spell_cast)
