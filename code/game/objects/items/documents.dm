@@ -115,7 +115,6 @@
 	if(do_after(user, time_list[time_mode], target = user, progress=TRUE))
 		print_report(user)
 
-
 /obj/item/inspector/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(user.combat_mode)
@@ -247,6 +246,7 @@
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
 	print_report(user)
+
 /obj/item/inspector/clown/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell_cover_open)
 		return ..()
