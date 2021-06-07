@@ -67,10 +67,29 @@
 		new_bible = M.client.prefs.custom_names["bible"]
 
 	switch(lowertext(new_religion))
-		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
+		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
+			new_bible = pick("Guys Gone Wild","Coming Out of The Closet","War of Cocks")
+			switch(new_bible)
+				if("War of Cocks")
+					B.deity_name = pick("Dick Powers", "King Cock")
+				else
+					B.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
+		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes")
+			new_bible = pick("Woody's Got Wood: The Aftermath", "Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook")
+			switch(new_bible)
+				if("Woody's Got Wood: The Aftermath")
+					B.deity_name = pick("Woody", "Andy", "Cherry Flavored Lube")
+				if("Sweet Bro and Hella Jeff: Expanded Edition")
+					B.deity_name = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
+				if("F.A.T.A.L. Rulebook")
+					B.deity_name = "Twenty Ten-Sided Dice"
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
 		if("servicianism", "partying")
 			B.desc = "Happy, Full, Clean. Live it and give it."
+		if("weeaboo","kawaii")
+			new_bible = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
+			B.deity_name = "Anime"
 		else
 			if(new_bible == DEFAULT_BIBLE)
 				new_bible = "The Holy Book of [new_religion]"
