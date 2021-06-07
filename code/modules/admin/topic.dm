@@ -1930,19 +1930,16 @@
 		poll_option_parse_href(href_list, poll, option)
 
 	else if(href_list["admincommend"])
-		if(!SSticker.IsRoundInProgress())
-			to_chat(usr, "<span class='warning'>The round must be in progress to use this!</span>")
-			return
 		var/mob/heart_recepient = locate(href_list["admincommend"])
-		if(!heart_recepient?.ckey)
+		/*if(!heart_recepient?.ckey)
 			to_chat(usr, "<span class='warning'>This mob either no longer exists or no longer is being controlled by someone!</span>")
 			return
-
+*/
 		switch(tgui_alert(usr, "Would you like the effects to apply immediately or at the end of the round? Applying them now will make it clear it was an admin commendation.", "<3?", list("Apply now", "Apply at round end", "Cancel")))
 			if("Apply now")
-				usr.nominate_heart(heart_recepient, instant = TRUE)
+				heart_recepient.receive_heart(usr, instant = TRUE)
 			if("Apply at round end")
-				usr.nominate_heart(heart_recepient)
+				heart_recepient.receive_heart(usr)
 			else
 				return
 

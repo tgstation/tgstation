@@ -62,7 +62,7 @@
 
 		switch(tgui_alert(usr, "Is this the person: [heart_contender.real_name]?", "<3?", list("Yes!", "Nope", "Cancel"), timeout = 15 SECONDS))
 			if("Yes!")
-				nominate_heart(heart_contender)
+				heart_contender.receive_heart(src)
 				return
 			if("Nope")
 				continue
@@ -74,18 +74,21 @@
 /*
 * Once we've confirmed who we're commending, either set their status now or log it for the end of the round
 *
+* This used to be reversed, with it being called on the mob sending the commendation and the first argument being the heart_recepient, but that was confusing
+* and unintuitive, so now src is the person being commended and the sender is now the first argument.
+*
 * Arguments:
-* * heart_recepient: The reference to the mob who we want to commend. Note that if we delay to the end of the round, we log the mob's current ckey in case they change bodies
+* * heart_sender: The reference to the mob who sent the commendation, just for the purposes of logging
 * * duration: How long from the moment it's applied the heart will last
 * * instant: If TRUE (or if the round is already over), we'll give them the heart status now, if FALSE, we wait until the end of the round (which is the standard behavior)
 */
-/mob/proc/nominate_heart(mob/heart_recepient, duration = 24 HOURS, instant = FALSE)
-	if(!mind || !client || !heart_recepient?.client)
+/mob/proc/receive_heart(mob/heart_sender, duration = 24 HOURS, instant = FALSE)
+	if(!client)
 		return
-	to_chat(src, "<span class='nicegreen'>Commendation sent!</span>")
-	message_admins("[key_name(src)] commended [key_name(heart_recepient)] [instant ? "" : "(roundend)"]")
-	log_admin("[key_name(src)] commended [key_name(heart_recepient)] [instant ? "" : "(roundend)"]")
+	to_chat(heart_sender, "<span class='nicegreen'>Commendation sent!</span>")
+	message_admins("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
+	log_admin("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
 	if(instant || SSticker.current_state == GAME_STATE_FINISHED)
-		heart_recepient.client?.adjust_heart(duration)
+		client.adjust_heart(duration)
 	else
-		LAZYADD(SSticker.hearts, heart_recepient.ckey)
+		LAZYADD(SSticker.hearts, ckey)
