@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "Right-clicking a reagent container in your active hand will pick the previous transfer amount instead of the next"
+  - code_imp: "Mauna mug uses ctrl+click instead of attack_self() to toggle power"
