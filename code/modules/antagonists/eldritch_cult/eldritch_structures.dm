@@ -40,7 +40,7 @@
 
 	if(istype(I,/obj/item/forbidden_book))
 		playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
-		anchored = !anchored
+		set_anchored(!anchored)
 		to_chat(user,"<span class='notice'>You [anchored == FALSE ? "unanchor" : "anchor"] the crucible</span>")
 		return
 
