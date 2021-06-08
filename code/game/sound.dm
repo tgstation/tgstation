@@ -1,3 +1,7 @@
+GLOBAL_DATUM(mutecache, /sound)
+GLOBAL_LIST_EMPTY(allAttachedSounds)
+GLOBAL_VAR_INIT(channelReserved, 256)
+GLOBAL_VAR_INIT(channelMax, 512)
 
 ///Default override for echo
 /sound
@@ -22,6 +26,65 @@
 		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
 	)
 	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
+	var/atom/attached
+	var/list/listeners = list()
+	var/maxdist = 0
+
+/sound/proc/attach( var/atom/towhat )
+	attached = towhat
+	channel = GLOB.channelReserved++
+	if(GLOB.channelReserved>GLOB.channelMax)
+		GLOB.channelReserved=256
+	if(!attached.attachedSounds)
+		attached.attachedSounds = list()
+	attached.attachedSounds.Add(src)
+	GLOB.allAttachedSounds.Add(src)
+
+	recalculate()
+
+/sound/proc/stop()
+	if(channel)
+		if(!GLOB.mutecache)
+			GLOB.mutecache = sound(null)
+		GLOB.mutecache.channel = channel
+		world << src
+		if(attached)
+			attached.attachedSounds.Remove( src )
+			GLOB.allAttachedSounds.Remove( src )
+			attached = null
+			listeners = list()
+
+/sound/proc/recalcClient(var/client/c)
+	if(!GLOB.mutecache)
+		GLOB.mutecache = sound(null)
+	GLOB.mutecache.channel = channel
+	status |= SOUND_UPDATE
+	var/turf/CT = get_turf(c.mob)
+	var/turf/AT = get_turf(attached)
+	var/dist = get_dist(CT, AT)
+	if( !listeners.Find(c) )
+		//world << "Their dist: [dist] vs [maxdist]"
+		if( dist < maxdist )
+			status &= ~SOUND_UPDATE
+			pan = clamp((AT.x - CT.x)/maxdist*100,-100,100)
+			volume = 100-(dist/maxdist*100)
+			SEND_SOUND(c, src)
+			status |= SOUND_UPDATE
+			listeners.Add(c)
+
+	else if( dist > maxdist )
+		listeners.Remove(c)
+		SEND_SOUND(c, GLOB.mutecache)
+	else
+		pan = (AT.x - CT.x)/maxdist*100
+		volume = 100-(dist/maxdist*100)
+		SEND_SOUND(c, src)
+
+/sound/proc/recalculate()
+	for(var/client/c in GLOB.clients)
+		//world << "Recalculating for [c]"
+		recalcClient(c)
+
 
 /*! playsound
 
@@ -81,11 +144,11 @@ falloff_distance - Distance at which falloff begins. Sound is at peak volume (in
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
+			M.playsound_local(source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
 	for(var/P in SSmobs.dead_players_by_zlevel[source_z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
+			M.playsound_local(source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
 
 /*! playsound
 
@@ -106,7 +169,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 */
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
+/mob/proc/playsound_local(atom/atom_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
 	if(!client || !can_hear())
 		return
 
@@ -116,13 +179,15 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 	S.wait = 0 //No queue
 	S.channel = channel || SSsounds.random_available_channel()
 	S.volume = vol
+	S.maxdist = vol
+	S.attach(atom_source)
 
 	if(vary)
 		if(frequency)
 			S.frequency = frequency
 		else
 			S.frequency = get_rand_frequency()
-
+	var/turf/turf_source = get_turf(atom_source)
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
 
@@ -180,6 +245,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 			S.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
 
 	SEND_SOUND(src, S)
+	addtimer(CALLBACK(S, /sound.proc/stop), S.len + 10 SECONDS) // account for pitch shit
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
 	if(!S)

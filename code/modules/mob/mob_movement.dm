@@ -542,3 +542,10 @@
 /// Can this mob move between z levels
 /mob/proc/canZMove(direction, turf/target)
 	return FALSE
+
+/mob/Move()
+	. = ..()
+	if(client)
+		for(var/sound/s in GLOB.allAttachedSounds)
+			s.recalcClient(client)
+			world << "recalculating for [src]"

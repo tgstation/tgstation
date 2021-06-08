@@ -525,6 +525,12 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 
+	update_sounds()
+	for(var/mob/m in src)
+		if(m.client)
+			for(var/sound/s in GLOB.allAttachedSounds)
+				s.recalcClient(m.client)
+
 	return TRUE
 
 
@@ -1182,3 +1188,8 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/atom/movable/proc/update_sounds()
+	if(length(attachedSounds))
+		for (var/sound/S as anything in attachedSounds)
+			S.recalculate()
