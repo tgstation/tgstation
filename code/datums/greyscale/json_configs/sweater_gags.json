@@ -1,0 +1,11 @@
+// sweater gags code
+{
+    "sweaters": [
+        {
+            "type": "icon_state",
+            "icon_state": "Sweater GAGS",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}
