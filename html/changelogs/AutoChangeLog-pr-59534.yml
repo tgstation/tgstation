@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes self-use sleepers like syndie-sleepers so you can actually use them by yourself when you're inside them."
