@@ -19,12 +19,22 @@
 	return basic_report
 
 /datum/antagonist/blob/greet()
+	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are the [owner.special_role].</font></span>")
+	owner.announce_objectives()
 	if(!isovermind(owner.current))
-		to_chat(owner,"<span class='userdanger'>You feel bloated.</span>")
+		to_chat(owner.current, "<span class='notice'>Use the pop ability to place your blob core! It is recommended you do this away from anyone else as you'll be taking on the entire crew!</span>")
 
 /datum/antagonist/blob/on_gain()
 	create_objectives()
 	. = ..()
+
+/datum/antagonist/blob/remove_innate_effects()
+	QDEL_NULL(pop_action)
+	return ..()
+
+/datum/antagonist/blob/farewell()
+	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are no longer the [owner.special_role].</font></span>")
+	return ..()
 
 /datum/antagonist/blob/proc/create_objectives()
 	var/datum/objective/blob_takeover/main = new
@@ -47,16 +57,27 @@
 	icon_icon = 'icons/mob/blob.dmi'
 	button_icon_state = "blob"
 
+	var/autoplace_time = OVERMIND_STARTING_AUTO_PLACE_TIME
+
+/datum/action/innate/blobpop/Grant(Target)
+	. = ..()
+	if(owner)
+		addtimer(CALLBACK(src, /datum/action/innate.proc/Activate), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+		to_chat(owner, "<span class='big'><font color=\"#EE4000\">You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)].</font></span>")
+
 /datum/action/innate/blobpop/Activate()
 	var/mob/living/old_body = owner
+	if(!owner)
+		return
+
 	var/datum/antagonist/blob/blobtag = owner.mind.has_antag_datum(/datum/antagonist/blob)
 	if(!blobtag)
-		Remove()
+		Remove(owner)
 		return
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(B)
 	old_body.gib()
-	B.place_blob_core(placement_override = TRUE, pop_override = TRUE)
+	B.place_blob_core(placement_override = BLOB_FORCE_PLACEMENT, pop_override = TRUE)
 
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
