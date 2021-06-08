@@ -114,7 +114,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(50)
 	can_toggle_range = FALSE
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage

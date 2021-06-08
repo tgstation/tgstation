@@ -6,6 +6,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
+	/// Where we are in the possible transfer amount list.
+	var/amount_list_position = 1
 	var/volume = 30
 	var/reagent_flags
 	var/list/list_reagents = null
@@ -14,7 +16,6 @@
 	var/spillable = FALSE
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
-	var/mode_change_message = ""
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -31,7 +32,9 @@
 /obj/item/reagent_containers/examine()
 	. = ..()
 	if(possible_transfer_amounts.len > 1)
-		. += "<span class='notice'>Left-click to increase or right-click to decrease its transfer amount in-hand.</span>"
+		. += "<span class='notice'>Left-click or right-click in-hand to increase or decrease its transfer amount.</span>"
+	else if(possible_transfer_amounts.len)
+		. += "<span class='notice'>Left-click or right-click in-hand to view its transfer amount.</span>"
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
@@ -67,12 +70,12 @@
 		return
 	switch(direction)
 		if(FORWARD)
-			list_position = (list_position % list_len) + 1
+			amount_list_position = (amount_list_position % list_len) + 1
 		if(BACKWARD)
-			list_position = (list_position - 1) || list_len
+			amount_list_position = (amount_list_position - 1) || list_len
 		else
 			CRASH("change_transfer_amount() called with invalid direction value")
-	amount_per_transfer_from_this = possible_transfer_amounts[list_position]
+	amount_per_transfer_from_this = possible_transfer_amounts[amount_list_position]
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 

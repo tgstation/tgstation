@@ -273,7 +273,7 @@
 	icon_state = "sunflower"
 	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 1
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(1)
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
