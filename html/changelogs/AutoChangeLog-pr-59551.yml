@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Admins will no longer accidentally toggle delaying the end of the shift off when multiple admins attempt to delay at the same time."
+  - admin: "When a round end delay goes past the ordinary server restart time, admins are now required to manually end the shift through Reboot World in the Server verb tab or Reboot-World in the command bar. The shift will no longer automatically restart past this point just because an admin undelayed end."
