@@ -104,7 +104,6 @@
 		qdel(timer)
 
 	//BEGIN: ECS SHIT
-	datum_flags &= ~DF_SIGNAL_ENABLED
 
 	var/list/dc = datum_components
 	if(dc)

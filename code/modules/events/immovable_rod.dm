@@ -19,10 +19,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(!check_rights(R_FUN))
 		return
 
-	var/aimed = alert("Aimed at current location?", "Sniperod", "Yes", "No")
+	var/aimed = tgui_alert(usr,"Aimed at current location?", "Sniperod", list("Yes", "No"))
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
-	var/looper = alert("Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", "Yes", "No")
+	var/looper = tgui_alert(usr,"Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", list("Yes", "No"))
 	if(looper == "Yes")
 		force_looping = TRUE
 	message_admins("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
@@ -83,7 +83,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	AddElement(/datum/element/point_of_interest)
 
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over_movable)
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
 	if(special_target)
@@ -92,7 +91,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
 	RemoveElement(/datum/element/point_of_interest)
 	SSaugury.unregister_doom(src)
 
@@ -118,7 +117,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(ghost))
 			ghost.ManualFollow(src)
 
-/obj/effect/immovablerod/proc/on_crossed_over_movable(datum/source, atom/movable/atom_crossed_over)
+/obj/effect/immovablerod/proc/on_entered_over_movable(datum/source, atom/movable/atom_crossed_over)
 	SIGNAL_HANDLER
 	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
 		Bump(atom_crossed_over)
@@ -129,6 +128,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		Bump(atom_entered)
 
 /obj/effect/immovablerod/Moved()
+	if(!loc)
+		return ..()
+		
+	for(var/atom/movable/to_bump in loc)
+		if((to_bump != src) && !QDELETED(to_bump) && (to_bump.density || isliving(to_bump)))
+			Bump(to_bump)
+
 	// If we have a special target, we should definitely make an effort to go find them.
 	if(special_target)
 		var/turf/target_turf = get_turf(special_target)

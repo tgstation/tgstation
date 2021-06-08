@@ -4,7 +4,6 @@
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 30
 
@@ -106,7 +105,6 @@
 	name = "Combustible Lemon"
 	desc = "Made for burning houses down."
 	icon_state = "firelemon"
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 70
 
@@ -176,6 +174,7 @@
 	name = "extradimensional orange"
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
+	bite_consumption_mod = 2
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/toxin/mindbreaker
 	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)

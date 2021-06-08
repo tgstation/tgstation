@@ -9,6 +9,22 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
+/obj/structure/mirror/directional/north
+	dir = SOUTH
+	pixel_y = 28
+
+/obj/structure/mirror/directional/south
+	dir = NORTH
+	pixel_y = -28
+
+/obj/structure/mirror/directional/east
+	dir = WEST
+	pixel_x = 28
+
+/obj/structure/mirror/directional/west
+	dir = EAST
+	pixel_x = -28
+
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
@@ -73,6 +89,7 @@
 		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
+	. = ..()
 	if(broken || (flags_1 & NODECONSTRUCT_1))
 		return
 	icon_state = "mirror_broke"
@@ -212,7 +229,7 @@
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
 			if(H.gender == "male")
-				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 					H.gender = FEMALE
@@ -222,7 +239,7 @@
 					return
 
 			else
-				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 					H.gender = MALE
@@ -235,7 +252,7 @@
 			H.update_mutations_overlay() //(hulk male/female)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hairstyle or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = tgui_alert(H, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?

@@ -22,7 +22,7 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard,\
+		/mob/living/simple_animal/hostile/giant_spider/viper/wizard,\
 		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)

@@ -223,7 +223,8 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
-	update_greyscale()
+	if(greyscale_config && greyscale_colors)
+		update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -471,6 +472,7 @@
 
 ///Check if this atoms eye is still alive (probably)
 /atom/proc/check_eye(mob/user)
+	SIGNAL_HANDLER
 	return
 
 /atom/proc/Bumped(atom/movable/AM)
@@ -726,31 +728,25 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
-/// Checks if the colors given are different and if so causes a greyscale icon update
-/// The colors argument can be either a list or the full color string
-/atom/proc/set_greyscale_colors(list/colors, update=TRUE)
+/// Handles updates to greyscale value updates.
+/// The colors argument can be either a list or the full color string.
+/// Child procs should call parent last so the update happens after all changes.
+/atom/proc/set_greyscale(list/colors, new_config)
 	SHOULD_CALL_PARENT(TRUE)
 	if(istype(colors))
 		colors = colors.Join("")
-	if(greyscale_colors == colors)
-		return
-	greyscale_colors = colors
-	if(!greyscale_config)
-		return
-	if(update)
-		update_greyscale()
+	if(!isnull(colors) && greyscale_colors != colors) // If you want to disable greyscale stuff then give a blank string
+		greyscale_colors = colors
 
-/// Checks if the greyscale config given is different and if so causes a greyscale icon update
-/atom/proc/set_greyscale_config(new_config, update=TRUE)
-	if(greyscale_config == new_config)
-		return
-	greyscale_config = new_config
-	if(update)
-		update_greyscale()
+	if(!isnull(new_config) && greyscale_config != new_config)
+		greyscale_config = new_config
 
-/// Checks if this atom uses the GAS system and if so updates the icon
+	update_greyscale()
+
+/// Checks if this atom uses the GAGS system and if so updates the icon
 /atom/proc/update_greyscale()
-	if(greyscale_config && greyscale_colors)
+	SHOULD_CALL_PARENT(TRUE)
+	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
@@ -1217,7 +1213,7 @@
 
 		if(reagents)
 			var/chosen_id
-			switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+			switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
 				if("Search")
 					var/valid_id
 					while(!valid_id)
@@ -1288,7 +1284,7 @@
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
-		if(newname && !(CHAT_FILTER_CHECK(newname) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") != "Confirm"))
+		if(newname && !(CHAT_FILTER_CHECK(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
@@ -1354,48 +1350,53 @@
  * Must return  parent proc ..() in the end if overridden
  */
 /atom/proc/tool_act(mob/living/user, obj/item/I, tool_type, is_right_clicking)
+	var/act_result
 	var/signal_result
 	if(!is_right_clicking) // Left click first for sensibility
 		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
+		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+			return TOOL_ACT_SIGNAL_BLOCKING
 		if(processing_recipes.len)
 			process_recipes(user, I, processing_recipes)
 		if(QDELETED(I))
 			return TRUE
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				. = crowbar_act(user, I,)
+				act_result = crowbar_act(user, I,)
 			if(TOOL_MULTITOOL)
-				. = multitool_act(user, I)
+				act_result = multitool_act(user, I)
 			if(TOOL_SCREWDRIVER)
-				. = screwdriver_act(user, I)
+				act_result = screwdriver_act(user, I)
 			if(TOOL_WRENCH)
-				. = wrench_act(user, I)
+				act_result = wrench_act(user, I)
 			if(TOOL_WIRECUTTER)
-				. = wirecutter_act(user, I)
+				act_result = wirecutter_act(user, I)
 			if(TOOL_WELDER)
-				. = welder_act(user, I)
+				act_result = welder_act(user, I)
 			if(TOOL_ANALYZER)
-				. = analyzer_act(user, I)
+				act_result = analyzer_act(user, I)
 	else
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, I)
+		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+			return TOOL_ACT_SIGNAL_BLOCKING
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				. = crowbar_act_secondary(user, I,)
+				act_result = crowbar_act_secondary(user, I,)
 			if(TOOL_MULTITOOL)
-				. = multitool_act_secondary(user, I)
+				act_result = multitool_act_secondary(user, I)
 			if(TOOL_SCREWDRIVER)
-				. = screwdriver_act_secondary(user, I)
+				act_result = screwdriver_act_secondary(user, I)
 			if(TOOL_WRENCH)
-				. = wrench_act_secondary(user, I)
+				act_result = wrench_act_secondary(user, I)
 			if(TOOL_WIRECUTTER)
-				. = wirecutter_act_secondary(user, I)
+				act_result = wirecutter_act_secondary(user, I)
 			if(TOOL_WELDER)
-				. = welder_act_secondary(user, I)
+				act_result = welder_act_secondary(user, I)
 			if(TOOL_ANALYZER)
-				. = analyzer_act_secondary(user, I)
-	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
-		return TRUE
+				act_result = analyzer_act_secondary(user, I)
+	if(act_result) // A tooltype_act has completed successfully
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /atom/proc/process_recipes(mob/living/user, obj/item/I, list/processing_recipes)
@@ -1430,8 +1431,13 @@
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			var/atom/created_atom = new atom_to_create(drop_location())
-			created_atom.pixel_x = rand(-8, 8)
-			created_atom.pixel_y = rand(-8, 8)
+			if(custom_materials)
+				created_atom.set_custom_materials(custom_materials, 1 / chosen_option[TOOL_PROCESSING_AMOUNT])
+			created_atom.pixel_x = pixel_x
+			created_atom.pixel_y = pixel_y
+			if(i > 1)
+				created_atom.pixel_x += rand(-8,8)
+				created_atom.pixel_y += rand(-8,8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")

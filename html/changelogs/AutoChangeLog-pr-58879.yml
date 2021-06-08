@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Cloth golems and podpeople can now strip people again."
-  - bugfix: "Bananium golems are considered to be advanced tool users again."

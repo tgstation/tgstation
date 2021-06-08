@@ -96,8 +96,8 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
-	if(islist(antag_datums))
-		QDEL_LIST(antag_datums)
+	QDEL_LIST(antag_datums)
+	QDEL_NULL(language_holder)
 	current = null
 	return ..()
 
@@ -330,6 +330,13 @@
 		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) //Todo make this reset signal
 		if(O)
 			O.unlock_code = null
+
+/// Remove the antagonists that should not persist when being borged
+/datum/mind/proc/remove_antags_for_borging()
+	remove_antag_datum(/datum/antagonist/cult)
+
+	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
+	revolutionary?.remove_revolutionary(borged = TRUE)
 
 /datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
 	if(!current)
@@ -657,28 +664,28 @@
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
 
-/datum/mind/proc/make_Traitor()
+/datum/mind/proc/make_traitor()
 	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
-/datum/mind/proc/make_Contractor_Support()
+/datum/mind/proc/make_contractor_support()
 	if(!(has_antag_datum(/datum/antagonist/traitor/contractor_support)))
 		add_antag_datum(/datum/antagonist/traitor/contractor_support)
 
-/datum/mind/proc/make_Changeling()
+/datum/mind/proc/make_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
 		C = add_antag_datum(/datum/antagonist/changeling)
 		special_role = ROLE_CHANGELING
 	return C
 
-/datum/mind/proc/make_Wizard()
+/datum/mind/proc/make_wizard()
 	if(!has_antag_datum(/datum/antagonist/wizard))
 		special_role = ROLE_WIZARD
 		assigned_role = ROLE_WIZARD
 		add_antag_datum(/datum/antagonist/wizard)
 
-/datum/mind/proc/make_Rev()
+/datum/mind/proc/make_rev()
 	var/datum/antagonist/rev/head/head = new()
 	head.give_flash = TRUE
 	head.give_hud = TRUE

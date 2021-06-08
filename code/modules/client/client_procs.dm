@@ -328,7 +328,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(alert_mob_dupe_login)
 		spawn()
-			alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+			tgui_alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime

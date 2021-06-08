@@ -77,13 +77,6 @@
 /datum/team/proc/antag_listing_footer()
 	return
 
-//Moves them to the top of the list if TRUE
-/datum/antagonist/proc/is_gamemode_hero()
-	return FALSE
-
-/datum/team/proc/is_gamemode_hero()
-	return FALSE
-
 /datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
 	var/list/priority_sections = list()
@@ -101,10 +94,7 @@
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)
 				all_antagonists -= X
-		if(T.is_gamemode_hero())
-			priority_sections += T.antag_listing_entry()
-		else
-			sections += T.antag_listing_entry()
+		sections += T.antag_listing_entry()
 
 	sortTim(all_antagonists, /proc/cmp_antag_category)
 
@@ -123,10 +113,7 @@
 
 		if(!next_antag || next_antag.roundend_category != current_antag.roundend_category) //End of section
 			current_section += "</table>"
-			if(current_antag.is_gamemode_hero())
-				priority_sections += current_section.Join()
-			else
-				sections += current_section.Join()
+			sections += current_section.Join()
 			current_section.Cut()
 			current_category = null
 	var/list/all_sections = priority_sections + sections
@@ -134,14 +121,9 @@
 
 /datum/admins/proc/check_antagonists()
 	if(!SSticker.HasRoundStarted())
-		alert("The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>")
-	if(SSticker.mode.replacementmode)
-		dat += "Former Game Mode: <B>[SSticker.mode.name]</B><BR>"
-		dat += "Replacement Game Mode: <B>[SSticker.mode.replacementmode.name]</B><BR>"
-	else
-		dat += "Current Game Mode: <B>[SSticker.mode.name]</B><BR>"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Currently only used by dynamic. If more start using this, find a better way.
 		dat += "<a href='?_src_=holder;[HrefToken()];gamemode_panel=1'>Game Mode Panel</a><br>"
 	dat += "Round Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B><BR>"
@@ -155,16 +137,6 @@
 			dat += "<a href='?_src_=holder;[HrefToken()];call_shuttle=2'>Send Back</a><br>"
 		else
 			dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_leading(num2text(timeleft % 60), 2, "0")]</a><BR>"
-	dat += "<B>Continuous Round Status</B><BR>"
-	dat += "<a href='?_src_=holder;[HrefToken()];toggle_continuous=1'>[CONFIG_GET(keyed_list/continuous)[SSticker.mode.config_tag] ? "Continue if antagonists die" : "End on antagonist death"]</a>"
-	if(CONFIG_GET(keyed_list/continuous)[SSticker.mode.config_tag])
-		dat += ", <a href='?_src_=holder;[HrefToken()];toggle_midround_antag=1'>[CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag] ? "creating replacement antagonists" : "not creating new antagonists"]</a><BR>"
-	else
-		dat += "<BR>"
-	if(CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
-		dat += "Time limit: <a href='?_src_=holder;[HrefToken()];alter_midround_time_limit=1'>[CONFIG_GET(number/midround_antag_time_check)] minutes into round</a><BR>"
-		dat += "Living crew limit: <a href='?_src_=holder;[HrefToken()];alter_midround_life_limit=1'>[CONFIG_GET(number/midround_antag_life_check) * 100]% of crew alive</a><BR>"
-		dat += "If limits past: <a href='?_src_=holder;[HrefToken()];toggle_noncontinuous_behavior=1'>[SSticker.mode.round_ends_with_antag_death ? "End The Round" : "Continue As Extended"]</a><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>End Round Now</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"

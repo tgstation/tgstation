@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "All custom names in Character Settings can now either be reset to the default or randomised by leaving the text box blank"
+  - qol: "You can now pick a random religion in Character Settings by leaving the text box blank. Setting a religion will also set the bible name and deity if applicable"

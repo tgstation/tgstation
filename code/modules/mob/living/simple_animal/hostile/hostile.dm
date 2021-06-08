@@ -66,7 +66,7 @@
 	///Declares a cooldown for potential charges right off the bat.
 	COOLDOWN_DECLARE(charge_cooldown)
 
-/mob/living/simple_animal/hostile/Initialize()
+/mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
 
 	if(!targets_from)
@@ -351,9 +351,12 @@
 
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
-	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
-	return target.attack_animal(src)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
+		return FALSE //but more importantly return before attack_animal called
+	var/result = target.attack_animal(src)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	return result
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -593,13 +596,6 @@
 				. += M
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
-
-/mob/living/simple_animal/hostile/tamed(whomst)
-	. = ..()
-	if(isliving(whomst))
-		var/mob/living/fren = whomst
-		friends = fren
-		faction = fren.faction.Copy()
 
 /**
  * Proc that handles a charge attack windup for a mob.

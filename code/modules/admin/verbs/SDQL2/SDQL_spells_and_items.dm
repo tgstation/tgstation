@@ -207,8 +207,8 @@
 #undef RAW_ADDRESS
 
 /client/proc/cmd_give_sdql_spell(mob/target in GLOB.mob_list)
-	set category = "Debug.Admin"
 	set name = "Give SDQL spell"
+	set hidden = TRUE
 	if(CONFIG_GET(flag/sdql_spells))
 		var/datum/give_sdql_spell/ui = new(usr, target)
 		ui.ui_interact(usr)

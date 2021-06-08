@@ -38,4 +38,4 @@
 			if(DT_PROB(0.5, delta_time))
 				affected_mob.visible_message("<span class='danger'>[affected_mob] coughs up a swarm of bees!</span>", \
 													"<span class='userdanger'>You cough up a swarm of bees!</span>")
-				new /mob/living/simple_animal/hostile/poison/bees(affected_mob.loc)
+				new /mob/living/simple_animal/hostile/bee(affected_mob.loc)

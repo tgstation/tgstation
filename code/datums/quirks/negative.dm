@@ -237,7 +237,7 @@
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
-	value = -1
+	value = -4
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
@@ -422,28 +422,76 @@
 /datum/quirk/social_anxiety/add()
 	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
 	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/quirk/social_anxiety/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
 
-/datum/quirk/social_anxiety/on_process(delta_time)
+/datum/quirk/social_anxiety/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
+
+	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+	var/moodmod
+	if(mood)
+		moodmod = (1+0.02*(50-(max(50, mood.mood_level*(7-mood.sanity_level))))) //low sanity levels are better, they max at 6
+	else
+		moodmod = (1+0.02*(50-(max(50, 0.1*quirk_holder.nutrition))))
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
 			nearby_people++
-	var/mob/living/carbon/human/H = quirk_holder
-	if(DT_PROB(2 + nearby_people, delta_time))
-		H.stuttering = max(3, H.stuttering)
-	else if(DT_PROB(min(3, nearby_people), delta_time) && !H.silent)
-		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
-		H.silent = max(10, H.silent)
-	else if(DT_PROB(0.5, delta_time) && dumb_thing)
-		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
-		dumb_thing = FALSE //only once per life
-		if(prob(1))
-			new/obj/item/food/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		var/list/message_split = splittext(message, " ")
+		var/list/new_message = list()
+		var/mob/living/carbon/human/quirker = quirk_holder
+		for(var/word in message_split)
+			if(prob(max(5,(nearby_people*12.5*moodmod))) && word != message_split[1]) //Minimum 1/20 chance of filler
+				new_message += pick("uh,","erm,","um,")
+				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a succesful filler roll, for 50% odds in a 15 word sentence
+					quirker.silent = max(3, quirker.silent)
+					to_chat(quirker, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
+					break
+			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
+				word = html_decode(word)
+				var/leng = length(word)
+				var/stuttered = ""
+				var/newletter = ""
+				var/rawchar = ""
+				var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
+				for(var/i = 1, i <= leng, i += length(rawchar))
+					rawchar = newletter = word[i]
+					if(prob(80) && !nostutter.Find(rawchar))
+						if(prob(10))
+							newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
+						else if(prob(20))
+							newletter = "[newletter]-[newletter]-[newletter]"
+						else
+							newletter = "[newletter]-[newletter]"
+					stuttered += newletter
+				sanitize(stuttered)
+				new_message += stuttered
+			else
+				new_message += word
+		message = jointext(new_message, " ")
+	var/mob/living/carbon/human/quirker = quirk_holder
+	if(prob(min(50,(0.50*(nearby_people*12.5)*moodmod)))) //Max 50% chance of not talking
+		if(dumb_thing)
+			to_chat(quirker, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
+			dumb_thing = FALSE //only once per life
+			if(prob(1))
+				new/obj/item/food/spaghetti/pastatomato(get_turf(quirker)) //now that's what I call spaghetti code
+		else
+			to_chat(quirk_holder, "<span class='warning'>You think that wouldn't add much to the conversation and decide not to say it.</span>")
+			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after succesful not talking roll
+				to_chat(quirker, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
+				quirker.silent = max(5, quirker.silent)
+		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
+	else
+		speech_args[SPEECH_MESSAGE] = message
 
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)

@@ -224,7 +224,7 @@
 /// Show the command radial menu
 /datum/ai_controller/dog/proc/command_radial(mob/living/clicker)
 	var/list/commands = list(
-		COMMAND_HEEL = image(icon = 'icons/Testing/turf_analysis.dmi', icon_state = "red_arrow"),
+		COMMAND_HEEL = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow"),
 		COMMAND_FETCH = image(icon = 'icons/mob/actions/actions_spells.dmi', icon_state = "summons"),
 		COMMAND_ATTACK = image(icon = 'icons/effects/effects.dmi', icon_state = "bite"),
 		COMMAND_DIE = image(icon = 'icons/mob/pets.dmi', icon_state = "puppy_dead")
@@ -321,9 +321,13 @@
 			current_movement_target = pointed_movable
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
+			if(living_pawn.buckled)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!</span>")
 			current_movement_target = pointed_movable
 			blackboard[BB_DOG_HARASS_TARGET] = pointed_movable
+			if(living_pawn.buckled)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/harass)

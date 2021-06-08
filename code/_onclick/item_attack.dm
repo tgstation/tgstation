@@ -2,7 +2,7 @@
  * This is the proc that handles the order of an item_attack.
  *
  * The order of procs called is:
- * * [/atom/proc/tool_act] on the target. If it returns TRUE, the chain will be stopped.
+ * * [/atom/proc/tool_act] on the target. If it returns TOOL_ACT_TOOLTYPE_SUCCESS or TOOL_ACT_SIGNAL_BLOCKING, the chain will be stopped.
  * * [/obj/item/proc/pre_attack] on src. If this returns TRUE, the chain will be stopped.
  * * [/atom/proc/attackby] on the target. If it returns TRUE, the chain will be stopped.
  * * [/obj/item/proc/afterattack]. The return value does not matter.
@@ -11,7 +11,7 @@
 
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
-	if(tool_behaviour && target.tool_act(user, src, tool_behaviour, is_right_clicking))
+	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
 
 	var/pre_attack_result
@@ -203,11 +203,13 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
-					"<span class='danger'>You hit [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+		var/no_damage = TRUE
+		if(take_damage(I.force, I.damtype, MELEE, 1))
+			no_damage = FALSE
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-	take_damage(I.force, I.damtype, MELEE, 1)
+		user.visible_message("<span class='danger'>[user] hits [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", \
+			"<span class='danger'>You hit [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)

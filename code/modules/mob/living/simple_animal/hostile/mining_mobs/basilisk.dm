@@ -112,7 +112,6 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = null // doesn't bite unlike the parent type.
 	stat_attack = HARD_CRIT
-	is_flying_animal = TRUE
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	gold_core_spawnable = NO_SPAWN
@@ -121,6 +120,10 @@
 	lava_drinker = FALSE
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize()
+	. = ..()
+	AddElement(/datum/element/simple_flying)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()

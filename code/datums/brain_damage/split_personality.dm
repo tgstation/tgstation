@@ -45,7 +45,7 @@
 /datum/brain_trauma/severe/split_personality/on_life(delta_time, times_fired)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
-			switch_personalities()
+			switch_personalities(TRUE)
 		qdel(src)
 	else if(DT_PROB(1.5, delta_time))
 		switch_personalities()
@@ -53,23 +53,23 @@
 
 /datum/brain_trauma/severe/split_personality/on_lose()
 	if(current_controller != OWNER) //it would be funny to cure a guy only to be left with the other personality, but it seems too cruel
-		switch_personalities()
+		switch_personalities(TRUE)
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
 	..()
 
-/datum/brain_trauma/severe/split_personality/proc/switch_personalities()
+/datum/brain_trauma/severe/split_personality/proc/switch_personalities(reset_to_owner = FALSE)
 	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
 		return
 
 	var/mob/living/split_personality/current_backseat
-	var/mob/living/split_personality/free_backseat
-	if(current_controller == OWNER)
-		current_backseat = stranger_backseat
-		free_backseat = owner_backseat
-	else
+	var/mob/living/split_personality/new_backseat
+	if(current_controller == STRANGER || reset_to_owner)
 		current_backseat = owner_backseat
-		free_backseat = stranger_backseat
+		new_backseat = stranger_backseat	
+	else
+		current_backseat = stranger_backseat
+		new_backseat = owner_backseat
 
 	if(!current_backseat.client) //Make sure we never switch to a logged off mob.
 		return
@@ -85,18 +85,21 @@
 	owner.computer_id = null
 	owner.lastKnownIP = null
 
-	free_backseat.ckey = owner.ckey
+	new_backseat.ckey = owner.ckey
 
-	free_backseat.name = owner.name
+	new_backseat.name = owner.name
 
 	if(owner.mind)
-		free_backseat.mind = owner.mind
+		new_backseat.mind = owner.mind
 
-	if(!free_backseat.computer_id)
-		free_backseat.computer_id = h2b_id
+	if(!new_backseat.computer_id)
+		new_backseat.computer_id = h2b_id
 
-	if(!free_backseat.lastKnownIP)
-		free_backseat.lastKnownIP = h2b_ip
+	if(!new_backseat.lastKnownIP)
+		new_backseat.lastKnownIP = h2b_ip
+	
+	if(reset_to_owner && new_backseat.mind)
+		new_backseat.ghostize(FALSE)
 
 	//Backseat to body
 

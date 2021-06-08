@@ -142,9 +142,13 @@
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 
-/datum/component/butchering/recycler/proc/onCrossed(datum/source, mob/living/L)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
+
+/datum/component/butchering/recycler/proc/on_entered(datum/source, mob/living/L)
 	SIGNAL_HANDLER
 
 	if(!istype(L))

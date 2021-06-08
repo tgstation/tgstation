@@ -86,6 +86,14 @@
 	icon_state = "blackplasma"
 	inhand_icon_state = "blackplasma"
 
+/obj/item/clothing/gloves/color/plasmaman/plasmanitrile
+	name = "nitrile envirogloves"
+	desc = "Pricy nitrile gloves made for plasmamen."
+	icon_state = "nitrile"
+	inhand_icon_state = "nitrilegloves"
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	transfer_prints = FALSE
+
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"
 	icon_state = "whiteplasma"

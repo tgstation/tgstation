@@ -126,7 +126,7 @@
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
-	description = "Frozen plasma, worth its weight in gold, to the right people"
+	description = "Frozen plasma, worth its weight in gold, to the right people."
 	reagent_state = SOLID
 	color = "#724cb8" // rgb: 114, 76, 184
 	taste_description = "thick and smokey"
@@ -212,11 +212,6 @@
 	taste_description = "fish"
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = ..()
-	for(var/i in M.all_scars)
-		qdel(i)
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -847,7 +842,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.losebreath += 5 * REM * delta_time
+	if(M.losebreath < 5)
+		M.losebreath = min(M.losebreath + 5 * REM * delta_time, 5)
 	return ..()
 
 /datum/reagent/toxin/spewium

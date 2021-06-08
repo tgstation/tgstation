@@ -39,8 +39,6 @@
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
-	pet_bonus = TRUE
-	pet_bonus_emote = "purrs!"
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -51,6 +49,7 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

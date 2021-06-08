@@ -51,8 +51,12 @@
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
+
 	greyscale_colors = null
 	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"

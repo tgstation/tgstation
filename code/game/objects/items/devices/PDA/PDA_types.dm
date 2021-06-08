@@ -49,6 +49,8 @@
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai
 	icon = null
+	greyscale_config = null
+	greyscale_colors = null
 	ttone = "data"
 
 

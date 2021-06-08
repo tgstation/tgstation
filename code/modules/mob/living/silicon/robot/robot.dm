@@ -170,8 +170,8 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(SSticker.anonymousnames) //only robotic renames will allow for anything other than the anonymous one
-		changed_name = SSticker.anonymousnames.anonymous_ai_name(FALSE)
+	if(GLOB.current_anonymous_theme) //only robotic renames will allow for anything other than the anonymous one
+		changed_name = GLOB.current_anonymous_theme.anonymous_ai_name(FALSE)
 	if(!changed_name && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
 		apply_pref_name("cyborg", C)
 		return //built in camera handled in proc
@@ -937,6 +937,7 @@
 			aicamera.stored[i] = TRUE
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
+	SIGNAL_HANDLER
 	if(model)
 		model.respawn_consumable(src, amount * 0.005)
 	if(cell)
@@ -980,3 +981,10 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+/mob/living/silicon/robot/get_exp_list(minutes)
+	. = ..()
+
+	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
+
+	.[cyborg_job_ref.title] = minutes

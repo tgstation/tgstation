@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Killer tomatoes no longer require the liquid contents trait to have a chance to self-animate when picked up without proper protection."

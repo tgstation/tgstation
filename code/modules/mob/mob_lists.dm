@@ -65,13 +65,13 @@
 /mob/proc/add_to_current_dead_players()
 	if(!SSticker?.mode)
 		return
-	SSticker.mode.current_players[CURRENT_DEAD_PLAYERS] |= src
+	GLOB.dead_player_list |= src
 
 /mob/dead/observer/add_to_current_dead_players()
 	if(!SSticker?.mode)
 		return
 	if(started_as_observer)
-		SSticker.mode.current_players[CURRENT_OBSERVERS] |= src
+		GLOB.current_observers_list |= src
 		return
 	return ..()
 
@@ -82,13 +82,13 @@
 /mob/proc/remove_from_current_dead_players()
 	if(!SSticker?.mode)
 		return
-	SSticker.mode.current_players[CURRENT_DEAD_PLAYERS] -= src
+	GLOB.dead_player_list -= src
 
 /mob/dead/observer/remove_from_current_dead_players()
 	if(!SSticker?.mode)
 		return
 	if(started_as_observer)
-		SSticker.mode.current_players[CURRENT_OBSERVERS] -= src
+		GLOB.current_observers_list -= src
 		return
 	return ..()
 
@@ -97,7 +97,7 @@
 /mob/proc/add_to_current_living_players()
 	if(!SSticker?.mode)
 		return
-	SSticker.mode.current_players[CURRENT_LIVING_PLAYERS] |= src
+	GLOB.alive_player_list |= src
 	if(mind && (mind.special_role || length(mind.antag_datums)))
 		add_to_current_living_antags()
 
@@ -105,7 +105,7 @@
 /mob/proc/remove_from_current_living_players()
 	if(!SSticker?.mode)
 		return
-	SSticker.mode.current_players[CURRENT_LIVING_PLAYERS] -= src
+	GLOB.alive_player_list -= src
 	if(LAZYLEN(mind?.antag_datums))
 		remove_from_current_living_antags()
 
@@ -114,10 +114,10 @@
 /mob/proc/add_to_current_living_antags()
 	if(!SSticker?.mode)
 		return
-	SSticker.mode.current_players[CURRENT_LIVING_ANTAGS] |= src
+	GLOB.current_living_antags |= src
 
 ///Removes the mob reference from the list of living antag player-mobs.
 /mob/proc/remove_from_current_living_antags()
 	if(!SSticker?.mode)
 		return
-	SSticker.mode.current_players[CURRENT_LIVING_ANTAGS] -= src
+	GLOB.current_living_antags -= src

@@ -133,6 +133,7 @@
  * Fixes any bugs that are caused by late Generate() or exchanging clients
  */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
+	SIGNAL_HANDLER
 	listclearnulls(smashes)
 	for(var/mind in targets)
 		if(isnull(mind))

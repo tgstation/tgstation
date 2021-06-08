@@ -1,14 +1,10 @@
 
-//Portrait picker! It's a tgui window that lets you look through all the portraits, and choose one as your AI.
-
-//very similar to centcom_podlauncher in terms of how this is coded, so i kept a lot of comments from it
-//^ wow! it's the second time i've said this! i'm a real coder now, copying my statement of copying other people's stuff.
-
-
-#define TAB_LIBRARY 1
-#define TAB_SECURE 2
-#define TAB_PRIVATE 3
-
+/**
+ * ## Portrait picker!!
+ *
+ * It's a tgui window that lets you look through all the portraits, and choose one as your AI.
+ * very similar to centcom_podlauncher in terms of how this is coded, so i kept a lot of comments from it
+ */
 /datum/portrait_picker
 	var/client/holder //client of whoever is using this datum
 

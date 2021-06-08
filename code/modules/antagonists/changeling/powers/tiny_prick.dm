@@ -47,8 +47,8 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE))
-		return
+	if(!length(get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE)))
+		return // no path within the sting's range is found. what a weird place to use the pathfinding system
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)
 		changeling.chem_charges -= chemical_cost

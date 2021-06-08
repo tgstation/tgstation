@@ -124,7 +124,7 @@
 	detonate() //If we're touching a hot item we go boom
 
 
-/// Expldoe and remove the object
+/// Explode and remove the object
 /datum/component/explodable/proc/detonate()
 	SIGNAL_HANDLER
 

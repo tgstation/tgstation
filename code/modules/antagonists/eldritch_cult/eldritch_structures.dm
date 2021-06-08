@@ -112,7 +112,7 @@
 	/// Reference to trap owner mob
 	var/mob/owner
 
-/obj/structure/trap/eldritch/Crossed(atom/movable/AM)
+/obj/structure/trap/eldritch/on_entered(datum/source, atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
 	var/mob/living/living_mob = AM

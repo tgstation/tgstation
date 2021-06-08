@@ -17,8 +17,6 @@
 	speak_chance = 1
 	turns_per_move = 10
 	can_be_held = TRUE
-	pet_bonus = TRUE
-	pet_bonus_emote = "woofs happily!"
 	ai_controller = /datum/ai_controller/dog
 	stop_automated_movement = TRUE
 	///In the case 'melee_damage_upper' is somehow raised above 0
@@ -31,6 +29,7 @@
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	add_cell_sample()
 
 //Corgis and pugs are now under one dog subtype

@@ -288,7 +288,7 @@
  */
 /datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
 	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"))
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
 	currently_asking -= invited
 	if(ask == "Yes")
 		possible_crusaders += invited

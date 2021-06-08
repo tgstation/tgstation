@@ -487,6 +487,7 @@
 		qdel(src)//runs disconnect code
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
+	SIGNAL_HANDLER
 	if(magnification)
 		visible_message("<span class='warning'>[src] falls off of [magnification]'s head as it changes shape!</span>")
 		magnification.dropItemToGround(src)

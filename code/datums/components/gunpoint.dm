@@ -117,8 +117,10 @@
 
 ///Bang bang, we're firing a charged shot off
 /datum/component/gunpoint/proc/trigger_reaction()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/async_trigger_reaction)
 
+/datum/component/gunpoint/proc/async_trigger_reaction()
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
 	target.remove_status_effect(STATUS_EFFECT_HELDUP, shooter)

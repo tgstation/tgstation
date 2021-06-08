@@ -23,7 +23,7 @@
 	icon_state = "banana"
 	inhand_icon_state = "banana"
 	trash_type = /obj/item/grown/bananapeel
-	bite_consumption = 5
+	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk

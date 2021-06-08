@@ -22,11 +22,14 @@
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon_state = "poppy"
+	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
+	greyscale_config = /datum/greyscale_config/flower_simple
+	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -42,7 +45,7 @@
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
-	icon_state = "lily"
+	greyscale_colors = "#fe881f"
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -80,7 +83,7 @@
 	name = "spaceman's trumpet"
 	desc = "A vivid flower that smells faintly of freshly cut grass. Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon."
 	icon_state = "spacemanstrumpet"
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 
 // Geranium
@@ -97,7 +100,7 @@
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	icon_state = "geranium"
+	greyscale_colors = "#1499bb"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -118,6 +121,9 @@
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
 	distill_reagent = /datum/reagent/ash
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 // Harebell
 /obj/item/seeds/harebell
@@ -146,7 +152,7 @@
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = ITEM_SLOT_HEAD
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Sunflower
@@ -211,7 +217,6 @@
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
-	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
 // Novaflower
@@ -311,7 +316,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 
 /obj/item/food/grown/rose/Initialize(mapload, obj/item/seeds/new_seed)

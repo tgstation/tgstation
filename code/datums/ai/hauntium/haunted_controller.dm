@@ -49,6 +49,7 @@
 
 ///Signal response for when the item is picked up; stops listening for follow up equips, just waits for a drop.
 /datum/ai_controller/haunted/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
 	var/list/hauntee_list = blackboard[BB_TO_HAUNT_LIST]
 	hauntee_list[equipper] = hauntee_list[equipper] + HAUNTED_ITEM_AGGRO_ADDITION //You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
@@ -57,5 +58,6 @@
 
 ///Flip it so we listen for equip again but not for drop.
 /datum/ai_controller/haunted/proc/on_dropped(datum/source, mob/user)
+	SIGNAL_HANDLER
 	RegisterSignal(pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	UnregisterSignal(pawn, COMSIG_ITEM_DROPPED)

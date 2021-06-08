@@ -161,18 +161,16 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
-	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
-	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/UncrossedRemoveItemFromLift)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXITED =.proc/UncrossedRemoveItemFromLift,
+		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
+		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
-
-/obj/structure/industrial_lift/Move(atom/newloc, direct)
-	UnregisterSignal(loc, COMSIG_ATOM_CREATED)
-	. = ..()
-	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/potential_rider)
 	SIGNAL_HANDLER
@@ -187,7 +185,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/structure/fluff/tram_rail))
+	if(istype(AM, /obj/structure/fluff/tram_rail) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
 		return
 	if(AM in lift_load)
 		return
@@ -415,7 +413,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/travel_direction
 	var/time_inbetween_moves = 1
 
+
 /obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+
+/obj/structure/industrial_lift/tram/central/Initialize(mapload)
+	. = ..()
+	SStramprocess.can_fire = TRUE
 
 /obj/structure/industrial_lift/tram/LateInitialize()
 	. = ..()
@@ -518,4 +521,4 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/effect/landmark/tram/right_part
 	name = "East Wing"
 	destination_id = "right_part"
-	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box")
+	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "beaker")

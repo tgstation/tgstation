@@ -31,6 +31,22 @@
 	/// If blind drop option is available
 	var/blind_drop_ready = TRUE
 
+/obj/machinery/computer/auxiliary_base/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/computer/auxiliary_base/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/computer/auxiliary_base/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/auxiliary_base/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/machinery/computer/auxiliary_base/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
@@ -56,7 +72,7 @@
 	if(LAZYLEN(turrets))
 		for(var/turret in turrets)
 			var/obj/machinery/porta_turret/aux_base/base_turret = turret
-			var/turret_integrity = max((base_turret.obj_integrity - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
+			var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
 			var/turret_status
 			if(base_turret.machine_stat & BROKEN)
 				turret_status = "ERROR"

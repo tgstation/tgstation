@@ -27,8 +27,8 @@
 	name = "watermelon"
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
+	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
-	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
@@ -58,9 +58,9 @@
 	name = "holymelon"
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
+	bite_consumption_mod = 2
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
-
 
 /obj/item/food/grown/holymelon/make_dryable()
 	return //No drying

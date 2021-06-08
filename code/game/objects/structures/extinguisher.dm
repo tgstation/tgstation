@@ -10,6 +10,22 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
+/obj/structure/extinguisher_cabinet/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/structure/extinguisher_cabinet/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/structure/extinguisher_cabinet/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/structure/extinguisher_cabinet/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -137,6 +153,7 @@
 	return ..()
 
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = 1
 		opened = 1

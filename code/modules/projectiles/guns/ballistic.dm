@@ -104,12 +104,17 @@
 	var/alternative_fire_sound
 	///If only our alternative ammuntion misfires and not our main ammunition, we set this to TRUE
 	var/alternative_ammo_misfires = FALSE
+
+	/// Misfire Variables ///
+
 	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
 	var/can_misfire = FALSE
 	///How likely is our gun to misfire?
 	var/misfire_probability = 0
 	///How much does shooting the gun increment the misfire probability?
 	var/misfire_percentage_increment = 0
+	///What is the cap on our misfire probability? Do not set this to 100.
+	var/misfire_probability_cap = 25
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -125,6 +130,21 @@
 		chamber_round(replace_new_round = TRUE)
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_reload)
+
+/obj/item/gun/ballistic/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
+
+/**
+ *
+ * Outputs type-specific weapon stats for ballistic weaponry based on its magazine and its caliber.
+ * It contains extra breaks for the sake of presentation
+ *
+ */
+/obj/item/gun/ballistic/proc/add_notes_ballistic()
+	if(magazine) // Make sure you have a magazine, thats where the warning is!
+		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[magazine.caliber]</span> rounds, which you can inspect for more information."
+	else
+		return "\nThe warning attached to the magazine is missing..."
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
 	. = ..()
@@ -356,6 +376,7 @@
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
+		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
 
 	. = ..()
 
@@ -631,6 +652,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			. = TRUE
 
 /obj/item/gun/ballistic/proc/instant_reload()
+	SIGNAL_HANDLER
 	if(magazine)
 		magazine.top_off()
 	else

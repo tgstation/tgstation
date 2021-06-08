@@ -59,10 +59,12 @@
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
-	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
+	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
+	else if(!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
+		return ELEMENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
 	directional = _dir
@@ -83,6 +85,14 @@
 
 	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
+/**
+ * ## generate_appearance
+ *
+ * If the decal was not given an appearance, it will generate one based on the other given arguments.
+ * element won't be compatible if it cannot do either
+ * all args are fed into creating an image, they are byond vars for images you'll recognize in the byond docs
+ * (except source, source is the object whose appearance we're copying.)
+ */
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
 		return FALSE
@@ -97,6 +107,7 @@
 	source.update_appearance()
 	if(isitem(source))
 		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
+	SEND_SIGNAL(source, COMSIG_TURF_DECAL_DETACHED, description, cleanable, directional, pic)
 	return ..()
 
 /datum/element/decal/proc/late_update_icon(atom/source)

@@ -39,5 +39,6 @@
 	name = "space tobacco leaves"
 	desc = "Dry them out to make some space-smokes."
 	icon_state = "stobacco_leaves"
+	bite_consumption_mod = 2
 	distill_reagent = null
 	wine_power = 50
