@@ -970,6 +970,9 @@ function draw_listedturf() {
 			return function(e) {
 				e.preventDefault();
 				clickcatcher = "?src=" + part[1] + ";statpanel_item_click=1";
+				if(e.button == 1){
+					clickcatcher += ";statpanel_item_middleclick=1"
+				}
 				if(e.shiftKey){
 					clickcatcher += ";statpanel_item_shiftclick=1";
 				}

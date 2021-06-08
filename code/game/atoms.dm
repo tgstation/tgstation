@@ -1956,6 +1956,8 @@
 		return
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
+	if(href_list["statpanel_item_middleclick"])
+		paramslist[MIDDLE_CLICK] = "1"
 	if(href_list["statpanel_item_shiftclick"])
 		paramslist[SHIFT_CLICK] = "1"
 	if(href_list["statpanel_item_ctrlclick"])
