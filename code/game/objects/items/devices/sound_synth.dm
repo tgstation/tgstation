@@ -1,11 +1,11 @@
-/obj/item/device/soundsynth
+/obj/item/soundsynth
 	name = "sound synthesizer"
 	desc = "A device that is able to create sounds."
 	icon_state = "radio"
 	icon = 'icons/obj/device.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
-	var/tmp/spam_flag = 0 //To prevent mashing the button to cause annoyance like a huge idiot.
+	var/playback_cooldown = 0 //To prevent mashing the button to cause annoyance like a huge idiot.
 	var/selected_sound = "sound/items/bikehorn.ogg"
 	var/shiftpitch = 1
 	var/volume = 50
@@ -33,7 +33,7 @@
 	"Time Stop" = "selected_sound=sound/magic/timeparadox2.ogg&shiftpitch=0&volume=80",
 	)
 
-/obj/item/device/soundsynth/verb/pick_sound()
+/obj/item/soundsynth/verb/pick_sound()
 	set category = "Object"
 	set name = "Select Sound Playback"
 	var/chosen_sound = input("Pick a sound:", null) as null|anything in sound_list
@@ -45,20 +45,20 @@
 	shiftpitch = text2num(sound_parser["shiftpitch"])
 	volume = text2num(sound_parser["volume"])
 
-/obj/item/device/soundsynth/attack_self(mob/user as mob)
-	if(spam_flag + 2 SECONDS < world.timeofday)
+/obj/item/soundsynth/attack_self(mob/user as mob)
+	if(playback_cooldown + 2 SECONDS < world.time)
 		playsound(src, selected_sound, volume, shiftpitch)
-		spam_flag = world.timeofday
+		playback_cooldown = world.time
 
-/obj/item/device/soundsynth/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/soundsynth/attack(mob/living/M, mob/living/user, def_zone)
 	if(M == user)
 		pick_sound()
-	else if(spam_flag + 2 SECONDS < world.timeofday)
+	else if(playback_cooldown + 2 SECONDS < world.timeofday)
 		M.playsound_local(get_turf(src), selected_sound, volume, shiftpitch)
-		spam_flag = world.timeofday
+		playback_cooldown = world.timeofday
 
-/obj/item/device/soundsynth/AltClick()
-	if(!usr.incapacitated() && Adjacent(usr))
+/obj/item/soundsynth/AltClick()
+	if(!incapacitated() && Adjacent())
 		pick_sound()
 		return
 	return ..()
