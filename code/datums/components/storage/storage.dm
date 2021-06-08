@@ -99,6 +99,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
+	RegisterSignal(parent, COMSIG_CLICK_RIGHT, .proc/on_right_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
@@ -831,13 +832,17 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
+	to_chat(user,"<span class='warning'>This action has been moved to right click.</span>")
+
+/datum/component/storage/proc/on_right_click(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	. = COMPONENT_CANCEL_CLICK_RIGHT
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
-		return
+		return FALSE
 
 	var/atom/A = parent
 	if(!quickdraw)
