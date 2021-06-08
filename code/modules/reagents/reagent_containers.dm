@@ -61,27 +61,20 @@
 /obj/item/reagent_containers/proc/mode_change_message(mob/user)
 	return
 
-/obj/item/reagent_containers/proc/change_transfer_amount(mob/user, direction)
-	if(!possible_transfer_amounts.len)
+/obj/item/reagent_containers/proc/change_transfer_amount(mob/user, direction = FORWARD)
+	var/list_len = length(possible_transfer_amounts)
+	if(!list_len)
 		return
-	var/list_position = 0
-	for(var/transfer_amount in possible_transfer_amounts)
-		list_position++
-		if(transfer_amount == amount_per_transfer_from_this)
-			switch(direction)
-				if(FORWARD)
-					if(list_position < possible_transfer_amounts.len) //not at end
-						amount_per_transfer_from_this = possible_transfer_amounts[list_position + 1] //move to next entry
-					else
-						amount_per_transfer_from_this = possible_transfer_amounts[1] //move to list start
-				if(BACKWARD)
-					if(list_position == 1) //at list start
-						amount_per_transfer_from_this = possible_transfer_amounts[possible_transfer_amounts.len] //move to list end
-					else
-						amount_per_transfer_from_this = possible_transfer_amounts[list_position - 1] //move to previous entry
-			balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
-			mode_change_message(user)
-			return
+	switch(direction)
+		if(FORWARD)
+			list_position = (list_position % list_len) + 1
+		if(BACKWARD)
+			list_position = (list_position - 1) || list_len
+		else
+			CRASH("change_transfer_amount() called with invalid direction value")
+	amount_per_transfer_from_this = possible_transfer_amounts[list_position]
+	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
+	mode_change_message(user)
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, DO_NOT_SPLASH))
