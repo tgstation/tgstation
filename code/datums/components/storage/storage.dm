@@ -834,7 +834,8 @@
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	to_chat(user,"<span class='warning'>This action has been moved to right click.</span>")
+	to_chat(user,"<span class='warning'>This action is being moved from alt-click to right-click.</span>")
+	on_right_click(source, user)
 
 /datum/component/storage/proc/on_right_click(datum/source, mob/user)
 	SIGNAL_HANDLER
