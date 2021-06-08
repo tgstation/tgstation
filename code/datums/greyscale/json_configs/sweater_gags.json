@@ -20,5 +20,5 @@
 		/obj/item/toy,
         )
 
-greyscale_config = /datum/greyscale_config/sweater_gags
-greyscale_colors = "#44A510"
+    greyscale_config = /datum/greyscale_config/sweater_gags
+    greyscale_colors = "#44A510"
