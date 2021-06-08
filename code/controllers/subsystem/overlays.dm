@@ -83,7 +83,8 @@ SUBSYSTEM_DEF(overlays)
 			// This is too expensive to run normally but running it during CI is a good test
 			var/list/icon_states_available = icon_states(icon)
 			if(!(overlay in icon_states_available))
-				stack_trace("Invalid icon state '[overlay]' attempted to get added as an overlay to [src].")
+				var/icon_file = "[icon]" || "Unknown Generated Icon"
+				stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [overlay].")
 				continue
 #endif
 			new_overlays += iconstate2appearance(icon, overlay)

@@ -25,10 +25,15 @@
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
+	/// The icon state for the paddle overlay, not applied if null
 	var/paddle_state = "defibunit-paddles"
+	/// The icon state for the powered on overlay, not applied if null
 	var/powered_state = "defibunit-powered"
+	/// The icon state for the charge bar overlay, not applied if null
 	var/charge_state = "defibunit-charge"
+	/// The icon state for the missing cell overlay, not applied if null
 	var/nocell_state = "defibunit-nocell"
+	/// The icon state for the emagged overlay, not applied if null
 	var/emagged_state = "defibunit-emagged"
 
 /obj/item/defibrillator/get_cell()
