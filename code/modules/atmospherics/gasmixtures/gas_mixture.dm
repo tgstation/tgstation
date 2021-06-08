@@ -37,9 +37,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
+	/// The fire key contains information that might determine the volume of hotspots.
 	var/list/reaction_results
-	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
-	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	/// Used for analyzer feedback - not initialized until its used
+	var/list/analyzer_results
+	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	var/gc_share = FALSE 
 
 /datum/gas_mixture/New(volume)
 	gases = new

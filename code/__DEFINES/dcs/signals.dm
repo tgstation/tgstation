@@ -43,6 +43,9 @@
 
 /// signals from globally accessible objects
 
+///from SSJob when DivideOccupations is called
+#define COMSIG_OCCUPATIONS_DIVIDED "occupations_divided"
+
 ///from SSsun when the sun changes position : (azimuth)
 #define COMSIG_SUN_MOVED "sun_moved"
 
@@ -695,6 +698,8 @@
 #define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
+///from base of [/obj/proc/update_integrity]: ()
+#define COMSIG_OBJ_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
@@ -705,6 +710,8 @@
 #define COMSIG_OBJ_PAINTED "obj_painted"
 /// from /obj/proc/obj_break: ()
 #define COMSIG_OBJ_BREAK "obj_break"
+/// from base of [/obj/proc/obj_fix]: ()
+#define COMSIG_OBJ_FIX "obj_fix"
 
 // /obj/machinery signals
 
@@ -946,6 +953,14 @@
 ///sent from mecha action buttons to the mecha they're linked to
 #define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
 
+///sent from clicking while you have no equipment selected. Sent before cooldown and adjacency checks, so you can use this for infinite range things if you want.
+#define COMSIG_MECHA_MELEE_CLICK "mecha_action_melee_click"
+	/// Prevents click from happening.
+	#define COMPONENT_CANCEL_MELEE_CLICK (1<<0)
+///sent from clicking while you have equipment selected.
+#define COMSIG_MECHA_EQUIPMENT_CLICK "mecha_action_equipment_click"
+	/// Prevents click from happening.
+	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
 
 // /mob/living/carbon/human signals
 
@@ -1289,3 +1304,6 @@
 #define COMSIG_CIRCUIT_ADD_COMPONENT "circuit_add_component"
 	/// Cancels adding the component to the circuit.
 	#define COMPONENT_CANCEL_ADD_COMPONENT (1<<0)
+
+/// Called in /obj/structure/moneybot/add_money(). (to_add)
+#define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
