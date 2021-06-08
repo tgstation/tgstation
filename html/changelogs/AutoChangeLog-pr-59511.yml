@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - code_imp: "Resetting an object's name and description with a pen will return them to what they were before being changed, instead of their initial values"
+  - bugfix: "Resetting a sculpture's description will no longer result in a description telling you to yell at Firecage"
