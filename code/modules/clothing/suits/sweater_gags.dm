@@ -1,9 +1,9 @@
 /obj/item/clothing/suit/sweater_gags
 	name = "turtleneck sweater"
 	desc = "Space is cold, bring a sweater."
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'icons/obj/clothing/suit.dmi'
 	icon_state = "sweater_gags"
-	worn_icon = 'icons/mob/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
 	body_parts_covered = CHEST|ARMS
 	cold_protection = CHEST|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

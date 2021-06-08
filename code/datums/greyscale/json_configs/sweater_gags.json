@@ -8,7 +8,7 @@
         }
     ]
 }
-/datum/greyscale_config/shamebrero
+/datum/greyscale_config/sweater
     icon_file = 'icons/obj/clothing/suit/sweater_gags.dmi'
     json_config = 'code/datums/greyscale/json_configs/sweater_gags.json'
 
