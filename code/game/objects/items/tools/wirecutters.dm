@@ -50,9 +50,9 @@
 		qdel(C.handcuffed)
 		return
 	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
-		user.visisble_message("<span class='notice'>[user] attempts to remove the durathread strand from around [C]'s neck.</span>")
+		user.visisble_message("<span class='notice'>[user] attempts to cut the durathread strand from around [C]'s neck.</span>")
 		if(do_after(user, 1.5 SECONDS, C))
-			user.visible_message("<span class='notice'>[user] succesfully removes the durathread strand from [C].</span>")
+			user.visible_message("<span class='notice'>[user] succesfully cuts the durathread strand from around [C]'s neck.</span>")
 			C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 			playsound(loc, usesound, 50, TRUE, -1)
 		return
