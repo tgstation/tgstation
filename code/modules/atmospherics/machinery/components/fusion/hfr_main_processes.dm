@@ -497,8 +497,7 @@
 
 	if(power_level >= 4)
 		if(moderator_list[/datum/gas/bz] > (150 / power_level))
-			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-			picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
+			fire_nuclear_particle()
 
 		if(moderator_list[/datum/gas/antinoblium] > 50 || critical_threshold_proximity > 500)
 			var/zap_number = power_level - 2
@@ -571,7 +570,12 @@
 	if(power_output)
 		var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
 		if(prob(PERCENT(particle_chance)))
-			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
-			picked_corner.loc.fire_nuclear_particle()
+			fire_nuclear_particle()
 		rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
 		radiation_pulse(loc, rad_power)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fire_nuclear_particle(angle)
+	var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
+	var/obj/projectile/energy/nuclear_particle/new_particle = new(picked_corner.loc)
+	new_particle.fire(turn(picked_corner.dir, 180))
+	

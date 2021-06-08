@@ -24,6 +24,12 @@
 	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
 	set_light(4, 3, particle_colors[our_color]) //Range of 4, brightness of 3 - Same range as a flashlight
 
-/atom/proc/fire_nuclear_particle(angle = rand(0,360)) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
-	var/obj/projectile/energy/nuclear_particle/P = new /obj/projectile/energy/nuclear_particle(src)
-	P.fire(angle)
+/obj/projectile/energy/nuclear_particle/fire(angle = rand(0,360))
+	. = ..(angle)
+
+/obj/projectile/energy/nuclear_particle/cellular
+	name = "nuclear particle"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	irradiate = 0
+	damage_type = CLONE
+	damage = 20

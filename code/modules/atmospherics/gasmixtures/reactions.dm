@@ -967,3 +967,58 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 	return REACTING
+
+/datum/gas_reaction/stimball
+	priority_group = PRIORITY_FIRE
+	name ="Stimulum Energy Ball"
+	id = "stimball"
+
+/datum/gas_reaction/stimball/init_reqs()
+	requirements = list(
+		/datum/gas/stimulum = STIM_BALL_GAS_AMOUNT,
+		/datum/gas/tritium = STIM_BALL_GAS_AMOUNT,
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
+		"MAX_TEMP" = 500000
+	)
+
+/datum/gas_reaction/stimball/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	var/turf/open/location
+	var/old_heat_capacity = air.heat_capacity()
+	var/temperature = air.temperature
+	var/burn_rate = 0
+	var/balls_shot = 0
+	var/gas_ratio =	max(cached_gases[/datum/gas/tritium][MOLES] / cached_gases[/datum/gas/stimulum][MOLES], cached_gases[/datum/gas/stimulum][MOLES] / cached_gases[/datum/gas/tritium][MOLES])
+
+	burn_rate = min(((gas_ratio + temperature * 0.005) ** 2) / 4, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/stimulum][MOLES])
+	
+	//Logistical function
+	balls_shot = round(STIMBALL_UPPER_LIMIT / (1 + (NUM_E^(-STIMBALL_STEEPNESS * (burn_rate - STIMBALL_MIDPOINT)))))
+
+	if (balls_shot > 0)
+		//Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		if(istype(holder,/datum/pipeline)) 
+			var/datum/pipeline/pipenet = holder
+			location = get_turf(pick(pipenet.members))
+		else
+			location = get_turf(holder)
+
+		var/random_starting_angle = rand(0,360)
+		var/increment = 360/balls_shot
+		for (var/shotcount in 1 to balls_shot)
+			var/obj/projectile/energy/nuclear_particle/cellular/new_particle = new(location)
+			new_particle.fire(random_starting_angle + (shotcount * increment))
+
+	cached_gases[/datum/gas/tritium][MOLES] -= burn_rate
+	cached_gases[/datum/gas/stimulum][MOLES] -= burn_rate
+
+	if (balls_shot == 0 && burn_rate > 0)
+		ASSERT_GAS(/datum/gas/halon, air)
+		cached_gases[/datum/gas/halon][MOLES] += burn_rate * 0.075 //Adds a way to tell that the reaction isnt powerful enough
+
+	var/energy_released = burn_rate * STIMBALL_ENERGY_RELEASED * (1 / gas_ratio) // A higher trit/stim or stim/trit ratio results in slower energy gain, more "stable"
+
+	if(energy_released)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)

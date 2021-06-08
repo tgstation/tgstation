@@ -646,7 +646,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			supermatter_zap(src, 6, clamp(power*2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
 
 		if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
-			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
+			// Start to emit radballs at a maximum of 30% chance per tick
+			var/obj/projectile/energy/nuclear_particle/new_particle = new(src)
+			new_particle.fire()
 
 		//Power * 0.55 * a value between 1 and 0.8
 		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
