@@ -574,7 +574,7 @@
 		rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
 		radiation_pulse(loc, rad_power)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fire_nuclear_particle(angle)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fire_nuclear_particle()
 	var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
 	var/obj/projectile/energy/nuclear_particle/new_particle = new(picked_corner.loc)
 	new_particle.fire(turn(picked_corner.dir, 180))
