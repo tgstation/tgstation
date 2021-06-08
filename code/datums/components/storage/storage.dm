@@ -832,6 +832,8 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	to_chat(user,"<span class='warning'>This action has been moved to right click.</span>")
 
 /datum/component/storage/proc/on_right_click(datum/source, mob/user)
