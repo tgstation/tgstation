@@ -277,3 +277,8 @@
 	name = "Gold Worn Cleric Mace"
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
+
+/datum/greyscale_config/sweater
+	name = "turtleneck sweater"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sweater_gags.json'

@@ -8,7 +8,7 @@
 	cold_protection = CHEST|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list(
-		/obj/item/flashlight,B
+		/obj/item/flashlight,
 		/obj/item/lighter,
 		/obj/item/modular_computer/tablet,
 		/obj/item/pda,
