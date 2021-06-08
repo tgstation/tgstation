@@ -29,7 +29,6 @@
 
 /obj/projectile/energy/nuclear_particle/cellular
 	name = "nuclear particle"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	irradiate = 0
 	damage_type = CLONE
 	damage = 20

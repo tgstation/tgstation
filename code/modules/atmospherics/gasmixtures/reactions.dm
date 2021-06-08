@@ -555,6 +555,7 @@
 		/datum/gas/tritium = 30,
 		/datum/gas/bz = 20,
 		/datum/gas/nitryl = 30,
+		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = 1500)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
@@ -982,7 +983,7 @@
 		/datum/gas/stimulum = STIM_BALL_GAS_AMOUNT,
 		/datum/gas/tritium = STIM_BALL_GAS_AMOUNT,
 		"MIN_TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
-		"MAX_TEMP" = 500000
+		"MAX_TEMP" = 50000
 	)
 
 /datum/gas_reaction/stimball/react(datum/gas_mixture/air, datum/holder)
@@ -998,7 +999,7 @@
 
 	if(burn_rate)
 		//Logistical function
-		balls_shot = round(STIMBALL_UPPER_LIMIT / (1 + (NUM_E^(-STIMBALL_STEEPNESS * (burn_rate - STIMBALL_MIDPOINT)))))
+		balls_shot = round(STIMBALL_UPPER_LIMIT / (1 + (NUM_E**(-STIMBALL_STEEPNESS * (burn_rate - STIMBALL_MIDPOINT)))))
 
 		if (balls_shot > 0)
 			//Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
@@ -1021,7 +1022,7 @@
 			ASSERT_GAS(/datum/gas/halon, air)
 			cached_gases[/datum/gas/halon][MOLES] += burn_rate * 0.075 //Adds a way to tell that the reaction isnt powerful enough
 
-		var/energy_released = burn_rate * STIMBALL_ENERGY_RELEASED * (1 / gas_ratio) // A higher trit/stim or stim/trit ratio results in slower energy gain, more "stable"
+		var/energy_released = burn_rate * STIMULUM_HEAT_SCALE * (1 / gas_ratio) // A higher trit/stim or stim/trit ratio results in slower energy gain, more "stable"
 
 		if(energy_released)
 			var/new_heat_capacity = air.heat_capacity()

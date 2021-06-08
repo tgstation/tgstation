@@ -305,6 +305,21 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	air_contents.temperature = 10000
 	SSair.start_processing_machine(src)
 
+/obj/machinery/portable_atmospherics/canister/stimball_test
+	name = "stimball test canister"
+	desc = "Don't be a badmin."
+	heat_limit = 1e12
+	pressure_limit = 1e14
+	mode = CANISTER_TIER_3
+
+/obj/machinery/portable_atmospherics/canister/stimball_test/create_gas()
+	air_contents.add_gases(/datum/gas/stimulum, /datum/gas/tritium, /datum/gas/plasma)
+	air_contents.gases[/datum/gas/stimulum][MOLES] = 20000
+	air_contents.gases[/datum/gas/tritium][MOLES] = 20000
+	air_contents.gases[/datum/gas/plasma][MOLES] = 2000
+	air_contents.temperature = 10500
+	SSair.start_processing_machine(src)
+
 /**
  * Getter for the amount of time left in the timer of prototype canisters
  */
