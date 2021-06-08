@@ -168,6 +168,9 @@ GLOBAL_LIST_INIT(normal_employers, list(
 ///codebase limit of the total cost of the red market (items purchasable with red tc)
 #define RED_TELECRYSTAL_LIMIT 90
 
+///how long traitors will have to wait before an unreasonable objective is rerolled
+#define OBJECTIVE_REROLL_TIMER 10 MINUTES
+
 ///all the employers that are syndicate
 #define FACTION_SYNDICATE "syndicate"
 ///all the employers that are nanotrasen

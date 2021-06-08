@@ -55,6 +55,9 @@
 	var/client/viewing
 	var/legend = FALSE //Viewing the wire legend
 
+/obj/item/areaeditor/blueprints/Initialize()
+	. = ..()
+	AddElement(/datum/element/objective_returner, SSjob.name_occupations["Chief Engineer"])
 
 /obj/item/areaeditor/blueprints/Destroy()
 	clear_viewer()

@@ -79,8 +79,12 @@
 
 /// sent when a smart objective finishes it's objective, however it figures (you killed a target). use source to get the objective
 #define COMSIG_SMART_OBJECTIVE_ACHIEVED "smart_objective_achieved"
-/// sent when a smart objective finishes it's objective, however it figures (your target revived). use source to get the objective
+/// sent when a smart objective unfinishes it's objective, however it figures (your target revived). use source to get the objective
 #define COMSIG_SMART_OBJECTIVE_UNACHIEVED "smart_objective_unachieved"
+/// sent when a smart objective becomes reasonable to complete, however it figures (steal target returned to station z). use source to get the objective
+#define COMSIG_SMART_OBJECTIVE_REASONABLE "smart_objective_reasonable"
+/// sent when a smart objective becomes unreasonable to complete, however it figures (steal target left station). use source to get the objective
+#define COMSIG_SMART_OBJECTIVE_UNREASONABLE "smart_objective_unreasonable"
 
 ///Subsystem signals
 ///From base of datum/controller/subsystem/Initialize: (start_timeofday)

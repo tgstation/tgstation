@@ -7,9 +7,9 @@
  */
 /datum/objective/smart
 	///this will be false the first time the objective is complete. if it is ever uncompleted, future completions will have this be TRUE
-	var/uncompleted = FALSE
-	///this will be false until the first time an objective becomes either "possible but unreasonable to complete" or "just straight up impossible right now"
-	//var/impossible = FALSE
+	var/was_uncompleted = FALSE
+	///this will be false until the first time an objective becomes either "possible but unreasonable to complete"
+	var/unreasonable = FALSE
 	///the payout for completing this objective
 	var/black_telecrystal_reward = 0
 
@@ -17,14 +17,26 @@
 	if(completed)
 		return
 	completed = TRUE
-	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_ACHIEVED, uncompleted)
+	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_ACHIEVED)
 
 /datum/objective/smart/proc/uncomplete_objective()
 	if(!completed)
 		return
-	uncompleted = TRUE
+	was_uncompleted = TRUE
 	completed = FALSE
 	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_UNACHIEVED)
+
+/datum/objective/smart/proc/reasonable_objective()
+	if(!unreasonable)
+		return
+	unreasonable = FALSE
+	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_REASONABLE)
+
+/datum/objective/smart/proc/unreasonable_objective()
+	if(unreasonable)
+		return
+	unreasonable = TRUE
+	SEND_SIGNAL(src, COMSIG_SMART_OBJECTIVE_UNREASONABLE)
 
 /**
  * ## Smart destroy AI
@@ -62,20 +74,21 @@
 	. = ..()
 	UnregisterSignal(target.current, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE, COMSIG_MOVABLE_Z_CHANGED))
 
-/datum/objective/smart/destroy_ai/proc/on_revive(datum/target, full_heal)
+/datum/objective/smart/destroy_ai/proc/on_revive(mob/living/target, full_heal)
 	SIGNAL_HANDLER
 
-	uncomplete_objective()
+	if(is_station_level(target.z) || is_mining_level(target.z))
+		uncomplete_objective()
 
-/datum/objective/smart/destroy_ai/proc/on_death(datum/target, gibbed)
+/datum/objective/smart/destroy_ai/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
 
 	complete_objective()
 
-/datum/objective/smart/destroy_ai/proc/on_z_level_changed(datum/target, old_z, new_z)
+/datum/objective/smart/destroy_ai/proc/on_z_level_changed(mob/living/target, old_z, new_z)
 	SIGNAL_HANDLER
 
-	if(new_z > 6)
+	if(is_station_level(target.z) || is_mining_level(target.z))
 		complete_objective()
 	else
 		uncomplete_objective()
@@ -96,7 +109,7 @@
 
 /datum/objective/smart/maroon/update_explanation_text()
 	if(target?.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive.<br>\
+		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive. \
 		for the purposes of getting rewarded, at least make sure they are dead or off the local station area, as to give the best chance of not escaping."
 	else
 		explanation_text = "Free Objective"
@@ -112,26 +125,26 @@
 	. = ..()
 	UnregisterSignal(target.current, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE, COMSIG_MOVABLE_Z_CHANGED))
 
-/datum/objective/smart/maroon/proc/on_revive(datum/target, full_heal)
+/datum/objective/smart/maroon/proc/on_revive(mob/living/target, full_heal)
 	SIGNAL_HANDLER
 
 	uncomplete_objective()
 
-/datum/objective/smart/maroon/proc/on_death(datum/target, gibbed)
+/datum/objective/smart/maroon/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
 
 	complete_objective()
 
-/datum/objective/smart/maroon/proc/on_z_level_changed(datum/target, old_z, new_z)
+/datum/objective/smart/maroon/proc/on_z_level_changed(mob/living/target, old_z, new_z)
 	SIGNAL_HANDLER
 
-	if(!is_station_level(new_z) && !is_centcom_level(new_z))
+	if((!is_station_level(new_z) && !is_centcom_level(new_z)) || target.stat == DEAD)
 		complete_objective()
 	else
 		uncomplete_objective()
 
 /datum/objective/smart/assassinate
-	name = "assasinate"
+	name = "assassinate"
 	var/target_role_type=FALSE
 	martyr_compatible = TRUE
 	black_telecrystal_reward = 6
@@ -156,20 +169,29 @@
 		return
 	RegisterSignal(target.current, COMSIG_LIVING_DEATH, .proc/on_death)
 	RegisterSignal(target.current, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(target.current, COMSIG_MOVABLE_Z_CHANGED, .proc/on_z_level_changed)
 
 /datum/objective/smart/assassinate/Destroy(force)
 	. = ..()
 	UnregisterSignal(target.current, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
 
-/datum/objective/smart/assassinate/proc/on_revive(datum/target, full_heal)
+/datum/objective/smart/assassinate/proc/on_revive(mob/living/target, full_heal)
 	SIGNAL_HANDLER
 
 	uncomplete_objective()
 
-/datum/objective/smart/assassinate/proc/on_death(datum/target, gibbed)
+/datum/objective/smart/assassinate/proc/on_death(mob/living/target, gibbed)
 	SIGNAL_HANDLER
 
 	complete_objective()
+
+/datum/objective/smart/assassinate/proc/on_z_level_changed(datum/target, old_z, new_z)
+	SIGNAL_HANDLER
+
+	if(is_station_level(new_z) || is_mining_level(new_z))
+		reasonable_objective()
+	else
+		unreasonable_objective()
 
 /datum/objective/smart/download
 	name = "download"
@@ -313,7 +335,7 @@
 
 /datum/objective/smart/steal/Destroy(force)
 	. = ..()
-	UnregisterSignal(steal_target, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE, ))
+	UnregisterSignal(steal_target, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 
 /datum/objective/smart/steal/proc/on_pickup(datum/tech_disk, mob/taker)
 	SIGNAL_HANDLER

@@ -61,6 +61,10 @@
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/gun/energy/e_gun/hos/Initialize()
+	. = ..()
+	AddElement(/datum/element/objective_returner, SSjob.name_occupations["Head Of Security"])
+
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."

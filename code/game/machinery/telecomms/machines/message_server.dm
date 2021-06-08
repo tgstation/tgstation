@@ -68,6 +68,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/blackbox/Initialize()
+	. = ..()
+	AddElement(/datum/element/objective_returner, SSjob.name_occupations["Chief Engineer"])
+
 #define MESSAGE_SERVER_FUNCTIONING_MESSAGE "This is an automated message. The messaging system is functioning correctly."
 
 // The message server itself.

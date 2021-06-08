@@ -602,6 +602,7 @@
 /obj/item/clothing/suit/hooded/ablative/Initialize()
 	. = ..()
 	allowed = GLOB.security_vest_allowed
+	AddElement(/datum/element/objective_returner, SSjob.name_occupations["Head Of Security"])
 
 /obj/item/clothing/suit/hooded/ablative/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))) //If not shot where ablative is covering you, you don't get the reflection bonus!

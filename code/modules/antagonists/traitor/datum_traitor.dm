@@ -36,6 +36,12 @@
 	var/additional_objectives_before_escape = 4
 	///if new objectives won't be added because a previously finished objective got unfinished, lazylist reference to uncompleted objectives
 	var/list/new_objectives_blocked
+	/**
+	 * if objectives are unreasonable they get a 10 minute timer before a new objective is given for smooth progression. still doesn't count for greentext doe
+	 * this is an assoc list, objective reference = timer id
+	 */
+	var/list/unreasonable_objective_timers = list()
+
 	///when new objectives are blocked, the objectives to add pile up here
 	var/objectives_to_add = 0
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
@@ -52,6 +58,8 @@
 	for(var/datum/objective/smart/objective as anything in objectives)
 		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_ACHIEVED, .proc/objective_done)
 		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_UNACHIEVED, .proc/objective_undone)
+		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_REASONABLE, .proc/objective_reasonable)
+		RegisterSignal(objective, COMSIG_SMART_OBJECTIVE_UNREASONABLE, .proc/objective_unreasonable)
 
 
 	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
@@ -107,7 +115,7 @@
 	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
 	// This does not give them 1 fewer objectives than intended.
 	for(var/i in objective_count to objective_limit - 1)
-		forge_single_generic_objective()
+		objectives += forge_single_generic_objective()
 
 
 /**
@@ -144,27 +152,23 @@
 	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
-			add_smart_objective(/datum/objective/smart/destroy_ai)
-			return
+			return create_smart_objective(/datum/objective/smart/destroy_ai)
 		if(prob(MAROON_PROB))
-			add_smart_objective(/datum/objective/smart/maroon)
-			return
-		add_smart_objective(/datum/objective/smart/assassinate)
-		return
+			return create_smart_objective(/datum/objective/smart/maroon)
+		return create_smart_objective(/datum/objective/smart/assassinate)
 
 	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/smart/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
-		add_smart_objective(/datum/objective/smart/download) //note to self: smart objective needs to use a different proc than this one used to
-		return
+		return create_smart_objective(/datum/objective/smart/download) //note to self: smart objective needs to use a different proc than this one used to
 
-	add_smart_objective(/datum/objective/smart/steal)
+	return create_smart_objective(/datum/objective/smart/steal)
 
 /// small helper does all the setup for smart objective adding
-/datum/antagonist/traitor/proc/add_smart_objective(type)
+/datum/antagonist/traitor/proc/create_smart_objective(type)
 	var/datum/objective/smart/new_objective = new type
 	new_objective.owner = owner
 	new_objective.find_target()
 	new_objective.post_find_target()
-	objectives += new_objective
+	return new_objective
 
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>[traitor_flavor["introduction"]]</span>")
@@ -278,8 +282,12 @@
 	return result
 
 ///signal called by an objective completing
-/datum/antagonist/traitor/proc/objective_done(datum/objective/smart/objective, uncompleted)
+/datum/antagonist/traitor/proc/objective_done(datum/objective/smart/objective)
 	SIGNAL_HANDLER
+
+	var/possible_reroll_timer = unreasonable_objective_timers[objective]
+	if(possible_reroll_timer)
+		deltimer(possible_reroll_timer)
 
 	if(new_objectives_blocked)
 		if(!LAZYFIND(new_objectives_blocked, objective))
@@ -297,10 +305,10 @@
 		for(var/iteration in 1 to objectives_to_add)
 			if(!additional_objectives_before_escape)
 				if(!ending_objective)
-					to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. An escape objective has been granted.</span>")
-					forge_ending_objective()
+					to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. Your final objective has been granted.</span>")
+					objectives += ending_objective
 				break
-			forge_single_generic_objective()
+			objectives += forge_single_generic_objective()
 		objectives_to_add = 0
 		return
 
@@ -308,18 +316,52 @@
 		additional_objectives_before_escape--
 		to_chat(owner.current, "<span class='boldnotice'>You have completed an objective. A new objective has been granted.</span>")
 		uplink?.black_telecrystals += objective.black_telecrystal_reward
-		forge_single_generic_objective()
+		objectives += forge_single_generic_objective()
 		return
-	to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. An escape objective has been granted.</span>")
+	to_chat(owner.current, "<span class='boldnotice'>You have completed enough objectives. Your final objective has been granted.</span>")
 	objectives += ending_objective
 
 ///signal called by an objective uncompleting
 /datum/antagonist/traitor/proc/objective_undone(datum/objective/smart/objective)
 	SIGNAL_HANDLER
 
-	to_chat(owner.current, "<span class='boldwarning'>One of your previous objectives is no longer complete. \
+	if(objective.unreasonable)
+		to_chat(owner.current, "<span class='boldwarning'>Your \"[objective]\" objective is no longer complete. \
+		Considering the status of the objective at this point, you are not blocked from getting more objectives and moving on.</span>")
+		return
+	to_chat(owner.current, "<span class='boldwarning'>Your \"[objective]\" objective is no longer complete. \
 	You are restricted from getting more objectives until you accomplish it.</span>")
 	LAZYADD(new_objectives_blocked, objective)
+
+/datum/antagonist/traitor/proc/objective_reasonable(datum/objective/smart/objective)
+	SIGNAL_HANDLER
+
+	if(objective.completed)
+		return
+	to_chat(owner.current, "<span class='boldwarning'>Your \"[objective]\" objective is once again reasonable to complete. \
+	You must now complete this objective before getting new objectives.</span>")
+	LAZYADD(new_objectives_blocked, objective)
+
+/datum/antagonist/traitor/proc/objective_unreasonable(datum/objective/smart/objective)
+	SIGNAL_HANDLER
+
+	if(objective.completed)
+		return
+	to_chat(owner.current, "<span class='boldnotice'>Your \"[objective]\" objective is no longer reasonable to complete. \
+	You are being given a new objective, and this one will reroll after [DisplayTimeText(OBJECTIVE_REROLL_TIMER)] into a new objective.</span>")
+	objectives += forge_single_generic_objective()
+	var/new_timer_id = addtimer(CALLBACK(src, .proc/reroll, objective), OBJECTIVE_REROLL_TIMER)
+	unreasonable_objective_timers[objective] = new_timer_id
+
+/datum/antagonist/traitor/proc/reroll(datum/objective/smart/objective)
+	to_chat(owner.current, "<span class='boldnotice'>Your \"[objective.name]\" objective has been rerolled.</span>")
+	unreasonable_objective_timers -= objective
+	var/removed_objective_list_position = objectives.Find(objective)
+	objectives[removed_objective_list_position] = "ERROR"
+	qdel(objective)
+	//replaced by this
+	var/new_objective = forge_single_generic_objective()
+	objectives[removed_objective_list_position] = new_objective
 
 /datum/antagonist/traitor/ui_static_data(mob/user)
 	var/list/data = list()

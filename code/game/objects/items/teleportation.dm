@@ -129,6 +129,7 @@
 /obj/item/hand_tele/Initialize()
 	. = ..()
 	active_portal_pairs = list()
+	AddElement(/datum/element/objective_returner, SSjob.name_occupations["Research Director"])
 
 /obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))

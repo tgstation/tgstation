@@ -47,6 +47,10 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/antique)
 
+/obj/item/gun/energy/laser/captain/Initialize()
+	. = ..()
+	AddElement(/datum/element/objective_returner, SSjob.name_occupations["Captain"])
+
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"

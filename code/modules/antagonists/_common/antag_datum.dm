@@ -331,10 +331,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	//all obj
 	for(var/datum/objective/objective in objectives)
 		var/smart_uncompleted_value
+		var/smart_unreasonable_value
 		var/smart_reward_value
 		if(istype(objective, /datum/objective/smart))
 			var/datum/objective/smart/smart_objective = objective
-			smart_uncompleted_value = smart_objective.uncompleted
+			smart_uncompleted_value = smart_objective.was_uncompleted
+			smart_unreasonable_value = smart_objective.unreasonable
 			smart_reward_value = smart_objective.black_telecrystal_reward
 		objective_data += list(list(
 			"count" = objective_count,
@@ -342,7 +344,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 			"explanation" = objective.explanation_text,
 			"complete" = objective.completed,
 			"was_uncompleted" = smart_uncompleted_value,
-			"reward" = smart_reward_value
+			"unreasonable" = smart_unreasonable_value,
+			"reward" = smart_reward_value,
 		))
 		objective_count++
 	return objective_data
