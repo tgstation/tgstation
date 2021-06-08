@@ -2041,6 +2041,7 @@
 #include "code\modules\clothing\suits\labcoat.dm"
 #include "code\modules\clothing\suits\miscellaneous.dm"
 #include "code\modules\clothing\suits\reactive_armour.dm"
+#include "code\modules\clothing\suits\sweater_gags.dm"
 #include "code\modules\clothing\suits\toggles.dm"
 #include "code\modules\clothing\suits\utility.dm"
 #include "code\modules\clothing\suits\wintercoats.dm"

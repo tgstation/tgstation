@@ -211,6 +211,3 @@
 	return output
 
 #undef MAX_SANE_LAYERS
-/datum/greyscale_config/sweaters
-icon_file = 'icons/obj/clothing/head/suits.dmi'
-json_config = 'code/datums/greyscale/json_configs/sweaters.json
