@@ -167,7 +167,7 @@
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#8291A1#D0DCED"
+	greyscale_colors = "#6E7D9C#D0DCED"
 	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, RAD = 0, FIRE = 30, ACID = 5, WOUND = 4)
 
 //Security

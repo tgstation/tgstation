@@ -6,5 +6,13 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
+	],
+	"beret_flat": [
+		{
+			"type": "icon_state",
+			"icon_state": "beret_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
 	]
 }
