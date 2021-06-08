@@ -20,4 +20,4 @@
 	new /obj/item/pneumatic_cannon/pie(src)
 	new /obj/item/food/pie/cream(src)
 	new /obj/item/storage/crayons(src)
-	new /obj/item/device/soundsynth(src)
+	new /obj/item/soundsynth(src)
