@@ -74,6 +74,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
+			log_game("[key_name(usr)] opened a [j.title] job position.")
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_close_job")
@@ -85,6 +86,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if(opened_positions[edit_job_target] <= 0)
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
+			log_game("[key_name(usr)] closed a [j.title] job position.")
 			opened_positions[edit_job_target]--
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
