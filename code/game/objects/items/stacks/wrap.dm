@@ -15,8 +15,6 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
-	var/base_color = "#00FF00"
-	var/ribbon_color = "#FF0000"
 
 /obj/item/stack/wrapping_paper/Initialize()
 	. = ..()
@@ -35,18 +33,13 @@
 
 		//Set layers to these colors, base then ribbon
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
-		base_color = generated_base_color
-		ribbon_color = generated_ribbon_color
 
 /obj/item/stack/wrapping_paper/RightClick(mob/user, modifiers)
 	var/new_base = input(user, "", "Select a base color", color) as color
 	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if((new_base && new_base != base_color) || (new_ribbon && new_ribbon != ribbon_color))
-		base_color = new_base
-		ribbon_color = new_ribbon
-		set_greyscale(colors = list(base_color, ribbon_color))
+	set_greyscale(colors = list(new_base, new_ribbon))
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
