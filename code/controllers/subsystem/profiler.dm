@@ -2,8 +2,7 @@
 
 #ifdef SENDMAPS_PROFILE
 #define SENDMAPS_FILENAME "sendmaps.json"
-
-GLOBAL_REAL_VAR(world_init_maptick_profiler) = world.Profile(PROFILE_START, type = "sendmaps")
+GLOBAL_REAL_VAR(world_init_maptick_profiler) = world.Profile(PROFILE_RESTART, type = "sendmaps")
 #endif
 
 SUBSYSTEM_DEF(profiler)
@@ -33,6 +32,9 @@ SUBSYSTEM_DEF(profiler)
 /datum/controller/subsystem/profiler/Shutdown()
 	if(CONFIG_GET(flag/auto_profile))
 		DumpFile()
+#ifdef SENDMAPS_PROFILE
+		world.Profile(PROFILE_CLEAR, type = "sendmaps")
+#endif
 	return ..()
 
 /datum/controller/subsystem/profiler/proc/StartProfiling()
@@ -61,7 +63,7 @@ SUBSYSTEM_DEF(profiler)
 	CONFIG_SET(flag/auto_profile, FALSE)
 #else
 	var/timer = TICK_USAGE_REAL
-	var/current_profile_data = world.Profile(PROFILE_REFRESH, format="json")
+	var/current_profile_data = world.Profile(PROFILE_REFRESH, format = "json")
 #ifdef SENDMAPS_PROFILE
 	var/current_sendmaps_data = world.Profile(PROFILE_REFRESH, type = "sendmaps", format="json")
 #endif
