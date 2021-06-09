@@ -18,6 +18,11 @@
 	var/hair_color = "000"
 	var/hairstyle = "Bald"
 
+	///Colour used for the hair gradient.
+	var/grad_color = "000"
+	///Style used for the hair gradient.
+	var/grad_style
+
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
 	var/facial_hairstyle = "Shaved"

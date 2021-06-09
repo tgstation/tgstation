@@ -1271,7 +1271,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = ..()
 	//starts in a state where you can move it
 	panel_open = TRUE
-	anchored = FALSE
+	set_anchored(FALSE)
 	add_overlay("[initial(icon_state)]-panel")
 	//and references the deity
 	name = "[GLOB.deity]'s Consecrated Vendor"

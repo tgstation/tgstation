@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Attacking something as morph no longer floods your chat with \"You're already in your normal form!\""

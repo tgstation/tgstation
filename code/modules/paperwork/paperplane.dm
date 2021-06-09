@@ -123,14 +123,24 @@
 		if(!Carbon.iscopy && !Carbon.copied)
 			to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 			return
-	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
-	user.temporarilyRemoveItemFromInventory(src)
-	var/obj/item/paperplane/plane_type = /obj/item/paperplane
 	//Origami Master
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active)
-		plane_type = /obj/item/paperplane/syndicate
+		make_plane(user, I, /obj/item/paperplane/syndicate)
+	else
+		make_plane(user, I, /obj/item/paperplane)
 
+/**
+ * Paper plane folding
+ *
+ * Arguments:
+ * * mob/living/user - who's folding
+ * * obj/item/I - what's being folded
+ * * obj/item/paperplane/plane_type - what it will be folded into (path)
+ */
+/obj/item/paper/proc/make_plane(mob/living/user, obj/item/I, obj/item/paperplane/plane_type = /obj/item/paperplane)
+	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
+	user.temporarilyRemoveItemFromInventory(src)
 	I = new plane_type(loc, src)
 	if(user.Adjacent(I))
 		user.put_in_hands(I)

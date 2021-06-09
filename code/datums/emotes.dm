@@ -59,6 +59,8 @@
 	var/cooldown = 0.8 SECONDS
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
+	/// How long is the cooldown on the audio of the emote, if it has one?
+	var/audio_cooldown = 2 SECONDS
 
 /datum/emote/New()
 	if (ispath(mob_type_allowed_typecache))
@@ -107,7 +109,8 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional))
+	if(tmp_sound && (!only_forced_audio || !intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 
 	var/user_turf = get_turf(user)
@@ -169,6 +172,8 @@
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
 		msg = replacetext(msg, "them", user.p_them())
+	if(findtext(msg, "they"))
+		msg = replacetext(message, "they", user.p_they())
 	if(findtext(msg, "%s"))
 		msg = replacetext(msg, "%s", user.p_s())
 	return msg

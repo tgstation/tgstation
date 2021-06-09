@@ -19,7 +19,7 @@
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
-	anchored = bolt
+	set_anchored(bolt)
 	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 

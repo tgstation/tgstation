@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - spellcheck: "The remaining damage message when tending burns no longer calls it brute damage."
