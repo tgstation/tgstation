@@ -2,6 +2,8 @@
 
 #ifdef SENDMAPS_PROFILE
 #define SENDMAPS_FILENAME "sendmaps.json"
+
+GLOBAL_REAL_VAR(world_init_maptick_profiler) = world.Profile(PROFILE_START, type = "sendmaps")
 #endif
 
 SUBSYSTEM_DEF(profiler)
