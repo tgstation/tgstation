@@ -278,13 +278,13 @@
 		if(iscyborg(user))
 			if(affect_cyborg)
 				user.flash_act(affect_silicon = TRUE)
-				user.Paralyze(stun_time_cyborg * 3)
+				user.Paralyze(stun_time_cyborg * force)
 				additional_effects_cyborg(user, user) // user is the target here
 				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
 			else
 				playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 		else
-			user.Knockdown(knockdown_time * 3)
+			user.Knockdown(knockdown_time * force)
 			user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
 			additional_effects_non_cyborg(user, user) // user is the target here
 			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
