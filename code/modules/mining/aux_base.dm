@@ -72,7 +72,7 @@
 	if(LAZYLEN(turrets))
 		for(var/turret in turrets)
 			var/obj/machinery/porta_turret/aux_base/base_turret = turret
-			var/turret_integrity = max((base_turret.obj_integrity - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
+			var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
 			var/turret_status
 			if(base_turret.machine_stat & BROKEN)
 				turret_status = "ERROR"
@@ -428,7 +428,7 @@
 
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	to_chat(user, "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>")
-	anchored = TRUE //Locks in place to mark the landing zone.
+	set_anchored(TRUE) //Locks in place to mark the landing zone.
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 	log_shuttle("[key_name(usr)] has registered the mining shuttle beacon at [COORD(landing_spot)].")
 

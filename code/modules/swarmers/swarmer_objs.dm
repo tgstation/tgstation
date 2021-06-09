@@ -130,6 +130,13 @@
 	max_integrity = 10
 	density = FALSE
 
+/obj/structure/swarmer/trap/Initialize()
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
 /obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))

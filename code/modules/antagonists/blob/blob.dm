@@ -1,7 +1,7 @@
 /datum/antagonist/blob
 	name = "Blob"
 	roundend_category = "blobs"
-	antagpanel_category = "Blob"
+	antagpanel_category = "Biohazards"
 	show_to_ghosts = TRUE
 	job_rank = ROLE_BLOB
 
