@@ -22,7 +22,7 @@
 	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are the [owner.special_role].</font></span>")
 	owner.announce_objectives()
 	if(!isovermind(owner.current))
-		to_chat(owner.current, "<span class='notice'>Use the pop ability to place your blob core! It is recommended you do this away from anyone else as you'll be taking on the entire crew!</span>")
+		to_chat(owner.current, "<span class='notice'>Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!</span>")
 
 /datum/antagonist/blob/on_gain()
 	create_objectives()
