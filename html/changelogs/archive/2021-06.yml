@@ -11,3 +11,9 @@
   - bugfix: Fixed not being able to add telecomms frequency filters
   - bugfix: Changed the color of command frequency in telecomms and headset GUI from
       blue to yellow to match chat color
+2021-06-09:
+  cacogen:
+  - qol: All custom names in Character Settings can now either be reset to the default
+      or randomised by leaving the text box blank
+  - qol: You can now pick a random religion in Character Settings by leaving the text
+      box blank. Setting a religion will also set the bible name and deity if applicable
