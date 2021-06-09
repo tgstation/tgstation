@@ -37,6 +37,8 @@
 	var/settable_temperature_median = 30 + T0C
 	///Range of temperatures above and below the median that we can set our target temperature (increase by upgrading the capacitors)
 	var/settable_temperature_range = 30
+	///Should we add an overlay for open spaceheaters
+	var/display_panel = TRUE
 
 /obj/machinery/space_heater/get_cell()
 	return cell
@@ -69,7 +71,7 @@
 
 /obj/machinery/space_heater/update_overlays()
 	. = ..()
-	if(panel_open)
+	if(panel_open && display_panel)
 		. += "[base_icon_state]-open"
 
 /obj/machinery/space_heater/process(delta_time)
@@ -261,6 +263,7 @@
 	var/obj/item/reagent_containers/beaker = null
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
+	display_panel = FALSE
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()

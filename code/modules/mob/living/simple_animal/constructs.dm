@@ -65,7 +65,8 @@
 		var/pos = 2+spellnum*31
 		CR.button.screen_loc = "6:[pos],4:-2"
 		CR.button.moved = "6:[pos],4:-2"
-	add_overlay("glow_[icon_state]_[theme]")
+	if(icon_state)
+		add_overlay("glow_[icon_state]_[theme]")
 
 /mob/living/simple_animal/hostile/construct/Login()
 	. = ..()

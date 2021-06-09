@@ -62,6 +62,7 @@
 	cell_type = /obj/item/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
+	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -73,6 +74,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
@@ -202,6 +204,7 @@
 	inhand_icon_state = null
 	icon_state = "wormhole_projector"
 	base_icon_state = "wormhole_projector"
+	automatic_charge_overlays = FALSE
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
@@ -366,6 +369,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	inhand_icon_state = "gravity_gun"
 	icon_state = "gravity_gun"
+	automatic_charge_overlays = FALSE
 	var/power = 4
 	var/firing_core = FALSE
 

@@ -72,6 +72,8 @@
 	var/casing_ejector = TRUE
 	///Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
 	var/internal_magazine = FALSE
+	///Should we attempt to display the gun's magazine?
+	var/display_mag = TRUE
 	///Phrasing of the bolt in examine and notification messages; ex: bolt, slide, etc.
 	var/bolt_wording = "bolt"
 	///Phrasing of the magazine in examine and notification messages; ex: magazine, box, etx
@@ -181,7 +183,7 @@
 		. += "[icon_state]_toy"
 
 
-	if(!magazine || internal_magazine)
+	if(!magazine || internal_magazine || !display_mag)
 		return
 
 	if(special_mags)
