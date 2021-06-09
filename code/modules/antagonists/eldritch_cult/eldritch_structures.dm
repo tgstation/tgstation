@@ -40,7 +40,7 @@
 
 	if(istype(I,/obj/item/forbidden_book))
 		playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
-		anchored = !anchored
+		set_anchored(!anchored)
 		to_chat(user,"<span class='notice'>You [anchored == FALSE ? "unanchor" : "anchor"] the crucible</span>")
 		return
 
@@ -111,13 +111,6 @@
 	charges = 1
 	/// Reference to trap owner mob
 	var/mob/owner
-
-/obj/structure/trap/eldritch/Initialize(mapload)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/structure/trap/eldritch/on_entered(datum/source, atom/movable/AM)
 	if(!isliving(AM))

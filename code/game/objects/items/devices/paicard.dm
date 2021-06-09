@@ -107,7 +107,7 @@
 				to_chat(pai, "<span class='notice'>You have been bound to a new master.</span>")
 				pai.emittersemicd = FALSE
 		if(href_list["wipe"])
-			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
+			var/confirm = tgui_alert(usr, "Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No"))
 			if(confirm == "Yes")
 				if(pai)
 					to_chat(pai, "<span class='warning'>You feel yourself slipping away from reality.</span>")

@@ -101,19 +101,19 @@
 		reviver_cooldown += 20 SECONDS
 
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
-			H.set_heartattack(TRUE)
-			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.stat != DEAD && prob(50 / severity) && human_owner.can_heartattack())
+			human_owner.set_heartattack(TRUE)
+			to_chat(human_owner, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
-	var/mob/living/carbon/human/H = owner
-	if(!istype(H))
+	var/mob/living/carbon/human/human_owner = owner
+	if(!istype(human_owner))
 		return
-	H.set_heartattack(FALSE)
-	if(H.stat == CONSCIOUS)
-		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
+	human_owner.set_heartattack(FALSE)
+	if(human_owner.stat == CONSCIOUS)
+		to_chat(human_owner, "<span class='notice'>You feel your heart beating again!</span>")
 
 
 /obj/item/organ/cyberimp/chest/thrusters
@@ -130,14 +130,14 @@
 	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/thruster_owner, special = 0)
 	. = ..()
 	if(!ion_trail)
 		ion_trail = new
 		ion_trail.auto_process = FALSE
-	ion_trail.set_up(M)
+	ion_trail.set_up(thruster_owner)
 
-/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
 		toggle(silent = TRUE)
 	..()
@@ -174,6 +174,7 @@
 	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
+	SIGNAL_HANDLER
 	if(!on)//If jet dont work, it dont work
 		return
 	if(!owner)//Don't allow jet self using
@@ -190,18 +191,19 @@
 		allow_thrust(0.01)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/pre_move_react()
+	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(owner)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
 	if(!owner)
 		return FALSE
 
-	var/turf/T = get_turf(owner)
-	if(!T) // No more runtimes from being stuck in nullspace.
+	var/turf/owner_turf = get_turf(owner)
+	if(!owner_turf) // No more runtimes from being stuck in nullspace.
 		return FALSE
 
 	// Priority 1: use air from environment.
-	var/datum/gas_mixture/environment = T.return_air()
+	var/datum/gas_mixture/environment = owner_turf.return_air()
 	if(environment && environment.return_pressure() > 30)
 		ion_trail.generate_effect()
 		return TRUE
@@ -218,11 +220,11 @@
 	if(internal_mix && internal_mix.total_moles() > num)
 		var/datum/gas_mixture/removed = internal_mix.remove(num)
 		if(removed.total_moles() > 0.005)
-			T.assume_air(removed)
+			owner_turf.assume_air(removed)
 			ion_trail.generate_effect()
 			return TRUE
 		else
-			T.assume_air(removed)
+			owner_turf.assume_air(removed)
 			ion_trail.generate_effect()
 
 	toggle(silent = TRUE)

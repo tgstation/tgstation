@@ -20,7 +20,7 @@
 	set hidden = TRUE
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",, list("Yes","No"))!="Yes")
 			return
 		src << link(forumurl)
 	else
@@ -33,7 +33,7 @@
 	set hidden = TRUE
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
-		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",, list("Yes","No"))!="Yes")
 			return
 		src << link(rulesurl)
 	else
@@ -46,7 +46,7 @@
 	set hidden = TRUE
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
-		if(alert("This will open the Github repository in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
 			return
 		src << link(githuburl)
 	else

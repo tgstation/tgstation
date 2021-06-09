@@ -636,10 +636,10 @@
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
 	move_stacks++
+	var/atom/oldloc = loc
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
-		var/atom/oldloc = loc
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
@@ -663,19 +663,19 @@
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
 
-		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
-		var/atom/oldloc = loc
-		if (loc)
+		loc = null
+		if (oldloc)
 			var/area/old_area = get_area(oldloc)
 			oldloc.Exited(src, null)
 			if(old_area)
 				old_area.Exited(src, null)
-		loc = null
+
+	Moved(oldloc, NONE, TRUE)
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
@@ -1127,7 +1127,7 @@
 		return
 
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
-		if(alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", "Allow", "Cancel") == "Cancel")
+		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) == "Cancel")
 			return
 
 		// Alert is async, so quick sanity check to make sure we should still be doing this.

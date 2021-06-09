@@ -48,7 +48,7 @@
 	var/mult = 1
 	if(isobj(source))
 		var/obj/art_piece = source
-		mult = art_piece.obj_integrity/art_piece.max_integrity
+		mult = art_piece.get_integrity() / art_piece.max_integrity
 
 	apply_moodlet(source, user, impressiveness * mult)
 

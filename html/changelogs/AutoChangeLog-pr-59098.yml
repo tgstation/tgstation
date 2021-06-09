@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Cryopods can no longer be used to round remove other SSD players."
-  - bugfix: "Cryopods no longer delete traitor objectives under certain edge cases, and can no longer be used to metagame the existence of traitors with steal objectives."
-  - balance: "Cryopods now vomit out all the items of players who get vored by them, like beautiful loot pinatas."

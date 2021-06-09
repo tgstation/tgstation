@@ -73,7 +73,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = FALSE
+	set_anchored(FALSE)
 	walk_to(src,0)
 	last_found = world.time
 	limiting_spam = FALSE
@@ -284,7 +284,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_idle()
-	anchored = FALSE
+	set_anchored(FALSE)
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -292,13 +292,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
-	anchored = FALSE
+	set_anchored(FALSE)
 	frustration = 0
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action) // responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/look_for_perp()
-	anchored = FALSE
+	set_anchored(FALSE)
 	for (var/mob/living/carbon/C in view(7,src))
 		if((C.stat) || (C.handcuffed))
 			continue

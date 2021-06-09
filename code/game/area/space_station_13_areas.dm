@@ -136,6 +136,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Satellite Hallway"
 	icon_state = "ai"
 
+/area/ai_monitored/turret_protected/aisat/maint
+	name = "AI Satellite Maintenance"
+	icon_state = "ai_maint"
+
 /area/ai_monitored/turret_protected/aisat_interior
 	name = "AI Satellite Antechamber"
 	icon_state = "ai_interior"

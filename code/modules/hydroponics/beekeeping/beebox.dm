@@ -213,7 +213,7 @@
 		else
 			visible_message("<span class='danger'>[user] disturbs the [name] to no effect!</span>")
 	else
-		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee", "Cancel")
+		var/option = tgui_alert(user, "What action do you wish to perform?","Apiary",list("Remove a Honey Frame","Remove the Queen Bee", "Cancel"))
 		if(!Adjacent(user))
 			return
 		switch(option)

@@ -1,4 +1,0 @@
-author: "Anonymous"
-delete-after: True
-changes: 
-  - code_imp: "You can now change emoji set with just a define. See `__DEFINES/misc.dm`."

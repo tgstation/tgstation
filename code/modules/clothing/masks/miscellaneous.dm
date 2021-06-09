@@ -22,6 +22,7 @@
 	desc = "To silence those pesky patients before putting them under."
 	icon_state = "breathmuzzle"
 	inhand_icon_state = "breathmuzzle"
+	body_parts_covered = NONE
 	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
 	gas_transfer_coefficient = 0.1
 	permeability_coefficient = 0.01

@@ -7,7 +7,6 @@
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_NORMAL
-	obj_integrity = 300
 	max_integrity = 300
 	inhand_icon_state = "reverse_bear_trap"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

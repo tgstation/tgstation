@@ -55,7 +55,7 @@
 		var/obj/object = o
 		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
 		object.forceMove(src)
-	anchored = FALSE
+	set_anchored(FALSE)
 	unpacked = FALSE
 
 /obj/machinery/food_cart/proc/unpack(mob/user)
@@ -65,7 +65,7 @@
 		to_chat(user, "<span class='warning'>There isn't enough room to unpack here! Bad spaces were marked in red.</span>")
 		return
 	visible_message("<span class='notice'>[src] expands into a full stand.</span>")
-	anchored = TRUE
+	set_anchored(TRUE)
 	var/iteration = 1
 	var/turf/grabbed_turf = get_step(get_turf(src), EAST)
 	for(var/angle in list(0, -45, -45, 45))

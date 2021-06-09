@@ -205,6 +205,12 @@
 
 	wound_bonus = 15
 
+/obj/item/melee/classic_baton/Initialize()
+	. = ..()
+	// Adding an extra break for the sake of presentation
+	if(stamina_damage != 0)
+		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only <span class='warning'>[round(100 / stamina_damage, 0.1)] hit\s!</span>"
+
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
@@ -666,13 +672,18 @@
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "mace_greyscale"
-	inhand_icon_state = "mace_greyscale"
-	worn_icon_state = "mace"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
+	icon = 'icons/obj/items/cleric_mace.dmi'
+	icon_state = "default"
+	inhand_icon_state = "default"
+	worn_icon_state = "default_worn"
+
+	greyscale_config = /datum/greyscale_config/cleric_mace
+	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace_lefthand
+	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace_righthand
+	greyscale_config_worn = /datum/greyscale_config/cleric_mace
+	greyscale_colors = "#FFFFFF"
+
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
@@ -682,11 +693,3 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
-	var/overlay_state = "mace_handle"
-	var/mutable_appearance/overlay
-
-/obj/item/melee/cleric_mace/Initialize()
-	. = ..()
-	overlay = mutable_appearance(icon, overlay_state)
-	overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | KEEP_APART
-	add_overlay(overlay)

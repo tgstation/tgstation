@@ -214,6 +214,7 @@
 //Random event wizard
 /datum/antagonist/wizard/apprentice/imposter
 	name = "Wizard Imposter"
+	show_in_antagpanel = FALSE
 	allow_rename = FALSE
 	move_to_lair = FALSE
 
@@ -246,6 +247,7 @@
 
 /datum/antagonist/wizard/academy
 	name = "Academy Teacher"
+	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
 
