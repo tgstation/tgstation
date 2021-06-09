@@ -282,3 +282,8 @@
 	name = "turtleneck sweater"
 	icon_file = 'icons/obj/clothing/suits.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sweater_gags.json'
+
+/datum/greyscale_config/sweater_gags_worn
+	name = "turtleneck sweater"
+	icon_file = 'icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sweater_gags_worn.json'
