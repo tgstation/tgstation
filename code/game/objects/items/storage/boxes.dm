@@ -723,6 +723,7 @@
 		W.matchignite()
 
 /obj/item/storage/box/matches/update_icon_state()
+	. = ..()
 	switch(length(contents))
 		if(10)
 			icon_state = initial(icon_state)
