@@ -82,9 +82,12 @@
 	. = new_overlays
 	if(opened)
 		. += "[icon_door_override ? icon_door : icon_state]_open"
+		var/mutable_appearance/door_blocker = mutable_appearance(icon, "[icon_door || icon_state]_open", plane = EMISSIVE_PLANE)
+		door_blocker.color = GLOB.em_block_color
+		. += door_blocker // If we don't do this the door doesn't block emissives and it looks weird.
 		return
 
-	. += "[icon_door || icon_state]_door"
+	. += mutable_appearance(icon, "[icon_door || icon_state]_door")
 	if(welded)
 		. += icon_welded
 
