@@ -19,12 +19,12 @@
 		if(bomb.timing)
 			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
-/obj/item/pinpointer/nuke/process()
+/obj/item/pinpointer/nuke/process(delta_time)
 	..()
-	if(!active)
+	if(!active || alert)
 		return
 	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
-		if(!bomb.timing || alert)
+		if(!bomb.timing)
 			return
 		alert = TRUE
 		playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
