@@ -1,4 +1,0 @@
-author: "Fhaxaris"
-delete-after: True
-changes: 
-  - bugfix: "Telekinesis throwing is now logged even if you don't hit someone."

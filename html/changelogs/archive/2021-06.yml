@@ -167,3 +167,36 @@
       reports. The cell it starts with has enough power for 100 reports.
   tralezab:
   - rscadd: Robotics Two Person Mecha!
+2021-06-09:
+  Fhaxaris:
+  - bugfix: Telekinesis throwing is now logged even if you don't hit someone.
+  Melbert:
+  - bugfix: Fixes self-use sleepers like syndie-sleepers so you can actually use them
+      by yourself when you're inside them.
+  RandomGamer123:
+  - bugfix: The heroine bud can no longer be removed by click-dragging
+  Thunder12345:
+  - bugfix: The drive-by landing station trait can no longer send players to space.
+  - bugfix: Swarmer traps are functional again
+  Timberpoes:
+  - admin: Admins will no longer accidentally toggle delaying the end of the shift
+      off when multiple admins attempt to delay at the same time.
+  - admin: When a round end delay goes past the ordinary server restart time, admins
+      are now required to manually end the shift through Reboot World in the Server
+      verb tab or Reboot-World in the command bar. The shift will no longer automatically
+      restart past this point just because an admin undelayed end.
+  - bugfix: Straight jackets and cargo gauntlets no longer pretend they're trying
+      to equip themselves when you hold them in your hand and mouse over an inventory
+      slot they can be equipped to.
+  cacogen:
+  - qol: Right-clicking a reagent container in your active hand will pick the previous
+      transfer amount instead of the next
+  - code_imp: Mauna mug uses ctrl+click instead of attack_self() to toggle power
+  - code_imp: Resetting an object's name and description with a pen will return them
+      to what they were before being changed, instead of their initial values
+  - bugfix: Resetting a sculpture's description will no longer result in a description
+      telling you to yell at Firecage
+  - qol: All custom names in Character Settings can now either be reset to the default
+      or randomised by leaving the text box blank
+  - qol: You can now pick a random religion in Character Settings by leaving the text
+      box blank. Setting a religion will also set the bible name and deity if applicable

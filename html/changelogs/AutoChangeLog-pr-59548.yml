@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Straight jackets and cargo gauntlets no longer pretend they're trying to equip themselves when you hold them in your hand and mouse over an inventory slot they can be equipped to."
