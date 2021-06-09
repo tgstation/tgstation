@@ -25,7 +25,7 @@
 		return
 	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
 		if(!bomb.timing)
-			return
+			continue
 		alert = TRUE
 		playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
 		if(isliving(loc))
