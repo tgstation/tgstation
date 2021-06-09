@@ -53,12 +53,6 @@
 "T" = (
 /turf/open/floor/cult,
 /area/icemoon/underground)
-"V" = (
-/obj/item/storage/toolbox/mechanical/old/clean,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/icemoon/underground)
 "Z" = (
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -754,7 +748,7 @@ q
 q
 q
 q
-V
+Z
 Z
 Z
 Z
