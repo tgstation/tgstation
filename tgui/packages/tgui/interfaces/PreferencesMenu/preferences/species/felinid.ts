@@ -18,6 +18,7 @@ const Felinid: Species = {
         flashbangs.",
     }],
   },
+  icon: "wrench",
   lore: "LORE MASTER HELP",
 };
 

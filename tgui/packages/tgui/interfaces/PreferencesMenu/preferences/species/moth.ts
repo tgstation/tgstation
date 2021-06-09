@@ -28,6 +28,7 @@ const Moth: Species = {
         masks will work.",
     }],
   },
+  icon: "wrench",
   lore: "LORE MASTER HELP",
 };
 

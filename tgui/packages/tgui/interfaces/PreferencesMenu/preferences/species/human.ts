@@ -19,6 +19,7 @@ const Human: Species = {
     neutral: [],
     bad: [],
   },
+  icon: "wrench",
   lore: "LORE MASTER HELP",
 };
 

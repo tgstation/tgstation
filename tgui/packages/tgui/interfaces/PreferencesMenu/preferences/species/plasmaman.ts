@@ -60,6 +60,7 @@ const Plasmaman: Species = {
         one at all.",
     }],
   },
+  icon: "wrench",
   lore: "LORE MASTER HELP",
 };
 

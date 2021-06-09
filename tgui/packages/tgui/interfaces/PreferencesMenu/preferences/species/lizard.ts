@@ -20,6 +20,7 @@ const Lizard: Species = {
         receiving medical treatment more difficult.",
     }],
   },
+  icon: "wrench",
   lore: "LORE MASTER HELP",
 };
 
