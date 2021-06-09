@@ -472,12 +472,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_state = "candyoff"
 	icon_state = "candyoff"
 	type_butt = /obj/item/food/candy_trash
-	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10)
+	heat = 473.15 // Lowered so that the sugar can be carmalized, but not burnt.
+	list_reagents = list(/datum/reagent/consumable/sugar = 20)
 
 /obj/item/clothing/mask/cigarette/candy/nicotine
 	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
 	type_butt = /obj/item/food/candy_trash/nicotine
-	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10, /datum/reagent/drug/nicotine = 20) //oh no!
+	list_reagents = list(/datum/reagent/consumable/sugar = 20, /datum/reagent/drug/nicotine = 20) //oh no!
 	smoke_all = TRUE //timmy's not getting out of this one
 
 /obj/item/cigbutt/roach
