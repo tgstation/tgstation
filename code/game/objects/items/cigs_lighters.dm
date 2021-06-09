@@ -306,7 +306,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 
-	open_flame()
+	open_flame(heat)
 	if((reagents?.total_volume) && COOLDOWN_FINISHED(src, drag_cooldown))
 		COOLDOWN_START(src, drag_cooldown, dragtime)
 		handle_reagents()
@@ -581,7 +581,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			name = "empty [initial(name)]"
 		STOP_PROCESSING(SSobj, src)
 		return
-	open_flame()
+
+	open_flame(heat)
 	if(reagents?.total_volume) // check if it has any reagents at all
 		handle_reagents()
 
@@ -814,7 +815,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/lighter/process()
-	open_flame()
+	open_flame(heat)
 
 /obj/item/lighter/get_temperature()
 	return lit * heat
