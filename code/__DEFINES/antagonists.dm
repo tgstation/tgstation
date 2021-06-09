@@ -72,6 +72,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_VOID "Void"
 
 #define BLOB_FORCE_PLACEMENT -1
+#define BLOB_NORMAL_PLACEMENT 0
+#define BLOB_RANDOM_PLACEMENT 1
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20

@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 				manualplace_min_time = 0
 			if(autoplace_max_time && world.time >= autoplace_max_time)
-				place_blob_core(1)
+				place_blob_core(BLOB_RANDOM_PLACEMENT)
 		else
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
