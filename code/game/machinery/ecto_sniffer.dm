@@ -6,6 +6,7 @@
 	density = FALSE
 	anchored = FALSE
 	pass_flags = PASSTABLE
+	circuit = /obj/item/circuitboard/machine/ecto_sniffer
 	///determines if the device if the power switch is turned on or off. Useful if the ghosts are too annoying.
 	var/on = TRUE
 	///If this var set to false the ghosts will not be able interact with the machine, say if the machine is silently disabled by cutting the internal wire.
@@ -22,9 +23,9 @@
 	if(!is_operational || !on || !sensor_enabled)
 		return
 
-	for(var/datum/weakref/spirit_residue in ectoplasmic_residues)
+	for(var/datum/weakref/spirit_residue as anything in ectoplasmic_residues)
 		if(IS_WEAKREF_OF(user, spirit_residue))
-			return ..()
+			return
 	activate(user)
 
 /obj/machinery/ecto_sniffer/proc/activate(mob/activator)
@@ -32,8 +33,9 @@
 	playsound(loc, 'sound/machines/ping.ogg', 20)
 	use_power(10)
 	if(activator)
-		ectoplasmic_residues += WEAKREF(activator)
-		addtimer(CALLBACK(src, .proc/clear_residue, activator), 15 SECONDS)
+		var/datum/weakref/residue = WEAKREF(activator)
+		ectoplasmic_residues += residue
+		addtimer(CALLBACK(src, .proc/clear_residue, residue), 15 SECONDS)
 
 /obj/machinery/ecto_sniffer/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -55,25 +57,25 @@
 		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask")
 
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	tool.play_tool_sound(src, 15)
 	set_anchored(!anchored)
-	balloon_alert(user, "sniffer [anchored ? "anchor" : "unanchor"]")
+	balloon_alert(user, "sniffer [anchored ? "anchored" : "unanchored"]")
 
 /obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!.)
 		return default_deconstruction_screwdriver(user, "ecto_sniffer_open", "ecto_sniffer", I)
 
+/obj/machinery/ecto_sniffer/crowbar_act(mob/living/user, obj/item/tool)
+	if(!default_deconstruction_crowbar(tool))
+		return ..
+
 /obj/machinery/ecto_sniffer/Destroy()
-	. = ..()
 	ectoplasmic_residues = null
+	. = ..()
 
 ///Removes the ghost from the ectoplasmic_residues list and lets them know they are free to activate the sniffer again.
-/obj/machinery/ecto_sniffer/proc/clear_residue(mob/haunt)
-	for(var/datum/weakref/spirit_residue in ectoplasmic_residues)
-		if(IS_WEAKREF_OF(haunt, spirit_residue))
-			ectoplasmic_residues -= spirit_residue
-			break
+/obj/machinery/ecto_sniffer/proc/clear_residue(datum/weakref/residue)
+	ectoplasmic_residues -= residue
 
-	to_chat(haunt, "<span class='nicegreen'>The coating of ectoplasmic residue you left on [src]'s sensors has decayed.</span>")
+	to_chat(residue.resolve(), "<span class='nicegreen'>The coating of ectoplasmic residue you left on [src]'s sensors has decayed.</span>")
