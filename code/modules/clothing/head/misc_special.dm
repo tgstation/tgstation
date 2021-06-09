@@ -247,16 +247,18 @@
 	return ..()
 
 
-/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
-	. = list()
+/obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
+	. = ..()
 	if(!isinhands)
-		var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
-		if(!S)
-			return
-		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
-		M.appearance_flags |= RESET_COLOR
-		M.color = color
-		. += M
+		return
+
+	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
+	if(!S)
+		return
+	var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
+	M.appearance_flags |= RESET_COLOR
+	M.color = color
+	. += M
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")

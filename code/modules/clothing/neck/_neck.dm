@@ -6,14 +6,16 @@
 	strip_delay = 40
 	equip_delay_other = 40
 
-/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
-	. = list()
-	if(!isinhands)
-		if(body_parts_covered & HEAD)
-			if(damaged_clothes)
-				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(HAS_BLOOD_DNA(src))
-				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+/obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+	. = ..()
+	if(isinhands)
+		return
+
+	if(body_parts_covered & HEAD)
+		if(damaged_clothes)
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
+		if(HAS_BLOOD_DNA(src))
+			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
 	name = "tie"
@@ -235,7 +237,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/sourceBandanaType
 
-/obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
+/obj/item/clothing/neck/neckerchief/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands)
 		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/clothing/mask.dmi', icon_state)

@@ -558,6 +558,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			facial_overlay.alpha = hair_alpha
 
+			var/mutable_appearance/facial_em_blocker = mutable_appearance(fhair_file, fhair_state, plane = EMISSIVE_PLANE, alpha = hair_alpha, appearance_flags = KEEP_APART)
+			facial_em_blocker.color = GLOB.em_block_color
+			facial_overlay.overlays += facial_em_blocker
+
 			standing += facial_overlay
 
 	if(H.head)
@@ -637,6 +641,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
 					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 		if(hair_overlay.icon)
+			var/mutable_appearance/hair_em_block = mutable_appearance(hair_overlay.icon, hair_overlay.icon_state, plane = EMISSIVE_PLANE, alpha = hair_alpha, appearance_flags = KEEP_APART)
+			hair_em_block.color = GLOB.em_block_color
+			hair_overlay.overlays += hair_em_block
+
 			standing += hair_overlay
 			standing += gradient_overlay
 
@@ -692,7 +700,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(!no_eyeslay)//we need eyes
 				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
-					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER, EMISSIVE_PLANE)
+					eye_overlays += emissive_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
 				else
 					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
 				for(var/mutable_appearance/eye_overlay as anything in eye_overlays)

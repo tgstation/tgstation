@@ -326,14 +326,15 @@
 	. += neon_overlay
 	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha=emissive_alpha)
 
-/obj/item/stack/tile/carpet/neon/worn_overlays(isinhands, icon_file)
+/obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands || !neon_inhand_icon_state)
 		return
-	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state, alpha = alpha)
+
+	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	/// TODO: Figure out how to add emissive overlays to inhand icon states.
+	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha, appearance_flags = KEEP_APART)
 
 /obj/item/stack/tile/carpet/neon/simple
 	name = "simple neon carpet"
