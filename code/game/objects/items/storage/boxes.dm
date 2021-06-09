@@ -708,6 +708,7 @@
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
 	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
 	custom_price = PAYCHECK_ASSISTANT * 0.4
+	base_icon_state = icon_state
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
