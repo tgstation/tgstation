@@ -1,7 +1,7 @@
 import { classes } from "common/react";
-import { sendAct, useBackend, useLocalState } from "../backend";
-import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../components";
-import { Window } from "../layouts";
+import { sendAct, useBackend, useLocalState } from "../../backend";
+import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
+import { Window } from "../../layouts";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
