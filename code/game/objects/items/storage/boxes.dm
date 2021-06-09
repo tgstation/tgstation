@@ -722,6 +722,17 @@
 	if(istype(W, /obj/item/match))
 		W.matchignite()
 
+/obj/item/storage/box/matches/update_icon_state()
+	switch(length(contents))
+		if(10)
+			icon_state = initial(icon_state)
+		if(5 to 9)
+			icon_state = "[initial(icon_state)]_almostfull"
+		if(1 to 4)
+			icon_state = "[initial(icon_state)]_almostempty"
+		if(0)
+			icon_state = "[initial(icon_state)]_e"
+
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
 	icon = 'icons/obj/storage.dmi'
