@@ -31,6 +31,7 @@
 		if(isliving(loc))
 			var/mob/living/alerted_holder = loc
 			to_chat(alerted_holder, "<span class='userdanger'>Your [name] vibrates and lets out an ominous alarm. Uh oh.</span>")
+		return
 
 /obj/item/pinpointer/nuke/scan_for_target()
 	target = null
