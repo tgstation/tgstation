@@ -726,13 +726,13 @@
 	. = ..()
 	switch(length(contents))
 		if(10)
-			icon_state = initial(icon_state)
+			icon_state = base_icon_state
 		if(5 to 9)
-			icon_state = "[initial(icon_state)]_almostfull"
+			icon_state = "[base_icon_state]_almostfull"
 		if(1 to 4)
-			icon_state = "[initial(icon_state)]_almostempty"
+			icon_state = "[base_icon_state]_almostempty"
 		if(0)
-			icon_state = "[initial(icon_state)]_e"
+			icon_state = "[base_icon_state]_e"
 
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
