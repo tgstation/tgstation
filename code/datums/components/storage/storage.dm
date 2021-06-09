@@ -840,13 +840,13 @@
 /datum/component/storage/proc/on_right_click(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_CANCEL_CLICK_RIGHT
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
-		return FALSE
+		return
 
+	. = COMPONENT_CANCEL_CLICK_RIGHT
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
