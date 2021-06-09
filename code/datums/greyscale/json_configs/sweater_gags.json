@@ -2,7 +2,7 @@
     "sweater_gags": [
         {
             "type": "icon_state",
-            "icon_state": "sweater_gags",
+            "icon_state": "sweater_gags_obj",
             "blend_mode": "overlay",
             "color_ids": [ 1 ]
         }
