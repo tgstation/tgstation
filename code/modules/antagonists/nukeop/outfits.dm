@@ -68,14 +68,14 @@
 	name = "Syndicate Operative - Plasmaman"
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	backpack_contents = list(/obj/item/kitchen/knife/combat/survival)
 
 /datum/outfit/syndicate/leader/plasmaman
 	name = "Syndicate Leader - Plasmaman"
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	backpack_contents = list(/obj/item/kitchen/knife/combat/survival)
 	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	command_radio = TRUE
@@ -86,5 +86,5 @@
 	name = "Syndicate Operative - Plasmaman Reinforcement"
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	backpack_contents = list(/obj/item/kitchen/knife/combat/survival)
