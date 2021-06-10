@@ -64,7 +64,7 @@
 /datum/action/innate/blobpop/Grant(Target)
 	. = ..()
 	if(owner)
-		addtimer(CALLBACK(src, /datum/action/innate.proc/Activate, TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, .proc/Activate, TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 		to_chat(owner, "<span class='big'><font color=\"#EE4000\">You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)].</font></span>")
 
 /datum/action/innate/blobpop/Activate(timer_activated = FALSE)
@@ -97,7 +97,7 @@
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(B)
 	old_body.gib()
-	B.place_blob_core(placement_override = BLOB_FORCE_PLACEMENT, pop_override = TRUE)
+	B.place_blob_core(placement_override, pop_override = TRUE)
 	playsound(get_turf(B), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
 
 /datum/antagonist/blob/antag_listing_status()

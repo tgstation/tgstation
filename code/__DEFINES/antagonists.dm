@@ -71,8 +71,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_FLESH "Flesh"
 #define PATH_VOID "Void"
 
+/// Forces the blob to place the core where they currently are, ignoring any checks.
 #define BLOB_FORCE_PLACEMENT -1
+/// Normal blob placement, does the regular checks to make sure the blob isn't placing itself in an invalid location
 #define BLOB_NORMAL_PLACEMENT 0
+/// Selects a random location for the blob to be placed.
 #define BLOB_RANDOM_PLACEMENT 1
 
 /// How many telecrystals a normal traitor starts with
