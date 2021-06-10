@@ -35,7 +35,7 @@
 	src.flags = flags
 
 	if(ismovable(target))
-		AddElement(/datum/element/connect_loc, target, crossed_connections)
+		AddElement(/datum/element/connect_loc_behalf, target, crossed_connections)
 	else
 		RegisterSignal(get_turf(target), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
@@ -93,4 +93,4 @@
 /datum/element/caltrop/Detach(datum/target)
 	. = ..()
 	if(ismovable(target))
-		RemoveElement(/datum/element/connect_loc, target, crossed_connections)
+		RemoveElement(/datum/element/connect_loc_behalf, target, crossed_connections)

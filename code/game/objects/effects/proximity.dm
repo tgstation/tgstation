@@ -111,7 +111,7 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 		COMSIG_ATOM_EXITED =.proc/on_uncrossed,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/abstract/proximity_checker/proc/on_uncrossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
