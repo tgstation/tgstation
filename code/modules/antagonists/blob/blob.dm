@@ -59,6 +59,7 @@
 	icon_icon = 'icons/mob/blob.dmi'
 	button_icon_state = "blob"
 
+	/// The time taken before this ability is automatically activated.
 	var/autoplace_time = OVERMIND_STARTING_AUTO_PLACE_TIME
 
 /datum/action/innate/blobpop/Grant(Target)
