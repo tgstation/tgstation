@@ -8,7 +8,7 @@
 		if (!preference.should_generate_icons)
 			continue
 
-		var/list/choices = preference.get_choices()
+		var/list/choices = preference.get_choices_serialized()
 		for (var/preference_value in choices)
 			var/create_icon_of = choices[preference_value]
 
@@ -24,7 +24,7 @@
 				icon = create_icon_of
 			else
 				// MOTHBLOCKS TODO: Unit test this
-				CRASH("[create_icon_of] is an invalid preference value.")
+				CRASH("[create_icon_of] is an invalid preference value (from [preference_key]:[preference_value]).")
 
 			Insert(preference.get_spritesheet_key(preference_value), icon, icon_state)
 

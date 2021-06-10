@@ -446,7 +446,10 @@
 			return
 	if(frn)
 		client.prefs.random_character()
-		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
+
+		var/species_type = client.prefs.read_preference(/datum/preference/species)
+		var/datum/species/species = new species_type
+		client.prefs.real_name = species.random_name(gender,1)
 
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)

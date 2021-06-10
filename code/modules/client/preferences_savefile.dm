@@ -373,14 +373,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == -2) //fatal, can't load any data
 		return FALSE
 
-	//Species
-	var/species_id
-	READ_FILE(S["species"], species_id)
-	if(species_id)
-		var/newtype = GLOB.species_list[species_id]
-		if(newtype)
-			pref_species = new newtype
-
 	//Character
 	READ_FILE(S["real_name"], real_name)
 	READ_FILE(S["gender"], gender)
@@ -549,7 +541,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["uplink_loc"] , uplink_spawn_loc)
 	WRITE_FILE(S["playtime_reward_cloak"] , playtime_reward_cloak)
 	WRITE_FILE(S["randomise"] , randomise)
-	WRITE_FILE(S["species"] , pref_species.id)
 	WRITE_FILE(S["phobia"], phobia)
 	WRITE_FILE(S["feature_mcolor"] , features["mcolor"])
 	WRITE_FILE(S["feature_ethcolor"] , features["ethcolor"])

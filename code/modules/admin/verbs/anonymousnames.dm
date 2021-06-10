@@ -78,7 +78,9 @@
  * * M - mob for preferences and gender
  */
 /datum/anonymous_theme/proc/anonymous_name(mob/M)
-	return M.client.prefs.pref_species.random_name(M.gender,1)
+	var/species_type = M.client.prefs.read_preference(/datum/preference/species)
+	var/datum/species/species = new species_type
+	return species.random_name(M.gender,1)
 
 /**
  * anonymous_ai_name: generates a random name, based off of whatever the round's anonymousnames is set to (but for sillycones).

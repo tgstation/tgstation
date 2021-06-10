@@ -394,7 +394,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(istype(I))
 				C.dropItemToGround(I)
 			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-				C.put_in_hands(new mutanthands())
+				INVOKE_ASYNC(C, /mob/proc/put_in_hands, new mutanthands)
 
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)

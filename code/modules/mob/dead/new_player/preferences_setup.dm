@@ -43,11 +43,9 @@
 	// else
 	// 	body_type = pick(MALE, FEMALE)
 
+// MOTHBLOCKS TODO: randomness
 /datum/preferences/proc/random_species()
-	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
-	pref_species = new random_species_type
-	if(randomise[RANDOM_NAME])
-		real_name = pref_species.random_name(gender,1)
+	return
 
 ///Setup a hardcore random character and calculate their hardcore random score
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist, is_latejoiner)

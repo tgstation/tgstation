@@ -77,7 +77,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/facial_hair_color = "000" //Facial hair color
 	var/skin_tone = "caucasian1" //Skin color
 	var/eye_color = "000" //Eye color
-	var/datum/species/pref_species = new /datum/species/human() //Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/phobia = "spiders"
@@ -178,7 +177,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	random_character() //let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
-	real_name = pref_species.random_name(gender,1)
+
+	var/species_type = read_preference(/datum/preference/species)
+	var/datum/species/species = new species_type
+	real_name = species.random_name(gender,1)
+
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
@@ -293,7 +296,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/generate_preference_values(datum/preference/preference)
 	var/list/values
-	var/list/choices = preference.get_choices()
+	var/list/choices = preference.get_choices_serialized()
 
 	if (preference.should_generate_icons)
 		values = list()
@@ -318,10 +321,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (preference.should_generate_icons)
 			data = list(
 				"icon" = preference.get_spritesheet_key(value),
-				"value" = value,
+				"value" = preference.serialize(value),
 			)
 		else
-			data = value
+			data = preference.serialize(value)
 
 		preferences[preference.category][preference.savefile_key] = data
 
@@ -426,7 +429,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
 	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
-
 		random_species()
 
 	if((randomise[RANDOM_BODY] || (randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
@@ -435,14 +437,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if((randomise[RANDOM_NAME] || (randomise[RANDOM_NAME_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
 		slot_randomized = TRUE
-		real_name = pref_species.random_name(gender)
+		// MOTHBLOCKS TODO: Random name for antags
+		// real_name = species.random_name(gender)
 
 	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
 		if(can_be_random_hardcore())
 			hardcore_random_setup(character, antagonist, is_latejoiner)
 
 	if(roundstart_checks)
-		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
+		if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/species) == /datum/species/human))
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
 			if(!firstspace) //we need a surname
@@ -481,21 +484,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.jumpsuit_style = jumpsuit_style
 
-	var/datum/species/chosen_species
-	chosen_species = pref_species.type
-	if(roundstart_checks && !(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
-		chosen_species = /datum/species/human
-		pref_species = new /datum/species/human
-		save_character()
-
 	character.dna.features = features.Copy()
-	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.real_name = character.real_name
 
-	if(pref_species.mutant_bodyparts["tail_lizard"])
-		character.dna.species.mutant_bodyparts["tail_lizard"] = pref_species.mutant_bodyparts["tail_lizard"]
-	if(pref_species.mutant_bodyparts["spines"])
-		character.dna.species.mutant_bodyparts["spines"] = pref_species.mutant_bodyparts["spines"]
+	// MOTHBLOCKS TODO: What is all this for? If it doesn't include moth wings, then what is it?
+	// Is it the same problem with cloning moths not giving wings? Oversight?
+
+	// if(species.mutant_bodyparts["tail_lizard"])
+	// 	character.dna.species.mutant_bodyparts["tail_lizard"] = species.mutant_bodyparts["tail_lizard"]
+	// if(species.mutant_bodyparts["spines"])
+	// 	character.dna.species.mutant_bodyparts["spines"] = species.mutant_bodyparts["spines"]
 
 	if(icon_updates)
 		character.update_body()

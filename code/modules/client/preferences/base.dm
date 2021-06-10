@@ -63,10 +63,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Return value can be in the form of:
 /// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
 /// - An assoc list of raw values to atoms/icons.
-/// If the mob has no client, and icons are expected to be generated, then
-/// empty strings will be given.
-/// Due to the need to send icons, this proc is NOT pure.
-/// Its calling should be deferred when possible.
 // MOTHBLOCKS TODO: Let preferences be text-only.
 /datum/preference/proc/get_choices()
 	// Override `init_values()` instead.
@@ -77,6 +73,26 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		ASSERT(cached_values.len)
 
 	return cached_values
+
+/// Returns a list of every possible value, serialized.
+/// Return value can be in the form of:
+/// - A flat list of serialized values, such as list(MALE, FEMALE, PLURAL).
+/// - An assoc list of serialized values to atoms/icons.
+/datum/preference/proc/get_choices_serialized()
+	// Override `init_values()` instead.
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/list/serialized_choices = list()
+	var/choices = get_choices()
+
+	if (should_generate_icons)
+		for (var/choice in choices)
+			serialized_choices += serialize(choice)
+	else
+		for (var/choice in choices)
+			serialized_choices[serialize(choice)] = choices[choice]
+
+	return serialized_choices
 
 /// Returns a list of every possible value.
 /// This must be overriden by `/datum/preference` subtypes.
