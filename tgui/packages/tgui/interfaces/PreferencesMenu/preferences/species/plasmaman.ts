@@ -40,7 +40,7 @@ const Plasmaman: Species = {
       description: "Plasmamen instantly ignite when their body makes contact \
         with oxygen.",
     }, {
-      icon: "lungs",
+      icon: "wind",
       name: "Plasma Breathing",
       description: "Plasmamen must breathe plasma to survive. You receive a \
         tank when you arrive.",

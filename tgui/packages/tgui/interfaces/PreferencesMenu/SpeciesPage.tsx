@@ -5,7 +5,7 @@ import { createSetPreference, PreferencesMenuData } from "./data";
 import { Feature, Species, fallbackSpecies } from "./preferences/species/base";
 
 // MOTHBLOCKS TODO: Derive this
-const SPECIES = ["human", "moth", "lizard", "ethereal"];
+const SPECIES = ["human", "moth", "lizard", "ethereal", "plasmaman"];
 
 const requireSpecies = require.context("./preferences/species");
 
