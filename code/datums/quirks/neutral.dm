@@ -43,10 +43,11 @@
 		H.grant_language(/datum/language/uncommon)
 
 /datum/quirk/foreigner/remove()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.remove_blocked_language(/datum/language/common)
-	if(ishumanbasic(H))
-		H.remove_language(/datum/language/uncommon)
+	if(quirk_holder)
+		var/mob/living/carbon/human/H = quirk_holder
+		H.remove_blocked_language(/datum/language/common)
+		if(ishumanbasic(H))
+			H.remove_language(/datum/language/uncommon)
 
 /datum/quirk/vegetarian
 	name = "Vegetarian"
