@@ -563,7 +563,7 @@ GLOBAL_VAR(preferences_species_data)
 	for (var/species_id in GLOB.roundstart_races)
 		var/datum/species/species = GLOB.species_list[species_id]
 
-		var/list/diet
+		var/list/diet = list()
 
 		if (!(TRAIT_NOHUNGER in initial(species.inherent_traits)))
 			diet = list(
