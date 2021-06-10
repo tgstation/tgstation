@@ -43,11 +43,11 @@
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
 	..()
-	if(M.dna && M.dna.species)
-		M.dna.species.say_mod = say_mod
-		M.dna.species.ask_mod = ask_mod
-		M.dna.species.exclaim_mod = exclaim_mod
-		M.dna.species.yell_mod = yell_mod
+	if(tongue_owner.dna && tongue_owner.dna.species)
+		tongue_owner.dna.species.say_mod = say_mod
+		tongue_owner.dna.species.ask_mod = ask_mod
+		tongue_owner.dna.species.exclaim_mod = exclaim_mod
+		tongue_owner.dna.species.yell_mod = yell_mod
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
 	if (modifies_speech)
@@ -65,11 +65,11 @@
 
 /obj/item/organ/tongue/Remove(mob/living/carbon/tongue_owner, special = 0)
 	..()
-	if(M.dna && M.dna.species)
-		M.dna.species.say_mod = initial(M.dna.species.say_mod)
-		M.dna.species.exclaim_mod = initial(M.dna.species.exclaim_mod)
-		M.dna.species.ask_mod = initial(M.dna.species.ask_mod)
-		M.dna.species.yell_mod = initial(M.dna.species.yell_mod)
+	if(tongue_owner.dna && tongue_owner.dna.species)
+		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
+		tongue_owner.dna.species.exclaim_mod = initial(tongue_owner.dna.species.exclaim_mod)
+		tongue_owner.dna.species.ask_mod = initial(tongue_owner.dna.species.ask_mod)
+		tongue_owner.dna.species.yell_mod = initial(tongue_owner.dna.species.yell_mod)
 	UnregisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.RegisterSignal(M, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
 	REMOVE_TRAIT(M, TRAIT_AGEUSIA, ORGAN_TRAIT)
