@@ -546,7 +546,7 @@
 	background_icon_state = "bg_alien"
 	var/activation_type = SLIME_ACTIVATE_MINOR
 	var/datum/species/jelly/luminescent/species
-	var/blood_cost = 150
+	var/blood_cost = 100
 
 /datum/action/innate/use_extract/New(_species)
 	..()
@@ -579,7 +579,7 @@
 	desc = "Pulse the slime extract with plasma jelly to activate it."
 	button_icon_state = "slimeuse2"
 	activation_type = SLIME_ACTIVATE_MAJOR
-	blood_cost = 250
+	blood_cost = 200
 
 ///////////////////////////////////STARGAZERS//////////////////////////////////////////
 
