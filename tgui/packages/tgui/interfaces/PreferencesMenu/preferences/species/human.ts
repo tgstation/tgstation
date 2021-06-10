@@ -13,7 +13,7 @@ const Human: Species = {
     }, {
       icon: "bullhorn",
       name: "Chain of Command",
-      description: "NanoTrasen only recognizes humans for command roles, such \
+      description: "Nanotrasen only recognizes humans for command roles, such \
         as Captain.",
     }],
     neutral: [],
