@@ -26,8 +26,9 @@
 	if(!ishuman(owner.current))
 		return
 	var/mob/living/carbon/human/H = owner.current
-
-	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+	
+	if(isplasmaman(H))
+		nukeop_outfit = text2path("[nukeop_outfit]/plasmaman")
 
 	H.equipOutfit(nukeop_outfit)
 	return TRUE

@@ -29,3 +29,28 @@
 	command_radio = TRUE
 
 	id_trim = /datum/id_trim/chameleon/operative/clown_leader
+
+/datum/outfit/syndicate/clownop/plasmaman
+	name = "Clown Operative - Plasmaman"
+	uniform = /obj/item/clothing/under/plasmaman/clown
+	head = /obj/item/clothing/head/helmet/space/plasmaman/clown
+	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	backpack_contents = list(/obj/item/kitchen/knife/combat/survival,
+		/obj/item/dnainjector/clumsymut, //in case you want to be clumsy for the memes
+		/obj/item/storage/box/syndie_kit/clownpins, //for any guns that you get your grubby little clown op mitts on
+		/obj/item/reagent_containers/spray/waterflower/lube)
+
+
+/datum/outfit/syndicate/clownop/leader/plasmaman
+	name = "Clown Operative Leader - Plasmaman"
+	uniform = /obj/item/clothing/under/plasmaman/clown
+	head = /obj/item/clothing/head/helmet/space/plasmaman/clown
+	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	backpack_contents = list(/obj/item/kitchen/knife/combat/survival,
+		/obj/item/dnainjector/clumsymut, //in case you want to be clumsy for the memes
+		/obj/item/storage/box/syndie_kit/clownpins, //for any guns that you get your grubby little clown op mitts on
+		/obj/item/reagent_containers/spray/waterflower/lube)
+
+	command_radio = TRUE
+
+	id_trim = /datum/id_trim/chameleon/operative/clown_leader
