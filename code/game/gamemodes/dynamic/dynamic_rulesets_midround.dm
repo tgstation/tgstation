@@ -435,12 +435,7 @@
 	var/body = applicant.become_overmind()
 	return body
 
-//////////////////////////////////////////////
-//                                          //
-//                 BLOB                     //
-//                                          //
-//////////////////////////////////////////////
-
+/// Infects a random player, making them explode into a blob.
 /datum/dynamic_ruleset/midround/blob_infection
 	name = "Blob Infection"
 	antag_datum = /datum/antagonist/blob
