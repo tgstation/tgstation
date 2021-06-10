@@ -1,5 +1,8 @@
 GLOBAL_LIST_EMPTY(preferences_datums)
 
+/// Cached object of info the client needs to represent species completely.
+GLOBAL_VAR(preferences_species_data)
+
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -222,8 +225,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return data
 
 /datum/preferences/ui_static_data(mob/user)
+	if (isnull(GLOB.preferences_species_data))
+		// If we do this in GLOBAL_VAR_INIT, the species list is not created yet.
+		GLOB.preferences_species_data = generate_preferences_species_data()
+
 	return list(
 		"generated_preference_values" = generated_preference_values,
+		"species" = GLOB.preferences_species_data,
 	)
 
 /datum/preferences/ui_assets(mob/user)
@@ -547,3 +555,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+/proc/generate_preferences_species_data()
+	var/list/food_flags = FOOD_FLAGS
+	var/list/species_data = list()
+
+	for (var/species_id in GLOB.roundstart_races)
+		var/datum/species/species = GLOB.species_list[species_id]
+
+		var/list/diet
+
+		if (!(TRAIT_NOHUNGER in initial(species.inherent_traits)))
+			diet = list(
+				"liked_food" = bitfield2list(initial(species.liked_food), food_flags),
+				"disliked_food" = bitfield2list(initial(species.disliked_food), food_flags),
+				"toxic_food" = bitfield2list(initial(species.toxic_food), food_flags),
+			)
+
+		species_data[species_id] = list(
+			"name" = initial(species.name),
+
+			"use_skintones" = initial(species.use_skintones),
+			"sexes" = initial(species.sexes),
+		) + diet
+
+	return species_data

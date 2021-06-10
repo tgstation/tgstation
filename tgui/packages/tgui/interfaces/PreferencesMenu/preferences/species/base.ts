@@ -3,6 +3,7 @@
 export type Species = {
   description: string;
   features: {
+    // MOTHBLOCKS TODO: Add side language as a perk to all nonhumans
     good: Feature[],
     neutral: Feature[],
     bad: Feature[],
