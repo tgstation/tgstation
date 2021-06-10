@@ -225,9 +225,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	GLOB.crematoriums.Remove(src)
 	return ..()
 
-/obj/structure/bodycontainer/crematorium/New()
+/obj/structure/bodycontainer/crematorium/Initialize()
+	. = ..()
 	GLOB.crematoriums.Add(src)
-	..()
 
 /obj/structure/bodycontainer/crematorium/Initialize()
 	. = ..()

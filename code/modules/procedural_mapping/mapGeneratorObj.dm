@@ -8,8 +8,8 @@
 	var/mapGeneratorType = /datum/map_generator/nature
 	var/datum/map_generator/mapGenerator
 
-/obj/effect/landmark/map_generator/New()
-	..()
+/obj/effect/landmark/map_generator/Initialize()
+	. = ..()
 	if(startTurfZ < 0)
 		startTurfZ = z
 	if(endTurfZ < 0)

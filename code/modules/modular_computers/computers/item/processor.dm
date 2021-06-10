@@ -19,8 +19,8 @@
 	machinery_computer = null
 	. = ..()
 
-/obj/item/modular_computer/processor/New(comp)
-	..()
+/obj/item/modular_computer/processor/Initialize(mapload, comp)
+	. = ..()
 	STOP_PROCESSING(SSobj, src) // Processed by its machine
 
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))

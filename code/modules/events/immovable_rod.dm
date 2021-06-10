@@ -73,7 +73,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
 
-/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at, force_looping)
+/obj/effect/immovablerod/Initialize(mapload, atom/start, atom/end, aimed_at, force_looping)
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 
@@ -130,7 +130,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/Moved()
 	if(!loc)
 		return ..()
-		
+
 	for(var/atom/movable/to_bump in loc)
 		if((to_bump != src) && !QDELETED(to_bump) && (to_bump.density || isliving(to_bump)))
 			Bump(to_bump)

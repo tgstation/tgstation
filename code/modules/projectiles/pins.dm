@@ -15,8 +15,8 @@
 	var/pin_removeable = FALSE // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
-/obj/item/firing_pin/New(newloc)
-	..()
+/obj/item/firing_pin/Initialize(mapload, newloc)
+	. = ..()
 	if(istype(newloc, /obj/item/gun))
 		gun = newloc
 

@@ -21,8 +21,8 @@
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
-/obj/structure/transit_tube/station/New()
-	..()
+/obj/structure/transit_tube/station/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/transit_tube/station/Destroy()

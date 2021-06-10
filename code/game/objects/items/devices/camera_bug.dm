@@ -31,8 +31,8 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/camera_bug/New()
-	..()
+/obj/item/camera_bug/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/camera_bug/Destroy()
@@ -44,6 +44,7 @@
 	bugged_cameras = list()
 	if(tracking)
 		tracking = null
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/camera_bug/interact(mob/user)

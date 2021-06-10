@@ -398,8 +398,8 @@
 	/// How many seconds between each recharge
 	var/charge_delay = 20
 
-/obj/item/flashlight/emp/New()
-	..()
+/obj/item/flashlight/emp/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/emp/Destroy()

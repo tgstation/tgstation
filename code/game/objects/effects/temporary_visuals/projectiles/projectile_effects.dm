@@ -31,7 +31,7 @@
 	M.Turn(angle)
 	transform = M
 
-/obj/effect/projectile/New(angle_override, p_x, p_y, color_override, scaling = 1)
+/obj/effect/projectile/Initialize(mapload, angle_override, p_x, p_y, color_override, scaling = 1)
 	if(angle_override && p_x && p_y && color_override && scaling)
 		apply_vars(angle_override, p_x, p_y, color_override, scaling)
 	return ..()

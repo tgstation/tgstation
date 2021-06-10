@@ -18,7 +18,7 @@
 	///List of cached overlays of the middle part indexed by piping layer
 	var/static/list/mutable_appearance/center_cache = list()
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/New()
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/Initialize()
 	icon_state = ""
 	return ..()
 

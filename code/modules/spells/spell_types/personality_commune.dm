@@ -10,7 +10,7 @@
 	var/datum/brain_trauma/severe/split_personality/trauma
 	var/flufftext = "You hear an echoing voice in the back of your head..."
 
-/obj/effect/proc_holder/spell/targeted/personality_commune/New(datum/brain_trauma/severe/split_personality/T)
+/obj/effect/proc_holder/spell/targeted/personality_commune/Initialize(mapload, datum/brain_trauma/severe/split_personality/T)
 	. = ..()
 	trauma = T
 

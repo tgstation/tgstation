@@ -35,7 +35,7 @@
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
@@ -303,8 +303,8 @@
 	name = "large air vent"
 	power_channel = AREA_USAGE_EQUIP
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 

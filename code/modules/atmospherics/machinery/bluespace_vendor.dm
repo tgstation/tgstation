@@ -67,7 +67,7 @@
 	dir = EAST
 	pixel_x = -30
 
-/obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
+/obj/machinery/bluespace_vendor/Initialize(mapload, loc, ndir, nbuild)
 	. = ..()
 	if(ndir)
 		setDir(ndir)
@@ -79,8 +79,6 @@
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
-	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
 /obj/machinery/bluespace_vendor/LateInitialize()

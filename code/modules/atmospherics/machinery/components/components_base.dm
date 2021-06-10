@@ -14,19 +14,16 @@
 	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
 
-/obj/machinery/atmospherics/components/New()
+/obj/machinery/atmospherics/components/Initialize()
 	parents = new(device_type)
 	airs = new(device_type)
 
-	..()
+	. = ..()
 
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		airs[i] = A
-
-/obj/machinery/atmospherics/components/Initialize()
-	. = ..()
 
 	if(hide)
 		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)

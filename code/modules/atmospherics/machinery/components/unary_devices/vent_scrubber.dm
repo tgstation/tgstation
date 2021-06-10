@@ -30,7 +30,7 @@
 	pipe_state = "scrubber"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()

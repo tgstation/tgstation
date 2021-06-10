@@ -77,7 +77,7 @@
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
+/obj/machinery/atmospherics/Initialize(mapload, loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
@@ -85,7 +85,7 @@
 	nodes = new(device_type)
 	if (!armor)
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
-	..()
+	. = ..()
 	if(process)
 		SSair.start_processing_machine(src)
 	SetInitDirections(init_dir)

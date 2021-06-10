@@ -14,13 +14,10 @@
 	buckle_requires_restraints = TRUE
 	buckle_lying = NO_BUCKLE_LYING
 
-/obj/machinery/atmospherics/pipe/New()
+/obj/machinery/atmospherics/pipe/Initialize(mapload)
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
-	..()
 
-///I have no idea why there's a new and at this point I'm too afraid to ask
-/obj/machinery/atmospherics/pipe/Initialize(mapload)
 	. = ..()
 
 	if(hide)

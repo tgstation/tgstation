@@ -4,7 +4,8 @@
 	var/minX = 2
 	var/minY = 2
 
-/obj/effect/vaultspawner/New(turf/location,lX = minX,uX = maxX,lY = minY,uY = maxY,type = null)
+/obj/effect/vaultspawner/Initialize(mapload, turf/location,lX = minX,uX = maxX,lY = minY,uY = maxY,type = null)
+	..()
 	if(!type)
 		type = pick("sandstone","rock","alien")
 
@@ -24,4 +25,4 @@
 			else
 				T.PlaceOnTop(text2path("/turf/open/floor/vault/[type]"))
 
-	qdel(src)
+	return INITIALIZE_HINT_QDEL

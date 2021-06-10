@@ -15,13 +15,13 @@
 	. = ..()
 	QDEL_IN(src, lifespan)
 
-/obj/item/implant/tracking/New()
-	..()
+/obj/item/implant/tracking/Initialize()
+	. = ..()
 	GLOB.tracked_implants += src
 
 /obj/item/implant/tracking/Destroy()
-	. = ..()
 	GLOB.tracked_implants -= src
+	. = ..()
 
 /obj/item/implanter/tracking
 	imp_type = /obj/item/implant/tracking

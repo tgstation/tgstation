@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 
-/obj/effect/overlay/gas/New(state, alph)
+/obj/effect/overlay/gas/Initialize(mapload, state, alph)
 	. = ..()
 	icon_state = state
 	alpha = alph

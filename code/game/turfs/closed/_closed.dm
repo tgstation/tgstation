@@ -60,11 +60,11 @@
 	plane = SPLASHSCREEN_PLANE
 	bullet_bounce_sound = null
 
-/turf/closed/indestructible/splashscreen/New()
+/turf/closed/indestructible/splashscreen/Initialize()
 	SStitle.splash_turf = src
 	if(SStitle.icon)
 		icon = SStitle.icon
-	..()
+	. = ..()
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
 	. = ..()

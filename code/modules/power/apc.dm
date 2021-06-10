@@ -207,12 +207,12 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/New(turf/loc, ndir, building=0)
+/obj/machinery/power/apc/Initialize(mapload, turf/loc, ndir, building=0)
 	if (!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
 		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
-	..()
+	. = ..()
 	GLOB.apcs_list += src
 
 	wires = new /datum/wires/apc(src)

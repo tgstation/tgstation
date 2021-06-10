@@ -111,12 +111,13 @@
 	desc = "Pride cometh before the..."
 	icon_state = "magic_mirror"
 
-/obj/structure/mirror/magic/pride/New()
+/obj/structure/mirror/magic/pride/Initialize()
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = speciestype
 		if(initial(S.changesource_flags) & MIRROR_PRIDE)
 			choosable_races += initial(S.id)
-	..()
+	// Populate choosable_races before calling super, to supress default behaviour
+	. = ..()
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \

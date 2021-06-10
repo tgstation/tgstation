@@ -4,7 +4,7 @@
 	// If we don't do this, we get occluded by item action buttons
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/buildmode/New(bld)
+/atom/movable/screen/buildmode/Initialize(mapload, bld)
 	bd = bld
 	return ..()
 
@@ -58,7 +58,7 @@
 /atom/movable/screen/buildmode/modeswitch
 	var/datum/buildmode_mode/modetype
 
-/atom/movable/screen/buildmode/modeswitch/New(bld, mt)
+/atom/movable/screen/buildmode/modeswitch/Initialize(mapload, bld, mt)
 	modetype = mt
 	icon_state = "buildmode_[initial(modetype.key)]"
 	name = initial(modetype.key)
@@ -72,7 +72,7 @@
 /atom/movable/screen/buildmode/dirswitch
 	icon_state = "build"
 
-/atom/movable/screen/buildmode/dirswitch/New(bld, dir)
+/atom/movable/screen/buildmode/dirswitch/Initialize(mapload, bld, dir)
 	src.dir = dir
 	name = dir2text(dir)
 	return ..(bld)

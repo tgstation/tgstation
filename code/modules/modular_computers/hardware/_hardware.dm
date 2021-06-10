@@ -34,8 +34,8 @@
 	// What define is used to qualify this piece of hardware? Important for upgraded versions of the same hardware.
 	var/device_type
 
-/obj/item/computer_hardware/New(obj/L)
-	..()
+/obj/item/computer_hardware/Initialize()
+	. = ..()
 	pixel_x = base_pixel_x + rand(-8, 8)
 	pixel_y = base_pixel_y + rand(-8, 8)
 

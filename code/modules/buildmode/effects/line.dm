@@ -2,7 +2,9 @@
 	var/image/I
 	var/client/cl
 
-/obj/effect/buildmode_line/New(client/C, atom/atom_a, atom/atom_b, linename)
+/obj/effect/buildmode_line/Initialize(mapload, client/C, atom/atom_a, atom/atom_b, linename)
+	. = ..()
+
 	name = linename
 	abstract_move(get_turf(atom_a))
 	I = image('icons/misc/mark.dmi', src, "line", 19.0)

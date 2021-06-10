@@ -17,11 +17,10 @@
 /obj/item/paper/contract/employment
 	icon_state = "paper_words"
 
-/obj/item/paper/contract/employment/New(atom/loc, mob/living/nOwner)
+/obj/item/paper/contract/employment/Initialize(mapload, atom/loc, mob/living/nOwner)
 	. = ..()
 	if(!nOwner || !nOwner.mind)
-		qdel(src)
-		return -1
+		return INITIALIZE_HINT_QDEL
 	target = nOwner.mind
 	update_text()
 
