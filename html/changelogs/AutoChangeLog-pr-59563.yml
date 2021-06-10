@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Replaces unusable TEG board on derelict with boards for a turbine setup instead."
