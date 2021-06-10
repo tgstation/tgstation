@@ -306,43 +306,51 @@
 		return
 
 /datum/objective/smart/steal/check_completion()
-	var/list/datum/mind/owners = get_owners()
+	var/list/owners = get_owners()
 	if(!steal_target)
 		return TRUE
-	for(var/datum/mind/M in owners)
-		if(!isliving(M.current))
+	for(var/datum/mind/owner as anything in owners)
+		if(!isliving(owner.current))
 			continue
 
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = owner.current.GetAllContents() //this should get things in cheesewheels, books, etc.
 
-		for(var/obj/I in all_items) //Check for items
-			if(istype(I, steal_target))
-				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
-					return TRUE
-				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
-					return TRUE
-
-			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
-				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
-					return TRUE
+		for(var/obj/item_to_test in all_items) //Check for items
+			if(valid_steal(item_to_test))
+				return TRUE
 	return FALSE
+
+/datum/objective/smart/steal/proc/valid_steal(obj/item/item_to_test)
+	. = FALSE
+	if(istype(item_to_test, steal_target))
+		if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return true.
+			return TRUE
+		else if(targetinfo.check_special_completion(item_to_test))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+			return TRUE
+
+	if(targetinfo && (item_to_test.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
+		if(targetinfo.check_special_completion(item_to_test))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+			return TRUE
 
 /datum/objective/smart/steal/post_find_target()
 	if(!steal_target)
 		return
-	RegisterSignal(steal_target, COMSIG_ITEM_PICKUP, .proc/on_pickup)
-	RegisterSignal(steal_target, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	RegisterSignal(owner.current, COMSIG_MOB_PICKUP, .proc/on_owner_pickup)
 
 /datum/objective/smart/steal/Destroy(force)
 	. = ..()
-	UnregisterSignal(steal_target, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(owner.current, COMSIG_MOB_PICKUP)
 
-/datum/objective/smart/steal/proc/on_pickup(datum/tech_disk, mob/taker)
+///signal called by objective owner picking up an item
+/datum/objective/smart/steal/proc/on_owner_pickup(datum/source, obj/item/item_equipped)
 	SIGNAL_HANDLER
 
-	complete_objective()
+	if(valid_steal(item_equipped))
+		RegisterSignal(item_equipped, COMSIG_ITEM_PICKUP, .proc/on_objective_pickup)
+		complete_objective()
 
-/datum/objective/smart/steal/proc/on_dropped(obj/item/disk/tech_disk/tech_disk, mob/dropper)
-	SIGNAL_HANDLER
-
-	uncomplete_objective()
+///signal called by objective when picked up, only added after owner picks it up in other objective
+/datum/objective/smart/steal/proc/on_objective_pickup(obj/item/item_picked_up, mob/grabber)
+	if(!(grabber in get_owners()))
+		UnregisterSignal(item_picked_up, COMSIG_ITEM_PICKUP)
+		uncomplete_objective()

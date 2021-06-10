@@ -549,6 +549,9 @@
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
 
+///from mob/proc/put_in_hands(): (item_equipped)
+#define COMSIG_MOB_PICKUP "mob_pickup"
+
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 ///from base of mob/living/resist() (/mob/living)

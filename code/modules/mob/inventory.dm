@@ -204,13 +204,13 @@
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE)
-	if(!I)
+/mob/proc/put_in_hands(obj/item/item_to_equip, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE)
+	if(!item_to_equip)
 		return FALSE
 
 	// If the item is a stack and we're already holding a stack then merge
-	if (istype(I, /obj/item/stack))
-		var/obj/item/stack/I_stack = I
+	if (istype(item_to_equip, /obj/item/stack))
+		var/obj/item/stack/I_stack = item_to_equip
 		var/obj/item/stack/active_stack = get_active_held_item()
 
 		if (I_stack.zero_amount())
@@ -228,22 +228,24 @@
 						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
 						return TRUE
 
-	if(put_in_active_hand(I, forced))
+	if(put_in_active_hand(item_to_equip, forced))
+		SEND_SIGNAL(src, COMSIG_MOB_PICKUP, item_to_equip)
 		return TRUE
 
 	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
 	if(!hand)
 		hand =  get_empty_held_index_for_side(RIGHT_HANDS)
 	if(hand)
-		if(put_in_hand(I, hand, forced))
+		if(put_in_hand(item_to_equip, hand, forced))
+			SEND_SIGNAL(src, COMSIG_MOB_PICKUP, item_to_equip)
 			return TRUE
 	if(del_on_fail)
-		qdel(I)
+		qdel(item_to_equip)
 		return FALSE
-	I.forceMove(drop_location())
-	I.layer = initial(I.layer)
-	I.plane = initial(I.plane)
-	I.dropped(src)
+	item_to_equip.forceMove(drop_location())
+	item_to_equip.layer = initial(item_to_equip.layer)
+	item_to_equip.plane = initial(item_to_equip.plane)
+	item_to_equip.dropped(src)
 	return FALSE
 
 /mob/proc/drop_all_held_items()
