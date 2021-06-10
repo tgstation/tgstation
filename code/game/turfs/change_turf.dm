@@ -89,6 +89,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	blueprint_data = null
 
 	var/list/old_baseturfs = baseturfs
+	var/list/old_signal_procs = signal_procs
 	var/old_type = type
 
 	var/list/post_change_callbacks = list()
@@ -98,6 +99,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	qdel(src) //Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
+	W.signal_procs = old_signal_procs
+	
 	for(var/datum/callback/callback as anything in post_change_callbacks)
 		callback.InvokeAsync(W)
 

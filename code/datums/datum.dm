@@ -37,6 +37,9 @@
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
 	var/list/list/datum/callback/signal_procs
 
+	/// Should we keep our signals through deletion. Only used by turfs
+	var/persist_signals = FALSE
+
 	/// Datum level flags
 	var/datum_flags = NONE
 
@@ -117,21 +120,22 @@
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
-	var/list/lookup = comp_lookup
-	if(lookup)
-		for(var/sig in lookup)
-			var/list/comps = lookup[sig]
-			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
+	if(!persist_signals)
+		var/list/lookup = comp_lookup
+		if(lookup)
+			for(var/sig in lookup)
+				var/list/comps = lookup[sig]
+				if(length(comps))
+					for(var/i in comps)
+						var/datum/component/comp = i
+						comp.UnregisterSignal(src, sig)
+				else
+					var/datum/component/comp = comps
 					comp.UnregisterSignal(src, sig)
-			else
-				var/datum/component/comp = comps
-				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
+			comp_lookup = lookup = null
 
-	for(var/target in signal_procs)
-		UnregisterSignal(target, signal_procs[target])
+		for(var/target in signal_procs)
+			UnregisterSignal(target, signal_procs[target])
 	//END: ECS SHIT
 
 	return QDEL_HINT_QUEUE
