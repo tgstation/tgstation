@@ -712,6 +712,7 @@
 
 /// The limb or the whole damn person we were grasping got deleted or dismembered, so we don't care anymore
 /obj/item/self_grasp/proc/qdel_void()
+	SIGNAL_HANDLER
 	qdel(src)
 
 /// We've already cleared that the bodypart in question is bleeding in [the place we create this][/mob/living/carbon/proc/grabbedby], so set up the connections

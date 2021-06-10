@@ -9,17 +9,29 @@
 	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
-	var/power_usage = 0 // If the hardware uses extra power, change this.
-	var/enabled = TRUE // If the hardware is turned off set this to 0.
-	var/critical = FALSE // Prevent disabling for important component, like the CPU.
-	var/can_install = TRUE // Prevents direct installation of removable media.
-	var/expansion_hw = FALSE // Hardware that fits into expansion bays.
-	var/removable = TRUE // Whether the hardware is removable or not.
-	var/damage = 0 // Current damage level
-	var/max_damage = 100 // Maximal damage level.
-	var/damage_malfunction = 20 // "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
-	var/damage_failure = 50 // "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
-	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
+	// If the hardware uses extra power, change this.
+	var/power_usage = 0
+	// If the hardware is turned off set this to 0.
+	var/enabled = TRUE
+	// Prevent disabling for important component, like the CPU.
+	var/critical = FALSE
+	// Prevents direct installation of removable media.
+	var/can_install = TRUE
+	// Hardware that fits into expansion bays.
+	var/expansion_hw = FALSE
+	// Whether the hardware is removable or not.
+	var/removable = TRUE
+	// Current damage level
+	var/damage = 0
+// Maximal damage level.
+	var/max_damage = 100
+	// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
+	var/damage_malfunction = 20
+	// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
+	var/damage_failure = 50
+	// Chance of malfunction when the component is damaged
+	var/malfunction_probability = 10
+	// What define is used to qualify this piece of hardware? Important for upgraded versions of the same hardware.
 	var/device_type
 
 /obj/item/computer_hardware/New(obj/L)

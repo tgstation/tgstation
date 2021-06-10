@@ -41,6 +41,10 @@
 
 /datum/ai_behavior/item_move_close_and_attack/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	reset_blackboard(controller, succeeded)
+
+
+/datum/ai_behavior/item_move_close_and_attack/proc/reset_blackboard(datum/ai_controller/controller, succeeded)
 	controller.blackboard[throw_count_key] = 0
 	controller.blackboard[target_key] = null
 

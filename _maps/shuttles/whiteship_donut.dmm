@@ -25,9 +25,7 @@
 /area/shuttle/abandoned)
 "ae" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/stack/sheet/iron,
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/airless,
@@ -42,9 +40,7 @@
 /area/shuttle/abandoned)
 "ah" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/broken{
-	dir = 4
-	},
+/obj/machinery/light/broken/directional/east,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -151,9 +147,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil,
-/obj/machinery/light/broken{
-	dir = 4
-	},
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "aC" = (
@@ -219,10 +213,7 @@
 /area/shuttle/abandoned)
 "aM" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/urinal{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/urinal/directional/east,
 /obj/structure/window/reinforced/tinted,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
@@ -257,15 +248,12 @@
 /area/shuttle/abandoned)
 "aR" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/urinal{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/urinal/directional/east,
 /obj/structure/window/reinforced/tinted{
 	dir = 1
 	},
@@ -278,7 +266,7 @@
 /area/shuttle/abandoned)
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/lootdrop/whiteship_cere_ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
@@ -344,9 +332,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 28
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -369,9 +355,7 @@
 "bg" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/folder/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -384,9 +368,7 @@
 "bh" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4

@@ -25,7 +25,7 @@
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+			for (var/mob/M in GLOB.alive_player_list)
 				if (M.stat == DEAD)
 					continue // Dead players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
@@ -95,7 +95,7 @@
 	if(!..())
 		return FALSE
 	var/head_check = 0
-	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
+	for(var/mob/player in GLOB.alive_player_list)
 		if (player.mind.assigned_role in GLOB.command_positions)
 			head_check++
 	return (head_check >= required_heads_of_staff)
@@ -153,5 +153,5 @@
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(101,101,101,10,10,10,10,10,10,10)
 	repeatable = TRUE

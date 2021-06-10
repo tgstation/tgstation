@@ -144,13 +144,13 @@
 
 ///Handles stinging without verbs.
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
-	if(!chosen_sting.try_to_sting(ling, A))
-		return
-	ling.changeNext_move(CLICK_CD_MELEE)
+
+	INVOKE_ASYNC(chosen_sting, /datum/action/changeling/sting.proc/try_to_sting, ling, A)
+
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
@@ -663,12 +663,6 @@
 	newprofile.profile_snapshot = profile_snapshot
 	newprofile.id_icon = id_icon
 
-/datum/antagonist/changeling/xenobio
-	name = "Xenobio Changeling"
-	give_objectives = FALSE
-	show_in_roundend = FALSE //These are here for admin tracking purposes only
-	you_are_greet = FALSE
-
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
 
@@ -698,5 +692,3 @@
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/xenobio/antag_listing_name()
-	return ..() + "(Xenobio)"

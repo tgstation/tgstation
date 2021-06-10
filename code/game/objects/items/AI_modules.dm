@@ -235,7 +235,7 @@ AI MODULES
 	if(newpos == null)
 		return
 	if(newpos < 15)
-		var/response = alert("Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", "Change to 15", "Cancel")
+		var/response = tgui_alert(usr, "Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", list("Change to 15", "Cancel"))
 		if (!response || response == "Cancel")
 			return
 		newpos = 15

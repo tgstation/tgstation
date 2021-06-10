@@ -184,7 +184,7 @@
 	throwforce = 1
 	amount_per_transfer_from_this = 5
 	custom_materials = list(/datum/material/iron=100)
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5)
 	volume = 5
 	flags_1 = CONDUCT_1
 	spillable = TRUE
@@ -458,7 +458,7 @@
 	name = "paper cup"
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(10)
 	volume = 10
 	spillable = TRUE
 	isGlass = FALSE
@@ -719,6 +719,13 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
 		open_soda(user)
+		return
+	return ..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/attack_self_secondary(mob/user)
+	if(!is_drainable())
+		open_soda(user)
+		return
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola

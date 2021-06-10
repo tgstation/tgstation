@@ -119,8 +119,13 @@
 				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;key=[adm_ckey]'>\[RA\]</a>"
 			else
 				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;key=[adm_ckey]'>\[DA\]</a>"
+
+			var/verify_link = ""
+			if (D.blocked_by_2fa)
+				verify_link += " | <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=verify;key=[adm_ckey]'>\[2FA VERIFY\]</a>"
+
 			output += "<tr>"
-			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;key=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;key=[adm_ckey]'>\[SYNC TGDB\]</a></td>"
+			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;key=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;key=[adm_ckey]'>\[SYNC TGDB\]</a>[verify_link]</td>"
 			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;key=[adm_ckey]'>[D.rank.name]</a></td>"
 			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
 			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
@@ -148,7 +153,7 @@
 	var/task = href_list["editrights"]
 	var/skip
 	var/legacy_only
-	if(task == "activate" || task == "deactivate" || task == "sync")
+	if(task == "activate" || task == "deactivate" || task == "sync" || task == "verify")
 		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
@@ -167,7 +172,7 @@
 				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>", confidential = TRUE)
 				use_db = FALSE
 			else
-				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
+				use_db = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
 				if(use_db == "Cancel")
 					return
 				if(use_db == "Permanent")
@@ -204,6 +209,13 @@
 			force_deadmin(admin_key, D)
 		if("sync")
 			sync_lastadminrank(admin_ckey, admin_key, D)
+		if("verify")
+			var/msg = "has authenticated [admin_ckey]"
+			message_admins("[key_name_admin(usr)] [msg]")
+			log_admin("[key_name(usr)] [msg]")
+
+			D.bypass_2fa = TRUE
+			D.associate(GLOB.directory[admin_ckey])
 	edit_admin_permissions()
 
 /datum/admins/proc/add_admin(admin_ckey, admin_key, use_db)
@@ -249,7 +261,7 @@
 		qdel(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/D)
-	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
+	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		GLOB.admin_datums -= admin_ckey
 		GLOB.deadmins -= admin_ckey
 		if(D)
@@ -383,10 +395,13 @@
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
 		D.rank = R //set the admin_rank as our rank
+		D.bypass_2fa = TRUE // Another admin has cleared us
 		var/client/C = GLOB.directory[admin_ckey]
 		D.associate(C)
 	else
-		D = new(R, admin_ckey, TRUE) //new admin
+		D = new(R, admin_ckey) //new admin
+		D.bypass_2fa = TRUE // Another admin has cleared us
+		D.activate()
 	message_admins(m1)
 	log_admin(m2)
 
@@ -494,7 +509,7 @@
 		to_chat(usr, "<span class='danger'>Error: Rank deletion attempted while rank still used; Tell a coder, this shouldn't happen.</span>", confidential = TRUE)
 		return
 	qdel(query_admins_with_rank)
-	if(alert("Are you sure you want to remove [admin_rank]?","Confirm Removal","Do it","Cancel") == "Do it")
+	if(tgui_alert(usr,"Are you sure you want to remove [admin_rank]?","Confirm Removal",list("Do it","Cancel")) == "Do it")
 		var/m1 = "[key_name_admin(usr)] removed rank [admin_rank] permanently"
 		var/m2 = "[key_name(usr)] removed rank [admin_rank] permanently"
 		var/datum/db_query/query_add_rank = SSdbcore.NewQuery(

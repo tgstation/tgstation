@@ -420,4 +420,5 @@
 
 ///What happens when we examine the uniform
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
 	examine_list += "The dogtag has a listing of allergies : [display]"

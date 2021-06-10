@@ -49,7 +49,7 @@
 
 /obj/item/sparkler/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/sparkler/ignition_effect(atom/A, mob/user)
 	. = "<span class='notice'>[user] gracefully lights [A] with [src].</span>"

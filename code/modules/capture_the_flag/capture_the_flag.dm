@@ -81,10 +81,10 @@
 		if(istype(mob_area, game_area))
 			to_chat(M, "<span class='userdanger'>\The [initial(src.name)] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
-	anchored = FALSE //normal checks need this to be FALSE to pass
+	anchored = FALSE // Hacky usage that bypasses set_anchored(), because normal checks need this to be FALSE to pass
 	. = ..() //this is the actual normal item checks
 	if(.) //only apply these flag passives
-		anchored = TRUE
+		anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 		return
 	//passing means the user picked up the flag so we can now apply this
 	user.set_anchored(TRUE)
@@ -92,7 +92,7 @@
 
 /obj/item/ctf/dropped(mob/user)
 	..()
-	user.set_anchored(FALSE)
+	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 20 SECONDS
 	START_PROCESSING(SSobj, src)
@@ -100,7 +100,7 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
 			to_chat(M, "<span class='userdanger'>\The [initial(name)] has been dropped!</span>")
-	anchored = TRUE
+	anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 
 
 /obj/item/ctf/red
@@ -279,7 +279,7 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
-			var/response = alert("Enable this CTF game?", "CTF", "Yes", "No")
+			var/response = tgui_alert(usr,"Enable this CTF game?", "CTF", list("Yes", "No"))
 			if(response == "Yes")
 				toggle_id_ctf(user, game_id)
 			return
@@ -360,7 +360,7 @@
 	else //2-3 choices
 		var/list/names_only = assoc_list_strip_value(ctf_gear)
 		names_only.len += 1 //create a new null entry so if it's a 2-sized list, names_only[3] is null instead of out of bounds
-		var/result = alert(new_team_member, "Select a class.", "CTF", names_only[1], names_only[2], names_only[3])
+		var/result = tgui_alert(new_team_member, "Select a class.", "CTF", list(names_only[1], names_only[2], names_only[3]))
 		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
 		chosen_class = ctf_gear[result]
@@ -453,7 +453,7 @@
 			continue
 		if(isstructure(atm))
 			var/obj/structure/S = atm
-			S.obj_integrity = S.max_integrity
+			S.repair_damage(S.max_integrity - S.get_integrity())
 		else if(!is_type_in_typecache(atm, ctf_object_typecache))
 			qdel(atm)
 

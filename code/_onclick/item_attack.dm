@@ -68,6 +68,11 @@
 		return TRUE
 	interact(user)
 
+/// Called when the item is in the active hand, and right-clicked. Intended for alternate or opposite functions, such as lowering reagent transfer amount. At the moment, there is no verb or hotkey.
+/obj/item/proc/attack_self_secondary(mob/user, modifiers)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+
 /**
  * Called on the item before it hits something
  *
@@ -203,11 +208,13 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
-					"<span class='danger'>You hit [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+		var/no_damage = TRUE
+		if(take_damage(I.force, I.damtype, MELEE, 1))
+			no_damage = FALSE
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-	take_damage(I.force, I.damtype, MELEE, 1)
+		user.visible_message("<span class='danger'>[user] hits [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", \
+			"<span class='danger'>You hit [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)

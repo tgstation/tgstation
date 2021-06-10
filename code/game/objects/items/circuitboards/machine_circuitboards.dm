@@ -496,7 +496,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/electrolyzer
 	req_components = list(
-		/obj/item/stock_parts/electrolite = 2,
+		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 2,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/glass = 1)
@@ -554,7 +554,7 @@
 		/obj/machinery/vending/medical = "NanoMed Plus",
 		/obj/machinery/vending/drugs = "NanoDrug Plus",
 		/obj/machinery/vending/wallmed = "NanoMed",
-		/obj/machinery/vending/assist  = "Vendomat",
+		/obj/machinery/vending/assist  = "Part-Mart",
 		/obj/machinery/vending/engivend = "Engi-Vend",
 		/obj/machinery/vending/hydronutrients = "NutriMax",
 		/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",

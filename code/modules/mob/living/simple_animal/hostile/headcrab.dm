@@ -78,7 +78,7 @@
 		origin.transfer_to(M)
 		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
 		if(!C)
-			C = origin.add_antag_datum(/datum/antagonist/changeling/xenobio)
+			C = origin.add_antag_datum(/datum/antagonist/changeling)
 		if(C.can_absorb_dna(owner))
 			C.add_new_profile(owner)
 

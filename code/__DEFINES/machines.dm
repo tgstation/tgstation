@@ -46,6 +46,8 @@
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
 #define AWAY_IMPRINTER (1<<9)
+/// For wiremod/integrated circuits. Uses various minerals.
+#define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -62,6 +64,7 @@
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
 #define MC_SENSORS "SENSORS"
+#define MC_SIGNALER "SIGNALER"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)

@@ -10,6 +10,8 @@
  * Plastic Utensils
  */
 
+#define PLASTIC_BREAK_PROBABILITY 25
+
 /obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -72,13 +74,10 @@
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_PRISONER * 2
-	var/break_chance = 25
 
-/obj/item/kitchen/fork/plastic/afterattack(atom/target, mob/user)
-	.=..()
-	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s fork snaps into tiny pieces in their hand.</span>")
-		qdel(src)
+/obj/item/kitchen/fork/plastic/Initialize()
+	. = ..()
+	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
@@ -132,13 +131,10 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_PRISONER * 2
-	var/break_chance = 25
 
-/obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)
-	.=..()
-	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s knife snaps into tiny pieces in their hand.</span>")
-		qdel(src)
+/obj/item/kitchen/knife/plastic/Initialize()
+	. = ..()
+	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/kitchen/knife/ritual
 	name = "ritual knife"
@@ -311,11 +307,8 @@
 	custom_price = PAYCHECK_PRISONER * 2
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...
 
-	/// The probability of this breaking every time it's used
-	var/break_chance = 25
+/obj/item/kitchen/spoon/plastic/Initialize()
+	. = ..()
+	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
-/obj/item/kitchen/spoon/plastic/afterattack(atom/target, mob/user)
-	.=..()
-	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s spoon snaps into tiny pieces in their hand.</span>")
-		qdel(src)
+#undef PLASTIC_BREAK_PROBABILITY

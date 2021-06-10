@@ -230,6 +230,7 @@
 	terminated++
 	hits++
 	var/obj/item/bodypart/hit_part
+	var/no_damage = FALSE
 	if(iscarbon(target) && hit_zone)
 		var/mob/living/carbon/hit_carbon = target
 		hit_part = hit_carbon.get_bodypart(hit_zone)
@@ -244,9 +245,14 @@
 				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += P.wound_bonus
 				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += P.bare_wound_bonus
 				P.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
+	else if(isobj(target))
+		var/obj/hit_object = target
+		if(hit_object.damage_deflection > P.damage || !P.damage)
+			no_damage = TRUE
 
-	targets_hit[target]++
-	if(targets_hit[target] == 1)
+	LAZYADDASSOC(targets_hit[target], "hits", 1)
+	LAZYSET(targets_hit[target], "no damage", no_damage)
+	if(targets_hit[target]["hits"] == 1)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
@@ -254,6 +260,7 @@
 
 ///One of our pellets disappeared due to hitting their max range (or just somehow got qdel'd), remove it from our list and check if we're done (terminated == num_pellets)
 /datum/component/pellet_cloud/proc/pellet_range(obj/projectile/P)
+	SIGNAL_HANDLER
 	pellets -= P
 	terminated++
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
@@ -285,7 +292,8 @@
 	var/proj_name = initial(P.name)
 
 	for(var/atom/target in targets_hit)
-		var/num_hits = targets_hit[target]
+		var/num_hits = targets_hit[target]["hits"]
+		var/did_damage = targets_hit[target]["no damage"]
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		var/obj/item/bodypart/hit_part
 		if(isbodypart(target))
@@ -300,10 +308,10 @@
 				hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
 
 		if(num_hits > 1)
-			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
+			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""][did_damage ? ", which don't leave a mark" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
 			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""]!</span>")
 		else
-			target.visible_message("<span class='danger'>[target] is hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
+			target.visible_message("<span class='danger'>[target] is hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""][did_damage ? ", which doesn't leave a mark" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
 			to_chat(target, "<span class='userdanger'>You're hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""]!</span>")
 
 	for(var/M in purple_hearts)

@@ -173,6 +173,10 @@
 		to_chat(user, "<span class='warning'>You don't think you can give this a noogie!</span>")
 		return
 
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to noogie [target]! You don't want to risk harming anyone...</span>")
+		return
+
 	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.getStaminaLoss() > 80)
 		return FALSE
 

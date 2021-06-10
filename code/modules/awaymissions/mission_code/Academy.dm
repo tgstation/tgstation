@@ -354,7 +354,7 @@
 		if(20)
 			//Free wizard!
 			T.visible_message("<span class='userdanger'>Magic flows out of [src] and into [user]!</span>")
-			user.mind.make_Wizard()
+			user.mind.make_wizard()
 
 /datum/outfit/butler
 	name = "Butler"
