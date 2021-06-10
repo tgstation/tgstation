@@ -1,0 +1,4 @@
+author: "TJatPBnJ"
+delete-after: True
+changes: 
+  - qol: "Storage items open on right-click, instead of alt-click"
