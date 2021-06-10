@@ -87,7 +87,7 @@
 	name = "flat gun"
 	desc = "A 2 dimensional gun.. what?"
 	icon_state = "flatgun"
-	display_mag = FALSE
+	mag_display = FALSE
 	show_bolt_icon = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)

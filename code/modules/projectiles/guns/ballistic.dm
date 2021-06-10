@@ -50,7 +50,7 @@
 	///Compatible magazines with the gun
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	///Whether the sprite has a visible magazine or not
-	var/mag_display = FALSE
+	var/mag_display = TRUE
 	///Whether the sprite has a visible ammo display or not
 	var/mag_display_ammo = FALSE
 	///Whether the sprite has a visible indicator for being empty or not.
@@ -72,8 +72,6 @@
 	var/casing_ejector = TRUE
 	///Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
 	var/internal_magazine = FALSE
-	///Should we attempt to display the gun's magazine?
-	var/display_mag = TRUE
 	///Phrasing of the bolt in examine and notification messages; ex: bolt, slide, etc.
 	var/bolt_wording = "bolt"
 	///Phrasing of the magazine in examine and notification messages; ex: magazine, box, etx
@@ -183,7 +181,7 @@
 		. += "[icon_state]_toy"
 
 
-	if(!magazine || internal_magazine || !display_mag)
+	if(!magazine || internal_magazine || !mag_display)
 		return
 
 	if(special_mags)

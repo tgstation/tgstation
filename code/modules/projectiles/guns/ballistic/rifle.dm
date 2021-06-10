@@ -189,7 +189,7 @@
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
-	show_bolt_icon = FALSE //It's a fucking why is this a gunnnnnnnnnnnn
+	show_bolt_icon = FALSE //It's a magic hand, not a rifle
 
 	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 
