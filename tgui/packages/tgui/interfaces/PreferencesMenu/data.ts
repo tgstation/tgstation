@@ -31,6 +31,7 @@ export type PreferencesMenuData = {
 
     misc: {
       gender: Gender;
+      species: string;
     };
   };
 

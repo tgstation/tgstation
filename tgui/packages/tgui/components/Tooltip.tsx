@@ -7,7 +7,7 @@ const DEFAULT_PLACEMENT = "top";
 
 type TooltipProps = {
   children?: InfernoNode;
-  content: string;
+  content: InfernoNode;
   position?: Placement,
 };
 

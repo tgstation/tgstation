@@ -171,4 +171,4 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Checks that a given value is valid.
 /// Any type can be passed through.
 /datum/preference/proc/is_valid(value)
-	return value in get_choices()
+	return value in get_choices_serialized()
