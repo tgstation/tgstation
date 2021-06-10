@@ -99,6 +99,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
+	RegisterSignal(parent, COMSIG_CLICK_RIGHT, .proc/on_right_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
@@ -833,12 +834,19 @@
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	if(on_right_click(source, user))
+		to_chat(user,"<span class='warning'>This action is being moved from alt-click to right-click.</span>")
+
+/datum/component/storage/proc/on_right_click(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		return
 
+	. = COMPONENT_CANCEL_CLICK_RIGHT
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
