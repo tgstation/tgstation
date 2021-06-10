@@ -71,6 +71,7 @@
 
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 		new_xeno.key = C.key
+		new_xeno.move_into_vent(vent)
 
 		spawncount--
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
