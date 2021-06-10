@@ -74,34 +74,6 @@
 	comp.appliedComponents += master.AddComponent(/datum/component/lifesteal, comp.quality)
 	return "vampiric [newName]"
 
-/datum/fantasy_affix/beautiful
-	name = "beautiful"
-	placement = AFFIX_PREFIX
-	alignment = AFFIX_GOOD
-
-/datum/fantasy_affix/beautiful/apply(datum/component/fantasy/comp, newName)
-	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/beauty, max(comp.quality, 1) * 250)
-	return "[pick("aesthetic", "beautiful", "gorgeous", "pretty")] [newName]"
-
-/datum/fantasy_affix/beautiful/remove(datum/component/fantasy/comp)
-	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/beauty, max(comp.quality, 1) * 250)
-
-/datum/fantasy_affix/ugly
-	name = "ugly"
-	placement = AFFIX_PREFIX
-	alignment = AFFIX_EVIL
-
-/datum/fantasy_affix/ugly/apply(datum/component/fantasy/comp, newName)
-	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
-	return "[pick("fugly", "ugly", "grotesque", "hideous")] [newName]"
-
-/datum/fantasy_affix/ugly/remove(datum/component/fantasy/comp)
-	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/beauty, min(comp.quality, -1) * 250)
-
 /datum/fantasy_affix/venomous
 	name = "<poisonname>-laced (picked from small pool of toxins)"
 	placement = AFFIX_PREFIX

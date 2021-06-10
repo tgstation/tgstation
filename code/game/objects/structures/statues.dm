@@ -9,7 +9,6 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
 	material_flags = MATERIAL_AFFECT_STATISTICS
-	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
@@ -19,7 +18,6 @@
 /obj/structure/statue/Initialize()
 	. = ..()
 	AddElement(art_type, impressiveness)
-	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
 
 /obj/structure/statue/proc/can_be_rotated(mob/user)

@@ -24,13 +24,6 @@
 	var/poweralm = FALSE
 	var/lightswitch = TRUE
 
-	/// All beauty in this area combined, only includes indoor area.
-	var/totalbeauty = 0
-	/// Beauty average per open turf in the area
-	var/beauty = 0
-	/// If a room is too big it doesn't have beauty.
-	var/beauty_threshold = 150
-
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 
@@ -184,7 +177,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/LateInitialize()
 	power_change() // all machines set to current power level, also updates icon
-	update_beauty()
 
 /area/proc/RunGeneration()
 	if(map_generator)
@@ -611,17 +603,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//Ship ambience just loops if turned on.
 	if(L.client?.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
-
-///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
-/area/proc/update_beauty()
-	if(!areasize)
-		beauty = 0
-		return FALSE
-	if(areasize >= beauty_threshold)
-		beauty = 0
-		return FALSE //Too big
-	beauty = totalbeauty / areasize
-
 
 /**
  * Called when an atom exits an area

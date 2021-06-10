@@ -5,7 +5,6 @@
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
-	var/beauty = 0
 	///The type of cleaning required to clean the decal, CLEAN_TYPE_LIGHT_DECAL can be cleaned with mops and soap, CLEAN_TYPE_HARD_DECAL can be cleaned by soap, see __DEFINES/cleaning.dm for the others
 	var/clean_type = CLEAN_TYPE_LIGHT_DECAL
 
@@ -27,8 +26,6 @@
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
-
-	AddElement(/datum/element/beauty, beauty)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))

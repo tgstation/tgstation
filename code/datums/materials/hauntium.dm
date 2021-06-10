@@ -7,7 +7,6 @@
 	categories = list(MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/hauntium
 	value_per_unit = 0.05
-	beauty_modifier = 0.25
 	strength_modifier = 1
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
 

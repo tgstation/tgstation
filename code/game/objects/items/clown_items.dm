@@ -129,8 +129,6 @@
 		user.visible_message("<span class='notice'>[user] begins to scrub \the [target.name] out with [src].</span>", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
-			var/obj/effect/decal/cleanable/cleanies = target
-			user.mind?.adjust_experience(/datum/skill/cleaning, max(round(cleanies.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT),0)) //again, intentional that this does NOT round but mops do.
 			qdel(target)
 			decreaseUses(user)
 
@@ -154,9 +152,6 @@
 		user.visible_message("<span class='notice'>[user] begins to clean \the [target.name] with [src]...</span>", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
-			if(user && isturf(target))
-				for(var/obj/effect/decal/cleanable/cleanable_decal in target)
-					user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
 			target.wash(CLEAN_SCRUB)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)

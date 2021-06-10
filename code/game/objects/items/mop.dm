@@ -29,9 +29,6 @@
 		// If there's a cleaner with a mind, let's gain some experience!
 		if(cleaner?.mind)
 			var/total_experience_gain = 0
-			for(var/obj/effect/decal/cleanable/cleanable_decal in A)
-				//it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-				total_experience_gain += max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)
 			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
 		A.wash(CLEAN_SCRUB)
 
