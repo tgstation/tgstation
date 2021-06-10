@@ -32,7 +32,7 @@
 	if (!client.holder && CONFIG_GET(flag/panic_bunker) && CONFIG_GET(flag/panic_bunker_interview) && !(client.ckey in GLOB.interviews.approved_ckeys))
 		var/required_living_minutes = CONFIG_GET(number/panic_bunker_living)
 		var/living_minutes = client.get_exp_living(TRUE)
-		if (required_living_minutes > living_minutes)
+		if (required_living_minutes >= living_minutes)
 			client.interviewee = TRUE
 			register_for_interview()
 			return
