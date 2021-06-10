@@ -67,11 +67,10 @@
 	var/obj/item/food/decomp = parent //Lets us spawn things at decomp
 	decomposition_level += delta_time
 	if(decomposition_level >= 600) //10 minutes
+		new /obj/effect/decal/cleanable/ants(decomp.loc)
 		new /obj/item/food/badrecipe/moldy(decomp.loc)
 		qdel(decomp)
 		return
-	if(decomposition_level == 300) //5 minutes
-		new /obj/effect/decal/cleanable/ants(decomp.loc)
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
