@@ -66,7 +66,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/purple
 	colour = "purple"
 	effect_desc = "Produces autoinjectors with regen jelly inside."
-	plasmarequired = 5
+	plasmarequired = 10
 	itempath = /obj/item/slimecrossbeaker/autoinjector/regenpack
 
 /obj/item/slimecross/industrial/blue

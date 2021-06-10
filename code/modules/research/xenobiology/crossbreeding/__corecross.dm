@@ -166,7 +166,7 @@ To add a crossbreed:
 	name = "mending solution"
 	desc = "A strange glob of sweet-smelling semifluid, which seems to stick to skin rather easily."
 	color = "#FF00FF"
-	list_reagents = list(/datum/reagent/medicine/regen_jelly = 20)
+	list_reagents = list(/datum/reagent/medicine/regen_jelly = 10)
 
 /obj/item/slimecrossbeaker/autoinjector/slimejelly //Primarily for slimepeople, but you do you.
 	self_use_only = TRUE

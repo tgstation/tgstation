@@ -546,6 +546,7 @@
 	background_icon_state = "bg_alien"
 	var/activation_type = SLIME_ACTIVATE_MINOR
 	var/datum/species/jelly/luminescent/species
+	var/blood_cost = 150
 
 /datum/action/innate/use_extract/New(_species)
 	..()
@@ -568,16 +569,17 @@
 		return
 	CHECK_DNA_AND_SPECIES(H)
 
-	if(species.current_extract)
-		species.extract_cooldown = world.time + 100
+	if(species.current_extract && H.blood_volume >= blood_cost)
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
+		H.blood_volume -= blood_cost
 
 /datum/action/innate/use_extract/major
 	name = "Extract Major Activation"
 	desc = "Pulse the slime extract with plasma jelly to activate it."
 	button_icon_state = "slimeuse2"
 	activation_type = SLIME_ACTIVATE_MAJOR
+	blood_cost = 250
 
 ///////////////////////////////////STARGAZERS//////////////////////////////////////////
 

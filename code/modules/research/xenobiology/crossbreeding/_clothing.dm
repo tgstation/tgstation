@@ -133,7 +133,9 @@ Slimecrossing Armor
 	inhand_icon_state = "adamsuit"
 	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW
-	slowdown = 4
+	slowdown = 0 //We apply slowdown through movespeed_modifier so red stabilized doesn't affect us
+	equip_delay_self = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
@@ -141,3 +143,11 @@ Slimecrossing Armor
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/clothing/suit/armor/heavy/adamantine/equipped(mob/user, slot) //It applies the slowdown even if you are holding it because logic
+	. = ..()
+	user.add_movespeed_modifier(/datum/movespeed_modifier/adamantine_armor)
+
+/obj/item/clothing/suit/armor/heavy/adamantine/dropped(mob/user)
+	. = ..()
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/adamantine_armor)

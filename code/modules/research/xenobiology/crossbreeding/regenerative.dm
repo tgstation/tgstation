@@ -23,16 +23,40 @@ Regenerative extracts:
 		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
 		return
 	if(H != user)
-		user.visible_message("<span class='notice'>[user] crushes [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
+		user.visible_message("<span class='notice'>[user] crushes [src] over [H], the milky goo quickly regenerating some of [H.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
+		user.visible_message("<span class='notice'>[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating some of [user.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
 	core_effect_before(H, user)
-	H.revive(full_heal = TRUE, admin_revive = FALSE)
+	activate_healing(H)
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
+
+/obj/item/slimecross/regenerative/proc/activate_healing(mob/living/target) //No longer full adminheal
+	target.adjustBruteLoss(-25)
+	target.adjustFireLoss(-25)
+	target.adjustOxyLoss(-25)
+	target.adjustCloneLoss(-25)
+	target.adjustToxLoss(-25, forced = TRUE)
+	target.remove_CC()
+	target.bodytemperature = target.get_body_temp_normal()
+
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humi = target
+		humi.set_coretemperature(humi.get_body_temp_normal())
+		if(!(humi.dna?.species && (NOBLOOD in humi.dna.species.species_traits)))
+			humi.blood_volume = max(humi.blood_volume, BLOOD_VOLUME_NORMAL)
+
+		for(var/i in humi.internal_organs)
+			var/obj/item/organ/O = i
+			if(O.organ_flags & ORGAN_SYNTHETIC)
+				continue
+			O.applyOrganDamage(-50)
+
+		for(var/datum/wound/iter_wound in humi.all_wounds)
+			iter_wound.blood_flow -= 3
 
 /obj/item/slimecross/regenerative/grey
 	colour = "grey" //Has no bonus effect.
