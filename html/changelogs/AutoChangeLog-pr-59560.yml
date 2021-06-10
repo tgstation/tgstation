@@ -1,0 +1,4 @@
+author: "fira"
+delete-after: True
+changes: 
+  - bugfix: "Fixed race condition in creation of z-levels."
