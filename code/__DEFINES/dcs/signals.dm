@@ -1251,7 +1251,3 @@
 // Exosca signals
 /// Sent on exoscan failure/manual interruption: ()
 #define COMSIG_EXOSCAN_INTERRUPTED "exoscan_interrupted"
-
-// Closet/crate items ejected signal
-///from closet open()
-#define COMSIG_ITEM_EJECTED_FROM_CLOSET "item_ejected_from_closet"
