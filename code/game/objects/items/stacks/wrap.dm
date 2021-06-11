@@ -40,6 +40,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	set_greyscale(colors = list(new_base, new_ribbon))
+	return TRUE
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
