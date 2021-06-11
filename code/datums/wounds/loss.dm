@@ -17,7 +17,7 @@
 		qdel(src)
 		return
 
-	victim = dismembered_part.owner
+	set_victim(dismembered_part.owner)
 	var/self_msg
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)

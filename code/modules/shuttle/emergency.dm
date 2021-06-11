@@ -738,6 +738,11 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
+/obj/docking_port/mobile/emergency/backup/Destroy(force)
+	if(SSshuttle.backup_shuttle == src)
+		SSshuttle.backup_shuttle = null
+	return ..()
+
 /obj/docking_port/mobile/emergency/shuttle_build/register()
 	. = ..()
 	initiate_docking(SSshuttle.getDock("emergency_home"))

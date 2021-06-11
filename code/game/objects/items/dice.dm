@@ -184,8 +184,10 @@
 	diceroll(user)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	diceroll(thrownby)
-	. = ..()
+	var/mob/thrown_by = thrownby?.resolve()
+	if(thrown_by)
+		diceroll(thrown_by)
+	return ..()
 
 /obj/item/dice/proc/diceroll(mob/user)
 	result = roll(sides)
