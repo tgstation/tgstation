@@ -1,5 +1,0 @@
-author: "norill"
-delete-after: True
-changes: 
-  - bugfix: "Fixed defibrillator paddles and wall mounts not detecting charge changes."
-  - qol: "Examining defibrillators now tell you if there is a power cell inside and how to remove it"

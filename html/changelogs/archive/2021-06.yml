@@ -209,3 +209,35 @@
   fira:
   - bugfix: Fixed race condition in creation of z-levels.
   - bugfix: Input system won't request in-place movements constantly anymore.
+2021-06-11:
+  Arkatos:
+  - qol: Midround alien larvas start the game already in a vent instead of just on
+      top of it. Fair chance for everyone!
+  GoldenAlpharex:
+  - bugfix: '*me should no longer force someone else''s message on your emote.'
+  Melbert:
+  - qol: You can now quick-swap beakers in and out of the bio-generator (Insert a
+      new beaker without needing to eject the old one).
+  RandomGamer123:
+  - bugfix: Replaces unusable TEG board on derelict with boards for a turbine setup
+      instead.
+  - bugfix: The tram control console now displays an icon for science correctly.
+  - qol: You can now examine people to see if they are being strangled with durathread.
+  - qol: Cutting durathread off of someone else now produces a public message for
+      everyone to know.
+  - bugfix: Durathread strangling caused by golems can now be cut off with jaws of
+      life as well.
+  RaveRadbury:
+  - rscadd: 'New emote: *tilt "tilts their head to the side."'
+  TJatPBnJ:
+  - qol: Storage items open on right-click, instead of alt-click
+  Wallem:
+  - bugfix: Matchbox sprite properly empties.
+  norill:
+  - bugfix: Fixed defibrillator paddles and wall mounts not detecting charge changes.
+  - qol: Examining defibrillators now tell you if there is a power cell inside and
+      how to remove it
+  tf-4:
+  - bugfix: The chemistry diamond is now NFPA compliant
+  vincentiusvin:
+  - bugfix: fixed the 2person mech crushing it's own parts

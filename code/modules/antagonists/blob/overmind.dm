@@ -181,6 +181,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSticker.force_ending = 1
 
 /mob/camera/blob/Destroy()
+	QDEL_NULL(blobstrain)
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)

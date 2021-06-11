@@ -830,6 +830,18 @@
 	name = "Long Fade Down"
 	icon_state = "long_fade_down"
 
+/datum/sprite_accessory/hair_gradient/short_fade_up
+	name = "Short Fade Up"
+	icon_state = "short_fade_up"
+
+/datum/sprite_accessory/hair_gradient/short_fade_down
+	name = "Short Fade Down"
+	icon_state = "short_fade_down"
+
+/datum/sprite_accessory/hair_gradient/wavy_spike
+	name = "Spiked Wavy"
+	icon_state = "wavy_spiked"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
