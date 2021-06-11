@@ -108,13 +108,14 @@
 		UnregisterSignal(source, COMSIG_MOB_LOGIN)
 		post_add()
 
-
-/datum/quirk/proc/add() //special "on add" effects
+/// Any effect that should be applied every single time the quirk is added to any mob, even when transferred.
+/datum/quirk/proc/add()
 /// Any effects from the proc that should not be done multiple times if the quirk is transferred between mobs. Put stuff like spawning items in here.
 /datum/quirk/proc/add_unique()
-/datum/quirk/proc/remove() //special "on remove" effects
-/datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
-/datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
+/// Removal of any reversible effects added by the quirk.
+/datum/quirk/proc/remove()
+/// Any special effects or chat messages which should be applied. This proc is guaranteed to run if the mob has a client when the quirk is added. Otherwise, it runs once on the next COMSIG_MOB_LOGIN.
+/datum/quirk/proc/post_add()
 
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk
