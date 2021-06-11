@@ -155,9 +155,9 @@
 			garbage_queue_processed = TRUE
 			break
 
-		if(world.time > start_time + time_needed + 30 MINUTES)
+		if(world.time > start_time + time_needed + 8 MINUTES)
 			Fail("Something has gone horribly wrong, the garbage queue has been processing for well over 10 minutes. What the hell did you do")
-			return
+			break
 
 		//Immediately fire the gc right after
 		SSgarbage.next_fire = 1
