@@ -199,6 +199,8 @@
  * logically "in" anything adjacent to us.
  */
 /atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
+	if(QDELETED(tool))
+		return FALSE
 	var/list/direct_access = DirectAccess()
 	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
 
