@@ -360,11 +360,11 @@
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_EYES)
-		user.become_blind("blindfold_[REF(src)]")
+		user.become_blind(BLINDFOLD_TRAIT)
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
-	user.cure_blind("blindfold_[REF(src)]")
+	user.cure_blind(BLINDFOLD_TRAIT)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"
