@@ -153,6 +153,35 @@
 	id = "comp_radio"
 	build_path = /obj/item/circuit_component/radio
 
+/datum/design/component/gps
+	name = "GPS Component"
+	desc = "A component that returns the xyz co-ordinates of itself."
+	id = "comp_gps"
+	build_path = /obj/item/circuit_component/gps
+
+/datum/design/component/direction
+	name = "Direction Component"
+	desc = "A component that returns the direction of itself and an entity."
+	id = "comp_direction"
+	build_path = /obj/item/circuit_component/direction
+
+/datum/design/component/health
+	name = "Health Component"
+	desc = "A component that returns the health of an organism."
+	id = "comp_health"
+	build_path = /obj/item/circuit_component/health
+
+/datum/design/component/combiner
+	name = "Combiner Component"
+	desc = "A component that combines multiple inputs to provide 1 output."
+	id = "comp_combiner"
+	build_path = /obj/item/circuit_component/combiner
+
+/datum/design/component/pull
+	name = "Pull Component"
+	desc = "A component that can force the shell to pull entities. Only works for drone shells."
+	id = "comp_pull"
+	build_path = /obj/item/circuit_component/pull
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -179,6 +208,15 @@
 	build_path = /obj/item/shell/bot
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
+	category = list("Circuitry", "Shells")
+
+/datum/design/money_bot_shell
+	name = "Money Bot Shell"
+	desc = "An immobile shell that is similar to a regular bot shell, but accepts monetary inputs and can also dispense money."
+	id = "money_bot_shell"
+	build_path = /obj/item/shell/money_bot
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/gold = 50)
 	category = list("Circuitry", "Shells")
 
 /datum/design/drone_shell

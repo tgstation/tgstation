@@ -134,7 +134,7 @@
 		open_machine()
 
 /obj/machinery/sleeper/ui_state(mob/user)
-	if(controls_inside)
+	if(!controls_inside)
 		return GLOB.notcontained_state
 	return GLOB.default_state
 

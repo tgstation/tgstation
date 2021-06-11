@@ -373,10 +373,10 @@
 	marktwo.dna_lock = markone.dna_lock
 	marktwo.mecha_flags = markone.mecha_flags
 	marktwo.strafe = markone.strafe
-	marktwo.obj_integrity = round((markone.obj_integrity / markone.max_integrity) * marktwo.obj_integrity) //Integ set to the same percentage integ as the old mecha, rounded to be whole number
+	//Integ set to the same percentage integ as the old mecha, rounded to be whole number
+	marktwo.update_integrity(round((markone.get_integrity() / markone.max_integrity) * marktwo.get_integrity()))
 	if(markone.name != initial(markone.name))
 		marktwo.name = markone.name
 	markone.wreckage = FALSE
 	qdel(markone)
 	playsound(get_turf(marktwo),'sound/items/ratchet.ogg',50,TRUE)
-	return

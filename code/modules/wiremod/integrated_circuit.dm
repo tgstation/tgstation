@@ -11,6 +11,12 @@
 	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
 
+	/// The name that appears on the shell.
+	var/display_name = ""
+
+	/// The max length of the name.
+	var/label_max_length = 24
+
 	/// The power of the integrated circuit
 	var/obj/item/stock_parts/cell/cell
 
@@ -22,6 +28,9 @@
 
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = FALSE
+
+	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
+	var/datum/weakref/owner_id
 
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
@@ -50,13 +59,18 @@
 
 	if(istype(I, /obj/item/stock_parts/cell))
 		if(cell)
-			balloon_alert(user, "<span class='warning'>There already is a cell inside!</span>")
+			balloon_alert(user, "there already is a cell inside!")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
 		I.add_fingerprint(user)
 		user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+		return
+
+	if(istype(I, /obj/item/card/id))
+		balloon_alert(user, "owner id set for [I]")
+		owner_id = WEAKREF(I)
 		return
 
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -85,7 +99,9 @@
 		attached_component.register_shell(shell)
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
-		attached_component.input_received()
+		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
+	if(display_name != "")
+		shell.name = "[initial(shell.name)] ([display_name])"
 
 /**
  * Unregisters the current shell attached to this circuit.
@@ -94,6 +110,7 @@
 	SIGNAL_HANDLER
 	if(!shell)
 		return
+	shell.name = initial(shell.name)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.unregister_shell(shell)
 	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
@@ -193,6 +210,8 @@
 		component_data["options"] = component.options
 		component_data["removable"] = component.removable
 		.["components"] += list(component_data)
+
+	.["display_name"] = display_name
 
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
@@ -346,6 +365,21 @@
 			else if(isnull(value))
 				value = "null"
 			balloon_alert(usr, "[port.name] value: [value]")
+			. = TRUE
+		if("set_display_name")
+			var/new_name = params["display_name"]
+
+			if(new_name)
+				display_name = strip_html(params["display_name"], label_max_length)
+			else
+				display_name = ""
+
+			if(shell)
+				if(display_name != "")
+					shell.name = "[initial(shell.name)] ([display_name])"
+				else
+					shell.name = initial(shell.name)
+
 			. = TRUE
 
 #undef WITHIN_RANGE

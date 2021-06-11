@@ -466,16 +466,18 @@
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(delays[POD_OPENING])
-	remove_glow()
+	//Trust the signals
 
 /obj/structure/closet/supplypod/proc/remove_glow()
 	SIGNAL_HANDLER
 	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
+	vis_contents -= glow_effect
 	glow_effect = null
 
 /obj/structure/closet/supplypod/Destroy()
 	deleteRubble()
-	endGlow()
+	//Trust the signals even harder
+	qdel(glow_effect)
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
 	return ..()
 

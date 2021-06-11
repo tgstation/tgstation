@@ -25,11 +25,10 @@
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
-	SSair.stop_processing_machine(src)
-
 	disconnect()
 	QDEL_NULL(air_contents)
-
+	SSair.stop_processing_machine(src)
+	
 	return ..()
 
 /obj/machinery/portable_atmospherics/ex_act(severity, target)
@@ -77,7 +76,7 @@
 	var/datum/pipeline/connected_port_parent = connected_port.parents[1]
 	connected_port_parent.reconcile_air()
 
-	anchored = TRUE //Prevent movement
+	set_anchored(TRUE) //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
 
@@ -96,7 +95,7 @@
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return FALSE
-	anchored = FALSE
+	set_anchored(FALSE)
 	connected_port.connected_device = null
 	connected_port = null
 	pixel_x = 0

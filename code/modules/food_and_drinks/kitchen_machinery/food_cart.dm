@@ -14,7 +14,7 @@
 	var/obj/machinery/smartfridge/food/cart_smartfridge
 	var/obj/structure/table/reinforced/cart_table
 	var/obj/effect/food_cart_stand/cart_tent
-	var/static/list/packed_things
+	var/list/packed_things
 
 /obj/machinery/food_cart/Initialize()
 	. = ..()
@@ -26,6 +26,7 @@
 	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
 	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
 	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	RegisterSignal(cart_tent, COMSIG_PARENT_QDELETING, .proc/lost_part)
 
 /obj/machinery/food_cart/Destroy()
 	if(cart_griddle)
@@ -34,7 +35,9 @@
 		QDEL_NULL(cart_smartfridge)
 	if(cart_table)
 		QDEL_NULL(cart_table)
-	QDEL_NULL(cart_tent)
+	if(cart_tent)
+		QDEL_NULL(cart_tent)
+	packed_things.Cut()
 	return ..()
 
 /obj/machinery/food_cart/examine(mob/user)
@@ -55,7 +58,7 @@
 		var/obj/object = o
 		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
 		object.forceMove(src)
-	anchored = FALSE
+	set_anchored(FALSE)
 	unpacked = FALSE
 
 /obj/machinery/food_cart/proc/unpack(mob/user)
@@ -65,7 +68,7 @@
 		to_chat(user, "<span class='warning'>There isn't enough room to unpack here! Bad spaces were marked in red.</span>")
 		return
 	visible_message("<span class='notice'>[src] expands into a full stand.</span>")
-	anchored = TRUE
+	set_anchored(TRUE)
 	var/iteration = 1
 	var/turf/grabbed_turf = get_step(get_turf(src), EAST)
 	for(var/angle in list(0, -45, -45, 45))
@@ -113,7 +116,7 @@
 	UnregisterSignal(cart_griddle, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_tent, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(cart_tent, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	obj_break()
 
 /obj/machinery/food_cart/obj_break(damage_flag)

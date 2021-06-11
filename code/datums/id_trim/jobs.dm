@@ -24,7 +24,6 @@
 
 /datum/id_trim/job/New()
 	if(isnull(job_changes))
-		SSmapping.HACK_LoadMapConfig()
 		job_changes = SSmapping.config.job_changes
 
 	if(!length(job_changes) || !config_job)

@@ -56,7 +56,6 @@ SUBSYSTEM_DEF(job)
 	var/always_promote_captain_job = TRUE
 
 /datum/controller/subsystem/job/Initialize(timeofday)
-	SSmapping.HACK_LoadMapConfig()
 	setup_job_lists()
 	if(!occupations.len)
 		SetupOccupations()
@@ -282,12 +281,7 @@ SUBSYSTEM_DEF(job)
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO")
 
-	//Holder for Triumvirate is stored in the SSticker, this just processes it
-	if(SSticker.triai)
-		for(var/datum/job/ai/A in occupations)
-			A.spawn_positions = 3
-		for(var/obj/effect/landmark/start/ai/secondary/S in GLOB.start_landmarks_list)
-			S.latejoin_active = TRUE
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)
@@ -709,9 +703,12 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
 	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
 
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-	living_mob.forceMove(toLaunch)
-	new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
+	if(!spawn_turf)
+		SendToLateJoin(living_mob)
+	else
+		var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+		living_mob.forceMove(toLaunch)
+		new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
 ///////////////////////////////////
 //Keeps track of all living heads//

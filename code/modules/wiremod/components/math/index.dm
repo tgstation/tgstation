@@ -12,7 +12,7 @@
 
 	/// The result from the output
 	var/datum/port/output/output
-	has_trigger = TRUE
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/index/Initialize()
 	. = ..()
@@ -44,4 +44,4 @@
 		return
 
 	output.set_output(list_input[index])
-	trigger_output.set_output(COMPONENT_SIGNAL)
+
