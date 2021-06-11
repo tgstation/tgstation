@@ -16,7 +16,6 @@
 /datum/component/decomposition/RegisterWithParent()
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED, //If a person drops the object
-		COMSIG_ITEM_EJECTED_FROM_CLOSET, //Checks if an object has been ejected from a lcoker/crate
 		COMSIG_STORAGE_EXITED), //Checks if a storage object has been dumped
 		.proc/table_check)
 	RegisterSignal(parent, list(
@@ -29,7 +28,6 @@
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED,
-		COMSIG_ITEM_EJECTED_FROM_CLOSET,
 		COMSIG_STORAGE_EXITED),
 		.proc/table_check)
 	UnregisterSignal(parent, list(
