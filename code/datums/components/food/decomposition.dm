@@ -3,72 +3,65 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///How decomposed a specific food item is. Uses delta_time.
 	var/decomposition_level = 0
-	//If an item is inside of a storage slot.
-	var/is_stored = FALSE
-
-/datum/component/decomposition/Initialize()
-	.=..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	///Makes sure food only starts decomposing if a player's EVER picked it up before
+	var/handled = FALSE
+	///Used to stop food in someone's hand & in storage slots from decomposing.
+	var/clean = FALSE
 
 /datum/component/decomposition/RegisterWithParent()
-	RegisterSignal(parent, list(
-		COMSIG_ITEM_DROPPED, //If a person drops the object
-		COMSIG_ITEM_EJECTED_FROM_CLOSET, //Checks if an object has been ejected from a lcoker/crate
-		COMSIG_STORAGE_EXITED), //Checks if a storage object has been dumped
-		.proc/table_check)
-	RegisterSignal(parent, list(
-		COMSIG_ITEM_PICKUP, //person picks up an item
-		COMSIG_TRY_STORAGE_HIDE_ALL), //Object has been put into a closed locker/crate
-		.proc/picked_up)
-	RegisterSignal(parent, COMSIG_STORAGE_ENTERED, .proc/storage_check) //Checks if you put it in storage
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/picked_up)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)
 
 /datum/component/decomposition/UnregisterFromParent()
-	UnregisterSignal(parent, list(
-		COMSIG_ITEM_DROPPED,
-		COMSIG_ITEM_EJECTED_FROM_CLOSET,
-		COMSIG_STORAGE_EXITED),
-		.proc/table_check)
-	UnregisterSignal(parent, list(
-		COMSIG_ITEM_PICKUP,
-		COMSIG_TRY_STORAGE_HIDE_ALL),
-		.proc/picked_up)
-	UnregisterSignal(parent, COMSIG_STORAGE_ENTERED, .proc/storage_check)
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
+	UnregisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/picked_up)
+	UnregisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)
+
+/datum/component/decomposition/proc/handle_movement() // Assuming it is guaranteed to be food
+	var/obj/item/food/food = parent
+	var/atom/last_loc = food.loc
+
+	while(!isarea(last_loc))
+		if(HAS_TRAIT(food.loc, TRAIT_PROTECT_FOOD))
+			clean = TRUE
+			break
+
+	if(!handled || clean)
+		// prevent decomposition
+		return
+	// do decomposition
+	START_PROCESSING(SSobj, src)
 
 /datum/component/decomposition/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/datum/component/decomposition/proc/on_entered()
-//I genuinely don't know how to do what you said I should do here,
-//so I'm going to go ask.
-
+/*
 /datum/component/decomposition/proc/storage_check()
 	SIGNAL_HANDLER
-	is_stored = TRUE
+	protect = TRUE
 	STOP_PROCESSING(SSobj, src)
-
-/datum/component/decomposition/proc/table_check(obj/item/food/decomp)
+*/
+/datum/component/decomposition/proc/dropped()
 	SIGNAL_HANDLER
-	if(locate(/obj/structure/table) in decomp.loc || is_stored) //Space ants can't climb tables
-		is_stored = FALSE //Made false here so storage dumping will still be affected.
-		return
-	START_PROCESSING(SSobj, src)
+	clean = FALSE
+	handle_movement()
 
 /datum/component/decomposition/proc/picked_up()
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
+	clean = TRUE
+	if(!handled)
+		handled = TRUE
 
+// The act of decomposing itself
 /datum/component/decomposition/process(delta_time)
 	var/obj/item/food/decomp = parent //Lets us spawn things at decomp
-	decomposition_level += delta_time
-	if(decomposition_level >= 600) //10 minutes
+	decomposition_level += delta_time //Things decompose in seconds.
+	if(decomposition_level >= 10) //10 minutes 600
 		new /obj/effect/decal/cleanable/ants(decomp.loc)
 		new /obj/item/food/badrecipe/moldy(decomp.loc)
+		decomp.visible_message("<span class='notice'>[decomp] gets overtaken by ants! Gross!</span>")
 		qdel(decomp)
 		return
 
@@ -77,9 +70,9 @@
 	switch(decomposition_level)
 		if (0 to 149)
 			return
-		if(150 to 299)
+		if(150 to 299) // 2.5 minutes
 			examine_list += "[parent] looks kinda stale."
-		if(300 to 449)
+		if(300 to 449) // 5 minutes
 			examine_list += "[parent] is starting to look pretty gross."
-		if(450 to 600)
+		if(450 to 600) // 7.5 minutes
 			examine_list += "[parent] looks barely edible."

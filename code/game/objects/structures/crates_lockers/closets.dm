@@ -144,8 +144,6 @@
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
-		for(var/atom/movable/thing as anything in src)
-			SEND_SIGNAL(thing, COMSIG_ITEM_EJECTED_FROM_CLOSET, src)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
@@ -171,6 +169,8 @@
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
+	var/obj/structure/closet/container = src
+	REMOVE_TRAIT(container, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 	dump_contents()
 	update_appearance()
 	after_open(user, force)
@@ -225,6 +225,8 @@
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
 		return FALSE
+	var/obj/structure/closet/container = src
+	ADD_TRAIT(container, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
 	opened = FALSE

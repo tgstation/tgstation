@@ -276,10 +276,11 @@
 	pixel_y = rand(-5, 5)
 
 /obj/effect/decal/cleanable/ants/on_entered(atom/movable/AM)
+	. = ..()
 	if(isliving(AM))
 		var/mob/living/victim = AM
 		if(!HAS_TRAIT(victim, TRAIT_PASSTABLE) && !victim.buckled)
 			victim.adjustBruteLoss(0.2)
 			to_chat(victim, "<span class='warning'>The ants bite at you!</span>")
 			playsound(loc, 'sound/weapons/bite.ogg', 15, TRUE, -3)
-	return ..()
+
