@@ -92,6 +92,8 @@
 	ignore += typesof(/obj/item/pinpointer/shuttle)
 	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
 	ignore += typesof(/obj/structure/alien/resin/flower_bud)
+	//Needs a linked mecha
+	ignore += typesof(/obj/effect/skyfall_landingzone)
 
 	var/list/ignore_cache = list()
 	for(var/type in ignore)
