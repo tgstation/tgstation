@@ -25,7 +25,6 @@
 
 /obj/effect/turf_decal/tile/blue
 	name = "blue corner"
-	var/color_name = "blue"
 	color = "#52B4E9"
 
 /obj/effect/turf_decal/tile/blue/joiner
@@ -52,7 +51,6 @@
 
 /obj/effect/turf_decal/tile/green
 	name = "green corner"
-	var/color_name = "green"
 	color = "#9FED58"
 
 /obj/effect/turf_decal/tile/green/joiner
@@ -79,7 +77,6 @@
 
 /obj/effect/turf_decal/tile/yellow
 	name = "yellow corner"
-	var/color_name = "yellow"
 	color = "#EFB341"
 
 /obj/effect/turf_decal/tile/yellow/joiner
@@ -106,7 +103,6 @@
 
 /obj/effect/turf_decal/tile/red
 	name = "red corner"
-	var/color_name = "red"
 	color = "#DE3A3A"
 
 /obj/effect/turf_decal/tile/red/joiner
@@ -133,7 +129,6 @@
 
 /obj/effect/turf_decal/tile/bar
 	name = "bar corner"
-	var/color_name = "bar"
 	color = "#791500"
 	alpha = 130
 
@@ -161,7 +156,6 @@
 
 /obj/effect/turf_decal/tile/purple
 	name = "purple corner"
-	var/color_name = "purple"
 	color = "#D381C9"
 
 /obj/effect/turf_decal/tile/purple/joiner
@@ -188,7 +182,6 @@
 
 /obj/effect/turf_decal/tile/brown
 	name = "brown corner"
-	var/color_name = "brown"
 	color = "#A46106"
 
 /obj/effect/turf_decal/tile/brown/joiner
@@ -215,7 +208,6 @@
 
 /obj/effect/turf_decal/tile/neutral
 	name = "neutral corner"
-	var/color_name = "neutral"
 	color = "#D4D4D4"
 	alpha = 50
 
@@ -243,7 +235,6 @@
 
 /obj/effect/turf_decal/tile/dark
 	name = "dark corner"
-	var/color_name = "dark"
 	color = "#0e0f0f"
 
 /obj/effect/turf_decal/tile/dark/joiner
@@ -270,7 +261,6 @@
 
 /obj/effect/turf_decal/tile/random // so many colors
 	name = "colorful corner"
-	var/color_name = "colorful"
 	color = "#E300FF" //bright pink as default for mapping
 
 /obj/effect/turf_decal/tile/random/joiner
@@ -297,7 +287,7 @@
 	color = "#[random_short_color()]"
 	. = ..()
 
-/// Done with tile decals
+/// Trimlines
 
 /obj/effect/turf_decal/trimline
 	layer = TURF_PLATING_DECAL_LAYER
