@@ -377,6 +377,11 @@
 	key_third_person = "sways"
 	message = "sways around dizzily."
 
+/datum/emote/living/tilt
+	key = "tilt"
+	key_third_person = "tilts"
+	message = "tilts their head to the side."
+
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"
