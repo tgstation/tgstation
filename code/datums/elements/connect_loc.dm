@@ -43,6 +43,10 @@
 	unregister_signals(listener, old_loc)
 	update_signals(listener)
 
+/// This element behaves the same as connect_loc, hooking into a signal on a tracked object's turf
+/// It has the ability to react to that signal on behalf of a seperate listener however
+/// This has great use, primarially for components, but it carries with it some overhead
+/// So we do it seperately rather then intigrating the behavior with the main element
 /datum/element/connect_loc_behalf
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH | ELEMENT_COMPLEX_DETACH
 	id_arg_index = 3
