@@ -32,7 +32,7 @@
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
-	if((slot != ITEM_SLOT_BACKPACK) || !istype(equipped_item, /obj/item/storage/backpack))
+	if((slot != ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "back_pain", /datum/mood_event/back_pain)
