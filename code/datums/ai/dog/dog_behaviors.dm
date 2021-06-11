@@ -26,7 +26,7 @@
 	if(!success) //Don't try again on this item if we failed
 		var/obj/item/target = controller.blackboard[BB_FETCH_TARGET]
 		if(target)
-			controller.blackboard[BB_FETCH_IGNORE_LIST][target] = TRUE
+			controller.blackboard[BB_FETCH_IGNORE_LIST][WEAKREF(target)] = TRUE
 		controller.blackboard[BB_FETCH_TARGET] = null
 		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
@@ -171,12 +171,13 @@
 	if(!istype(living_pawn) || !(isturf(living_pawn.loc) || HAS_TRAIT(living_pawn, TRAIT_AI_BAGATTACK)))
 		return
 
-	var/atom/movable/harass_target = controller.blackboard[BB_DOG_HARASS_TARGET]
+	var/datum/weakref/harass_ref = controller.blackboard[BB_DOG_HARASS_TARGET]
+	var/atom/movable/harass_target = harass_ref.resolve()
 	if(!harass_target || !can_see(living_pawn, harass_target, length=AI_DOG_VISION_RANGE))
 		finish_action(controller, FALSE)
 		return
 
-	if(controller.blackboard[BB_DOG_FRIENDS][harass_target])
+	if(controller.blackboard[BB_DOG_FRIENDS][harass_ref])
 		living_pawn.visible_message("<span class='danger'>[living_pawn] looks sideways at [harass_target] for a moment, then shakes [living_pawn.p_their()] head and ceases aggression.</span>")
 		finish_action(controller, FALSE)
 		return
