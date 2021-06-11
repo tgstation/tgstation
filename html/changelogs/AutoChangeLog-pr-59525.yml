@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - qol: "You can now quick-swap beakers in and out of the bio-generator (Insert a new beaker without needing to eject the old one)."
