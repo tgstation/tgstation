@@ -388,7 +388,7 @@ SUBSYSTEM_DEF(ticker)
 			if(player_assigned_role != new_player_human.mind.special_role)
 				SSjob.EquipRank(new_player_mob, player_assigned_role, FALSE, player_is_captain)
 				if(CONFIG_GET(flag/roundstart_traits) && ishuman(new_player_human))
-					SSquirks.AssignQuirks(new_player_human, new_player_mob.client, TRUE)
+					SSquirks.AssignQuirks(new_player_human, new_player_mob.client)
 		CHECK_TICK
 
 	if(captainless)

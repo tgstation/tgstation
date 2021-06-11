@@ -815,7 +815,7 @@
 			return
 
 		var/list/options = list("Clear"="Clear")
-		for(var/x in subtypesof(/datum/quirk))
+		for(var/x in (subtypesof(/datum/quirk) - /datum/quirk/item_quirk))
 			var/datum/quirk/T = x
 			var/qname = initial(T.name)
 			options[has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
@@ -823,14 +823,14 @@
 		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sortList(options)
 		if(result)
 			if(result == "Clear")
-				for(var/datum/quirk/q in roundstart_quirks)
+				for(var/datum/quirk/q in quirks)
 					remove_quirk(q.type)
 			else
 				var/T = options[result]
 				if(has_quirk(T))
 					remove_quirk(T)
 				else
-					add_quirk(T,TRUE)
+					add_quirk(T)
 	if(href_list[VV_HK_MAKE_MONKEY])
 		if(!check_rights(R_SPAWN))
 			return
