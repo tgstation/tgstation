@@ -113,7 +113,7 @@
 
 /datum/mood_event/brain_damage/add_effects()
 	var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
-	description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
+	description = "<span class='warning'>My head really hurts, it's hard to think straight.</span>\n"
 
 /datum/mood_event/hulk //Entire duration of having the hulk mutation
 	description = "<span class='warning'>HULK SMASH!</span>\n"
