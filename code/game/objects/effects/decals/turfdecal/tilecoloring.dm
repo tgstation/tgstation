@@ -30,23 +30,23 @@
 
 /obj/effect/turf_decal/tile/blue/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "blue joiner"
 
 /obj/effect/turf_decal/tile/blue/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "blue center joiner"
 
 /obj/effect/turf_decal/tile/blue/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "blue half"
 
 /obj/effect/turf_decal/tile/blue/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "blue anticorner"
 
 /obj/effect/turf_decal/tile/blue/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "blue full"
 
 /// Green tiles
 
@@ -57,23 +57,23 @@
 
 /obj/effect/turf_decal/tile/green/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "green joiner"
 
 /obj/effect/turf_decal/tile/green/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "green center joiner"
 
 /obj/effect/turf_decal/tile/green/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "green half"
 
 /obj/effect/turf_decal/tile/green/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "green anticorner"
 
 /obj/effect/turf_decal/tile/green/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "green full"
 
 /// Yellow tiles
 
@@ -84,23 +84,23 @@
 
 /obj/effect/turf_decal/tile/yellow/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "yellow joiner"
 
 /obj/effect/turf_decal/tile/yellow/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "yellow center joiner"
 
 /obj/effect/turf_decal/tile/yellow/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "yellow half"
 
 /obj/effect/turf_decal/tile/yellow/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "yellow anticorner"
 
 /obj/effect/turf_decal/tile/yellow/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "yellow full"
 
 /// Red tiles
 
@@ -111,23 +111,23 @@
 
 /obj/effect/turf_decal/tile/red/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "red joiner"
 
 /obj/effect/turf_decal/tile/red/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "red center joiner"
 
 /obj/effect/turf_decal/tile/red/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "red half"
 
 /obj/effect/turf_decal/tile/red/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "red anticorner"
 
 /obj/effect/turf_decal/tile/red/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "red full"
 
 /// Bar tiles
 
@@ -139,23 +139,23 @@
 
 /obj/effect/turf_decal/tile/bar/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "bar joiner"
 
 /obj/effect/turf_decal/tile/bar/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "bar center joiner"
 
 /obj/effect/turf_decal/tile/bar/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "bar half"
 
 /obj/effect/turf_decal/tile/bar/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "bar anticorner"
 
 /obj/effect/turf_decal/tile/bar/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "bar full"
 
 /// Purple tiles
 
@@ -166,23 +166,23 @@
 
 /obj/effect/turf_decal/tile/purple/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "purple joiner"
 
 /obj/effect/turf_decal/tile/purple/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "purple center joiner"
 
 /obj/effect/turf_decal/tile/purple/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "purple half"
 
 /obj/effect/turf_decal/tile/purple/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "purple anticorner"
 
 /obj/effect/turf_decal/tile/purple/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "purple full"
 
 /// Brown tiles
 
@@ -193,23 +193,23 @@
 
 /obj/effect/turf_decal/tile/brown/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "brown joiner"
 
 /obj/effect/turf_decal/tile/brown/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "brown center joiner"
 
 /obj/effect/turf_decal/tile/brown/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "brown half"
 
 /obj/effect/turf_decal/tile/brown/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "brown anticorner"
 
 /obj/effect/turf_decal/tile/brown/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "brown full"
 
 /// Neutral tiles
 
@@ -221,23 +221,23 @@
 
 /obj/effect/turf_decal/tile/neutral/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "neutral joiner"
 
 /obj/effect/turf_decal/tile/neutral/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "neutral center joiner"
 
 /obj/effect/turf_decal/tile/neutral/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "neutral half"
 
 /obj/effect/turf_decal/tile/neutral/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "neutral anticorner"
 
 /obj/effect/turf_decal/tile/neutral/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "neutral full"
 
 /// Dark tiles
 
@@ -248,23 +248,23 @@
 
 /obj/effect/turf_decal/tile/dark/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "dark joiner"
 
 /obj/effect/turf_decal/tile/dark/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "dark center joiner"
 
 /obj/effect/turf_decal/tile/dark/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "dark half"
 
 /obj/effect/turf_decal/tile/dark/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "dark anticorner"
 
 /obj/effect/turf_decal/tile/dark/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "dark full"
 
 /// Random tiles
 
@@ -275,23 +275,23 @@
 
 /obj/effect/turf_decal/tile/random/joiner
 	icon_state = "tile_joiner"
-	name = color_name + " joiner"
+	name = "colorful joiner"
 
 /obj/effect/turf_decal/tile/random/center_join
 	icon_state = "tile_center_join"
-	name = color_name + " center joiner"
+	name = "colorful center joiner"
 
 /obj/effect/turf_decal/tile/random/half
 	icon_state = "tile_half"
-	name = color_name + " half"
+	name = "colorful half"
 
 /obj/effect/turf_decal/tile/random/anticorner
 	icon_state = "tile_anticorner"
-	name = color_name + " anticorner"
+	name = "colorful anticorner"
 
 /obj/effect/turf_decal/tile/random/full
 	icon_state = "tile_full"
-	name = color_name + " full"
+	name = "colorful full"
 
 /obj/effect/turf_decal/tile/random/Initialize()
 	color = "#[random_short_color()]"
