@@ -77,6 +77,7 @@
 /obj/item/udder/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	udder_mob = null
 
 /obj/item/udder/process(delta_time)
 	if(udder_mob.stat != DEAD)
@@ -131,10 +132,6 @@
 	if(udder_mob.gender == FEMALE)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_mob_attacking)
-
-/obj/item/udder/gutlunch/Destroy()
-	. = ..()
-	UnregisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 
 /obj/item/udder/gutlunch/process(delta_time)
 	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_mob

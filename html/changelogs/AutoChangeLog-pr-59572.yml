@@ -1,6 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - qol: "You can now examine people to see if they are being strangled with durathread."
-  - qol: "Cutting durathread off of someone else now produces a public message for everyone to know."
-  - bugfix: "Durathread strangling caused by golems can now be cut off with jaws of life as well."
