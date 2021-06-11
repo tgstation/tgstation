@@ -578,10 +578,8 @@
 		return
 	CHECK_DNA_AND_SPECIES(H)
 	
-	if(species.current_extract)
-		species.extract_cooldown = world.time + 100
-
 	if(species.current_extract && H.blood_volume >= blood_cost)
+		species.extract_cooldown = world.time + 100
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 		H.blood_volume -= blood_cost
