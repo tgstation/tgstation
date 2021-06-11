@@ -243,6 +243,7 @@
 	. = ..()
 
 	held_mob = user
+	our_chili = our_plant
 	START_PROCESSING(SSobj, src)
 
 /*
@@ -254,6 +255,7 @@
 	SIGNAL_HANDLER
 
 	held_mob = null
+	our_chili = null
 	STOP_PROCESSING(SSobj, src)
 
 /*
@@ -446,7 +448,7 @@
 
 /// Cherry Bomb's increased max volume gene
 /datum/plant_gene/trait/modified_volume/cherry_bomb
-	name = "Powder-filled Bulbs"
+	name = "Powder-Filled Bulbs"
 	new_capcity = 125
 
 /// Plants that explode when used (based on their reagent contents)
