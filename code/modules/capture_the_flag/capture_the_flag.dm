@@ -40,6 +40,7 @@
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
+		reset.flag = src
 	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/ComponentInitialize()
@@ -55,7 +56,10 @@
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
 	SIGNAL_HANDLER
 
-	forceMove(get_turf(src.reset))
+	var/turf/our_turf = get_turf(src.reset)
+	if(!our_turf)
+		return TRUE
+	forceMove(our_turf)
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
@@ -143,6 +147,13 @@
 	icon_state = "banner"
 	desc = "This is where a banner with Nanotrasen's logo on it would go."
 	layer = LOW_ITEM_LAYER
+	var/obj/item/ctf/flag
+
+/obj/effect/ctf/flag_reset/Destroy()
+	if(flag)
+		flag.reset = null
+		flag = null
+	return ..()
 
 /obj/effect/ctf/flag_reset/red
 	name = "red flag landmark"
@@ -805,6 +816,13 @@
 		if(CTF.game_id != game_id)
 			continue
 		CTF.dead_barricades += src
+
+/obj/effect/ctf/dead_barricade/Destroy()
+	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(CTF.game_id != game_id)
+			continue
+		CTF.dead_barricades -= src
+	return ..()
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
 	if(!QDELETED(src))

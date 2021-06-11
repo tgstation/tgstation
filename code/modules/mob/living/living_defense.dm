@@ -96,8 +96,9 @@
 		if(blocked)
 			return TRUE
 
-		if(thrown_item.thrownby)
-			log_combat(thrown_item.thrownby, src, "threw and hit", thrown_item)
+		var/mob/thrown_by = thrown_item.thrownby?.resolve()
+		if(thrown_by)
+			log_combat(thrown_by, src, "threw and hit", thrown_item)
 		if(nosell_hit)
 			return ..()
 		visible_message("<span class='danger'>[src] is hit by [thrown_item]!</span>", \

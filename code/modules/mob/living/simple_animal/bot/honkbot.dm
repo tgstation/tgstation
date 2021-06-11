@@ -167,8 +167,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM
-		if(I.throwforce < health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
-			var/mob/living/carbon/human/H = I.thrownby
+		var/mob/thrown_by = I.thrownby?.resolve()
+		if(I.throwforce < health && thrown_by && (istype(thrown_by, /mob/living/carbon/human)))
+			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 	..()
 
