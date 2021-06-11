@@ -117,7 +117,7 @@
 	return null
 
 /obj/item/computer_hardware/hard_drive/Destroy()
-	stored_files = null
+	QDEL_LIST(stored_files)
 	return ..()
 
 /obj/item/computer_hardware/hard_drive/Initialize()

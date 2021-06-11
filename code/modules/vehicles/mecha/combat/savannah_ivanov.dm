@@ -185,7 +185,7 @@
 			crushed_wall.ScrapeAway()
 		if(isobj(thing))
 			var/obj/crushed_object = thing
-			if(crushed_object == src)
+			if(crushed_object == src || crushed_object.loc == src)
 				continue
 			crushed_object.take_damage(150) //same as a hulk punch, makes sense to me
 		if(isliving(thing))

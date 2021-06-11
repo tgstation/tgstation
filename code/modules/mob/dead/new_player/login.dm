@@ -7,7 +7,7 @@
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = TRUE
-		mind.current = src
+		mind.set_current(src)
 
 	. = ..()
 	if(!. || !client)
