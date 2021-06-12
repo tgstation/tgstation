@@ -324,7 +324,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = alpha)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha=emissive_alpha)
+	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -906,7 +906,11 @@
 
 /obj/item/stack/tile/fake_error/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha=src.alpha)
+	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+
+/obj/item/stack/tile/fake_error/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha, appearance_flags = KEEP_APART)
 
 /obj/item/stack/tile/fake_error/ten
 	amount = 10
@@ -1114,6 +1118,14 @@
 	desc = "A glow-in-the-dark floor tile used to test emissive turfs."
 	turf_type = /turf/open/floor/emissive_test
 	merge_type = /obj/item/stack/tile/emissive_test
+
+/obj/item/stack/tile/emissive_test/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+
+/obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha, appearance_flags = KEEP_APART)
 
 /obj/item/stack/tile/emissive_test/sixty
 	amount = 60

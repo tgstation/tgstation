@@ -418,6 +418,7 @@
 /turf/open/floor/emissive_test/white
 	icon_state = "pure_white"
 	base_icon_state = "pure_white"
+	floor_tile = /obj/item/stack/tile/emissive_test/white
 
 /turf/open/floor/carpet/neon
 	name = "neon carpet"
