@@ -12,7 +12,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "kortanut-grow"
 	icon_dead = "kortanut-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/one_bite)
 	mutatelist = list(/obj/item/seeds/korta_nut/sweet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
@@ -21,7 +21,6 @@
 	name = "korta nut"
 	desc = "A little nut of great importance. Has a peppery shell which can be ground into flour and a soft, pulpy interior that produces a milky fluid when juiced. Or you can eat them whole, as a quick snack."
 	icon_state = "korta_nut"
-	bite_consumption_mod = 100
 	foodtypes = NUTS
 	grind_results = list(/datum/reagent/consumable/korta_flour = 0)
 	juice_results = list(/datum/reagent/consumable/korta_milk = 0)
