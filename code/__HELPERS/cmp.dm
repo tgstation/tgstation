@@ -52,7 +52,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return a.priority - b.priority
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
-	return a.priority - b.priority
+	return initial(a.priority) - initial(b.priority)
 
 /proc/cmp_filter_data_priority(list/A, list/B)
 	return A["priority"] - B["priority"]
