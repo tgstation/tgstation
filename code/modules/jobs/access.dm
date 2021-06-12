@@ -130,5 +130,4 @@
 		return "hudcentcom"
 
 	// If none of the above apply, job name is unknown.
-	
 	return "hudunknown"
