@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/compare/logic
 	display_name = "Logic"
+	display_desc = "A component with 'and' and 'or' capabilities."
 
 
 GLOBAL_LIST_INIT(comp_logic_options, list(

@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The description of the component shown on the UI
+	var/display_desc = "A generic component"
+
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -182,3 +185,31 @@
 
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
+
+/**
+ * Gets the UI notices to be displayed on the CircuitInfo panel.
+ *
+ * Returns a list of buttons in the following format
+ * list(
+ *   "icon" = ICON(string)
+ *   "content" = CONTENT(string)
+ *   "color" = COLOR(string, not a hex)
+ * )
+ */
+/obj/item/circuit_component/proc/get_ui_notices()
+	. = list()
+
+	if(!removable)
+		. += list(list(
+			"icon" = "lock",
+			"content" = "Unremovable",
+			"color" = "red"
+		))
+
+
+	if(length(input_ports))
+		. += list(list(
+			"icon" = "bolt",
+			"content" = "Power Usage Per Input: [power_usage_per_input]",
+			"color" = "orange",
+		))

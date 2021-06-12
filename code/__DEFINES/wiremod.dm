@@ -25,6 +25,9 @@
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
+/// Any datatype (USED ONLY FOR DISPLAY, DO NOT USE)
+#define COMP_TYPE_ANY "any"
+
 
 /// The maximum range between a port and an atom
 #define PORT_ATOM_MAX_RANGE 7
@@ -80,9 +83,6 @@
 
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
-
-// Combiner component
-#define COMP_COMBINER_ANY "any"
 
 // Shells
 

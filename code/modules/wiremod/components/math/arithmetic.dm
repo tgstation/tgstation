@@ -6,6 +6,7 @@
  */
 /obj/item/circuit_component/arithmetic
 	display_name = "Arithmetic"
+	display_desc = "General arithmetic component with add/subtract/multiplication/division capabilities."
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4
