@@ -105,8 +105,8 @@
 	pixel_y = rand(-4,4)
 
 /obj/item/trash/peanuts
-	name = "\improper Parker's peanuts packet"
-	desc = "The most alliterative garbage around."
+	name = "\improper Gallery peanuts packet"
+	desc = "This thread is trash!"
 	icon_state = "peanuts"
 
 /obj/item/trash/cnds

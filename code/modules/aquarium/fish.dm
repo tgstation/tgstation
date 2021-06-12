@@ -192,7 +192,7 @@
 /datum/aquarium_behaviour/fish/armorfish
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
-	icon_state = "needlefish"
+	icon_state = "armorfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish

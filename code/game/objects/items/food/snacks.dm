@@ -170,42 +170,42 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/peanuts
-	name = "\improper Parker's plain peanuts"
-	desc = "As commonly seen on shuttle flights."
+	name = "\improper Gallery's peanuts"
+	desc = "A favourite amongst the terminally angry."
 	icon_state = "peanuts"
 	trash_type = /obj/item/trash/peanuts
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	tastes = list("peanuts" = 3)
+	tastes = list("peanuts" = 4, "anger" = 1)
 	foodtypes = JUNKFOOD | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
 
 /obj/item/food/peanuts/salted
-	name = "\improper Parker's salted peanuts"
-	desc = "Tastes salty, just like most peanuts."
+	name = "\improper Gallery's salt reserves peanuts"
+	desc = "Tastes salty."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 1)
-	tastes = list("peanuts" = 2, "salt" = 1)
+	tastes = list("peanuts" = 3, "salt" = 1, "high blood pressure" = 1)
 
 /obj/item/food/peanuts/wasabi
-	name = "\improper Parker's wasabi peanuts"
-	desc = "It's the Heat from the East. Goes well with sushi peanuts."
+	name = "\improper Gallery's raging wasabi peanuts"
+	desc = "The angriest of all peanut flavours."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/capsaicin = 1)
-	tastes = list("peanuts" = 2, "wasabi heat" = 1)
+	tastes = list("peanuts" = 3, "wasabi" = 1, "rage" = 1)
 
 /obj/item/food/peanuts/honey_roasted
-	name = "\improper Parker's honey-roasted peanuts"
-	desc = "Tossed in honey and roasted for maximum sugary-savoury flavour."
+	name = "\improper Gallery's delete sweet peanuts"
+	desc = "Oddly bitter for a sweet treat."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 1)
-	tastes = list("peanuts" = 2, "honey" = 1)
+	tastes = list("peanuts" = 3, "honey" = 1, "bitterness" = 1)
 
 /obj/item/food/peanuts/barbecue
-	name = "\improper Parker's barbecue peanuts"
-	desc = "The pioneers used to ride for miles after eating these."
+	name = "\improper Gallery's IDEDBBQ peanuts"
+	desc = "Where there's smoke, there's not necessarily fire- sometimes it's just BBQ sauce."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
-	tastes = list("peanuts" = 2, "bbq sauce" = 1)
+	tastes = list("peanuts" = 3, "bbq sauce" = 1, "arguments" = 1)
 
 /obj/item/food/peanuts/random
-	name = "\improper Parker's every-flavour peanuts"
+	name = "\improper Gallery's every-flavour peanuts"
 	desc = "What flavour will you get?"
 	icon_state = "peanuts"
 
