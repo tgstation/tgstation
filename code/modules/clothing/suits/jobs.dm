@@ -156,7 +156,6 @@
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
 	allowed = list(
-		/obj/item/analyzer,
 		/obj/item/flashlight/pen,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
