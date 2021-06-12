@@ -28,13 +28,11 @@
 	if(isnum(variant))
 		variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
-	var/turf/open/ground = get_turf(src)
-	ADD_TRAIT(ground, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
+	var/obj/machinery/griddle/stove = src
+	ADD_TRAIT(stove, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
 
 /obj/machinery/griddle/Destroy()
 	QDEL_NULL(grill_loop)
-	var/turf/open/ground = get_turf(src)
-	REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
 	. = ..()
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
