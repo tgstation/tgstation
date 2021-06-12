@@ -96,19 +96,12 @@
 		return
 
 	if(istype(O, /obj/item/reagent_containers/glass))
-		. = 1 //no afterattack
-		if(!panel_open)
-			if(beaker)
-				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
-			else
-				if(!user.transferItemToLoc(O, src))
-					return
-				beaker = O
-				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
-				update_appearance()
-		else
+		if(panel_open)
 			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
-		return
+		else
+			insert_beaker(user, O)
+
+		return TRUE
 
 	else if(istype(O, /obj/item/storage/bag/plants))
 		var/obj/item/storage/bag/plants/PB = O
@@ -159,7 +152,7 @@
 /obj/machinery/biogenerator/AltClick(mob/living/user)
 	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
-		detach(user)
+		eject_beaker(user)
 
 /**
  * activate: Activates biomass processing and converts all inserted grown products into biomass
@@ -244,14 +237,51 @@
 	update_appearance()
 	return .
 
-/obj/machinery/biogenerator/proc/detach(mob/living/user)
+/*
+ * Insert a new beaker into the biogenerator, replacing/swapping our current beaker if there is one.
+ *
+ * user - the mob inserting the beaker
+ * inserted_beaker - the beaker we're inserting into the biogen
+ */
+/obj/machinery/biogenerator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/glass/inserted_beaker)
+	if(!can_interact(user))
+		return
+
+	if(!user.transferItemToLoc(inserted_beaker, src))
+		return
+
 	if(beaker)
-		if(can_interact(user))
-			user.put_in_hands(beaker)
-		else
-			beaker.drop_location(get_turf(src))
-		beaker = null
-		update_appearance()
+		to_chat(user, "<span class='notice'>You swap out [beaker] in [src] for [inserted_beaker].</span>")
+		eject_beaker(user, silent = TRUE)
+	else
+		to_chat(user, "<span class='notice'>You add [inserted_beaker] to [src].</span>")
+
+	beaker = inserted_beaker
+	update_appearance()
+
+/*
+ * Eject the current stored beaker either into the user's hands or onto the ground.
+ *
+ * user - the mob ejecting the beaker
+ * silent - whether to give a message to the user that the beaker was ejected.
+ */
+/obj/machinery/biogenerator/proc/eject_beaker(mob/living/user, silent = FALSE)
+	if(!beaker)
+		return
+
+	if(!can_interact(user))
+		return
+
+	if(user.put_in_hands(beaker))
+		if(!silent)
+			to_chat(user, "<span class='notice'>You eject [beaker] from [src].</span>")
+	else
+		if(!silent)
+			to_chat(user, "<span class='notice'>You eject [beaker] from [src] onto the ground.</span>")
+		beaker.forceMove(drop_location())
+
+	beaker = null
+	update_appearance()
 
 /obj/machinery/biogenerator/ui_status(mob/user)
 	if(machine_stat & BROKEN || panel_open)
@@ -317,8 +347,8 @@
 		if("activate")
 			activate(usr)
 			return TRUE
-		if("detach")
-			detach(usr)
+		if("eject")
+			eject_beaker(usr)
 			return TRUE
 		if("create")
 			var/amount = text2num(params["amount"])

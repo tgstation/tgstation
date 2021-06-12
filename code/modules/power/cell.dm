@@ -204,6 +204,7 @@
 /obj/item/stock_parts/cell/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_appearance()
 
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"

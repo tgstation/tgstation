@@ -1212,7 +1212,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/human/human_mob = target
 	LAZYNULL(human_mob.hal_screwydoll)
 	human_mob.update_health_hud()
-	..()
+	return ..()
 
 
 /datum/hallucination/items/New(mob/living/carbon/C, forced = TRUE)

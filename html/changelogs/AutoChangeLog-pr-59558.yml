@@ -1,4 +1,0 @@
-author: "fira"
-delete-after: True
-changes: 
-  - bugfix: "Input system won't request in-place movements constantly anymore."
