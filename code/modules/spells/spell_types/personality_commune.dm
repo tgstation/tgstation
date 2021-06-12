@@ -14,6 +14,10 @@
 	. = ..()
 	trauma = T
 
+/obj/effect/proc_holder/spell/targeted/personality_commune/Destroy()
+	trauma = null
+	return ..()
+
 // Pillaged and adapted from telepathy code
 /obj/effect/proc_holder/spell/targeted/personality_commune/cast(list/targets, mob/user)
 	if(!istype(trauma))

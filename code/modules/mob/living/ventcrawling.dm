@@ -54,18 +54,26 @@
 				if(!client)
 					return
 				visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
-				forceMove(ventcrawl_target)
-				ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
-				update_pipe_vision()
+				move_into_vent(ventcrawl_target)
 			else
 				to_chat(src, "<span class='warning'>This ventilation duct is not connected to anything!</span>")
-
 
 /mob/living/simple_animal/slime/handle_ventcrawl(atom/A)
 	if(buckled)
 		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
 		return
 	return ..()
+
+/**
+ * Moves living mob directly into the vent as a ventcrawler
+ *
+ * Arguments:
+ * * ventcrawl_target - The vent into which we are moving the mob
+ */
+/mob/living/proc/move_into_vent(obj/machinery/atmospherics/components/ventcrawl_target)
+	forceMove(ventcrawl_target)
+	ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
+	update_pipe_vision()
 
 /**
  * Everything related to pipe vision on ventcrawling is handled by update_pipe_vision().

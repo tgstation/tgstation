@@ -19,17 +19,19 @@
 		if(bomb.timing)
 			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
-/obj/item/pinpointer/nuke/process()
+/obj/item/pinpointer/nuke/process(delta_time)
 	..()
-	if(active) // If shit's going down
-		for(var/obj/machinery/nuclearbomb/bomb in GLOB.nuke_list)
-			if(bomb.timing)
-				if(!alert)
-					alert = TRUE
-					playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
-					if(isliving(loc))
-						var/mob/living/L = loc
-						to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
+	if(!active || alert)
+		return
+	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+		if(!bomb.timing)
+			continue
+		alert = TRUE
+		playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
+		if(isliving(loc))
+			var/mob/living/alerted_holder = loc
+			to_chat(alerted_holder, "<span class='userdanger'>Your [name] vibrates and lets out an ominous alarm. Uh oh.</span>")
+		return
 
 /obj/item/pinpointer/nuke/scan_for_target()
 	target = null

@@ -394,7 +394,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "bX" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/generator,
+/obj/item/circuitboard/computer/turbine_computer,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bY" = (
@@ -3688,6 +3688,11 @@
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
+"Oo" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/power_compressor,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/bridge/ai_upload)
 "OT" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3743,6 +3748,11 @@
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Vg" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/power_turbine,
+/turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Vt" = (
 /obj/structure/cable,
@@ -8451,7 +8461,7 @@ ax
 ax
 ax
 aR
-aR
+by
 bw
 by
 aR
@@ -8903,8 +8913,8 @@ ax
 ax
 ax
 bo
-aR
-by
+Oo
+Vg
 bX
 bg
 ax
