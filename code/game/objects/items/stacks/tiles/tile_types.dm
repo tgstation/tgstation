@@ -906,7 +906,7 @@
 
 /obj/item/stack/tile/fake_error/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+	. += emissive_appearance(icon, icon_state, alpha = alpha)
 
 /obj/item/stack/tile/fake_error/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -1121,7 +1121,7 @@
 
 /obj/item/stack/tile/emissive_test/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+	. += emissive_appearance(icon, icon_state, alpha = alpha)
 
 /obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
