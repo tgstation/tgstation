@@ -166,7 +166,7 @@
 	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
 
 	// Otherwise, it has a chance to fail. We don't want that, since this is already pretty unlikely.
-	sleeper_agent.randomly_acceptable = FALSE
+	sleeper_agent.has_failure_chance = FALSE
 
 	mode.configure_ruleset(sleeper_agent)
 
@@ -195,7 +195,7 @@
 
 	/// Whether or not this instance of sleeper agent should be randomly acceptable.
 	/// If TRUE, then this has a threat level% chance to succeed.
-	var/randomly_acceptable = TRUE
+	var/has_failure_chance = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = GLOB.alive_player_list.len
@@ -208,7 +208,7 @@
 		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
 		return FALSE
 
-	if (randomly_acceptable && !prob(mode.threat_level))
+	if (has_failure_chance && !prob(mode.threat_level))
 		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
 		return FALSE
 
