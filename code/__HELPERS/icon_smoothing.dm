@@ -387,8 +387,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 								if(!get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency)) //if all else fails, ask our own turf
 									underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
 									underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
-					underlays += underlay_appearance
-
+					underlays = list(underlay_appearance)
 
 /turf/open/floor/set_smoothed_icon_state(new_junction)
 	if(broken || burnt)
