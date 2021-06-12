@@ -755,8 +755,6 @@
 	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [allergy_string], make sure not to consume any of these!</span>")
 
 /datum/quirk/item_quirk/allergic/process(delta_time)
-	. = ..()
-
 	if(!iscarbon(quirk_holder))
 		return
 
