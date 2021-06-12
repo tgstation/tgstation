@@ -1148,7 +1148,7 @@
 				set_light_color(var_value)
 			. =  TRUE
 		if(NAMEOF(src, light_on))
-			set_smoothed_icon_state(var_value)
+			set_light_on(var_value)
 			. =  TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)
