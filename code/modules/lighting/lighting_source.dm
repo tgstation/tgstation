@@ -28,10 +28,7 @@
 	var/tmp/applied_lum_g
 	var/tmp/applied_lum_b
 
-	/// List used to store how much we're affecting corners.
-	var/list/datum/lighting_corner/effect_str
-	///what turfs we affect
-	var/list/turf/affecting_turfs
+	var/list/datum/lighting_corner/effect_str     // List used to store how much we're affecting corners.
 
 	/// Whether we have applied our light yet or not.
 	var/applied = FALSE
@@ -73,7 +70,8 @@
 	source_atom = null
 	source_turf = null
 	pixel_turf = null
-	. = ..()
+
+	return ..()
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
@@ -114,40 +112,32 @@
 // The braces and semicolons are there to be able to do this on a single line.
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
-#define APPLY_CORNER(C)                      \
-	. = LUM_FALLOFF(C, pixel_turf);          \
-	. *= light_power;                        \
-	var/OLD = effect_str[C];                 \
-	effect_str[C] = .;                       \
-											\
-	C.update_lumcount                        \
-	(                                        \
-		(. * lum_r) - (OLD * applied_lum_r), \
-		(. * lum_g) - (OLD * applied_lum_g), \
-		(. * lum_b) - (OLD * applied_lum_b)  \
-	);
+#define APPLY_CORNER(C)                          \
+	. = LUM_FALLOFF(C, pixel_turf);              \
+	. *= light_power;                            \
+	var/OLD = effect_str[C];                     \
+	                                             \
+	C.update_lumcount                            \
+	(                                            \
+		(. * lum_r) - (OLD * applied_lum_r),     \
+		(. * lum_g) - (OLD * applied_lum_g),     \
+		(. * lum_b) - (OLD * applied_lum_b)      \
+	);                                           \
 
-#define REMOVE_CORNER(C)                     \
-	. = -effect_str[C];                      \
-	C.update_lumcount                        \
-	(                                        \
-		. * applied_lum_r,                   \
-		. * applied_lum_g,                   \
-		. * applied_lum_b                    \
+#define REMOVE_CORNER(C)                         \
+	. = -effect_str[C];                          \
+	C.update_lumcount                            \
+	(                                            \
+		. * applied_lum_r,                       \
+		. * applied_lum_g,                       \
+		. * applied_lum_b                        \
 	);
 
 /// This is the define used to calculate falloff.
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
-	for (var/turf/current_turf as anything in affecting_turfs)
-		LAZYREMOVE(current_turf.affecting_lights, src)
-
-	affecting_turfs = null
-
-
 	for (var/datum/lighting_corner/corner as anything in effect_str)
 		REMOVE_CORNER(corner)
-
 		LAZYREMOVE(corner.affecting, src)
 
 	effect_str = null
@@ -158,8 +148,8 @@
 		REMOVE_CORNER(corner)
 		effect_str[corner] = 0
 
-	APPLY_CORNER(corner)
-	UNSETEMPTY(effect_str)
+	APPLY_CORNER(C)
+	effect_str[C] = .
 
 
 /datum/light_source/proc/update_corners()
@@ -224,70 +214,56 @@
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
-	var/list/turf/turfs = list()
-	var/datum/lighting_corner/corner
-	var/turf/current_turf
+	var/list/turf/turfs                    = list()
 
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
-		for(current_turf in view(CEILING(light_range, 1), source_turf))
-			if((!IS_DYNAMIC_LIGHTING(current_turf) && !current_turf.light_sources))
-				continue
-			if(!IS_OPAQUE_TURF(current_turf))
-				if (!current_turf.lighting_corners_initialised)
-					current_turf.generate_missing_corners()
-				for (corner as anything in current_turf.corners)
-					corners[corner] = 0
-			turfs += current_turf
+		for(var/turf/T in view(CEILING(light_range, 1), source_turf))
+			if(!IS_OPAQUE_TURF(T))
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				corners[T.lighting_corner_NE] = 0
+				corners[T.lighting_corner_SE] = 0
+				corners[T.lighting_corner_SW] = 0
+				corners[T.lighting_corner_NW] = 0
+			turfs += T
 		source_turf.luminosity = oldlum
 
-	LAZYINITLIST(affecting_turfs)
-	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
-	affecting_turfs += L
-	for (current_turf as anything in L)
-		LAZYADD(current_turf.affecting_lights, src)
-
-	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
-	affecting_turfs -= L
-	for (current_turf as anything in L)
-		LAZYREMOVE(current_turf.affecting_lights, src)
-
+	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (corner as anything in corners - effect_str) // New corners
-			LAZYADD(corner.affecting, src)
-			if (!corner.active)
-				effect_str[corner] = 0
-				continue
+		for (var/datum/lighting_corner/corner as anything in new_corners)
 			APPLY_CORNER(corner)
+			if (. != 0)
+				LAZYADD(corner.affecting, src)
+				effect_str[corner] = .
 	else
-		L = corners - effect_str
-		for (corner as anything in L) // New corners
-			LAZYADD(corner.affecting, src)
-			if (!corner.active)
-				effect_str[corner] = 0
-				continue
+		for (var/datum/lighting_corner/corner as anything in new_corners)
 			APPLY_CORNER(corner)
+			if (. != 0)
+				LAZYADD(corner.affecting, src)
+				effect_str[corner] = .
 
-		for (corner as anything in corners - L) // Existing corners
-			if (!corner.active)
-				effect_str[corner] = 0
-				continue
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
 			APPLY_CORNER(corner)
+			if (. != 0)
+				effect_str[corner] = .
+			else
+				LAZYREMOVE(corner.affecting, src)
+				effect_str -= corner
 
-	L = effect_str - corners
-	for (corner as anything in L) // Old, now gone, corners.
+	var/list/datum/lighting_corner/gone_corners = effect_str - corners
+	for (var/datum/lighting_corner/corner as anything in gone_corners) 
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
-	effect_str -= L
+	effect_str -= gone_corners
 
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g
 	applied_lum_b = lum_b
 
 	UNSETEMPTY(effect_str)
-	UNSETEMPTY(affecting_turfs)
 
 #undef EFFECT_UPDATE
 #undef LUM_FALLOFF

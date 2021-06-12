@@ -68,7 +68,7 @@
 
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
-	qdel(visuals)
+	QDEL_NULL(visuals)
 	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 	target = null

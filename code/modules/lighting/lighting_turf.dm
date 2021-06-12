@@ -1,16 +1,13 @@
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	for (var/datum/light_source/light as anything in affecting_lights)
-		light.vis_update()
+	lighting_corner_NE?.vis_update()
+	lighting_corner_SE?.vis_update()
+	lighting_corner_SW?.vis_update()
+	lighting_corner_NW?.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
 		qdel(lighting_object, force=TRUE)
-
-	for (var/datum/lighting_corner/corner as anything in corners)
-		if(!corner)
-			continue
-		corner.update_active()
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
@@ -21,18 +18,7 @@
 	if (!IS_DYNAMIC_LIGHTING(our_area) && !light_sources)
 		return
 
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-
-	new/datum/lighting_object(src)
-
-	for (var/datum/lighting_corner/corner as anything in corners)
-		if(!corner)
-			continue
-		if (!corner.active) // We would activate the corner, calculate the lighting for it.
-			for (var/datum/light_source/light as anything in corner.affecting)
-				light.recalc_corner(corner)
-			corner.active = TRUE
+	new/atom/movable/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -40,11 +26,20 @@
 		return 1
 
 	var/totallums = 0
-
-	for (var/datum/lighting_corner/corner as anything in corners)
-		if(!corner)
-			continue
-		totallums += corner.lum_r + corner.lum_b + corner.lum_g
+	var/datum/lighting_corner/L
+	L = lighting_corner_NE
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SE
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_NW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+		
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 
@@ -109,14 +104,16 @@
 				lighting_clear_overlay()
 
 /turf/proc/generate_missing_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return
+	if (!lighting_corner_NE)
+		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
+	
+	if (!lighting_corner_SE)
+		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
+	
+	if (!lighting_corner_SW)
+		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
+	
+	if (!lighting_corner_NW)
+		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
+	
 	lighting_corners_initialised = TRUE
-	if (!corners)
-		corners = list(null, null, null, null)
-
-	for (var/i = 1 to 4)
-		if (corners[i]) // Already have a corner on this direction.
-			continue
-
-		corners[i] = new/datum/lighting_corner(src, GLOB.LIGHTING_CORNER_DIAGONAL[i])

@@ -181,6 +181,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	vis_contents += portal_visuals
 	return ..()
 
+/obj/machinery/gateway/Destroy()
+	destination.target_gateway = null
+	GLOB.gateway_destinations -= destination
+	destination = null
+	return ..()
+
 /obj/machinery/gateway/proc/generate_destination()
 	destination = new destination_type
 	destination.name = destination_name

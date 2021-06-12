@@ -54,16 +54,10 @@
 
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/list/corners = affected_turf.corners
-	var/datum/lighting_corner/cr = dummy_lighting_corner
-	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner
-	var/datum/lighting_corner/ca = dummy_lighting_corner
-	if (corners) //done this way for speed
-		cr = corners[3] || dummy_lighting_corner
-		cg = corners[2] || dummy_lighting_corner
-		cb = corners[4] || dummy_lighting_corner
-		ca = corners[1] || dummy_lighting_corner
+	var/datum/lighting_corner/cr = myturf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/cg = myturf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/cb = myturf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/ca = myturf.lighting_corner_NE || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
