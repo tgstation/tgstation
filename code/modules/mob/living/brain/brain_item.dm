@@ -226,7 +226,7 @@
 
 	destroy_all_skillchips()
 	if(owner?.mind) //You aren't allowed to return to brains that don't exist
-		owner.mind.current = null
+		owner.mind.set_current(null)
 	return ..()
 
 /obj/item/organ/brain/on_life(delta_time, times_fired)
