@@ -85,15 +85,13 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	var/forced_state = SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATING)
-
-	if(((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8)) || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT)
+	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "transparent"
 		current_underlay.color = null
 		affected_turf.underlays += current_underlay
-	else if(!set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_DARK)
+	else if(!set_luminosity)
 		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "dark"
 		current_underlay.color = null
@@ -111,6 +109,4 @@
 
 		affected_turf.underlays += current_underlay
 
-	SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATED, current_underlay)
-
-	affected_turf.luminosity = set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT
+	affected_turf.luminosity = set_luminosity
