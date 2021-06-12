@@ -68,7 +68,7 @@
 
 /obj/machinery/ecto_sniffer/crowbar_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_crowbar(tool))
-		return ..
+		return ..()
 
 /obj/machinery/ecto_sniffer/Destroy()
 	ectoplasmic_residues = null
@@ -77,5 +77,5 @@
 ///Removes the ghost from the ectoplasmic_residues list and lets them know they are free to activate the sniffer again.
 /obj/machinery/ecto_sniffer/proc/clear_residue(datum/weakref/residue)
 	ectoplasmic_residues -= residue
-
-	to_chat(residue.resolve(), "<span class='nicegreen'>The coating of ectoplasmic residue you left on [src]'s sensors has decayed.</span>")
+	var/mob/ghost = residue.resolve()
+	to_chat(ghost, "[FOLLOW_LINK(ghost, src)] <span class='nicegreen'>The coating of ectoplasmic residue you left on [src]'s sensors has decayed.</span>")
