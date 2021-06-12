@@ -13,12 +13,16 @@
 	var/recharge_start_delay = 20 SECONDS
 	/// Once we go unhit long enough to recharge, we replenish charges this often. The floor is effectively 1 second, AKA how often SSdcs processes
 	var/charge_increment_delay = 1 SECONDS
+	/// How many charges we recover on each charge increment
+	var/charge_recovery = 1
 	/// What .dmi we're pulling the shield icon from
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// What icon is used when someone has a functional shield up
 	var/shield_icon = "shield-old"
 	/// Do we still shield if we're being held in-hand? If FALSE, it needs to be equipped to a slot to work
 	var/shield_inhand = FALSE
+	/// Should the shield lose charges equal to the damage dealt by a hit?
+	var/lose_multiple_charges = FALSE
 	/// The cooldown tracking when we were last hit
 	COOLDOWN_DECLARE(recently_hit_cd)
 	/// The cooldown tracking when we last replenished a charge
@@ -26,7 +30,7 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, health_like_damage = FALSE, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -73,7 +77,7 @@
 
 	var/obj/item/item_parent = parent
 	COOLDOWN_START(src, charge_add_cd, charge_increment_delay)
-	current_charges++
+	current_charges = clamp(current_charges + charge_recovery, 0, max_charges) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
 	if(wearer && current_charges == 1)
 		wearer.update_appearance(UPDATE_ICON)
 	playsound(item_parent, 'sound/magic/charge.ogg', 50, TRUE)
@@ -121,7 +125,13 @@
 	if(current_charges <= 0)
 		return
 	. = COMPONENT_HIT_REACTION_BLOCK
-	current_charges = max(current_charges - 1, 0)
+
+	var/charge_loss = 1 // how many charges do we lose
+
+	if(lose_multiple_charges) // if the shield has health like damage we'll lose charges equal to the damage of the hit
+		charge_loss = damage
+
+	current_charges = clamp(current_charges - charge_loss, 0, max_charges) // remove charge_loss from the current charges, clamp between zero and max_charges to avoid anything funky happening
 
 	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
 

@@ -39,6 +39,8 @@
 	r_hand = /obj/item/gun/energy/laser/instakill
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
+// RED TEAM CLASSES
+
 /datum/outfit/ctf/red
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
@@ -49,6 +51,16 @@
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
 	shoes = /obj/item/clothing/shoes/jackboots/fast
+
+/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_RED)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
+
+// BLUE TEAM CLASSES
 
 /datum/outfit/ctf/blue
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
@@ -61,6 +73,16 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_BLUE)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
+
+// GREEN TEAM CLASSES
+
 /datum/outfit/ctf/green
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
@@ -72,6 +94,16 @@
 	r_hand = /obj/item/gun/energy/laser/instakill/green
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
+/datum/outfit/ctf/green/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_GREEN)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
+
+// YELLOW TEAM CLASSES
+
 /datum/outfit/ctf/yellow
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
@@ -82,30 +114,6 @@
 /datum/outfit/ctf/yellow/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/yellow
 	shoes = /obj/item/clothing/shoes/jackboots/fast
-
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_RED)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
-
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_BLUE)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
-
-/datum/outfit/ctf/green/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_GREEN)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
 
 /datum/outfit/ctf/yellow/post_equip(mob/living/carbon/human/H)
 	..()

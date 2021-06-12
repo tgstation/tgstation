@@ -74,6 +74,28 @@
 				. = TRUE
 				break
 
+// SHIELDED HARDSUIT
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf
+	name = "white shielded hardsuit"
+	desc = "Standard issue hardsuit for playing capture the flag."
+	icon_state = "ert_medical"
+	inhand_icon_state = "ert_medical"
+	hardsuit_type = "ert_medical"
+	// Adding TRAIT_NODROP is done when the CTF spawner equips people
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
+	armor = list(MELEE = 0, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 100, RAD = 100, FIRE = 95, ACID = 95)
+	slowdown = 0
+	max_charges = 5
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
+	name = "shielded hardsuit helmet"
+	desc = "Standard issue hardsuit helmet for playing capture the flag."
+	icon_state = "hardsuit0-ert_medical"
+	inhand_icon_state = "hardsuit0-ert_medical"
+	hardsuit_type = "ert_medical"
+	armor = list(MELEE = 0, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 100, RAD = 100, FIRE = 95, ACID = 95)
+
 // RED TEAM GUNS
 
 /obj/item/gun/ballistic/automatic/laser/ctf/red
@@ -133,3 +155,63 @@
 /obj/projectile/beam/ctf/yellow
 	icon_state = "gaussstrong"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+
+// RED TEAM SUITS
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	name = "red shielded hardsuit"
+	icon_state = "ert_security"
+	inhand_icon_state = "ert_security"
+	hardsuit_type = "ert_security"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
+	shield_icon = "shield-red"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
+	icon_state = "hardsuit0-ert_security"
+	inhand_icon_state = "hardsuit0-ert_security"
+	hardsuit_type = "ert_security"
+
+// BLUE TEAM SUITS
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	name = "blue shielded hardsuit"
+	icon_state = "ert_command"
+	inhand_icon_state = "ert_command"
+	hardsuit_type = "ert_commander"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
+	shield_icon = "shield-old"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
+	icon_state = "hardsuit0-ert_commander"
+	inhand_icon_state = "hardsuit0-ert_commander"
+	hardsuit_type = "ert_commander"
+
+// GREEN TEAM SUITS
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
+	name = "green shielded hardsuit"
+	icon_state = "ert_green"
+	inhand_icon_state = "ert_green"
+	hardsuit_type = "ert_green"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/green
+	shield_icon = "shield-green"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/green
+	icon_state = "hardsuit0-ert_green"
+	inhand_icon_state = "hardsuit0-ert_green"
+	hardsuit_type = "ert_green"
+
+// YELLOW TEAM SUITS
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
+	name = "yellow shielded hardsuit"
+	icon_state = "ert_engineer"
+	inhand_icon_state = "ert_engineer"
+	hardsuit_type = "ert_engineer"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
+	shield_icon = "shield-yellow"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
+	icon_state = "hardsuit0-ert_engineer"
+	inhand_icon_state = "hardsuit0-ert_engineer"
+	hardsuit_type = "ert_engineer"
