@@ -28,12 +28,13 @@
 	var/tmp/applied_lum_g
 	var/tmp/applied_lum_b
 
-	var/list/datum/lighting_corner/effect_str     // List used to store how much we're affecting corners.
+	/// List used to store how much we're affecting corners.
+	var/list/datum/lighting_corner/effect_str
 
 	/// Whether we have applied our light yet or not.
 	var/applied = FALSE
 
-	/// Whether we are queued for an update.
+	/// whether we are to be added to SSlighting's sources_queue list for an update
 	var/needs_update = LIGHTING_NO_UPDATE
 
 
@@ -148,8 +149,8 @@
 		REMOVE_CORNER(corner)
 		effect_str[corner] = 0
 
-	APPLY_CORNER(C)
-	effect_str[C] = .
+	APPLY_CORNER(corner)
+	effect_str[corner] = .
 
 
 /datum/light_source/proc/update_corners()
@@ -214,7 +215,7 @@
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
-	var/list/turf/turfs                    = list()
+	var/list/turf/turfs = list()
 
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
@@ -254,7 +255,7 @@
 				effect_str -= corner
 
 	var/list/datum/lighting_corner/gone_corners = effect_str - corners
-	for (var/datum/lighting_corner/corner as anything in gone_corners) 
+	for (var/datum/lighting_corner/corner as anything in gone_corners)
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
 	effect_str -= gone_corners

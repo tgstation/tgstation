@@ -15,7 +15,7 @@
 		return
 	. = ..()
 
-	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", source.z, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
 
 	affected_turf = source
 	if (affected_turf.lighting_object)
@@ -54,28 +54,28 @@
 
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/datum/lighting_corner/cr = myturf.lighting_corner_SW || dummy_lighting_corner
-	var/datum/lighting_corner/cg = myturf.lighting_corner_SE || dummy_lighting_corner
-	var/datum/lighting_corner/cb = myturf.lighting_corner_NW || dummy_lighting_corner
-	var/datum/lighting_corner/ca = myturf.lighting_corner_NE || dummy_lighting_corner
+	var/datum/lighting_corner/red_corner = affected_turf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/green_corner = affected_turf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/blue_corner = affected_turf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/alpha_corner = affected_turf.lighting_corner_NE || dummy_lighting_corner
 
-	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
+	var/max = max(red_corner.largest_color_luminosity, green_corner.largest_color_luminosity, blue_corner.largest_color_luminosity, alpha_corner.largest_color_luminosity)
 
-	var/rr = cr.cache_r
-	var/rg = cr.cache_g
-	var/rb = cr.cache_b
+	var/rr = red_corner.cache_r
+	var/rg = red_corner.cache_g
+	var/rb = red_corner.cache_b
 
-	var/gr = cg.cache_r
-	var/gg = cg.cache_g
-	var/gb = cg.cache_b
+	var/gr = green_corner.cache_r
+	var/gg = green_corner.cache_g
+	var/gb = green_corner.cache_b
 
-	var/br = cb.cache_r
-	var/bg = cb.cache_g
-	var/bb = cb.cache_b
+	var/br = blue_corner.cache_r
+	var/bg = blue_corner.cache_g
+	var/bb = blue_corner.cache_b
 
-	var/ar = ca.cache_r
-	var/ag = ca.cache_g
-	var/ab = ca.cache_b
+	var/ar = alpha_corner.cache_r
+	var/ag = alpha_corner.cache_g
+	var/ab = alpha_corner.cache_b
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
