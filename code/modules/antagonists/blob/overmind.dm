@@ -96,6 +96,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(blobstrain.effectdesc)
 				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
+/mob/camera/blob/can_zFall(turf/source, levels)
+	// Prevent blob from falling through zlevels
+	return FALSE
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
@@ -178,6 +181,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSticker.force_ending = 1
 
 /mob/camera/blob/Destroy()
+	QDEL_NULL(blobstrain)
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
@@ -219,7 +223,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
-		var/current_health = round((blob_core.obj_integrity / blob_core.max_integrity) * 100)
+		var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
 		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.hud_used.blobpwrdisplay)
@@ -270,7 +274,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/get_status_tab_items()
 	. = ..()
 	if(blob_core)
-		. += "Core Health: [blob_core.obj_integrity]"
+		. += "Core Health: [blob_core.get_integrity()]"
 		. += "Power Stored: [blob_points]/[max_blob_points]"
 		. += "Blobs to Win: [blobs_legit.len]/[blobwincount]"
 	if(free_strain_rerolls)

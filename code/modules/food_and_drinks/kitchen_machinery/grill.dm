@@ -150,7 +150,7 @@
 			grilled_item.desc = "A [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
 			grilled_item.foodtype |= FRIED
 	grill_time = 0
-	UnregisterSignal(grilled_item, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+	UnregisterSignal(grilled_item, COMSIG_GRILL_COMPLETED)
 	grill_loop.stop()
 
 ///Called when a food is transformed by the grillable component

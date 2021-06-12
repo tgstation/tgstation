@@ -79,7 +79,7 @@
 	},
 /area/template_noop)
 "l" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/north,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -155,7 +155,7 @@
 	},
 /area/template_noop)
 "C" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "D" = (
@@ -285,7 +285,7 @@
 	},
 /area/template_noop)
 "V" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"

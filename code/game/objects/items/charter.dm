@@ -133,14 +133,15 @@
 	w_class = 5
 	force = 15
 	ignores_timeout = TRUE //non roundstart!
-	var/timesup = FALSE
+	//A cooldown, once it's over you can't declare a new name anymore
+	COOLDOWN_DECLARE(cutoff)
 
 /obj/item/station_charter/revolution/Initialize()
 	. = ..()
-	addtimer(VARSET_CALLBACK(src, timesup, TRUE), 5 MINUTES)
+	COOLDOWN_START(src, cutoff, 5 MINUTES)
 
 /obj/item/station_charter/revolution/attack_self(mob/living/user)
-	if(timesup && !used)
+	if(COOLDOWN_FINISHED(src, cutoff) && !used)
 		to_chat(user, "<span class='warning'>You have lost the victorious fervor to declare a new name.</span>")
 		return
 	. = ..()

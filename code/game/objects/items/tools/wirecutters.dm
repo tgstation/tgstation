@@ -6,6 +6,9 @@
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+
+	greyscale_config = /datum/greyscale_config/wirecutters
+
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
@@ -37,9 +40,8 @@
 
 /obj/item/wirecutters/Initialize()
 	if(random_color)
-		set_greyscale_config(/datum/greyscale_config/wirecutters)
 		var/our_color = pick(wirecutter_colors)
-		set_greyscale_colors(list(wirecutter_colors[our_color]))
+		set_greyscale(colors=list(wirecutter_colors[our_color]))
 	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
@@ -48,10 +50,12 @@
 		qdel(C.handcuffed)
 		return
 	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
-		to_chat(C, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+		user.visible_message("<span class='notice'>[user] attempts to cut the durathread strand from around [C]'s neck.</span>")
 		if(do_after(user, 1.5 SECONDS, C))
-			to_chat(C, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			user.visible_message("<span class='notice'>[user] succesfully cuts the durathread strand from around [C]'s neck.</span>")
 			C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			playsound(loc, usesound, 50, TRUE, -1)
+		return
 	else
 		..()
 

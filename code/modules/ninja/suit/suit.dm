@@ -84,6 +84,11 @@
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
 
+/obj/item/clothing/suit/space/space_ninja/Destroy()
+	QDEL_NULL(spark_system)
+	QDEL_NULL(cell)
+	return ..()
+
 // seal the cell in the ninja outfit
 /obj/item/clothing/suit/space/space_ninja/toggle_spacesuit_cell(mob/user)
 	return

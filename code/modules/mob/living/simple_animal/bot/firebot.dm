@@ -92,7 +92,7 @@
 	target_fire = null
 	old_target_fire = null
 	ignore_list = list()
-	anchored = FALSE
+	set_anchored(FALSE)
 	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()

@@ -42,7 +42,7 @@
 		"<span class='notice'>[user] successfully removes the damaged part of [target]'s stomach.</span>")
 	return ..()
 
-/datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
+/datum/surgery_step/gastrectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	var/mob/living/carbon/human/target_human = target
 	target_human.adjustOrganLoss(ORGAN_SLOT_STOMACH, 15)
 	display_results(user, target, "<span class='warning'>You cut the wrong part of [target]'s stomach!</span>",

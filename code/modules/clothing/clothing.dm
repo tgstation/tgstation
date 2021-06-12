@@ -309,7 +309,7 @@
 		else
 			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
 		if(pockets.quickdraw)
-			how_cool_are_your_threads += "You can quickly remove an item from [src] using Alt-Click.\n"
+			how_cool_are_your_threads += "You can quickly remove an item from [src] using Right-Click.\n"
 		if(pockets.silent)
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
@@ -397,6 +397,7 @@
 	return .
 
 /obj/item/clothing/obj_break(damage_flag)
+	. = ..()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
 	if(isliving(loc)) //It's not important enough to warrant a message if it's not on someone

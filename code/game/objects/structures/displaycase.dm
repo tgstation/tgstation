@@ -83,6 +83,7 @@
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		density = FALSE
 		broken = TRUE
@@ -398,8 +399,6 @@
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
-	///We're using the same trick as paper does in order to cache the image, and only load the UI when messed with.
-	var/list/viewing_ui = list()
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
@@ -415,7 +414,6 @@
 	if(!ui)
 		ui = new(user, src, "Vendatray", name)
 		ui.set_autoupdate(FALSE)
-		viewing_ui[user] = ui
 		ui.open()
 
 /obj/structure/displaycase/forsale/ui_data(mob/user)
@@ -576,6 +574,7 @@
 		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
 
 /obj/structure/displaycase/forsale/obj_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)

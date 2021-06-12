@@ -219,6 +219,7 @@
 	message = "laughs."
 	message_mime = "laughs silently!"
 	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 5 SECONDS
 	vary = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
@@ -361,7 +362,7 @@
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
-	message = "puts their hands on their head and falls to the ground, they surrender!"
+	message = "puts their hands on their head and falls to the ground, they surrender%s!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
@@ -375,6 +376,11 @@
 	key = "sway"
 	key_third_person = "sways"
 	message = "sways around dizzily."
+
+/datum/emote/living/tilt
+	key = "tilt"
+	key_third_person = "tilts"
+	message = "tilts their head to the side."
 
 /datum/emote/living/tremble
 	key = "tremble"
@@ -435,6 +441,8 @@
 	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
+	var/custom_emote
+	var/custom_emote_type
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
@@ -446,22 +454,23 @@
 		to_chat(user, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 		return FALSE
 	else if(!params)
-		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
 				if("Visible")
-					emote_type = EMOTE_VISIBLE
+					custom_emote_type = EMOTE_VISIBLE
 				if("Hearable")
-					emote_type = EMOTE_AUDIBLE
+					custom_emote_type = EMOTE_AUDIBLE
 				else
 					tgui_alert(usr,"Unable to use this emote, must be either hearable or visible.")
 					return
-			message = custom_emote
 	else
-		message = params
+		custom_emote = params
 		if(type_override)
-			emote_type = type_override
+			custom_emote_type = type_override
+	message = custom_emote
+	emote_type = custom_emote_type
 	. = ..()
 	message = null
 	emote_type = EMOTE_VISIBLE
