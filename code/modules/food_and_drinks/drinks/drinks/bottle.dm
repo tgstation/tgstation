@@ -517,6 +517,14 @@
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha
+	name = "Solzara Brewing Company Mushi Kombucha"
+	desc = "Best drunk over ice to savour the mushroomy flavour."
+	icon_state = "shroomy_bottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
+	isGlass = FALSE
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"
@@ -525,7 +533,7 @@
 	list_reagents = list()
 	var/list/accelerants = list( /datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
 	..()
@@ -579,7 +587,9 @@
 			return
 		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
 		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
-		active = 0
+		active = FALSE
+		return
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno
 	name = "pruno mix"

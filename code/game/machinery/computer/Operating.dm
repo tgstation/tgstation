@@ -8,7 +8,6 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
 
-	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
@@ -70,16 +69,18 @@
 		surgery["desc"] = initial(S.desc)
 		surgeries += list(surgery)
 	data["surgeries"] = surgeries
-	data["patient"] = null
-	if(table)
-		data["table"] = table
-		if(!table.check_eligible_patient())
-			return data
-		data["patient"] = list()
-		patient = table.patient
-	else
+
+	//If there's no patient just hop to it yeah?
+	if(!table)
 		data["patient"] = null
 		return data
+
+	data["table"] = table
+	if(!table.check_eligible_patient())
+		return data
+	data["patient"] = list()
+	var/mob/living/carbon/human/patient = table.patient
+
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"

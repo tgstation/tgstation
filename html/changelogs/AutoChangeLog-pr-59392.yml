@@ -1,7 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - qol: "Additional information was added to the greyscale configuration menu in the form of tooltips."
-  - qol: "You can now randomize the colors in the greyscale configuration menu."
-  - qol: "The configuration that a layer is from is now displayed in the full version of the greyscale configuration menu."
-  - bugfix: "The full version of the greyscale configuration menu now properly displays all layer steps again."

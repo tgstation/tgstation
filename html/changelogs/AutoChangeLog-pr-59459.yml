@@ -1,7 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - rscadd: "Added the Internal GPS, Direction, Health, Pull and Signal Combiner circuit components."
-  - rscadd: "Added the Money Bot shell which can dispense and receive money and also added the ability to lock shells by scanning your ID over the circuit and then over the shell once inside the shell."
-  - rscadd: "You can now rename integrated circuits so that they appear on the attached shell."
-  - code_imp: "Restructured the circuit components folder to be more organised."

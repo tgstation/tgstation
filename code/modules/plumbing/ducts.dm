@@ -292,7 +292,7 @@ All the important duct code:
 /obj/machinery/duct/doMove(destination)
 	. = ..()
 	disconnect_duct()
-	anchored = FALSE
+	set_anchored(FALSE)
 
 /obj/machinery/duct/Destroy()
 	disconnect_duct()

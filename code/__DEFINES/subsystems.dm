@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 14
+#define DB_MINOR_VERSION 15
 
 
 //! ## Timing subsystem
@@ -87,6 +87,9 @@
 
 ///Call qdel on the atom after intialization
 #define INITIALIZE_HINT_QDEL 2
+
+///Call qdel with a force of TRUE after initialization
+#define INITIALIZE_HINT_QDEL_FORCE 3
 
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\

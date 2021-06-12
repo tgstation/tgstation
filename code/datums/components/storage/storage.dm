@@ -99,6 +99,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
+	RegisterSignal(parent, COMSIG_CLICK_RIGHT, .proc/on_right_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
@@ -397,20 +398,27 @@
 	M.client.screen |= boxes
 	M.client.screen |= closer
 	M.client.screen |= real_location.contents
-	M.active_storage = src
+	M.set_active_storage(src)
 	LAZYOR(is_using, M)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/mob_deleted)
 	return TRUE
 
+/datum/component/storage/proc/mob_deleted(datum/source)
+	SIGNAL_HANDLER
+	hide_from(source)
+
 /datum/component/storage/proc/hide_from(mob/M)
+	if(M.active_storage == src)
+		M.set_active_storage(null)
+	LAZYREMOVE(is_using, M)
+
+	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 	if(!M.client)
 		return TRUE
 	var/atom/real_location = real_location()
 	M.client.screen -= boxes
 	M.client.screen -= closer
 	M.client.screen -= real_location.contents
-	if(M.active_storage == src)
-		M.active_storage = null
-	LAZYREMOVE(is_using, M)
 	return TRUE
 
 /datum/component/storage/proc/close(mob/M)
@@ -489,6 +497,7 @@
 			cansee |= M
 		else
 			LAZYREMOVE(is_using, M)
+			UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 	return cansee
 
 //Tries to dump content
@@ -833,12 +842,19 @@
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	if(on_right_click(source, user))
+		to_chat(user,"<span class='warning'>This action is being moved from alt-click to right-click.</span>")
+
+/datum/component/storage/proc/on_right_click(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		return
 
+	. = COMPONENT_CANCEL_CLICK_RIGHT
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)

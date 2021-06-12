@@ -22,6 +22,12 @@
 	if(has_action)
 		action = new base_action(src)
 
+/obj/effect/proc_holder/Destroy()
+	if(!QDELETED(action))
+		qdel(action)
+	action = null
+	return ..()
+
 /obj/effect/proc_holder/proc/on_gain(mob/living/user)
 	return
 

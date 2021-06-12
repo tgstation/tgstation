@@ -60,7 +60,7 @@
 	eigenstate.add_atom_colour(LIGHT_COLOR_LIGHT_CYAN, FIXED_COLOUR_PRIORITY)
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	eigenstate.anchored = 1//So space wind cannot drag it.
+	eigenstate.set_anchored(TRUE) //So space wind cannot drag it.
 	eigenstate.name = "[living_mob.name]'s eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
