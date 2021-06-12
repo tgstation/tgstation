@@ -335,10 +335,10 @@
 		if(CTF.team_members.len < src.team_members.len)
 			to_chat(user, "<span class='warning'>[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up.</span>")
 			return
+
 	var/client/new_team_member = user.client
-	if(user.mind && user.mind.current)
-		ctf_dust_old(user.mind.current)
-	spawn_team_member(new_team_member)
+	team_members |= new_team_member.ckey
+	to_chat(user, "<span class='warning'>You are now a member of [src.team], click on the [src.team] controller to respawn.</span>")
 
 //does not add to recently dead, because it dusts and that triggers ctf_qdelled_player
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
@@ -360,21 +360,28 @@
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
 	var/datum/outfit/chosen_class
+
 	if(ctf_gear.len == 1) //no choices to make
 		for(var/key in ctf_gear)
 			chosen_class = ctf_gear[key]
-	else if(ctf_gear.len > 3) //a lot of choices, so much that we can't use a basic alert
-		var/result = input(new_team_member, "Select a class.", "CTF") as null|anything in sortList(ctf_gear)
-		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
-			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
-		chosen_class = ctf_gear[result]
-	else //2-3 choices
-		var/list/names_only = assoc_list_strip_value(ctf_gear)
-		names_only.len += 1 //create a new null entry so if it's a 2-sized list, names_only[3] is null instead of out of bounds
-		var/result = tgui_alert(new_team_member, "Select a class.", "CTF", list(names_only[1], names_only[2], names_only[3]))
-		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
-			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
-		chosen_class = ctf_gear[result]
+
+	else //there's a choice to make, present a radial menu
+		var/list/display_classes = list()
+
+		for(var/key in ctf_gear)
+			var/datum/outfit/ctf/class = ctf_gear[key]
+			var/datum/radial_menu_choice/option = new
+			option.image  = image(icon = get_flat_human_icon(null, null, new_team_member.prefs, DUMMY_HUMAN_SLOT_CTF, showDirs = list(SOUTH), outfit_override = class))
+			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
+			display_classes[key] = option
+
+		sortList(display_classes)
+		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
+		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob) || src.ctf_enabled == FALSE || !(new_team_member.ckey in src.team_members))
+			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
+				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
+		chosen_class = ctf_gear[choice]
+
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.set_species(/datum/species/synth)
@@ -385,7 +392,6 @@
 	for(var/trait in player_traits)
 		ADD_TRAIT(M, trait, CAPTURE_THE_FLAG_TRAIT)
 	spawned_mobs[M] = chosen_class
-	team_members |= new_team_member.ckey
 	return M //used in medisim.dm
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)

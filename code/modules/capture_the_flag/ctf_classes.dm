@@ -1,5 +1,5 @@
 /datum/outfit/ctf
-	name = "CTF"
+	name = "CTF Rifleman"
 	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
@@ -11,6 +11,9 @@
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
+
+	///Description to be shown in the class selection menu
+	var/class_description = "General purpose combat class. Armed with a laser rifle and backup pistol."
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -32,6 +35,7 @@
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
+	name = "CTF Instagib"
 	r_hand = /obj/item/gun/energy/laser/instakill
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
