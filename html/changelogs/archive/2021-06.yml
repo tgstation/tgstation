@@ -241,3 +241,15 @@
   - bugfix: The chemistry diamond is now NFPA compliant
   vincentiusvin:
   - bugfix: fixed the 2person mech crushing it's own parts
+2021-06-12:
+  Arkatos:
+  - bugfix: Fixed a case where slip mood debuff was not triggering at all. You should
+      think about being more careful next time...
+  JohnFulpWillard:
+  - admin: Opening and closing job slots is now logged.
+  Thunder12345:
+  - imageadd: Three new hair gradients, a pair of shorter fades and a spiky wave.
+  Watermelon914:
+  - bugfix: Fixed a runtime with the comparison components.
+  vincentiusvin:
+  - bugfix: stimformation should not be called if no gas is actually being formed.
