@@ -22,10 +22,11 @@
 	var/obj/item/food/food = parent
 	var/atom/last_loc = food.loc
 
-	while(!isarea(last_loc))
+	while(last_loc && !isarea(last_loc))
 		if(HAS_TRAIT(food.loc, TRAIT_PROTECT_FOOD))
 			clean = TRUE
 			break
+		last_loc = last_loc.loc
 
 	if(!handled || clean)
 		// prevent decomposition
