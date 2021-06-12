@@ -392,6 +392,13 @@
 						dna.previous.Remove("UI")
 					dna.temporary_mutations.Remove(mut)
 					continue
+				if(mut == UF_CHANGED)
+					if(dna.previous["UF"])
+						dna.uni_features = merge_text(dna.uni_features,dna.previous["UF"])
+						updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+						dna.previous.Remove("UF")
+					dna.temporary_mutations.Remove(mut)
+					continue
 				if(mut == UE_CHANGED)
 					if(dna.previous["name"])
 						real_name = dna.previous["name"]

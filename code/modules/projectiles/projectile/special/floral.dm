@@ -22,6 +22,7 @@
 					else
 						C.easy_randmut(POSITIVE)
 					C.randmuti()
+					C.randmutf()
 					C.domutcheck()
 			else
 				L.adjustFireLoss(rand(5, 15))

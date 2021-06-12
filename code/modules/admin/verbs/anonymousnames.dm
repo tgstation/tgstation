@@ -93,11 +93,13 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 		if(issilicon(player))
 			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
 		else
+			var/mob/living/carbon/human/human_mob = player
 			var/original_name = player.real_name //id will not be changed if you do not do this
 			randomize_human(player) //do this first so the special name can be given
 			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
 			if(extras_enabled)
 				player_extras(player)
+			human_mob.dna.update_dna_identity()
 
 /**
  * restore_all_players: sets all crewmembers on station back to their preference name.
