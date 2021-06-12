@@ -93,7 +93,7 @@
 
 /obj/item/organ/tail/lizard/fake
 	name = "fabricated lizard tail"
-	desc = "A fabricated severed lizard tail. This one's made of synthflestail_owner. Probably not usable for lizard wine."
+	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
 	tail_type = null
 	spines = null
 
