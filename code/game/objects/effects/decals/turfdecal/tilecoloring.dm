@@ -27,14 +27,6 @@
 	name = "blue corner"
 	color = "#52B4E9"
 
-/obj/effect/turf_decal/tile/blue/joiner
-	icon_state = "tile_joiner"
-	name = "blue joiner"
-
-/obj/effect/turf_decal/tile/blue/center_join
-	icon_state = "tile_center_join"
-	name = "blue center joiner"
-
 /obj/effect/turf_decal/tile/blue/half
 	icon_state = "tile_half"
 	name = "blue half"
@@ -52,14 +44,6 @@
 /obj/effect/turf_decal/tile/green
 	name = "green corner"
 	color = "#9FED58"
-
-/obj/effect/turf_decal/tile/green/joiner
-	icon_state = "tile_joiner"
-	name = "green joiner"
-
-/obj/effect/turf_decal/tile/green/center_join
-	icon_state = "tile_center_join"
-	name = "green center joiner"
 
 /obj/effect/turf_decal/tile/green/half
 	icon_state = "tile_half"
@@ -79,14 +63,6 @@
 	name = "yellow corner"
 	color = "#EFB341"
 
-/obj/effect/turf_decal/tile/yellow/joiner
-	icon_state = "tile_joiner"
-	name = "yellow joiner"
-
-/obj/effect/turf_decal/tile/yellow/center_join
-	icon_state = "tile_center_join"
-	name = "yellow center joiner"
-
 /obj/effect/turf_decal/tile/yellow/half
 	icon_state = "tile_half"
 	name = "yellow half"
@@ -104,14 +80,6 @@
 /obj/effect/turf_decal/tile/red
 	name = "red corner"
 	color = "#DE3A3A"
-
-/obj/effect/turf_decal/tile/red/joiner
-	icon_state = "tile_joiner"
-	name = "red joiner"
-
-/obj/effect/turf_decal/tile/red/center_join
-	icon_state = "tile_center_join"
-	name = "red center joiner"
 
 /obj/effect/turf_decal/tile/red/half
 	icon_state = "tile_half"
@@ -132,14 +100,6 @@
 	color = "#791500"
 	alpha = 130
 
-/obj/effect/turf_decal/tile/bar/joiner
-	icon_state = "tile_joiner"
-	name = "bar joiner"
-
-/obj/effect/turf_decal/tile/bar/center_join
-	icon_state = "tile_center_join"
-	name = "bar center joiner"
-
 /obj/effect/turf_decal/tile/bar/half
 	icon_state = "tile_half"
 	name = "bar half"
@@ -158,14 +118,6 @@
 	name = "purple corner"
 	color = "#D381C9"
 
-/obj/effect/turf_decal/tile/purple/joiner
-	icon_state = "tile_joiner"
-	name = "purple joiner"
-
-/obj/effect/turf_decal/tile/purple/center_join
-	icon_state = "tile_center_join"
-	name = "purple center joiner"
-
 /obj/effect/turf_decal/tile/purple/half
 	icon_state = "tile_half"
 	name = "purple half"
@@ -183,14 +135,6 @@
 /obj/effect/turf_decal/tile/brown
 	name = "brown corner"
 	color = "#A46106"
-
-/obj/effect/turf_decal/tile/brown/joiner
-	icon_state = "tile_joiner"
-	name = "brown joiner"
-
-/obj/effect/turf_decal/tile/brown/center_join
-	icon_state = "tile_center_join"
-	name = "brown center joiner"
 
 /obj/effect/turf_decal/tile/brown/half
 	icon_state = "tile_half"
@@ -211,14 +155,6 @@
 	color = "#D4D4D4"
 	alpha = 50
 
-/obj/effect/turf_decal/tile/neutral/joiner
-	icon_state = "tile_joiner"
-	name = "neutral joiner"
-
-/obj/effect/turf_decal/tile/neutral/center_join
-	icon_state = "tile_center_join"
-	name = "neutral center joiner"
-
 /obj/effect/turf_decal/tile/neutral/half
 	icon_state = "tile_half"
 	name = "neutral half"
@@ -237,14 +173,6 @@
 	name = "dark corner"
 	color = "#0e0f0f"
 
-/obj/effect/turf_decal/tile/dark/joiner
-	icon_state = "tile_joiner"
-	name = "dark joiner"
-
-/obj/effect/turf_decal/tile/dark/center_join
-	icon_state = "tile_center_join"
-	name = "dark center joiner"
-
 /obj/effect/turf_decal/tile/dark/half
 	icon_state = "tile_half"
 	name = "dark half"
@@ -262,14 +190,6 @@
 /obj/effect/turf_decal/tile/random // so many colors
 	name = "colorful corner"
 	color = "#E300FF" //bright pink as default for mapping
-
-/obj/effect/turf_decal/tile/random/joiner
-	icon_state = "tile_joiner"
-	name = "colorful joiner"
-
-/obj/effect/turf_decal/tile/random/center_join
-	icon_state = "tile_center_join"
-	name = "colorful center joiner"
 
 /obj/effect/turf_decal/tile/random/half
 	icon_state = "tile_half"
