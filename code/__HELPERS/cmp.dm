@@ -51,9 +51,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority
 
-/proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
-	return initial(a.priority) - initial(b.priority)
-
 /proc/cmp_filter_data_priority(list/A, list/B)
 	return A["priority"] - B["priority"]
 

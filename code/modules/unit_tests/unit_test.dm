@@ -34,6 +34,9 @@ GLOBAL_VAR(test_log)
 
 	var/static/datum/space_level/reservation
 
+/proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
+	return initial(a.priority) - initial(b.priority)
+
 /datum/unit_test/New()
 	if (isnull(reservation))
 		var/datum/map_template/unit_tests/template = new
