@@ -18,7 +18,7 @@ Ok so let's say you're some guy called Jerry, and you're writing a programming l
 
 You want your coders to be able to pass around objects without doing a full copy. So you'll store the pack of data somewhere in memory
 
-```c++
+```dm
 /someobject
     var/id = 42
     var/name = "some shit"
@@ -27,13 +27,13 @@ You want your coders to be able to pass around objects without doing a full copy
 Then you them to be able to pass that object into say a proc, without doing a full copy. So you let them pass in the object's location in memory instead
 This is called passing something by reference
 
-```c++
+```dm
 someshit(someobject) //This isn't making a copy of someobject, it's passing in a reference to it
 ```
 
 This of course means they can store that location in memory in another object's vars, or in a list, or whatever
 
-```c++
+```dm
 /datum
     var/reference
 
@@ -48,13 +48,13 @@ So then, you've gotta do something to clean up these references when you want to
 
 We could hold a list of references to everything that references us, but god, that'd get really expensive wouldn't it
 
-Why not keep count of how many times we're referenced then? If we try to delete ourselves and it's 0, we're all good and don't need to do anything
+Why not keep count of how many times we're referenced then? If an object's ref count is ever 0, nothing whatsoever cares about it, so we can freely get rid of it
 
 But if something's holding onto a reference to us, we're not gonna have any idea where or what it is
 
 So I guess you should scan all of memory for that reference?
 
-```c++
+```dm
 del(someobject) //We now need to scan memory until we find the thing holding a ref to us, and clear it
 ```
 
@@ -66,7 +66,7 @@ What can we do to help that?
 
 ### How we can avoid hard deletes
 
-If hard deletion is so slow, we're gonna need to clean up all our references ourselves, before trying to delete our object
+If hard deletion is so slow, we're gonna need to clean up all our references ourselves
 
 In our codebase we do this with `/datum/proc/Destroy()`, a proc called by `qdel()`, whose purpose I will explain later
 
@@ -78,7 +78,7 @@ There's a long long list of things this does, since we use it a TON. So I can't 
 
 Now that you know the theory, let's go over what can actually cause hard deletes. Some of this is obvious, some of it's much less so.
 
-The BYOND reference has a list [https://secure.byond.com/docs/ref/#/DM/garbage](Here), but it's not a complete one
+The BYOND reference has a list [Here](https://secure.byond.com/docs/ref/#/DM/garbage), but it's not a complete one
 
 * Stored in a var
 * An item in a list, or associated with a list item
@@ -103,6 +103,8 @@ Any proc that calls `sleep()`, `spawn()`, or some wrapper around that like `walk
 ### Range() and View() like procs
 
 Some internal BYOND procs will hold references to objects passed into them for a time after the proc is finished doing work, because they cache the returned info to make some code faster. You should never run into this issue, since we wait for what should be long enough to avoid this issue as a part of garbage collection
+
+This is what `qdel()` does by the by, it literally just means queue deletion. A reference to the object gets put into a queue, and if it still exists after 2 minutes or so, we hard delete it
 
 ### Walk() procs
 
@@ -132,9 +134,9 @@ Once you've found the issue, it becomes a matter of making sure the ref is clear
 
 ### Our Tools
 
-First and simplest we have `Destroy()
+First and simplest we have `Destroy()`. Use this to clean up after yourself for simple cases
 
-```c++
+```dm
 /someobject/Initialize()
     . = ..()
     GLOB.somethings += src //We add ourselves to some global list
@@ -146,7 +148,9 @@ First and simplest we have `Destroy()
 
 Next, and slightly more complex, pairs of objects that reference each other
 
-```c++
+This is helpful when for cases where both objects "own" each other
+
+```dm
 /someobject
     var/someotherobject/buddy
 
@@ -184,15 +188,13 @@ BYOND has an internal bit of behavior that looks like this
 
 `var/string = "\ref[someobject]"`
 
-This essentially gets that object's position in memory directly. Unlike normal references, this doesn't count for hard deletes
-You can retrieve the object in question by using `locate()`
+This essentially gets that object's position in memory directly. Unlike normal references, this doesn't count for hard deletes. You can retrieve the object in question by using `locate()`
 
 `var/someobject/someobj = locate(string)`
 
-This has some flaws however, since the bit of memory we're pointing to might change, and 
-Fortunately we've developed a datum to handle worrying about this for you, `/datum/weakref`
+This has some flaws however, since the bit of memory we're pointing to might change, which would cause issues. Fortunately we've developed a datum to handle worrying about this for you, `/datum/weakref`
 
-You can create one using the `WEAKREF()` define, and use weakref.resolve() to retrieve the actual object
+You can create one using the `WEAKREF()` proc, and use weakref.resolve() to retrieve the actual object
 
 This should be used for things that your object doesn't "own", but still cares about
 
@@ -200,7 +202,7 @@ For instance, a paper bin would own the paper inside it, but the paper inside it
 
 There's no need to clean these up, just make sure you account for it being null, since it'll return that if the object doesn't exist or has been queued for deletion
 
-```c++
+```dm
 /someobject
     var/datum/weakref/our_coin
 
@@ -234,7 +236,7 @@ We can listen for that signal, and if we hear it clear whatever reference we may
 
 Here's an example
 
-```c++
+```dm
 /somemob
     var/mob/target
 
