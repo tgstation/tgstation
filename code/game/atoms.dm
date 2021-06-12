@@ -1272,8 +1272,8 @@
 				if(!isnull(x) && !isnull(y))
 					transform = M.Scale(x,y)
 			if("Translate")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = input(usr, "Choose x mod (negative = left, positive = right)","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod (negative = down, positive = up)","Transform Mod") as null|num
 				if(!isnull(x) && !isnull(y))
 					transform = M.Translate(x,y)
 			if("Rotate")
