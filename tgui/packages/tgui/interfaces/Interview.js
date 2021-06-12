@@ -58,13 +58,6 @@ export const Interview = (props, context) => {
   return (
     <Window width={500} height={600} canClose={is_admin}>
       <Window.Content scrollable>
-        {(!!is_admin && !read_only && (
-          <NoticeBox>
-            Note to admins: this interview has not yet been submitted and should
-            not be considered complete yet. This window will update
-            automatically as it is filled out.
-          </NoticeBox>
-        ))}
         {(!read_only && (
           <Section title="Welcome!">
             <p>{linkify_text(welcome_message)}</p>
