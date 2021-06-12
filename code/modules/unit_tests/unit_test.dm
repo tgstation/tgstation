@@ -24,12 +24,11 @@ GLOBAL_VAR(test_log)
 
 	/// The top right floor turf of the testing zone
 	var/turf/run_loc_floor_top_right
-
+	///The priority of the test, the larger it is the earlier it fires
+	var/priority = TEST_DEFAULT
 	//internal shit
 	var/focus = FALSE
 	var/succeeded = TRUE
-	//Do we have our own handling?
-	var/snowflake = FALSE
 	var/list/allocated
 	var/list/fail_reasons
 
@@ -110,21 +109,17 @@ GLOBAL_VAR(test_log)
 	var/list/tests_to_run = subtypesof(/datum/unit_test)
 	for (var/_test_to_run in tests_to_run)
 		var/datum/unit_test/test_to_run = _test_to_run
-		if(initial(test_to_run.snowflake))
-			tests_to_run -= test_to_run
-			continue
 		if (initial(test_to_run.focus))
 			tests_to_run = list(test_to_run)
 			break
 
+	tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
+
 	var/list/test_results = list()
 
 	for(var/unit_path in tests_to_run)
+		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
-		CHECK_TICK
-
-	//Fuck you, fight me
-	RunUnitTest(/datum/unit_test/del_test, test_results)
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

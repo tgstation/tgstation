@@ -1,7 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/del_test
-	//We have special handling, be happy
-	snowflake = TRUE
+	//You absolutely must run last
+	priority = TEST_DEL_WORLD
 
 /datum/unit_test/del_test/Run()
 	//We'll spawn everything here
