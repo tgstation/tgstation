@@ -816,10 +816,14 @@
 			return
 
 		var/list/options = list("Clear"="Clear")
-		for(var/x in (subtypesof(/datum/quirk) - /datum/quirk/item_quirk))
-			var/datum/quirk/T = x
-			var/qname = initial(T.name)
-			options[has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
+		for(var/type in subtypesof(/datum/quirk))
+			var/datum/quirk/quirk_type = type
+
+			if(initial(quirk_type.abstract_parent_type) == type)
+				continue
+
+			var/qname = initial(quirk_type.name)
+			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type
 
 		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sortList(options)
 		if(result)

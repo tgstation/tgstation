@@ -10,11 +10,13 @@
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
-	///Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
+	/// Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
 	var/hardcore_value = 0
 	var/mob/living/quirk_holder
 	/// This quirk should START_PROCESSING when added and STOP_PROCESSING when removed.
 	var/processing_quirk = FALSE
+	/// When making an abstract quirk (in OOP terms), don't forget to set this var to the type path for that abstract quirk.
+	var/abstract_parent_type = /datum/quirk
 
 /datum/quirk/Destroy()
 	if(quirk_holder)
@@ -123,6 +125,7 @@
 	var/list/where_items_spawned
 	/// If true, the backpack automatically opens on post_add(). Usually set to TRUE when an item is equipped inside the player's backpack.
 	var/open_backpack = FALSE
+	abstract_parent_type = /datum/quirk/item_quirk
 
 /**
  * Handles inserting an item in any of the valid slots provided, then allows for post_add notification.
