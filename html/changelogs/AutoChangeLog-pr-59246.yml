@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Dogs are now properly restricted to being able to fetch/pick up items only, and can no longer fetch you lockers and full size cars"
