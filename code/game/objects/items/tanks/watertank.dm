@@ -374,23 +374,24 @@
 		turn_on()
 
 //Todo : cache these.
-/obj/item/reagent_containers/chemtank/worn_overlays(isinhands = FALSE) //apply chemcolor and level
-	. = list()
+/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE) //apply chemcolor and level
+	. = ..()
 	//inhands + reagent_filling
-	if(!isinhands && reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
+	if(isinhands || !reagents.total_volume)
+		return
 
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 15)
-				filling.icon_state = "backpackmob-10"
-			if(16 to 60)
-				filling.icon_state = "backpackmob50"
-			if(61 to INFINITY)
-				filling.icon_state = "backpackmob100"
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
+	var/percent = round((reagents.total_volume / volume) * 100)
+	switch(percent)
+		if(0 to 15)
+			filling.icon_state = "backpackmob-10"
+		if(16 to 60)
+			filling.icon_state = "backpackmob50"
+		if(61 to INFINITY)
+			filling.icon_state = "backpackmob100"
 
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling
 
 /obj/item/reagent_containers/chemtank/proc/turn_on()
 	on = TRUE

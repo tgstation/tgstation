@@ -6,7 +6,13 @@ import { createParameter as _createParameter } from './parameter';
 import { RunnerConfig } from './runner';
 import { createTarget as _createTarget } from './target';
 export { exec, chalk, glob, logger };
-export declare const setup: (config?: RunnerConfig) => void;
+/**
+ * Configures Juke Build and starts executing targets.
+ *
+ * @param config Juke Build configuration.
+ * @returns Exit code of the whole runner process.
+ */
+export declare const setup: (config?: RunnerConfig) => Promise<number>;
 export declare const createTarget: typeof _createTarget;
 export declare const createParameter: typeof _createParameter;
 export declare const sleep: (time: number) => Promise<unknown>;

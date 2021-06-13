@@ -1,0 +1,5 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - rscadd: "Neon carpets exists. Bug your local chemist or quartermaster for a supply."
+  - code_imp: "Decals support user-defined planes and some forms of smoothing."

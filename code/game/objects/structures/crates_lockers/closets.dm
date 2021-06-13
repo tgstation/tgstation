@@ -10,6 +10,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
@@ -81,9 +82,12 @@
 	. = new_overlays
 	if(opened)
 		. += "[icon_door_override ? icon_door : icon_state]_open"
+		var/mutable_appearance/door_blocker = mutable_appearance(icon, "[icon_door || icon_state]_open", plane = EMISSIVE_PLANE)
+		door_blocker.color = GLOB.em_block_color
+		. += door_blocker // If we don't do this the door doesn't block emissives and it looks weird.
 		return
 
-	. += "[icon_door || icon_state]_door"
+	. += mutable_appearance(icon, "[icon_door || icon_state]_door")
 	if(welded)
 		. += icon_welded
 

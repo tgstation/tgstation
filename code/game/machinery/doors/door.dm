@@ -19,6 +19,7 @@
 	damage_deflection = 10
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby

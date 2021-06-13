@@ -1000,18 +1000,27 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
 
-/client/proc/show_character_previews(mutable_appearance/MA)
+/client/proc/show_character_previews(mutable_appearance/source)
+	LAZYINITLIST(char_render_holders)
+	if(!LAZYLEN(char_render_holders))
+		for(var/plane_master_path as anything in subtypesof(/atom/movable/screen/plane_master))
+			var/atom/movable/screen/plane_master/plane_master = new plane_master_path()
+			char_render_holders["plane_master-[plane_master.plane]"] = plane_master
+			plane_master.backdrop(mob)
+			screen |= plane_master
+			plane_master.screen_loc = "character_preview_map:0,CENTER"
+
 	var/pos = 0
-	for(var/D in GLOB.cardinals)
+	for(var/dir in GLOB.cardinals)
 		pos++
-		var/atom/movable/screen/O = LAZYACCESS(char_render_holders, "[D]")
-		if(!O)
-			O = new
-			LAZYSET(char_render_holders, "[D]", O)
-			screen |= O
-		O.appearance = MA
-		O.dir = D
-		O.screen_loc = "character_preview_map:0,[pos]"
+		var/atom/movable/screen/preview = char_render_holders["preview-[dir]"]
+		if(!preview)
+			preview = new
+			char_render_holders["preview-[dir]"] = preview
+			screen |= preview
+		preview.appearance = source
+		preview.dir = dir
+		preview.screen_loc = "character_preview_map:0,[pos]"
 
 /client/proc/clear_character_previews()
 	for(var/index in char_render_holders)

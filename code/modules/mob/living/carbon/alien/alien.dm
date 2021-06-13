@@ -10,6 +10,7 @@
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/food/meat/slab/xeno
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/move_delay_add = 0 // movement delay to add
 

@@ -186,6 +186,10 @@
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
+/obj/effect/anomaly/flux/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, alpha=src.alpha)
+
 /obj/effect/anomaly/flux/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	mobShock(AM)

@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - rscadd: "When a midround ghost event doesn't get any applicants, a sleeper agent/syndicate infiltrator will roll in its place."

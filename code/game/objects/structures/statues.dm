@@ -9,6 +9,7 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
 	material_flags = MATERIAL_AFFECT_STATISTICS
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
