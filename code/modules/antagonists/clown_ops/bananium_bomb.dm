@@ -54,4 +54,5 @@
 			H.equip_to_slot_or_del(C, ITEM_SLOT_MASK)
 
 		H.dna.add_mutation(CLOWNMUT)
+		ADD_TRAIT(H, TRAIT_BALLS_VULNERABLE, MAGIC_TRAIT)
 		H.gain_trauma(/datum/brain_trauma/mild/phobia/clowns, TRAUMA_RESILIENCE_LOBOTOMY) //MWA HA HA

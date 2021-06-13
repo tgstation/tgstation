@@ -1439,6 +1439,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 
+		if(HAS_TRAIT(target, TRAIT_BALLS_VULNERABLE) && user.zone_selected == BODY_ZONE_PRECISE_GROIN) //Clowns can be punched in groin for memes
+			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+			target.apply_damage(damage * 5, STAMINA, affecting, armor_block)
+			target.emote("scream")
+			playsound(target, 'sound/items/bikehorn.ogg', 200, TRUE) //Loudly honks
+			new /obj/effect/decal/cleanable/confetti(get_turf(target)) //And shits themselves
+			log_combat(user, target, "punched in the balls")
+			return
+
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
 			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block)
 			log_combat(user, target, "kicked")

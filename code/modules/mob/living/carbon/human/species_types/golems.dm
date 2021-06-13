@@ -588,6 +588,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_BALLS_VULNERABLE
 	)
 	punchdamagelow = 0
 	punchdamagehigh = 1

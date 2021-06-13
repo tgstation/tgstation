@@ -74,9 +74,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	switch(icon_state)
 		if("honk1")
 			user.dna.add_mutation(CLOWNMUT)
+			ADD_TRAIT(user, TRAIT_BALLS_VULNERABLE, MAGIC_TRAIT)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 		if("honk2")
 			user.dna.add_mutation(CLOWNMUT)
+			ADD_TRAIT(user, TRAIT_BALLS_VULNERABLE, MAGIC_TRAIT)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 		if("insuls")
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new

@@ -323,6 +323,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
+/// If human with this trait is punched into groin they will get stam damage, scream and LOOOOOUDLY honk
+#define TRAIT_BALLS_VULNERABLE "clown_balls"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
