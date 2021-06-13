@@ -625,6 +625,17 @@
 						to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>")
 				break
 
+/proc/is_ctf_target(atom/target)
+	. = FALSE
+	if(istype(target, /obj/structure/barricade/security/ctf))
+		. = TRUE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+			if(H in CTF.spawned_mobs)
+				. = TRUE
+				break
+
 #undef WHITE_TEAM
 #undef RED_TEAM
 #undef BLUE_TEAM

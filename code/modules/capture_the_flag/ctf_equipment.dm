@@ -1,78 +1,78 @@
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf
-	desc = "This looks like it could really hurt in melee."
-	force = 75
-	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
-
-/obj/item/ammo_box/magazine/m50/ctf
-	ammo_type = /obj/item/ammo_casing/a50/ctf
-
-/obj/item/ammo_casing/a50/ctf
-	projectile_type = /obj/projectile/bullet/ctf
-
-/obj/projectile/bullet/ctf
-	damage = 0
-
-/obj/projectile/bullet/ctf/prehit_pierce(atom/target)
-	if(is_ctf_target(target))
-		damage = 60
-		return PROJECTILE_PIERCE_NONE /// hey uhh don't hit anyone behind them
-	. = ..()
-
-/obj/item/gun/ballistic/automatic/laser/ctf
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
-	desc = "This looks like it could really hurt in melee."
-	force = 50
-
-/obj/item/gun/ballistic/automatic/laser/ctf/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
-
-/obj/item/ammo_box/magazine/recharge/ctf
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
-
-/obj/item/ammo_box/magazine/recharge/ctf/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
-
-/obj/item/ammo_casing/caseless/laser/ctf
-	projectile_type = /obj/projectile/beam/ctf
+// GENERIC PROJECTILE
 
 /obj/projectile/beam/ctf
 	damage = 0
 	icon_state = "omnilaser"
 
 /obj/projectile/beam/ctf/prehit_pierce(atom/target)
-	if(is_ctf_target(target))
-		damage = 150
+	if(!is_ctf_target(target))
+		damage = 0
 		return PROJECTILE_PIERCE_NONE /// hey uhhh don't hit anyone behind them
 	. = ..()
 
-/proc/is_ctf_target(atom/target)
-	. = FALSE
-	if(istype(target, /obj/structure/barricade/security/ctf))
-		. = TRUE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
-			if(H in CTF.spawned_mobs)
-				. = TRUE
-				break
+/obj/projectile/beam/ctf/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(is_ctf_target(target) && blocked == FALSE)
+		if(iscarbon(target))
+			var/mob/living/carbon/M = target
+			M.adjustBruteLoss(150, 0)
+		return BULLET_ACT_HIT
+
+// LASER RIFLE
+
+/obj/item/gun/ballistic/automatic/laser/ctf
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
+	desc = "This looks like it could really hurt in melee."
+	force = 50
+
+/obj/item/gun/ballistic/automatic/laser/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+
+/obj/item/ammo_box/magazine/recharge/ctf
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
+
+/obj/item/ammo_box/magazine/recharge/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+
+/obj/item/ammo_casing/caseless/laser/ctf
+	projectile_type = /obj/projectile/beam/ctf/rifle
+
+
+/obj/projectile/beam/ctf/rifle
+	damage = 30
+
+// DESERT EAGLE
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf
+	desc = "This looks like it could really hurt in melee."
+	force = 75
+	mag_type = /obj/item/ammo_box/magazine/m50/ctf
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+
+/obj/item/ammo_box/magazine/m50/ctf
+	ammo_type = /obj/item/ammo_casing/a50/ctf
+
+/obj/item/ammo_box/magazine/m50/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+
+/obj/item/ammo_casing/a50/ctf
+	projectile_type = /obj/projectile/beam/ctf/deagle
+
+
+/obj/projectile/beam/ctf/deagle
+	damage = 60
+
 
 // SHIELDED HARDSUIT
 
@@ -107,9 +107,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
 
 /obj/item/ammo_casing/caseless/laser/ctf/red
-	projectile_type = /obj/projectile/beam/ctf/red
+	projectile_type = /obj/projectile/beam/ctf/rifle/red
 
-/obj/projectile/beam/ctf/red
+/obj/projectile/beam/ctf/rifle/red
 	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
@@ -122,9 +122,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
 
 /obj/item/ammo_casing/caseless/laser/ctf/blue
-	projectile_type = /obj/projectile/beam/ctf/blue
+	projectile_type = /obj/projectile/beam/ctf/rifle/blue
 
-/obj/projectile/beam/ctf/blue
+/obj/projectile/beam/ctf/rifle/blue
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
@@ -137,9 +137,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/green
 
 /obj/item/ammo_casing/caseless/laser/ctf/green
-	projectile_type = /obj/projectile/beam/ctf/green
+	projectile_type = /obj/projectile/beam/ctf/rifle/green
 
-/obj/projectile/beam/ctf/green
+/obj/projectile/beam/ctf/rifle/green
 	icon_state = "xray"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
@@ -152,9 +152,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/yellow
 
 /obj/item/ammo_casing/caseless/laser/ctf/yellow
-	projectile_type = /obj/projectile/beam/ctf/yellow
+	projectile_type = /obj/projectile/beam/ctf/rifle/yellow
 
-/obj/projectile/beam/ctf/yellow
+/obj/projectile/beam/ctf/rifle/yellow
 	icon_state = "gaussstrong"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 
