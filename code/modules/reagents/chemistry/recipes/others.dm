@@ -859,11 +859,11 @@
 	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!</span>")
 
 /datum/chemical_reaction/ants
-	results = list(/datum/reagent/ants = 2)
-	required_reagents = list(/datum/reagent/ants = 1, /datum/reagent/consumable/sugar = 3)
+	results = list(/datum/reagent/ants = 3)
+	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 6)
 
-/datum/chemical_reaction/big_ant
-	required_reagents = list(/datum/reagent/ants = 20, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/strange_reagent = 5)
+/datum/chemical_reaction/big_ant // We're basically glueing ants together with synthflesh & maint sludge to make a bigger ant.
+	required_reagents = list(/datum/reagent/ants = 40, /datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/drug/maint/sludge = 5)
 	required_temp = 374
 
 /datum/chemical_reaction/big_ant/on_reaction(datum/reagents/holder, created_volume)
