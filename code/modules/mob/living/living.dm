@@ -114,9 +114,6 @@
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return TRUE
 
-	if(moving_diagonally)//no mob swap during diagonal moves.
-		return TRUE
-
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
 		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
@@ -204,8 +201,6 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM, force = move_force)
 	if(now_pushing)
-		return TRUE
-	if(moving_diagonally)// no pushing during diagonal moves.
 		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
@@ -785,7 +780,7 @@
 
 	. = ..()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 	else
 		if(isliving(pulledby))
