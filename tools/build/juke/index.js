@@ -6719,15 +6719,19 @@ const runner = new class Runner {
       worker.onFinish(() => resolve(true));
       worker.onFail(() => resolve(false));
       worker.start();
-    }))); // Show done only in happy path
+    })));
+    const hasFailedWorkers = resolutions.includes(false); // Show done only in happy path
 
-    if (!resolutions.includes(false)) {
+    if (!hasFailedWorkers) {
       const time = (Date.now() - startedAt) / 1000 + 's';
 
       const timeStr = _chalk.default.magenta(time);
 
       _logger.logger.action(`Done in ${timeStr}`);
-    }
+    } // Exit code 0 or 1 depdending on the fail state.
+
+
+    return Number(hasFailedWorkers);
   }
 
 }();
@@ -7087,6 +7091,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const autoParameters = [];
 const autoTargets = [];
+/**
+ * Configures Juke Build and starts executing targets.
+ *
+ * @param config Juke Build configuration.
+ * @returns Exit code of the whole runner process.
+ */
 
 const setup = (config = {}) => {
   config = { ...config
@@ -7102,7 +7112,7 @@ const setup = (config = {}) => {
 
   _runner.runner.configure(config);
 
-  _runner.runner.start();
+  return _runner.runner.start();
 };
 
 exports.setup = setup;
