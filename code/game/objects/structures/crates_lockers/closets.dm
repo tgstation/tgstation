@@ -83,12 +83,12 @@
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(enable_door_overlay)
-		if(opened)
+		if(opened && has_opened_overlay)
 			. += "[icon_door_override ? icon_door : icon_state]_open"
 			var/mutable_appearance/door_blocker = mutable_appearance(icon, "[icon_door || icon_state]_open", plane = EMISSIVE_PLANE)
 			door_blocker.color = GLOB.em_block_color
 			. += door_blocker // If we don't do this the door doesn't block emissives and it looks weird.
-		else
+		else if(has_closed_overlay)
 			. += "[icon_door || icon_state]_door"
 
 	if(opened)
