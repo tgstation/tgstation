@@ -117,9 +117,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (light_power && light_range)
 		update_light()
 
-	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
-
 	var/turf/T = SSmapping.get_turf_above(src)
 	if(T)
 		T.multiz_turf_new(src, DOWN)
@@ -129,6 +126,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
+
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
