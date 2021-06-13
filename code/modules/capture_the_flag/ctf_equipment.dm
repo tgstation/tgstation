@@ -24,19 +24,13 @@
 /obj/item/gun/ballistic/automatic/laser/ctf
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
+	item_flags = DROPDEL
 	force = 50
-
-/obj/item/gun/ballistic/automatic/laser/ctf/Initialize()
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
 
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
-
-/obj/item/ammo_box/magazine/recharge/ctf/Initialize()
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 
 /obj/item/ammo_casing/caseless/laser/ctf
@@ -52,18 +46,12 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 	mag_type = /obj/item/ammo_box/magazine/m50/ctf
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize()
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 
 /obj/item/ammo_box/magazine/m50/ctf
 	ammo_type = /obj/item/ammo_casing/a50/ctf
-
-/obj/item/ammo_box/magazine/m50/ctf/Initialize()
-	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	item_flags = DROPDEL
 
 
 /obj/item/ammo_casing/a50/ctf
