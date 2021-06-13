@@ -19,42 +19,89 @@
 			M.adjustBruteLoss(150, 0)
 		return BULLET_ACT_HIT
 
-// LASER RIFLE
-
-/obj/item/gun/ballistic/automatic/laser/ctf
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
-	desc = "This looks like it could really hurt in melee."
-	item_flags = DROPDEL
-	force = 50
-
-
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
-	item_flags = DROPDEL
+
+/obj/item/ammo_box/magazine/recharge/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
 
 
 /obj/item/ammo_casing/caseless/laser/ctf
+	projectile_type = /obj/projectile/beam/ctf/
+
+// LASER RIFLE
+
+/obj/item/gun/ballistic/automatic/laser/ctf
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle
+	desc = "This looks like it could really hurt in melee."
+	force = 50
+
+/obj/item/gun/ballistic/automatic/laser/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+
+/obj/item/ammo_box/magazine/recharge/ctf/rifle
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle
+
+
+/obj/item/ammo_casing/caseless/laser/ctf/rifle
 	projectile_type = /obj/projectile/beam/ctf/rifle
 
 
 /obj/projectile/beam/ctf/rifle
 	damage = 30
 
+// LASER SHOTGUN
+
+/obj/item/gun/ballistic/shotgun/ctf
+	name = "laser shotgun"
+	desc = "This looks like it could really hurt in melee."
+	weapon_weight = WEAPON_MEDIUM
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
+	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
+	semi_auto = TRUE
+	internal_magazine = FALSE
+	tac_reloads = TRUE
+
+/obj/item/gun/ballistic/shotgun/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+/obj/item/ammo_box/magazine/recharge/ctf/shotgun
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun
+	max_ammo = 6
+
+
+/obj/item/ammo_casing/caseless/laser/ctf/shotgun
+	projectile_type = /obj/projectile/beam/ctf/shotgun
+	pellets = 6
+	variance = 40
+
+
+/obj/projectile/beam/ctf/shotgun
+	damage = 30
+	range = 4
+
 // DESERT EAGLE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
-	mag_type = /obj/item/ammo_box/magazine/m50/ctf
-	item_flags = DROPDEL
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/deagle
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
 
 
-/obj/item/ammo_box/magazine/m50/ctf
-	ammo_type = /obj/item/ammo_casing/a50/ctf
-	item_flags = DROPDEL
+/obj/item/ammo_box/magazine/recharge/ctf/deagle
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/deagle
+	max_ammo = 7
 
 
-/obj/item/ammo_casing/a50/ctf
+/obj/item/ammo_casing/caseless/laser/ctf/deagle
 	projectile_type = /obj/projectile/beam/ctf/deagle
 
 
@@ -86,68 +133,144 @@
 	hardsuit_type = "ert_medical"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
+// LIGHT SHIELDED HARDSUIT
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light
+	name = "light white shielded hardsuit"
+	desc = "Lightweight hardsuit for playing capture the flag."
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light
+	max_charges = 30
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light
+	name = "light shielded hardsuit helmet"
+	desc = "Lightweight hardsuit helmet for playing capture the flag."
+
 // RED TEAM GUNS
 
+// Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/red
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
 
-/obj/item/ammo_box/magazine/recharge/ctf/red
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
+/obj/item/ammo_box/magazine/recharge/ctf/rifle/red
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/red
 
-/obj/item/ammo_casing/caseless/laser/ctf/red
+/obj/item/ammo_casing/caseless/laser/ctf/rifle/red
 	projectile_type = /obj/projectile/beam/ctf/rifle/red
 
 /obj/projectile/beam/ctf/rifle/red
 	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
+
+// Shotgun
+/obj/item/gun/ballistic/shotgun/ctf/red
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
+
+/obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/red
+
+/obj/item/ammo_casing/caseless/laser/ctf/shotgun/red
+	projectile_type = /obj/projectile/beam/ctf/shotgun/red
+
+/obj/projectile/beam/ctf/shotgun/red
+	icon_state = "laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+
 // BLUE TEAM GUNS
 
+// Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/blue
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
 
-/obj/item/ammo_box/magazine/recharge/ctf/blue
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
+/obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/blue
 
-/obj/item/ammo_casing/caseless/laser/ctf/blue
+/obj/item/ammo_casing/caseless/laser/ctf/rifle/blue
 	projectile_type = /obj/projectile/beam/ctf/rifle/blue
 
 /obj/projectile/beam/ctf/rifle/blue
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
+// Shotgun
+/obj/item/gun/ballistic/shotgun/ctf/blue
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
+
+/obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/blue
+
+/obj/item/ammo_casing/caseless/laser/ctf/shotgun/blue
+	projectile_type = /obj/projectile/beam/ctf/shotgun/blue
+
+/obj/projectile/beam/ctf/shotgun/blue
+	icon_state = "bluelaser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+
 // GREEN TEAM GUNS
 
+// Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/green
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/green
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
 
-/obj/item/ammo_box/magazine/recharge/ctf/green
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/green
+/obj/item/ammo_box/magazine/recharge/ctf/rifle/green
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/green
 
-/obj/item/ammo_casing/caseless/laser/ctf/green
+/obj/item/ammo_casing/caseless/laser/ctf/rifle/green
 	projectile_type = /obj/projectile/beam/ctf/rifle/green
 
 /obj/projectile/beam/ctf/rifle/green
 	icon_state = "xray"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
+
+// Shotgun
+/obj/item/gun/ballistic/shotgun/ctf/green
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
+
+/obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/green
+
+/obj/item/ammo_casing/caseless/laser/ctf/shotgun/green
+	projectile_type = /obj/projectile/beam/ctf/shotgun/green
+
+/obj/projectile/beam/ctf/shotgun/green
+	icon_state = "xray"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+
 // YELLOW TEAM GUNS
 
+// Rifle
 /obj/item/gun/ballistic/automatic/laser/ctf/yellow
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/yellow
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
 
-/obj/item/ammo_box/magazine/recharge/ctf/yellow
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/yellow
+/obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/yellow
 
-/obj/item/ammo_casing/caseless/laser/ctf/yellow
+/obj/item/ammo_casing/caseless/laser/ctf/rifle/yellow
 	projectile_type = /obj/projectile/beam/ctf/rifle/yellow
 
 /obj/projectile/beam/ctf/rifle/yellow
 	icon_state = "gaussstrong"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 
+
+// Shotgun
+/obj/item/gun/ballistic/shotgun/ctf/yellow
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
+
+/obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/yellow
+
+/obj/item/ammo_casing/caseless/laser/ctf/shotgun/yellow
+	projectile_type = /obj/projectile/beam/ctf/shotgun/yellow
+
+/obj/projectile/beam/ctf/shotgun/yellow
+	icon_state = "gaussstrong"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+
 // RED TEAM SUITS
 
+// Regular
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	name = "red shielded hardsuit"
 	icon_state = "ert_security"
@@ -161,8 +284,23 @@
 	inhand_icon_state = "hardsuit0-ert_security"
 	hardsuit_type = "ert_security"
 
+// Light
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/red
+	name = "light red shielded hardsuit"
+	icon_state = "ert_security"
+	inhand_icon_state = "ert_security"
+	hardsuit_type = "ert_security"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/red
+	shield_icon = "shield-red"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/red
+	icon_state = "hardsuit0-ert_security"
+	inhand_icon_state = "hardsuit0-ert_security"
+	hardsuit_type = "ert_security"
+
 // BLUE TEAM SUITS
 
+// Regular
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"
 	icon_state = "ert_command"
@@ -176,8 +314,23 @@
 	inhand_icon_state = "hardsuit0-ert_commander"
 	hardsuit_type = "ert_commander"
 
+// Light
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/blue
+	name = "light blue shielded hardsuit"
+	icon_state = "ert_command"
+	inhand_icon_state = "ert_command"
+	hardsuit_type = "ert_commander"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/blue
+	shield_icon = "shield-old"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/blue
+	icon_state = "hardsuit0-ert_commander"
+	inhand_icon_state = "hardsuit0-ert_commander"
+	hardsuit_type = "ert_commander"
+
 // GREEN TEAM SUITS
 
+// Regular
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
 	name = "green shielded hardsuit"
 	icon_state = "ert_green"
@@ -191,8 +344,23 @@
 	inhand_icon_state = "hardsuit0-ert_green"
 	hardsuit_type = "ert_green"
 
+// Light
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/green
+	name = "light green shielded hardsuit"
+	icon_state = "ert_green"
+	inhand_icon_state = "ert_green"
+	hardsuit_type = "ert_green"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/green
+	shield_icon = "shield-green"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/green
+	icon_state = "hardsuit0-ert_green"
+	inhand_icon_state = "hardsuit0-ert_green"
+	hardsuit_type = "ert_green"
+
 // YELLOW TEAM SUITS
 
+// Regular
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	name = "yellow shielded hardsuit"
 	icon_state = "ert_engineer"
@@ -201,7 +369,21 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
 	shield_icon = "shield-yellow"
 
+// Light
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
+	icon_state = "hardsuit0-ert_engineer"
+	inhand_icon_state = "hardsuit0-ert_engineer"
+	hardsuit_type = "ert_engineer"
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/yellow
+	name = "light yellow shielded hardsuit"
+	icon_state = "ert_engineer"
+	inhand_icon_state = "ert_engineer"
+	hardsuit_type = "ert_engineer"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/yellow
+	shield_icon = "shield-yellow"
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/yellow
 	icon_state = "hardsuit0-ert_engineer"
 	inhand_icon_state = "hardsuit0-ert_engineer"
 	hardsuit_type = "ert_engineer"
