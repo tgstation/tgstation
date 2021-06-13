@@ -178,6 +178,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("peanuts" = 4, "anger" = 1)
 	foodtypes = JUNKFOOD | NUTS
+	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
@@ -206,6 +207,12 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
 	tastes = list("peanuts" = 3, "bbq sauce" = 1, "arguments" = 1)
 
+/obj/item/food/peanuts/banappeal
+	name = "\improper Gallery's Ban Appel roast peanuts"
+	desc = "Yearly lobbying is denied not because the roasting apples are toxic, but because they keep evading the ban."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cyanide = 1) //uses roasted poison apples
+	tastes = list("peanuts" = 3, "apples" = 1, "regret" = 1)
+
 /obj/item/food/peanuts/random
 	name = "\improper Gallery's every-flavour peanuts"
 	desc = "What flavour will you get?"
@@ -213,7 +220,7 @@
 
 /obj/item/food/peanuts/random/Initialize()
 	// Generate a sample p
-	var/peanut_type = pick(subtypesof(/obj/item/food/peanuts) - /obj/item/food/peanuts/random)
+	var/peanut_type = pick(subtypesof(/obj/item/food/peanuts) - /obj/item/food/peanuts/random - /obj/item/food/peanuts/banappeal)
 	var/obj/item/food/sample = new peanut_type(loc)
 
 	name = sample.name
