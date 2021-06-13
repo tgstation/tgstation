@@ -39,7 +39,7 @@
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You maximize the pressure output on [src] to [target_pressure] kPa.</span>")
+		balloon_alert(user, "pressure output set to [target_pressure] kPa")
 		update_appearance()
 	return ..()
 
