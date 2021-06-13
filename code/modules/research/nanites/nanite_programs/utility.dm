@@ -33,7 +33,7 @@
 
 /datum/nanite_program/monitoring/enable_passive_effect()
 	. = ..()
-	ADD_TRAIT(host_mob, TRAIT_NANITE_MONITORING, "nanites") //Shows up in diagnostic and medical HUDs as a small blinking icon
+	ADD_TRAIT(host_mob, TRAIT_NANITE_MONITORING, NANITES_TRAIT) //Shows up in diagnostic and medical HUDs as a small blinking icon
 	if(ishuman(host_mob))
 		GLOB.nanite_sensors_list |= host_mob
 	host_mob.hud_set_nanite_indicator()
