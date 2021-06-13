@@ -14,7 +14,7 @@
 	var/bare_wound_bonus = 0
 
 	var/datum/armor/armor
-	var/obj_integrity //defaults to max_integrity
+	VAR_PRIVATE/obj_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
@@ -59,8 +59,7 @@
 		armor = getArmor()
 	else if (!istype(armor, /datum/armor))
 		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
-	if(obj_integrity == null)
-		obj_integrity = max_integrity
+	obj_integrity = max_integrity
 
 	. = ..() //Do this after, else mat datums is mad.
 

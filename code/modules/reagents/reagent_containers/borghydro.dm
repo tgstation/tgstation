@@ -19,7 +19,7 @@ Borg Hypospray
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5)
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_timer = 0
@@ -46,8 +46,8 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_LIST(reagent_list)
 	return ..()
-
 
 /obj/item/reagent_containers/borghypo/process(delta_time) //Every [recharge_time] seconds, recharge some reagents for the cyborg
 	charge_timer += delta_time

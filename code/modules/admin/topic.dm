@@ -159,22 +159,40 @@
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))
 			return
-		if(!SSticker.delay_end)
-			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-			if(isnull(SSticker.admin_delay_notice))
-				return
-		else
-			if(tgui_alert(usr, "Really cancel current round end delay? The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Undelay round end", list("Yes", "No")) != "Yes")
-				return
-			SSticker.admin_delay_notice = null
-		SSticker.delay_end = !SSticker.delay_end
-		var/reason = SSticker.delay_end ? "for reason: [SSticker.admin_delay_notice]" : "."//laziness
-		var/msg = "[SSticker.delay_end ? "delayed" : "undelayed"] the round end [reason]"
-		log_admin("[key_name(usr)] [msg]")
-		message_admins("[key_name_admin(usr)] [msg]")
-		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
-			SSticker.standard_reboot()
 
+		if(SSticker.delay_end)
+			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
+			return
+
+		var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+
+		if(isnull(delay_reason))
+			return
+
+		if(SSticker.delay_end)
+			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
+			return
+
+		SSticker.delay_end = TRUE
+		SSticker.admin_delay_notice = delay_reason
+
+		log_admin("[key_name(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
+		message_admins("[key_name_admin(usr)] delayed the round end for reason: [SSticker.admin_delay_notice]")
+	else if(href_list["undelay_round_end"])
+		if(!check_rights(R_SERVER))
+			return
+
+		if(tgui_alert(usr, "Really cancel current round end delay? The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Undelay round end", list("Yes", "No")) == "No")
+			return
+
+		SSticker.admin_delay_notice = null
+		SSticker.delay_end = FALSE
+
+		log_admin("[key_name(usr)] undelayed the round end.")
+		if(SSticker.ready_for_reboot)
+			message_admins("[key_name_admin(usr)] undelayed the round end. You must now manually Reboot World to start the next shift.")
+		else
+			message_admins("[key_name_admin(usr)] undelayed the round end.")
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
 			return

@@ -67,7 +67,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/vend_ready = TRUE
 	///Next world time to send a purchase message
 	var/purchase_message_cooldown
-	///Last mob to shop with us
+	///The ref of the last mob to shop with us
 	var/last_shopper
 	var/tilted = FALSE
 	var/tiltable = TRUE
@@ -929,10 +929,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 			D.adjust_money(price_to_use)
 			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 			log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
-	if(last_shopper != usr || purchase_message_cooldown < world.time)
+	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		say("Thank you for shopping with [src]!")
 		purchase_message_cooldown = world.time + 5 SECONDS
-		last_shopper = usr
+		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
+		last_shopper = REF(usr)
 	use_power(5)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
@@ -1189,10 +1190,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 					S.forceMove(drop_location())
 					loaded_items--
 					use_power(5)
-					if(last_shopper != usr || purchase_message_cooldown < world.time)
+					if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 						say("Thank you for buying local and purchasing [S]!")
 						purchase_message_cooldown = world.time + 5 SECONDS
-						last_shopper = usr
+						last_shopper = REF(usr)
 					vend_ready = TRUE
 					updateUsrDialog()
 					return
@@ -1271,7 +1272,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = ..()
 	//starts in a state where you can move it
 	panel_open = TRUE
-	anchored = FALSE
+	set_anchored(FALSE)
 	add_overlay("[initial(icon_state)]-panel")
 	//and references the deity
 	name = "[GLOB.deity]'s Consecrated Vendor"

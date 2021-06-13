@@ -262,7 +262,7 @@
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(10)
 	/**
 	  * List of possible styles (list(<icon_state>, <name>, <desc>)) for condiment packs.
 	  * Since all of them differs only in color should probably be replaced with usual reagentfillings instead

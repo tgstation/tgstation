@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a case where slip mood debuff was not triggering at all. You should think about being more careful next time..."

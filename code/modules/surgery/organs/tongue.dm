@@ -151,7 +151,7 @@
 		statue.set_visuals(becoming_statue.appearance)
 		statue.forceMove(get_turf(becoming_statue))
 		becoming_statue.forceMove(statue)
-		statue.obj_integrity = becoming_statue.health
+		statue.update_integrity(becoming_statue.health)
 		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
 
 	//somehow they used an exploit/teleportation to leave statue, lets clean up

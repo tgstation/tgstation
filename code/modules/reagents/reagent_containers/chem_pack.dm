@@ -10,6 +10,7 @@
 	resistance_flags = ACID_PROOF
 	var/sealed = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+	possible_transfer_amounts = list()
 
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)
