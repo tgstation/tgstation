@@ -138,6 +138,8 @@
 /// Traits for plants with backfire effects. These are negative effects that occur when a plant is handled without gloves/unsafely.
 /datum/plant_gene/trait/backfire
 	name = "Backfire Trait"
+	/// Whether our actions are cancelled when the backfire triggers.
+	var/cancel_action_on_backfire = TRUE
 	/// A list of extra traits to check to be considered safe.
 	var/traits_to_check
 	/// A list of extra genes to check to be considered safe.
@@ -148,8 +150,7 @@
 	if(!.)
 		return
 
-	our_plant.AddElement(/datum/element/plant_backfire, traits_to_check, genes_to_check)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/backfire_effect)
+	our_plant.AddElement(/datum/element/plant_backfire, CALLBACK(src, .proc/backfire_effect), cancel_action_on_backfire, traits_to_check, genes_to_check)
 
 /*
  * The backfire effect. Override with plant-specific effects.
@@ -163,6 +164,7 @@
 /// Rose's prick on backfire
 /datum/plant_gene/trait/backfire/rose_thorns
 	name = "Rose Thorns"
+	cancel_action_on_backfire = FALSE
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
@@ -191,7 +193,6 @@
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
 		user.update_damage_overlays()
-	return BACKFIRE_CANCEL_ACTION
 
 /// Normal Nettle hannd burn on backfire
 /datum/plant_gene/trait/backfire/nettle_burn
@@ -216,11 +217,12 @@
 	if(prob(50))
 		user.Paralyze(100)
 		to_chat(user, "<span class='userdanger'>You are stunned by the powerful acids of [our_plant]!</span>")
-	return BACKFIRE_CANCEL_ACTION
 
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
 	name = "Active Capsicum Glands"
+	cancel_action_on_backfire = FALSE
+	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
 	var/mob/living/carbon/human/held_mob
 	/// The chili this gene is tied to, to track it for processing.
@@ -273,6 +275,7 @@
 /// Bluespace Tomato squashing on the user on backfire
 /datum/plant_gene/trait/backfire/bluespace
 	name = "Bluespace Volatility"
+	genes_to_check = list(/datum/plant_gene/trait/squash)
 
 /datum/plant_gene/trait/backfire/bluespace/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
@@ -280,7 +283,6 @@
 	if(prob(50))
 		to_chat(user, "<span class='danger'>[our_plant] slips out of your hand!</span>")
 		INVOKE_ASYNC(our_plant, /obj/item/.proc/attack_self, user)
-		return BACKFIRE_CANCEL_ACTION
 
 /// Traits for plants that can be activated to turn into a mob.
 /datum/plant_gene/trait/mob_transformation
@@ -305,8 +307,7 @@
 		return
 
 	if(dangerous)
-		our_plant.AddElement(/datum/element/plant_backfire)
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
+		our_plant.AddElement(/datum/element/plant_backfire, CALLBACK(src, .proc/early_awakening), TRUE)
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/manual_awakening)
 	RegisterSignal(our_plant, COMSIG_ITEM_PRE_ATTACK, .proc/pre_consumption_check)
 
