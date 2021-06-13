@@ -11,4 +11,5 @@ IF NOT %1 == "" (
 	rem TGS3: Otherwise build in Game/B
 	cd ..\Game\B
 )
-tools\build\build tgs
+set CBT_BUILD_MODE=TGS
+tools\build\build
