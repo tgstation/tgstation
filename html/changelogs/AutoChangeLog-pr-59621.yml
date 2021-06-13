@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - admin: "The interview system has been improved with in-chat clickable links for interviews and ability to include links in interview questions."

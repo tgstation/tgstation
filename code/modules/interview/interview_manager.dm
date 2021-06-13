@@ -109,7 +109,7 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
-		to_chat(X, "<span class='adminhelp'>Interview for [ckey] enqueued for review. Current position in queue: [to_queue.pos_in_queue]</span>", confidential = TRUE)
+		to_chat(X, "<span class='adminhelp'>[to_queue.link_self()] for [ckey] enqueued for review. Current position in queue: [to_queue.pos_in_queue]</span>", confidential = TRUE)
 
 /**
  * Removes a ckey from the cooldown list, used for enforcing cooldown after an interview is denied.

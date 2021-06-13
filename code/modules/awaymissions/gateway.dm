@@ -355,7 +355,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(!our_destination)
 		return
 
-
 	add_filter("portal_alpha", 1, list("type" = "alpha", "icon" = icon(alpha_icon, alpha_icon_state), "x" = 32, "y" = 32))
 	add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
 	add_filter("portal_ripple", 1, list("type" = "ripple", "size" = 2, "radius" = 1, "falloff" = 1, "y" = 7))
@@ -363,5 +362,4 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
 
 	var/turf/center_turf = our_destination.get_target_turf()
-
 	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))

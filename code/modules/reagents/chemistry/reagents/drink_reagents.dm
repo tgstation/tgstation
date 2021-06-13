@@ -1026,3 +1026,19 @@
 		M.drowsyness += 1 * REM * delta_time
 	return ..()
 
+/datum/reagent/consumable/mushroom_tea
+	name = "Mushroom Tea"
+	description = "A savoury glass of tea made from polypore mushroom shavings, originally native to Tizira."
+	color = "#674945" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "mushrooms"
+	glass_icon_state = "mushroom_tea_glass"
+	glass_name = "glass of mushroom tea"
+	glass_desc = "Oddly savoury for a drink."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(islizard(M))
+		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
+	..()
+	. = TRUE

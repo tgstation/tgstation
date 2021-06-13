@@ -111,7 +111,7 @@
 #define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting objects
+///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100
 #define LIGHTING_RENDER_TARGET "LIGHT_PLANE"
 
