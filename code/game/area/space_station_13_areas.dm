@@ -99,7 +99,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/ai_monitored/turret_protected
 	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
-	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg') //This sound is terrible when you hear it constantly, so isolate it from the core's sound pool.
+	///Some sounds (like the space jam) are terrible when on loop. We use this varaible to add it to other AI areas, but override it to keep it from the AI's core.
+	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
 /area/ai_monitored/turret_protected/Initialize()
