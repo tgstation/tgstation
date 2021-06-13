@@ -217,18 +217,15 @@
 	while(t_amount < product_count)
 		var/obj/item/food/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
-			var/obj/item/seeds/new_prod = pick(mutatelist)
-			t_prod = initial(new_prod.product)
+			var/obj/item/seeds/mutated_seed = pick(mutatelist)
+			t_prod = initial(mutated_seed.product)
 			if(!t_prod)
 				continue
-			t_prod = new t_prod(output_loc, src)
-			t_prod.seed = new new_prod
-			t_prod.seed.name = initial(new_prod.name)
-			t_prod.seed.desc = initial(new_prod.desc)
-			t_prod.seed.plantname = initial(new_prod.plantname)
+			mutated_seed = new mutated_seed
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
-				if(trait.can_add(t_prod.seed))
-					t_prod.seed.genes += trait
+				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
+					mutated_seed.genes += trait
+			t_prod = new t_prod(output_loc, mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, user)
@@ -578,12 +575,12 @@
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
 	var/amount_random_traits = rand(lower, upper)
 	for(var/i in 1 to amount_random_traits)
-		var/random_trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
-		var/datum/plant_gene/trait/T = new random_trait
-		if(T.can_add(src))
-			genes += T
+		var/random_trait = pick(subtypesof(/datum/plant_gene/trait))
+		var/datum/plant_gene/trait/picked_random_trait = new random_trait
+		if((picked_random_trait.mutability_flags & PLANT_GENE_MUTATABLE) && picked_random_trait.can_add(src))
+			genes += picked_random_trait
 		else
-			qdel(T)
+			qdel(picked_random_trait)
 
 /obj/item/seeds/proc/add_random_plant_type(normal_plant_chance = 75)
 	if(prob(normal_plant_chance))
@@ -629,15 +626,19 @@
  *
  * Adds the graft trait to this plant if possible.
  * Increases plant stats by 2/3 of the grafts stats to a maximum of 100 (10 for yield).
- * Returns [TRUE]
+ * Returns TRUE if the graft could apply its trait successfully, FALSE if it fails to apply the trait.
+ * NOTE even if the graft fails to apply the trait it still adjusts the plant's stats and reagents.
  *
  * Arguments:
  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
  */
 /obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
+	. = TRUE
 	var/datum/plant_gene/new_trait = snip.stored_trait
 	if(new_trait?.can_add(src))
 		genes += new_trait.Copy()
+	else
+		. = FALSE
 
 	// Adjust stats based on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.lifespan - lifespan)))))
@@ -650,7 +651,7 @@
 	// Add in any reagents, too.
 	reagents_from_genes()
 
-	return TRUE
+	return
 
 /*
  * Both `/item/food/grown` and `/item/grown` implement a seed variable which tracks

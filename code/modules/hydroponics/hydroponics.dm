@@ -289,7 +289,7 @@
 		if (needs_update)
 			update_appearance()
 
-		if(myseed && prob(5 * (11-myseed.production)))
+		if(myseed)
 			SEND_SIGNAL(myseed, COMSIG_PLANT_ON_GROW, src)
 
 	return
@@ -628,10 +628,10 @@
 
 		var/list/current_traits = list()
 		for(var/datum/plant_gene/gene in myseed.genes)
-			if(istype(gene, /datum/plant_gene/core) || (istype(gene,/datum/plant_gene/trait/plant_type)) || islist(gene))
+			if(islist(gene))
 				continue
-			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE) || !(gene.mutability_flags & PLANT_GENE_EXTRACTABLE))
-				continue //No bypassing unextractable or essential genes.
+			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE))
+				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
 		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sortList(current_traits))
 		if(removed_trait == null)
@@ -658,11 +658,11 @@
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-		if(!myseed.apply_graft(snip))
-			to_chat(user, "<span class='warning'>The [myseed.plantname] rejects the [snip]!</span>")
-			return
+		if(myseed.apply_graft(snip))
+			to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname], granting it [snip.stored_trait.get_name()].</span>")
+		else
+			to_chat(user, "<span class='warning'>You integrate the grafted plant limb onto [myseed.plantname], but it does not accept the [snip.stored_trait.get_name()] trait from the [snip].</span>")
 		qdel(snip)
-		to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname].</span>")
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))
