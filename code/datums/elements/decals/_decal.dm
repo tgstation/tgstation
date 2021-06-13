@@ -1,10 +1,17 @@
 /datum/element/decal
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
+	/// Whether this decal can be cleaned.
 	var/cleanable
+	/// A description this decal appends to the target's examine message.
 	var/description
 	/// If true this was initialized with no set direction - will follow the parent dir.
 	var/directional
+	/// The base icon state that this decal was initialized with.
+	var/base_icon_state
+	/// What smoothing junction this was initialized with.
+	var/smoothing
+	/// The overlay applied by this decal to the target.
 	var/mutable_appearance/pic
 
 /// Remove old decals and apply new decals after rotation as necessary
@@ -36,7 +43,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["cleanable"], result["color"], result["layer"], result["desc"], result["alpha"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["plane"], result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -46,40 +53,46 @@
 		new_dir = turn(pic.dir,-rotation)
 	return list(
 		"icon" = pic.icon,
-		"icon_state" = pic.icon_state,
+		"icon_state" = base_icon_state,
 		"dir" = new_dir,
-		"cleanable" = cleanable,
-		"color" = pic.color,
+		"plane" = pic.plane,
 		"layer" = pic.layer,
-		"desc" = description,
-		"alpha" = pic.alpha
+		"alpha" = pic.alpha,
+		"color" = pic.color,
+		"smoothing" = smoothing,
+		"cleanable" = cleanable,
+		"desc" = description
 	)
 
 
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _alpha=255, _color, _smoothing, _cleanable=FALSE, _description, mutable_appearance/_pic)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
-	else if(!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
+	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, target))
 		return ELEMENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
 	directional = _dir
+	base_icon_state = _icon_state
+	smoothing = _smoothing
 
 	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
 	if(target.flags_1 & INITIALIZED_1)
-		target.update_appearance() //could use some queuing here now maybe.
+		target.update_appearance(UPDATE_OVERLAYS) //could use some queuing here now maybe.
 	else
 		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
 		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
+	if(!isnull(_smoothing))
+		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, .proc/smooth_react, TRUE)
 	if(_cleanable)
-		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
+		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react, TRUE)
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
 
@@ -93,18 +106,19 @@
  * all args are fed into creating an image, they are byond vars for images you'll recognize in the byond docs
  * (except source, source is the object whose appearance we're copying.)
  */
-/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
+/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	if(!_icon || !_icon_state)
 		return FALSE
-	var/temp_image = image(_icon, null, _icon_state, _layer, _dir)
+	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
 	pic = new(temp_image)
+	pic.plane = _plane
 	pic.color = _color
 	pic.alpha = _alpha
 	return TRUE
 
 /datum/element/decal/Detach(atom/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE))
-	source.update_appearance()
+	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE, COMSIG_ATOM_SMOOTHED_ICON))
+	source.update_appearance(UPDATE_OVERLAYS)
 	if(isitem(source))
 		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
 	SEND_SIGNAL(source, COMSIG_TURF_DECAL_DETACHED, description, cleanable, directional, pic)
@@ -114,8 +128,8 @@
 	SIGNAL_HANDLER
 
 	if(source && istype(source))
-		source.update_appearance()
-		UnregisterSignal(source,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+		source.update_appearance(UPDATE_OVERLAYS)
+		UnregisterSignal(source, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
 
 /datum/element/decal/proc/apply_overlay(atom/source, list/overlay_list)
@@ -142,4 +156,20 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional, cleanable, pic.color, pic.layer, description, pic.alpha)
+	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description)
+
+/**
+ * Reacts to the source atom smoothing.
+ *
+ * Arguments:
+ * - [source][/atom]: The source of the signal and recently smoothed atom.
+ */
+/datum/element/decal/proc/smooth_react(atom/source)
+	SIGNAL_HANDLER
+	var/smoothing_junction = source.smoothing_junction
+	if(smoothing_junction == smoothing)
+		return NONE
+
+	Detach(source)
+	source.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
+	return NONE
