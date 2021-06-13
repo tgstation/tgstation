@@ -1044,4 +1044,4 @@
 		return
 	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
 		to_chat(living, "<span class='notice'>You manage to get some of the ants off!</span>")
-		ant_covered.ants_remaining -= 7
+		ant_covered.ants_remaining -= 10
