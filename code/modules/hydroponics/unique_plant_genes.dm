@@ -139,7 +139,7 @@
 /datum/plant_gene/trait/backfire
 	name = "Backfire Trait"
 	/// Whether our actions are cancelled when the backfire triggers.
-	var/cancel_action_on_backfire = TRUE
+	var/cancel_action_on_backfire = FALSE
 	/// A list of extra traits to check to be considered safe.
 	var/traits_to_check
 	/// A list of extra genes to check to be considered safe.
@@ -164,7 +164,6 @@
 /// Rose's prick on backfire
 /datum/plant_gene/trait/backfire/rose_thorns
 	name = "Rose Thorns"
-	cancel_action_on_backfire = FALSE
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
@@ -184,6 +183,7 @@
 /// Novaflower's hand burn on backfire
 /datum/plant_gene/trait/backfire/novaflower_heat
 	name = "Burning Stem"
+	cancel_action_on_backfire = TRUE
 
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
@@ -210,6 +210,7 @@
 /// Deathnettle hand burn + stun on backfire
 /datum/plant_gene/trait/backfire/nettle_burn/death
 	name = "Aggressive Stinging Stem"
+	cancel_action_on_backfire = TRUE
 
 /datum/plant_gene/trait/backfire/nettle_burn/death/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
@@ -221,7 +222,6 @@
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
 	name = "Active Capsicum Glands"
-	cancel_action_on_backfire = FALSE
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
 	var/mob/living/carbon/human/held_mob
@@ -275,6 +275,7 @@
 /// Bluespace Tomato squashing on the user on backfire
 /datum/plant_gene/trait/backfire/bluespace
 	name = "Bluespace Volatility"
+	cancel_action_on_backfire = TRUE
 	genes_to_check = list(/datum/plant_gene/trait/squash)
 
 /datum/plant_gene/trait/backfire/bluespace/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
