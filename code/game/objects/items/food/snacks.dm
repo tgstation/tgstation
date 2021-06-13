@@ -210,7 +210,7 @@
 /obj/item/food/peanuts/banappeal
 	name = "\improper Gallery's Ban Appel roast peanuts"
 	desc = "Yearly lobbying is denied not because the roasting apples are toxic, but because they keep evading the ban."
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cyanide = 1) //uses roasted poison apples
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/cyanide = 1) //uses roasted poison apples
 	tastes = list("peanuts" = 3, "apples" = 1, "regret" = 1)
 
 /obj/item/food/peanuts/random
