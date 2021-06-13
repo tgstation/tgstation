@@ -18,6 +18,7 @@
 
 /// Override this to do initial set up
 /datum/greyscale_layer/proc/Initialize(icon_file)
+	return
 
 /// Handles the processing of the json data and conversion to correct value types.
 /// Will error on incorrect, missing, or unexpected values.

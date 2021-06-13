@@ -2,7 +2,9 @@
 /// Subtypes represent different conversions of that value.
 /datum/json_reader
 
+/// Takes a value read directly from json and verifies/converts as needed to a result
 /datum/json_reader/proc/ReadJson(value)
+	return
 
 /datum/json_reader/text/ReadJson(value)
 	if(!istext(value))
