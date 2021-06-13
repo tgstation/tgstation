@@ -120,7 +120,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
-	ai_will_not_hear_this = list()
+	ai_will_not_hear_this = null
 
 /area/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
