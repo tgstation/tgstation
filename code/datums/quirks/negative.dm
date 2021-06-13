@@ -90,7 +90,7 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!</span>")
+	to_chat(quirk_holder, span_boldnotice("There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!"))
 
 /datum/quirk/brainproblems/on_process(delta_time)
 	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
@@ -164,7 +164,7 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [heirloom_spawn_loc], passed down from generation to generation. Keep it safe!</span>")
+	to_chat(quirk_holder, span_boldnotice("There is a precious family [heirloom.name] [heirloom_spawn_loc], passed down from generation to generation. Keep it safe!"))
 
 	var/list/names = splittext(quirk_holder.real_name, " ")
 	var/family_name = names[names.len]
@@ -267,7 +267,7 @@
 	var/lums = T.get_lumcount()
 	if(lums <= 0.2)
 		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+			to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 			quirk_holder.toggle_move_intent()
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
@@ -453,7 +453,7 @@
 				new_message += pick("uh,","erm,","um,")
 				if(prob(min(5,(0.05*(nearby_people*12.5)*moodmod)))) //Max 1 in 20 chance of cutoff after a succesful filler roll, for 50% odds in a 15 word sentence
 					quirker.silent = max(3, quirker.silent)
-					to_chat(quirker, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
+					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
 				word = html_decode(word)
@@ -480,14 +480,14 @@
 	var/mob/living/carbon/human/quirker = quirk_holder
 	if(prob(min(50,(0.50*(nearby_people*12.5)*moodmod)))) //Max 50% chance of not talking
 		if(dumb_thing)
-			to_chat(quirker, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
+			to_chat(quirker, span_userdanger("You think of a dumb thing you said a long time ago and scream internally."))
 			dumb_thing = FALSE //only once per life
 			if(prob(1))
 				new/obj/item/food/spaghetti/pastatomato(get_turf(quirker)) //now that's what I call spaghetti code
 		else
-			to_chat(quirk_holder, "<span class='warning'>You think that wouldn't add much to the conversation and decide not to say it.</span>")
+			to_chat(quirk_holder, span_warning("You think that wouldn't add much to the conversation and decide not to say it."))
 			if(prob(min(25,(0.25*(nearby_people*12.75)*moodmod)))) //Max 25% chance of silence stacks after succesful not talking roll
-				to_chat(quirker, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
+				to_chat(quirker, span_danger("You retreat into yourself. You <i>really</i> don't feel up to talking."))
 				quirker.silent = max(5, quirker.silent)
 		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
 	else
@@ -501,7 +501,7 @@
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, span_smallnotice("You make eye contact with [A].")), 3)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
 	SIGNAL_HANDLER
@@ -526,7 +526,7 @@
 			msg += "causing you to freeze up!"
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, span_userdanger("[msg]")), 3) // so the examine signal has time to fire and this will print after
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/mood_event/anxiety_eyecontact
@@ -593,7 +593,7 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //chat feedback here. No need of lose_text.
 
 /datum/quirk/junkie/proc/announce_drugs()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out...</span>")
+	to_chat(quirk_holder, span_boldnotice("There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out..."))
 
 /datum/quirk/junkie/on_process()
 	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
@@ -609,7 +609,7 @@
 		if(deleted || missing_addiction)
 			if(deleted)
 				reagent_instance = new reagent_type()
-			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you feel like you're falling back onto bad habits..</span>")
+			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
 			for(var/addiction in reagent_instance.addiction_types)
 				H.mind.add_addiction_points(addiction, 1000) ///Max that shit out
 
@@ -635,7 +635,7 @@
 	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
+	to_chat(quirk_holder, span_boldnotice("There is a [initial(drug_container_type.name)] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out."))
 
 
 /datum/quirk/junkie/smoker/on_process()
@@ -685,7 +685,7 @@
 	name = "Extreme " + display +"Allergies"
 	medical_record_text = "Patient's immune system responds violently to [display]"
 	quirk_holder?.mind.store_memory("You are allergic to [display]")
-	to_chat(quirk_holder, "<span class='boldnotice'>You are allergic to [display]make sure not to consume any of it!</span>")
+	to_chat(quirk_holder, span_boldnotice("You are allergic to [display]make sure not to consume any of it!"))
 	if(!ishuman(quirk_holder))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder

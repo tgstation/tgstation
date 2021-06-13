@@ -97,7 +97,7 @@
 
 /obj/item/food/grown/grind_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
-		to_chat(usr, "<span class='warning'>[src] needs to be dry before it can be ground up!</span>")
+		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
 		return
 	return TRUE
 

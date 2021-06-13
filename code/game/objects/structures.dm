@@ -35,9 +35,9 @@
 	. = ..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			. += "<span class='warning'>It's on fire!</span>"
+			. += span_warning("It's on fire!")
 		if(broken)
-			. += "<span class='notice'>It appears to be broken.</span>"
+			. += span_notice("It appears to be broken.")
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
@@ -51,7 +51,7 @@
 			return  "It appears heavily damaged."
 		if(0 to 25)
 			if(!broken)
-				return  "<span class='warning'>It's falling apart!</span>"
+				return  span_warning("It's falling apart!")
 
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)

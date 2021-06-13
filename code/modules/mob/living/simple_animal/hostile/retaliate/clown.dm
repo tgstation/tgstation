@@ -348,7 +348,7 @@
 
 	if(IS_EDIBLE(potential_food))
 		if(prank_pouch.len >= 8)
-			to_chat(src, "<span class='warning'>Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now.</span>")
+			to_chat(src, span_warning("Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now."))
 			return FALSE
 		return TRUE
 
@@ -359,7 +359,7 @@
 								/obj/item/food/grown/tomato,
 								/obj/item/food/meatclown)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
@@ -405,10 +405,10 @@
 /obj/effect/proc_holder/regurgitate/fire(mob/living/carbon/user)
 	if(active)
 		user.icon_state = initial(user.icon_state)
-		remove_ranged_ability("<span class='notice'>Your throat muscles relax.</span>")
+		remove_ranged_ability(span_notice("Your throat muscles relax."))
 	else
 		user.icon_state = "glutton_tongue"
-		add_ranged_ability(user, "<span class='notice'>Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B></span>", TRUE)
+		add_ranged_ability(user, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"), TRUE)
 
 /obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
@@ -424,7 +424,7 @@
 	if(!pouch_owner.prank_pouch.len)
 		//active = FALSE
 		pouch_owner.icon_state = "glutton"
-		remove_ranged_ability("<span class='notice'>Your prank pouch is empty,.</span>")
+		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
 		return
 
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)

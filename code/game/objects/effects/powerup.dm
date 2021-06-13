@@ -47,7 +47,7 @@
 	else
 		qdel(src)
 	if(pickup_message)
-		to_chat(target, "<span class='notice'>[pickup_message]</span>")
+		to_chat(target, span_notice("[pickup_message]"))
 	if(pickup_sound)
 		playsound(get_turf(target), pickup_sound, 50, TRUE, -1)
 	return TRUE

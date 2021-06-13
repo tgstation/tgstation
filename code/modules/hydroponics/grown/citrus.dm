@@ -109,7 +109,7 @@
 	wine_power = 70
 
 /obj/item/food/grown/firelemon/attack_self(mob/living/user)
-	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")
+	user.visible_message(span_warning("[user] primes [src]!"), span_userdanger("You prime [src]!"))
 	log_bomber(user, "primed a", src, "for detonation")
 	icon_state = "firelemon_active"
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)

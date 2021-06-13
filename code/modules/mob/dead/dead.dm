@@ -63,7 +63,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	switch(csa.len)
 		if(0)
 			remove_verb(src, /mob/dead/proc/server_hop)
-			to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
+			to_chat(src, span_notice("Server Hop has been disabled."))
 		if(1)
 			pick = csa[1]
 		else
@@ -78,7 +78,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return
 
 	var/client/C = client
-	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
+	to_chat(C, span_notice("Sending you to [pick]."))
 	new /atom/movable/screen/splash(C)
 
 	notransform = TRUE

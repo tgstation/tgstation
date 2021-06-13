@@ -16,7 +16,7 @@
 	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
 /obj/item/seeds/watermelon/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.gib()
 	new product(drop_location())
 	qdel(src)
@@ -74,10 +74,10 @@
 
 /obj/item/food/grown/holymelon/proc/block_magic(mob/user, major)
 	if(major)
-		to_chat(user, "<span class='warning'>[src] hums slightly, and seems to decay a bit.</span>")
+		to_chat(user, span_warning("[src] hums slightly, and seems to decay a bit."))
 
 /obj/item/food/grown/holymelon/proc/expire(mob/user)
-	to_chat(user, "<span class='warning'>[src] rapidly turns into ash!</span>")
+	to_chat(user, span_warning("[src] rapidly turns into ash!"))
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
@@ -91,7 +91,7 @@
 	var/mob/living/carbon/human/holy_person = M
 	if(!holy_person.mind?.holy_role || HAS_TRAIT(holy_person, TRAIT_AGEUSIA))
 		return
-	to_chat(holy_person,"<span class='notice'>Truly, a piece of heaven!</span>")
+	to_chat(holy_person,span_notice("Truly, a piece of heaven!"))
 	M.adjust_disgust(-5 + -2.5 * fraction)
 	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
 	last_check_time = world.time

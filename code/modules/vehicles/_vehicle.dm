@@ -43,7 +43,7 @@
 /obj/vehicle/examine(mob/user)
 	. = ..()
 	if(resistance_flags & ON_FIRE)
-		. += "<span class='warning'>It's on fire!</span>"
+		. += span_warning("It's on fire!")
 	var/healthpercent = obj_integrity/max_integrity * 100
 	switch(healthpercent)
 		if(50 to 99)
@@ -51,7 +51,7 @@
 		if(25 to 50)
 			. += "It appears heavily damaged."
 		if(0 to 25)
-			. += "<span class='warning'>It's falling apart!</span>"
+			. += span_warning("It's falling apart!")
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return istype(I, key_type)

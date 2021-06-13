@@ -307,7 +307,7 @@
 		misc_smudge.name = "[our_plant.name] smudge"
 		misc_smudge.color = "#82b900"
 
-	our_plant.visible_message("<span class='warning'>[our_plant] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
+	our_plant.visible_message(span_warning("[our_plant] is squashed."),span_hear("You hear a smack."))
 	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SQUASH, target)
 
 	our_plant.reagents?.expose(our_turf)
@@ -396,7 +396,7 @@
 /datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/our_plant, mob/living/eater, mob/feeder)
 	SIGNAL_HANDLER
 
-	to_chat(eater, "<span class='notice'>You feel energized as you bite into [our_plant].</span>")
+	to_chat(eater, span_notice("You feel energized as you bite into [our_plant]."))
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	for(var/obj/item/stock_parts/cell/found_cell in eater.GetAllContents())
@@ -409,7 +409,7 @@
 			found_cell.update_appearance()
 			batteries_recharged = TRUE
 	if(batteries_recharged)
-		to_chat(eater, "<span class='notice'>Your batteries are recharged!</span>")
+		to_chat(eater, span_notice("Your batteries are recharged!"))
 
 /*
  * Makes the plant glow. Makes the plant in tray glow, too.
@@ -536,7 +536,7 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/teleport_radius = max(round(our_seed.potency / 10), 1)
 	var/turf/T = get_turf(target)
-	to_chat(target, "<span class='warning'>You slip through spacetime!</span>")
+	to_chat(target, span_warning("You slip through spacetime!"))
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 	if(prob(50))
 		do_teleport(our_plant, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -605,10 +605,10 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/stack/cable_coil/cabling = hit_item
 	if(!cabling.use(5))
-		to_chat(user, "<span class='warning'>You need five lengths of cable to make a [our_plant] battery!</span>")
+		to_chat(user, span_warning("You need five lengths of cable to make a [our_plant] battery!"))
 		return
 
-	to_chat(user, "<span class='notice'>You add some cable to [our_plant] and slide it inside the battery encasing.</span>")
+	to_chat(user, span_notice("You add some cable to [our_plant] and slide it inside the battery encasing."))
 	var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
 	pocell.icon_state = our_plant.icon_state
 	pocell.maxcharge = our_seed.potency * 20
@@ -656,7 +656,7 @@
 		if(living_target.reagents && living_target.can_inject())
 			var/injecting_amount = max(1, our_seed.potency * 0.2) // Minimum of 1, max of 20
 			our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
-			to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
+			to_chat(target, span_danger("You are pricked by [our_plant]!"))
 			log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
 
 /// Explodes into reagent-filled smoke when squashed.
@@ -743,7 +743,7 @@
 	if(target_tray.myseed) // Check if there's another seed in the next tray.
 		if(target_tray.myseed.type == origin_tray.myseed.type && !target_tray.dead)
 			return FALSE // It should not destroy its own kind.
-		target_tray.visible_message("<span class='warning'>The [target_tray.myseed.plantname] is overtaken by [origin_tray.myseed.plantname]!</span>")
+		target_tray.visible_message(span_warning("The [target_tray.myseed.plantname] is overtaken by [origin_tray.myseed.plantname]!"))
 		QDEL_NULL(target_tray.myseed)
 	target_tray.myseed = origin_tray.myseed.Copy()
 	target_tray.age = 0
@@ -754,7 +754,7 @@
 	target_tray.weedlevel = 0 // Reset
 	target_tray.pestlevel = 0 // Reset
 	target_tray.update_appearance()
-	target_tray.visible_message("<span class='warning'>The [origin_tray.myseed.plantname] spreads!</span>")
+	target_tray.visible_message(span_warning("The [origin_tray.myseed.plantname] spreads!"))
 	if(target_tray.myseed)
 		target_tray.name = "[initial(target_tray.name)] ([target_tray.myseed.plantname])"
 	else

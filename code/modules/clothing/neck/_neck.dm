@@ -52,7 +52,7 @@
 	icon_state = "stethoscope"
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!</span>")
+	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 
 /obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
@@ -64,25 +64,25 @@
 	var/mob/living/carbon/carbon_patient = M
 	var/body_part = parse_zone(user.zone_selected)
 
-	var/heart_strength = "<span class='danger'>no</span>"
-	var/lung_strength = "<span class='danger'>no</span>"
+	var/heart_strength = span_danger("no")
+	var/lung_strength = span_danger("no")
 
 	var/obj/item/organ/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
 		if(istype(heart))
-			heart_strength = (heart.beating ? "a healthy" : "<span class='danger'>an unstable</span>")
+			heart_strength = (heart.beating ? "a healthy" : span_danger("an unstable"))
 		if(istype(lungs))
-			lung_strength = ((carbon_patient.failed_last_breath || carbon_patient.losebreath) ? "<span class='danger'>strained</span>" : "healthy")
+			lung_strength = ((carbon_patient.failed_last_breath || carbon_patient.losebreath) ? span_danger("strained") : "healthy")
 
-	user.visible_message("<span class='notice'>[user] places [src] against [carbon_patient]'s [body_part] and listens attentively.</span>", ignored_mobs = user)
+	user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
 
 	var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration" : "You faintly hear [heart_strength] pulse")
 	if(!user.can_hear())
 		diagnosis = "Fat load of good it does you though, since you can't hear"
 
-	to_chat(user, "<span class='notice'>You place [src] against [carbon_patient]'s [body_part]. [diagnosis].</span>")
+	to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. [diagnosis]."))
 
 ///////////
 //SCARVES//
@@ -205,7 +205,7 @@
 /obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
 	. = ..()
 	selling = !selling
-	to_chat(user, "<span class='notice'>[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode.</span>")
+	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
 
 /obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
 	. = ..()
@@ -218,7 +218,7 @@
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, "<span class='notice'>[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]</span>")
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user),true_price)
 			for(var/i in ex.exported_atoms_ref)
@@ -227,7 +227,7 @@
 					continue
 				qdel(AM)
 	else
-		to_chat(user, "<span class='warning'>There is no export value for [I] or any items within it.</span>")
+		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
 
 
 /obj/item/clothing/neck/neckerchief
@@ -247,7 +247,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(ITEM_SLOT_NECK) == src)
-			to_chat(user, "<span class='warning'>You can't untie [src] while wearing it!</span>")
+			to_chat(user, span_warning("You can't untie [src] while wearing it!"))
 			return
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
@@ -255,9 +255,9 @@
 			var/oldName = src.name
 			qdel(src)
 			user.put_in_hand(newBand, currentHandIndex)
-			user.visible_message("<span class='notice'>You untie [oldName] back into a [newBand.name].</span>", "<span class='notice'>[user] unties [oldName] back into a [newBand.name].</span>")
+			user.visible_message(span_notice("You untie [oldName] back into a [newBand.name]."), span_notice("[user] unties [oldName] back into a [newBand.name]."))
 		else
-			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!</span>")
+			to_chat(user, span_warning("You must be holding [src] in order to untie it!"))
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"

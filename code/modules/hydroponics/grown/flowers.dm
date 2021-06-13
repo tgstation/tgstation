@@ -260,7 +260,7 @@
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of [src]!</span>")
+		to_chat(M, span_danger("You are lit on fire from the intense heat of [src]!"))
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
@@ -273,7 +273,7 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else
-		to_chat(usr, "<span class='warning'>All the petals have fallen off [src] from violent whacking!</span>")
+		to_chat(usr, span_warning("All the petals have fallen off [src] from violent whacking!"))
 		qdel(src)
 
 /*
@@ -282,7 +282,7 @@
  * user - the carbon who is holding the flower.
  */
 /obj/item/grown/novaflower/proc/singe_holder(mob/living/carbon/user)
-	to_chat(user, "<span class='danger'>[src] singes your bare hand!</span>")
+	to_chat(user, span_danger("[src] singes your bare hand!"))
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
 		user.update_damage_overlays()
@@ -327,7 +327,7 @@
 	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
 		return
 
-	to_chat(user, "<span class='danger'>[src]'s thorns prick your hand. Ouch.</span>")
+	to_chat(user, span_danger("[src]'s thorns prick your hand. Ouch."))
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(2))
 		user.update_damage_overlays()

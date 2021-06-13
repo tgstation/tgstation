@@ -151,7 +151,7 @@
 
 /datum/quirk/monochromatic/post_add()
 	if(quirk_holder.mind.assigned_role == "Detective")
-		to_chat(quirk_holder, "<span class='boldannounce'>Mmm. Nothing's ever clear on this station. It's all shades of gray...</span>")
+		to_chat(quirk_holder, span_boldannounce("Mmm. Nothing's ever clear on this station. It's all shades of gray..."))
 		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
 
 /datum/quirk/monochromatic/remove()
@@ -205,7 +205,7 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='notice'>There is a pinpointer [where], which can help you find your way around. Click in-hand to activate.</span>")
+	to_chat(quirk_holder, span_notice("There is a pinpointer [where], which can help you find your way around. Click in-hand to activate."))
 
 /datum/quirk/bald
 	name = "Smooth-Headed"
@@ -283,7 +283,7 @@
 		H.put_in_hands(gloves)
 
 /datum/quirk/tongue_tied/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
+	to_chat(quirk_holder, span_boldannounce("Because you speak with your hands, having them full hinders your ability to communicate!"))
 
 /datum/quirk/photographer
 	name = "Photographer"

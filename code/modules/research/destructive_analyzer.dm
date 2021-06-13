@@ -32,11 +32,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(!is_insertion_ready(user))
 			return
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+			to_chat(user, span_warning("\The [O] is stuck to your hand, you cannot put it in the [src.name]!"))
 			return
 		busy = TRUE
 		loaded_item = O
-		to_chat(user, "<span class='notice'>You add the [O.name] to the [src.name]!</span>")
+		to_chat(user, span_notice("You add the [O.name] to the [src.name]!"))
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
 		updateUsrDialog()
@@ -146,14 +146,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.researched_nodes[N.id])  // already researched
-				l += "<span class='linkOff'>[N.display_name]</span>"
+				l += "<span class='linkoff'>[N.display_name]</span>"
 				l += "This node has already been researched."
 			else if(!length(worth))  // reveal only
 				if (stored_research.hidden_nodes[N.id])
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
 					l += "This node will be revealed."
 				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "<span class='linkoff'>[N.display_name]</span>"
 					l += "This node has already been revealed."
 			else  // boost by the difference
 				var/list/differences = list()
@@ -167,7 +167,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
 					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
 				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "<span class='linkoff'>[N.display_name]</span>"
 					l += "This node has already been boosted.</span>"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
@@ -176,7 +176,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[loaded_item.type])
-				l += "<span class='linkOff'>Point Deconstruction</span>"
+				l += "<span class='linkoff'>Point Deconstruction</span>"
 				l += "This item's points have already been claimed."
 			else
 				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_DESTROY_ID]'>Point Deconstruction</A>"
@@ -209,7 +209,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(busy)
-			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
+			to_chat(usr, span_danger("The destructive analyzer is busy at the moment."))
 			return
 		if(loaded_item)
 			unload_item()

@@ -211,7 +211,7 @@
 	wine_power = 80
 
 /obj/item/food/grown/cherry_bomb/attack_self(mob/living/user)
-	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
+	user.visible_message(span_warning("[user] plucks the stem from [src]!"), span_userdanger("You pluck the stem from [src], which begins to hiss loudly!"))
 	log_bomber(user, "primed a", src, "for detonation")
 	detonate()
 
@@ -287,8 +287,8 @@
 	var/turf/player_turf = get_turf(user)
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
-	user.visible_message("<span class='danger'>[user] begins to plant \the [src]...</span>")
+	user.visible_message(span_danger("[user] begins to plant \the [src]..."))
 	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
 		new /obj/structure/fluff/hedge/opaque(user.drop_location())
-		to_chat(user, "<span class='notice'>You plant \the [src].</span>")
+		to_chat(user, span_notice("You plant \the [src]."))
 		qdel(src)

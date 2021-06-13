@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(istype(bumped_atom, /obj/machinery/field))
 		return
 
-	bumped_atom.visible_message("<span class='userdanger'>[src] crashes into the field violently!</span>")
+	bumped_atom.visible_message(span_userdanger("[src] crashes into the field violently!"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms)
 		tram_part.travel_distance = 0
 		tram_part.travelling = FALSE
@@ -229,16 +229,16 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = going
 	if(going == DOWN)
 		for(var/mob/living/crushed in destination.contents)
-			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
+			to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 	else if(going != UP) //can't really crush something upwards
 		for(var/obj/structure/anchortrouble in destination.contents)
 			if(!QDELETED(anchortrouble) && anchortrouble.anchored && (!istype(anchortrouble, /obj/structure/holosign)) && anchortrouble.layer >= GAS_PUMP_LAYER) //to avoid pipes, wires, etc
 				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-				visible_message("<span class='notice'>[src] smashes through [anchortrouble]!</span>")
+				visible_message(span_notice("[src] smashes through [anchortrouble]!"))
 				anchortrouble.deconstruct(FALSE)
 		for(var/mob/living/collided in destination.contents)
-			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
+			to_chat(collided, span_userdanger("[src] collides into you!"))
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 			var/damage = rand(5,10)
 			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
@@ -271,11 +271,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(lift_master_datum.Check_lift_move(DOWN))
 		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 	if(!length(tool_list))
-		to_chat(user, "<span class='warning'>[src] doesn't seem to able to move anywhere!</span>")
+		to_chat(user, span_warning("[src] doesn't seem to able to move anywhere!"))
 		add_fingerprint(user)
 		return
 	if(controls_locked)
-		to_chat(user, "<span class='warning'>[src] has its controls locked! It must already be trying to do something!</span>")
+		to_chat(user, span_warning("[src] has its controls locked! It must already be trying to do something!"))
 		add_fingerprint(user)
 		return
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
@@ -325,9 +325,9 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
-		user.visible_message("<span class='notice'>[user] moves the lift upwards.</span>", "<span class='notice'>You move the lift upwards.</span>")
+		user.visible_message(span_notice("[user] moves the lift upwards."), span_notice("You move the lift upwards."))
 	else
-		user.visible_message("<span class='notice'>[user] moves the lift downwards.</span>", "<span class='notice'>You move the lift downwards.</span>")
+		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
 
 /obj/structure/industrial_lift/Destroy()
 	GLOB.lifts.Remove(src)
