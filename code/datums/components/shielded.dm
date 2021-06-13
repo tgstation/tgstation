@@ -37,6 +37,8 @@
 	src.max_charges = max_charges
 	src.recharge_start_delay = recharge_start_delay
 	src.charge_increment_delay = charge_increment_delay
+	src.charge_recovery = charge_recovery
+	src.lose_multiple_charges = lose_multiple_charges
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
 	src.shield_inhand = shield_inhand

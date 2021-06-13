@@ -86,7 +86,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
 	slowdown = 0
-	max_charges = 5
+	max_charges = 150
 	recharge_amount = 30
 	lose_multiple_charges = TRUE
 
