@@ -6715,15 +6715,23 @@ const runner = new class Runner {
       });
     }
 
-    await Promise.all(this.workers.map(worker => new Promise(resolve => {
-      worker.onFinish(resolve);
+    const resolutions = await Promise.all(this.workers.map(worker => new Promise(resolve => {
+      worker.onFinish(() => resolve(true));
+      worker.onFail(() => resolve(false));
       worker.start();
     })));
-    const time = (Date.now() - startedAt) / 1000 + 's';
+    const hasFailedWorkers = resolutions.includes(false); // Show done only in happy path
 
-    const timeStr = _chalk.default.magenta(time);
+    if (!hasFailedWorkers) {
+      const time = (Date.now() - startedAt) / 1000 + 's';
 
-    _logger.logger.action(`Done in ${timeStr}`);
+      const timeStr = _chalk.default.magenta(time);
+
+      _logger.logger.action(`Done in ${timeStr}`);
+    } // Exit code 0 or 1 depdending on the fail state.
+
+
+    return Number(hasFailedWorkers);
   }
 
 }();
@@ -6747,17 +6755,11 @@ class Worker {
   }
 
   rejectDependency(target) {
-    if (this.hasFailed || !this.dependencies.has(target)) {
-      return;
-    }
+    var _this$generator2;
 
+    this.dependencies.delete(target);
     this.hasFailed = true;
-
-    const nameStr = _chalk.default.cyan(this.target.name);
-
-    _logger.logger.error(`Target '${nameStr}' failed`);
-
-    this.emitter.emit('fail');
+    (_this$generator2 = this.generator) == null ? void 0 : _this$generator2.next();
   }
 
   start() {
@@ -6793,6 +6795,11 @@ class Worker {
 
 
     if (this.hasFailed) {
+      const nameStr = _chalk.default.cyan(this.target.name);
+
+      _logger.logger.error(`Target '${nameStr}' failed`);
+
+      this.emitter.emit('fail');
       return;
     } // Compare inputs and outputs
 
@@ -6818,6 +6825,11 @@ class Worker {
 
 
     if (this.hasFailed) {
+      const nameStr = _chalk.default.cyan(this.target.name);
+
+      _logger.logger.error(`Target '${nameStr}' failed (at file comparison stage)`);
+
+      this.emitter.emit('fail');
       return;
     } // Execute the task
 
@@ -6838,7 +6850,7 @@ class Worker {
           if (err instanceof _exec.ExitError) {
             const codeStr = _chalk.default.red(err.code);
 
-            _logger.logger.error(`Target '${nameStr}' failed in ${timeStr} (${codeStr})`);
+            _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, exit code: ${codeStr}`);
           } else {
             _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, unhandled exception:`);
 
@@ -7079,6 +7091,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const autoParameters = [];
 const autoTargets = [];
+/**
+ * Configures Juke Build and starts executing targets.
+ *
+ * @param config Juke Build configuration.
+ * @returns Exit code of the whole runner process.
+ */
 
 const setup = (config = {}) => {
   config = { ...config
@@ -7094,7 +7112,7 @@ const setup = (config = {}) => {
 
   _runner.runner.configure(config);
 
-  _runner.runner.start();
+  return _runner.runner.start();
 };
 
 exports.setup = setup;

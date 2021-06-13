@@ -17,7 +17,7 @@ export declare const runner: {
     parameters: Parameter[];
     workers: Worker[];
     configure(config: RunnerConfig): void;
-    start(): Promise<void>;
+    start(): Promise<number>;
 };
 declare class Worker {
     readonly target: Target;
