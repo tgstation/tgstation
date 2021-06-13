@@ -421,27 +421,29 @@
 			priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
-/////////////////////////////////// DISABILITIES ////////////////////////////////////
-/mob/living/proc/add_quirk(quirktype, spawn_effects) //separate proc due to the way these ones are handled
+/mob/living/proc/add_quirk(quirktype) //separate proc due to the way these ones are handled
 	if(HAS_TRAIT(src, quirktype))
 		return
-	var/datum/quirk/T = quirktype
-	var/qname = initial(T.name)
+	var/datum/quirk/quirk = quirktype
+	var/qname = initial(quirk.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
 		return
-	new quirktype (src, spawn_effects)
-	return TRUE
+	quirk = new quirktype()
+	if(quirk.add_to_holder(src))
+		return TRUE
+	qdel(quirk)
+	return FALSE
 
 /mob/living/proc/remove_quirk(quirktype)
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.type == quirktype)
-			qdel(Q)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
+			qdel(quirk)
 			return TRUE
 	return FALSE
 
 /mob/living/proc/has_quirk(quirktype)
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.type == quirktype)
+	for(var/datum/quirk/quirk in quirks)
+		if(quirk.type == quirktype)
 			return TRUE
 	return FALSE
 

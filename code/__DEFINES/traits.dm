@@ -486,6 +486,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ROUNDSTART_TRAIT "roundstart"
 #define JOB_TRAIT "job"
 #define CYBORG_ITEM_TRAIT "cyborg-item"
+/// Any traits granted by quirks.
+#define QUIRK_TRAIT "quirk_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
 #define CHANGELING_TRAIT "changeling"
