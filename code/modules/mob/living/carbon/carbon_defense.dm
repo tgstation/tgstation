@@ -2,7 +2,7 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
-	if(HAS_TRAIT(src, TRAIT_BLIND))
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_BLIND, list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)

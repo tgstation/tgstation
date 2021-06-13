@@ -121,7 +121,7 @@
 		return
 	target_temperature = T20C
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
-	to_chat(user, "<span class='notice'>You reset the target temperature on [src] to [target_temperature] K.</span>")
+	balloon_alert(user, "temperature reset to [target_temperature] K")
 
 /** Performs heat calculation for the freezer. The full equation for this whole process is:
  * T3 = (C1*T1  +  (C1*C2)/(C1+C2)*(T2-T1)*E) / C1.

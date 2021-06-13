@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - qol: "Most alt-click atmospheric interactions changed to use balloon alerts."

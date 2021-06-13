@@ -953,3 +953,54 @@
 	taste_description = "milky batter"
 	color = "#fccc98"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/korta_flour
+	name = "Korta Flour"
+	description = "A coarsely ground, peppery flour made from korta nut shells."
+	taste_description = "earthy heat"
+	color = "#EEC39A"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/korta_milk
+	name = "Korta Milk"
+	description = "A milky liquid made by crushing the centre of a korta nut."
+	taste_description = "sugary milk"
+	color = "#FFFFFF"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/korta_nectar
+	name = "Korta Nectar"
+	description = "A sweet, sugary syrup made from crushed sweet korta nuts."
+	color = "#d3a308"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	taste_description = "peppery sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/peanut_butter
+	name = "Peanut Butter"
+	description = "A rich, creamy spread produced by grinding peanuts."
+	taste_description = "peanuts"
+	color = "#D9A066"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
+	if(isabductor(M))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
+		M.set_drugginess(15 * REM * delta_time)
+	..()
+
+/datum/reagent/consumable/vinegar
+	name = "Vinegar"
+	description = "Useful for pickling, or putting on chips."
+	taste_description = "acid"
+	color = "#661F1E"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+//A better oil, representing choices like olive oil, argan oil, avocado oil, etc.
+/datum/reagent/consumable/quality_oil
+	name = "Quality Oil"
+	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
+	taste_description = "olive oil"
+	color = "#DBCF5C"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

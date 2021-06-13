@@ -2521,3 +2521,114 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/kortara
+	name = "Kortara"
+	description = "A sweet, milky nut-based drink enjoyed on Tizira. Frequently mixed with fruit juices and cocoa for extra refreshment."
+	boozepwr = 25
+	color = "#EEC39A"
+	quality = DRINK_GOOD
+	taste_description = "sweet nectar"
+	glass_icon_state = "kortara_glass"
+	glass_name = "glass of kortara"
+	glass_desc = "The fermented nectar of the Korta nut, as enjoyed by lizards galaxywide."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(M.getBruteLoss() && DT_PROB(10, delta_time))
+		M.heal_bodypart_damage(1,0, 0)
+		. = TRUE
+
+/datum/reagent/consumable/ethanol/sea_breeze
+	name = "Sea Breeze"
+	description = "Light and refreshing with a mint and cocoa hit- like mint choc chip ice cream you can drink!"
+	boozepwr = 15
+	color = "#CFFFE5"
+	quality = DRINK_VERYGOOD
+	taste_description = "mint choc chip"
+	glass_icon_state = "sea_breeze"
+	glass_name = "Sea Breeze"
+	glass_desc = "Minty, chocolatey, and creamy. It's like drinkable mint chocolate chip!"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.apply_status_effect(/datum/status_effect/throat_soothed)
+	..()
+
+/datum/reagent/consumable/ethanol/white_tiziran
+	name = "White Tiziran"
+	description = "A mix of vodka and kortara. The Lizard imbibes."
+	boozepwr = 65
+	color = "#A68340"
+	quality = DRINK_GOOD
+	taste_description = "strikes and gutters"
+	glass_icon_state = "white_tiziran"
+	glass_name = "White Tiziran"
+	glass_desc = "I had a rough night and I hate the fucking humans, man."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/drunken_espatier
+	name = "Drunken Espatier"
+	description = "Look, if you had to get into a shootout in the cold vacuum of space, you'd want to be drunk too."
+	boozepwr = 65
+	color = "#A68340"
+	quality = DRINK_GOOD
+	taste_description = "sorrow"
+	glass_icon_state = "drunken_espatier"
+	glass_name = "Drunken Espatier"
+	glass_desc = "A drink to make facing death easier."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+	C.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
+	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	..()
+
+/datum/reagent/consumable/ethanol/protein_blend
+	name = "Protein Blend"
+	description = "A vile blend of protein, pure grain alcohol, korta flour, and blood. Useful for bulking up, if you can keep it down."
+	boozepwr = 65
+	color = "#FF5B69"
+	quality = DRINK_NICE
+	taste_description = "regret"
+	glass_icon_state = "protein_blend"
+	glass_name = "Protein Blend"
+	glass_desc = "Vile, even by lizard standards."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_nutrition(2 * REM * delta_time)
+	if(!islizard(M))
+		M.adjust_disgust(5 * REM * delta_time)
+	else
+		M.adjust_disgust(2 * REM * delta_time)
+	..()
+
+/datum/reagent/consumable/ethanol/mushi_kombucha
+	name = "Mushi Kombucha"
+	description = "A popular summer beverage on Tizira, made from sweetened mushroom tea."
+	boozepwr = 10
+	color = "#C46400"
+	quality = DRINK_VERYGOOD
+	taste_description = "sweet 'shrooms"
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of mushi kombucha"
+	glass_desc = "A glass of (slightly alcoholic) fermented sweetened mushroom tea. Refreshing, if a little strange."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/triumphal_arch
+	name = "Triumphal Arch"
+	description = "A drink celebrating the Lizard Empire and its military victories. It's popular at bars on Unification Day."
+	boozepwr = 60
+	color = "#FFD700"
+	quality = DRINK_FANTASTIC
+	taste_description = "victory"
+	glass_icon_state = "triumphal_arch"
+	glass_name = "Triumphal Arch"
+	glass_desc = "A toast to the Empire, long may it stand."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(islizard(M))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+	..()
