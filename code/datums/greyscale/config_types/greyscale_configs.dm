@@ -278,12 +278,12 @@
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
-/datum/greyscale_config/sweater_gags
+/datum/greyscale_config/sweater
 	name = "turtleneck sweater"
 	icon_file = 'icons/obj/clothing/suits.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sweater_gags.json'
+	json_config = 'code/datums/greyscale/json_configs/sweater.json'
 
-/datum/greyscale_config/sweater_gags_worn
+/datum/greyscale_config/sweater_worn
 	name = "turtleneck sweater"
 	icon_file = 'icons/mob/clothing/suit.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sweater_gags_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/sweater_worn.json'
