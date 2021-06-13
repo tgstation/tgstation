@@ -446,8 +446,9 @@
 		if(pulling.anchored)
 			stop_pulling()
 		else
-			//puller and pullee more than one tile away and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
-			if(!pulling.pulling?.moving_from_pull && get_dist(src, pulling) > 1)
+			var/pull_dir = get_dir(src, pulling)
+			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
+			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)))
 				pulling.moving_from_pull = src
 				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
