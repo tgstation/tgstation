@@ -357,8 +357,8 @@
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
 	if(get_dist(src,user) <= user.interaction_range)
 		AICtrlClick(user)
-	else
-		..()
+		return
+	return ..()
 
 /obj/machinery/firealarm/AICtrlClick(mob/living/silicon/robot/user)
 	if(obj_flags & EMAGGED)
@@ -413,4 +413,3 @@
 	if (!party_overlay)
 		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
 	area.add_overlay(party_overlay)
-
