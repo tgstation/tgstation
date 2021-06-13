@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Adding and removing quirks using the VV dropdown is now more reliable in adding or removing the effects of quirks."
+  - code_imp: "Refactors quirks and (hopefully) improves their code, squashing some runtimes associated with quirks on deleted mobs and increasing the performance of some quirks. There should be no player-facing changes, however any problems with quirks should be reported on the Github issue tracker since they may stem from this PR."
