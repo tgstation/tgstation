@@ -746,13 +746,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(headache)
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
-		owner.become_blind("oculine_impure")
+		owner.become_blind(IMPURE_OCULINE)
 		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates.</spans>")
 		headache = TRUE
 	..()
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
-	owner.cure_blind("oculine_impure")
+	owner.cure_blind(IMPURE_OCULINE)
 	if(headache)
 		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
 	..()
