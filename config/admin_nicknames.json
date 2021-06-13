@@ -5,6 +5,6 @@
     ],
     "names": [
         "Badmin",
-        span_adminooc("Spanmin")
+        "<span class='adminooc'>Spanmin</span>"
     ]
 }
