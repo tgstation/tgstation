@@ -167,6 +167,8 @@
 	///Generic flags
 	var/simple_mob_flags = NONE
 
+	///Limits how often mobs can hunt other mobs
+	COOLDOWN_DECLARE(emote_cooldown)
 
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
@@ -715,3 +717,37 @@
 
 /mob/living/simple_animal/proc/stop_deadchat_plays()
 	stop_automated_movement = FALSE
+
+//Makes this mob hunt the prey.
+/mob/living/simple_animal/proc/hunt_target(var/mob/living/simple_animal/prey)
+	var/turns_since_scan = 0
+
+	if((src.loc) && isturf(src.loc))
+		if(!stat && !resting && !buckled)
+			for(prey in view(1,src))
+				if(!prey.stat && Adjacent(prey) && COOLDOWN_FINISHED(src, emote_cooldown))
+					manual_emote("chomps [prey]!")
+					prey.death()
+					prey = null
+					stop_automated_movement = 0
+					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+					break
+	if(!stat && !buckled)
+		turns_since_scan++
+		if(turns_since_scan > 5)
+			walk_to(src,0)
+			turns_since_scan = 0
+			if((prey) && !(isturf(prey.loc) || ishuman(prey.loc) ))
+				prey = null
+				stop_automated_movement = 0
+			if(!prey || !(prey.loc in oview(src, 3)))
+				prey = null
+				stop_automated_movement = 0
+				var/mob/living/simple_animal/quarry = prey
+				for(quarry in oview(src,3))
+					if(isturf(quarry.loc) && !quarry.stat)
+						quarry = prey
+						break
+			if(prey)
+				stop_automated_movement = 1
+				walk_to(src,prey,0,3)

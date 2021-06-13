@@ -1003,7 +1003,7 @@
 
 /datum/status_effect/ants/tick(delta_time)
 	var/mob/living/carbon/human/victim = owner
-	victim.adjustBruteLoss(max(0.2, round((ants_remaining * 0.008),0.1))) //Roughly 20 brute over 50 seconds.
+	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Roughly 10 brute over 50 seconds.
 	if(!victim.stat) //Makes sure people don't scratch at themselves while they're dead
 		if(DT_PROB(15, delta_time))
 			victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!"), forced = /datum/status_effect/ants)
@@ -1027,8 +1027,8 @@
 			victim.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
 			ants_remaining -= 5
 	ants_remaining -= delta_time
-	if(ants_remaining <= 0)
-		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them, they are no longer affected.
+	if(ants_remaining <= 0 || victim.stat)
+		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"

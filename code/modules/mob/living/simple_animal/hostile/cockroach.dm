@@ -31,10 +31,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	faction = list("neutral")
 	var/squish_chance = 50
-	var/obj/effect/decal/cleanable/ants/movement_target
-	//Reduces how often a cockroach can kill ants
-	COOLDOWN_DECLARE(emote_cooldown)
-	var/turns_since_scan = 0
+
 
 /mob/living/simple_animal/hostile/cockroach/Initialize()
 	. = ..()
@@ -48,7 +45,7 @@
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
-
+/*
 /mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) //Natural predators
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
@@ -79,7 +76,7 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
-
+*/
 
 
 /obj/projectile/glockroachbullet

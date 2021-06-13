@@ -2623,13 +2623,13 @@
 	glass_name = "glass of ants"
 	glass_desc = "Bottoms up...?"
 	ph = 4.6 //Ants contain Formic Acid, meaning they would likely be very acidic themselves if you used them as a reagent
-	var/ant_damage = 0
-	var/amount_left = 0
+	var/ant_damage = 0 //How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
+	var/amount_left = 0 //Tells the debuff how many ants we are being covered with.
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim)
-	victim.adjustBruteLoss(max(0.2, round((ant_damage * 0.01),0.1))) //Around 25 brute for 50 seconds
+	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.005),0.1))) //Around 12.5 brute for 50 seconds
 	if(prob(5)) //Due to the fact this has a chance of happening every cycle, it's more likely to happen than it looks
-		if(prob(1)) //Super rare statement
+		if(prob(2)) //Super rare statement
 			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
 		else
 			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!"), forced = /datum/reagent/ants)

@@ -11,8 +11,7 @@
 /obj/item/storage/Initialize()
 	. = ..()
 	PopulateContents()
-	var/obj/item/storage/container = src //Have to do this or the game softlocks
-	ADD_TRAIT(container, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 
 /obj/item/storage/ComponentInitialize()
 	AddComponent(component_type)
