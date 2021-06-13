@@ -39,4 +39,5 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7) //They're both insects, might as well make it do SOMETHING
 
 /mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) //Payback time bitch
+	. = ..()
 	hunt_target(/mob/living/simple_animal/hostile/cockroach)
