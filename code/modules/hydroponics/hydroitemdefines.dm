@@ -257,13 +257,19 @@
 	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
 	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
 	if(scanned.rarity)
-		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]\n"
-	var/all_traits = ""
+		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]</span>\n"
+	var/all_removable_traits = ""
+	var/all_immutable_traits = ""
 	for(var/datum/plant_gene/trait/traits in scanned.genes)
 		if(istype(traits, /datum/plant_gene/trait/plant_type))
 			continue
-		all_traits += "[(all_traits == "") ? "" : ", "][traits.get_name()]"
-	text += "- Plant Traits: [span_notice("[all_traits? all_traits : "None."]")]\n"
+		if(traits.mutability_flags & PLANT_GENE_REMOVABLE)
+			all_removable_traits += "[(all_removable_traits == "") ? "" : ", "][traits.get_name()]"
+		else
+			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
+
+	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]</span>\n"
+	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]</span>\n"
 	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
 	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards

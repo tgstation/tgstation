@@ -47,7 +47,7 @@
 	species = "holymelon"
 	plantname = "Holy Melon Vines"
 	product = /obj/item/food/grown/holymelon
-	genes = list(/datum/plant_gene/trait/glow/yellow)
+	genes = list(/datum/plant_gene/trait/glow/yellow, /datum/plant_gene/trait/anti_magic)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
@@ -64,23 +64,6 @@
 
 /obj/item/food/grown/holymelon/make_dryable()
 	return //No drying
-
-/obj/item/food/grown/holymelon/Initialize()
-	. = ..()
-	var/uses = 1
-	if(seed)
-		uses = round(seed.potency / 20)
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
-
-/obj/item/food/grown/holymelon/proc/block_magic(mob/user, major)
-	if(major)
-		to_chat(user, span_warning("[src] hums slightly, and seems to decay a bit."))
-
-/obj/item/food/grown/holymelon/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] rapidly turns into ash!"))
-	qdel(src)
-	new /obj/effect/decal/cleanable/ash(drop_location())
-
 
 /*
 /obj/item/food/grown/holymelon/checkLiked(fraction, mob/M)    //chaplains sure love holymelons
