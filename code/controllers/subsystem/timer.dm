@@ -302,6 +302,8 @@ SUBSYSTEM_DEF(timer)
 		// Insert the timer into the bucket, and perform necessary circular doubly-linked list operations
 		new_bucket_count++
 		var/bucket_pos = BUCKET_POS(timer)
+		timer.bucket_pos = bucket_pos
+
 		var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 		if (!bucket_head)
 			bucket_list[bucket_pos] = timer
@@ -363,6 +365,8 @@ SUBSYSTEM_DEF(timer)
 	var/datum/controller/subsystem/timer/timer_subsystem
 	/// Boolean indicating if timer joined into bucket
 	var/bucket_joined = FALSE
+	/// Initial bucket position
+	var/bucket_pos = -1
 
 /datum/timedevent/New(datum/callback/callBack, wait, flags, datum/controller/subsystem/timer/timer_subsystem, hash, source)
 	var/static/nextid = 1
@@ -434,9 +438,6 @@ SUBSYSTEM_DEF(timer)
  * Removes this timed event from any relevant buckets, or the secondary queue
  */
 /datum/timedevent/proc/bucketEject()
-	// Attempt to find bucket that contains this timed event
-	var/bucketpos = BUCKET_POS(src)
-
 	// Store local references for the bucket list and secondary queue
 	// This is faster than referencing them from the datum itself
 	var/list/bucket_list = timer_subsystem.bucket_list
@@ -444,14 +445,14 @@ SUBSYSTEM_DEF(timer)
 
 	// Attempt to get the head of the bucket
 	var/datum/timedevent/buckethead
-	if(bucketpos > 0)
-		buckethead = bucket_list[bucketpos]
+	if(bucket_pos > 0)
+		buckethead = bucket_list[bucket_pos]
 
 	// Decrement the number of timers in buckets if the timed event is
 	// the head of the bucket, or has a TTR less than TIMER_MAX implying it fits
 	// into an existing bucket, or is otherwise not present in the secondary queue
 	if(buckethead == src)
-		bucket_list[bucketpos] = next
+		bucket_list[bucket_pos] = next
 		timer_subsystem.bucket_count--
 	else if(timeToRun < TIMER_MAX(timer_subsystem))
 		timer_subsystem.bucket_count--
@@ -468,6 +469,7 @@ SUBSYSTEM_DEF(timer)
 	if (next && next.prev == src)
 		next.prev = prev
 	prev = next = null
+	bucket_pos = -1
 
 /**
  * Attempts to add this timed event to a bucket, will enter the secondary queue
@@ -501,7 +503,13 @@ SUBSYSTEM_DEF(timer)
 	var/list/bucket_list = timer_subsystem.bucket_list
 
 	// Find the correct bucket for this timed event
-	var/bucket_pos = BUCKET_POS(src)
+	bucket_pos = BUCKET_POS(src)
+
+	if (bucket_pos < timer_subsystem.practical_offset && timeToRun < (timer_subsystem.head_offset + TICKS2DS(BUCKET_LEN)))
+		WARNING("Bucket pos in past: bucket_pos = [bucket_pos] < practical_offset = [timer_subsystem.practical_offset] \
+			&& timeToRun = [timeToRun] < [timer_subsystem.head_offset + TICKS2DS(BUCKET_LEN)], Timer: [name]")
+		bucket_pos = timer_subsystem.practical_offset // Recover bucket_pos to avoid timer blocking queue
+
 	var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 	timer_subsystem.bucket_count++
 
