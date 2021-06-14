@@ -97,7 +97,7 @@
 	if(AM.movement_type & (FLYING|FLOATING) || !AM.has_gravity())
 		return
 	var/atom/current_parent = parent
-	if(isturf(current_parent.loc))
+	if(isturf(current_parent?.loc))
 		play_squeak()
 
 /datum/component/squeak/proc/use_squeak()

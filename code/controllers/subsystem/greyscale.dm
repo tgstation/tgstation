@@ -27,9 +27,13 @@ SUBSYSTEM_DEF(greyscale)
 		configurations[i].Refresh(TRUE)
 
 /datum/controller/subsystem/greyscale/proc/GetColoredIconByType(type, list/colors)
+	if(!ispath(type, /datum/greyscale_config))
+		CRASH("An invalid greyscale configuration was given to `GetColoredIconByType()`: [type]")
 	type = "[type]"
 	if(istype(colors)) // It's the color list format
 		colors = colors.Join()
+	else if(!istext(colors))
+		CRASH("Invalid colors were given to `GetColoredIconByType()`: [colors]")
 	return configurations[type].Generate(colors)
 
 /datum/controller/subsystem/greyscale/proc/ParseColorString(color_string)

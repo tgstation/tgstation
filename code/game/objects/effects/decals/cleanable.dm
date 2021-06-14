@@ -63,12 +63,12 @@
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
-				to_chat(user, "<span class='notice'>[src] isn't thick enough to scoop up!</span>")
+				to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
 				return
 			if(W.reagents.total_volume >= W.reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>[W] is full!</span>")
+				to_chat(user, span_notice("[W] is full!"))
 				return
-			to_chat(user, "<span class='notice'>You scoop up [src] into [W]!</span>")
+			to_chat(user, span_notice("You scoop up [src] into [W]!"))
 			reagents.trans_to(W, reagents.total_volume, transfered_by = user)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
@@ -79,7 +79,7 @@
 		else
 			var/hotness = W.get_temperature()
 			reagents.expose_temperature(hotness)
-			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
+			to_chat(user, span_notice("You heat [name] with [W]!"))
 	else
 		return ..()
 
