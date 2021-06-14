@@ -1001,7 +1001,7 @@
 	if(!aicard.AI)
 		return TRUE
 
-	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	to_chat(user, span_boldwarning("You can't craft an intelliTater with an AI in the card!"))
 	return FALSE
 
 /datum/crafting_recipe/aispook
@@ -1288,7 +1288,7 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
-	
+
 /**
  * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
  */

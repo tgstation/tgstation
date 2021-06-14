@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed moneybots dispensing 0 credits and added a failure signal if it tries to dispense 0 credits."

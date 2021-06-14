@@ -43,19 +43,19 @@
 		return
 	var/obj/item/multitool/M = I
 	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
 /obj/machinery/ticket_machine/emag_act(mob/user) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class='warning'>You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting.</span>")
+	to_chat(user, span_warning("You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting."))
 	ticket_number = rand(0,max_number)
 	current_number = ticket_number
 	obj_flags |= EMAGGED
 	if(tickets.len)
 		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-			ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
+			ticket.audible_message(span_notice("\the [ticket] disperses!"))
 			qdel(ticket)
 		tickets.Cut()
 	update_appearance()
@@ -68,14 +68,14 @@
 	if(current_number > ticket_number)
 		return
 	if(current_number && !(obj_flags & EMAGGED) && tickets[current_number])
-		tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] disperses!</span>")
+		tickets[current_number].audible_message(span_notice("\the [tickets[current_number]] disperses!"))
 		qdel(tickets[current_number])
 	if(current_number < ticket_number)
 		current_number ++ //Increment the one we're serving.
 		playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
 		say("Now serving ticket #[current_number]!")
 		if(!(obj_flags & EMAGGED) && tickets[current_number])
-			tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
+			tickets[current_number].audible_message(span_notice("\the [tickets[current_number]] vibrates!"))
 		update_appearance() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
@@ -101,7 +101,7 @@
 		controller.linked = WEAKREF(M.buffer)
 		id = null
 		controller.id = null
-		to_chat(user, "<span class='warning'>You've linked [src] to [M.buffer].</span>")
+		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
@@ -164,17 +164,17 @@
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
-			to_chat(user, "<span class='notice'>[src] refuses [I]! There [max_number-ticket_number==1 ? "is" : "are"] still [max_number-ticket_number] ticket\s left!</span>")
+			to_chat(user, span_notice("[src] refuses [I]! There [max_number-ticket_number==1 ? "is" : "are"] still [max_number-ticket_number] ticket\s left!"))
 			return
-		to_chat(user, "<span class='notice'>You start to refill [src]'s ticket holder (doing this will reset its ticket count!).</span>")
+		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
 		if(do_after(user, 30, target = src))
-			to_chat(user, "<span class='notice'>You insert [I] into [src] as it whirs nondescriptly.</span>")
+			to_chat(user, span_notice("You insert [I] into [src] as it whirs nondescriptly."))
 			qdel(I)
 			ticket_number = 0
 			current_number = 0
 			if(tickets.len)
 				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-					ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
+					ticket.audible_message(span_notice("\the [ticket] disperses!"))
 					qdel(ticket)
 				tickets.Cut()
 			max_number = initial(max_number)
@@ -187,17 +187,17 @@
 /obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 	if(!ready)
-		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
+		to_chat(user,span_warning("You press the button, but nothing happens..."))
 		return
 	if(ticket_number >= max_number)
-		to_chat(user,"<span class='warning'>Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!</span>")
+		to_chat(user,span_warning("Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!"))
 		return
 	if((user in ticket_holders) && !(obj_flags & EMAGGED))
-		to_chat(user, "<span class='warning'>You already have a ticket!</span>")
+		to_chat(user, span_warning("You already have a ticket!"))
 		return
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
-	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
+	to_chat(user, span_notice("You take a ticket from [src], looks like you're ticket number #[ticket_number]..."))
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
 	theirticket.name = "Ticket #[ticket_number]"
 	theirticket.maptext = MAPTEXT(ticket_number)

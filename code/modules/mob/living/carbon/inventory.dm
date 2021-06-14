@@ -165,18 +165,18 @@
 /mob/living/carbon/proc/give()
 	var/obj/item/receiving = get_active_held_item()
 	if(!receiving)
-		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
+		to_chat(src, span_warning("You're not holding anything to give!"))
 		return
 
 	if(IS_DEAD_OR_INCAP(src))
-		to_chat(src, "<span class='warning'>You're unable to offer anything in your current state!</span>")
+		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
 	if(istype(receiving, /obj/item/slapper))
 		offer_high_five(receiving)
 		return
-	visible_message("<span class='notice'>[src] is offering [receiving].</span>", \
-					"<span class='notice'>You offer [receiving].</span>", null, 2)
+	visible_message(span_notice("[src] is offering [receiving]."), \
+					span_notice("You offer [receiving]."), null, 2)
 	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
 			continue
@@ -201,19 +201,19 @@
 /mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
 	clear_alert("[giver]")
 	if(get_dist(src, giver) > 1)
-		to_chat(src, "<span class='warning'>[giver] is out of range! </span>")
+		to_chat(src, span_warning("[giver] is out of range! "))
 		return
 	if(!I || giver.get_active_held_item() != I)
-		to_chat(src, "<span class='warning'>[giver] is no longer holding the item they were offering! </span>")
+		to_chat(src, span_warning("[giver] is no longer holding the item they were offering! "))
 		return
 	if(!get_empty_held_indexes())
-		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
+		to_chat(src, span_warning("You have no empty hands!"))
 		return
 	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[giver] tries to hand over [I] but it's stuck to them....</span>")
+		visible_message(span_notice("[giver] tries to hand over [I] but it's stuck to them...."))
 		return
-	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
-					"<span class='notice'>You take [I] from [giver]</span>")
+	visible_message(span_notice("[src] takes [I] from [giver]"), \
+					span_notice("You take [I] from [giver]"))
 	put_in_hands(I)
 
 /// Spin-off of [/mob/living/carbon/proc/give] exclusively for high-fiving
@@ -221,8 +221,8 @@
 	if(has_status_effect(STATUS_EFFECT_HIGHFIVE))
 		return
 	if(!(locate(/mob/living/carbon) in orange(1, src)))
-		visible_message("<span class='danger'>[src] raises [p_their()] arm, looking around for a high-five, but there's no one around! How embarassing...</span>", \
-			"<span class='warning'>You post up, looking for a high-five, but finding no one within range! How embarassing...</span>", null, 2)
+		visible_message(span_danger("[src] raises [p_their()] arm, looking around for a high-five, but there's no one around! How embarassing..."), \
+			span_warning("You post up, looking for a high-five, but finding no one within range! How embarassing..."), null, 2)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
 		return
 
