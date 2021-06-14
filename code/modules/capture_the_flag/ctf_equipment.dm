@@ -77,12 +77,32 @@
 /obj/item/ammo_casing/caseless/laser/ctf/shotgun
 	projectile_type = /obj/projectile/beam/ctf/shotgun
 	pellets = 6
-	variance = 40
+	variance = 25
 
 
 /obj/projectile/beam/ctf/shotgun
-	damage = 30
-	range = 4
+	damage = 15
+
+// MARKSMAN RIFLE
+
+/obj/item/gun/ballistic/automatic/laser/ctf/marksman
+	name = "designated marksman rifle"
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman
+	fire_delay = 1 SECONDS
+
+/obj/item/ammo_box/magazine/recharge/ctf/marksman
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman
+	max_ammo = 10
+
+/obj/item/ammo_casing/caseless/laser/ctf/marksman
+	projectile_type = /obj/projectile/beam/ctf/marksman
+
+/obj/projectile/beam/ctf/marksman
+	damage = 45
+	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/laser/blue
+	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
+	impact_type = /obj/effect/projectile/impact/laser/blue
 
 // DESERT EAGLE
 
@@ -140,6 +160,7 @@
 	desc = "Lightweight hardsuit for playing capture the flag."
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light
 	max_charges = 30
+	slowdown = -0.25
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light
 	name = "light shielded hardsuit helmet"
@@ -176,6 +197,23 @@
 	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
+
+// DMR
+/obj/item/gun/ballistic/automatic/laser/ctf/marksman/red
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
+
+/obj/item/ammo_box/magazine/recharge/ctf/marksman/red
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/red
+
+/obj/item/ammo_casing/caseless/laser/ctf/marksman/red
+	projectile_type = /obj/projectile/beam/ctf/marksman/red
+
+/obj/projectile/beam/ctf/marksman/red
+	icon_state = "laser"
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
+
 // BLUE TEAM GUNS
 
 // Rifle
@@ -205,6 +243,19 @@
 /obj/projectile/beam/ctf/shotgun/blue
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+
+
+// DMR
+/obj/item/gun/ballistic/automatic/laser/ctf/marksman/blue
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
+
+/obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/blue
+
+/obj/item/ammo_casing/caseless/laser/ctf/marksman/blue
+	projectile_type = /obj/projectile/beam/ctf/marksman/blue
+
+/obj/projectile/beam/ctf/marksman/blue
 
 // GREEN TEAM GUNS
 
@@ -237,6 +288,23 @@
 	icon_state = "xray"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
+
+// DMR
+/obj/item/gun/ballistic/automatic/laser/ctf/marksman/green
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
+
+/obj/item/ammo_box/magazine/recharge/ctf/marksman/green
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/green
+
+/obj/item/ammo_casing/caseless/laser/ctf/marksman/green
+	projectile_type = /obj/projectile/beam/ctf/marksman/green
+
+/obj/projectile/beam/ctf/marksman/green
+	icon_state = "xray"
+	tracer_type = /obj/effect/projectile/tracer/xray
+	muzzle_type = /obj/effect/projectile/muzzle/xray
+	impact_type = /obj/effect/projectile/impact/xray
+
 // YELLOW TEAM GUNS
 
 // Rifle
@@ -267,6 +335,23 @@
 /obj/projectile/beam/ctf/shotgun/yellow
 	icon_state = "gaussstrong"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+
+
+// DMR
+/obj/item/gun/ballistic/automatic/laser/ctf/marksman/yellow
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
+
+/obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/yellow
+
+/obj/item/ammo_casing/caseless/laser/ctf/marksman/yellow
+	projectile_type = /obj/projectile/beam/ctf/marksman/yellow
+
+/obj/projectile/beam/ctf/marksman/yellow
+	icon_state = "gaussstrong"
+	tracer_type = /obj/effect/projectile/tracer/solar
+	muzzle_type = /obj/effect/projectile/muzzle/solar
+	impact_type = /obj/effect/projectile/impact/solar
 
 // RED TEAM SUITS
 

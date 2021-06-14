@@ -52,7 +52,17 @@
 /datum/outfit/ctf/assault
 	name = "CTF Assaulter"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light
+	r_hand = /obj/item/gun/ballistic/shotgun/ctf
 	gloves = /obj/item/clothing/gloves/tackler/rocket
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
+	belt = null
+
+/datum/outfit/ctf/marksman
+	name = "CTF Marksman"
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	belt = null
 
 // RED TEAM CLASSES
@@ -75,6 +85,14 @@
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
+	id = /obj/item/card/id/red
+	team_radio_freq = FREQ_CTF_RED
+
+/datum/outfit/ctf/marksman/red
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/red
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
 	id = /obj/item/card/id/red
 	team_radio_freq = FREQ_CTF_RED
 
@@ -101,6 +119,14 @@
 	id = /obj/item/card/id/blue
 	team_radio_freq = FREQ_CTF_BLUE
 
+/datum/outfit/ctf/marksman/blue
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/blue
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
+	id = /obj/item/card/id/blue
+	team_radio_freq = FREQ_CTF_BLUE
+
 // GREEN TEAM CLASSES
 
 /datum/outfit/ctf/green
@@ -124,6 +150,14 @@
 	id = /obj/item/card/id/green
 	team_radio_freq = FREQ_CTF_GREEN
 
+/datum/outfit/ctf/marksman/green
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/green
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
+	id = /obj/item/card/id/green
+	team_radio_freq = FREQ_CTF_GREEN
+
 // YELLOW TEAM CLASSES
 
 /datum/outfit/ctf/yellow
@@ -144,5 +178,13 @@
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
+	id = /obj/item/card/id/yellow
+	team_radio_freq = FREQ_CTF_YELLOW
+
+/datum/outfit/ctf/marksman/yellow
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/yellow
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
 	id = /obj/item/card/id/yellow
 	team_radio_freq = FREQ_CTF_YELLOW

@@ -32,3 +32,6 @@
 /obj/effect/projectile/muzzle/laser/emitter
 	name = "emitter flash"
 	icon_state = "muzzle_emitter"
+
+/obj/effect/projectile/muzzle/solar
+	icon_state = "muzzle_solar"

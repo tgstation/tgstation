@@ -223,7 +223,7 @@
 	var/list/recently_dead_ckeys = list()
 	var/ctf_enabled = FALSE
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
-	var/list/ctf_gear = list("rifleman" = /datum/outfit/ctf, "assaulter" = /datum/outfit/ctf/assault)
+	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/instagib_gear = /datum/outfit/ctf/instagib
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
@@ -259,7 +259,7 @@
 	icon_state = "syndbeacon"
 	team = RED_TEAM
 	team_span = "redteamradio"
-	ctf_gear = list("Rifleman" = /datum/outfit/ctf/red, "Assaulter" = /datum/outfit/ctf/assault/red)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/red, "Assaulter" = /datum/outfit/ctf/assault/red, "Marksman" = /datum/outfit/ctf/marksman/red)
 	instagib_gear = /datum/outfit/ctf/red/instagib
 
 /obj/machinery/capture_the_flag/blue
@@ -267,7 +267,7 @@
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
 	team_span = "blueteamradio"
-	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue, "Marksman" = /datum/outfit/ctf/marksman/blue)
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 /obj/machinery/capture_the_flag/green
@@ -275,7 +275,7 @@
 	icon_state = "greenbeacon"
 	team = GREEN_TEAM
 	team_span = "greenteamradio"
-	ctf_gear = list("Rifleman" = /datum/outfit/ctf/green, "Assaulter" = /datum/outfit/ctf/assault/green)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/green, "Assaulter" = /datum/outfit/ctf/assault/green, "Marksman" = /datum/outfit/ctf/marksman/green)
 	instagib_gear = /datum/outfit/ctf/green/instagib
 
 /obj/machinery/capture_the_flag/yellow
@@ -283,7 +283,7 @@
 	icon_state = "yellowbeacon"
 	team = YELLOW_TEAM
 	team_span = "yellowteamradio"
-	ctf_gear = list("Rifleman" = /datum/outfit/ctf/yellow, "Assaulter" = /datum/outfit/ctf/assault/yellow)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/yellow, "Assaulter" = /datum/outfit/ctf/assault/yellow, "Marksman" = /datum/outfit/ctf/marksman/yellow)
 	instagib_gear = /datum/outfit/ctf/yellow/instagib
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
