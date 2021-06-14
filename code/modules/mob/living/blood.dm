@@ -253,7 +253,7 @@
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
 		blood_data["quirks"] = list()
-		for(var/V in roundstart_quirks)
+		for(var/V in quirks)
 			var/datum/quirk/T = V
 			blood_data["quirks"] += T.type
 		return blood_data

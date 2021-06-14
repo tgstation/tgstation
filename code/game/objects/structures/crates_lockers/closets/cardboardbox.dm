@@ -57,10 +57,11 @@
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
-	var/image/I = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
-	flick_overlay_view(I, src, 8)
-	I.alpha = 0
-	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
+	var/image/alert_image = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
+	alert_image.plane = ABOVE_LIGHTING_PLANE
+	flick_overlay_view(alert_image, src, 8)
+	alert_image.alpha = 0
+	animate(alert_image, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
 
 /obj/structure/closet/cardboard/metal

@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "The Modify Transform -> Translate option in the VV dropdown will now remind you which way positive or negative numbers will move the sprite in question. For those of you wondering, on the Y-axis, positive moves you up and negative moves you down."

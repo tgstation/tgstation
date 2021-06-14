@@ -1,5 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "The Enhanced Interrogation Chamber's mid-interrogation messages will now actually be received."
-  - bugfix: "The hypnoflash (and flashes in general) now work on sleeping people."
