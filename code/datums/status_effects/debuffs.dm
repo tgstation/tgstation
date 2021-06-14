@@ -1003,7 +1003,7 @@
 
 /datum/status_effect/ants/tick(delta_time)
 	var/mob/living/carbon/human/victim = owner
-	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Roughly 10 brute over 50 seconds.
+	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(!victim.stat) //Makes sure people don't scratch at themselves while they're dead
 		if(DT_PROB(15, delta_time))
 			victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!"), forced = /datum/status_effect/ants)
@@ -1044,4 +1044,4 @@
 		return
 	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
 		to_chat(living, "<span class='notice'>You manage to get some of the ants off!</span>")
-		ant_covered.ants_remaining -= 10
+		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place

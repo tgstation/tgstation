@@ -2627,7 +2627,7 @@
 	var/amount_left = 0 //Tells the debuff how many ants we are being covered with.
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim)
-	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.005),0.1))) //Around 12.5 brute for 50 seconds
+	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.005),0.1))) //Scales with time. Around 12.5 brute for 50 seconds.
 	if(prob(5)) //Due to the fact this has a chance of happening every cycle, it's more likely to happen than it looks
 		if(prob(2)) //Super rare statement
 			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
