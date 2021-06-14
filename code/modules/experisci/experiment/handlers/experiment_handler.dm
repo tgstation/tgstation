@@ -101,7 +101,7 @@
 	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
 		return
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-	to_chat(user, "<span class='notice'>[target] is not related to your currently selected experiment.</span>")
+	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -126,16 +126,16 @@
  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
-		to_chat(user, "<span class='notice'>You do not have an experiment selected!</span>")
+		to_chat(user, span_notice("You do not have an experiment selected!"))
 		return
 	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
-		to_chat(user, "<span class='notice'>You scan [target].</span>")
+		to_chat(user, span_notice("You scan [target]."))
 	else
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(user, "<span class='notice'>[target] is not related to your currently selected experiment.</span>")
+		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 
 /**
@@ -146,7 +146,7 @@
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
 		playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(our_scanner, "<span class='notice'>No experiment selected!</span>")
+		to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
 	for(var/scan_target in scanned_atoms)
@@ -155,7 +155,7 @@
 			break
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
-		to_chat(our_scanner, "<span class='notice'>The scan succeeds.</span>")
+		to_chat(our_scanner, span_notice("The scan succeeds."))
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
