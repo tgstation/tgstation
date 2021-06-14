@@ -1009,15 +1009,15 @@
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner
 	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
-	if(!victim.stat == DEAD) //Makes sure people don't scratch at themselves while they're dead
+	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're unconcious
 		if(prob(15))
 			switch(rand(1,2))
 				if(1)
-					victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!"), forced = /datum/status_effect/ants)
+					victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!", "MAKE IT END!!", "THEY'RE EVERYWHERE!!", "GET THEM OFF!!", "SOMEBODY HELP ME!!"), forced = /datum/status_effect/ants)
 				if(2)
 					victim.emote("scream")
 		if(prob(50))
-			switch(rand(1, 50))
+			switch(rand(1,50))
 				if (1 to 8) //16% Chance
 					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
 					to_chat(victim, "<span class='danger'>You scratch at the ants on your scalp!.</span>")
@@ -1035,7 +1035,7 @@
 					victim.blur_eyes(3)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
-	if(ants_remaining <= 0 || victim.stat == DEAD)
+	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
 		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
