@@ -1,12 +1,3 @@
-/proc/cmp_epsilon_less_than(a,b,epsilon = MOLAR_ACCURACY)
-	return (a < (b + epsilon))
-
-/proc/cmp_epsilon_greater_than(a,b,epsilon = MOLAR_ACCURACY)
-	return ((a + epsilon) > b)
-
-/proc/cmp_epsilon_equals(a,b,epsilon = MOLAR_ACCURACY)
-	return (((a + epsilon) > b) && ((a - epsilon) < b))
-
 /proc/cmp_numeric_dsc(a,b)
 	return b - a
 

@@ -43,7 +43,10 @@
 #define MINIMUM_MOLE_COUNT 0.01
 /// Molar accuracy to round to
 #define MOLAR_ACCURACY  1E-4
-
+/// Types of gases (based on gaslist_cache)
+#define GAS_TYPE_COUNT gaslist_cache.len
+/// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
+#define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
