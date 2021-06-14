@@ -40,4 +40,4 @@
 
 /mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) //Payback time bitch
 	. = ..()
-	hunt_target(/mob/living/simple_animal/hostile/cockroach)
+	hunt_target(prey = /mob/living/simple_animal/hostile/cockroach)

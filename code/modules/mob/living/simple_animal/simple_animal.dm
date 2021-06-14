@@ -719,9 +719,11 @@
 	stop_automated_movement = FALSE
 
 //Makes this mob hunt the prey.
-/mob/living/simple_animal/proc/hunt_target(var/mob/living/simple_animal/prey)
+/mob/living/simple_animal/proc/hunt_target(hunted)
+	var/mob/living/simple_animal/prey = hunted
 	var/turns_since_scan = 0
-
+	if(prey == src) //It keeps fucking eating itself
+		return
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(prey in view(1,src))
