@@ -44,4 +44,4 @@
 	var/obj/item/card/id/W = H.wear_id
 	if(H.age < AGE_MINOR)
 		W.registered_age = AGE_MINOR
-		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
+		to_chat(H, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))

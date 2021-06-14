@@ -64,6 +64,9 @@
 		return prev_value
 	. = value_to_convert
 
+	if(isnull(value_to_convert))
+		return null
+
 	switch(datatype)
 		if(PORT_TYPE_STRING)
 			// So that they can't easily get the name like this.
@@ -248,7 +251,7 @@
 
 	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
 	if(trigger && send_update)
-		connected_component.input_received(src)
+		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
 /datum/port/input/proc/null_output(datum/source)
