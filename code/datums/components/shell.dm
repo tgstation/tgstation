@@ -69,13 +69,13 @@
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!attached_circuit)
-		examine_text += "<span class='notice'>There is no integrated circuit attached.</span>"
+		examine_text += span_notice("There is no integrated circuit attached.")
 		return
 
-	examine_text += "<span class='notice'>There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].</span>"
-	examine_text += "<span class='notice'>The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].</span>"
+	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
+	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
-	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
+	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
 
 /**

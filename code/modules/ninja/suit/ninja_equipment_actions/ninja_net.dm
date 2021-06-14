@@ -18,18 +18,18 @@
 		return
 
 	if(locate(/obj/structure/energy_net) in get_turf(net_target))//Check if they are already being affected by an energy net.
-		to_chat(ninja, "<span class='warning'>[net_target.p_they(TRUE)] are already trapped inside an energy net!</span>")
+		to_chat(ninja, span_warning("[net_target.p_they(TRUE)] are already trapped inside an energy net!"))
 		return
 	for(var/turf/between_turf in getline(get_turf(ninja), get_turf(net_target)))
 		if(between_turf.density)//Don't want them shooting nets through walls. It's kind of cheesy.
-			to_chat(ninja, "<span class='warning'>You may not use an energy net through solid obstacles!</span>")
+			to_chat(ninja, span_warning("You may not use an energy net through solid obstacles!"))
 			return
 	if(!ninjacost(400,N_STEALTH_CANCEL))
 		ninja.Beam(net_target, "n_beam", time = 15)
 		ninja.say("Get over here!", forced = "ninja net")
 		var/obj/structure/energy_net/net = new /obj/structure/energy_net(net_target.drop_location())
 		net.affecting = net_target
-		ninja.visible_message("<span class='danger'>[ninja] caught [net_target] with an energy net!</span>","<span class='notice'>You caught [net_target] with an energy net!</span>")
+		ninja.visible_message(span_danger("[ninja] caught [net_target] with an energy net!"),span_notice("You caught [net_target] with an energy net!"))
 
 		if(net_target.buckled)
 			net_target.buckled.unbuckle_mob(affecting,TRUE)
