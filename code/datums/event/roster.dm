@@ -532,7 +532,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 /// A debug function, for when you need contestant datums but don't have people
 /datum/roster/proc/toggle_wounds(mob/user)
-	enable_random_wounds != enable_random_wounds
+	enable_random_wounds = !enable_random_wounds
 
 	message_admins("[key_name_admin(user)] has [enable_random_wounds ? "ENABLED" : "DISABLED"] random wounds!")
 	log_game("[key_name_admin(user)] has [enable_random_wounds ? "ENABLED" : "DISABLED"] random wounds!")

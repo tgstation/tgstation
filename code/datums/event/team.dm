@@ -53,7 +53,7 @@
 		testing("[dead_kid.ckey] isn't on a team")
 		return
 	if(dead_kid.current_team != src)
-		testing("[dead_kid.ckey] is on a differnet team")
+		testing("[dead_kid.ckey] is on a different team")
 		return
 
 	dead_kid.current_team = null
