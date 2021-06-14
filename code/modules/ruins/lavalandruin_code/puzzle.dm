@@ -206,8 +206,8 @@
 	var/icon/puzzle_icon
 
 /obj/structure/puzzle_element/Move(nloc, dir)
-	if(!isturf(nloc) || get_dist(get_step(src,dir),get_turf(source)) > 1)
-		return 0
+	if(!isturf(nloc) || (dir & (dir - 1)) || get_dist(get_step(src,dir),get_turf(source)) > 1)
+		return FALSE
 	else
 		return ..()
 
