@@ -64,6 +64,12 @@
 		var/obj/item/card/id/id_card = card
 		if(!istype(id_card))
 			continue
+
+		// Chameleon IDs explicitly jump to the front so they can disguise other cards in wallets.
+		if(istype(id_card, /obj/item/card/id/advanced/chameleon))
+			front_id = id_card
+			break
+
 		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
 		if(card_tally > winning_tally)
 			winning_tally = card_tally
