@@ -386,8 +386,6 @@
 	var/list/old_locs
 	if(is_multi_tile_object && isturf(loc))
 		old_locs = locs.Copy()
-
-	if(old_locs) // Is a large object moving away from a turf.
 		for(var/atom/exiting_loc as anything in old_locs)
 			if(!exiting_loc.Exit(src, direction))
 				return
@@ -405,8 +403,6 @@
 				newloc.z
 				)
 		)
-
-	if(new_locs) // Is a large object 
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
 				return
