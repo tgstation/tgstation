@@ -1040,7 +1040,7 @@
 
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
-	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
+	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
 
@@ -1063,17 +1063,6 @@
 	theft_target = null
 	. = ..()
 
-/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(istype(target, /obj/item/card/id))
-		theft_target = WEAKREF(target)
-		ui_interact(user)
-		return
-
-	return ..()
-
 /obj/item/card/id/advanced/chameleon/pre_attack(atom/target, mob/living/user, params)
 	. = ..()
 
@@ -1084,16 +1073,48 @@
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return TRUE to cancel the attack chain from all code paths relating to this functionality.
 	if(istype(target, /mob/living/carbon/human))
+		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
+
+		// This is possibly a bit too powerful to be instant. Allows players to counter this with an examine.
+		if(!do_mob(user, target, 2 SECONDS))
+			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
+			return TRUE
+
 		var/mob/living/carbon/human/human_target = target
 
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
+			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
 			return TRUE
 
-		theft_target = WEAKREF(pick(target_id_cards))
+		var/selected_id = pick(target_id_cards)
+		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
 		return TRUE
+
+	if(istype(target, /obj/item))
+		var/obj/item/target_item = target
+
+		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
+
+		var/target_item_id = target_item.GetID()
+
+		if(target_item_id)
+			target_id_cards |= target_item_id
+
+		if(!length(target_id_cards))
+			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
+			return TRUE
+
+		var/selected_id = pick(target_id_cards)
+		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		theft_target = WEAKREF(selected_id)
+		ui_interact(user)
+		return TRUE
+
+	return
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1107,6 +1128,13 @@
 	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
 	data["accessFlags"] = SSid_access.flags_by_access
 	return data
+
+/obj/item/card/id/advanced/chameleon/ui_host(mob/user)
+	// Hook our UI to the theft target ID card for UI state checks.
+	return theft_target?.resolve()
+
+/obj/item/card/id/advanced/chameleon/ui_state(mob/user)
+	return GLOB.strictly_adjacent_state
 
 /obj/item/card/id/advanced/chameleon/ui_data(mob/user)
 	var/list/data = list()
