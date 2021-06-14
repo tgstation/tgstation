@@ -82,21 +82,21 @@
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(active_timers)
+	if(active_timers) // Is the timer currently applied to this?
 		switch(timeleft(timerid)) // Deciseconds used so there's no gaps between examine times.
-			if(3001 to 4500) // 7.5 to 5 Minutes
+			if(3001 to 4500) // 7.5 to 5 Minutes left
 				examine_list += "[parent] looks kinda stale."
-			if(1501 to 3000) // 5 to 2.5 Minutes
+			if(1501 to 3000) // 5 to 2.5 Minutes left
 				examine_list += "[parent] is starting to look pretty gross."
-			if(1 to 1500) // 2.5 Minutes to 1 Decisecond
+			if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
 				examine_list += "[parent] looks barely edible."
-	else
+	else // No timer currently running.
 		switch(time_remaining)
-			if(3001 to 4500) // 7.5 to 5 Minutes
+			if(3001 to 4500) // 7.5 to 5 Minutes left
 				examine_list += "[parent] looks kinda stale."
-			if(1501 to 3000) // 5 to 2.5 Minutes
+			if(1501 to 3000) // 5 to 2.5 Minutes left
 				examine_list += "[parent] is starting to look pretty gross."
-			if(1 to 1500) // 2.5 Minutes to 1 Decisecond
+			if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
 				examine_list += "[parent] looks barely edible."
 
 
