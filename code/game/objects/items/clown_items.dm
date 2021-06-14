@@ -246,3 +246,25 @@
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)
+
+/obj/item/rubber_chicken
+	name = "rubber chicken"
+	desc = " A robust rubber chicken the size of a Louisiana broiler.\nIt looks somewhat clammy and exudes a noticable rubbery smell.\nA small peeling sticker on the chicken's left thigh reads: 'made by waffle co.'"
+	icon_state "rubber_chicken"
+	force = 10
+	damtype = STAMINA
+
+/obj/item/rubber_chicken/attack_secondary(mob/living/victim, mob/living/user, params)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You are a pacifist.</span>")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/datum/
+	user.do_attack_animation(src)
+	victim.s
+	victim.apply_damage(7 , STAMINA, BODY_ZONE_HEAD)
+	victim.apply_status_effect(STATUS_EFFECT_CHICKENS)
+	return ALT_ATTACK_CONTINUE_CHAIN

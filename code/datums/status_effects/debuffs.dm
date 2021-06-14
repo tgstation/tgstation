@@ -968,3 +968,22 @@
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()
 	QDEL_NULL(mob_overlay)
+
+/datum/status_effect/stacking/smacked_silly
+	id = "smacked_silly"
+	tick_interval = 2 SECONDS
+	overlay_file = 'icons/effects/32x64.dmi'
+	overlay_state = "dizzy_birdies"
+
+/datum/status_effect/stacking/smacked_silly/on_apply()
+	. = ..()
+	if(!isliving(owner))
+		return FALSE
+	var/mob/living/living_owner = owner
+	living_owner.add_confusion(5 * stacks)
+
+/datum/status_effect/stacking/smacked_silly/on_remove()
+	. = ..()
+	if(owner)
+		var/mob/living/living_owner = owner
+		living_owner.set_confusion(0)
