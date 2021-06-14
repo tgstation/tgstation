@@ -24,7 +24,7 @@
 		return FALSE
 	var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
 	if(board?.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
-		to_chat(user, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare.</span>")
+		to_chat(user, span_warning("You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare."))
 		return FALSE
 	board.moved = TRUE
 	return TRUE
@@ -49,7 +49,7 @@
 	if(!.)
 		return FALSE
 	if(!is_centcom_level(z))
-		to_chat(user, "<span class='warning'>Pods are one way!</span>")
+		to_chat(user, span_warning("Pods are one way!"))
 		return FALSE
 	return TRUE
 

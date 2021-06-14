@@ -40,7 +40,7 @@
 /obj/effect/decal/cleanable/food/salt/Bumped(atom/movable/AM)
 	. = ..()
 	if(is_species(AM, /datum/species/snail))
-		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
+		to_chat(AM, span_danger("Your path is obstructed by [span_phobia("salt")]."))
 
 /obj/effect/decal/cleanable/food/salt/on_entered(datum/source, atom/movable/AM)
 	. = ..()

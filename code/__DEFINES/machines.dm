@@ -46,6 +46,8 @@
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
 #define AWAY_IMPRINTER (1<<9)
+/// For wiremod/integrated circuits. Uses various minerals.
+#define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -141,10 +143,6 @@
 #define MACHINE_NOT_ELECTRIFIED 0
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
-
-//these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
-#define PLANT_GENE_REMOVABLE (1<<0)
-#define PLANT_GENE_EXTRACTABLE (1<<1)
 
 //mass drivers and related machinery
 #define MASSDRIVER_TOXINS "toxinsdriver"

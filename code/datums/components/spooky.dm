@@ -40,7 +40,7 @@
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 		H.Paralyze(20)
 		H.set_species(/datum/species/skeleton)
-		H.visible_message("<span class='warning'>[H] has given up on life as a mortal.</span>")
+		H.visible_message(span_warning("[H] has given up on life as a mortal."))
 		var/T = get_turf(H)
 		if(too_spooky)
 			if(prob(30))
@@ -50,9 +50,9 @@
 			else if(prob(30))
 				new/obj/item/instrument/trombone/spectral(T)
 			else
-				to_chat(H, "<span class='boldwarning'>The spooky gods forgot to ship your instrument. Better luck next unlife.</span>")
-		to_chat(H, "<span class='boldnotice'>You are the spooky skeleton!</span>")
-		to_chat(H, "<span class='boldnotice'>A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties.</span>")
+				to_chat(H, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
+		to_chat(H, span_boldnotice("You are the spooky skeleton!"))
+		to_chat(H, span_boldnotice("A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties."))
 		change_name(H) //time for a new name!
 
 /datum/component/spooky/proc/change_name(mob/living/carbon/human/H)

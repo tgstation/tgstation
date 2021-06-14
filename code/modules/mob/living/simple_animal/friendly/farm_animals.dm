@@ -49,9 +49,9 @@
 			Retaliate()
 
 		if(enemies.len && DT_PROB(5, delta_time))
-			enemies = list()
+			clear_enemies()
 			LoseTarget()
-			src.visible_message("<span class='notice'>[src] calms down.</span>")
+			src.visible_message(span_notice("[src] calms down."))
 	if(stat != CONSCIOUS)
 		return
 
@@ -66,7 +66,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
-	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
+	src.visible_message(span_danger("[src] gets an evil-looking gleam in [p_their()] eye."))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	. = ..()
@@ -94,8 +94,8 @@
 		var/mob/living/carbon/human/H = target
 		if(istype(H.dna.species, /datum/species/pod))
 			var/obj/item/bodypart/NB = pick(H.bodyparts)
-			H.visible_message("<span class='warning'>[src] takes a big chomp out of [H]!</span>", \
-								  "<span class='userdanger'>[src] takes a big chomp out of your [NB]!</span>")
+			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
+								  span_userdanger("[src] takes a big chomp out of your [NB]!"))
 			NB.dismember()
 //cow
 /mob/living/simple_animal/cow
@@ -106,7 +106,7 @@
 	icon_dead = "cow_dead"
 	icon_gib = "cow_gib"
 	gender = FEMALE
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
@@ -129,31 +129,32 @@
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/food/grown/wheat)
-	tame_chance = 25
-	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/cow/Initialize()
 	AddComponent(/datum/component/udder)
 	AddElement(/datum/element/pet_bonus, "moos happily!")
 	add_cell_sample()
+	make_tameable()
 	. = ..()
+
+///wrapper for the tameable component addition so you can have non tamable cow subtypes
+/mob/living/simple_animal/cow/proc/make_tameable()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/cow/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/cow/tamed()
-	. = ..()
+/mob/living/simple_animal/cow/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/user, list/modifiers)
 	if(!stat && LAZYACCESS(modifiers, RIGHT_CLICK) && icon_state != icon_dead)
-		user.visible_message("<span class='warning'>[user] tips over [src].</span>",
-			"<span class='notice'>You tip over [src].</span>")
-		to_chat(src, "<span class='userdanger'>You are tipped over by [user]!</span>")
+		user.visible_message(span_warning("[user] tips over [src]."),
+			span_notice("You tip over [src]."))
+		to_chat(src, span_userdanger("You are tipped over by [user]!"))
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = icon_dead
 		addtimer(CALLBACK(src, .proc/cow_tipped, user), rand(20,50))
@@ -175,26 +176,27 @@
 	else
 		external = "[src] seems resigned to its fate."
 		internal = "You resign yourself to your fate."
-	visible_message("<span class='notice'>[external]</span>",
-		"<span class='revennotice'>[internal]</span>")
+	visible_message(span_notice("[external]"),
+		span_revennotice("[internal]"))
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all"
 	gold_core_spawnable = FALSE
-	tame_chance = 0
-	bonus_tame_chance = 0
 	speak_chance = 15
 
 /mob/living/simple_animal/cow/wisdom/Initialize()
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
+/mob/living/simple_animal/cow/wisdom/make_tameable()
+	return //cannot tame
+
 ///Give intense wisdom to the attacker if they're being friendly about it
 /mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/user, list/modifiers)
 	if(!stat && !user.combat_mode)
-		to_chat(user, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
+		to_chat(user, span_nicegreen("[src] whispers you some intense wisdoms and then disappears!"))
 		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
 		do_smoke(1, get_turf(src))
 		qdel(src)
@@ -261,6 +263,7 @@
 	..()
 	amount_grown = 0
 
+
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
@@ -277,8 +280,6 @@
 	speak_chance = 2
 	turns_per_move = 3
 	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
-	var/egg_type = /obj/item/food/egg
-	food_type = list(/obj/item/food/grown/wheat)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -289,66 +290,42 @@
 	attack_verb_simple = "kick"
 	health = 15
 	maxHealth = 15
-	var/eggsleft = 0
-	var/eggsFertile = TRUE
-	var/body_color
-	var/icon_prefix = "chicken"
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
-	var/list/layMessage = EGG_LAYING_MESSAGES
-	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = FRIENDLY_SPAWN
-	var/static/chicken_count = 0
-
 	footstep_type = FOOTSTEP_MOB_CLAW
+	///counter for how many chickens are in existence to stop too many chickens from lagging shit up
+	var/static/chicken_count = 0
+	///boolean deciding whether eggs laid by this chicken can hatch into chicks
+	var/process_eggs = TRUE
 
 /mob/living/simple_animal/chicken/Initialize()
 	. = ..()
-	if(!body_color)
-		body_color = pick(validColors)
-	icon_state = "[icon_prefix]_[body_color]"
-	icon_living = "[icon_prefix]_[body_color]"
-	icon_dead = "[icon_prefix]_[body_color]_dead"
-	pixel_x = base_pixel_x + rand(-6, 6)
-	pixel_y = base_pixel_y + rand(0, 10)
-	++chicken_count
+	chicken_count++
 	add_cell_sample()
-
+	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
+	AddComponent(/datum/component/egg_layer,\
+		/obj/item/food/egg,\
+		list(/obj/item/food/grown/wheat),\
+		feed_messages = list("[p_they()] clucks happily."),\
+		lay_messages = EGG_LAYING_MESSAGES,\
+		eggs_left = 0,\
+		eggs_added_from_eating = rand(1, 4),\
+		max_eggs_held = 8,\
+		egg_laid_callback = CALLBACK(src, .proc/egg_laid)\
+	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chicken/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
-	--chicken_count
+	chicken_count--
 	return ..()
 
-/mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
-	if(is_type_in_list(O, food_type)) //feedin' dem chickens
-		if(!stat && eggsleft < 8)
-			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
-			user.visible_message(feedmsg)
-			qdel(O)
-			eggsleft += rand(1, 4)
-		else
-			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
-	else
-		..()
-
-/mob/living/simple_animal/chicken/Life(delta_time = SSMOBS_DT, times_fired)
-	. =..()
-	if(!.)
-		return
-	if((!stat && DT_PROB(1.5, delta_time) && eggsleft > 0) && egg_type)
-		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
-		eggsleft--
-		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6, 6)
-		E.pixel_y = rand(-6, 6)
-		if(eggsFertile)
-			if(chicken_count < MAX_CHICKENS && prob(25))
-				START_PROCESSING(SSobj, E)
+/mob/living/simple_animal/chicken/proc/egg_laid(obj/item/egg)
+	if(chicken_count <= MAX_CHICKENS && process_eggs && prob(25))
+		START_PROCESSING(SSobj, egg)
 
 /obj/item/food/egg/var/amount_grown = 0
 
@@ -356,7 +333,7 @@
 	if(isturf(loc))
 		amount_grown += rand(1,2) * delta_time
 		if(amount_grown >= 200)
-			visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
+			visible_message(span_notice("[src] hatches with a quiet cracking sound."))
 			new /mob/living/simple_animal/chick(get_turf(src))
 			STOP_PROCESSING(SSobj, src)
 			qdel(src)
@@ -391,5 +368,4 @@
 	health = 75
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/food/grown/apple)
 	footstep_type = FOOTSTEP_MOB_SHOE

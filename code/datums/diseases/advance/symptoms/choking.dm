@@ -51,16 +51,16 @@ Bonus
 	switch(A.stage)
 		if(1, 2)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]</span>")
+				to_chat(M, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
 		if(3, 4)
 			if(!suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]</span>")
+				to_chat(M, span_warning("[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]"))
 			else
-				to_chat(M, "<span class='warning'>You feel very [pick("dizzy","woozy","faint")].</span>") //fake bloodloss messages
+				to_chat(M, span_warning("You feel very [pick("dizzy","woozy","faint")].")) //fake bloodloss messages
 			Choke_stage_3_4(M, A)
 			M.emote("gasp")
 		else
-			to_chat(M, "<span class='userdanger'>[pick("You're choking!", "You can't breathe!")]</span>")
+			to_chat(M, span_userdanger("[pick("You're choking!", "You can't breathe!")]"))
 			Choke(M, A)
 			M.emote("gasp")
 
@@ -125,15 +125,15 @@ Bonus
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(3, 4)
-			to_chat(M, "<span class='warning'><b>[pick("Your windpipe feels thin.", "Your lungs feel small.")]</span>")
+			to_chat(M, span_warning("<b>[pick("Your windpipe feels thin.", "Your lungs feel small.")]"))
 			Asphyxiate_stage_3_4(M, A)
 			M.emote("gasp")
 		if(5)
-			to_chat(M, "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>")
+			to_chat(M, span_userdanger("[pick("Your lungs hurt!", "It hurts to breathe!")]"))
 			Asphyxiate(M, A)
 			M.emote("gasp")
 			if(M.getOxyLoss() >= 120)
-				M.visible_message("<span class='warning'>[M] stops breathing, as if their lungs have totally collapsed!</span>")
+				M.visible_message(span_warning("[M] stops breathing, as if their lungs have totally collapsed!"))
 				Asphyxiate_death(M, A)
 	return
 

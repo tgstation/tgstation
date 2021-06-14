@@ -22,13 +22,13 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Heretic!</B></font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='warningplain'><span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!</span></span>")
+	to_chat(owner, span_cult("<span class='warningplain'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>"))
 	var/policy = get_policy(ROLE_HERETIC)
 	if(policy)
 		to_chat(owner, policy)
 
 /datum/antagonist/heretic/farewell()
-	to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
+	to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
 	owner.announce_objectives()
 
 /datum/antagonist/heretic/on_gain()
@@ -78,10 +78,10 @@
 	var/item_name = initial(item_path.name)
 	var/where = heretic.equip_in_one_of_slots(T, slots)
 	if(!where)
-		to_chat(heretic, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
+		to_chat(heretic, span_userdanger("Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1)."))
 		return FALSE
 	else
-		to_chat(heretic, "<span class='danger'>You have a [item_name] in your [where].</span>")
+		to_chat(heretic, span_danger("You have a [item_name] in your [where]."))
 		if(where == "backpack")
 			SEND_SIGNAL(heretic.back, COMSIG_TRY_STORAGE_SHOW, heretic)
 		return TRUE
@@ -97,6 +97,7 @@
 
 ///What happens to the heretic once he dies, used to remove any custom perks
 /datum/antagonist/heretic/proc/on_death()
+	SIGNAL_HANDLER
 
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
@@ -180,18 +181,18 @@
 		for(var/o in objectives)
 			var/datum/objective/objective = o
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!</b>")]"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
 				cultiewin = FALSE
 			count++
 	if(ascended)
 		parts += "<span class='greentext big'>THE HERETIC ASCENDED!</span>"
 	else
 		if(cultiewin)
-			parts += "<span class='greentext'>The heretic was successful!</span>"
+			parts += span_greentext("The heretic was successful!")
 		else
-			parts += "<span class='redtext'>The heretic has failed.</span>"
+			parts += span_redtext("The heretic has failed.")
 
 	parts += "<b>Knowledge Researched:</b> "
 

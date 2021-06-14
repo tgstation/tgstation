@@ -22,14 +22,14 @@
 
 /datum/component/storage/concrete/tcg/show_to(mob/M)
 	. = ..()
-	M.visible_message("<span class='notice'>[M] starts to look through the contents of \the [parent]!</span>", \
-					"<span class='notice'>You begin looking into the contents of \the [parent]!</span>")
+	M.visible_message(span_notice("[M] starts to look through the contents of \the [parent]!"), \
+					span_notice("You begin looking into the contents of \the [parent]!"))
 
 /datum/component/storage/concrete/tcg/close(mob/M)
 	. = ..()
 	var/list/card_contents = contents()
 	var/obj/temp_parent = parent
-	temp_parent.visible_message("<span class='notice'>\the [parent] is shuffled after looking through it.</span>")
+	temp_parent.visible_message(span_notice("\the [parent] is shuffled after looking through it."))
 	card_contents = shuffle(card_contents)
 
 /datum/component/storage/concrete/tcg/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found)

@@ -27,7 +27,7 @@
 	new picked(src)
 
 /obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
 /obj/item/storage/pill_bottle/dice/hazard
@@ -65,7 +65,7 @@
 	update_appearance()
 
 /obj/item/dice/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
 /obj/item/dice/d1
@@ -184,8 +184,10 @@
 	diceroll(user)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	diceroll(thrownby)
-	. = ..()
+	var/mob/thrown_by = thrownby?.resolve()
+	if(thrown_by)
+		diceroll(thrown_by)
+	return ..()
 
 /obj/item/dice/proc/diceroll(mob/user)
 	result = roll(sides)
@@ -209,11 +211,11 @@
 	if(special_faces.len == sides)
 		result = special_faces[result]
 	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message("<span class='notice'>[user] throws [src]. It lands on [result]. [comment]</span>", \
-			"<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
-			"<span class='hear'>You hear [src] rolling, it sounds like a [fake_result].</span>")
+		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
+			span_notice("You throw [src]. It lands on [result]. [comment]"), \
+			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
 	else if(!src.throwing) //Dice was thrown and is coming to rest
-		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
+		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
 
 /obj/item/dice/update_overlays()
 	. = ..()

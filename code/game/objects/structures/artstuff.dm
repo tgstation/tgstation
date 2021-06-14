@@ -21,7 +21,7 @@
 		painting = canvas
 		canvas.forceMove(get_turf(src))
 		canvas.layer = layer+0.1
-		user.visible_message("<span class='notice'>[user] puts \the [canvas] on \the [src].</span>","<span class='notice'>You place \the [canvas] on \the [src].</span>")
+		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
 	else
 		return ..()
 
@@ -278,17 +278,17 @@
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
 	if(persistence_id)
-		. += "<span class='notice'>Any painting placed here will be archived at the end of the shift.</span>"
+		. += span_notice("Any painting placed here will be archived at the end of the shift.")
 	if(current_canvas)
 		current_canvas.ui_interact(user)
-		. += "<span class='notice'>Use wirecutters to remove the painting.</span>"
+		. += span_notice("Use wirecutters to remove the painting.")
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(current_canvas)
 		current_canvas.forceMove(drop_location())
 		current_canvas = null
-		to_chat(user, "<span class='notice'>You remove the painting from the frame.</span>")
+		to_chat(user, span_notice("You remove the painting from the frame."))
 		update_appearance()
 		return TRUE
 
@@ -297,7 +297,7 @@
 		current_canvas = new_canvas
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
-		to_chat(user,"<span class='notice'>You frame [current_canvas].</span>")
+		to_chat(user,span_notice("You frame [current_canvas]."))
 	update_appearance()
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
@@ -433,7 +433,7 @@
 			return
 		var/mob/user = usr
 		if(!persistence_id || !current_canvas)
-			to_chat(user,"<span class='warning'>This is not a persistent painting.</span>")
+			to_chat(user,span_warning("This is not a persistent painting."))
 			return
 		var/md5 = md5(lowertext(current_canvas.get_data_string()))
 		var/author = current_canvas.author_ckey
@@ -449,4 +449,4 @@
 				QDEL_NULL(P.current_canvas)
 				P.update_appearance()
 		log_admin("[key_name(user)] has deleted a persistent painting made by [author].")
-		message_admins("<span class='notice'>[key_name_admin(user)] has deleted persistent painting made by [author].</span>")
+		message_admins(span_notice("[key_name_admin(user)] has deleted persistent painting made by [author]."))

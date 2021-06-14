@@ -7,12 +7,6 @@
 #define PLAYER_READY_TO_PLAY 1
 #define PLAYER_READY_TO_OBSERVE 2
 
-//Game mode list indexes
-#define CURRENT_LIVING_PLAYERS "living_players_list"
-#define CURRENT_LIVING_ANTAGS "living_antags_list"
-#define CURRENT_DEAD_PLAYERS "dead_players_list"
-#define CURRENT_OBSERVERS "current_observers_list"
-
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -449,3 +443,5 @@
 #define THROW_MODE_TOGGLE 1
 #define THROW_MODE_HOLD 2
 
+//Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
+#define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
