@@ -153,13 +153,13 @@
 	the_roster.spawns_team1 = null
 	the_roster.spawns_team2 = null
 
-	for(var/obj/machinery/arena_spawn/A in GLOB.machines)
-		if(A.arena_id != arena_id)
+	for(var/obj/machinery/arena_spawn/iter_spawn in GLOB.machines)
+		if(iter_spawn.arena_id != arena_id)
 			continue
-		if(A.team == ARENA_RED_TEAM)
-			LAZYADD(the_roster.spawns_team1, A)
-		else if(A.team == ARENA_GREEN_TEAM)
-			LAZYADD(the_roster.spawns_team2, A)
+		if(iter_spawn.team == ARENA_RED_TEAM)
+			LAZYADD(the_roster.spawns_team1, iter_spawn)
+		else if(iter_spawn.team == ARENA_GREEN_TEAM)
+			LAZYADD(the_roster.spawns_team2, iter_spawn)
 
 	message_admins("[LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
 	log_admin("[LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
@@ -322,6 +322,9 @@
 		else if(href_list["add_empty"] == "team")
 			GLOB.global_roster.create_team(usr)
 
+	if(href_list["toggle_wounds"])
+		GLOB.global_roster.toggle_wounds(usr)
+
 	if(href_list["eliminate_contestant"])
 		GLOB.global_roster.eliminate_contestant(usr, href_list["eliminate_contestant"])
 
@@ -340,18 +343,38 @@
 	if(href_list["resolve_match"])
 		GLOB.global_roster.try_resolve_match(usr)
 
-	if(href_list["toggle_freeze"])
-		GLOB.global_roster.toggle_freeze(usr, uref_list["toggle_freeze"])
+	if(href_list["set_freeze"])
+		var/freeze_arg = href_list["set_freeze"]
+		if(freeze_arg == "on" || freeze_arg == "off") // everyone
+			GLOB.global_roster.set_frozen_all(usr, freeze_arg)
 
-	if(href_list["toggle_godmode"])
-		GLOB.global_roster.toggle_godmode(usr, href_list["toggle_godmode"])
+		else if(istype(freeze_arg, /datum/event_team)) // team
+			var/datum/event_team/freeze_target = freeze_arg
+			freeze_target.set_frozen(!freeze_target.frozen)
 
-	if(href_list["spawn_all"])
+		else if(istype(freeze_arg, /datum/contestant)) // contestant (not currently used)
+			var/datum/contestant/freeze_target = freeze_arg
+			freeze_target.set_frozen(!freeze_target.frozen)
+
+	if(href_list["set_godmode"])
+		var/godmode_arg = href_list["set_godmode"]
+		if(godmode_arg == "on" || godmode_arg == "off") // everyone
+			GLOB.global_roster.set_godmode_all(usr, godmode_arg)
+
+		else if(istype(godmode_arg, /datum/event_team)) // team
+			var/datum/event_team/godmode_target = godmode_arg
+			godmode_target.set_godmode(!godmode_target.godmode)
+
+		else if(istype(godmode_arg, /datum/contestant)) // contestant (not currently used)
+			var/datum/contestant/godmode_target = godmode_arg
+			godmode_target.set_godmode(!godmode_target.godmode)
+
+	/*if(href_list["spawn_all"])
 		GLOB.global_roster.spawn_everyone(usr)
 
-	if(href_list["remove_all"])
+	if(href_list["despawn_all"])
 		GLOB.global_roster.despawn_everyone(usr)
-
+*/
 	if(href_list["select_team_slot"])
 		GLOB.global_roster.try_load_team_slot(usr, text2num(href_list["select_team_slot"]))
 
@@ -454,10 +477,14 @@
 			dat += "-----------------------------------------"
 			dat += "<a href='?src=[REF(src)];add_empty=contestant'>Add Empty Contestant</a>"
 			dat += "<a href='?src=[REF(src)];add_empty=team'>Add Empty Team</a>"
+			dat += "Random Wounds are currently: <a href='?src=[REF(src)];toggle_wounds=1'><b>[GLOB.global_roster.enable_random_wounds ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 			dat += "-----------------------------------------"
 			dat += "<a href='?src=[REF(src)];change_page=match'>Go to Match</a>"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
 			dat += "<a href='?src=[REF(src)];change_page=contestant'>Go to Contestant List</a>"
+
+			dat += "\t<a href='?src=[REF(src)];set_freeze=on'>FREEZE EVERYONE</a> <a href='?src=[REF(src)];set_freeze=off'>UNFREEZE EVERYONE</a>"
+			dat += "\t<a href='?src=[REF(src)];set_godmode=on'>GODMODE EVERYONE</a> <a href='?src=[REF(src)];set_godmode=off'>UNGODMODE EVERYONE</a>"
 
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
@@ -471,6 +498,8 @@
 
 			if(team1)
 				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a>"
+				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team1)]'><b>[team1.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
+				dat += "\t\tTeam Godmode: <a href='?src=[REF(src)];set_godmode=[REF(team1)]'><b>[team1.godmode ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 				var/i = 0
 				for(var/datum/contestant/iter_member in team1.members)
 					i++
@@ -481,6 +510,8 @@
 
 			if(team2)
 				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2]</a>"
+				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team2)]'><b>[team2.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
+				dat += "\t\tTeam Godmode: <a href='?src=[REF(src)];set_godmode=[REF(team2)]'><b>[team2.godmode ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 				var/i = 0
 				for(var/datum/contestant/iter_member in team2.members)
 					i++
@@ -495,9 +526,9 @@
 				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
 
 			if(istype(team1) ||istype(team2))
-				dat += "<a href='?src=[REF(src)];toggle_freeze=on'><b>Freeze All</b></a><a href='?src=[REF(src)];toggle_freeze=off'><b>Unfreeze All</b></a>"
-				dat += "<a href='?src=[REF(src)];toggle_godmode=on'><b>Godmode All</b></a><a href='?src=[REF(src)];toggle_godmode=off'><b>Ungodmode All</b></a>"
-				dat += "<a href='?src=[REF(src)];spawn_all=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];remove_all=1'><b>Unspawn Everyone</b></a>"
+				dat += "<a href='?src=[REF(src)];set_freeze=on'><b>Freeze All</b></a><a href='?src=[REF(src)];set_freeze=off'><b>Unfreeze All</b></a>"
+				dat += "<a href='?src=[REF(src)];set_godmode=on'><b>Godmode All</b></a><a href='?src=[REF(src)];set_godmode=off'><b>Ungodmode All</b></a>"
+				dat += "<a href='?src=[REF(src)];spawn_all=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];despawn_all=1'><b>Unspawn Everyone</b></a>"
 
 
 

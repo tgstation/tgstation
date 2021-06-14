@@ -25,6 +25,12 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	/// Holds the datums for all contestants who are actively spawned and competing
 	var/list/live_contestants
+	/// Holds the datums for all contestants who are actively spawned and competing
+	var/list/spawns_team1
+	/// Holds the datums for all contestants who are actively spawned and competing
+	var/list/spawns_team2
+	/// If FALSE, bodyparts cannot suffer wounds by receiving damage. Wounds can still be manually applied as per normal
+	var/enable_random_wounds = FALSE
 
 /datum/roster/New()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_ENTER, .proc/check_new_player)
@@ -445,13 +451,13 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	try_remove_team_slot(user, 1)
 	try_remove_team_slot(user, 2)
-	message_admins("[key_name_admin(user)] has resolved the current match!") // log which they chose
-	log_game("[key_name_admin(user)] has resolved the current match!")
+	message_admins("[key_name_admin(user)] has resolved the current match! Result: [winner]")
+	log_game("[key_name_admin(user)] has resolved the current match! Result: [winner]")
 
 /// A debug function, for when you need contestant datums but don't have people
 /datum/roster/proc/add_empty_contestant(mob/user)
 	var/rand_num = num2text(rand(1,10000))
-	message_admins("[key_name_admin(user)] has added an empty contestant ([rand_num])!") // log which they chose
+	message_admins("[key_name_admin(user)] has added an empty contestant ([rand_num])!")
 	log_game("[key_name_admin(user)] has added an empty contestant ([rand_num]).")
 	var/datum/contestant/new_kid = new(rand_num)
 	LAZYADDASSOC(all_contestants, rand_num, new_kid)
@@ -465,9 +471,25 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		return
 
 	LAZYADD(live_contestants, new_spawn)
+/*
+/obj/machinery/computer/arena/proc/spawn_member(obj/machinery/arena_spawn/spawnpoint,ckey,team)
+	var/mob/oldbody = get_mob_by_key(ckey)
+	if(!isobserver(oldbody))
+		return
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
+	oldbody.client.prefs.copy_to(M)
+	M.set_species(/datum/species/human) // Could use setting per team
+	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
+	M.faction += team //In case anyone wants to add team based stuff to arena special effects
+	M.key = ckey
+
+	var/datum/atom_hud/antag/team_hud = team_huds[team]
+	team_hud.join_hud(M)
+	set_antag_hud(M,"arena",team_hud_index[team])
+	*/
 
 /// A debug function, for when you need contestant datums but don't have people
-/datum/roster/proc/toggle_freeze(mob/user, str_toggle)
+/datum/roster/proc/set_frozen_all(mob/user, str_toggle)
 	var/mode
 	if(str_toggle == "on")
 		mode = TRUE
@@ -476,10 +498,41 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	else
 		return
 
-	var/rand_num = num2text(rand(1,10000))
-	message_admins("[key_name_admin(user)] has added an empty contestant ([rand_num])!") // log which they chose
-	log_game("[key_name_admin(user)] has added an empty contestant ([rand_num]).")
-	var/datum/contestant/new_kid = new(rand_num)
-	LAZYADDASSOC(all_contestants, rand_num, new_kid)
-	LAZYADD(active_contestants, new_kid)
-	new_kid.ckey = rand_num
+	// set on all the teams first
+	for(var/datum/event_team/iter_team in active_teams)
+		iter_team.set_frozen(mode)
+
+	// then set on all the individual contestants, just in case
+	for(var/datum/contestant/iter_contestant in all_contestants)
+		iter_contestant.set_frozen(mode)
+
+	message_admins("[key_name_admin(user)] has [mode ? "frozen" : "unfrozen"] everyone")
+	log_game("[key_name_admin(user)] has [mode ? "frozen" : "unfrozen"] everyone")
+
+/// A debug function, for when you need contestant datums but don't have people
+/datum/roster/proc/set_godmode_all(mob/user, str_toggle)
+	var/mode
+	if(str_toggle == "on")
+		mode = TRUE
+	else if(str_toggle == "off")
+		mode = FALSE
+	else
+		return
+
+	// set on all the teams first
+	for(var/datum/event_team/iter_team in active_teams)
+		iter_team.set_godmode(mode)
+
+	// then set on all the individual contestants, just in case
+	for(var/datum/contestant/iter_contestant in all_contestants)
+		iter_contestant.set_godmode(mode)
+
+	message_admins("[key_name_admin(user)] has [mode ? "godmoded" : "ungodmoded"] everyone")
+	log_game("[key_name_admin(user)] has [mode ? "godmoded" : "ungodmoded"] everyone")
+
+/// A debug function, for when you need contestant datums but don't have people
+/datum/roster/proc/toggle_wounds(mob/user)
+	enable_random_wounds != enable_random_wounds
+
+	message_admins("[key_name_admin(user)] has [enable_random_wounds ? "ENABLED" : "DISABLED"] random wounds!")
+	log_game("[key_name_admin(user)] has [enable_random_wounds ? "ENABLED" : "DISABLED"] random wounds!")
