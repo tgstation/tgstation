@@ -1063,22 +1063,27 @@
 	theft_target = null
 	. = ..()
 
-/obj/item/card/id/advanced/chameleon/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
-
-	if(.)
+/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
 		return
 
+	if(istype(target, /obj/item/card/id))
+		theft_target = WEAKREF(target)
+		ui_interact(user)
+		return
+
+	return ..()
+
+/obj/item/card/id/advanced/chameleon/pre_attack_secondary(atom/target, mob/living/user, params)
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
-	// return TRUE to cancel the attack chain from all code paths relating to this functionality.
+	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
 	if(istype(target, /mob/living/carbon/human))
 		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
 
-		// This is possibly a bit too powerful to be instant. Allows players to counter this with an examine.
 		if(!do_mob(user, target, 2 SECONDS))
 			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
-			return TRUE
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/mob/living/carbon/human/human_target = target
 
@@ -1086,16 +1091,18 @@
 
 		if(!length(target_id_cards))
 			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
-			return TRUE
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/selected_id = pick(target_id_cards)
 		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(istype(target, /obj/item))
 		var/obj/item/target_item = target
+
+		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
 
@@ -1106,15 +1113,15 @@
 
 		if(!length(target_id_cards))
 			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
-			return TRUE
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/selected_id = pick(target_id_cards)
 		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	return
+	return ..()
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
