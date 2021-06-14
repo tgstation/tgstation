@@ -185,7 +185,8 @@ SUBSYSTEM_DEF(timer)
 
 		if (!bucket_list[practical_offset])
 			// Empty the bucket, check if anything in the secondary queue should be shifted to this bucket
-			bucket_list[practical_offset++] = null
+			bucket_list[practical_offset] = null // Just in case
+			practical_offset++
 			var/i = 0
 			for (i in 1 to length(second_queue))
 				timer = second_queue[i]
