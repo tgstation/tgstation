@@ -98,12 +98,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, BOMB = 0, BIO = 0, RAD = 0, FIRE = 1, ACID = 1)
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
-	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going. amount / 50 means 40 radiation per sheet.
+	return
 
 /datum/material/uranium/on_removed(atom/source, amount, material_flags)
-	. = ..()
-	qdel(source.GetComponent(/datum/component/radioactive))
+	return
 
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
