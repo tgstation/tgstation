@@ -146,14 +146,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.researched_nodes[N.id])  // already researched
-				l += "<span class='linkoff'>[N.display_name]</span>"
+				l += "<span class='linkOff'>[N.display_name]</span>"
 				l += "This node has already been researched."
 			else if(!length(worth))  // reveal only
 				if (stored_research.hidden_nodes[N.id])
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
 					l += "This node will be revealed."
 				else
-					l += "<span class='linkoff'>[N.display_name]</span>"
+					l += "<span class='linkOff'>[N.display_name]</span>"
 					l += "This node has already been revealed."
 			else  // boost by the difference
 				var/list/differences = list()
@@ -167,7 +167,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
 					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
 				else
-					l += "<span class='linkoff'>[N.display_name]</span>"
+					l += "<span class='linkOff'>[N.display_name]</span>"
 					l += "This node has already been boosted.</span>"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
@@ -176,7 +176,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[loaded_item.type])
-				l += "<span class='linkoff'>Point Deconstruction</span>"
+				l += "<span class='linkOff'>Point Deconstruction</span>"
 				l += "This item's points have already been claimed."
 			else
 				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_DESTROY_ID]'>Point Deconstruction</A>"

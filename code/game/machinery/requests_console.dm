@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				if ((announceAuth || isAdminGhostAI(user)) && message)
 					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
-					dat += "<span class='linkoff'>Announce Message</span><BR>"
+					dat += "<span class='linkOff'>Announce Message</span><BR>"
 				dat += "<BR><A href='?src=[REF(src)];setScreen=[REQ_SCREEN_MAIN]'><< Back</A><BR>"
 
 		if(!dat)

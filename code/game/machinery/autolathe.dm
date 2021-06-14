@@ -298,7 +298,7 @@
 			continue
 
 		if(disabled || !can_build(D))
-			dat += "<span class='linkoff'>[D.name]</span>"
+			dat += "<span class='linkOff'>[D.name]</span>"
 		else
 			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 
@@ -332,7 +332,7 @@
 	for(var/v in matching_designs)
 		var/datum/design/D = v
 		if(disabled || !can_build(D))
-			dat += "<span class='linkoff'>[D.name]</span>"
+			dat += "<span class='linkOff'>[D.name]</span>"
 		else
 			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 

@@ -303,7 +303,7 @@
 			entry_text += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
 		entry_text += "[temp_material][RDSCREEN_NOBREAK]"
 	else
-		entry_text += "<span class='linkoff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+		entry_text += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
 	entry_text += ""
 	return entry_text
 

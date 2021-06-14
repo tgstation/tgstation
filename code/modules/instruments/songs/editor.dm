@@ -38,14 +38,14 @@
 	if(lines.len > 0)
 		dat += "<H3>Playback</H3>"
 		if(!playing)
-			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <span class='linkon'>Stop</span><BR><BR>"
+			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <span class='linkOn'>Stop</span><BR><BR>"
 			dat += "Repeat Song: "
-			dat += repeat > 0 ? "<A href='?src=[REF(src)];repeat=-10'>-</A><A href='?src=[REF(src)];repeat=-1'>-</A>" : "<span class='linkoff'>-</SPAN><SPAN CLASS='linkOff'>-</span>"
+			dat += repeat > 0 ? "<A href='?src=[REF(src)];repeat=-10'>-</A><A href='?src=[REF(src)];repeat=-1'>-</A>" : "<span class='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</span>"
 			dat += " [repeat] times "
-			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<span class='linkoff'>+</SPAN><SPAN CLASS='linkOff'>+</span>"
+			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<span class='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</span>"
 			dat += "<BR>"
 		else
-			dat += "<span class='linkon'>Play</span> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
+			dat += "<span class='linkOn'>Play</span> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
 			dat += "Repeats left: <B>[repeat]</B><BR>"
 	if(!editing)
 		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"

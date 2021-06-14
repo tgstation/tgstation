@@ -362,12 +362,12 @@ the new instance inside the host to be updated to the template's stats.
 				if(A.CanBuy(src))
 					purchase_text = "<a href='byond://?src=[REF(src)];buy_ability=[REF(A)]'>Purchase</a>"
 				else
-					purchase_text = "<span class='linkoff'>Purchase</span>"
+					purchase_text = "<span class='linkOff'>Purchase</span>"
 			else
 				if(A.CanRefund(src))
 					purchase_text = "<a href='byond://?src=[REF(src)];refund_ability=[REF(A)]'>Refund</a>"
 				else
-					purchase_text = "<span class='linkoff'>Refund</span>"
+					purchase_text = "<span class='linkOff'>Refund</span>"
 			dat += "<tr><td>[A.cost]</td><td>[purchase_text]</td><td>[A.required_total_points]</td><td><a href='byond://?src=[REF(src)];examine_ability=[REF(A)]'>[A.name]</a></td><td>[A.category]</td><td>[A.short_desc]</td></tr>"
 
 		dat += "</table><br>Infect many hosts at once to gain adaptation points.<hr><h1>Infected Hosts</h1>"
