@@ -61,6 +61,30 @@ SUBSYSTEM_DEF(timer)
 	msg = "B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)] RST:[bucket_reset_count]"
 	return ..()
 
+/datum/controller/subsystem/timer/proc/dump_timer_buckets(full = TRUE)
+	var/list/to_log = list("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+	if (full)
+		for (var/i in 1 to length(bucket_list))
+			var/datum/timedevent/bucket_head = bucket_list[i]
+			if (!bucket_head)
+				continue
+
+			to_log += "Active timers at index [i]:"
+			var/datum/timedevent/bucket_node = bucket_head
+			var/anti_loop_check = 1
+			do
+				to_log += get_timer_debug_string(bucket_node)
+				bucket_node = bucket_node.next
+				anti_loop_check--
+			while(bucket_node && bucket_node != bucket_head && anti_loop_check)
+
+		to_log += "Active timers in the second_queue queue:"
+		for(var/I in second_queue)
+			to_log += get_timer_debug_string(I)
+
+	// Dump all the logged data to the world log
+	log_world(to_log.Join("\n"))
+
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	// Store local references to datum vars as it is faster to access them
 	var/lit = last_invoke_tick
@@ -80,28 +104,7 @@ SUBSYSTEM_DEF(timer)
 		WARNING(msg)
 		if(bucket_auto_reset)
 			bucket_resolution = 0
-
-		var/list/to_log = list("Timer bucket reset. world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
-		for (var/i in 1 to length(bucket_list))
-			var/datum/timedevent/bucket_head = bucket_list[i]
-			if (!bucket_head)
-				continue
-
-			to_log += "Active timers at index [i]:"
-			var/datum/timedevent/bucket_node = bucket_head
-			var/anti_loop_check = 1000
-			do
-				to_log += get_timer_debug_string(bucket_node)
-				bucket_node = bucket_node.next
-				anti_loop_check--
-			while(bucket_node && bucket_node != bucket_head && anti_loop_check)
-
-		to_log += "Active timers in the second_queue queue:"
-		for(var/I in second_queue)
-			to_log += get_timer_debug_string(I)
-
-		// Dump all the logged data to the world log
-		log_world(to_log.Join("\n"))
+		dump_timer_buckets(CONFIG_GET(flag/log_timers_on_bucket_reset))
 
 	// Process client-time timers
 	if (next_clienttime_timer_index)
