@@ -44,7 +44,7 @@
 /// Molar accuracy to round to
 #define MOLAR_ACCURACY  1E-4
 /// Types of gases (based on gaslist_cache)
-#define GAS_TYPE_COUNT gaslist_cache.len
+#define GAS_TYPE_COUNT GLOB.gaslist_cache.len
 /// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
 #define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
