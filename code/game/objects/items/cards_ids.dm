@@ -1063,15 +1063,37 @@
 	theft_target = null
 	. = ..()
 
-/obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(O, /obj/item/card/id))
-		theft_target = WEAKREF(O)
+
+	if(istype(target, /obj/item/card/id))
+		theft_target = WEAKREF(target)
 		ui_interact(user)
 		return
 
 	return ..()
+
+/obj/item/card/id/advanced/chameleon/pre_attack(atom/target, mob/living/user, params)
+	. = ..()
+
+	if(.)
+		return
+
+	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
+	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
+	// return TRUE to cancel the attack chain from all code paths relating to this functionality.
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human_target = target
+
+		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
+
+		if(!length(target_id_cards))
+			return TRUE
+
+		theft_target = WEAKREF(pick(target_id_cards))
+		ui_interact(user)
+		return TRUE
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
