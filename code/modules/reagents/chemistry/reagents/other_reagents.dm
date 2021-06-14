@@ -2618,7 +2618,7 @@
 	reagent_state = SOLID
 	color = "#993333"
 	taste_mult = 1.3
-	taste_description = "<span class='warning'>ANTS OH GOD</span>"
+	taste_description = "tiny legs scuttling down the back of your throat."
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	glass_name = "glass of ants"
 	glass_desc = "Bottoms up...?"
