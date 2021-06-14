@@ -12,6 +12,8 @@
 #define ARENA_UI_TEAMS "team"
 /// The page of the arena computer UI for managing contestants
 #define ARENA_UI_INDIV "contestant"
+/// The page of the arena computer UI for managing the arena
+#define ARENA_UI_ARENA "arena"
 
 /// Arena related landmarks
 /obj/effect/landmark/arena
@@ -147,7 +149,20 @@
 	message_admins("[key_name_admin(user)] loaded [arena_template] event arena for [arena_id] arena.")
 	log_admin("[key_name(user)] loaded [arena_template] event arena for [arena_id] arena.")
 
+	var/datum/roster/the_roster = GLOB.global_roster
+	the_roster.spawns_team1 = null
+	the_roster.spawns_team2 = null
 
+	for(var/obj/machinery/arena_spawn/A in GLOB.machines)
+		if(A.arena_id != arena_id)
+			continue
+		if(A.team == ARENA_RED_TEAM)
+			LAZYADD(the_roster.spawns_team1, A)
+		else if(A.team == ARENA_GREEN_TEAM)
+			LAZYADD(the_roster.spawns_team2, A)
+
+	message_admins("[LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
+	log_admin("[LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
 
 /obj/machinery/computer/arena/proc/add_new_arena_template(user,fname,friendly_name)
 	if(!fname)
@@ -298,6 +313,8 @@
 				ui_mode = ARENA_UI_TEAMS
 			if("contestant")
 				ui_mode = ARENA_UI_INDIV
+			if("arena")
+				ui_mode = ARENA_UI_ARENA
 
 	if(href_list["add_empty"])
 		if(href_list["add_empty"] == "contestant")
@@ -322,6 +339,18 @@
 
 	if(href_list["resolve_match"])
 		GLOB.global_roster.try_resolve_match(usr)
+
+	if(href_list["toggle_freeze"])
+		GLOB.global_roster.toggle_freeze(usr, uref_list["toggle_freeze"])
+
+	if(href_list["toggle_godmode"])
+		GLOB.global_roster.toggle_godmode(usr, href_list["toggle_godmode"])
+
+	if(href_list["spawn_all"])
+		GLOB.global_roster.spawn_everyone(usr)
+
+	if(href_list["remove_all"])
+		GLOB.global_roster.despawn_everyone(usr)
 
 	if(href_list["select_team_slot"])
 		GLOB.global_roster.try_load_team_slot(usr, text2num(href_list["select_team_slot"]))
@@ -462,7 +491,14 @@
 
 
 			if(istype(team1) && istype(team2))
+				dat += "<a href='?src=[REF(src)];start_match=1'><b>Start Match</b></a>"
 				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
+
+			if(istype(team1) ||istype(team2))
+				dat += "<a href='?src=[REF(src)];toggle_freeze=on'><b>Freeze All</b></a><a href='?src=[REF(src)];toggle_freeze=off'><b>Unfreeze All</b></a>"
+				dat += "<a href='?src=[REF(src)];toggle_godmode=on'><b>Godmode All</b></a><a href='?src=[REF(src)];toggle_godmode=off'><b>Ungodmode All</b></a>"
+				dat += "<a href='?src=[REF(src)];spawn_all=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];remove_all=1'><b>Unspawn Everyone</b></a>"
+
 
 
 			var/list/waiting_teams = list()
@@ -492,8 +528,7 @@
 				dat += "<br><b>Marked Teams:</b>"
 				for(var/datum/event_team/iter_team in marked_teams)
 					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a> <a href='?src=[REF(src)];confirm_elim_team=[REF(iter_team)]'>Confirm Elimination</a> <a href='?src=[REF(src)];unmark_team=[REF(iter_team)]'>Unmark</a>"
-			/*for(var/datum/event_team/iter_team in GLOB.global_roster.rostered_teams)
-				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"*/
+
 		if(ARENA_UI_TEAMS)
 			dat += "<b>Team menu</b>"
 			dat += "-----------------------------------------"
@@ -538,7 +573,19 @@
 					var/mob/the_guy = iter_loser.get_mob()
 					dat += "\t[iter_loser.ckey] ([the_guy]) (Eliminated) <a href='?src=[REF(src)];delete_contestant=[REF(iter_loser)]'>Delete</a>"
 
-
+		if(ARENA_UI_ARENA)
+			dat += "<b>Arena menu</b>"
+			dat += "-----------------------------------------"
+			dat += "Current arena: [current_arena_template]"
+			dat += "<h2>Arena List:</h2>"
+			for(var/A in arena_templates)
+				dat += "<a href='?src=[REF(src)];change_arena=[url_encode(A)]'>[A]</a><br>"
+			dat += "<hr>"
+			dat += "<a href='?src=[REF(src)];upload=1'>Upload new arena</a><br>"
+			dat += "<hr>"
+			//Special actions
+			dat += "<a href='?src=[REF(src)];special=reset'>Reset Arena.</a><br>"
+			dat += "<a href='?src=[REF(src)];special=randomarena'>Load random arena.</a><br>"
 
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
 	popup.set_content(dat.Join("<br>"))
@@ -568,16 +615,7 @@
 		dat += "<a href='?src=[REF(src)];team_action=outfit;team=[team]'>Change Outfit</a>"
 		//Add more per team features here
 
-	dat += "Current arena: [current_arena_template]"
-	dat += "<h2>Arena List:</h2>"
-	for(var/A in arena_templates)
-		dat += "<a href='?src=[REF(src)];change_arena=[url_encode(A)]'>[A]</a><br>"
-	dat += "<hr>"
-	dat += "<a href='?src=[REF(src)];upload=1'>Upload new arena</a><br>"
-	dat += "<hr>"
-	//Special actions
-	dat += "<a href='?src=[REF(src)];special=reset'>Reset Arena.</a><br>"
-	dat += "<a href='?src=[REF(src)];special=randomarena'>Load random arena.</a><br>"
+
 	dat += "<a href='?src=[REF(src)];special=spawntrophy'>Spawn trophies for survivors.</a><br>"
 
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)

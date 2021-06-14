@@ -23,6 +23,9 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	/// Counter for how many team datums we've made, each team gets a unique number, even if a lower numbered team has already been deleated
 	var/team_id_tracker = 0
 
+	/// Holds the datums for all contestants who are actively spawned and competing
+	var/list/live_contestants
+
 /datum/roster/New()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_ENTER, .proc/check_new_player)
 	// add a signal for new playters joining or observing or whatever and make it call check_connection with their client
@@ -447,6 +450,32 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 /// A debug function, for when you need contestant datums but don't have people
 /datum/roster/proc/add_empty_contestant(mob/user)
+	var/rand_num = num2text(rand(1,10000))
+	message_admins("[key_name_admin(user)] has added an empty contestant ([rand_num])!") // log which they chose
+	log_game("[key_name_admin(user)] has added an empty contestant ([rand_num]).")
+	var/datum/contestant/new_kid = new(rand_num)
+	LAZYADDASSOC(all_contestants, rand_num, new_kid)
+	LAZYADD(active_contestants, new_kid)
+	new_kid.ckey = rand_num
+
+/// A debug function, for when you need contestant datums but don't have people
+/datum/roster/proc/spawn_contestant(mob/user, datum/contestant/new_spawn)
+	if(LAZYFIND(live_contestants, new_spawn))
+		message_admins("[new_spawn] is already spawned")
+		return
+
+	LAZYADD(live_contestants, new_spawn)
+
+/// A debug function, for when you need contestant datums but don't have people
+/datum/roster/proc/toggle_freeze(mob/user, str_toggle)
+	var/mode
+	if(str_toggle == "on")
+		mode = TRUE
+	else if(str_toggle == "off")
+		mode = FALSE
+	else
+		return
+
 	var/rand_num = num2text(rand(1,10000))
 	message_admins("[key_name_admin(user)] has added an empty contestant ([rand_num])!") // log which they chose
 	log_game("[key_name_admin(user)] has added an empty contestant ([rand_num]).")
