@@ -8,8 +8,6 @@
 	var/handled = FALSE
 	///Used to stop food in someone's hand & in storage slots from decomposing.
 	var/protected = FALSE
-	// When we started to decompose
-	var/decomp_started = 0
 	// Used to stop the timer & check for the examine proc
 	var/timerid
 	// Used so the timer won't reset.
@@ -49,19 +47,15 @@
 
 	if(!handled || clean || protected)
 		// prevent decomposition
-		//STOP_PROCESSING(SSobj, src)
 		if(active_timers)
 			time_remaining = timeleft(timerid)
 		deltimer(timerid)
 		return
 	// do decomposition
-	//START_PROCESSING(SSobj, src)
-	if(!decomp_started)
-		decomp_started = world.time
 	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE, TIMER_UNIQUE) //Was told to use this instead of processing I guess
 
 /datum/component/decomposition/Destroy()
-	//STOP_PROCESSING(SSobj, src)
+	deltimer(timerid) //Just in case
 	return ..()
 
 /datum/component/decomposition/proc/dropped()
@@ -71,25 +65,12 @@
 
 /datum/component/decomposition/proc/picked_up()
 	SIGNAL_HANDLER
-	//STOP_PROCESSING(SSobj, src)
 	if(active_timers)
 		time_remaining = timeleft(timerid)
 	deltimer(timerid)
 	protected = TRUE
 	if(!handled)
 		handled = TRUE
-/*
-// The act of decomposing itself
-/datum/component/decomposition/process(delta_time)
-	var/obj/item/food/decomp = parent //Lets us spawn things at decomp
-	decomposition_level += delta_time //Things decompose in seconds.
-	if(decomposition_level >= 10) //10 minutes 600
-		new /obj/effect/decal/cleanable/ants(decomp.loc)
-		new /obj/item/food/badrecipe/moldy(decomp.loc)
-		decomp.visible_message("<span class='notice'>[decomp] gets overtaken by ants! Gross!</span>")
-		qdel(decomp)
-		return
-*/
 
 /datum/component/decomposition/proc/decompose()
 	var/obj/item/food/decomp = parent //Lets us spawn things at decomp
@@ -101,37 +82,22 @@
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-
 	if(active_timers)
-		var/decomposition_level = timeleft(timerid)
-		switch(decomposition_level)
-			if(10 MINUTES to 7.51 MINUTES)
-				return
-			if(7.5 MINUTES to 5.01 MINUTES)
+		switch(timeleft(timerid)) // Deciseconds used so there's no gaps between examine times.
+			if(3001 to 4500) // 7.5 to 5 Minutes
 				examine_list += "[parent] looks kinda stale."
-			if(5 MINUTES to 2.51 MINUTES)
+			if(1501 to 3000) // 5 to 2.5 Minutes
 				examine_list += "[parent] is starting to look pretty gross."
-			if(2.5 MINUTES to 1 SECONDS)
+			if(1 to 1500) // 2.5 Minutes to 1 Decisecond
 				examine_list += "[parent] looks barely edible."
 	else
 		switch(time_remaining)
-			if(10 MINUTES to 7.51 MINUTES)
-				return
-			if(7.5 MINUTES to 5.01 MINUTES)
+			if(3001 to 4500) // 7.5 to 5 Minutes
 				examine_list += "[parent] looks kinda stale."
-			if(5 MINUTES to 2.51 MINUTES)
+			if(1501 to 3000) // 5 to 2.5 Minutes
 				examine_list += "[parent] is starting to look pretty gross."
-			if(2.5 MINUTES to 1 SECONDS)
+			if(1 to 1500) // 2.5 Minutes to 1 Decisecond
 				examine_list += "[parent] looks barely edible."
-/*	switch(decomposition_level)
-		if (0 to 149)
-			return
-		if(150 to 299) // 2.5 minutes
-			examine_list += "[parent] looks kinda stale."
-		if(300 to 449) // 5 minutes
-			examine_list += "[parent] is starting to look pretty gross."
-		if(450 to 600) // 7.5 minutes
-			examine_list += "[parent] looks barely edible."
-*/
+
 
 #undef DECOMPOSITION_TIME
