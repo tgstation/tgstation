@@ -54,9 +54,13 @@
 		UnregisterSignal(our_boy, COMSIG_LIVING_DEATH)
 
 /// If arg is TRUE, this contestant will be immobilized if they're currently alive, and set to immobilized when they spawn, set to FALSE to disable that
-/datum/contestant/proc/set_frozen(new_mode)
+/datum/contestant/proc/set_frozen(mob/user, new_mode)
 	if(frozen == new_mode)
 		return
+
+	if(user)
+		message_admins("[key_name_admin(user)] has [new_mode ? "FROZEN" : "UNFROZEN"] [src]!")
+		log_game("[key_name_admin(user)] has [new_mode ? "FROZEN" : "UNFROZEN"] [src]!")
 
 	frozen = new_mode
 	var/mob/living/our_boy = get_mob()
@@ -68,9 +72,13 @@
 		REMOVE_TRAIT(our_boy, TRAIT_IMMOBILIZED, TRAIT_EVENT)
 
 /// If arg is TRUE, this contestant will be set for godmode if they're currently alive, and set to godmode when they spawn, set to FALSE to disable that
-/datum/contestant/proc/set_godmode(new_mode)
+/datum/contestant/proc/set_godmode(mob/user, new_mode)
 	if(godmode == new_mode)
 		return
+
+	if(user)
+		message_admins("[key_name_admin(user)] has [new_mode ? "GODMODED" : "UNGODMODED"] [src]!")
+		log_game("[key_name_admin(user)] has [new_mode ? "GODMODED" : "UNGODMODED"] [src]!")
 
 	godmode = new_mode
 	var/mob/living/our_boy = get_mob()

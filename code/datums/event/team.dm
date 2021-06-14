@@ -70,20 +70,30 @@
 		iter_member.flagged_for_elimination = !victorious
 
 /// If the arg is TRUE, mark the team and members as successfully completing a round. If the arg is FALSE, mark them for elimination
-/datum/event_team/proc/set_frozen(new_mode)
+/datum/event_team/proc/set_frozen(mob/user, new_mode)
+	testing("try set fr")
 	if(frozen == new_mode)
 		return
 
+	if(user)
+		message_admins("[key_name_admin(user)] has [new_mode ? "FROZEN" : "UNFROZEN"] [src]!")
+		log_game("[key_name_admin(user)] has [new_mode ? "FROZEN" : "UNFROZEN"] [src]!")
+
 	frozen = new_mode
 	for(var/datum/contestant/iter_member in members)
-		iter_member.set_frozen(frozen)
+		iter_member.set_frozen(null, frozen)
 
 /// If the arg is TRUE, mark the team and members as successfully completing a round. If the arg is FALSE, mark them for elimination
-/datum/event_team/proc/set_godmode(new_mode)
+/datum/event_team/proc/set_godmode(mob/user, new_mode)
+	testing("try set go")
 	if(godmode == new_mode)
 		return
 
+	if(user)
+		message_admins("[key_name_admin(user)] has [new_mode ? "GODMODED" : "UNGODMODED"] [src]!")
+		log_game("[key_name_admin(user)] has [new_mode ? "GODMODED" : "UNGODMODED"] [src]!")
+
 	godmode = new_mode
 	for(var/datum/contestant/iter_member in members)
-		iter_member.set_godmode(godmode)
+		iter_member.set_godmode(null, godmode)
 

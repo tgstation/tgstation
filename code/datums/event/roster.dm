@@ -284,7 +284,6 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		if(!istype(target))
 			to_chat(user, "<span class='warning'>Couldn't find that target to eliminate.</span>")
 			return
-	var/the_ckey_for_later = target.ckey
 
 	LAZYREMOVEASSOC(all_contestants, target.ckey, target)
 	LAZYREMOVE(active_contestants, target)
@@ -500,14 +499,14 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	// set on all the teams first
 	for(var/datum/event_team/iter_team in active_teams)
-		iter_team.set_frozen(mode)
+		iter_team.set_frozen(null, mode)
 
 	// then set on all the individual contestants, just in case
 	for(var/datum/contestant/iter_contestant in all_contestants)
-		iter_contestant.set_frozen(mode)
+		iter_contestant.set_frozen(null, mode)
 
-	message_admins("[key_name_admin(user)] has [mode ? "frozen" : "unfrozen"] everyone")
-	log_game("[key_name_admin(user)] has [mode ? "frozen" : "unfrozen"] everyone")
+	message_admins("[key_name_admin(user)] has [mode ? "FROZEN" : "UNFROZEN"] everyone")
+	log_game("[key_name_admin(user)] has [mode ? "FROZEN" : "UNFROZEN"] everyone")
 
 /// A debug function, for when you need contestant datums but don't have people
 /datum/roster/proc/set_godmode_all(mob/user, str_toggle)
@@ -521,14 +520,14 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	// set on all the teams first
 	for(var/datum/event_team/iter_team in active_teams)
-		iter_team.set_godmode(mode)
+		iter_team.set_godmode(null, mode)
 
 	// then set on all the individual contestants, just in case
 	for(var/datum/contestant/iter_contestant in all_contestants)
-		iter_contestant.set_godmode(mode)
+		iter_contestant.set_godmode(null, mode)
 
-	message_admins("[key_name_admin(user)] has [mode ? "godmoded" : "ungodmoded"] everyone")
-	log_game("[key_name_admin(user)] has [mode ? "godmoded" : "ungodmoded"] everyone")
+	message_admins("[key_name_admin(user)] has [mode ? "GODMODED" : "UNGODMODED"] everyone")
+	log_game("[key_name_admin(user)] has [mode ? "GODMODED" : "UNGODMODED"] everyone")
 
 /// A debug function, for when you need contestant datums but don't have people
 /datum/roster/proc/toggle_wounds(mob/user)
