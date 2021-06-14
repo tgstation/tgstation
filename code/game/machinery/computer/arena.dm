@@ -343,31 +343,31 @@
 	if(href_list["resolve_match"])
 		GLOB.global_roster.try_resolve_match(usr)
 
+	if(href_list["set_freeze_all"])
+		GLOB.global_roster.set_frozen_all(usr, href_list["set_freeze_all"])
+
 	if(href_list["set_freeze"])
 		var/freeze_arg = href_list["set_freeze"]
-		if(freeze_arg == "on" || freeze_arg == "off") // everyone
-			GLOB.global_roster.set_frozen_all(usr, freeze_arg)
+		var/datum/event_team/try_team = locate(freeze_arg) in GLOB.global_roster.active_teams
+		if(istype(try_team)) // team
+			try_team.set_frozen(usr, !try_team.frozen)
+		else
+			var/datum/contestant/try_contestant = locate(freeze_arg) in GLOB.global_roster.all_contestants
+			if(istype(try_contestant)) // contestant (not currently used)
+				try_contestant.set_frozen(usr, !try_contestant.frozen)
 
-		else if(istype(freeze_arg, /datum/event_team)) // team
-			var/datum/event_team/freeze_target = locate(freeze_arg) in GLOB.global_roster.active_teams
-			freeze_target.set_frozen(usr, !freeze_target.frozen)
-
-		else if(istype(freeze_arg, /datum/contestant)) // contestant (not currently used)
-			var/datum/contestant/freeze_target = locate(freeze_arg) in GLOB.global_roster.all_contestants
-			freeze_target.set_frozen(usr, !freeze_target.frozen)
+	if(href_list["set_godmode_all"])
+		GLOB.global_roster.set_godmode_all(usr, href_list["set_godmode_all"])
 
 	if(href_list["set_godmode"])
 		var/godmode_arg = href_list["set_godmode"]
-		if(godmode_arg == "on" || godmode_arg == "off") // everyone
-			GLOB.global_roster.set_godmode_all(usr, godmode_arg)
-
-		else if(istype(godmode_arg, /datum/event_team)) // team
-			var/datum/event_team/godmode_target = locate(godmode_arg) in GLOB.global_roster.active_teams
-			godmode_target.set_godmode(usr, !godmode_target.godmode)
-
-		else if(istype(godmode_arg, /datum/contestant)) // contestant (not currently used)
-			var/datum/contestant/godmode_target = locate(godmode_arg) in GLOB.global_roster.all_contestants
-			godmode_target.set_godmode(usr, !godmode_target.godmode)
+		var/datum/event_team/try_team = locate(godmode_arg) in GLOB.global_roster.active_teams
+		if(istype(try_team)) // team
+			try_team.set_godmode(usr, !try_team.godmode)
+		else
+			var/datum/contestant/try_contestant = locate(godmode_arg) in GLOB.global_roster.all_contestants
+			if(istype(try_contestant)) // contestant (not currently used)
+				try_contestant.set_godmode(usr, !try_contestant.godmode)
 
 	/*if(href_list["spawn_all"])
 		GLOB.global_roster.spawn_everyone(usr)
@@ -484,8 +484,8 @@
 			dat += "<a href='?src=[REF(src)];change_page=contestant'>Go to Contestant List</a>"
 
 			dat += "<br>-----------------------------------------"
-			dat += "\t<a href='?src=[REF(src)];set_freeze=on'>FREEZE EVERYONE</a> <a href='?src=[REF(src)];set_freeze=off'>UNFREEZE EVERYONE</a>"
-			dat += "\t<a href='?src=[REF(src)];set_godmode=on'>GODMODE EVERYONE</a> <a href='?src=[REF(src)];set_godmode=off'>UNGODMODE EVERYONE</a>"
+			dat += "\t<a href='?src=[REF(src)];set_freeze_all=on'>FREEZE EVERYONE</a> <a href='?src=[REF(src)];set_freeze_all=off'>UNFREEZE EVERYONE</a>"
+			dat += "\t<a href='?src=[REF(src)];set_godmode_all=on'>GODMODE EVERYONE</a> <a href='?src=[REF(src)];set_godmode_all=off'>UNGODMODE EVERYONE</a>"
 
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
@@ -509,6 +509,9 @@
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=1'>Select Team 1</a>"
 
+			if(team1 && team2) // since it can be busy with both teams there
+				dat += "--------"
+
 			if(team2)
 				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2]</a>"
 				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team2)]'><b>[team2.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
@@ -527,8 +530,8 @@
 				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
 
 			if(istype(team1) ||istype(team2))
-				//dat += "<a href='?src=[REF(src)];set_freeze=on'><b>Freeze All</b></a><a href='?src=[REF(src)];set_freeze=off'><b>Unfreeze All</b></a>"
-				//dat += "<a href='?src=[REF(src)];set_godmode=on'><b>Godmode All</b></a><a href='?src=[REF(src)];set_godmode=off'><b>Ungodmode All</b></a>"
+				//dat += "<a href='?src=[REF(src)];set_freeze_all=on'><b>Freeze All</b></a><a href='?src=[REF(src)];set_freeze_all=off'><b>Unfreeze All</b></a>"
+				//dat += "<a href='?src=[REF(src)];set_godmode_all=on'><b>Godmode All</b></a><a href='?src=[REF(src)];set_godmode_all=off'><b>Ungodmode All</b></a>"
 				dat += "<a href='?src=[REF(src)];spawn_all=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];despawn_all=1'><b>Unspawn Everyone</b></a>"
 
 
