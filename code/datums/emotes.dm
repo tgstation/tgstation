@@ -294,5 +294,6 @@
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
 
 /mob/manual_emote(text)
-	if(stat == CONSCIOUS)
-		return ..()
+	if(stat != CONSCIOUS)
+		return
+	return ..()
