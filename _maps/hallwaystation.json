@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"map_name": "Hallway Station",
-	"map_path": "map_files\Hallway",
+	"map_path": "map_files/Hallway",
 	"map_file": "Hallwaystation.dmm",
 	"shuttles": {
 		"cargo": "cargo_box",
