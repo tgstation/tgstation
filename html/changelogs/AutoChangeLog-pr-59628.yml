@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Radial info boxes will now layer properly over the radial button, so it is actually visible and clickable."
