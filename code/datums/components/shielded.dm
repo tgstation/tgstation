@@ -79,12 +79,15 @@
 
 	var/obj/item/item_parent = parent
 	COOLDOWN_START(src, charge_add_cd, charge_increment_delay)
-	current_charges = clamp(current_charges + charge_recovery, 0, max_charges) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
-	if(wearer && current_charges == 1)
-		wearer.update_appearance(UPDATE_ICON)
+	adjust_charge(charge_recovery) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
 	playsound(item_parent, 'sound/magic/charge.ogg', 50, TRUE)
 	if(current_charges == max_charges)
 		playsound(item_parent, 'sound/machines/ding.ogg', 50, TRUE)
+
+/datum/component/shielded/proc/adjust_charge(change)
+	current_charges = clamp(current_charges + change, 0, max_charges)
+	if(wearer)
+		wearer.update_appearance(UPDATE_ICON)
 
 /// Check if we've been equipped to a valid slot to shield
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
@@ -133,7 +136,7 @@
 	if(lose_multiple_charges) // if the shield has health like damage we'll lose charges equal to the damage of the hit
 		charge_loss = damage
 
-	current_charges = clamp(current_charges - charge_loss, 0, max_charges) // remove charge_loss from the current charges, clamp between zero and max_charges to avoid anything funky happening
+	adjust_charge(-charge_loss)
 
 	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
 
@@ -142,8 +145,6 @@
 			qdel(src)
 		return
 
-	if(!current_charges)
-		wearer.update_appearance(UPDATE_ICON)
 	START_PROCESSING(SSdcs, src) // if we DO recharge, start processing so we can do that
 
 /// The wrapper to invoke the on_hit callback, so we don't have to worry about blocking in the signal handler
