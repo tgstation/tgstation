@@ -976,7 +976,8 @@
 	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
 	examine_text = "<span class='warning'>SUBJECTPRONOUN is covered in ants!</span>"
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
-	var/ants_remaining = 0 //Will act as the main timer as well as changing how much damage the ants do.
+	/// Will act as the main timer as well as changing how much damage the ants do.
+	var/ants_remaining = 0
 
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left))

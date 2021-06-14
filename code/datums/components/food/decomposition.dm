@@ -4,13 +4,13 @@
 
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	///Makes sure food only starts decomposing if a player's EVER picked it up before
+	/// Makes sure food only starts decomposing if a player's EVER picked it up before
 	var/handled = FALSE
-	///Used to stop food in someone's hand & in storage slots from decomposing.
+	/// Used to stop food in someone's hand & in storage slots from decomposing.
 	var/protected = FALSE
-	// Used to stop the timer & check for the examine proc
+	/// Used to stop the timer & check for the examine proc
 	var/timerid
-	// Used so the timer won't reset.
+	/// Used so the timer won't reset.
 	var/time_remaining = DECOMPOSITION_TIME
 
 /datum/component/decomposition/RegisterWithParent()
