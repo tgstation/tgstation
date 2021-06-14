@@ -2642,6 +2642,8 @@
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	ant_damage = 0
+	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
+	..()
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
