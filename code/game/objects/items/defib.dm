@@ -1,5 +1,6 @@
 //backpack item
 #define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+#define DEFIB_CAN_HURT(source) (source.combat || (source.req_defib && !source.defib.safety))
 
 /obj/item/defibrillator
 	name = "defibrillator"
@@ -473,14 +474,6 @@
 
 	do_help(H, user)
 
-/// Returns TRUE when the paddles can do harmful actions, and false if they cant (If the safety is off, or if they're combat paddles)
-/obj/item/shockpaddles/proc/can_hurt()
-	if(combat)
-		return TRUE
-	if(req_defib && !defib.safety)
-		return TRUE
-	return FALSE
-
 /// Called whenever the paddles successfuly shock something
 /obj/item/shockpaddles/proc/do_success()
 	if(busy)
@@ -509,7 +502,7 @@
 			M.emote("scream")
 
 /obj/item/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
-	if(!can_hurt())
+	if(!DEFIB_CAN_HURT(src))
 		return
 	busy = TRUE
 	M.visible_message("<span class='danger'>[user] touches [M] with [src]!</span>", \
@@ -525,7 +518,7 @@
 	do_success()
 
 /obj/item/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
-	if(!can_hurt())
+	if(!DEFIB_CAN_HURT(src))
 		return
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>",
 		"<span class='warning'>You overcharge the paddles and begin to place them onto [H]'s chest...</span>")
@@ -695,3 +688,4 @@
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH
+#undef DEFIB_CAN_HURT
