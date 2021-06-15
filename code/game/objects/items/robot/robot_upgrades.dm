@@ -581,15 +581,15 @@
 		R.SetLockdown(TRUE)
 		R.set_anchored(TRUE)
 		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(1, R.loc)
+		smoke.set_up(TRUE, R.loc)
 		smoke.start()
 		sleep(2)
 		for(var/i in 1 to 4)
 			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 			sleep(12)
 		if(!prev_lockcharge)
-			R.SetLockdown(0)
-		R.set_anchored(FALSE)
+			R.SetLockdown(FALSE)
+		R.anchored = FALSE
 		R.notransform = FALSE
 		R.resize = 2
 		R.hasExpanded = TRUE
