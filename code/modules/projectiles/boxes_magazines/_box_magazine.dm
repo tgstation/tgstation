@@ -123,7 +123,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+			to_chat(user, span_notice("You load [num_loaded] shell\s into \the [src]!"))
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		update_ammo_count()
 
@@ -138,7 +138,7 @@
 	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-	to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
+	to_chat(user, span_notice("You remove a round from [src]!"))
 	update_ammo_count()
 
 /// Updates the materials and appearance of this ammo box

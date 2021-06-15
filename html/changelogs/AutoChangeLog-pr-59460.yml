@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fix temperature pump exploit that allows the users to go over 1e8 limiter. This is done by a power usage equation that become exponential upon reaching 3e7 and will eat through the room APC charge (so no makeshift power drain)."

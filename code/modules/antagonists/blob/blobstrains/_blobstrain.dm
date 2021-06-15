@@ -70,6 +70,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		stack_trace("blobstrain created without overmind")
 	overmind = new_overmind
 
+/datum/blobstrain/Destroy()
+	overmind = null
+	return ..()
+
 /datum/blobstrain/proc/on_gain()
 	overmind.color = complementary_color
 
@@ -138,7 +142,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
 	totalmessage += "!"
-	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")
+	to_chat(M, span_userdanger("[totalmessage]"))
 
 /datum/blobstrain/proc/core_process()
 	if(resource_delay <= world.time)
@@ -170,4 +174,4 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/examine(mob/user)
-	return list("<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+	return list("<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")

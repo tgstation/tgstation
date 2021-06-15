@@ -19,6 +19,11 @@ GLOBAL_LIST_EMPTY(objectives)
 	if(text)
 		explanation_text = text
 
+//Apparently objectives can be qdel'd. Learn a new thing every day
+/datum/objective/Destroy()
+	GLOB.objectives -= src
+	return ..()
+
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
 	. = (team?.members) ? team.members.Copy() : list()
 	if(owner)
@@ -883,7 +888,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sortNames(possible_targets)
 		target = new_target.mind
 	else
-		to_chat(admin, "<span class='boldwarning'>No active AIs with minds.</span>")
+		to_chat(admin, span_boldwarning("No active AIs with minds."))
 	update_explanation_text()
 
 /datum/objective/destroy/internal

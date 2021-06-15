@@ -101,10 +101,10 @@
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
-			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
+			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
-		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
+		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
 
 /mob/living/carbon/human/get_policy_keywords()
@@ -227,9 +227,9 @@
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
 	if(key || !getorgan(/obj/item/organ/brain) || ghost?.can_reenter_corpse)
-		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
-		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
 
 ///copies over clothing preferences like underwear to another human
 /mob/living/carbon/human/proc/copy_clothing_prefs(mob/living/carbon/human/destination)

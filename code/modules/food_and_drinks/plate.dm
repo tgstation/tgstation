@@ -16,10 +16,10 @@
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))
-		to_chat(user, "<span class='notice'>[src] is made for food, and food alone!</span>")
+		to_chat(user, span_notice("[src] is made for food, and food alone!"))
 		return
 	if(contents.len >= max_items)
-		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
+		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
 	var/list/modifiers = params2list(params)
 	//Center the icon where the user clicked.
@@ -28,7 +28,7 @@
 	if(user.transferItemToLoc(I, src, silent = FALSE))
 		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
 		I.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
-		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
+		to_chat(user, span_notice("You place [I] on [src]."))
 		AddToPlate(I, user)
 		update_appearance()
 	else

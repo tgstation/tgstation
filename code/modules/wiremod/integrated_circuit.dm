@@ -47,9 +47,9 @@
 /obj/item/integrated_circuit/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
+		. += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
-		. += "<span class='notice'>There is no power cell installed.</span>"
+		. += span_notice("There is no power cell installed.")
 
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -65,7 +65,7 @@
 			return
 		cell = I
 		I.add_fingerprint(user)
-		user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 		return
 
 	if(istype(I, /obj/item/card/id))
@@ -77,7 +77,7 @@
 		if(!cell)
 			return
 		I.play_tool_sound(src)
-		user.visible_message("<span class='notice'>[user] unscrews the power cell from [src].</span>", "<span class='notice'>You unscrew the power cell from [src].</span>")
+		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
 		cell.forceMove(drop_location())
 		cell = null
 		return
