@@ -724,22 +724,27 @@
 	stop_automated_movement = FALSE
 
 //Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
-/mob/living/simple_animal/proc/hunt_target(hunted, living_target = TRUE)
-	if(hunted == src) //Make sure it doesn't eat itself.
+/mob/living/simple_animal/proc/hunt_target(list/hunted, living_target = TRUE)
+	if(src.type == hunted) //Make sure it doesn't eat itself.
 		return
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			if(!living_target)
-				for(var/obj/prey_obj in view(1,src)) // Objs can't move, so inept_hunter does nothing here.
-					if(Adjacent(prey_obj) && COOLDOWN_FINISHED(src, emote_cooldown) && prey_obj.type == hunted)
-						manual_emote("chomps [prey_obj]!")
-						qdel(prey_obj)
-						prey_obj = null
+				var/list/possible_objs = (/obj in view(1,src))
+				if(!possible_objs)
+					return
+				if(possible_objs.type in hunted)
+				//for(var/obj/prey_obj in possible_objs) // Objs can't move, so inept_hunter does nothing here.
+					if(Adjacent(possible_objs) && COOLDOWN_FINISHED(src, emote_cooldown))
+						manual_emote("chomps [possible_objs]!")
+						qdel(possible_objs)
+						possible_objs = null
 						stop_automated_movement = FALSE
 						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-						break
+				//		break
 			else
-				for(var/mob/living/simple_animal/prey in view(1,src))
+				var/list/possible_mobs = (hunted in view(1,src))
+				for(var/mob/living/simple_animal/prey in possible_mobs)
 					if(inept_hunter && prey.type == hunted)
 						if(COOLDOWN_FINISHED(src, emote_cooldown))
 							visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
@@ -759,7 +764,8 @@
 			walk_to(src,0)
 			turns_since_scan = 0
 			if(living_target)
-				for(var/mob/living/simple_animal/yummy in oview(src,3))
+				var/list/possible_mob_locs = (hunted in oview(src,3))
+				for(var/mob/living/simple_animal/yummy in possible_mob_locs)
 					if(yummy.type == hunted)
 						if((yummy) && !(isturf(yummy.loc) || ishuman(yummy.loc) || yummy.stat || yummy.loc in oview(src, 3)))
 							yummy = null
@@ -771,7 +777,8 @@
 							stop_automated_movement = TRUE
 							walk_to(src,yummy,0,3)
 			else
-				for(var/obj/yummy_obj in oview(src,3))
+				var/list/possible_obj_locs = (hunted in oview(src,3))
+				for(var/obj/yummy_obj in possible_obj_locs)
 					if(yummy_obj.type == hunted)
 						if((yummy_obj) && !(isturf(yummy_obj.loc) || yummy_obj.loc in oview(src, 3)))
 							yummy_obj = null
