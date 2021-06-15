@@ -49,6 +49,7 @@
 /**
  * # secret documents (photocopy)
  *
+ * Outcome of photocopying documents. Can be copied, and can have a blue/red seal forged.
 */
 /obj/item/documents/photocopy
 	desc = "A copy of some top-secret documents. Nobody will notice they aren't the originals... right?"
@@ -68,11 +69,11 @@
 /obj/item/documents/photocopy/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/toy/crayon/red) || istype(O, /obj/item/toy/crayon/blue))
 		if (forgedseal)
-			to_chat(user, "<span class='warning'>You have already forged a seal on [src]!</span>")
+			to_chat(user, span_warning("You have already forged a seal on [src]!"))
 		else
 			var/obj/item/toy/crayon/C = O
 			name = "[C.crayon_color] secret documents"
 			icon_state = "docs_[C.crayon_color]"
 			forgedseal = C.crayon_color
-			to_chat(user, "<span class='notice'>You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?</span>")
+			to_chat(user, span_notice("You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?"))
 			update_appearance()

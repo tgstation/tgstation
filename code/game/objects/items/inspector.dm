@@ -68,19 +68,19 @@
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
 	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
-			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
+			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
 		if(user.transferItemToLoc(I, src))
 			cell = I
-			to_chat(user, "<span class='notice'>You successfully install \the [cell] into [src].</span>")
+			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 			return
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !cell_cover_open || !cell)
 		return ..()
-	user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
-		"<span class='notice'>You remove [cell].</span>")
+	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
+		span_notice("You remove [cell]."))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
@@ -95,7 +95,7 @@
 	if(!cell)
 		. += "The slot for a cell is empty."
 	else
-		. += "\The [cell] is firmly in place. <span class='info'>Ctrl-click with an empty hand to remove it.</span>"
+		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
 
 /**
  * Create our report
@@ -159,14 +159,14 @@
 /obj/item/paper/report/examine(mob/user)
 	. = ..()
 	if(scanned_area?.name)
-		. += "<span class='notice'>\The [src] contains data on [scanned_area.name].</span>"
+		. += span_notice("\The [src] contains data on [scanned_area.name].")
 	else if(scanned_area)
-		. += "<span class='notice'>\The [src] contains data on a vague area on station, you should throw it away.</span>"
+		. += span_notice("\The [src] contains data on a vague area on station, you should throw it away.")
 	else if(info)
 		icon_state = "slipfull"
-		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
+		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
-		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
+		. += span_notice("Wait a minute, this thing's blank! You should throw it away.")
 
 /**
  * # Fake N-spect scanner
@@ -208,10 +208,10 @@
 /obj/item/inspector/clown/examine_more(mob/user)
 	if(!cell_cover_open)
 		return ..()
-	. = list("<span class='notice'>Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands.</span>")
-	. += "\t<span class='info'>The first dial is labeled \"SPEED\" and looks a bit like a <strong>screw</strong> head.</span>"
-	. += "\t<span class='info'>The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?</span>"
-	. += "\t<span class='info'>A small bananium part labeled \"ADVANCED WATER CHIP 23000000\" is visible within the battery compartment. It looks completely unlike normal modern electronics, disturbing it would be rather unwise.</span>"
+	. = list(span_notice("Both setting dials are flush with the surface of the battery compartment, and seem to be impossible to move with bare hands."))
+	. += "\t[span_info("The first dial is labeled \"SPEED\" and looks a bit like a <strong>screw</strong> head.")]"
+	. += "\t[span_info("The second dial is labeled \"SOUND\". It has four small holes in it. Perhaps it can be turned with a fork?")]"
+	. += "\t[span_info("A small bananium part labeled \"ADVANCED WATER CHIP 23000000\" is visible within the battery compartment. It looks completely unlike normal modern electronics, disturbing it would be rather unwise.")]"
 
 
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
@@ -278,10 +278,10 @@
 	if(cell_cover_open)
 		check_settings_legality()
 	if(istype(I, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
-		to_chat(user, "<span class='info'>\The [src] refuses to consume \the [I]!</span>")
+		to_chat(user, span_info("\The [src] refuses to consume \the [I]!"))
 		return
 	if(istype(I, /obj/item/paper))
-		to_chat(user, "<span class='info'>\The [src] consumes \the [I]!</span>")
+		to_chat(user, span_info("\The [src] consumes \the [I]!"))
 		paper_charges = min(paper_charges + charges_per_paper, max_paper_charges)
 		qdel(I)
 
@@ -357,13 +357,13 @@
 /obj/item/paper/fake_report/examine(mob/user)
 	. = ..()
 	if(scanned_area?.name)
-		. += "<span class='notice'>\The [src] contains no data on [scanned_area.name].</span>"
+		. += span_notice("\The [src] contains no data on [scanned_area.name].")
 	else if(scanned_area)
-		. += "<span class='notice'>\The [src] contains no data on a vague area on station, you should throw it away.</span>"
+		. += span_notice("\The [src] contains no data on a vague area on station, you should throw it away.")
 	else if(info)
-		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
+		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
-		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
+		. += span_notice("Wait a minute, this thing's blank! You should throw it away.")
 
 /**
  * # Fake report made of water
@@ -385,5 +385,5 @@
 	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
 		var/turf/open/target = get_turf(src)
 		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		to_chat(user, "<span class='notice'>As you try to fold [src] into the shape of a plane, it disintegrates into water!</span>")
+		to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
 		qdel(src)
