@@ -71,6 +71,9 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
 
+/// Base amonut for the maximum amount of delimbs a human can suffer from an explosion
+#define HUMAN_EXP_MAX_DELIMB 1.33
+
 /// Base chance for a human to get delimbed by an explosion
 #define HUMAN_EXP_DELIMB_CHANCE 16.6
 
