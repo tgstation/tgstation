@@ -25,16 +25,16 @@
 	require_all_chems = FALSE
 
 /datum/surgery_step/wing_reconstruction/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to fix [target]'s charred wing membranes...</span>",
-		"<span class='notice'>[user] begins to fix [target]'s charred wing membranes.</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target]'s charred wing membranes.</span>")
+	display_results(user, target, span_notice("You begin to fix [target]'s charred wing membranes..."),
+		span_notice("[user] begins to fix [target]'s charred wing membranes."),
+		span_notice("[user] begins to perform surgery on [target]'s charred wing membranes."))
 
 /datum/surgery_step/wing_reconstruction/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		display_results(user, target, "<span class='notice'>You succeed in reconstructing [target]'s wings.</span>",
-			"<span class='notice'>[user] successfully reconstructs [target]'s wings!</span>",
-			"<span class='notice'>[user] completes the surgery on [target]'s wings.</span>")
+		display_results(user, target, span_notice("You succeed in reconstructing [target]'s wings."),
+			span_notice("[user] successfully reconstructs [target]'s wings!"),
+			span_notice("[user] completes the surgery on [target]'s wings."))
 		if(human_target.dna.features["original_moth_wings"] != null)
 			human_target.dna.features["moth_wings"] = human_target.dna.features["original_moth_wings"]
 		else

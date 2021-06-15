@@ -28,20 +28,20 @@
 	time = 40
 
 /datum/surgery_step/pacify/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to pacify [target]...</span>",
-		"<span class='notice'>[user] begins to fix [target]'s brain.</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
+	display_results(user, target, span_notice("You begin to pacify [target]..."),
+		span_notice("[user] begins to fix [target]'s brain."),
+		span_notice("[user] begins to perform surgery on [target]'s brain."))
 
 /datum/surgery_step/pacify/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, "<span class='notice'>You succeed in neurologically pacifying [target].</span>",
-		"<span class='notice'>[user] successfully fixes [target]'s brain!</span>",
-		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
+	display_results(user, target, span_notice("You succeed in neurologically pacifying [target]."),
+		span_notice("[user] successfully fixes [target]'s brain!"),
+		span_notice("[user] completes the surgery on [target]'s brain."))
 	target.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
 	return ..()
 
 /datum/surgery_step/pacify/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You screw up, rewiring [target]'s brain the wrong way around...</span>",
-			"<span class='warning'>[user] screws up, causing brain damage!</span>",
-			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
+	display_results(user, target, span_notice("You screw up, rewiring [target]'s brain the wrong way around..."),
+			span_warning("[user] screws up, causing brain damage!"),
+			span_notice("[user] completes the surgery on [target]'s brain."))
 	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	return FALSE

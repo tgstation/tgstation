@@ -206,7 +206,7 @@
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
 
 /datum/mood_event/sacrifice_bad
-	description ="<span class='warning'>Those darn savages!</span>\n"
+	description = "<span class='warning'>Those darn savages!</span>\n"
 	mood_change = -5
 	timeout = 2 MINUTES
 
@@ -216,7 +216,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/graverobbing
-	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	description = "<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
 	mood_change = -8
 	timeout = 3 MINUTES
 
@@ -287,7 +287,7 @@
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
 
 /datum/mood_event/bald
-	description ="<span class='warning'>I need something to cover my head...</span>\n"
+	description = "<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
 
 /datum/mood_event/bad_touch

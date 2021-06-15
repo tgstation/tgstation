@@ -99,7 +99,7 @@
 
 /obj/item/aquarium_kit/attack_self(mob/user)
 	. = ..()
-	to_chat(user,"<span class='notice'>There's instruction and tools necessary to build aquarium inside. All you need is to start crafting.</span>")
+	to_chat(user,span_notice("There's instruction and tools necessary to build aquarium inside. All you need is to start crafting."))
 
 
 /obj/item/aquarium_prop

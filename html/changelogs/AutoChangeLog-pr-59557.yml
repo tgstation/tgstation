@@ -1,4 +1,0 @@
-author: "fira"
-delete-after: True
-changes: 
-  - bugfix: "Made statpanel relay used mouse button when clicking on turf contents."
