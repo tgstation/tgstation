@@ -1141,7 +1141,27 @@
 	return theft_target?.resolve()
 
 /obj/item/card/id/advanced/chameleon/ui_state(mob/user)
-	return GLOB.strictly_adjacent_state
+	return GLOB.always_state
+
+/obj/item/card/id/advanced/chameleon/ui_status(mob/user)
+	var/target = theft_target?.resolve()
+
+	if(!target)
+		return UI_CLOSE
+
+	var/status = min(
+		ui_status_user_strictly_adjacent(user, target),
+		ui_status_user_is_advanced_tool_user(user),
+		max(
+			ui_status_user_is_conscious_and_lying_down(user),
+			ui_status_user_is_abled(user, target),
+		),
+	)
+
+	if(status < UI_INTERACTIVE)
+		return UI_CLOSE
+
+	return status
 
 /obj/item/card/id/advanced/chameleon/ui_data(mob/user)
 	var/list/data = list()
