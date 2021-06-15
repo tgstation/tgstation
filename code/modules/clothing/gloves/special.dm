@@ -28,7 +28,7 @@
 		stack_trace("Gloves already have a pull component associated with \[[pull_component.parent]\] when \[[equipper]\] is trying to equip them.")
 		QDEL_NULL(pull_component_weakref)
 
-	to_chat(equipper, "<span class='notice'>You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!</span>")
+	to_chat(equipper, span_notice("You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!"))
 
 	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
 
@@ -46,6 +46,6 @@
 	if(!pull_component)
 		return
 
-	to_chat(pull_component.parent, "<span class='warning'>You have lost the grip power of [src]!</span>")
+	to_chat(pull_component.parent, span_warning("You have lost the grip power of [src]!"))
 
 	QDEL_NULL(pull_component_weakref)

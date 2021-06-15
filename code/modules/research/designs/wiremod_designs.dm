@@ -18,6 +18,16 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/usb_cable
+	name = "USB Cable"
+	desc = "A cable that allows certain shells to connect to nearby computers and machines."
+	id = "usb_cable"
+	build_path = /obj/item/usb_cable
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Core")
+	// Yes, it would make sense to make them take plastic, but then less people would make them, and I think they're cool
+	materials = list(/datum/material/iron = 2500)
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/component
 	name = "Component ( NULL ENTRY )"
@@ -203,7 +213,7 @@
 
 /datum/design/bot_shell
 	name = "Bot Shell"
-	desc = "An immobile shell that can store more components."
+	desc = "An immobile shell that can store more components. Has a USB port to be able to connect to computers and machines."
 	id = "bot_shell"
 	build_path = /obj/item/shell/bot
 	build_type = PROTOLATHE | COMPONENT_PRINTER
