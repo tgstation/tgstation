@@ -428,13 +428,13 @@
 		else //Diagonal move
 			var/canpass = FALSE
 			if(direct & NORTH)
-				canpass = loc.CanPass(src, get_step(loc, NORTH))
+				canpass = get_step(loc, NORTH).CouldEnter(src, get_step(loc, direct))
 			if(!canpass && (direct & EAST))
-				canpass = loc.CanPass(src, get_step(loc, EAST))
+				canpass = get_step(loc, EAST).CouldEnter(src, get_step(loc, direct))
 			if(!canpass && (direct & WEST))
-				canpass = loc.CanPass(src, get_step(loc, WEST))
+				canpass = get_step(loc, WEST).CouldEnter(src, get_step(loc, direct))
 			if(!canpass && (direct & SOUTH))
-				canpass = loc.CanPass(src, get_step(loc, SOUTH))
+				canpass = get_step(loc, SOUTH).CouldEnter(src, get_step(loc, direct))
 			if(canpass)
 				. = ..()
 

@@ -337,6 +337,19 @@
 	return !density
 
 /**
+ * Return FALSE if nothing will prevent mover from entering the atom,
+ * wether it be the atom itself or atom in it's contents.
+ * Return TRUE if the atom could cross this atom while heading to the target atom
+ */
+/atom/proc/CouldEnter(atom/movable/mover, atom/next_loc)
+	if(!CanPass(mover, src) || !next_loc?.CanPass(mover, src))
+		return FALSE
+	for(var/atom/movable/thing AS in contents)
+		if(!thing.CanPass(mover, src))
+			return FALSE
+	return TRUE
+
+/**
  * Is this atom currently located on centcom
  *
  * Specifically, is it on the z level and within the centcom areas
