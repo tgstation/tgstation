@@ -157,7 +157,7 @@
  * Adds a component to the circuitboard through a manual action.
  */
 /obj/item/integrated_circuit/proc/add_component_manually(obj/item/circuit_component/to_add, mob/living/user)
-	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
+	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
 		return
 
 	add_component(to_add, user)
