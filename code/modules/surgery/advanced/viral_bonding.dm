@@ -35,14 +35,14 @@
 	return TRUE
 
 /datum/surgery_step/viral_bond/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You start heating [target]'s bone marrow with [tool]...</span>",
-		"<span class='notice'>[user] starts heating [target]'s bone marrow with [tool]...</span>",
-		"<span class='notice'>[user] starts heating something in [target]'s chest with [tool]...</span>")
+	display_results(user, target, span_notice("You start heating [target]'s bone marrow with [tool]..."),
+		span_notice("[user] starts heating [target]'s bone marrow with [tool]..."),
+		span_notice("[user] starts heating something in [target]'s chest with [tool]..."))
 
 /datum/surgery_step/viral_bond/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
-	display_results(user, target, "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>",
-		"<span class='notice'>[target]'s bone marrow begins pulsing slowly.</span>",
-		"<span class='notice'>[user] finishes the operation.</span>")
+	display_results(user, target, span_notice("[target]'s bone marrow begins pulsing slowly. The viral bonding is complete."),
+		span_notice("[target]'s bone marrow begins pulsing slowly."),
+		span_notice("[user] finishes the operation."))
 	for(var/datum/disease/infected_disease as anything in target.diseases)
 		infected_disease.carrier = TRUE
 	return TRUE

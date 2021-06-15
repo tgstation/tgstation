@@ -15,6 +15,6 @@
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
 	var/turf/T = get_turf(src)
-	. += "<span class='notice'>[locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_below(T)) ? "Detected" : "Undetected"] hub UP.</span>"
-	. += "<span class='notice'>[locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_above(T)) ? "Detected" : "Undetected"] hub DOWN.</span>"
+	. += span_notice("[locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_below(T)) ? "Detected" : "Undetected"] hub UP.")
+	. += span_notice("[locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_above(T)) ? "Detected" : "Undetected"] hub DOWN.")
 

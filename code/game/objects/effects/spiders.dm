@@ -40,7 +40,7 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.visible_message("<span class='notice'>[user] begins weaving [src] into cloth.</span>", "<span class='notice'>You begin weaving [src] into cloth.</span>")
+	user.visible_message(span_notice("[user] begins weaving [src] into cloth."), span_notice("You begin weaving [src] into cloth."))
 	if(!do_after(user, 2 SECONDS))
 		return
 	qdel(src)
@@ -62,7 +62,7 @@
 		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/giant_spider))
 			return TRUE
 		if(prob(50))
-			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
 			return FALSE
 	else if(istype(mover, /obj/projectile))
 		return prob(30)
@@ -83,7 +83,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			to_chat(mover, span_danger("You get stuck in \the [src] for a moment."))
 			return FALSE
 	else if(istype(mover, /obj/projectile))
 		return prob(30)
@@ -149,7 +149,7 @@
 
 		var/datum/radial_menu_choice/option = new
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
-		option.info = "<span class='boldnotice'>[initial(spider.menu_description)]</span>"
+		option.info = span_boldnotice("[initial(spider.menu_description)]")
 
 		display_spiders[initial(spider.name)] = option
 
@@ -248,7 +248,7 @@
 		return
 
 	if(prob(50))
-		audible_message("<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
+		audible_message(span_hear("You hear something scampering through the ventilation ducts."))
 
 	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
 
@@ -276,7 +276,7 @@
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
-								"<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
+								span_hear("You hear something scampering through the ventilation ducts."))
 
 			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(20,60))
 
@@ -288,7 +288,7 @@
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
 			if(prob(40))
-				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
+				src.visible_message(span_notice("\The [src] skitters[pick(" away"," around","")]."))
 	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
@@ -323,8 +323,8 @@
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
-	visible_message("<span class='notice'>You see something struggling and writhing in \the [src]!</span>")
+	to_chat(user, span_notice("You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)"))
+	visible_message(span_notice("You see something struggling and writhing in \the [src]!"))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
@@ -332,7 +332,7 @@
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
+	src.visible_message(span_warning("\The [src] splits open."))
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 	return ..()

@@ -34,6 +34,15 @@
 	var/datum/port/input/south
 	var/datum/port/input/west
 
+	// Done like this so that travelling diagonally is more simple
+	COOLDOWN_DECLARE(north_delay)
+	COOLDOWN_DECLARE(east_delay)
+	COOLDOWN_DECLARE(south_delay)
+	COOLDOWN_DECLARE(west_delay)
+
+	/// Delay between each movement
+	var/move_delay = COMP_CLOCK_DELAY
+
 /obj/item/circuit_component/bot_circuit/Initialize()
 	. = ..()
 	north = add_input_port("Move North", PORT_TYPE_SIGNAL)
@@ -52,14 +61,18 @@
 
 	var/direction
 
-	if(COMPONENT_TRIGGERED_BY(north, port))
+	if(COMPONENT_TRIGGERED_BY(north, port) && COOLDOWN_FINISHED(src, north_delay))
 		direction = NORTH
-	else if(COMPONENT_TRIGGERED_BY(east, port))
+		COOLDOWN_START(src, north_delay, move_delay)
+	else if(COMPONENT_TRIGGERED_BY(east, port) && COOLDOWN_FINISHED(src, east_delay))
 		direction = EAST
-	else if(COMPONENT_TRIGGERED_BY(south, port))
+		COOLDOWN_START(src, east_delay, move_delay)
+	else if(COMPONENT_TRIGGERED_BY(south, port) && COOLDOWN_FINISHED(src, south_delay))
 		direction = SOUTH
-	else if(COMPONENT_TRIGGERED_BY(west, port))
+		COOLDOWN_START(src, south_delay, move_delay)
+	else if(COMPONENT_TRIGGERED_BY(west, port) && COOLDOWN_FINISHED(src, west_delay))
 		direction = WEST
+		COOLDOWN_START(src, west_delay, move_delay)
 
 	if(!direction)
 		return
