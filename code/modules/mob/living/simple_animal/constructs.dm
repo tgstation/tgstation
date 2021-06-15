@@ -42,8 +42,8 @@
 	var/can_repair_self = FALSE
 	var/runetype
 	var/datum/action/innate/cult/create_rune/our_rune
-	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
-	var/theme = THEME_CULT
+	/// Theme controls color. THEME_FAKE_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
+	var/theme = THEME_FAKE_CULT
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
