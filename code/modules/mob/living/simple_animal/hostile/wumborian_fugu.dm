@@ -86,13 +86,13 @@
 /datum/action/innate/fugu/expand/Activate()
 	var/mob/living/simple_animal/hostile/asteroid/fugu/F = owner
 	if(F.wumbo)
-		to_chat(F, "<span class='warning'>YOU'RE ALREADY WUMBO!</span>")
+		to_chat(F, span_warning("YOU'RE ALREADY WUMBO!"))
 		return
 	if(F.inflate_cooldown)
-		to_chat(F, "<span class='warning'>You need time to gather your strength!</span>")
+		to_chat(F, span_warning("You need time to gather your strength!"))
 		return
 	if(HAS_TRAIT(F, TRAIT_FUGU_GLANDED))
-		to_chat(F, "<span class='warning'>Something is interfering with your growth!</span>")
+		to_chat(F, span_warning("Something is interfering with your growth!"))
 		return
 	F.wumbo = 1
 	F.icon_state = "Fugu1"
@@ -149,10 +149,10 @@
 	var/mob/living/simple_animal/animal = target
 
 	if(animal.stat == DEAD || HAS_TRAIT(animal, TRAIT_FAKEDEATH))
-		to_chat(user, "<span class='warning'>[src] can only multiply strength, not grant it to the dead.</span>")
+		to_chat(user, span_warning("[src] can only multiply strength, not grant it to the dead."))
 		return
 	if(HAS_TRAIT(animal, TRAIT_FUGU_GLANDED))
-		to_chat(user, "<span class='warning'>[animal] has already been affected by \a [src].</span>")
+		to_chat(user, span_warning("[animal] has already been affected by \a [src]."))
 		return
 
 	ADD_TRAIT(animal, TRAIT_FUGU_GLANDED, type)
@@ -163,5 +163,5 @@
 	animal.melee_damage_upper = max((animal.melee_damage_upper * 2), 10)
 	animal.transform *= 2
 	animal.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
-	to_chat(user, "<span class='info'>You increase the size of [animal], giving [animal.p_them()] a surge of strength!</span>")
+	to_chat(user, span_info("You increase the size of [animal], giving [animal.p_them()] a surge of strength!"))
 	qdel(src)

@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			possible_beacons += EP
 
 	if(!possible_beacons.len)
-		to_chat(user, "<span class='warning'>There are no extraction beacons in existence!</span>")
+		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
 
 	else
@@ -36,21 +36,21 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(!A)
 			return
 		beacon = A
-		to_chat(user, "<span class='notice'>You link the extraction pack to the beacon system.</span>")
+		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	. = ..()
 	if(!beacon)
-		to_chat(user, "<span class='warning'>[src] is not linked to a beacon, and cannot be used!</span>")
+		to_chat(user, span_warning("[src] is not linked to a beacon, and cannot be used!"))
 		return
 	if(!(beacon in GLOB.total_extraction_beacons))
 		beacon = null
-		to_chat(user, "<span class='warning'>The connected beacon has been destroyed!</span>")
+		to_chat(user, span_warning("The connected beacon has been destroyed!"))
 		return
 	if(!can_use_indoors)
 		var/area/area = get_area(A)
 		if(!area.outdoors)
-			to_chat(user, "<span class='warning'>[src] can only be used on things that are outdoors!</span>")
+			to_chat(user, span_warning("[src] can only be used on things that are outdoors!"))
 			return
 	if(!flag)
 		return
@@ -58,15 +58,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 	else
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
-			to_chat(user, "<span class='warning'>[src] is not safe for use with living creatures, they wouldn't survive the trip back!</span>")
+			to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
 		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
-		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
+		to_chat(user, span_notice("You start attaching the pack to [A]..."))
 		if(do_after(user,50,target=A))
-			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
+			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
 				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)

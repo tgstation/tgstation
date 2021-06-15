@@ -30,7 +30,7 @@
 				A.inflamed = 1
 				A.update_appearance()
 			if(DT_PROB(1.5, delta_time))
-				to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
+				to_chat(affected_mob, span_warning("You feel a stabbing pain in your abdomen!"))
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)
 				affected_mob.Stun(rand(40, 60))
 				affected_mob.adjustToxLoss(1, FALSE)

@@ -82,7 +82,7 @@
 /mob/proc/nominate_heart(mob/heart_recepient, duration = 24 HOURS, instant = FALSE)
 	if(!mind || !client || !heart_recepient?.client)
 		return
-	to_chat(src, "<span class='nicegreen'>Commendation sent!</span>")
+	to_chat(src, span_nicegreen("Commendation sent!"))
 	message_admins("[key_name(src)] commended [key_name(heart_recepient)] [instant ? "" : "(roundend)"]")
 	log_admin("[key_name(src)] commended [key_name(heart_recepient)] [instant ? "" : "(roundend)"]")
 	if(instant || SSticker.current_state == GAME_STATE_FINISHED)
