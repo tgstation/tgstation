@@ -344,7 +344,7 @@
 /atom/proc/CouldEnter(atom/movable/mover, atom/next_loc)
 	if(!CanPass(mover, src) || !next_loc?.CanPass(mover, src))
 		return FALSE
-	for(var/atom/movable/thing as in contents)
+	for(var/atom/movable/thing as anything in contents)
 		if(!thing.CanPass(mover, src))
 			return FALSE
 	return TRUE
