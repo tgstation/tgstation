@@ -160,7 +160,7 @@
 	COOLDOWN_DECLARE(emote_cooldown)
 	var/turns_since_scan = 0
 
-	///Is this animal horrible at their hunting job?
+	///Is this animal horrible at hunting?
 	var/inept_hunter = FALSE
 
 
@@ -692,69 +692,40 @@
 /mob/living/simple_animal/proc/stop_deadchat_plays()
 	stop_automated_movement = FALSE
 
+
+
 //Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
-/mob/living/simple_animal/proc/hunt_target(list/hunted, living_target = TRUE)
-	if(src.type == hunted) //Make sure it doesn't eat itself.
+/mob/living/simple_animal/proc/hunt(hunted)
+	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
 		return
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			if(!living_target)
-				var/list/possible_objs = (/obj in view(1,src))
-				if(!possible_objs)
-					return
-				if(possible_objs.type in hunted)
-				//for(var/obj/prey_obj in possible_objs) // Objs can't move, so inept_hunter does nothing here.
-					if(Adjacent(possible_objs) && COOLDOWN_FINISHED(src, emote_cooldown))
-						manual_emote("chomps [possible_objs]!")
-						qdel(possible_objs)
-						possible_objs = null
+			if(Adjacent(hunted) && COOLDOWN_FINISHED(src, emote_cooldown))
+				if(isliving(hunted)) // Are we hunting a living mob?
+					var/mob/living/prey = hunted
+					if(inept_hunter) // Kept this in case you want your hunter to run around in a funny way.
+						visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
+						step(prey, pick(GLOB.cardinals))
 						stop_automated_movement = FALSE
 						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-				//		break
-			else
-				var/list/possible_mobs = (hunted in view(1,src))
-				for(var/mob/living/simple_animal/prey in possible_mobs)
-					if(inept_hunter && prey.type == hunted)
-						if(COOLDOWN_FINISHED(src, emote_cooldown))
-							visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
-							step(prey, pick(GLOB.cardinals))
-							COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-						break
-					if(!prey.stat && Adjacent(prey) && COOLDOWN_FINISHED(src, emote_cooldown) && prey.type == hunted)
+						return
+					if(!prey.stat)
 						manual_emote("chomps [prey]!")
 						prey.death()
 						prey = null
 						stop_automated_movement = FALSE
 						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-						break
-	if(!(src.stat) && !(src.buckled))
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			walk_to(src,0)
-			turns_since_scan = 0
-			if(living_target)
-				var/list/possible_mob_locs = (hunted in oview(src,3))
-				for(var/mob/living/simple_animal/yummy in possible_mob_locs)
-					if(yummy.type == hunted)
-						if((yummy) && !(isturf(yummy.loc) || ishuman(yummy.loc) || yummy.stat || yummy.loc in oview(src, 3)))
-							yummy = null
-							stop_automated_movement = FALSE
-						if((!yummy || !(yummy.loc in oview(src, 3))))
-							yummy = null
-							stop_automated_movement = FALSE
-						if(yummy)
-							stop_automated_movement = TRUE
-							walk_to(src,yummy,0,3)
+						return
+				else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
+					manual_emote("chomps [hunted]!")
+					qdel(hunted)
+					hunted = null
+					stop_automated_movement = FALSE
+					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+					return
 			else
-				var/list/possible_obj_locs = (hunted in oview(src,3))
-				for(var/obj/yummy_obj in possible_obj_locs)
-					if(yummy_obj.type == hunted)
-						if((yummy_obj) && !(isturf(yummy_obj.loc) || yummy_obj.loc in oview(src, 3)))
-							yummy_obj = null
-							stop_automated_movement = FALSE
-						if(!yummy_obj)
-							yummy_obj = null
-							stop_automated_movement = FALSE
-						if(yummy_obj)
-							stop_automated_movement = TRUE
-							walk_to(src,yummy_obj,0,3)
+				stop_automated_movement = TRUE
+				walk_to(src,hunted,0,3)
+				if(Adjacent(hunted))
+					hunt(hunted) //In case it gets next to the target immediately, skip the scan timer and kill it.
+	stop_automated_movement = FALSE

@@ -40,4 +40,10 @@
 
 /mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) //Payback time bitch
 	. = ..()
-	hunt_target(hunted = /mob/living/simple_animal/hostile/cockroach)
+	turns_since_scan++
+	if(turns_since_scan > 5)
+		turns_since_scan = 0
+		var/list/target_types = list(/mob/living/simple_animal/hostile/cockroach)
+		for(var/mob/living/simple_animal/hostile/potential_target in view(3, get_turf(src)))
+			if(potential_target.type in target_types)
+				hunt(potential_target)

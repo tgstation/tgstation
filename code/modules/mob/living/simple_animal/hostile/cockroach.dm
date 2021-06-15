@@ -48,7 +48,14 @@
 
 /mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) //Natural predators
 	. = ..()
-	hunt_target(hunted = /obj/effect/decal/cleanable/ants, living_target = FALSE)
+	turns_since_scan++
+	if(turns_since_scan > 5)
+		turns_since_scan = 0
+		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
+		for(var/obj/effect/decal/cleanable/potential_target in view(4, get_turf(src)))
+			if(potential_target.type in target_types)
+				hunt(potential_target)
+
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
