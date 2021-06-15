@@ -52,7 +52,7 @@ Bonus
 				M.blood_volume += 1
 		else
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
+				to_chat(M, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
 	return
 
 /datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)

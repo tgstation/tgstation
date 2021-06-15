@@ -39,7 +39,7 @@
 		return
 	if(world.time < last_synth+time_per_syringe)
 		return
-	to_chat(loc, "<span class='warning'>You hear a click as [src] synthesizes a new dart.</span>")
+	to_chat(loc, span_warning("You hear a click as [src] synthesizes a new dart."))
 	syringes_left++
 	if(chambered && !chambered.loaded_projectile)
 		chambered.newshot()

@@ -188,7 +188,7 @@
 					if(iscarbon(card.loc))
 						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 					else
-						to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
+						to_chat(src, span_warning("You are not being carried by anyone!"))
 						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
 			if("pdamessage")
@@ -273,10 +273,10 @@
 						var/mob/living/L = card.loc
 						if(L.put_in_hands(hacking_cable))
 							transfered_to_mob = TRUE
-							L.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of.</span>", "<span class='hear'>You hear the soft click of something light and manage to catch hold of [hacking_cable].</span>")
+							L.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
 					if(!transfered_to_mob)
 						hacking_cable.forceMove(drop_location())
-						hacking_cable.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor.</span>", "<span class='hear'>You hear the soft click of something light and hard falling to the ground.</span>")
+						hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
 
 
@@ -398,9 +398,9 @@
 		return
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
-						"<span class='notice'>You press your thumb against [P].</span>",\
-						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
+		M.visible_message(span_notice("[M] presses [M.p_their()] thumb against [P]."),\
+						span_notice("You press your thumb against [P]."),\
+						span_notice("[P] makes a sharp clicking sound as it extracts DNA material from [M]."))
 		if(!M.has_dna())
 			to_chat(P, "<b>No DNA detected</b>")
 			return
@@ -410,7 +410,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "<span class='warning'>[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.</span>")
+		to_chat(P, span_warning("[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly."))
 
 // -=-=-=-= Software =-=-=-=-=- //
 
