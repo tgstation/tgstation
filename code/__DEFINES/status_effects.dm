@@ -99,6 +99,10 @@
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
 
+#define STATUS_EFFECT_PRANKED /datum/status_effect/pranked //tracks the number of times the number of times the victim has been pranked lately.
+
+#define STATUS_EFFECT_SLAPPED_SILLY /datum/status_effect/slapped_silly //confuses and makes clumsy, for some time.
+
 ///Raises click cooldowns for everything you do.
 #define STATUS_EFFECT_WOOZY /datum/status_effect/woozy
 

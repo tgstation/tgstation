@@ -250,9 +250,21 @@
 /obj/item/rubber_chicken
 	name = "rubber chicken"
 	desc = " A robust rubber chicken the size of a Louisiana broiler.\nIt looks somewhat clammy and exudes a noticable rubbery smell.\nA small peeling sticker on the chicken's left thigh reads: 'made by waffle co.'"
-	icon_state "rubber_chicken"
+	icon = 'icons/obj/clown_items.dmi'
+	icon_state = "rubber_chicken"
+	force_string = "hilarious"
 	force = 10
 	damtype = STAMINA
+	hitsound = 'sound/weapons/genhit.ogg'  //could use a funnier
+	attack_verb_continuous = list("slaps", "smacks", "gahonks")
+	attack_verb_simple = list("slap", "smack", "gahonk")
+
+/obj/item/rubber_chicken/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/slapped = target
+	slapped.apply_status_effect(STATUS_EFFECT_PRANKED)
 
 /obj/item/rubber_chicken/attack_secondary(mob/living/victim, mob/living/user, params)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -262,9 +274,16 @@
 	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	var/datum/
+	var/datum/status_effect/pranked/victim_pranked = victim.has_status_effect(STATUS_EFFECT_PRANKED)
+	if(!victim_pranked)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/slap_power = victim_pranked.prank_counter
+
+	playsound(user, 'sound/weapons/punch1.ogg', min(slap_power * 10, 100))
 	user.do_attack_animation(src)
-	victim.s
-	victim.apply_damage(7 , STAMINA, BODY_ZONE_HEAD)
-	victim.apply_status_effect(STATUS_EFFECT_CHICKENS)
-	return ALT_ATTACK_CONTINUE_CHAIN
+	victim.apply_damage(7 * slap_power, STAMINA, BODY_ZONE_HEAD)
+	victim.apply_status_effect(STATUS_EFFECT_SLAPPED_SILLY, slap_power SECONDS)
+	victim.remove_status_effect(STATUS_EFFECT_PRANKED)
+	user.visible_message("<span class='danger'>[user] knocks [victim] silly with [src]!</span>")
+	return SECONDARY_ATTACK_CONTINUE_CHAIN

@@ -969,21 +969,52 @@
 	. = ..()
 	QDEL_NULL(mob_overlay)
 
-/datum/status_effect/stacking/smacked_silly
-	id = "smacked_silly"
-	tick_interval = 2 SECONDS
-	overlay_file = 'icons/effects/32x64.dmi'
-	overlay_state = "dizzy_birdies"
+/datum/status_effect/pranked
+	id = "pranked"
+	duration = 20 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+	///increments every time the status effect is refreshed. Higher counter == more powerful clown combos.
+	var/prank_counter = 1
 
-/datum/status_effect/stacking/smacked_silly/on_apply()
+/datum/status_effect/pranked/refresh()
+	. = ..()
+	prank_counter++
+/datum/status_effect/slapped_silly
+	id = "smacked_silly"
+	duration = 10 SECONDS
+	///This sound is played for the duration of the effect.
+	var/datum/looping_sound/dizzy_birdies/bird_noise
+	///This overlay is applied to the owner for the duration of the effect.
+	var/mutable_appearance/mob_overlay
+
+/datum/status_effect/slapped_silly/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/slapped_silly/on_apply()
 	. = ..()
 	if(!isliving(owner))
 		return FALSE
 	var/mob/living/living_owner = owner
-	living_owner.add_confusion(5 * stacks)
 
-/datum/status_effect/stacking/smacked_silly/on_remove()
+	mob_overlay = mutable_appearance('icons/effects/32x64.dmi', "dizzy_birdies", ABOVE_MOB_LAYER)
+	owner.overlays += mob_overlay
+	owner.update_appearance()
+
+	living_owner.add_confusion(25)
+	ADD_TRAIT(living_owner,TRAIT_CLUMSY, id)
+	bird_noise = new(list(living_owner), TRUE)
+
+/datum/status_effect/slapped_silly/on_remove()
 	. = ..()
+	if(QDELETED(owner))
+		return
 	if(owner)
 		var/mob/living/living_owner = owner
-		living_owner.set_confusion(0)
+		living_owner.set_confusion(0) //Yes, a light slap might actually help treat confusion.
+		REMOVE_TRAIT(living_owner,TRAIT_CLUMSY, id)
+		QDEL_NULL(bird_noise)
+		owner.overlays -= mob_overlay
+		owner.update_appearance()

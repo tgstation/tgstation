@@ -76,3 +76,12 @@
 	price_max = 1000
 	stock_max = 2
 	availability_prob = 30
+
+/datum/blackmarket_item/misc/rubber_chicken
+	name = "Rubber Chicken"
+	desc = "A shipment of rubber chickens diverted from the clown planet's supply lines. I wonder why Nanotrasen stopped issuing their clowns this classic comedic prop?"
+	item = /obj/item/rubber_chicken
+	price_min = 250
+	price_max = 550
+	stock_max = 3
+	availability_prob = 30
