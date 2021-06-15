@@ -1,37 +1,49 @@
+// A datum for dealing with threshold limit values
 /datum/tlv
-	var/min2
-	var/min1
-	var/max1
-	var/max2
+	var/warning_min
+	var/warning_max
+	var/hazard_min
+	var/hazard_max
 
 /datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
-	if(min2) src.min2 = min2
-	if(min1) src.min1 = min1
-	if(max1) src.max1 = max1
-	if(max2) src.max2 = max2
+	if(min2)
+		hazard_min = min2
+	if(min1)
+		warning_min = min1
+	if(max1)
+		warning_max = max1
+	if(max2)
+		hazard_max = max2
 
 /datum/tlv/proc/get_danger_level(val as num)
-	if(max2 != -1 && val >= max2)
-		return 2
-	if(min2 != -1 && val <= min2)
-		return 2
-	if(max1 != -1 && val >= max1)
-		return 1
-	if(min1 != -1 && val <= min1)
-		return 1
-	return 0
+	switch(val)
+		if(hazard_max to INFINITY)
+			if(hazard_max != -1)
+				return TLV_OUTSIDE_HAZARD_LIMIT
+		if(0 to hazard_min)
+			if(hazard_min != -1)
+				return TLV_OUTSIDE_HAZARD_LIMIT
+
+		if(warning_max to INFINITY)
+			if(warning_max != -1)
+				return TLV_OUTSIDE_WARNING_LIMIT
+		if(0 to warning_min)
+			if(warning_min != -1)
+				return TLV_OUTSIDE_WARNING_LIMIT
+
+	return TLV_NO_DANGER
 
 /datum/tlv/no_checks
-	min2 = -1
-	min1 = -1
-	max1 = -1
-	max2 = -1
+	hazard_min = TLV_DONT_CHECK
+	warning_min = TLV_DONT_CHECK
+	warning_max = TLV_DONT_CHECK
+	hazard_max = TLV_DONT_CHECK
 
 /datum/tlv/dangerous
-	min2 = -1
-	min1 = -1
-	max1 = 0.2
-	max2 = 0.5
+	hazard_min = TLV_DONT_CHECK
+	warning_min = TLV_DONT_CHECK
+	warning_max = 0.2
+	hazard_max = 0.5
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
@@ -363,27 +375,27 @@
 
 		selected = TLV["pressure"]
 		thresholds += list(list("name" = "Pressure", "settings" = list()))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.min2))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.min1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.max1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.max2))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min2", "selected" = selected.hazard_min))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "min1", "selected" = selected.warning_min))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max1", "selected" = selected.warning_max))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = "max2", "selected" = selected.hazard_max))
 
 		selected = TLV["temperature"]
 		thresholds += list(list("name" = "Temperature", "settings" = list()))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.min2))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.min1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.max1))
-		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.max2))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min2", "selected" = selected.hazard_min))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "min1", "selected" = selected.warning_min))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max1", "selected" = selected.warning_max))
+		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "max2", "selected" = selected.hazard_max))
 
 		for(var/gas_id in GLOB.meta_gas_info)
 			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 				continue
 			selected = TLV[gas_id]
 			thresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.min2))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.min1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.max1))
-			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.max2))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min2", "selected" = selected.hazard_min))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "min1", "selected" = selected.warning_min))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max1", "selected" = selected.warning_max))
+			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "max2", "selected" = selected.hazard_max))
 
 		data["thresholds"] = thresholds
 	return data
@@ -674,27 +686,27 @@
 	if(!location)
 		return
 
-	var/datum/tlv/cur_tlv
+	var/datum/tlv/current_tlv
+	//cache for sanic speed (lists are references anyways)
+	var/list/cached_tlv = TLV
 
 	var/datum/gas_mixture/environment = location.return_air()
 	var/list/env_gases = environment.gases
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
 
-	cur_tlv = TLV["pressure"]
+	current_tlv = cached_tlv["pressure"]
 	var/environment_pressure = environment.return_pressure()
-	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
+	var/pressure_dangerlevel = current_tlv.get_danger_level(environment_pressure)
 
-	cur_tlv = TLV["temperature"]
-	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
+	current_tlv = cached_tlv["temperature"]
+	var/temperature_dangerlevel = current_tlv.get_danger_level(environment.temperature)
 
 	var/gas_dangerlevel = 0
 	for(var/gas_id in env_gases)
-		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
-		cur_tlv = TLV[gas_id]
-		gas_dangerlevel = max(gas_dangerlevel, cur_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
-
-	environment.garbage_collect()
+		current_tlv = cached_tlv[gas_id]
+		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)

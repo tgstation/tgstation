@@ -240,37 +240,33 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
  */
 /area/proc/poweralert(state, obj/source)
-	if (area_flags & NO_ALERTS)
+	if (area_flags & NO_ALERTS || state == poweralm)
 		return
-	if (state != poweralm)
-		poweralm = state
-		if(istype(source)) //Only report power alarms on the z-level where the source is located.
-			for (var/item in GLOB.silicon_mobs)
-				var/mob/living/silicon/aiPlayer = item
-				if (!state)
-					aiPlayer.cancelAlarm("Power", src, source)
-				else
-					aiPlayer.triggerAlarm("Power", src, cameras, source)
 
-			for (var/item in GLOB.alert_consoles)
-				var/obj/machinery/computer/station_alert/a = item
-				if(!state)
-					a.cancelAlarm("Power", src, source)
-				else
-					a.triggerAlarm("Power", src, cameras, source)
+	poweralm = state
+	if(istype(source)) //Only report power alarms on the z-level where the source is located.
+		for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+			if (!state)
+				aiPlayer.cancelAlarm("Power", src, source)
+			else
+				aiPlayer.triggerAlarm("Power", src, cameras, source)
 
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				if(!state)
-					D.cancelAlarm("Power", src, source)
-				else
-					D.triggerAlarm("Power", src, cameras, source)
-			for(var/item in GLOB.alarmdisplay)
-				var/datum/computer_file/program/alarm_monitor/p = item
-				if(!state)
-					p.cancelAlarm("Power", src, source)
-				else
-					p.triggerAlarm("Power", src, cameras, source)
+		for (var/obj/machinery/computer/station_alert/alert_computer as anything in GLOB.alert_consoles)
+			if(!state)
+				alert_computer.cancelAlarm("Power", src, source)
+			else
+				alert_computer.triggerAlarm("Power", src, cameras, source)
+
+		for (var/mob/living/simple_animal/drone/drone as anything in GLOB.drones_list)
+			if(!state)
+				drone.cancelAlarm("Power", src, source)
+			else
+				drone.triggerAlarm("Power", src, cameras, source)
+		for(var/datum/computer_file/program/alarm_monitor/alarm_monitor as anything in GLOB.alarmdisplay)
+			if(!state)
+				alarm_monitor.cancelAlarm("Power", src, source)
+			else
+				alarm_monitor.triggerAlarm("Power", src, cameras, source)
 
 /**
  * Generate an atmospheric alert for this area
@@ -577,8 +573,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Clears all power used for equipment, light and environment channels
  */
 /area/proc/clear_usage()
-	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
-		power_usage[i] = 0
+	power_usage[AREA_USAGE_EQUIP] = 0
+	power_usage[AREA_USAGE_LIGHT] = 0
+	power_usage[AREA_USAGE_ENVIRON] = 0
+
 
 /**
  * Add a power value amount to the stored used_x variables
