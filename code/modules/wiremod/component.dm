@@ -137,6 +137,9 @@
 		if(connected_port.datatype != output_port.datatype)
 			output_port.set_datatype(connected_port.datatype)
 			return TRUE
+	else
+		output_port.set_datatype(output_port.default_datatype)
+		return TRUE
 	return FALSE
 
 
