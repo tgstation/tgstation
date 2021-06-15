@@ -58,7 +58,6 @@
 		to_chat(M, "<span class='warning'>It's too comfy to move...</span>")
 		M.Paralyze(10 SECONDS)
 	..()
-	. = TRUE
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
