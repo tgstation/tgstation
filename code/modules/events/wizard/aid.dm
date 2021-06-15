@@ -18,7 +18,7 @@
 					S.clothes_req = 0
 					spell_improved = TRUE
 			if(spell_improved)
-				to_chat(L, "<span class='notice'>You suddenly feel like you never needed those garish robes in the first place...</span>")
+				to_chat(L, span_notice("You suddenly feel like you never needed those garish robes in the first place..."))
 
 //--//
 
@@ -55,4 +55,4 @@
 					if(5)
 						S.name = "Ludicrous [S.name]"
 
-			to_chat(L, "<span class='notice'>You suddenly feel more competent with your casting!</span>")
+			to_chat(L, span_notice("You suddenly feel more competent with your casting!"))

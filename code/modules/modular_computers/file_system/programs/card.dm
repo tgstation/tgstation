@@ -123,11 +123,11 @@
 					contents += "  [SSid_access.get_access_desc(A)]"
 
 			if(!printer.print_text(contents,"access report"))
-				to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
+				to_chat(usr, span_notice("Hardware error: Printer was unable to print the file. It may be out of paper."))
 				return TRUE
 			else
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
-				computer.visible_message("<span class='notice'>\The [computer] prints out a paper.</span>")
+				computer.visible_message(span_notice("\The [computer] prints out a paper."))
 			return TRUE
 		// Eject the ID used to log on to the ID app.
 		if("PRG_ejectauthid")
@@ -157,7 +157,7 @@
 				return TRUE
 			if(minor)
 				if(!(target_id_card.trim?.type in job_templates))
-					to_chat(usr, "<span class='notice'>Software error: You do not have the necessary permissions to demote this card.</span>")
+					to_chat(usr, span_notice("Software error: You do not have the necessary permissions to demote this card."))
 					return TRUE
 
 			// Set the new assignment then remove the trim.
@@ -190,7 +190,7 @@
 			new_name = reject_bad_name(new_name, allow_numbers = TRUE)
 
 			if(!new_name)
-				to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new name as it contains prohibited characters.</span>")
+				to_chat(usr, span_notice("Software error: The ID card rejected the new name as it contains prohibited characters."))
 				return TRUE
 
 			target_id_card.registered_name = new_name
@@ -239,7 +239,7 @@
 				return TRUE
 
 			if(!target_id_card.add_access(list(access_type), try_wildcard))
-				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+				to_chat(usr, span_notice("ID error: ID card rejected your attempted access modification."))
 				LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 

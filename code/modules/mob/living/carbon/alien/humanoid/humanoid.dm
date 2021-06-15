@@ -42,8 +42,8 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/alien/humanoid/resist_grab(moving_resist)
 	if(pulledby.grab_state)
-		visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
-						"<span class='danger'>You break free of [pulledby]'s grip!</span>")
+		visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
+						span_danger("You break free of [pulledby]'s grip!"))
 	pulledby.stop_pulling()
 	. = 0
 
