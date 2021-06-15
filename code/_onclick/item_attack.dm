@@ -98,6 +98,14 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/pre_attack_secondary(atom/target, mob/living/user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, params)
+
+	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /**
@@ -126,6 +134,14 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby_secondary(obj/item/weapon, mob/user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY_SECONDARY, weapon, user, params)
+
+	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/I, mob/living/user, params)

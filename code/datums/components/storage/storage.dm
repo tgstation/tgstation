@@ -98,8 +98,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_parent_attacked_secondary)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/on_parent_attacked_secondary)
+	RegisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_HAND_SECONDARY), .proc/on_open_storage_click)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/on_open_storage_attackby)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
@@ -839,16 +839,14 @@
 
 	return hide_from(target)
 
-/datum/component/storage/proc/on_parent_attacked_secondary(datum/source, mob/user, list/modifiers)
-	SIGNAL_HANDLER
-
+/datum/component/storage/proc/open_storage(mob/user)
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
-		return
+		return FALSE
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
-		return
+		return FALSE
 
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	. = TRUE
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
@@ -861,6 +859,18 @@
 		return
 
 	INVOKE_ASYNC(src, .proc/attempt_put_in_hands, to_remove, user)
+
+/datum/component/storage/proc/on_open_storage_click(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(open_storage(user))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/storage/proc/on_open_storage_attackby(datum/source, obj/item/weapon, mob/user, params)
+	SIGNAL_HANDLER
+
+	if(open_storage(user))
+		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 ///attempt to put an item from contents into the users hands
 /datum/component/storage/proc/attempt_put_in_hands(obj/item/to_remove, mob/user)
