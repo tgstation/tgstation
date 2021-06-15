@@ -803,9 +803,14 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/metabolisationtime = 0
+
+/datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
+	var/metabolisationtime += delta_time
+	..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	var/toxdamage = current_cycle*3
+	var/toxdamage = metabolisationtime*3
 	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
 	..()
