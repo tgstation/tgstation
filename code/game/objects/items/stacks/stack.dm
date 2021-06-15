@@ -464,6 +464,10 @@
 		. = ..()
 
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/max = get_amount()

@@ -87,6 +87,8 @@
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
 ///from base of atom/attackby(): (/obj/item, /mob/living, params)
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
+/// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
+#define COMSIG_ATOM_ATTACK_HAND_SECONDARY "atom_attack_hand_secondary"
 ///Return this in response if you don't want afterattack to be called
 	#define COMPONENT_NO_AFTERATTACK (1<<0)
 ///from base of atom/attack_hulk(): (/mob/living/carbon/human)
@@ -340,9 +342,6 @@
 #define COMSIG_EXIT_AREA "exit_area"
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
-///from base of atom/RightClick(): (/mob)
-#define COMSIG_CLICK_RIGHT "right_click"
-	#define COMPONENT_CANCEL_CLICK_RIGHT (1<<0)
 ///from base of atom/ShiftClick(): (/mob)
 #define COMSIG_CLICK_SHIFT "shift_click"
 	#define COMPONENT_ALLOW_EXAMINATE (1<<0) //Allows the user to examinate regardless of client.eye.

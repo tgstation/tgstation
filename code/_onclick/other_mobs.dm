@@ -60,7 +60,9 @@
 
 /// When the user uses their hand on an item while holding right-click
 /// Returns a SECONDARY_ATTACK_* value.
-/atom/proc/attack_hand_secondary(mob/user, modifiers)
+/atom/proc/attack_hand_secondary(mob/user, list/modifiers)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND_SECONDARY, user, list/modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 //Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
