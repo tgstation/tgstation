@@ -58,8 +58,6 @@
 	ADD_TRAIT(humie, TRAIT_MUTE, MAGIC_TRAIT)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
-	humie.setMaxHealth(50)
-	humie.health = 50 // Voiceless dead are much tougher than ghouls
 	humie.setMaxHealth(MUTE_MAX_HEALTH)
 	humie.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
 	humie.become_husk()
@@ -115,8 +113,6 @@
 	. = TRUE
 	RegisterSignal(human_target,COMSIG_LIVING_DEATH,.proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
-	human_target.setMaxHealth(25)
-	human_target.health = 25
 	human_target.setMaxHealth(GHOUL_MAX_HEALTH)
 	human_target.health = GHOUL_MAX_HEALTH
 	human_target.become_husk()
