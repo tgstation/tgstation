@@ -579,6 +579,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 30
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 
 /obj/item/food/canned/proc/open_can(mob/user)
