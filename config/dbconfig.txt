@@ -13,7 +13,7 @@ ADDRESS localhost
 PORT 3306
 
 ## Database for all SQL functions, not just feedback.
-FEEDBACK_DATABASE ss13
+FEEDBACK_DATABASE feedback
 
 ## Prefix to be added to the name of every table, older databases will require this be set to erro_
 ## Note, this does not change the table names in the database, you will have to do that yourself.
@@ -24,7 +24,7 @@ FEEDBACK_DATABASE ss13
 FEEDBACK_TABLEPREFIX SS13_
 
 ## Username/Login used to access the database.
-FEEDBACK_LOGIN root
+FEEDBACK_LOGIN username
 
 ## Password used to access the database.
 FEEDBACK_PASSWORD password
