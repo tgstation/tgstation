@@ -1,4 +1,4 @@
-/datum/component/storage/concrete/wallet/on_right_click(datum/source, mob/user)
+/datum/component/storage/concrete/wallet/on_parent_attacked_secondary(datum/source, mob/user)
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
 	if(locked)
