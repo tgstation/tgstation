@@ -312,12 +312,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
 	
 	if(iscyborg(sacrificial))
-		var/static/list/constructs = list(
-			"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
-			"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
-			"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
-			)
-		var/construct_class = show_radial_menu(first_invoker, sacrificial, constructs, require_near = TRUE, tooltips = TRUE)
+		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_types, require_near = TRUE, tooltips = TRUE)
 		if(QDELETED(sacrificial))
 			return FALSE
 		makeNewConstructFromClass(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
