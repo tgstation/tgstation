@@ -1,0 +1,5 @@
+author: "Mothblocks, ArcaneMusic for sprites"
+delete-after: True
+changes: 
+  - rscadd: "Bot circuits can now use USB cables to connect to computers and machines that support it. Currently, only the tram controls computer supports this, but support should roll out for other systems."
+  - rscadd: "Bot shells now have a button that you can register to."
