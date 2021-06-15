@@ -1,6 +1,6 @@
 /mob/living/silicon/Login()
 	if(mind)
-		SSticker.mode?.remove_antag_for_borging(mind)
+		mind?.remove_antags_for_borging()
 	return ..()
 
 

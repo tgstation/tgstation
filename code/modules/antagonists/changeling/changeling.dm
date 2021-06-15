@@ -46,6 +46,21 @@
 
 	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
+	var/static/list/slot2type = list(
+		"head" = /obj/item/clothing/head/changeling,
+		"wear_mask" = /obj/item/clothing/mask/changeling,
+		"back" = /obj/item/changeling,
+		"wear_suit" = /obj/item/clothing/suit/changeling,
+		"w_uniform" = /obj/item/clothing/under/changeling,
+		"shoes" = /obj/item/clothing/shoes/changeling,
+		"belt" = /obj/item/changeling,
+		"gloves" = /obj/item/clothing/gloves/changeling,
+		"glasses" = /obj/item/clothing/glasses/changeling,
+		"ears" = /obj/item/changeling,
+		"wear_id" = /obj/item/changeling/id,
+		"s_store" = /obj/item/changeling,
+	)
+
 /datum/antagonist/changeling/New()
 	. = ..()
 	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
@@ -129,13 +144,13 @@
 
 ///Handles stinging without verbs.
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
-	if(!chosen_sting.try_to_sting(ling, A))
-		return
-	ling.changeNext_move(CLICK_CD_MELEE)
+
+	INVOKE_ASYNC(chosen_sting, /datum/action/changeling/sting.proc/try_to_sting, ling, A)
+
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
@@ -160,23 +175,23 @@
 		return
 
 	if(absorbedcount < thepower.req_dna)
-		to_chat(owner.current, "<span class='warning'>We lack the energy to evolve this ability!</span>")
+		to_chat(owner.current, span_warning("We lack the energy to evolve this ability!"))
 		return
 
 	if(has_sting(thepower))
-		to_chat(owner.current, "<span class='warning'>We have already evolved this ability!</span>")
+		to_chat(owner.current, span_warning("We have already evolved this ability!"))
 		return
 
 	if(thepower.dna_cost < 0)
-		to_chat(owner.current, "<span class='warning'>We cannot evolve this ability!</span>")
+		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
 		return
 
 	if(geneticpoints < thepower.dna_cost)
-		to_chat(owner.current, "<span class='warning'>We have reached our capacity for abilities!</span>")
+		to_chat(owner.current, span_warning("We have reached our capacity for abilities!"))
 		return
 
 	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		to_chat(owner.current, "<span class='warning'>We lack the energy to evolve new abilities right now!</span>")
+		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return
 
 	geneticpoints -= thepower.dna_cost
@@ -185,19 +200,19 @@
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
-		to_chat(owner.current, "<span class='warning'>We can't remove our evolutions in this form!</span>")
+		to_chat(owner.current, span_warning("We can't remove our evolutions in this form!"))
 		return
 	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
-		to_chat(owner.current, "<span class='warning'>We are too busy reforming ourselves to readapt right now!</span>")
+		to_chat(owner.current, span_warning("We are too busy reforming ourselves to readapt right now!"))
 		return
 	if(canrespec)
-		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
+		to_chat(owner.current, span_notice("We have removed our evolutions from this form, and are now ready to readapt."))
 		reset_powers()
 		canrespec = FALSE
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return TRUE
 	else
-		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
+		to_chat(owner.current, span_warning("You lack the power to readapt your evolutions!"))
 		return FALSE
 
 //Called in life()
@@ -231,33 +246,33 @@
 		var/datum/changelingprofile/prof = stored_profiles[1]
 		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
 			if(verbose)
-				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
+				to_chat(user, span_warning("We have reached our capacity to store genetic information! We must transform before absorbing more."))
 			return
 	if(!target)
 		return
 	if(NO_DNA_COPY in target.dna.species.species_traits)
 		if(verbose)
-			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
+			to_chat(user, span_warning("[target] is not compatible with our biology."))
 		return
 	if(HAS_TRAIT(target, TRAIT_BADDNA))
 		if(verbose)
-			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
+			to_chat(user, span_warning("DNA of [target] is ruined beyond usability!"))
 		return
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(verbose)
-			to_chat(user, "<span class='warning'>[target]'s body is ruined beyond usability!</span>")
+			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
-			to_chat(user, "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>")
+			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
 		return
 	if(has_dna(target.dna))
 		if(verbose)
-			to_chat(user, "<span class='warning'>We already have this DNA in storage!</span>")
+			to_chat(user, span_warning("We already have this DNA in storage!"))
 		return
 	if(!target.has_dna())
 		if(verbose)
-			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
+			to_chat(user, span_warning("[target] is not compatible with our biology."))
 		return
 	return TRUE
 
@@ -375,14 +390,14 @@
 
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
-		to_chat(owner.current, "<span class='boldannounce'>You are a changeling! You have absorbed and taken the form of a human.</span>")
+		to_chat(owner.current, span_boldannounce("You are a changeling! You have absorbed and taken the form of a human."))
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	owner.announce_objectives()
 
 /datum/antagonist/changeling/farewell()
-	to_chat(owner.current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
+	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
 
 
 /datum/antagonist/changeling/proc/forge_objectives()
@@ -460,7 +475,7 @@
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
-	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are a changeling!</span>")
+	to_chat(new_owner.current, span_boldannounce("Our powers have awoken. A flash of memory returns to us...we are a changeling!"))
 
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
@@ -469,13 +484,127 @@
 
 /datum/antagonist/changeling/proc/admin_restore_appearance(mob/admin)
 	if(!stored_profiles.len || !iscarbon(owner.current))
-		to_chat(admin, "<span class='danger'>Resetting DNA failed!</span>")
+		to_chat(admin, span_danger("Resetting DNA failed!"))
 	else
 		var/mob/living/carbon/C = owner.current
 		first_prof.dna.transfer_identity(C, transfer_SE=1)
 		C.real_name = first_prof.name
 		C.updateappearance(mutcolor_update=1)
 		C.domutcheck()
+
+/datum/antagonist/changeling/proc/transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
+	var/static/list/slot2slot = list(
+		"head" = ITEM_SLOT_HEAD,
+		"wear_mask" = ITEM_SLOT_MASK,
+		"neck" = ITEM_SLOT_NECK,
+		"back" = ITEM_SLOT_BACK,
+		"wear_suit" = ITEM_SLOT_OCLOTHING,
+		"w_uniform" = ITEM_SLOT_ICLOTHING,
+		"shoes" = ITEM_SLOT_FEET,
+		"belt" = ITEM_SLOT_BELT,
+		"gloves" = ITEM_SLOT_GLOVES,
+		"glasses" = ITEM_SLOT_EYES,
+		"ears" = ITEM_SLOT_EARS,
+		"wear_id" = ITEM_SLOT_ID,
+		"s_store" = ITEM_SLOT_SUITSTORE,
+	)
+
+	var/datum/dna/chosen_dna = chosen_prof.dna
+	user.real_name = chosen_prof.name
+	user.underwear = chosen_prof.underwear
+	user.undershirt = chosen_prof.undershirt
+	user.socks = chosen_prof.socks
+
+	chosen_dna.transfer_identity(user, 1)
+	user.updateappearance(mutcolor_update=1)
+	user.update_body()
+	user.domutcheck()
+
+	// get rid of any scars from previous changeling-ing
+	for(var/i in user.all_scars)
+		var/datum/scar/iter_scar = i
+		if(iter_scar.fake)
+			qdel(iter_scar)
+
+	// Do skillchip code after DNA code.
+	// There's a mutation that increases max chip complexity available, even though we force-implant skillchips.
+
+	// Remove existing skillchips.
+	user.destroy_all_skillchips(silent = FALSE)
+
+	// Add new set of skillchips.
+	for(var/chip in chosen_prof.skillchips)
+		var/chip_type = chip["type"]
+		var/obj/item/skillchip/skillchip = new chip_type(user)
+
+		if(!istype(skillchip))
+			stack_trace("Failure to implant changeling from [chosen_prof] with skillchip [skillchip]. Tried to implant with non-skillchip type [chip_type]")
+			qdel(skillchip)
+			continue
+
+		// Try force-implanting and activating. If it doesn't work, there's nothing much we can do. There may be some
+		// incompatibility out of our hands
+		var/implant_msg = user.implant_skillchip(skillchip, TRUE)
+		if(implant_msg)
+			// Hopefully recording the error message will help debug it.
+			stack_trace("Failure to implant changeling from [chosen_prof] with skillchip [skillchip]. Error msg: [implant_msg]")
+			qdel(skillchip)
+			continue
+
+		// Time to set the metadata. This includes trying to activate the chip.
+		var/set_meta_msg = skillchip.set_metadata(chip)
+
+		if(set_meta_msg)
+			// Hopefully recording the error message will help debug it.
+			stack_trace("Failure to activate changeling skillchip from [chosen_prof] with skillchip [skillchip] using [chip] metadata. Error msg: [set_meta_msg]")
+			continue
+
+	//vars hackery. not pretty, but better than the alternative.
+	for(var/slot in slot2type)
+		if(istype(user.vars[slot], slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
+			qdel(user.vars[slot])
+			continue
+
+		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !(chosen_prof.exists_list[slot]))
+			continue
+
+		if(istype(user.vars[slot], slot2type[slot]) && slot == "wear_id") //always remove old flesh IDs, so they get properly updated
+			qdel(user.vars[slot])
+
+		var/obj/item/C
+		var/equip = 0
+		if(!user.vars[slot])
+			var/thetype = slot2type[slot]
+			equip = 1
+			C = new thetype(user)
+
+		else if(istype(user.vars[slot], slot2type[slot]))
+			C = user.vars[slot]
+
+		C.appearance = chosen_prof.appearance_list[slot]
+		C.name = chosen_prof.name_list[slot]
+		C.flags_cover = chosen_prof.flags_cover_list[slot]
+		C.lefthand_file = chosen_prof.lefthand_file_list[slot]
+		C.righthand_file = chosen_prof.righthand_file_list[slot]
+		C.inhand_icon_state = chosen_prof.inhand_icon_state_list[slot]
+		C.worn_icon = chosen_prof.worn_icon_list[slot]
+		C.worn_icon_state = chosen_prof.worn_icon_state_list[slot]
+
+		if(istype(C, /obj/item/changeling/id) && chosen_prof.id_icon)
+			var/obj/item/changeling/id/flesh_id = C
+			flesh_id.hud_icon = chosen_prof.id_icon
+
+		if(equip)
+			user.equip_to_slot_or_del(C, slot2slot[slot])
+			if(!QDELETED(C))
+				ADD_TRAIT(C, TRAIT_NODROP, CHANGELING_TRAIT)
+
+	for(var/stored_scar_line in chosen_prof.stored_scars)
+		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)
+		if(attempted_fake_scar)
+			attempted_fake_scar.fake = TRUE
+
+	user.regenerate_icons()
 
 // Profile
 
@@ -534,12 +663,6 @@
 	newprofile.profile_snapshot = profile_snapshot
 	newprofile.id_icon = id_icon
 
-/datum/antagonist/changeling/xenobio
-	name = "Xenobio Changeling"
-	give_objectives = FALSE
-	show_in_roundend = FALSE //These are here for admin tracking purposes only
-	you_are_greet = FALSE
-
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
 
@@ -556,18 +679,16 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!</b>")]"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
 				changelingwin = FALSE
 			count++
 
 	if(changelingwin)
-		parts += "<span class='greentext'>The changeling was successful!</span>"
+		parts += span_greentext("The changeling was successful!")
 	else
-		parts += "<span class='redtext'>The changeling has failed.</span>"
+		parts += span_redtext("The changeling has failed.")
 
 	return parts.Join("<br>")
 
-/datum/antagonist/changeling/xenobio/antag_listing_name()
-	return ..() + "(Xenobio)"

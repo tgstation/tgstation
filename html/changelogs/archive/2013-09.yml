@@ -1,0 +1,90 @@
+2013-09-01:
+  Cael_Aislinn:
+  - rscadd: 'Terbs Fun Week Day 3: Detective can reskin his gun to one of five variants:
+      Leopard Spots, Gold Trim, Black Panther, Peacemaker and the Original.'
+2013-09-02:
+  Cael_Aislinn:
+  - rscadd: 'Terbs Fun Week Day 4: Humans, aliens and cyborgs now show speech bubbles
+      when they talk.'
+2013-09-03:
+  Cael_Aislinn:
+  - rscadd: 'Terbs Fun Week Day 5: Chef gets a Nanotrasen-issued icecream machine
+      with four pre-approved icecream flavours and two official cone types.'
+2013-09-12:
+  AndroidSFV:
+  - rscadd: "AI Photography: AIs now have two new verbs, Take Picture and View Picture.\
+      \ The pictures the AI takes are centered on the AI's eyeobj. You can use these\
+      \ pictures on a newscaster, and print them at a photocopier.\n\t"
+2013-09-13:
+  JJRcop:
+  - rscadd: We at Nanotrasen would like to assure you that we know the pain of waiting
+      five minutes for the emergency shuttle to be dispatched in a high-alert situation
+      due to our confirmation-of-distress policy. Therefore, we have amended our confirmation-of-distress
+      policy so that, in the event of a red alert, the distress confirmation period
+      is shortened to three minutes and we will hurry in preparing the shuttle for
+      transit. This totals to 6 minutes, in hope that it will give our <b>very expensive
+      equipment</b> a better chance of recovery.
+2013-09-17:
+  SuperSayu:
+  - bugfix: You can no longer strip people through windows and windoors
+  - bugfix: You can open doors by hand even if there is a firedoor in the way, making
+      firedoor+airlock no longer an unbeatable combination
+  - rscadd: Ghosts can now click on anything to examine it, or double click to jump
+      to a turf.  Double clicking a mob, bot, or (heaven forbid) singularity/Nar-Sie
+      will let you follow it.  Double clicking your own corpse re-enters it.
+  - rscadd: AI can double click a mob to follow it, as well as double clicking turfs
+      to jump.
+  - rscadd: Ventcrawling mobs can alt-click a vent to start ventcrawling.
+  - wip: Telekinesis is now part of the click system.  You can click on buttons, items,
+      etc, without having a telekinetic throw in hand; the throw will appear when
+      you click on something you can move (with your mind).
+2013-09-19:
+  Malkevin:
+  - tweak: Juggernaut's ablative armor has been adjusted. They have a greater chance
+      to reflect lasers however on reflection they take half damage instead of no
+      damage, basically this adjustment means you should be able to kill a Juggernaut
+      with two laser guns instead of four! Also their reflection spread has been greatly
+      widened, enjoy the lightshow
+  - rscadd: Cargo can now order exile implants.
+  - tweak: Checking a collector's last power output via analyzers has been moved to
+      multitools, because that actually made sense (betcha didn't know this existed,
+      I know I didn't)
+  - rscadd: Analyzers can now be used to check the gas level of the tank in a loaded
+      radiation collector (yay no more crowbars), you can also use them on pipes to
+      check gas levels (yay no more pipe meters)
+2013-09-21:
+  Malkevin:
+  - rscadd: 'Due to complaints about Security not announcing themselves before making
+      arrests NT has now issued it''s Sec team with loud hailer integrated gas masks,
+      found in their standard equipment lockers. Users can adjust the mask''s level
+      of aggression with a screwdriver.  '
+  - wip: The sprites could be shaded better. Think you can do better? <a href="http://www.ss13.eu/phpbb/viewtopic.php?f=11&amp;t=17&amp;sid=24a5a7a670cc6308e9e306591c8132d1&amp;start=80#p36310">Post
+      your submissions here. </a>
+2013-09-26:
+  Cheridan:
+  - rscadd: "<b>Nanotrasen Anomaly Primer:</b><br/>\n\t\tUnstable anomalies have been\
+      \ spotted in your region of space. These anomalies can be hazardous and destructive,\
+      \ though our initial encounters with these space oddities has discovered a method\
+      \ of neutralization. Method follows.<br/>\n\t\t<p>Step 1. Upon confirmation\
+      \ of an anomaly sighting, report its location. Early detection is key.<br/>\n\
+      \t\tStep 2. Using an atmospheric analyzer at short range, determine the frequency\
+      \ that the anomaly's core is fluctuating at.<br/>\n\t\tStep 3. Send a signal\
+      \ through the frequency using a radio signaller. Note that non-specialized signaller\
+      \ devices may possibly lack the frequency range needed.<br/></p>\n\t\tWith the\
+      \ anomaly neutralized and the station brought out of danger, inspect the area\
+      \ for any remnants of the anomaly. Properly researched, we believe these events\
+      \ could provide vast amounts of valuable data.<br/>\n\t\t<i>Did you find this\
+      \ report helpful?</i> <select><option value=\"yes\">Yes</option><option value=\"\
+      no\">No</option></select>"
+2013-09-28:
+  Ergovisavi:
+  - rscadd: Mobs can now be lit on fire. Wearing a full firesuit (or similar) will
+      protect you. Extinguishers, Showers, Space, Cryo, Resisting, being splashed
+      with water can all extinguish you. Being splashed with fuel/ethanol/plasma makes
+      you more flammable. Water makes you less flammable.
+2013-09-29:
+  RobRichards:
+  - rscadd: '<b>Nanotrasen Cyborg Upgrades:</b><br/>
+
+      Standard issue Engineering cyborgs now come equipped with replacement floor
+      tiles which they can replenish at recharge stations.'

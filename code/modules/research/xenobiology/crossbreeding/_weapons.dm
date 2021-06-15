@@ -37,8 +37,8 @@ Slimecrossing Weapons
 			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
 			hitsound = 'sound/weapons/sear.ogg'
-			attack_verb_continuous = string_list(list("burns", "sings", "heats"))
-			attack_verb_simple = string_list(list("burn", "sing", "heat"))
+			attack_verb_continuous = string_list(list("burns", "singes", "heats"))
+			attack_verb_simple = string_list(list("burn", "singe", "heat"))
 		if(TOX)
 			hitsound = 'sound/weapons/pierce.ogg'
 			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))

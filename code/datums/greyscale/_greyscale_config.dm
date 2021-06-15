@@ -1,12 +1,28 @@
+#define MAX_SANE_LAYERS 50
+
+/// A datum tying together a greyscale configuration and dmi file. Required for using GAGS and handles the code interactions.
 /datum/greyscale_config
+	/// User friendly name used in the debug menu
+	var/name
+
 	/// Reference to the json config file
 	var/json_config
 
 	/// Reference to the dmi file for this config
 	var/icon_file
 
+	/// An optional var to set that tells the material system what material this configuration is for.
+	/// Use a typepath here, not an instance.
+	var/datum/material/material_skin
+
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Do not set any further vars, the json file specified above is what generates the object
+
+	/// Spritesheet width of the icon_file
+	var/width
+
+	/// Spritesheet height of the icon_file
+	var/height
 
 	/// String path to the json file, used for reloading
 	var/string_json_config
@@ -27,26 +43,24 @@
 // Sensible error messages that tell you exactly what's wrong is the best way to make this easy to use
 /datum/greyscale_config/New()
 	if(!json_config)
-		CRASH("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
+		stack_trace("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
 	string_json_config = "[json_config]"
 	if(!icon_file)
-		CRASH("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
+		stack_trace("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
 	string_icon_file = "[icon_file]"
-
-	Refresh()
+	if(!name)
+		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
 		json_config = file(string_json_config)
 		icon_file = file(string_icon_file)
 
-	icon_states = list()
-
 	var/list/raw = json_decode(file2text(json_config))
 	ReadIconStateConfiguration(raw)
 
 	if(!length(icon_states))
-		CRASH("The json configuration [DebugName()] is missing any icon_states.")
+		CRASH("The json configuration [DebugName()] doesn't have any icon states.")
 
 	icon_cache = list()
 
@@ -54,10 +68,12 @@
 
 /// Gets the name used for debug purposes
 /datum/greyscale_config/proc/DebugName()
-	return "([icon_file]|[json_config])"
+	var/display_name = name || "MISSING_NAME"
+	return "[display_name] ([icon_file]|[json_config])"
 
 /// Takes the json icon state configuration and puts it into a more processed format
 /datum/greyscale_config/proc/ReadIconStateConfiguration(list/data)
+	icon_states = list()
 	for(var/state in data)
 		var/list/raw_layers = data[state]
 		if(!length(raw_layers))
@@ -76,8 +92,8 @@
 	if(!islist(data[1]))
 		var/layer_type = SSgreyscale.layer_types[data["type"]]
 		if(!layer_type)
-			CRASH("An unknown layer type was specified in greyscale configuration json: [data["layer_type"]]")
-		return new layer_type(icon_file, data)
+			CRASH("An unknown layer type was specified in the json of greyscale configuration [DebugName()]: [data["layer_type"]]")
+		return new layer_type(icon_file, data.Copy()) // We don't want anything in there touching our version of the data
 	var/list/output = list()
 	for(var/list/group as anything in data)
 		output += ReadLayerGroup(group)
@@ -87,6 +103,10 @@
 
 /// Reads layer configurations to take out some useful overall information
 /datum/greyscale_config/proc/ReadMetadata()
+	var/icon/source = icon(icon_file)
+	height = source.Height()
+	width = source.Width()
+
 	var/list/datum/greyscale_layer/all_layers = list()
 	var/list/to_process = list()
 	for(var/state in icon_states)
@@ -99,32 +119,64 @@
 		else
 			all_layers += current
 
+	if(length(all_layers) > MAX_SANE_LAYERS)
+		stack_trace("[DebugName()] has [length(all_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
+
 	var/list/color_groups = list()
+	var/largest_id = 0
 	for(var/datum/greyscale_layer/layer as anything in all_layers)
 		for(var/id in layer.color_ids)
+			if(!isnum(id))
+				continue
+			largest_id = max(id, largest_id)
 			color_groups["[id]"] = TRUE
+
+	for(var/i in 1 to largest_id)
+		if(color_groups["[i]"])
+			continue
+		stack_trace("Color Ids are required to be sequential and start from 1. [DebugName()] has a max id of [largest_id] but is missing [i].")
 
 	expected_colors = length(color_groups)
 
 /// Actually create the icon and color it in, handles caching
-/datum/greyscale_config/proc/Generate(color_string, list/render_steps)
+/datum/greyscale_config/proc/Generate(color_string)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
-	if(new_icon && !render_steps)
+	if(new_icon)
 		return icon(new_icon)
-	var/list/colors = ParseColorString(color_string)
+
+	var/icon/icon_bundle = GenerateBundle(color_string)
+
+	// This block is done like this because generated icons are unable to be scaled before getting added to the rsc
+	icon_bundle = fcopy_rsc(icon_bundle)
+	icon_bundle = icon(icon_bundle)
+	icon_bundle.Scale(width, height)
+	icon_bundle = fcopy_rsc(icon_bundle)
+
+	icon_cache[key] = icon_bundle
+	var/icon/output = icon(icon_bundle)
+	return output
+
+/// Handles the actual icon manipulation to create the spritesheet
+/datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps)
+	if(!istype(colors))
+		colors = SSgreyscale.ParseColorString(colors)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
-	var/icon/icon_bundle = new
+
+	var/list/generated_icons = list()
 	for(var/icon_state in icon_states)
 		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], render_steps)
 		// We read a pixel to force the icon to be fully generated before we let it loose into the world
 		// I hate this
 		generated_icon.GetPixel(1, 1)
-		icon_bundle.Insert(generated_icon, icon_state)
-	icon_bundle = fcopy_rsc(icon_bundle)
-	icon_cache[key] = icon_bundle
-	return icon(icon_bundle)
+		generated_icons[icon_state] = generated_icon
+
+	var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
+	for(var/icon_state in generated_icons)
+		icon_bundle.Insert(generated_icons[icon_state], icon_state)
+
+	return icon_bundle
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
@@ -144,7 +196,10 @@
 
 		// These are so we can see the result of every step of the process in the preview ui
 		if(render_steps)
-			render_steps[image(layer_icon)] = image(new_icon)
+			var/list/icon_data = list()
+			render_steps[icon(layer_icon)] = icon_data
+			icon_data["config_name"] = name
+			icon_data["result"] = icon(new_icon)
 	return new_icon
 
 /datum/greyscale_config/proc/GenerateDebug(colors)
@@ -152,11 +207,7 @@
 	var/list/debug_steps = list()
 	output["steps"] = debug_steps
 
-	output["icon"] = Generate(colors, debug_steps)
+	output["icon"] = GenerateBundle(colors, debug_steps)
 	return output
 
-/datum/greyscale_config/proc/ParseColorString(color_string)
-	. = list()
-	var/list/split_colors = splittext(color_string, "#")
-	for(var/color in 2 to length(split_colors))
-		. += "#[split_colors[color]]"
+#undef MAX_SANE_LAYERS

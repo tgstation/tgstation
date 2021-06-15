@@ -143,7 +143,7 @@
 	do_sparks(2, TRUE, owner)
 	owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!<span>")
 	if(current_charges <= 0)
-		owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
+		owner.visible_message(span_warning("[owner]'s shield overloads!"))
 
 /datum/component/shielded/proc/check_recharge_rune(datum/source, obj/item/wizard_armour_charge/recharge_rune, mob/living/user)
 	SIGNAL_HANDLER
@@ -152,8 +152,9 @@
 		return
 	. = COMPONENT_NO_AFTERATTACK
 	if(!istype(parent, /obj/item/clothing/suit/space/hardsuit/shielded/wizard))
-		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
+		to_chat(user, span_warning("The rune can only be used on battlemage armour!"))
 		return
 
 	current_charges += recharge_rune.restored_charges
-	to_chat(user, "<span class='notice'>You charge \the [parent]. It can now absorb [current_charges] hits.</span>")
+	to_chat(user, span_notice("You charge \the [parent]. It can now absorb [current_charges] hits."))
+	qdel(recharge_rune)

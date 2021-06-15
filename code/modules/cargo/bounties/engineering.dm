@@ -10,9 +10,10 @@
 	if(!..())
 		return FALSE
 	var/obj/item/tank/T = O
-	if(!T.air_contents.gases[gas_type])
+	var/datum/gas_mixture/our_mix = T.return_air()
+	if(!our_mix.gases[gas_type])
 		return FALSE
-	return T.air_contents.gases[gas_type][MOLES] >= moles_required
+	return our_mix.gases[gas_type][MOLES] >= moles_required
 
 /datum/bounty/item/engineering/gas/nitryl_tank
 	name = "Full Tank of Nitryl"

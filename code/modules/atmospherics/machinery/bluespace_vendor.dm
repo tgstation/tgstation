@@ -120,21 +120,21 @@
 		update_appearance()
 		return
 
-	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
+	connected_machine.bluespace_network.pump_gas_to(internal_tank.return_air(), (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!istype(multitool))
 		return
 	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
-		to_chat(user, "<span class='notice'>Wrong machine type in [multitool] buffer...</span>")
+		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
 	if(connected_machine)
-		to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
+		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
 	register_machine(multitool.buffer)
-	to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
+	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
@@ -156,11 +156,11 @@
 /obj/machinery/bluespace_vendor/examine(mob/user)
 	. = ..()
 	if(empty_tanks > 1)
-		. += "<span class='notice'>There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.</span>"
+		. += span_notice("There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.")
 	else if(empty_tanks == 1)
-		. += "<span class='notice'>There is only one empty tank available, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is only one empty tank available, please refill the machine by using iron sheets.")
 	else
-		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is no available tank, please refill the machine by using iron sheets.")
 
 ///Check what is the current operating mode
 /obj/machinery/bluespace_vendor/proc/check_mode()
@@ -182,6 +182,7 @@
 
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
+	SIGNAL_HANDLER
 	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
 	LAZYREMOVE(connected_machine.vendors, src)
 	connected_machine = null
@@ -191,13 +192,14 @@
 ///Check the price of the current tank, if the user doesn't have the money the gas will be merged back into the network
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
-	var/list/gases = internal_tank.air_contents.gases
+	var/datum/gas_mixture/working_mix = internal_tank.return_air()
+	var/list/gases = working_mix.gases
 	for(var/gas_id in gases)
 		temp_price += gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
-		var/datum/gas_mixture/remove = internal_tank.air_contents.remove(internal_tank.air_contents.total_moles())
+		var/datum/gas_mixture/remove = working_mix.remove_ratio(1)
 		connected_machine.bluespace_network.merge(remove)
 		return
 	connected_machine.credits_gained += gas_price + tank_cost
@@ -241,7 +243,8 @@
 	data["inserted_tank"] = inserted_tank
 	var/total_tank_pressure
 	if(internal_tank)
-		total_tank_pressure = internal_tank.air_contents.return_pressure()
+		var/datum/gas_mixture/working_mix = internal_tank.return_air()
+		total_tank_pressure = working_mix.return_pressure()
 	else
 		total_tank_pressure = 0
 	data["tank_full"] = total_tank_pressure

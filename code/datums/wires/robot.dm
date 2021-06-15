@@ -13,6 +13,8 @@
 	..()
 
 /datum/wires/robot/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/mob/living/silicon/robot/R = holder
 	if(R.wiresexposed)
 		return TRUE
@@ -48,17 +50,17 @@
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
+				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
-				R.visible_message("<span class='notice'>[R] gently chimes.</span>", "<span class='notice'>LawSync protocol engaged.</span>")
+				R.visible_message(span_notice("[R] gently chimes."), span_notice("LawSync protocol engaged."))
 				R.lawsync()
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
 		if(WIRE_RESET_MODEL)
 			if(R.has_model())
-				R.visible_message("<span class='notice'>[R]'s model servos twitch.</span>", "<span class='notice'>Your model display flickers.</span>")
+				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder
@@ -81,7 +83,7 @@
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.status = mend
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
+				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
 				R.logevent("Camera Module fault [mend?"cleared":"detected"]")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)

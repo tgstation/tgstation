@@ -209,7 +209,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -275,6 +275,22 @@
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()

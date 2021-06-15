@@ -51,11 +51,9 @@
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
-/obj/machinery/firealarm/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
 /obj/machinery/firealarm/Destroy()
 	myarea.firereset(src)
@@ -80,32 +78,32 @@
 	. += "fire_overlay"
 	if(is_station_level(z))
 		. += "fire_[SSsecurity_level.current_level]"
-		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]", layer, plane)
-		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]")
+		. += emissive_appearance(icon, "fire_[SSsecurity_level.current_level]")
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
-		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]", layer, plane)
-		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
+		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 
 	var/area/A = get_area(src)
 
 	if(!detecting || !A.fire)
 		. += "fire_off"
-		. += mutable_appearance(icon, "fire_off", layer, plane)
-		. += mutable_appearance(icon, "fire_off", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_off")
+		. += emissive_appearance(icon, "fire_off")
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
-		. += mutable_appearance(icon, "fire_emagged", layer, plane)
-		. += mutable_appearance(icon, "fire_emagged", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_emagged")
+		. += emissive_appearance(icon, "fire_emagged")
 	else
 		. += "fire_on"
-		. += mutable_appearance(icon, "fire_on", layer, plane)
-		. += mutable_appearance(icon, "fire_on", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_on")
+		. += emissive_appearance(icon, "fire_on")
 
 	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
 		. += "fire_detected"
-		. += mutable_appearance(icon, "fire_detected", layer, plane)
-		. += mutable_appearance(icon, "fire_detected", layer, EMISSIVE_PLANE) //Pain
+		. += mutable_appearance(icon, "fire_detected")
+		. += emissive_appearance(icon, "fire_detected") //Pain
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -122,8 +120,8 @@
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
-		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
-							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
+		user.visible_message(span_warning("Sparks fly out of [src]!"),
+							span_notice("You emag [src], disabling its thermal sensors."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -138,7 +136,7 @@
 		update_appearance()
 	alarm()
 
-/obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
+/obj/machinery/firealarm/atmos_end()
 	if(!detecting)
 		return
 	if(triggered)
@@ -199,7 +197,7 @@
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
 		W.play_tool_sound(src)
 		panel_open = !panel_open
-		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
+		to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
 		update_appearance()
 		return
 
@@ -210,12 +208,12 @@
 				if(!W.tool_start_check(user, amount=0))
 					return
 
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+				to_chat(user, span_notice("You begin repairing [src]..."))
 				if(W.use_tool(src, user, 40, volume=50))
 					obj_integrity = max_integrity
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
+					to_chat(user, span_notice("You repair [src]."))
 			else
-				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+				to_chat(user, span_warning("[src] is already in good condition!"))
 			return
 
 		switch(buildstage)
@@ -223,16 +221,16 @@
 				if(W.tool_behaviour == TOOL_MULTITOOL)
 					detecting = !detecting
 					if (src.detecting)
-						user.visible_message("<span class='notice'>[user] reconnects [src]'s detecting unit!</span>", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
+						user.visible_message(span_notice("[user] reconnects [src]'s detecting unit!"), span_notice("You reconnect [src]'s detecting unit."))
 					else
-						user.visible_message("<span class='notice'>[user] disconnects [src]'s detecting unit!</span>", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+						user.visible_message(span_notice("[user] disconnects [src]'s detecting unit!"), span_notice("You disconnect [src]'s detecting unit."))
 					return
 
 				else if(W.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
-					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
+					to_chat(user, span_notice("You cut the wires from \the [src]."))
 					update_appearance()
 					return
 
@@ -247,31 +245,31 @@
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
-						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
+						to_chat(user, span_warning("You need more cable for this!"))
 					else
 						coil.use(5)
 						buildstage = 2
-						to_chat(user, "<span class='notice'>You wire \the [src].</span>")
+						to_chat(user, span_notice("You wire \the [src]."))
 						update_appearance()
 					return
 
 				else if(W.tool_behaviour == TOOL_CROWBAR)
-					user.visible_message("<span class='notice'>[user.name] removes the electronics from [src.name].</span>", \
-										"<span class='notice'>You start prying out the circuit...</span>")
+					user.visible_message(span_notice("[user.name] removes the electronics from [src.name]."), \
+										span_notice("You start prying out the circuit..."))
 					if(W.use_tool(src, user, 20, volume=50))
 						if(buildstage == 1)
 							if(machine_stat & BROKEN)
-								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
+								to_chat(user, span_notice("You remove the destroyed circuit."))
 								set_machine_stat(machine_stat & ~BROKEN)
 							else
-								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
+								to_chat(user, span_notice("You pry out the circuit."))
 								new /obj/item/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_appearance()
 					return
 			if(0)
 				if(istype(W, /obj/item/electronics/firealarm))
-					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
+					to_chat(user, span_notice("You insert the circuit."))
 					qdel(W)
 					buildstage = 1
 					update_appearance()
@@ -281,15 +279,15 @@
 					var/obj/item/electroadaptive_pseudocircuit/P = W
 					if(!P.adapt_circuit(user, 15))
 						return
-					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
-					"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
+					user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+					span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
 					buildstage = 1
 					update_appearance()
 					return
 
 				else if(W.tool_behaviour == TOOL_WRENCH)
-					user.visible_message("<span class='notice'>[user] removes the fire alarm assembly from the wall.</span>", \
-						"<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
+					user.visible_message(span_notice("[user] removes the fire alarm assembly from the wall."), \
+						span_notice("You remove the fire alarm assembly from the wall."))
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.forceMove(user.drop_location())
 					W.play_tool_sound(src)
@@ -306,8 +304,8 @@
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
-			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
-			"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
+			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+			span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
 			buildstage = 1
 			update_appearance()
 			return TRUE
@@ -338,7 +336,7 @@
 		if(!(machine_stat & BROKEN))
 			var/obj/item/I = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)
-				I.obj_integrity = I.max_integrity * 0.5
+				I.update_integrity(I.max_integrity * 0.5)
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 

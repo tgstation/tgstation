@@ -11,10 +11,10 @@
 //Can be used whilst unconscious.
 /datum/action/changeling/fleshmend/sting_action(mob/living/user)
 	if(user.has_status_effect(STATUS_EFFECT_FLESHMEND))
-		to_chat(user, "<span class='warning'>We are already fleshmending!</span>")
+		to_chat(user, span_warning("We are already fleshmending!"))
 		return
 	..()
-	to_chat(user, "<span class='notice'>We begin to heal rapidly.</span>")
+	to_chat(user, span_notice("We begin to heal rapidly."))
 	user.apply_status_effect(STATUS_EFFECT_FLESHMEND)
 	return TRUE
 

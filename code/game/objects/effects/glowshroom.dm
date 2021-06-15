@@ -98,6 +98,7 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
 
+	AddElement(/datum/element/atmos_sensitive, mapload)
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 
 	START_PROCESSING(SSobj, src)
@@ -106,10 +107,6 @@
 	. = ..()
 	GLOB.glowshrooms--
 	STOP_PROCESSING(SSobj, src)
-
-/obj/structure/glowshroom/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
 
 /**
  * Causes glowshroom spreading across the floor/walls.
@@ -236,7 +233,7 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
-	visible_message("<span class='danger'>[src] melts away!</span>")
+	visible_message(span_danger("[src] melts away!"))
 	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)

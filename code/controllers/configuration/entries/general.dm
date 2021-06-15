@@ -104,8 +104,6 @@
 
 /datum/config_entry/flag/allow_vote_restart // allow votes to restart
 
-/datum/config_entry/flag/allow_vote_mode // allow votes to change mode
-
 /datum/config_entry/flag/allow_vote_map // allow votes to change map
 
 /datum/config_entry/number/vote_delay // minimum time between voting sessions (deciseconds, 10 minute default)
@@ -511,3 +509,6 @@
 /datum/config_entry/string/centcom_ban_db // URL for the CentCom Galactic Ban DB API
 
 /datum/config_entry/string/centcom_source_whitelist
+
+/// URL for admins to be redirected to for 2FA
+/datum/config_entry/string/admin_2fa_url

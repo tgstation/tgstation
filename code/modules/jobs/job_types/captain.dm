@@ -26,6 +26,12 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
+	mail_goodies = list(
+		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
+		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10
+	)
+
 /datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()
 	if(announce_captaincy)
@@ -62,7 +68,6 @@
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	SSmapping.HACK_LoadMapConfig()
 	var/list/job_changes = SSmapping.config.job_changes
 	if(!length(job_changes))
 		return

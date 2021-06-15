@@ -14,7 +14,7 @@
 	else
 		host_mob.adjustBruteLoss(1, TRUE)
 	if(prob(3))
-		to_chat(host_mob, "<span class='warning'>You feel a stab of pain from somewhere inside you.</span>")
+		to_chat(host_mob, span_warning("You feel a stab of pain from somewhere inside you."))
 
 /datum/nanite_program/poison
 	name = "Poisoning"
@@ -25,7 +25,7 @@
 /datum/nanite_program/poison/active_effect()
 	host_mob.adjustToxLoss(1)
 	if(prob(2))
-		to_chat(host_mob, "<span class='warning'>You feel nauseous.</span>")
+		to_chat(host_mob, span_warning("You feel nauseous."))
 		if(iscarbon(host_mob))
 			var/mob/living/carbon/C = host_mob
 			C.vomit(20)
@@ -46,7 +46,8 @@
 
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
-	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even."
+	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even, \
+			and scaling linearly for a net positive of 0.1 production rate per 20 nanite volume beyond that."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -67,12 +68,12 @@
 
 /datum/nanite_program/meltdown/enable_passive_effect()
 	. = ..()
-	to_chat(host_mob, "<span class='userdanger'>Your blood is burning!</span>")
+	to_chat(host_mob, span_userdanger("Your blood is burning!"))
 	nanites.safety_threshold = 0
 
 /datum/nanite_program/meltdown/disable_passive_effect()
 	. = ..()
-	to_chat(host_mob, "<span class='warning'>Your blood cools down, and the pain gradually fades.</span>")
+	to_chat(host_mob, span_warning("Your blood cools down, and the pain gradually fades."))
 
 /datum/nanite_program/explosive
 	name = "Chain Detonation"
@@ -83,12 +84,12 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/explosive/on_trigger(comm_message)
-	host_mob.visible_message("<span class='warning'>[host_mob] starts emitting a high-pitched buzzing, and [host_mob.p_their()] skin begins to glow...</span>",\
-							"<span class='userdanger'>You start emitting a high-pitched buzzing, and your skin begins to glow...</span>")
+	host_mob.visible_message(span_warning("[host_mob] starts emitting a high-pitched buzzing, and [host_mob.p_their()] skin begins to glow..."),\
+							span_userdanger("You start emitting a high-pitched buzzing, and your skin begins to glow..."))
 	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
 /datum/nanite_program/explosive/proc/boom()
-	dyn_explosion(get_turf(host_mob), nanites.nanite_volume / 50)
+	dyn_explosion(host_mob, nanites.nanite_volume / 50)
 	qdel(nanites)
 
 //TODO make it defuse if triggered again

@@ -39,8 +39,6 @@
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
-	pet_bonus = TRUE
-	pet_bonus_emote = "purrs!"
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -51,6 +49,7 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -230,7 +229,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
 					if(COOLDOWN_FINISHED(src, emote_cooldown))
-						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
+						visible_message(span_warning("[src] chases [M] around, to no avail!"))
 						step(M, pick(GLOB.cardinals))
 						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 					break
@@ -307,7 +306,7 @@
 	free cake to the station!</b>")
 	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
 	if(new_name)
-		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
+		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
 		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)

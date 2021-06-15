@@ -68,7 +68,7 @@
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, -1, 0, 1)
+	explosion(target, devastation_range = -1, light_impact_range = 1)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet

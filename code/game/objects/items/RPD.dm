@@ -196,23 +196,39 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
+	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
-	var/working = 0
+	///Direction of the device we are going to spawn, set up in the UI
 	var/p_dir = NORTH
+	///Initial direction of the smart pipe we are going to spawn, set up in the UI
+	var/p_init_dir = ALL_CARDINALS
+	///Is the device of the flipped type?
 	var/p_flipped = FALSE
+	///Color of the device we are going to spawn
 	var/paint_color = "grey"
-	var/atmos_build_speed = 5 //deciseconds (500ms)
-	var/disposal_build_speed = 5
-	var/transit_build_speed = 5
-	var/destroy_speed = 5
-	var/paint_speed = 5
+	///Speed of building atmos devices
+	var/atmos_build_speed = 0.5 SECONDS
+	///Speed of building disposal devices
+	var/disposal_build_speed = 0.5 SECONDS
+	///Speed of building transit devices
+	var/transit_build_speed = 0.5 SECONDS
+	///Speed of removal of unwrenched devices
+	var/destroy_speed = 0.5 SECONDS
+	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
+	///Piping layer we are going to spawn the atmos device in
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	///Layer for disposal ducts
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+	///Stores the current device to spawn
 	var/datum/pipe_info/recipe
+	///Stores the first atmos device
 	var/static/datum/pipe_info/first_atmos
+	///Stores the first disposal device
 	var/static/datum/pipe_info/first_disposal
+	///Stores the first transit device
 	var/static/datum/pipe_info/first_transit
+	///The modes that are allowed for the RPD
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
@@ -271,7 +287,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
 		piping_layer = target.piping_layer
-		to_chat(user, "<span class='notice'>You change [src] to [paint_color] color and layer [piping_layer] pipes.</span>")
+		to_chat(user, span_notice("You change [src] to [paint_color] color and layer [piping_layer] pipes."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
@@ -290,14 +306,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
  */
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
 	if(rpd_up.upgrade_flags& upgrade_flags)
-		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
+		to_chat(user, span_warning("[src] has already installed this upgrade!"))
 		return
 	upgrade_flags |= rpd_up.upgrade_flags
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
+	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
 	return(BRUTELOSS)
@@ -344,6 +360,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
+	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
+	for(var/direction in GLOB.cardinals)
+		if(p_init_dir & direction)
+			init_directions[dir2text(direction)] = TRUE
+	data["init_directions"] = init_directions
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
@@ -390,6 +411,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				mode &= ~n
 			else
 				mode |= n
+		if("init_dir_setting")
+			p_init_dir ^= text2dir(params["dir_flag"])
+		if("init_reset")
+			p_init_dir = ALL_CARDINALS
 	if(playeffect)
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
@@ -422,8 +447,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	. = TRUE
 
-	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter))
-		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
+	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
+		to_chat(user, span_notice("You start destroying a pipe..."))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = attack_target))
 			activate()
@@ -437,7 +462,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return ..()
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if (recipe.type == /datum/pipe_info/meter)
-					to_chat(user, "<span class='notice'>You start building a meter...</span>")
+					to_chat(user, span_notice("You start building a meter..."))
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						activate()
 						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(attack_target))
@@ -446,44 +471,50 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							PM.wrench_act(user, src)
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
-						to_chat(user, "<span class='notice'>You can't build this object on the layer...</span>")
+						to_chat(user, span_notice("You can't build this object on the layer..."))
 						return ..()
-					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
+					to_chat(user, span_notice("You start building a pipe..."))
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
-							to_chat(user, "<span class='notice'>You can't build this object on the layer...</span>")
+							to_chat(user, span_notice("You can't build this object on the layer..."))
 							return ..()
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-						var/obj/item/pipe/P = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color])
-
-						if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
-							var/obj/item/pipe/trinary/flippable/F = P
+						var/obj/item/pipe/pipe_type = new pipe_item_type(
+							get_turf(attack_target),
+							queued_p_type,
+							queued_p_dir,
+							null,
+							GLOB.pipe_paint_colors[paint_color],
+							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
+						)
+						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
+							var/obj/item/pipe/trinary/flippable/F = pipe_type
 							F.flipped = queued_p_flipped
 
-						P.update()
-						P.add_fingerprint(usr)
-						P.setPipingLayer(piping_layer)
+						pipe_type.update()
+						pipe_type.add_fingerprint(usr)
+						pipe_type.setPipingLayer(piping_layer)
 						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
-							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
-							P.wrench_act(user, src)
+							pipe_type.wrench_act(user, src)
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
 					return ..()
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
-					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
-				to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
+				to_chat(user, span_notice("You start building a disposals pipe..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, disposal_build_speed, target = attack_target))
 					var/obj/structure/disposalconstruct/C = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
 
 					if(!C.can_place())
-						to_chat(user, "<span class='warning'>There's not enough room to build that here!</span>")
+						to_chat(user, span_warning("There's not enough room to build that here!"))
 						qdel(C)
 						return
 
@@ -500,9 +531,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return ..()
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
-					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
-				to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
+				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
 					activate()
@@ -542,7 +573,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	else
 		return
 	SStgui.update_uis(src)
-	to_chat(source, "<span class='notice'>You set the layer to [piping_layer].</span>")
+	to_chat(source, span_notice("You set the layer to [piping_layer]."))
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

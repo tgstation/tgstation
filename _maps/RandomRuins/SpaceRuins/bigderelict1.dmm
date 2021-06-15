@@ -41,9 +41,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aj" = (
-/obj/machinery/button/door{
-	name = "tradepost entry doors";
-	pixel_y = 24
+/obj/machinery/button/door/directional/north{
+	id = "bigderelictshipdock";
+	name = "tradepost entry doors"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -73,9 +73,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ap" = (
 /obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -99,9 +97,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "av" = (
 /obj/structure/table,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aw" = (
@@ -232,9 +228,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aT" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -300,12 +294,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bh" = (
-/obj/machinery/button/door{
-	id = "bigderelictship";
-	name = "shuttle cargo doors";
-	pixel_x = 24
-	},
 /obj/structure/alien/weeds/creature,
+/obj/machinery/button/door/directional/east{
+	id = "bigderelictship";
+	name = "shuttle cargo doors"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bi" = (
@@ -481,9 +474,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/derelictoutpost)
 "bD" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "bE" = (
@@ -513,9 +504,7 @@
 	desc = "A .45 bullet casing. This one is spent.";
 	name = "spent bullet casing"
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bI" = (
@@ -529,9 +518,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bK" = (
 /obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "bL" = (
@@ -566,9 +553,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "bQ" = (
 /obj/structure/filingcabinet,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -613,11 +598,6 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bT" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/button/door{
-	id = "bigderelictcheckpoint";
-	name = "security checkpoint control";
-	pixel_y = -24
-	},
 /obj/structure/alien/weeds/creature,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -628,6 +608,10 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/button/door/directional/south{
+	id = "bigderelictcheckpoint";
+	name = "security checkpoint control"
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -665,9 +649,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "bY" = (
@@ -746,9 +728,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
 "ch" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "ci" = (
@@ -881,10 +861,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "cG" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cH" = (
@@ -932,7 +909,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cO" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cP" = (
@@ -940,10 +917,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cQ" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cR" = (
@@ -1023,7 +997,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dc" = (
 /obj/structure/alien/weeds/creature,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dd" = (
@@ -1049,7 +1023,7 @@
 	name = "dried blood trail"
 	},
 /obj/structure/alien/weeds/creature,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1132,9 +1106,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dp" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dq" = (
@@ -1367,9 +1339,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dU" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dV" = (
@@ -1396,9 +1366,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dZ" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ea" = (
@@ -1414,9 +1382,7 @@
 /obj/item/target/clown,
 /obj/item/target/alien,
 /obj/item/target,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1592,7 +1558,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/iron,
@@ -1604,10 +1570,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eD" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eE" = (
@@ -1624,7 +1587,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eG" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eH" = (
