@@ -53,7 +53,7 @@
 	if(!droppoint)
 		droppoint = drop_location()
 	if(collapse)
-		visible_message("<span class='warning'>The stack of paper collapses!</span>")
+		visible_message(span_warning("The stack of paper collapses!"))
 	for(var/atom/movable/movable_atom in contents)
 		movable_atom.forceMove(droppoint)
 		if(!movable_atom.pixel_y)
@@ -87,7 +87,7 @@
 		pen.add_fingerprint(user)
 		pen.forceMove(user.loc)
 		user.put_in_hands(pen)
-		to_chat(user, "<span class='notice'>You take [pen] out of [src].</span>")
+		to_chat(user, span_notice("You take [pen] out of [src]."))
 		bin_pen = null
 		update_appearance()
 	else if(LAZYLEN(papers))
@@ -96,10 +96,10 @@
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
 		user.put_in_hands(top_paper)
-		to_chat(user, "<span class='notice'>You take [top_paper] out of [src].</span>")
+		to_chat(user, span_notice("You take [top_paper] out of [src]."))
 		update_appearance()
 	else
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 	add_fingerprint(user)
 	return ..()
 
@@ -111,14 +111,14 @@
 		var/obj/item/paper/paper = I
 		if(!user.transferItemToLoc(paper, src))
 			return
-		to_chat(user, "<span class='notice'>You put [paper] in [src].</span>")
+		to_chat(user, span_notice("You put [paper] in [src]."))
 		papers.Add(paper)
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/pen = I
 		if(!user.transferItemToLoc(pen, src))
 			return
-		to_chat(user, "<span class='notice'>You put [pen] in [src].</span>")
+		to_chat(user, span_notice("You put [pen] in [src]."))
 		bin_pen = pen
 		update_appearance()
 	else
@@ -217,11 +217,11 @@
 
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/paper/carbon))
-		to_chat(user, "<span class='warning'>[W] won't fit into [src].</span>")
+		to_chat(user, span_warning("[W] won't fit into [src]."))
 		return
 	if(W.get_sharpness())
 		if(W.use_tool(src, user, 1 SECONDS))
-			to_chat(user, "<span class='notice'>You slice the cable from [src].</span>")
+			to_chat(user, span_notice("You slice the cable from [src]."))
 			deconstruct(TRUE)
 	else
 		..()

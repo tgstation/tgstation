@@ -218,8 +218,8 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
+			to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
+		audible_message(span_danger("[src] buzzes oddly!"))
 		flick("medibot_spark", src)
 		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
@@ -247,7 +247,7 @@
 /mob/living/simple_animal/bot/medbot/proc/tip_over(mob/user)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
-	user.visible_message("<span class='danger'>[user] tips over [src]!</span>", "<span class='danger'>You tip [src] over!</span>")
+	user.visible_message(span_danger("[user] tips over [src]!"), span_danger("You tip [src] over!"))
 	mode = BOT_TIPPED
 	var/matrix/mat = transform
 	transform = mat.Turn(180)
@@ -258,13 +258,13 @@
 	var/list/messagevoice
 
 	if(user)
-		user.visible_message("<span class='notice'>[user] sets [src] right-side up!</span>", "<span class='green'>You set [src] right-side up!</span>")
+		user.visible_message(span_notice("[user] sets [src] right-side up!"), span_green("You set [src] right-side up!"))
 		if(user.name == tipper_name)
 			messagevoice = list("I forgive you." = 'sound/voice/medbot/forgive.ogg')
 		else
 			messagevoice = list("Thank you!" = 'sound/voice/medbot/thank_you.ogg', "You are a good person." = 'sound/voice/medbot/youre_good.ogg')
 	else
-		visible_message("<span class='notice'>[src] manages to wriggle enough to right itself.</span>")
+		visible_message(span_notice("[src] manages to wriggle enough to right itself."))
 		messagevoice = list("Fuck you." = 'sound/voice/medbot/fuck_you.ogg', "Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg')
 	tipper_name = null
 	if(world.time > last_tipping_action_voice + 15 SECONDS)
@@ -319,9 +319,9 @@
 		if(MEDBOT_PANIC_MED to MEDBOT_PANIC_HIGH)
 			. += "They are tipped over and appear visibly distressed." // now we humanize the medbot as a they, not an it
 		if(MEDBOT_PANIC_HIGH to MEDBOT_PANIC_FUCK)
-			. += "<span class='warning'>They are tipped over and visibly panicking!</span>"
+			. += span_warning("They are tipped over and visibly panicking!")
 		if(MEDBOT_PANIC_FUCK to INFINITY)
-			. += "<span class='warning'><b>They are freaking out from being tipped over!</b></span>"
+			. += span_warning("<b>They are freaking out from being tipped over!</b>")
 
 /mob/living/simple_animal/bot/medbot/handle_automated_action()
 	if(!..())
@@ -454,11 +454,11 @@
 
 /mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
-		to_chat(user, "<span class='warning'>You're already interacting with [src].</span>")
+		to_chat(user, span_warning("You're already interacting with [src]."))
 		return
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && mode != BOT_TIPPED)
-		user.visible_message("<span class='danger'>[user] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
+		user.visible_message(span_danger("[user] begins tipping over [src]."), span_warning("You begin tipping over [src]..."))
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)
 			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
@@ -471,7 +471,7 @@
 			tip_over(user)
 
 	else if(!user.combat_mode && mode == BOT_TIPPED)
-		user.visible_message("<span class='notice'>[user] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		user.visible_message(span_notice("[user] begins righting [src]."), span_notice("You begin righting [src]..."))
 		if(do_after(user, 3 SECONDS, target=src))
 			set_right(user)
 	else
@@ -540,7 +540,7 @@
 
 		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
 			if(C.maxHealth - C.get_organic_health() < heal_threshold)
-				to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)</span>")
+				to_chat(src, span_notice("[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
 
 			var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
 			var/message = pick(messagevoice)
@@ -549,8 +549,8 @@
 			bot_reset()
 			tending = FALSE
 		else if(patient)
-			C.visible_message("<span class='danger'>[src] is trying to tend the wounds of [patient]!</span>", \
-				"<span class='userdanger'>[src] is trying to tend your wounds!</span>")
+			C.visible_message(span_danger("[src] is trying to tend the wounds of [patient]!"), \
+				span_userdanger("[src] is trying to tend your wounds!"))
 
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
 				if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
@@ -565,8 +565,8 @@
 					else
 						patient.apply_damage_type((healies*-1),treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
-					C.visible_message("<span class='notice'>[src] tends the wounds of [patient]!</span>", \
-						"<span class='infoplain'><span class='green'>[src] tends your wounds!</span></span>")
+					C.visible_message(span_notice("[src] tends the wounds of [patient]!"), \
+						"<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
 					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)
 					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (30 SECONDS))
 				else
@@ -583,7 +583,7 @@
 
 /mob/living/simple_animal/bot/medbot/explode()
 	on = FALSE
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	drop_part(firstaid, Tsec)
