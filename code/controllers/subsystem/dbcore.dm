@@ -475,7 +475,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	store_data(json_decode(job_result))
 	return TRUE
 
-/datum/db_query/proc/store_data(var/result)
+/datum/db_query/proc/store_data(result)
 	switch(result["status"])
 		if("ok")
 			rows = result["rows"]
