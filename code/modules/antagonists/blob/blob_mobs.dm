@@ -149,7 +149,7 @@
 	if(pod_ask == "No" || !src || QDELETED(src))
 		return
 	if(key)
-		to_chat(user, "<span class='warning'>Someone else already took this spore!</span>")
+		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
 	log_game("[key_name(src)] took control of [name].")
@@ -177,7 +177,7 @@
 	H.forceMove(src)
 	oldguy = H
 	update_icons()
-	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message(span_warning("The corpse of [H.name] suddenly rises!"))
 	if(!key)
 		notify_ghosts("\A [src] has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Blob Zombie Created")
 

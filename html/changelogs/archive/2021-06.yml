@@ -337,3 +337,6 @@
   - qol: Most alt-click atmospheric interactions changed to use balloon alerts.
   zxaber:
   - sounddel: The space-jam ambient sound will no longer play inside the AI's core.
+2021-06-15:
+  Watermelon914:
+  - refactor: Refactors how spans are done in code.

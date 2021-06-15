@@ -56,7 +56,7 @@
  * Displays a message, spawns a human venus trap, then qdels itself.
  */
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
-	visible_message("<span class='danger'>The plant has borne fruit!</span>")
+	visible_message(span_danger("The plant has borne fruit!"))
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
 	qdel(src)
 
@@ -85,7 +85,7 @@
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
 			L.adjustBruteLoss(5)
-			to_chat(L, "<span class='alert'>You cut yourself on the thorny vines.</span>")
+			to_chat(L, span_alert("You cut yourself on the thorny vines."))
 
 /**
  * Venus Human Trap
@@ -177,7 +177,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/Login()
 	. = ..()
-	to_chat(src, "<span class='boldwarning'>You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!</span>")
+	to_chat(src, span_boldwarning("You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"))
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
@@ -200,7 +200,7 @@
 	if(plant_ask == "No" || QDELETED(src))
 		return
 	if(key)
-		to_chat(user, "<span class='warning'>Someone else already took this plant!</span>")
+		to_chat(user, span_warning("Someone else already took this plant!"))
 		return
 	key = user.key
 	log_game("[key_name(src)] took control of [name].")

@@ -150,7 +150,7 @@
 		open_backpack = TRUE
 
 	if(notify_player)
-		LAZYADD(where_items_spawned, "<span class='boldnotice'>You have \a [quirk_item] [where]. [flavour_text]</span>")
+		LAZYADD(where_items_spawned, span_boldnotice("You have \a [quirk_item] [where]. [flavour_text]"))
 
 /datum/quirk/item_quirk/post_add()
 	if(open_backpack)
