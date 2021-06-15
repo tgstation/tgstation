@@ -40,6 +40,7 @@
 	if(pizza)
 		pizza = new pizza
 	update_appearance()
+	ADD_TRAIT(src, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 
 
 /obj/item/pizzabox/Destroy()

@@ -43,19 +43,6 @@
 		time_remaining = DECOMPOSITION_TIME_RAW
 		examine_type = 2
 
-/*
-/datum/component/decomposition/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
-	RegisterSignal(parent, list(
-		COMSIG_ITEM_PICKUP, //person picks up an item
-		COMSIG_STORAGE_ENTERED), //Object enters a storage object (boxes, etc.)
-		.proc/picked_up)
-	RegisterSignal(parent, list(
-		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
-		COMSIG_STORAGE_EXITED), //Object exits a storage object (boxes, etc)
-		.proc/dropped)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine) // Self-explanitory
-*/
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP,
