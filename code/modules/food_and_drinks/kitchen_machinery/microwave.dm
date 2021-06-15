@@ -37,8 +37,6 @@
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
 	soundloop = new(list(src), FALSE)
-	var/obj/machinery/microwave/wave = src
-	ADD_TRAIT(wave, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
 
 /obj/machinery/microwave/Destroy()
 	eject()

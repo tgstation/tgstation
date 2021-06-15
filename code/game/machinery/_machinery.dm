@@ -152,6 +152,8 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
+	ADD_TRAIT(src, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT) // I realized if it's going to be inside ANY MACHINE it'd probably get preserved
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)

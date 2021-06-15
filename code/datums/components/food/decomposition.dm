@@ -49,13 +49,14 @@
 		// prevent decomposition
 		if(active_timers)
 			time_remaining = timeleft(timerid)
-		deltimer(timerid)
+			deltimer(timerid)
 		return
 	// do decomposition
 	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE, TIMER_UNIQUE) //Was told to use this instead of processing I guess
 
 /datum/component/decomposition/Destroy()
-	deltimer(timerid) //Just in case
+	if(active_timers)
+		deltimer(timerid) //Just in case
 	return ..()
 
 /datum/component/decomposition/proc/dropped()
@@ -67,7 +68,7 @@
 	SIGNAL_HANDLER
 	if(active_timers)
 		time_remaining = timeleft(timerid)
-	deltimer(timerid)
+		deltimer(timerid)
 	protected = TRUE
 	if(!handled)
 		handled = TRUE

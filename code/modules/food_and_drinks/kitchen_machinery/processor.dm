@@ -40,8 +40,6 @@
 			typecache[input_type] = recipe
 		for(var/machine_type in typesof(recipe.required_machine))
 			LAZYADD(processor_inputs[machine_type], typecache)
-	var/obj/machinery/processor/processing = src
-	ADD_TRAIT(processing, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)

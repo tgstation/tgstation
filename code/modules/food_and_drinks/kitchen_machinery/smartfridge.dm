@@ -22,8 +22,6 @@
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
 	create_reagents(100, NO_REACT)
-	var/obj/machinery/smartfridge/fridge = src
-	ADD_TRAIT(fridge, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)

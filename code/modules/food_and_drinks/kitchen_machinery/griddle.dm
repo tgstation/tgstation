@@ -28,8 +28,6 @@
 	if(isnum(variant))
 		variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
-	var/obj/machinery/griddle/stove = src
-	ADD_TRAIT(stove, TRAIT_PROTECT_FOOD, FOOD_MACHINE_TRAIT)
 
 /obj/machinery/griddle/Destroy()
 	QDEL_NULL(grill_loop)
