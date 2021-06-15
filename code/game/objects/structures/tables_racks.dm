@@ -257,7 +257,7 @@
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, "<span class='notice'>You deconstruct the table.</span>")
+			to_chat(user, span_notice("You deconstruct the table."))
 			var/turf/open/ground = get_turf(src)
 			REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 			qdel(src)
