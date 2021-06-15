@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 			L = H
 	var/turf/T = find_safe_turf()
 	L.forceMove(T)
-	to_chat(L, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
+	to_chat(L, span_notice("You blink and find yourself in [get_area_name(T)]."))
 
 /**
  * Deletes minds from the cursed minds list after their deletion
