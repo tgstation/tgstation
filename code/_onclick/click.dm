@@ -141,10 +141,8 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
-				RightClickOn(A)
-			else
-				UnarmedAttack(A, FALSE, modifiers)
+
+			UnarmedAttack(A, FALSE, modifiers)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -306,29 +304,6 @@
  * Useful for mobs that have their abilities mapped to right click.
  */
 /mob/proc/ranged_secondary_attack(atom/target, modifiers)
-
-/**
- * Right click
- *
- * Used for right-clicking interactions, in similar fashion of AltClick.
- * Returns [atom/proc/RightClick] on the atom being right-clicked, which checks if the click chain doesn't continue.
- * Arguments:
- * * atom/target - The atom being rightclicked.
- */
-/mob/proc/RightClickOn(atom/target)
-	return target.RightClick(src)
-
-/**
- * Proc used for right-clicking
- *
- * Used for right-click interactions, called by [mob/proc/RightClickOn].
- * Returns TRUE if the click chain should not continue from a right-click.
- * Arguments:
- * * mob/user - The mob right-clicking.
- */
-/atom/proc/RightClick(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_CLICK_RIGHT, user) & COMPONENT_CANCEL_CLICK_RIGHT)
-		return TRUE
 
 /**
  * Middle click
