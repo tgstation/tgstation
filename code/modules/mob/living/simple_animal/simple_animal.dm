@@ -169,6 +169,11 @@
 
 	///Limits how often mobs can hunt other mobs
 	COOLDOWN_DECLARE(emote_cooldown)
+	var/turns_since_scan = 0
+
+	///Is this animal horrible at their hunting job?
+	var/inept_hunter = FALSE
+
 
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
@@ -718,38 +723,62 @@
 /mob/living/simple_animal/proc/stop_deadchat_plays()
 	stop_automated_movement = FALSE
 
-//Makes this mob hunt the prey.
-/mob/living/simple_animal/proc/hunt_target(hunted)
-	var/mob/living/simple_animal/prey = hunted
-	var/turns_since_scan = 0
-	if(prey == src) //It keeps fucking eating itself
+//Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
+/mob/living/simple_animal/proc/hunt_target(hunted, living_target = TRUE)
+	if(hunted == src) //Make sure it doesn't eat itself.
 		return
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(prey in view(1,src))
-				if(!prey.stat && Adjacent(prey) && COOLDOWN_FINISHED(src, emote_cooldown))
-					manual_emote("chomps [prey]!")
-					prey.death()
-					prey = null
-					stop_automated_movement = 0
-					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-					break
-	if(!stat && !buckled)
+			if(!living_target)
+				for(var/obj/prey_obj in view(1,src)) // Objs can't move, so inept_hunter does nothing here.
+					if(Adjacent(prey_obj) && COOLDOWN_FINISHED(src, emote_cooldown) && prey_obj.type == hunted)
+						manual_emote("chomps [prey_obj]!")
+						qdel(prey_obj)
+						prey_obj = null
+						stop_automated_movement = FALSE
+						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+						break
+			else
+				for(var/mob/living/simple_animal/prey in view(1,src))
+					if(inept_hunter && prey.type == hunted)
+						if(COOLDOWN_FINISHED(src, emote_cooldown))
+							visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
+							step(prey, pick(GLOB.cardinals))
+							COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+						break
+					if(!prey.stat && Adjacent(prey) && COOLDOWN_FINISHED(src, emote_cooldown) && prey.type == hunted)
+						manual_emote("chomps [prey]!")
+						prey.death()
+						prey = null
+						stop_automated_movement = FALSE
+						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+						break
+	if(!(src.stat) && !(src.buckled))
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
 			turns_since_scan = 0
-			if((prey) && !(isturf(prey.loc) || ishuman(prey.loc) ))
-				prey = null
-				stop_automated_movement = 0
-			if(!prey || !(prey.loc in oview(src, 3)))
-				prey = null
-				stop_automated_movement = 0
-				var/mob/living/simple_animal/quarry = prey
-				for(quarry in oview(src,3))
-					if(isturf(quarry.loc) && !quarry.stat)
-						quarry = prey
-						break
-			if(prey)
-				stop_automated_movement = 1
-				walk_to(src,prey,0,3)
+			if(living_target)
+				for(var/mob/living/simple_animal/yummy in oview(src,3))
+					if(yummy.type == hunted)
+						if((yummy) && !(isturf(yummy.loc) || ishuman(yummy.loc) || yummy.stat || yummy.loc in oview(src, 3)))
+							yummy = null
+							stop_automated_movement = FALSE
+						if((!yummy || !(yummy.loc in oview(src, 3))))
+							yummy = null
+							stop_automated_movement = FALSE
+						if(yummy)
+							stop_automated_movement = TRUE
+							walk_to(src,yummy,0,3)
+			else
+				for(var/obj/yummy_obj in oview(src,3))
+					if(yummy_obj.type == hunted)
+						if((yummy_obj) && !(isturf(yummy_obj.loc) || yummy_obj.loc in oview(src, 3)))
+							yummy_obj = null
+							stop_automated_movement = FALSE
+						if(!yummy_obj)
+							yummy_obj = null
+							stop_automated_movement = FALSE
+						if(yummy_obj)
+							stop_automated_movement = TRUE
+							walk_to(src,yummy_obj,0,3)

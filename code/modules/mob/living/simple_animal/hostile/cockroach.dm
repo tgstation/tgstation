@@ -45,39 +45,10 @@
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
-/*
-/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) //Natural predators
-	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
-			for(var/obj/effect/decal/cleanable/ants/ant in view(1,src))//Tiny ants are defenseless to this mighty foe
-				if(Adjacent(ant) && COOLDOWN_FINISHED(src, emote_cooldown))
-					manual_emote("chomps [ant]!")
-					qdel(ant)
-					movement_target = null
-					stop_automated_movement = 0
-					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-					break
-	..()
-	if(!stat && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			walk_to(src,0)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = 0
-			if(!movement_target || !(movement_target.loc in oview(src, 3)))
-				movement_target = null
-				stop_automated_movement = 0
-				for(var/obj/effect/decal/cleanable/ants/snack in oview(src,3))
-					if(isturf(snack.loc))
-						movement_target = snack
-						break
-			if(movement_target)
-				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
-*/
 
+/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) //Natural predators
+	. = ..()
+	hunt_target(hunted = /obj/effect/decal/cleanable/ants, living_target = FALSE)
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
