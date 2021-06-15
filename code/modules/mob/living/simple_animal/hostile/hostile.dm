@@ -207,7 +207,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -408,7 +408,7 @@
 	if(CheckFriendlyFire(A))
 		return
 	if(!(simple_mob_flags & SILENCE_RANGED_MESSAGE))
-		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+		visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
 
 
 	if(rapid > 1)
@@ -646,13 +646,13 @@
 				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
 					blocked = TRUE
 			if(!blocked)
-				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
+				L.visible_message(span_danger("[src] charges on [L]!"), span_userdanger("[src] charges into you!"))
 				L.Knockdown(knockdown_time)
 			else
 				Stun((knockdown_time * 2), ignore_canstun = TRUE)
 			charge_end()
 		else if(hit_atom.density && !hit_atom.CanPass(src))
-			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
+			visible_message(span_danger("[src] smashes into [hit_atom]!"))
 			Stun((knockdown_time * 2), ignore_canstun = TRUE)
 
 		if(charge_state)

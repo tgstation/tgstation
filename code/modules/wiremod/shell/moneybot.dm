@@ -43,11 +43,15 @@
 	/// The amount of money to dispense
 	var/datum/port/input/dispense_amount
 
+	/// Outputs a signal when it fails to output any money.
+	var/datum/port/output/on_fail
+
 	var/obj/structure/money_bot/attached_bot
 
 /obj/item/circuit_component/money_dispenser/Initialize()
 	. = ..()
 	dispense_amount = add_input_port("Amount", PORT_TYPE_NUMBER)
+	on_fail = add_output_port("On Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_dispenser/register_shell(atom/movable/shell)
 	. = ..()
@@ -67,6 +71,10 @@
 		return
 
 	var/to_dispense = clamp(dispense_amount.input_value, 0, attached_bot.stored_money)
+	if(!to_dispense)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	attached_bot.add_money(-to_dispense)
 	new /obj/item/holochip(drop_location(), to_dispense)
 

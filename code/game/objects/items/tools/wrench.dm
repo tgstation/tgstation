@@ -23,7 +23,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 
 /obj/item/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
@@ -50,10 +50,10 @@
 /obj/item/wrench/medical/examine(mob/user)
 	. = ..()
 	if(suicider)
-		. += "<span class='notice'>For some reason, it reminds you of [suicider].</span>"
+		. += span_notice("For some reason, it reminds you of [suicider].")
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
@@ -102,7 +102,7 @@
 		tool_behaviour = initial(tool_behaviour)
 		toolspeed = initial(toolspeed)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] can now be kept at bay.</span>")
+		to_chat(user, span_warning("[src] can now be kept at bay."))
 	else
 		on = TRUE
 		force = 6
@@ -111,7 +111,7 @@
 		tool_behaviour = TOOL_WRENCH
 		toolspeed = 1
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] is now active. Woe onto your enemies!</span>")
+		to_chat(user, span_warning("[src] is now active. Woe onto your enemies!"))
 	update_appearance()
 
 /obj/item/wrench/combat/update_icon_state()

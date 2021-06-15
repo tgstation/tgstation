@@ -964,7 +964,7 @@
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, delta_time)
 
 	if(length(mix_message)) //This is only at the end
-		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
@@ -1026,7 +1026,7 @@
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
 	if(length(mix_message))
-		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 
 /*
@@ -1047,7 +1047,7 @@
 				mix_message += end_reaction(equilibrium)
 				any_stopped = TRUE
 	if(length(mix_message))
-		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]</span>")
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
 	return any_stopped
 
 /*
@@ -1138,13 +1138,13 @@
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
-			my_atom.audible_message("<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.Uses--
 			if(extract.Uses <= 0) // give the notification that the slime core is dead
-				my_atom.visible_message("<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+				my_atom.visible_message(span_notice("[iconhtml] \The [my_atom]'s power is consumed in the reaction."))
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
