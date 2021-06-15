@@ -24,11 +24,11 @@ Regenerative extracts:
 		return
 	if(H != user)
 		user.visible_message(span_notice("[user] crushes [src] over [H], the milky goo quickly regenerating some of [H.p_their()] injuries!"),
-			"<span class='notice'>You squeeze [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries."))
+			span_notice("You squeeze [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries."))
 	else
 		user.visible_message(span_notice("[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating some of [user.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
-      
+
 	core_effect_before(H, user)
 	activate_healing(H)
 	core_effect(H, user)
