@@ -320,7 +320,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/construct_class = show_radial_menu(first_invoker, sacrificial, constructs, require_near = TRUE, tooltips = TRUE)
 		if(QDELETED(sacrificial))
 			return FALSE
-		makeNewConstructFromClass(construct_class, THEME_CULT, sacrificial, first_invoker, FALSE, get_turf(src))
+		makeNewConstructFromClass(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
 		var/mob/living/silicon/robot/sacriborg = sacrificial
 		sacriborg.mmi = null
 		qdel(sacrificial)
