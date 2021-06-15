@@ -44,6 +44,11 @@ SUBSYSTEM_DEF(dbcore)
 
 	return ..()
 
+/datum/controller/subsystem/dbcore/stat_entry(msg)
+	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
+	return ..()
+
+
 /datum/controller/subsystem/dbcore/fire(resumed = FALSE)
 	if(!IsConnected())
 		return
@@ -132,6 +137,9 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/Shutdown()
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
+		for(var/datum/db_query/query in queries_current)
+			run_query(query)
+
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
 			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id)
@@ -195,7 +203,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/timeout = max(CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
 	var/thread_limit = CONFIG_GET(number/bsql_thread_limit)
 
-	max_concurrent_queries = thread_limit
+	max_concurrent_queries = CONFIG_GET(number/max_concurrent_queries)
 
 	var/result = json_decode(rustg_sql_connect_pool(json_encode(list(
 		"host" = address,
