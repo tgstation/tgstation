@@ -101,7 +101,7 @@
 		return
 
 	if(!Adjacent(attack_target))
-		to_chat(src, span_warning("You are too far away to use your slam attack on [A]!"))
+		to_chat(src, span_warning("You are too far away to use your slam attack on [attack_target]!"))
 		return
 
 	if(slam_cooldown + slam_cooldown_time > world.time)
