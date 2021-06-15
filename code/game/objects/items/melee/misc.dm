@@ -187,7 +187,7 @@
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
 	/// Default wait time until can stun again.
-	var/cooldown = 40 
+	var/cooldown = (4 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
 	var/knockdown_time = (1.5 SECONDS)
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
@@ -220,10 +220,11 @@
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[round(100 / stamina_damage, 0.1)] hit\s!")]"
 
+/// Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
 
-/// Description for when turning the baton "on"
+/// Description for when turning the baton "on".
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
