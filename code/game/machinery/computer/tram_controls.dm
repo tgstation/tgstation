@@ -81,22 +81,23 @@
 
 	switch (action)
 		if ("send")
-			try_send_tram(params["destination"])
+			var/obj/effect/landmark/tram/to_where
+			for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+				if(destination.destination_id == params["destination"])
+					to_where = destination
+					break
+
+			if (!to_where)
+				return FALSE
+
+			return try_send_tram(to_where)
 
 /// Attempts to sends the tram to the given destination
-/obj/machinery/computer/tram_controls/proc/try_send_tram(destination_name)
+/obj/machinery/computer/tram_controls/proc/try_send_tram(obj/effect/landmark/tram/to_where)
 	if(tram_part.travelling)
-		return
-	var/destination_id = params["destination"]
-	var/obj/effect/landmark/tram/to_where
-	for(var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
-		if(destination.destination_id == destination_id)
-			to_where = destination
-			break
-	if(!to_where)
-		return
+		return FALSE
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started
-		return
+		return FALSE
 	tram_part.tram_travel(to_where)
 	return TRUE
 
@@ -158,7 +159,17 @@
 	if (!tram_controls.powered())
 		return
 
-	tram_controls.try_send_tram(new_destination.input_value)
+	var/destination
+
+	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
+		if(possible_destination.name == new_destination.input_value)
+			destination = possible_destination
+			break
+
+	if (!destination)
+		return
+
+	tram_controls.try_send_tram(destination)
 
 /obj/item/circuit_component/tram_controls/proc/on_tram_set_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
