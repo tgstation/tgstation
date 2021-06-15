@@ -1325,8 +1325,6 @@
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			area.poweralert(FALSE, src)
-			if(cell.percent() > 75)
-				area.poweralert(FALSE, src)
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
@@ -1398,17 +1396,18 @@
  *   - [AUTOSET_OFF]: The APC turns automatic channels off.
  */
 /obj/machinery/power/apc/proc/autoset(val, on)
-	if(on == AUTOSET_FORCE_OFF)
-		if(val == APC_CHANNEL_ON) // if on, return off
-			return APC_CHANNEL_OFF
-		else if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
-			return APC_CHANNEL_AUTO_OFF
-	else if(on == AUTOSET_ON)
-		if(val == APC_CHANNEL_AUTO_OFF) // if auto-off, return auto-on
-			return APC_CHANNEL_AUTO_ON
-	else if(on == AUTOSET_OFF)
-		if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
-			return APC_CHANNEL_AUTO_OFF
+	switch(on)
+		if(AUTOSET_FORCE_OFF)
+			if(val == APC_CHANNEL_ON) // if on, return off
+				return APC_CHANNEL_OFF
+			else if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
+				return APC_CHANNEL_AUTO_OFF
+		if(AUTOSET_ON)
+			if(val == APC_CHANNEL_AUTO_OFF) // if auto-off, return auto-on
+				return APC_CHANNEL_AUTO_ON
+		if(AUTOSET_OFF)
+			if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
+				return APC_CHANNEL_AUTO_OFF
 	return val
 
 /**

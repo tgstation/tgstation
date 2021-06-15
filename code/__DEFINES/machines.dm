@@ -197,3 +197,9 @@
 #define AIRALARM_BUILD_NO_WIRES 1
 /// Air alarm has all components but isn't completed
 #define AIRALARM_BUILD_COMPLETE 2
+
+///TODOKYLER: doc this
+#define TLV_DONT_CHECK -1
+#define TLV_NO_DANGER 0
+#define TLV_OUTSIDE_WARNING_LIMIT 1
+#define TLV_OUTSIDE_HAZARD_LIMIT 2
