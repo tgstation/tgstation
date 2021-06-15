@@ -95,9 +95,10 @@
 		melee_damage_lower = 15
 		melee_damage_upper = 15
 		var/mob_direction = get_dir(src,target)
+		var/atom/target_from = GET_TARGETS_FROM(src)
 		if(get_dist(src,target) > 1)
 			step(src,mob_direction)
-		if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from) && isliving(target))
+		if(isturf(target_from.loc) && target.Adjacent(target_from) && isliving(target))
 			var/mob/living/L = target
 			L.attack_animal(src)
 			return

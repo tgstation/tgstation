@@ -227,7 +227,7 @@
 		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(6)
 		operating = FALSE
-		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
+		desc += "<BR>[span_warning("Its access panel is smoking slightly.")]"
 		open(2)
 
 /obj/machinery/door/window/attackby(obj/item/I, mob/living/user, params)
@@ -239,17 +239,17 @@
 	if(!(flags_1&NODECONSTRUCT_1))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			if(density || operating)
-				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
+				to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
 				return
 			I.play_tool_sound(src)
 			panel_open = !panel_open
-			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [name].</span>")
+			to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the [name]."))
 			return
 
 		if(I.tool_behaviour == TOOL_CROWBAR)
 			if(panel_open && !density && !operating)
-				user.visible_message("<span class='notice'>[user] removes the electronics from the [name].</span>", \
-					"<span class='notice'>You start to remove electronics from the [name]...</span>")
+				user.visible_message(span_notice("[user] removes the electronics from the [name]."), \
+					span_notice("You start to remove electronics from the [name]..."))
 				if(I.use_tool(src, user, 40, volume=50))
 					if(panel_open && !density && !operating && loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(loc)
@@ -271,11 +271,11 @@
 						WA.created_name = name
 
 						if(obj_flags & EMAGGED)
-							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
+							to_chat(user, span_warning("You discard the damaged electronics."))
 							qdel(src)
 							return
 
-						to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
+						to_chat(user, span_notice("You remove the airlock electronics."))
 
 						var/obj/item/electronics/airlock/ae
 						if(!electronics)
@@ -308,7 +308,7 @@
 		else
 			close(2)
 	else
-		to_chat(user, "<span class='warning'>The door's motors resist your efforts to force it!</span>")
+		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)
@@ -354,7 +354,7 @@
 /obj/machinery/door/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, "<span class='notice'>You deconstruct the windoor.</span>")
+			to_chat(user, span_notice("You deconstruct the windoor."))
 			qdel(src)
 			return TRUE
 	return FALSE
