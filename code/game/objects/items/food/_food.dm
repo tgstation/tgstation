@@ -89,5 +89,5 @@
 ///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
 /obj/item/food/proc/MakeDecompose()
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition)
+		AddComponent(/datum/component/decomposition, decomp_flags = foodtypes)
 	return
