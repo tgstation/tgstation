@@ -41,8 +41,9 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
-	var/turf/open/ground = get_turf(src)
-	ADD_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
+	if(!istype(src, /obj/structure/table/rolling))
+		var/turf/open/ground = get_turf(src)
+		ADD_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -244,8 +245,9 @@
 			new frame(T)
 		else
 			new framestack(T, framestackamount)
-	var/turf/open/ground = get_turf(src)
-	REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
+	if(!istype(src, /obj/structure/table/rolling))
+		var/turf/open/ground = get_turf(src)
+		REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 	qdel(src)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -258,8 +260,9 @@
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct the table."))
-			var/turf/open/ground = get_turf(src)
-			REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
+			if(!istype(src, /obj/structure/table/rolling))
+				var/turf/open/ground = get_turf(src)
+				REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 			qdel(src)
 			return TRUE
 	return FALSE
