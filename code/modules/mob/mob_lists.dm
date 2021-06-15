@@ -22,6 +22,13 @@
 	if(client)
 		remove_from_current_living_players()
 
+///Adds a mob reference to the list of all suicided mobs
+/mob/proc/add_to_mob_suicide_list()
+	GLOB.suicided_mob_list += src
+	
+///Removes a mob references from the list of all suicided mobs
+/mob/proc/remove_from_mob_suicide_list()
+	GLOB.suicided_mob_list -= src
 
 ///Adds the mob reference to the list of all the dead mobs. If mob is cliented, it adds it to the list of all dead player-mobs.
 /mob/proc/add_to_dead_mob_list()

@@ -43,7 +43,7 @@
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)
-		to_chat(M, "<span class='info'>[message]</span>")
+		to_chat(M, span_info("[message]"))
 		if(once)
 			qdel(src)
 

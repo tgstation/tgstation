@@ -64,7 +64,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 	if(!is_operational)
-		to_chat(user, "<span class='notice'>[src] can't accept money when it's not functioning.</span>")
+		to_chat(user, span_notice("[src] can't accept money when it's not functioning."))
 		return
 	if(istype(O, /obj/item/holochip) || istype(O, /obj/item/stack/spacecash))
 		var/deposit_value = O.get_item_credit_value()

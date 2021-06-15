@@ -69,6 +69,9 @@
 		on_mob_remove()
 	if(nanites)
 		nanites.programs -= src
+	for(var/datum/nanite_rule/rule as anything in rules)
+		rule.remove()
+	rules.Cut()
 	return ..()
 
 /datum/nanite_program/proc/copy()

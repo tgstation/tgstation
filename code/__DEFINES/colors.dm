@@ -135,7 +135,7 @@
 #define LIGHT_COLOR_CYAN       "#7DE1E1"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
-/// More-saturated cyan. rgb(16, 21, 22)
+/// More-saturated cyan. rgb(64, 206, 255)
 #define LIGHT_COLOR_LIGHT_CYAN "#40CEFF"
 /// Saturated blue. rgb(51, 117, 248)
 #define LIGHT_COLOR_DARK_BLUE  "#6496FA"
