@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the RAM component retaining its output type after the input port is cleared."
