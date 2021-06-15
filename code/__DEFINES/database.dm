@@ -1,0 +1,4 @@
+#define DB_QUERY_STARTED 0
+#define DB_QUERY_READING 1
+#define DB_QUERY_FINISHED 2
+#define DB_QUERY_BROKEN 3

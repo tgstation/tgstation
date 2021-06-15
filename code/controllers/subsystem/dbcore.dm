@@ -280,8 +280,12 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/sql
 	var/arguments
 
+	var/datum/callback/success_callback
+	var/datum/callback/fail_callback
+
 	// Status information
-	var/in_progress
+	var/status
+	var/job_id
 	var/last_error
 	var/last_activity
 	var/last_activity_time
@@ -349,7 +353,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/job_result_str
 
 	if (async)
-		var/job_id = rustg_sql_query_async(connection, sql, json_encode(arguments))
+		job_id = rustg_sql_query_async(connection, sql, json_encode(arguments))
 		in_progress = TRUE
 		UNTIL((job_result_str = rustg_sql_check_query(job_id)) != RUSTG_JOB_NO_RESULTS_YET)
 		in_progress = FALSE
@@ -373,6 +377,37 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		if ("offline")
 			last_error = "offline"
 			return FALSE
+
+/datum/db_query/proc/read_single()
+	if(status >= DB_QUERY_FINISHED)
+		return
+
+	var/job_result = rustg_sql_check_query(job_id)
+	if(job_result == RUSTG_JOB_NO_RESULTS_YET)
+		return
+
+	var/result = json_decode(job_result)
+	switch(result["status"])
+		if("ok")
+			rows = result["rows"]
+			affected = result["affected"]
+			last_insert_id = result["last_insert_id"]
+			status = DB_QUERY_FINISHED
+			return
+		if("err")
+			last_error = result["data"]
+			status = DB_QUERY_BROKEN
+			return
+		if("offline")
+			last_error = "CONNECTION OFFLINE"
+			status = DB_QUERY_BROKEN
+			return
+
+/datum/db_query/process(delta_time)
+	read_single()
+	if(status == DB_QUERY_FINISHED)
+		if(success_callback && )
+
 
 /datum/db_query/proc/slow_query_check()
 	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
