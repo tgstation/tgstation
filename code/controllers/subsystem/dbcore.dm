@@ -15,7 +15,6 @@ SUBSYSTEM_DEF(dbcore)
 
 	var/last_error
 
-	/// Maximum amount of queries that can be ran concurrently
 	var/max_concurrent_queries = 25
 
 	/// All the current queries that exist.
@@ -92,6 +91,8 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/create_active_query(datum/db_query/query)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
+	if(IsAdminAdvancedProcCall())
+		return FALSE
 	run_query(query)
 	queries_active += query
 	return query
@@ -99,6 +100,8 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/process_query(datum/db_query/query)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
+	if(IsAdminAdvancedProcCall())
+		return FALSE
 	if(QDELETED(query))
 		return FALSE
 	if(query.process(wait))
@@ -107,14 +110,20 @@ SUBSYSTEM_DEF(dbcore)
 	return TRUE
 
 /datum/controller/subsystem/dbcore/proc/run_query_sync(datum/db_query/query)
+	if(IsAdminAdvancedProcCall())
+		return
 	run_query(query)
 	UNTIL(query.process())
 	return query
 
 /datum/controller/subsystem/dbcore/proc/run_query(datum/db_query/query)
+	if(IsAdminAdvancedProcCall())
+		return
 	query.job_id = rustg_sql_query_async(connection, query.sql, json_encode(query.arguments))
 
 /datum/controller/subsystem/dbcore/proc/queue_query(datum/db_query/query)
+	if(IsAdminAdvancedProcCall())
+		return
 	queries_standby |= query
 
 /datum/controller/subsystem/dbcore/Recover()
@@ -127,7 +136,7 @@ SUBSYSTEM_DEF(dbcore)
 			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = :round_id",
 			list("end_state" = SSticker.end_state, "round_id" = GLOB.round_id)
 		)
-		query_round_shutdown.Execute(force = TRUE)
+		query_round_shutdown.Execute()
 		qdel(query_round_shutdown)
 	if(IsConnected())
 		Disconnect()
@@ -151,6 +160,16 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, connection))
+		return FALSE
+	if(var_name == NAMEOF(src, all_queries))
+		return FALSE
+	if(var_name == NAMEOF(src, queries_active))
+		return FALSE
+	if(var_name == NAMEOF(src, queries_new))
+		return FALSE
+	if(var_name == NAMEOF(src, queries_standby))
+		return FALSE
+	if(var_name == NAMEOF(src, queries_active))
 		return FALSE
 	return ..()
 
@@ -176,6 +195,8 @@ SUBSYSTEM_DEF(dbcore)
 	var/timeout = max(CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
 	var/thread_limit = CONFIG_GET(number/bsql_thread_limit)
 
+	max_concurrent_queries = thread_limit
+
 	var/result = json_decode(rustg_sql_connect_pool(json_encode(list(
 		"host" = address,
 		"port" = port,
@@ -200,7 +221,7 @@ SUBSYSTEM_DEF(dbcore)
 		if(Connect())
 			log_world("Database connection established.")
 			var/datum/db_query/query_db_version = NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute(force = TRUE)
+			query_db_version.Execute()
 			if(query_db_version.NextRow())
 				db_major = text2num(query_db_version.item[1])
 				db_minor = text2num(query_db_version.item[2])
@@ -423,7 +444,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(!.)
 		to_chat(usr, span_danger("A SQL error occurred during this operation, check the server logs."))
 
-/datum/db_query/proc/Execute(async = TRUE, log_error = TRUE, force = FALSE)
+/datum/db_query/proc/Execute(async = TRUE, log_error = TRUE)
 	Activity("Execute")
 	if(status == DB_QUERY_STARTED)
 		CRASH("Attempted to start a new query while waiting on the old one")
@@ -438,7 +459,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	Close()
 	status = DB_QUERY_STARTED
 	if(async)
-		if(force || !Master.current_runlevel)
+		if(!Master.current_runlevel || Master.processing == 0)
 			SSdbcore.run_query_sync(src)
 		else
 			SSdbcore.queue_query(src)
