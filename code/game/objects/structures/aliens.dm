@@ -312,19 +312,19 @@
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)
-				to_chat(user, "<span class='notice'>You clear the hatched egg.</span>")
+				to_chat(user, span_notice("You clear the hatched egg."))
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
 				qdel(src)
 				return
 			if(GROWING)
-				to_chat(user, "<span class='notice'>The child is not developed yet.</span>")
+				to_chat(user, span_notice("The child is not developed yet."))
 				return
 			if(GROWN)
-				to_chat(user, "<span class='notice'>You retrieve the child.</span>")
+				to_chat(user, span_notice("You retrieve the child."))
 				Burst(kill=FALSE)
 				return
 	else
-		to_chat(user, "<span class='notice'>It feels slimy.</span>")
+		to_chat(user, span_notice("It feels slimy."))
 		user.changeNext_move(CLICK_CD_MELEE)
 
 
@@ -362,6 +362,7 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/alien/egg/obj_break(damage_flag)
+	. = ..()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)

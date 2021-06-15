@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Flipping a gun will no longer unload all its bullets."

@@ -41,7 +41,8 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/retaliate/snake/ListTargets(atom/the_target)
-	. = oview(vision_range, targets_from) //get list of things in vision range
+	var/atom/target_from = GET_TARGETS_FROM(src)
+	. = oview(vision_range, target_from) //get list of things in vision range
 	var/list/living_mobs = list()
 	var/list/mice = list()
 	for (var/HM in .)
@@ -59,7 +60,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/snake/AttackingTarget()
 	if(istype(target, /mob/living/simple_animal/mouse))
-		visible_message("<span class='notice'>[name] consumes [target] in a single gulp!</span>", "<span class='notice'>You consume [target] in a single gulp!</span>")
+		visible_message(span_notice("[name] consumes [target] in a single gulp!"), span_notice("You consume [target] in a single gulp!"))
 		QDEL_NULL(target)
 		adjustBruteLoss(-2)
 	else

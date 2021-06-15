@@ -16,10 +16,10 @@
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && deconstructible)
-		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
+		user.visible_message(span_notice("[user] starts disassembling [src]..."), span_notice("You start disassembling [src]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 50))
-			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
+			user.visible_message(span_notice("[user] disassembles [src]!"), span_notice("You break down [src] into scrap metal."))
 			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new/obj/item/stack/sheet/iron(drop_location())
 			qdel(src)
@@ -278,9 +278,9 @@
 
 /obj/structure/fluff/hedge/attacked_by(obj/item/I, mob/living/user)
 	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
-		to_chat(user,"<span class='notice'>You start trimming \the [src].</span>")
+		to_chat(user,span_notice("You start trimming \the [src]."))
 		if(do_after(user, 3 SECONDS,target=src))
-			to_chat(user,"<span class='notice'>You finish trimming \the [src].</span>")
+			to_chat(user,span_notice("You finish trimming \the [src]."))
 			opacity = FALSE
 	else
 		return ..()

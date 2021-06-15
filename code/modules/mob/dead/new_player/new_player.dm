@@ -152,7 +152,7 @@
 
 	if(href_list["late_join"])
 		if(!SSticker?.IsRoundInProgress())
-			to_chat(usr, "<span class='boldwarning'>The round is either not ready, or has already finished...</span>")
+			to_chat(usr, span_boldwarning("The round is either not ready, or has already finished..."))
 			return
 
 		if(href_list["late_join"] == "override")
@@ -160,16 +160,16 @@
 			return
 
 		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in GLOB.admin_datums)))
-			to_chat(usr, "<span class='danger'>[CONFIG_GET(string/hard_popcap_message)]</span>")
+			to_chat(usr, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
 
 			var/queue_position = SSticker.queued_players.Find(usr)
 			if(queue_position == 1)
-				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
+				to_chat(usr, span_notice("You are next in line to join the game. You will be notified when a slot opens up."))
 			else if(queue_position)
-				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
+				to_chat(usr, span_notice("There are [queue_position-1] players in front of you in the queue to join the game."))
 			else
 				SSticker.queued_players += usr
-				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len].</span>")
+				to_chat(usr, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
 			return
 		LateChoices()
 
@@ -178,16 +178,16 @@
 
 	if(href_list["SelectedJob"])
 		if(!SSticker?.IsRoundInProgress())
-			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			to_chat(usr, span_danger("The round is either not ready, or has already finished..."))
 			return
 
 		if(!GLOB.enter_allowed)
-			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+			to_chat(usr, span_notice("There is an administrative lock on entering the game!"))
 			return
 
 		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
-				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				to_chat(usr, span_warning("Server is full."))
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -214,7 +214,7 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
+	var/this_is_like_playing_right = tgui_alert(usr, "Are you sure you wish to observe? You will not be able to play this round!","Player Setup",list("Yes","No"))
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -228,11 +228,11 @@
 	observer.started_as_observer = TRUE
 	close_spawn_windows()
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
-	to_chat(src, "<span class='notice'>Now teleporting.</span>")
+	to_chat(src, span_notice("Now teleporting."))
 	if (O)
 		observer.forceMove(O.loc)
 	else
-		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
+		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 	observer.key = key
 	observer.client = client
@@ -292,18 +292,18 @@
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	var/error = IsJobUnavailable(rank)
 	if(error != JOB_AVAILABLE)
-		alert(src, get_job_unavailable_error_message(error, rank))
+		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
 	if(SSticker.late_join_disabled)
-		alert(src, "An administrator has disabled late join spawning.")
+		tgui_alert(usr, "An administrator has disabled late join spawning.")
 		return FALSE
 
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
+			src << tgui_alert(usr,"The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
 
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
@@ -375,7 +375,7 @@
 						SSticker.mode.make_antag_chance(humanc)
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
-		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
+		SSquirks.AssignQuirks(humanc, humanc.client)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -439,7 +439,6 @@
 	var/mob/living/carbon/human/H = new(loc)
 
 	var/frn = CONFIG_GET(flag/force_random_names)
-	var/admin_anon_names = SSticker.anonymousnames
 	if(!frn)
 		frn = is_banned_from(ckey, "Appearance")
 		if(QDELETED(src))
@@ -454,9 +453,9 @@
 
 	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
 
-	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
+	if(GLOB.current_anonymous_theme)//overrides random name because it achieves the same effect and is an admin enabled event tool
 		randomize_human(H)
-		H.fully_replace_character_name(null, SSticker.anonymousnames.anonymous_name(H))
+		H.fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(H))
 
 	H.dna.update_dna_identity()
 	if(mind)
@@ -465,7 +464,7 @@
 		mind.active = FALSE //we wish to transfer the key manually
 		mind.original_character_slot_index = client.prefs.default_slot
 		mind.transfer_to(H) //won't transfer key since the mind is not active
-		mind.original_character = H
+		mind.set_original_character(H)
 
 	H.name = real_name
 	client.init_verbs()
@@ -522,13 +521,12 @@
 		has_antags = TRUE
 	if(client.prefs.job_preferences.len == 0)
 		if(!ineligible_for_roles)
-			to_chat(src, "<span class='danger'>You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences.</span>")
+			to_chat(src, span_danger("You have no jobs enabled, along with return to lobby if job is unavailable. This makes you ineligible for any round start role, please update your job preferences."))
 		ineligible_for_roles = TRUE
 		ready = PLAYER_NOT_READY
 		if(has_antags)
-			log_admin("[src.ckey] just got booted back to lobby with no jobs, but antags enabled.")
-			message_admins("[src.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
-
+			log_admin("[src.ckey] has no jobs enabled, return to lobby if job is unavailable enabled and [client.prefs.be_special.len] antag preferences enabled. The player has been forcefully returned to the lobby.")
+			message_admins("[src.ckey] has no jobs enabled, return to lobby if job is unavailable enabled and [client.prefs.be_special.len] antag preferences enabled. This is an old antag rolling technique. The player has been asked to update their job preferences and has been forcefully returned to the lobby.")
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
 	return TRUE
 

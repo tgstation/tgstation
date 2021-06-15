@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(explosions)
 	set name = "Check Bomb Impact"
 	set category = "Debug"
 
-	var/newmode = alert("Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
+	var/newmode = tgui_alert(usr, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
 	var/turf/epicenter = get_turf(mob)
 	if(!epicenter)
 		return
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(explosions)
 	var/heavy = 0
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = input("Bomb Size?") in choices
+	var/choice = tgui_input_list(usr, "Pick the bomb size", "Bomb Size?", choices)
 	switch(choice)
 		if(null)
 			return 0
@@ -354,7 +354,7 @@ SUBSYSTEM_DEF(explosions)
 			for(var/I in T)
 				var/atom/A = I
 				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += A.GetAllContents()
+					items += A.GetAllContents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
 			for(var/thing in items)
 				var/atom/movable/movable_thing = thing
 				if(QDELETED(movable_thing))

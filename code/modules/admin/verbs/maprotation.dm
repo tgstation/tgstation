@@ -1,7 +1,7 @@
 /client/proc/forcerandomrotate()
 	set category = "Server"
 	set name = "Trigger Random Map Rotation"
-	var/rotate = alert("Force a random map rotation to trigger?", "Rotate map?", "Yes", "Cancel")
+	var/rotate = tgui_alert(usr,"Force a random map rotation to trigger?", "Rotate map?", list("Yes", "Cancel"))
 	if (rotate != "Yes")
 		return
 	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")
@@ -32,7 +32,7 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in sortList(maprotatechoices)|"Custom"
+	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", sortList(maprotatechoices)|"Custom")
 	if (!chosenmap)
 		return
 
@@ -50,7 +50,7 @@
 			return
 
 		if(copytext("[map_file]", -4) != ".dmm")//4 == length(".dmm")
-			to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map_file]</span>")
+			to_chat(src, span_warning("Filename must end in '.dmm': [map_file]"))
 			return
 
 		if(!fcopy(map_file, "_maps/custom/[map_file]"))
@@ -59,24 +59,24 @@
 		// This is to make sure the map works so the server does not start without a map.
 		var/datum/parsed_map/M = new (map_file)
 		if(!M)
-			to_chat(src, "<span class='warning'>Map '[map_file]' failed to parse properly.</span>")
+			to_chat(src, span_warning("Map '[map_file]' failed to parse properly."))
 			return
 
 		if(!M.bounds)
-			to_chat(src, "<span class='warning'>Map '[map_file]' has non-existant bounds.</span>")
+			to_chat(src, span_warning("Map '[map_file]' has non-existant bounds."))
 			qdel(M)
 			return
 
 		qdel(M)
 
-		var/shuttles = alert("Do you want to modify the shuttles?", "Map Shuttles", "Yes", "No")
+		var/shuttles = tgui_alert(usr,"Do you want to modify the shuttles?", "Map Shuttles", list("Yes", "No"))
 		if(shuttles == "Yes")
 			for(var/s in VM.shuttles)
 				var/shuttle = input(s, "Map Shuttles") as null|text
 				if(!shuttle)
 					continue
 				if(!SSmapping.shuttle_templates[shuttle])
-					to_chat(usr, "<span class='warning'>No such shuttle as '[shuttle]' exists, using default.</span>")
+					to_chat(usr, span_warning("No such shuttle as '[shuttle]' exists, using default."))
 					continue
 				VM.shuttles[s] = shuttle
 

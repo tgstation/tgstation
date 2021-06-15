@@ -61,10 +61,10 @@
 		quirks = B.data["quirks"]
 		sampleDNA = B.data["blood_DNA"]
 		contains_sample = TRUE
-		visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
 		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 	else
-		visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+		visible_message(span_warning("The [src] rejects the sample!"))
 	return NONE
 
 /// Handles reagents being deleted from these seeds.
@@ -122,7 +122,7 @@
 	if(!make_podman)
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(mind || ckey)
-			var/choice = alert("The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", "Harvest Seeds", "Cancel")
+			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
 			if(choice == "Cancel")
 				return result
 

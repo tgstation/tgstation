@@ -18,7 +18,7 @@
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
 
 /obj/item/implant/ui_action_click()
-	activate("action_button")
+	INVOKE_ASYNC(src, .proc/activate, "action_button")
 
 /obj/item/implant/proc/can_be_implanted_in(mob/living/target)
 	if(issilicon(target))

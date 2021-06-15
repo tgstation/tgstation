@@ -56,7 +56,7 @@
 		AddToGrill(new_pancake)
 		if(griddled_objects.len >= max_items)
 			break
-	visible_message("<span class='notice'>[exposing_reagent] begins to cook on [src].</span>")
+	visible_message(span_notice("[exposing_reagent] begins to cook on [src]."))
 	return NONE
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
@@ -66,7 +66,7 @@
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	if(griddled_objects.len >= max_items)
-		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
+		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
 	var/list/modifiers = params2list(params)
 	//Center the icon where the user clicked.
@@ -76,7 +76,7 @@
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
+		to_chat(user, span_notice("You place [I] on [src]."))
 		AddToGrill(I, user)
 		update_appearance()
 	else
@@ -103,6 +103,7 @@
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
+	SIGNAL_HANDLER
 	I.flags_1 &= ~IS_ONTOP_1
 	griddled_objects -= I
 	vis_contents -= I
@@ -140,7 +141,7 @@
 			continue
 		griddled_item.fire_act(1000) //Hot hot hot!
 		if(prob(10))
-			visible_message("<span class='danger'>[griddled_item] doesn't seem to be doing too great on the [src]!</span>")
+			visible_message(span_danger("[griddled_item] doesn't seem to be doing too great on the [src]!"))
 
 /obj/machinery/griddle/update_icon_state()
 	icon_state = "griddle[variant]_[on ? "on" : "off"]"
