@@ -78,7 +78,7 @@
 /datum/status_effect/proc/before_remove() //! Called before being removed; returning FALSE will cancel removal
 	return TRUE
 
-/datum/status_effect/proc/refresh()
+/datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
 	if(original_duration == -1)
 		return
@@ -118,7 +118,7 @@
 			if(S.status_type == STATUS_EFFECT_REPLACE)
 				S.be_replaced()
 			else if(S.status_type == STATUS_EFFECT_REFRESH)
-				S.refresh(arguments[2])
+				S.refresh(arglist(arguments))
 				return
 			else
 				return

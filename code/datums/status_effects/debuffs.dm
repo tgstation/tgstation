@@ -986,7 +986,7 @@
 		ants_remaining += amount_left
 	. = ..()
 
-/datum/status_effect/ants/refresh(amount_left) // amount_left keeps coming up null here, I wish I understood how the hell transferring variables through procs worked entirely.
+/datum/status_effect/ants/refresh(effect, amount_left)
 	var/mob/living/carbon/human/victim = owner
 	if(isnum(amount_left) && ants_remaining >= 1)
 		if(!prob(1)) // 99%
