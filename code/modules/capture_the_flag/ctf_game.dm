@@ -338,7 +338,9 @@
 
 	var/client/new_team_member = user.client
 	team_members |= new_team_member.ckey
-	to_chat(user, "<span class='warning'>You are now a member of [src.team], click on the [src.team] controller to respawn.</span>")
+	to_chat(user, "<span class='warning'>You are now a member of [src.team].</span>")
+	spawn_team_member(new_team_member)
+
 
 //does not add to recently dead, because it dusts and that triggers ctf_qdelled_player
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
@@ -452,7 +454,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK, header = "CTF has been activated")
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click)</a> to go to the [team] team's controller!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
