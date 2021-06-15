@@ -278,6 +278,7 @@
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
+<<<<<<< HEAD
 /datum/greyscale_config/suspenders
 	name = "Suspenders"
 	icon_file = 'icons/obj/clothing/belts.dmi'
@@ -287,3 +288,49 @@
 	name = "Worn Suspenders"
 	icon_file = 'icons/mob/clothing/suit.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
+=======
+/datum/greyscale_config/giftdeliverybox
+	name = "Gift Box"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverybox.json'
+
+/datum/greyscale_config/giftdeliverycloset
+	name = "Gift Closet"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverycloset.json'
+
+/datum/greyscale_config/giftdeliverycrate
+	name = "Gift Crate"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverycrate.json'
+
+/datum/greyscale_config/giftdeliverypackage5
+	name = "Gift Package 5 (Biggest)"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage5.json'
+
+/datum/greyscale_config/giftdeliverypackage4
+	name = "Gift Package 4"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage4.json'
+
+/datum/greyscale_config/giftdeliverypackage3
+	name = "Gift Package 3"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage3.json'
+
+/datum/greyscale_config/giftdeliverypackage2
+	name = "Gift Package 2"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage2.json'
+
+/datum/greyscale_config/giftdeliverypackage1
+	name = "Gift Package 1 (Smallest)"
+	icon_file = 'icons/obj/storage.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
+
+/datum/greyscale_config/wrap_paper
+	name = "Wrapping Paper"
+	icon_file = 'icons/obj/stack_objects.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wrap_paper.json'
+>>>>>>> upstream/master

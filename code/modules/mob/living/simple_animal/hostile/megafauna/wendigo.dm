@@ -152,7 +152,7 @@ Difficulty: Hard
 			for(var/mob/living/L in stomp_turf)
 				if(L == source || L.throwing)
 					continue
-				to_chat(L, "<span class='userdanger'>[source]'s ground slam shockwave sends you flying!</span>")
+				to_chat(L, span_userdanger("[source]'s ground slam shockwave sends you flying!"))
 				var/turf/thrownat = get_ranged_target_turf_direct(source, L, throw_range, rand(-10, 10))
 				L.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
 				L.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
@@ -206,7 +206,7 @@ Difficulty: Hard
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
 		dizzy_target.Dizzy(6)
-		to_chat(dizzy_target, "<span class='danger'>The wendigo screams loudly!</span>")
+		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
 	SLEEP_CHECK_DEATH(1 SECONDS)
 	spiral_attack()
 	SetRecoveryTime(3 SECONDS)
@@ -303,7 +303,7 @@ Difficulty: Hard
 	var/mob/living/carbon/human/human_user = user
 	if(!human_user.mind)
 		return
-	to_chat(human_user, "<span class='danger'>Power courses through you! You can now shift your form at will.</span>")
+	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear/transformation_spell = new
 	human_user.mind.AddSpell(transformation_spell)
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
