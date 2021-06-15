@@ -90,7 +90,7 @@
 			span_userdanger("[user]'s punches you!"))
 		return
 	if(!cmp_epsilon_equals(gasused.total_moles(), gasperfist * fisto_setting))
-		to_chat(user, spanwarning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
+		to_chat(user, span_warning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
 		playsound(loc, 'sound/weapons/punch4.ogg', 50, TRUE)
 		target.apply_damage((force / 2), BRUTE)
 		target.visible_message(span_danger("[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
