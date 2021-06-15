@@ -806,7 +806,7 @@
 	var/metabolisationtime = 0
 
 /datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
-	var/metabolisationtime += delta_time
+	metabolisationtime += delta_time
 	..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
