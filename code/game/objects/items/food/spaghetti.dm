@@ -14,8 +14,8 @@
 	. = ..()
 	if(!microwaved_type) // This isn't cooked, why would you put uncooked spaghetti in your pocket?
 		var/list/display_message = list(
-			"<span class='notice'>Something wet falls out of their pocket and hits the ground. Is that... [name]?</span>",
-			"<span class='warning'>Oh shit! All your pocket [name] fell out!</span>")
+			span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
+			span_warning("Oh shit! All your pocket [name] fell out!"))
 		AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg')
 
 /obj/item/food/spaghetti/boiledspaghetti

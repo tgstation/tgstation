@@ -7,6 +7,7 @@
 	display_name = "Comparison"
 
 	input_port_amount = 2
+	var/current_type = PORT_TYPE_ANY
 
 GLOBAL_LIST_INIT(comp_comparison_options, list(
 	COMP_COMPARISON_EQUAL,
@@ -20,6 +21,21 @@ GLOBAL_LIST_INIT(comp_comparison_options, list(
 /obj/item/circuit_component/compare/comparison/Initialize()
 	options = GLOB.comp_comparison_options
 	return ..()
+
+/obj/item/circuit_component/compare/comparison/input_received(datum/port/input/port)
+	switch(current_option)
+		if(COMP_COMPARISON_EQUAL, COMP_COMPARISON_NOT_EQUAL)
+			if(current_type != PORT_TYPE_ANY)
+				current_type = PORT_TYPE_ANY
+				input_ports[1].set_datatype(PORT_TYPE_ANY)
+				input_ports[2].set_datatype(PORT_TYPE_ANY)
+		else
+			if(current_type != PORT_TYPE_NUMBER)
+				current_type = PORT_TYPE_NUMBER
+				input_ports[1].set_datatype(PORT_TYPE_NUMBER)
+				input_ports[2].set_datatype(PORT_TYPE_NUMBER)
+	return ..()
+
 
 /obj/item/circuit_component/compare/comparison/do_comparisons(list/ports)
 	if(length(ports) < input_port_amount)

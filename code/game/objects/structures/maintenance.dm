@@ -58,14 +58,14 @@ at the cost of risking a vicious bite.**/
 	if(iscyborg(user) || isalien(user))
 		return
 	if(!CanReachInside(user))
-		to_chat(user, "<span class='warning'>You need to lie down to reach into [src].</span>")
+		to_chat(user, span_warning("You need to lie down to reach into [src]."))
 		return
-	to_chat(user, "<span class='notice'>You reach down into the cold water of the basin.</span>")
+	to_chat(user, span_notice("You reach down into the cold water of the basin."))
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	if(hidden_item)
 		user.put_in_hands(hidden_item)
-		to_chat(user, "<span class='notice'>As you poke around inside [src] you feel the contours of something hidden below the murky waters.</span>\n<span class='nicegreen'>You retrieve [hidden_item] from [src].</span>")
+		to_chat(user, span_notice("As you poke around inside [src] you feel the contours of something hidden below the murky waters.</span>\n<span class='nicegreen'>You retrieve [hidden_item] from [src]."))
 		hidden_item = null
 		return
 	if(critter_infested && prob(50) && iscarbon(user))
@@ -73,11 +73,11 @@ at the cost of risking a vicious bite.**/
 		var/obj/item/bodypart/affecting = bite_victim.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 		if(affecting?.receive_damage(30))
 
-			to_chat(user, "<span class='danger'>You feel a sharp as an unseen creature sinks it's [pick("fangs", "beak", "proboscis")] into your arm!</span>")
+			to_chat(user, span_danger("You feel a sharp as an unseen creature sinks it's [pick("fangs", "beak", "proboscis")] into your arm!"))
 			bite_victim.update_damage_overlays()
 			playsound(src,'sound/weapons/bite.ogg', 70, TRUE)
 			return
-	to_chat(user, "<span class='warning'>You find nothing of value...</span>")
+	to_chat(user, span_warning("You find nothing of value..."))
 
 /obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
@@ -91,13 +91,13 @@ at the cost of risking a vicious bite.**/
 		var/obj/item/reagent_containers/reagent_container = I
 		if(reagent_container.is_open_container())
 			reagent_container.reagents.add_reagent(/datum/reagent/water, min(reagent_container.volume - reagent_container.reagents.total_volume, reagent_container.amount_per_transfer_from_this))
-			to_chat(user, "<span class='notice'>You fill [reagent_container] from [src].</span>")
+			to_chat(user, span_notice("You fill [reagent_container] from [src]."))
 			return
 	if(hidden_item)
-		to_chat(user, "<span class='warning'>There is already something inside [src].</span>")
+		to_chat(user, span_warning("There is already something inside [src]."))
 		return
 	if(!user.transferItemToLoc(I, src))
-		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in [src]!</span>")
+		to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in [src]!"))
 		return
 	hidden_item = I
-	to_chat(user, "<span class='notice'>You hide [I] inside the basin.</span>")
+	to_chat(user, span_notice("You hide [I] inside the basin."))

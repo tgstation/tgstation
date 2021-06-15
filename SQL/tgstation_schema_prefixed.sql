@@ -630,6 +630,20 @@ CREATE TABLE `SS13_text_adventures` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
+--
+-- Table structure for table `admin_connections`
+--
+DROP TABLE IF EXISTS `SS13_admin_connections`;
+CREATE TABLE `SS13_admin_connections` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ckey` VARCHAR(32) NOT NULL,
+  `ip` INT(11) UNSIGNED NOT NULL,
+  `cid` VARCHAR(32) NOT NULL,
+  `verification_time` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`)
+) ENGINE=InnoDB;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

@@ -62,13 +62,13 @@
 /obj/item/gun/blastcannon/examine(mob/user)
 	. = ..()
 	if(bomb)
-		. += "<span class='notice'>A bomb is loaded inside.</span>"
+		. += span_notice("A bomb is loaded inside.")
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
 	if(bomb)
 		bomb.forceMove(user.loc)
 		user.put_in_hands(bomb)
-		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
+		user.visible_message(span_warning("[user] detaches [bomb] from [src]."))
 		bomb = null
 	update_appearance()
 	return ..()
@@ -82,16 +82,16 @@
 		return ..()
 
 	if(bomb)
-		to_chat(user, "<span class='warning'>[bomb] is already attached to [src]!</span>")
+		to_chat(user, span_warning("[bomb] is already attached to [src]!"))
 		return
 	if(!bomb_to_attach.ready())
-		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
+		to_chat(user, span_warning("What good would an incomplete bomb do?"))
 		return FALSE
 	if(!user.transferItemToLoc(bomb_to_attach, src))
-		to_chat(user, "<span class='warning'>[bomb_to_attach] seems to be stuck to your hand!</span>")
+		to_chat(user, span_warning("[bomb_to_attach] seems to be stuck to your hand!"))
 		return FALSE
 
-	user.visible_message("<span class='warning'>[user] attaches [bomb_to_attach] to [src]!</span>")
+	user.visible_message(span_warning("[user] attaches [bomb_to_attach] to [src]!"))
 	bomb = bomb_to_attach
 	update_appearance()
 	return TRUE
@@ -104,8 +104,8 @@
 	cached_modifiers = params
 	if(bomb?.valve_open)
 		user.visible_message(
-			"<span class='danger'>[user] points [src] at [target]!</span>",
-			"<span class='danger'>You point [src] at [target]!</span>"
+			span_danger("[user] points [src] at [target]!"),
+			span_danger("You point [src] at [target]!")
 		)
 		return
 
@@ -116,8 +116,8 @@
 
 	playsound(src, dry_fire_sound, 30, TRUE) // *click
 	user.visible_message(
-		"<span class='danger'>[user] opens [bomb] on [user.p_their()] [src] and points [p_them()] at [target]!</span>",
-		"<span class='danger'>You open [bomb] on your [src] and point [p_them()] at [target]!</span>"
+		span_danger("[user] opens [bomb] on [user.p_their()] [src] and points [p_them()] at [target]!"),
+		span_danger("You open [bomb] on your [src] and point [p_them()] at [target]!")
 	)
 	var/turf/current_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
@@ -142,7 +142,7 @@
 	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
-		visible_message("<span class='warning'>[src] lets out a little \"phut\".</span>")
+		visible_message(span_warning("[src] lets out a little \"phut\"."))
 		return
 
 	if(!ismob(loc))
@@ -200,8 +200,8 @@
  */
 /obj/item/gun/blastcannon/proc/fire_intentionally(atom/target, mob/firer, heavy, medium, light, modifiers)
 	firer.visible_message(
-		"<span class='danger'>[firer] fires a blast wave at [target]!</span>",
-		"<span class='danger'>You fire a blast wave at [target]!</span>"
+		span_danger("[firer] fires a blast wave at [target]!"),
+		span_danger("You fire a blast wave at [target]!")
 	)
 	var/turf/start_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
@@ -232,8 +232,8 @@
 	var/mob/firer = cached_firer?.resolve()
 	var/turf/start_turf = get_turf(src)
 	holder.visible_message(
-		"<span class='danger'>[src] suddenly goes off[holding ? " in [holder]'s hands" : null]!</span>",
-		"<span class='danger'>[src] suddenly goes off[holding ? " in your hands" : null]!</span>"
+		span_danger("[src] suddenly goes off[holding ? " in [holder]'s hands" : null]!"),
+		span_danger("[src] suddenly goes off[holding ? " in your hands" : null]!")
 	)
 	message_admins("Blast wave primed by [ADMIN_LOOKUPFLW(firer)] fired from [ADMIN_VERBOSEJMP(start_turf)] roughly towards [ADMIN_VERBOSEJMP(target)] while being held by [ADMIN_LOOKUPFLW(holder)] with power [heavy]/[medium]/[light].")
 	log_game("Blast wave primed by [key_name(firer)] fired from [AREACOORD(start_turf)] roughly towards [AREACOORD(target)] while being held by [key_name(holder)] with power [heavy]/[medium]/[light].")
