@@ -320,15 +320,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/construct_class = show_radial_menu(first_invoker, sacrificial, constructs, require_near = TRUE, tooltips = TRUE)
 		if(QDELETED(sacrificial))
 			return FALSE
-		switch(construct_class)
-			if("Juggernaut")
-				makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, sacrificial, first_invoker, FALSE, get_turf(src))
-			if("Wraith")
-				makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, sacrificial, first_invoker, FALSE, get_turf(src))
-			if("Artificer")
-				makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, sacrificial, first_invoker, FALSE, get_turf(src))
-			else
-				return FALSE
+		makeNewConstructFromClass(construct_class, THEME_CULT, sacrificial, first_invoker, FALSE, get_turf(src))
 		var/mob/living/silicon/robot/sacriborg = sacrificial
 		sacriborg.mmi = null
 		qdel(sacrificial)
