@@ -95,6 +95,7 @@
 	if(bloodpool)
 		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
 
+/// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/simple_animal/hostile/imp/slaughter/proc/bodyslam(atom/attack_target)
 	if(!isliving(attack_target))
 		return
