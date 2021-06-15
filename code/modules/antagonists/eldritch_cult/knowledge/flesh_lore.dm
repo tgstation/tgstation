@@ -1,3 +1,7 @@
+#define GHOUL_MAX_HEALTH 25
+#define MUTE_MAX_HEALTH 50
+#define ORIGINAL_MAX_HEALTH 100
+
 /datum/eldritch_knowledge/base_flesh
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. Allows you to transmute a pool of blood with a kitchen knife, or its derivatives, into a Flesh Blade."
@@ -56,8 +60,11 @@
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
 	humie.setMaxHealth(50)
 	humie.health = 50 // Voiceless dead are much tougher than ghouls
+	humie.setMaxHealth(MUTE_MAX_HEALTH)
+	humie.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
 	humie.become_husk()
 	humie.faction |= "heretics"
+	humie.apply_status_effect(/datum/status_effect/ghoul)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
@@ -70,6 +77,8 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/humie = source
 	ghouls -= humie
+	humie.setMaxHealth(ORIGINAL_MAX_HEALTH)
+	humie.remove_status_effect(/datum/status_effect/ghoul)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source,COMSIG_LIVING_DEATH)
 
@@ -108,7 +117,10 @@
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 	human_target.setMaxHealth(25)
 	human_target.health = 25
+	human_target.setMaxHealth(GHOUL_MAX_HEALTH)
+	human_target.health = GHOUL_MAX_HEALTH
 	human_target.become_husk()
+	human_target.apply_status_effect(/datum/status_effect/ghoul)
 	human_target.faction |= "heretics"
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
@@ -131,6 +143,8 @@
 /datum/eldritch_knowledge/flesh_grasp/proc/remove_ghoul(datum/source)
 	var/mob/living/carbon/human/humie = source
 	spooky_scaries -= humie
+	humie.setMaxHealth(ORIGINAL_MAX_HEALTH)
+	humie.remove_status_effect(/datum/status_effect/ghoul)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 
@@ -244,3 +258,6 @@
 	grasp_ghoul.ghoul_amt *= 3
 	var/datum/eldritch_knowledge/flesh_ghoul/better_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
 	better_ghoul.max_amt *= 3
+#undef GHOUL_MAX_HEALTH
+#undef MUTE_MAX_HEALTH
+#undef ORIGINAL_MAX_HEALTH
