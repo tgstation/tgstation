@@ -427,12 +427,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 
 ///Returns the src and all recursive contents as a list.
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(ignore_flag_1)
 	. = list(src)
 	var/i = 0
 	while(i < length(.))
 		var/atom/A = .[++i]
-		. += A.contents
+		if (!(A.flags_1 & ignore_flag_1))
+			. += A.contents
 
 ///identical to getallcontents but returns a list of atoms of the type passed in the argument.
 /atom/proc/get_all_contents_type(type)
@@ -1507,10 +1508,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		path = new path(pod)
 
 	//remove non var edits from specifications
-	specifications -= landing_location
-	specifications -= style
-	specifications -= spawn_type
-	specifications -= "paths_to_spawn" //list, we remove the key
+	specifications -= "target"
+	specifications -= "style"
+	specifications -= "path"
+	specifications -= "spawn" //list, we remove the key
 
 	//rest of specificiations are edits on the pod
 	for(var/variable_name in specifications)
@@ -1519,4 +1520,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			stack_trace("WARNING! podspawn vareditting \"[variable_name]\" to \"[variable_value]\" was rejected by the pod!")
 	new /obj/effect/pod_landingzone(landing_location, pod)
 	return pod
-

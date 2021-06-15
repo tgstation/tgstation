@@ -31,5 +31,5 @@
 /datum/component/itempicky/proc/particularly(datum/source, obj/item/pickingup)
 	SIGNAL_HANDLER
 	if(!is_type_in_typecache(pickingup, whitelist))
-		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", pickingup)]</span>")
+		to_chat(source, span_warning("[replacetext(message, "%TARGET", pickingup)]"))
 		return COMPONENT_LIVING_CANT_PUT_IN_HAND

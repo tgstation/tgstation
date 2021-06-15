@@ -251,7 +251,7 @@ Code:
 
 
 			if(!powercount)
-				menu += "<span class='danger'>No connection<BR></span>"
+				menu += span_danger("No connection<BR>")
 			else
 
 				menu += "<FONT SIZE=-1>"
@@ -265,7 +265,7 @@ Code:
 		if (433)
 			menu = "<h4>[PDAIMG(power)] Power Monitor </h4><BR>"
 			if(!powmonitor || !powmonitor.get_powernet())
-				menu += "<span class='danger'>No connection<BR></span>"
+				menu += span_danger("No connection<BR>")
 			else
 				var/list/L = list()
 				var/datum/powernet/connected_powernet = powmonitor.get_powernet()
@@ -530,7 +530,7 @@ Code:
 			if(!emoji_table)
 				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
-				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
+				for(var/emoji in sortList(icon_states(icon(EMOJI_SET))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")
 					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
 				collate += "</table><br>"

@@ -43,6 +43,7 @@
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	SIGNAL_HANDLER
 	showpipe = !covered
 	update_appearance()
 
@@ -210,7 +211,7 @@
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	to_chat(user, "<span class='danger'>Access denied.</span>")
+	to_chat(user, span_danger("Access denied."))
 	return UI_CLOSE
 
 // Tool acts

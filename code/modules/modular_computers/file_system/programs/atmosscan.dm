@@ -13,7 +13,7 @@
 	if (!.)
 		return
 	if(!computer?.get_modular_computer_part(MC_SENSORS)) //Giving a clue to users why the program is spitting out zeros.
-		to_chat(user, "<span class='warning'>\The [computer] flashes an error: \"hardware\\sensorpackage\\startup.bin -- file not found\".</span>")
+		to_chat(user, span_warning("\The [computer] flashes an error: \"hardware\\sensorpackage\\startup.bin -- file not found\"."))
 
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)

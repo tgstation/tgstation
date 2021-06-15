@@ -44,7 +44,7 @@
 /obj/item/food/cheese/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
-	king.cheese_heal(src, rat_heal, "<span class='green'>You eat [src], restoring some health.</span>")
+	king.cheese_heal(src, rat_heal, span_green("You eat [src], restoring some health."))
 
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
@@ -193,6 +193,7 @@
 
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
+	SIGNAL_HANDLER
 	return COMPONENT_HANDLED_GRILLING
 
 /obj/item/food/carrotfries
@@ -474,9 +475,9 @@
 		return
 	if(prob(15))
 		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b></span>")
+		to_chat(victim, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b>"))
 	else
-		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
+		to_chat(victim, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
 /obj/item/food/gumball
 	name = "gumball"
@@ -516,15 +517,15 @@
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
+	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
 		if(!R.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, "<span class='warning'>You do not have enough iron to put [src] on a stick!</span>")
+			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
 			return ..()
-		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+		to_chat(user, span_notice("You stick the rod into the stick of butter."))
 		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
 		var/replace = (user.get_inactive_held_item() == R)
 		if(!R && replace)
@@ -581,7 +582,7 @@
 
 
 /obj/item/food/canned/proc/open_can(mob/user)
-	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
+	to_chat(user, span_notice("You pull back the tab of \the [src]."))
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
 
@@ -593,7 +594,7 @@
 
 /obj/item/food/canned/attack(mob/living/M, mob/user, def_zone)
 	if (!is_drainable())
-		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
+		to_chat(user, span_warning("[src]'s lid hasn't been opened!"))
 		return FALSE
 	return ..()
 

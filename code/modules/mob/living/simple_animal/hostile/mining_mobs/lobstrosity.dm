@@ -39,7 +39,7 @@
 	if(COOLDOWN_FINISHED(src, charge_cooldown))
 		INVOKE_ASYNC(src, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
 	else
-		to_chat(src, "<span class='notice'>Your charge is still on cooldown!</span>")
+		to_chat(src, span_notice("Your charge is still on cooldown!"))
 
 /mob/living/simple_animal/hostile/asteroid/lobstrosity/lava
 	name = "tropical lobstrosity"

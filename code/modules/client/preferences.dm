@@ -1019,7 +1019,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	if (!isnum(desiredLvl))
-		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
+		to_chat(user, span_danger("UpdateJobPreference - desired level was not a number. Please notify coders!"))
 		ShowChoices(user)
 		return
 
@@ -1049,7 +1049,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/SetQuirks(mob/user)
 	if(!SSquirks)
-		to_chat(user, "<span class='danger'>The quirk subsystem is still initializing! Try again in a minute.</span>")
+		to_chat(user, span_danger("The quirk subsystem is still initializing! Try again in a minute."))
 		return
 
 	var/list/dat = list()
@@ -1145,7 +1145,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/expires = "This is a permanent ban."
 			if(ban_details["expiration_time"])
 				expires = " The ban is for [DisplayTimeText(text2num(ban_details["duration"]) MINUTES)] and expires on [ban_details["expiration_time"]] (server time)."
-			to_chat(user, "<span class='danger'>You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing [href_list["bancheck"]].<br>The ban reason is: [ban_details["reason"]]<br>This ban (BanID #[ban_details["id"]]) was applied by [ban_details["admin_key"]] on [ban_details["bantime"]] during round ID [ban_details["round_id"]].<br>[expires]</span>")
+			to_chat(user, span_danger("You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing [href_list["bancheck"]].<br>The ban reason is: [ban_details["reason"]]<br>This ban (BanID #[ban_details["id"]]) was applied by [ban_details["admin_key"]] on [ban_details["bantime"]] during round ID [ban_details["round_id"]].<br>[expires]"))
 			return
 	if(href_list["preference"] == "job")
 		switch(href_list["task"])
@@ -1188,22 +1188,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						continue
 					for(var/Q in all_quirks)
 						if((Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
-							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
+							to_chat(user, span_danger("[quirk] is incompatible with [Q]."))
 							return
 				var/value = SSquirks.quirk_points[quirk]
 				var/balance = GetQuirkBalance()
 				if(quirk in all_quirks)
 					if(balance + value < 0)
-						to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+						to_chat(user, span_warning("Refunding this would cause you to go below your balance!"))
 						return
 					all_quirks -= quirk
 				else
 					var/is_positive_quirk = SSquirks.quirk_points[quirk] > 0
 					if(is_positive_quirk && GetPositiveQuirkCount() >= MAX_QUIRKS)
-						to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
+						to_chat(user, span_warning("You can't have more than [MAX_QUIRKS] positive quirks!"))
 						return
 					if(balance - value < 0)
-						to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
+						to_chat(user, span_warning("You don't have enough balance to gain this quirk!"))
 						return
 					all_quirks += quirk
 				SetQuirks(user)
@@ -1269,7 +1269,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_orbit = new_orbit
 
 				if("ghostaccs")
-					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
+					var/new_ghost_accs = tgui_alert(usr,"Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,list(GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME))
 					switch(new_ghost_accs)
 						if(GHOST_ACCS_FULL_NAME)
 							ghost_accs = GHOST_ACCS_FULL
@@ -1279,7 +1279,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_accs = GHOST_ACCS_NONE
 
 				if("ghostothers")
-					var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
+					var/new_ghost_others = tgui_alert(usr,"Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,list(GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME))
 					switch(new_ghost_others)
 						if(GHOST_OTHERS_THEIR_SETTING_NAME)
 							ghost_others = GHOST_OTHERS_THEIR_SETTING
@@ -1383,7 +1383,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
-							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+							to_chat(user, span_danger("Invalid color. Your color is not bright enough."))
 
 				if("color_ethereal")
 					var/new_etherealcolor = input(user, "Choose your ethereal color", "Character Preference") as null|anything in GLOB.color_list_ethereal
@@ -1660,7 +1660,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					save_preferences()
 
 				if("keybindings_reset")
-					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"))
+					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"), 60 SECONDS)
 					if(choice == "Cancel")
 						ShowChoices(user)
 						return
@@ -1735,7 +1735,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("clear_scars")
 					var/path = "data/player_saves/[user.ckey[1]]/[user.ckey]/scars.sav"
 					fdel(path)
-					to_chat(user, "<span class='notice'>All scar slots cleared.</span>")
+					to_chat(user, span_notice("All scar slots cleared."))
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -1867,7 +1867,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("clear_heart")
 					hearted = FALSE
 					hearted_until = null
-					to_chat(user, "<span class='notice'>OOC Commendation Heart disabled</span>")
+					to_chat(user, span_notice("OOC Commendation Heart disabled"))
 					save_preferences()
 
 	ShowChoices(user)
@@ -1920,7 +1920,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		organ_eyes.old_eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
-
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
@@ -1976,7 +1975,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if("mime")
 			return pick(GLOB.mime_names)
 		if("religion")
-			return DEFAULT_RELIGION
+			return pick(GLOB.religion_names)
 		if("deity")
 			return DEFAULT_DEITY
 		if("bible")
@@ -2001,3 +2000,75 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+	if(name_id == "religion")
+		update_bible_and_deity_name(custom_names[name_id])
+
+/datum/preferences/proc/update_bible_and_deity_name(religion)
+	switch(lowertext(religion))
+		if("christianity") // DEFAULT_RELIGION
+			custom_names["bible"] = pick("The Holy Bible","The Dead Sea Scrolls")
+			custom_names["deity"] = "Space Jesus"
+		if("buddhism")
+			custom_names["bible"] = "The Sutras"
+			custom_names["deity"] = "Buddha"
+		if("clownism","honkmother","honk","honkism","comedy")
+			custom_names["bible"] = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
+			custom_names["deity"] = "The Honkmother"
+		if("chaos")
+			custom_names["bible"] = "The Book of Lorgar"
+			custom_names["deity"] = pick("Chaos Gods", "Dark Gods", "Ruinous Powers")
+		if("cthulhu")
+			custom_names["bible"] = "The Necronomicon"
+			custom_names["deity"] = pick("Great Old Ones", "Old Ones")
+		if("hinduism")
+			custom_names["bible"] = "The Vedas"
+			custom_names["deity"] = pick("Brahma", "Vishnu", "Shiva")
+		if("imperium")
+			custom_names["bible"] = "Uplifting Primer"
+			custom_names["deity"] = "Astra Militarum"
+		if("islam")
+			custom_names["bible"] = "Quran"
+			custom_names["deity"] = "Allah"
+		if("judaism")
+			custom_names["bible"] = "The Torah"
+			custom_names["deity"] = "Yahweh"
+		if("lampism")
+			custom_names["bible"] = "Fluorescent Incandescence"
+			custom_names["deity"] = "Lamp"
+		if("monkeyism","apism","gorillism","primatism")
+			custom_names["bible"] = pick("Going Bananas", "Bananas Out For Harambe")
+			custom_names["deity"] = pick("Harambe", "monky")
+		if("mormonism")
+			custom_names["bible"] = "The Book of Mormon"
+			custom_names["deity"] = pick("God", "Elohim", "Godhead")
+		if("pastafarianism")
+			custom_names["bible"] = "The Gospel of the Flying Spaghetti Monster"
+			custom_names["deity"] = "Flying Spaghetti Monster"
+		if("rastafarianism","rasta")
+			custom_names["bible"] = "The Holy Piby"
+			custom_names["deity"] = "Haile Selassie I"
+		if("satanism")
+			custom_names["bible"] = "The Unholy Bible"
+			custom_names["deity"] = "Satan"
+		if("sikhism")
+			custom_names["bible"] = "Guru Granth Sahib"
+			custom_names["deity"] = "Waheguru"
+		if("science")
+			custom_names["bible"] = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+			custom_names["deity"] = pick("Albert Einstein", "Stephen Hawking", "Neil deGrasse Tyson", "Carl Sagan", "Richard Dawkins")
+		if("scientology")
+			custom_names["bible"] = pick("The Biography of L. Ron Hubbard","Dianetics")
+			custom_names["deity"] = pick("Money", "Power", "Xenu", "Tom Cruise", "L. Ron Hubbard", "David Miscavige", "John Travolta")
+		if("servicianism", "partying")
+			custom_names["bible"] = "The Tenets of Servicia"
+			custom_names["deity"] = pick("Servicia", "Space Bacchus", "Space Dionysus")
+		if("subgenius")
+			custom_names["bible"] = "Book of the SubGenius"
+			custom_names["deity"] = pick("Jehovah 1", "J. R. \"Bob\" Dobbs")
+		if("toolboxia","greytide")
+			custom_names["bible"] = pick("Toolbox Manifesto","iGlove Assistants")
+			custom_names["deity"] = "Maintenance"
+		else
+			if(custom_names["bible"] == DEFAULT_BIBLE)
+				custom_names["bible"] = "The Holy Book of [religion]"

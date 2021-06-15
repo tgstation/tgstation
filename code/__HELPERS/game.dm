@@ -343,6 +343,10 @@
 	O.screen_loc = screen_loc
 	return O
 
+/// Removes an image from a client's `.images`. Useful as a callback.
+/proc/remove_image_from_client(image/image, client/remove_from)
+	remove_from?.images -= image
+
 /proc/remove_images_from_clients(image/I, list/show_to)
 	for(var/client/C in show_to)
 		C.images -= I
@@ -390,22 +394,22 @@
 	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
 	switch(tgui_alert(M, Question, "A limited-time offer!", answers, timeout=poll_time))
 		if("Yes")
-			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
+			to_chat(M, span_notice("Choice registered: Yes."))
 			if(time_passed + poll_time <= world.time)
-				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
+				to_chat(M, span_danger("Sorry, you answered too late to be considered!"))
 				SEND_SOUND(M, 'sound/machines/buzz-sigh.ogg')
 				candidates -= M
 			else
 				candidates += M
 		if("No")
-			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			to_chat(M, span_danger("Choice registered: No."))
 			candidates -= M
 		if("Never for this round")
 			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
 				GLOB.poll_ignore[ignore_category] = list()
 			GLOB.poll_ignore[ignore_category] += M.ckey
-			to_chat(M, "<span class='danger'>Choice registered: Never for this round.</span>")
+			to_chat(M, span_danger("Choice registered: Never for this round."))
 			candidates -= M
 		else
 			candidates -= M

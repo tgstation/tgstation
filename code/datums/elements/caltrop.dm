@@ -4,7 +4,7 @@
  * Used for broken glass, cactuses and four sided dice.
  */
 /datum/element/caltrop
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
 
 	///Minimum damage done when crossed
@@ -88,8 +88,8 @@
 
 	if(!(flags & CALTROP_SILENT) && !H.has_status_effect(/datum/status_effect/caltropped))
 		H.apply_status_effect(/datum/status_effect/caltropped)
-		H.visible_message("<span class='danger'>[H] steps on [caltrop].</span>", \
-					"<span class='userdanger'>You step on [caltrop]!</span>")
+		H.visible_message(span_danger("[H] steps on [caltrop]."), \
+					span_userdanger("You step on [caltrop]!"))
 
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 

@@ -28,7 +28,7 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("<span class='notice'>[src] pops!</span>")
+	visible_message(span_notice("[src] pops!"))
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
@@ -57,6 +57,8 @@
 /obj/effect/fun_balloon/sentience/ui_status(mob/user)
 	if(popped)
 		return UI_CLOSE
+	if(isAdminObserver(user)) // ignore proximity if we're an admin
+		return UI_INTERACTIVE
 	return ..()
 
 /obj/effect/fun_balloon/sentience/ui_act(action, list/params)
@@ -117,7 +119,7 @@
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
-		to_chat(M, "<span class='notice'>Pop!</span>", confidential = TRUE)
+		to_chat(M, span_notice("Pop!"), confidential = TRUE)
 
 // ----------- Station Crash
 // Can't think of anywhere better to put it right now

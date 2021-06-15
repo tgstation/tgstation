@@ -5,6 +5,7 @@
  * Note: works for carbons and above, but please do something better. humans have wings got dangit!
  */
 /datum/element/simple_flying
+	element_flags = ELEMENT_DETACH
 
 /datum/element/simple_flying/Attach(datum/target)
 	. = ..()

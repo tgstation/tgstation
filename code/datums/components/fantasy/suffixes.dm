@@ -173,5 +173,30 @@
 /datum/fantasy_affix/fool/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
+	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg' = 1), 50, falloff_exponent = 20)
 	return "[newName] of the fool"
+
+/datum/fantasy_affix/curse_of_hunger
+	name = "curse of hunger"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_EVIL
+
+/datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
+	//curse of hunger that attaches onto food has the ability to eat itself. it's hilarious.
+	if(!IS_EDIBLE(attached))
+		return TRUE
+	return TRUE
+
+/datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
+	. = ..()
+	var/obj/item/master = comp.parent
+	var/filter_color = "#8a0c0ca1" //clarified args
+	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
+	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
+	var/add_dropdel = FALSE //clarified boolean
+	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+	return newName //no spoilers!
+
+/datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/curse_announcement) //just in case

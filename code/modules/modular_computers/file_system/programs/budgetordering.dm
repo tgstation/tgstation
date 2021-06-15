@@ -18,11 +18,21 @@
 	///Can this console approve purchase requests?
 	var/can_approve_requests = FALSE
 	///What do we say when the shuttle moves with living beings on it.
-	var/safety_warning = "For safety reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, \
+	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle \
+		cannot transport live organisms, human remains, classified nuclear weaponry, mail, \
 		homing beacons, unstable eigenstates or machinery housing any form of artificial intelligence."
 	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
+	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
+	var/cargo_shuttle = "supply"
+	///The docking port called when returning to the station.
+	var/docking_home = "supply_home"
+	///The docking port called when leaving the station.
+	var/docking_away = "supply_away"
+	///If this console can loan the cargo shuttle. Set to false to disable.
+	var/stationcargo = TRUE
+	///The account this console processes and displays. Independent from the account the shuttle processes.
+	var/cargo_account = ACCOUNT_CAR
 
 /datum/computer_file/program/budgetorders/proc/get_export_categories()
 	. = EXPORT_CARGO
@@ -59,7 +69,7 @@
 	. = ..()
 	var/list/data = get_header_data()
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/buyer = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/card/id/id_card = card_slot?.GetID()
 	if(id_card?.registered_account)
@@ -100,7 +110,7 @@
 
 //Data regarding the User's capability to buy things.
 	data["has_id"] = id_card
-	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
+	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
@@ -148,15 +158,15 @@
 			if(SSshuttle.supplyBlocked)
 				computer.say(blockade_warning)
 				return
-			if(SSshuttle.supply.getDockedId() == "supply_home")
+			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.supply.export_categories = get_export_categories()
-				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
+				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
 				computer.investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				computer.investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
-				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
+				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
@@ -166,7 +176,9 @@
 				return
 			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
 				return
-			else if(SSshuttle.supply.getDockedId() != "supply_away")
+			else if(SSshuttle.supply.getDockedId() != docking_away)
+				return
+			else if(stationcargo != TRUE)
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
@@ -268,7 +280,7 @@
 			self_paid = !self_paid
 			. = TRUE
 	if(.)
-		post_signal("supply")
+		post_signal(cargo_shuttle)
 
 /datum/computer_file/program/budgetorders/proc/post_signal(command)
 
