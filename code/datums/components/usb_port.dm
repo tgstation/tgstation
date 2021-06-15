@@ -73,14 +73,14 @@
 	SIGNAL_HANDLER
 
 	if (isnull(attached_circuit))
-		examine_text += "<span class='notice'>There is a USB port on the front.</span>"
+		examine_text += span_notice("There is a USB port on the front.")
 	else
-		examine_text += "<span class='notice'>[attached_circuit.shell || attached_circuit] is connected to [parent.p_them()] by a USB port.</span>"
+		examine_text += span_notice("[attached_circuit.shell || attached_circuit] is connected to [parent.p_them()] by a USB port.")
 
 /datum/component/usb_port/proc/on_examine_shell(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += "<span class='notice'>[source.p_they(TRUE)] [source.p_are()] attached to [parent] with a USB cable.</span>"
+	examine_text += span_notice("[source.p_they(TRUE)] [source.p_are()] attached to [parent] with a USB cable.")
 
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER

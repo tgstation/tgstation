@@ -80,7 +80,7 @@
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
-		examine_text += "<span class='notice'>There is a <b>USB port</b> on the front.</span>"
+		examine_text += span_notice("There is a <b>USB port</b> on the front.")
 
 /**
  * Called when the shell is wrenched.
