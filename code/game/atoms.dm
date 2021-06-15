@@ -338,7 +338,7 @@
 
 /**
  * Return FALSE if nothing will prevent mover from entering the atom,
- * wether it be the atom itself or atom in it's contents.
+ * whether it be the atom itself or an atom in its contents.
  * Return TRUE if the atom could cross this atom while heading to the target atom
  */
 /atom/proc/CouldEnter(atom/movable/mover, atom/next_loc)
