@@ -803,11 +803,11 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/metabolisationtime = 0
+	var/delayed_toxin_damage = 0
 
 /datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
 	metabolisationtime += delta_time
-	..()
+	. = ..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	var/toxdamage = metabolisationtime*3
