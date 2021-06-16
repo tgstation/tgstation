@@ -5579,7 +5579,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/medbay/central)
 "aTY" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
@@ -8952,7 +8952,7 @@
 	dir = 8
 	},
 /obj/machinery/duct,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/medbay/central)
 "bEB" = (
 /obj/structure/disposalpipe/segment,
@@ -17999,6 +17999,7 @@
 /obj/item/wrench/medical,
 /obj/effect/turf_decal/siding/white,
 /obj/item/food/popsicle/creamsicle_orange,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/medical/coldroom)
 "dDG" = (
@@ -22175,6 +22176,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/surgery/room_b)
 "eUZ" = (
@@ -26382,13 +26385,13 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "gsG" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/medical/cryo)
 "gsL" = (
@@ -49570,7 +49573,6 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "olN" = (
@@ -51215,6 +51217,7 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/surgery/room_b)
 "oNh" = (
