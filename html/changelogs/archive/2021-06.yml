@@ -340,3 +340,27 @@
 2021-06-15:
   Watermelon914:
   - refactor: Refactors how spans are done in code.
+2021-06-16:
+  ArcaneDefence:
+  - expansion: Poutine can be made via the crafting menu in the misc foods category
+      again.
+  DuffCreeper:
+  - rscadd: Allows people to now examine fire alarms to detect their thermal sensor
+      state. Silicons can now also Ctrl+Click to enable and disable at the sensor
+      at a whim
+  - code_imp: Cleaned up single letter variables in firealarm.dm
+  JohnFulpWillard:
+  - bugfix: Flipping a gun will no longer unload all its bullets.
+  - balance: Bartenders now properly have a weapon's permit for their gun.
+  Mothblocks, ArcaneMusic for sprites:
+  - rscadd: Bot circuits can now use USB cables to connect to computers and machines
+      that support it. Currently, only the tram controls computer supports this, but
+      support should roll out for other systems.
+  - rscadd: Bot shells now have a button that you can register to.
+  TemporalOroboros:
+  - bugfix: Wigs work when on your head again.
+  Watermelon914:
+  - bugfix: Fixed the RAM component retaining its output type after the input port
+      is cleared.
+  tralezab:
+  - bugfix: carbon roses can no longer mutate into carbon roses
