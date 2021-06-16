@@ -34,8 +34,8 @@
 	show_name_in_check_antagonists = TRUE
 
 /datum/antagonist/brainwashed/greet()
-	to_chat(owner, "<span class='warning'>Your mind reels as it begins focusing on a single purpose...</span>")
-	to_chat(owner, "<big><span class='warning'><b>Follow the Directives, at any cost!</b></span></big>")
+	to_chat(owner, span_warning("Your mind reels as it begins focusing on a single purpose..."))
+	to_chat(owner, "<big>[span_warning("<b>Follow the Directives, at any cost!</b>")]</big>")
 	var/i = 1
 	for(var/X in objectives)
 		var/datum/objective/O = X
@@ -43,8 +43,8 @@
 		i++
 
 /datum/antagonist/brainwashed/farewell()
-	to_chat(owner, "<span class='warning'>Your mind suddenly clears...</span>")
-	to_chat(owner, "<big><span class='warning'><b>You feel the weight of the Directives disappear! You no longer have to obey them.</b></span></big>")
+	to_chat(owner, span_warning("Your mind suddenly clears..."))
+	to_chat(owner, "<big>[span_warning("<b>You feel the weight of the Directives disappear! You no longer have to obey them.</b>")]</big>")
 	if(owner.current)
 		var/mob/living/owner_mob = owner.current
 		owner_mob.log_message("is no longer brainwashed with the objectives: [english_list(objectives)].", LOG_ATTACK)

@@ -155,9 +155,9 @@
 	var/list/report = list()
 	report += "<span class='header'>[name]:</span>"
 	if(!members.len)
-		report += "<span class='redtext'>The family was wiped out!</span>"
+		report += span_redtext("The family was wiped out!")
 	else if(my_gang_datum.check_gang_objective())
-		report += "<span class='greentext'>The family completed their objective!</span>"
+		report += span_greentext("The family completed their objective!")
 	else
 		report += "<span class='redtext big'>The family failed their objective!</span>"
 	report += "Objective: [my_gang_datum.gang_objective]"

@@ -104,16 +104,16 @@
 
 		if(sort_tag != destination_tag.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
-			to_chat(user, "<span class='notice'>*[tag]*</span>")
+			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 /obj/item/mail/attack_self(mob/user)
 	if(recipient && user != recipient)
-		to_chat(user, "<span class='notice'>You can't open somebody else's mail! That's <em>illegal</em>!</span>")
+		to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
 		return
 
-	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	to_chat(user, span_notice("You start to unwrap the package..."))
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -124,12 +124,12 @@
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list("<span class='notice'><i>You notice the postmarking on the front of the mail...</i></span>")
+	var/list/msg = list(span_notice("<i>You notice the postmarking on the front of the mail...</i>"))
 	if(recipient)
-		msg += "\t<span class='info'>Certified NT mail for [recipient].</span>"
+		msg += "\t[span_info("Certified NT mail for [recipient].")]"
 	else
-		msg += "\t<span class='info'>Certified mail for [GLOB.station_name].</span>"
-	msg += "\t<span class='info'>Distribute by hand or via destination tagger using the certified NT disposal system.</span>"
+		msg += "\t[span_info("Certified mail for [GLOB.station_name].")]"
+	msg += "\t[span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")]"
 	return msg
 
 /// Accepts a mob to initialize goodies for a piece of mail.
@@ -193,7 +193,7 @@
 
 /// Subtype that's always junkmail
 /obj/item/mail/junkmail/Initialize()
-	..()
+	. = ..()
 	junk_mail()
 
 /// Crate for mail from CentCom.

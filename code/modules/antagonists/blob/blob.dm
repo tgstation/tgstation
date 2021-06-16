@@ -19,10 +19,10 @@
 	return basic_report
 
 /datum/antagonist/blob/greet()
-	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are the Blob!</font></span>")
+	to_chat(owner.current, span_notice("<font color=\"#EE4000\">You are the Blob!</font>"))
 	owner.announce_objectives()
 	if(!isovermind(owner.current))
-		to_chat(owner.current, "<span class='notice'>Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!</span>")
+		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/blobalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 

@@ -1508,10 +1508,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		path = new path(pod)
 
 	//remove non var edits from specifications
-	specifications -= landing_location
-	specifications -= style
-	specifications -= spawn_type
-	specifications -= "paths_to_spawn" //list, we remove the key
+	specifications -= "target"
+	specifications -= "style"
+	specifications -= "path"
+	specifications -= "spawn" //list, we remove the key
 
 	//rest of specificiations are edits on the pod
 	for(var/variable_name in specifications)
@@ -1520,4 +1520,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			stack_trace("WARNING! podspawn vareditting \"[variable_name]\" to \"[variable_value]\" was rejected by the pod!")
 	new /obj/effect/pod_landingzone(landing_location, pod)
 	return pod
-

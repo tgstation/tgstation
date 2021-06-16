@@ -1,5 +1,0 @@
-author: "ModDownloading"
-delete-after: True
-changes: 
-  - rscadd: "audio_cooldown, a var for coders to use in new emotes to add a cooldown for sounds when the emote is used voluntarily."
-  - rscadd: "Clapping and laughing now have 5-second audio cooldowns."

@@ -1,8 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "anonymous names feature content"
-  - spellcheck: "any reference to ai triumvirate as \"tripAI\" has been obliterated. use the right case next time, jagoff"
-  - code_imp: "Moved ai triumvirate off SSTicker"
-  - refactor: "ai triumvirate is now a singleton datum controller"
-  - admin: "anonymous names has two new themes and some optional enabled theme features"
