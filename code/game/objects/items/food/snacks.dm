@@ -52,7 +52,7 @@
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()
 	if(!revelation && !isobserver(user))
-		. += "<span class='notice'>Geeze, you need to get to get your eyes checked. You should look again...</span>"
+		. += span_notice("Geeze, you need to get to get your eyes checked. You should look again...")
 
 		name = "South Bronx Parasite bar"
 		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
@@ -238,7 +238,7 @@
 
 /obj/item/food/cnds/suicide_act(mob/user)
 	. = ..()
-	user.visible_message("<span class='suicide'>[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
 /obj/item/food/cnds/caramel

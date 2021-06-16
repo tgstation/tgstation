@@ -29,9 +29,9 @@
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
+		user.visible_message(span_boldannounce("[src] hums with power as [user] deals a blow to [activate_descriptor] itself!"))
 	else
-		to_chat(user, "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>")
+		to_chat(user, span_danger("The unearthly energies that powered the blade are now dormant."))
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
@@ -63,7 +63,7 @@
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/nullrod))
-		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
+		user.visible_message(span_danger("[user] seals \the [src] with \the [I]."))
 		qdel(src)
 		return
 	else
@@ -142,7 +142,7 @@
 	var/datum/component/mood/insaneinthemembrane = jedi.GetComponent(/datum/component/mood)
 	if(insaneinthemembrane.sanity < 15)
 		return //they've already seen it and are about to die, or are just too insane to care
-	to_chat(jedi, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
 	insaneinthemembrane.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
@@ -186,7 +186,7 @@
 	var/mob/holder = get(loc, /mob)
 	if(current_owner && current_owner != holder)
 
-		to_chat(current_owner, "<span class='notice'>Your otherworldly vision fades...</span>")
+		to_chat(current_owner, span_notice("Your otherworldly vision fades..."))
 
 		REMOVE_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
 		REMOVE_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
@@ -197,14 +197,14 @@
 	if(!current_owner && holder)
 		current_owner = holder
 
-		to_chat(current_owner, "<span class='notice'>You can see...everything!</span>")
+		to_chat(current_owner, span_notice("You can see...everything!"))
 
 		ADD_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
 		ADD_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
 		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
-	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
+	visible_message(span_danger("[user] stares into [src], their eyes glazing over."))
 	user.ghostize(1)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
@@ -232,7 +232,7 @@
 		return
 
 	if(M.stat != DEAD)
-		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
+		to_chat(user, span_warning("This artifact can only affect the dead!"))
 		return
 
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
@@ -241,19 +241,19 @@
 			break
 
 	if(!M.mind || !M.client)
-		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
+		to_chat(user, span_warning("There is no soul connected to this body..."))
 		return
 
 	check_spooky()//clean out/refresh the list
 	if(spooky_scaries.len >= 3 && !unlimited)
-		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
+		to_chat(user, span_warning("This artifact can only affect three undead at a time!"))
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive(full_heal = TRUE, admin_revive = TRUE)
 	spooky_scaries |= M
-	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
+	to_chat(M, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
 
 	equip_roman_skeleton(M)
 

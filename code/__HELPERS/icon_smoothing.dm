@@ -149,7 +149,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	return ..()
 
 
-//do not use, use QUEUE_SMOOTH(atom)
+///do not use, use QUEUE_SMOOTH(atom)
 /atom/proc/smooth_icon()
 	smoothing_flags &= ~SMOOTH_QUEUED
 	flags_1 |= HTML_USE_INITAL_ICON_1
@@ -164,6 +164,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		bitmask_smooth()
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
+	SEND_SIGNAL(src, COMSIG_ATOM_SMOOTHED_ICON)
+	update_appearance(~UPDATE_SMOOTHING)
 
 
 /atom/proc/corners_diagonal_smooth(adjacencies)
@@ -388,7 +390,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 									underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
 									underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
 					underlays = list(underlay_appearance)
-
 
 /turf/open/floor/set_smoothed_icon_state(new_junction)
 	if(broken || burnt)

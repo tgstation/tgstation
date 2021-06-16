@@ -224,6 +224,7 @@
 		"compact_remote_shell",
 		"component_printer",
 		"integrated_circuit",
+		"usb_cable",
 	)
 
 /////////////////////////Biotech/////////////////////////

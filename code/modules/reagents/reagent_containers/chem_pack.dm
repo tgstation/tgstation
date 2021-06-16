@@ -15,7 +15,7 @@
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)
 		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
-			to_chat(user, "<span class='warning'>Uh... whoops! You accidentally spill the content of the bag onto yourself.</span>")
+			to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
 			SplashReagents(user)
 			return
 
@@ -24,14 +24,14 @@
 		reagents.flags = reagent_flags
 		spillable = FALSE
 		sealed = TRUE
-		to_chat(user, "<span class='notice'>You seal the bag.</span>")
+		to_chat(user, span_notice("You seal the bag."))
 
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()
 	if(sealed)
-		. += "<span class='notice'>The bag is sealed shut.</span>"
+		. += span_notice("The bag is sealed shut.")
 	else
-		. += "<span class='notice'>Alt-click to seal it.</span>"
+		. += span_notice("Alt-click to seal it.")
 
 
 /obj/item/reagent_containers/chem_pack/attack_self(mob/user)

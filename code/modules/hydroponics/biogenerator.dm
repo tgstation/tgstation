@@ -61,7 +61,7 @@
 /obj/machinery/biogenerator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
+		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.")
 
 /obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
@@ -81,7 +81,7 @@
 		return ..()
 
 	if(processing)
-		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
+		to_chat(user, span_warning("The biogenerator is currently processing."))
 		return
 
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
@@ -97,7 +97,7 @@
 
 	if(istype(O, /obj/item/reagent_containers/glass))
 		if(panel_open)
-			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
+			to_chat(user, span_warning("Close the maintenance panel first."))
 		else
 			insert_beaker(user, O)
 
@@ -109,7 +109,7 @@
 		for(var/obj/item/food/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
+			to_chat(user, span_warning("The biogenerator is already full! Activate it."))
 		else
 			for(var/obj/item/food/grown/G in PB.contents)
 				if(i >= max_items)
@@ -117,11 +117,11 @@
 				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
 					i++
 			if(i<max_items)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
+				to_chat(user, span_info("You empty the plant bag into the biogenerator."))
 			else if(PB.contents.len == 0)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
+				to_chat(user, span_info("You empty the plant bag into the biogenerator, filling it to its capacity."))
 			else
-				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
+				to_chat(user, span_info("You fill the biogenerator to its capacity."))
 		return TRUE //no afterattack
 
 	else if(istype(O, /obj/item/food/grown))
@@ -129,15 +129,15 @@
 		for(var/obj/item/food/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
+			to_chat(user, span_warning("The biogenerator is full! Activate it."))
 		else
 			if(user.transferItemToLoc(O, src))
-				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
+				to_chat(user, span_info("You put [O.name] in [src.name]"))
 		return TRUE //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>",
-			"<span class='notice'>You begin to load a design from \the [O]...</span>",
-			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
+		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
+			span_notice("You begin to load a design from \the [O]..."),
+			span_hear("You hear the chatter of a floppy drive."))
 		processing = TRUE
 		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
@@ -147,7 +147,7 @@
 		processing = FALSE
 		return TRUE
 	else
-		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
+		to_chat(user, span_warning("You cannot put this in [src.name]!"))
 
 /obj/machinery/biogenerator/AltClick(mob/living/user)
 	. = ..()
@@ -166,7 +166,7 @@
 	if(machine_stat != NONE)
 		return
 	if(processing)
-		to_chat(user, "<span class='warning'>The biogenerator is in the process of working.</span>")
+		to_chat(user, span_warning("The biogenerator is in the process of working."))
 		return
 	var/S = 0
 	for(var/obj/item/food/grown/I in contents)
@@ -251,10 +251,10 @@
 		return
 
 	if(beaker)
-		to_chat(user, "<span class='notice'>You swap out [beaker] in [src] for [inserted_beaker].</span>")
+		to_chat(user, span_notice("You swap out [beaker] in [src] for [inserted_beaker]."))
 		eject_beaker(user, silent = TRUE)
 	else
-		to_chat(user, "<span class='notice'>You add [inserted_beaker] to [src].</span>")
+		to_chat(user, span_notice("You add [inserted_beaker] to [src]."))
 
 	beaker = inserted_beaker
 	update_appearance()
@@ -274,10 +274,10 @@
 
 	if(user.put_in_hands(beaker))
 		if(!silent)
-			to_chat(user, "<span class='notice'>You eject [beaker] from [src].</span>")
+			to_chat(user, span_notice("You eject [beaker] from [src]."))
 	else
 		if(!silent)
-			to_chat(user, "<span class='notice'>You eject [beaker] from [src] onto the ground.</span>")
+			to_chat(user, span_notice("You eject [beaker] from [src] onto the ground."))
 		beaker.forceMove(drop_location())
 
 	beaker = null
