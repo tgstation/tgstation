@@ -172,7 +172,7 @@
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
 	opened = TRUE
 	if(!dense_when_open)
-		density = FALSE
+		set_density(FALSE)
 	var/obj/structure/closet/container = src
 	REMOVE_TRAIT(container, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 	dump_contents()
@@ -234,7 +234,7 @@
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
 	opened = FALSE
-	density = TRUE
+	set_density(TRUE)
 	update_appearance()
 	after_close(user)
 	return TRUE

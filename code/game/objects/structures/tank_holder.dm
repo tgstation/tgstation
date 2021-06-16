@@ -106,7 +106,7 @@
 /// and density.
 /obj/structure/tank_holder/proc/after_detach_tank()
 	tank = null
-	density = FALSE
+	set_density(FALSE)
 	icon_state = "holder"
 
 /obj/structure/tank_holder/oxygen

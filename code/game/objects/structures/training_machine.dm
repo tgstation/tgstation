@@ -293,9 +293,9 @@
  */
 /obj/structure/training_machine/proc/handle_density()
 	if(length(buckled_mobs) || attached_item)
-		density = TRUE
+		set_density(TRUE)
 	else
-		density = FALSE
+		set_density(FALSE)
 
 /obj/structure/training_machine/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	. = ..()
