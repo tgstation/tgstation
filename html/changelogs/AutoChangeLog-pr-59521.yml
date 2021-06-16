@@ -1,5 +1,0 @@
-author: "DuffCreeper"
-delete-after: True
-changes: 
-  - rscadd: "Allows people to now examine fire alarms to detect their thermal sensor state. Silicons can now also Ctrl+Click to enable and disable at the sensor at a whim"
-  - code_imp: "Cleaned up single letter variables in firealarm.dm"
