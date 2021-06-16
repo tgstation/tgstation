@@ -254,6 +254,7 @@
 	grasp_ghoul.ghoul_amt *= 3
 	var/datum/eldritch_knowledge/flesh_ghoul/better_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
 	better_ghoul.max_amt *= 3
+	
 #undef GHOUL_MAX_HEALTH
 #undef MUTE_MAX_HEALTH
 #undef ORIGINAL_MAX_HEALTH
