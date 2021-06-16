@@ -146,15 +146,17 @@ SUBSYSTEM_DEF(time_track)
 			length(SSair.networks),
 			length(SSair.high_pressure_delta),
 			length(SSair.active_super_conductivity),
-			length(SSdbcore.all_queries),
-			length(SSdbcore.queries_active),
-			length(SSdbcore.queries_standby)
+			length(SSdbcore.all_queries_num),
+			length(SSdbcore.queries_active_num),
+			length(SSdbcore.queries_standby_num)
 #ifdef SENDMAPS_PROFILE
 		) + send_maps_values
 #else
 		)
 #endif
 	)
+
+	SSdbcore.reset_tracking()
 
 #ifdef SENDMAPS_PROFILE
 /datum/controller/subsystem/time_track/proc/scream_maptick_data()

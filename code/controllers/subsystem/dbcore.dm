@@ -17,6 +17,13 @@ SUBSYSTEM_DEF(dbcore)
 
 	var/max_concurrent_queries = 25
 
+	/// Number of all queries, reset to 0 when logged in SStime_track. Used by SStime_track
+	var/all_queries_num = 0
+	/// Number of active queries, reset to 0 when logged in SStime_track. Used by SStime_track
+	var/queries_active_num = 0
+	/// Number of standby queries, reset to 0 when logged in SStime_track. Used by SStime_track
+	var/queries_standby_num = 0
+
 	/// All the current queries that exist.
 	var/list/all_queries = list()
 	/// Queries being checked for timeouts.
@@ -48,6 +55,11 @@ SUBSYSTEM_DEF(dbcore)
 	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
 	return ..()
 
+/// Resets the tracking numbers on the subsystem. Used by SStime_track.
+/datum/controller/subsystem/dbcore/proc/reset_tracking()
+	all_queries_num = 0
+	queries_active_num = 0
+	queries_standby_num = 0
 
 /datum/controller/subsystem/dbcore/fire(resumed = FALSE)
 	if(!IsConnected())
@@ -99,6 +111,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(IsAdminAdvancedProcCall())
 		return FALSE
 	run_query(query)
+	queries_active_num++
 	queries_active += query
 	return query
 
@@ -129,6 +142,7 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/queue_query(datum/db_query/query)
 	if(IsAdminAdvancedProcCall())
 		return
+	queries_standby_num++
 	queries_standby |= query
 
 /datum/controller/subsystem/dbcore/Recover()
@@ -425,6 +439,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 /datum/db_query/New(connection, sql, arguments)
 	SSdbcore.all_queries += src
+	SSdbcore.all_queries_num++
 	Activity("Created")
 	item = list()
 
