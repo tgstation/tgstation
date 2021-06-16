@@ -255,7 +255,7 @@
 	force_string = "hilarious"
 	force = 10
 	damtype = STAMINA
-	hitsound = 'sound/weapons/genhit.ogg'  //could use a funnier
+	hitsound = 'sound/weapons/genhit1.ogg'  //could use a funnier
 	attack_verb_continuous = list("slaps", "smacks", "gahonks")
 	attack_verb_simple = list("slap", "smack", "gahonk")
 
@@ -278,9 +278,12 @@
 	if(!victim_pranked)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
+	if(victim.has_status_effect(STATUS_EFFECT_SLAPPED_SILLY))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
 	var/slap_power = victim_pranked.prank_counter
 
-	playsound(user, 'sound/weapons/punch1.ogg', min(slap_power * 10, 100))
+	playsound(user, 'sound/weapons/punch1.ogg', min(slap_power * 10, 80))
 	user.do_attack_animation(src)
 	victim.apply_damage(7 * slap_power, STAMINA, BODY_ZONE_HEAD)
 	victim.apply_status_effect(STATUS_EFFECT_SLAPPED_SILLY, slap_power SECONDS)
