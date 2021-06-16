@@ -215,7 +215,7 @@
 			to_chat(user, span_warning("[I] is too large for the drain enclosure."))
 			return
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
+			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
 		hiddenitem = I
 		to_chat(user, span_notice("You place [I] into the drain enclosure."))
