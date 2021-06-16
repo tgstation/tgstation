@@ -298,7 +298,7 @@
 	var/list/local_servers = list()
 	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
 		var/turf/position_of_this_server_machine = get_turf(server)
-		if (turf_to_check_for_servers && position_of_this_server_machine && position_of_this_server_machine.z == turf_to_check_for_servers.z)
+		if (turf_to_check_for_servers && position_of_this_server_machine && SSmapping.level_trait(position_of_this_server_machine.z,ZTRAIT_STATION) && SSmapping.level_trait(turf_to_check_for_servers.z,ZTRAIT_STATION))
 			local_servers += server
 	return local_servers
 
