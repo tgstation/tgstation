@@ -29,7 +29,7 @@
 		return FALSE
 	var/area/noteleport_check = get_area(user)
 	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
-		to_chat(user, "<span class='danger'>Some dull, universal force is stopping you from jaunting here.</span>")
+		to_chat(user, span_danger("Some dull, universal force is stopping you from jaunting here."))
 		return FALSE
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
@@ -98,5 +98,5 @@
 	if(!.)
 		return
 	if (locate(/obj/effect/blessing, .))
-		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
+		to_chat(user, span_warning("Holy energies block your path!"))
 		return null
