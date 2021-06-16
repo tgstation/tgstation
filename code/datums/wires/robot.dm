@@ -64,8 +64,8 @@
 			R.SetLockdown(!R.lockcharge) // Toggle
 			log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] via pulse")
 
-		if(WIRE_RESET_MODULE)
-			if(R.has_module())
+		if(WIRE_RESET_MODEL)
+			if(R.has_model())
 				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
 
 /datum/wires/robot/on_cut(wire, mend)
