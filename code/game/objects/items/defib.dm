@@ -164,7 +164,7 @@
 		return
 
 	if(combat) // Elite agents do not subscribe to your notion of "Safety"
-		visible_message("<span class='notice'>[src] beeps: Safety protocols nonexistent!</span>")
+		visible_message(span_notice("[src] beeps: Safety protocols nonexistent!"))
 		playsound(src, 'sound/machines/defib_saftyOff.ogg', 50, FALSE)
 	else if(safety)
 		safety = FALSE
