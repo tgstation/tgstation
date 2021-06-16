@@ -51,7 +51,7 @@
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.toggle_cam(usr, FALSE)
-				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
+				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
 				log_combat(usr, R, "toggled cyborg camera to [R.builtInCamera.status ? "on" : "off"] via pulse")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
