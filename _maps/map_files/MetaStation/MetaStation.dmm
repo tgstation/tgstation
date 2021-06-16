@@ -9461,16 +9461,16 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/item/borg/sight/hud/med{
+/obj/item/clothing/glasses/hud/health{
 	pixel_y = 6
 	},
-/obj/item/borg/sight/hud/med{
+/obj/item/clothing/glasses/hud/health{
 	pixel_y = 4
 	},
-/obj/item/borg/sight/hud/med{
+/obj/item/clothing/glasses/hud/health{
 	pixel_y = 2
 	},
-/obj/item/borg/sight/hud/med,
+/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
