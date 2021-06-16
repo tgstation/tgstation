@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
-	flags = SS_TICKER|SS_BACKGROUND
-	wait = 1
+	wait = 0.5 SECONDS
 	runlevels = RUNLEVEL_INIT|RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	init_order = INIT_ORDER_DBCORE
 	priority = FIRE_PRIORITY_DATABASE
