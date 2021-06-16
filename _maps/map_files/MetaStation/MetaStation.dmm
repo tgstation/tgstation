@@ -10665,6 +10665,11 @@
 /area/maintenance/port/aft)
 "bYR" = (
 /obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Medbay Paramedic Dispatch";
+	name = "medical camera";
+	network = list("ss13","medical")
+	},
 /turf/open/floor/iron/dark,
 /area/medical/office)
 "bYS" = (
@@ -12308,6 +12313,12 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Primary Surgery";
+	dir = 4;
+	name = "medical camera";
+	network = list("ss13","medical")
 	},
 /turf/open/floor/iron/white,
 /area/medical/surgery)
@@ -18224,6 +18235,11 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/structure/tank_holder/extinguisher,
+/obj/machinery/camera{
+	c_tag = "Medbay Cryogenics";
+	dir = 8;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "dIs" = (
@@ -19794,6 +19810,10 @@
 "ejb" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/siding/white,
+/obj/machinery/camera{
+	c_tag = "Medbay Cold Storage";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/kitchen_coldroom,
 /area/medical/coldroom)
 "ejh" = (
@@ -30216,7 +30236,7 @@
 /area/cargo/qm)
 "hOi" = (
 /obj/machinery/camera{
-	c_tag = "Medbay Ward";
+	c_tag = "Medbay Break Room";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
@@ -74153,6 +74173,25 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
+"wmP" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Primary Treatment Centre West";
+	dir = 4;
+	network = list("ss13","medbay")
+	},
+/turf/open/floor/iron/white,
+/area/medical/treatment_center)
 "wmS" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;47"
@@ -77771,7 +77810,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Medbay Primary Treatment Centre";
+	c_tag = "Medbay Primary Treatment Centre East";
 	dir = 8;
 	network = list("ss13","medbay")
 	},
@@ -100073,7 +100112,7 @@ nHD
 tbY
 vog
 mRw
-iYO
+wmP
 oKv
 nIN
 eFQ
