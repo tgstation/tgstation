@@ -55,7 +55,7 @@
 				log_combat(usr, R, "toggled cyborg camera to [R.builtInCamera.status ? "on" : "off"] via pulse")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
-				R.visible_message("[R] gently chimes.", "LawSync protocol engaged.")
+				R.visible_message(span_notice("[R] gently chimes."), span_notice("LawSync protocol engaged."))
 				log_combat(usr, R, "forcibly synced cyborg laws via pulse")
 				// TODO, log the laws they gained here
 				R.lawsync()
