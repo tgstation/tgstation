@@ -41,8 +41,8 @@
 					new_ai = select_active_ai(R, R.z)
 				R.notify_ai(DISCONNECT)
 				if(new_ai && (new_ai != R.connected_ai))
+					R.set_connected_ai(new_ai)
 					log_combat(usr, R, "synced cyborg [R.connected_ai ? "from [ADMIN_LOOKUP(R.connected_ai)]": ""] to [ADMIN_LOOKUP(new_ai)]")
-					R.connected_ai = new_ai
 					if(R.shell)
 						R.undeploy() //If this borg is an AI shell, disconnect the controlling AI and assign ti to a new AI
 						R.notify_ai(AI_SHELL)
