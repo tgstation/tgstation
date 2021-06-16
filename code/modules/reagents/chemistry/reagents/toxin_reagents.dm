@@ -806,14 +806,13 @@
 	var/delayed_toxin_damage = 0
 
 /datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
-	metabolisationtime += delta_time
+	delayed_toxin_damage += (delta_time * 3)
 	. = ..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	var/toxdamage = metabolisationtime*3
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
-	M.adjustToxLoss(toxdamage)
-	..()
+	M.log_message("has taken [delayed_toxin_damage] toxin damage from amanitin toxin", LOG_ATTACK)
+	M.adjustToxLoss(delayed_toxin_damage)
+	. = ..()
 
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
