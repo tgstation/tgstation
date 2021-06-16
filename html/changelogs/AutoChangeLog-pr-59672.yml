@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Smartfridges will now show an approximate number of their stored items correctly on their sprite."
+  - bugfix: "Smartfridges will now count maximum number of allowed items correctly."
+  - bugfix: "Smartfridges will now show their UI only when directly interacted with."
