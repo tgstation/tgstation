@@ -1,6 +1,5 @@
 #define GHOUL_MAX_HEALTH 25
 #define MUTE_MAX_HEALTH 50
-#define ORIGINAL_MAX_HEALTH 100
 
 /datum/eldritch_knowledge/base_flesh
 	name = "Principle of Hunger"
@@ -75,7 +74,7 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/humie = source
 	ghouls -= humie
-	humie.setMaxHealth(ORIGINAL_MAX_HEALTH)
+	humie.setMaxHealth(initial(humie.maxHealth))
 	humie.remove_status_effect(/datum/status_effect/ghoul)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source,COMSIG_LIVING_DEATH)
@@ -139,7 +138,7 @@
 /datum/eldritch_knowledge/flesh_grasp/proc/remove_ghoul(datum/source)
 	var/mob/living/carbon/human/humie = source
 	spooky_scaries -= humie
-	humie.setMaxHealth(ORIGINAL_MAX_HEALTH)
+	humie.setMaxHealth(initial(humie.maxHealth))
 	humie.remove_status_effect(/datum/status_effect/ghoul)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source, COMSIG_LIVING_DEATH)
@@ -257,4 +256,3 @@
 	
 #undef GHOUL_MAX_HEALTH
 #undef MUTE_MAX_HEALTH
-#undef ORIGINAL_MAX_HEALTH
