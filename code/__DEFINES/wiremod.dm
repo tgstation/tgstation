@@ -3,6 +3,9 @@
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
 
+/// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
+#define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
+
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
@@ -78,6 +81,9 @@
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
 
+// Combiner component
+#define COMP_COMBINER_ANY "any"
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -86,8 +92,20 @@
 /// Whether the shell needs to be anchored for the circuit to be on.
 #define SHELL_FLAG_REQUIRE_ANCHOR (1<<1)
 
+/// Whether or not the shell has a USB port.
+#define SHELL_FLAG_USB_PORT (1<<2)
+
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10
 #define SHELL_CAPACITY_MEDIUM 25
 #define SHELL_CAPACITY_LARGE 50
 #define SHELL_CAPACITY_VERY_LARGE 500
+
+/// The maximum range a USB cable can be apart from a source
+#define USB_CABLE_MAX_RANGE 2
+
+// Circuit flags
+/// Creates an input trigger that means the component won't be triggered unless the trigger is pulsed.
+#define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
+/// Creates an output trigger that sends a pulse whenever the component is successfully triggered
+#define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)

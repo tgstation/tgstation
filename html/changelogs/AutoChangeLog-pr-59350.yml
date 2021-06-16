@@ -1,5 +1,0 @@
-author: "norill"
-delete-after: True
-changes: 
-  - bugfix: "Fixed not being able to add telecomms frequency filters"
-  - bugfix: "Changed the color of command frequency in telecomms and headset GUI from blue to yellow to match chat color"

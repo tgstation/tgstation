@@ -78,7 +78,7 @@
 
 /datum/antagonist/traitor/on_removal()
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='userdanger'>You are no longer the [name]!</span>")
+		to_chat(owner.current, span_userdanger("You are no longer the [name]!"))
 
 	owner.special_role = null
 
@@ -171,7 +171,7 @@
 	return new_objective
 
 /datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<span class='alertsyndie'>[traitor_flavor["introduction"]]</span>")
+	to_chat(owner.current, span_alertsyndie(traitor_flavor["introduction"]))
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -217,9 +217,9 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
 			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				traitor_won = FALSE
 			count++
 
@@ -238,9 +238,9 @@
 		result += contractor_round_end()
 
 	if(traitor_won)
-		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
+		result += span_greentext("The [special_role_text] was successful!")
 	else
-		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
+		result += span_redtext("The [special_role_text] has failed!")
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
@@ -276,8 +276,8 @@
 		if (completed_contracts > 1)
 			pluralCheck = "contracts"
 
-		result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
-					<span class='greentext'>[tc_total] TC</span>![contractor_support_unit]<br>"
+		result += "Completed [span_greentext("[completed_contracts]")] [pluralCheck] for a total of \
+					[span_greentext("[tc_total] TC")]![contractor_support_unit]<br>"
 
 	return result
 
@@ -384,6 +384,6 @@
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"
 
 	return message

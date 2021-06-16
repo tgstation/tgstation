@@ -270,8 +270,8 @@
 			extra_warnings = volume_warnings_stage_1 + volume_warnings_stage_2 + volume_warnings_stage_3 + volume_warnings_stage_4 + volume_warnings_stage_5
 
 	if(prob(35))
-		to_chat(host_mob, "<span class='warning'>[pick(main_warnings)]</span>")
+		to_chat(host_mob, span_warning("[pick(main_warnings)]"))
 		next_warning = world.time + rand(min_warning_cooldown, max_warning_cooldown)
 	else if(islist(extra_warnings))
-		to_chat(host_mob, "<span class='warning'>[pick(extra_warnings)]</span>")
+		to_chat(host_mob, span_warning("[pick(extra_warnings)]"))
 		next_warning = world.time + rand(min_warning_cooldown, max_warning_cooldown)

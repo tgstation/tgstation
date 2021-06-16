@@ -30,7 +30,7 @@
 	//AI laws
 	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
 		M.laws_sanity_check()
-		if(M.stat != DEAD && M.see_in_dark != 0)
+		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
 

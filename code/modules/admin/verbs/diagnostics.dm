@@ -84,7 +84,7 @@
 	set name = "Toggle CDN"
 	set category = "Server"
 	var/static/admin_disabled_cdn_transport = null
-	if (tgui_alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", list("Yes", "No")) != "Yes")
+	if (alert(usr, "Are you sure you want to toggle the CDN asset transport?", "Confirm", "Yes", "No") != "Yes")
 		return
 	var/current_transport = CONFIG_GET(string/asset_transport)
 	if (!current_transport || current_transport == "simple")
@@ -95,7 +95,7 @@
 			message_admins("[key_name_admin(usr)] re-enabled the CDN asset transport")
 			log_admin("[key_name(usr)] re-enabled the CDN asset transport")
 		else
-			to_chat(usr, "<span class='adminnotice'>The CDN is not enabled!</span>")
+			to_chat(usr, span_adminnotice("The CDN is not enabled!"))
 			if (tgui_alert(usr, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
 				SSassets.transport.dont_mutate_filenames = !SSassets.transport.dont_mutate_filenames
 				message_admins("[key_name_admin(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")

@@ -33,7 +33,7 @@
 		if(!prob(10))
 			return
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		audible_message(pick(list("<span class='notice'>[src] grumbles!</span>", "<span class='notice'>[src] makes a splashing noise!</span>", "<span class='notice'>[src] sloshes!</span>")))
+		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 
 ///Handles the petri dish depositing into the vat.
 /obj/machinery/plumbing/growing_vat/attacked_by(obj/item/I, mob/living/user)
@@ -46,7 +46,7 @@
 		return ..()
 
 	if(biological_sample)
-		to_chat(user, "<span class='warning'>There is already a sample in the vat!</span>")
+		to_chat(user, span_warning("There is already a sample in the vat!"))
 		return
 	deposit_sample(user, petri)
 
@@ -57,7 +57,7 @@
 		biological_sample.micro_organisms += new m.type()
 	biological_sample.sample_layers = petri.sample.sample_layers
 	biological_sample.sample_color = petri.sample.sample_color
-	to_chat(user, "<span class='warning'>You put some of the sample in the vat!</span>")
+	to_chat(user, span_warning("You put some of the sample in the vat!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
 
@@ -66,7 +66,7 @@
 	. = ..()
 	if(!biological_sample)
 		return
-	. += "<span class='notice'>It seems to have a sample in it!</span>"
+	. += span_notice("It seems to have a sample in it!")
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(user.research_scanner)

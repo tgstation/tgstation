@@ -127,9 +127,14 @@
 	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
-		W.attack_self(src, modifiers)
-		update_inv_hands()
-		return
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			W.attack_self_secondary(src, modifiers)
+			update_inv_hands()
+			return
+		else
+			W.attack_self(src, modifiers)
+			update_inv_hands()
+			return
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory

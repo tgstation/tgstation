@@ -19,7 +19,7 @@
 			if(hidden_uplink)
 				hidden_uplink.red_telecrystals += amount
 				use(amount)
-				to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
+				to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 
 
 /obj/item/stack/red_telecrystal/five
@@ -49,7 +49,7 @@
 			if(hidden_uplink)
 				hidden_uplink.black_telecrystals += amount
 				use(amount)
-				to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
+				to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 
 /obj/item/stack/black_telecrystal/five
 	amount = 5

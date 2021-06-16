@@ -15,6 +15,9 @@
 	/// The port type. Ports can only connect to each other if the type matches
 	var/datatype
 
+	/// The default port type. Stores the original datatype of the port set on Initialize.
+	var/default_datatype
+
 	/// The port color. If unset, appears as blue.
 	var/color
 
@@ -28,6 +31,7 @@
 	src.connected_component = to_connect
 	src.name = name
 	src.datatype = datatype
+	src.default_datatype = datatype
 	src.color = datatype_to_color()
 
 
@@ -63,6 +67,9 @@
 	if(prev_value == value_to_convert)
 		return prev_value
 	. = value_to_convert
+
+	if(isnull(value_to_convert))
+		return null
 
 	switch(datatype)
 		if(PORT_TYPE_STRING)
@@ -248,7 +255,7 @@
 
 	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
 	if(trigger && send_update)
-		connected_component.input_received(src)
+		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
 /datum/port/input/proc/null_output(datum/source)
