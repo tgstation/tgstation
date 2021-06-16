@@ -1819,6 +1819,9 @@
 /mob/living/proc/set_usable_legs(new_value)
 	if(usable_legs == new_value)
 		return
+	if(new_value < 0) // Sanity check
+		new_value = 0
+
 	. = usable_legs
 	usable_legs = new_value
 
