@@ -431,7 +431,7 @@
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(istype(R.type, /datum/reagent/medicine/calomel))
+		if(!istype(R.type, /datum/reagent/medicine/calomel))
 			M.reagents.remove_reagent(R.type, 3 * REM * delta_time)
 	if(M.health > 20)
 		M.adjustToxLoss(1 * REM * delta_time, 0)
