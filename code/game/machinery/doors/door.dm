@@ -335,7 +335,7 @@
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)
-	density = FALSE
+	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
@@ -365,7 +365,7 @@
 	do_animate("closing")
 	layer = closingLayer
 	sleep(5)
-	density = TRUE
+	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	sleep(5)
 	update_appearance()
