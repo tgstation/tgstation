@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
 GLOBAL_LIST_EMPTY(emote_list)
 
-GLOBAL_LIST_INIT(construct_types, list(
+GLOBAL_LIST_INIT(construct_radial_images, list(
 	"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
 	"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
 	"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
