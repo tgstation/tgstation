@@ -13,7 +13,7 @@
 	new /obj/item/secateurs(src)
 
 //Plocker
-/obj/structure/closet/secure_closet/plocker
+/obj/structure/closet/secure_closet/peach
 	name = "peach locker"
 	desc = "A huge hollow pitless peach."
 	locked = FALSE
@@ -26,14 +26,11 @@
 	close_sound = "sound/misc/moist_impact.ogg"
 	open_sound = "sound/misc/soggy.ogg"
 	breakout_time = 100
-	var/isDegrading = FALSE
-	var/owner = null
-	var/lifespan = 1800
+	var/isDegrading = FALSE //Used to check if the peach locker is degrading
+	var/owner = null //The owner of the locker which is set when an impeach is activated
+	var/lifespan = 3 MINUTES //Right when the peach locker is created it has this amount of time before it starts degrading
 
-/**
-* Overrided to include a different sound when attacked
-*/
-/obj/structure/closet/secure_closet/plocker/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/closet/secure_closet/peach/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -43,10 +40,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/**
-* Overrided so that the creator of the peach locker can only lock / unlock it
-*/
-/obj/structure/closet/secure_closet/plocker/togglelock(mob/living/user, silent)
+/obj/structure/closet/secure_closet/peach/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(owner == user)
 			if(iscarbon(user))
@@ -60,17 +54,14 @@
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
 
-/**
-* When created it has a life span
-*/
-/obj/structure/closet/secure_closet/plocker/Initialize()
+/obj/structure/closet/secure_closet/peach/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/start_degrading), lifespan)
 
 /**
 * Begins the process for the locker to degrade
 */
-/obj/structure/closet/secure_closet/plocker/proc/start_degrading()
+/obj/structure/closet/secure_closet/peach/proc/start_degrading()
 	isDegrading = TRUE
 	icon_state = "plocker_degrade"
 	desc += " There are ants all over it!"
@@ -80,21 +71,15 @@
 /**
 * Degrades the peach locker over time
 */
-/obj/structure/closet/secure_closet/plocker/proc/degrade()
+/obj/structure/closet/secure_closet/peach/proc/degrade()
 	if(QDELETED(src) || isDegrading == FALSE)
 		return
 	src.take_damage(10,BRUTE,"",FALSE)
 	if(obj_integrity > 0)
 		addtimer(CALLBACK(src, .proc/degrade), 1 MINUTES)
 
-/**
-* Cannot emag
-*/
-/obj/structure/closet/secure_closet/plocker/emag_act(mob/user)
+/obj/structure/closet/secure_closet/peach/emag_act(mob/user)
 	return
 
-/**
-* Cannot emp
-*/
-/obj/structure/closet/secure_closet/plocker/emp_act(severity)
+/obj/structure/closet/secure_closet/peach/emp_act(severity)
 	return
