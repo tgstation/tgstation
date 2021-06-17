@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(garbage)
 				#ifndef REFERENCE_TRACKING
 				if (ignore_gc_failure)
 					continue
-				#ifndef REFERENCE_TRACKING
+				#endif
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
