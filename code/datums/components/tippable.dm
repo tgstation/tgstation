@@ -40,6 +40,15 @@
 /datum/component/tippable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
 
+/datum/component/acid/Destroy(force, silent)
+	if(pre_tipped_callback)
+		QDEL_NULL(pre_tipped_callback)
+	if(post_tipped_callback)
+		QDEL_NULL(post_tipped_callback)
+	if(post_untipped_callback)
+		QDEL_NULL(post_untipped_callback)
+	return ..()
+
 /*
  * Attempt to interact with [source], either tipping it or helping it up.
  *
