@@ -2046,6 +2046,8 @@
 	// Statusbar
 	status_bar_set_text(usr, name)
 	// Screentips
+	if(SSlag_switch.measures[DISABLE_SCREENTIPS] && !HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES))
+		return
 	if(!usr?.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
 		usr.hud_used.screentip_text.maptext = ""
 	else

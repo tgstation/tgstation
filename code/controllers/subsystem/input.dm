@@ -36,4 +36,6 @@ SUBSYSTEM_DEF(input)
 
 /datum/controller/subsystem/input/fire()
 	for(var/mob/user as anything in GLOB.player_list)
+		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && user.stat == DEAD && !user.client?.holder)
+			continue
 		user.focus?.keyLoop(user.client)
