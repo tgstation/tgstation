@@ -30,6 +30,9 @@ SUBSYSTEM_DEF(garbage)
 	init_order = INIT_ORDER_GARBAGE
 
 	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS) // deciseconds to wait before moving something up in the queue to the next level
+	
+	var/ignore_gc_failure = FALSE //! Does not hard delete things that fail to gc.
+	var/no_hard_deletes = FALSE //! Does not hard delete things, even if they request it. (impiles ignore_gc_failure)
 
 	//Stat tracking
 	var/delslasttick = 0 // number of del()'s we've done this tick
@@ -200,6 +203,10 @@ SUBSYSTEM_DEF(garbage)
 					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
 				#endif
 				I.failures++
+				#ifndef REFERENCE_TRACKING
+				if (ignore_gc_failure)
+					continue
+				#ifndef REFERENCE_TRACKING
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
@@ -240,6 +247,8 @@ SUBSYSTEM_DEF(garbage)
 	var/ticktime = world.time
 	++delslasttick
 	++totaldels
+	if (no_hard_deletes)
+		return
 	var/type = D.type
 	var/refID = "\ref[D]"
 
