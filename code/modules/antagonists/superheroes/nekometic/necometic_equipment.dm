@@ -1,5 +1,5 @@
 /obj/item/clothing/gloves/combat/nekometic
-	name = "nanite combat gloves"
+	name = "advanced combat gloves"
 	desc = "A pair of advanced combat gloves that teach their user NekoBrawl using nanotechnologies."
 	icon_state = "really_black"
 	var/datum/martial_art/cqc/nekobrawl/style = new
@@ -67,11 +67,16 @@
 		wall.gets_drilled(H)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/item/clothing/under/costume/schoolgirl/nekometic
+/obj/item/clothing/suit/nekometic //Turned it into a suit so you can't stack armor
 	name = "reinforced schoolgirl uniform"
 	desc = "A reinforced version of japaneese school dress, for <b>reasons</b>."
+	icon = 'icons/obj/clothing/under/costume.dmi'
+	worn_icon =  'icons/mob/clothing/under/costume.dmi'
+	icon_state = "schoolgirl"
+	inhand_icon_state = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(MELEE = 50, BULLET = 50, LASER = 40, ENERGY = 50, BOMB = 45, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
+	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/space/hardsuit/syndi/nekometic
 	name = "neko hardsuit"

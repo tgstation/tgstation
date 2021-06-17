@@ -76,7 +76,7 @@
 
 /obj/effect/mob_spawn/human/superhero/villain/nekometic
 	name = "Nekometic's cryostasis sleeper"
-	desc = "A cryostasis sleeper containing Nekometic. Is he a real catboy or just a pervert wearing an anime skirt?"
+	desc = "A cryostasis sleeper containing Nekometic. Is she a real catgirl or just a cosplayer?"
 
 	outfit = /datum/outfit/superhero/villain/nekometic_nude
 	hero_role = "Nekometic"
