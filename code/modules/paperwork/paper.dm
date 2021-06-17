@@ -4,12 +4,6 @@
  *
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
-#define MAX_PAPER_LENGTH 5000
-#define MAX_PAPER_STAMPS 30 // Too low?
-#define MAX_PAPER_STAMPS_OVERLAYS 4
-#define MODE_READING 0
-#define MODE_WRITING 1
-#define MODE_STAMPING 2
 
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
