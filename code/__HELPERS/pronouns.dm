@@ -43,6 +43,10 @@
 	switch(copytext_char(pluralize, -1))
 		if ("s")
 			. = "es"
+		if ("x")
+			. = "es"
+		if ("y")
+			. = "ies"
 		else
 			. = "s"
 
