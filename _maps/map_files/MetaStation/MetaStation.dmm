@@ -47805,13 +47805,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/defibrillator{
+/obj/item/defibrillator/loaded{
 	pixel_y = 6
 	},
-/obj/item/defibrillator{
+/obj/item/defibrillator/loaded{
 	pixel_y = 3
 	},
-/obj/item/defibrillator,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "nIe" = (
