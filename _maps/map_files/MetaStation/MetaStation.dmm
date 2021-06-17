@@ -36012,6 +36012,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "jQm" = (
@@ -49683,6 +49684,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/coldroom)
 "onR" = (
@@ -65139,6 +65141,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "tqs" = (
@@ -69669,6 +69672,7 @@
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "uPf" = (
@@ -78754,6 +78758,7 @@
 "xPf" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/end,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "xPj" = (
