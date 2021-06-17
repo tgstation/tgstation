@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		..(target)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+			to_chat(occupant, span_notice("<b>You feel cool air surround you. You go numb as your senses turn inward.</b>"))
 
 		COOLDOWN_START(src, despawn_world_time, time_till_despawn)
 	icon_state = "cryopod"
@@ -139,8 +139,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist_act(mob/living/user)
-	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
-		"<span class='notice'>You climb out of [src]!</span>")
+	visible_message(span_notice("[occupant] emerges from [src]!"),
+		span_notice("You climb out of [src]!"))
 	open_machine()
 
 /obj/machinery/cryopod/relaymove(mob/user)
@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			objective.team.objectives -= objective
 			qdel(objective)
 			for(var/datum/mind/mind in objective.team.members)
-				to_chat(mind.current, "<BR><span class='userdanger'>Your target is no longer within reach. Objective removed!</span>")
+				to_chat(mind.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
 				mind.announce_objectives()
 		else if(objective.target && istype(objective.target, /datum/mind))
 			if(objective.target == mob_occupant.mind)
@@ -180,17 +180,17 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 					return
 				objective.find_target()
 				if(!objective.target && objective.owner)
-					to_chat(objective.owner.current, "<BR><span class='userdanger'>Your target is no longer within reach. Objective removed!</span>")
+					to_chat(objective.owner.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
 					for(var/datum/antagonist/antag in objective.owner.antag_datums)
 						antag.objectives -= objective
 				if (!objective.team)
 					objective.update_explanation_text()
 					objective.owner.announce_objectives()
-					to_chat(objective.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
+					to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
 				else
 					var/list/objectivestoupdate
 					for(var/datum/mind/objective_owner in objective.get_owners())
-						to_chat(objective_owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
+						to_chat(objective_owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
 						for(var/datum/objective/update_target_objective in objective_owner.get_all_objectives())
 							LAZYADD(objectivestoupdate, update_target_objective)
 					objectivestoupdate += objective.team.objectives
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 							continue
 						update_objective.target = objective.target
 						update_objective.update_explanation_text()
-						to_chat(objective.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
+						to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
 						update_objective.owner.announce_objectives()
 				qdel(objective)
 
@@ -247,14 +247,14 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
 
-	visible_message("<span class='notice'>[src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
+	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
 #if MIN_COMPILER_VERSION >= 514
 	#warn Please replace the loop below this warning with an `as anything` loop.
 #endif
 	for(var/mob_content in mob_occupant)
 		var/obj/item/item_content = mob_content
-		if(!istype(item_content))
+		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
 			continue
 
 		mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
@@ -276,18 +276,18 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		return
 
 	if(occupant)
-		to_chat(user, "<span class='notice'>[src] is already occupied!</span>")
+		to_chat(user, span_notice("[src] is already occupied!"))
 		return
 
 	if(target.stat == DEAD)
-		to_chat(user, "<span class='notice'>Dead people can not be put into cryo.</span>")
+		to_chat(user, span_notice("Dead people can not be put into cryo."))
 		return
 
 	if(target.key && user != target)
 		if(iscyborg(target))
-			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online.</span>")
+			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
 		else
-			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious.</span>")
+			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
 		return
 
 	if(target == user && (tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes"))
@@ -308,7 +308,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		// rerun the checks in case of shenanigans
 
 	if(occupant)
-		to_chat(user, "<span class='notice'>[src] is already occupied!</span>")
+		to_chat(user, span_notice("[src] is already occupied!"))
 		return
 
 	if(target == user)
@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	else
 		visible_message("<span class='infoplain'>[user] starts putting [target] into the cryo pod.</span>")
 
-	to_chat(target, "<span class='warning'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
+	to_chat(target, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"))
 
 	log_admin("[key_name(target)] entered a stasis pod.")
 	message_admins("[key_name_admin(target)] entered a stasis pod. [ADMIN_JMP(src)]")

@@ -70,9 +70,9 @@
 		var/list/readout = list("")
 		// No dividing by 0
 		if(loaded_projectile.damage > 0)
-			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (loaded_projectile.damage * pellets), 0.1)]</span> discharge\s at point-blank, taking <span class='warning'>[pellets]</span> shot\s per round"
+			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after [span_warning("[round(100 / (loaded_projectile.damage * pellets), 0.1)]")] discharge\s at point-blank, taking [span_warning("[pellets]")] shot\s per round"
 		if(loaded_projectile.stamina > 0)
-			readout += "[loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]</span> of these rounds"
+			readout += "[loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after [span_warning("[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]")] of these rounds"
 		if(loaded_projectile.damage == 0 && loaded_projectile.stamina == 0)
 			return "Our legal team has determined the offensive nature of these rounds to be esoteric"
 		return readout.Join("\n") // Sending over a single string, rather than the whole list
@@ -120,9 +120,9 @@
 					continue
 			if (boolets > 0)
 				box.update_appearance()
-				to_chat(user, "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
+				to_chat(user, span_notice("You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s."))
 			else
-				to_chat(user, "<span class='warning'>You fail to collect anything!</span>")
+				to_chat(user, span_warning("You fail to collect anything!"))
 	else
 		return ..()
 

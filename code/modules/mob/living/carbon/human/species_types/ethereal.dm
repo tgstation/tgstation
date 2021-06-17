@@ -101,9 +101,10 @@
 	H.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
+	SIGNAL_HANDLER
 	EMPeffect = TRUE
 	spec_updatehealth(H)
-	to_chat(H, "<span class='notice'>You feel the light of your body leave you.</span>")
+	to_chat(H, span_notice("You feel the light of your body leave you."))
 	switch(severity)
 		if(EMP_LIGHT)
 			addtimer(CALLBACK(src, .proc/stop_emp, H), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
@@ -111,12 +112,13 @@
 			addtimer(CALLBACK(src, .proc/stop_emp, H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
+	SIGNAL_HANDLER
 	if(emageffect)
 		return
 	emageffect = TRUE
 	if(user)
-		to_chat(user, "<span class='notice'>You tap [H] on the back with your card.</span>")
-	H.visible_message("<span class='danger'>[H] starts flickering in an array of colors!</span>")
+		to_chat(user, span_notice("You tap [H] on the back with your card."))
+	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
 	handle_emag(H)
 	addtimer(CALLBACK(src, .proc/stop_emag, H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 
@@ -134,7 +136,7 @@
 /datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/H)
 	EMPeffect = FALSE
 	spec_updatehealth(H)
-	to_chat(H, "<span class='notice'>You feel more energized as your shine comes back.</span>")
+	to_chat(H, span_notice("You feel more energized as your shine comes back."))
 
 
 /datum/species/ethereal/proc/handle_emag(mob/living/carbon/human/H)
@@ -147,7 +149,7 @@
 /datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/H)
 	emageffect = FALSE
 	spec_updatehealth(H)
-	H.visible_message("<span class='danger'>[H] stops flickering and goes back to their normal state!</span>")
+	H.visible_message(span_danger("[H] stops flickering and goes back to their normal state!"))
 
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H, delta_time, times_fired)
 	switch(get_charge(H))
@@ -174,8 +176,8 @@
 			H.clear_alert("ethereal_overcharge")
 
 /datum/species/ethereal/proc/discharge_process(mob/living/carbon/human/H)
-	to_chat(H, "<span class='warning'>You begin to lose control over your charge!</span>")
-	H.visible_message("<span class='danger'>[H] begins to spark violently!</span>")
+	to_chat(H, span_warning("You begin to lose control over your charge!"))
+	H.visible_message(span_danger("[H] begins to spark violently!"))
 	var/static/mutable_appearance/overcharge //shameless copycode from lightning spell
 	overcharge = overcharge || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
 	H.add_overlay(overcharge)
@@ -187,12 +189,12 @@
 		tesla_zap(H, 2, stomach.crystal_charge*2.5, ZAP_OBJ_DAMAGE | ZAP_ALLOW_DUPLICATES)
 		if(istype(stomach))
 			stomach.adjust_charge(ETHEREAL_CHARGE_FULL - stomach.crystal_charge)
-		to_chat(H, "<span class='warning'>You violently discharge energy!</span>")
-		H.visible_message("<span class='danger'>[H] violently discharges energy!</span>")
+		to_chat(H, span_warning("You violently discharge energy!"))
+		H.visible_message(span_danger("[H] violently discharges energy!"))
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
 			var/datum/disease/D = new /datum/disease/heart_failure
 			H.ForceContractDisease(D)
-			to_chat(H, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
+			to_chat(H, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 			H.playsound_local(H, 'sound/effects/singlebeat.ogg', 100, 0)
 		H.Paralyze(100)
 

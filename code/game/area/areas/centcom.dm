@@ -86,6 +86,10 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	eventarea = TRUE
+
+/area/tdome
+	eventareaair = TRUE
 
 /area/tdome/arena
 	name = "Thunderdome Arena"

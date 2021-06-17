@@ -67,6 +67,7 @@
 	ghouls += humie
 
 /datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
+	SIGNAL_HANDLER
 	var/mob/living/carbon/human/humie = source
 	ghouls -= humie
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
@@ -91,13 +92,13 @@
 		return
 	human_target.grab_ghost()
 	if(!human_target.mind || !human_target.client)
-		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
+		to_chat(user, span_warning("There is no soul connected to this body..."))
 		return
 	if(HAS_TRAIT(human_target, TRAIT_HUSK))
-		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
+		to_chat(user, span_warning("You cannot revive a dead ghoul!"))
 		return
 	if(LAZYLEN(spooky_scaries) >= ghoul_amt)
-		to_chat(user, "<span class='warning'>Your patron cannot support more ghouls on this plane!</span>")
+		to_chat(user, span_warning("Your patron cannot support more ghouls on this plane!"))
 		return
 	LAZYADD(spooky_scaries, human_target)
 	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")

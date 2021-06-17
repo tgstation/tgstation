@@ -106,13 +106,13 @@
 	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
 	if(DT_PROB(0.0125 * damage * nutri_vol * nutri_vol, delta_time))
 		body.vomit(damage)
-		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 		return
 
 	// the change of vomit is now high
 	if(damage > high_threshold && DT_PROB(0.05 * damage * nutri_vol * nutri_vol, delta_time))
 		body.vomit(damage)
-		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
 /obj/item/organ/stomach/get_availability(datum/species/owner_species)
 	return !(NOSTOMACH in owner_species.inherent_traits)
@@ -125,7 +125,7 @@
 				disgusted.stuttering += 1
 				disgusted.add_confusion(2)
 			if(DT_PROB(5, delta_time) && !disgusted.stat)
-				to_chat(disgusted, "<span class='warning'>You feel kind of iffy...</span>")
+				to_chat(disgusted, span_warning("You feel kind of iffy..."))
 			disgusted.jitteriness = max(disgusted.jitteriness - 3, 0)
 		if(disgusted.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
@@ -174,7 +174,7 @@
 		var/mob/living/carbon/body = owner
 		if(milk.volume > 50)
 			reagents.remove_reagent(milk.type, milk.volume - 5)
-			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
+			to_chat(owner, span_warning("The excess milk is dripping off your bones!"))
 		body.heal_bodypart_damage(milk_brute_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time, milk_burn_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 
 		for(var/datum/wound/iter_wound as anything in body.all_wounds)
@@ -210,13 +210,15 @@
 	..()
 
 /obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+	SIGNAL_HANDLER
 	adjust_charge(amount / 3.5)
 
 /obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	SIGNAL_HANDLER
 	if(flags & SHOCK_ILLUSION)
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)
-	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
+	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)

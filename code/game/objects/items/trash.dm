@@ -9,12 +9,22 @@
 	item_flags = NOBLUDGEON
 
 /obj/item/trash/Initialize(mapload)
+	#ifdef EVENTMODE
+	///AUTO CLEAN
+	if(mapload)
+		return .
+	QDEL_IN(src, 30)
+	return ..()
+	#endif
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	return ..()
 
 /obj/item/trash/Destroy()
+	#ifdef EVENTMODE
+	return ..()
+	#endif
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
@@ -103,3 +113,12 @@
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+
+/obj/item/trash/peanuts
+	name = "\improper Gallery peanuts packet"
+	desc = "This thread is trash!"
+	icon_state = "peanuts"
+
+/obj/item/trash/cnds
+	name = "\improper C&Ds packet"
+	icon_state = "cnds"

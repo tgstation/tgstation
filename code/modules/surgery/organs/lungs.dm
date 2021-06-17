@@ -300,7 +300,7 @@
 			breather.emote("burp")
 		if (prob(nitryl_pp) && nitryl_pp>10)
 			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
-			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
+			to_chat(breather, span_notice("You feel a burning sensation in your chest"))
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			breather.reagents.add_reagent(/datum/reagent/nitryl,1)
@@ -310,12 +310,12 @@
 	// Freon
 		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
 		if (prob(freon_pp))
-			to_chat(breather, "<span class='alert'>Your mouth feels like it's burning!</span>")
+			to_chat(breather, span_alert("Your mouth feels like it's burning!"))
 		if (freon_pp >40)
 			breather.emote("gasp")
 			breather.adjustFireLoss(15)
 			if (prob(freon_pp/2))
-				to_chat(breather, "<span class='alert'>Your throat closes up!</span>")
+				to_chat(breather, span_alert("Your throat closes up!"))
 				breather.silent = max(breather.silent, 3)
 		else
 			breather.adjustFireLoss(freon_pp/4)
@@ -329,7 +329,7 @@
 		var/healium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/healium][MOLES])
 		if(healium_pp > gas_stimulation_min)
 			if(prob(15))
-				to_chat(breather, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
+				to_chat(breather, span_alert("Your head starts spinning and your lungs burn!"))
 				healium_euphoria = EUPHORIA_ACTIVE
 				breather.emote("gasp")
 		else
@@ -395,22 +395,22 @@
 					// At lower pp, give out a little warning
 					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 					if(prob(5))
-						to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+						to_chat(owner, span_notice("There is an unpleasant smell in the air."))
 				if(5 to 15)
 					//At somewhat higher pp, warning becomes more obvious
 					if(prob(15))
-						to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+						to_chat(owner, span_warning("You smell something horribly decayed inside this room."))
 						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
 				if(15 to 30)
 					//Small chance to vomit. By now, people have internals on anyway
 					if(prob(5))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+						to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
 						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				if(30 to INFINITY)
 					//Higher chance to vomit. Let the horror start
 					if(prob(15))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+						to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
 						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				else
@@ -468,7 +468,7 @@
 			breather.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
 		if(breath_temperature < cold_level_1_threshold)
 			if(prob(20))
-				to_chat(breather, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
+				to_chat(breather, span_warning("You feel [cold_message] in your [name]!"))
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = breather.dna.species.heatmod
@@ -480,7 +480,7 @@
 			breather.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
-				to_chat(breather, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
+				to_chat(breather, span_warning("You feel [hot_message] in your [name]!"))
 
 	// The air you breathe out should match your body temperature
 	breath.temperature = breather.bodytemperature
@@ -495,7 +495,7 @@
 		if(do_i_cough)
 			owner.emote("cough")
 	if(organ_flags & ORGAN_FAILING && owner.stat == CONSCIOUS)
-		owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", "<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
+		owner.visible_message(span_danger("[owner] grabs [owner.p_their()] throat, struggling for breath!"), span_userdanger("You suddenly feel like you can't breathe!"))
 		failed = TRUE
 
 /obj/item/organ/lungs/get_availability(datum/species/owner_species)

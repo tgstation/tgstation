@@ -98,6 +98,7 @@
 
 
 /obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
 	return
 
 /obj/item/organ/proc/on_find(mob/living/finder)
@@ -131,17 +132,17 @@
 /obj/item/organ/examine(mob/user)
 	. = ..()
 
-	. += "<span class='notice'>It should be inserted in the [parse_zone(zone)].</span>"
+	. += span_notice("It should be inserted in the [parse_zone(zone)].")
 
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
-			. += "<span class='warning'>[src] seems to be broken.</span>"
+			. += span_warning("[src] seems to be broken.")
 			return
-		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
+		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")
 		return
 
 	if(damage > high_threshold)
-		. += "<span class='warning'>[src] is starting to look discolored.</span>"
+		. += span_warning("[src] is starting to look discolored.")
 
 /obj/item/organ/Initialize()
 	. = ..()
@@ -171,7 +172,7 @@
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
-	if(mess && owner)
+	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken

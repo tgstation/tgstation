@@ -11,7 +11,7 @@
 
 /turf/open/floor/iron/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
+	. += span_notice("There's a <b>small crack</b> on the edge of it.")
 
 
 /turf/open/floor/iron/rust_heretic_act()

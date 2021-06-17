@@ -68,7 +68,7 @@
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
 	AddElement(/datum/element/simple_flying)
 	if(random_color)
-		set_greyscale_config(/datum/greyscale_config/carp)
+		set_greyscale(new_config=/datum/greyscale_config/carp)
 		carp_randomify(rarechance)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
@@ -92,10 +92,10 @@
 	var/our_color
 	if(prob(rarechance))
 		our_color = pick(carp_colors_rare)
-		set_greyscale_colors(list(carp_colors_rare[our_color]))
+		set_greyscale(colors=list(carp_colors_rare[our_color]))
 	else
 		our_color = pick(carp_colors)
-		set_greyscale_colors(list(carp_colors[our_color]))
+		set_greyscale(colors=list(carp_colors[our_color]))
 
 /mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
@@ -105,7 +105,7 @@
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
 	if(tasty_plastic && Adjacent(tasty_plastic))
-		visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
+		visible_message(span_notice("[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!"), span_notice("You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!"))
 
 		new /obj/effect/decal/cleanable/plastic(loc)
 
@@ -235,7 +235,7 @@
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
+	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
 
@@ -255,7 +255,7 @@
 /mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
 	. = ..()
 	if(disky)
-		. += "<span class='notice'>Wait... is that [disky] in [p_their()] mouth?</span>"
+		. += span_notice("Wait... is that [disky] in [p_their()] mouth?")
 
 /mob/living/simple_animal/hostile/carp/cayenne/AttackingTarget(atom/attacked_target)
 	if(istype(attacked_target, /obj/item/disk/nuclear))
@@ -264,14 +264,14 @@
 			return
 		potential_disky.forceMove(src)
 		disky = potential_disky
-		to_chat(src, "<span class='nicegreen'>YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)</span>")
+		to_chat(src, span_nicegreen("YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)"))
 		update_icon()
 		if(!disky.fake)
 			client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
 		return
 	if(disky)
 		if(isopenturf(attacked_target))
-			to_chat(src, "<span class='notice'>You place [disky] on [attacked_target]</span>")
+			to_chat(src, span_notice("You place [disky] on [attacked_target]"))
 			disky.forceMove(attacked_target.drop_location())
 			disky = null
 			update_icon()
