@@ -73107,8 +73107,12 @@
 /area/science/genetics)
 "vTp" = (
 /obj/structure/table/reinforced,
-/obj/item/wrench/medical,
 /obj/machinery/light/directional/north,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "vTw" = (
