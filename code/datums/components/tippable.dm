@@ -17,7 +17,8 @@
 	/// Callback to additoinal behavior after sucessfuly being untipped.
 	var/datum/callback/post_untipped_callback
 
-/datum/component/tippable/Initialize(tip_time = 3 SECONDS,
+/datum/component/tippable/Initialize(
+		tip_time = 3 SECONDS,
 		untip_time = 1 SECONDS,
 		self_right_time = 60 SECONDS,
 		datum/callback/pre_tipped_callback,
@@ -65,11 +66,10 @@
 	if(istype(living_user) && !living_user.combat_mode)
 		return
 
-	if(!is_tipped)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			INVOKE_ASYNC(src, .proc/try_tip, source, user)
-	else
+	if(is_tipped)
 		INVOKE_ASYNC(src, .proc/try_untip, source, user)
+	else if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		INVOKE_ASYNC(src, .proc/try_tip, source, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
