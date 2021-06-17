@@ -1,5 +1,9 @@
 /mob/living/carbon/human/Login()
 	. = ..()
+
+	if(ai_controller)
+		QDEL_NULL(ai_controller)
+
 	if(!LAZYLEN(afk_thefts))
 		return
 
