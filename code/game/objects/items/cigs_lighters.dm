@@ -20,18 +20,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
+	var/smoketime = 10 SECONDS
+	w_class = WEIGHT_CLASS_TINY
+	heat = 1000
+	grind_results = list(/datum/reagent/phosphorus = 2)
 	/// Whether this match has been lit.
 	var/lit = FALSE
 	/// Whether this match has burnt out.
 	var/burnt = FALSE
 	/// How long the match lasts in seconds
-	var/smoketime = 10 SECONDS
-	w_class = WEIGHT_CLASS_TINY
-	heat = 1000
-	grind_results = list(/datum/reagent/phosphorus = 2)
 
 /obj/item/match/process(delta_time)
-	smoketime -= delta_time SECONDS
+	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
 		matchburnout()
 	else
@@ -299,7 +299,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			extinguish()
 			return
 
-	smoketime -= delta_time SECONDS
+	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
 		new type_butt(location)
 		if(ismob(loc))
@@ -832,7 +832,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"matte",
 		"zoppo" //u cant stoppo th zoppo
 		)
+
+	/// The color of the lighter.
 	var/lighter_color
+	/// The set of colors this lighter can be autoset as on init.
 	var/list/color_list = list( //Same 16 color selection as electronic assemblies
 		COLOR_ASSEMBLY_BLACK,
 		COLOR_FLOORTILE_GRAY,
