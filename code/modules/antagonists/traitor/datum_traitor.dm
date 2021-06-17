@@ -25,10 +25,6 @@
 	///assoc list of strings set up after employer is given
 	var/list/traitor_flavor
 
-	///datum of the contractor hub, if they decide to become a contractor in the round.
-	///in the future, this should definitely be moved into a component that attaches to these datums
-	var/datum/contractor_hub/contractor_hub
-
 	///reference to the uplink this traitor was given, if they were.
 	var/datum/component/uplink/uplink
 
@@ -234,9 +230,6 @@
 
 	var/special_role_text = lowertext(name)
 
-	if (contractor_hub)
-		result += contractor_round_end()
-
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
@@ -244,42 +237,6 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
-
-/// Proc detailing contract kit buys/completed contracts/additional info
-/datum/antagonist/traitor/proc/contractor_round_end()
-	var/result = ""
-	var/total_spent_rep = 0
-
-	var/completed_contracts = contractor_hub.contracts_completed
-	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
-
-	var/contractor_item_icons = "" // Icons of purchases
-	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
-
-	/// Get all the icons/total cost for all our items bought
-	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
-		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
-
-		total_spent_rep += contractor_purchase.cost
-
-		/// Special case for reinforcements, we want to show their ckey and name on round end.
-		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
-			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
-			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
-
-	if (contractor_hub.purchased_items.len)
-		result += "<br>(used [total_spent_rep] Rep) "
-		result += contractor_item_icons
-	result += "<br>"
-	if (completed_contracts > 0)
-		var/pluralCheck = "contract"
-		if (completed_contracts > 1)
-			pluralCheck = "contracts"
-
-		result += "Completed [span_greentext("[completed_contracts]")] [pluralCheck] for a total of \
-					[span_greentext("[tc_total] TC")]![contractor_support_unit]<br>"
-
-	return result
 
 ///signal called by an objective completing
 /datum/antagonist/traitor/proc/objective_done(datum/objective/smart/objective)

@@ -134,22 +134,6 @@
 	icon_state = "syndicate-black-red"
 	inhand_icon_state = "syndicate-black-red"
 
-//Black-red syndicate contract varient
-/obj/item/clothing/head/helmet/space/syndicate/contract
-	name = "contractor helmet"
-	desc = "A specialised black and gold helmet that's more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
-	w_class = WEIGHT_CLASS_SMALL
-	icon_state = "syndicate-contract-helm"
-	inhand_icon_state = "syndicate-contract-helm"
-
-/obj/item/clothing/suit/space/syndicate/contract
-	name = "contractor space suit"
-	desc = "A specialised black and gold space suit that's quicker, and more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
-	slowdown = 1
-	w_class = WEIGHT_CLASS_SMALL
-	icon_state = "syndicate-contract"
-	inhand_icon_state = "syndicate-contract"
-
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
 	name = "black space helmet"

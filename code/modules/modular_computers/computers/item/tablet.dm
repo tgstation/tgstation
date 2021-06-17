@@ -26,18 +26,6 @@
 		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
 	return ..()
 
-/obj/item/modular_computer/tablet/syndicate_contract_uplink
-	name = "contractor tablet"
-	icon = 'icons/obj/contractor_tablet.dmi'
-	icon_state = "tablet"
-	icon_state_unpowered = "tablet"
-	icon_state_powered = "tablet"
-	icon_state_menu = "assign"
-	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-	comp_light_luminosity = 6.3
-	has_variants = FALSE
-
 /// Given to Nuke Ops members.
 /obj/item/modular_computer/tablet/nukeops
 	icon_state = "tablet-syndicate"
