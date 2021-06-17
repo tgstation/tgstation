@@ -51,7 +51,7 @@
 /obj/item/food/grown/peach/impeach/proc/create_plocker(user)
 	var /obj/structure/closet/secure_closet/plocker/spawned_locker = new /obj/structure/closet/secure_closet/plocker(get_turf(src.loc))
 	spawned_locker.visible_message("<span class='notice'>[src] suddenly turns into a giant peach!</span>")
-	spawned_locker.obj_integrity = round(P.max_integrity + (seed.potency / 4))
+	spawned_locker.obj_integrity = round(spawned_locker.max_integrity + (seed.potency / 4))
 	spawned_locker.damage_deflection = round(seed.endurance / 15)
 	spawned_locker.breakout_time += round(seed.endurance / 2)
 	spawned_locker.lifespan += round(seed.lifespan * 6)
