@@ -29,6 +29,13 @@
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/kitty
 
+/datum/outfit/superhero/villain/nekometic_nude/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	H.gender = FEMALE
+	H.hairstyle = "Long Emo"
+	H.facial_hairstyle = "Shaved"
+	H.update_hair()
+
 /datum/outfit/superhero/villain/nekometic/space
 	name = "Nekometic (Operation Starbird)"
 	uniform = /obj/item/clothing/under/costume/schoolgirl
