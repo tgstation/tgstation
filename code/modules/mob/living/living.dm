@@ -1820,6 +1820,7 @@
 	if(usable_legs == new_value)
 		return
 	if(new_value < 0) // Sanity check
+		stack_trace("[src] had set_usable_legs() called on them with a negative value!")
 		new_value = 0
 
 	. = usable_legs
