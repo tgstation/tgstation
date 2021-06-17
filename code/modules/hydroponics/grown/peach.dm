@@ -49,15 +49,15 @@
 * Creates and spawns a giant peach locker.
 */
 /obj/item/food/grown/peach/impeach/proc/create_plocker(user)
-	var /obj/structure/closet/secure_closet/plocker/P = new /obj/structure/closet/secure_closet/plocker(get_turf(src.loc))
-	P.visible_message("<span class='notice'>[src] suddenly turns into a giant peach!</span>")
-	P.obj_integrity = round(P.max_integrity + (seed.potency / 4))
-	P.damage_deflection = round(seed.endurance / 15)
-	P.breakout_time += round(seed.endurance / 2)
-	P.lifespan += round(seed.lifespan * 6)
-	P.owner = user
+	var /obj/structure/closet/secure_closet/plocker/spawned_locker = new /obj/structure/closet/secure_closet/plocker(get_turf(src.loc))
+	spawned_locker.visible_message("<span class='notice'>[src] suddenly turns into a giant peach!</span>")
+	spawned_locker.obj_integrity = round(P.max_integrity + (seed.potency / 4))
+	spawned_locker.damage_deflection = round(seed.endurance / 15)
+	spawned_locker.breakout_time += round(seed.endurance / 2)
+	spawned_locker.lifespan += round(seed.lifespan * 6)
+	spawned_locker.owner = user
 	playsound(loc, 'sound/misc/moist_impact.ogg', 200, TRUE)
-	return P
+	return spawned_locker
 
 /**
 * Used when the impeach isnt thrown in time, or is dropped.
