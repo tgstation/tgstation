@@ -424,11 +424,13 @@
 					if (!SSdbcore.Connect())
 						tgui_alert(usr,"Connection to Archive has been severed. Aborting.")
 					else
-						var/msg = "[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs"
+						var/content = scanner.cache.dat
+						content = trim(content, MAX_PAPER_LENGTH) //Wooooo no bad
+						var/msg = "[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(content)] signs"
 						var/datum/db_query/query_library_upload = SSdbcore.NewQuery({"
 							INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created)
 							VALUES (:author, :title, :content, :category, :ckey, Now(), :round_id)
-						"}, list("title" = scanner.cache.name, "author" = scanner.cache.author, "content" = scanner.cache.dat, "category" = upload_category, "ckey" = usr.ckey, "round_id" = GLOB.round_id))
+						"}, list("title" = scanner.cache.name, "author" = scanner.cache.author, "content" = content, "category" = upload_category, "ckey" = usr.ckey, "round_id" = GLOB.round_id))
 						if(!query_library_upload.Execute())
 							qdel(query_library_upload)
 							tgui_alert(usr,"Database error encountered uploading to Archive")

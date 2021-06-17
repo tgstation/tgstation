@@ -268,7 +268,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",8192)
+				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",MAX_PAPER_LENGTH)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
@@ -276,6 +276,9 @@
 					return
 				else
 					dat += content
+					if(length(dat) > MAX_PAPER_LENGTH)
+						dat = trim(dat, MAX_PAPER_LENGTH)
+						to_chat(user, span_warning("The text is too long, you've run out of space!"))
 			if("Author")
 				var/newauthor = stripped_input(user, "Write the author's name:")
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
