@@ -122,7 +122,7 @@
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
-		self_right_time = 3 MINUTES,
+		self_right_time = 3.5 MINUTES, \
 		on_tipped_sounds = 'sound/machines/warning-buzzer.ogg', \
 		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
 		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
@@ -252,6 +252,11 @@
 	else
 		return
 
+/*
+ * Proc used in a callback for before this medibot is tipped by the tippable component.
+ *
+ * user - the mob who is tipping us over
+ */
 /mob/living/simple_animal/bot/medbot/proc/pre_tip_over(mob/user)
 	if(!COOLDOWN_FINISHED(src, last_tipping_action_voice))
 		return
@@ -262,10 +267,20 @@
 	speak(message)
 	playsound(src, messagevoice[message], 70, FALSE)
 
+/*
+ * Proc used in a callback for after this medibot is tipped by the tippable component.
+ *
+ * user - the mob who tipped us over
+ */
 /mob/living/simple_animal/bot/medbot/proc/after_tip_over(mob/user)
 	mode = BOT_TIPPED
 	tipper_name = user.name
 
+/*
+ * Proc used in a callback for after this medibot is righted, either by themselves or by a mob, by the tippable component.
+ *
+ * user - the mob who righted us. Can be null.
+ */
 /mob/living/simple_animal/bot/medbot/proc/after_righted(mob/user)
 	var/list/messagevoice
 	if(user)

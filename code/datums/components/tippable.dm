@@ -47,7 +47,7 @@
 		src.on_tipped_sounds =  list(on_tipped_sounds)
 	src.pre_tipped_callback = pre_tipped_callback
 	src.post_tipped_callback = post_tipped_callback
-	src.post_untipped_callback = post_tipped_callback
+	src.post_untipped_callback = post_untipped_callback
 
 /datum/component/tippable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/interact_with_tippable)
@@ -55,12 +55,20 @@
 /datum/component/tippable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
 
+/*
+ * Attempt to interact with [source], either tipping it or helping it up.
+ *
+ * source - the mob being tipped over
+ * user - the mob interacting with source
+ * modifiers - list of on click modifiers (we only tip mobs over using right click!)
+ */
 /datum/component/tippable/proc/interact_with_tippable(mob/living/source, mob/user, modifiers)
 	SIGNAL_HANDLER
 
+	var/mob/living/living_user = user
 	if(DOING_INTERACTION_WITH_TARGET(user, source))
 		return
-	if(user.combat_mode)
+	if(istype(living_user) && !living_user.combat_mode)
 		return
 
 	if(!is_tipped)
@@ -71,6 +79,14 @@
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/*
+ * Try to tip over [tipped_mob].
+ * If the mob is dead, or optional callback returns a value, or our do-after fails, we don't tip the mob.
+ * Otherwise, upon completing of the do_after, tip over the mob.
+ *
+ * tipped_mob - the mob being tipped over
+ * tipper - the mob tipping the tipped_mob
+ */
 /datum/component/tippable/proc/try_tip(mob/living/tipped_mob, mob/tipper)
 	if(tipped_mob.stat)
 		return
@@ -87,6 +103,14 @@
 			return
 	do_tip(tipped_mob, tipper)
 
+/*
+ * Actually tip over the mob, setting it to tipped.
+ * Also invoking any callbacks we have, with the tipper as the argument,
+ * and set a timer to right our self-right our tipped mob if we can.
+ *
+ * tipped_mob - the mob who was tipped
+ * tipper - the mob who tipped the tipped_mob
+ */
 /datum/component/tippable/proc/do_tip(mob/living/tipped_mob, mob/tipper)
 	if(QDELETED(tipped_mob))
 		return
@@ -100,6 +124,13 @@
 	if(self_right_time > 0)
 		addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time)
 
+/*
+ * Try to untip a mob that has been tipped.
+ * After a do-after is completed, we untip the mob.
+ *
+ * tipped_mob - the mob who is tipped
+ * untipper - the mob who is untipping the tipped_mob
+ */
 /datum/component/tippable/proc/try_untip(mob/living/tipped_mob, mob/untipper)
 	if(untip_time > 0)
 		to_chat(untipper, span_notice("You begin righting [tipped_mob]..."))
@@ -111,6 +142,13 @@
 
 	do_untip(tipped_mob, untipper)
 
+/*
+ * Actually untip over the mob, setting it to untipped.
+ * Also invoke any untip callbacks we have, with the untipper as the argument.
+ *
+ * tipped_mob - the mob who was tipped
+ * tipper - the mob who tipped the tipped_mob
+ */
 /datum/component/tippable/proc/do_untip(mob/living/tipped_mob, mob/untipper)
 	if(QDELETED(tipped_mob))
 		return
@@ -122,16 +160,30 @@
 	set_tipped_status(tipped_mob, FALSE)
 	post_untipped_callback?.Invoke(untipper)
 
+/*
+ * Proc called after a timer to have a tipped mob un-tip itself after a certain length of time.
+ * Sets our mob to untipped and invokes the untipped callback without any arguments if we have one.
+ *
+ * tipped_mob - the mob who was tipped, and is freeing itself
+ */
 /datum/component/tippable/proc/right_self(mob/living/tipped_mob)
 	if(!is_tipped || QDELETED(tipped_mob))
 		return
 
 	set_tipped_status(tipped_mob, FALSE)
+	post_untipped_callback?.Invoke()
 
 	to_chat(tipped_mob, span_notice("You right yourself."))
 	tipped_mob.visible_message(span_notice("[tipped_mob] rights itself."), ignored_mobs = tipped_mob)
 
-/datum/component/tippable/proc/set_tipped_status(mob/living/tipped_mob, new_status = TRUE)
+/*
+ * Toggles our tipped status between tipped or untipped (TRUE or FALSE)
+ * also handles rotating our mob and adding immobilization traits
+ *
+ * tipped_mob - the mob we're setting to tipped or untipped
+ * new_status - the tipped status we're setting the mob to - TRUE for tipped, FALSE for untipped
+ */
+/datum/component/tippable/proc/set_tipped_status(mob/living/tipped_mob, new_status = FALSE)
 	is_tipped = new_status
 	if(is_tipped)
 		tipped_mob.transform = turn(tipped_mob.transform, 180)

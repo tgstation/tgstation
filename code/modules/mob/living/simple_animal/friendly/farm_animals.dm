@@ -155,19 +155,43 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
+/*
+ * Proc called via callback after the cow is tipped by the tippable component.
+ * Begins a timer for us pleading for help.
+ *
+ * tipper - the mob who tipped us
+ */
 /mob/living/simple_animal/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
-	add_timer(CALLBACK(src, .proc/look_for_help, tipper), rand(10 SECONDS, 20 SECONDS))
+	addtimer(CALLBACK(src, .proc/look_for_help, tipper), rand(10 SECONDS, 20 SECONDS))
 
+/*
+ * Find a mob in a short radius around us (prioritizing the person who originally tipped us)
+ * and either look at them for help, or give up. No actual mechanical difference between the two.
+ *
+ * tipper - the mob who originally tipped us
+ */
 /mob/living/simple_animal/cow/proc/look_for_help(mob/living/carbon/tipper)
-	if(prob(75))
-		var/text = pick("imploringly.", "pleadingly.",
-			"with a resigned expression.")
-		external = "[src] looks at [tipper] [text]"
-		internal = "You look at [tipper] [text]"
+	// visible part of the visible message
+	var/seen_message = ""
+	// self part of the visible message
+	var/self_message = ""
+	// the mob we're looking to for aid
+	var/mob/living/carbon/savior
+	// look for someone in a radius around us for help. If our original tipper is in range, prioritize them
+	for(var/mob/living/carbon/potential_aid in oview(3, get_turf(src)))
+		if(potential_aid == tipper)
+			savior = tipper
+			break
+		savior = potential_aid
+
+	if(prob(75) && savior)
+		var/text = pick("imploringly", "pleadingly", "with a resigned expression")
+		seen_message = "[src] looks at [savior] [text]."
+		self_message = "You look at [savior] [text]."
 	else
-		external = "[src] seems resigned to its fate."
-		internal = "You resign yourself to your fate."
-	visible_message(span_notice("[external]"), span_notice("[internal]"))
+		seen_message = "[src] seems resigned to its fate."
+		self_message = "You resign yourself to your fate."
+	visible_message(span_notice("[seen_message]"), span_notice("[self_message]"))
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom
