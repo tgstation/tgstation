@@ -230,7 +230,7 @@
 				rank = I.assignment
 				screen = 1
 			else
-				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
+				to_chat(usr, span_danger("Unauthorized access."))
 			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if(authenticated)
 			if(href_list["screen"])
