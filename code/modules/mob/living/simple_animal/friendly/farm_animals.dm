@@ -133,6 +133,11 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	AddComponent(/datum/component/udder)
+	AddComponent(/datum/component/tippable, \
+		tip_time = 0.5 SECONDS, \
+		untip_time = 0.5 SECONDS, \
+		self_right_time = rand(25 SECONDS, 50 SECONDS), \
+		post_tipped_callback = CALLBACK(src, .proc/after_cow_tipped))
 	AddElement(/datum/element/pet_bonus, "moos happily!")
 	add_cell_sample()
 	make_tameable()
@@ -150,34 +155,19 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(!stat && LAZYACCESS(modifiers, RIGHT_CLICK) && icon_state != icon_dead)
-		user.visible_message(span_warning("[user] tips over [src]."),
-			span_notice("You tip over [src]."))
-		to_chat(src, span_userdanger("You are tipped over by [user]!"))
-		Paralyze(60, ignore_canstun = TRUE)
-		icon_state = icon_dead
-		addtimer(CALLBACK(src, .proc/cow_tipped, user), rand(20,50))
+/mob/living/simple_animal/cow/proc/after_cow_tipped(mob/living/carbon/tipper)
+	add_timer(CALLBACK(src, .proc/look_for_help, tipper), rand(10 SECONDS, 20 SECONDS))
 
-	else
-		..()
-
-/mob/living/simple_animal/cow/proc/cow_tipped(mob/living/carbon/M)
-	if(QDELETED(M) || stat)
-		return
-	icon_state = icon_living
-	var/external
-	var/internal
+/mob/living/simple_animal/cow/proc/look_for_help(mob/living/carbon/tipper)
 	if(prob(75))
 		var/text = pick("imploringly.", "pleadingly.",
 			"with a resigned expression.")
-		external = "[src] looks at [M] [text]"
-		internal = "You look at [M] [text]"
+		external = "[src] looks at [tipper] [text]"
+		internal = "You look at [tipper] [text]"
 	else
 		external = "[src] seems resigned to its fate."
 		internal = "You resign yourself to your fate."
-	visible_message(span_notice("[external]"),
-		span_revennotice("[internal]"))
+	visible_message(span_notice("[external]"), span_notice("[internal]"))
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom

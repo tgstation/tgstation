@@ -33,43 +33,43 @@
 	window_name = "Automatic Medical Unit v1.1"
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
 	path_image_color = "#DDDDFF"
-/// drop determining variable
+	/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
-/// drop determining variable
+	/// drop determining variable
 	var/firstaid = /obj/item/storage/firstaid
-///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
+	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
 	var/skin
 	var/mob/living/carbon/patient
 	var/mob/living/carbon/oldpatient
 	var/oldloc
 	var/last_found = 0
-/// Don't spam the "HEY I'M COMING" messages
+	/// Don't spam the "HEY I'M COMING" messages
 	var/last_newpatient_speak = 0
-/// How much healing do we do at a time?
+	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
-/// Start healing when they have this much damage in a category
+	/// Start healing when they have this much damage in a category
 	var/heal_threshold = 10
-/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
+	/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
 	var/damagetype_healer = BRUTE
-/// If active, the bot will transmit a critical patient alert to MedHUD users.
+	/// If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_crit = TRUE
-/// Prevents spam of critical patient alerts.
+	/// Prevents spam of critical patient alerts.
 	var/declare_cooldown = FALSE
-/// If enabled, the Medibot will not move automatically.
+	/// If enabled, the Medibot will not move automatically.
 	var/stationary_mode = FALSE
 
-/// silences the medbot if TRUE
+	/// silences the medbot if TRUE
 	var/shut_up = FALSE
-/// techweb linked to the medbot
+	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
-///Is the medbot currently tending wounds
+	///Is the medbot currently tending wounds
 	var/tending = FALSE
-///How panicked we are about being tipped over (why would you do this?)
+	///How panicked we are about being tipped over (why would you do this?)
 	var/tipped_status = MEDBOT_PANIC_NONE
-///The name we got when we were tipped
+	///The name we got when we were tipped
 	var/tipper_name
-///The last time we were tipped/righted and said a voice line, to avoid spam
-	var/last_tipping_action_voice = 0
+	///Cooldown to track last time we were tipped/righted and said a voice line, to avoid spam
+	COOLDOWN_DECLARE(last_tipping_action_voice)
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -119,6 +119,14 @@
 	if(damagetype_healer == "all")
 		return
 
+	AddComponent(/datum/component/tippable, \
+		tip_time = 3 SECONDS, \
+		untip_time = 3 SECONDS, \
+		self_right_time = 3 MINUTES,
+		on_tipped_sounds = 'sound/machines/warning-buzzer.ogg', \
+		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
+		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
+		post_untipped_callback = CALLBACK(src, .proc/after_righted))
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -244,37 +252,38 @@
 	else
 		return
 
-/mob/living/simple_animal/bot/medbot/proc/tip_over(mob/user)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
-	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
-	user.visible_message(span_danger("[user] tips over [src]!"), span_danger("You tip [src] over!"))
+/mob/living/simple_animal/bot/medbot/proc/pre_tip_over(mob/user)
+	if(!COOLDOWN_FINISHED(src, last_tipping_action_voice))
+		return
+
+	COOLDOWN_START(src, last_tipping_action_voice, 15 SECONDS) // message for tipping happens when we start interacting, message for righting comes after finishing
+	var/list/messagevoice = list("Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',"Please don't..." = 'sound/voice/medbot/please_dont.ogg',"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg', "Nooo..." = 'sound/voice/medbot/nooo.ogg', "Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg')
+	var/message = pick(messagevoice)
+	speak(message)
+	playsound(src, messagevoice[message], 70, FALSE)
+
+/mob/living/simple_animal/bot/medbot/proc/after_tip_over(mob/user)
 	mode = BOT_TIPPED
-	var/matrix/mat = transform
-	transform = mat.Turn(180)
 	tipper_name = user.name
 
-/mob/living/simple_animal/bot/medbot/proc/set_right(mob/user)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
+/mob/living/simple_animal/bot/medbot/proc/after_righted(mob/user)
 	var/list/messagevoice
-
 	if(user)
-		user.visible_message(span_notice("[user] sets [src] right-side up!"), span_green("You set [src] right-side up!"))
 		if(user.name == tipper_name)
 			messagevoice = list("I forgive you." = 'sound/voice/medbot/forgive.ogg')
 		else
 			messagevoice = list("Thank you!" = 'sound/voice/medbot/thank_you.ogg', "You are a good person." = 'sound/voice/medbot/youre_good.ogg')
 	else
-		visible_message(span_notice("[src] manages to wriggle enough to right itself."))
 		messagevoice = list("Fuck you." = 'sound/voice/medbot/fuck_you.ogg', "Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg')
 	tipper_name = null
-	if(world.time > last_tipping_action_voice + 15 SECONDS)
-		last_tipping_action_voice = world.time
+
+	if(COOLDOWN_FINISHED(src, last_tipping_action_voice))
+		COOLDOWN_START(src, last_tipping_action_voice, 15 SECONDS)
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], 70)
 	tipped_status = MEDBOT_PANIC_NONE
 	mode = BOT_IDLE
-	transform = matrix()
 
 /// if someone tipped us over, check whether we should ask for help or just right ourselves eventually
 /mob/living/simple_animal/bot/medbot/proc/handle_panic()
@@ -294,7 +303,6 @@
 			messagevoice = list("Is this the end?" = 'sound/voice/medbot/is_this_the_end.ogg', "Nooo!" = 'sound/voice/medbot/nooo.ogg')
 		if(MEDBOT_PANIC_END)
 			speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
-			set_right() // strong independent medbot
 
 	if(prob(tipped_status))
 		do_jitter_animation(tipped_status * 0.1)
@@ -451,31 +459,6 @@
 		return TRUE
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
-
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(DOING_INTERACTION_WITH_TARGET(user, src))
-		to_chat(user, span_warning("You're already interacting with [src]."))
-		return
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && mode != BOT_TIPPED)
-		user.visible_message(span_danger("[user] begins tipping over [src]."), span_warning("You begin tipping over [src]..."))
-
-		if(world.time > last_tipping_action_voice + 15 SECONDS)
-			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
-			var/list/messagevoice = list("Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',"Please don't..." = 'sound/voice/medbot/please_dont.ogg',"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg', "Nooo..." = 'sound/voice/medbot/nooo.ogg', "Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(src, messagevoice[message], 70, FALSE)
-
-		if(do_after(user, 3 SECONDS, target=src))
-			tip_over(user)
-
-	else if(!user.combat_mode && mode == BOT_TIPPED)
-		user.visible_message(span_notice("[user] begins righting [src]."), span_notice("You begin righting [src]..."))
-		if(do_after(user, 3 SECONDS, target=src))
-			set_right(user)
-	else
-		..()
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
