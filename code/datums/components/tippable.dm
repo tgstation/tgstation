@@ -10,10 +10,6 @@
 	var/self_right_time = 60 SECONDS
 	/// Whether the mob is currently tipped.
 	var/is_tipped = FALSE
-	/// List of sounds to play when attempting to tip the mob.
-	var/list/try_tipped_sounds
-	/// Lists of sounds to play after successfully tipping the mob.
-	var/list/on_tipped_sounds
 	/// Callback to additional behavior before being tipped (on try_tip). Return anything from this callback to cancel the tip.
 	var/datum/callback/pre_tipped_callback
 	/// Callback to additional behavior after successfully tipping the mob.
@@ -21,12 +17,9 @@
 	/// Callback to additoinal behavior after sucessfuly being untipped.
 	var/datum/callback/post_untipped_callback
 
-/datum/component/tippable/Initialize(
-		tip_time = 3 SECONDS,
+/datum/component/tippable/Initialize(tip_time = 3 SECONDS,
 		untip_time = 1 SECONDS,
 		self_right_time = 60 SECONDS,
-		try_tipped_sounds,
-		on_tipped_sounds,
 		datum/callback/pre_tipped_callback,
 		datum/callback/post_tipped_callback,
 		datum/callback/post_untipped_callback)
@@ -37,14 +30,6 @@
 	src.tip_time = tip_time
 	src.untip_time = untip_time
 	src.self_right_time = self_right_time
-	if(islist(try_tipped_sounds))
-		src.try_tipped_sounds = try_tipped_sounds
-	else if(try_tipped_sounds)
-		src.try_tipped_sounds =  list(try_tipped_sounds)
-	if(islist(on_tipped_sounds))
-		src.on_tipped_sounds = on_tipped_sounds
-	else if(on_tipped_sounds)
-		src.on_tipped_sounds =  list(on_tipped_sounds)
 	src.pre_tipped_callback = pre_tipped_callback
 	src.post_tipped_callback = post_tipped_callback
 	src.post_untipped_callback = post_untipped_callback

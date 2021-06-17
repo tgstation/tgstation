@@ -123,7 +123,6 @@
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
 		self_right_time = 3.5 MINUTES, \
-		on_tipped_sounds = 'sound/machines/warning-buzzer.ogg', \
 		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
 		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
 		post_untipped_callback = CALLBACK(src, .proc/after_righted))
@@ -275,6 +274,7 @@
 /mob/living/simple_animal/bot/medbot/proc/after_tip_over(mob/user)
 	mode = BOT_TIPPED
 	tipper_name = user.name
+	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 
 /*
  * Proc used in a callback for after this medibot is righted, either by themselves or by a mob, by the tippable component.
