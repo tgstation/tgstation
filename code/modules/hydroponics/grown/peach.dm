@@ -43,13 +43,13 @@
 	name = "impeach"
 	desc = "A quick way to impeach your pets, friends or even your whole family!"
 	icon_state = "impeach"
-	var/activated = FALSE
+	var/activated = FALSE //Has the impeach been activated yet?
 
 /**
 * Creates and spawns a giant peach locker.
 */
-/obj/item/food/grown/peach/impeach/proc/create_plocker(user)
-	var /obj/structure/closet/secure_closet/plocker/spawned_locker = new /obj/structure/closet/secure_closet/plocker(get_turf(src.loc))
+/obj/item/food/grown/peach/impeach/proc/create_locker(user)
+	var /obj/structure/closet/secure_closet/peach/spawned_locker = new /obj/structure/closet/secure_closet/peach(get_turf(src.loc))
 	spawned_locker.visible_message("<span class='notice'>[src] suddenly turns into a giant peach!</span>")
 	spawned_locker.obj_integrity = round(spawned_locker.max_integrity + (seed.potency / 4))
 	spawned_locker.damage_deflection = round(seed.endurance / 15)
@@ -65,33 +65,27 @@
 /obj/item/food/grown/peach/impeach/proc/dry_activate(user)
 	if(QDELETED(src))
 		return
-	var /obj/structure/closet/secure_closet/plocker/P = create_plocker(user)
-	for(var/mob/M in get_turf(P))
-		if(P.insert(M))
-			log_combat(user, M, "trapped", /obj/item/food/grown/peach/impeach)
+	var /obj/structure/closet/secure_closet/peach/spawned_locker = create_locker(user)
+	for(var/mob/target in get_turf(spawned_locker))
+		if(spawned_locker.insert(target))
+			log_combat(user, target, "trapped", /obj/item/food/grown/peach/impeach)
 	qdel(src)
 
-/**
-* Activates the timer for the impeach
-*/
 /obj/item/food/grown/peach/impeach/attack_self(mob/user)
 	icon_state = "impeach_active"
 	activated = TRUE
 	addtimer(CALLBACK(src, .proc/dry_activate, user), 3 SECONDS)
 	playsound(loc, 'sound/misc/twisting.ogg', 60, TRUE)
 
-/**
-* When coming in contact with a mob while active it will put them into a locker
-*/
 /obj/item/food/grown/peach/impeach/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(QDELETED(src) || activated == FALSE)
 		return
-	var /obj/structure/closet/secure_closet/plocker/P = create_plocker(throwingdatum.thrower)
-	if(P.insert(hit_atom)) //when the impeach hits a mob
+	var /obj/structure/closet/secure_closet/peach/spawned_locker = create_locker(throwingdatum.thrower)
+	if(spawned_locker.insert(hit_atom)) //when the impeach hits a mob
 		log_combat(throwingdatum.thrower, hit_atom, "trapped", /obj/item/food/grown/peach/impeach)
 	else //when the impeach hits anything that isnt a mob
-		for(var/mob/M in get_turf(P))
-			if(P.insert(M))
-				log_combat(throwingdatum.thrower, M, "trapped", /obj/item/food/grown/peach/impeach)
+		for(var/mob/target in get_turf(spawned_locker))
+			if(spawned_locker.insert(target))
+				log_combat(throwingdatum.thrower, target, "trapped", /obj/item/food/grown/peach/impeach)
 	qdel(src)
