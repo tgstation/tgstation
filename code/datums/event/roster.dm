@@ -16,18 +16,18 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/list/active_teams
 	/// Teams that are not rostered and still need to play
 	var/list/unrostered_teams
-	/// Hardcoded slot 1 for the 2 team match system
+	/// Hardcoded slot 1 for the 2 team match system (RED TEAM)
 	var/datum/event_team/team1
-	/// Hardcoded slot 2 for the 2 team match system
+	/// Hardcoded slot 2 for the 2 team match system (GREEN TEAM)
 	var/datum/event_team/team2
 	/// Counter for how many team datums we've made, each team gets a unique number, even if a lower numbered team has already been deleated
 	var/team_id_tracker = 0
 
 	/// Holds the datums for all contestants who are actively spawned and competing
 	var/list/live_contestants
-	/// Holds the datums for all contestants who are actively spawned and competing
+	/// Holds the list of /obj/machinery/arena_spawn objects for the currently loaded arena keyed for the RED team (team1)
 	var/list/spawns_team1
-	/// Holds the datums for all contestants who are actively spawned and competing
+	/// Holds the list of /obj/machinery/arena_spawn objects for the currently loaded arena keyed for the GREEN team (team2)
 	var/list/spawns_team2
 	/// If FALSE, bodyparts cannot suffer wounds by receiving damage. Wounds can still be manually applied as per normal
 	var/enable_random_wounds = FALSE
@@ -463,13 +463,25 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	LAZYADD(active_contestants, new_kid)
 	new_kid.ckey = rand_num
 
-/// A debug function, for when you need contestant datums but don't have people
-/datum/roster/proc/spawn_contestant(mob/user, datum/contestant/new_spawn)
-	if(LAZYFIND(live_contestants, new_spawn))
-		message_admins("[new_spawn] is already spawned")
-		return
+/**
+ * For spawning in teams at their respective spawnpoints. Please note, calling this with no 2nd argument spawns both team1 and team2
+ *
+ * Arguments:
+ * * user: The person who called this
+ * * spawning_team: If you want to specify one of the 2 team slots you're spawning, pass the team datum here. If there's no argument for this, we try spawning both teams (assuming there's a team for each slot)
+ */
+/datum/roster/proc/spawn_team(mob/user, datum/event_team/spawning_team)
+	var/who_spawned = ""
+	log_game("[key_name_admin(user)] has tried spawning teams!")
 
-	LAZYADD(live_contestants, new_spawn)
+	if(team2 && spawning_team != team1)
+		team2.spawn_members(user, spawns_team2)
+	if(team1 && spawning_team != team2)
+		team1.spawn_members(user, spawns_team1)
+
+	message_admins("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
+	log_game("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
+
 /*
 /obj/machinery/computer/arena/proc/spawn_member(obj/machinery/arena_spawn/spawnpoint,ckey,team)
 	var/mob/oldbody = get_mob_by_key(ckey)
@@ -487,7 +499,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	set_antag_hud(M,"arena",team_hud_index[team])
 	*/
 
-/// A debug function, for when you need contestant datums but don't have people
+/// For forcing everyone to freeze, including future spawning contestants. Or for unfreezing them all
 /datum/roster/proc/set_frozen_all(mob/user, str_toggle)
 	var/mode
 	if(str_toggle == "on")
@@ -508,7 +520,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	message_admins("[key_name_admin(user)] has [mode ? "FROZEN" : "UNFROZEN"] everyone")
 	log_game("[key_name_admin(user)] has [mode ? "FROZEN" : "UNFROZEN"] everyone")
 
-/// A debug function, for when you need contestant datums but don't have people
+/// For forcing everyone to godmode, including future spawning contestants. Or for ungodmodeing them all
 /datum/roster/proc/set_godmode_all(mob/user, str_toggle)
 	var/mode
 	if(str_toggle == "on")
@@ -529,7 +541,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	message_admins("[key_name_admin(user)] has [mode ? "GODMODED" : "UNGODMODED"] everyone")
 	log_game("[key_name_admin(user)] has [mode ? "GODMODED" : "UNGODMODED"] everyone")
 
-/// A debug function, for when you need contestant datums but don't have people
+/// For enabling/disabling random wounds
 /datum/roster/proc/toggle_wounds(mob/user)
 	enable_random_wounds = !enable_random_wounds
 

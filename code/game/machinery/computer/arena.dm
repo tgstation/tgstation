@@ -377,12 +377,17 @@
 			if(istype(try_contestant)) // contestant (not currently used)
 				try_contestant.set_godmode(usr, !try_contestant.godmode)
 
-	/*if(href_list["spawn_all"])
-		GLOB.global_roster.spawn_everyone(usr)
+	if(href_list["spawn_team"])
+		var/datum/event_team/check_team = locate(href_list["spawn_team"]) in GLOB.global_roster.active_teams
 
-	if(href_list["despawn_all"])
-		GLOB.global_roster.despawn_everyone(usr)
-*/
+		if(istype(check_team))
+			GLOB.global_roster.spawn_team(usr, check_team)
+		else
+			GLOB.global_roster.spawn_team(usr)
+
+	//if(href_list["despawn_all"])
+		//GLOB.global_roster.despawn_everyone(usr)
+
 	if(href_list["select_team_slot"])
 		GLOB.global_roster.try_load_team_slot(usr, text2num(href_list["select_team_slot"]))
 
@@ -509,7 +514,7 @@
 			dat += ""
 
 			if(team1)
-				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a>"
+				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a> <a href='?src=[REF(src)];spawn_team=[REF(team1)]'>Spawn Team (RED)</a>"
 				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team1)]'><b>[team1.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 				dat += "\t\tTeam Godmode: <a href='?src=[REF(src)];set_godmode=[REF(team1)]'><b>[team1.godmode ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 				var/i = 0
@@ -524,7 +529,7 @@
 				dat += "--------"
 
 			if(team2)
-				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2]</a>"
+				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2] <a href='?src=[REF(src)];spawn_team=[REF(team2)]'>Spawn Team (GREEN)</a>"
 				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team2)]'><b>[team2.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 				dat += "\t\tTeam Godmode: <a href='?src=[REF(src)];set_godmode=[REF(team2)]'><b>[team2.godmode ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
 				var/i = 0
@@ -535,16 +540,14 @@
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=2'>Select Team 2</a>"
 
+			if(istype(team1) ||istype(team2))
+				//dat += "<a href='?src=[REF(src)];set_freeze_all=on'><b>Freeze All</b></a><a href='?src=[REF(src)];set_freeze_all=off'><b>Unfreeze All</b></a>"
+				//dat += "<a href='?src=[REF(src)];set_godmode_all=on'><b>Godmode All</b></a><a href='?src=[REF(src)];set_godmode_all=off'><b>Ungodmode All</b></a>"
+				dat += "<a href='?src=[REF(src)];spawn_team=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];despawn_all=1'><b>Unspawn Everyone</b></a>"
 
 			if(istype(team1) && istype(team2))
 				dat += "<a href='?src=[REF(src)];start_match=1'><b>Start Match</b></a>"
 				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
-
-			if(istype(team1) ||istype(team2))
-				//dat += "<a href='?src=[REF(src)];set_freeze_all=on'><b>Freeze All</b></a><a href='?src=[REF(src)];set_freeze_all=off'><b>Unfreeze All</b></a>"
-				//dat += "<a href='?src=[REF(src)];set_godmode_all=on'><b>Godmode All</b></a><a href='?src=[REF(src)];set_godmode_all=off'><b>Ungodmode All</b></a>"
-				dat += "<a href='?src=[REF(src)];spawn_all=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];despawn_all=1'><b>Unspawn Everyone</b></a>"
-
 
 
 			var/list/waiting_teams = list()
@@ -589,7 +592,6 @@
 					var/mob/the_guy = iter_contestant.get_mob()
 					dat += "\t\tMember #[i]: [iter_contestant] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_contestant)];unteam_team_target=[REF(iter_team)]'>Remove Member</a>"
 
-					//dat += "\t\t: <a href='?src=[REF(src)];change_page;team=[iter_team]'>[iter_team]</a>"
 		if(ARENA_UI_INDIV)
 			dat += "<b>Contestant menu</b>"
 			dat += "-----------------------------------------"

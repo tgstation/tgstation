@@ -89,7 +89,34 @@
 	else
 		our_boy &= GODMODE
 
-/// Set any effects that we need on the person, this is to be called after they've been put in their body
+/// Spawn this guy in as a human at the appropriate spawnpoint. Returns TRUE if successful, so we can count off how many successfully spawn when needed
+/datum/contestant/proc/spawn_this_contestant(obj/machinery/arena_spawn/spawnpoint)
+	if(!istype(spawnpoint))
+		CRASH("[src] cannot be spawned, no spawnpoint was provided")
+
+	if(LAZYFIND(GLOB.global_roster.live_contestants, src))
+		message_admins("[src] is already spawned??")
+		//return
+
+	var/mob/oldbody = get_mob()
+	if(oldbody && !isobserver(oldbody))
+		testing("Spawning in [ckey] even though already in body [oldbody]")
+		//return
+
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
+	if(oldbody?.client) // debug testing with empty contestant datums
+		oldbody.client.prefs.copy_to(M)
+	M.set_species(/datum/species/human) // Could use setting per team
+	M.equipOutfit(/datum/outfit/job/assistant) // TODO: ADD CONTROLS FOR THIS
+	//M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
+	//M.faction += team //In case anyone wants to add team based stuff to arena special effects
+	M.key = ckey
+	M.forceMove(get_turf(spawnpoint))
+	LAZYADD(GLOB.global_roster.live_contestants, src)
+	on_spawn()
+	return TRUE
+
+/// Set any extra effects that we need on the person, this is to be called after they've been put in their body
 /datum/contestant/proc/on_spawn()
 	var/mob/living/our_boy = get_mob()
 	if(!istype(our_boy))
@@ -98,6 +125,10 @@
 		ADD_TRAIT(our_boy, TRAIT_IMMOBILIZED, TRAIT_EVENT)
 	if(godmode)
 		our_boy.status_flags |= GODMODE
+
+/// This'll need to be hooked up to more things, this is the anti spawn_this_contestant proc to undo them being in the live contestants
+/datum/contestant/proc/despawn()
+	LAZYREMOVE(GLOB.global_roster.live_contestants, src)
 
 /// If we die while we were listening for our death, mark us for elimination then stop listening
 /datum/contestant/proc/on_flagged_death(datum/source)

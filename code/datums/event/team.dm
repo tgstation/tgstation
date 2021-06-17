@@ -97,3 +97,22 @@
 	for(var/datum/contestant/iter_member in members)
 		iter_member.set_godmode(null, godmode)
 
+/// If the arg is TRUE, mark the team and members as successfully completing a round. If the arg is FALSE, mark them for elimination
+/datum/event_team/proc/spawn_members(mob/user, list/spawnpoints)
+	if(!LAZYLEN(members))
+		CRASH("tried spawning with no members!!")
+	if(!length(spawnpoints))
+		CRASH("tried spawning with no spawnpoints!!")
+
+	if(user)
+		message_admins("[key_name_admin(user)] has spawned [src]!")
+		log_game("[key_name_admin(user)] has spawned [src]!")
+
+	var/successes = 0
+	for(var/datum/contestant/iter_member in members)
+		var/obj/machinery/arena_spawn/random_spawn = pick(spawnpoints)
+		if(iter_member.spawn_this_contestant(random_spawn))
+			successes++
+
+	testing("Team [src]: [successes]/[LAZYLEN(members)] spawned!")
+
