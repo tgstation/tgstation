@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"map_name": "Event Map",
+	"map_path": "map_files/debug",
+	"map_file": "eventmap.dmm",
+	"shuttles": {
+		"cargo": "cargo_delta"
+	}
+}

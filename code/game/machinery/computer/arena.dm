@@ -32,6 +32,7 @@
 /// Controller for admin event arenas
 /obj/machinery/computer/arena
 	name = "arena controller"
+	use_power = FALSE
 	/// Arena ID
 	var/arena_id = ARENA_DEFAULT_ID
 	/// Enables/disables spawning
@@ -173,8 +174,15 @@
 		friendly_name = "[fname]" //Could ask the user for friendly name here
 
 	var/datum/map_template/T = new(fname,friendly_name,TRUE)
-	if(!T.cached_map || T.cached_map.check_for_errors())
+	if(!T.cached_map)
+		to_chat(user,"Map doesn't even exist, broh.")
+		return
+	var/datum/map_report/broken_map = T.cached_map.check_for_errors()
+
+	if(broken_map)
 		to_chat(user,"Map failed to parse check for errors.")
+		var/mob/the_user = user
+		broken_map.show_to(the_user.client)
 		return
 
 	arena_templates[T.name] = T
@@ -490,6 +498,9 @@
 		if(ARENA_UI_MATCH)
 			dat += "<b>Match menu</b>"
 			dat += "-----------------------------------------"
+			dat += "<a href='?src=[REF(src)];change_page=arena'>Manage Arena</a>"
+			//dat += "<a href='?src=[REF(src)];setup_match=1'>Setup Next Match</a>"
+			dat += "-----------------------------------------"
 			dat += "<a href='?src=[REF(src)];change_page=team'>Go to Teams</a>"
 			dat += "<a href='?src=[REF(src)];setup_match=1'>Setup Next Match</a>"
 
@@ -610,6 +621,7 @@
 
 		if(ARENA_UI_ARENA)
 			dat += "<b>Arena menu</b>"
+			dat += "<a href='?src=[REF(src)];change_page=match'>\<Back to Match</a>"
 			dat += "-----------------------------------------"
 			dat += "Current arena: [current_arena_template]"
 			dat += "<h2>Arena List:</h2>"
