@@ -40,7 +40,7 @@
 /datum/component/tippable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
 
-/datum/component/acid/Destroy(force, silent)
+/datum/component/tippable/Destroy()
 	if(pre_tipped_callback)
 		QDEL_NULL(pre_tipped_callback)
 	if(post_tipped_callback)
