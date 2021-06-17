@@ -2298,6 +2298,7 @@
 #include "code\modules\hydroponics\grown\mushrooms.dm"
 #include "code\modules\hydroponics\grown\nettle.dm"
 #include "code\modules\hydroponics\grown\onion.dm"
+#include "code\modules\hydroponics\grown\peach.dm"
 #include "code\modules\hydroponics\grown\peas.dm"
 #include "code\modules\hydroponics\grown\pineapple.dm"
 #include "code\modules\hydroponics\grown\potato.dm"
