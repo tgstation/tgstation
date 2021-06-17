@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - qol: "Swarmers now have a generic living healthdoll and pull icon."
-  - qol: "Swarmers will now show severity of their injuries as a red screen overlay to the user."
-  - qol: "Swarmer's abilities now have tooltips to clarify their use upon mouse hover."
