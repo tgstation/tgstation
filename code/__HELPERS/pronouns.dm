@@ -45,8 +45,6 @@
 			. = "es"
 		if ("x")
 			. = "es"
-		if ("y")
-			. = "ies"
 		else
 			. = "s"
 
