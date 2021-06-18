@@ -2,7 +2,6 @@
 SUBSYSTEM_DEF(lag_switch)
 	name = "Lag Switch"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_LAG_SWITCH //Just before Input
 
 	/// If the lag switch measures should attempt to trigger automatically, TRUE if a config value exists
 	var/auto_switch = FALSE
