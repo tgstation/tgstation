@@ -402,13 +402,13 @@
 				min(world.maxy, newloc.y + CEILING(bound_height / 32, 1)),
 				newloc.z
 				)
-		)
+		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
 				return
 			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 				return
-	else
+	else // Else just try to enter the single destination.
 		if(!newloc.Enter(src))
 			return
 		if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
@@ -424,15 +424,15 @@
 
 	. = TRUE
 
-	if(old_locs)
+	if(old_locs) // This condition will only be true if it is a multi-tile object.
 		for(var/atom/exited_loc as anything in (old_locs - new_locs))
 			exited_loc.Exited(src, direction)
-	else
+	else // Else there's just one loc to be exited.
 		oldloc.Exited(src, direction)
 	if(oldarea != newarea)
 		oldarea.Exited(src, direction)
 
-	if(new_locs)
+	if(new_locs) // Same here, only if multi-tile.
 		for(var/atom/entered_loc as anything in (new_locs - old_locs))
 			entered_loc.Entered(src, direction)
 	else
