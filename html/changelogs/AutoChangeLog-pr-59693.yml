@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - rscdel: "Removed the fake error texture floor tiles."
