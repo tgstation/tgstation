@@ -1,0 +1,7 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Nitrile gloves have been restocked on Metastation."
+  - bugfix: "Disconnected scrubber pipe on Metastation"
+  - bugfix: "Batteries are now included with defibrillators on Metastation"
+  - bugfix: "Broken power cable on metastation"
