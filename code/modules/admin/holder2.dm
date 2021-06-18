@@ -319,7 +319,7 @@ GLOBAL_PROTECT(href_token)
 		to_chat(
 			admin_client,
 			type = MESSAGE_TYPE_ADMINLOG,
-			html = "<span class='admin'><span class='prefix'>ADMIN 2FA:</span> You have the ability to verify [key_name_admin(client)] by using the Permissions Panel.</span>",
+			html = span_admin("[span_prefix("ADMIN 2FA:")] You have the ability to verify [key_name_admin(client)] by using the Permissions Panel."),
 			confidential = TRUE,
 		)
 

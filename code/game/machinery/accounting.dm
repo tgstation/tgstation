@@ -17,13 +17,13 @@
 	if(isidcard(I))
 		var/obj/item/card/id/new_id = I
 		if(inserted_id)
-			to_chat(user, "<span class='warning'>[src] already has a card inserted!</span>")
+			to_chat(user, span_warning("[src] already has a card inserted!"))
 			return
 		if(new_id.registered_account)
-			to_chat(user, "<span class='warning'>[src] already has a bank account!</span>")
+			to_chat(user, span_warning("[src] already has a bank account!"))
 			return
 		if(!anchored || !user.transferItemToLoc(I,src))
-			to_chat(user, "<span class='warning'>\the [src] blinks red as you try to insert the ID Card!</span>")
+			to_chat(user, span_warning("\the [src] blinks red as you try to insert the ID Card!"))
 			return
 		inserted_id = new_id
 		RegisterSignal(inserted_id, COMSIG_PARENT_QDELETING, .proc/remove_card)
@@ -44,7 +44,7 @@
 
 	user.put_in_hands(inserted_id)
 	inserted_id.add_fingerprint(user)
-	user.visible_message("<span class='notice'>[user] removes [inserted_id] from \the [src].</span>", "<span class='notice'>You remove [inserted_id] from \the [src].</span>")
+	user.visible_message(span_notice("[user] removes [inserted_id] from \the [src]."), span_notice("You remove [inserted_id] from \the [src]."))
 	remove_card()
 
 ///Used to clean up variables after the card has been removed, unregisters the removal signal, sets inserted ID to null, and updates the icon.

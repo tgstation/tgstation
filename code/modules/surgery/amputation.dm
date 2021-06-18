@@ -26,14 +26,14 @@
 	time = 64
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to sever [target]'s [parse_zone(target_zone)]...</span>",
-		"<span class='notice'>[user] begins to sever [target]'s [parse_zone(target_zone)]!</span>",
-		"<span class='notice'>[user] begins to sever [target]'s [parse_zone(target_zone)]!</span>")
+	display_results(user, target, span_notice("You begin to sever [target]'s [parse_zone(target_zone)]..."),
+		span_notice("[user] begins to sever [target]'s [parse_zone(target_zone)]!"),
+		span_notice("[user] begins to sever [target]'s [parse_zone(target_zone)]!"))
 
 /datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, "<span class='notice'>You sever [target]'s [parse_zone(target_zone)].</span>",
-		"<span class='notice'>[user] severs [target]'s [parse_zone(target_zone)]!</span>",
-		"<span class='notice'>[user] severs [target]'s [parse_zone(target_zone)]!</span>")
+	display_results(user, target, span_notice("You sever [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"),
+		span_notice("[user] severs [target]'s [parse_zone(target_zone)]!"))
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()
