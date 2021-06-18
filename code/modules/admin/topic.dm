@@ -1692,7 +1692,7 @@
 				if(!SSlag_switch.set_measure(switch_index, !LAZYACCESS(SSlag_switch.measures, switch_index)))
 					to_chat(src, span_danger("Something went wrong when trying to toggle that Lag Switch. Check runtimes for more info."), confidential = TRUE)
 				else
-					log_admin("[key_name(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
+					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 
 		src.show_lag_switch_panel()
@@ -1703,12 +1703,12 @@
 
 		switch(href_list["change_lag_switch_option"])
 			if("CANCEL")
-				if(SSlag_switch.cancel_auto_switch_in_progress())
+				if(SSlag_switch.cancel_auto_enable_in_progress())
 					log_admin("[key_name(usr)] canceled the automatic Lag Switch activation in progress.")
 					message_admins("[key_name_admin(usr)] canceled the automatic Lag Switch activation in progress.")
-				return
+				return // return here to avoid (re)rendering the panel for this case
 			if("TOGGLE_AUTO")
-				SSlag_switch.toggle_auto_switch()
+				SSlag_switch.toggle_auto_enable()
 				log_admin("[key_name(usr)] toggled automatic Lag Switch activation [SSlag_switch.auto_switch ? "ON" : "OFF"].")
 				message_admins("[key_name_admin(usr)] toggled automatic Lag Switch activation [SSlag_switch.auto_switch ? "ON" : "OFF"].")
 			else

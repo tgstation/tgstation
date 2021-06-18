@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(lag_switch)
 
 
 /// (En/Dis)able automatic triggering of switches based on client count
-/datum/controller/subsystem/lag_switch/proc/toggle_auto_switch()
+/datum/controller/subsystem/lag_switch/proc/toggle_auto_enable()
 	auto_switch = !auto_switch
 	if(auto_switch)
 		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(lag_switch)
 		UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 
 /// Called from an admin chat link
-/datum/controller/subsystem/lag_switch/proc/cancel_auto_switch_in_progress()
+/datum/controller/subsystem/lag_switch/proc/cancel_auto_enable_in_progress()
 	if(!veto_timer_id)
 		return FALSE
 	deltimer(veto_timer_id)
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(lag_switch)
 		stack_trace("SSlag_switch.set_measure() was called with a null arg")
 		return FALSE
 	if(isnull(LAZYACCESS(measures, measure_key)))
-		stack_trace("SSlag_switch.set_measure() was called with a switch key not in the list of measures")
+		stack_trace("SSlag_switch.set_measure() was called with a measure_key not in the list of measures")
 		return FALSE
 	if(measures[measure_key] == state)
 		return TRUE
@@ -66,8 +66,12 @@ SUBSYSTEM_DEF(lag_switch)
 	switch(measure_key)
 		if(DISABLE_DEAD_KEYLOOP)
 			if(state)
+				for(var/mob/user as anything in GLOB.player_list)
+					if(user.stat == DEAD && !user.client?.holder)
+						GLOB.keyloop_list -= user
 				deadchat_broadcast(span_big("To increase performance Observer freelook is now disabled. Please use Orbit, Teleport, and Jump to look around."), message_type = DEADCHAT_ANNOUNCEMENT)
 			else
+				GLOB.keyloop_list |= GLOB.player_list
 				deadchat_broadcast("Observer freelook has been re-enabled. Enjoy your wooshing.", message_type = DEADCHAT_ANNOUNCEMENT)
 		if(DISABLE_GHOST_ZOOM_TRAY)
 			if(state) // if enabling make sure current ghosts are updated
