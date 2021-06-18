@@ -299,6 +299,7 @@
 	if(locked)
 		return
 	locked = TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_BOLT)
 	playsound(src,boltDown,30,FALSE,3)
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
 	update_appearance()
@@ -310,6 +311,7 @@
 	if(!locked)
 		return
 	locked = FALSE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_UNBOLT)
 	playsound(src,boltUp,30,FALSE,3)
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
 	update_appearance()

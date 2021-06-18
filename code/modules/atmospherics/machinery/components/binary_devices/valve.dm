@@ -42,6 +42,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		parent1.reconcile_air()
 		investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 		vent_movement |= VENTCRAWL_ALLOWED
+	SEND_SIGNAL(src, COMSIG_VALVE_TOGGLED, on)
 
 /obj/machinery/atmospherics/components/binary/valve/interact(mob/user)
 	add_fingerprint(usr)
@@ -67,6 +68,68 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "dvalve"
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
+
+/obj/machinery/atmospherics/components/binary/valve/digital/Initialize()
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/digital_valve))
+
+/obj/item/circuit_component/digital_valve
+	display_name = "Digital Valve"
+	display_desc = "The interface for communicating with a digital valve."
+
+	var/obj/machinery/atmospherics/components/binary/valve/digital/attached_valve
+
+	/// Opens the digital valve
+	var/datum/port/input/open
+	/// Closes the digital valve
+	var/datum/port/input/close
+
+	/// Whether the valve is currently open
+	var/datum/port/output/is_open
+	/// Sent when the valve is opened
+	var/datum/port/output/opened
+	/// Sent when the valve is closed
+	var/datum/port/output/closed
+
+/obj/item/circuit_component/digital_valve/Initialize()
+	. = ..()
+	open = add_input_port("Open", PORT_TYPE_SIGNAL)
+	close = add_input_port("Close", PORT_TYPE_SIGNAL)
+
+	is_open = add_output_port("Is Open", PORT_TYPE_NUMBER)
+	opened = add_output_port("Opened", PORT_TYPE_SIGNAL)
+	closed = add_output_port("Closed", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/digital_valve/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/atmospherics/components/binary/valve/digital))
+		attached_valve = shell
+		RegisterSignal(attached_valve, COMSIG_VALVE_TOGGLED, .proc/handle_valve_toggled)
+
+/obj/item/circuit_component/digital_valve/unregister_usb_parent(atom/movable/shell)
+	attached_valve = null
+	UnregisterSignal(attached_valve, COMSIG_VALVE_TOGGLED)
+	return ..()
+
+/obj/item/circuit_component/digital_valve/proc/handle_valve_toggled(datum/source, on)
+	is_open.set_output(on)
+	if(on)
+		opened.set_output(COMPONENT_SIGNAL)
+	else
+		closed.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/digital_valve/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
+
+	if(!attached_valve)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(open, port) && !attached_valve.on)
+		attached_valve.toggle()
+	if(COMPONENT_TRIGGERED_BY(close, port) && attached_valve.on)
+		attached_valve.toggle()
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(!is_operational)

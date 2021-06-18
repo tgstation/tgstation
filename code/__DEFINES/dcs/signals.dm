@@ -761,12 +761,21 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
+// /obj/machinery/atmospherics/components/binary/valve signals
+
+/// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
+#define COMSIG_VALVE_TOGGLED "valve_toggled"
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
 //from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
+///from /obj/machinery/door/airlock/bolt():
+#define COMSIG_AIRLOCK_BOLT "airlock_bolt"
+//from /obj/machinery/door/airlock/unbolt():
+#define COMSIG_AIRLOCK_UNBOLT "airlock_unbolt"
 
 // /obj/item signals
 
