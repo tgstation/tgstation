@@ -1855,6 +1855,7 @@
 #include "code\modules\atmospherics\machinery\components\trinary_devices\filter.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\mixer.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\trinary_devices.dm"
+#include "code\modules\atmospherics\machinery\components\turbine\turbine.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\bluespace_sender.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\cryo.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\heat_exchanger.dm"
