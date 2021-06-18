@@ -979,7 +979,5 @@
 	dat += "<br/><b>Measures below can be bypassed with a <abbr title='TRAIT_BYPASS_MEASURES'><u>special trait</u></abbr></b><br/>"
 	dat += "Disable runechat: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br/>"
 	dat += "Disable examine icons: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
-	dat += "Disable item tooltips: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_ITEM_TOOLTIPS]'><b>[SSlag_switch.measures[DISABLE_ITEM_TOOLTIPS] ? "On" : "Off"]</b></a><br/>"
-	dat += "Disable screentips: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_SCREENTIPS]'><b>[SSlag_switch.measures[DISABLE_SCREENTIPS] ? "On" : "Off"]</b></a><br/>"
 	dat += "</body></html>"
 	usr << browse(dat.Join(), "window=lag_switch_panel;size=420x360")

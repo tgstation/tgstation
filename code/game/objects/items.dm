@@ -862,7 +862,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	. = ..()
 	if(get(src, /mob) == usr && !QDELETED(src))
 		var/mob/living/L = usr
-		if(usr.client.prefs.enable_tips && (!SSlag_switch.measures[DISABLE_ITEM_TOOLTIPS] || HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES)))
+		if(usr.client.prefs.enable_tips)
 			var/timedelay = usr.client.prefs.tip_delay/100
 			tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 		if(usr.client.prefs.itemoutline_pref)
