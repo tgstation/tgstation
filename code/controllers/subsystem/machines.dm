@@ -13,11 +13,11 @@ SUBSYSTEM_DEF(machines)
 	return ..()
 
 /datum/controller/subsystem/machines/proc/makepowernets()
-	for(var/datum/powernet/PN in powernets)
+	for(var/datum/powernet/PN as anything in powernets)
 		qdel(PN)
 	powernets.Cut()
 
-	for(var/obj/structure/cable/PC in GLOB.cable_list)
+	for(var/obj/structure/cable/PC as anything in GLOB.cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
@@ -48,160 +48,6 @@ SUBSYSTEM_DEF(machines)
 				thing.datum_flags &= ~DF_ISPROCESSING
 		if (MC_TICK_CHECK)
 			return
-
-/proc/benchmark(loop_length = 500000)
-	var/list/random_numbers = list()
-
-	for(var/i in 1 to loop_length)
-		random_numbers += rand(0, 10)
-
-	var/max1 = rand(1, 4)
-	var/min1 = -1
-	var/max2 = rand(4.1, 9)
-	var/min2 = rand(0, 4)
-
-	CHECK_TICK
-
-	var/ecksdee
-
-	var/start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		if(max2 != -1 && val >= max2)
-			ecksdee = val
-			continue
-
-		if(min2 != -1 && val <= min2)
-			ecksdee = val
-			continue
-
-		if(max1 != -1 && val >= max1)
-			ecksdee = val
-			continue
-
-		if(min1 != -1 && val <= min1)
-			ecksdee = val
-			continue
-
-	message_admins("two checks per if took [TICK_USAGE_TO_MS(start)] milliseconds!")
-
-	CHECK_TICK
-
-	start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		switch(val)
-			if(max2 to INFINITY)
-				ecksdee = val
-				continue
-			if(0 to min2)
-				ecksdee = val
-				continue
-
-			if(max1 to INFINITY)
-				ecksdee = val
-				continue
-			if(0 to min1)
-				ecksdee = val
-				continue
-
-	message_admins("switch statement without checking for -1 took [TICK_USAGE_TO_MS(start)] milliseconds!")
-
-	CHECK_TICK
-
-	start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		ecksdee = (2*((max2 != -1)&(val >= max2) | (min2 != -1)&(val <= min2))) | ((max1 != -1)&(val >= max1) | (min1 != -1)&(val >= min1))
-
-	message_admins("branchless testing took [TICK_USAGE_TO_MS(start)] milliseconds!")
-
-	CHECK_TICK
-
-	start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		if((max2 != -1)&(val >= max2) | (min2 != -1)&(val <= min2))
-			ecksdee = val
-			continue
-
-		if((max1 != -1)&(val >= max1) | (min1 != -1)&(val >= min1))
-			ecksdee = val
-			continue
-
-	message_admins("two branches took [TICK_USAGE_TO_MS(start)] milliseconds!")
-
-	CHECK_TICK
-
-	start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		switch(val)
-			if(max2 to INFINITY)
-				if(max2 != -1)
-					ecksdee = val
-					continue
-			if(0 to min2)
-				if(min2 != -1)
-					ecksdee = val
-					continue
-
-			if(max1 to INFINITY)
-				if(max1 != -1)
-					ecksdee = val
-					continue
-			if(0 to min1)
-				if(min1 != -1)
-					ecksdee = val
-					continue
-
-	message_admins("switch statement and checking for -1 took [TICK_USAGE_TO_MS(start)] milliseconds!")
-
-	CHECK_TICK
-
-	start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		if(max2 != -1 & val >= max2)
-			ecksdee = val
-			continue
-
-		if(min2 != -1 & val <= min2)
-			ecksdee = val
-			continue
-
-		if(max1 != -1 & val >= max1)
-			ecksdee = val
-			continue
-
-		if(min1 != -1 & val <= min1)
-			ecksdee = val
-			continue
-
-	message_admins("bitwise AND ifs took [TICK_USAGE_TO_MS(start)] milliseconds!")
-
-	CHECK_TICK
-
-	start = TICK_USAGE
-
-	for(var/val in random_numbers)
-		if(val >= max2)
-			ecksdee = val
-			continue
-
-		if(val <= min2)
-			ecksdee = val
-			continue
-
-		if(val >= max1)
-			ecksdee = val
-			continue
-
-		if(val <= min1)
-			ecksdee = val
-			continue
-
-	message_admins("one check per if took [TICK_USAGE_TO_MS(start)] milliseconds!")
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	var/obj/structure/cable/PC
