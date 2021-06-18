@@ -56,6 +56,9 @@
 	. = ..()
 	. += "This is a [generation]\th generation [name]!"
 
+	if(user.stat == DEAD)
+		. += myseed.get_text_traits()
+
 /**
  * Creates a new glowshroom structure.
  *

@@ -623,7 +623,7 @@
 			materials_list += "[M.name]"
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
 	if(reagents)
-		if(reagents.flags & TRANSPARENT)
+		if((reagents.flags & TRANSPARENT) || user.stat == DEAD) //Ghosts always see all the reagents
 			. += "It contains:"
 			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent

@@ -104,10 +104,62 @@
 /obj/item/seeds/examine(mob/user)
 	. = ..()
 	. += span_notice("Use a pen on it to rename it or change its description.")
-	if(reagents_add && user.can_see_reagents())
+	if(user.stat == DEAD)
+		var/returned_message = get_text_traits()
+		returned_message += "</span>\n"
+		. += returned_message
+	else if(reagents_add && user.can_see_reagents())
 		. += span_notice("- Plant Reagents -")
 		for(var/datum/plant_gene/reagent/G in genes)
 			. += span_notice("- [G.get_name()] -")
+
+/obj/item/seeds/proc/get_text_traits(obj/item/seeds/scanned)
+	var/text = ""
+	if(get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+		text += "- Plant type: [span_notice("Weed. Can grow in nutrient-poor soil.")]\n"
+	else if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		text += "- Plant type: [span_notice("Mushroom. Can grow in dry soil.")]\n"
+	else if(get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
+		text += "- Plant type: [span_warning("UNKNOWN")] \n"
+	else
+		text += "- Plant type: [span_notice("Normal plant")]\n"
+
+	if(potency != -1)
+		text += "- Potency: [span_notice("[potency]")]\n"
+	if(yield != -1)
+		text += "- Yield: [span_notice("[yield]")]\n"
+	text += "- Maturation speed: [span_notice("[maturation]")]\n"
+	if(yield != -1)
+		text += "- Production speed: [span_notice("[production]")]\n"
+	text += "- Endurance: [span_notice("[scanned.endurance]")]\n"
+	text += "- Lifespan: [span_notice("[lifespan]")]\n"
+	text += "- Instability: [span_notice("[instability]")]\n"
+	text += "- Weed Growth Rate: [span_notice("[weed_rate]")]\n"
+	text += "- Weed Vulnerability: [span_notice("[weed_chance]")]\n"
+	if(rarity)
+		text += "- Species Discovery Value: [span_notice("[rarity]")]</span>\n"
+	var/all_removable_traits = ""
+	var/all_immutable_traits = ""
+	for(var/datum/plant_gene/trait/traits in genes)
+		if(istype(traits, /datum/plant_gene/trait/plant_type))
+			continue
+		if(traits.mutability_flags & PLANT_GENE_REMOVABLE)
+			all_removable_traits += "[(all_removable_traits == "") ? "" : ", "][traits.get_name()]"
+		else
+			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
+
+	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]</span>\n"
+	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]</span>\n"
+	var/datum/plant_gene/scanned_graft_result = graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
+	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
+	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
+	text += "*---------*"
+	var/unique_text = get_unique_analyzer_text()
+	if(unique_text)
+		text += "\n"
+		text += unique_text
+		text += "\n*---------*"
+	return text
 
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/copy_seed = new type(null, TRUE)

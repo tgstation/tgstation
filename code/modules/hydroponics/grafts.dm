@@ -46,3 +46,21 @@
 /obj/item/graft/Destroy()
 	QDEL_NULL(stored_trait)
 	return ..()
+
+/obj/item/graft/examine(mob/user)
+	. = ..()
+	if(user.stat == DEAD)
+		var/text = "[span_info("*---------*")]\n<span class='info'>- Plant Graft -\n"
+		if(parent_name)
+			text += "- Parent Plant: [span_notice("[parent_name]")] -\n"
+		if(stored_trait)
+			text += "- Graftable Traits: [span_notice("[stored_trait.get_name()]")] -\n"
+		text += "*---------*\n"
+		text += "- Yield: [span_notice("[yield]")]\n"
+		text += "- Production speed: [span_notice("[production]")]\n"
+		text += "- Endurance: [span_notice("[endurance]")]\n"
+		text += "- Lifespan: [span_notice("[lifespan]")]\n"
+		text += "- Weed Growth Rate: [span_notice("[weed_rate]")]\n"
+		text += "- Weed Vulnerability: [span_notice("[weed_chance]")]\n"
+		text += "*---------*</span>"
+		. += text

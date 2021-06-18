@@ -93,6 +93,28 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Tray efficiency at <b>[rating*100]%</b>.")
 
+/obj/machinery/hydroponics/examine(mob/user)
+	. = ..()
+	if(user.stat == DEAD)
+		var/returned_message = "<span class='info'>*---------*\n"
+		if(myseed)
+			returned_message += "*** <B>[myseed.plantname]</B> ***\n"
+			returned_message += "- Plant Age: [span_notice("[age]")]</span>\n"
+			returned_message += myseed.get_text_traits()
+		else
+			returned_message += "[span_info("<B>No plant found.</B>")]\n"
+
+		returned_message += "<span class='info'>"
+		returned_message += "- Weed level: [span_notice("[weedlevel] / [MAX_TRAY_WEEDS]")]\n"
+		returned_message += "- Pest level: [span_notice("[pestlevel] / [MAX_TRAY_PESTS]")]\n"
+		returned_message += "- Toxicity level: [span_notice("[toxic] / [MAX_TRAY_TOXINS]")]\n"
+			returned_message += "- Water level: [span_notice("[waterlevel] / [maxwater]")]\n"
+		returned_message += "- Nutrition level: [span_notice("[reagents.total_volume] / [maxnutri]")]\n"
+		if(yieldmod != 1)
+			returned_message += "- Yield modifier on harvest: [span_notice("[yieldmod]x")]\n"
+
+		returned_message += "*---------*</span>"
+		. += returned_message
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
