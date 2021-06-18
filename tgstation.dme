@@ -3590,6 +3590,7 @@
 #include "code\modules\wiremod\components\utility\typecheck.dm"
 #include "code\modules\wiremod\preset\hello_world.dm"
 #include "code\modules\wiremod\preset\speech_relay.dm"
+#include "code\modules\wiremod\shell\airlock.dm"
 #include "code\modules\wiremod\shell\bot.dm"
 #include "code\modules\wiremod\shell\compact_remote.dm"
 #include "code\modules\wiremod\shell\controller.dm"
