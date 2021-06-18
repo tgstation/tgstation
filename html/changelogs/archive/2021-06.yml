@@ -364,3 +364,32 @@
       is cleared.
   tralezab:
   - bugfix: carbon roses can no longer mutate into carbon roses
+2021-06-17:
+  Arkatos:
+  - qol: Swarmers now have a generic living healthdoll and pull icon.
+  - qol: Swarmers will now show severity of their injuries as a red screen overlay
+      to the user.
+  - qol: Swarmer's abilities now have tooltips to clarify their use upon mouse hover.
+  - bugfix: Smartfridges will now show an approximate number of their stored items
+      correctly on their sprite.
+  - bugfix: Smartfridges will now count maximum number of allowed items correctly.
+  - bugfix: Smartfridges will now show their UI only when directly interacted with.
+  EOBGames:
+  - rscadd: Metastation's medbay has received another revision. Stop by the next time
+      you get hurt, and marvel at the new design!
+  Maurukas:
+  - bugfix: Metastation has received the correct health HUDs for its new medbay
+  - bugfix: Camera coverage has been improved in Metastation's medbay
+  RandomGamer123:
+  - bugfix: Amanitin (destroying angel toxin) is now back to its original amount of
+      deadliness prior to human metabolisation changes.
+  Wayland-Smithy:
+  - bugfix: Fixed the tgui changelog dates sometimes being inaccurate to the source
+      files.
+  tralezab:
+  - expansion: dullahans are now considered undead
+2021-06-18:
+  RandomGamer123:
+  - bugfix: Power fist no longer occasionally and randomly says it does not have enough
+      gas when it has enough
+  - bugfix: Connects Delta's cryopod room to the station's power grid

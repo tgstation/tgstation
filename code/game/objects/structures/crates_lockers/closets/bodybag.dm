@@ -62,7 +62,7 @@
 /obj/structure/closet/body_bag/close()
 	. = ..()
 	if(.)
-		density = FALSE
+		set_density(FALSE)
 		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)

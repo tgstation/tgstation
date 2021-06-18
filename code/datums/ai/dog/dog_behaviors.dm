@@ -143,7 +143,7 @@
 		simple_pawn.icon_state = simple_pawn.icon_dead
 		if(simple_pawn.flip_on_death)
 			simple_pawn.transform = simple_pawn.transform.Turn(180)
-		simple_pawn.density = FALSE
+		simple_pawn.set_density(FALSE)
 
 	if(DT_PROB(10, delta_time))
 		finish_action(controller, TRUE)
@@ -158,7 +158,7 @@
 	simple_pawn.icon_state = simple_pawn.icon_living
 	if(simple_pawn.flip_on_death)
 		simple_pawn.transform = simple_pawn.transform.Turn(180)
-	simple_pawn.density = initial(simple_pawn.density)
+	simple_pawn.set_density(initial(simple_pawn.density))
 
 /// This behavior involves either eating a snack we can reach, or begging someone holding a snack
 /datum/ai_behavior/harass

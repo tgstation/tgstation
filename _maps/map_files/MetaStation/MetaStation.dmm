@@ -23125,6 +23125,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
 "flT" = (
@@ -26971,6 +26974,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -33348,6 +33354,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "iSH" = (
@@ -36023,6 +36032,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "jQm" = (
@@ -47816,13 +47826,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/defibrillator{
+/obj/item/defibrillator/loaded{
 	pixel_y = 6
 	},
-/obj/item/defibrillator{
+/obj/item/defibrillator/loaded{
 	pixel_y = 3
 	},
-/obj/item/defibrillator,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "nIe" = (
@@ -49694,6 +49704,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/coldroom)
 "onR" = (
@@ -53198,6 +53209,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -65147,6 +65161,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "tqs" = (
@@ -65772,6 +65787,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -67413,6 +67431,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -69671,6 +69692,7 @@
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "uPf" = (
@@ -73127,8 +73149,12 @@
 /area/science/genetics)
 "vTp" = (
 /obj/structure/table/reinforced,
-/obj/item/wrench/medical,
 /obj/machinery/light/directional/north,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "vTw" = (
@@ -75951,6 +75977,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "wUW" = (
@@ -78768,6 +78797,7 @@
 "xPf" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/end,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "xPj" = (
