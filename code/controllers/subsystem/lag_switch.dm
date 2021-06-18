@@ -1,11 +1,11 @@
-/// The subsystem for controlling drastic performance enhancements aimed at reducing server load for a smoother albeit slightly duller gaming expirence
+/// The subsystem for controlling drastic performance enhancements aimed at reducing server load for a smoother albeit slightly duller gaming experience
 SUBSYSTEM_DEF(lag_switch)
 	name = "Lag Switch"
 	flags = SS_NO_FIRE
 
 	/// If the lag switch measures should attempt to trigger automatically, TRUE if a config value exists
 	var/auto_switch = FALSE
-	/// Amount of connected clients above which the Lag Switch should engage, set via config or VV
+	/// Amount of connected clients above which the Lag Switch should engage, set via config or admin panel
 	var/trigger_pop = INFINITY - 1337
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(lag_switch)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 	veto_timer_id = addtimer(CALLBACK(src, .proc/set_all_measures, TRUE, TRUE), 20 SECONDS, TIMER_STOPPABLE)
 	message_admins("Lag Switch population trigger activated. Enabling of drastic lag mitigation measures occuring in 20 seconds. (<a href='?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
-	log_game("Lag Switch: client threshold reached, automatic enabling of all measures occuring in 20 seconds.")
+	log_admin("Lag Switch population trigger activated. Enabling of drastic lag mitigation measures occuring in 20 seconds.")
 
 
 /// (En/Dis)able automatic triggering of switches based on client count
@@ -48,7 +48,6 @@ SUBSYSTEM_DEF(lag_switch)
 		return FALSE
 	deltimer(veto_timer_id)
 	veto_timer_id = null
-	log_game("Lag Switch: an admin has canceled automatic enabling of all measures.")
 	return TRUE
 
 /// Handle the state change for individual measures
@@ -81,7 +80,6 @@ SUBSYSTEM_DEF(lag_switch)
 						ghost.client.view_size.resetToDefault()
 
 	measures[measure_key] = state
-	log_game("Lag Switch: measure at index ([measure_key]) has been turned [state ? "ON" : "OFF"].")
 	return TRUE
 
 /// Helper to loop over all measures for mass changes
@@ -91,6 +89,7 @@ SUBSYSTEM_DEF(lag_switch)
 		return FALSE
 	if(automatic)
 		message_admins("Automatically enabling drastic lag mitigation measures now.")
+		log_admin("Automatically enabling all Lag Switch measures.")
 		veto_timer_id = null
 	for(var/i = 1, i <= measures.len, i++)
 		set_measure(i, state)
