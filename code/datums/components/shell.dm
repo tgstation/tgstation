@@ -201,7 +201,7 @@
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_QDELETING,
-		COMSIG_CIRCUIT_ADD_COMPONENT,
+		COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY,
 	))
 	if(attached_circuit.loc == parent)
 		var/atom/parent_atom = parent
