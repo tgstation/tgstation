@@ -43,14 +43,6 @@
 	var/current_arena_template = "None"
 	// What turf arena clears to
 	var/empty_turf_type = /turf/open/indestructible
-	// List of team ids
-	var/list/teams = list(ARENA_RED_TEAM,ARENA_GREEN_TEAM)
-	/// List of hud instances indedxed by team id
-	var/static/list/team_huds = list()
-	/// List of hud colors indexed by team id
-	var/static/list/team_colors = list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green")
-	// Team hud index in GLOB.huds indexed by team id
-	var/static/list/team_hud_index = list()
 
 	/// List of ckeys indexed by team id
 	var/list/team_keys = list()
@@ -77,17 +69,6 @@
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
-	GenerateAntagHuds()
-
-/obj/machinery/computer/arena/proc/GenerateAntagHuds()
-	for(var/team in teams)
-		var/datum/atom_hud/antag/teamhud = team_huds[team]
-		if(!teamhud) //These will be shared between arenas because this stuff is expensive and cross arena fighting is not a thing anyway
-			teamhud = new
-			teamhud.icon_color = team_colors[team]
-			GLOB.huds += teamhud
-			team_huds[team] = teamhud
-			team_hud_index[team] = length(GLOB.huds)
 
 /**
  * Loads the arenas from config directory.
@@ -226,10 +207,6 @@
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
 
-	var/datum/atom_hud/antag/team_hud = team_huds[team]
-	team_hud.join_hud(M)
-	set_antag_hud(M,"arena",team_hud_index[team])
-
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()
 
@@ -258,34 +235,6 @@
 	for(var/obj/machinery/arena_spawn/A in GLOB.machines)
 		if(A.arena_id == arena_id && A.team == team)
 			return A
-
-/obj/machinery/computer/arena/proc/start_match(mob/user)
-	//TODO: Check if everyone is spawned in, if not ask for confirmation.
-	var/timetext = DisplayTimeText(start_delay)
-	to_chat(user,span_notice("The match will start in [timetext]."))
-	for(var/mob/M in all_contestants())
-		to_chat(M,span_userdanger("The gates will open in [timetext]!"))
-	start_time = world.time + start_delay
-	addtimer(CALLBACK(src,.proc/begin),start_delay)
-	for(var/team in teams)
-		var/obj/machinery/arena_spawn/team_spawn = get_spawn(team)
-		var/obj/effect/countdown/arena/A = new(team_spawn)
-		A.start()
-		countdowns += A
-
-/obj/machinery/computer/arena/proc/begin()
-	ready_to_spawn = FALSE
-	set_doors(closed = FALSE)
-	if(start_sound)
-		for(var/team in teams)
-			var/obj/machinery/arena_spawn/A = get_spawn(team)
-			playsound(A,start_sound, start_sound_volume)
-	for(var/mob/M in all_contestants())
-		to_chat(M,span_userdanger("START!"))
-	//Clean up the countdowns
-	QDEL_LIST(countdowns)
-	start_time = null
-	updateUsrDialog()
 
 
 /obj/machinery/computer/arena/proc/set_doors(closed = FALSE)
@@ -424,19 +373,6 @@
 		add_new_arena_template(user)
 	if(href_list["change_arena"])
 		load_arena(href_list["change_arena"],user)
-	if(href_list["toggle_spawn"])
-		toggle_spawn(user)
-	if(href_list["start"])
-		start_match(user)
-	if(href_list["team_action"])
-		var/team = href_list["team"]
-		switch(href_list["team_action"])
-			if("addmember")
-				add_team_member(user,team)
-			if("loadteam")
-				load_team(user,team)
-			if("outfit")
-				change_outfit(user,team)
 	if(href_list["special"])
 		switch(href_list["special"])
 			if("reset")
