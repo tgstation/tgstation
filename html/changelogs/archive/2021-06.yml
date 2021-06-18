@@ -388,3 +388,8 @@
       files.
   tralezab:
   - expansion: dullahans are now considered undead
+2021-06-18:
+  RandomGamer123:
+  - bugfix: Power fist no longer occasionally and randomly says it does not have enough
+      gas when it has enough
+  - bugfix: Connects Delta's cryopod room to the station's power grid
