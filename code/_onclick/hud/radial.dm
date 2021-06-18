@@ -231,7 +231,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			if (choice_datum.info)
 				var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
 				info_button.plane = ABOVE_HUD_PLANE
-				info_button.layer = RADIAL_BACKGROUND_LAYER
+				info_button.layer = RADIAL_CONTENT_LAYER
 				E.vis_contents += info_button
 
 /datum/radial_menu/New()

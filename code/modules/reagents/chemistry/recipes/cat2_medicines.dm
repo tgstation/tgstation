@@ -33,7 +33,7 @@
 			new /obj/effect/hotspot(holder.my_atom.loc)
 			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 2)
 			holder.chem_temp += 5
-			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing [holder.my_atom] to let out a hearty burst of flame, evaporating part of the product!</span>")
+			holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing [holder.my_atom] to let out a hearty burst of flame, evaporating part of the product!"))
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()//drains product
@@ -130,7 +130,7 @@
 	for(var/mob/living/living_mob in orange(3, get_turf(holder.my_atom)))
 		if(living_mob.flash_act(1, length = 5))
 			living_mob.set_blurriness(10)
-	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [holder.my_atom] lets out a loud bang!</span>")
+	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [holder.my_atom] lets out a loud bang!"))
 	playsound(holder.my_atom, 'sound/effects/explosion1.ogg', 50, 1)
 
 /datum/chemical_reaction/medicine/hercuri
@@ -300,7 +300,7 @@
 	var/datum/reagent/monover = holder.has_reagent(/datum/reagent/inverse/healing/monover)
 	if(monover)
 		holder.remove_reagent(/datum/reagent/inverse/healing/monover, monover.volume)
-		holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover bursts into flames from the heat!</span>")
+		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover bursts into flames from the heat!"))
 		explode_fire_square(holder, equilibrium, 1)
 		holder.my_atom.fire_act(holder.chem_temp, monover.volume)//I'm kinda banking on this setting the thing on fire. If you see this, then it didn't!
 
@@ -311,7 +311,7 @@
 		var/norm_d_ph = 1-(delta_ph/0.35)
 		holder.chem_temp += norm_d_ph*12 //0 - 48 per second)
 	if(delta_ph < 0.1)
-		holder.my_atom.visible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover begins to glow!</span>")
+		holder.my_atom.visible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The Monover begins to glow!"))
 
 /datum/chemical_reaction/medicine/syriniver
 	results = list(/datum/reagent/medicine/c2/syriniver = 5)

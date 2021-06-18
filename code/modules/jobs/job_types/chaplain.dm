@@ -41,7 +41,7 @@
 			B.icon_state = GLOB.bible_icon_state
 		if(GLOB.bible_inhand_icon_state)
 			B.inhand_icon_state = GLOB.bible_inhand_icon_state
-		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.</span>")
+		to_chat(H, span_boldnotice("There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain."))
 		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)

@@ -71,7 +71,6 @@
 /// from datum ui_act (usr, action)
 #define COMSIG_UI_ACT "COMSIG_UI_ACT"
 
-
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
 /// fires on the target datum when an element is attached to it  (/datum/element)
@@ -94,7 +93,7 @@
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"
 ///from base of atom/animal_attack(): (/mob/user)
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"
-///from base of atom/examine(): (/mob)
+///from base of atom/examine(): (/mob, list/examine_text)
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
@@ -129,6 +128,8 @@
 #define COMSIG_ATOM_UPDATE_OVERLAYS "atom_update_overlays"
 ///from base of [/atom/update_icon]: (signalOut, did_anything)
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
+///from base of [/atom/proc/smooth_icon]: ()
+#define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
 ///from base of atom/Entered(): (atom/movable/entering, /atom/oldLoc)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/entered_atom, /atom/oldLoc)
@@ -771,6 +772,8 @@
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
+/// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
+#define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"
 ///called on [/obj/item] before unequip from base of [mob/proc/doUnEquip]: (force, atom/newloc, no_move, invdrop, silent)
 #define COMSIG_ITEM_PRE_UNEQUIP "item_pre_unequip"
 	///only the pre unequip can be cancelled
@@ -1306,6 +1309,34 @@
 #define COMSIG_CIRCUIT_ADD_COMPONENT "circuit_add_component"
 	/// Cancels adding the component to the circuit.
 	#define COMPONENT_CANCEL_ADD_COMPONENT (1<<0)
+
+/// Sent when a [/obj/item/circuit_component] is added to a circuit manually, by putting the item inside directly.
+/// Accepts COMPONENT_CANCEL_ADD_COMPONENT.
+#define COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY "circuit_add_component_manually"
+
+/// Sent when a circuit is removed from its shell
+#define COMSIG_CIRCUIT_SHELL_REMOVED "circuit_shell_removed"
+
+/// Sent to [/obj/item/circuit_component] when it is removed from a circuit. (/obj/item/integrated_circuit)
+#define COMSIG_CIRCUIT_COMPONENT_REMOVED "circuit_component_removed"
+
+/// Sent to an atom when a [/obj/item/usb_cable] attempts to connect to something. (/obj/item/usb_cable/usb_cable, /mob/user)
+#define COMSIG_ATOM_USB_CABLE_TRY_ATTACH "usb_cable_try_attach"
+	/// Attaches the USB cable to the atom. If the USB cables moves away, it will disconnect.
+	#define COMSIG_USB_CABLE_ATTACHED (1<<0)
+
+	/// Attaches the USB cable to a circuit. Producers of this are expected to set the usb_cable's
+	/// `attached_circuit` variable.
+	#define COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT (1<<1)
+
+	/// Cancels the attack chain, but without performing any other action.
+	#define COMSIG_CANCEL_USB_CABLE_ATTACK (1<<2)
+
+/// Sent from /obj/structure/industrial_lift/tram when its travelling status updates. (travelling)
+#define COMSIG_TRAM_SET_TRAVELLING "tram_set_travelling"
+
+/// Sent from /obj/structure/industrial_lift/tram when it begins to travel. (obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
+#define COMSIG_TRAM_TRAVEL "tram_travel"
 
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
