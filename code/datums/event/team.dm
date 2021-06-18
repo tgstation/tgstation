@@ -19,6 +19,9 @@
 	/// This value is passed onto the contestants on this team
 	var/godmode = FALSE
 
+	/// During battle royale, there's just one big team and we don't bother with antag huds
+	var/battle_royale = FALSE
+
 /datum/event_team/New(our_number)
 	rostered_id = our_number
 	name = "Team #[rostered_id]"

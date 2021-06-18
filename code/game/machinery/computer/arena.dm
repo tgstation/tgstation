@@ -1,5 +1,3 @@
-#define ARENA_RED_TEAM "red"
-#define ARENA_GREEN_TEAM "green"
 #define ARENA_DEFAULT_ID "arena_default"
 #define ARENA_CORNER_A "cornerA"
 #define ARENA_CORNER_B "cornerB"
@@ -515,8 +513,7 @@
 
 			if(team1)
 				dat += "\tTeam 1 ([team1.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=1'>Remove [team1]</a> <a href='?src=[REF(src)];spawn_team=[REF(team1)]'>Spawn Team (RED)</a>"
-				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team1)]'><b>[team1.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
-				dat += "\t\tTeam Godmode: <a href='?src=[REF(src)];set_godmode=[REF(team1)]'><b>[team1.godmode ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
+				dat += "\t\t<a href='?src=[REF(src)];set_freeze=[REF(team1)]'><b>[team1.frozen ? "Unfreeze" : "Freeze"]</span></b></a> <a href='?src=[REF(src)];set_godmode=[REF(team1)]'><b>[team1.godmode ? "Disable Godmode" : "Enable Godmode"]</span></b></a>"
 				var/i = 0
 				for(var/datum/contestant/iter_member in team1.members)
 					i++
@@ -530,8 +527,7 @@
 
 			if(team2)
 				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2] <a href='?src=[REF(src)];spawn_team=[REF(team2)]'>Spawn Team (GREEN)</a>"
-				dat += "\t\tTeam Frozen: <a href='?src=[REF(src)];set_freeze=[REF(team2)]'><b>[team2.frozen ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
-				dat += "\t\tTeam Godmode: <a href='?src=[REF(src)];set_godmode=[REF(team2)]'><b>[team2.godmode ? "<span class='green'>ENABLED" : "<span class='red'>DISABLED"]</span></b></a>"
+				dat += "\t\t<a href='?src=[REF(src)];set_freeze=[REF(team2)]'><b>[team2.frozen ? "Unfreeze" : "Freeze"]</span></b></a> <a href='?src=[REF(src)];set_godmode=[REF(team2)]'><b>[team2.godmode ? "Disable Godmode" : "Enable Godmode"]</span></b></a>"
 				var/i = 0
 				for(var/datum/contestant/iter_member in team2.members)
 					i++
@@ -599,7 +595,9 @@
 			dat += "<b>Contestants:</b>"
 
 			var/list/flagged_contestants = list()
-			var/list/still_in = GLOB.global_roster.active_contestants - GLOB.global_roster.losers
+			var/list/still_in = null
+			if(GLOB.global_roster.active_contestants)
+				still_in = GLOB.global_roster.active_contestants - GLOB.global_roster.losers
 
 			for(var/datum/contestant/iter_contestant in still_in)
 				if(iter_contestant.flagged_for_elimination)
@@ -714,8 +712,8 @@
 			return
 		C.spawn_member(src,user.ckey,team)
 
-#undef ARENA_GREEN_TEAM
-#undef ARENA_RED_TEAM
+//#undef ARENA_GREEN_TEAM
+//#undef ARENA_RED_TEAM
 #undef ARENA_DEFAULT_ID
 #undef ARENA_CORNER_A
 #undef ARENA_CORNER_B

@@ -32,9 +32,20 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	/// If FALSE, bodyparts cannot suffer wounds by receiving damage. Wounds can still be manually applied as per normal
 	var/enable_random_wounds = FALSE
 
+	// antag hud stuff stolen wholesale from the arena computer so they now live here
+	/// List of team ids
+	var/list/teams = list(ARENA_RED_TEAM,ARENA_GREEN_TEAM)
+	/// List of hud instances indedxed by team id
+	var/static/list/team_huds = list()
+	/// List of hud colors indexed by team id
+	var/static/list/team_colors = list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green")
+	/// Team hud index in GLOB.huds indexed by team id
+	var/static/list/team_hud_index = list()
+
 /datum/roster/New()
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_ENTER, .proc/check_new_player)
 	// add a signal for new playters joining or observing or whatever and make it call check_connection with their client
+	generate_antag_huds()
 	return
 
 /// Hooked to players observing, checks to see if we've expecting their ckey so we can turn them into a contestant
@@ -481,6 +492,44 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	message_admins("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
 	log_game("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
+
+/datum/roster/proc/generate_antag_huds()
+	for(var/team in teams)
+		testing("Generating antag hud for team [team]")
+		var/datum/atom_hud/antag/teamhud = team_huds[team]
+		if(!teamhud) //These will be shared between arenas because this stuff is expensive and cross arena fighting is not a thing anyway
+			teamhud = new
+			teamhud.icon_color = team_colors[team]
+			GLOB.huds += teamhud
+			team_huds[team] = teamhud
+			team_hud_index[team] = length(GLOB.huds)
+
+/datum/roster/proc/get_team_antag_hud(datum/event_team/check_team)
+	if(!check_team)
+		return
+
+	if(check_team == team1)
+		return team_huds[ARENA_RED_TEAM]
+	else if(check_team == team2)
+		return team_huds[ARENA_GREEN_TEAM]
+
+/datum/roster/proc/get_team_slot(datum/event_team/check_team)
+	if(!check_team)
+		return
+
+	if(check_team == team1)
+		return ARENA_RED_TEAM
+	else if(check_team == team2)
+		return ARENA_GREEN_TEAM
+
+/datum/roster/proc/add_contestant_to_antag_hud(datum/event_team/check_team)
+	if(!check_team)
+		return
+
+	if(check_team == team1)
+		return team_huds[ARENA_RED_TEAM]
+	else if(check_team == team2)
+		return team_huds[ARENA_GREEN_TEAM]
 
 /*
 /obj/machinery/computer/arena/proc/spawn_member(obj/machinery/arena_spawn/spawnpoint,ckey,team)

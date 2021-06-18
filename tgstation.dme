@@ -31,6 +31,7 @@
 #include "code\__DEFINES\ai.dm"
 #include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\aquarium.dm"
+#include "code\__DEFINES\arena.dm"
 #include "code\__DEFINES\art.dm"
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"

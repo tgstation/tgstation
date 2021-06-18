@@ -19,6 +19,8 @@
 	var/frozen = FALSE
 	/// If TRUE, this contestant is supposed to be godmoded, and will be godmoded if spawned in
 	var/godmode = FALSE
+	/// The antag hud we're currently joined on, so we can remember to unjoin it when we leave
+	var/datum/atom_hud/antag/our_team_hud
 
 /datum/contestant/New(new_ckey)
 	ckey = new_ckey
@@ -125,6 +127,35 @@
 		ADD_TRAIT(our_boy, TRAIT_IMMOBILIZED, TRAIT_EVENT)
 	if(godmode)
 		our_boy.status_flags |= GODMODE
+
+	if(!current_team || current_team.battle_royale)
+		return
+
+	if(!our_boy.mind) // only needed for empty contestant testing
+		our_boy.mind_initialize()
+	update_antag_hud()
+
+
+/// This'll need to be hooked up to more things, this is the anti spawn_this_contestant proc to undo them being in the live contestants
+/datum/contestant/proc/update_antag_hud()
+	var/datum/roster/the_roster = GLOB.global_roster
+	var/team_slot = the_roster.get_team_slot(current_team)
+
+	var/mob/living/our_boy = get_mob()
+	if(!istype(our_boy))
+		return
+	if(!team_slot)
+		our_team_hud?.remove_from_hud(our_boy)
+		return
+
+	var/datum/atom_hud/antag/new_team_hud = the_roster.get_team_antag_hud(current_team)
+	if(our_team_hud && our_team_hud != new_team_hud) // no need to update if they match, we're already good
+		our_team_hud.leave_hud(our_boy)
+	our_team_hud = new_team_hud
+	if(!our_team_hud)
+		return
+	our_team_hud.join_hud(our_boy)
+	set_antag_hud(our_boy,"arena",the_roster.team_hud_index[team_slot])
 
 /// This'll need to be hooked up to more things, this is the anti spawn_this_contestant proc to undo them being in the live contestants
 /datum/contestant/proc/despawn()
