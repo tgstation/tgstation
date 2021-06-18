@@ -87,11 +87,11 @@
 
 /datum/nanite_program/conductive/enable_passive_effect()
 	. = ..()
-	ADD_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
+	ADD_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, NANITES_TRAIT)
 
 /datum/nanite_program/conductive/disable_passive_effect()
 	. = ..()
-	REMOVE_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, NANITES_TRAIT)
 
 /datum/nanite_program/mindshield
 	name = "Mental Barrier"
@@ -102,10 +102,10 @@
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
 	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev, TRUE)) //won't work if on a rev, to avoid having implanted revs.
-		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
+		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT)
 		host_mob.sec_hud_set_implants()
 
 /datum/nanite_program/mindshield/disable_passive_effect()
 	. = ..()
-	REMOVE_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT)
 	host_mob.sec_hud_set_implants()

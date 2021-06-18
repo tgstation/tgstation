@@ -37,7 +37,7 @@
 			"defeat","pain","bliss","revenge","poison","time","space","death","life","truth","lies","justice","memory",\
 			"regrets","your soul","suffering","music","noise","blood","hunger","the american way")
 		if(text_output != last_taste_text || last_taste_time + 100 < world.time)
-			to_chat(src, "<span class='notice'>You can taste [text_output].</span>")
+			to_chat(src, span_notice("You can taste [text_output]."))
 			// "something indescribable" -> too many tastes, not enough flavor.
 
 			last_taste_time = world.time

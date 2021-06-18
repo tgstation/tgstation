@@ -156,7 +156,7 @@
 
 /obj/effect/temp_visual/paperwiz_dying/Initialize()
 	. = ..()
-	visible_message("<span class='boldannounce'>The wizard cries out in pain as a gate appears behind him, sucking him in!</span>")
+	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
 	playsound(get_turf(src),'sound/magic/mandswap.ogg', 50, TRUE, TRUE)
 	playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 

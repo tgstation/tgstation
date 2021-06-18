@@ -40,8 +40,8 @@
 		return
 
 	user.do_attack_animation(target)
-	target.visible_message("<span class='warning'>[user] gently taps [target]'s knee with [item].</span>", \
-		"<span class='userdanger'>[user] taps your knee with [item].</span>")
+	target.visible_message(span_warning("[user] gently taps [target]'s knee with [item]."), \
+		span_userdanger("[user] taps your knee with [item]."))
 
 	if(target.stat == DEAD) //dead men have no reflexes!
 		return
@@ -53,17 +53,17 @@
 
 	if(target_brain_damage < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-		target.visible_message("<span class='danger'>[target]'s leg kicks out sharply!</span>", \
-			"<span class='danger'>Your leg kicks out sharply!</span>")
+		target.visible_message(span_danger("[target]'s leg kicks out sharply!"), \
+			span_danger("Your leg kicks out sharply!"))
 
 	else if(target_brain_damage < BRAIN_DAMAGE_SEVERE) //a mildly damaged brain produces a delayed reaction
 		playsound(target, 'sound/weapons/punchmiss.ogg', 15, TRUE, -1)
-		target.visible_message("<span class='danger'>After a moment, [target]'s leg kicks out sharply!</span>", \
-			"<span class='danger'>After a moment, your leg kicks out sharply!</span>")
+		target.visible_message(span_danger("After a moment, [target]'s leg kicks out sharply!"), \
+			span_danger("After a moment, your leg kicks out sharply!"))
 
 	else if(target_brain_damage < BRAIN_DAMAGE_DEATH) //a severely damaged brain produces a delayed + weaker reaction
 		playsound(target, 'sound/weapons/punchmiss.ogg', 5, TRUE, -1)
-		target.visible_message("<span class='danger'>After a moment, [target]'s leg kicks out weakly!</span>", \
-			"<span class='danger'>After a moment, your leg kicks out weakly!</span>")
+		target.visible_message(span_danger("After a moment, [target]'s leg kicks out weakly!"), \
+			span_danger("After a moment, your leg kicks out weakly!"))
 
 	return
