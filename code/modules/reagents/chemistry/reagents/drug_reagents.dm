@@ -438,3 +438,32 @@
 
 	M.adjustToxLoss(5 * REM * delta_time)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time)
+
+/datum/reagent/drug/saturnx
+	name = "SaturnX"
+	reagent_state = SOLID
+	color = "#638b9b"
+	overdose_threshold = 25
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
+
+/datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.6 * REM * delta_time)
+
+/datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_INVISIBLE_MAN, name)
+	playsound(L, 'sound/effects/woosh.ogg', 30)
+	to_chat(L, "<span='notice'>You feel pins and needles all over your skin as your body suddenly becomes transparent!</span>")
+
+/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
+	. = ..()
+	REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
+	to_chat(M, "<span='notice'>As you sober up, opacity once again returns to your body meats.</span>")
+
+/datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	if(prob(8))
+		M.emote("giggle")
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
