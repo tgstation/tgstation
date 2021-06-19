@@ -1,0 +1,9 @@
+author: "SpaceDragon00"
+delete-after: True
+changes: 
+  - bugfix: "Combat defibs no longer enable their safeties when being EMPed"
+  - bugfix: "Visible message sends its message to mobs that are also its location"
+  - bugfix: "shock_touching (Renamed to shock_pulling) now actually uses the damage value provided"
+  - code_imp: "Removed useless mob/user input for cooldowncheck"
+  - code_imp: "Added recharge_time variable to paddles for variable charge times"
+  - code_imp: "Added can_hurt, do_success, and do_cancel to reduce code duplication"
