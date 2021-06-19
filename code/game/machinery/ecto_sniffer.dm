@@ -30,7 +30,7 @@
 
 /obj/machinery/ecto_sniffer/proc/activate(mob/activator)
 	flick("ecto_sniffer_flick", src)
-	playsound(loc, 'sound/machines/ping.ogg', 20)
+	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 25)
 	use_power(10)
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
@@ -74,7 +74,7 @@
 	. = ..()
 
 ///Removes the ghost from the ectoplasmic_residues list and lets them know they are free to activate the sniffer again.
-/obj/machinery/ecto_sniffer/proc/clear_residue(var/ghost_ckey)
+/obj/machinery/ecto_sniffer/proc/clear_residue(ghost_ckey)
 	ectoplasmic_residues -= ghost_ckey
 	var/mob/ghost = get_mob_by_ckey(ghost_ckey)
 	if(!ghost || isliving(ghost))
