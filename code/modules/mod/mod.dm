@@ -196,7 +196,7 @@
 		return ..()
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
-			to_chat(carbon_user, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
+			to_chat(carbon_user, span_warning("ERROR: At least one of the parts are still on your body, please retract them and try again."))
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 
@@ -205,7 +205,7 @@
 		return ..()
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
-			to_chat(wearer, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
+			to_chat(wearer, span_warning("ERROR: At least one of the parts are still on your body, please retract them and try again."))
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return
 	if(!wearer.incapacitated())
@@ -219,9 +219,9 @@
 		if(shock(user))
 			return
 	if(open && cell && loc == user)
-		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
+		to_chat(user, span_notice("You start removing [cell]."))
 		if(do_after(user, 1.5 SECONDS, target = src))
-			to_chat(user, "<span class='notice'>You remove [cell].</span>")
+			to_chat(user, span_notice("You remove [cell]."))
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			if(!user.put_in_hands(cell))
 				cell.forceMove(drop_location())
@@ -232,25 +232,25 @@
 	if(..())
 		return TRUE
 	if(active || activating)
-		to_chat(user, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		to_chat(user, span_warning("ERROR: Suit activated. Deactivate before further action."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	to_chat(user, "<span class='notice'>You start to [open ? "screw the panel back on" : "unscrew the panel"]...</span>")
+	to_chat(user, span_notice("You start to [open ? "screw the panel back on" : "unscrew the panel"]..."))
 	I.play_tool_sound(src, 100)
 	if(I.use_tool(src, user, 0.5 SECONDS))
 		if(active || activating)
 			return FALSE
 		I.play_tool_sound(src, 100)
-		user.visible_message("<span class='notice'>[user] [open ? "screws the panel back on" : "unscrews the panel"].</span>",
-			"<span class='notice'>You [open ? "screw the panel back on" : "unscrew the panel"].</span>",
-			"<span class='hear'>You hear metal noises.</span>")
+		user.visible_message(span_notice("[user] [open ? "screws the panel back on" : "unscrews the panel"]."),
+			span_notice("You [open ? "screw the panel back on" : "unscrew the panel"]."),
+			span_hear("You hear metal noises."))
 		open = !open
 	return TRUE
 
 /obj/item/mod/control/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!open)
-		to_chat(user, "<span class='warning'>ERROR: Suit panel not open.</span>")
+		to_chat(user, span_warning("ERROR: Suit panel not open."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	if(length(modules))
@@ -259,42 +259,42 @@
 				uninstall(module)
 				module.forceMove(drop_location())
 			else
-				audible_message("<span class='warning'>[src] indicates that [module] cannot be removed.</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+				audible_message(span_warning("[src] indicates that [module] cannot be removed."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				return
 		I.play_tool_sound(src, 100)
 		return TRUE
-	to_chat(user, "<span class='warning'>ERROR: There's no modules on [src]!</span>")
+	to_chat(user, span_warning("ERROR: There's no modules on [src]!"))
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return FALSE
 
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
-			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+			audible_message(span_warning("[src] indicates that it needs to be open before installing [attacking_item]."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 		install(attacking_item, FALSE)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
-			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+			audible_message(span_warning("[src] indicates that it needs to be open before installing [attacking_item]."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 		if(cell)
-			audible_message("<span class='warning'>[src] indicates that there is a cell already installed.</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+			audible_message(span_warning("[src] indicates that there is a cell already installed."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 		attacking_item.forceMove(src)
 		cell = attacking_item
-		audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>", hearing_distance = 1)
+		audible_message(span_notice("[src] indicates that [cell] has been succesfully installed."), span_warning("[src] flashes a confirmation message."), hearing_distance = 1)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/mod/paint) && paint(user, attacking_item))
-		to_chat(user, "<span class='notice'>You paint [src] with [attacking_item].</span>")
+		to_chat(user, span_notice("You paint [src] with [attacking_item]."))
 		qdel(attacking_item)
 		return TRUE
 	else if(open && attacking_item.GetID())
@@ -308,15 +308,15 @@
 
 /obj/item/mod/control/emag_act(mob/user)
 	locked = !locked
-	to_chat(user, "<span class='notice'>You emag [src], [locked ? "locking" : "unlocking"] it.</span>")
+	to_chat(user, span_notice("You emag [src], [locked ? "locking" : "unlocking"] it."))
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
-	to_chat(wearer, "<span class='notice'>[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!</span>")
+	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
 	if(!active || !wearer || . & EMP_PROTECT_CONTENTS)
 		return
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
-	to_chat(wearer, "<span class='danger'>You feel [src] heat up from the EMP burning you slightly.</span>")
+	to_chat(wearer, span_danger("You feel [src] heat up from the EMP burning you slightly."))
 	if (wearer.stat < UNCONSCIOUS && prob(10))
 		wearer.emote("scream")
 
@@ -369,19 +369,19 @@
 	for(var/obj/item/mod/module/old_module as anything in modules)
 		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
 			if(!starting_module)
-				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+				audible_message(span_warning("[src] indicates that [new_module] is incompatible with [old_module]."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				return
 	if(is_type_in_list(module, theme.module_blacklist))
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+			audible_message(span_warning("[src] indicates that it rejects [new_module]."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return
 	var/complexity_with_module = complexity
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its firmware.</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
+			audible_message(span_warning("[src] indicates that [new_module] is too complex for its firmware."), span_warning("[src] flashes an error message."), hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return
 	new_module.forceMove(src)
@@ -390,7 +390,7 @@
 	new_module.mod = src
 	new_module.on_install()
 	if(!starting_module)
-		audible_message("<span class='notice'>[src] indicates that [new_module] has been installed successfully.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>", hearing_distance = 1)
+		audible_message(span_notice("[src] indicates that [new_module] has been installed successfully."), span_warning("[src] flashes a confirmation message."), hearing_distance = 1)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/mod/control/proc/uninstall(module)
@@ -405,14 +405,14 @@
 /obj/item/mod/control/proc/update_access(card)
 	var/obj/item/card/id/access_id = card
 	if(!allowed(wearer))
-		to_chat(wearer, "<span class='warning'>ERROR: Access denied.</span>")
+		to_chat(wearer, span_warning("ERROR: Access denied."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return
 	req_access = access_id.access.Copy()
-	to_chat(wearer, "<span class='notice'>Access levels updated.</span>")
+	to_chat(wearer, span_notice("Access levels updated."))
 
 /obj/item/mod/control/proc/power_off()
-	to_chat(wearer, "<span class='warning'>ERROR: Insufficient power.</span>")
+	to_chat(wearer, span_warning("ERROR: Insufficient power."))
 	toggle_activate(wearer, force_deactivate = TRUE)
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, atom/newloc)

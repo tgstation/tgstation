@@ -94,10 +94,10 @@
 		mod.selected_module = src
 		if(device)
 			mod.wearer.put_in_hands(device)
-			to_chat(mod.wearer, "<span class='notice'>You extend [device].</span>")
+			to_chat(mod.wearer, span_notice("You extend [device]."))
 			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 		else
-			to_chat(mod.wearer, "<span class='notice'>You activate [src]. You can use the middle-mouse button or alt-click to use it.</span>")
+			to_chat(mod.wearer, span_notice("You activate [src]. You can use the middle-mouse button or alt-click to use it."))
 			RegisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON, .proc/on_select_use)
 			RegisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON, .proc/on_select_use)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
@@ -111,10 +111,10 @@
 		mod.selected_module = null
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, TRUE)
-			to_chat(mod.wearer, "<span class='notice'>You retract [device].</span>")
+			to_chat(mod.wearer, span_notice("You retract [device]."))
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else
-			to_chat(mod.wearer, "<span class='notice'>You deactivate [src].</span>")
+			to_chat(mod.wearer, span_notice("You deactivate [src]."))
 			UnregisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON)
 			UnregisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON)
 	mod.wearer.update_inv_back()
@@ -356,7 +356,7 @@
 /obj/item/mod/module/stealth/proc/unstealth(datum/source)
 	SIGNAL_HANDLER
 
-	to_chat(mod.wearer, "<span class='warning'>[src] gets discharged from contact!</span>")
+	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
 	do_sparks(2, TRUE, src)
 	drain_power(use_power_cost)
 	on_deactivation()
@@ -506,17 +506,17 @@
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!holding)
-			to_chat(mod.wearer, "<span class='notice'>You aren't holding anything to holster!</span>")
+			to_chat(mod.wearer, span_notice("You aren't holding anything to holster!"))
 			return
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
-			to_chat(mod.wearer, "<span class='notice'>[holding] doesn't fit in the holster!</span>")
+			to_chat(mod.wearer, span_notice("[holding] doesn't fit in the holster!"))
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
 			holstered = holding
-			to_chat(mod.wearer, "<span class='notice'>You holster [holstered].</span>")
+			to_chat(mod.wearer, span_notice("You holster [holstered]."))
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
-		to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
+		to_chat(mod.wearer, span_notice("You draw [holstered]."))
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 
@@ -540,7 +540,7 @@
 
 /obj/item/mod/module/tether/on_use()
 	if(mod.wearer.has_gravity(get_turf(src)))
-		to_chat(mod.wearer, "<span class='warning'>You need to be in a 0-G environment to use [src]!</span>")
+		to_chat(mod.wearer, span_warning("You need to be in a 0-G environment to use [src]!"))
 		playsound(src, 'sound/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()

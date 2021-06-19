@@ -15,7 +15,7 @@
 	if(!istype(part) || user.incapacitated())
 		return
 	if(active || activating)
-		to_chat(user, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		to_chat(user, span_warning("ERROR: Suit activated. Deactivate before further action."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	var/parts_to_check = mod_parts - part
@@ -43,16 +43,16 @@
 		boots.overslot = wearer.shoes
 		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-		user.visible_message("<span class='notice'>[wearer]'s [piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
-			"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
-			"<span class='hear'>You hear a mechanical hiss.</span>")
+		user.visible_message(span_notice("[wearer]'s [piece] deploy[piece.p_s()] with a mechanical hiss."),
+			span_notice("[piece] deploy[piece.p_s()] with a mechanical hiss."),
+			span_hear("You hear a mechanical hiss."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 		ADD_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	else if(piece.loc != src)
-		to_chat(user, "<span class='warning'>ERROR: [piece] [piece.p_are()] already deployed.</span>")
+		to_chat(user, span_warning("ERROR: [piece] [piece.p_are()] already deployed."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 	else
-		to_chat(user, "<span class='warning'>ERROR: Bodypart clothed.</span>")
+		to_chat(user, span_warning("ERROR: Bodypart clothed."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 
 /obj/item/mod/control/proc/conceal(mob/user, part)
@@ -63,50 +63,50 @@
 		gauntlets.show_overslot()
 	if(piece == boots)
 		boots.show_overslot()
-	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
-		"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
-		"<span class='hear'>You hear a mechanical hiss.</span>")
+	user.visible_message(span_notice("[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
+		span_notice("[piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
+		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
 	for(var/obj/item/part as anything in mod_parts)
 		if(!force_deactivate && part.loc == src)
-			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
+			to_chat(user, span_warning("ERROR: Not all parts deployed."))
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 	if(locked && !active && !allowed(user) && !force_deactivate)
-		to_chat(user, "<span class='warning'>ERROR: Access level insufficient.</span>")
+		to_chat(user, span_warning("ERROR: Access level insufficient."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(!cell?.charge && !force_deactivate)
-		to_chat(user, "<span class='warning'>ERROR: Suit unpowered.</span>")
+		to_chat(user, span_warning("ERROR: Suit unpowered."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(open && !force_deactivate)
-		to_chat(user, "<span class='warning'>ERROR: Suit panel open.</span>")
+		to_chat(user, span_warning("ERROR: Suit panel open."))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(activating)
 		if(!force_deactivate)
-			to_chat(user, "<span class='warning'>ERROR: Suit already [active ? "shutting down" : "staring up"].</span>")
+			to_chat(user, span_warning("ERROR: Suit already [active ? "shutting down" : "staring up"]."))
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	activating = TRUE
-	to_chat(wearer, "<span class='notice'>MODsuit [active ? "shutting down" : "starting up"].</span>")
+	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		to_chat(wearer, "<span class='notice'>[boots] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
+		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		boots.icon_state = "[skin]-boots[active ? "" : "-sealed"]"
 		boots.worn_icon_state = "[skin]-boots[active ? "" : "-sealed"]"
 		wearer.update_inv_shoes()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		to_chat(wearer, "<span class='notice'>[gauntlets] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"].</span>")
+		to_chat(wearer, span_notice("[gauntlets] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"]."))
 		gauntlets.icon_state = "[skin]-gauntlets[active ? "" : "-sealed"]"
 		gauntlets.worn_icon_state = "[skin]-gauntlets[active ? "" : "-sealed"]"
 		wearer.update_inv_gloves()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		to_chat(wearer, "<span class='notice'>[chestplate] [active ? "releases your chest" : "cinches tightly against your chest"].</span>")
+		to_chat(wearer, span_notice("[chestplate] [active ? "releases your chest" : "cinches tightly against your chest"]."))
 		chestplate.icon_state = "[skin]-chestplate[active ? "" : "-sealed"]"
 		chestplate.worn_icon_state = "[skin]-chestplate[active ? "" : "-sealed"]"
 		if(active)
@@ -119,7 +119,7 @@
 		wearer.update_inv_w_uniform()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		to_chat(wearer, "<span class='notice'>[helmet] hisses [active ? "open" : "closed"].</span>")
+		to_chat(wearer, span_notice("[helmet] hisses [active ? "open" : "closed"]."))
 		helmet.icon_state = "[skin]-helmet[active ? "" : "-sealed"]"
 		helmet.worn_icon_state = "[skin]-helmet[active ? "" : "-sealed"]"
 		if(active)
@@ -137,7 +137,7 @@
 		wearer.update_hair()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		audible_message("<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer].</span>", hearing_distance = 0)
+		audible_message(span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."), hearing_distance = 0)
 		icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		worn_icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		active = !active

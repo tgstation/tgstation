@@ -3,12 +3,12 @@
 	if(!.)
 		return
 	if(!open) //mod must be open
-		to_chat(user, "<span class='warning'>[src] must be open in order to allow a transfer.</span>")
+		to_chat(user, span_warning("[src] must be open in order to allow a transfer."))
 		return
 	switch(interaction)
 		if(AI_TRANS_TO_CARD)
 			if(!ai)
-				to_chat(user, "<span class='warning'>No AI detected in [src].</span>")
+				to_chat(user, span_warning("No AI detected in [src]."))
 				return
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
@@ -25,19 +25,19 @@
 					qdel(action)
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
-			to_chat(intAI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
+			to_chat(intAI, span_notice("You have been downloaded to a mobile storage device. Wireless connection offline."))
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [intAI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 			ai = null
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
 			intAI = card.AI
 			if(!intAI)
-				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
+				to_chat(user, span_warning("There is no AI currently installed on this device."))
 				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
 			if(intAI.stat || !intAI.client)
-				to_chat(user, "<span class='warning'>[intAI.name] is currently unresponsive, and cannot be uploaded.</span>")
+				to_chat(user, span_warning("[intAI.name] is currently unresponsive, and cannot be uploaded."))
 				return
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
@@ -54,7 +54,7 @@
 	newAI.remote_control = src
 	newAI.forceMove(src)
 	ai = newAI
-	to_chat(newAI, "<span class='notice'>You have been uploaded to a MODsuit's onboard system.</span>")
+	to_chat(newAI, span_notice("You have been uploaded to a MODsuit's onboard system."))
 	for(var/datum/action/action in actions)
 		var/datum/action/newaction = action.type
 		newaction = new newaction(src)

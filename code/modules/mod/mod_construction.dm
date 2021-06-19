@@ -59,20 +59,20 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		to_chat(user, span_notice("You insert [I] into [src]."))
 		core = I
 		icon_to_use = "core"
 
 	if(core)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, "<span class='notice'>You screw [I] into [src].</span>")
+				to_chat(user, span_notice("You screw [I] into [src]."))
 				screwed_core = TRUE
 				icon_to_use = "screwed_core"
 		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				core.forceMove(drop_location())
-				to_chat(user, "<span class='notice'>You remove [core] from [src].</span>")
+				to_chat(user, span_notice("You remove [core] from [src]."))
 				core = null
 				icon_to_use = null
 
@@ -81,12 +81,12 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
+			to_chat(user, span_notice("You fit [I] onto [src]."))
 			helmet = I
 			icon_to_use = "helmet"
 		else if(I.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, "<span class='notice'>You unscrew the core from [src].</span>")
+				to_chat(user, span_notice("You unscrew the core from [src]."))
 				screwed_core = FALSE
 				icon_to_use = "core"
 
@@ -95,13 +95,13 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
+			to_chat(user, span_notice("You fit [I] onto [src]."))
 			chestplate = I
 			icon_to_use = "chestplate"
 		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				helmet.forceMove(drop_location())
-				to_chat(user, "<span class='notice'>You pry [helmet] from [src].</span>")
+				to_chat(user, span_notice("You pry [helmet] from [src]."))
 				helmet = null
 				icon_to_use = "screwed_core"
 
@@ -110,13 +110,13 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
+			to_chat(user, span_notice("You fit [I] onto [src]."))
 			gauntlets = I
 			icon_to_use = "gauntlets"
 		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				chestplate.forceMove(drop_location())
-				to_chat(user, "<span class='notice'>You pry [chestplate] from [src].</span>")
+				to_chat(user, span_notice("You pry [chestplate] from [src]."))
 				chestplate = null
 				icon_to_use = "helmet"
 
@@ -125,38 +125,38 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
+			to_chat(user, span_notice("You fit [I] onto [src]."))
 			boots = I
 			icon_to_use = "boots"
 		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				gauntlets.forceMove(drop_location())
-				to_chat(user, "<span class='notice'>You pry [gauntlets] from [src].</span>")
+				to_chat(user, span_notice("You pry [gauntlets] from [src]."))
 				gauntlets = null
 				icon_to_use = "chestplate"
 
 	if(boots)
 		if(I.tool_behaviour == TOOL_WRENCH) //Construct
 			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, "<span class='notice'>You wrench together the assembly.</span>")
+				to_chat(user, span_notice("You wrench together the assembly."))
 				wrenched_assembly = TRUE
 				icon_to_use = "wrenched_assembly"
 		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				boots.forceMove(drop_location())
-				to_chat(user, "<span class='notice'>You pry [boots] from [src].</span>")
+				to_chat(user, span_notice("You pry [boots] from [src]."))
 				boots = null
 				icon_to_use = "gauntlets"
 
 	if(wrenched_assembly)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, "<span class='notice'>You screw together the assembly.</span>")
+				to_chat(user, span_notice("You screw together the assembly."))
 				screwed_assembly = TRUE
 				icon_to_use = "screwed_assembly"
 		else if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, "<span class='notice'>You unwrench the assembled parts.</span>")
+				to_chat(user, span_notice("You unwrench the assembled parts."))
 				wrenched_assembly = FALSE
 				icon_to_use = "boots"
 
@@ -166,14 +166,14 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, "<span class='notice'>You fit [external_armor] onto [src], finishing your MODsuit.</span>")
+			to_chat(user, span_notice("You fit [external_armor] onto [src], finishing your MODsuit."))
 			var/obj/item/modsuit = new /obj/item/mod/control(drop_location(), external_armor.theme)
 			qdel(src)
 			user.put_in_hands(modsuit)
 			return
 		else if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, "<span class='notice'>You unscrew the assembled parts.</span>")
+				to_chat(user, span_notice("You unscrew the assembled parts."))
 				screwed_assembly = FALSE
 				icon_to_use = "wrenched_assembly"
 	update_icon_state()
