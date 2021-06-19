@@ -299,7 +299,7 @@ SUBSYSTEM_DEF(timer)
 				qdel(timer)
 			continue
 
-		// Insert the timer into the bucket, and perform necessary circular doubly-linked list operations
+		// Insert the timer into the bucket, and perform necessary doubly-linked list operations
 		new_bucket_count++
 		var/bucket_pos = BUCKET_POS(timer)
 		timer.bucket_pos = bucket_pos
