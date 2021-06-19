@@ -134,6 +134,9 @@
 	if(SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
 		return
 
+	if(!to_add.add_to(src))
+		return
+
 	var/success = FALSE
 	if(user)
 		success = user.transferItemToLoc(to_add, src)
@@ -182,6 +185,7 @@
 	to_remove.parent = null
 	SEND_SIGNAL(to_remove, COMSIG_CIRCUIT_COMPONENT_REMOVED, src)
 	SStgui.update_uis(src)
+	to_remove.removed_from(src)
 
 /obj/item/integrated_circuit/get_cell()
 	return cell
@@ -363,6 +367,9 @@
 					port.set_input(text2num(any_type) || any_type)
 				if(PORT_TYPE_STRING)
 					port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
+				if(PORT_TYPE_SIGNAL)
+					balloon_alert(usr, "triggered [port.name]")
+					port.set_input(COMPONENT_SIGNAL)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])

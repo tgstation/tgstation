@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane, Tooltip } from '../components';
+import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane } from '../components';
 import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
 import { CSS_COLORS } from '../constants';
@@ -87,6 +87,17 @@ const FUNDAMENTAL_DATA_TYPES = {
         icon="upload"
         compact
         onClick={() => setValue(null, { marked_atom: true })}
+      />
+    );
+  },
+  "signal": (props, context) => {
+    const { name, setValue } = props;
+    return (
+      <Button
+        content={name}
+        color="transparent"
+        compact
+        onClick={() => setValue()}
       />
     );
   },
