@@ -184,6 +184,8 @@
 	if(!(L.z in impacted_z_levels))
 		if(mob_turf)
 			return
+		if(!(L.loc.z in impacted_z_levels))
+			return
 		if(istype(L.loc,/obj/structure/closet/))
 			if((immunity_type in L.loc.weather_protection) || ("all" in L.loc.weather_protection))
 				return

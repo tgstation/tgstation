@@ -89,3 +89,12 @@
 		return
 	loc.visible_message(span_warning("[user] suddenly appears in front of [loc]!"), span_userdanger("[user] breaks free of [src]!"))
 	qdel(src)
+
+/obj/item/bodybag/environmental
+	name = "environmental protection bag"
+	desc = "A folded, reinforced bag designed to protect against exoplanetary environmental storms."
+	icon = "icons/obj/bodybag.dmi"
+	icon_state = "envbodybag_folded"
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental
+	w_class = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag -> higher bulkiness than regular bodybag
+	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF

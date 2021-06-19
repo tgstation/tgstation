@@ -16,6 +16,7 @@
 	anchorable = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
+	weather_protection = list()
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
@@ -147,3 +148,12 @@
 		max_weight_of_contents = A_is_item.w_class
 	B.w_class = max_weight_of_contents
 	usr.put_in_hands(B)
+
+/obj/structure/closet/body_bag/environmental
+	name = "environmental protection bag"
+	desc = "A reinforced bag designed to protect against exoplanetary environmental storms."
+	icon = "icons/obj/bodybag.dmi"
+	icon_state = "envbodybag"
+	mob_storage_capacity = 1
+	foldedbag_path = /obj/item/body_bag/environmental
+	weather_protection = list("all")
