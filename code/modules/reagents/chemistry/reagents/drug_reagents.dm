@@ -439,7 +439,57 @@
 	M.adjustToxLoss(5 * REM * delta_time)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time)
 
+/datum/reagent/drug/mushroomhallucinogen
+	name = "Mushroom Hallucinogen"
+	description = "A strong hallucinogenic drug derived from certain species of mushroom."
+	color = "#E700E7" // rgb: 231, 0, 231
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	taste_description = "mushroom"
+	ph = 11
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
+/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(!M.slurring)
+		M.slurring = 1 * REM * delta_time
+	switch(current_cycle)
+		if(1 to 5)
+			M.Dizzy(5 * REM * delta_time)
+			if(DT_PROB(5, delta_time))
+				M.emote(pick("twitch","giggle"))
+		if(5 to 10)
+			M.Jitter(10 * REM * delta_time)
+			M.Dizzy(10 * REM * delta_time)
+			if(DT_PROB(10, delta_time))
+				M.emote(pick("twitch","giggle"))
+		if (10 to INFINITY)
+			M.Jitter(20 * REM * delta_time)
+			M.Dizzy(20 * REM * delta_time)
+			if(DT_PROB(16, delta_time))
+				M.emote(pick("twitch","giggle"))
+	..()
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_add(mob/living/L)
+	. = ..()
+	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
+	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
+	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
+	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
+
+	affected_plane_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/i in affected_plane_controller.get_filters("rainbow"))
+		animate(i, color = col_filter_identity, time = 0 SECONDS, loop = -1)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_delete(mob/living/L)
+	. = ..()
+	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	affected_plane_controller.remove_filter("rainbow")
 
 /datum/reagent/drug/blastoff
 	name = "Blastoff"
@@ -447,8 +497,8 @@
 	reagent_state = LIQUID
 	color = "#9015a9"
 	overdose_threshold = 30
-	addiction_threshold = 10
-	can_synth = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/hallucinogens = 15)
 
 /datum/reagent/drug/blastoff/on_mob_add(mob/living/L)
 	. = ..()
@@ -470,38 +520,6 @@
 	. = ..()
 	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	affected_plane_controller.remove_filter("blastoff")
-
-
-/datum/reagent/drug/rainbow
-	name = "rainbow"
-	description = "KRYSON PLEASE WRITE THIS HELP AAAAA."
-	reagent_state = LIQUID
-	color = "#9015a9"
-	overdose_threshold = 30
-	addiction_threshold = 10
-	can_synth = TRUE
-
-/datum/reagent/drug/rainbow/on_mob_add(mob/living/L)
-	. = ..()
-	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
-	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
-	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
-	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
-
-	affected_plane_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
-
-	for(var/i in affected_plane_controller.get_filters("rainbow"))
-		animate(i, color = col_filter_identity, time = 0 SECONDS, loop = -1)
-		animate(color = col_filter_green, time = 4 SECONDS)
-		animate(color = col_filter_blue, time = 4 SECONDS)
-		animate(color = col_filter_red, time = 4 SECONDS)
-
-/datum/reagent/drug/rainbow/on_mob_delete(mob/living/L)
-	. = ..()
-	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	affected_plane_controller.remove_filter("rainbow")
 
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
