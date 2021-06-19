@@ -8,18 +8,19 @@
 	tastes = list("drugs" = 1)
 	eatverbs = list("gnaws" = 1)
 	bite_consumption = 10
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/drug/saturnx
 	name = "saturnX glob"
-	desc = "A congealed glob of pure saturnX.\nThis compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising cloaking agent cadidate. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity.\nIt has since attained some limited popularity as a street drug."
+	desc = "A congealed glob of pure saturnX.\nThis compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity.\nIt has since attained some limited popularity as a street drug."
 	icon_state = "saturnx_glob" //tell kryson to sprite two more variants in the future.
-	food_reagents = list() //add saturnX here. ANTLION
+	food_reagents = list(/datum/reagent/drug/saturnx = 10)
 
 /obj/item/food/drug/moon_rock
 	name = "moon rock"
 	desc = "A small hard lump of kronkaine freebase.\nIt is said the average kronkaine addict causes as much criminal damage as four cat burglars, two arsonists and one rabid pit bull terrier combined."
 	icon_state = "moon_rock1"
-	food_reagents = list() //add kronkcaine here. ANTLION
+	food_reagents = list(/datum/reagent/drug/kroncaine = 10)
 
 /obj/item/food/drug/moon_rock/Initialize()
 	. = ..()
@@ -32,11 +33,12 @@
 	volume = 20
 	reagent_flags = TRANSPARENT
 	spillable = FALSE
-	list_reagents = list() // add blastoff here ANTLION
+	list_reagents = list(/datum/reagent/drug/blastoff = 10)
 
 /obj/item/reagent_containers/glass/blaztoff_ampoule/update_icon_state()
+	. = ..()
 	if(!reagents.total_volume)
-		icon_state = "blastoff_empty".
+		icon_state = "blastoff_empty"
 	else if(is_open_container())
 		icon_state = "blastoff_open"
 	else

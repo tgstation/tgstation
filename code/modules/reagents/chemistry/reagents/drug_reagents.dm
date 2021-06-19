@@ -74,36 +74,6 @@
 	..()
 	. = TRUE
 
-/datum/reagent/drug/crank
-	name = "Crank"
-	description = "Reduces stun times by about 200%. If overdosed it will deal significant Toxin, Brute and Brain damage."
-	reagent_state = LIQUID
-	color = "#FA00C8"
-	overdose_threshold = 20
-	ph = 10
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/stimulants = 14) //5.6 per 2 seconds
-
-/datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(2.5, delta_time))
-		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
-		to_chat(M, span_notice("[high_message]"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-20 * REM * delta_time)
-	M.AdjustKnockdown(-20 * REM * delta_time)
-	M.AdjustUnconscious(-20 * REM * delta_time)
-	M.AdjustImmobilized(-20 * REM * delta_time)
-	M.AdjustParalyzed(-20 * REM * delta_time)
-	..()
-	. = TRUE
-
-/datum/reagent/drug/crank/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time)
-	M.adjustToxLoss(2 * REM * delta_time, 0)
-	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
-	..()
-	. = TRUE
-
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage."
@@ -493,8 +463,8 @@
 	affected_plane_controller.remove_filter("rainbow")
 
 /datum/reagent/drug/blastoff
-	name = "Blastoff"
-	description = "KRYSON PLEASE WRITE THIS HELP AAAAA."
+	name = "bLaSToFF"
+	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
 	reagent_state = LIQUID
 	color = "#9015a9"
 	overdose_threshold = 30
@@ -524,6 +494,7 @@
 
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
+	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
 	reagent_state = SOLID
 	color = "#638b9b"
 	overdose_threshold = 25
@@ -536,14 +507,20 @@
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_INVISIBLE_MAN, name)
-	playsound(L, 'sound/effects/woosh.ogg', 30)
+	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 20)
 	to_chat(L, "<span='notice'>You feel pins and needles all over your skin as your body suddenly becomes transparent!</span>")
+	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
+
+///This proc turns the guy who took the drug invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
+/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
+		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+		invisible_man.update_body()
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
 	to_chat(M, "<span='notice'>As you sober up, opacity once again returns to your body meats.</span>")
+	M.update_body()
 
 /datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
@@ -554,17 +531,17 @@
 
 /datum/reagent/drug/kroncaine
 	name = "kroncaine"
-	description = "Raises action speed by around 40%, ."
+	description = "A highly illegal stimulant from the edges of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
-	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	addiction_types = list(/datum/addiction/stimulants = 18)
 
 /datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine
-)
+	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+	L.adjustStaminaLoss(-4 * volume, 0)
 
 /datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
 	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
@@ -572,13 +549,15 @@
 
 /datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustUnconscious(-40, FALSE)
+	M.AdjustAllImmobility(-10, FALSE)
 	M.adjustStaminaLoss(-2, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.6)
 	M.Jitter(2)
 
 
 /datum/reagent/drug/kroncaine/overdose_process(mob/living/M)
 	M.Jitter(10)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 2)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
+	if(prob(15))
+		to_chat(M, span_danger(pick("You feel your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))

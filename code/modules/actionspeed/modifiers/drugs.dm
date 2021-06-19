@@ -1,2 +1,2 @@
 /datum/actionspeed_modifier/kroncaine
-	multiplicative_slowdown = -0.4
+	multiplicative_slowdown = -0.5

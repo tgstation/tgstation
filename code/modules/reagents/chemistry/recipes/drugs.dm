@@ -3,13 +3,6 @@
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG
 
-/datum/chemical_reaction/crank
-	results = list(/datum/reagent/drug/crank = 5)
-	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1, /datum/reagent/lithium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/fuel = 1)
-	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
-	required_temp = 390
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG
-
 /datum/chemical_reaction/krokodil
 	results = list(/datum/reagent/drug/krokodil = 6)
 	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/medicine/morphine = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/potassium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/fuel = 1)

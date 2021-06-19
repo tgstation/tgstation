@@ -749,7 +749,7 @@
 		should_draw_greyscale = FALSE
 		no_update = TRUE
 
-	if(HAS_TRAIT(C, TRAIT_INVISIBLE_MAN) && is_organic_limb())
+	if(HAS_TRAIT(limb_owner, TRAIT_INVISIBLE_MAN) && is_organic_limb())
 		species_id = "invisible" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
 		should_draw_gender = FALSE
