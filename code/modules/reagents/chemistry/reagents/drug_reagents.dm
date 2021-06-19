@@ -549,3 +549,35 @@
 	if(prob(8))
 		M.emote("giggle")
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
+
+
+/datum/reagent/drug/kroncaine
+	name = "kroncaine"
+	description = "Raises action speed by around 40%, ."
+	reagent_state = LIQUID
+	color = "#FAFAFA"
+	overdose_threshold = 20
+	addiction_threshold = 10
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+
+/datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
+	..()
+	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine
+)
+
+/datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
+	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+	..()
+
+/datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
+	M.AdjustUnconscious(-40, FALSE)
+	M.adjustStaminaLoss(-2, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
+	M.Jitter(2)
+
+
+/datum/reagent/drug/kroncaine/overdose_process(mob/living/M)
+	M.Jitter(10)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 2)
