@@ -1,4 +1,3 @@
-
 /**
  * # N-spect scanner
  *
@@ -65,7 +64,6 @@
 	balloon_alert(user, "You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].")
 	return TRUE
 
-
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
 	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
@@ -85,7 +83,6 @@
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
-
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
