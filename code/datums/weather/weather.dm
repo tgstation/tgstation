@@ -189,7 +189,7 @@
 		if(istype(L.loc,/obj/structure/closet/))
 			if((immunity_type in L.loc.weather_protection) || ("all" in L.loc.weather_protection))
 				return
-	if(immunity_type in L.weather_immunities)
+	if((immunity_type in L.weather_immunities) || ("all" in L.weather_immunities))
 		return
 	if(!(get_area(L) in impacted_areas))
 		return
