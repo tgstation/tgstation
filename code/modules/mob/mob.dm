@@ -575,10 +575,6 @@
 	set name = "Point To"
 	set category = "Object"
 
-	#ifdef EVENTMODE
-	if(!client?.holder)
-		return FALSE
-	#endif
 	if(client && !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
