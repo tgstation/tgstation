@@ -19,6 +19,8 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	circuit_components = list()
+
 	for(var/circuit_component_type in circuit_component_types)
 		var/obj/item/circuit_component/circuit_component = new circuit_component_type(null)
 		circuit_components += circuit_component
