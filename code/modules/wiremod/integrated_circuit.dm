@@ -192,6 +192,7 @@
 	attached_components -= to_remove
 	to_remove.disconnect()
 	to_remove.parent = null
+	SEND_SIGNAL(to_remove, COMSIG_CIRCUIT_COMPONENT_REMOVED, src)
 	SStgui.update_uis(src)
 
 /obj/item/integrated_circuit/get_cell()
