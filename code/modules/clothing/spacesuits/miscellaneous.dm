@@ -282,6 +282,21 @@ Contains:
 	flash_protect = FLASH_PROTECTION_NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 20, FIRE = 50, ACID = 65)
 
+/obj/item/clothing/head/helmet/space/eva/examine(mob/user)
+	. = ..()
+	. += span_notice("You can start constructing a critter sized mecha with a [span_bold("cyborg leg")].")
+
+/obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, params)
+	. = ..()
+	if(!istype(attacked_with, /obj/item/bodypart/l_leg/robot) && !istype(attacked_with, /obj/item/bodypart/r_leg/robot))
+		return
+	if(ismob(loc))
+		user.balloon_alert(user, "drop the helmet first!")
+		return
+	user.balloon_alert(user, "leg attached")
+	new /obj/item/bot_assembly/vim(loc)
+	qdel(src)
+
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
