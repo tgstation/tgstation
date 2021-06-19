@@ -91,6 +91,40 @@
 /area/tdome
 	eventareaair = TRUE
 
+/*For the battle royale zone area map*/
+
+/area/tdome/one
+
+/area/tdome/two
+
+/area/tdome/three
+
+/area/tdome/four
+
+/area/tdome/five
+
+/area/tdome/six
+
+/area/tdome/seven
+
+/area/tdome/eight
+
+/area/tdome/nine
+
+/area/tdome/ten
+
+/area/tdome/eleven
+
+/area/tdome/twelve
+
+/area/tdome/thirteen
+
+/area/tdome/fourteen
+
+/area/tdome/fifteen
+
+/area/tdome/sixteen
+
 /area/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
