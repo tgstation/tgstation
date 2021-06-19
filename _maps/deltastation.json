@@ -3,6 +3,9 @@
 	"map_name": "Delta Station",
 	"map_path": "map_files/Deltastation",
 	"map_file": "DeltaStation2.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"minetype": "none",
 	"shuttles": {
 		"emergency": "emergency_delta",
 		"ferry": "ferry_fancy",
