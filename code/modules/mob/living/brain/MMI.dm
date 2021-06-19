@@ -161,6 +161,7 @@
 /obj/item/mmi/proc/set_brainmob(mob/living/brain/new_brainmob)
 	if(brainmob == new_brainmob)
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_MMI_SET_BRAINMOB, new_brainmob)
 	. = brainmob
 	brainmob = new_brainmob
 	if(new_brainmob)

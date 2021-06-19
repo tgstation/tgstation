@@ -151,7 +151,6 @@
 // WIRE_TRANSMIT = 4
 
 /obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
-	SEND_SIGNAL(src, COMSIG_PAI_SET_PERSONALITY, pai, personality)
 	pai = personality
 	emotion_icon = "null"
 	update_appearance()

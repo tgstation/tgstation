@@ -209,7 +209,7 @@
 		"comp_light",
 		"comp_logic",
 		"comp_not",
-		"comp_pai",
+		"comp_mmi",
 		"comp_radio",
 		"comp_ram",
 		"comp_random",

@@ -462,7 +462,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FIREDOOR_STOP "firedoor_stop"
 
 /// Trait applied when the pAI component is added to an [/obj/item/integrated_circuit]
-#define TRAIT_COMPONENT_PAI "component_pai"
+#define TRAIT_COMPONENT_MMI "component_mmi"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0

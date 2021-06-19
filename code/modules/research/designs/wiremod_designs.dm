@@ -193,11 +193,11 @@
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
 
-/datum/design/component/pai
-	name = "pAI Component"
-	desc = "A component that allows pAIs to enter shells to send output signals."
-	id = "comp_pai"
-	build_path = /obj/item/circuit_component/pai
+/datum/design/component/mmi
+	name = "MMI Component"
+	desc = "A component that allows MMI to enter shells to send output signals."
+	id = "comp_mmi"
+	build_path = /obj/item/circuit_component/mmi
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

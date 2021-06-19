@@ -3563,7 +3563,7 @@
 #include "code\modules\wiremod\usb_cable.dm"
 #include "code\modules\wiremod\components\abstract\compare.dm"
 #include "code\modules\wiremod\components\action\light.dm"
-#include "code\modules\wiremod\components\action\pai.dm"
+#include "code\modules\wiremod\components\action\mmi.dm"
 #include "code\modules\wiremod\components\action\pull.dm"
 #include "code\modules\wiremod\components\action\radio.dm"
 #include "code\modules\wiremod\components\action\speech.dm"

@@ -1272,7 +1272,7 @@
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
 ///from /obj/item/paicard/setPersonality(): (mob/living/silicon/pai/old_personality, mob/living/silicon/pai/new_personality)
-#define COMSIG_PAI_SET_PERSONALITY "pai_set_personality"
+#define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
 /// Exoprobe adventure finished: (result) result is ADVENTURE_RESULT_??? values
 #define COMSIG_ADVENTURE_FINISHED "adventure_done"
