@@ -171,9 +171,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	#ifdef EVENTMODE
 	///No fancy lighting ever
-	if(eventarea == TRUE)
-		dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	else
+	if(eventarea == FALSE)
 		dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	#endif
 	. = ..()
