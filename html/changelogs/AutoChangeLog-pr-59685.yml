@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Chat feedback is improved when setting down briefcase launchpads."
+  - bugfix: "Urinals no longer alert you about the letter \"i\" being stuck to your hand in certain edge cases."
