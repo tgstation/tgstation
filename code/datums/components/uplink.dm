@@ -254,6 +254,11 @@
 
 	var/mob/user = arguments[2]
 	owner = "[user.key]"
+	if(istype(source,/obj/item/implant/uplink))
+		var/obj/item/implant/uplink/uplink_implant = source
+		if(uplink_implant.uplink_flag)
+			uplink_flag = uplink_implant.uplink_flag
+			update_items()
 
 /datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	SIGNAL_HANDLER

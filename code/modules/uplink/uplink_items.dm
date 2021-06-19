@@ -1667,8 +1667,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = UPLINK_IMPLANT_TELECRYSTAL_COST
 	// An empty uplink is kinda useless.
 	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	restricted = TRUE
+
+/datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/component/uplink/purchaser_uplink)
+	var/obj/uplink_box = ..()
+	for(var/obj/item/implanter/uplink/uplink_implanter in uplink_box.contents)
+		var/obj/item/implant/uplink/uplink_implant = uplink_implanter.imp // why does this have to be an implant inside an implanter inside a box whose component i have to get to change a flag
+		uplink_implant.uplink_flag = purchaser_uplink.uplink_flag
+	return uplink_box
+	
 
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"
