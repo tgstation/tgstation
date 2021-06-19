@@ -77,10 +77,7 @@
 
 			return TRUE
 		if("PRG_contract_abort")
-			var/contract_id = hard_drive.traitor_data.contractor_hub.current_contract?.id
-			if(!contract_id)
-				stack_trace("Contract hub attempted to abort a null or missing contract!")
-				return
+			var/contract_id = hard_drive.traitor_data.contractor_hub.current_contract.id
 
 			hard_drive.traitor_data.contractor_hub.current_contract = null
 			hard_drive.traitor_data.contractor_hub.assigned_contracts[contract_id].status = CONTRACT_STATUS_ABORTED
@@ -170,7 +167,7 @@
 		for (var/datum/syndicate_contract/contract in traitor_data.contractor_hub.assigned_contracts)
 			if(!contract.contract)
 				stack_trace("Syndiate contract with null contract objective found in [traitor_data.owner]'s contractor hub!")
-				traitor_data.contractor_hub.assigned_contracts.Remove(contract)
+				contract.status = CONTRACT_STATUS_ABORTED
 				continue
 
 			data["contracts"] += list(list(
