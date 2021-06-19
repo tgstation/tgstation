@@ -14,7 +14,6 @@ export const NtosWindow = (props, context) => {
     title,
     width = 575,
     height = 700,
-    resizable,
     theme = 'ntos',
     children,
   } = props;
@@ -35,8 +34,7 @@ export const NtosWindow = (props, context) => {
       title={title}
       width={width}
       height={height}
-      theme={theme}
-      resizable={resizable}>
+      theme={theme}>
       <div className="NtosWindow">
         <div className="NtosWindow__header NtosHeader">
           <div className="NtosHeader__left">
@@ -63,13 +61,11 @@ export const NtosWindow = (props, context) => {
                   src={resolveAsset(PC_ntneticon)} />
               )}
             </Box>
-            {!!PC_showbatteryicon && PC_batteryicon && (
+            {!!(PC_showbatteryicon && PC_batteryicon) && (
               <Box inline mr={1}>
-                {PC_batteryicon && (
-                  <img
-                    className="NtosHeader__icon"
-                    src={resolveAsset(PC_batteryicon)} />
-                )}
+                <img
+                  className="NtosHeader__icon"
+                  src={resolveAsset(PC_batteryicon)} />
                 {PC_batterypercent && (
                   PC_batterypercent
                 )}

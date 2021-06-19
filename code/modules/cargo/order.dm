@@ -16,7 +16,7 @@
 		errors |= MANIFEST_ERROR_ITEM
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
-	return stamped && stamped.len && !is_denied()
+	return stamped?.len && !is_denied()
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_denied()
 	return stamped && ("stamp-deny" in stamped)
@@ -51,14 +51,14 @@
 	P.info += "Order #[id]<br/>"
 	P.info += "Time of Order: [station_time_timestamp()]<br/>"
 	P.info += "Item: [pack.name]<br/>"
-	P.info += "Access Restrictions: [get_access_desc(pack.access)]<br/>"
+	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	P.info += "Requested by: [orderer]<br/>"
 	if(paying_account)
 		P.info += "Paid by: [paying_account.account_holder]<br/>"
 	P.info += "Rank: [orderer_rank]<br/>"
 	P.info += "Comment: [reason]<br/>"
 
-	P.update_icon()
+	P.update_appearance()
 	return P
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname) //generates-the-manifests.
@@ -96,13 +96,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-	P.update_icon()
+	P.update_appearance()
 	P.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = container
 		C.manifest = P
-		C.update_icon()
+		C.update_appearance()
 	else
 		container.contents += P
 

@@ -15,7 +15,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "d" = (
 /obj/machinery/computer/shuttle/mining,
@@ -23,7 +23,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "e" = (
 /obj/structure/table/reinforced,
@@ -38,13 +38,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "f" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "g" = (
 /obj/structure/chair/comfy/shuttle{
@@ -60,7 +60,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "h" = (
 /obj/effect/decal/cleanable/dirt,
@@ -68,7 +68,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "i" = (
 /obj/machinery/door/airlock/shuttle{
@@ -92,14 +92,14 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/mining)
 "j" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "k" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -112,13 +112,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "l" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "m" = (
 /obj/machinery/door/airlock/shuttle{
@@ -133,7 +133,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/mining)
 "n" = (
 /obj/structure/chair/comfy/shuttle{
@@ -143,7 +143,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "o" = (
 /obj/structure/chair/comfy/shuttle{
@@ -154,7 +154,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "p" = (
 /obj/structure/chair/comfy/shuttle{
@@ -164,7 +164,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "q" = (
 /obj/item/clothing/suit/hazardvest{
@@ -250,7 +250,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "r" = (
 /obj/structure/shuttle/engine/heater,
@@ -273,7 +273,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/mining)
 "t" = (
 /obj/structure/shuttle/engine/propulsion/burst,

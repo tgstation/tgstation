@@ -79,7 +79,9 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			return
 		if (M.HasDisease(D))
 			if(M.onCentCom() || M.onSyndieBase())
 				escaped_monkeys++
@@ -125,7 +127,7 @@
 	return TRUE
 
 /proc/is_monkey_leader(datum/mind/monkey_mind)
-	return monkey_mind && monkey_mind.has_antag_datum(/datum/antagonist/monkey/leader)
+	return monkey_mind?.has_antag_datum(/datum/antagonist/monkey/leader)
 
 /proc/is_monkey(datum/mind/monkey_mind)
 	return monkey_mind && (monkey_mind.has_antag_datum(/datum/antagonist/monkey) || is_monkey_leader(monkey_mind))

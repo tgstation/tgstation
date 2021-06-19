@@ -13,9 +13,9 @@
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations = 0	//based on body_parts_covered
-	var/face_covered = 0	//based on flags_inv
-	var/eyesmouth_covered = 0	//based on flags_cover
+	var/covered_locations = 0 //based on body_parts_covered
+	var/face_covered = 0 //based on flags_inv
+	var/eyesmouth_covered = 0 //based on flags_cover
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))

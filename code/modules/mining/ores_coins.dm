@@ -25,20 +25,23 @@
 /obj/item/stack/ore/update_overlays()
 	. = ..()
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
-	if(difference == 0)
+	if(!difference)
 		return
-	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
-		if (LAZYLEN(stack_overlays)-difference <= 0)
+
+	if(difference < 0 && LAZYLEN(stack_overlays)) //amount < stack_overlays, remove excess.
+		if(LAZYLEN(stack_overlays)-difference <= 0)
 			stack_overlays = null
-		else
-			stack_overlays.len += difference
-	else if(difference > 0)			//amount > stack_overlays, add some.
+			return
+		stack_overlays.len += difference
+
+	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
 			newore.pixel_x = rand(-8,8)
 			newore.pixel_y = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
-	if (stack_overlays)
+
+	if(stack_overlays)
 		. += stack_overlays
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
@@ -73,11 +76,12 @@
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = MATERIAL_NO_EFFECTS
-	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
 	scan_state = "rock_Uranium"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/uranium
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
@@ -85,11 +89,12 @@
 	inhand_icon_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
-	refined_type = /obj/item/stack/sheet/metal
+	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
 	scan_state = "rock_Iron"
 	spreadChance = 20
+	merge_type = /obj/item/stack/ore/iron
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
@@ -97,10 +102,11 @@
 	inhand_icon_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
-	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
+	merge_type = /obj/item/stack/ore/glass
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
@@ -125,9 +131,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
-	if (severity == EXPLODE_NONE)
-		return
-	qdel(src)
+	if(severity != EXPLODE_NONE)
+		qdel(src)
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
@@ -135,6 +140,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/basalt
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
@@ -142,16 +148,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
-	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
 	scan_state = "rock_Plasma"
 	spreadChance = 8
+	merge_type = /obj/item/stack/ore/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	return TRUE
-
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
@@ -160,10 +166,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
-	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 	scan_state = "rock_Silver"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/silver
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
@@ -172,10 +179,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
-	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 	scan_state = "rock_Gold"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/gold
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
@@ -183,10 +191,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
-	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
 	scan_state = "rock_Diamond"
+	merge_type = /obj/item/stack/ore/diamond
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -194,10 +203,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
-	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
 	scan_state = "rock_Bananium"
+	merge_type = /obj/item/stack/ore/bananium
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
@@ -205,11 +215,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
-	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
 	scan_state = "rock_Titanium"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/titanium
 
 /obj/item/stack/ore/slag
 	name = "slag"
@@ -217,6 +228,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "slag"
 	inhand_icon_state = "slag"
 	singular_name = "slag chunk"
+	merge_type = /obj/item/stack/ore/slag
 
 /obj/item/gibtonite
 	name = "gibtonite ore"
@@ -316,15 +328,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 				explosion(src,0,1,3,adminlog = notify_admins)
 		qdel(src)
 
-/obj/item/stack/ore/Initialize()
+/obj/item/stack/ore/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = base_pixel_x + rand(0, 16) - 8
+	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
-	if (!severity || severity >= 2)
-		return
-	qdel(src)
+	if(severity == EXPLODE_DEVASTATE)
+		qdel(src)
 
 
 /*****************************Coin********************************/
@@ -353,8 +364,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = base_pixel_x + rand(0, 16) - 8
+	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
 	. = ..()
@@ -431,8 +442,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("<span class='notice'>[user] flips [src]. It lands on [coinflip].</span>", \
- 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-							 "<span class='hear'>You hear the clattering of loose change.</span>")
+				"<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+				"<span class='hear'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
 
 /obj/item/coin/gold
@@ -500,8 +511,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("<span class='notice'>[user] flips [src]. It lands on [coinflip].</span>", \
- 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-							 "<span class='hear'>You hear the clattering of loose change.</span>")
+				"<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+				"<span class='hear'>You hear the clattering of loose change.</span>")
 		SSeconomy.fire()
 		to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()] is the inflation value.</span>")
 	return TRUE//did the coin flip? useful for suicide_act

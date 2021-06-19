@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - refactor: "Orbiter components are a little easier to understand now."

@@ -10,20 +10,46 @@
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
 	var/datum/bounty/civilian_bounty
+	var/list/datum/bounty/bounties
 	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)
-	if(add_to_accounts)
-		SSeconomy.bank_accounts += src
 	account_holder = newname
 	account_job = job
-	account_id = rand(111111,999999)
 	payday_modifier = modifier
+	setup_unique_account_id()
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
-		SSeconomy.bank_accounts -= src
+		SSeconomy.bank_accounts_by_id -= "[account_id]"
 	return ..()
+
+/// Proc guarantees the account_id possesses a unique number. If it doesn't, it tries to find a unique alternative. It then adds it to the `SSeconomy.bank_accounts_by_id` global list.
+/datum/bank_account/proc/setup_unique_account_id()
+	if(account_id && !SSeconomy.bank_accounts_by_id["[account_id]"])
+		SSeconomy.bank_accounts_by_id["[account_id]"] = src
+		return //Already unique
+	for(var/i in 1 to 1000)
+		account_id = rand(111111, 999999)
+		if(!SSeconomy.bank_accounts_by_id["[account_id]"])
+			break
+	if(SSeconomy.bank_accounts_by_id["[account_id]"])
+		stack_trace("Unable to find a unique account ID, substituting currently existing account of id [account_id].")
+	SSeconomy.bank_accounts_by_id["[account_id]"] = src
+
+/datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
+	var/old_id = account_id
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, account_id))
+			if(add_to_accounts)
+				SSeconomy.bank_accounts_by_id -= "[old_id]"
+				setup_unique_account_id()
+		if(NAMEOF(src, add_to_accounts))
+			if(add_to_accounts)
+				setup_unique_account_id()
+			else
+				SSeconomy.bank_accounts_by_id -= "[account_id]"
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
@@ -54,7 +80,7 @@
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	if(!account_job)
 		return
-	var/money_to_transfer = account_job.paycheck * payday_modifier * amt_of_paychecks
+	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amt_of_paychecks)
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
@@ -77,10 +103,9 @@
 		return
 	for(var/obj/A in bank_cards)
 		var/icon_source = A
-		if(istype(A, /obj/item/card/id))
-			var/obj/item/card/id/id_card = A
-			if(id_card.uses_overlays)
-				icon_source = id_card.get_cached_flat_icon()
+		if(istype(A, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/id_card = A
+			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(A, /mob)
 		if(ismob(card_holder)) //If on a mob
 			if(!card_holder.client || (!(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force))
@@ -109,8 +134,8 @@
 					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
 
 /**
-  * Returns a string with the civilian bounty's description on it.
-  */
+ * Returns a string with the civilian bounty's description on it.
+ */
 /datum/bank_account/proc/bounty_text()
 	if(!civilian_bounty)
 		return FALSE
@@ -118,8 +143,8 @@
 
 
 /**
-  * Returns the required item count, or required chemical units required to submit a bounty.
-  */
+ * Returns the required item count, or required chemical units required to submit a bounty.
+ */
 /datum/bank_account/proc/bounty_num()
 	if(!civilian_bounty)
 		return FALSE
@@ -133,16 +158,16 @@
 		return "At least 1u"
 
 /**
-  * Produces the value of the account's civilian bounty reward, if able.
-  */
+ * Produces the value of the account's civilian bounty reward, if able.
+ */
 /datum/bank_account/proc/bounty_value()
 	if(!civilian_bounty)
 		return FALSE
 	return civilian_bounty.reward
 
 /**
-  * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
-  */
+ * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
+ */
 /datum/bank_account/proc/reset_bounty()
 	civilian_bounty = null
 	bounty_timer = 0

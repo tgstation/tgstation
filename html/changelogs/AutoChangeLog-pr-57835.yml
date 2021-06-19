@@ -1,0 +1,4 @@
+author: "bloons3"
+delete-after: True
+changes: 
+  - admin: "Added semi-verbose logging to brig timers"

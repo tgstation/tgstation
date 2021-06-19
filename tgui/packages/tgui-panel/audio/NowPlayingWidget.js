@@ -6,7 +6,6 @@
 
 import { toFixed } from 'common/math';
 import { useDispatch, useSelector } from 'common/redux';
-import { Fragment } from 'inferno';
 import { Button, Flex, Knob } from 'tgui/components';
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
@@ -19,7 +18,7 @@ export const NowPlayingWidget = (props, context) => {
   return (
     <Flex align="center">
       {audio.playing && (
-        <Fragment>
+        <>
           <Flex.Item
             shrink={0}
             mx={0.5}
@@ -36,7 +35,7 @@ export const NowPlayingWidget = (props, context) => {
             }}>
             {title || 'Unknown Track'}
           </Flex.Item>
-        </Fragment>
+        </>
       ) || (
         <Flex.Item grow={1} color="label">
           Nothing to play.

@@ -14,7 +14,7 @@
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/M = owner
-	if(M.stat == DEAD || !M.client)	//No use assigning people to a corpse or braindead
+	if(M.stat == DEAD || !M.client) //No use assigning people to a corpse or braindead
 		qdel(src)
 		return
 	..()
@@ -42,12 +42,12 @@
 	else
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/on_life()
+/datum/brain_trauma/severe/split_personality/on_life(delta_time, times_fired)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
 			switch_personalities()
 		qdel(src)
-	else if(prob(3))
+	else if(DT_PROB(1.5, delta_time))
 		switch_personalities()
 	..()
 
@@ -71,7 +71,7 @@
 		current_backseat = owner_backseat
 		free_backseat = stranger_backseat
 
-	if(!free_backseat.client) //Make sure we never switch to a logged off mob.
+	if(!current_backseat.client) //Make sure we never switch to a logged off mob.
 		return
 
 	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
@@ -131,7 +131,7 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life()
+/mob/living/split_personality/Life(delta_time = SSMOBS_DT, times_fired)
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
 
@@ -157,7 +157,7 @@
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
 	return FALSE
 
-/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE)
+/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
 	return FALSE
 
 ///////////////BRAINWASHING////////////////////
@@ -203,7 +203,7 @@
 	else
 		qdel(src)
 
-/datum/brain_trauma/severe/split_personality/brainwashing/on_life()
+/datum/brain_trauma/severe/split_personality/brainwashing/on_life(delta_time, times_fired)
 	return //no random switching
 
 /datum/brain_trauma/severe/split_personality/brainwashing/handle_hearing(datum/source, list/hearing_args)

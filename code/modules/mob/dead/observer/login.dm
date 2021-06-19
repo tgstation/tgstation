@@ -18,5 +18,8 @@
 	if (isturf(T))
 		update_z(T.z)
 
-	update_icon(preferred_form)
+	update_icon(ALL, preferred_form)
 	updateghostimages()
+	client.set_right_click_menu_mode(FALSE)
+
+

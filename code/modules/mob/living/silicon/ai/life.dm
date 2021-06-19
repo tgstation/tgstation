@@ -1,9 +1,4 @@
-#define POWER_RESTORATION_OFF 0
-#define POWER_RESTORATION_START 1
-#define POWER_RESTORATION_SEARCH_APC 2
-#define POWER_RESTORATION_APC_FOUND 3
-
-/mob/living/silicon/ai/Life()
+/mob/living/silicon/ai/Life(delta_time = SSMOBS_DT, times_fired)
 	if (stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
@@ -11,9 +6,11 @@
 
 		update_gravity(mob_has_gravity())
 
-		handle_status_effects()
+		handle_status_effects(delta_time, times_fired)
 
-		if(malfhack && malfhack.aidisabled)
+		handle_traits()
+
+		if(malfhack?.aidisabled)
 			deltimer(malfhacking)
 			// This proc handles cleanup of screen notifications and
 			// messenging the client
@@ -32,16 +29,16 @@
 				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
 				adjustOxyLoss(200)
 			else
-				battery --
+				battery--
 		else
 			// Gain Power
 			if (battery < 200)
-				battery ++
+				battery++
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
 			if(home.powered(AREA_USAGE_EQUIP))
-				home.use_power(1000, AREA_USAGE_EQUIP)
+				home.use_power(500 * delta_time, AREA_USAGE_EQUIP)
 
 			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 				ai_restore_power()
@@ -99,7 +96,7 @@
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
-	if(AIarea && AIarea.power_equip)
+	if(AIarea?.power_equip)
 		if(!isspaceturf(T))
 			ai_restore_power()
 			return
@@ -110,7 +107,7 @@
 	T = get_turf(src)
 	if(isspaceturf(T))
 		to_chat(src, "<span class='alert'>Unable to verify! No power connection detected!</span>")
-		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
+		setAiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 		return
 	to_chat(src, "<span class='notice'>Connection verified. Searching for APC in power network.</span>")
 	sleep(50)
@@ -131,7 +128,7 @@
 					to_chat(src, "<span class='alert'>Unable to locate APC!</span>")
 				else
 					to_chat(src, "<span class='alert'>Lost connection with the APC!</span>")
-			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
+			setAiRestorePowerRoutine(POWER_RESTORATION_SEARCH_APC)
 			return
 		if(AIarea.power_equip)
 			if(!isspaceturf(T))
@@ -149,10 +146,10 @@
 				sleep(50)
 				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
 				sleep(2)
-				apc_override = 1
-				theAPC.ui_interact(src)
-				apc_override = 0
-				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
+				to_chat(src, "<A HREF=?src=[REF(src)];emergencyAPC=[TRUE]>APC ready for connection.</A>")
+				apc_override = theAPC
+				apc_override.ui_interact(src)
+				setAiRestorePowerRoutine(POWER_RESTORATION_APC_FOUND)
 		sleep(50)
 		theAPC = null
 
@@ -160,21 +157,19 @@
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored.</span>")
+			if(apc_override)
+				to_chat(src, "<span class='notice'>APC backdoor has been closed.</span>") //Fluff for why we have to hack every time.
 		else
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
-		aiRestorePowerRoutine = POWER_RESTORATION_OFF
+		setAiRestorePowerRoutine(POWER_RESTORATION_OFF)
 		set_blindness(0)
+		apc_override = null
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()
 	disconnect_shell()
-	aiRestorePowerRoutine = POWER_RESTORATION_START
+	setAiRestorePowerRoutine(POWER_RESTORATION_START)
 	blind_eyes(1)
 	update_sight()
 	to_chat(src, "<span class='alert'>You've lost power!</span>")
 	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
-
-#undef POWER_RESTORATION_OFF
-#undef POWER_RESTORATION_START
-#undef POWER_RESTORATION_SEARCH_APC
-#undef POWER_RESTORATION_APC_FOUND

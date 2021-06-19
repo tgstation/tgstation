@@ -116,7 +116,7 @@
 /obj/item/crowbar/red,
 /obj/item/storage/lockbox/loyalty,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -127,7 +127,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ar" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -139,7 +139,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "as" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -242,14 +242,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aB" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -259,7 +259,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -275,7 +275,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aD" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
@@ -335,7 +335,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aJ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/security/glass{
@@ -343,7 +343,7 @@
 	req_one_access_txt = "19"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aK" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -469,7 +469,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -482,7 +482,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -573,7 +573,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/corner{
@@ -584,7 +584,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bd" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -595,7 +595,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "be" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/chair/comfy/shuttle{
@@ -606,7 +606,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -622,7 +622,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bg" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
@@ -677,7 +677,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bn" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset,
@@ -1591,7 +1591,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cS" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -1656,7 +1656,7 @@
 /obj/item/surgical_drapes,
 /obj/item/retractor,
 /obj/item/cautery,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dc" = (
 /obj/structure/shuttle/engine/heater,

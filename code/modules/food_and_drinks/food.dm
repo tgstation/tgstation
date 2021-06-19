@@ -8,7 +8,7 @@
 
 /obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
-	volume = 50	//Sets the default container amount for all food items.
+	volume = 50 //Sets the default container amount for all food items.
 	reagent_flags = INJECTABLE
 	resistance_flags = FLAMMABLE
 	var/foodtype = NONE

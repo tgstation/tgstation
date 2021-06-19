@@ -48,7 +48,7 @@
 		var/mob/M = target
 		if(M.anti_magic_check(check_antimagic, check_holy))
 			return FALSE
-		if(ignored_factions && ignored_factions.len && faction_check(M.faction,ignored_factions))
+		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
 			return FALSE
 
 
@@ -65,7 +65,7 @@
 
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you
 	//Below only apply if update_projectile is true
-	var/proj_icon = 'icons/obj/projectiles.dmi'
+	var/proj_icon = 'icons/obj/guns/projectiles.dmi'
 	var/proj_icon_state = "spell"
 	var/proj_name = "a spell projectile"
 	var/proj_trail = FALSE //if it leaves a trail
@@ -91,7 +91,7 @@
 		projectile.icon_state = proj_icon_state
 		projectile.name = proj_name
 		if(proj_insubstantial)
-			projectile.movement_type |= UNSTOPPABLE
+			projectile.movement_type |= PHASING
 		if(proj_homing)
 			projectile.homing = TRUE
 			projectile.homing_turn_speed = 360 //Perfect tracking

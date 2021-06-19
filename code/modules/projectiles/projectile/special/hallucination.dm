@@ -23,7 +23,7 @@
 
 /obj/projectile/hallucination/fire()
 	..()
-	fake_icon = image('icons/obj/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	fake_icon = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
 	if(hal_target.client)
 		hal_target.client.images += fake_icon
 

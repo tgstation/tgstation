@@ -36,19 +36,21 @@ BONUS
 	)
 
 /datum/symptom/headache/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		base_message_chance = 50
-	if(A.properties["stage_rate"] >= 6) //severe pain
+	if(A.totalStageSpeed() >= 6) //severe pain
 		power = 2
-	if(A.properties["stage_rate"] >= 9) //cluster headaches
+	if(A.totalStageSpeed() >= 9) //cluster headaches
 		symptom_delay_min = 30
 		symptom_delay_max = 60
 		power = 3
 
 /datum/symptom/headache/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	if(power < 2)

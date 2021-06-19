@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
@@ -18,7 +17,7 @@ export const KeycardAuth = (props, context) => {
           </Box>
           <Box>
             {data.waiting === 0 && (
-              <Fragment>
+              <>
                 {!!data.auth_required && (
                   <Button
                     icon="check-square"
@@ -30,7 +29,7 @@ export const KeycardAuth = (props, context) => {
                     content="Authorize" />
                 )}
                 {data.auth_required === 0 && (
-                  <Fragment>
+                  <>
                     <Button
                       icon="exclamation-triangle"
                       fluid
@@ -48,9 +47,9 @@ export const KeycardAuth = (props, context) => {
                       fluid
                       onClick={() => act('bsa_unlock')}
                       content="Bluespace Artillery Unlock" />
-                  </Fragment>
+                  </>
                 )}
-              </Fragment>
+              </>
             )}
           </Box>
         </Section>

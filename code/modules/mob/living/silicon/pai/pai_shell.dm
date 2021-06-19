@@ -18,7 +18,8 @@
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
-	mobility_flags = MOBILITY_FLAGS_DEFAULT
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
+	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -64,15 +65,16 @@
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	mobility_flags = NONE
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
 	set_resting(resting)
 
 /**
-  * Sets a new holochassis skin based on a pAI's choice
-  */
+ * Sets a new holochassis skin based on a pAI's choice
+ */
 /mob/living/silicon/pai/proc/choose_chassis()
 	var/list/skins = list()
 	for(var/holochassis_option in possible_chassis)
@@ -91,11 +93,11 @@
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * * Arguments:
-  * * anchor The atom that is anchoring the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * * Arguments:
+ * * anchor The atom that is anchoring the menu
+ */
 /mob/living/silicon/pai/proc/check_menu(atom/anchor)
 	if(incapacitated())
 		return FALSE
@@ -126,7 +128,7 @@
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
 
-/mob/living/silicon/pai/mob_try_pickup(mob/living/user)
+/mob/living/silicon/pai/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!possible_chassis[chassis])
 		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE

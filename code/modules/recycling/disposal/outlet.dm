@@ -8,7 +8,7 @@
 	anchored = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/active = FALSE
-	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/turf/target // this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
@@ -29,7 +29,7 @@
 
 	trunk = locate() in loc
 	if(trunk)
-		trunk.linked = src	// link the pipe trunk to self
+		trunk.linked = src // link the pipe trunk to self
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
@@ -57,15 +57,9 @@
 	if(!H)
 		return
 
-	var/turf/T = get_turf(src)
+	pipe_eject(H, dir, TRUE, target, eject_range, throw_range)
 
-	for(var/A in H)
-		var/atom/movable/AM = A
-		AM.forceMove(T)
-		AM.pipe_eject(dir)
-		AM.throw_at(target, eject_range, eject_speed)
-
-	H.vent_gas(T)
+	H.vent_gas(loc)
 	qdel(H)
 
 /obj/structure/disposaloutlet/welder_act(mob/living/user, obj/item/I)

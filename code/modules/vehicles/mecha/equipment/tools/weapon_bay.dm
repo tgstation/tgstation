@@ -11,4 +11,4 @@
 	if(locate(/obj/item/mecha_parts/concealed_weapon_bay) in M.contents)
 		to_chat(user, "<span class='warning'>[M] already has a concealed weapon bay!</span>")
 		return
-	..()
+	return ..()

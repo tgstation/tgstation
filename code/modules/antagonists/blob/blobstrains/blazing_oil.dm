@@ -2,9 +2,9 @@
 //sets you on fire, does burn damage, explodes into flame when burnt, weak to water
 /datum/blobstrain/reagent/blazing_oil
 	name = "Blazing Oil"
-	description = "will do medium burn damage and set targets on fire."
+	description = "will do medium-high burn damage ignoring armor, and set targets on fire."
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
-	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
+	analyzerdescdamage = "Does medium-high burn damage and sets targets on fire."
 	analyzerdesceffect = "Releases fire when burnt, but takes damage from water and other extinguishing liquids."
 	color = "#B68D00"
 	complementary_color = "#BE5532"
@@ -12,6 +12,7 @@
 	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
 	reagent = /datum/reagent/blob/blazing_oil
+	fire_based = TRUE
 
 /datum/blobstrain/reagent/blazing_oil/extinguish_reaction(obj/structure/blob/B)
 	B.take_damage(1.5, BURN, ENERGY)
@@ -31,11 +32,12 @@
 	taste_description = "burning oil"
 	color = "#B68D00"
 
-/datum/reagent/blob/blazing_oil/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.adjust_fire_stacks(round(reac_volume/10))
-	M.IgniteMob()
-	if(M)
-		M.apply_damage(0.8*reac_volume, BURN, wound_bonus=CANT_WOUND)
-	if(iscarbon(M))
-		M.emote("scream")
+/datum/reagent/blob/blazing_oil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
+	exposed_mob.adjust_fire_stacks(round(reac_volume/10))
+	exposed_mob.IgniteMob()
+	if(exposed_mob)
+		exposed_mob.apply_damage(0.8*reac_volume, BURN, wound_bonus=CANT_WOUND)
+	if(iscarbon(exposed_mob))
+		exposed_mob.emote("scream")

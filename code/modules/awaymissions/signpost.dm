@@ -33,7 +33,7 @@
 /obj/structure/signpost/attackby(obj/item/W, mob/user, params)
 	return interact(user)
 
-/obj/structure/signpost/attack_paw(mob/user)
+/obj/structure/signpost/attack_paw(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_hulk(mob/user)
@@ -49,7 +49,7 @@
 /obj/structure/signpost/attack_slime(mob/user)
 	return interact(user)
 
-/obj/structure/signpost/attack_animal(mob/user)
+/obj/structure/signpost/attack_animal(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/salvation

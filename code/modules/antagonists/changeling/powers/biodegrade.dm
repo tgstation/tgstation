@@ -9,7 +9,7 @@
 
 /datum/action/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
-	if(!user.restrained() && !user.legcuffed && isopenturf(user.loc))
+	if(!HAS_TRAIT(user, TRAIT_RESTRAINED) && !user.legcuffed && isopenturf(user.loc))
 		to_chat(user, "<span class='warning'>We are already free!</span>")
 		return FALSE
 

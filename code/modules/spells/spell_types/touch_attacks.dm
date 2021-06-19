@@ -9,7 +9,9 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
 	remove_hand()
-	to_chat(usr, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
+	if(action?.owner)
+		var/mob/guy_who_needs_to_know = action.owner
+		to_chat(guy_who_needs_to_know, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
@@ -81,3 +83,14 @@
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/duffelbag
+	name = "Bestow Cursed Duffel Bag"
+	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
+	hand_path = /obj/item/melee/touch_attack/duffelbag
+	action_icon_state = "duffelbag_curse"
+	
+	school = "conjuration"
+	charge_max = 60
+	clothes_req = FALSE
+	cooldown_min = 20

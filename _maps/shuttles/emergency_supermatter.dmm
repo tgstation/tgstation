@@ -303,7 +303,7 @@
 /area/shuttle/escape)
 "hD" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "pb" = (
 /obj/structure/closet/radiation{

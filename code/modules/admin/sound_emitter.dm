@@ -81,7 +81,7 @@
 		var/new_label = stripped_input(user, "Choose a new label.", "Sound Emitter")
 		if(!new_label)
 			return
-		maptext = new_label
+		maptext = MAPTEXT(new_label)
 		to_chat(user, "<span class='notice'>Label set to [maptext].</span>", confidential = TRUE)
 	if(href_list["edit_sound_file"])
 		var/new_file = input(user, "Choose a sound file.", "Sound Emitter") as null|sound

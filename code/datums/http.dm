@@ -6,10 +6,12 @@
 	var/body
 	var/headers
 	var/url
+	/// If present response body will be saved to this file.
+	var/output_file
 
 	var/_raw_response
 
-/datum/http_request/proc/prepare(method, url, body = "", list/headers)
+/datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file)
 	if (!length(headers))
 		headers = ""
 	else
@@ -19,21 +21,27 @@
 	src.url = url
 	src.body = body
 	src.headers = headers
+	src.output_file = output_file
 
 /datum/http_request/proc/execute_blocking()
-	_raw_response = rustg_http_request_blocking(method, url, body, headers)
+	_raw_response = rustg_http_request_blocking(method, url, body, headers, build_options())
 
 /datum/http_request/proc/begin_async()
 	if (in_progress)
 		CRASH("Attempted to re-use a request object.")
 
-	id = rustg_http_request_async(method, url, body, headers)
+	id = rustg_http_request_async(method, url, body, headers, build_options())
 
 	if (isnull(text2num(id)))
 		stack_trace("Proc error: [id]")
 		_raw_response = "Proc error: [id]"
 	else
 		in_progress = TRUE
+
+/datum/http_request/proc/build_options()
+	if(output_file)
+		return json_encode(list("output_filename"=output_file,"body_filename"=null))
+	return null
 
 /datum/http_request/proc/is_complete()
 	if (isnull(id))

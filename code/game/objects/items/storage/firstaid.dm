@@ -1,8 +1,8 @@
 /* First aid storage
  * Contains:
- *		First Aid Kits
- * 		Pill Bottles
- *		Dice Pack (in a pill bottle)
+ * First Aid Kits
+ * Pill Bottles
+ * Dice Pack (in a pill bottle)
  */
 
 /*
@@ -75,6 +75,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/spray,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
@@ -98,14 +99,14 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
+		/obj/item/shears,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/wrench/medical,
 		/obj/item/clothing/mask/muzzle,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/gun/syringe/syndicate,
@@ -113,7 +114,8 @@
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical
+		/obj/item/holosign_creator/medical,
+		/obj/item/stack/sticky_tape //surgical tape
 		))
 
 /obj/item/storage/firstaid/medical/PopulateContents()
@@ -253,7 +255,7 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
 	inhand_icon_state = "firstaid-rad"
-	custom_premium_price = 1100
+	custom_premium_price = PAYCHECK_HARD * 6
 	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
@@ -486,22 +488,22 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/neurine(src)
 
-/obj/item/storage/pill_bottle/floorpill
-	name = "bottle of floorpills"
+/obj/item/storage/pill_bottle/maintenance_pill
+	name = "bottle of maintenance pills"
 	desc = "An old pill bottle. It smells musty."
 
-/obj/item/storage/pill_bottle/floorpill/Initialize()
+/obj/item/storage/pill_bottle/maintenance_pill/Initialize()
 	. = ..()
 	var/obj/item/reagent_containers/pill/P = locate() in src
 	name = "bottle of [P.name]s"
 
-/obj/item/storage/pill_bottle/floorpill/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_pill/PopulateContents()
 	for(var/i in 1 to rand(1,7))
-		new /obj/item/reagent_containers/pill/floorpill(src)
+		new /obj/item/reagent_containers/pill/maintenance(src)
 
-/obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_pill/full/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/floorpill(src)
+		new /obj/item/reagent_containers/pill/maintenance(src)
 
 ///////////////////////////////////////// Psychologist inventory pillbottles
 /obj/item/storage/pill_bottle/happinesspsych
@@ -532,11 +534,12 @@
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
 	icon_state = "organbox"
+	base_icon_state = "organbox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_premium_price = 1100
+	custom_premium_price = PAYCHECK_MEDIUM * 4
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
@@ -548,7 +551,7 @@
 	STR.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
-		/obj/item/reagent_containers/food/snacks/icecream
+		/obj/item/food/icecream
 		))
 
 /obj/item/storage/organbox/Initialize()
@@ -558,36 +561,33 @@
 	RegisterSignal(src, COMSIG_TRY_STORAGE_TAKE, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process()
+/obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
 	var/cool = FALSE
-	var/amount = reagents.get_reagent_amount(/datum/reagent/cryostylane)
-	if(amount >= 0.1)
-		reagents.remove_reagent(/datum/reagent/cryostylane, 0.1)
+	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
+	if(amount > 0)
+		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
 		cool = TRUE
 	else
-		amount = reagents.get_reagent_amount(/datum/reagent/consumable/ice)
-		if(amount >= 0.3)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, 0.2)
+		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
+		if(amount > 0)
+			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			freeze(C)
 		return
 	if(cooling && !cool)
 		cooling = FALSE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			unfreeze(C)
 
-/obj/item/storage/organbox/update_icon()
-	. = ..()
-	if(cooling)
-		icon_state = "organbox-working"
-	else
-		icon_state = "organbox"
+/obj/item/storage/organbox/update_icon_state()
+	icon_state = "[base_icon_state][cooling ? "-working" : null]"
+	return ..()
 
 ///freezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)

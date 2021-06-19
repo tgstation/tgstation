@@ -42,7 +42,8 @@ Charged extracts:
 	effect_desc = "Instantly makes a large burst of flame for a moment."
 
 /obj/item/slimecross/charged/orange/do_effect(mob/user)
-	for(var/turf/turf in range(5,get_turf(user)))
+	var/turf/targetturf = get_turf(user)
+	for(var/turf/turf as anything in RANGE_TURFS(5,targetturf))
 		if(!locate(/obj/effect/hotspot) in turf)
 			new /obj/effect/hotspot(turf)
 	..()
@@ -70,17 +71,17 @@ Charged extracts:
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	new /obj/item/stack/sheet/metal(get_turf(user), 25)
+	new /obj/item/stack/sheet/iron(get_turf(user), 25)
 	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
 	..()
 
 /obj/item/slimecross/charged/yellow
 	colour = "yellow"
-	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity and recharges constantly at a very fast rate."
+	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime/hypercharged(get_turf(user))
+	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
 	user.visible_message("<span class='notice'>[src] sparks violently, and swells with electric power!</span>")
 	..()
 
@@ -107,7 +108,7 @@ Charged extracts:
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
-	new /obj/item/reagent_containers/food/snacks/store/cake/slimecake(get_turf(user))
+	new /obj/item/food/cake/slimecake(get_turf(user))
 	for(var/i in 1 to 10)
 		var/drink_type = get_random_drink()
 		new drink_type(get_turf(user))
@@ -203,7 +204,7 @@ Charged extracts:
 /obj/item/slimecross/charged/gold/process()
 	visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(src))
-	playsound(get_turf(src), "sparks", 50, TRUE)
+	playsound(get_turf(src), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)
@@ -274,4 +275,4 @@ Charged extracts:
 	for(var/i in 1 to 3)
 		var/mob/living/simple_animal/slime/S = new(get_turf(user))
 		S.random_colour()
-	..()
+	return ..()

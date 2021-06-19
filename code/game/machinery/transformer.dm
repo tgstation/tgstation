@@ -39,6 +39,7 @@
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)
@@ -49,9 +50,10 @@
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
-		if((transform_standing || !(H.mobility_flags & MOBILITY_STAND)) && move_dir == EAST)// || move_dir == WEST)
+		if((transform_standing || H.body_position == LYING_DOWN) && move_dir == EAST)// || move_dir == WEST)
 			AM.forceMove(drop_location())
 			do_transform(AM)
+
 
 /obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -65,7 +67,7 @@
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))
 		cooldown = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -80,7 +82,7 @@
 	// Activate the cooldown
 	cooldown = 1
 	cooldown_timer = world.time + cooldown_duration
-	update_icon()
+	update_appearance()
 
 	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
 	H.emote("scream") // It is painful
@@ -93,7 +95,7 @@
 	var/mob/living/silicon/robot/R = H.Robotize()
 	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R, robot_cell_charge)
 
- 	// So he can't jump out the gate right away.
+	// So he can't jump out the gate right away.
 	R.SetLockdown()
 	if(masterAI)
 		R.set_connected_ai(masterAI)

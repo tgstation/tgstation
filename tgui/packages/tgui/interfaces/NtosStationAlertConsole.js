@@ -5,8 +5,7 @@ export const NtosStationAlertConsole = () => {
   return (
     <NtosWindow
       width={315}
-      height={500}
-      resizable>
+      height={500}>
       <NtosWindow.Content scrollable>
         <StationAlertConsoleContent />
       </NtosWindow.Content>

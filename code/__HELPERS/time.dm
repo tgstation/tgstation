@@ -21,7 +21,7 @@
 	if(isnum(force_set))
 		SSticker.gametime_offset = force_set
 		return
-	SSticker.gametime_offset = rand(0, 864000)		//hours in day * minutes in hour * seconds in minute * deciseconds in second
+	SSticker.gametime_offset = rand(0, 864000) //hours in day * minutes in hour * seconds in minute * deciseconds in second
 	if(prob(50))
 		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 3600)
 	else
@@ -41,53 +41,34 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	return GLOB.midnight_rollovers
 
 
-///Returns the current week of the current month, from 1 to 5.
-/proc/week_of_the_month()
-	var/day = time2text(world.timeofday, "DDD") 	// get the current day
-	var/date = text2num(time2text(world.timeofday, "DD")) 	// get the current date
+///Returns a string day as an integer in ISO format 1 (Monday) - 7 (Sunday)
+/proc/weekday_to_iso(ddd)
+	switch (ddd)
+		if (MONDAY)
+			return 1
+		if (TUESDAY)
+			return 2
+		if (WEDNESDAY)
+			return 3
+		if (THURSDAY)
+			return 4
+		if (FRIDAY)
+			return 5
+		if (SATURDAY)
+			return 6
+		if (SUNDAY)
+			return 7
 
-	switch(day)
-		if(MONDAY)
-			date -= 1
-		if(TUESDAY)
-			date -= 2
-		if(WEDNESDAY)
-			date -= 3
-		if(THURSDAY)
-			date -= 4
-		if(FRIDAY)
-			date -= 5
-		if(SATURDAY)
-			date -= 6
-		if(SUNDAY)
-			date -= 7
-
-	return CEILING(date / 7, 1) + 1
-
-
-///Returns the first day of the current month in number format, from 1 (monday) - 7 (sunday).
-/proc/first_day_of_month()
-	var/year = text2num(time2text(world.timeofday, "YY"))
-	var/month = text2num(time2text(world.timeofday, "MM"))
-
-	var/day = (1 + (((13 * month) + (13 * 1)) / 5) + (year) + (year/4) + (20/4) + (5 * 20)) % 7 //Zeller's congruence
-
-	switch(day) //convert to 1-7 monday first format
-		if(0)
-			day = 6
-		if(1)
-			day = 7
-		if(2)
-			day = 1
-		if(3)
-			day = 2
-		if(4)
-			day = 3
-		if(5)
-			day = 4
-		if(6)
-			day = 5
-	return day
+///Returns the first day of the given year and month in number format, from 1 (monday) - 7 (sunday).
+/proc/first_day_of_month(year, month)
+	// https://en.wikipedia.org/wiki/Zeller%27s_congruence
+	var/m = month < 3 ? month + 12 : month // month (march = 3, april = 4...february = 14)
+	var/K = year % 100 // year of century
+	var/J = round(year / 100) // zero-based century
+	// day 0-6 saturday to sunday:
+	var/h = (1 + round(13 * (m + 1) / 5) + K + round(K / 4) + round(J / 4) - 2 * J) % 7
+	//convert to ISO 1-7 monday first format
+	return ((h + 5) % 7) + 1
 
 
 //Takes a value of time in deciseconds.

@@ -18,7 +18,7 @@
 	if(M.mind)
 		if(ishuman(M) && (M.mind.holy_role))
 			return FALSE
-		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
+		if(specific_cult?.is_sacrifice_target(M.mind))
 			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
 			return FALSE

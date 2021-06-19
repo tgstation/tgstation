@@ -34,13 +34,15 @@ Bonus
 	)
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4) //warn less often
+	if(A.totalStealth() >= 4) //warn less often
 		base_message_chance = 25
 
 /datum/symptom/weight_loss/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -49,5 +51,5 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
 		else
 			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
-			M.overeatduration = max(M.overeatduration - 100, 0)
+			M.overeatduration = max(M.overeatduration - 200 SECONDS, 0)
 			M.adjust_nutrition(-100)

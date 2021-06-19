@@ -1,10 +1,11 @@
-import { classes } from 'common/react';
 import { uniqBy } from 'common/collections';
-import { useBackend, useSharedState } from '../backend';
-import { formatSiUnit, formatMoney } from '../format';
-import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Icon, Input } from '../components';
-import { Window } from '../layouts';
+import { classes } from 'common/react';
 import { createSearch } from 'common/string';
+import { Fragment } from 'inferno';
+import { useBackend, useSharedState } from '../backend';
+import { Box, Button, Flex, Icon, Input, NumberInput, ProgressBar, Section, Stack } from '../components';
+import { formatMoney, formatSiUnit } from '../format';
+import { Window } from '../layouts';
 
 const MATERIAL_KEYS = {
   "iron": "sheet-metal_3",
@@ -101,94 +102,67 @@ const queueCondFormat = (materials, queue) => {
 };
 
 const searchFilter = (search, allparts) => {
-  let searchResults = [];
-
   if (!search.length) {
     return;
   }
-
   const resultFilter = createSearch(search, part => (
     (part.name || "")
     + (part.desc || "")
     + (part.searchMeta || "")
   ));
-
+  let searchResults = [];
   Object.keys(allparts).forEach(category => {
     allparts[category]
       .filter(resultFilter)
-      .forEach(e => { searchResults.push(e); });
+      .forEach(e => {
+        searchResults.push(e);
+      });
   });
-
   searchResults = uniqBy(part => part.name)(searchResults);
-
   return searchResults;
 };
 
 export const ExosuitFabricator = (props, context) => {
   const { act, data } = useBackend(context);
-
   const queue = data.queue || [];
   const materialAsObj = materialArrayToObj(data.materials || []);
-
   const {
     materialTally,
     missingMatTally,
     textColors,
   } = queueCondFormat(materialAsObj, queue);
-
-  const [
-    displayMatCost,
-    setDisplayMatCost,
-  ] = useSharedState(context, "display_mats", false);
-
+  const [displayMatCost, setDisplayMatCost] = useSharedState(
+    context, 'display_mats', false);
   return (
     <Window
-      resizable
       title="Exosuit Fabricator"
       width={1100}
       height={640}>
-      <Window.Content
-        scrollable>
-        <Flex
-          fillPositionedParent
-          direction="column">
-          <Flex>
-            <Flex.Item
-              ml={1}
-              mr={1}
-              mt={1}
-              basis="content"
-              grow={1}>
-              <Section
-                title="Materials">
-                <Materials />
-              </Section>
-            </Flex.Item>
-            <Flex.Item
-              mt={1}
-              mr={1}>
-              <Section
-                title="Settings"
-                height="100%">
-                <Button.Checkbox
-                  onClick={() => setDisplayMatCost(!displayMatCost)}
-                  checked={displayMatCost}>
-                  Display Material Costs
-                </Button.Checkbox>
-              </Section>
-            </Flex.Item>
-          </Flex>
-          <Flex.Item
-            grow={1}
-            m={1}>
-            <Flex
-              spacing={1}
-              height="100%"
-              overflowY="hide">
-              <Flex.Item position="relative" basis="content">
+      <Window.Content>
+        <Stack fill vertical>
+          <Stack.Item>
+            <Stack fill>
+              <Stack.Item grow>
+                <Section fill title="Materials">
+                  <Materials />
+                </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Section fill title="Settings">
+                  <Button.Checkbox
+                    onClick={() => setDisplayMatCost(!displayMatCost)}
+                    checked={displayMatCost}>
+                    Display Material Costs
+                  </Button.Checkbox>
+                </Section>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Stack fill>
+              <Stack.Item>
                 <Section
-                  height="100%"
-                  overflowY="auto"
+                  fill
                   title="Categories"
                   buttons={(
                     <Button
@@ -197,29 +171,21 @@ export const ExosuitFabricator = (props, context) => {
                   )}>
                   <PartSets />
                 </Section>
-              </Flex.Item>
-              <Flex.Item
-                position="relative"
-                grow={1}>
-                <Box
-                  fillPositionedParent
-                  overflowY="auto">
-                  <PartLists
-                    queueMaterials={materialTally}
-                    materials={materialAsObj} />
-                </Box>
-              </Flex.Item>
-              <Flex.Item
-                width="420px"
-                position="relative">
+              </Stack.Item>
+              <Stack.Item grow>
+                <PartLists
+                  queueMaterials={materialTally}
+                  materials={materialAsObj} />
+              </Stack.Item>
+              <Stack.Item width="420px">
                 <Queue
                   queueMaterials={materialTally}
                   missingMaterials={missingMatTally}
                   textColors={textColors} />
-              </Flex.Item>
-            </Flex>
-          </Flex.Item>
-        </Flex>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -227,27 +193,20 @@ export const ExosuitFabricator = (props, context) => {
 
 const EjectMaterial = (props, context) => {
   const { act } = useBackend(context);
-
   const { material } = props;
-
   const {
     name,
     removable,
     sheets,
     ref,
   } = material;
-
-  const [
-    removeMaterials,
-    setRemoveMaterials,
-  ] = useSharedState(context, "remove_mats_" + name, 1);
-
-  if ((removeMaterials > 1) && (sheets < removeMaterials)) {
+  const [removeMaterials, setRemoveMaterials] = useSharedState(
+    context, 'remove_mats_' + name, 1);
+  if (removeMaterials > 1 && sheets < removeMaterials) {
     setRemoveMaterials(sheets || 1);
   }
-
   return (
-    <Fragment>
+    <>
       <NumberInput
         width="30px"
         animated
@@ -268,31 +227,23 @@ const EjectMaterial = (props, context) => {
           ref: ref,
           amount: removeMaterials,
         })} />
-    </Fragment>
+    </>
   );
 };
 
 const Materials = (props, context) => {
   const { data } = useBackend(context);
-
   const materials = data.materials || [];
-
   return (
-    <Flex
-      wrap="wrap">
+    <Flex wrap>
       {materials.map(material => (
-        <Flex.Item
-          width="80px"
-          key={material.name}>
+        <Flex.Item key={material.name} width="80px">
           <MaterialAmount
             name={material.name}
             amount={material.amount}
             formatsi />
-          <Box
-            mt={1}
-            style={{ "text-align": "center" }}>
-            <EjectMaterial
-              material={material} />
+          <Box mt={1} textAlign="center">
+            <EjectMaterial material={material} />
           </Box>
         </Flex.Item>
       ))}
@@ -309,11 +260,8 @@ const MaterialAmount = (props, context) => {
     color,
     style,
   } = props;
-
   return (
-    <Flex
-      direction="column"
-      align="center">
+    <Flex direction="column" textAlign="center">
       <Flex.Item>
         <Box
           className={classes([
@@ -322,14 +270,10 @@ const MaterialAmount = (props, context) => {
           ])}
           style={style} />
       </Flex.Item>
-      <Flex.Item>
-        <Box
-          textColor={color}
-          style={{ "text-align": "center" }}>
-          {(formatsi && formatSiUnit(amount, 0))
-          || (formatmoney && formatMoney(amount))
-          || (amount)}
-        </Box>
+      <Flex.Item color={color}>
+        {formatsi && formatSiUnit(amount, 0)
+          || formatmoney && formatMoney(amount)
+          || amount}
       </Flex.Item>
     </Flex>
   );
@@ -337,35 +281,22 @@ const MaterialAmount = (props, context) => {
 
 const PartSets = (props, context) => {
   const { data } = useBackend(context);
-
   const partSets = data.partSets || [];
   const buildableParts = data.buildableParts || {};
-
-  const [
-    selectedPartTab,
-    setSelectedPartTab,
-  ] = useSharedState(
-    context,
-    "part_tab",
-    partSets.length ? buildableParts[0] : ""
-  );
-
-  return (
-    <Tabs
-      vertical>
-      {partSets.map(set => (
-        !!(buildableParts[set]) && (
-          <Tabs.Tab
-            key={set}
-            selected={set === selectedPartTab}
-            disabled={!(buildableParts[set])}
-            onClick={() => setSelectedPartTab(set)}>
-            {set}
-          </Tabs.Tab>
-        )
-      ))}
-    </Tabs>
-  );
+  const [selectedPartTab, setSelectedPartTab] = useSharedState(
+    context, 'part_tab', partSets.length ? buildableParts[0] : '');
+  return partSets
+    .filter(set => buildableParts[set])
+    .map(set => (
+      <Button
+        key={set}
+        fluid
+        color="transparent"
+        selected={set === selectedPartTab}
+        onClick={() => setSelectedPartTab(set)}>
+        {set}
+      </Button>
+    ));
 };
 
 const PartLists = (props, context) => {
@@ -436,218 +367,192 @@ const PartLists = (props, context) => {
     });
   }
 
-
   return (
-    <Fragment>
-      <Section>
-        <Flex>
-          <Flex.Item mr={1}>
-            <Icon
-              name="search" />
-          </Flex.Item>
-          <Flex.Item
-            grow={1}>
-            <Input
-              fluid
-              placeholder="Search for..."
-              onInput={(e, v) => setSearchText(v)} />
-          </Flex.Item>
-        </Flex>
-      </Section>
-      {(!!searchText && (
-        <PartCategory
-          name={"Search Results"}
-          parts={partsList}
-          forceShow
-          placeholder="No matching results..." />
-      )) || (
-        Object.keys(partsList).map(category => (
-          <PartCategory
-            key={category}
-            name={category}
-            parts={partsList[category]} />
-        ))
-      )}
-    </Fragment>
+    <Stack fill vertical>
+      <Stack.Item>
+        <Section fill>
+          <Stack align="baseline">
+            <Stack.Item>
+              <Icon name="search" />
+            </Stack.Item>
+            <Stack.Item grow>
+              <Input
+                fluid
+                placeholder="Search for..."
+                onInput={(e, v) => setSearchText(v)} />
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable>
+          {!!searchText && (
+            <PartCategory
+              name={"Search Results"}
+              parts={partsList}
+              forceShow
+              placeholder="No matching results..." />
+          ) || (
+            Object.keys(partsList).map(category => (
+              <PartCategory
+                key={category}
+                name={category}
+                parts={partsList[category]} />
+            ))
+          )}
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 
 const PartCategory = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     buildingPart,
   } = data;
-
   const {
     parts,
     name,
     forceShow,
     placeholder,
   } = props;
-
   const [
     displayMatCost,
-  ] = useSharedState(context, "display_mats", false);
-
+  ] = useSharedState(context, 'display_mats', false);
+  if (!forceShow && parts.length === 0) {
+    return null;
+  }
   return (
-    ((!!parts.length || forceShow) && (
-      <Section
-        title={name}
-        buttons={
-          <Button
-            disabled={!parts.length}
-            color="good"
-            content="Queue All"
-            icon="plus-circle"
-            onClick={() => act("add_queue_set", {
-              part_list: parts.map(part => part.id),
-            })} />
-        }>
-        {(!parts.length) && (placeholder)}
-        {parts.map(part => (
-          <Fragment
-            key={part.name}>
-            <Flex
-              align="center">
-              <Flex.Item>
-                <Button
-                  disabled={buildingPart
-                  || (part.format.textColor === COLOR_BAD)}
-                  color="good"
-                  height="20px"
-                  mr={1}
-                  icon="play"
-                  onClick={() => act("build_part", { id: part.id })} />
-              </Flex.Item>
-              <Flex.Item>
-                <Button
-                  color="average"
-                  height="20px"
-                  mr={1}
-                  icon="plus-circle"
-                  onClick={() => act("add_queue_part", { id: part.id })} />
-              </Flex.Item>
-              <Flex.Item>
-                <Box
-                  inline
-                  textColor={COLOR_KEYS[part.format.textColor]}>
-                  {part.name}
-                </Box>
-              </Flex.Item>
-              <Flex.Item
-                grow={1} />
-              <Flex.Item>
-                <Button
-                  icon="question-circle"
-                  transparent
-                  height="20px"
-                  tooltip={
-                    "Build Time: "
-                  + part.printTime + "s. "
-                  + (part.desc || "")
-                  }
-                  tooltipPosition="left" />
-              </Flex.Item>
-            </Flex>
-            {(displayMatCost && (
-              <Flex mb={2}>
-                {Object.keys(part.cost).map(material => (
-                  <Flex.Item
-                    width={"50px"}
-                    key={material}
-                    color={COLOR_KEYS[part.format[material].color]}>
-                    <MaterialAmount
-                      formatmoney
-                      style={{
-                        transform: 'scale(0.75) translate(0%, 10%)',
-                      }}
-                      name={material}
-                      amount={part.cost[material]} />
-                  </Flex.Item>
-                ))}
-              </Flex>
-            ))}
-
-          </Fragment>
-        ))}
-      </Section>
-    ))
+    <Section
+      title={name}
+      level={2}
+      buttons={
+        <Button
+          disabled={!parts.length}
+          color="good"
+          content="Queue All"
+          icon="plus-circle"
+          onClick={() => act("add_queue_set", {
+            part_list: parts.map(part => part.id),
+          })} />
+      }>
+      {!parts.length && placeholder}
+      {parts.map(part => (
+        <Fragment key={part.name}>
+          <Stack align="center">
+            <Stack.Item>
+              <Button
+                disabled={(
+                  buildingPart || part.format.textColor === COLOR_BAD
+                )}
+                color="good"
+                icon="play"
+                onClick={() => act("build_part", { id: part.id })} />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="average"
+                icon="plus-circle"
+                onClick={() => act("add_queue_part", { id: part.id })} />
+            </Stack.Item>
+            <Stack.Item grow color={COLOR_KEYS[part.format.textColor]}>
+              {part.name}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="question-circle"
+                tooltip={
+                  'Build Time: '
+                  + part.printTime + 's. '
+                  + (part.desc || '')
+                }
+                tooltipPosition="left" />
+            </Stack.Item>
+          </Stack>
+          {displayMatCost && (
+            <Stack mb={2}>
+              {Object.keys(part.cost).map(material => (
+                <Stack.Item
+                  key={material}
+                  width="50px"
+                  color={COLOR_KEYS[part.format[material].color]}>
+                  <MaterialAmount
+                    formatmoney
+                    style={{
+                      transform: 'scale(0.75) translate(0%, 10%)',
+                    }}
+                    name={material}
+                    amount={part.cost[material]} />
+                </Stack.Item>
+              ))}
+            </Stack>
+          )}
+        </Fragment>
+      ))}
+    </Section>
   );
 };
 
 const Queue = (props, context) => {
   const { act, data } = useBackend(context);
-
   const { isProcessingQueue } = data;
-
   const queue = data.queue || [];
-
   const {
     queueMaterials,
     missingMaterials,
     textColors,
   } = props;
-
   return (
-    <Flex
-      height="100%"
-      width="100%"
-      direction="column">
-      <Flex.Item
-        height={0}
-        grow={1}>
+    <Stack fill vertical>
+      <Stack.Item grow>
         <Section
-          height="100%"
+          fill
+          scrollable
           title="Queue"
-          overflowY="auto"
-          buttons={
-            <Fragment>
+          buttons={(
+            <>
               <Button.Confirm
                 disabled={!queue.length}
                 color="bad"
                 icon="minus-circle"
                 content="Clear Queue"
                 onClick={() => act("clear_queue")} />
-              {(!!isProcessingQueue && (
+              {!!isProcessingQueue && (
                 <Button
                   disabled={!queue.length}
                   content="Stop"
                   icon="stop"
                   onClick={() => act("stop_queue")} />
-              )) || (
+              ) || (
                 <Button
                   disabled={!queue.length}
                   content="Build Queue"
                   icon="play"
                   onClick={() => act("build_queue")} />
               )}
-            </Fragment>
-          }>
-          <Flex
-            direction="column"
-            height="100%">
-            <Flex.Item>
+            </>
+          )}>
+          <Stack fill vertical>
+            <Stack.Item>
               <BeingBuilt />
-            </Flex.Item>
-            <Flex.Item>
-              <QueueList
-                textColors={textColors} />
-            </Flex.Item>
-          </Flex>
+            </Stack.Item>
+            <Stack.Item>
+              <QueueList textColors={textColors} />
+            </Stack.Item>
+          </Stack>
         </Section>
-      </Flex.Item>
+      </Stack.Item>
       {!!queue.length && (
-        <Flex.Item mt={1}>
-          <Section
-            title="Material Cost">
+        <Stack.Item>
+          <Section title="Material Cost">
             <QueueMaterials
               queueMaterials={queueMaterials}
               missingMaterials={missingMaterials} />
           </Section>
-        </Flex.Item>
+        </Stack.Item>
       )}
-    </Flex>
+    </Stack>
   );
 };
 
@@ -656,27 +561,22 @@ const QueueMaterials = (props, context) => {
     queueMaterials,
     missingMaterials,
   } = props;
-
   return (
-    <Flex wrap="wrap">
+    <Stack wrap>
       {Object.keys(queueMaterials).map(material => (
-        <Flex.Item
-          width="12%"
-          key={material}>
+        <Stack.Item key={material} textAlign="center">
           <MaterialAmount
             formatmoney
             name={material}
             amount={queueMaterials[material]} />
-          {(!!missingMaterials[material] && (
-            <Box
-              textColor="bad"
-              style={{ "text-align": "center" }}>
+          {!!missingMaterials[material] && (
+            <Box color="bad">
               {formatMoney(missingMaterials[material])}
             </Box>
-          ))}
-        </Flex.Item>
+          )}
+        </Stack.Item>
       ))}
-    </Flex>
+    </Stack>
   );
 };
 
@@ -691,76 +591,51 @@ const QueueList = (props, context) => {
 
   if (!queue.length) {
     return (
-      <Fragment>
+      <>
         No parts in queue.
-      </Fragment>
+      </>
     );
   }
 
-  return (
-    queue.map((part, index) => (
-      <Box
-        key={part.name}>
-        <Flex
-          mb={0.5}
-          direction="column"
-          justify="center"
-          wrap="wrap"
-          height="20px" inline>
-          <Flex.Item
-            basis="content">
-            <Button
-              height="20px"
-              mr={1}
-              icon="minus-circle"
-              color="bad"
-              onClick={() => act("del_queue_part", { index: index+1 })} />
-          </Flex.Item>
-          <Flex.Item>
-            <Box
-              inline
-              textColor={COLOR_KEYS[textColors[index]]}>
-              {part.name}
-            </Box>
-          </Flex.Item>
-        </Flex>
-      </Box>
-    ))
-  );
+  return queue.map((part, index) => (
+    <Stack key={part.name} wrap align="baseline">
+      <Stack.Item>
+        <Button
+          icon="minus-circle"
+          color="bad"
+          onClick={() => act("del_queue_part", { index: index + 1 })} />
+      </Stack.Item>
+      <Stack.Item textColor={COLOR_KEYS[textColors[index]]}>
+        {part.name}
+      </Stack.Item>
+    </Stack>
+  ));
 };
 
 const BeingBuilt = (props, context) => {
   const { data } = useBackend(context);
-
   const {
     buildingPart,
     storedPart,
   } = data;
 
   if (storedPart) {
-    const {
-      name,
-    } = storedPart;
-
+    const { name } = storedPart;
     return (
-      <Box>
-        <ProgressBar
-          minValue={0}
-          maxValue={1}
-          value={1}
-          color="average">
-          <Flex>
-            <Flex.Item>
-              {name}
-            </Flex.Item>
-            <Flex.Item
-              grow={1} />
-            <Flex.Item>
-              {"Fabricator outlet obstructed..."}
-            </Flex.Item>
-          </Flex>
-        </ProgressBar>
-      </Box>
+      <ProgressBar
+        minValue={0}
+        maxValue={1}
+        value={1}
+        color="average">
+        <Stack>
+          <Stack.Item grow>
+            {name}
+          </Stack.Item>
+          <Stack.Item>
+            Fabricator outlet obstructed...
+          </Stack.Item>
+        </Stack>
+      </ProgressBar>
     );
   }
 
@@ -770,27 +645,23 @@ const BeingBuilt = (props, context) => {
       duration,
       printTime,
     } = buildingPart;
-
     const timeLeft = Math.ceil(duration/10);
-
     return (
-      <Box>
-        <ProgressBar
-          minValue={0}
-          maxValue={printTime}
-          value={duration}>
-          <Flex>
-            <Flex.Item>
-              {name}
-            </Flex.Item>
-            <Flex.Item
-              grow={1} />
-            <Flex.Item>
-              {((timeLeft >= 0) && (timeLeft + "s")) || ("Dispensing...")}
-            </Flex.Item>
-          </Flex>
-        </ProgressBar>
-      </Box>
+      <ProgressBar
+        minValue={0}
+        maxValue={printTime}
+        value={duration}>
+        <Stack>
+          <Stack.Item grow>
+            {name}
+          </Stack.Item>
+          <Stack.Item>
+            {timeLeft >= 0 && (timeLeft + 's') || 'Dispensing...'}
+          </Stack.Item>
+        </Stack>
+      </ProgressBar>
     );
   }
+
+  return null;
 };

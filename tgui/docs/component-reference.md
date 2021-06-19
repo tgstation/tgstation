@@ -28,6 +28,7 @@ Make sure to add new items to this list if you document new components.
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
   - [`Icon`](#icon)
+  - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
   - [`Knob`](#knob)
   - [`LabeledControls`](#labeledcontrols)
@@ -39,8 +40,10 @@ Make sure to add new items to this list if you document new components.
   - [`NoticeBox`](#noticebox)
   - [`NumberInput`](#numberinput)
   - [`ProgressBar`](#progressbar)
+  - [`RoundGauge`](#roundgauge)
   - [`Section`](#section)
   - [`Slider`](#slider)
+  - [`Stack`](#stack)
   - [`Table`](#table)
   - [`Table.Row`](#tablerow)
   - [`Table.Cell`](#tablecell)
@@ -246,7 +249,7 @@ A button with an extra confirmation step, using native button component.
 **Props:**
 
 - See inherited props: [Button](#button)
-- `confirmMessage: string` - Text to display after first click; defaults to "Confirm?"
+- `confirmContent: string` - Text to display after first click; defaults to "Confirm?"
 - `confirmColor: string` - Color to display after first click; defaults to "bad"
 
 ### `Button.Input`
@@ -359,12 +362,16 @@ and displays selected entry.
 **Props:**
 
 - See inherited props: [Box](#box)
+- See inherited props: [Icon](#icon)
 - `options: string[]` - An array of strings which will be displayed in the
 dropdown when open
 - `selected: string` - Currently selected entry
 - `width: number` - Width of dropdown button and resulting menu
-- `over: boolean` - dropdown renders over instead of below
-- `color: string` - color of dropdown button
+- `over: boolean` - Dropdown renders over instead of below
+- `color: string` - Color of dropdown button
+- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `noscroll: boolean` - Whether or not the dropdown menu should have a scroll bar
+- `displayText: string` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
@@ -384,10 +391,9 @@ to the left, and certain elements to the right:
 
 ```jsx
 <Flex>
-  <Flex.Item>
+  <Flex.Item grow={1}>
     Button description
   </Flex.Item>
-  <Flex.Item grow={1} />
   <Flex.Item>
     <Button>
       Perform an action
@@ -396,16 +402,15 @@ to the left, and certain elements to the right:
 </Flex>
 ```
 
-Flex item with `grow` property serves as a "filler", to separate the other
-two flex items as far as possible from each other.
+Flex item with `grow` property will grow to take all available empty space,
+while flex items without grow will take the minimum amount of space. This
+effectively places the last flex item to the very end of the flex container.
 
 **Props:**
 
 - See inherited props: [Box](#box)
-- `spacing: number` - Spacing between flex items, in integer units
-(1 unit - 0.5em). Does not directly relate to a flex css property
-(adds a modifier class under the hood), and only integer numbers are
-supported.
+- ~~`spacing: number`~~ - **Removed in tgui 4.3**,
+use [Stack](#stack) instead.
 - `inline: boolean` - Makes flexbox container inline, with similar behavior
 to an `inline` property on a `Box`.
 - `direction: string` - This establishes the main-axis, thus defining the
@@ -452,16 +457,16 @@ when they overflow the line.
 - `order: number` - By default, flex items are laid out in the source order.
 However, the order property controls the order in which they appear in the
 flex container.
-- `grow: number` - This defines the ability for a flex item to grow if
-necessary. It accepts a unitless value that serves as a proportion. It
+- `grow: number | boolean` - This defines the ability for a flex item to grow
+if necessary. It accepts a unitless value that serves as a proportion. It
 dictates what amount of the available space inside the flex container the
 item should take up. This number is unit-less and is relative to other
 siblings.
-- `shrink: number` - This defines the ability for a flex item to shrink
-if necessary. Inverse of `grow`.
-- `basis: string` - This defines the default size of an element before any
-flex-related calculations are done. Has to be a length (e.g. `20%`, `5rem`),
-an `auto` or `content` keyword.
+- `shrink: number | boolean` - This defines the ability for a flex item to
+shrink if necessary. Inverse of `grow`.
+- `basis: number | string` - This defines the default size of an element
+before any flex-related calculations are done. Has to be a length
+(e.g. `20%`, `5rem`), an `auto` or `content` keyword.
   - **Important:** IE11 flex is buggy, and auto width/height calculations
   can sometimes end up in a circular dependency. This usually happens, when
   working with tables inside flex (they have wacky internal widths and such).
@@ -528,6 +533,22 @@ Fractional numbers are supported.
 - `rotation: number` - Icon rotation, in degrees.
 - `spin: boolean` - Whether an icon should be spinning. Good for load
 indicators.
+
+### `Icon.Stack`
+
+Renders children icons on top of each other in order to make your own icon.
+
+```jsx
+<Icon.Stack>
+  <Icon name="pen" />
+  <Icon name="slash" />
+</Icon.Stack>
+```
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: Icon` - Icons to stack.
 
 ### `Input`
 
@@ -754,6 +775,38 @@ based on whether the value lands in the range between `from` and `to`.
 - `color: string` - Color of the progress bar.
 - `children: any` - Content to render inside the progress bar.
 
+### `RoundGauge`
+
+The RoundGauge component provides a visual representation of a single metric, as well as being capable of showing informational or cautionary boundaries related to that metric.
+
+```jsx
+<RoundGauge
+  size={1.75}
+  value={tankPressure}
+  minValue={0}
+  maxValue={pressureLimit}
+  alertAfter={pressureLimit * 0.70}
+  ranges={{
+    "good": [0, pressureLimit * 0.70],
+    "average": [pressureLimit * 0.70, pressureLimit * 0.85],
+    "bad": [pressureLimit * 0.85, pressureLimit],
+  }}
+  format={formatPressure} />
+```
+
+The alert on the gauge is optional, and will only be shown if the `alertAfter` prop is defined. When defined, the alert will begin to flash the respective color upon which the needle currently rests, as defined in the `ranges` prop.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `value: number` - The current value of the metric.
+- `minValue: number` (default: 0) - The lower bound of the guage.
+- `maxValue: number` (default: 1) - The upper bound of the guage.
+- `ranges: { color: [from, to] }` (default: `{ "good": [0, 1] }`) - Provide regions of the guage to color between two specified values of the metric.
+- `alertAfter: number` (optional) - When provided, will cause an alert symbol on the gauge to begin flashing in the color upon which the needle currently rest, as defined in `ranges`.
+- `format: function(value) => string` (optional) - When provided, will be used to format the value of the metric for display.
+- `size: number` (default: 1) - When provided scales the gauge.
+
 ### `Section`
 
 Section is a surface that displays content and actions on a single topic.
@@ -785,10 +838,12 @@ If you want to have a button on the right side of an section title
 </Section>
 ```
 
+**New:** Sections can now be nested, and will automatically font size of the
+header according to their nesting level. Previously this was done via `level`
+prop, but now it is automatically calculated.
+
 - See inherited props: [Box](#box)
 - `title: string` - Title of the section.
-- `level: number` - Section level in hierarchy. Default is 1, higher number
-means deeper level of nesting. Must be an integer number.
 - `buttons: any` - Buttons to render aside the section title.
 - `fill: boolean` - If true, fills all available vertical space.
 - `fitted: boolean` - If true, removes all section padding.
@@ -829,6 +884,76 @@ Default is about 250ms, increase it if you still see flickering.
 the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
+
+### `Stack`
+
+A higher-level component, that is based on [Flex](#flex). The main difference
+from `Flex`, is that this component automatically adds spacing between
+all stack items, reducing the boilerplate that you have to write!
+
+Consists of two elements: `<Stack>` and `<Stack.Item>`.
+
+Stacks can be vertical by adding a `vertical` property.
+
+**Example:**
+
+```jsx
+<Stack>
+  <Stack.Item grow>
+    Button description
+  </Stack.Item>
+  <Stack.Item>
+    <Button>
+      Perform an action
+    </Button>
+  </Stack.Item>
+</Stack>
+```
+
+**Example of a high-level window layout:**
+
+Stacks can be used for high level window layout.
+Make sure to use the `fill` property.
+
+```jsx
+<Window>
+  <Window.Content>
+    <Stack fill>
+      <Stack.Item>
+        <Section fill>
+          Sidebar
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Stack fill vertical>
+          <Stack.Item grow>
+            <Section fill scrollable>
+              Main content
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              Bottom pane
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  </Window.Content>
+</Window>
+```
+
+**Props:**
+
+- See inherited props: [Flex](#flex)
+- `fill: boolean` - If set, stack will fill all available height.
+- `vertical: boolean` - If set, stack will work in vertical mode.
+
+### `Stack.Item`
+
+**Props:**
+
+- See inherited props: [Flex.Item](#flexitem)
 
 ### `Table`
 
@@ -902,25 +1027,41 @@ Notice that tabs do not contain state. It is your job to track the selected
 tab, handle clicks and place tab content where you need it. In return, you get
 a lot of flexibility in regards to how you can layout your tabs.
 
-Tabs also support a vertical configuration. This is usually paired with a
-[Flex](#flex) component to render tab content to the right.
+Tabs also support a vertical configuration. This is usually paired with
+[Stack](#stack) to render tab content to the right.
 
 ```jsx
-<Flex>
-  <Flex.Item>
+<Stack>
+  <Stack.Item>
     <Tabs vertical>
       ...
     </Tabs>
-  </Flex.Item>
-  <Flex.Item grow={1} basis={0}>
+  </Stack.Item>
+  <Stack.Item grow={1} basis={0}>
     Tab content.
-  </Flex.Item>
-</Flex>
+  </Stack.Item>
+</Stack>
+```
+
+If you need to combine a tab section with other elements, or if you want to
+add scrollable functionality to tabs, pair them with the [Section](#section)
+component:
+
+```jsx
+<Section fill fitted scrollable width="128px">
+  <Tabs vertical>
+    ...
+  </Tabs>
+  ... other things ...
+</Section>
 ```
 
 **Props:**
 
 - See inherited props: [Box](#box)
+- `fluid: boolean` - If true, tabs will take all available horizontal space.
+- `fill: boolean` - Similarly to `fill` on [Section](#section), tabs will fill
+all available vertical space. Only makes sense in a vertical configuration.
 - `vertical: boolean` - Use a vertical configuration, where tabs will be
 stacked vertically.
 - `children: Tab[]` - This component only accepts tabs as its children.
@@ -976,9 +1117,7 @@ it in one way or another.
 Example:
 
 ```jsx
-<Window
-  theme="hackerman"
-  resizable>
+<Window theme="hackerman">
   <Window.Content scrollable>
     Hello, world!
   </Window.Content>
@@ -992,7 +1131,9 @@ Example:
 - `theme: string` - A name of the theme.
   - For a list of themes, see `packages/tgui/styles/themes`.
 - `title: string` - Window title.
-- `resizable: boolean` - Controls resizability of the window.
+- `width: number` - Window width.
+- `height: number` - Window height.
+- `noClose: boolean` - Controls the ability to close the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be

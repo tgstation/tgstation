@@ -1,3 +1,5 @@
+#define SHADOW_REGEN_RATE 1.5
+
 /obj/effect/proc_holder/spell/targeted/shadowwalk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
@@ -13,6 +15,15 @@
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/spell/targeted/shadowwalk/cast_check(skipcharge = 0,mob/user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/area/noteleport_check = get_area(user)
+	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+		to_chat(user, "<span class='danger'>Some dull, universal force is stopping you from melting into the shadows here.</span>")
+		return FALSE
 
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
@@ -35,31 +46,44 @@
 			to_chat(user, "<span class='warning'>It isn't dark enough here!</span>")
 
 /obj/effect/dummy/phased_mob/shadow
-	name = "darkness"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	var/canmove = TRUE
 	var/mob/living/jaunter
-	density = FALSE
-	anchored = TRUE
-	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/dummy/phased_mob/shadow/Destroy()
+	jaunter = null
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/effect/dummy/phased_mob/shadow/process(delta_time)
+	var/turf/T = get_turf(src)
+	var/light_amount = T.get_lumcount()
+	if(!jaunter || jaunter.loc != src)
+		qdel(src)
+	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
+		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
+	check_light_level()
+
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
-	var/turf/newLoc = get_step(src,direction)
-	if(isspaceturf(newLoc))
+	var/turf/oldloc = loc
+	. = ..()
+	if(loc != oldloc)
+		check_light_level()
+
+/obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
+	. = ..()
+	if(. && isspaceturf(.))
 		to_chat(user, "<span class='warning'>It really would not be wise to go into space.</span>")
-		return
-	forceMove(newLoc)
-	check_light_level()
+		return FALSE
 
 /obj/effect/dummy/phased_mob/shadow/proc/check_light_level()
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
-	else if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)
@@ -67,32 +91,8 @@
 			visible_message("<span class='boldwarning'>[jaunter] is revealed by the light!</span>")
 		else
 			visible_message("<span class='boldwarning'>[jaunter] emerges from the darkness!</span>")
-		jaunter.forceMove(get_turf(src))
-		playsound(get_turf(jaunter), 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-		jaunter = null
+		playsound(loc, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	qdel(src)
 
-/obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
 
-/obj/effect/dummy/phased_mob/shadow/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/effect/dummy/phased_mob/shadow/process()
-	if(!jaunter)
-		qdel(src)
-	if(jaunter.loc != src)
-		qdel(src)
-	check_light_level()
-
-/obj/effect/dummy/phased_mob/shadow/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/shadow/bullet_act()
-	return BULLET_ACT_FORCE_PIERCE
-
-/obj/effect/dummy/phased_mob/shadow/singularity_act()
-	return
-
+#undef SHADOW_REGEN_RATE

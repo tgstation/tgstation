@@ -3,11 +3,11 @@
 #define MUSIC_MAXLINECHARS 300
 
 /**
-  * # Song datum
-  *
-  * These are the actual backend behind instruments.
-  * They attach to an atom and provide the editor + playback functionality.
-  */
+ * # Song datum
+ *
+ * These are the actual backend behind instruments.
+ * They attach to an atom and provide the editor + playback functionality.
+ */
 /datum/song
 	/// Name of the song
 	var/name = "Untitled"
@@ -38,7 +38,7 @@
 	var/max_repeats = 10
 
 	/// Our volume
-	var/volume = 75
+	var/volume = 35
 	/// Max volume
 	var/max_volume = 75
 	/// Min volume - This is so someone doesn't decide it's funny to set it to 0 and play invisible songs.
@@ -146,14 +146,16 @@
 	stop_playing()
 	SSinstruments.on_song_del(src)
 	lines = null
-	using_instrument = null
+	if(using_instrument)
+		using_instrument.songs_using -= src
+		using_instrument = null
 	allowed_instrument_ids = null
 	parent = null
 	return ..()
 
 /**
-  * Checks and stores which mobs can hear us. Terminates sounds for mobs that leave our range.
-  */
+ * Checks and stores which mobs can hear us. Terminates sounds for mobs that leave our range.
+ */
 /datum/song/proc/do_hearcheck()
 	last_hearcheck = world.time
 	var/list/old = hearing_mobs.Copy()
@@ -166,8 +168,8 @@
 		terminate_sound_mob(i)
 
 /**
-  * Sets our instrument, caching anything necessary for faster accessing. Accepts an ID, typepath, or instantiated instrument datum.
-  */
+ * Sets our instrument, caching anything necessary for faster accessing. Accepts an ID, typepath, or instantiated instrument datum.
+ */
 /datum/song/proc/set_instrument(datum/instrument/I)
 	terminate_all_sounds()
 	var/old_legacy
@@ -197,8 +199,8 @@
 				compile_chords()
 
 /**
-  * Attempts to start playing our song.
-  */
+ * Attempts to start playing our song.
+ */
 /datum/song/proc/start_playing(mob/user)
 	if(playing)
 		return
@@ -222,8 +224,8 @@
 	START_PROCESSING(SSinstruments, src)
 
 /**
-  * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
-  */
+ * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
+ */
 /datum/song/proc/stop_playing()
 	if(!playing)
 		return
@@ -237,8 +239,8 @@
 	user_playing = null
 
 /**
-  * Processes our song.
-  */
+ * Processes our song.
+ */
 /datum/song/proc/process_song(wait)
 	if(!length(compiled_chords) || should_stop_playing(user_playing))
 		stop_playing()
@@ -259,55 +261,55 @@
 				return
 
 /**
-  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
-  */
+ * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
+ */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
 	if(!tempodiv)
-		tempodiv = 1		// no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
+		tempodiv = 1 // no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
 	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
 
 /**
-  * Compiles chords.
-  */
+ * Compiles chords.
+ */
 /datum/song/proc/compile_chords()
 	legacy? compile_legacy() : compile_synthesized()
 
 /**
-  * Plays a chord.
-  */
+ * Plays a chord.
+ */
 /datum/song/proc/play_chord(list/chord)
 	// last value is timing information
 	for(var/i in 1 to (length(chord) - 1))
 		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing) : playkey_synth(chord[i], user_playing)
 
 /**
-  * Checks if we should halt playback.
-  */
+ * Checks if we should halt playback.
+ */
 /datum/song/proc/should_stop_playing(mob/user)
 	return QDELETED(parent) || !using_instrument || !playing
 
 /**
-  * Sanitizes tempo to a value that makes sense and fits the current world.tick_lag.
-  */
+ * Sanitizes tempo to a value that makes sense and fits the current world.tick_lag.
+ */
 /datum/song/proc/sanitize_tempo(new_tempo)
 	new_tempo = abs(new_tempo)
 	return clamp(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
 
 /**
-  * Gets our beats per minute based on our tempo.
-  */
+ * Gets our beats per minute based on our tempo.
+ */
 /datum/song/proc/get_bpm()
 	return 600 / tempo
 
 /**
-  * Sets our tempo from a beats-per-minute, sanitizing it to a valid number first.
-  */
+ * Sets our tempo from a beats-per-minute, sanitizing it to a valid number first.
+ */
 /datum/song/proc/set_bpm(bpm)
 	tempo = sanitize_tempo(600 / bpm)
 
 /**
-  * Updates the window for our users. Override down the line.
-  */
+ * Updates the window for our users. Override down the line.
+ */
 /datum/song/proc/updateDialog(mob/user)
 	ui_interact(user)
 
@@ -319,8 +321,8 @@
 	process_decay(world.tick_lag)
 
 /**
-  * Updates our cached linear/exponential falloff stuff, saving calculations down the line.
-  */
+ * Updates our cached linear/exponential falloff stuff, saving calculations down the line.
+ */
 /datum/song/proc/update_sustain()
 	// Exponential is easy
 	cached_exponential_dropoff = sustain_exponential_dropoff
@@ -331,32 +333,32 @@
 	cached_linear_dropoff = volume_decrease_per_decisecond
 
 /**
-  * Setter for setting output volume.
-  */
+ * Setter for setting output volume.
+ */
 /datum/song/proc/set_volume(volume)
 	src.volume = clamp(volume, max(0, min_volume), min(100, max_volume))
 	update_sustain()
 	updateDialog()
 
 /**
-  * Setter for setting how low the volume has to get before a note is considered "dead" and dropped
-  */
+ * Setter for setting how low the volume has to get before a note is considered "dead" and dropped
+ */
 /datum/song/proc/set_dropoff_volume(volume)
 	sustain_dropoff_volume = clamp(volume, INSTRUMENT_MIN_SUSTAIN_DROPOFF, 100)
 	update_sustain()
 	updateDialog()
 
 /**
-  * Setter for setting exponential falloff factor.
-  */
+ * Setter for setting exponential falloff factor.
+ */
 /datum/song/proc/set_exponential_drop_rate(drop)
 	sustain_exponential_dropoff = clamp(drop, INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX)
 	update_sustain()
 	updateDialog()
 
 /**
-  * Setter for setting linear falloff duration.
-  */
+ * Setter for setting linear falloff duration.
+ */
 /datum/song/proc/set_linear_falloff_duration(duration)
 	sustain_linear_duration = clamp(duration, 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN)
 	update_sustain()

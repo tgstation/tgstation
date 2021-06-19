@@ -1,7 +1,7 @@
 /datum/round_event_control/falsealarm
-	name 			= "False Alarm"
-	typepath 		= /datum/round_event/falsealarm
-	weight			= 20
+	name = "False Alarm"
+	typepath = /datum/round_event/falsealarm
+	weight = 20
 	max_occurrences = 5
 	var/forced_type //Admin abuse
 
@@ -45,8 +45,8 @@
 	if(event_control)
 		var/datum/round_event/Event = new event_control.typepath()
 		message_admins("False Alarm: [Event]")
-		Event.kill() 		//do not process this event - no starts, no ticks, no ends
-		Event.announce(TRUE) 	//just announce it like it's happening
+		Event.kill() //do not process this event - no starts, no ticks, no ends
+		Event.announce(TRUE) //just announce it like it's happening
 
 /proc/gather_false_events(players_amt, gamemode)
 	. = list()

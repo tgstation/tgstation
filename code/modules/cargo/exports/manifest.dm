@@ -1,7 +1,7 @@
 // Approved manifest.
-// +200 credits flat.
+// +80 credits flat.
 /datum/export/manifest_correct
-	cost = 200
+	cost =  CARGO_CRATE_VALUE * 0.4
 	k_elasticity = 0
 	unit_name = "approved manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
@@ -18,7 +18,7 @@
 // Correctly denied manifest.
 // Refunds the package cost minus the cost of crate.
 /datum/export/manifest_error_denied
-	cost = -500
+	cost = -CARGO_CRATE_VALUE
 	k_elasticity = 0
 	unit_name = "correctly denied manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
@@ -60,7 +60,7 @@
 // Erroneously denied manifest.
 // Substracts the package cost minus the cost of crate.
 /datum/export/manifest_correct_denied
-	cost = 500
+	cost = CARGO_CRATE_VALUE
 	unit_name = "erroneously denied manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 

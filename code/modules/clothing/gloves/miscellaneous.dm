@@ -9,7 +9,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = 75
+	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
@@ -146,6 +146,12 @@
 	icon_state = "wizard"
 	inhand_icon_state = "purplegloves"
 
+/obj/item/clothing/gloves/radio
+	name = "translation gloves"
+	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
+	icon_state = "radio_g"
+	inhand_icon_state = "radio_g"
+
 /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
 	name = "head of personnel's envirogloves"
 	desc = "Covers up those scandalous, bony hands. Appears to be an attempt at making a replica of the captain's gloves."
@@ -156,11 +162,7 @@
 	name = "chief engineer's envirogloves"
 	icon_state = "ceplasma"
 	inhand_icon_state = "ceplasma"
-
-/obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
-	name = "chief medical officer's envirogloves"
-	icon_state = "cmoplasma"
-	inhand_icon_state = "cmoplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/research_director
 	name = "research director's envirogloves"

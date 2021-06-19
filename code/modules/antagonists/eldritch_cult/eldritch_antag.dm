@@ -6,6 +6,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
+	hijack_speed = 0.5
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
@@ -18,25 +19,25 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='cult'>The book whispers, the forbidden knowledge walks once again!<br>\
-	Your book allows you to research abilities, read it very carefully! you cannot undo what has been done!<br>\
-	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br> \
+	to_chat(owner, "<span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!<br>\
+	Your book allows you to research abilities. Read it very carefully, for you cannot undo what has been done!<br>\
+	You gain charges by either collecting influences or sacrificing people tracked by the living heart.<br> \
 	You can find a basic guide at : https://tgstation13.org/wiki/Heresy_101 </span>")
 
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
 	if(ishuman(current))
 		forge_primary_objectives()
-		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
-		gain_knowledge(/datum/eldritch_knowledge/living_heart)
-		gain_knowledge(/datum/eldritch_knowledge/codex_cicatrix)
+		for(var/eldritch_knowledge in GLOB.heretic_start_knowledge)
+			gain_knowledge(eldritch_knowledge)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
+	RegisterSignal(owner.current,COMSIG_LIVING_DEATH,.proc/on_death)
 	if(give_equipment)
 		equip_cultist()
 	return ..()
@@ -52,6 +53,8 @@
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
+
+	on_death()
 
 	return ..()
 
@@ -84,40 +87,62 @@
 
 /datum/antagonist/heretic/process()
 
+	if(owner.current.stat == DEAD)
+		return
+
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
 
+///What happens to the heretic once he dies, used to remove any custom perks
+/datum/antagonist/heretic/proc/on_death()
+
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		EK.on_death(owner.current)
+
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
-	for(var/i in 1 to 2)
-		var/pck = pick("assasinate","stalk","protect")
-		switch(pck)
-			if("assasinate")
-				var/datum/objective/assassinate/A = new
-				A.owner = owner
-				var/list/owners = A.get_owners()
-				A.find_target(owners,protection)
-				assasination += A.target
-				objectives += A
-			if("stalk")
-				var/datum/objective/stalk/S = new
-				S.owner = owner
-				S.find_target()
-				objectives += S
-			if("protect")
-				var/datum/objective/protect/P = new
-				P.owner = owner
-				var/list/owners = P.get_owners()
-				P.find_target(owners,assasination)
-				protection += P.target
-				objectives += P
+
+	var/choose_list_begin = list("assassinate","protect")
+	var/choose_list_end = list("assassinate","hijack","protect","glory")
+
+	var/pck1 = pick(choose_list_begin)
+	var/pck2 = pick(choose_list_end)
+
+	forge_objective(pck1,assasination,protection)
+	forge_objective(pck2,assasination,protection)
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
 	SE.update_explanation_text()
 	objectives += SE
+
+/datum/antagonist/heretic/proc/forge_objective(string,assasination,protection)
+	switch(string)
+		if("assassinate")
+			var/datum/objective/assassinate/A = new
+			A.owner = owner
+			var/list/owners = A.get_owners()
+			A.find_target(owners,protection)
+			assasination += A.target
+			objectives += A
+		if("hijack")
+			var/datum/objective/hijack/hijack = new
+			hijack.owner = owner
+			objectives += hijack
+		if("glory")
+			var/datum/objective/martyr/martyrdom = new
+			martyrdom.owner = owner
+			objectives += martyrdom
+		if("protect")
+			var/datum/objective/protect/P = new
+			P.owner = owner
+			var/list/owners = P.get_owners()
+			P.find_target(owners,assasination)
+			protection += P.target
+			objectives += P
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -125,7 +150,7 @@
 	if(mob_override)
 		current = mob_override
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
-	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
+	handle_clown_mutation(current, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
@@ -160,7 +185,7 @@
 				cultiewin = FALSE
 			count++
 	if(ascended)
-		parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
+		parts += "<span class='greentext big'>THE HERETIC ASCENDED!</span>"
 	else
 		if(cultiewin)
 			parts += "<span class='greentext'>The heretic was successful!</span>"
@@ -209,33 +234,6 @@
 ////////////////
 // Objectives //
 ////////////////
-
-/datum/objective/stalk
-	name = "spendtime"
-	var/timer = 5 MINUTES
-
-/datum/objective/stalk/process()
-	if(owner?.current.stat != DEAD && target?.current.stat != DEAD && (target in view(5,owner.current)))
-		timer -= 1 SECONDS
-	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
-	if(timer <= 0)
-		STOP_PROCESSING(SSprocessing,src)
-
-/datum/objective/stalk/Destroy(force, ...)
-	STOP_PROCESSING(SSprocessing,src)
-	return ..()
-
-/datum/objective/stalk/update_explanation_text()
-	//we want to start processing after we set the timer
-	timer += rand(-3 MINUTES, 3 MINUTES)
-	START_PROCESSING(SSprocessing,src)
-	if(target?.current)
-		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
-	else
-		explanation_text = "Free Objective"
-
-/datum/objective/stalk/check_completion()
-	return timer <= 0 || explanation_text == "Free Objective"
 
 /datum/objective/sacrifice_ecult
 	name = "sacrifice"

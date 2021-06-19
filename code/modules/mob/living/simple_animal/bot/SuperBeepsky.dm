@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
-	weapon.attack_self(src)
+	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)
@@ -51,7 +51,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
+		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 2)
 		back_to_idle()
 
 
@@ -59,27 +59,27 @@
 	if(!on)
 		return
 	switch(mode)
-		if(BOT_IDLE)		// idle
-			update_icon()
+		if(BOT_IDLE) // idle
+			update_appearance()
 			walk_to(src,0)
-			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
-		if(BOT_HUNT)		// hunting for perp
-			update_icon()
+			look_for_perp() // see if any criminals are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
+		if(BOT_HUNT) // hunting for perp
+			update_appearance()
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
 				walk_to(src,0)
 				back_to_idle()
 				return
-			if(target)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+			if(target) // make sure target exists
+				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
 					target_lastloc = target.loc //stun_attack() can clear the target if they're dead, so this needs to be set first
 					stun_attack(target)
 					set_anchored(TRUE)
 					return
-				else								// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))

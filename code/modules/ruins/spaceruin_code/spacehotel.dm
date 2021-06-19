@@ -1,4 +1,4 @@
-///////////	spacehotel items
+/////////// spacehotel items
 
 
 /obj/item/paper/fluff/ruins/spacehotel/notice

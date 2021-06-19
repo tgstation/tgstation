@@ -1,4 +1,4 @@
-/datum/config_entry/flag/sql_enabled	// for sql switching
+/datum/config_entry/flag/sql_enabled // for sql switching
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/address

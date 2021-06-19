@@ -7,7 +7,7 @@
 /obj/structure/door_assembly
 	var/datum/airlock_maker/maker = null
 
-/obj/structure/door_assembly/attack_hand()
+/obj/structure/door_assembly/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -45,8 +45,9 @@
 	var/list/leftcolumn = list()
 	var/list/rightcolumn = list()
 	leftcolumn += "<u><b>Required Access</b></u>"
-	for(var/access in get_all_accesses())
-		leftcolumn += linkpretty("access=[access]",get_access_desc(access),access in access_used)
+	var/list/all_station_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
+	for(var/access in all_station_access)
+		leftcolumn += linkpretty("access=[access]",SSid_access.get_access_desc(access),access in access_used)
 	leftcolumn += "Require all listed accesses: [linkpretty("reqall",null,require_all)]"
 
 	rightcolumn += "<u><b>Paintjob</b></u>"

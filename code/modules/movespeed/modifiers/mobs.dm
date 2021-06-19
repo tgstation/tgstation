@@ -16,6 +16,9 @@
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 
+/datum/movespeed_modifier/resonance
+	multiplicative_slowdown = 0.75
+
 /datum/movespeed_modifier/damage_slowdown
 	blacklisted_movetypes = FLOATING|FLYING
 	variable = TRUE
@@ -90,7 +93,7 @@
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/tarantula_web
-	multiplicative_slowdown = 3
+	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING

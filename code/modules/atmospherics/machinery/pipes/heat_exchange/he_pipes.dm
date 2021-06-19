@@ -2,7 +2,7 @@
 	var/minimum_temperature_difference = 20
 	var/thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 	color = "#404040"
-	buckle_lying = -1
+	buckle_lying = NO_BUCKLE_LYING
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
@@ -25,7 +25,7 @@
 	var/turf/T = loc
 	if(istype(T))
 		if(islava(T))
-			environment_temperature = 5000
+			environment_temperature = 5000 //Yuck
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
@@ -33,7 +33,6 @@
 			environment_temperature = OT.GetTemperature()
 	else
 		environment_temperature = T.temperature
-
 	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
 		parent.temperature_interact(T, volume, thermal_conductivity)
 
@@ -49,7 +48,7 @@
 			L.bodytemperature = avg_temp
 		pipe_air.temperature = avg_temp
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/process()
+/obj/machinery/atmospherics/pipe/heat_exchanging/process(delta_time)
 	if(!parent)
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
@@ -78,4 +77,4 @@
 		if(pipe_air.temperature > heat_limit + 1)
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)

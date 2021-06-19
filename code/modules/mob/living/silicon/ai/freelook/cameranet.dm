@@ -106,7 +106,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 					if(USE_STATIC_OPAQUE)
 						client.images -= GLOB.cameranet.obscured
 
-// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
+// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
 
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 	if(!SSticker || (opacity_check && !A.opacity))
@@ -179,12 +179,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		if(chunk.visibleTurfs[position])
 			return 1
 	return 0
-
-/datum/cameranet/proc/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
-
-	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))
 
 /obj/effect/overlay/camera_static
 	name = "static"

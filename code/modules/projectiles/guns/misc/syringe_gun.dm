@@ -18,6 +18,7 @@
 /obj/item/gun/syringe/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
+	recharge_newshot()
 
 /obj/item/gun/syringe/handle_atom_del(atom/A)
 	. = ..()
@@ -33,9 +34,9 @@
 	return syringes.len
 
 /obj/item/gun/syringe/process_chamber()
-	if(chambered && !chambered.BB) //we just fired
+	if(chambered && !chambered.loaded_projectile) //we just fired
 		recharge_newshot()
-	update_icon()
+	update_appearance()
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
@@ -54,11 +55,14 @@
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
-	update_icon()
+	update_appearance()
 
 	return TRUE
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
+	if(istype(A, /obj/item/reagent_containers/syringe/bluespace))
+		to_chat(user, "<span class='notice'>[A] is too big to load into [src].</span>")
+		return TRUE
 	if(istype(A, /obj/item/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(A, src))
@@ -66,7 +70,7 @@
 			to_chat(user, "<span class='notice'>You load [A] into \the [src].</span>")
 			syringes += A
 			recharge_newshot()
-			update_icon()
+			update_appearance()
 			playsound(loc, load_sound, 40)
 			return TRUE
 		else
@@ -95,6 +99,7 @@
 	force = 2 //Also very weak because it's smaller
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
+	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"

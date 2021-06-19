@@ -14,9 +14,11 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
+	var/mob/living/owner
 
-/obj/effect/proc_holder/Initialize()
+/obj/effect/proc_holder/Initialize(mob/living/owner)
 	. = ..()
+	src.owner = owner
 	if(has_action)
 		action = new base_action(src)
 
@@ -35,8 +37,7 @@
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
-	if (action)
-		qdel(action)
+	QDEL_NULL(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -75,7 +76,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	active = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
@@ -87,7 +88,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(ranged_ability_user, msg)
 	ranged_ability_user = null
 	active = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -103,7 +104,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
-	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
+	var/charge_max = 10 SECONDS //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
 	var/recharging = TRUE
@@ -285,22 +286,22 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return
 
 /**
-  * can_target: Checks if we are allowed to cast the spell on a target.
-  *
-  * Arguments:
-  * * target The atom that is being targeted by the spell.
-  * * user The mob using the spell.
-  * * silent If the checks should not give any feedback messages.
-  */
+ * can_target: Checks if we are allowed to cast the spell on a target.
+ *
+ * Arguments:
+ * * target The atom that is being targeted by the spell.
+ * * user The mob using the spell.
+ * * silent If the checks should not give any feedback messages.
+ */
 /obj/effect/proc_holder/spell/proc/can_target(atom/target, mob/user, silent = FALSE)
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	recharging = TRUE
 
-/obj/effect/proc_holder/spell/process()
+/obj/effect/proc_holder/spell/process(delta_time)
 	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
-		charge_counter += 2	//processes 5 times per second instead of 10.
+		charge_counter += delta_time * 10
 		if(charge_counter >= charge_max)
 			action.UpdateButtonIcon()
 			charge_counter = charge_max
@@ -309,7 +310,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation(user)
-	if(user && user.ckey)
+	if(user?.ckey)
 		user.log_message("<span class='danger'>cast the spell [name].</span>", LOG_ATTACK)
 	if(recharge)
 		recharging = TRUE
@@ -567,3 +568,53 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
 	user.adjustBruteLoss(-10)
 	user.adjustFireLoss(-10)
+
+/obj/effect/proc_holder/spell/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	if(clothes_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_ROBELESS, "Set Robeless")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_ROBELESS, "Unset Robeless")
+
+	if(cult_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_CULT, "Set Cult Robeless")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_CULT, "Unset Cult Robeless")
+
+	if(human_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_HUMANONLY, "Unset Require Humanoid Mob")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_HUMANONLY, "Set Require Humanoid Mob")
+
+	if(nonabstract_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_NONABSTRACT, "Unset Require Body")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_NONABSTRACT, "Set Require Body")
+
+/obj/effect/proc_holder/spell/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_SPELL_SET_ROBELESS])
+		clothes_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_ROBELESS])
+		clothes_req = TRUE
+		return
+	if(href_list[VV_HK_SPELL_SET_CULT])
+		cult_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_CULT])
+		cult_req = TRUE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_HUMANONLY])
+		human_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_SET_HUMANONLY])
+		human_req = TRUE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_NONABSTRACT])
+		nonabstract_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_SET_NONABSTRACT])
+		nonabstract_req = TRUE
+		return

@@ -3,6 +3,7 @@
 /obj/item/storage/bag/money
 	name = "money bag"
 	icon_state = "moneybag"
+	worn_icon_state = "moneybag"
 	force = 10
 	throwforce = 0
 	resistance_flags = FLAMMABLE

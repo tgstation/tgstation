@@ -42,11 +42,11 @@
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "l" = (
-/obj/item/reagent_containers/food/snacks/grown/mushroom/angel,
+/obj/item/food/grown/mushroom/angel,
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "m" = (
-/obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap,
+/obj/item/food/grown/mushroom/libertycap,
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "n" = (
@@ -73,7 +73,7 @@
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "s" = (
-/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita,
+/obj/item/food/grown/mushroom/amanita,
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "t" = (
@@ -104,7 +104,7 @@
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "D" = (
-/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+/obj/item/food/grown/mushroom/chanterelle,
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/unpowered/gaia)
 

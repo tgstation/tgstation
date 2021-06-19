@@ -36,7 +36,7 @@
 		to_chat(user, "<span class='warning'>You cannot evolve when you are cuffed!</span>")
 		return
 
-	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
+	if(L.amount_grown >= L.max_grown) //TODO ~Carn
 		to_chat(L, "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>")
 		to_chat(L, "<span class='info'>There are three to choose from:</span>")
 		to_chat(L, "<span class='name'>Hunters</span> <span class='info'>are the most agile caste, tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>")

@@ -5,7 +5,7 @@
 	icon_state = "seed-watermelon"
 	species = "watermelon"
 	plantname = "Watermelon Vines"
-	product = /obj/item/reagent_containers/food/snacks/grown/watermelon
+	product = /obj/item/food/grown/watermelon
 	lifespan = 50
 	endurance = 40
 	instability = 20
@@ -15,27 +15,29 @@
 	mutatelist = list(/obj/item/seeds/watermelon/holy, /obj/item/seeds/watermelon/barrel)
 	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
-/obj/item/seeds/watermelon/suicide_act(mob/user)
+/obj/item/seeds/watermelon/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.gib()
 	new product(drop_location())
 	qdel(src)
 	return MANUAL_SUICIDE
 
-/obj/item/reagent_containers/food/snacks/grown/watermelon
+/obj/item/food/grown/watermelon
 	seed = /obj/item/seeds/watermelon
 	name = "watermelon"
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
-	slice_path = /obj/item/reagent_containers/food/snacks/watermelonslice
-	slices_num = 5
-	dried_type = null
 	w_class = WEIGHT_CLASS_NORMAL
-	filling_color = "#008000"
-	bitesize_mod = 3
-	foodtype = FRUIT
+	bite_consumption_mod = 3
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
+
+/obj/item/food/grown/watermelon/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20)
+
+/obj/item/food/grown/watermelon/make_dryable()
+	return //No drying
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
@@ -44,40 +46,44 @@
 	icon_state = "seed-holymelon"
 	species = "holymelon"
 	plantname = "Holy Melon Vines"
-	product = /obj/item/reagent_containers/food/snacks/grown/holymelon
+	product = /obj/item/food/grown/holymelon
 	genes = list(/datum/plant_gene/trait/glow/yellow)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 	graft_gene = /datum/plant_gene/trait/glow/yellow
 
-/obj/item/reagent_containers/food/snacks/grown/holymelon
+/obj/item/food/grown/holymelon
 	seed = /obj/item/seeds/watermelon/holy
 	name = "holymelon"
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
-	filling_color = "#FFD700"
-	dried_type = null
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
-/obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
+
+/obj/item/food/grown/holymelon/make_dryable()
+	return //No drying
+
+/obj/item/food/grown/holymelon/Initialize()
 	. = ..()
 	var/uses = 1
 	if(seed)
 		uses = round(seed.potency / 20)
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
 
-/obj/item/reagent_containers/food/snacks/grown/holymelon/proc/block_magic(mob/user, major)
+/obj/item/food/grown/holymelon/proc/block_magic(mob/user, major)
 	if(major)
 		to_chat(user, "<span class='warning'>[src] hums slightly, and seems to decay a bit.</span>")
 
-/obj/item/reagent_containers/food/snacks/grown/holymelon/proc/expire(mob/user)
+/obj/item/food/grown/holymelon/proc/expire(mob/user)
 	to_chat(user, "<span class='warning'>[src] rapidly turns into ash!</span>")
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
-/obj/item/reagent_containers/food/snacks/grown/holymelon/checkLiked(fraction, mob/M)    //chaplains sure love holymelons
+
+/*
+/obj/item/food/grown/holymelon/checkLiked(fraction, mob/M)    //chaplains sure love holymelons
 	if(!ishuman(M))
 		return
 	if(last_check_time + 5 SECONDS >= world.time)
@@ -90,6 +96,9 @@
 	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
 	last_check_time = world.time
 
+
+*/
+
 /// Barrel melon Seeds
 /obj/item/seeds/watermelon/barrel
 	name = "pack of barrelmelon seeds"
@@ -97,7 +106,7 @@
 	icon_state = "seed-barrelmelon"
 	species = "barrelmelon"
 	plantname = "Barrel Melon Vines"
-	product = /obj/item/reagent_containers/food/snacks/grown/barrelmelon
+	product = /obj/item/food/grown/barrelmelon
 	genes = list(/datum/plant_gene/trait/brewing)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/ethanol/ale = 0.2, /datum/reagent/consumable/nutriment = 0.1)
@@ -105,10 +114,9 @@
 	graft_gene = /datum/plant_gene/trait/brewing
 
 /// Barrel melon Fruit
-/obj/item/reagent_containers/food/snacks/grown/barrelmelon
+/obj/item/food/grown/barrelmelon
 	seed = /obj/item/seeds/watermelon/barrel
 	name = "barrelmelon"
 	desc = "The nutriments within this melon have been compressed and fermented into rich alcohol."
 	icon_state = "barrelmelon"
-	filling_color = "#b47b31"
 	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.

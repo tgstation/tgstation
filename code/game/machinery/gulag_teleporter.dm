@@ -11,6 +11,7 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
+	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
 	use_power = IDLE_POWER_USE
@@ -23,6 +24,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/jumpskirt_type = /obj/item/clothing/under/rank/prisoner/skirt
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
+	var/emergency_plasglove_type = /obj/item/clothing/gloves/color/plasmaman
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
 		/obj/item/implant,
@@ -55,7 +57,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
-		update_icon()
+		update_appearance()
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -67,22 +69,22 @@ The console is located at computer/gulag_teleporter.dm
 	return ..()
 
 /obj/machinery/gulag_teleporter/update_icon_state()
-	icon_state = initial(icon_state) + (state_open ? "_open" : "")
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 	//no power or maintenance
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
 		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
-		return
+		return ..()
 
 	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
-		return
+		return ..()
 
 	//running and someone in there
 	if(occupant)
 		icon_state += "_occupied"
-		return
+	return ..()
 
 
 /obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)
@@ -153,11 +155,13 @@ The console is located at computer/gulag_teleporter.dm
 	var/mob/living/carbon/human/prisoner = occupant
 	if(!isplasmaman(prisoner) && jumpsuit_type)
 		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
-		prisoner.equip_to_appropriate_slot(new suit_or_skirt)
+		prisoner.equip_to_appropriate_slot(new suit_or_skirt, qdel_on_fail = TRUE)
+	if(isplasmaman(prisoner) && !prisoner.gloves && emergency_plasglove_type)
+		prisoner.equip_to_appropriate_slot(new emergency_plasglove_type, qdel_on_fail = TRUE)
 	if(shoes_type)
-		prisoner.equip_to_appropriate_slot(new shoes_type)
+		prisoner.equip_to_appropriate_slot(new shoes_type, qdel_on_fail = TRUE)
 	if(id)
-		prisoner.equip_to_appropriate_slot(id)
+		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
 

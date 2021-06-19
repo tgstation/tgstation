@@ -3,7 +3,7 @@
 /datum/unit_test/reagent_id_typos
 
 /datum/unit_test/reagent_id_typos/Run()
-	build_chemical_reactions_list()
+	build_chemical_reactions_lists()
 	build_chemical_reagent_list()
 
 	for(var/I in GLOB.chemical_reactions_list)

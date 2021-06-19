@@ -47,7 +47,7 @@
 		broken = TRUE
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 2)
+	new /obj/item/stack/sheet/iron(drop_location(), 2)
 	new /obj/item/stack/cable_coil(drop_location(), 2)
 	qdel(src)
 
@@ -61,7 +61,7 @@
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/structure/sign/barsign/attack_hand(mob/user)
+/obj/structure/sign/barsign/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

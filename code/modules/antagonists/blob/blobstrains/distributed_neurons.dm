@@ -1,10 +1,10 @@
 //kills unconscious targets and turns them into blob zombies, produces fragile spores when killed.  Spore produced by factories are sentient.
 /datum/blobstrain/reagent/distributed_neurons
 	name = "Distributed Neurons"
-	description = "will do very low toxin damage and turns unconscious targets into blob zombies."
+	description = "will do medium-low toxin damage and turns unconscious targets into blob zombies."
 	effectdesc = "will also produce fragile spores when killed.  Spores produced by factories are sentient."
-	shortdesc = "will do very low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
-	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans."
+	shortdesc = "will do medium-low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
+	analyzerdescdamage = "Does medium-low toxin damage and kills unconscious humans."
 	analyzerdesceffect = "Produces spores when killed.  Spores produced by factories are sentient."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
@@ -24,17 +24,18 @@
 	name = "Distributed Neurons"
 	color = "#E88D5D"
 
-/datum/reagent/blob/distributed_neurons/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, TOX)
-	if(O && ishuman(M))
-		if(M.stat == UNCONSCIOUS || M.stat == HARD_CRIT)
-			M.death() //sleeping in a fight? bad plan.
-		if(M.stat == DEAD && O.can_buy(5))
-			var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(M))
-			BS.overmind = O
-			BS.update_icons()
-			O.blob_mobs.Add(BS)
-			BS.Zombify(M)
-			O.add_points(-5)
-			to_chat(O, "<span class='notice'>Spent 5 resources for the zombification of [M].</span>")
+/datum/reagent/blob/distributed_neurons/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
+	exposed_mob.apply_damage(0.6*reac_volume, TOX)
+	if(overmind && ishuman(exposed_mob))
+		if(exposed_mob.stat == UNCONSCIOUS || exposed_mob.stat == HARD_CRIT)
+			exposed_mob.death() //sleeping in a fight? bad plan.
+		if(exposed_mob.stat == DEAD && overmind.can_buy(5))
+			var/mob/living/simple_animal/hostile/blob/blobspore/spore = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(exposed_mob))
+			spore.overmind = overmind
+			spore.update_icons()
+			overmind.blob_mobs.Add(spore)
+			spore.Zombify(exposed_mob)
+			overmind.add_points(-5)
+			to_chat(overmind, "<span class='notice'>Spent 5 resources for the zombification of [exposed_mob].</span>")

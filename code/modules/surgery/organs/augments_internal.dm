@@ -61,7 +61,7 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				ADD_TRAIT(I, TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
+				ADD_TRAIT(I, TRAIT_NODROP, IMPLANT_TRAIT)
 
 	else
 		release_items()
@@ -85,7 +85,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		REMOVE_TRAIT(I, TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
+		REMOVE_TRAIT(I, TRAIT_NODROP, IMPLANT_TRAIT)
 	stored_items = list()
 
 

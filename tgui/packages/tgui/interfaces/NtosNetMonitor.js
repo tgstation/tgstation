@@ -1,7 +1,6 @@
-import { Section, Box, Button, NoticeBox, LabeledList, NumberInput } from "../components";
-import { useBackend } from "../backend";
-import { Fragment } from "inferno";
-import { NtosWindow } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosNetMonitor = (props, context) => {
   const { act, data } = useBackend(context);
@@ -20,7 +19,7 @@ export const NtosNetMonitor = (props, context) => {
     ntnetlogs = [],
   } = data;
   return (
-    <NtosWindow resizable>
+    <NtosWindow>
       <NtosWindow.Content scrollable>
         <NoticeBox>
           WARNING: Disabling wireless transmitters when using
@@ -85,7 +84,7 @@ export const NtosNetMonitor = (props, context) => {
         </Section>
         <Section title="Security Systems">
           {!!idsalarm && (
-            <Fragment>
+            <>
               <NoticeBox>
                 NETWORK INCURSION DETECTED
               </NoticeBox>
@@ -93,13 +92,13 @@ export const NtosNetMonitor = (props, context) => {
                 Abnormal activity has been detected in the network.
                 Check system logs for more information
               </Box>
-            </Fragment>
+            </>
           )}
           <LabeledList>
             <LabeledList.Item
               label="IDS Status"
               buttons={(
-                <Fragment>
+                <>
                   <Button
                     icon={idsstatus ? 'power-off' : 'times'}
                     content={idsstatus ? 'ENABLED' : 'DISABLED'}
@@ -110,7 +109,7 @@ export const NtosNetMonitor = (props, context) => {
                     content="Reset"
                     color="bad"
                     onClick={() => act('resetIDS')} />
-                </Fragment>
+                </>
               )} />
             <LabeledList.Item
               label="Max Log Count"

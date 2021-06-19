@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Simple bots should no longer randomly fail to respond to summons even when a path is available"

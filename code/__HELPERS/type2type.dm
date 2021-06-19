@@ -1,11 +1,11 @@
 /*
  * Holds procs designed to change one type of value, into another.
  * Contains:
- *			file2list
- *			angle2dir
- *			angle2text
- *			worldtime2text
- *			text2dir_extended & dir2text_short
+ * file2list
+ * angle2dir
+ * angle2text
+ * worldtime2text
+ * text2dir_extended & dir2text_short
  */
 
 
@@ -341,7 +341,7 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
 
-/proc/color2hex(color)	//web colors
+/proc/color2hex(color) //web colors
 	if(!color)
 		return "#000000"
 

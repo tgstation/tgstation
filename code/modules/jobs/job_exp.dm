@@ -1,7 +1,6 @@
 GLOBAL_LIST_EMPTY(exp_to_update)
 GLOBAL_PROTECT(exp_to_update)
 
-
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
@@ -56,71 +55,6 @@ GLOBAL_PROTECT(exp_to_update)
 		if(job in explist)
 			amount += explist[job]
 	return amount
-
-/client/proc/get_exp_report()
-	if(!CONFIG_GET(flag/use_exp_tracking))
-		return "Tracking is disabled in the server configuration file."
-	var/list/play_records = prefs.exp
-	if(!play_records.len)
-		set_exp_from_db()
-		play_records = prefs.exp
-		if(!play_records.len)
-			return "[key] has no records."
-	var/return_text = list()
-	return_text += "<UL>"
-	var/list/exp_data = list()
-	for(var/category in SSjob.name_occupations)
-		if(play_records[category])
-			exp_data[category] = text2num(play_records[category])
-		else
-			exp_data[category] = 0
-	for(var/category in GLOB.exp_specialmap)
-		if(category == EXP_TYPE_SPECIAL || category == EXP_TYPE_ANTAG)
-			if(GLOB.exp_specialmap[category])
-				for(var/innercat in GLOB.exp_specialmap[category])
-					if(play_records[innercat])
-						exp_data[innercat] = text2num(play_records[innercat])
-					else
-						exp_data[innercat] = 0
-		else
-			if(play_records[category])
-				exp_data[category] = text2num(play_records[category])
-			else
-				exp_data[category] = 0
-	if(prefs.db_flags & DB_FLAG_EXEMPT)
-		return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
-
-	for(var/dep in exp_data)
-		if(exp_data[dep] > 0)
-			if(exp_data[EXP_TYPE_LIVING] > 0)
-				var/percentage = num2text(round(exp_data[dep]/exp_data[EXP_TYPE_LIVING]*100))
-				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([percentage]%)</LI>"
-			else
-				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] </LI>"
-	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(src,R_ADMIN))
-		return_text += "<LI>Admin (all jobs auto-unlocked)</LI>"
-	return_text += "</UL>"
-	var/list/jobs_locked = list()
-	var/list/jobs_unlocked = list()
-	for(var/datum/job/job in SSjob.occupations)
-		if(job.exp_requirements && job.exp_type)
-			if(!job_is_xp_locked(job.title))
-				continue
-			else if(!job.required_playtime_remaining(mob.client))
-				jobs_unlocked += job.title
-			else
-				var/xp_req = job.get_exp_req_amount()
-				jobs_locked += "[job.title] ([get_exp_format(text2num(calc_exp_type(job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
-	if(jobs_unlocked.len)
-		return_text += "<BR><BR>Jobs Unlocked:<UL><LI>"
-		return_text += jobs_unlocked.Join("</LI><LI>")
-		return_text += "</LI></UL>"
-	if(jobs_locked.len)
-		return_text += "<BR><BR>Jobs Not Unlocked:<UL><LI>"
-		return_text += jobs_locked.Join("</LI><LI>")
-		return_text += "</LI></UL>"
-	return return_text
-
 
 /client/proc/get_exp_living(pure_numeric = FALSE)
 	if(!prefs.exp || !prefs.exp[EXP_TYPE_LIVING])
@@ -251,7 +185,7 @@ GLOBAL_PROTECT(exp_to_update)
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
 			to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
-	else if(minutes)	//Let "refresh" checks go through
+	else if(minutes) //Let "refresh" checks go through
 		return
 
 	for(var/jtype in play_records)
@@ -286,6 +220,6 @@ GLOBAL_PROTECT(exp_to_update)
 	if(flags_read.NextRow())
 		prefs.db_flags = text2num(flags_read.item[1])
 	else if(isnull(prefs.db_flags))
-		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
+		prefs.db_flags = 0 //This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE

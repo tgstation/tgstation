@@ -35,8 +35,8 @@
 
 /datum/bioware/grounded_nerves/on_gain()
 	..()
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "grounded_nerves")
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, EXPERIMENTAL_SURGERY_TRAIT)
 
 /datum/bioware/grounded_nerves/on_lose()
 	..()
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "grounded_nerves")
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, EXPERIMENTAL_SURGERY_TRAIT)

@@ -132,7 +132,7 @@
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aA" = (
 /obj/machinery/door/airlock/bananium/glass{
 	name = "Emergency Shuttle Greentext"

@@ -26,7 +26,7 @@
 				playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, FALSE)
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 			active_apc.locked = TRUE
-			active_apc.update_icon()
+			active_apc.update_appearance()
 			active_apc.remote_control = null
 			active_apc = null
 
@@ -37,7 +37,7 @@
 	..()
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
+	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !(APC.area.area_flags & NO_ALERTS)
 
 /obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	operator = user
@@ -80,8 +80,10 @@
 	return data
 
 /obj/machinery/computer/apc_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("log-in")
 			if(obj_flags & EMAGGED)
@@ -125,7 +127,7 @@
 				playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, FALSE)
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 				active_apc.locked = TRUE
-				active_apc.update_icon()
+				active_apc.update_appearance()
 				active_apc.remote_control = null
 				active_apc = null
 			APC.remote_control = src
@@ -138,7 +140,7 @@
 				playsound(APC, 'sound/machines/boltsup.ogg', 25, FALSE)
 				playsound(APC, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 			APC.locked = FALSE
-			APC.update_icon()
+			APC.update_appearance()
 			active_apc = APC
 		if("check-logs")
 			log_activity("Checked Logs")
@@ -151,8 +153,17 @@
 			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
 			if(!target)
 				return
-			target.vars[type] = target.setsubsystem(text2num(value))
-			target.update_icon()
+
+			value = target.setsubsystem(text2num(value))
+			switch(type) // Sanity check
+				if("equipment", "lighting", "environ")
+					target.vars[type] = value
+				else
+					message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set [type] on [target] to [value]")
+					log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set [type] on [target] to [value]")
+					return
+
+			target.update_appearance()
 			target.update()
 			var/setTo = ""
 			switch(target.vars[type])
@@ -178,7 +189,7 @@
 		return
 	obj_flags |= EMAGGED
 	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)

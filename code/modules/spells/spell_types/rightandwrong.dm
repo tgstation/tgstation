@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/ar,
 	/obj/item/gun/ballistic/revolver/mateba,
 	/obj/item/gun/ballistic/rifle/boltaction,
-	/obj/item/pneumatic_cannon/speargun,
+	/obj/item/gun/ballistic/rifle/boltaction/harpoon,
 	/obj/item/gun/ballistic/automatic/mini_uzi,
 	/obj/item/gun/energy/lasercannon,
 	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
@@ -69,7 +69,6 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
-	/obj/item/voodoo,
 	/obj/item/warpwhistle,
 	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/immortality_talisman,
@@ -94,7 +93,6 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/scrying,
 	/obj/item/spellbook,
 	/obj/item/storage/belt/wands/full,
-	/obj/item/voodoo,
 	/obj/item/warpwhistle))
 
 // If true, it's the probability of triggering "survivor" antag.
@@ -116,7 +114,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
-	if (istype(G)) // The list contains some non-gun type guns like the speargun which do not have this proc
+	if (istype(G)) // The list may contain some non-gun type guns which do not have this proc
 		G.unlock()
 	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, TRUE)
 
@@ -175,13 +173,13 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 /proc/summonevents()
 	if(!SSevents.wizardmode)
-		SSevents.frequency_lower = 600									//1 minute lower bound
-		SSevents.frequency_upper = 3000									//5 minutes upper bound
+		SSevents.frequency_lower = 600 //1 minute lower bound
+		SSevents.frequency_upper = 3000 //5 minutes upper bound
 		SSevents.toggleWizardmode()
 		SSevents.reschedule()
 
-	else 																//Speed it up
-		SSevents.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+	else //Speed it up
+		SSevents.frequency_upper -= 600 //The upper bound falls a minute each time, making the AVERAGE time between events lessen
 		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
 			SSevents.frequency_upper = SSevents.frequency_lower
 

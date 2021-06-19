@@ -8,7 +8,7 @@ export const ThermoMachine = (props, context) => {
   return (
     <Window
       width={300}
-      height={230}>
+      height={350}>
       <Window.Content>
         <Section title="Status">
           <LabeledList>
@@ -36,6 +36,25 @@ export const ThermoMachine = (props, context) => {
               onClick={() => act('power')} />
           )}>
           <LabeledList>
+            <LabeledList.Item label="Use tank gas">
+              <Button
+                content={data.tank_gas ? 'Push gas' : 'Empty'}
+                selected={data.tank_gas}
+                disabled={!data.tank_gas}
+                onClick={() => act('pumping')} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Eject tank gas">
+              <Button
+                content={data.holding ? 'Eject tank' : 'Empty'}
+                disabled={!data.holding}
+                onClick={() => act('eject')} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Setting">
+              <Button
+                content={data.cooling ? 'Cooling' : 'Heating'}
+                selected={data.cooling}
+                onClick={() => act('cooling')} />
+            </LabeledList.Item>
             <LabeledList.Item label="Target Temperature">
               <NumberInput
                 animated

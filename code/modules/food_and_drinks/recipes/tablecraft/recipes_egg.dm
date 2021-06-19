@@ -6,48 +6,60 @@
 /datum/crafting_recipe/food/friedegg
 	name = "Fried egg"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/reagent_containers/food/snacks/egg = 1
+		/obj/item/food/egg = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/friedegg
+	result = /obj/item/food/friedegg
 	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/omelette
 	name = "Omelette"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/egg = 2,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
+		/obj/item/food/egg = 2,
+		/obj/item/food/cheese = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/omelette
+	result = /obj/item/food/omelette
 	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/chocolateegg
 	name = "Chocolate egg"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/chocolatebar = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/chocolateegg
+	result = /obj/item/food/chocolateegg
 	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/eggsbenedict
 	name = "Eggs benedict"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/friedegg = 1,
-		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
+		/obj/item/food/friedegg = 1,
+		/obj/item/food/meat/steak = 1,
 		/obj/item/food/breadslice/plain = 1,
 	)
-	result = /obj/item/reagent_containers/food/snacks/benedict
+	result = /obj/item/food/benedict
 	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/eggbowl
 	name = "Egg bowl"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/corn = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/eggbowl
+	result = /obj/item/food/salad/eggbowl
 	subcategory = CAT_EGG
+
+/datum/crafting_recipe/food/chawanmushi
+	name = "Chawanmushi"
+	reqs = list(
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/food/boiledegg = 2,
+		/obj/item/food/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/food/chawanmushi
+	subcategory = CAT_EGG
+	

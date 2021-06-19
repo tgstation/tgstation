@@ -5,9 +5,9 @@
 /* Library Items
  *
  * Contains:
- *		Bookcase
- *		Book
- *		Barcode Scanner
+ * Bookcase
+ * Book
+ * Barcode Scanner
  */
 
 /*
@@ -57,7 +57,7 @@
 		if(!isbook(I))
 			continue
 		I.forceMove(src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/bookcase/set_anchored(anchorvalue)
 	. = ..()
@@ -70,7 +70,7 @@
 			if(!isbook(I))
 				continue
 			I.forceMove(Tsec)
-	update_icon()
+	update_appearance()
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
@@ -91,7 +91,7 @@
 					W.use(2)
 					to_chat(user, "<span class='notice'>You add a shelf.</span>")
 					state = BOOKCASE_FINISHED
-					update_icon()
+					update_appearance()
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
@@ -102,13 +102,13 @@
 			if(isbook(I))
 				if(!user.transferItemToLoc(I, src))
 					return
-				update_icon()
+				update_appearance()
 			else if(STR)
 				for(var/obj/item/T in I.contents)
 					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
 						STR.remove_from_storage(T, src)
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
-				update_icon()
+				update_appearance()
 			else if(istype(I, /obj/item/pen))
 				if(!user.is_literate())
 					to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
@@ -128,12 +128,12 @@
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
 					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 					state = BOOKCASE_ANCHORED
-					update_icon()
+					update_appearance()
 			else
 				return ..()
 
 
-/obj/structure/bookcase/attack_hand(mob/living/user)
+/obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -145,14 +145,14 @@
 	if(contents.len)
 		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
 		if(choice)
-			if(!(user.mobility_flags & MOBILITY_USE) || user.stat || user.restrained() || !in_range(loc, user))
+			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
 				return
 			if(ishuman(user))
 				if(!user.get_active_held_item())
 					user.put_in_hands(choice)
 			else
 				choice.forceMove(drop_location())
-			update_icon()
+			update_appearance()
 
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
@@ -168,11 +168,12 @@
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
-		return
+		return ..()
 	var/amount = contents.len
 	if(load_random_books)
 		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"
+	return ..()
 
 
 /obj/structure/bookcase/manuals/engineering
@@ -185,7 +186,7 @@
 	new /obj/item/book/manual/wiki/engineering_guide(src)
 	new /obj/item/book/manual/wiki/engineering_singulo_tesla(src)
 	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
-	update_icon()
+	update_appearance()
 
 
 /obj/structure/bookcase/manuals/research_and_development
@@ -194,7 +195,7 @@
 /obj/structure/bookcase/manuals/research_and_development/Initialize()
 	. = ..()
 	new /obj/item/book/manual/wiki/research_and_development(src)
-	update_icon()
+	update_appearance()
 
 
 /*
@@ -208,27 +209,30 @@
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb_continuous = list("bashes", "whacks", "educates")
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound =  'sound/items/handling/book_pickup.ogg'
-	var/dat				//Actual page content
-	var/due_date = 0	//Game time in 1/10th seconds
-	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	var/unique = FALSE	//false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
-	var/title			//The real name of the book.
+	var/dat //Actual page content
+	var/due_date = 0 //Game time in 1/10th seconds
+	var/author //Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	var/unique = FALSE //false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
+	var/title //The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
 
 /obj/item/book/attack_self(mob/user)
 	if(!user.can_read(src))
 		return
+	user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+	on_read(user)
+
+/obj/item/book/proc/on_read(mob/user)
 	if(dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+		user << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
@@ -254,7 +258,7 @@
 				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
-				if (length(newtitle) > 20)
+				if (length_char(newtitle) > 30)
 					to_chat(user, "<span class='warning'>That title won't fit on the cover!</span>")
 					return
 				if(!newtitle)
@@ -314,7 +318,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'</span>")
 
-	else if(istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER)
+	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
@@ -346,9 +350,9 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
-	var/obj/item/book/book			//Currently scanned book
-	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/obj/machinery/computer/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
+	var/obj/item/book/book //Currently scanned book
+	var/mode = 0 //0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1

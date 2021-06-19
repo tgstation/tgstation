@@ -84,6 +84,7 @@
 		VM.map_file = "[map_file]"
 		VM.config_filename = "data/next_map.json"
 		var/json_value = list(
+			"version" = MAP_CURRENT_VERSION,
 			"map_name" = VM.map_name,
 			"map_path" = VM.map_path,
 			"map_file" = VM.map_file,

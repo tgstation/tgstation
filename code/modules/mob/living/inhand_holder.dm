@@ -10,7 +10,6 @@
 	var/destroying = FALSE
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
-	. = ..()
 	if(head_icon)
 		worn_icon = head_icon
 	if(worn_state)
@@ -22,6 +21,7 @@
 	if(worn_slot_flags)
 		slot_flags = worn_slot_flags
 	deposit(M)
+	. = ..()
 
 /obj/item/clothing/head/mob_holder/Destroy()
 	destroying = TRUE

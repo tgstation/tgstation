@@ -13,76 +13,76 @@
 /area/ruin/powered/gluttony)
 "f" = (
 /obj/item/reagent_containers/syringe/gluttony,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "g" = (
 /obj/effect/gluttony,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "h" = (
 /obj/item/veilrender/vealrender,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "i" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "j" = (
 /obj/item/trash/plate,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "l" = (
 /obj/item/trash/candy,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "m" = (
 /obj/item/trash/raisins,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "n" = (
 /obj/item/trash/pistachios,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "o" = (
 /obj/item/trash/popcorn,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "p" = (
 /obj/item/trash/semki,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "q" = (
 /obj/item/trash/syndi_cakes,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "r" = (
 /obj/effect/gluttony,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "t" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "v" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "z" = (
 /obj/item/trash/plate,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "A" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "R" = (
 /turf/closed/indestructible/riveted/uranium,
@@ -90,7 +90,7 @@
 "S" = (
 /obj/machinery/door/airlock/uranium,
 /obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 
 (1,1,1) = {"

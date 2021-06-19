@@ -51,7 +51,7 @@
 	rogue_types = list(/datum/nanite_program/shocking, /datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/stun/on_trigger(comm_message)
-	playsound(host_mob, "sparks", 75, TRUE, -1)
+	playsound(host_mob, "sparks", 75, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
 	host_mob.Paralyze(80)
 
 /datum/nanite_program/pacifying
@@ -121,11 +121,11 @@
 
 /datum/nanite_program/comm/proc/receive_comm_signal(signal_comm_code, comm_message, comm_source)
 	var/datum/nanite_extra_setting/comm_code = extra_settings[NES_COMM_CODE]
-	if(!activated || !comm_code)
+	if(!activated || !comm_code.get_value())
 		return
-	if(signal_comm_code == comm_code)
+	if(signal_comm_code == comm_code.get_value())
 		host_mob.investigate_log("'s [name] nanite program was messaged by [comm_source] with comm code [signal_comm_code] and message '[comm_message]'.", INVESTIGATE_NANITES)
-		trigger(comm_message)
+		trigger(FALSE, comm_message)
 
 /datum/nanite_program/comm/speech
 	name = "Forced Speech"
@@ -136,7 +136,8 @@
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 	var/static/list/blacklist = list(
 		"*surrender",
-		"*collapse"
+		"*collapse",
+		"*faint",
 	)
 
 /datum/nanite_program/comm/speech/register_extra_settings()

@@ -269,14 +269,14 @@
 	trigger_cooldown = 5
 
 	var/list/static/allowed_species = list(
-    	"Human" = /datum/species/human,
-    	"Lizard" = /datum/species/lizard,
+		"Human" = /datum/species/human,
+		"Lizard" = /datum/species/lizard,
 		"Moth" = /datum/species/moth,
 		"Ethereal" = /datum/species/ethereal,
 		"Pod" = /datum/species/pod,
 		"Fly" = /datum/species/fly,
 		"Felinid" = /datum/species/human/felinid,
-		"Jelly" = /datum/species/jelly
+		"Jelly" = /datum/species/jelly,
 	)
 
 /datum/nanite_program/sensor/species/register_extra_settings()
@@ -296,7 +296,7 @@
 	if(species)
 		if(is_species(host_mob, species))
 			species_match = TRUE
-	else	//this is the check for the "Other" option
+	else //this is the check for the "Other" option
 		species_match = TRUE
 		for(var/name in allowed_species)
 			var/species_other = allowed_species[name]

@@ -2,12 +2,12 @@
 
 #define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = Master.current_ticklimit; var/split_tick_phases = ##phase_count
 #define MC_SPLIT_TICK \
-    if(split_tick_phases > 1){\
-        Master.current_ticklimit = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
-        --split_tick_phases;\
-    } else {\
-        Master.current_ticklimit = original_tick_limit;\
-    }
+	if(split_tick_phases > 1){\
+		Master.current_ticklimit = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
+		--split_tick_phases;\
+	} else {\
+		Master.current_ticklimit = original_tick_limit;\
+	}
 
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
@@ -55,23 +55,23 @@
 #define SS_POST_FIRE_TIMING 64
 
 //! SUBSYSTEM STATES
-#define SS_IDLE 0		/// ain't doing shit.
-#define SS_QUEUED 1		/// queued to run
-#define SS_RUNNING 2	/// actively running
-#define SS_PAUSED 3		/// paused by mc_tick_check
-#define SS_SLEEPING 4	/// fire() slept.
-#define SS_PAUSING 5 	/// in the middle of pausing
+#define SS_IDLE 0 /// ain't doing shit.
+#define SS_QUEUED 1 /// queued to run
+#define SS_RUNNING 2 /// actively running
+#define SS_PAUSED 3 /// paused by mc_tick_check
+#define SS_SLEEPING 4 /// fire() slept.
+#define SS_PAUSING 5 /// in the middle of pausing
 
 #define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
 /datum/controller/subsystem/##X/New(){\
-    NEW_SS_GLOBAL(SS##X);\
-    PreInit();\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
 }\
 /datum/controller/subsystem/##X
 
 #define PROCESSING_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/processing/##X);\
 /datum/controller/subsystem/processing/##X/New(){\
-    NEW_SS_GLOBAL(SS##X);\
-    PreInit();\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
 }\
 /datum/controller/subsystem/processing/##X

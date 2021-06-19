@@ -1,5 +1,5 @@
-#define ELECTROLYZER_MODE_STANDBY	"standby"
-#define ELECTROLYZER_MODE_WORKING	"working"
+#define ELECTROLYZER_MODE_STANDBY "standby"
+#define ELECTROLYZER_MODE_WORKING "working"
 
 /obj/machinery/electrolyzer
 	anchored = FALSE
@@ -32,7 +32,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
@@ -41,7 +41,7 @@
 
 /obj/machinery/electrolyzer/on_deconstruction()
 	if(cell)
-		component_parts += cell
+		LAZYADD(component_parts, cell)
 		cell = null
 	return ..()
 
@@ -56,14 +56,14 @@
 
 /obj/machinery/electrolyzer/update_icon_state()
 	icon_state = "electrolyzer-[on ? "[mode]" : "off"]"
+	return ..()
 
 /obj/machinery/electrolyzer/update_overlays()
 	. = ..()
-
 	if(panel_open)
 		. += "electrolyzer-open"
 
-/obj/machinery/electrolyzer/process()
+/obj/machinery/electrolyzer/process(delta_time)
 	if(!is_operational && on)
 		on = FALSE
 	if(!on)
@@ -71,34 +71,38 @@
 
 	if(!cell || cell.charge <= 0)
 		on = FALSE
-		update_icon()
+		update_appearance()
 		return PROCESS_KILL
 
 	var/turf/L = loc
 	if(!istype(L))
 		if(mode != ELECTROLYZER_MODE_STANDBY)
 			mode = ELECTROLYZER_MODE_STANDBY
-			update_icon()
+			update_appearance()
 		return
 
 	var/newMode = on ? ELECTROLYZER_MODE_WORKING : ELECTROLYZER_MODE_STANDBY //change the mode to working if the machine is on
 
 	if(mode != newMode) //check if the mode is set correctly
 		mode = newMode
-		update_icon()
+		update_appearance()
 
 	if(mode == ELECTROLYZER_MODE_STANDBY)
 		return
 
 	var/datum/gas_mixture/env = L.return_air() //get air from the turf
 	var/datum/gas_mixture/removed = env.remove(0.1 * env.total_moles())
+
+	if(!removed)
+		return
+
 	removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
-	var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], (3 * workingPower))//Works to max 12 moles at a time.
+	var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], (1.5 * delta_time * workingPower))//Works to max 12 moles at a time.
 	removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
 	removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
 	removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
 	env.merge(removed) //put back the new gases in the turf
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	cell.use((5 * proportion * workingPower) / (efficiency + workingPower))
 
 /obj/machinery/electrolyzer/RefreshParts()
@@ -136,7 +140,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].</span>", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
-		update_icon()
+		update_appearance()
 		return
 	if(default_deconstruction_crowbar(I))
 		return
@@ -169,7 +173,7 @@
 			on = !on
 			mode = ELECTROLYZER_MODE_STANDBY
 			usr.visible_message("<span class='notice'>[usr] switches [on ? "on" : "off"] \the [src].</span>", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-			update_icon()
+			update_appearance()
 			if (on)
 				START_PROCESSING(SSmachines, src)
 			. = TRUE

@@ -17,6 +17,7 @@
 	color = "#ff0000"
 	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster."
 	name = "experimental wirecutters"
+	worn_icon_state = "cutters"
 	toolspeed = 0.3
 	random_color = FALSE
 

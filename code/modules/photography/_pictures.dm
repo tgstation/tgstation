@@ -9,10 +9,12 @@
 	var/psize_x = 96
 	var/psize_y = 96
 	var/has_blueprints = FALSE
-	var/logpath						//If the picture has been logged this is the path.
-	var/id							//this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
+	var/logpath //If the picture has been logged this is the path.
+	var/id //this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
+	///Was this image capable of seeing ghosts?
+	var/see_ghosts = CAMERA_NO_GHOSTS
 
-/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
+/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
@@ -35,6 +37,8 @@
 		caption = caption_
 	if(autogenerate_icon && !picture_icon && picture_image)
 		regenerate_small_icon()
+	if(can_see_ghosts)
+		see_ghosts = can_see_ghosts
 
 /datum/picture/proc/get_small_icon(iconstate)
 	if(!picture_icon)
@@ -137,7 +141,7 @@
 	if(!CONFIG_GET(flag/log_pictures))
 		return
 	if(logpath)
-		return			//we're already logged
+		return //we're already logged
 	var/number = GLOB.picture_logging_id++
 	var/finalpath = "[GLOB.picture_log_directory]/[number].png"
 	fcopy(icon(picture_image, dir = SOUTH, frame = 1), finalpath)
@@ -159,7 +163,7 @@
 	P.picture_name = picture_name
 	P.picture_desc = picture_desc
 	if(picture_image)
-		P.picture_image = icon(picture_image)	//Copy, not reference.
+		P.picture_image = icon(picture_image) //Copy, not reference.
 	if(picture_icon)
 		P.picture_icon = icon(picture_icon)
 	P.psize_x = psize_x - cropx * 2

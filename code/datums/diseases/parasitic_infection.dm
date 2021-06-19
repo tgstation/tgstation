@@ -15,7 +15,7 @@
 	bypasses_immunity = TRUE
 
 
-/datum/disease/parasite/stage_act()
+/datum/disease/parasite/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -28,20 +28,20 @@
 
 	switch(stage)
 		if(1)
-			if(prob(5))
+			if(DT_PROB(2.5, delta_time))
 				affected_mob.emote("cough")
 		if(2)
-			if(prob(10))
+			if(DT_PROB(5, delta_time))
 				if(prob(50))
 					to_chat(affected_mob, "<span class='notice'>You feel the weight loss already!</span>")
 				affected_mob.adjust_nutrition(-3)
 		if(3)
-			if(prob(20))
+			if(DT_PROB(10, delta_time))
 				if(prob(20))
 					to_chat(affected_mob, "<span class='notice'>You're... REALLY starting to feel the weight loss.</span>")
 				affected_mob.adjust_nutrition(-6)
 		if(4)
-			if(prob(30))
+			if(DT_PROB(16, delta_time))
 				if(affected_mob.nutrition >= 100)
 					if(prob(10))
 						to_chat(affected_mob, "<span class='warning'>You feel like your body's shedding weight rapidly!</span>")

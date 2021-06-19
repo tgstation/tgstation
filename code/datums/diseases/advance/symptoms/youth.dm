@@ -30,7 +30,8 @@ BONUS
 	symptom_delay_max = 50
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	if(ishuman(M))

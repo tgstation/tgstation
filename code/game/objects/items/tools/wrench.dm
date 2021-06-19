@@ -3,6 +3,7 @@
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
+	worn_icon_state = "wrench"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -111,7 +112,7 @@
 		toolspeed = 1
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active. Woe onto your enemies!</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/wrench/combat/update_icon_state()
 	if(on)
@@ -120,3 +121,4 @@
 	else
 		icon_state = "[initial(icon_state)]"
 		inhand_icon_state = "[initial(inhand_icon_state)]"
+	return ..()
