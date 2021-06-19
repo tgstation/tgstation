@@ -181,8 +181,12 @@
  */
 /datum/weather/proc/can_weather_act(mob/living/L)
 	var/turf/mob_turf = get_turf(L)
-	if(mob_turf && !(mob_turf.z in impacted_z_levels))
-		return
+	if(!(L.z in impacted_z_levels))
+		if(mob_turf)
+			return
+		if(L.loc.parent_type == /obj/structure/closet/) // Supposed to check if the mob is inside of a container, might or might not work, to fix later
+			if((immunity_type in L.loc.weather_protection) || ("all" in L.loc.weather_protection))
+				return
 	if(immunity_type in L.weather_immunities)
 		return
 	if(!(get_area(L) in impacted_areas))
