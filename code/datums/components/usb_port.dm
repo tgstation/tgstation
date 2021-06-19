@@ -110,7 +110,7 @@
 	attached_circuit = connecting_cable.attached_circuit
 
 	connecting_cable.forceMove(attached_circuit)
-	circuit_components = attach_circuit_components(attached_circuit)
+	attach_circuit_components(attached_circuit)
 	attached_circuit.interact(user)
 
 	usb_cable_beam = atom_parent.Beam(attached_circuit.shell, "usb_cable_beam", 'icons/obj/wiremod.dmi')
