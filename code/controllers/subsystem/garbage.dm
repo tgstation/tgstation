@@ -201,7 +201,8 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
-				HardDelete(D)
+				if (!CONFIG_GET(flag/disable_gc_failure_hard_deletes))
+					HardDelete(D)
 				if (MC_TICK_CHECK)
 					return
 				continue
@@ -242,8 +243,8 @@ SUBSYSTEM_DEF(garbage)
 	++totaldels
 	var/type = D.type
 	var/refID = "\ref[D]"
-
-	del(D)
+	if (!CONFIG_GET(flag/disable_all_hard_deletes))
+		del(D)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
 

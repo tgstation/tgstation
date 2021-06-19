@@ -514,3 +514,13 @@
 
 /// URL for admins to be redirected to for 2FA
 /datum/config_entry/string/admin_2fa_url
+
+/datum/config_entry/flag/disable_gc_failure_hard_deletes
+
+/datum/config_entry/flag/disable_all_hard_deletes
+
+
+
+
+
+
