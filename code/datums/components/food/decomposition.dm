@@ -61,8 +61,10 @@
 		if(HAS_TRAIT(food.loc, TRAIT_PROTECT_FOOD))
 			clean = TRUE
 			break
+		else if(locate(/obj/structure/table) in food.loc)
+			clean = TRUE
+			break
 		last_loc = last_loc.loc
-
 	if(!handled || clean || protected)
 		// prevent decomposition
 		if(active_timers)

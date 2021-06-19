@@ -41,8 +41,6 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
-	var/turf/open/ground = get_turf(src)
-	ADD_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -244,9 +242,6 @@
 			new frame(T)
 		else
 			new framestack(T, framestackamount)
-	if(!istype(src, /obj/structure/table/rolling))
-		var/turf/open/ground = get_turf(src)
-		REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 	qdel(src)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -259,9 +254,6 @@
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, span_notice("You deconstruct the table."))
-			if(!istype(src, /obj/structure/table/rolling))
-				var/turf/open/ground = get_turf(src)
-				REMOVE_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
 			qdel(src)
 			return TRUE
 	return FALSE
@@ -286,12 +278,6 @@
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
 	///Used to get the last turf this table was on so we can add the TRAIT_PROTECT_FOOD trait to it
-	var/turf/open/last_loc
-
-/obj/structure/table/rolling/Initialize(mapload, _buildstack)
-	. = ..()
-	var/turf/open/ground = get_turf(src)
-	last_loc = ground
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
@@ -310,19 +296,12 @@
 	. = ..()
 	if(!loc)
 		return
-	protect_food()
 	for(var/mob/living/living_mob in OldLoc.contents)//Kidnap everyone on top
 		living_mob.forceMove(loc)
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
 		if(!AM.Move(loc))
 			RemoveItemFromTable(AM, AM.loc)
-
-/obj/structure/table/rolling/proc/protect_food()
-	REMOVE_TRAIT(last_loc, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
-	var/turf/open/ground = get_turf(src)
-	ADD_TRAIT(ground, TRAIT_PROTECT_FOOD, TABLE_TRAIT)
-	last_loc = ground
 
 /*
  * Glass tables
