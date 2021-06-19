@@ -18,11 +18,12 @@ import {
 } from 'common/keycodes';
 
 export class AlertModal extends Component {
-  constructor() {
+  constructor(autofocus = false) {
     super();
 
     this.buttonRefs = [createRef()];
     this.state = { current: 0 };
+    this.autofocus = autofocus;
   }
 
   componentDidMount() {
@@ -35,8 +36,6 @@ export class AlertModal extends Component {
     for (let i = 1; i < buttons.length; i++) {
       this.buttonRefs.push(createRef());
     }
-
-    setTimeout(() => button.focus(), 1);
   }
 
   setCurrent(current, isArrowKey) {
@@ -64,6 +63,16 @@ export class AlertModal extends Component {
     const { title, message, buttons, timeout } = data;
     const { current } = this.state;
     const focusCurrentButton = () => this.setCurrent(current, false);
+    const updateCurrentFocus = () => {
+      if (this.autofocus) {
+        focusCurrentButton;
+      } else {
+        const button = this.buttonRefs[current].current;
+        if (button) {
+          setTimeout(() => button.blur(), 1);
+        }
+      }
+    };
 
     return (
       <Window
@@ -73,7 +82,7 @@ export class AlertModal extends Component {
         canClose={timeout > 0}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
-          onFocus={focusCurrentButton}
+          onFocus={updateCurrentFocus}
           onClick={focusCurrentButton}>
           <Section fill>
             <Flex direction="column" height="100%">
