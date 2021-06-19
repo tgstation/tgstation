@@ -1889,6 +1889,7 @@
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\exile.dm"
 #include "code\modules\awaymissions\gateway.dm"
+#include "code\modules\awaymissions\medical_challenge.dm"
 #include "code\modules\awaymissions\pamphlet.dm"
 #include "code\modules\awaymissions\signpost.dm"
 #include "code\modules\awaymissions\super_secret_room.dm"
