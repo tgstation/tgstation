@@ -40,8 +40,8 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
-	/// Protection against weather (e.g ash storms) that being inside of it provides.
-	var/weather_protection = list()
+	/// Protection against weather (in this case, rad storms) that being inside of it provides.
+	var/weather_protection = list("rad")
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component is dragging this, preventing opening

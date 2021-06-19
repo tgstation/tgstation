@@ -16,6 +16,7 @@
 	close_sound = 'sound/machines/cardboard_box.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 35
+	weather_protection = list()
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
 	var/egged = 0
@@ -77,5 +78,6 @@
 	close_sound = 'sound/machines/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
+	weather_protection = list("rad")
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS

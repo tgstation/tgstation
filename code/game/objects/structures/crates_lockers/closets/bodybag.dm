@@ -156,4 +156,4 @@
 	icon_state = "envbodybag"
 	mob_storage_capacity = 1
 	foldedbag_path = /obj/item/body_bag/environmental
-	weather_protection = list("acid", "ash", "rad", "snow") // Does not protect against lava, The Floor Is Lava, or Voidstorm.
+	weather_protection = list("acid", "ash", "rad", "snow", "void") // Does not protect against lava or the The Floor Is Lava spell.
