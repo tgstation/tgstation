@@ -20,4 +20,3 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           dockerfile: Dockerfile
           tags: "latest"
-          cache: true

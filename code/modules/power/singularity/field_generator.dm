@@ -76,18 +76,18 @@ no power level overlay is currently in the overlays list.
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
-				to_chat(user, "<span class='warning'>You are unable to turn off [src] once it is online!</span>")
+				to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))
 				return 1
 			else
-				user.visible_message("<span class='notice'>[user] turns on [src].</span>", \
-					"<span class='notice'>You turn on [src].</span>", \
-					"<span class='hear'>You hear heavy droning.</span>")
+				user.visible_message(span_notice("[user] turns on [src]."), \
+					span_notice("You turn on [src]."), \
+					span_hear("You hear heavy droning."))
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
-		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
+		to_chat(user, span_warning("[src] needs to be firmly secured to the floor first!"))
 
 /obj/machinery/field/generator/set_anchored(anchorvalue)
 	. = ..()
@@ -100,12 +100,12 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
-			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
+			to_chat(user, span_warning("Turn \the [src] off first!"))
 		return FAILED_UNFASTEN
 
 	else if(state == FG_WELDED)
 		if(!silent)
-			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
+			to_chat(user, span_warning("[src] is welded to the floor!"))
 		return FAILED_UNFASTEN
 
 	return ..()
@@ -118,32 +118,32 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(active)
-		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
+		to_chat(user, span_warning("[src] needs to be off!"))
 		return TRUE
 
 	switch(state)
 		if(FG_UNSECURED)
-			to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
+			to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 
 		if(FG_SECURED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>", \
-				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] starts to weld [src] to the floor."), \
+				span_notice("You start to weld \the [src] to the floor..."), \
+				span_hear("You hear welding."))
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
 				state = FG_WELDED
-				to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
+				to_chat(user, span_notice("You weld the field generator to the floor."))
 
 		if(FG_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>", \
-				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] starts to cut [src] free from the floor."), \
+				span_notice("You start to cut \the [src] free from the floor..."), \
+				span_hear("You hear welding."))
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
 				state = FG_SECURED
-				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+				to_chat(user, span_notice("You cut \the [src] free from the floor."))
 
 	return TRUE
 
@@ -151,7 +151,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		set_anchored(FALSE)
-		user.visible_message("<span class='warning'>[user] rips [src] free from its moorings!</span>")
+		user.visible_message(span_warning("[user] rips [src] free from its moorings!"))
 	else
 		..()
 	if(!anchored)
@@ -223,7 +223,7 @@ no power level overlay is currently in the overlays list.
 		check_power_level()
 		return TRUE
 	else
-		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='hear'>You hear something shutting down.</span>")
+		visible_message(span_danger("The [name] shuts down!"), span_hear("You hear something shutting down."))
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
@@ -317,7 +317,7 @@ no power level overlay is currently in the overlays list.
 			fields += CF
 			G.fields += CF
 			for(var/mob/living/L in T)
-				CF.Crossed(L)
+				CF.on_entered(src, L)
 
 	connected_gens |= G
 	G.connected_gens |= src

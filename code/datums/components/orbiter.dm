@@ -99,7 +99,7 @@
 		orbiter.glide_size = movable_parent.glide_size
 
 	orbiter.forceMove(get_turf(parent))
-	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
+	to_chat(orbiter, span_notice("Now orbiting [parent]."))
 
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(!orbiter_list[orbiter])
@@ -151,6 +151,7 @@
 	end_orbit(orbiter)
 
 /datum/component/orbiter/proc/orbiter_glide_size_update(datum/source, target)
+	SIGNAL_HANDLER
 	for(var/orbiter in orbiter_list)
 		var/atom/movable/movable_orbiter = orbiter
 		movable_orbiter.glide_size = target

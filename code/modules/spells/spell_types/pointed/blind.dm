@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/pointed/trigger/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "STI KALY"
@@ -30,6 +30,6 @@
 		return FALSE
 	if(!isliving(target))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
+			to_chat(user, span_warning("You can only blind living beings!"))
 		return FALSE
 	return TRUE

@@ -19,6 +19,12 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
+	mail_goodies = list(
+		/obj/item/storage/box/flashes = 20,
+		/obj/item/stack/sheet/iron/twenty = 15,
+		/obj/item/modular_computer/tablet/preset/advanced = 5
+	)
+
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 
 /datum/job/roboticist/New()
@@ -38,6 +44,7 @@
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/science=1)
 
 	pda_slot = ITEM_SLOT_LPOCKET
 

@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed being unable to add extra circuit components when an integrated circuit was removed."

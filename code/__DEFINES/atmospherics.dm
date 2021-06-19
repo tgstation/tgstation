@@ -27,6 +27,26 @@
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP 259.15
 
+/**
+ *I feel the need to document what happens here. Basically this is used
+ *catch rounding errors, and make gas go away in small portions.
+ *People have raised it to higher levels in the past, do not do this. Consider this number a soft limit
+ *If you're making gasmixtures that have unexpected behavior related to this value, you're doing something wrong.
+ *
+ *On an unrelated note this may cause a bug that creates negative gas, related to round(). When it has a second arg it will round up.
+ *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
+ *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
+ */
+/// The minimum heat capacity of a gas
+#define MINIMUM_HEAT_CAPACITY 0.0003
+/// Minimum mole count of a gas
+#define MINIMUM_MOLE_COUNT 0.01
+/// Molar accuracy to round to
+#define MOLAR_ACCURACY  1E-4
+/// Types of gases (based on gaslist_cache)
+#define GAS_TYPE_COUNT GLOB.gaslist_cache.len
+/// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
+#define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
@@ -54,6 +74,13 @@
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
+//Defines for N2O and Healium euphoria moodlets
+#define EUPHORIA_INACTIVE 0
+#define EUPHORIA_ACTIVE 1
+#define EUPHORIA_LAST_FLAG 2
+
+#define MIASMA_CORPSE_MOLES 0.02
+#define MIASMA_GIBS_MOLES 0.005
 
 //EXCITED GROUPS
 /**
@@ -134,6 +161,14 @@
 #define NO_REACTION 0
 #define REACTING 1
 #define STOP_REACTIONS 2
+
+//Fusion
+///Max amount of radiation that can be emitted per reaction cycle
+#define FUSION_RAD_MAX 5000
+///Maximum instability before the reaction goes endothermic
+#define FUSION_INSTABILITY_ENDOTHERMALITY 4
+///Maximum reachable fusion temperature
+#define FUSION_MAXIMUM_TEMPERATURE 1e8
 
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
@@ -472,8 +507,20 @@
 #define PIPING_DEFAULT_LAYER_ONLY (1<<2)
 /// north/south east/west doesn't matter, auto normalize on build.
 #define PIPING_CARDINAL_AUTONORMALIZE (1<<3)
+/// intended to connect with everything, both layers and colors
+#define PIPING_ALL_COLORS (1<<4)
+/// can bridge over pipenets
+#define PIPING_BRIDGE (1<<5)
 
-//HELPERS
+// Ventcrawling bitflags, handled in var/vent_movement
+///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
+#define VENTCRAWL_ALLOWED	(1<<0)
+///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
+#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
+///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
+#define VENTCRAWL_CAN_SEE	(1<<2)
+
+//Helpers
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) { \
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
@@ -507,16 +554,19 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
-#define TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, out_var)\
-	out_var = 0;\
-	for(var/total_moles_id in cached_gases){\
-		if(total_moles_id == gas_id){\
-			out_var += cached_gases[total_moles_id][MOLES];\
-		}\
+
+GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
+#define GAS_OVERLAYS(gases, out_var)\
+	out_var = list();\
+	for(var/_ID in gases){\
+		if(GLOB.nonoverlaying_gases[_ID]) continue;\
+		var/_GAS = gases[_ID];\
+		var/_GAS_META = _GAS[GAS_META];\
+		if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
+		var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY];\
+		out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
 	}
-#define NORMAL_TURF 1
-#define MAKE_ACTIVE 2
-#define KILL_EXCITED 3
+
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = state}
@@ -524,38 +574,13 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) SSadjacent_air.queue[T] = state
 #endif
 
+//Adjacent turf related defines, they dictate what to do with a turf once it's been recalculated
+//Used as "state" in CALCULATE_ADJACENT_TURFS
+#define NORMAL_TURF 1
+#define MAKE_ACTIVE 2
+#define KILL_EXCITED 3
+
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
-
-GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
-		"amethyst" = rgb(130,43,255), //supplymain
-		"blue" = rgb(0,0,255),
-		"brown" = rgb(178,100,56),
-		"cyan" = rgb(0,255,249),
-		"dark" = rgb(69,69,69),
-		"green" = rgb(30,255,0),
-		"grey" = rgb(255,255,255),
-		"orange" = rgb(255,129,25),
-		"purple" = rgb(128,0,182),
-		"red" = rgb(255,0,0),
-		"violet" = rgb(64,0,128),
-		"yellow" = rgb(255,198,0)
-)))
-
-#define MIASMA_CORPSE_MOLES 0.02
-#define MIASMA_GIBS_MOLES 0.005
-
-//Defines for N2O and Healium euphoria moodlets
-#define EUPHORIA_INACTIVE 0
-#define EUPHORIA_ACTIVE 1
-#define EUPHORIA_LAST_FLAG 2
-
-// Ventcrawling bitflags, handled in var/vent_movement
-///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
-#define VENTCRAWL_ALLOWED	(1<<0)
-///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
-#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
-///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
-#define VENTCRAWL_CAN_SEE	(1<<2)

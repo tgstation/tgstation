@@ -273,42 +273,42 @@
 	if(!istype(H))
 		return
 	if(H.back)
-		H.back.add_fingerprint(H,1) //The 1 sets a flag to ignore gloves
+		H.back.add_fingerprint(H, ignoregloves = TRUE)
 		for(var/obj/item/I in H.back.contents)
-			I.add_fingerprint(H,1)
+			I.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.wear_id)
-		H.wear_id.add_fingerprint(H,1)
+		H.wear_id.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.w_uniform)
-		H.w_uniform.add_fingerprint(H,1)
+		H.w_uniform.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.wear_suit)
-		H.wear_suit.add_fingerprint(H,1)
+		H.wear_suit.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.wear_mask)
-		H.wear_mask.add_fingerprint(H,1)
+		H.wear_mask.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.wear_neck)
-		H.wear_neck.add_fingerprint(H,1)
+		H.wear_neck.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.head)
-		H.head.add_fingerprint(H,1)
+		H.head.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.shoes)
-		H.shoes.add_fingerprint(H,1)
+		H.shoes.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.gloves)
-		H.gloves.add_fingerprint(H,1)
+		H.gloves.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.ears)
-		H.ears.add_fingerprint(H,1)
+		H.ears.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.glasses)
-		H.glasses.add_fingerprint(H,1)
+		H.glasses.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.belt)
-		H.belt.add_fingerprint(H,1)
+		H.belt.add_fingerprint(H, ignoregloves = TRUE)
 		for(var/obj/item/I in H.belt.contents)
-			I.add_fingerprint(H,1)
+			I.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.s_store)
-		H.s_store.add_fingerprint(H,1)
+		H.s_store.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.l_store)
-		H.l_store.add_fingerprint(H,1)
+		H.l_store.add_fingerprint(H, ignoregloves = TRUE)
 	if(H.r_store)
-		H.r_store.add_fingerprint(H,1)
+		H.r_store.add_fingerprint(H, ignoregloves = TRUE)
 	for(var/obj/item/I in H.held_items)
-		I.add_fingerprint(H,1)
-	return 1
+		I.add_fingerprint(H, ignoregloves = TRUE)
+	return TRUE
 
 /// Return a list of all the types that are required to disguise as this outfit type
 /datum/outfit/proc/get_chameleon_disguise_info()
@@ -336,6 +336,7 @@
 	.["ears"] = ears
 	.["glasses"] = glasses
 	.["id"] = id
+	.["id_trim"] = id_trim
 	.["l_pocket"] = l_pocket
 	.["r_pocket"] = r_pocket
 	.["suit_store"] = suit_store
@@ -346,6 +347,34 @@
 	.["box"] = box
 	.["implants"] = implants
 	.["accessory"] = accessory
+
+/// Copy most vars from another outfit to this one
+/datum/outfit/proc/copy_from(datum/outfit/target)
+	name = target.name
+	uniform = target.uniform
+	suit = target.suit
+	toggle_helmet = target.toggle_helmet
+	back = target.back
+	belt = target.belt
+	gloves = target.gloves
+	shoes = target.shoes
+	head = target.head
+	mask = target.mask
+	neck = target.neck
+	ears = target.ears
+	glasses = target.glasses
+	id = target.id
+	id_trim = target.id_trim
+	l_pocket = target.l_pocket
+	r_pocket = target.r_pocket
+	suit_store = target.suit_store
+	r_hand = target.r_hand
+	l_hand = target.l_hand
+	internals_slot = target.internals_slot
+	backpack_contents = target.backpack_contents
+	box = target.box
+	implants = target.implants
+	accessory = target.accessory
 
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
@@ -374,6 +403,7 @@
 	ears = text2path(outfit_data["ears"])
 	glasses = text2path(outfit_data["glasses"])
 	id = text2path(outfit_data["id"])
+	id_trim = text2path(outfit_data["id_trim"])
 	l_pocket = text2path(outfit_data["l_pocket"])
 	r_pocket = text2path(outfit_data["r_pocket"])
 	suit_store = text2path(outfit_data["suit_store"])
@@ -395,3 +425,13 @@
 			implants += imptype
 	accessory = text2path(outfit_data["accessory"])
 	return TRUE
+
+/datum/outfit/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION(VV_HK_TO_OUTFIT_EDITOR, "Outfit Editor")
+
+/datum/outfit/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_TO_OUTFIT_EDITOR])
+		usr.client.open_outfit_editor(src)

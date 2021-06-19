@@ -7,7 +7,8 @@
 	BB_CUSTOMER_CUSTOMERINFO = null,
 	BB_CUSTOMER_EATING = FALSE,
 	BB_CUSTOMER_LEAVING = FALSE,
-	BB_CUSTOMER_ATTENDING_VENUE = null)
+	BB_CUSTOMER_ATTENDING_VENUE = null,
+	BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE)
 
 
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
@@ -54,7 +55,7 @@
 	SIGNAL_HANDLER
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	if(attending_venue.is_correct_order(I, blackboard[BB_CUSTOMER_CURRENT_ORDER]))
-		to_chat(user, "<span class='notice'>You hand [I] to [pawn]</span>")
+		to_chat(user, span_notice("You hand [I] to [pawn]"))
 		eat_order(I, attending_venue)
 		return COMPONENT_NO_AFTERATTACK
 	else

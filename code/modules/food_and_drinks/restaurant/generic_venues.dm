@@ -33,7 +33,7 @@
 		SSrestaurant.food_appearance_cache[object_to_order] = appearance //and cache it for future orders
 		qdel(temp_object)
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
 
 	I.appearance = appearance
 	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
@@ -52,7 +52,7 @@
 /datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	. = ..()
 	var/obj/item/food/ordered_food = order_item
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
+	customer_pawn.visible_message(span_danger("[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!"), span_danger("You push [ordered_food] into your mouth-shaped hole."))
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	customers_served += 1
 	qdel(ordered_food)
@@ -104,7 +104,7 @@
 
 	customer_pawn.say(order_food_line(reagent_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
 	I.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
 	I.pixel_y = 32
 	I.pixel_x = 16
@@ -125,7 +125,7 @@
 			continue
 		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
+	customer_pawn.visible_message(span_danger("[customer_pawn] slurps up [order_item] in one go!"), span_danger("You slurp up [order_item] in one go."))
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
 	customers_served += 1
 	order_item.reagents.clear_reagents()

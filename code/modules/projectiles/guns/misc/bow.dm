@@ -40,7 +40,7 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		to_chat(user, "<span class='notice'>You [drawn ? "release the tension on" : "draw the string on"] [src].</span>")
+		to_chat(user, span_notice("You [drawn ? "release the tension on" : "draw the string on"] [src]."))
 		drawn = !drawn
 	update_appearance()
 

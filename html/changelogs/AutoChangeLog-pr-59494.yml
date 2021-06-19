@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "Added a new machine to the robotics lab; the ectoscopic sniffer."

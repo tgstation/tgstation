@@ -25,8 +25,7 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
-/tools/LinuxOneShot/ @Cyberboss
-/tools/tgs4_scripts/ @Cyberboss
+
 
 # Mothblocks
 
@@ -54,6 +53,7 @@
 /code/controllers/subsystem/timer.dm @MrStonedOne
 /code/controllers/configuration/entries @MrStonedOne
 /config/ @MrStonedOne
+/tools/build/ @MrStonedOne
 
 # ninjanomnom
 
@@ -81,9 +81,11 @@
 
 # Multiple Owners
 
-/icons/ @Twaticus @ShizCalev
+/icons/ @Twaticus @ShizCalev @Krysonism
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
-/_maps/ @EOBGames @ShizCalev
+/_maps/ @EOBGames @ShizCalev @Maurukas
+/tools/LinuxOneShot/ @Cyberboss @MrStonedOne
+/tools/tgs4_scripts/ @Cyberboss @MrStonedOne
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

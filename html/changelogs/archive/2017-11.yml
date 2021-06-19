@@ -1,0 +1,535 @@
+2017-11-02:
+  ACCount:
+  - tweak: '"Tail removal" and "tail attachment" surgeries are merged with "organ
+      manipulation".'
+  - imageadd: New sprites for reflectors. They finally look like something.
+  - rscadd: You can lock reflector's rotation by using a screwdriver. Use the screwdriver
+      again to unlock it.
+  - rscadd: Reflector examine now shows the current angle and rotation lock status.
+  - rscadd: You can now use a welder to repair damaged reflectors.
+  - bugfix: Multiple reflector bugs are fixed.
+  Improvedname:
+  - rscdel: Removes statues from gold slime pool
+  Mercenaryblue:
+  - imageadd: Updated Clown Box sprite to match the others.
+  More Robust Than You:
+  - admin: ONLY ADMINS CAN ACTIVATE THE ARK NOW
+  - tweak: The Ark's time measurements are now a bit more readable
+  MrStonedOne:
+  - tweak: Meteor events will not happen before 25 minutes, the worst versions before
+      35 and 45 minutes.
+  - tweak: Meteor events are now player gated to 15, 20, and 25 players respectively
+  - balance: The more destructive versions of meteor events now have a slightly higher
+      chance of triggering, to offset the decrease in how often it is that they will
+      even qualify.
+  - bugfix: Fixed the changelog generator.
+  Naksu:
+  - tweak: Smartfridges and chem/condimasters now output items in a deterministic
+      3x3 grid rather than in a huge pile in the middle of the tile.
+  SpaceManiac:
+  - bugfix: Admins can once again spawn nuke teams on demand.
+  Xhuis:
+  - admin: Admins can now create sound emitters (/obj/effect/sound_emitter) that can
+      be customized to play sounds to different people, at different volumes, and
+      at different locations such as by z-level. They're much more versatile for events
+      than the Play Sound commands!
+  - rscadd: You can now add grenades to plushies! You'll need to cut out the stuffing
+      first.
+  - tweak: Clockwork cult tips of the round have been updated to match the rework.
+  - tweak: Abscond and Reebe rifts now place servants directly at the Ark instead
+      of below the "base" area.
+  nicbn:
+  - tweak: Brown gas renamed to nitryl.
+  ninjanomnom:
+  - bugfix: Fixes decals not rotating correctly with the turf.
+  - bugfix: Fixes a runtime causing some turfs to be left behind by removed shuttles.
+  - code_imp: Shuttles should be roughly 40-50% smoother.
+  - bugfix: Fixes the cargo shuttle occasionally breaking if a mob got on at exactly
+      the right time.
+2017-11-10:
+  Anonmare:
+  - bugfix: Adds an organ storage bag to the syndicate medborg.
+  AnturK:
+  - balance: Dying in shapeshifted form reverts you to the original one. (You're still
+      dead)
+  Floyd / Qustinnus:
+  - soundadd: Redtexting as a traitor now plays a depressing tune to you
+  Floyd / Qustinnus (And all the sounds by Kayozz11 from Yogstation):
+  - soundadd: Adds about 30 new ambience sounds
+  - refactor: added new defines for ambience lists.
+  Iamgoofball:
+  - tweak: Cooldown on the Ripley's mining drills has been halved.
+  - tweak: The frequency of the Ripley's ore pulse has been doubled.
+  Jalleo:
+  - tweak: Removed a variable to state which RCD's can deconstruct reinforced walls
+  - balance: Made combat (ERT ones) and admin RCDs able to deconstruct r walls alongside
+      borg ones
+  Kor:
+  - bugfix: Cult mode will once again print out names at round end.
+  Mark9013100:
+  - rscadd: Deltastation now has a Whiteship.
+  - tweak: Charcoal bottles have been renamed, and have been given a more informative
+      description.
+  Mercenaryblue:
+  - spellcheck: spellchecked the hotel staff.
+  - rscadd: Added frog masks. Reeeeeeeeee!!
+  More Robust Than You:
+  - bugfix: Blobbernauts and spores are no longer killed by blob victory
+  - bugfix: New blob overminds off the station Z level are moved to the station
+  - bugfix: You can now use banhammers as a weapon
+  - tweak: Monkeys can no longer transmit diseases through hardsuits
+  - tweak: Xenobio blobbernauts can no longer walk on blob tiles
+  Naksu:
+  - tweak: Added deterministic output slots to the slime processor
+  - bugfix: Fixed some interactions with ghosts and items
+  - bugfix: Nonhumans such as monkeys can now be scanned for chemicals with the health
+      analyzer.
+  Okand37 (DeltaStation Updates):
+  - rscadd: Tweaked Atmospherics
+  - bugfix: Fixed the Incinerator air injector
+  - rscadd: Tweaked Engineering
+  - rscadd: Added logs to the Chaplain's closet for gimmicks (bonfires)
+  - rscadd: Tweaked Security
+  - bugfix: Fixed medical morgue maintenance not providing radiation shielding and
+      exterior chemistry windoor
+  - rscadd: Bar now has a door from the backroom to the theatre stage
+  - rscadd: Tweaked Locker Room/Dormitories
+  ShizCalev:
+  - bugfix: You can now -actually- load pie cannons.
+  - bugfix: The captain's winter coat can now hold a flashlight.
+  - bugfix: The captain's and security winter coats can now hold internals tanks.
+  - tweak: All winter coats can now hold toys, lighters, and cigarettes.
+  - tweak: The captain's hardsuit can now hold pepperspray.
+  - rscadd: Updated the Test Map debugging verb to report more issues regarding APCs.
+      DELTASTATION
+  - bugfix: Reverted Okand37's morgue changes which broke power in the area.
+  - bugfix: Corrected wrong area on the Southern airlock leading into electrical maintenance.
+      ALL STATIONS
+  - bugfix: Corrected numerous duplicate APCs in areas which led to power issues.
+  SpaceManiac:
+  - bugfix: Ghosts can no longer create sparks from the hand teleporter's portals.
+  - bugfix: Digging on Lavaland no longer shows two progress bars.
+  - bugfix: The holodeck now has an "Offline" option.
+  - bugfix: Injury and crit overlays are now scaled properly for zoomed-out views.
+  - bugfix: Already-downloaded software is now hidden from the NTNet software downloader.
+  - bugfix: The crafting, language, and building buttons are now positioned correctly
+      in zoomed-out views.
+  - bugfix: Bluespace shelter walls no longer smooth with non-shelter walls and windows.
+  Swindly:
+  - rscadd: Organ storage bags can be used to perform limb augmentation.
+  - bugfix: You can now cancel a cavity implant during the implanting/removing step
+      by using drapes while holding the appropriate tool in your inactive hand. Cyborgs
+      can cancel the surgery by using drapes alone.
+  - bugfix: Fixed hot items and fire heating reagents to temperatures higher than
+      their heat source.
+  - bugfix: Sprays can now be heated with hot items.
+  - tweak: The heating of reagents by hot items, fire, and microwaves now scales linearly
+      with the difference between the reagent holder's temperature and the heat source's
+      temperature instead of constantly.
+  - tweak: The body temperature of a mob with reagents is affected by the temperature
+      of the mob's reagents.
+  - tweak: Reagent containers can now be heated by hot air.
+  Thefastfoodguy:
+  - bugfix: Spamming runes / battlecries / etc will no longer trigger spam prevention
+  WJohnston:
+  - bugfix: Ancient station lighting fixed on beta side (medical and atmos remains)
+  XDTM:
+  - rscadd: Ghosts now have a Toggle Health Scan verb, which allows them to health
+      scan mobs they click on.
+  Xhuis:
+  - rscadd: Ratvar and Nar-Sie plushes now have a unique interaction.
+  - balance: Clockwork marauders are now on harm intent.
+  - balance: The Clockwork Marauder scripture now takes five seconds longer to invoke
+      per marauder summoned in the last 20 seconds, capping at 30 extra seconds.
+  - balance: Clockwork marauders no longer gain a health bonus when war is declared.
+  - tweak: Moved the BoxStation deep fryers up one tile.
+  - rscadd: Microwaves have new sounds!
+  YPOQ:
+  - bugfix: EMPs can pulse multiple wires
+  as334:
+  - rscadd: Pluoxium can now be formed by irradiating tiles with CO2 in the air.
+  - rscadd: Rad collectors now steadily form Tritium at a slow pace.
+  - balance: Nerfs fusion by making it slower, and produce radioactivity.
+  - balance: Noblium formation now requires significantly more energy input.
+  - balance: Tanks now melt if their temperature is above 1 Million Kelvin.
+  deathride58:
+  - bugfix: Directional character icon previews now function properly. Other things
+      relying on getflaticon probably work with directional icons again, as well.
+  nicbn:
+  - imageadd: Canister sprites for the new gases
+  ninjanomnom:
+  - bugfix: Shuttle parallax has been fixed once more
+  - bugfix: You can no longer set up the auxiliary base's shuttle beacon overlapping
+      with the edge of the map
+  uraniummeltdown:
+  - tweak: Replica fabricatoring airlocks and windoors keeps the old name
+  - tweak: Narsie and Ratvar converting airlocks and windoors keeps the old name
+2017-11-11:
+  DaxDupont:
+  - bugfix: Medbots can inject from one tile away again.
+  SpaceManiac:
+  - bugfix: The detective and heads of staff are no longer attacked by portable turrets.
+  deathride58:
+  - bugfix: You can no longer delete girders, lattices, or catwalks with the RPD
+  - bugfix: Fixes runtimes that occur when clicking girders, lattices, catwalks, or
+      disposal pipes with the RPD in paint mode
+  ninjanomnom:
+  - bugfix: Fixes ruin cable spawning and probably some other bugs
+2017-11-12:
+  Cyberboss:
+  - bugfix: Clockwork slabs no longer refer to components
+2017-11-13:
+  Cobby:
+  - rscadd: The Xray now only hits the first mob it comes into contact with instead
+      of being outright removed from the game.
+  Floyd / Qustinnus:
+  - soundadd: Reebe now has ambience sounds
+  'Floyd / Qustinnus:':
+  - soundadd: Adds a few sound_loop datums to machinery.
+  Frozenguy5:
+  - bugfix: Broken cable cuffs no longer has an invisible sprite.
+  PKPenguin321:
+  - rscadd: Welders must now be screwdrivered open to reveal their fuel tank.
+  - rscadd: You can empty welders into open containers (like beakers or glasses) when
+      they're screwdrivered open.
+  - rscadd: You can now insert any chemical into a welder, but all most will do is
+      clog the fuel. Welding fuel will refuel it as usual. Plasma in welders tends
+      to explode.
+  Qbopper and JJRcop:
+  - tweak: The default internet sound volume was changed from 100 to 25. Stop complaining
+      in OOC about your ears!
+  SpaceManiac:
+  - bugfix: Posters may no longer be placed on diagonal wall corners.
+  WJohnston:
+  - rscdel: Removes stationary docking ports for syndicate infiltrator ships on all
+      maps. Use the docking navigator computer instead! This gives the white ship
+      and syndicate infiltrator more room to navigate and place custom locations that
+      are otherwise occupied by fixed shuttle landing zones that are rarely used.
+  Xhuis:
+  - rscadd: Deep fryers now have sound.
+  - tweak: Deep fryers now use cooking oil, a specialized reagent that becomes highly
+      damaging at high temperatures. You can get it from grinding soybeans and meat.
+  - tweak: Deep fryers now become more efficient with higher-level micro lasers, using
+      less oil and frying faster.
+  - tweak: Deep fryers now slowly use oil as it fries objects, instead of all at once.
+  - bugfix: You can now correctly refill deep fryers with syringes and pills.
+  nicn:
+  - balance: Damage from low pressure has been doubled.
+  ninjanomnom:
+  - rscadd: You can now select a nearby area to expand when using a blueprint instead
+      of making a new area.
+  - rscadd: New shuttle areas can be created using blueprints. This is currently not
+      useful but will be used later for shuttle construction.
+  - tweak: Blueprints can modify existing areas on station.
+  - admin: Blueprint functionality has been added to the debug tab as a verb.
+2017-11-14:
+  ike709:
+  - imageadd: Added directional computer sprites. Maps haven't been changed yet.
+  psykzz:
+  - refactor: AI Airlock UI to use TGUI
+  - tweak: Allow AI to swap between electrified door states without having to un-electrify
+      first.
+  selea/arsserpentarium:
+  - rscadd: Integrated circuits have been added to Research!
+  - rscadd: You can use these to create devices with very complex behaviors.
+  - rscadd: Research the Integrated circuits printer to get started.
+2017-11-15:
+  Fury:
+  - rscadd: Added new sprites for the Heirophant Relay (clock cultist telecomms equipment).
+  Naksu:
+  - bugfix: 'Removed fire-related free lag. change: fire alarms and cameras no longer
+      work after being ripped off a wall by a singulo'
+  - tweak: 'Minor speedups to movement processing. change: Fat mobs no longer gain
+      temperature by running.'
+  Robustin:
+  - refactor: Cult population scaling no longer operates on arbitrary breakpoints.
+      Each additional player between the between the breakpoints will add to the "chance"
+      that an additional cultist will spawn.
+  - tweak: On average you will see less roundstart cultists in lowpop and more roundstart
+      cultists in highpop.
+  - tweak: Damage examinations now include a "moderate" classification. Before minor
+      was <30 and severe was anything 30 or above. Now minor is <25, moderate is 25
+      to <50, and severe is 50+.
+  - tweak: The tesla will now move toward power beacons at a significantly slower
+      rate.
+  SpaceManiac:
+  - bugfix: The post-round station integrity report is now functional again.
+  ninjanomnom:
+  - bugfix: Gas overlays no longer block clicks, on 512
+2017-11-22:
+  ACCount:
+  - refactor: Old integrated circuit save file format is ditched in favor of JSON.
+      Readability, both of save files and save code, is improved greatly.
+  - tweak: Integrated circuit panels now open with screwdriver instead of crowbar,
+      to match every single other thing on this server.
+  - tweak: Integrated circuit printer now stores up to 25 metal sheets.
+  - bugfix: Fixed integrated circuit rechargers not recharging guns properly and not
+      updating icons.
+  - bugfix: Fixed multiple bugs in integrated circuits UIs, improved overall usability.
+  Anonmare:
+  - balance: Laserpoitners now incapcitate catpeople
+  AutomaticFrenzy:
+  - bugfix: cell chargers weren't animating properly
+  - bugfix: disable_warning wasn't getting checked and the chat was being spammed
+  Code by Pyko, Ported by Frozenguy5:
+  - rscadd: Rat Kebabs and Double Rat Kebabs have been added!
+  Cyberboss:
+  - server: Server tools API changed to version 3.2.0.1
+  - admin: '"ahelp" chat command can now accept a ticket number as opposed to a ckey'
+  DaxDupont:
+  - tweak: CentCom has issued a firmware updated for the operating computers. It is
+      no longer needed to manually refresh the procedure and patient status.
+  - bugfix: Proximity sensors no longer beep when unarmed.
+  - bugfix: Plant trays will now properly process fluorine and adjust toxins and water
+      contents.
+  Francinum:
+  - tweak: The shuttle build plate is now better sized for all stations.
+  Iamgoofball:
+  - spellcheck: fixes grammar on logic gate descriptions
+  - spellcheck: fixes grammar on list circuits
+  - bugfix: fixes grammar on trig circuits
+  - spellcheck: fixed grammar on output circuits
+  JJRcop:
+  - bugfix: Fixes changeling eggs not putting the changeling in control if the brainslug
+      is destroyed before hatching.
+  - tweak: The silicon airlock menu looks a little more like it used to.
+  Kor:
+  - bugfix: Blobbernauts will no longer spawn if a player is not selected to control
+      it, preventing AI blobbernauts from running off the blob and to their deaths.
+  - rscdel: Following complaints that cargo has been selling all the materials they
+      receive rather than distributing them, mineral exporting has been removed.
+  MMMiracles:
+  - balance: Power regen on the regular tesla relay has been reduced to 50, from 150.
+  Naksu:
+  - bugfix: Sped up saycode to remove free lag from highpop
+  - bugfix: Using a chameleon projector will now dismount you from any vehicles you
+      are riding, in order to prevent wacky space glitches and being sent to a realm
+      outside space and time.
+  Shadowlight213:
+  - code_imp: Added round id to the status world topic
+  ShizCalev:
+  - bugfix: Chameleon goggles will no longer go invisible when selecting Optical Tray
+      scanners.
+  - rscadd: Engineering and Atmos scanner goggles will now have correctly colored
+      inhand sprites.
+  - tweak: The computers on all maps have have been updated for the latest directional
+      sprite changes. Please report any computers facing in strange directions to
+      your nearest mapper.
+  - bugfix: MetaStation - The consoles in medbay have had their directions corrected.
+  - imageadd: The Nanotrasen logo on modular computers has been fixed, rejoice!
+  - bugfix: PubbyStation - Unpowered air injectors in various locations have been
+      fixed.
+  - bugfix: MetaStation - Air injector leading out of the incinerator has been fixed
+  - bugfix: MetaStation - Corrected a couple maintenance airlocks being powered by
+      the wrong areas.
+  - bugfix: Computers will no longer rotate incorrectly when being deconstructed.
+  - bugfix: You can now rotate computer frames during construction.
+  - bugfix: Chairs, PA parts, infrared emitters, and doppler arrays will now rotate
+      clockwise.
+  - bugfix: Throwing drinking glasses and cartons will now consistently cause them
+      to break!
+  - bugfix: Humans missing legs or are legcuffed will no longer move slower in areas
+      without gravity.
+  - bugfix: The structures external to stations are now properly lit. Make sure you
+      bring a flashlight.
+  - bugfix: Computers will no longer delete themselves when being built, whoops!
+  - bugfix: Space cats will no longer have a smashed helmet when they lay down.
+  Skylar Lineman, your local R&D moonlighter:
+  - rscadd: Research has been completely overhauled into the techweb system! No more
+      levels, the station now unlocks research "nodes" with research points passively
+      generated when there is atleast one research server properly cooled, powered,
+      and online.
+  - rscadd: R&D lab has been replaced by the departmental lathe system on the three
+      major maps. Each department gets a lathe and possibly a circuit imprinter that
+      only have designs assigned by that department.
+  - rscadd: The ore redemption machine has been moved into cargo bay on maps with
+      decentralized research to prevent the hallways from becoming a free for all.
+      Honk!
+  - balance: You shouldn't expect balance as this is the initial merge. Please put
+      all feedback and concerns on the forum so we can revise the system over the
+      days, weeks, and months, to make this enjoyable for everyone. Heavily wanted
+      are ideas of how to add more ways of generating points.
+  - balance: You can get techweb points by setting off bombs with an active science
+      doppler array listening. The bombs have to have a theoretical radius far above
+      maxcap to make a difference. You can only go up, not down, in radius, so you
+      can't get 6 times the points with 6 TTVs. The algorithm is exponentially/logarithmically
+      scaled to prevent "world destroyer" bombs from instantly finishing research.
+  SpaceManiac:
+  - bugfix: HUDs from mechs and helmets no longer conflict with HUD glasses and no
+      longer inappropriately remove implanted HUDs.
+  - code_imp: Chasm code has been refactored to be more sane.
+  - bugfix: Building lattices over chasms no longer sometimes deletes the chasm.
+  - code_imp: Ladders have been refactored and should be far less buggy.
+  - bugfix: Jacob's ladder actually works again.
+  - bugfix: Pizza box stacking works again.
+  - bugfix: Fix some permanent-on and permanent-off bugs caused by the HUD stacking
+      change.
+  WJohnston:
+  - imageadd: A bunch of new turf decals for mappers to play with, coming in yellow,
+      white, and red varieties!
+  - bugfix: Green banded default airlocks now have extended click area like all other
+      airlocks.
+  Y0SH1 M4S73R:
+  - spellcheck: The R&D Server's name is now improper.
+  - spellcheck: The R&D Server now has an explanation of what it does.
+  arsserpentarium:
+  - bugfix: now lists should work properly
+  duncathan:
+  - rscadd: The RPD has a shiny new UI!
+  - rscadd: The RPD can now paint pipes as it lays them, for quicker piping projects.
+  - rscadd: Atmos scrubbers (vent and portable) can now filter any and all gases.
+  ike709:
+  - imageadd: Added new vent and scrubber sprites by Partheo.
+  - bugfix: Fixed some computers facing the wrong direction.
+  jammer312:
+  - bugfix: fixed conjuration spells forgetting about conjured items
+  kevinz000:
+  - rscadd: purple bartender suit and apron added to clothesmates!
+  - rscadd: long hair 3 added, check it out. both have sprites from okand!
+  nicbn:
+  - soundadd: Now rolling beds and office chairs have a sound!
+  oranges:
+  - rscdel: Removed the shocker circuit
+  psykzz:
+  - imageadd: Grilles have new damaged and default sprites
+  - rscadd: Added TGUI for Turbine computer
+  tserpas1289:
+  - tweak: Any suit that could hold emergency oxygen tanks can now also hold plasma
+      man internals
+  - tweak: Hydroponics winter coats now can hold emergency oxygen tanks just like
+      the other winter coats.
+  - bugfix: Plasma men jumpsuits can now hold accessories like pocket protectors and
+      medals.
+  zennerx:
+  - bugfix: fixed a bug that made you try and scream while unconscious due to a fire
+  - tweak: Skateboard crashes now give slight brain damage!
+  - rscadd: Using a helmet prevents brain damage from the skateboard!
+2017-11-23:
+  GupGup:
+  - bugfix: Fixes hostile mobs attacking surrounding tiles when trying to attack someone
+  MrStonedOne and Jordie:
+  - server: As a late note, serverops be advise that mysql is no longer supported.
+      existing mysql databases will need to be converted to mariadb
+  Robustin:
+  - tweak: RND consoles will no longer display options for machines or disks that
+      are not connected/inserted.
+  ShizCalev:
+  - bugfix: Aliens in soft-crit will now use the correct sprite.
+  XDTM:
+  - rscadd: 'Added two new symptoms: one allows viruses to still work while dead,
+      and allows infection of undead species, and one allows infection of inorganic
+      species (such as plasmapeople or golems).'
+2017-11-24:
+  ACCount:
+  - rscdel: Removed "console screen" stock part. Just use glass sheets instead.
+  More Robust Than You:
+  - tweak: Spessmen are now smart enough to realize you don't need to turn around
+      to pull cigarette butts
+  SpaceManiac:
+  - bugfix: Fix water misters being inappropriately glued to hands in some cases.
+  - bugfix: Some misplaced decals in the Hotel brig have been corrected.
+  ninjanomnom:
+  - bugfix: Custom shuttle dockers can no longer place docking regions inside other
+      custom docker regions.
+2017-11-25:
+  CosmicScientist:
+  - bugfix: bolas are back in tablecrafting!
+  Dorsisdwarf:
+  - tweak: Catpeople are now distracted instead of debilitated
+  - rscadd: Normal cats now go for laser pointers
+  SpaceManiac:
+  - bugfix: You can no longer buckle people to roller beds from inside of a locker.
+  YPOQ:
+  - bugfix: AIs and cyborgs can interact with unscrewed airlocks and APCs.
+  ninjanomnom:
+  - bugfix: Fixes thermite burning hotter than the boiling point of stone
+  zennerx:
+  - bugfix: Zombies don't reanimate with no head!
+2017-11-27:
+  ACCount:
+  - rscadd: 'New integrated circuit components: list constructors/deconstructors.
+      Useful for building lists and taking them apart.'
+  - bugfix: Fixed multiple bugs in integrated circuits UIs, improved overall usability.
+  More Robust Than You:
+  - bugfix: Fixed cult leaders being de-culted upon election if they had a mindshield
+      implant
+  Naksu:
+  - bugfix: Hopefully fixed mesons granting the ability to hear people through walls.
+  Okand37:
+  - rscadd: Re-organized Delta's departmental protolathes for all departments.
+  - rscadd: Re-organized Delta's ORM placement by connecting it to the mining office,
+      which now has a desk for over handing materials to the outside.
+  - rscadd: Added a second Nanomed to Deltastation's medical bay.
+  - rscadd: Nanotrasen has decided to add proper caution signs to most docking ports
+      on Deltastation, warning individuals to be cautious around these areas.
+  - rscadd: Two health sensors are now placed in Deltastation's robotics area for
+      medibots.
+  - bugfix: Atmospheric Technicians at Deltastation can now open up their gas storage
+      in the supermatter power area as intended.
+  WJohnston:
+  - bugfix: Fixed a case where items would sometimes be placed underneath racks.
+  XDTM:
+  - balance: Viruses' healing symptoms have been reworked!
+  - rscdel: All existing healing symptoms have been removed in favour of new ones.
+  - rscdel: Weight Even and Weight Gain have been removed, so hunger can be used for
+      balancing in symptoms.
+  - rscadd: Starlight Condensation heals toxin damage if you're in space using starlight
+      as a catalyst. Being up to two tiles away also works, as long as you can still
+      see it, but slower.
+  - rscadd: Toxolysis (level 7) rapidly cleanses all chemicals from the body, with
+      no exception.
+  - rscadd: 'Cellular Molding heals brute damage depending on your body temperature:
+      the higher the temperature, the faster the healing. Requires above-average temperature
+      to activate, and the speed heavily increases while on fire.'
+  - rscadd: Regenerative Coma (level 8) causes the virus to send you into a deep coma
+      when you are heavily damaged (>70 brute+burn damage). While you are unconscious,
+      either from the virus or from other sources, the virus will heal both brute
+      and burn damage fairly quickly. Sleeping also works, but at reduced speed.
+  - rscadd: Tissue Hydration heals burn damage if you are wet (negative fire stacks)
+      or if you have water in your bloodstream.
+  - rscadd: Plasma Fixation (level 8) stabilizes temperature and heals burns while
+      plasma is in your body or while standing in a plasma cloud. Does not protect
+      from the poisoning effects of plasma.
+  - rscadd: Radioactive Resonance gives a mild constant brute and burn healing while
+      irradiated. The healing becomes more intense if you reach higher levels of radiation,
+      but is still less than the alternatives.
+  - rscadd: Metabolic Boost (level 7) doubles the rate at which you process chemicals,
+      good and bad, but also increases hunger tenfold.
+  kevinz000:
+  - bugfix: Cryo cells can now be properly rotated with a wrench.
+  ninjanomnom:
+  - rscadd: 'You can now make a new tasty traditional treat: butterdogs. Watch out,
+      they''re slippery.'
+2017-11-28:
+  ACCount:
+  - rscdel: '"Machine prototype" is removed from the game.'
+  - rscdel: Mass-spectrometers are removed. Would anyone notice if not for this changelog
+      entry?
+  Cruix:
+  - rscadd: AI and observer diagnostic huds will now show the astar path of all bots,
+      and Pai bots will be given a visible path to follow when called by the AI.
+  JJRcop:
+  - admin: Fixed the Make space ninja verb.
+  Naksu:
+  - code_imp: rejiggered botcode a little bit
+  SpaceManiac:
+  - spellcheck: Admin-added "download research" objectives are now consistent with
+      automatic ones.
+  improvedname:
+  - tweak: toolbelts can now carry geiger counters
+  uraniummeltdown:
+  - rscadd: You can make many different types of office and comfy chairs with metal
+  - tweak: Stack menus use /datum/browser
+2017-11-29:
+  MrStonedOne:
+  - tweak: The sloth no longer suspiciously moves fast when gliding between tiles.
+  - balance: The sloth's movespeed when inhabited by a player has been lowered from
+      once every 1/5 of a second to once every second.
+  SpaceManiac:
+  - spellcheck: The techweb node for mech LMGs no longer claims to be for mech tasers.
+2017-11-30:
+  ninjanomnom:
+  - tweak: Reduced the max volume of sm by 1/5th and made the upper bounds only play
+      mid delamination.
+  psykzz:
+  - bugfix: Fixing the broken turbine computer

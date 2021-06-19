@@ -1,6 +1,6 @@
 /obj/item/food/pie
 	icon = 'icons/obj/food/piecake.dmi'
-	trash_type = /obj/item/trash/plate
+
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
@@ -12,7 +12,7 @@
 /obj/item/food/pieslice
 	name = "pie slice"
 	icon = 'icons/obj/food/piecake.dmi'
-	trash_type = /obj/item/trash/plate
+
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "uncertainty" = 1)
@@ -52,7 +52,7 @@
 		if(stunning)
 			living_target_getting_hit.Paralyze(20) //splat!
 		living_target_getting_hit.adjust_blurriness(1)
-		living_target_getting_hit.visible_message("<span class='warning'>[living_target_getting_hit] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		living_target_getting_hit.visible_message(span_warning("[living_target_getting_hit] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
 		playsound(living_target_getting_hit, "desecration", 50, TRUE)
 	if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)

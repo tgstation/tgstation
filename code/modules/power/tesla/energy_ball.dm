@@ -19,7 +19,7 @@
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
 	density = TRUE
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	move_resist = INFINITY
@@ -163,7 +163,7 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/jedi = user
-	to_chat(jedi, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
+	to_chat(jedi, span_userdanger("That was a shockingly dumb idea."))
 	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.internal_organs
 	jedi.ghostize(jedi)
 	if(rip_u)

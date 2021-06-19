@@ -1,0 +1,31 @@
+name: GBP Collection
+# Every hour at the :20 minute mark. GitHub tells us to pick odd hours, instead of just using the start.
+on:
+  schedule:
+  - cron: "20 * * * *"
+  workflow_dispatch:
+jobs:
+  gbp_collection:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    - name: Checkout alternate branch
+      uses: actions/checkout@v2
+      with:
+        ref: "gbp-balances" # The branch name
+        path: gbp-balances
+    # This is to ensure we keep the gbp.toml from master
+    # without having to update our separate branch.
+    - name: Copy configuration
+      run: cp ./.github/gbp.toml ./gbp-balances/.github/gbp.toml
+    - name: GBP action
+      uses: Mothblocks/gbp-action@collate-changes
+      with:
+        collect: "true"
+        directory: ./gbp-balances
+        token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,18 +1,3 @@
-/obj/item/caution
-	desc = "Caution! Wet Floor!"
-	name = "wet floor sign"
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "caution"
-	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	force = 1
-	throwforce = 3
-	throw_speed = 2
-	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb_continuous = list("warns", "cautions", "smashes")
-	attack_verb_simple = list("warn", "caution", "smash")
-
 /obj/item/choice_beacon
 	name = "choice beacon"
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
@@ -48,20 +33,20 @@
 	if(!uses)
 		qdel(src)
 	else
-		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
+		to_chat(M, span_notice("[uses] use[uses > 1 ? "s" : ""] remaining on the [src]."))
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
-	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-	new choice(pod)
-	pod.explosionSize = list(0,0,0,0)
+	podspawn(list(
+		"target" = get_turf(src),
+		"style" = STYLE_BLUESPACE,
+		"spawn" = choice,
+	))
 	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(istype(H.ears, /obj/item/radio/headset))
-			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Item request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
+			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: [span_bold("Item request received. Your package is inbound, please stand back from the landing site.")] Message ends.\""
 	to_chat(M, msg)
-
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/item/choice_beacon/ingredient
 	name = "ingredient delivery beacon"
@@ -77,7 +62,7 @@
 
 /obj/item/choice_beacon/ingredient/spawn_option(obj/choice,mob/living/M)
 	new choice(get_turf(M))
-	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'Plasteel Chef' Ingredients Box, exactly as shown in the hit show!</b> Message ends.\"</span>")
+	to_chat(M, span_hear("You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'Plasteel Chef' Ingredients Box, exactly as shown in the hit show!</b> Message ends.\""))
 
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
@@ -245,7 +230,7 @@
 
 /obj/item/choice_beacon/hero/spawn_option(obj/choice,mob/living/M)
 	new choice(get_turf(M))
-	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'History Comes Alive branded' Costume Set, exactly as shown in the hit show!</b> Message ends.\"</span>")
+	to_chat(M, span_hear("You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'History Comes Alive branded' Costume Set, exactly as shown in the hit show!</b> Message ends.\""))
 
 
 /obj/item/storage/box/hero
@@ -312,7 +297,7 @@
 
 /obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
 	new choice(get_turf(M))
-	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from S.E.L.F. Message as follows: <b>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</b> Message ends.\"</span>")
+	to_chat(M, span_hear("You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from S.E.L.F. Message as follows: <b>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</b> Message ends.\""))
 
 /obj/item/skub
 	desc = "It's skub."
@@ -328,7 +313,7 @@
 	AddComponent(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
 
 /obj/item/skub/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
+	user.visible_message(span_suicide("[user] has declared themself as anti-skub! The skub tears them apart!"))
 
 	user.gib()
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE, -1)
@@ -359,10 +344,10 @@
 	var/mob/living/joe = user
 
 	if(joe in mob_mobs) //Only one nickname fuckhead
-		to_chat(joe, "<span class='warning'>You have already been initiated into the mafioso life.</span>")
+		to_chat(joe, span_warning("You have already been initiated into the mafioso life."))
 		return
 
-	to_chat(joe, "<span class='notice'>As you burn the picture, a nickname comes to mind...</span>")
+	to_chat(joe, span_notice("As you burn the picture, a nickname comes to mind..."))
 	var/nickname = stripped_input(joe, "Pick a nickname", "Mafioso Nicknames", null, NICKNAME_CAP, TRUE)
 	nickname = reject_bad_name(nickname, allow_numbers = FALSE, max_length = NICKNAME_CAP, ascii_only = TRUE)
 	if(!nickname)
@@ -377,12 +362,12 @@
 	used_up = TRUE
 	mob_mobs += joe
 	joe.say("My soul will burn like this saint if I betray my family. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
-	to_chat(joe, "<span class='userdanger'>Being inducted into the mafia does not grant antagonist status.</span>")
+	to_chat(joe, span_userdanger("Being inducted into the mafia does not grant antagonist status."))
 
 #undef NICKNAME_CAP
 
 /obj/item/virgin_mary/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!</span>")
+	user.visible_message(span_suicide("[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!"))
 	user.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen. ", forced = /obj/item/virgin_mary)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 75)
 	addtimer(CALLBACK(user, /atom/movable/proc/say, "O my Mother, preserve me this day from mortal sin..."), 50)

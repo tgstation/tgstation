@@ -20,7 +20,6 @@
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
-	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
@@ -39,7 +38,6 @@
 
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
-	SSticker.mode.ape_infectees -= owner
 
 	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
 	if(D)
@@ -79,7 +77,7 @@
 /datum/antagonist/monkey/admin_remove(mob/admin)
 	var/mob/living/carbon/human/M = owner.current
 	if(ismonkey(M))
-		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
+		switch(tgui_alert(admin, "Humanize?", "Humanize", list("Yes", "No")))
 			if("Yes")
 				if(admin == M)
 					admin = M.humanize()
@@ -98,7 +96,7 @@
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/human/H = new_owner.current
 	if(istype(H))
-		switch(alert(admin, "Monkeyize?", "Monkeyize", "Yes", "No"))
+		switch(tgui_alert(admin, "Monkeyize?", "Monkeyize", list("Yes", "No")))
 			if("Yes")
 				if(admin == H)
 					admin = H.monkeyize()
@@ -116,18 +114,16 @@
 	. = ..()
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
-	SSticker.mode.ape_leaders += owner
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
-	SSticker.mode.ape_leaders -= owner
 	var/obj/item/organ/heart/H = new
 	H.Insert(owner.current, drop_if_replaced = FALSE) //replace freedom heart with normal heart
 
 	. = ..()
 
 /datum/antagonist/monkey/leader/greet()
-	to_chat(owner, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
+	to_chat(owner, "<B>[span_notice("You are the Jungle Fever patient zero!!</B>")]")
 	to_chat(owner, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
 	to_chat(owner, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(owner, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
@@ -208,23 +204,23 @@
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
 			parts += "<span class='greentext big'><B>Monkey Major Victory!</B></span>"
-			parts += "<span class='greentext'><B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B></span>"
+			parts += span_greentext("<B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B>")
 		if(MONKEYS_LIVED)
 			parts += "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>"
-			parts += "<span class='greentext'><B>[station_name()] was taken over by the monkeys! Ook ook!</B></span>"
+			parts += span_greentext("<B>[station_name()] was taken over by the monkeys! Ook ook!</B>")
 		if(DISEASE_LIVED)
 			parts += "<span class='redtext big'><B>Monkey Minor Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, but the disease lives on! The future is uncertain.</B></span>"
+			parts += span_redtext("<B>All the monkeys died, but the disease lives on! The future is uncertain.</B>")
 		if(MONKEYS_DIED)
 			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
+			parts += span_redtext("<B>All the monkeys died, and Jungle Fever was wiped out!</B>")
 	var/list/leaders = get_antag_minds(/datum/antagonist/monkey/leader, TRUE)
 	var/list/monkeys = get_antag_minds(/datum/antagonist/monkey, TRUE)
 
 	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_leaders)
+		parts += printplayerlist(leaders)
 	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_infectees)
+		parts += printplayerlist(monkeys)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

@@ -206,7 +206,7 @@
 		screenmob.client.screen += module_store_icon //"store" icon
 
 		if(!R.model.modules)
-			to_chat(usr, "<span class='warning'>Selected model has no modules to select!</span>")
+			to_chat(usr, span_warning("Selected model has no modules to select!"))
 			return
 
 		if(!R.robot_modules_background)
@@ -226,7 +226,6 @@
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			A.layer = ABOVE_HUD_LAYER
 			A.plane = ABOVE_HUD_PLANE
 
 			x++

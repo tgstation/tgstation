@@ -3,13 +3,12 @@
 /datum/round_event_control/shuttle_insurance
 	name = "Shuttle Insurance"
 	typepath = /datum/round_event/shuttle_insurance
-	weight = 200 //you're basically bound to get it
 	max_occurrences = 1
 
-/datum/round_event_control/shuttle_insurance/canSpawnEvent(players, gamemode)
+/datum/round_event_control/shuttle_insurance/canSpawnEvent(players)
 	if(!SSeconomy.get_dep_account(ACCOUNT_CAR))
 		return FALSE //They can't pay?
-	if(SSshuttle.shuttle_purchased != SHUTTLEPURCHASE_FORCED)
+	if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return FALSE //don't do it if there's nothing to insure
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //catastrophes won't trigger so no point

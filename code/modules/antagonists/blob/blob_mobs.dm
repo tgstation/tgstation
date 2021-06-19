@@ -105,7 +105,6 @@
 	attack_verb_continuous = "hits"
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	is_flying_animal = TRUE
 	del_on_death = TRUE
 	deathmessage = "explodes into a cloud of gas!"
 	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
@@ -117,6 +116,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -145,11 +145,11 @@
 		return
 	if(key || stat)
 		return
-	var/pod_ask = alert("Become a blob spore?", "Are you bulbous enough?", "Yes", "No")
+	var/pod_ask = tgui_alert(usr,"Become a blob spore?", "Are you bulbous enough?", list("Yes", "No"))
 	if(pod_ask == "No" || !src || QDELETED(src))
 		return
 	if(key)
-		to_chat(user, "<span class='warning'>Someone else already took this spore!</span>")
+		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
 	log_game("[key_name(src)] took control of [name].")
@@ -177,7 +177,7 @@
 	H.forceMove(src)
 	oldguy = H
 	update_icons()
-	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message(span_warning("The corpse of [H.name] suddenly rises!"))
 	if(!key)
 		notify_ghosts("\A [src] has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Blob Zombie Created")
 
@@ -269,7 +269,7 @@
 	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	hud_type = /datum/hud/blobbernaut
+	hud_type = /datum/hud/living/blobbernaut
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	. = ..()
@@ -313,15 +313,6 @@
 		if(overmind)
 			I.color = overmind.blobstrain.complementary_color
 		flick_overlay_view(I, src, 8)
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(updating_health)
-		update_health_hud()
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
-	if(hud_used)
-		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>")
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()

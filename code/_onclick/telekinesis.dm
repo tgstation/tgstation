@@ -90,7 +90,6 @@
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	//inhand_icon_state = null
 	w_class = WEIGHT_CLASS_GIGANTIC
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 	///Object focused / selected by the TK user
@@ -174,6 +173,9 @@
 		apply_focus_overlay()
 		//Only items can be thrown 10 tiles everything else only 1 tile
 		focus.throw_at(target, focus.tk_throw_range, 1,user)
+		var/turf/start_turf = get_turf(focus)
+		var/turf/end_turf = get_turf(target)
+		user.log_message("has thrown [focus] from [AREACOORD(start_turf)] towards [AREACOORD(end_turf)] using Telekinesis", LOG_ATTACK)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_appearance()
 
@@ -181,7 +183,7 @@
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
 	if(d > TK_MAXRANGE)
-		to_chat(user, "<span class='warning'>Your mind won't reach that far.</span>")
+		to_chat(user, span_warning("Your mind won't reach that far."))
 		return
 	return TRUE
 
@@ -221,7 +223,7 @@
 	. += focus_overlay
 
 /obj/item/tk_grab/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
 

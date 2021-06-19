@@ -103,8 +103,8 @@
 		return
 	for(var/obj/A in bank_cards)
 		var/icon_source = A
-		if(istype(A, /obj/item/card/id/advanced))
-			var/obj/item/card/id/advanced/id_card = A
+		if(istype(A, /obj/item/card/id))
+			var/obj/item/card/id/id_card = A
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(A, /mob)
 		if(ismob(card_holder)) //If on a mob
@@ -113,7 +113,7 @@
 
 			if(card_holder.can_hear())
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
-				to_chat(card_holder, "[icon2html(icon_source, card_holder)] <span class='notice'>[message]</span>")
+				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(A.loc)) //If on the ground
 			var/turf/T = A.loc
 			for(var/mob/M in hearers(1,T))
@@ -121,7 +121,7 @@
 					continue
 				if(M.can_hear())
 					M.playsound_local(T, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
+					to_chat(M, "[icon2html(icon_source, M)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
@@ -131,7 +131,7 @@
 					sound_atom = A.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(M.can_hear())
 					M.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
-					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
+					to_chat(M, "[icon2html(icon_source, M)] [span_notice("[message]")]")
 
 /**
  * Returns a string with the civilian bounty's description on it.

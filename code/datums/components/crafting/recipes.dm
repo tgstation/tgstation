@@ -138,6 +138,7 @@
 	result = /obj/item/tailclub
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/sheet/iron = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -147,6 +148,7 @@
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/cable_coil = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -421,7 +423,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/iron = 4,
 				/obj/item/stack/package_wrap = 8,
-				/obj/item/pipe = 2)
+				/obj/item/pipe/quaternary = 2)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -999,7 +1001,7 @@
 	if(!aicard.AI)
 		return TRUE
 
-	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	to_chat(user, span_boldwarning("You can't craft an intelliTater with an AI in the card!"))
 	return FALSE
 
 /datum/crafting_recipe/aispook
@@ -1019,14 +1021,6 @@
 	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
-
-/datum/crafting_recipe/multiduct
-	name = "Multi-layer duct"
-	result = /obj/machinery/duct/multilayered
-	time = 5
-	reqs = list(/obj/item/stack/ducts = 5)
-	category = CAT_MISC
-	tool_behaviors = list(TOOL_WELDER)
 
 /datum/crafting_recipe/rib
 	name = "Collosal Rib"
@@ -1294,6 +1288,17 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
+
+/**
+ * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
+ */
+/datum/crafting_recipe/clown_scanner_upgrade
+	name = "Bananium HONK-spect scanner"
+	result = /obj/item/inspector/clown/bananium
+	reqs = list(/obj/item/inspector/clown = 1, /obj/item/stack/sticky_tape = 3, /obj/item/stack/sheet/mineral/bananium = 5) //the chainsaw of prank tools
+	tool_paths = list(/obj/item/bikehorn)
+	time = 40 SECONDS
+	category = CAT_MISC
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

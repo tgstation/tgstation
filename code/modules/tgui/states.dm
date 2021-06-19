@@ -61,7 +61,7 @@
  */
 /mob/proc/shared_ui_interaction(src_object)
 	// Close UIs if mindless.
-	if(!client)
+	if(!client && !HAS_TRAIT(src, TRAIT_PRESERVE_UI_WITHOUT_CLIENT))
 		return UI_CLOSE
 	// Disable UIs if unconcious.
 	else if(stat)

@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
 	name = "Shapechange"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
+	school = SCHOOL_TRANSMUTATION
 	clothes_req = FALSE
 	human_req = FALSE
 	charge_max = 200
@@ -21,7 +22,7 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard,\
+		/mob/living/simple_animal/hostile/giant_spider/viper/wizard,\
 		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
@@ -72,7 +73,7 @@
 		else
 			ourpipeline = pipenets
 
-		to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
+		to_chat(M, span_userdanger("Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!"))
 		var/gibtype = /obj/effect/gibspawner/generic
 		if(isalien(M))
 			gibtype = /obj/effect/gibspawner/xeno
@@ -100,7 +101,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
-		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
+		to_chat(caster, span_warning("You're already shapeshifted!"))
 		return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)

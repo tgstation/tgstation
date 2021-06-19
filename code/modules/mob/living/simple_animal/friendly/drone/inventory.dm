@@ -59,7 +59,6 @@
 
 	I.screen_loc = null // will get moved if inventory is visible
 	I.forceMove(src)
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 
 	switch(slot)
@@ -70,7 +69,7 @@
 			internal_storage = I
 			update_inv_internal_storage()
 		else
-			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
+			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 			return
 
 	//Call back for item being equipped to drone

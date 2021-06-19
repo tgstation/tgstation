@@ -1,0 +1,72 @@
+2013-04-04:
+  Cheridan:
+  - tweak: When an AI shunts into an APC, the pinpointer will begin tracking it. When
+      the AI returns to its core, the pinpointer will go back to locating the nuke
+      disc.
+  - tweak: New sechud icons for sec officers/HoS, medical doctors, and loyalty implants.
+2013-04-09:
+  Ikarrus:
+  - rscadd: Liquid Plasma have been found to have strange and unexpected results on
+      virion cultures. The executive chief science officer urges virologists to explore
+      the possibilities this new discovery could bring.
+  - rscadd: After years or research, our scientists have engineered this cutting-edge
+      technology born from the science of shaving. The Electric Space-Razor 5000!
+      It uses moisturizers to refuel your face while you shave with not three, not
+      four, but FIVE lazer-precise inner blades for maximum comfort.
+2013-04-10:
+  Cheridan:
+  - rscadd: You can now condense capsaicin into pepper spray with chemistry.
+  - tweak: Pepper spray made slightly more effective.
+  - tweak: Teargas grenades can be obtained in Weapons and Riot crates.
+  - tweak: 'Riot crate comes with 2 sets of gear instead of 3, made cheaper. Beanbag
+      crate removed entirely. Just make more at the autolathe instead. Bureaucracy
+      crate cheaper, now has film roll. '
+  - tweak: NT bluespace engineers have ironed-out that little issue with the teleporter
+      occasionally malfunctioning and dropping users into deep space. Please note,
+      however, that bluespace teleporters are still sensitive experimental technology,
+      and should be Test Fired before use to ensure proper function.
+2013-04-17:
+  Giacom:
+  - rscadd: If the configuration option is enabled, AIs and or Cyborgs will not be
+      able to communicate vocally. This means they cannot talk normally and need to
+      use alternative methods to do so
+2013-04-22:
+  Cheridan:
+  - rscdel: Stungloves removed 5eva.
+  - rscadd: Don't rage yet. Makeshift stunprods(similar in function to stungloves)
+      and spears are now craftable. Make them by using a rod on cable restraits, then
+      adding something.
+  - rscadd: Stun batons/prods now work off power cells, which can be removed and replaced!
+      Use a screwdriver to remove the battery.
+  Malkevin:
+  - tweak: Overhauled the thermal insulation system
+  - rscadd: All clothing that protected from one side of the thermal spectrum now
+      protects from the other.
+  - wip: Armor (although most don't have full coverage) protects between 160 to 600
+      kelvin
+  - wip: 'Firesuits protect between 60 to 30,000 kelvin (Note: Hotspot damage still
+      exists)'
+  - rscadd: CE's hardsuit got its firesuit level protection back
+  - tweak: Bomb suits function as ghetto riot gear
+2013-04-23:
+  Malkevin:
+  - imageadd: Replaced the captain's run of the mill armored vest with his very own
+      unique vest. Offers slightly better bullet protection.
+2013-04-24:
+  Carnie:
+  - experiment: 'DNA reworked: All SE blocks are randomised. DNA-modifier emitter
+      strength affects the size of the change in the hex-character hit. Emitter duration
+      makes it more likely to hit the character you click on. Almost all DNA-modifier
+      functions are on one screen.<br/>Balancing -will- be off a bit. Is getting halk
+      to hard/easy? Please report bugs/balancing issues/concerns here: http://forums.nanotrasen.com/viewtopic.php?f=15&amp;t=13083
+      &lt;3'
+2013-04-26:
+  Ikarrus:
+  - rscadd: Commanding Officers of Nanotrasen Stations have been issued a box of medals
+      to be awarded to crew members who display exemplary conduct.
+2013-04-30:
+  Ikarrus:
+  - rscadd: Researchers have discovered that glass shards are, in fact, dangerous
+      due to their typically sharp nature. Our internal Safety Committee advises that
+      glass shards only be handled while using Nanotrasen-approved hand-protective
+      equipment.

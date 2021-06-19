@@ -64,7 +64,6 @@
 	friendly_verb_continuous = "grooms"
 	friendly_verb_simple = "groom"
 	mob_size = MOB_SIZE_SMALL
-	is_flying_animal = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10
@@ -128,6 +127,8 @@
 			  /mob/living/simple_animal/parrot/proc/toggle_mode,
 			  /mob/living/simple_animal/parrot/proc/perch_mob_player))
 
+	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
+	AddElement(/datum/element/simple_flying)
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()
@@ -185,99 +186,96 @@
 
 	return FALSE
 
-/*
- * Inventory
- */
-/mob/living/simple_animal/parrot/show_inv(mob/user)
-	user.set_machine(src)
-	var/list/dat = list()
+GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
+	/datum/strippable_item/parrot_headset,
+)))
 
-	dat += "<table>"
-	dat += "<tr><td><B>Headset:</B></td><td><A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'><font color=grey>Empty</font>"]</A></td></tr>"
-	dat += {"</table>
-	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
-	"}
+/datum/strippable_item/parrot_headset
+	key = STRIPPABLE_ITEM_PARROT_HEADSET
 
-	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
-	popup.set_content(dat.Join())
-	popup.open()
+/datum/strippable_item/parrot_headset/get_item(atom/source)
+	var/mob/living/simple_animal/parrot/parrot_source = source
+	return istype(parrot_source) ? parrot_source.ears : null
 
+/datum/strippable_item/parrot_headset/try_equip(atom/source, obj/item/equipping, mob/user)
+	. = ..()
+	if (!.)
+		return FALSE
 
-/mob/living/simple_animal/parrot/Topic(href, href_list)
-	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		usr << browse(null, "window=mob[REF(src)]")
-		usr.unset_machine()
+	if (!istype(equipping, /obj/item/radio/headset))
+		to_chat(user, span_warning("[equipping] won't fit!"))
+		return FALSE
+
+	return TRUE
+
+// There is no delay for putting a headset on a parrot.
+/datum/strippable_item/parrot_headset/start_equip(atom/source, obj/item/equipping, mob/user)
+	return TRUE
+
+/datum/strippable_item/parrot_headset/finish_equip(atom/source, obj/item/equipping, mob/user)
+	var/obj/item/radio/headset/radio = equipping
+	if (!istype(radio))
 		return
 
-	//Removing from inventory
-	if(href_list["remove_inv"])
-		var/remove_from = href_list["remove_inv"]
-		switch(remove_from)
-			if("ears")
-				if(!ears)
-					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
-					return
-				if(!stat)
-					say("[available_channels.len ? "[pick(available_channels)] " : null]BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-				ears.forceMove(drop_location())
-				ears = null
-				for(var/possible_phrase in speak)
-					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
-						possible_phrase = copytext_char(possible_phrase, 3)
-		show_inv(usr)
+	var/mob/living/simple_animal/parrot/parrot_source = source
+	if (!istype(parrot_source))
+		return
 
-	//Adding things to inventory
-	else if(href_list["add_inv"])
-		var/add_to = href_list["add_inv"]
-		if(!usr.get_active_held_item())
-			to_chat(usr, "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>")
-			return
-		switch(add_to)
-			if("ears")
-				if(ears)
-					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
-					return
-				else
-					var/obj/item/item_to_add = usr.get_active_held_item()
-					if(!item_to_add)
-						return
+	if (!user.transferItemToLoc(radio, source))
+		return
 
-					if( !istype(item_to_add,  /obj/item/radio/headset) )
-						to_chat(usr, "<span class='warning'>This object won't fit!</span>")
-						return
+	parrot_source.ears = radio
 
-					var/obj/item/radio/headset/headset_to_add = item_to_add
+	to_chat(user, span_notice("You fit [radio] onto [source]."))
 
-					if(!usr.transferItemToLoc(headset_to_add, src))
-						return
-					ears = headset_to_add
-					to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
+	parrot_source.available_channels.Cut()
 
-					available_channels.Cut()
-					for(var/ch in headset_to_add.channels)
-						switch(ch)
-							if(RADIO_CHANNEL_ENGINEERING)
-								available_channels.Add(RADIO_TOKEN_ENGINEERING)
-							if(RADIO_CHANNEL_COMMAND)
-								available_channels.Add(RADIO_TOKEN_COMMAND)
-							if(RADIO_CHANNEL_SECURITY)
-								available_channels.Add(RADIO_TOKEN_SECURITY)
-							if(RADIO_CHANNEL_SCIENCE)
-								available_channels.Add(RADIO_TOKEN_SCIENCE)
-							if(RADIO_CHANNEL_MEDICAL)
-								available_channels.Add(RADIO_TOKEN_MEDICAL)
-							if(RADIO_CHANNEL_SUPPLY)
-								available_channels.Add(RADIO_TOKEN_SUPPLY)
-							if(RADIO_CHANNEL_SERVICE)
-								available_channels.Add(RADIO_TOKEN_SERVICE)
+	for (var/channel in radio.channels)
+		var/channel_to_add
 
-					if(headset_to_add.translate_binary)
-						available_channels.Add(MODE_TOKEN_BINARY)
-		show_inv(usr)
+		switch (channel)
+			if (RADIO_CHANNEL_ENGINEERING)
+				channel_to_add = RADIO_TOKEN_ENGINEERING
+			if (RADIO_CHANNEL_COMMAND)
+				channel_to_add = RADIO_TOKEN_COMMAND
+			if (RADIO_CHANNEL_SECURITY)
+				channel_to_add = RADIO_TOKEN_SECURITY
+			if (RADIO_CHANNEL_SCIENCE)
+				channel_to_add = RADIO_TOKEN_SCIENCE
+			if (RADIO_CHANNEL_MEDICAL)
+				channel_to_add = RADIO_TOKEN_MEDICAL
+			if (RADIO_CHANNEL_SUPPLY)
+				channel_to_add = RADIO_TOKEN_SUPPLY
+			if (RADIO_CHANNEL_SERVICE)
+				channel_to_add = RADIO_TOKEN_SERVICE
 
-	else
-		return ..()
+		if (channel_to_add)
+			parrot_source.available_channels += channel_to_add
 
+	if (radio.translate_binary)
+		parrot_source.available_channels.Add(MODE_TOKEN_BINARY)
+
+/datum/strippable_item/parrot_headset/start_unequip(atom/source, mob/user)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	var/mob/living/simple_animal/parrot/parrot_source = source
+	if (!istype(parrot_source))
+		return
+
+	if (!parrot_source.stat)
+		parrot_source.say("[parrot_source.available_channels.len ? "[pick(parrot_source.available_channels)] " : null]BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+
+	return TRUE
+
+/datum/strippable_item/parrot_headset/finish_unequip(atom/source, mob/user)
+	var/mob/living/simple_animal/parrot/parrot_source = source
+	if (!istype(parrot_source))
+		return
+
+	parrot_source.ears.forceMove(parrot_source.drop_location())
+	parrot_source.ears = null
 
 /*
  * Attack responces
@@ -348,7 +346,7 @@
 			adjustBruteLoss(-10)
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
-		to_chat(user, "<span class='notice'>[src] eagerly devours the cracker.</span>")
+		to_chat(user, span_notice("[src] eagerly devours the cracker."))
 	..()
 	return
 
@@ -515,7 +513,7 @@
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.forceMove(src)
-					visible_message("<span class='notice'>[src] grabs [held_item]!</span>", "<span class='notice'>You grab [held_item]!</span>", "<span class='hear'>You hear the sounds of wings flapping furiously.</span>")
+					visible_message(span_notice("[src] grabs [held_item]!"), span_notice("You grab [held_item]!"), span_hear("You hear the sounds of wings flapping furiously."))
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -693,7 +691,7 @@
 		return -1
 
 	if(held_item)
-		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
+		to_chat(src, span_warning("You are already holding [held_item]!"))
 		return 1
 
 	for(var/obj/item/I in view(1,src))
@@ -706,10 +704,10 @@
 
 			held_item = I
 			I.forceMove(src)
-			visible_message("<span class='notice'>[src] grabs [held_item]!</span>", "<span class='notice'>You grab [held_item]!</span>", "<span class='hear'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message(span_notice("[src] grabs [held_item]!"), span_notice("You grab [held_item]!"), span_hear("You hear the sounds of wings flapping furiously."))
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
+	to_chat(src, span_warning("There is nothing of interest to take!"))
 	return 0
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
@@ -721,7 +719,7 @@
 		return -1
 
 	if(held_item)
-		to_chat(src, "<span class='warning'>You are already holding [held_item]!</span>")
+		to_chat(src, span_warning("You are already holding [held_item]!"))
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -735,10 +733,10 @@
 		if(stolen_item)
 			C.transferItemToLoc(stolen_item, src, TRUE)
 			held_item = stolen_item
-			visible_message("<span class='notice'>[src] grabs [held_item] out of [C]'s hand!</span>", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='hear'>You hear the sounds of wings flapping furiously.</span>")
+			visible_message(span_notice("[src] grabs [held_item] out of [C]'s hand!"), span_notice("You snag [held_item] out of [C]'s hand!"), span_hear("You hear the sounds of wings flapping furiously."))
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
+	to_chat(src, span_warning("There is nothing of interest to take!"))
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -763,7 +761,7 @@
 
 	if(!held_item)
 		if(src == usr) //So that other mobs won't make this message appear when they're bludgeoning you.
-			to_chat(src, "<span class='warning'>You have nothing to drop!</span>")
+			to_chat(src, span_warning("You have nothing to drop!"))
 		return 0
 
 
@@ -782,11 +780,11 @@
 			var/obj/item/grenade/G = held_item
 			G.forceMove(drop_location())
 			G.detonate()
-			to_chat(src, "<span class='danger'>You let go of [held_item]!</span>")
+			to_chat(src, span_danger("You let go of [held_item]!"))
 			held_item = null
 			return 1
 
-	to_chat(src, "<span class='notice'>You drop [held_item].</span>")
+	to_chat(src, span_notice("You drop [held_item]."))
 
 	held_item.forceMove(drop_location())
 	held_item = null
@@ -808,7 +806,7 @@
 					icon_state = icon_sit
 					parrot_state = PARROT_PERCH
 					return
-	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
+	to_chat(src, span_warning("There is no perch nearby to sit on!"))
 	return
 
 /mob/living/simple_animal/parrot/Moved(oldLoc, dir)
@@ -833,12 +831,12 @@
 				continue
 			perch_on_human(H)
 			return
-		to_chat(src, "<span class='warning'>There is nobody nearby that you can sit on!</span>")
+		to_chat(src, span_warning("There is nobody nearby that you can sit on!"))
 	else
 		icon_state = icon_living
 		parrot_state = PARROT_WANDER
 		if(buckled)
-			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
+			to_chat(src, span_notice("You are no longer sitting on [buckled]'s shoulder."))
 			buckled.unbuckle_mob(src, TRUE)
 		buckled = null
 		pixel_x = initial(pixel_x)
@@ -855,7 +853,7 @@
 		pixel_x = pick(-8,8) //pick left or right shoulder
 		icon_state = icon_sit
 		parrot_state = PARROT_PERCH
-		to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+		to_chat(src, span_notice("You sit on [H]'s shoulder."))
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
@@ -872,7 +870,7 @@
 	else
 		melee_damage_upper = parrot_damage_upper
 		set_combat_mode(TRUE)
-	to_chat(src, "<span class='notice'>You will now [combat_mode ? "Harm" : "Help"] others.</span>")
+	to_chat(src, span_notice("You will now [combat_mode ? "Harm" : "Help"] others."))
 	return
 
 /*
@@ -1004,4 +1002,4 @@
 	forceMove(H)
 	H.ForceContractDisease(P, FALSE)
 	parrot_interest = null
-	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+	H.visible_message(span_danger("[src] dive bombs into [H]'s chest and vanishes!"), span_userdanger("[src] dive bombs into your chest, vanishing! This can't be good!"))

@@ -220,11 +220,21 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = COLOR_SOFT_RED
 
+/obj/projectile/beam/instakill/green
+	icon_state = "green_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	light_color = COLOR_VERY_PALE_LIME_GREEN
+
+/obj/projectile/beam/instakill/yellow
+	icon_state = "yellow_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	light_color = COLOR_VERY_SOFT_YELLOW
+
 /obj/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
+		M.visible_message(span_danger("[M] explodes into a shower of gibs!"))
 		M.gib()
 
 //a shrink ray that shrinks stuff, which grows back after a short while.

@@ -17,7 +17,8 @@ GLOBAL_LIST_EMPTY(alarmdisplay)         //list of all machines or programs that 
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity) //list of all singularities on the station
 GLOBAL_LIST_EMPTY(mechpad_list) //list of all /obj/machinery/mechpad
 
-GLOBAL_LIST(chemical_reactions_list) //list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
+GLOBAL_LIST(chemical_reactions_list) //list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
+GLOBAL_LIST(chemical_reactions_list_reactant_index) //list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
 GLOBAL_LIST(chemical_reactions_list_product_index) //list of all /datum/chemical_reaction datums. Used for the reaction lookup UI. Indexed by PRODUCT type
 GLOBAL_LIST(chemical_reagents_list) //list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with their associated product and result ids. Used for reaction lookups
@@ -38,7 +39,7 @@ GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(trophy_cases)
 GLOBAL_LIST_EMPTY(experiment_handlers)
 ///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
-GLOBAL_LIST_EMPTY(editable_sign_types)
+GLOBAL_LIST_INIT(editable_sign_types, populate_editable_sign_types())
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)

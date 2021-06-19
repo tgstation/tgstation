@@ -50,9 +50,10 @@
  * automatic disconnection = beam_died, so we can give a warning message first
  */
 /obj/item/gun/medbeam/proc/beam_died()
+	SIGNAL_HANDLER
 	active = FALSE //skip qdelling the beam again if we're doing this proc, because
 	if(isliving(loc))
-		to_chat(loc, "<span class='warning'>You lose control of the beam!</span>")
+		to_chat(loc, span_warning("You lose control of the beam!"))
 	LoseTarget()
 
 /obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -112,7 +113,7 @@
 				return FALSE
 		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
 			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc,0,3,5,8)
+				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8)
 				qdel(dummy)
 				return FALSE
 	qdel(dummy)

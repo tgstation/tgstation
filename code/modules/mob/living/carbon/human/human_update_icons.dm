@@ -420,7 +420,13 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		var/mutable_appearance/legcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
+		if(legcuffed.blocks_emissive)
+			var/mutable_appearance/legcuff_blocker = mutable_appearance('icons/mob/mob.dmi', "legcuff1", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+			legcuff_blocker.color = GLOB.em_block_color
+			legcuff_overlay.overlays += legcuff_blocker
+
+		overlays_standing[LEGCUFF_LAYER] = legcuff_overlay
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
@@ -516,39 +522,41 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mutable_appearance/standing
 	if(femaleuniform)
-		standing = wear_female_version(t_state,file2use,layer2use,femaleuniform) //should layer2use be in sync with the adjusted value below? needs testing - shiz
+		standing = wear_female_version(t_state, file2use, layer2use, femaleuniform) //should layer2use be in sync with the adjusted value below? needs testing - shiz
 	if(!standing)
 		standing = mutable_appearance(file2use, t_state, -layer2use)
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(isinhands, file2use)
+	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
 	if(worn_overlays?.len)
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
-	//Handle held offsets
-	var/mob/M = loc
-	if(istype(M))
-		var/list/L = get_held_offsets()
-		if(L)
-			standing.pixel_x += L["x"] //+= because of center()ing
-			standing.pixel_y += L["y"]
+	//Worn offsets
+	var/list/offsets = get_worn_offsets(isinhands)
+	standing.pixel_x += offsets[1]
+	standing.pixel_y += offsets[2]
 
 	standing.alpha = alpha
 	standing.color = color
 
 	return standing
 
-
-/obj/item/proc/get_held_offsets()
-	var/list/L
-	if(ismob(loc))
-		var/mob/M = loc
-		L = M.get_item_offsets_for_index(M.get_held_index_of_item(src))
-	return L
-
+/// Returns offsets used for equipped item overlays in list(px_offset,py_offset) form.
+/obj/item/proc/get_worn_offsets(isinhands)
+	. = list(0,0) //(px,py)
+	if(isinhands)
+		//Handle held offsets
+		var/mob/holder = loc
+		if(istype(holder))
+			var/list/offsets = holder.get_item_offsets_for_index(holder.get_held_index_of_item(src))
+			if(offsets)
+				.[1] = offsets["x"]
+				.[2] = offsets["y"]
+	else
+		.[2] = worn_y_offset
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)

@@ -6,7 +6,7 @@
 	name = "chemical reaction tester"
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "HPLC"
+	icon_state = "HPLC_debug"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
@@ -48,6 +48,8 @@
 	var/beaker_spawn = FALSE
 	///If we force min temp on reaction setup
 	var/min_temp = FALSE
+	///The recipe we're editing
+	var/datum/chemical_reaction/edit_recipe
 
 ///Create reagents datum
 /obj/machinery/chem_recipe_debug/Initialize()
@@ -75,10 +77,10 @@
 /obj/machinery/chem_recipe_debug/proc/setup_reactions()
 	cached_reactions = list()
 	if(process_all)
-		for(var/reaction in GLOB.chemical_reactions_list)
-			if(is_type_in_list(GLOB.chemical_reactions_list[reaction], cached_reactions))
+		for(var/reaction in GLOB.chemical_reactions_list_reactant_index)
+			if(is_type_in_list(GLOB.chemical_reactions_list_reactant_index[reaction], cached_reactions))
 				continue
-			cached_reactions += GLOB.chemical_reactions_list[reaction]
+			cached_reactions += GLOB.chemical_reactions_list_reactant_index[reaction]
 	else
 		cached_reactions = reaction_names
 	reagents.clear_reagents()
@@ -129,25 +131,25 @@
 		for(var/reagent_type in reaction.results)
 			var/datum/reagent/reagent =  reagents.get_reagent(reagent_type)
 			if(!reagent)
-				say("<span class='warning'>Unable to find product [reagent_type] in holder after reaction! reagents found are:</span>")
+				say(span_warning("Unable to find product [reagent_type] in holder after reaction! reagents found are:"))
 				for(var/other_reagent in reagents.reagent_list)
 					say("[other_reagent]")
 				var/obj/item/reagent_containers/glass/beaker/bluespace/beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 				reagents.trans_to(beaker)
 				beaker.name = "[cached_reactions[index]] failed"
 				if(!failed)
-					problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [reagent_type] in holder after reaction! Trying alternative setup. index:[index]</span>\n"
+					problem_string += "[cached_reactions[index]] [span_warning("Unable to find product [reagent_type] in holder after reaction! Trying alternative setup. index:[index]")]\n"
 					failed++
 					return
 			say("Reaction has a product [reagent_type] [reagent.volume]u purity of [reagent.purity]")
 			if(reagent.purity < 0.9)
-				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [reagent.volume]u <span class='boldwarning'>purity of [reagent.purity]</span> index:[index]\n"
+				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [reagent.volume]u [span_boldwarning("purity of [reagent.purity]")] index:[index]\n"
 				majorImpurity++
 			else if (reagent.purity < 1)
-				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [reagent.volume]u <span class='warning'>purity of [reagent.purity]</span> index:[index]\n"
+				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [reagent.volume]u [span_warning("purity of [reagent.purity]")] index:[index]\n"
 				minorImpurity++
 			if(reagent.volume < reaction.results[reagent_type])
-				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] <span class='warning'>[reagent.volume]u</span> purity of [reagent.purity] index:[index]\n"
+				impure_string += "Reaction [cached_reactions[index]] has a product [reagent_type] [span_warning("[reagent.volume]u")] purity of [reagent.purity] index:[index]\n"
 			cached_purity = reagent.purity
 		if(beaker_spawn && reagents.total_volume)
 			var/obj/item/reagent_containers/glass/beaker/bluespace/beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
@@ -189,7 +191,7 @@
 	if(min_temp)
 		say("Overriding temperature to required temp.")
 		reagents.chem_temp = reaction.is_cold_recipe ? reaction.required_temp - 1 : reaction.required_temp + 1
-	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.ph] index [index] of [cached_reactions.len]")
+	say("Reacting [span_nicegreen("[cached_reactions[index]]")] starting pH: [reagents.ph] index [index] of [cached_reactions.len]")
 
 /obj/machinery/chem_recipe_debug/ui_data(mob/user)
 	var/data = list()
@@ -207,6 +209,7 @@
 	data["endIndex"] = cached_reactions.len
 	data["beakerSpawn"] = beaker_spawn
 	data["minTemp"] = min_temp
+	data["editRecipe"] = null
 
 	var/list/beaker_contents = list()
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
@@ -260,6 +263,24 @@
 		active_reactions[length(active_reactions)] = list("name" = reagent.name, "danger" = danger, "purityAlert" = purity_alert, "quality" = equilibrium.reaction_quality, "overheat" = overheat, "inverse" = reagent.inverse_chem_val, "minPure" = equilibrium.reaction.purity_min, "reactedVol" = equilibrium.reacted_vol, "targetVol" = round(equilibrium.target_vol, 1))//Use the first result reagent to name the reaction detected
 	data["activeReactions"] = active_reactions
 	data["isFlashing"] = flashing
+
+	if(edit_recipe)
+		data["editRecipeName"] = edit_recipe.type
+		data["editRecipeCold"] = edit_recipe.is_cold_recipe
+		data["editRecipe"] = list(
+			list("name" = "required_temp" , "var" = edit_recipe.required_temp),
+			list("name" = "optimal_temp" , "var" = edit_recipe.optimal_temp),
+			list("name" = "overheat_temp" , "var" = edit_recipe.overheat_temp),
+			list("name" = "optimal_ph_min" , "var" = edit_recipe.optimal_ph_min),
+			list("name" = "optimal_ph_max" , "var" = edit_recipe.optimal_ph_max),
+			list("name" = "determin_ph_range" , "var" = edit_recipe.determin_ph_range),
+			list("name" = "temp_exponent_factor" , "var" = edit_recipe.temp_exponent_factor),
+			list("name" = "ph_exponent_factor" , "var" = edit_recipe.ph_exponent_factor),
+			list("name" = "thermic_constant" , "var" = edit_recipe.thermic_constant),
+			list("name" = "H_ion_release" , "var" = edit_recipe.H_ion_release),
+			list("name" = "rate_up_lim" , "var" = edit_recipe.rate_up_lim),
+			list("name" = "purity_min" , "var" = edit_recipe.purity_min),
+		)
 
 	return data
 
@@ -335,6 +356,40 @@
 			relay_all_reactions()
 		if("minTemp")
 			min_temp = !min_temp
+		if("setEdit")
+			var/name = (input("Enter the name of any reagent", "Input") as text|null)
+			reaction_names = list()
+			if(!text)
+				say("Could not find reaction")
+			var/datum/reagent/reagent = find_reagent_object_from_type(get_chem_id(name))
+			if(!reagent)
+				say("Could not find [name]")
+				return
+			var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list_product_index[reagent.type]
+			if(!reaction)
+				say("Could not find [name] reaction!")
+				return
+			edit_recipe = reaction[1]
+		if("updateVar")
+			var/target = params["target"]
+			edit_recipe.vars[params["type"]] = target
+		if("export")
+			var/export = {"[edit_recipe.type]
+[edit_recipe.is_cold_recipe ? "is_cold_recipe = TRUE" : ""]
+required_temp = [edit_recipe.required_temp]
+optimal_temp = [edit_recipe.optimal_temp]
+overheat_temp = [edit_recipe.overheat_temp]
+optimal_ph_min = [edit_recipe.optimal_ph_min]
+optimal_ph_max = [edit_recipe.optimal_ph_max]
+determin_ph_range = [edit_recipe.determin_ph_range]
+temp_exponent_factor = [edit_recipe.temp_exponent_factor]
+ph_exponent_factor = [edit_recipe.ph_exponent_factor]
+thermic_constant = [edit_recipe.thermic_constant]
+H_ion_release = [edit_recipe.H_ion_release]
+rate_up_lim = [edit_recipe.rate_up_lim]
+purity_min = [edit_recipe.purity_min]"}
+			say(export)
+			text2file(export, "[GLOB.log_directory]/chem_parse.txt")
 
 
 /obj/machinery/chem_recipe_debug/ui_interact(mob/user, datum/tgui/ui)

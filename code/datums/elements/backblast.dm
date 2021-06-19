@@ -29,7 +29,7 @@
 	else
 		RegisterSignal(target, COMSIG_GUN_FIRED, .proc/gun_fired)
 
-/datum/element/backblast/Detach(datum/source, force)
+/datum/element/backblast/Detach(datum/source)
 	if(source)
 		UnregisterSignal(source, COMSIG_GUN_FIRED)
 	return ..()

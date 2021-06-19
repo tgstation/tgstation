@@ -20,7 +20,7 @@
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(toxpwr)
-		M.adjustToxLoss(toxpwr * REM * delta_time, 0)
+		M.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * delta_time, 0)
 		. = TRUE
 	..()
 
@@ -37,6 +37,8 @@
 	name = "Unstable mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
@@ -124,7 +126,7 @@
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
-	description = "Frozen plasma, worth its weight in gold, to the right people"
+	description = "Frozen plasma, worth its weight in gold, to the right people."
 	reagent_state = SOLID
 	color = "#724cb8" // rgb: 114, 76, 184
 	taste_description = "thick and smokey"
@@ -147,6 +149,8 @@
 	name = "Lexorin"
 	description = "A powerful poison used to stop respiration."
 	color = "#7DC3A0"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
 	taste_description = "acid"
 	ph = 1.2
@@ -159,8 +163,8 @@
 		. = FALSE
 
 	if(.)
-		C.adjustOxyLoss(5 * REM * delta_time, 0)
-		C.losebreath += 2 * REM * delta_time
+		C.adjustOxyLoss(5 * REM * normalise_creation_purity() * delta_time, 0)
+		C.losebreath += 2 * REM * normalise_creation_purity() * delta_time
 		if(DT_PROB(10, delta_time))
 			C.emote("gasp")
 	..()
@@ -177,7 +181,7 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
+		to_chat(M, span_danger("Your insides are burning!"))
 		M.adjustToxLoss(rand(20, 60), 0)
 		. = TRUE
 	else if(DT_PROB(23, delta_time))
@@ -209,16 +213,13 @@
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = ..()
-	for(var/i in M.all_scars)
-		qdel(i)
-
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	silent_toxin = TRUE
 	reagent_state = SOLID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
@@ -265,6 +266,8 @@
 	description = "A strong neurotoxin that slows metabolism to a death-like state, while keeping the patient fully active. Causes toxin buildup if used too long."
 	reagent_state = SOLID
 	color = "#664700" // rgb: 102, 71, 0
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0.8
 	taste_description = "death"
 	ph = 14.5
@@ -289,12 +292,20 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	ph = 11
+	impure_chem = /datum/reagent/impurity/rosenol
+	inverse_chem = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.hallucination += 5 * REM * delta_time
+	if(HAS_TRAIT(M, TRAIT_INSANITY))
+		M.hallucination = 0
+	else
+		M.hallucination += 5 * REM * delta_time
+
 	return ..()
 
 /datum/reagent/toxin/plantbgone
@@ -326,13 +337,16 @@
 		var/obj/structure/spacevine/SV = exposed_obj
 		SV.on_chem_effect(src)
 
-/datum/reagent/toxin/plantbgone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/plantbgone/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)
 	. = ..()
+	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
+	if(exposed_mob.mob_biotypes & MOB_PLANT)
+		exposed_mob.adjustToxLoss(damage)
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
 		return
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	if(!exposed_carbon.wear_mask)
-		exposed_carbon.adjustToxLoss(min(round(0.4 * reac_volume, 0.1), 10))
+		exposed_carbon.adjustToxLoss(damage)
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -419,23 +433,26 @@
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	silent_toxin = TRUE
 	reagent_state = SOLID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	ph = 11
+	impure_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	switch(current_cycle)
 		if(1 to 10)
-			M.add_confusion(2 * REM * delta_time)
-			M.drowsyness += 2 * REM * delta_time
+			M.add_confusion(2 * REM * normalise_creation_purity() * delta_time)
+			M.drowsyness += 2 * REM * normalise_creation_purity() * delta_time
 		if(10 to 50)
-			M.Sleeping(40 * REM * delta_time)
+			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 			. = TRUE
 		if(51 to INFINITY)
-			M.Sleeping(40 * REM * delta_time)
-			M.adjustToxLoss(1 * (current_cycle - 50) * REM * delta_time, 0)
+			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
+			M.adjustToxLoss(1 * (current_cycle - 50) * REM * normalise_creation_purity() * delta_time, 0)
 			. = TRUE
 	..()
 
@@ -479,10 +496,22 @@
 	ph = 4.9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/toxin/mushroom_powder
+	name = "Mushroom Powder"
+	description = "Finely ground polypore mushrooms, ready to be steeped in water to make mushroom tea."
+	reagent_state = SOLID
+	color = "#67423A" // rgb: 127, 132, 0
+	toxpwr = 0.1
+	taste_description = "mushrooms"
+	ph = 8.0
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	description = "A nonlethal poison that inhibits speech in its victim."
 	silent_toxin = TRUE
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "silence"
@@ -490,7 +519,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.silent = max(M.silent, 3 * REM * delta_time)
+	M.silent = max(M.silent, 3 * REM * normalise_creation_purity() * delta_time)
 	..()
 
 /datum/reagent/toxin/staminatoxin
@@ -536,7 +565,7 @@
 	if(DT_PROB(30, delta_time))
 		switch(pick(1, 2, 3, 4))
 			if(1)
-				to_chat(M, "<span class='danger'>You can barely see!</span>")
+				to_chat(M, span_danger("You can barely see!"))
 				M.blur_eyes(3)
 			if(2)
 				M.emote("cough")
@@ -544,7 +573,7 @@
 				M.emote("sneeze")
 			if(4)
 				if(prob(75))
-					to_chat(M, "<span class='danger'>You scratch at an itch.</span>")
+					to_chat(M, span_danger("You scratch at an itch."))
 					M.adjustBruteLoss(2*REM, 0)
 					. = TRUE
 	..()
@@ -563,7 +592,11 @@
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 1
+	ph = 2.0
+	impure_chem = /datum/reagent/impurity/methanol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -598,18 +631,21 @@
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
+	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/opiods = 25)
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * normalise_creation_purity() * delta_time, 150)
 	if(M.toxloss <= 60)
-		M.adjustToxLoss(1 * REM * delta_time, 0)
+		M.adjustToxLoss(1 * REM * normalise_creation_purity() * delta_time, 0)
 	if(current_cycle >= 4)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
-		M.Sleeping(40 * REM * delta_time)
+		M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 	..()
 	return TRUE
 
@@ -618,17 +654,20 @@
 	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a stun."
 	reagent_state = LIQUID
 	color = "#00B4FF"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
+	ph = 9.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(2.5, delta_time))
 		M.losebreath += 1
 	if(DT_PROB(4, delta_time))
-		to_chat(M, "<span class='danger'>You feel horrendously weak!</span>")
+		to_chat(M, span_danger("You feel horrendously weak!"))
 		M.Stun(40)
-		M.adjustToxLoss(2*REM, 0)
+		M.adjustToxLoss(2*REM * normalise_creation_purity(), 0)
 	return ..()
 
 /datum/reagent/toxin/bad_food
@@ -646,23 +685,26 @@
 	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#C8C8C8"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 7
 	penetrates_skin = TOUCH|VAPOR
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(8, delta_time))
-		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
+		to_chat(M, span_danger("You scratch at your head."))
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = TRUE
 	if(DT_PROB(8, delta_time))
-		to_chat(M, "<span class='danger'>You scratch at your leg.</span>")
+		to_chat(M, span_danger("You scratch at your leg."))
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = TRUE
 	if(DT_PROB(8, delta_time))
-		to_chat(M, "<span class='danger'>You scratch at your arm.</span>")
+		to_chat(M, span_danger("You scratch at your arm."))
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = TRUE
 	if(DT_PROB(1.5, delta_time))
@@ -696,7 +738,7 @@
 				if(!C.undergoing_cardiac_arrest() && C.can_heartattack())
 					C.set_heartattack(TRUE)
 					if(C.stat == CONSCIOUS)
-						C.visible_message("<span class='userdanger'>[C] clutches at [C.p_their()] chest as if [C.p_their()] heart stopped!</span>")
+						C.visible_message(span_userdanger("[C] clutches at [C.p_their()] chest as if [C.p_their()] heart stopped!"))
 				else
 					C.losebreath += 10
 					C.adjustOxyLoss(rand(5,25), 0)
@@ -752,14 +794,17 @@
 	description = "A stealthy poison that deals minor toxin damage and eventually puts the target to sleep."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#7DC3A0"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 22)
-		M.Sleeping(40 * REM * delta_time)
+		M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 	return ..()
 
 /datum/reagent/toxin/amanitin
@@ -771,12 +816,16 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/delayed_toxin_damage = 0
+
+/datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
+	delayed_toxin_damage += (delta_time * 3)
+	. = ..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	var/toxdamage = current_cycle*3*REM
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
-	M.adjustToxLoss(toxdamage)
-	..()
+	M.log_message("has taken [delayed_toxin_damage] toxin damage from amanitin toxin", LOG_ATTACK)
+	M.adjustToxLoss(delayed_toxin_damage)
+	. = ..()
 
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
@@ -784,15 +833,19 @@
 	silent_toxin = TRUE
 	taste_description = "mothballs"
 	reagent_state = LIQUID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 6
+	impure_chem = /datum/reagent/impurity/ipecacide
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1 * REM * delta_time, 0)
-	M.adjust_nutrition(-3 * REM * delta_time) // making the chef more valuable, one meme trap at a time
+	M.adjust_nutrition(-3 * REM * normalise_creation_purity() * delta_time) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
 
@@ -806,7 +859,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.losebreath += 5 * REM * delta_time
+	if(M.losebreath < 5)
+		M.losebreath = min(M.losebreath + 5 * REM * delta_time, 5)
 	return ..()
 
 /datum/reagent/toxin/spewium
@@ -833,7 +887,7 @@
 	if(current_cycle >= 33 && DT_PROB(7.5, delta_time))
 		C.spew_organ()
 		C.vomit(0, TRUE, TRUE, 4)
-		to_chat(C, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
+		to_chat(C, span_userdanger("You feel something lumpy come up as you vomit."))
 
 /datum/reagent/toxin/curare
 	name = "Curare"
@@ -856,9 +910,12 @@
 	description = "A powerful anticoagulant. All open cut wounds on the victim will open up and bleed much faster"
 	silent_toxin = TRUE
 	reagent_state = LIQUID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
+	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/heparin/on_mob_metabolize(mob/living/M)
@@ -874,9 +931,12 @@
 	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	color = "#AC88CA" //RGB: 172, 136, 202
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	ph = 6.2
 	taste_description = "spinning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -904,7 +964,10 @@
 	reagent_state = LIQUID
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0.15
+	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -912,7 +975,7 @@
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.type, remove_amt * REM * delta_time)
+		M.reagents.remove_reagent(R.type, remove_amt * REM * normalise_creation_purity() * delta_time)
 	return ..()
 
 //ACID
@@ -968,9 +1031,11 @@
 	name = "Fluorosulfuric acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 2
 	acidpwr = 42.0
-	ph = 1.3
+	ph = 0.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // SERIOUSLY
@@ -982,7 +1047,7 @@
 		mytray.adjustWeeds(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss((current_cycle/15) * REM * delta_time, 0)
+	M.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * delta_time, 0)
 	. = TRUE
 	..()
 
@@ -990,13 +1055,15 @@
 	name = "Nitric acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 3
 	acidpwr = 5.0
-	ph = 3.3
+	ph = 1.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss((volume/10) * REM * delta_time, FALSE) //here you go nervar
+	M.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * delta_time, FALSE) //here you go nervar
 	. = TRUE
 	..()
 
@@ -1025,7 +1092,10 @@
 	description = "A nonlethal neurotoxin that interferes with the victim's ability to gesture."
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
+	ph = 1.7
 	taste_description = "stillness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1040,7 +1110,10 @@
 	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
 	silent_toxin = TRUE //no point spamming them even more.
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 0
+	ph = 3.1
 	taste_description = "bone hurting"
 	overdose_threshold = 50
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1058,7 +1131,7 @@
 			if(2)
 				M.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 			if(3)
-				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
+				to_chat(M, span_warning("Your bones hurt!"))
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M, delta_time, times_fired)
@@ -1067,11 +1140,11 @@
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
 			playsound(M, get_sfx("desecration"), 50, TRUE, -1)
-			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+			M.visible_message(span_warning("[M]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			bp.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))
 		else //SUCH A LUST FOR REVENGE!!!
-			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+			to_chat(M, span_warning("A phantom limb hurts!"))
 			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 	return ..()
 
@@ -1090,7 +1163,7 @@
 	M.set_confusion(M.dizziness) //add a tertiary effect here if this is isn't an effective poison.
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
-		to_chat(M, "<span class='notice'>[tox_message]</span>")
+		to_chat(M, span_notice("[tox_message]"))
 	. = TRUE
 	..()
 
@@ -1108,6 +1181,6 @@
 	M.adjustOrganLoss(ORGAN_SLOT_EARS, 1 * REM * delta_time)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time)
 	if(DT_PROB(0.5, delta_time))
-		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
+		to_chat(M, span_notice("Ah, what was that? You thought you heard something..."))
 		M.add_confusion(5)
 	return ..()

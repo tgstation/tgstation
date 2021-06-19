@@ -986,6 +986,24 @@
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/datum/supply_pack/engine/hypertorus_fusion_reactor
+	name = "HFR Crate"
+	desc = "The new and improved fusion reactor. Requires CE access to open."
+	cost = CARGO_CRATE_VALUE * 23
+	access = ACCESS_CE
+	contains = list(/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/core)
+	crate_name = "HFR crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	dangerous = TRUE
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Canisters & Materials ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1130,6 +1148,8 @@
 
 		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
 
+		pack.crate_type = crate_type
+
 		canister_packs += pack
 
 	return canister_packs
@@ -1236,8 +1256,8 @@
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
 					/obj/item/reagent_containers/pill/neurine,
-					/obj/item/stack/medical/bone_gel,
-					/obj/item/stack/medical/bone_gel,
+					/obj/item/stack/medical/bone_gel/four,
+					/obj/item/stack/medical/bone_gel/four,
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs)
 	crate_name = "medical supplies crate"
@@ -1541,7 +1561,7 @@
 
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
+	desc = "Iron floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
@@ -1570,6 +1590,40 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty,
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
+
+/datum/supply_pack/service/carpet_neon
+	name = "Simple Neon Carpet Crate"
+	desc = "Simple rubbery mats with phosphorescent lining. Contains 120 tiles each of 13 color variants. Limited edition release."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+	)
+	crate_name = "neon carpet crate"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
@@ -2094,9 +2148,9 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? Then this isn't the crate for you. Contains three poisonous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
-	contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
-					/mob/living/simple_animal/hostile/retaliate/poison/snake,
-					/mob/living/simple_animal/hostile/retaliate/poison/snake)
+	contains = list(/mob/living/simple_animal/hostile/retaliate/snake,
+					/mob/living/simple_animal/hostile/retaliate/snake,
+					/mob/living/simple_animal/hostile/retaliate/snake)
 	crate_name = "snake crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2401,7 +2455,7 @@
 /datum/supply_pack/misc/aquarium_kit
 	name = "Aquarium Kit"
 	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, fish catalog, feed can and three freshwater fish from our collection."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/book/fish_catalog,
 					/obj/item/storage/fish_case/random/freshwater,
 					/obj/item/storage/fish_case/random/freshwater,
@@ -2416,7 +2470,8 @@
 	name = "Aquarium Fish Case"
 	desc = "An aquarium fish handpicked by monkeys from our collection."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random)
+	contains = list(/obj/item/storage/fish_case/random,
+					/obj/item/storage/fish_case/random)
 	crate_name = "aquarium fish crate"
 
 /datum/supply_pack/misc/bicycle
@@ -2456,6 +2511,13 @@
 					/obj/item/book/random,
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/exploration_drone
+	name = "Exploration Drone"
+	desc = "A replacement long-range exploration drone."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/exodrone)
+	crate_name = "exodrone crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
@@ -2592,7 +2654,7 @@
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	var/list/uplink_items = get_uplink_items(UPLINK_TRAITORS)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
@@ -2715,12 +2777,12 @@
 	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/vending/vendomat
-	name = "Vendomat & YouTool Supply Crate"
+	name = "Part-Mart & YouTool Supply Crate"
 	desc = "More tools for your IED testing facility."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/assist,
 					/obj/item/vending_refill/youtool)
-	crate_name = "Vendomat & YouTool supply crate"
+	crate_name = "Part-Mart & YouTool supply crate"
 
 /datum/supply_pack/vending/clothesmate
 	name = "ClothesMate Supply Crate"
@@ -2799,3 +2861,49 @@
 					/obj/item/vending_refill/wardrobe/det_wardrobe,
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"
+
+
+/// Exploration drone unlockables ///
+
+/datum/supply_pack/exploration
+	special = TRUE
+	group = "Outsourced"
+
+/datum/supply_pack/exploration/scrapyard
+	name = "Scrapyard Crate"
+	desc = "Outsourced crate containing various junk."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/relic,
+					/obj/item/broken_bottle,
+					/obj/item/pickaxe/rusted)
+	crate_name = "scrapyard crate"
+
+/datum/supply_pack/exploration/catering
+	name = "Catering Crate"
+	desc = "No cook? No problem! Food quality may vary depending on provider."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/food/sandwich,
+					/obj/item/food/sandwich,
+					/obj/item/food/sandwich,
+					/obj/item/food/sandwich,
+					/obj/item/food/sandwich)
+	crate_name = "outsourced food crate"
+
+/datum/supply_pack/exploration/catering/fill(obj/structure/closet/crate/C)
+	. = ..()
+	if(prob(30))
+		for(var/obj/item/food/F in C)
+			F.name = "spoiled [F.name]"
+			F.foodtypes |= GROSS
+			F.MakeEdible()
+
+/datum/supply_pack/exploration/shrubbery
+	name = "Shrubbery Crate"
+	desc = "Crate full of hedge shrubs."
+	cost = CARGO_CRATE_VALUE * 5
+	crate_name = "shrubbery crate"
+	var/shrub_amount = 8
+
+/datum/supply_pack/exploration/shrubbery/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to shrub_amount)
+		new /obj/item/grown/shrub(C)

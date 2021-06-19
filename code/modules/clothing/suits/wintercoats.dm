@@ -2,25 +2,36 @@
 /obj/item/clothing/suit/hooded/wintercoat
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
+	icon = 'icons/obj/clothing/suits/wintercoat.dmi'
 	icon_state = "coatwinter"
+	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
 	inhand_icon_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list(
+	allowed = list()
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
+
+/obj/item/clothing/suit/hooded/wintercoat/Initialize()
+	. = ..()
+	allowed += list(
 		/obj/item/flashlight,
 		/obj/item/lighter,
+		/obj/item/modular_computer/tablet,
+		/obj/item/pda,
+		/obj/item/radio,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
-)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
+	)
 
 /obj/item/clothing/head/hooded/winterhood
 	name = "winter hood"
 	desc = "A cozy winter hood attached to a heavy winter jacket."
-	icon_state = "winterhood"
+	icon = 'icons/obj/clothing/head/winterhood.dmi'
+	icon_state = "hood_winter"
+	worn_icon = 'icons/mob/clothing/head/winterhood.dmi'
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -41,7 +52,7 @@
 	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
-	icon_state = "winterhood_centcom"
+	icon_state = "hood_centcom"
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
 
 // Captain
@@ -60,7 +71,7 @@
 	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
-	icon_state = "winterhood_captain"
+	icon_state = "hood_captain"
 	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 
 // Head of Personnel
@@ -70,10 +81,13 @@
 	icon_state = "coathop"
 	inhand_icon_state = "coathop"
 	armor = list(MELEE = 10, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 35)
+	allowed = list(
+		/obj/item/melee/classic_baton/telescopic,
+	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
 /obj/item/clothing/head/hooded/winterhood/hop
-	icon_state = "winterhood_hop"
+	icon_state = "hood_hop"
 
 // Botanist
 /obj/item/clothing/suit/hooded/wintercoat/hydro
@@ -84,23 +98,18 @@
 	allowed = list(
 		/obj/item/cultivator,
 		/obj/item/hatchet,
-		/obj/item/lighter,
 		/obj/item/plant_analyzer,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/seeds,
 		/obj/item/storage/bag/plants,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/toy,
-)
+	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hydro
 
 /obj/item/clothing/head/hooded/winterhood/hydro
 	desc = "A green winter coat hood."
-	icon_state = "winterhood_hydro"
+	icon_state = "hood_hydro"
 
 // Janitor
 /obj/item/clothing/suit/hooded/wintercoat/janitor
@@ -109,11 +118,9 @@
 	icon_state = "coatjanitor"
 	inhand_icon_state = "coatjanitor"
 	allowed = list(
-		/obj/item/flashlight,
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
 		/obj/item/key/janitor,
-		/obj/item/lighter,
 		/obj/item/lightreplacer,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
@@ -122,17 +129,12 @@
 		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/storage/bag/trash,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/toy,
-)
+	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/janitor
 
 /obj/item/clothing/head/hooded/winterhood/janitor
 	desc = "A purple hood that smells of space cleaner."
-	icon_state = "winterhood_janitor"
+	icon_state = "hood_janitor"
 
 // Security Officer
 /obj/item/clothing/suit/hooded/wintercoat/security
@@ -149,7 +151,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
-	icon_state = "winterhood_security"
+	icon_state = "hood_security"
 	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
 
 // Head of Security
@@ -163,7 +165,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/security/hos
 	desc = "A red, armour-padded winter hood, lovingly woven with a Kevlar interleave. Definitely not bulletproof, especially not the part where your face goes."
-	icon_state = "winterhood_hos"
+	icon_state = "hood_hos"
 
 // Medical Doctor
 /obj/item/clothing/suit/hooded/wintercoat/medical
@@ -172,13 +174,8 @@
 	icon_state = "coatmedical"
 	inhand_icon_state = "coatmedical"
 	allowed = list(
-		/obj/item/analyzer,
-		/obj/item/dnainjector,
 		/obj/item/flashlight/pen,
 		/obj/item/healthanalyzer,
-		/obj/item/lighter,
-		/obj/item/melee/classic_baton/telescopic,
-		/obj/item/paper,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
@@ -187,18 +184,14 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
 		/obj/item/sensor_device,
-		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/toy,
-)
+	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 40, RAD = 0, FIRE = 10, ACID = 20)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
 /obj/item/clothing/head/hooded/winterhood/medical
 	desc = "A white winter coat hood."
-	icon_state = "winterhood_medical"
+	icon_state = "hood_medical"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 40, RAD = 0, FIRE = 10, ACID = 20)
 
 // Chief Medical Officer
@@ -210,9 +203,15 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 30)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
 
+/obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize()
+	. = ..()
+	allowed += list(
+		/obj/item/melee/classic_baton/telescopic,
+	)
+
 /obj/item/clothing/head/hooded/winterhood/medical/cmo
 	desc = "A blue winter coat hood."
-	icon_state = "winterhood_cmo"
+	icon_state = "hood_cmo"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 30)
 
 // Chemist
@@ -225,7 +224,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 	desc = "A white winter coat hood."
-	icon_state = "winterhood_chemistry"
+	icon_state = "hood_chemistry"
 
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
@@ -237,7 +236,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/medical/viro
 	desc = "A white winter coat hood with green markings."
-	icon_state = "winterhood_viro"
+	icon_state = "hood_viro"
 
 // Paramedic
 /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic
@@ -249,7 +248,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/medical/paramedic
 	desc = "A white winter coat hood with blue markings."
-	icon_state = "winterhood_paramed"
+	icon_state = "hood_paramed"
 
 // Scientist
 /obj/item/clothing/suit/hooded/wintercoat/science
@@ -260,10 +259,6 @@
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
-		/obj/item/flashlight/pen,
-		/obj/item/healthanalyzer,
-		/obj/item/lighter,
-		/obj/item/melee/classic_baton/telescopic,
 		/obj/item/paper,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
@@ -271,20 +266,15 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/stack/medical,
-		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/toy,
-)
+	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/head/hooded/winterhood/science
 	desc = "A white winter coat hood. This one will keep your brain warm. About as much as the others, really."
-	icon_state = "winterhood_science"
+	icon_state = "hood_science"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 0)
 
 // Research Director
@@ -296,9 +286,15 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/rd
 
+/obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize()
+	. = ..()
+	allowed += list(
+		/obj/item/melee/classic_baton/telescopic,
+	)
+
 /obj/item/clothing/head/hooded/winterhood/science/rd
 	desc = "A white winter coat hood. It smells faintly of hair gel."
-	icon_state = "winterhood_rd"
+	icon_state = "hood_rd"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 0)
 
 // Roboticist
@@ -311,7 +307,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/science/robotics
 	desc = "A black winter coat hood. You can pull it down over your eyes and pretend that you're an outdated, late 1980s interpretation of a futuristic mechanized police force. They'll fix you. They fix everything."
-	icon_state = "winterhood_robotics"
+	icon_state = "hood_robotics"
 
 // Geneticist
 /obj/item/clothing/suit/hooded/wintercoat/science/genetics
@@ -323,7 +319,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/science/genetics
 	desc = "A white winter coat hood. It's warm."
-	icon_state = "winterhood_genetics"
+	icon_state = "hood_genetics"
 
 // Station Engineer
 /obj/item/clothing/suit/hooded/wintercoat/engineering
@@ -334,22 +330,16 @@
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/construction/rcd,
-		/obj/item/flashlight,
-		/obj/item/lighter,
 		/obj/item/pipe_dispenser,
-		/obj/item/storage/fancy/cigarettes,
 		/obj/item/t_scanner,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/toy,
-)
+	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/head/hooded/winterhood/engineering
 	desc = "A yellow winter coat hood. Definitely not a replacement for a hard hat."
-	icon_state = "winterhood_engineer"
+	icon_state = "hood_engineer"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 20, ACID = 0)
 
 // Chief Engineer
@@ -361,9 +351,15 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 10)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/ce
 
+/obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize()
+	. = ..()
+	allowed += list(
+		/obj/item/melee/classic_baton/telescopic,
+	)
+
 /obj/item/clothing/head/hooded/winterhood/engineering/ce
 	desc = "A white winter coat hood. Feels surprisingly heavy. The tag says that it's not child safe."
-	icon_state = "winterhood_ce"
+	icon_state = "hood_ce"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 10)
 
 // Atmospherics Technician
@@ -376,7 +372,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/engineering/atmos
 	desc = "A yellow and blue winter coat hood."
-	icon_state = "winterhood_atmos"
+	icon_state = "hood_atmos"
 
 // Cargo Technician
 /obj/item/clothing/suit/hooded/wintercoat/cargo
@@ -388,7 +384,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/cargo
 	desc = "A grey hood for a winter coat."
-	icon_state = "winterhood_cargo"
+	icon_state = "hood_cargo"
 
 // Quartermaster
 /obj/item/clothing/suit/hooded/wintercoat/qm
@@ -400,7 +396,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/qm
 	desc = "A dark brown winter hood"
-	icon_state = "winterhood_qm"
+	icon_state = "hood_qm"
 
 // Shaft Miner
 /obj/item/clothing/suit/hooded/wintercoat/miner
@@ -409,18 +405,37 @@
 	icon_state = "coatminer"
 	inhand_icon_state = "coatminer"
 	allowed = list(
-		/obj/item/flashlight,
-		/obj/item/lighter,
+		/obj/item/gun/energy/kinetic_accelerator,
+		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/toy,
-)
+		/obj/item/resonator,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/tank/internals,
+	)
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
 /obj/item/clothing/head/hooded/winterhood/miner
 	desc = "A dusty winter coat hood."
-	icon_state = "winterhood_miner"
+	icon_state = "hood_miner"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+
+/obj/item/clothing/suit/hooded/wintercoat/custom
+	name = "tailored winter coat"
+	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
+	greyscale_config = /datum/greyscale_config/winter_coats
+	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
+
+/obj/item/clothing/suit/hooded/wintercoat/custom/MakeHood()
+	. = ..()
+	var/list/coat_colors = (SSgreyscale.ParseColorString(greyscale_colors))
+	var/list/new_coat_colors = coat_colors.Copy(1,4)
+	hood.set_greyscale(new_coat_colors) //Adopt the suit's grayscale coloring for visual clarity.
+
+/obj/item/clothing/head/hooded/winterhood/custom
+	name = "tailored winter coat hood"
+	desc = "A heavy jacket hood made from 'synthetic' animal furs, with custom colors."
+	greyscale_config = /datum/greyscale_config/winter_hoods
+	greyscale_config_worn = /datum/greyscale_config/winter_hoods/worn

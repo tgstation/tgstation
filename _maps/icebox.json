@@ -46,12 +46,11 @@
 	],
 	"minetype": "none",
 	"job_changes": {
-		"prisoner": {
-			"total_positions": 4,
-			"spawn_positions": 4
-		},
 		"cook": {
 			"additional_cqc_areas": ["/area/service/kitchen/diner"]
+		},
+		"captain": {
+			"special_charter": "moon"
 		}
 	}
 }

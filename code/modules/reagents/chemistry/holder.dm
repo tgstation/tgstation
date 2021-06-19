@@ -2,6 +2,9 @@
 #define REAGENTS_UI_MODE_REAGENT 1
 #define REAGENTS_UI_MODE_RECIPE 2
 
+#define REAGENT_TRANSFER_AMOUNT "amount"
+#define REAGENT_PURITY "purity"
+
 /////////////These are used in the reagents subsystem init() and the reagent_id_typos.dm////////
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -16,25 +19,27 @@
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
+		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
 		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_lists()
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
 	// For example:
-	// chemical_reaction_list[/datum/reagent/toxin/plasma] is a list of all reactions relating to plasma
+	// chemical_reactions_list_reactant_index[/datum/reagent/toxin/plasma] is a list of all reactions relating to plasma
 	//For chemical reaction list product index - indexes reactions based off the product reagent type - see get_recipe_from_reagent_product() in helpers
 	//For chemical reactions list lookup list - creates a bit list of info passed to the UI. This is saved to reduce lag from new windows opening, since it's a lot of data.
 
 	//Prevent these reactions from appearing in lookup tables (UI code)
 	var/list/blacklist = (/datum/chemical_reaction/randomized)
 
-	if(GLOB.chemical_reactions_list)
+	if(GLOB.chemical_reactions_list_reactant_index)
 		return
 
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
-	GLOB.chemical_reactions_list = list() //reagents to reaction list
+	GLOB.chemical_reactions_list = list() //typepath to reaction list
+	GLOB.chemical_reactions_list_reactant_index = list() //reagents to reaction list
 	GLOB.chemical_reactions_results_lookup_list = list() //UI glob
 	GLOB.chemical_reactions_list_product_index = list() //product to reaction list
 
@@ -48,6 +53,8 @@
 
 		if(!D.required_reagents || !D.required_reagents.len) //Skip impossible reactions
 			continue
+
+		GLOB.chemical_reactions_list[path] = D
 
 		for(var/reaction in D.required_reagents)
 			reaction_ids += reaction
@@ -80,9 +87,9 @@
 
 		// Create filters based on each reagent id in the required reagents list - this is used to speed up handle_reactions()
 		for(var/id in reaction_ids)
-			if(!GLOB.chemical_reactions_list[id])
-				GLOB.chemical_reactions_list[id] = list()
-			GLOB.chemical_reactions_list[id] += D
+			if(!GLOB.chemical_reactions_list_reactant_index[id])
+				GLOB.chemical_reactions_list_reactant_index[id] = list()
+			GLOB.chemical_reactions_list_reactant_index[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant
 
 ///////////////////////////////Main reagents code/////////////////////////////////////////////
@@ -484,7 +491,8 @@
 					R.expose_single(reagent, target_atom, methods, part, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
-			transfer_log[reagent.type] = transfer_amount
+			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
+			transfer_log[reagent.type] = reagent_qualities
 
 	else
 		var/to_transfer = amount
@@ -509,7 +517,8 @@
 					R.expose_single(reagent, target_atom, methods, transfer_amount, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
-			transfer_log[reagent.type] = transfer_amount
+			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
+			transfer_log[reagent.type] = reagent_qualities
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
@@ -708,7 +717,7 @@
 			if(reagent.overdosed)
 				need_mob_update += reagent.overdose_process(owner, delta_time, times_fired)
 
-			need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
+		need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
 	return need_mob_update
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
@@ -817,7 +826,7 @@
 			return FALSE
 
 	var/list/cached_reagents = reagent_list
-	var/list/cached_reactions = GLOB.chemical_reactions_list
+	var/list/cached_reactions = GLOB.chemical_reactions_list_reactant_index
 	var/datum/cached_my_atom = my_atom
 	LAZYNULL(failed_but_capable_reactions)
 
@@ -910,7 +919,7 @@
 					qdel(equilibrium)
 				else
 					//Adding is done in new(), deletion is in qdel
-					equilibrium.reaction.on_reaction(equilibrium, src, equilibrium.multiplier)
+					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
@@ -955,7 +964,7 @@
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, delta_time)
 
 	if(length(mix_message)) //This is only at the end
-		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
@@ -972,6 +981,7 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
+	equilibrium.reaction.reaction_finish(src, equilibrium, equilibrium.reacted_vol)
 	if(!equilibrium.holder || !equilibrium.reaction) //Somehow I'm getting empty equilibrium. This is here to handle them
 		LAZYREMOVE(reaction_list, equilibrium)
 		qdel(equilibrium)
@@ -980,7 +990,7 @@
 	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
-	equilibrium.reaction.reaction_finish(src, equilibrium.reacted_vol)
+
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
@@ -1016,7 +1026,7 @@
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
 	if(length(mix_message))
-		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 
 /*
@@ -1037,7 +1047,7 @@
 				mix_message += end_reaction(equilibrium)
 				any_stopped = TRUE
 	if(length(mix_message))
-		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]</span>")
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
 	return any_stopped
 
 /*
@@ -1128,17 +1138,17 @@
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
-			my_atom.audible_message("<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.Uses--
 			if(extract.Uses <= 0) // give the notification that the slime core is dead
-				my_atom.visible_message("<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+				my_atom.visible_message(span_notice("[iconhtml] \The [my_atom]'s power is consumed in the reaction."))
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
-	selected_reaction.on_reaction(null, src, multiplier)
+	selected_reaction.on_reaction(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused
@@ -1433,19 +1443,22 @@
  * Used in attack logs for reagents in pills and such
  *
  * Arguments:
- * * external_list - list of reagent types = amounts
+ * * external_list - assoc list of reagent type = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
  */
 /datum/reagents/proc/log_list(external_list)
 	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
 
+
+
 	var/list/data = list()
 	if(external_list)
 		for(var/r in external_list)
-			data += "[r] ([round(external_list[r], 0.1)]u)"
+			var/list/qualities = external_list[r]
+			data += "[r] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
 	else
 		for(var/datum/reagent/reagent as anything in reagent_list) //no reagents will be left behind
-			data += "[reagent.type] ([round(reagent.volume, 0.1)]u)"
+			data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
 			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
@@ -1480,7 +1493,7 @@
 	var/list/possible_reactions = list()
 	if(!length(cached_reagents))
 		return null
-	cached_reactions = GLOB.chemical_reactions_list
+	cached_reactions = GLOB.chemical_reactions_list_reactant_index
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/reagent = _reagent
 		for(var/_reaction in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
@@ -1926,3 +1939,10 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+
+#undef REAGENT_TRANSFER_AMOUNT
+#undef REAGENT_PURITY
+
+#undef REAGENTS_UI_MODE_LOOKUP
+#undef REAGENTS_UI_MODE_REAGENT
+#undef REAGENTS_UI_MODE_RECIPE
