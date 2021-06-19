@@ -981,9 +981,9 @@
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = FALSE
+		density = FALSE // Hacky and doesn't use set_density()
 		var/can_step = step_towards(M, T)
-		density = old_density
+		density = old_density // Avoid changing density directly in normal circumstances, without the setter.
 		if(!can_step)
 			return FALSE
 	return ..()

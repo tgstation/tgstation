@@ -106,12 +106,12 @@
 				I.icon_state = "[initial(I.icon_state)]_[(assembly_holder.a_left == src) ? "l":"r"]" //Sync the offset of the beam with the position of the sensor.
 			else if(istype(holder, /obj/item/transfer_valve))
 				I.icon_state = "[initial(I.icon_state)]_ttv"
-			I.density = TRUE
+			I.set_density(TRUE)
 			if(!I.Move(_T))
 				qdel(I)
 				switchListener(_T)
 				break
-			I.density = FALSE
+			I.set_density(FALSE)
 			beams += I
 			I.master = src
 			I.setDir(_dir)

@@ -689,7 +689,7 @@
 
 /obj/structure/rack/deconstruct(disassembled = TRUE)
 	if(!(flags_1&NODECONSTRUCT_1))
-		density = FALSE
+		set_density(FALSE)
 		var/obj/item/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
 	qdel(src)
