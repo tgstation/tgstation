@@ -107,8 +107,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		RegisterSignal(attached_valve, COMSIG_VALVE_TOGGLED, .proc/handle_valve_toggled)
 
 /obj/item/circuit_component/digital_valve/unregister_usb_parent(atom/movable/shell)
-	attached_valve = null
 	UnregisterSignal(attached_valve, COMSIG_VALVE_TOGGLED)
+	attached_valve = null
 	return ..()
 
 /obj/item/circuit_component/digital_valve/proc/handle_valve_toggled(datum/source, on)
