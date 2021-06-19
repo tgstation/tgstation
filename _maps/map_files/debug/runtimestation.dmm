@@ -504,6 +504,12 @@
 	dir = 8
 	},
 /area/space)
+"dT" = (
+/obj/machinery/computer/arena,
+/turf/open/floor/iron/half{
+	dir = 1
+	},
+/area/space)
 "dU" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1008,6 +1014,10 @@
 	name = "Bar"
 	},
 /turf/open/floor/iron/dark/textured_half,
+/area/space)
+"hD" = (
+/obj/effect/landmark/arena/start,
+/turf/open/floor/iron/smooth,
 /area/space)
 "hG" = (
 /turf/open/floor/carpet/red,
@@ -2940,9 +2950,6 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
-	},
-/obj/item/toy/plush/lizardplushie{
-	name = "Forges-The-Station"
 	},
 /turf/open/floor/carpet/red,
 /area/space)
@@ -5372,6 +5379,10 @@
 "SW" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/wood,
+/area/space)
+"Tc" = (
+/obj/effect/landmark/arena/end,
+/turf/open/floor/iron/smooth,
 /area/space)
 "Td" = (
 /obj/structure/chair/sofa/corp/left,
@@ -29761,7 +29772,7 @@ zT
 zT
 zT
 zT
-zT
+hD
 Mu
 zK
 zK
@@ -45889,7 +45900,7 @@ zK
 zK
 zK
 Mu
-zT
+Tc
 zT
 zT
 zT
@@ -52113,7 +52124,7 @@ cm
 ew
 YQ
 Mu
-GS
+dT
 Mu
 MC
 zK

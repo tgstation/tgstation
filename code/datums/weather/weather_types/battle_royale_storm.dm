@@ -2,7 +2,7 @@
 GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 
 /datum/storm_controller
-	var/area_consume_timer = 15 SECONDS
+	var/area_consume_timer = 30 SECONDS
 	var/area_consume_addition = 10 SECONDS
 	///which list to pick from
 	var/list/current_area_pick
@@ -95,23 +95,23 @@ GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 		to_chat(L, "<span class='userdanger'>You're badly burned by the storm!</span>")
 
 GLOBAL_LIST_INIT(externalareasstorm, list(
-	/area/tdome/one,
-	/area/tdome/two,
-	/area/tdome/three,
-	/area/tdome/four,
-	/area/tdome/five,
-	/area/tdome/six,))
+	/area/tdome/arena/one,
+	/area/tdome/arena/two,
+	/area/tdome/arena/three,
+	/area/tdome/arena/four,
+	/area/tdome/arena/five,
+	/area/tdome/arena/six,))
 
 GLOBAL_LIST_INIT(middleareastorm, list(
-	/area/tdome/seven,
-	/area/tdome/eight,
-	/area/tdome/nine,
-	/area/tdome/ten,
-	/area/tdome/eleven,
-	/area/tdome/twelve,))
+	/area/tdome/arena/seven,
+	/area/tdome/arena/eight,
+	/area/tdome/arena/nine,
+	/area/tdome/arena/ten,
+	/area/tdome/arena/eleven,
+	/area/tdome/arena/twelve,))
 
 GLOBAL_LIST_INIT(innerareastorm, list(
-	/area/tdome/thirteen,
-	/area/tdome/fourteen,
-	/area/tdome/fifteen,
-	/area/tdome/sixteen,))
+	/area/tdome/arena/thirteen,
+	/area/tdome/arena/fourteen,
+	/area/tdome/arena/fifteen,
+	/area/tdome/arena/sixteen,))

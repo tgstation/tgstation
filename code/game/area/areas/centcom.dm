@@ -90,45 +90,46 @@
 
 /area/tdome
 	eventareaair = TRUE
+	
 
 /*For the battle royale zone area map*/
-
-/area/tdome/one
-
-/area/tdome/two
-
-/area/tdome/three
-
-/area/tdome/four
-
-/area/tdome/five
-
-/area/tdome/six
-
-/area/tdome/seven
-
-/area/tdome/eight
-
-/area/tdome/nine
-
-/area/tdome/ten
-
-/area/tdome/eleven
-
-/area/tdome/twelve
-
-/area/tdome/thirteen
-
-/area/tdome/fourteen
-
-/area/tdome/fifteen
-
-/area/tdome/sixteen
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/tdome/arena/one
+
+/area/tdome/arena/two
+
+/area/tdome/arena/three
+
+/area/tdome/arena/four
+
+/area/tdome/arena/five
+
+/area/tdome/arena/six
+
+/area/tdome/arena/seven
+
+/area/tdome/arena/eight
+
+/area/tdome/arena/nine
+
+/area/tdome/arena/ten
+
+/area/tdome/arena/eleven
+
+/area/tdome/arena/twelve
+
+/area/tdome/arena/thirteen
+
+/area/tdome/arena/fourteen
+
+/area/tdome/arena/fifteen
+
+/area/tdome/arena/sixteen
 
 /area/tdome/arena_source
 	name = "Thunderdome Arena Template"
