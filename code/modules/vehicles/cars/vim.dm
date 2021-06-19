@@ -7,11 +7,12 @@
 /obj/vehicle/sealed/car/vim
 	name = "\improper Vim"
 	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
-	icon_state = "crittermecha_empty"
+	icon_state = "crittermecha"
 	max_integrity = 50
 	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	enter_delay = 20
 	movedelay = 0.6
+	engine_sound_length = 0.6 SECONDS
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 2
@@ -26,12 +27,13 @@
 	if(animal.mob_size != MOB_SIZE_TINY)
 		return FALSE
 	. = ..()
+	update_overlays()
 
 /obj/vehicle/sealed/car/vim/generate_actions()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/climb_out/vim, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/noise/chime, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/noise/buzz, VEHICLE_CONTROL_DRIVE)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights/vim, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/vim/update_overlays()
 	. = ..()

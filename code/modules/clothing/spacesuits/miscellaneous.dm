@@ -295,6 +295,7 @@ Contains:
 		return
 	user.balloon_alert(user, "leg attached")
 	new /obj/item/bot_assembly/vim(loc)
+	qdel(attacked_with)
 	qdel(src)
 
 /obj/item/clothing/head/helmet/space/freedom

@@ -216,6 +216,7 @@
 	to_chat(owner, span_notice("You flip the switch for the vehicle's headlights."))
 	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
 	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
+	vehicle_entered_target.update_overlays()
 	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
@@ -345,3 +346,6 @@
 	button_icon_state = "vim_buzz"
 	sound_path = 'sound/machines/buzz-sigh.ogg'
 	sound_message = "buzzes."
+
+/datum/action/vehicle/sealed/headlights/vim
+	button_icon_state = "vim_headlights"

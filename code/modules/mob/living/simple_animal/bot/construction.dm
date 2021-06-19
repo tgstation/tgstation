@@ -562,7 +562,7 @@
 				balloon_alert(user, "securing flashlight...")
 				if(!part.use_tool(src, user, 4 SECONDS, volume=100))
 					return
-				balloon_alert(user, "securing flashlight secured")
+				balloon_alert(user, "flashlight secured")
 				icon_state = "vim_3"
 				desc = "Some kind of incomplete mechanism. It seems nearly completed, and just needs a voice assembly."
 				build_step++
