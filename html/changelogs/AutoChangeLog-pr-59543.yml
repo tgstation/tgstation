@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "OOC heart commendations should once again function and poll people as it should during the shuttle's return trip."
