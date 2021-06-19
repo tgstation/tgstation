@@ -44,6 +44,8 @@
 	var/weather_protection = list("rad")
 	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
 	var/pressure_protection = 0
+	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
+	var/thermal_insulation = 0
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component is dragging this, preventing opening

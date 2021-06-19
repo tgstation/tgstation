@@ -151,10 +151,11 @@
 
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
-	desc = "A reinforced bag designed to protect against exoplanetary environmental storms and other environmental factors."
+	desc = "An insulated, reinforced bag designed to protect against exoplanetary environmental storms and other environmental factors."
 	icon = "icons/obj/bodybag.dmi"
 	icon_state = "envbodybag"
 	mob_storage_capacity = 1
-	pressure_protection = 1
+	pressure_protection = 0.8
+	thermal_insulation = 0.5
 	foldedbag_path = /obj/item/body_bag/environmental
 	weather_protection = list("acid", "ash", "rad", "snow", "void") // Does not protect against lava or the The Floor Is Lava spell.
