@@ -2,8 +2,8 @@
 	title = "Quartermaster"
 	department_head = list("Head of Personnel")
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
 	exp_type_department = EXP_TYPE_SUPPLY // This is so the jobs menu can work properly

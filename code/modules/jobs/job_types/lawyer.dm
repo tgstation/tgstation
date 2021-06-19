@@ -2,8 +2,8 @@
 	title = "Lawyer"
 	department_head = list("Head of Personnel")
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/lawyers = 0 //Counts lawyer amount

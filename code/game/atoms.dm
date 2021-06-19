@@ -1148,7 +1148,7 @@
 				set_light_color(var_value)
 			. =  TRUE
 		if(NAMEOF(src, light_on))
-			set_smoothed_icon_state(var_value)
+			set_light_on(var_value)
 			. =  TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)
@@ -1844,6 +1844,16 @@
  */
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
+
+
+///Setter for the `density` variable to append behavior related to its changing.
+/atom/proc/set_density(new_value)
+	SHOULD_CALL_PARENT(TRUE)
+	if(density == new_value)
+		return
+	. = density
+	density = new_value
+
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)

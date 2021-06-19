@@ -94,6 +94,12 @@
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	client.init_verbs()
 
+	#ifdef EVENTMODE
+	if(!isnewplayer(src)) //skip newplayers so no lobby huds or runtimes when they get deleted, might be too hot here?
+		for(var/datum/atom_hud/antag/H in GLOB.huds)
+			H.add_hud_to(src) //enable antag/team huds by default
+	#endif
+
 	return TRUE
 
 

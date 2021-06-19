@@ -575,6 +575,10 @@
 	set name = "Point To"
 	set category = "Object"
 
+	#ifdef EVENTMODE
+	if(!client?.holder)
+		return FALSE
+	#endif
 	if(client && !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
@@ -977,9 +981,9 @@
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = FALSE
+		density = FALSE // Hacky and doesn't use set_density()
 		var/can_step = step_towards(M, T)
-		density = old_density
+		density = old_density // Avoid changing density directly in normal circumstances, without the setter.
 		if(!can_step)
 			return FALSE
 	return ..()

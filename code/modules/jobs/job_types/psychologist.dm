@@ -2,8 +2,8 @@
 	title = "Psychologist"
 	department_head = list("Head of Personnel","Chief Medical Officer")
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel and the chief medical officer"
 	selection_color = "#bbe291"
 
