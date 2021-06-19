@@ -470,6 +470,7 @@ SUBSYSTEM_DEF(timer)
 		next.prev = prev
 	prev = next = null
 	bucket_pos = -1
+	bucket_joined = FALSE
 
 /**
  * Attempts to add this timed event to a bucket, will enter the secondary queue
