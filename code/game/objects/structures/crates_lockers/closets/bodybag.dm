@@ -43,7 +43,7 @@
 		else
 			name = initial(name)
 		return
-	else if(I.tool_behaviour == TOOL_WIRECUTTER)
+	else if((I.tool_behaviour == TOOL_WIRECUTTER) && tagged)
 		to_chat(user, span_notice("You cut the tag off [src]."))
 		name = "body bag"
 		tagged = FALSE
