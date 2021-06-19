@@ -6,7 +6,7 @@
 	var/obj/item/integrated_circuit/attached_circuit
 
 	/// Flags containing what this shell can do
-	var/shell_flags = 0
+	var/shell_flags = NONE
 
 	/// The capacity of the shell.
 	var/capacity = INFINITY
@@ -38,6 +38,7 @@
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
+	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 
 /datum/component/shell/UnregisterFromParent()
@@ -48,7 +49,8 @@
 		COMSIG_OBJ_DECONSTRUCT,
 		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
 		COMSIG_PARENT_EXAMINE,
-		COMSIG_ATOM_ATTACK_GHOST
+		COMSIG_ATOM_ATTACK_GHOST,
+		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -77,6 +79,8 @@
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
+	if (shell_flags & SHELL_FLAG_USB_PORT)
+		examine_text += span_notice("There is a <b>USB port</b> on the front.")
 
 /**
  * Called when the shell is wrenched.
@@ -163,8 +167,9 @@
 	SIGNAL_HANDLER
 	remove_circuit()
 
-/datum/component/shell/proc/on_circuit_add_component(datum/source, obj/item/circuit_component/added_comp)
+/datum/component/shell/proc/on_circuit_add_component_manually(datum/source, obj/item/circuit_component/added_comp)
 	SIGNAL_HANDLER
+
 	return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
@@ -180,7 +185,7 @@
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
-	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT, .proc/on_circuit_add_component)
+	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
 	attached_circuit.set_shell(parent)
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
@@ -206,3 +211,17 @@
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
 	attached_circuit = null
+
+/datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
+	SIGNAL_HANDLER
+
+	if (!(shell_flags & SHELL_FLAG_USB_PORT))
+		source.balloon_alert(user, "this shell has no usb ports")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
+	if (isnull(attached_circuit))
+		source.balloon_alert(user, "no circuit inside")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
+	usb_cable.attached_circuit = attached_circuit
+	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
