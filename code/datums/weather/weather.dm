@@ -184,7 +184,7 @@
 	if(!(L.z in impacted_z_levels))
 		if(mob_turf)
 			return
-		if(L.loc.parent_type == /obj/structure/closet/) // Supposed to check if the mob is inside of a container, might or might not work, to fix later
+		if(istype(L.loc,/obj/structure/closet/))
 			if((immunity_type in L.loc.weather_protection) || ("all" in L.loc.weather_protection))
 				return
 	if(immunity_type in L.weather_immunities)
