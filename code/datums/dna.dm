@@ -492,41 +492,41 @@
 	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
 	hairstyle = GLOB.hairstyles_list[deconstruct_block(getblock(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	var/features = dna.unique_features
-	if("mcolor" in dna.features)
+	if(dna.features["mcolor"])
 		dna.features["mcolor"] = sanitize_hexcolor(getblock(features, DNA_MCOLOR_BLOCK))
-	if("ethcolor" in dna.features)
+	if(dna.features["ethcolor"])
 		dna.features["ethcolor"] = sanitize_hexcolor(getblock(features, DNA_ETHCOLOR_BLOCK))
-	if("body_markings" in dna.features)
+	if(dna.features["body_markings"])
 		dna.features["body_markings"] = GLOB.body_markings_list[deconstruct_block(getblock(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.body_markings_list.len)]
-	if("tail_lizard" in dna.features)
+	if(dna.features["tail_lizard"])
 		dna.features["tail_lizard"] = GLOB.tails_list_lizard[deconstruct_block(getblock(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
-	if("snout" in dna.features)
+	if(dna.features["snout"])
 		dna.features["snout"] = GLOB.snouts_list[deconstruct_block(getblock(features, DNA_SNOUT_BLOCK), GLOB.snouts_list.len)]
-	if("horns" in dna.features)
+	if(dna.features["horns"])
 		dna.features["horns"] = GLOB.horns_list[deconstruct_block(getblock(features, DNA_HORNS_BLOCK), GLOB.horns_list.len)]
-	if("frills" in dna.features)
+	if(dna.features["frills"])
 		dna.features["frills"] = GLOB.frills_list[deconstruct_block(getblock(features, DNA_FRILLS_BLOCK), GLOB.frills_list.len)]
-	if("spines" in dna.features)
+	if(dna.features["spines"])
 		dna.features["spines"] = GLOB.spines_list[deconstruct_block(getblock(features, DNA_SPINES_BLOCK), GLOB.spines_list.len)]
-	if("tail_human" in dna.features)
+	if(dna.features["tail_human"])
 		dna.features["tail_human"] = GLOB.tails_list_human[deconstruct_block(getblock(features, DNA_HUMAN_TAIL_BLOCK), GLOB.tails_list_human.len)]
-	if("ears" in dna.features)
+	if(dna.features["ears"])
 		dna.features["ears"] = GLOB.ears_list[deconstruct_block(getblock(features, DNA_EARS_BLOCK), GLOB.ears_list.len)]
-	if("moth_wings" in dna.features)
+	if(dna.features["moth_wings"])
 		var/genetic_value = GLOB.moth_wings_list[deconstruct_block(getblock(features, DNA_MOTH_WINGS_BLOCK), GLOB.moth_wings_list.len)]
 		dna.features["original_moth_wings"] = genetic_value
 		if(dna.features["moth_wings"] != "Burnt Off")
 			dna.features["moth_wings"] = genetic_value
-	if("moth_antennae" in dna.features)
+	if(dna.features["moth_antennae"])
 		var/genetic_value = GLOB.moth_antennae_list[deconstruct_block(getblock(features, DNA_MOTH_ANTENNAE_BLOCK), GLOB.moth_antennae_list.len)]
 		dna.features["original_moth_antennae"] = genetic_value
 		if(dna.features["moth_antennae"] != "Burnt Off")
 			dna.features["moth_antennae"] = genetic_value
-	if("moth_markings" in dna.features)
+	if(dna.features["moth_markings"])
 		dna.features["moth_markings"] = GLOB.moth_markings_list[deconstruct_block(getblock(features, DNA_MOTH_MARKINGS_BLOCK), GLOB.moth_markings_list.len)]
-	if("caps" in dna.features)
+	if(dna.features["caps"])
 		dna.features["caps"] = GLOB.caps_list[deconstruct_block(getblock(features, DNA_CAPS_BLOCK), GLOB.caps_list.len)]
-	if("tail_monkey" in dna.features)
+	if(dna.features["tail_monkey"])
 		dna.features["tail_monkey"] = GLOB.tails_list_monkey[deconstruct_block(getblock(features, DNA_MONKEY_TAIL_BLOCK), GLOB.tails_list_monkey.len)]
 
 	if(icon_update)
