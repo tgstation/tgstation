@@ -438,16 +438,10 @@
 		var/max_limb_loss = 0
 		var/probability = 0
 		switch(severity)
-			if(EXPLODE_NONE to EXPLODE_LIGHT)
-				max_limb_loss = 1
-				probability = 20
-			if(EXPLODE_LIGHT to EXPLODE_HEAVY)
-				max_limb_loss = 2
-				probability = 30
-			if(EXPLODE_HEAVY to EXPLODE_DEVASTATE)
+			if(EXPLODE_HEAVY)
 				max_limb_loss = 3
 				probability = 40
-			if(EXPLODE_DEVASTATE to INFINITY)
+			if(EXPLODE_DEVASTATE)
 				max_limb_loss = 4
 				probability = 50
 		for(var/X in bodyparts)
