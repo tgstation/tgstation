@@ -50,6 +50,7 @@
 	adjacent_turfs.Cut()
 	return ..()
 
+//TODOKYLER: make this update statically
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!on || welded || !is_operational || !powered(power_channel))
 		return FALSE

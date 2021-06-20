@@ -40,8 +40,8 @@ SUBSYSTEM_DEF(machines)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(!QDELETED(thing) && thing.process(wait * 0.1) != PROCESS_KILL)
-			if(thing.use_power)
-				thing.auto_use_power() //add back the power state
+			//if(thing.use_power)
+			//	thing.auto_use_power() //add back the power state
 		else
 			processing -= thing
 			if (!QDELETED(thing))

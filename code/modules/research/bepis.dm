@@ -187,7 +187,7 @@
 				return
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
-			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
+			update_use_power(IDLE_POWER_USE) //Machine shuts off after use to prevent spam and look better visually.
 			update_appearance()
 		if("amount")
 			var/input = text2num(params["amount"])
@@ -195,9 +195,9 @@
 				banking_amount = input
 		if("toggle_power")
 			if(use_power == ACTIVE_POWER_USE)
-				use_power = IDLE_POWER_USE
+				update_use_power(IDLE_POWER_USE)
 			else
-				use_power = ACTIVE_POWER_USE
+				update_use_power(ACTIVE_POWER_USE)
 			update_appearance()
 		if("account_reset")
 			if(use_power == IDLE_POWER_USE)

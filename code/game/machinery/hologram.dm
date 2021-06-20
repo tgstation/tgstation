@@ -447,6 +447,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(2)
 	else
 		set_light(0)
+	update_static_power_usage()
 	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
