@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Makes roleblocks in mafia actually end properly"
