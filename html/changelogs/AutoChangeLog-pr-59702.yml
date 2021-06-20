@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - spellcheck: "multiple projectiles are now pluralized correctly"
