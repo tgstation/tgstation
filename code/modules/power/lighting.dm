@@ -221,8 +221,8 @@
 	active_power_usage = 20
 	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE // 1 if on, 0 if off
-	var/on_gs = FALSE
-	var/static_power_used = 0
+	//var/on_gs = FALSE
+	//var/static_power_used = 0
 	var/brightness = 8 // luminosity when on, also used in power calculation
 	var/bulb_power = 1 // basically the alpha of the emitted light source
 	var/bulb_colour = "#f3fffa" // befault colour of the light.
@@ -445,18 +445,19 @@
 		emergency_mode = TRUE
 		START_PROCESSING(SSmachines, src)
 	else
-		use_power = IDLE_POWER_USE
+		use_power = IDLE_POWER_USE //TODOKYLER: decide between using update_use_power(use_power to switch to) and putting update_static_power_usage() at the end
 		set_light(0)
 	update_appearance()
 
-	active_power_usage = (brightness * 10)
-	if(on != on_gs)
+	active_power_usage = (brightness * 30)
+	update_static_power_usage()
+	/*if(on != on_gs) //TODOKYLER: figure out if this is correct
 		on_gs = on
 		if(on)
 			static_power_used = brightness * 20 //20W per unit luminosity
 			addStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 		else
-			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
+			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)*/
 
 	broken_sparks(start_only=TRUE)
 

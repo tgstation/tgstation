@@ -172,6 +172,7 @@
 	dump_inventory_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
+	_unset_static_power()
 	return ..()
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
@@ -371,6 +372,7 @@
 
 	return old_usage
 
+//should this just be used without arguments? if so maybe get rid of them
 /obj/machinery/proc/update_static_power_usage(new_use_power = use_power, new_power_channel = power_channel)
 
 	if(new_use_power != use_power)
