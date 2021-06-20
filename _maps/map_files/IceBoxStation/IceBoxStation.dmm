@@ -31000,14 +31000,14 @@
 	network = list("ss13","prison")
 	},
 /obj/machinery/light/directional/south,
-/obj/item/body_bag/environmental/prisoner{
+/obj/item/bodybag/environmental/prisoner{
 	pixel_x = -3;
 	pixel_y = 12
 	},
-/obj/item/body_bag/environmental/prisoner{
+/obj/item/bodybag/environmental/prisoner{
 	pixel_y = 9
 	},
-/obj/item/body_bag/environmental/prisoner{
+/obj/item/bodybag/environmental/prisoner{
 	pixel_x = 3;
 	pixel_y = 6
 	},

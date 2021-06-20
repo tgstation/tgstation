@@ -98,7 +98,7 @@
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
-	if(istype(src.loc, /obj/structure/closet/))
+	if(istype(src.loc, /obj/structure/closet))
 		var/obj/structure/closet/current_locker = src.loc
 		temp_delta *= (1 - current_locker.thermal_insulation)
 

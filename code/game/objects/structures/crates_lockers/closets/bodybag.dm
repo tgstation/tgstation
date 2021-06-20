@@ -159,7 +159,7 @@
 	mob_storage_capacity = 1
 	pressure_protection = 0.8
 	thermal_insulation = 0.5
-	foldedbag_path = /obj/item/body_bag/environmental/
+	foldedbag_path = /obj/item/bodybag/environmental/
 	weather_protection = list("acid", "ash", "rad", "snow", "void") // Does not protect against lava or the The Floor Is Lava spell.
 
 /obj/structure/closet/body_bag/environmental/nanotrasen
@@ -169,7 +169,7 @@
 	icon_state = "ntenvirobag"
 	pressure_protection = 1
 	thermal_insulation = 1
-	foldedbag_path = /obj/item/body_bag/environmental/nanotrasen/
+	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen/
 	weather_protection = list("all")
 
 /// Securable enviro. bags
@@ -179,7 +179,7 @@
 	desc = "Intended for transport of prisoners through hazardous environments, this environmental protection bag comes with straps to keep an occupant secure."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
-	foldedbag_path = /obj/item/body_bag/environmental/prisoner/
+	foldedbag_path = /obj/item/bodybag/environmental/prisoner/
 	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this as it is to get out of a straightjacket.
 	var/sinch_time = 100
 	var/sinched = FALSE
@@ -281,7 +281,7 @@
 	icon_state = "syndieenvirobag"
 	pressure_protection = 1
 	thermal_insulation = 1
-	foldedbag_path = /obj/item/body_bag/environmental/prisoner/syndicate
+	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list("all")
 	breakout_time = 4800
 	sinch_time = 300
