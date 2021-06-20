@@ -280,6 +280,10 @@
 	if(href_list["toggle_wounds"])
 		GLOB.global_roster.toggle_wounds(usr)
 
+	if(href_list["remove_ckey_at_large"])
+		testing("[usr] trying to remove [href_list["remove_ckey_at_large"]]")
+		GLOB.global_roster.remove_ckey_at_large(usr, href_list["remove_ckey_at_large"])
+
 	if(href_list["eliminate_contestant"])
 		GLOB.global_roster.eliminate_contestant(usr, href_list["eliminate_contestant"])
 
@@ -288,6 +292,12 @@
 
 	if(href_list["delete_contestant"])
 		GLOB.global_roster.delete_contestant(usr, href_list["delete_contestant"])
+
+	if(href_list["add_specific_contestant"])
+		GLOB.global_roster.add_specific_contestant(usr)
+
+	if(href_list["reset_roster"])
+		GLOB.global_roster.reset_roster(usr)
 
 	if(href_list["load_roster"])
 		GLOB.global_roster.load_contestants_from_file(usr, "sample_roster.json")
@@ -368,6 +378,13 @@
 			testing("failed to find team member")
 			return
 		unteam_team.remove_member(unteam_member)
+
+	if(href_list["query_add_member"])
+		var/datum/event_team/target_team = locate(href_list["query_add_member"]) in GLOB.global_roster.active_teams
+		if(!istype(target_team))
+			testing("failed to find team")
+			return
+		target_team.query_add_member(usr)
 
 	if(href_list["upload"])
 		add_new_arena_template(user)
@@ -517,7 +534,8 @@
 				dat += "<a href='?src=[REF(src)];clear_teams=1'>Clear existing teams</a><br>"
 
 			for(var/datum/event_team/iter_team in GLOB.global_roster.active_teams)
-				dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
+				dat += "\tTeam [iter_team.rostered_id]:"
+				dat += "\t\t<a href='?src=[REF(src)];query_add_member=[REF(iter_team)]'>Add Member!</a>"
 				var/i = 0
 				for(var/datum/contestant/iter_contestant in iter_team.members)
 					i++
@@ -528,6 +546,8 @@
 			dat += "<b>Contestant menu</b>"
 			dat += "-----------------------------------------"
 			dat += "<a href='?src=[REF(src)];load_roster=1'>Load Roster</a>"
+			dat += "<a href='?src=[REF(src)];add_specific_contestant=1'>Add Contestant</a>"
+			dat += "<a href='?src=[REF(src)];reset_roster=1'><b>Reset Roster</b></a>"
 			dat += "<b>Contestants:</b>"
 
 			var/list/flagged_contestants = list()
@@ -554,6 +574,11 @@
 				for(var/datum/contestant/iter_loser in GLOB.global_roster.losers)
 					var/mob/the_guy = iter_loser.get_mob()
 					dat += "\t[iter_loser.ckey] ([the_guy]) (Eliminated) <a href='?src=[REF(src)];delete_contestant=[REF(iter_loser)]'>Delete</a>"
+
+			if(LAZYLEN(GLOB.global_roster.ckeys_at_large))
+				dat += "<br><b><span class='danger'>Ckeys at Large</span></b>:"
+				for(var/iter_ckey in GLOB.global_roster.ckeys_at_large)
+					dat += "\t[iter_ckey] <a href='?src=[REF(src)];remove_ckey_at_large=[iter_ckey]'>Delete</a>"
 
 		if(ARENA_UI_ARENA)
 			dat += "<b>Arena menu</b>"

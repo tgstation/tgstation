@@ -34,6 +34,14 @@
 		current_team.remove_member(src)
 	. = ..()
 
+/// For helping things get back on track after some idiot deletes all the contestants mid-tournament
+/datum/contestant/proc/dump_info()
+	if(!ckey)
+		return
+
+	var/return_line = "CONTESTANT LINE| Ckey: [ckey] | Eliminated: [eliminated] | Flagged for Elimination: [flagged_for_elimination] | Rounds Participated: [rounds_participated] | Team: [current_team]"
+	return return_line
+
 /// Helper to return the current mob quickly
 /datum/contestant/proc/get_mob()
 	if(!ckey)
