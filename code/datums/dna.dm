@@ -6,7 +6,7 @@
 	var/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
-	var/uni_features
+	var/uni_features ///Stores the hashed values of the person's non-human features.
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Temporary changes to the UE
@@ -124,7 +124,10 @@
 	return .
 
 /datum/dna/proc/generate_uni_features()
-	. = ""
+	var/list/data = list()
+	
+	for(var/feature in list())
+	
 	var/list/L = new /list(DNA_FEATURE_BLOCKS)
 
 	if(features["mcolor"])
@@ -158,12 +161,10 @@
 	if(features["tail_monkey"])
 		L[DNA_MONKEY_TAIL_BLOCK] = construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len)
 
-	for(var/i=1, i<=DNA_FEATURE_BLOCKS, i++)
-		if(L[i])
-			. += L[i]
-		else
-			. += random_string(DNA_BLOCK_SIZE,GLOB.hex_characters)
-	return .
+	for(var/i in 1 to DNA_FEATURE_BLOCKS)
+		data += (L[i] || random_string(DNA_BLOCK_SIZE,GLOB.hex_characters))
+	
+	return data.Join()
 
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
