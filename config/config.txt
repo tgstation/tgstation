@@ -546,10 +546,3 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Uncomment to disable hard deletes entirely, even things that explicitly request. This is not recommended unless you have a need for it during events or other high pop times where performance is key.
 #DISABLE_ALL_HARD_DELETES
-
-
-
-
-
-
-
