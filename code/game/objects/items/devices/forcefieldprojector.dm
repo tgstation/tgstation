@@ -47,7 +47,8 @@
 		to_chat(user, span_warning("[src] cannot sustain any more forcefields!"))
 		return
 	if(force_proj_busy)
-		to_chat(user, span_notice("[src] is busy creating a forcefield."))	
+		to_chat(user, span_notice("[src] is busy creating a forcefield."))
+		return
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		force_proj_busy = TRUE
