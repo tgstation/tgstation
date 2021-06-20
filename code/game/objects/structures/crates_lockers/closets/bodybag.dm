@@ -268,8 +268,8 @@
 		if(!do_after(user,(sinch_time),target = src)
 			return
 	sinched = !sinched
-	user.visible_message(span_notice("[user] [sinched ? null, "un"]sinches [src]"), \
-							span_notice("You [sinched ? null, "un"]sinch [src]"), \
+	user.visible_message(span_notice("[user] [sinched ? null, "un"]sinches [src]"),
+							span_notice("You [sinched ? null, "un"]sinch [src]"),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
 	log_game("[key_name(user)] [sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]")
 	update_appearance()
