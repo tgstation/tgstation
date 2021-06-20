@@ -132,9 +132,9 @@
 	var/list/L = new /list(DNA_FEATURE_BLOCKS)
 
 	if(features["mcolor"])
-		L[DNA_MCOLOR_BLOCK] = sanitize_hexcolor(features["mcolor"])
+		L[DNA_MUTANT_COLOR_BLOCK] = sanitize_hexcolor(features["mcolor"])
 	if(features["ethcolor"])
-		L[DNA_ETHCOLOR_BLOCK] = sanitize_hexcolor(features["ethcolor"])
+		L[DNA_ETHEREAL_COLOR_BLOCK] = sanitize_hexcolor(features["ethcolor"])
 	if(features["body_markings"])
 		L[DNA_LIZARD_MARKINGS_BLOCK] = construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len)
 	if(features["tail_lizard"])
@@ -158,7 +158,7 @@
 	if(features["moth_markings"])
 		L[DNA_MOTH_MARKINGS_BLOCK] = construct_block(GLOB.moth_markings_list.Find(features["moth_markings"]), GLOB.moth_markings_list.len)
 	if(features["caps"])
-		L[DNA_CAPS_BLOCK] = construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len)
+		L[DNA_MUSHROOM_CAPS_BLOCK] = construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len)
 	if(features["tail_monkey"])
 		L[DNA_MONKEY_TAIL_BLOCK] = construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len)
 
@@ -205,8 +205,8 @@
 	if(active)
 		return sequence
 	while(difficulty)
-		var/randnum = rand(1, length_char(sequence))
-		sequence = copytext_char(sequence, 1, randnum) + "X" + copytext_char(sequence, randnum + 1)
+		var/randnum = rand(1, length(sequence))
+		sequence = copytext(sequence, 1, randnum) + "X" + copytext(sequence, randnum + 1)
 		difficulty--
 	return sequence
 
@@ -253,9 +253,9 @@
 	if(!ishuman(holder))
 		CRASH("Non-human mobs shouldn't have DNA")
 	switch(blocknumber)
-		if(DNA_MCOLOR_BLOCK)
+		if(DNA_MUTANT_COLOR_BLOCK)
 			setblock(unique_features, blocknumber, sanitize_hexcolor(features["mcolor"]))
-		if(DNA_ETHCOLOR_BLOCK)
+		if(DNA_ETHEREAL_COLOR_BLOCK)
 			setblock(unique_features, blocknumber, sanitize_hexcolor(features["ethcolor"]))
 		if(DNA_LIZARD_MARKINGS_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len))
@@ -279,7 +279,7 @@
 			setblock(unique_features, blocknumber, construct_block(GLOB.moth_antennae_list.Find(features["moth_antennae"]), GLOB.moth_antennae_list.len))
 		if(DNA_MOTH_MARKINGS_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.moth_markings_list.Find(features["moth_markings"]), GLOB.moth_markings_list.len))
-		if(DNA_CAPS_BLOCK)
+		if(DNA_MUSHROOM_CAPS_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_MONKEY_TAIL_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len))
@@ -497,9 +497,9 @@
 	hairstyle = GLOB.hairstyles_list[deconstruct_block(getblock(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	var/features = dna.unique_features
 	if(dna.features["mcolor"])
-		dna.features["mcolor"] = sanitize_hexcolor(getblock(features, DNA_MCOLOR_BLOCK))
+		dna.features["mcolor"] = sanitize_hexcolor(getblock(features, DNA_MUTANT_COLOR_BLOCK))
 	if(dna.features["ethcolor"])
-		dna.features["ethcolor"] = sanitize_hexcolor(getblock(features, DNA_ETHCOLOR_BLOCK))
+		dna.features["ethcolor"] = sanitize_hexcolor(getblock(features, DNA_ETHEREAL_COLOR_BLOCK))
 	if(dna.features["body_markings"])
 		dna.features["body_markings"] = GLOB.body_markings_list[deconstruct_block(getblock(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.body_markings_list.len)]
 	if(dna.features["tail_lizard"])
@@ -529,7 +529,7 @@
 	if(dna.features["moth_markings"])
 		dna.features["moth_markings"] = GLOB.moth_markings_list[deconstruct_block(getblock(features, DNA_MOTH_MARKINGS_BLOCK), GLOB.moth_markings_list.len)]
 	if(dna.features["caps"])
-		dna.features["caps"] = GLOB.caps_list[deconstruct_block(getblock(features, DNA_CAPS_BLOCK), GLOB.caps_list.len)]
+		dna.features["caps"] = GLOB.caps_list[deconstruct_block(getblock(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
 	if(dna.features["tail_monkey"])
 		dna.features["tail_monkey"] = GLOB.tails_list_monkey[deconstruct_block(getblock(features, DNA_MONKEY_TAIL_BLOCK), GLOB.tails_list_monkey.len)]
 
@@ -604,14 +604,14 @@
 
 /proc/getleftblocks(input,blocknumber,blocksize)
 	if(blocknumber > 1)
-		return copytext_char(input,1,((blocksize*blocknumber)-(blocksize-1)))
+		return copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
 
 /proc/getrightblocks(input,blocknumber,blocksize)
 	if(blocknumber < (length(input)/blocksize))
-		return copytext_char(input,blocksize*blocknumber+1,length(input)+1)
+		return copytext(input,blocksize*blocknumber+1,length(input)+1)
 
 /proc/getblock(input, blocknumber, blocksize=DNA_BLOCK_SIZE)
-	return copytext_char(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
+	return copytext(input, blocksize*(blocknumber-1)+1, (blocksize*blocknumber)+1)
 
 /proc/setblock(istring, blocknumber, replacement, blocksize=DNA_BLOCK_SIZE)
 	if(!istring || !blocknumber || !replacement || !blocksize)

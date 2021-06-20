@@ -37,6 +37,9 @@
 /// The base cooldown of the ability to copy enzymes and genetic makeup to people.
 #define ENZYME_COPY_BASE_COOLDOWN (60 SECONDS)
 
+#define RAD_PULSE_UNIQUE_IDENTITY "ui"
+#define RAD_PULSE_UNIQUE_FEATURES "uf"
+
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
 	desc = "Scan DNA."
@@ -146,7 +149,7 @@
 
 	// This is for pulsing the UI element with radiation as part of genetic makeup
 	// If rad_pulse_index > 0 then it means we're attempting a rad pulse
-	if((rad_pulse_index > 0) && (rad_pulse_timer <= world.time) && (rad_pulse_type == "ui" || rad_pulse_type == "uf"))
+	if((rad_pulse_index > 0) && (rad_pulse_timer <= world.time) && (rad_pulse_type == RAD_PULSE_UNIQUE_IDENTITY || rad_pulse_type == RAD_PULSE_UNIQUE_FEATURES))
 		rad_pulse()
 		return
 
@@ -513,12 +516,12 @@
 			//  X to allow highlighting logic to work on the tgui interface.
 			if(newgene == "X")
 				var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
-				defaultseq = copytext_char(defaultseq, 1, genepos) + newgene + copytext_char(defaultseq, genepos + 1)
+				defaultseq = copytext(defaultseq, 1, genepos) + newgene + copytext(defaultseq, genepos + 1)
 				scanner_occupant.dna.default_mutation_genes[path] = defaultseq
 
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant rads
-			sequence = copytext_char(sequence, 1, genepos) + newgene + copytext_char(sequence, genepos + 1)
+			sequence = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
 			scanner_occupant.dna.mutation_index[path] = sequence
 			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff
 			scanner_occupant.domutcheck()
@@ -1390,9 +1393,9 @@
 			var/len
 			switch(type)
 				if("ui")
-					len = length_char(scanner_occupant.dna.unique_identity)
+					len = length(scanner_occupant.dna.unique_identity)
 				if("uf")
-					len = length_char(scanner_occupant.dna.unique_features)
+					len = length(scanner_occupant.dna.unique_features)
 			rad_pulse_timer = world.time + (radduration*10)
 			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
@@ -2148,34 +2151,34 @@
 	// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 	//  operational guard checks.
 	// If we can't, abort the procedure.
-	if(!can_modify_occupant() || (rad_pulse_type != "ui" && rad_pulse_type != "uf"))
+	if(!can_modify_occupant() || (rad_pulse_type != RAD_PULSE_UNIQUE_IDENTITY && rad_pulse_type != RAD_PULSE_UNIQUE_FEATURES))
 		rad_pulse_index = 0
 		end_processing()
 		return
 
 	var/len
 	switch(rad_pulse_type)
-		if("ui")
-			len = length_char(scanner_occupant.dna.unique_identity)
-		if("uf")
-			len = length_char(scanner_occupant.dna.unique_features)
+		if(RAD_PULSE_UNIQUE_IDENTITY)
+			len = length(scanner_occupant.dna.unique_identity)
+		if(RAD_PULSE_UNIQUE_FEATURES)
+			len = length(scanner_occupant.dna.unique_features)
 
 	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2  //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 
 	var/hex
 	switch(rad_pulse_type)
-		if("ui")
-			hex = copytext_char(scanner_occupant.dna.unique_identity, num, num+1)
-		if("uf")
-			hex = copytext_char(scanner_occupant.dna.unique_features, num, num+1)
+		if(RAD_PULSE_UNIQUE_IDENTITY)
+			hex = copytext(scanner_occupant.dna.unique_identity, num, num+1)
+		if(RAD_PULSE_UNIQUE_FEATURES)
+			hex = copytext(scanner_occupant.dna.unique_features, num, num+1)
 
 	hex = scramble(hex, radstrength, radduration)
 
 	switch(rad_pulse_type)
-		if("ui")
-			scanner_occupant.dna.unique_identity = copytext_char(scanner_occupant.dna.unique_identity, 1, num) + hex + copytext_char(scanner_occupant.dna.unique_identity, num + 1)
-		if("uf")
-			scanner_occupant.dna.unique_features = copytext_char(scanner_occupant.dna.unique_features, 1, num) + hex + copytext_char(scanner_occupant.dna.unique_features, num + 1)
+		if(RAD_PULSE_UNIQUE_IDENTITY)
+			scanner_occupant.dna.unique_identity = copytext(scanner_occupant.dna.unique_identity, 1, num) + hex + copytext(scanner_occupant.dna.unique_identity, num + 1)
+		if(RAD_PULSE_UNIQUE_FEATURES)
+			scanner_occupant.dna.unique_features = copytext(scanner_occupant.dna.unique_features, 1, num) + hex + copytext(scanner_occupant.dna.unique_features, num + 1)
 	scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 
 	rad_pulse_index = 0
