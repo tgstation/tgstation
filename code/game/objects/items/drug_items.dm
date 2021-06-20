@@ -2,10 +2,11 @@
 	name = "generic drug"
 	desc =  "I am error"
 	icon = 'icons/obj/drugs.dmi'
-	food_flags = TOXIC
+	foodtypes = TOXIC
+	food_flags = FOOD_FINGER_FOOD
 	max_volume = 50
 	eat_time = 1 SECONDS
-	tastes = list("drugs" = 1)
+	tastes = list("drugs" = 2, "chemicals" = 1)
 	eatverbs = list("gnaws" = 1)
 	bite_consumption = 10
 	w_class = WEIGHT_CLASS_TINY
@@ -26,7 +27,7 @@
 	. = ..()
 	icon_state = pick("moon_rock1", "moon_rock2", "moon_rock3")
 
-/obj/item/reagent_containers/glass/blaztoff_ampoule
+/obj/item/reagent_containers/glass/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name
 	desc = "A small ampoule. The liquid inside appears to be boiling violently.\nYou suspect it contains bLasSToFF; the drug thought to be the cause of the infamous Luna nightclub mass casuality incident."
 	icon_state = "blastoff_ampoule"
@@ -35,7 +36,7 @@
 	spillable = FALSE
 	list_reagents = list(/datum/reagent/drug/blastoff = 10)
 
-/obj/item/reagent_containers/glass/blaztoff_ampoule/update_icon_state()
+/obj/item/reagent_containers/glass/blastoff_ampoule/update_icon_state()
 	. = ..()
 	if(!reagents.total_volume)
 		icon_state = "blastoff_empty"
@@ -44,14 +45,14 @@
 	else
 		icon_state = "blastoff_ampoule"
 
-/obj/item/reagent_containers/glass/blaztoff_ampoule/attack_self(mob/user)
+/obj/item/reagent_containers/glass/blastoff_ampoule/attack_self(mob/user)
 	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
 		reagent_flags = OPENCONTAINER
 		spillable = TRUE
 		return update_icon()
 
-/obj/item/reagent_containers/food/drinks/blaztoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/food/drinks/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!.) //if the bottle wasn't caught
 		if(QDELING(src) || !hit_atom)		//Invalid loc
 			return
