@@ -7,12 +7,12 @@
 /obj/vehicle/sealed/car/vim
 	name = "\improper Vim"
 	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
-	icon_state = "crittermecha"
+	icon_state = "vim"
 	max_integrity = 50
 	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	enter_delay = 20
 	movedelay = 0.6
-	engine_sound_length = 0.6 SECONDS
+	engine_sound_length = 0.3 SECONDS
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 2
@@ -27,7 +27,14 @@
 	if(animal.mob_size != MOB_SIZE_TINY)
 		return FALSE
 	. = ..()
+
+/obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
+	. = ..()
 	update_overlays()
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	if(obj_integrity == max_integrity)
+		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
+
 
 /obj/vehicle/sealed/car/vim/generate_actions()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/climb_out/vim, VEHICLE_CONTROL_DRIVE)
@@ -40,8 +47,8 @@
 	var/static/piloted_overlay
 	var/static/headlights_overlay
 	if(isnull(piloted_overlay))
-		piloted_overlay = iconstate2appearance(icon, "crittermecha_piloted")
-		headlights_overlay = iconstate2appearance(icon, "crittermecha_headlights")
+		piloted_overlay = iconstate2appearance(icon, "vim_piloted")
+		headlights_overlay = iconstate2appearance(icon, "vim_headlights")
 
 	var/list/drivers = return_drivers()
 	if(drivers.len)

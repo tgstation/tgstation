@@ -326,7 +326,7 @@
 
 /datum/action/vehicle/sealed/noise/Trigger()
 	var/obj/vehicle/sealed/car/vim/vim_mecha = vehicle_entered_target
-	if(COOLDOWN_FINISHED(vim_mecha, sound_cooldown))
+	if(!COOLDOWN_FINISHED(vim_mecha, sound_cooldown))
 		vim_mecha.balloon_alert(owner, "on cooldown!")
 		return
 	COOLDOWN_START(vim_mecha, sound_cooldown, VIM_SOUND_COOLDOWN)
