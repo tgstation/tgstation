@@ -157,7 +157,7 @@
 	mob_storage_capacity = 1
 	pressure_protection = 0.8
 	thermal_insulation = 0.5
-	foldedbag_path = /obj/item/body_bag/environmental
+	foldedbag_path = /obj/item/body_bag/environmental/
 	weather_protection = list("acid", "ash", "rad", "snow", "void") // Does not protect against lava or the The Floor Is Lava spell.
 
 /obj/structure/closet/body_bag/environmental/nanotrasen
@@ -167,6 +167,97 @@
 	icon_state = "ntenvirobag"
 	pressure_protection = 1
 	thermal_insulation = 1
-	foldedbag_path = /obj/item/body_bag/environmental/nanotrasen
+	foldedbag_path = /obj/item/body_bag/environmental/nanotrasen/
 	weather_protection = list("all")
 
+/obj/structure/closet/body_bag/environmental/prisoner
+	name = "prisoner transport bag"
+	desc = "Intended for transport of prisoners through hazardous environments, this environmental protection bag comes with straps to keep an occupant secure."
+	icon = "icons/obj/bodybag.dmi"
+	icon_state = "prisonerenvirobag"
+	foldedbag_path = /obj/item/body_bag/environmental/prisoner/
+	var/sinched = FALSE
+	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this than it is to get out of a straightjacket.
+
+/obj/structure/closet/body_bag/environmental/prisoner/update_icon()
+	. = ..()
+	if(sinched)
+		icon_state = initial(icon_state) + "_sinched"
+	else
+		icon_state = initial(icon_state)
+
+/obj/structure/closet/body_bag/environmental/prisoner/can_open(mob/living/user, force = FALSE)
+	if(force)
+		return TRUE
+	if(sinched)
+		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
+		return FALSE
+	. = ..()
+
+/obj/structure/closet/body_bag/environmental/prisoner/proc/open(mob/living/user, force = FALSE)
+	if(!can_open(user, force))
+		return
+	if(opened)
+		return
+	sinched = FALSE
+	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
+	opened = TRUE
+	if(!dense_when_open)
+		set_density(FALSE)
+	dump_contents()
+	update_appearance()
+	after_open(user, force)
+	return TRUE
+
+/obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
+	/// copy-pasted because flavor text needs changing, as well as some other params
+	if(opened)
+		return
+	if(ismovable(loc))
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
+		var/atom/movable/AM = loc
+		AM.relay_container_resist_act(user, src)
+		return
+	if(!sinched)
+		open()
+		return
+
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message(span_warning("Someone in [src] begins to wriggle!"), \
+		span_notice("You start wriggling, attempting to loosen [src]'s buckles... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_hear("You hear straining cloth from [src]."))
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || !sinched )
+			return
+		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
+							span_notice("You successfully break out of [src]!"))
+		bust_open()
+	else
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			to_chat(user, span_warning("You fail to break out of [src]!"))
+
+
+/obj/structure/closet/body_bag/environmental/prisoner/proc/bust_open()
+	SIGNAL_HANDLER
+	sinched = FALSE
+	// We don't break the bag, because the buckles were backed out as opposed to fully broken.
+	open()
+
+/obj/structure/closet/body_bag/environmental/prisoner/RightClick(mob/user, modifiers)
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+		return
+	if(!opened)
+		togglelock(user)
+	return TRUE
+
+/obj/structure/closet/body_bag/environmental/prisoner/proc/togglelock(mob/living/user, silent)
+	if(iscarbon(user))
+		add_fingerprint(user)
+	sinched = !sinched
+	user.visible_message(span_notice("[user] [sinched ? null, "un"]sinches [src]"), \
+							span_notice("You [sinched ? null, "un"]sinch [src]"), \
+							span_hear("You hear stretching followed by metal clicking from [src]."))
+	update_appearance()

@@ -95,14 +95,21 @@
 	desc = "A folded, reinforced bag designed to protect against exoplanetary environmental storms."
 	icon = "icons/obj/bodybag.dmi"
 	icon_state = "envirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/
 	w_class = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag -> higher bulkiness than regular bodybag
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF
 
 /obj/item/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
-	desc = "Used for VIP extraction from hazardous environments and as shelter by elite Nanotrasen operatives, this highly reinforced bag is nearly completely isolated from environmental factors when closed."
+	desc = "Used for VIP extraction from hazardous environments and as shelter by elite Nanotrasen operatives, this folded, highly reinforced bag is nearly completely isolated from environmental factors when closed."
 	icon = "icons/obj/bodybag.dmi"
 	icon_state = "ntenvirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/nanotrasen
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/nanotrasen/
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
+
+/obj/item/body_bag/environmental/prisoner/
+	name = "prisoner transport bag"
+	desc = "Intended for transport of prisoners through hazardous environments, this folded environmental protection bag comes with straps to keep an occupant secure."
+	icon = "icons/obj/bodybag.dmi"
+	icon_state = "prisonerenvirobag_folded"
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/
