@@ -1287,7 +1287,7 @@
 	toysay = "Where is Pun Pun?"
 
 /obj/item/toy/figure/borg
-	name = "C\improper yborg action figure"
+	name = "\improper Cyborg action figure"
 	icon_state = "borg"
 	toysay = "I. LIVE. AGAIN."
 	toysound = 'sound/voice/liveagain.ogg'
