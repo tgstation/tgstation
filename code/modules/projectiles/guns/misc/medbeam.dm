@@ -53,7 +53,7 @@
 	SIGNAL_HANDLER
 	active = FALSE //skip qdelling the beam again if we're doing this proc, because
 	if(isliving(loc))
-		to_chat(loc, "<span class='warning'>You lose control of the beam!</span>")
+		to_chat(loc, span_warning("You lose control of the beam!"))
 	LoseTarget()
 
 /obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)

@@ -30,15 +30,15 @@
 	time = 20
 
 /datum/surgery_step/stomach_pump/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin pumping [target]'s stomach...</span>",
-		"<span class='notice'>[user] begins to pump [target]'s stomach.</span>",
-		"<span class='notice'>[user] begins to press on [target]'s chest.</span>")
+	display_results(user, target, span_notice("You begin pumping [target]'s stomach..."),
+		span_notice("[user] begins to pump [target]'s stomach."),
+		span_notice("[user] begins to press on [target]'s chest."))
 
 /datum/surgery_step/stomach_pump/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		display_results(user, target, "<span class='notice'>[user] forces [target_human] to vomit, cleansing their stomach of some chemicals!</span>",
-				"<span class='notice'>[user] forces [target_human] to vomit, cleansing their stomach of some chemicals!</span>",
+		display_results(user, target, span_notice("[user] forces [target_human] to vomit, cleansing their stomach of some chemicals!"),
+				span_notice("[user] forces [target_human] to vomit, cleansing their stomach of some chemicals!"),
 				"[user] forces [target_human] to vomit!")
 		target_human.vomit(20, FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 0.67) //higher purge ratio than regular vomiting
 	return ..()
@@ -46,8 +46,8 @@
 /datum/surgery_step/stomach_pump/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		display_results(user, target, "<span class='warning'>You screw up, brusing [target_human]'s chest!</span>",
-			"<span class='warning'>[user] screws up, brusing [target_human]'s chest!</span>",
-			"<span class='warning'>[user] screws up!</span>")
+		display_results(user, target, span_warning("You screw up, brusing [target_human]'s chest!"),
+			span_warning("[user] screws up, brusing [target_human]'s chest!"),
+			span_warning("[user] screws up!"))
 		target_human.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		target_human.adjustBruteLoss(5)

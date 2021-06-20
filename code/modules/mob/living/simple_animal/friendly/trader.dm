@@ -142,7 +142,7 @@
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_buy(mob/user, obj/item/item_to_buy)
 	var/cost = products[item_to_buy]
-	to_chat(user, "<span class='notice'>It will cost you [cost] credits to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?</span>")
+	to_chat(user, span_notice("It will cost you [cost] credits to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
@@ -183,7 +183,7 @@
 	if(!cost)
 		return FALSE
 	say(interestedphrase)
-	to_chat(user, "<span class='notice'>You will receive [cost] credits for each one of [sellitem].</span>")
+	to_chat(user, span_notice("You will receive [cost] credits for each one of [sellitem]."))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
