@@ -164,7 +164,7 @@
 
 /obj/structure/closet/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
-	desc = "Used for VIP extraction from hazardous environments and as shelter by elite Nanotrasen operatives, this highly reinforced bag is nearly completely isolated from environmental factors when closed."
+	desc = "A heavily reinforced and insulated bag, capable of fully isolating its contents from external factors."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "ntenvirobag"
 	pressure_protection = 1
@@ -285,11 +285,7 @@
 	weather_protection = list(WEATHER_ALL)
 	breakout_time = 8 MINUTES
 	sinch_time = 30 SECONDS
-	var/obj/item/tank/internals/anesthetic/tank // todo: make this transfer over to the held item, currently the tank is bottomless by folding and unfolding the bag.
-
-/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
-	. = ..()
-	tank = new
+	var/obj/item/tank/internals/anesthetic/tank
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_air()
 	if(tank && sinched)
