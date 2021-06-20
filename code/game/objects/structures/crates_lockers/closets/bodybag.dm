@@ -27,13 +27,13 @@
 		QDEL_NULL(foldedbag_instance)
 	return ..()
 
-/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
+/obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
+	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
-		if(user.get_active_held_item() != I)
+		if(user.get_active_held_item() != interact_tool)
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
@@ -44,7 +44,7 @@
 		else
 			name = initial(name)
 		return
-	else if((I.tool_behaviour == TOOL_WIRECUTTER) && tagged)
+	else if((interact_tool.tool_behaviour == TOOL_WIRECUTTER) && tagged)
 		to_chat(user, span_notice("You cut the tag off [src]."))
 		name = "body bag"
 		tagged = FALSE
@@ -180,8 +180,8 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/
-	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this as it is to get out of a straightjacket.
-	var/sinch_time = 100
+	breakout_time = 4 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
+	var/sinch_time = 10 SECONDS
 	var/sinched = FALSE
 
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
@@ -221,8 +221,8 @@
 	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
-		var/atom/movable/AM = loc
-		AM.relay_container_resist_act(user, src)
+		var/atom/movable/location = loc
+		location.relay_container_resist_act(user, src)
 		return
 	if(!sinched)
 		open()
@@ -283,8 +283,8 @@
 	thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list(WEATHER_ALL)
-	breakout_time = 4800
-	sinch_time = 300
+	breakout_time = 8 MINUTES
+	sinch_time = 30 SECONDS
 	var/obj/item/tank/internals/anesthetic/tank // todo: make this transfer over to the held item, currently the tank is bottomless by folding and unfolding the bag.
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()

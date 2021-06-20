@@ -179,21 +179,27 @@
  * Returns TRUE if the living mob can be affected by the weather
  *
  */
-/datum/weather/proc/can_weather_act(mob/living/L)
-	var/turf/mob_turf = get_turf(L)
+/datum/weather/proc/can_weather_act(mob/living/mob_to_check)
+	var/turf/mob_turf = get_turf(mob_to_check)
+
 	if(!(L.z in impacted_z_levels))
 		if(mob_turf)
 			return
-		if(!(L.loc.z in impacted_z_levels))
+
+		if(!(mob_to_check.loc.z in impacted_z_levels))
 			return
-		if(istype(L.loc, /obj/structure/closet))
-			var/obj/structure/closet/current_locker = L.loc
+
+		if(istype(mob_to_check.loc, /obj/structure/closet))
+			var/obj/structure/closet/current_locker = mob_to_check.loc
 			if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
 				return
-	if((immunity_type in L.weather_immunities) || (WEATHER_ALL in L.weather_immunities))
+
+	if((immunity_type in mob_to_check.weather_immunities) || (WEATHER_ALL in mob_to_check.weather_immunities))
 		return
-	if(!(get_area(L) in impacted_areas))
+
+	if(!(get_area(mob_to_check) in impacted_areas))
 		return
+
 	return TRUE
 
 /**
