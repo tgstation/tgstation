@@ -616,7 +616,7 @@
 	series_number = 13
 	max_combat_health = 5 //300 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
-	special_attack_cry = "BOMBANANA"
+	special_attack_cry = "BOMBANANA SPREE"
 
 /obj/item/toy/mecha/deathripley
 	name = "toy Death-Ripley"
