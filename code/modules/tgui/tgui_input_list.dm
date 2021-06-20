@@ -82,12 +82,16 @@
 	src.message = message
 	src.buttons = list()
 	src.buttons_map = list()
+	var/list/repeat_buttons = list()
 
 	// Gets rid of illegal characters
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 
 	for(var/i in buttons)
 		var/string_key = whitelistedWords.Replace("[i]", "")
+
+		//avoids duplicated keys E.g: when areas have the same name
+		string_key = avoid_assoc_duplicate_keys(string_key, repeat_buttons)
 
 		src.buttons += string_key
 		src.buttons_map[string_key] = i
