@@ -181,6 +181,7 @@
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/body_bag/environmental/prisoner/
 	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this as it is to get out of a straightjacket.
+	var/sinch_time = 100
 	var/sinched = FALSE
 
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
@@ -258,9 +259,14 @@
 	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/proc/togglelock(mob/living/user, silent)
-	// Todo: have this take a certian amount of time.
 	if(iscarbon(user))
 		add_fingerprint(user)
+	if(!sinched)
+		for(mob/living/target in src.contents)
+			target.visible_message(span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
+		user.visible_message(span_notice("You begin sinching down the buckles on [src].")
+		if(!do_after(user,(sinch_time),target = src)
+			return
 	sinched = !sinched
 	user.visible_message(span_notice("[user] [sinched ? null, "un"]sinches [src]"), \
 							span_notice("You [sinched ? null, "un"]sinch [src]"), \
@@ -278,6 +284,7 @@
 	foldedbag_path = /obj/item/body_bag/environmental/prisoner/syndicate
 	weather_protection = list("all")
 	breakout_time = 4800
+	var/sinch_time = 300
 	var/obj/item/tank/internals/anesthetic/tank // todo: make this transfer over to the held item, currently the tank is bottomless by folding and unfolding the bag.
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
@@ -296,3 +303,8 @@
 	else
 		return null
 
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/togglelock(mob/living/user, silent)
+	. = ..()
+	if(sinched)
+		for(mob/living/target in src.contents)
+			target.visible_message(span_warning("You hear a faint hiss, and a white mist fills your vision...")
