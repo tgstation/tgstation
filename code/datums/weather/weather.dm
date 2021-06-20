@@ -182,7 +182,7 @@
 /datum/weather/proc/can_weather_act(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
 
-	if(!(L.z in impacted_z_levels))
+	if(!(mob_to_check.z in impacted_z_levels))
 		if(mob_turf)
 			return
 
