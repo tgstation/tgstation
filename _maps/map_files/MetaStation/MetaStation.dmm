@@ -64853,7 +64853,7 @@
 /area/security/brig)
 "tkI" = (
 /obj/structure/table/wood,
-/obj/item/toy/prize/honk{
+/obj/item/toy/mecha/honk{
 	pixel_y = 12
 	},
 /obj/item/toy/dummy,
