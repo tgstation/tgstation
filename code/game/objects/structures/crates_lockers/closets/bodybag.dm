@@ -151,11 +151,22 @@
 
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
-	desc = "An insulated, reinforced bag designed to protect against exoplanetary environmental storms and other environmental factors."
+	desc = "An insulated, reinforced bag designed to protect against exoplanetary storms and other environmental factors."
 	icon = "icons/obj/bodybag.dmi"
-	icon_state = "envbodybag"
+	icon_state = "envirobag"
 	mob_storage_capacity = 1
 	pressure_protection = 0.8
 	thermal_insulation = 0.5
 	foldedbag_path = /obj/item/body_bag/environmental
 	weather_protection = list("acid", "ash", "rad", "snow", "void") // Does not protect against lava or the The Floor Is Lava spell.
+
+/obj/structure/closet/body_bag/environmental/nanotrasen
+	name = "elite environmental protection bag"
+	desc = "Used for VIP extraction from hazardous environments and as shelter by elite Nanotrasen operatives, this highly reinforced bag is nearly completely isolated from environmental factors when closed."
+	icon = "icons/obj/bodybag.dmi"
+	icon_state = "ntenvirobag"
+	pressure_protection = 1
+	thermal_insulation = 1
+	foldedbag_path = /obj/item/body_bag/environmental/nanotrasen
+	weather_protection = list("all")
+
