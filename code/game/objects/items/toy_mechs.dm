@@ -57,7 +57,8 @@
 
 /obj/item/toy/mecha/Initialize()
 	. = ..()
-	desc = "Mini-Mecha action figure! Attack your friends or another mech with one to initiate epic mech combat! Collect them all: [series_number]/[ALL_MECH_TOYS]."
+	if(!desc) //some ruins override the desc
+		desc = "Mini-Mecha action figure! Attack your friends or another mech with one to initiate epic mech combat! Collect them all: [series_number]/[ALL_MECH_TOYS]."
 	combat_health = max_combat_health
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE)
@@ -667,7 +668,7 @@
 
 /obj/item/toy/mecha/firefighter //rip
 	name = "toy Firefighter"
-	icon_state = "fireripleytoy"
+	icon_state = "firefightertoy"
 	series_number = 18
 	max_combat_health = 5 //250 integrity?
 	special_attack_type = SPECIAL_ATTACK_HEAL
