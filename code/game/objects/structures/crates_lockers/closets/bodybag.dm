@@ -149,6 +149,8 @@
 	B.w_class = max_weight_of_contents
 	usr.put_in_hands(B)
 
+/// Environmental bags
+
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
 	desc = "An insulated, reinforced bag designed to protect against exoplanetary storms and other environmental factors."
@@ -170,14 +172,16 @@
 	foldedbag_path = /obj/item/body_bag/environmental/nanotrasen/
 	weather_protection = list("all")
 
+/// Securable enviro. bags
+
 /obj/structure/closet/body_bag/environmental/prisoner
 	name = "prisoner transport bag"
 	desc = "Intended for transport of prisoners through hazardous environments, this environmental protection bag comes with straps to keep an occupant secure."
 	icon = "icons/obj/bodybag.dmi"
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/body_bag/environmental/prisoner/
+	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this as it is to get out of a straightjacket.
 	var/sinched = FALSE
-	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this than it is to get out of a straightjacket.
 
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
 	. = ..()
@@ -210,7 +214,7 @@
 	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
-	/// copy-pasted because flavor text needs changing, as well as some other params
+	/// copy-pasted with changes because flavor text as well as some other misc stuff
 	if(opened)
 		return
 	if(ismovable(loc))
@@ -254,10 +258,41 @@
 	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/proc/togglelock(mob/living/user, silent)
+	// Todo: have this take a certian amount of time.
 	if(iscarbon(user))
 		add_fingerprint(user)
 	sinched = !sinched
 	user.visible_message(span_notice("[user] [sinched ? null, "un"]sinches [src]"), \
 							span_notice("You [sinched ? null, "un"]sinch [src]"), \
 							span_hear("You hear stretching followed by metal clicking from [src]."))
+	log_game("[key_name(user)] [sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]")
 	update_appearance()
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate
+	name = "syndicate prisoner transport bag"
+	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured during transport."
+	icon = "icons/obj/bodybag.dmi"
+	icon_state = "syndieenvirobag"
+	pressure_protection = 1
+	thermal_insulation = 1
+	foldedbag_path = /obj/item/body_bag/environmental/prisoner/syndicate
+	weather_protection = list("all")
+	breakout_time = 4800
+	var/obj/item/tank/internals/anesthetic/tank // todo: make this transfer over to the held item, currently the tank is bottomless by folding and unfolding the bag.
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
+	. = ..()
+	tank = new
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_air()
+	if(tank && sinched)
+		return tank.return_air()
+	else
+		return loc.return_air()
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_analyzable_air()
+	if(tank)
+		return tank.return_analyzable_air()
+	else
+		return null
+
