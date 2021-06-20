@@ -689,7 +689,7 @@
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, uf=FALSE, probability)
 	if(!M.has_dna())
-		CRASH("[src] does not have DNA")
+		CRASH("[M] does not have DNA")
 	if(se)
 		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))
