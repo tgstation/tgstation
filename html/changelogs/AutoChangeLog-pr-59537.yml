@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - qol: "Suspenders now uses a GAGS setup, allowing for custom recolors."
