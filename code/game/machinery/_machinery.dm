@@ -102,8 +102,12 @@
 		//0 = dont run the auto
 		//1 = run auto, use idle
 		//2 = run auto, use active
+	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
 	var/idle_power_usage = 0
+	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
 	var/active_power_usage = 0
+	///the current amount of static power load this machine gives to its area
+	var/static_power_usage = 0 //try to not use this at first, just the idle and active power usage vars
 	var/power_channel = AREA_USAGE_EQUIP
 		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	///A combination of factors such as having power, not being broken and so on. Boolean.
@@ -154,6 +158,22 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	if(use_power)
+		update_static_power_usage()
+	become_area_sensitive(ROUNDSTART_TRAIT)
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
+
+/obj/machinery/Destroy()
+	GLOB.machines.Remove(src)
+	end_processing()
+	dump_inventory_contents()
+	QDEL_LIST(component_parts)
+	QDEL_NULL(circuit)
+	return ..()
+
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -169,20 +189,6 @@
 /obj/machinery/proc/end_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
-
-/obj/machinery/LateInitialize()
-	. = ..()
-	power_change()
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
-
-/obj/machinery/Destroy()
-	GLOB.machines.Remove(src)
-	end_processing()
-	dump_inventory_contents()
-	QDEL_LIST(component_parts)
-	QDEL_NULL(circuit)
-	return ..()
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -314,6 +320,87 @@
 		target.forceMove(src)
 	updateUsrDialog()
 	update_appearance()
+
+/obj/machinery/proc/update_use_power(new_use_power)
+	if(new_use_power == use_power)
+		return FALSE
+
+	_unset_static_power()
+
+	var/new_usage = 0
+	switch(new_use_power)
+		if(IDLE_POWER_USE)
+			new_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			new_usage = active_power_usage
+
+	static_power_usage = new_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area)
+		our_area.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	use_power = new_use_power
+
+	return TRUE
+
+/obj/machinery/proc/update_power_channel(new_power_channel)
+	if(new_power_channel == power_channel)
+		return FALSE
+
+	var/usage = _unset_static_power()
+
+	var/area/our_area = get_area(src)
+
+	if(our_area && usage)
+		our_area.addStaticPower(usage, DYNAMIC_TO_STATIC_CHANNEL(new_power_channel))
+
+	power_channel = new_power_channel
+
+	return TRUE
+
+/obj/machinery/proc/_unset_static_power() //make this a macro?
+	var/old_usage = static_power_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area && old_usage)
+		our_area.addStaticPower(-old_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+		static_power_usage = 0
+
+	return old_usage
+
+/obj/machinery/proc/update_static_power_usage(new_use_power = use_power, new_power_channel = power_channel)
+
+	if(new_use_power != use_power)
+		update_use_power(new_use_power)
+
+	_unset_static_power()
+
+	switch(use_power)
+		if(NO_POWER_USE)
+			return
+		if(IDLE_POWER_USE)
+			static_power_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			static_power_usage = active_power_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area)
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(new_power_channel))
+
+		power_channel = new_power_channel
+
+	return TRUE
+
+/*
+/area/proc/use_power(amount, chan)
+	switch(chan)
+		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+			power_usage[chan] += amount
+			*/
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
