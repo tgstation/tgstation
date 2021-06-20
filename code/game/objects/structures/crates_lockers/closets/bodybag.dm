@@ -154,7 +154,7 @@
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
 	desc = "An insulated, reinforced bag designed to protect against exoplanetary storms and other environmental factors."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "envirobag"
 	mob_storage_capacity = 1
 	pressure_protection = 0.8
@@ -165,7 +165,7 @@
 /obj/structure/closet/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
 	desc = "Used for VIP extraction from hazardous environments and as shelter by elite Nanotrasen operatives, this highly reinforced bag is nearly completely isolated from environmental factors when closed."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "ntenvirobag"
 	pressure_protection = 1
 	thermal_insulation = 1
@@ -177,7 +177,7 @@
 /obj/structure/closet/body_bag/environmental/prisoner
 	name = "prisoner transport bag"
 	desc = "Intended for transport of prisoners through hazardous environments, this environmental protection bag comes with straps to keep an occupant secure."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/body_bag/environmental/prisoner/
 	breakout_time = 3000 // Five minutes, because it's probably about as hard to get out of this as it is to get out of a straightjacket.
@@ -199,7 +199,7 @@
 		return FALSE
 	. = ..()
 
-/obj/structure/closet/body_bag/environmental/prisoner/proc/open(mob/living/user, force = FALSE)
+/obj/structure/closet/body_bag/environmental/prisoner/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
 		return
 	if(opened)
@@ -245,7 +245,7 @@
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
 
-/obj/structure/closet/body_bag/environmental/prisoner/proc/bust_open()
+/obj/structure/closet/body_bag/environmental/prisoner/bust_open()
 	SIGNAL_HANDLER
 	sinched = FALSE
 	// We don't break the bag, because the buckles were backed out as opposed to fully broken.
@@ -258,12 +258,12 @@
 		togglelock(user)
 	return TRUE
 
-/obj/structure/closet/body_bag/environmental/prisoner/proc/togglelock(mob/living/user, silent)
+/obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
 	if(iscarbon(user))
 		add_fingerprint(user)
 	if(!sinched)
-		for(mob/living/target in src.contents)
-			target.visible_message(span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
+		for(var/mob/living/target in src.contents)
+			to_chat(target, span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
 		user.visible_message(span_notice("You begin sinching down the buckles on [src]."))
 		if(!(do_after(user,(sinch_time),target = src)))
 			return
@@ -277,14 +277,14 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured during transport."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag"
 	pressure_protection = 1
 	thermal_insulation = 1
 	foldedbag_path = /obj/item/body_bag/environmental/prisoner/syndicate
 	weather_protection = list("all")
 	breakout_time = 4800
-	var/sinch_time = 300
+	sinch_time = 300
 	var/obj/item/tank/internals/anesthetic/tank // todo: make this transfer over to the held item, currently the tank is bottomless by folding and unfolding the bag.
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
@@ -306,5 +306,5 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/togglelock(mob/living/user, silent)
 	. = ..()
 	if(sinched)
-		for(mob/living/target in src.contents)
-			target.visible_message(span_warning("You hear a faint hiss, and a white mist fills your vision...")
+		for(var/mob/living/target in src.contents)
+			to_chat(target, span_warning("You hear a faint hiss, and a white mist fills your vision..."))

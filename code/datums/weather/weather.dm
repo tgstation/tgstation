@@ -187,7 +187,8 @@
 		if(!(L.loc.z in impacted_z_levels))
 			return
 		if(istype(L.loc,/obj/structure/closet/))
-			if((immunity_type in L.loc.weather_protection) || ("all" in L.loc.weather_protection))
+			/var/obj/structure/closet/current_locker = L.loc
+			if((immunity_type in current_locker.weather_protection) || ("all" in current_locker.weather_protection))
 				return
 	if((immunity_type in L.weather_immunities) || ("all" in L.weather_immunities))
 		return

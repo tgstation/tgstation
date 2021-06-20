@@ -93,31 +93,31 @@
 /obj/item/bodybag/environmental
 	name = "environmental protection bag"
 	desc = "A folded, reinforced bag designed to protect against exoplanetary environmental storms."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "envirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental
 	w_class = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag, so it has a higher bulkiness than regular bodybag
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF
 
 /obj/item/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
 	desc = "Used for VIP extraction from hazardous environments and as shelter by elite Nanotrasen operatives, this folded, highly reinforced bag is nearly completely isolated from environmental factors when closed."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "ntenvirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/nanotrasen/
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/nanotrasen
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
 
 /obj/item/body_bag/environmental/prisoner
 	name = "prisoner transport bag"
 	desc = "Intended for transport of prisoners through hazardous environments, this folded environmental protection bag comes with straps to keep an occupant secure."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "prisonerenvirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner
 
 /obj/item/body_bag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured until they are transported to a required location."
-	icon = "icons/obj/bodybag.dmi"
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
