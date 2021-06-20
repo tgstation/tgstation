@@ -148,13 +148,14 @@
 	)
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
-/datum/component/butchering/recycler/proc/on_entered(datum/source, mob/living/L)
+/datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
-	if(!istype(L))
+	if(!isliving(arrived))
 		return
+	var/mob/living/victim = arrived
 	var/obj/machinery/recycler/eater = parent
 	if(eater.safety_mode || (eater.machine_stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
-	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		Butcher(parent, L)
+	if(victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
+		Butcher(parent, victim)

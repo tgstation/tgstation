@@ -173,9 +173,9 @@ GLOBAL_LIST_EMPTY(lifts)
 		lift_master_datum = new(src)
 
 
-/obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/potential_rider)
+/obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
-	RemoveItemFromLift(potential_rider)
+	RemoveItemFromLift(gone)
 
 /obj/structure/industrial_lift/proc/RemoveItemFromLift(atom/movable/potential_rider)
 	SIGNAL_HANDLER

@@ -26,10 +26,10 @@
 	swarm_members = null
 	return ..()
 
-/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
+/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
-	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
+	var/datum/component/swarming/other_swarm = arrived.GetComponent(/datum/component/swarming)
 	if(!other_swarm)
 		return
 	swarm()
@@ -37,10 +37,10 @@
 	other_swarm.swarm()
 	other_swarm.swarm_members |= src
 
-/datum/component/swarming/proc/leave_swarm(datum/source, atom/movable/AM)
+/datum/component/swarming/proc/leave_swarm(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
+	var/datum/component/swarming/other_swarm = gone.GetComponent(/datum/component/swarming)
 	if(!other_swarm || !(other_swarm in swarm_members))
 		return
 	swarm_members -= other_swarm
