@@ -310,8 +310,8 @@
 		data["subjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
 		data["isMonkey"] = ismonkey(scanner_occupant)
-		data["subjectUNI"] = scanner_occupant.dna.uni_identity
-		data["subjectUF"] = scanner_occupant.dna.uni_features
+		data["subjectUNI"] = scanner_occupant.dna.unique_identity
+		data["subjectUF"] = scanner_occupant.dna.unique_features
 		data["storage"]["occupant"] = tgui_occupant_mutations
 		//data["subjectMutations"] = tgui_occupant_mutations
 	else
@@ -1166,9 +1166,9 @@
 			// Set the new information
 			genetic_makeup_buffer[buffer_index] = list(
 				"label"="Slot [buffer_index]:[scanner_occupant.real_name]",
-				"UI"=scanner_occupant.dna.uni_identity,
+				"UI"=scanner_occupant.dna.unique_identity,
 				"UE"=scanner_occupant.dna.unique_enzymes,
-				"UF"=scanner_occupant.dna.uni_features,
+				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
 				"blood_type"=scanner_occupant.dna.blood_type)
 
@@ -1390,9 +1390,9 @@
 			var/len
 			switch(type)
 				if("ui")
-					len = length_char(scanner_occupant.dna.uni_identity)
+					len = length_char(scanner_occupant.dna.unique_identity)
 				if("uf")
-					len = length_char(scanner_occupant.dna.uni_features)
+					len = length_char(scanner_occupant.dna.unique_features)
 			rad_pulse_timer = world.time + (radduration*10)
 			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
@@ -1618,7 +1618,7 @@
 				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
-			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
+			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
 			scanner_occupant.radiation += rad_increase
 			scanner_occupant.domutcheck()
@@ -1631,7 +1631,7 @@
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
-			scanner_occupant.dna.uni_features = buffer_slot["UF"]
+			scanner_occupant.dna.unique_features = buffer_slot["UF"]
 			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 			scanner_occupant.radiation += rad_increase
 			scanner_occupant.domutcheck()
@@ -1659,8 +1659,8 @@
 				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
-			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
-			scanner_occupant.dna.uni_features = buffer_slot["UF"]
+			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
+			scanner_occupant.dna.unique_features = buffer_slot["UF"]
 			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
@@ -2156,26 +2156,26 @@
 	var/len
 	switch(rad_pulse_type)
 		if("ui")
-			len = length_char(scanner_occupant.dna.uni_identity)
+			len = length_char(scanner_occupant.dna.unique_identity)
 		if("uf")
-			len = length_char(scanner_occupant.dna.uni_features)
+			len = length_char(scanner_occupant.dna.unique_features)
 
 	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2  //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 
 	var/hex
 	switch(rad_pulse_type)
 		if("ui")
-			hex = copytext_char(scanner_occupant.dna.uni_identity, num, num+1)
+			hex = copytext_char(scanner_occupant.dna.unique_identity, num, num+1)
 		if("uf")
-			hex = copytext_char(scanner_occupant.dna.uni_features, num, num+1)
+			hex = copytext_char(scanner_occupant.dna.unique_features, num, num+1)
 
 	hex = scramble(hex, radstrength, radduration)
 
 	switch(rad_pulse_type)
 		if("ui")
-			scanner_occupant.dna.uni_identity = copytext_char(scanner_occupant.dna.uni_identity, 1, num) + hex + copytext_char(scanner_occupant.dna.uni_identity, num + 1)
+			scanner_occupant.dna.unique_identity = copytext_char(scanner_occupant.dna.unique_identity, 1, num) + hex + copytext_char(scanner_occupant.dna.unique_identity, num + 1)
 		if("uf")
-			scanner_occupant.dna.uni_features = copytext_char(scanner_occupant.dna.uni_features, 1, num) + hex + copytext_char(scanner_occupant.dna.uni_features, num + 1)
+			scanner_occupant.dna.unique_features = copytext_char(scanner_occupant.dna.unique_features, 1, num) + hex + copytext_char(scanner_occupant.dna.unique_features, num + 1)
 	scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 
 	rad_pulse_index = 0
