@@ -700,7 +700,7 @@
 			if(prob(probability))
 				M.dna.unique_identity = setblock(M.dna.unique_identity, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	if(uf)
-		for(var/i=1, i<=DNA_FEATURE_BLOCKS, i++)
+		for(var/i in 1 to DNA_FEATURE_BLOCKS)
 			if(prob(probability))
 				M.dna.unique_features = setblock(M.dna.unique_features, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	if(ui || uf)
