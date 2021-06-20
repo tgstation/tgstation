@@ -220,8 +220,10 @@
 	return .
 
 /datum/dna/proc/update_ui_block(blocknumber)
-	if(!blocknumber || !ishuman(holder))
-		return
+	if(!blocknumber)
+		CRASH("UI block index is null")
+	if(!ishuman(holder))
+		CRASH("Non-human mobs shouldn't have DNA")
 	var/mob/living/carbon/human/H = holder
 	switch(blocknumber)
 		if(DNA_HAIR_COLOR_BLOCK)
@@ -246,8 +248,10 @@
 			setblock(unique_identity, blocknumber, construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len))
 
 /datum/dna/proc/update_uf_block(blocknumber)
-	if(!blocknumber || !ishuman(holder))
-		return
+	if(!blocknumber)
+		CRASH("UF block index is null")
+	if(!ishuman(holder))
+		CRASH("Non-human mobs shouldn't have DNA")
 	switch(blocknumber)
 		if(DNA_MCOLOR_BLOCK)
 			setblock(unique_features, blocknumber, sanitize_hexcolor(features["mcolor"]))
