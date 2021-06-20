@@ -541,12 +541,11 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Add the ID of the role you want assigning here
 #DISCORD_ROLEID 000000000000000000
 
-## Uncomment to disable hard deleting garbage collection failures. (Hard deleting GC failures causes lag in order to bring memory usage down and keep bugged objects from hanging around and causing bugs in other things.) You can safely enable this for preformance on production if the lag spikes are too disruptive)
+## Uncomment to disable hard deleting garbage collection failures. (Hard deleting GC failures causes lag in order to bring memory usage down and keep bugged objects from hanging around and causing bugs in other things.) You can safely enable this for performance on production if the lag spikes are too disruptive)
 #DISABLE_GC_FAILURE_HARD_DELETES
 
-## Uncommand to disable hard deletes entirely, even things that explicitly request. This is not recommended unless you have a need for it during events or other high pop times where preformance is key.
+## Uncomment to disable hard deletes entirely, even things that explicitly request. This is not recommended unless you have a need for it during events or other high pop times where performance is key.
 #DISABLE_ALL_HARD_DELETES
-
 
 
 
