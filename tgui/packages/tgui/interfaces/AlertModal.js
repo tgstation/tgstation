@@ -18,12 +18,12 @@ import {
 } from 'common/keycodes';
 
 export class AlertModal extends Component {
-  constructor(autofocus = false) {
+  constructor() {
     super();
 
     this.buttonRefs = [createRef()];
     this.state = { current: 0 };
-    this.autofocus = autofocus;
+    this.autofocus = false; // stops the autofocusing from functioning
   }
 
   componentDidMount() {
