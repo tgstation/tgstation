@@ -16,8 +16,10 @@
 	var/max_fields = 3
 	var/list/current_fields
 	var/field_distance_limit = 7
-	var/creation_time = 10
-	var/forceproj_busy = FALSE
+	/// Time it takes to materialize a forcefield.
+	var/creation_time = 1 SECONDS
+	/// Checks to make sure the projector isn't busy with making another forcefield.
+	var/force_proj_busy = FALSE
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -44,15 +46,15 @@
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, span_warning("[src] cannot sustain any more forcefields!"))
 		return
-	if(forceproj_busy)
+	if(force_proj_busy)
 		to_chat(user, span_notice("[src] is busy creating a forcefield."))	
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
-		forceproj_busy = TRUE
+		force_proj_busy = TRUE
 		if(!do_after(user, creation_time, target = target))
-			forceproj_busy = FALSE
+			force_proj_busy = FALSE
 			return
-		forceproj_busy = FALSE
+		force_proj_busy = FALSE
 	
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
