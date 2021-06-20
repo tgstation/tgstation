@@ -49,6 +49,7 @@
 #define WEATHER_LAVA "lava"
 #define WEATHER_RAD "rad"
 #define WEATHER_SNOW "snow"
+#define WEATHER_VOID "void"
 #define WEATHER_ALL "all"
 
 //bitflag damage defines used for suicide_act
