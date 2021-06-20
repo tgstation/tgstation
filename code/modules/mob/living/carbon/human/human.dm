@@ -943,9 +943,9 @@
 
 	if(target.loc != loc)
 		var/old_density = density
-		density = FALSE
+		density = FALSE // Hacky and doesn't use set_density()
 		step_towards(target, loc)
-		density = old_density
+		density = old_density // Avoid changing density directly in normal circumstances, without the setter.
 
 	if(target.loc == loc)
 		return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)

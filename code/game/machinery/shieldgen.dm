@@ -99,7 +99,7 @@
 *The barrier itself is not intended to interact with the conceal runes cult spell for balance purposes.
 */
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
-	density = !density
+	set_density(!density)
 	air_update_turf(TRUE, !density)
 	invisibility = initial(invisibility)
 	if(!density)

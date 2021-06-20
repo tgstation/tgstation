@@ -567,7 +567,7 @@
 
 /datum/action/innate/use_extract/Activate()
 	var/mob/living/carbon/human/H = owner
-	var/datum/species/jelly/luminescent/species = owner
+	var/datum/species/jelly/luminescent/species = H.dna.species
 	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
 		return
 	CHECK_DNA_AND_SPECIES(H)
