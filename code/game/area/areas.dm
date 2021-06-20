@@ -240,33 +240,33 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
  */
 /area/proc/poweralert(state, obj/source)
-	if (area_flags & NO_ALERTS || state == poweralm)
+	if (area_flags & NO_ALERTS || state == poweralm || !istype(source))
 		return
 
 	poweralm = state
-	if(istype(source)) //Only report power alarms on the z-level where the source is located.
-		for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
-			if (!state)
-				aiPlayer.cancelAlarm("Power", src, source)
-			else
-				aiPlayer.triggerAlarm("Power", src, cameras, source)
+	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+		if (!state)
+			aiPlayer.cancelAlarm("Power", src, source)
+		else
+			aiPlayer.triggerAlarm("Power", src, cameras, source)
 
-		for (var/obj/machinery/computer/station_alert/alert_computer as anything in GLOB.alert_consoles)
-			if(!state)
-				alert_computer.cancelAlarm("Power", src, source)
-			else
-				alert_computer.triggerAlarm("Power", src, cameras, source)
+	for (var/obj/machinery/computer/station_alert/alert_computer as anything in GLOB.alert_consoles)
+		if(!state)
+			alert_computer.cancelAlarm("Power", src, source)
+		else
+			alert_computer.triggerAlarm("Power", src, cameras, source)
 
-		for (var/mob/living/simple_animal/drone/drone as anything in GLOB.drones_list)
-			if(!state)
-				drone.cancelAlarm("Power", src, source)
-			else
-				drone.triggerAlarm("Power", src, cameras, source)
-		for(var/datum/computer_file/program/alarm_monitor/alarm_monitor as anything in GLOB.alarmdisplay)
-			if(!state)
-				alarm_monitor.cancelAlarm("Power", src, source)
-			else
-				alarm_monitor.triggerAlarm("Power", src, cameras, source)
+	for (var/mob/living/simple_animal/drone/drone as anything in GLOB.drones_list)
+		if(!state)
+			drone.cancelAlarm("Power", src, source)
+		else
+			drone.triggerAlarm("Power", src, cameras, source)
+
+	for(var/datum/computer_file/program/alarm_monitor/alarm_monitor as anything in GLOB.alarmdisplay)
+		if(!state)
+			alarm_monitor.cancelAlarm("Power", src, source)
+		else
+			alarm_monitor.triggerAlarm("Power", src, cameras, source)
 
 /**
  * Generate an atmospheric alert for this area
@@ -548,7 +548,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
  */
 /area/proc/power_change()
-	for(var/obj/machinery/M in src) // for each machine in the area
+	for(var/obj/machinery/M in src) //TODOKYLER: make this a signal instead, machines register and deregister to their area in entered and exited
 		M.power_change() // reverify power status (to update icons etc.)
 	SEND_SIGNAL(src, COMSIG_AREA_POWER_CHANGE)
 	update_appearance()
@@ -568,9 +568,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			power_usage[powerchannel] += value
 
 /**
- * Clear all power usage in area
+ * Clear all non-static power usage in area
  *
- * Clears all power used for equipment, light and environment channels
+ * Clears all power used for the dynamic equipment, light and environment channels
  */
 /area/proc/clear_usage()
 	power_usage[AREA_USAGE_EQUIP] = 0
