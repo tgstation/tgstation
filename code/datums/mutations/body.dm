@@ -40,9 +40,9 @@
 			if(1)
 				new_mob = owner.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
 			if(2)
-				new_mob = owner.randmuti()
+				new_mob = owner.random_mutate_unique_identity()
 			if(3)
-				new_mob = owner.randmutf()
+				new_mob = owner.random_mutate_unique_features()
 	else
 		new_mob = owner.easy_randmut(POSITIVE)
 	if(new_mob && ismob(new_mob))

@@ -662,7 +662,7 @@
 					HM.mutadone_proof = TRUE
 		return TRUE
 
-/mob/living/carbon/proc/randmuti()
+/mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
 		return
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
@@ -670,7 +670,7 @@
 	dna.unique_identity = newdna
 	updateappearance(mutations_overlay_update=1)
 
-/mob/living/carbon/proc/randmutf()
+/mob/living/carbon/proc/random_mutate_unique_features()
 	if(!has_dna())
 		return
 	var/num = rand(1, DNA_FEATURE_BLOCKS)

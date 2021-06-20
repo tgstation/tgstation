@@ -21,8 +21,8 @@
 						C.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
 					else
 						C.easy_randmut(POSITIVE)
-					C.randmuti()
-					C.randmutf()
+					C.random_mutate_unique_identity()
+					C.random_mutate_unique_features()
 					C.domutcheck()
 			else
 				L.adjustFireLoss(rand(5, 15))

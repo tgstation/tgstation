@@ -35,8 +35,8 @@
 			var/mob/living/carbon/human/H = L
 			if(H.dna && !HAS_TRAIT(H, TRAIT_GENELESS))
 				if(prob(max(0,100-resist)))
-					H.randmuti()
-					H.randmutf()
+					H.random_mutate_unique_identity()
+					H.random_mutate_unique_features()
 					if(prob(50))
 						if(prob(90))
 							H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
