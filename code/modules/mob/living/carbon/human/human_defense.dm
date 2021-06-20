@@ -435,10 +435,24 @@
 
 	//attempt to dismember bodyparts
 	if(severity >= EXPLODE_HEAVY || !bomb_armor)
-		var/max_limb_loss = round(HUMAN_EXP_MAX_DELIMB*severity, 1) //so you don't lose four limbs at severity 3.
+		var/max_limb_loss = 0
+		var/probability = 0
+		switch(severity)
+			if(EXPLODE_NONE to EXPLODE_LIGHT)
+				max_limb_loss = 1
+				probability = 20
+			if(EXPLODE_LIGHT to EXPLODE_HEAVY)
+				max_limb_loss = 2
+				probability = 30
+			if(EXPLODE_HEAVY to EXPLODE_DEVASTATE)
+				max_limb_loss = 3
+				probability = 40
+			if(EXPLODE_DEVASTATE to INFINITY)
+				max_limb_loss = 4
+				probability = 50
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(HUMAN_EXP_DELIMB_CHANCE*severity) && !prob(getarmor(BP, BOMB)) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
+			if(prob(probability) && !prob(getarmor(BP, BOMB)) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
