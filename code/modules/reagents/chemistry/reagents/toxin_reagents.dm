@@ -53,9 +53,9 @@
 		exposed_mob.random_mutate_unique_identity()
 		exposed_mob.random_mutate_unique_features()
 		if(prob(98))
-			exposed_mob.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			exposed_mob.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
 		else
-			exposed_mob.easy_randmut(POSITIVE)
+			exposed_mob.easy_random_mutate(POSITIVE)
 		exposed_mob.updateappearance()
 		exposed_mob.domutcheck()
 

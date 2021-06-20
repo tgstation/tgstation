@@ -629,15 +629,15 @@
 		return TRUE
 
 
-/mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
+/mob/living/carbon/proc/random_mutate(list/candidates, difficulty = 2)
 	if(!has_dna())
-		return
+		CRASH("[src] does not have DNA")
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation)
 
-/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE, resilient = NONE)
+/mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE, resilient = NONE)
 	if(!has_dna())
-		return
+		CRASH("[src] does not have DNA")
 	var/list/mutations = list()
 	if(quality & POSITIVE)
 		mutations += GLOB.good_mutations
@@ -664,7 +664,7 @@
 
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
-		return
+		CRASH("[src] does not have DNA")
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
 	var/newdna = setblock(dna.unique_identity, num, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	dna.unique_identity = newdna
@@ -672,7 +672,7 @@
 
 /mob/living/carbon/proc/random_mutate_unique_features()
 	if(!has_dna())
-		return
+		CRASH("[src] does not have DNA")
 	var/num = rand(1, DNA_FEATURE_BLOCKS)
 	var/newdna = setblock(dna.unique_features, num, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	dna.unique_features = newdna
@@ -680,16 +680,16 @@
 
 /mob/living/carbon/proc/clean_dna()
 	if(!has_dna())
-		return
+		CRASH("[src] does not have DNA")
 	dna.remove_all_mutations()
 
-/mob/living/carbon/proc/clean_randmut(list/candidates, difficulty = 2)
+/mob/living/carbon/proc/clean_random_mutate(list/candidates, difficulty = 2)
 	clean_dna()
-	randmut(candidates, difficulty)
+	random_mutate(candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, uf=FALSE, probability)
 	if(!M.has_dna())
-		return FALSE
+		CRASH("[src] does not have DNA")
 	if(se)
 		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))
@@ -705,7 +705,6 @@
 				M.dna.unique_features = setblock(M.dna.unique_features, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	if(ui || uf)
 		M.updateappearance(mutcolor_update=uf, mutations_overlay_update=1)
-	return TRUE
 
 //value in range 1 to values. values must be greater than 0
 //all arguments assumed to be positive integers

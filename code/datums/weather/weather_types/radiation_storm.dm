@@ -39,9 +39,9 @@
 					H.random_mutate_unique_features()
 					if(prob(50))
 						if(prob(90))
-							H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+							H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
 						else
-							H.easy_randmut(POSITIVE)
+							H.easy_random_mutate(POSITIVE)
 						H.domutcheck()
 		L.rad_act(20)
 

@@ -38,13 +38,13 @@
 	if(prob(95))
 		switch(rand(1,3))
 			if(1)
-				new_mob = owner.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
+				new_mob = owner.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 			if(2)
 				new_mob = owner.random_mutate_unique_identity()
 			if(3)
 				new_mob = owner.random_mutate_unique_features()
 	else
-		new_mob = owner.easy_randmut(POSITIVE)
+		new_mob = owner.easy_random_mutate(POSITIVE)
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner

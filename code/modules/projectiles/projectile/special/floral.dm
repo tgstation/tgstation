@@ -18,9 +18,9 @@
 				if(iscarbon(L) && L.has_dna())
 					var/mob/living/carbon/C = L
 					if(prob(80))
-						C.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
+						C.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 					else
-						C.easy_randmut(POSITIVE)
+						C.easy_random_mutate(POSITIVE)
 					C.random_mutate_unique_identity()
 					C.random_mutate_unique_features()
 					C.domutcheck()
