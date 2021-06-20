@@ -249,7 +249,7 @@
 
 /obj/item/rubber_chicken
 	name = "rubber chicken"
-	desc = " A robust rubber chicken the size of a Louisiana broiler.\nIt looks somewhat clammy and exudes a noticable rubbery smell.\nA small peeling sticker on the chicken's left thigh reads: 'made by waffle co.'"
+	desc = "A robust rubber chicken the size of a Louisiana broiler."
 	icon = 'icons/obj/clown_items.dmi'
 	icon_state = "rubber_chicken"
 	force_string = "hilarious"
@@ -258,6 +258,10 @@
 	hitsound = 'sound/weapons/genhit1.ogg'  //could use a funnier
 	attack_verb_continuous = list("slaps", "smacks", "gahonks")
 	attack_verb_simple = list("slap", "smack", "gahonk")
+
+/obj/item/rubber_chicken/examine(mob/user)
+	. = ..()
+	. += span_notice("It looks somewhat clammy and exudes a noticable rubbery smell.\nA small peeling sticker on the chicken's left thigh reads: 'made by Waffle Co.'")
 
 /obj/item/rubber_chicken/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -268,7 +272,7 @@
 
 /obj/item/rubber_chicken/attack_secondary(mob/living/victim, mob/living/user, params)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(M, span_warning("You don't want to hurt anyone!"))
+		to_chat(user, span_warning("You don't want to hurt anyone!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
@@ -288,6 +292,6 @@
 	victim.apply_damage(7 * slap_power, STAMINA, BODY_ZONE_HEAD)
 	var/slap_duration = slap_power * 2 SECONDS
 	victim.apply_status_effect(STATUS_EFFECT_SLAPPED_SILLY, slap_duration)
-	victim.remove_status_effect(STATUS_EFFECT_PRANKED)d
-	user.visible_message("<span class='danger'>[user] knocks [victim] silly with [src]!</span>")
+	victim.remove_status_effect(STATUS_EFFECT_PRANKED)
+	user.visible_message(span_danger("[user] knocks [victim] silly with [src]!"))
 	return SECONDARY_ATTACK_CONTINUE_CHAIN

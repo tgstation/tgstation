@@ -987,7 +987,7 @@
 	///This sound is played for the duration of the effect.
 	var/datum/looping_sound/dizzy_birdies/bird_noise
 	///This overlay is applied to the owner for the duration of the effect.
-	var/mutable_appearance/mob_overlay
+	var/static/mob_overlay
 
 /datum/status_effect/slapped_silly/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -1000,22 +1000,23 @@
 		return FALSE
 	var/mob/living/living_owner = owner
 
-	mob_overlay = mutable_appearance('icons/effects/32x64.dmi', "dizzy_birdies", ABOVE_MOB_LAYER)
+	if(isnull(mob_overlay))
+		mob_overlay = icon2appearance('icons/effects/32x64.dmi', "dizzy_birdies")
 	owner.overlays += mob_overlay
 	owner.update_appearance()
 
 	living_owner.add_confusion(25)
-	ADD_TRAIT(living_owner,TRAIT_CLUMSY, id)
+	ADD_TRAIT(living_owner, TRAIT_CLUMSY, id)
 	bird_noise = new(list(living_owner), TRUE)
 
 /datum/status_effect/slapped_silly/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	if(owner)
-		var/mob/living/living_owner = owner
-		living_owner.set_confusion(0) //Yes, a light slap might actually help treat confusion.
-		REMOVE_TRAIT(living_owner,TRAIT_CLUMSY, id)
-		QDEL_NULL(bird_noise)
-		owner.overlays -= mob_overlay
-		owner.update_appearance()
+
+	var/mob/living/living_owner = owner
+	living_owner.set_confusion(0) //Yes, a light slap might actually help treat confusion.
+	REMOVE_TRAIT(living_owner, TRAIT_CLUMSY, id)
+	QDEL_NULL(bird_noise)
+	owner.overlays -= mob_overlay
+	owner.update_appearance()
