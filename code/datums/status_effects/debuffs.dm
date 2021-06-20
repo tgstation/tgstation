@@ -980,6 +980,7 @@
 /datum/status_effect/pranked/refresh()
 	. = ..()
 	prank_counter++
+
 /datum/status_effect/slapped_silly
 	id = "smacked_silly"
 	duration = 10 SECONDS

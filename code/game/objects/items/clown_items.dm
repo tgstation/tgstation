@@ -268,7 +268,7 @@
 
 /obj/item/rubber_chicken/attack_secondary(mob/living/victim, mob/living/user, params)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You are a pacifist.</span>")
+		to_chat(M, span_warning("You don't want to hurt anyone!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
@@ -286,7 +286,8 @@
 	playsound(user, 'sound/weapons/punch1.ogg', min(slap_power * 10, 80))
 	user.do_attack_animation(src)
 	victim.apply_damage(7 * slap_power, STAMINA, BODY_ZONE_HEAD)
-	victim.apply_status_effect(STATUS_EFFECT_SLAPPED_SILLY, slap_power SECONDS)
-	victim.remove_status_effect(STATUS_EFFECT_PRANKED)
+	var/slap_duration = slap_power * 2 SECONDS
+	victim.apply_status_effect(STATUS_EFFECT_SLAPPED_SILLY, slap_duration)
+	victim.remove_status_effect(STATUS_EFFECT_PRANKED)d
 	user.visible_message("<span class='danger'>[user] knocks [victim] silly with [src]!</span>")
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
