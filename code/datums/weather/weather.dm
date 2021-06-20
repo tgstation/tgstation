@@ -63,7 +63,7 @@
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs to prevent them from being affected by the weather
-	var/immunity_type = "storm"
+	var/immunity_type = WEATHER_STORM
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -188,9 +188,9 @@
 			return
 		if(istype(L.loc, /obj/structure/closet))
 			var/obj/structure/closet/current_locker = L.loc
-			if((immunity_type in current_locker.weather_protection) || ("all" in current_locker.weather_protection))
+			if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
 				return
-	if((immunity_type in L.weather_immunities) || ("all" in L.weather_immunities))
+	if((immunity_type in L.weather_immunities) || (WEATHER_ALL in L.weather_immunities))
 		return
 	if(!(get_area(L) in impacted_areas))
 		return

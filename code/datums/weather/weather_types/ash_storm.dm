@@ -20,7 +20,7 @@
 	protect_indoors = TRUE
 	target_trait = ZTRAIT_ASHSTORM
 
-	immunity_type = "ash"
+	immunity_type = WEATHER_ASH
 
 	probability = 90
 
@@ -86,7 +86,7 @@
 				return TRUE
 		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
 			var/mob/living/the_mob = L
-			if("ash" in the_mob.weather_immunities)
+			if(WEATHER_ASH in the_mob.weather_immunities)
 				return TRUE
 		L = L.loc //Check parent items immunities (recurses up to the turf)
 	return FALSE //RIP you

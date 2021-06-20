@@ -160,7 +160,7 @@
 	pressure_protection = 0.8
 	thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental/
-	weather_protection = list("acid", "ash", "rad", "snow", "void") // Does not protect against lava or the The Floor Is Lava spell.
+	weather_protection = list(WEATHER_ACID, WEATHER_ASH, WEATHER_RAD, WEATHER_SNOW, WEATHER_VOID) // Does not protect against lava or the The Floor Is Lava spell.
 
 /obj/structure/closet/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
@@ -170,7 +170,7 @@
 	pressure_protection = 1
 	thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen/
-	weather_protection = list("all")
+	weather_protection = list(WEATHER_ALL)
 
 /// Securable enviro. bags
 
@@ -282,7 +282,7 @@
 	pressure_protection = 1
 	thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
-	weather_protection = list("all")
+	weather_protection = list(WEATHER_ALL)
 	breakout_time = 4800
 	sinch_time = 300
 	var/obj/item/tank/internals/anesthetic/tank // todo: make this transfer over to the held item, currently the tank is bottomless by folding and unfolding the bag.
