@@ -29,7 +29,7 @@
 
 	uses -= 1
 	if(!uses)
-		visible_message("<span class='warning'>[src] vanishes, its magic completely consumed from the fortification.</span>")
+		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
 
 /obj/item/upgradescroll/unlimited

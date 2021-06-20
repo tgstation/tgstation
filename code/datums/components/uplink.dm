@@ -95,7 +95,7 @@
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
-		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
+		to_chat(user, span_notice("You slot [TC] into [parent] and charge its internal uplink."))
 	var/amt = TC.amount
 	telecrystals += amt
 	TC.use(amt)
@@ -118,7 +118,7 @@
 				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
 				if(purchase_log)
 					purchase_log.total_spent -= cost
-				to_chat(user, "<span class='notice'>[I] refunded.</span>")
+				to_chat(user, span_notice("[I] refunded."))
 				qdel(I)
 				return
 
@@ -280,7 +280,7 @@
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
+	to_chat(user, span_hear("The PDA softly beeps."))
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE
@@ -320,7 +320,7 @@
 		previous_attempts.Cut()
 		master.degrees = 0
 		interact(null, user)
-		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+		to_chat(user, span_warning("Your pen makes a clicking noise, before quickly rotating back to 0 degrees!"))
 
 	else if(compare_list(previous_attempts, failsafe_code))
 		failsafe(user)

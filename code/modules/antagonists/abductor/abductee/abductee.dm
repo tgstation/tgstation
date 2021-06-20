@@ -16,8 +16,8 @@
 	. = ..()
 
 /datum/antagonist/abductee/greet()
-	to_chat(owner, "<span class='warning'><b>Your mind snaps!</b></span>")
-	to_chat(owner, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
+	to_chat(owner, span_warning("<b>Your mind snaps!</b>"))
+	to_chat(owner, "<big>[span_warning("<b>You can't remember how you got here...</b>")]</big>")
 	owner.announce_objectives()
 
 /datum/antagonist/abductee/proc/give_objective()

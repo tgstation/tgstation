@@ -108,7 +108,7 @@
 	if(!QDELETED(src) && !take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)) //Bullet on_hit effect might have already destroyed this object
 		no_damage = TRUE
 	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message("<span class='danger'>[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE)
 
 ///Called to get the damage that hulks will deal to the obj.
 /obj/proc/hulk_damage()
@@ -116,7 +116,7 @@
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>", "<span class='danger'>You smash [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
 	if(density)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else

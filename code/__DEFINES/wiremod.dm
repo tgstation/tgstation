@@ -92,11 +92,17 @@
 /// Whether the shell needs to be anchored for the circuit to be on.
 #define SHELL_FLAG_REQUIRE_ANCHOR (1<<1)
 
+/// Whether or not the shell has a USB port.
+#define SHELL_FLAG_USB_PORT (1<<2)
+
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10
 #define SHELL_CAPACITY_MEDIUM 25
 #define SHELL_CAPACITY_LARGE 50
 #define SHELL_CAPACITY_VERY_LARGE 500
+
+/// The maximum range a USB cable can be apart from a source
+#define USB_CABLE_MAX_RANGE 2
 
 // Circuit flags
 /// Creates an input trigger that means the component won't be triggered unless the trigger is pulsed.
