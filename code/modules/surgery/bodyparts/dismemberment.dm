@@ -323,7 +323,7 @@
 		return FALSE
 	. = TRUE
 	moveToNullspace()
-	owner = new_limb_owner
+	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 	if(held_index)
 		if(held_index > new_limb_owner.hand_bodyparts.len)
