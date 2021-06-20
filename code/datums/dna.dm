@@ -676,7 +676,7 @@
 	var/num = rand(1, DNA_FEATURE_BLOCKS)
 	var/newdna = setblock(dna.unique_features, num, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	dna.unique_features = newdna
-	updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+	updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 
 /mob/living/carbon/proc/clean_dna()
 	if(!has_dna())
@@ -700,7 +700,7 @@
 			if(prob(probability))
 				M.dna.unique_identity = setblock(M.dna.unique_identity, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	if(uf)
-		for(var/i=1, i<=DNA_FEATURE_BLOCKS, i++)
+		for(var/i in 1 to DNA_FEATURE_BLOCKS)
 			if(prob(probability))
 				M.dna.unique_features = setblock(M.dna.unique_features, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 	if(ui || uf)
