@@ -5,13 +5,14 @@ SUBSYSTEM_DEF(lag_switch)
 
 	/// If the lag switch measures should attempt to trigger automatically, TRUE if a config value exists
 	var/auto_switch = FALSE
-	/// Amount of connected clients above which the Lag Switch should engage, set via config or admin panel
+	/// Amount of connected clients at which the Lag Switch should engage, set via config or admin panel
 	var/trigger_pop = INFINITY - 1337
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
 	/// Timer ID for the automatic veto period
 	var/veto_timer_id
-
+	/// Cooldown between say verb uses when slowmode is enabled
+	var/slowmode_cooldown = 3 SECONDS
 
 /datum/controller/subsystem/lag_switch/Initialize(start_timeofday)
 	for(var/i = 1, i <= measures.len, i++)
@@ -50,6 +51,23 @@ SUBSYSTEM_DEF(lag_switch)
 	veto_timer_id = null
 	return TRUE
 
+/// Update the slowmode timer length and clear existing ones if reduced
+/datum/controller/subsystem/lag_switch/proc/change_slowmode_cooldown(length)
+	if(!length)
+		return FALSE
+	var/length_secs = length SECONDS
+	if(length_secs <= 0)
+		length_secs = 1 // one tick because cooldowns do not like 0
+
+	if(length_secs < slowmode_cooldown)
+		for(var/client/C as anything in GLOB.clients)
+			COOLDOWN_RESET(C, say_slowmode)
+
+	slowmode_cooldown = length_secs
+	if(measures[SLOWMODE_SAY])
+		to_chat(world, span_boldannounce("Slowmode timer has been changed to [length] seconds by an admin."))
+	return TRUE
+
 /// Handle the state change for individual measures
 /datum/controller/subsystem/lag_switch/proc/set_measure(measure_key, state)
 	if(isnull(measure_key) || isnull(state))
@@ -78,6 +96,13 @@ SUBSYSTEM_DEF(lag_switch)
 						continue
 					if(!ghost.client.holder && ghost.client.view_size.getView() != ghost.client.view_size.default)
 						ghost.client.view_size.resetToDefault()
+		if(SLOWMODE_SAY)
+			if(state)
+				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been enabled with [slowmode_cooldown/10] seconds between messages."))
+			else
+				for(var/client/C as anything in GLOB.clients)
+					COOLDOWN_RESET(C, say_slowmode)
+				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been disabled by an admin."))
 
 	measures[measure_key] = state
 	return TRUE
