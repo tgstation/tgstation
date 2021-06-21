@@ -171,3 +171,9 @@
 	desc = "Lights out, guerilla radio!"
 	database_id = MEDAL_TRAM_SURFER
 	icon = "tram_surfer"
+
+/datum/award/achievement/misc/wag_tailpop
+	name = "Wagpocalypse"
+	desc = "Holy hell it just came right off!"
+	database_id = MEDAL_WAG_TAILPOP
+	icon = "wag_tailpop"

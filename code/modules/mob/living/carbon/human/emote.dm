@@ -121,6 +121,17 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_wag_tail(H))
+		if(prob(0.1) && locate(/obj/item/organ/tail) in H.internal_organs)
+			for(var/obj/item/organ/tail/tail in H.internal_organs)
+				H.visible_message(
+					span_notice("[user]'s tail rips off in a bloody squelch!"),
+					span_warning("Your tail rips off with a bloody squelch!"),
+					span_notice("You hear a wet squelching sound")
+				)
+				H.spawn_gibs()
+				user.client?.give_award(/datum/award/achievement/misc/wag_tailpop, user)
+				tail.Remove(H)
+				tail.forceMove(H.drop_location())
 		return
 	if(!H.dna.species.is_wagging_tail())
 		H.dna.species.start_wagging_tail(H)
@@ -131,7 +142,7 @@
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	return H.dna && H.dna.species && H.dna.species.can_wag_tail(user)
+	return locate(/obj/item/organ/tail) in H.internal_organs
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()
