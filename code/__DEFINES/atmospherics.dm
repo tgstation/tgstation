@@ -27,6 +27,26 @@
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP 259.15
 
+/**
+ *I feel the need to document what happens here. Basically this is used
+ *catch rounding errors, and make gas go away in small portions.
+ *People have raised it to higher levels in the past, do not do this. Consider this number a soft limit
+ *If you're making gasmixtures that have unexpected behavior related to this value, you're doing something wrong.
+ *
+ *On an unrelated note this may cause a bug that creates negative gas, related to round(). When it has a second arg it will round up.
+ *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
+ *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
+ */
+/// The minimum heat capacity of a gas
+#define MINIMUM_HEAT_CAPACITY 0.0003
+/// Minimum mole count of a gas
+#define MINIMUM_MOLE_COUNT 0.01
+/// Molar accuracy to round to
+#define MOLAR_ACCURACY  1E-4
+/// Types of gases (based on gaslist_cache)
+#define GAS_TYPE_COUNT GLOB.gaslist_cache.len
+/// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
+#define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity

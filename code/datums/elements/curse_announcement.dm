@@ -53,7 +53,7 @@
 		cursed_item.name = replacetext(cursed_item.name, quality_suffix_text,"")
 
 	//modifications to the item so it looks cursed
-	to_chat(cursed, "<span class='userdanger'>[announcement_message]</span>")
+	to_chat(cursed, span_userdanger("[announcement_message]"))
 	cursed_item.add_filter("cursed_item", 9, list("type" = "outline", "color" = filter_color, "size" = 1))
 	cursed_item.name = "[cursed_item][new_name]"
 

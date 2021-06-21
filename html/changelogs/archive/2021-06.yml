@@ -337,3 +337,137 @@
   - qol: Most alt-click atmospheric interactions changed to use balloon alerts.
   zxaber:
   - sounddel: The space-jam ambient sound will no longer play inside the AI's core.
+2021-06-15:
+  Watermelon914:
+  - refactor: Refactors how spans are done in code.
+2021-06-16:
+  ArcaneDefence:
+  - expansion: Poutine can be made via the crafting menu in the misc foods category
+      again.
+  DuffCreeper:
+  - rscadd: Allows people to now examine fire alarms to detect their thermal sensor
+      state. Silicons can now also Ctrl+Click to enable and disable at the sensor
+      at a whim
+  - code_imp: Cleaned up single letter variables in firealarm.dm
+  JohnFulpWillard:
+  - bugfix: Flipping a gun will no longer unload all its bullets.
+  - balance: Bartenders now properly have a weapon's permit for their gun.
+  Mothblocks, ArcaneMusic for sprites:
+  - rscadd: Bot circuits can now use USB cables to connect to computers and machines
+      that support it. Currently, only the tram controls computer supports this, but
+      support should roll out for other systems.
+  - rscadd: Bot shells now have a button that you can register to.
+  TemporalOroboros:
+  - bugfix: Wigs work when on your head again.
+  Watermelon914:
+  - bugfix: Fixed the RAM component retaining its output type after the input port
+      is cleared.
+  tralezab:
+  - bugfix: carbon roses can no longer mutate into carbon roses
+2021-06-17:
+  Arkatos:
+  - qol: Swarmers now have a generic living healthdoll and pull icon.
+  - qol: Swarmers will now show severity of their injuries as a red screen overlay
+      to the user.
+  - qol: Swarmer's abilities now have tooltips to clarify their use upon mouse hover.
+  - bugfix: Smartfridges will now show an approximate number of their stored items
+      correctly on their sprite.
+  - bugfix: Smartfridges will now count maximum number of allowed items correctly.
+  - bugfix: Smartfridges will now show their UI only when directly interacted with.
+  EOBGames:
+  - rscadd: Metastation's medbay has received another revision. Stop by the next time
+      you get hurt, and marvel at the new design!
+  Maurukas:
+  - bugfix: Metastation has received the correct health HUDs for its new medbay
+  - bugfix: Camera coverage has been improved in Metastation's medbay
+  RandomGamer123:
+  - bugfix: Amanitin (destroying angel toxin) is now back to its original amount of
+      deadliness prior to human metabolisation changes.
+  Wayland-Smithy:
+  - bugfix: Fixed the tgui changelog dates sometimes being inaccurate to the source
+      files.
+  tralezab:
+  - expansion: dullahans are now considered undead
+2021-06-18:
+  RandomGamer123:
+  - bugfix: Power fist no longer occasionally and randomly says it does not have enough
+      gas when it has enough
+  - bugfix: Connects Delta's cryopod room to the station's power grid
+2021-06-19:
+  Maurukas:
+  - bugfix: Nitrile gloves have been restocked on Metastation.
+  - bugfix: Disconnected scrubber pipe on Metastation
+  - bugfix: Batteries are now included with defibrillators on Metastation
+  - bugfix: Broken power cable on metastation
+  - qol: KiloStation's fire safety budget has been reduced, resulting in the removal
+      of some redundant firelocks
+  - bugfix: Restores drug vendor to Kilostation Medbay
+  - bugfix: Restores Crew Health Monitor to to the Kilostation medbay
+  - bugfix: Additional scrubbers/vents to some areas on Kilo that had inadequate coverage
+  - qol: Declutter pass of Kilo medbay, holodeck area
+  - bugfix: Some cameras in Kilostation now have better names
+  - bugfix: Misc. piping and wiring issues on Kilostation have been repaired
+  - bugfix: Missing air alarm added to Kilostation Botany
+  - bugfix: The water tank stuck in a door in Kilostation engineering has been released
+      back into its natural maintenance habitat
+  Timberpoes:
+  - rscdel: Removed the fake error texture floor tiles.
+2021-06-20:
+  Krysonism:
+  - rscadd: Added a new machine to the robotics lab; the ectoscopic sniffer.
+  OHJ4Y:
+  - qol: Surgical aprons can now hold more medical-related items in their storage
+      slot.
+  Ryll/Shaps:
+  - bugfix: OOC heart commendations should once again function and poll people as
+      it should during the shuttle's return trip.
+  SmArtKar:
+  - bugfix: Luminescents once again use slime extracts
+  SpaceDragon00:
+  - bugfix: Combat defibs no longer enable their safeties when being EMPed
+  - bugfix: Visible message sends its message to mobs that are also its location
+  - bugfix: shock_touching (Renamed to shock_pulling) now actually uses the damage
+      value provided
+  - code_imp: Removed useless mob/user input for cooldowncheck
+  - code_imp: Added recharge_time variable to paddles for variable charge times
+  - code_imp: Added can_hurt, do_success, and do_cancel to reduce code duplication
+  Timberpoes:
+  - bugfix: Chat feedback is improved when setting down briefcase launchpads.
+  - bugfix: Urinals no longer alert you about the letter "i" being stuck to your hand
+      in certain edge cases.
+  Watermelon914:
+  - bugfix: Fixed being unable to add extra circuit components when an integrated
+      circuit was removed.
+2021-06-21:
+  ArcaneMusic:
+  - qol: Suspenders now uses a GAGS setup, allowing for custom recolors.
+  Melbert:
+  - bugfix: Fixes contractor tablets breaking due to contract targets cryoing.
+  - bugfix: Fixed nuke ops lobby meta exploit
+  RandomGamer123:
+  - bugfix: Makes roleblocks in mafia actually end properly
+  - bugfix: Tachyon-doppler arrays now connect with servers on different z-levels.
+  SpaceDragon00:
+  - bugfix: People with digitigrade legs are now properly paralyzed by the Paraplegic
+      perk
+  - bugfix: Usable_limbs can no longer be set below 0, which let people walk when
+      they shouldn't be able to
+  Timberpoes:
+  - bugfix: H.A.U.L. gauntlets no longer output a message about losing their grip
+      power when you drop them to the floor.
+  - bugfix: Removing the H.A.U.L. gauntlets while pulling something will now stop
+      the enhanced pulling effect.
+  - bugfix: Fix some runtimes with quirks and equipping silicons.
+  Watermelon914:
+  - bugfix: Fixed signal ports receiving signals when a signal is not actually sent
+  Y0SH1M4S73R:
+  - expansion: The DNA console can now edit the nonhuman features of its occupants,
+      as well as allowing injectors to apply those features. Look for the "Features"
+      tab in the DNA console.
+  dragomagol:
+  - spellcheck: multiple projectiles are now pluralized correctly
+  jupyterkat:
+  - qol: you can now press space or enter to select in tgui input lists
+  - bugfix: tgui input lists no longer break when duplicate keys are passed
+  ninjanomnom:
+  - bugfix: Some overlays missing from variant defibs are now properly applied.

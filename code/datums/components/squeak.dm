@@ -87,14 +87,14 @@
 	else
 		steps++
 
-/datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
+/datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
-	if(isitem(AM))
-		var/obj/item/I = AM
+	if(isitem(arrived))
+		var/obj/item/I = arrived
 		if(I.item_flags & ABSTRACT)
 			return
-	if(AM.movement_type & (FLYING|FLOATING) || !AM.has_gravity())
+	if(arrived.movement_type & (FLYING|FLOATING) || !arrived.has_gravity())
 		return
 	var/atom/current_parent = parent
 	if(isturf(current_parent?.loc))

@@ -14,20 +14,20 @@
 
 //Only need to use one camera
 
-/area/ai_monitored/Entered(atom/movable/O)
-	..()
-	if (ismob(O) && motioncameras.len)
+/area/ai_monitored/Entered(atom/movable/arrived, direction)
+	. = ..()
+	if (ismob(arrived) && motioncameras.len)
 		for(var/X in motioncameras)
 			var/obj/machinery/camera/cam = X
-			cam.newTarget(O)
+			cam.newTarget(arrived)
 			return
 
-/area/ai_monitored/Exited(atom/movable/O)
+/area/ai_monitored/Exited(atom/movable/gone, direction)
 	..()
-	if (ismob(O) && motioncameras.len)
+	if (ismob(gone) && motioncameras.len)
 		for(var/X in motioncameras)
 			var/obj/machinery/camera/cam = X
-			cam.lostTargetRef(WEAKREF(O))
+			cam.lostTargetRef(WEAKREF(gone))
 			return
 
 /area/ai_monitored/turret_protected/ai/Initialize()

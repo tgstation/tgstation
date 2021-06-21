@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - bugfix: "Eggs now give 5u yolk no matter what it is cracked in"

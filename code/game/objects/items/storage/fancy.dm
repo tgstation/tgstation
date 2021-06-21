@@ -53,16 +53,16 @@
 	if(contents.len)
 		return
 	new fold_result(user.drop_location())
-	to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+	to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
 	user.put_in_active_hand(fold_result)
 	qdel(src)
 
-/obj/item/storage/fancy/Exited()
+/obj/item/storage/fancy/Exited(atom/movable/gone, direction)
 	. = ..()
 	is_open = TRUE
 	update_appearance()
 
-/obj/item/storage/fancy/Entered()
+/obj/item/storage/fancy/Entered(atom/movable/arrived, direction)
 	. = ..()
 	is_open = TRUE
 	update_appearance()
@@ -165,7 +165,7 @@
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
 		new fold_result(user.drop_location())
-		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+		to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
 		user.put_in_active_hand(fold_result)
 		qdel(src)
 
@@ -198,7 +198,7 @@
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
 
-	to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+	to_chat(user, span_notice("You rip the back off \the [src] and get a coupon!"))
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
 	attached_coupon.generate(rigged_omen)
@@ -219,9 +219,9 @@
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
 
-	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	. += span_notice("Alt-click to extract contents.")
 	if(spawn_coupon)
-		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
+		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
@@ -231,9 +231,9 @@
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
 		contents -= W
-		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
+		to_chat(user, span_notice("You take \a [W] out of the pack."))
 	else
-		to_chat(user, "<span class='notice'>There are no [contents_tag]s left in the pack.</span>")
+		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()
@@ -269,7 +269,7 @@
 
 	var/obj/item/clothing/mask/cigarette/cig = locate() in contents
 	if(!cig)
-		to_chat(user, "<span class='notice'>There are no [contents_tag]s left in the pack.</span>")
+		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 		return
 	if(target != user || !contents.len || user.wear_mask)
 		return ..()
@@ -277,7 +277,7 @@
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, cig, target)
 	target.equip_to_slot_if_possible(cig, ITEM_SLOT_MASK)
 	contents -= cig
-	to_chat(user, "<span class='notice'>You take \a [cig] out of the pack.</span>")
+	to_chat(user, span_notice("You take \a [cig] out of the pack."))
 	return
 
 
