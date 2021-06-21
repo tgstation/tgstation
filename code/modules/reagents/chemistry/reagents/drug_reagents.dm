@@ -57,7 +57,7 @@
 	if(DT_PROB(4, delta_time) && M.buckled && M.body_position != LYING_DOWN && !M.IsParalyzed()) //chance to be couchlocked if sitting
 		to_chat(M, "<span class='warning'>It's too comfy to move...</span>")
 		M.Paralyze(10 SECONDS)
-	..()
+	return ..()
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
