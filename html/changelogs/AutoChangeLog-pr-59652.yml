@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - balance: "The traitor's Agent ID card has a new option available during forging called Wallet ID Spoofing. Selecting this option will automatically snap the Agent ID card to the front of any wallet, allowing the traitor to hide more valuable ID cards behind it. This is disabled when the card is unforged."
