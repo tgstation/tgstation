@@ -88,7 +88,7 @@
 	if(opened)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while unzipped."))
 		return
-	if(contents.len)
+	if(contents.len > 1) // There's an /atom/movable/emissive_blocker thing in list/contents at all times, hence contents.len > 1 as opposed to > 0.
 		to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
 		return
 	// toto we made it!
@@ -185,6 +185,11 @@
 	var/sinch_time = 10 SECONDS
 	var/sinched = FALSE
 
+/obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
+	if(sinched)
+		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
+	return ..()
+
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
 	. = ..()
 	if(sinched)
@@ -269,8 +274,8 @@
 		if(!(do_after(user,(sinch_time),target = src)))
 			return
 	sinched = !sinched
-	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]"),
-							span_notice("You [sinched ? null : "un"]sinch [src]"),
+	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
+							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
 	log_game("[key_name(user)] [sinched ? "sinched":"unsinched"] secure environmental bag [src] at [AREACOORD(src)]")
 	update_appearance()
@@ -286,19 +291,30 @@
 	weather_protection = list(WEATHER_ALL)
 	breakout_time = 8 MINUTES
 	sinch_time = 30 SECONDS
-	var/obj/item/tank/internals/anesthetic/tank
+	// The contents of the gas to be distributed to an occupant once sinched down. Set in Initialize()
+	var/datum/gas_mixture/air_contents = null
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
+	. = ..()
+	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Destroy()
+	if(air_contents)
+		QDEL_NULL(air_contents)
+
+	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_air()
-	if(tank && sinched)
-		return tank.return_air()
-	else
-		return loc.return_air()
+	if(sinched)
+		return air_contents
+	..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_analyzable_air()
-	if(tank)
-		return tank.return_analyzable_air()
-	else
-		return null
+	if(sinched)
+		return air_contents
+	..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/togglelock(mob/living/user, silent)
 	. = ..()
