@@ -461,7 +461,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
 #define TRAIT_FIREDOOR_STOP "firedoor_stop"
 
-/// Trait applied when the pAI component is added to an [/obj/item/integrated_circuit]
+/// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
 
 //Medical Categories for quirks
