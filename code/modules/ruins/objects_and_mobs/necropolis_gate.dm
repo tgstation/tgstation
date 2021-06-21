@@ -112,7 +112,7 @@
 		sleep(1)
 		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 80000)
 		sleep(1)
-		density = TRUE
+		set_density(TRUE)
 		sleep(1)
 		var/turf/sight_blocker_turf = get_turf(src)
 		if(sight_blocker_distance)
@@ -136,7 +136,7 @@
 		sleep(22)
 		sight_blocker.forceMove(src)
 		sleep(5)
-		density = FALSE
+		set_density(FALSE)
 		sleep(5)
 		open = TRUE
 	changing_openness = FALSE

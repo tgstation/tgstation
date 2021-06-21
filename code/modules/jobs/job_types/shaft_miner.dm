@@ -2,8 +2,8 @@
 	title = "Shaft Miner"
 	department_head = list("Head of Personnel")
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
 

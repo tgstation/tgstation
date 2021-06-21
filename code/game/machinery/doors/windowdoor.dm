@@ -54,7 +54,7 @@
 	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/window/Destroy()
-	density = FALSE
+	set_density(FALSE)
 	QDEL_LIST(debris)
 	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
@@ -163,7 +163,7 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
 	sleep(10)
-	density = FALSE
+	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 
@@ -185,7 +185,7 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state = base_state
 
-	density = TRUE
+	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
 	sleep(10)

@@ -208,7 +208,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	bumped_atom.visible_message(span_userdanger("[src] crashes into the field violently!"))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms)
 		tram_part.travel_distance = 0
-		tram_part.travelling = FALSE
+		tram_part.set_travelling(FALSE)
 		if(prob(15) || locate(/mob/living) in tram_part.lift_load) //always go boom on people on the track
 			explosion(tram_part, devastation_range = rand(0,1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
 		qdel(tram_part)
@@ -445,10 +445,17 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
  * even in the worst cast scenario.
  */
 /obj/structure/industrial_lift/tram/proc/find_our_location()
-	for(var/obj/effect/landmark/tram/our_location as anything in GLOB.tram_landmarks)
+	for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
 		if(our_location.destination_id == initial_id)
 			from_where = our_location
 			break
+
+/obj/structure/industrial_lift/tram/proc/set_travelling(travelling)
+	if (src.travelling == travelling)
+		return
+
+	src.travelling = travelling
+	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
 
 /obj/structure/industrial_lift/tram/use(mob/user) //dont click the floor dingus we use computers now
 	return
@@ -482,7 +489,8 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	for(var/obj/structure/industrial_lift/tram/other_tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		if(other_tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo locked controls, though, as that will resolve itself
-		other_tram_part.travelling = TRUE
+		SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
+		other_tram_part.set_travelling(TRUE)
 		other_tram_part.from_where = to_where
 	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 	travel_distance--
@@ -499,7 +507,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
 	visible_message("<span class='notice'>[src]'s controls are now unlocked.</span")
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
-		tram_part.travelling = FALSE
+		tram_part.set_travelling(FALSE)
 		lift_master_datum.set_controls(UNLOCKED)
 
 GLOBAL_LIST_EMPTY(tram_landmarks)
