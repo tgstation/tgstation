@@ -1053,6 +1053,7 @@
 
 /obj/item/card/id/advanced/chameleon/Initialize()
 	. = ..()
+
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src)
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
@@ -1205,6 +1206,9 @@
 				if(new_age)
 					registered_age = max(round(text2num(new_age)), 0)
 
+				if(tgui_alert(user, "Activate wallet ID spoofing, allowing this card to force itself to occupy the visible ID slot in wallets?", "Wallet ID Spoofing", list("Yes", "No")) == "Yes")
+					ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
+
 				update_label()
 				update_icon()
 				forged = TRUE
@@ -1225,6 +1229,7 @@
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
 				SSid_access.remove_trim_from_chameleon_card(src)
+				REMOVE_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)
 				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 				update_label()
 				update_icon()

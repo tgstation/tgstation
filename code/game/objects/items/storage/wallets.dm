@@ -65,8 +65,8 @@
 		if(!istype(id_card))
 			continue
 
-		// Chameleon IDs explicitly jump to the front so they can disguise other cards in wallets.
-		if(istype(id_card, /obj/item/card/id/advanced/chameleon))
+		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
+		if(HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
 			front_id = id_card
 			break
 
