@@ -46,8 +46,30 @@
 	return paper
 
 /obj/item/paper_bin/Destroy()
-	QDEL_LIST(papers)
+	clear_paper()
 	. = ..()
+
+/**
+ * Delete all paper contained within and clear the papers list
+ */
+/obj/item/paper_bin/proc/clear_paper()
+	QDEL_LIST(papers)
+
+/**
+ * Dump paper up to specified count into the given location
+ *
+ * This will remove items from the bin stack and drop them into the passed in location
+ *
+ * Arguments:
+ * * atom/droppoint the location to move the paper to
+ * * count, the count of the papers to dump (if more than in the bin only up to the bin amount will be dumped)
+ */
+/obj/item/paper_bin/proc/dump_papers(atom/droppoint, count)
+	while(count > 0 || papers.len <= 0)
+		var/obj/item/paper/top_paper = papers[papers.len]
+		papers.Remove(top_paper)
+		top_paper.forceMove(droppoint)
+		count -= 1
 
 /obj/item/paper_bin/dump_contents(atom/droppoint, collapse = FALSE)
 	if(!droppoint)
@@ -65,8 +87,7 @@
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(LAZYLEN(papers))
-		LAZYNULL(papers)
-		update_appearance()
+		dump_contents(null)
 	..()
 
 /obj/item/paper_bin/attack_paw(mob/user, list/modifiers)

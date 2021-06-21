@@ -39,6 +39,22 @@
 	return TRUE
 
 /obj/item/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
+	if(istype(I, /obj/item/paper_bin))
+		var/obj/item/paper_bin/bin = I
+		var/bin_paper = bin.papers.len
+		var/to_insert = min(max_paper, stored_paper + bin_paper)
+		var/left_over = bin_paper - max_paper
+		if(left_over > 0)
+			visible_message(
+				span_notice("Paper spills out of the bin as the feed mechanism overloads"),
+				span_warning("UWU, the paper jams up your slot and spills out over the ground"), //nobody will ever see this :devilish:
+				span_notice("You hear crazy whirring and paper fluttering sounds")
+			)
+			bin.dump_papers(user.drop_location(), left_over)
+
+		bin.clear_paper()
+		stored_paper += to_insert
+
 	if(istype(I, /obj/item/paper))
 		if(stored_paper >= max_paper)
 			to_chat(user, span_warning("You try to add \the [I] into [src], but its paper bin is full!"))
