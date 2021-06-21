@@ -1334,7 +1334,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(radiation > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
 		to_chat(source, span_danger("You mutate!"))
-		source.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
+		source.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 		source.emote("gasp")
 		source.domutcheck()
 

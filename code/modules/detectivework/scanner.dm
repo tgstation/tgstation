@@ -97,7 +97,7 @@
 
 			var/mob/living/carbon/human/H = A
 			if(!H.gloves)
-				fingerprints += md5(H.dna.uni_identity)
+				fingerprints += md5(H.dna.unique_identity)
 
 		else if(!ismob(A))
 
