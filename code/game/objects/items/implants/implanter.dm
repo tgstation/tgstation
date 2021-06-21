@@ -24,25 +24,25 @@
 		return
 	if(user && imp)
 		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attempting to implant [M].</span>")
+			M.visible_message(span_warning("[user] is attempting to implant [M]."))
 
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_mob(user, M, 50)))
 			if(src && imp)
 				if(imp.implant(M, user))
 					if (M == user)
-						to_chat(user, "<span class='notice'>You implant yourself.</span>")
+						to_chat(user, span_notice("You implant yourself."))
 					else
-						M.visible_message("<span class='notice'>[user] implants [M].</span>", "<span class='notice'>[user] implants you.</span>")
+						M.visible_message(span_notice("[user] implants [M]."), span_notice("[user] implants you."))
 					imp = null
 					update_appearance()
 				else
-					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
+					to_chat(user, span_warning("[src] fails to implant [M]."))
 
 /obj/item/implanter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You prod at [src] with [W]!</span>")
+			to_chat(user, span_notice("You prod at [src] with [W]!"))
 			return
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_held_item() != W)

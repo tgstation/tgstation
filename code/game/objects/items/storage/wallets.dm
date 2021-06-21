@@ -40,7 +40,7 @@
 		/obj/item/stamp),
 		list(/obj/item/screwdriver/power))
 
-/obj/item/storage/wallet/Exited(atom/movable/AM)
+/obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
 	refreshID(removed = TRUE)
 
@@ -85,7 +85,7 @@
 	update_appearance(UPDATE_ICON)
 	update_slot_icon()
 
-/obj/item/storage/wallet/Entered(atom/movable/AM)
+/obj/item/storage/wallet/Entered(atom/movable/arrived, direction)
 	. = ..()
 	refreshID(removed = FALSE)
 
@@ -117,7 +117,7 @@
 /obj/item/storage/wallet/examine()
 	. = ..()
 	if(front_id)
-		. += "<span class='notice'>Alt-click to remove the id.</span>"
+		. += span_notice("Alt-click to remove the id.")
 
 /obj/item/storage/wallet/get_id_examine_strings(mob/user)
 	. = ..()

@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - qol: "Ghosts can open NT CIMS (SM monitor) by clicking the Supermatter Crystal."
-  - rscdel: "Removed the EER from the examine text"

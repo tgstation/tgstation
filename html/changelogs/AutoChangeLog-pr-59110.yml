@@ -1,0 +1,8 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - qol: "Contractor batons will now stun cyborgs on a left click and harmbaton them on a right click, instead of stunning cyborgs if you're NOT in combat mode and harmbatonning them if you are."
+  - bugfix: "Stunning a cyborg with a contractor baton now puts your contractor baton on cooldown, just like knocking a human down does. Don't worry, you can still easily chainstun/baton 'n' bash borgs with contractor batons."
+  - soundadd: "Attempting to stun a cyborg with a classic baton or a telebaton will play a CLONGing noise, produce a special message, and put your baton on cooldown. Harmbatonning cyborgs with classic batons and telebatons still works, of course."
+  - refactor: "The code for classic batons, telebatons, and contractor batons has been doc'd slightly better and refactored a bit."
+  - bugfix: "Some edge cases involving cyborgs who somehow both are clumsy and can wield a classic baton have been accounted for. This shouldn't affect normal gameplay unless an admin tries some REALLY weird stuff. Like, clumsy contractor cyborg level weird."

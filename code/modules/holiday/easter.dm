@@ -110,11 +110,11 @@
 	add_overlay("basket-grass")
 	add_overlay("basket-egg[min(contents.len, 5)]")
 
-/obj/item/storage/basket/easter/Exited()
+/obj/item/storage/basket/easter/Exited(atom/movable/gone, direction)
 	. = ..()
 	countEggs()
 
-/obj/item/storage/basket/easter/Entered()
+/obj/item/storage/basket/easter/Entered(atom/movable/arrived, direction)
 	. = ..()
 	countEggs()
 
@@ -195,7 +195,7 @@
 /obj/item/food/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
-		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")
+		to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)
