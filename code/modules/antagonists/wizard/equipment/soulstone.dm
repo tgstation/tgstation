@@ -274,7 +274,7 @@
 		return FALSE
 	return TRUE
 
-/proc/makeNewConstructFromClass(construct_class, theme, target, creator, cultoverride, loc_override)
+/proc/makeNewConstructFromClass(construct_class, theme, mob/target, mob/creator, cultoverride, loc_override)
 	switch(construct_class)
 		if("Juggernaut")
 			if(IS_CULTIST(creator))
