@@ -3,15 +3,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/indestructible,
-/area/tdome/arena)
-"cM" = (
-/obj/effect/turf_decal/siding/yellow{
-	dir = 4
-	},
-/obj/effect/spawner/lootdrop/crate_spawner,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/large,
 /turf/open/indestructible,
 /area/tdome/arena)
 "fy" = (
@@ -29,11 +21,6 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
-/turf/open/indestructible,
-/area/tdome/arena)
-"iy" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible,
 /area/tdome/arena)
 "kf" = (
@@ -88,6 +75,14 @@
 	dir = 8
 	},
 /area/tdome/arena)
+"sD" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/tdome/arena)
 "tW" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth_large,
@@ -101,10 +96,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
-"yz" = (
-/obj/machinery/button,
-/turf/closed/indestructible/riveted,
-/area/tdome/arena)
 "yW" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -116,7 +107,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/structure/closet/crate/large,
 /turf/open/indestructible,
 /area/tdome/arena)
 "zs" = (
@@ -129,6 +120,11 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
+/area/tdome/arena)
+"BB" = (
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
 /area/tdome/arena)
 "Cd" = (
 /obj/structure/shuttle/engine/router,
@@ -159,21 +155,12 @@
 	dir = 8
 	},
 /area/tdome/arena)
-"DE" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible,
-/area/tdome/arena)
 "Ev" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
-"GB" = (
-/obj/effect/turf_decal/siding/yellow{
-	dir = 8
-	},
-/obj/effect/spawner/lootdrop/crate_spawner,
-/obj/effect/decal/cleanable/dirt/dust,
+"Ga" = (
+/obj/structure/closet/crate/large,
 /turf/open/indestructible,
 /area/tdome/arena)
 "GD" = (
@@ -204,15 +191,19 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
+"Il" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/tdome/arena)
 "IV" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/tdome/arena)
-"IY" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/indestructible,
 /area/tdome/arena)
 "KF" = (
 /turf/open/floor/iron/smooth_half,
@@ -286,10 +277,6 @@
 	dir = 1
 	},
 /area/tdome/arena)
-"UL" = (
-/obj/machinery/door/poddoor/shutters,
-/turf/open/indestructible,
-/area/tdome/arena)
 "UY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible,
@@ -304,11 +291,6 @@
 /turf/open/indestructible,
 /area/tdome/arena)
 "WG" = (
-/turf/open/indestructible,
-/area/tdome/arena)
-"WV" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
-/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/indestructible,
 /area/tdome/arena)
 "WX" = (
@@ -1609,11 +1591,11 @@ QQ
 QQ
 QQ
 qy
-GB
-is
-GB
-is
 cK
+cK
+cK
+Il
+Il
 is
 qy
 is
@@ -1675,12 +1657,12 @@ QQ
 QQ
 QQ
 qy
+Ga
+BB
+Ga
+Ga
+Ga
 WG
-UY
-IY
-iy
-DE
-IY
 qy
 WG
 UY
@@ -1741,13 +1723,13 @@ QQ
 QQ
 QQ
 qy
-UY
-IY
-UY
-UY
-IY
-UY
-UL
+Ga
+Ga
+Ga
+Ga
+BB
+WG
+WG
 UY
 WG
 WG
@@ -1807,13 +1789,13 @@ QQ
 QQ
 QQ
 qy
-IY
+BB
+Ga
+Ga
+Ga
+Ga
 UY
-IY
-WV
 WG
-IY
-UL
 WG
 WG
 WG
@@ -1873,13 +1855,13 @@ QQ
 QQ
 QQ
 qy
-UY
-iy
-IY
-iy
-UY
-UY
-yz
+BB
+BB
+BB
+BB
+Ga
+WG
+qy
 UY
 WG
 WG
@@ -1940,11 +1922,11 @@ QQ
 QQ
 qy
 zc
-VP
-cM
-VP
+sD
 zc
-HJ
+zc
+zc
+VP
 qy
 VP
 VP
@@ -2071,18 +2053,18 @@ QQ
 QQ
 QQ
 qy
-WX
 GX
 YR
 CM
+WX
 WX
 kf
 kf
 fy
 kf
 kf
-qy
-QQ
+kf
+kf
 QQ
 QQ
 QQ
@@ -2135,20 +2117,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
+ru
 ru
 ru
 Ut
 ru
 ru
+ru
 kf
 pd
 WG
+WG
+WG
 Yc
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2201,20 +2183,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
 ru
 pd
+WG
+WG
 WG
 Yc
 ru
 kf
 pd
 WG
+WG
+WG
 Yc
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2267,20 +2249,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
 ru
 pd
+WG
+WG
 WG
 Yc
 ru
 kf
 pd
 WG
+WG
+WG
 Yc
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2333,20 +2315,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
 ru
 pd
+WG
+WG
 WG
 Yc
 ru
 kf
 pd
 WG
+WG
+WG
 Yc
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2399,20 +2381,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
 ru
 pd
+WG
+WG
 WG
 Yc
 ru
 kf
 pd
 WG
+WG
+WG
 Yc
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2465,20 +2447,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
 ru
 pd
+WG
+WG
 WG
 Yc
 ru
 kf
 pd
 WG
+WG
+WG
 Yc
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2531,20 +2513,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
 ru
 pd
+WG
+WG
 WG
 Yc
 ru
 kf
 kf
+kf
 Cd
 kf
+Cd
 kf
-qy
-QQ
 QQ
 QQ
 QQ
@@ -2597,20 +2579,20 @@ QQ
 QQ
 QQ
 QQ
-QQ
-qy
+ru
+ru
 ru
 ru
 fy
 ru
 ru
 WX
+WX
 SR
 Se
 Qe
-WX
-qy
-QQ
+Se
+Qe
 QQ
 QQ
 QQ
@@ -2735,11 +2717,11 @@ hm
 is
 is
 qy
-is
-GB
-is
-GB
-is
+hm
+cK
+cK
+cK
+Il
 cK
 qy
 QQ
@@ -2800,13 +2782,13 @@ qy
 WG
 WG
 UY
-yz
+qy
 WG
-WG
-iy
-IY
-iy
-UY
+Ga
+BB
+Ga
+Ga
+Ga
 qy
 QQ
 QQ
@@ -2864,15 +2846,15 @@ QQ
 QQ
 qy
 WG
-WG
-WG
-UL
-IY
 UY
-IY
-WV
 WG
-IY
+WG
+WG
+Ga
+BB
+Ga
+Ga
+Ga
 qy
 QQ
 QQ
@@ -2932,13 +2914,13 @@ qy
 WG
 WG
 UY
-UL
-UY
-IY
 WG
 UY
-IY
-WG
+Ga
+Ga
+BB
+Ga
+BB
 qy
 QQ
 QQ
@@ -2999,12 +2981,12 @@ WG
 UY
 WG
 qy
-IY
-WG
-IY
-IY
-WG
 UY
+Ga
+BB
+Ga
+BB
+Ga
 qy
 QQ
 QQ
@@ -3065,11 +3047,11 @@ py
 VP
 VP
 qy
-HJ
-zc
-HJ
-zc
 VP
+zc
+zc
+sD
+zc
 zc
 qy
 QQ

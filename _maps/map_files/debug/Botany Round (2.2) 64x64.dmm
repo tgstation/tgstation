@@ -2,64 +2,64 @@
 "ag" = (
 /obj/structure/spacevine,
 /turf/closed/wall/mineral/sandstone,
-/area/tdome)
+/area/tdome/arena)
 "ai" = (
 /mob/living/simple_animal/parrot/poly/ghost,
 /turf/open/floor/grass/fairy,
-/area/tdome)
+/area/tdome/arena)
 "ej" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/tdome)
+/area/tdome/arena)
 "eW" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/plating/grass/jungle,
-/area/tdome)
+/area/tdome/arena)
 "gC" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
-/area/tdome)
+/area/tdome/arena)
 "hm" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/iron,
-/area/tdome)
+/area/tdome/arena)
 "ie" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/grass/fairy,
-/area/tdome)
+/area/tdome/arena)
 "jb" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
 /turf/closed/wall/mineral/wood,
-/area/tdome)
+/area/tdome/arena)
 "jy" = (
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris,
 /turf/closed/wall/mineral/wood,
-/area/tdome)
+/area/tdome/arena)
 "kh" = (
 /obj/machinery/door/airlock/alarmlock,
 /obj/structure/trap/ctf/red,
 /turf/open/floor/iron/showroomfloor,
-/area/tdome)
+/area/tdome/arena)
 "ky" = (
 /obj/machinery/hydroponics,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "kN" = (
 /obj/machinery/arena_spawn/red,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "ld" = (
 /obj/structure/sink{
 	pixel_y = 20
 	},
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "oY" = (
 /obj/machinery/door/airlock/alarmlock,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "rF" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -68,53 +68,53 @@
 	icon_state = "beartrap1"
 	},
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 "rO" = (
 /turf/open/floor/carpet/orange,
-/area/tdome)
+/area/tdome/arena)
 "sA" = (
 /turf/open/floor/grass,
-/area/space)
+/area/tdome/arena)
 "tr" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
 /turf/closed/wall/mineral/sandstone,
-/area/tdome)
+/area/tdome/arena)
 "uj" = (
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "uO" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
 	name = "SapMaster XP"
 	},
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "wZ" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "zc" = (
 /turf/open/floor/carpet/lone,
-/area/tdome)
+/area/tdome/arena)
 "AQ" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/tdome)
+/area/tdome/arena)
 "AU" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/plating/grass/jungle,
-/area/tdome)
+/area/tdome/arena)
 "AV" = (
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "BB" = (
 /obj/machinery/vending/cola/pwr_game,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "CP" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/wirecutters,
@@ -122,45 +122,45 @@
 /obj/item/shovel/spade,
 /obj/item/hatchet,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "FM" = (
 /obj/structure/sink{
 	pixel_y = 20
 	},
 /turf/open/floor/carpet/orange,
-/area/tdome)
+/area/tdome/arena)
 "Gl" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
 /obj/structure/spacevine,
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 "GH" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "Ie" = (
 /turf/closed/wall/mineral/sandstone,
-/area/tdome)
+/area/tdome/arena)
 "It" = (
 /turf/open/floor/carpet/black,
-/area/tdome)
+/area/tdome/arena)
 "Iy" = (
 /obj/machinery/light,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "ID" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "IK" = (
 /obj/item/plant_analyzer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Jy" = (
 /turf/open/floor/plating/grass/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Kc" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
@@ -168,10 +168,7 @@
 	anchored = 1
 	},
 /turf/open/floor/holofloor/grass,
-/area/tdome)
-"Ke" = (
-/turf/open/floor/grass,
-/area/tdome)
+/area/tdome/arena)
 "Ml" = (
 /obj/structure/table/reinforced,
 /obj/item/watertank,
@@ -180,70 +177,70 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Ms" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/paper/guides/jobs/hydroponics,
 /obj/item/book/manual/hydroponics_pod_people,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "NL" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/plating/grass/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Ou" = (
 /obj/item/grown/bananapeel{
 	anchored = 1
 	},
 /obj/structure/spacevine,
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 "OD" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "OK" = (
 /turf/closed/wall/mineral/wood,
-/area/tdome)
+/area/tdome/arena)
 "OM" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/toy/plush/awakenedplushie,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "Pr" = (
 /obj/structure/sign/poster/contraband/kudzu,
 /turf/closed/wall/mineral/wood,
-/area/tdome)
+/area/tdome/arena)
 "QA" = (
 /obj/machinery/arena_spawn/green,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "QL" = (
 /obj/effect/temp_visual/glowing_rune,
 /turf/open/floor/grass/fairy,
-/area/tdome)
+/area/tdome/arena)
 "Tt" = (
 /turf/closed/indestructible/cult,
-/area/tdome)
+/area/tdome/arena)
 "TF" = (
 /obj/item/clothing/suit/ghost_sheet/spooky,
 /turf/open/floor/grass/fairy,
-/area/tdome)
+/area/tdome/arena)
 "Uc" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/wood/parquet,
-/area/tdome)
+/area/tdome/arena)
 "Ue" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Uf" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/grass,
-/area/tdome)
+/area/tdome/arena)
 "Ui" = (
 /obj/structure/spacevine,
 /obj/item/restraints/legcuffs/beartrap{
@@ -251,54 +248,54 @@
 	icon_state = "beartrap1"
 	},
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 "Ve" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/iron,
-/area/tdome)
+/area/tdome/arena)
 "Vw" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
 /turf/closed/wall/mineral/wood,
-/area/tdome)
+/area/tdome/arena)
 "Wf" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Wr" = (
 /obj/structure/spacevine,
 /obj/structure/spacevine,
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 "Yf" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/machinery/biogenerator,
 /turf/open/floor/plating/grass/jungle,
-/area/tdome)
+/area/tdome/arena)
 "Ym" = (
 /turf/open/floor/grass/fairy,
-/area/tdome)
+/area/tdome/arena)
 "YN" = (
 /obj/structure/spacevine,
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 "Zi" = (
 /obj/machinery/door/airlock/alarmlock,
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/iron/showroomfloor,
-/area/tdome)
+/area/tdome/arena)
 "ZO" = (
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome)
+/area/tdome/arena)
 "ZX" = (
 /obj/structure/spacevine,
 /obj/item/grown/bananapeel{
 	anchored = 1
 	},
 /turf/open/floor/holofloor/grass,
-/area/tdome)
+/area/tdome/arena)
 
 (1,1,1) = {"
 sA
@@ -2371,7 +2368,7 @@ sA
 sA
 sA
 Tt
-Ke
+sA
 gC
 hm
 uj
@@ -2503,7 +2500,7 @@ sA
 sA
 sA
 Tt
-Ke
+sA
 Uf
 Ve
 AV
@@ -2570,7 +2567,7 @@ sA
 sA
 Tt
 Ym
-Ke
+sA
 OK
 FM
 rO
@@ -2636,7 +2633,7 @@ sA
 sA
 Tt
 Uf
-Ke
+sA
 Ve
 rO
 rO
@@ -2701,7 +2698,7 @@ sA
 sA
 sA
 Tt
-Ke
+sA
 Ym
 Ve
 BB
@@ -2835,7 +2832,7 @@ sA
 Tt
 Ym
 gC
-Ke
+sA
 OK
 Ve
 Ve
@@ -2900,11 +2897,11 @@ sA
 sA
 Tt
 Tt
-Ke
+sA
 gC
-Ke
+sA
 Uf
-Ke
+sA
 OK
 OK
 Vw
@@ -2970,7 +2967,7 @@ Tt
 Tt
 Tt
 ej
-Ke
+sA
 Ve
 Ml
 Wf
@@ -2979,9 +2976,9 @@ Jy
 Wf
 IK
 Ve
-Ke
+sA
 gC
-Ke
+sA
 Tt
 sA
 sA
@@ -3036,7 +3033,7 @@ sA
 sA
 Tt
 Uf
-Ke
+sA
 Ve
 ID
 Jy
@@ -3046,7 +3043,7 @@ Jy
 ID
 Ve
 gC
-Ke
+sA
 Tt
 Tt
 sA
@@ -3111,8 +3108,8 @@ eW
 Jy
 ID
 Ve
-Ke
-Ke
+sA
+sA
 Tt
 sA
 sA
@@ -3168,7 +3165,7 @@ sA
 sA
 Tt
 gC
-Ke
+sA
 Ve
 ky
 Jy
@@ -3177,7 +3174,7 @@ NL
 Jy
 ky
 Ve
-Ke
+sA
 gC
 Tt
 sA
@@ -3234,7 +3231,7 @@ sA
 sA
 Tt
 ej
-Ke
+sA
 Ve
 ky
 kN
@@ -3244,7 +3241,7 @@ ZO
 ky
 Ve
 ej
-Ke
+sA
 Tt
 sA
 sA
@@ -3299,7 +3296,7 @@ sA
 sA
 sA
 Tt
-Ke
+sA
 Uf
 OK
 OK
@@ -3309,8 +3306,8 @@ OD
 OD
 OK
 OK
-Ke
-Ke
+sA
+sA
 Tt
 sA
 sA
@@ -3365,18 +3362,18 @@ sA
 sA
 sA
 Tt
-Ke
+sA
 gC
-Ke
+sA
 OK
 Ve
 Ve
 Ve
 Ve
 OK
-Ke
+sA
 Uf
-Ke
+sA
 Tt
 sA
 sA
@@ -3432,16 +3429,16 @@ sA
 sA
 Tt
 Tt
-Ke
-Ke
+sA
+sA
 gC
-Ke
-Ke
-Ke
+sA
+sA
+sA
 AQ
-Ke
+sA
 ej
-Ke
+sA
 ej
 Tt
 sA
@@ -3499,15 +3496,15 @@ sA
 sA
 Tt
 Tt
-Ke
-Ke
-Ke
+sA
+sA
+sA
 gC
-Ke
-Ke
-Ke
+sA
+sA
+sA
 gC
-Ke
+sA
 Tt
 Tt
 sA
