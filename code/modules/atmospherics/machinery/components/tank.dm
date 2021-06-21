@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/components/unary/tank
+/obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
 	icon_state = "smooth"
 
@@ -56,7 +56,7 @@
 	/// The typecache of types which are allowed to merge internal storage
 	var/static/list/merger_typecache
 
-/obj/machinery/atmospherics/components/unary/tank/Initialize()
+/obj/machinery/atmospherics/components/tank/Initialize()
 	. = ..()
 
 	if(!knob_overlays)
@@ -70,7 +70,7 @@
 			crack_states += "crack[i]"
 
 	if(!merger_typecache)
-		merger_typecache = typecacheof(/obj/machinery/atmospherics/components/unary/tank)
+		merger_typecache = typecacheof(/obj/machinery/atmospherics/components/tank)
 
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.05)
 	AddElement(/datum/element/volatile_gas_storage)
@@ -96,15 +96,15 @@
 
 // We late initialize here so all stationary tanks have time to set up their
 // initial gas mixes and signal registrations.
-/obj/machinery/atmospherics/components/unary/tank/LateInitialize()
+/obj/machinery/atmospherics/components/tank/LateInitialize()
 	. = ..()
 	GetMergeGroup(merger_id, merger_typecache)
 
-/obj/machinery/atmospherics/components/unary/tank/Destroy()
+/obj/machinery/atmospherics/components/tank/Destroy()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/tank/examine(mob/user, thats)
+/obj/machinery/atmospherics/components/tank/examine(mob/user, thats)
 	. = ..()
 	var/wrench_hint = examine_hint_leftclick("wrench")
 	if(!initialize_directions)
@@ -112,18 +112,18 @@
 	else
 		. += "<span class='notice'>The pipe port can be moved or closed with a [wrench_hint].</span>"
 
-/obj/machinery/atmospherics/components/unary/tank/set_custom_materials(list/materials, multiplier)
+/obj/machinery/atmospherics/components/tank/set_custom_materials(list/materials, multiplier)
 	. = ..()
 	RefreshPressureLimit()
 
 /// Recalculates pressure based on the current max integrity compared to original
-/obj/machinery/atmospherics/components/unary/tank/proc/RefreshPressureLimit()
+/obj/machinery/atmospherics/components/tank/proc/RefreshPressureLimit()
 	var/max_pressure_multiplier = max_integrity / initial(max_integrity)
 	max_pressure = max_pressure_multiplier * initial(max_pressure)
 
 /// Fills the tank to the maximum safe pressure.
 /// Safety margin is a multiplier for the cap for the purpose of this proc so it doesn't have to be filled completely.
-/obj/machinery/atmospherics/components/unary/tank/proc/FillToPressure(gastype, safety_margin=0.5)
+/obj/machinery/atmospherics/components/tank/proc/FillToPressure(gastype, safety_margin=0.5)
 	var/pressure_limit = max_pressure * safety_margin
 
 	var/moles_to_add = (pressure_limit * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -132,7 +132,7 @@
 	air_contents.archive()
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/tank/process_atmos()
+/obj/machinery/atmospherics/components/tank/process_atmos()
 	if(air_contents.react(src))
 		update_parents()
 
@@ -146,21 +146,21 @@
 ///////////////////////////////////////////////////////////////////
 // Pipenet stuff
 
-/obj/machinery/atmospherics/components/unary/tank/returnAirsForReconcilation(datum/pipeline/requester)
+/obj/machinery/atmospherics/components/tank/returnAirsForReconcilation(datum/pipeline/requester)
 	. = ..()
 	if(!air_contents)
 		return
 	. += air_contents
 
-/obj/machinery/atmospherics/components/unary/tank/returnPipenetsForReconcilation(datum/pipeline/requester)
+/obj/machinery/atmospherics/components/tank/returnPipenetsForReconcilation(datum/pipeline/requester)
 	. = ..()
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
-	for(var/obj/machinery/atmospherics/components/unary/tank/tank as anything in merge_group.members)
+	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
 		if(tank == src)
 			continue
 		. += tank.parents
 
-/obj/machinery/atmospherics/components/unary/tank/proc/ToggleSidePort(new_dir)
+/obj/machinery/atmospherics/components/tank/proc/ToggleSidePort(new_dir)
 	if(initialize_directions & new_dir)
 		initialize_directions &= ~new_dir
 	else
@@ -190,31 +190,31 @@
 ///////////////////////////////////////////////////////////////////
 // Merger handling
 
-/obj/machinery/atmospherics/components/unary/tank/proc/MergerAdding(obj/machinery/atmospherics/components/unary/tank/us, datum/merger/new_merger)
+/obj/machinery/atmospherics/components/tank/proc/MergerAdding(obj/machinery/atmospherics/components/tank/us, datum/merger/new_merger)
 	SIGNAL_HANDLER
 	if(new_merger.id != merger_id)
 		return
 	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/MergerRefreshComplete)
 
-/obj/machinery/atmospherics/components/unary/tank/proc/MergerRemoving(obj/machinery/atmospherics/components/unary/tank/us, datum/merger/old_merger)
+/obj/machinery/atmospherics/components/tank/proc/MergerRemoving(obj/machinery/atmospherics/components/tank/us, datum/merger/old_merger)
 	SIGNAL_HANDLER
 	if(old_merger.id != merger_id)
 		return
 	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
 
 /// Handles the combined gas tank for the entire merger group, only the origin tank actualy runs this.
-/obj/machinery/atmospherics/components/unary/tank/proc/MergerRefreshComplete(datum/merger/merger, list/leaving_members, list/joining_members)
+/obj/machinery/atmospherics/components/tank/proc/MergerRefreshComplete(datum/merger/merger, list/leaving_members, list/joining_members)
 	SIGNAL_HANDLER
 	if(merger.origin != src)
 		return
 	var/shares = length(merger.members) + length(leaving_members) - length(joining_members)
-	for(var/obj/machinery/atmospherics/components/unary/tank/leaver as anything in leaving_members)
+	for(var/obj/machinery/atmospherics/components/tank/leaver as anything in leaving_members)
 		var/datum/gas_mixture/gas_share = air_contents.remove_ratio(1/shares--)
 		air_contents.volume -= leaver.volume
 		leaver.air_contents = gas_share
 		leaver.update_appearance()
 
-	for(var/obj/machinery/atmospherics/components/unary/tank/joiner as anything in joining_members)
+	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
 		var/datum/gas_mixture/joiner_share = joiner.air_contents
 		if(joiner_share)
 			air_contents.merge(joiner_share)
@@ -231,15 +231,15 @@
 ///////////////////////////////////////////////////////////////////
 // Appearance stuff
 
-/obj/machinery/atmospherics/components/unary/tank/proc/Smoothed()
+/obj/machinery/atmospherics/components/tank/proc/Smoothed()
 	SIGNAL_HANDLER
 	RefreshWindow()
 
-/obj/machinery/atmospherics/components/unary/tank/update_appearance()
+/obj/machinery/atmospherics/components/tank/update_appearance()
 	. = ..()
 	RefreshWindow()
 
-/obj/machinery/atmospherics/components/unary/tank/update_overlays()
+/obj/machinery/atmospherics/components/tank/update_overlays()
 	. = ..()
 	if(!initialize_directions)
 		return
@@ -247,11 +247,11 @@
 		if(initialize_directions & dir)
 			. += knob_overlays["[dir]"]
 
-/obj/machinery/atmospherics/components/unary/tank/update_greyscale()
+/obj/machinery/atmospherics/components/tank/update_greyscale()
 	. = ..()
 	RefreshWindow()
 
-/obj/machinery/atmospherics/components/unary/tank/proc/RefreshWindow()
+/obj/machinery/atmospherics/components/tank/proc/RefreshWindow()
 	cut_overlay(window)
 
 	if(!air_contents)
@@ -275,7 +275,7 @@
 ///////////////////////////////////////////////////////////////////
 // Tool interactions
 
-/obj/machinery/atmospherics/components/unary/tank/wrench_act(mob/living/user, obj/item/item)
+/obj/machinery/atmospherics/components/tank/wrench_act(mob/living/user, obj/item/item)
 	. = TRUE
 	var/new_dir = get_dir(src, user)
 
@@ -290,7 +290,7 @@
 
 	item.play_tool_sound(src, 50)
 
-/obj/machinery/atmospherics/components/unary/tank/welder_act(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/tank/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	. = TRUE
 	if(obj_integrity >= max_integrity)
@@ -305,7 +305,7 @@
 	while(repair_damage(repair_amount))
 	to_chat(user, "<span class='notice'>The gas tank has been fully repaired and all cracks sealed.</span>")
 
-/obj/machinery/atmospherics/components/unary/tank/welder_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/tank/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	. = TRUE
 	to_chat(user, "<span class='notice'>You begin cutting open the gas tank...</span>")
@@ -324,7 +324,7 @@
 	deconstruct(disassembled=TRUE)
 	to_chat(user, "<span class='notice'>You finish cutting open the sealed gas tank, revealing the innards.</span>")
 
-/obj/machinery/atmospherics/components/unary/tank/deconstruct(disassembled)
+/obj/machinery/atmospherics/components/tank/deconstruct(disassembled)
 	var/turf/location = drop_location()
 	. = ..()
 	if(!disassembled)
@@ -337,75 +337,75 @@
 ///////////////////////////////////////////////////////////////////
 // Gas tank variants
 
-/obj/machinery/atmospherics/components/unary/tank/air
+/obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
 
-/obj/machinery/atmospherics/components/unary/tank/air/Initialize()
+/obj/machinery/atmospherics/components/tank/air/Initialize()
 	. = ..()
 	FillToPressure(/datum/gas/oxygen, safety_margin=0.1)
 	FillToPressure(/datum/gas/nitrogen, safety_margin=0.5)
 
-/obj/machinery/atmospherics/components/unary/tank/carbon_dioxide
+/obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
 
-/obj/machinery/atmospherics/components/unary/tank/toxins
+/obj/machinery/atmospherics/components/tank/toxins
 	gas_type = /datum/gas/plasma
 
-/obj/machinery/atmospherics/components/unary/tank/nitrogen
+/obj/machinery/atmospherics/components/tank/nitrogen
 	gas_type = /datum/gas/nitrogen
 
-/obj/machinery/atmospherics/components/unary/tank/oxygen
+/obj/machinery/atmospherics/components/tank/oxygen
 	gas_type = /datum/gas/oxygen
 
-/obj/machinery/atmospherics/components/unary/tank/nitrous
+/obj/machinery/atmospherics/components/tank/nitrous
 	gas_type = /datum/gas/nitrous_oxide
 
-/obj/machinery/atmospherics/components/unary/tank/bz
+/obj/machinery/atmospherics/components/tank/bz
 	gas_type = /datum/gas/bz
 
-/obj/machinery/atmospherics/components/unary/tank/freon
+/obj/machinery/atmospherics/components/tank/freon
 	gas_type = /datum/gas/freon
 
-/obj/machinery/atmospherics/components/unary/tank/halon
+/obj/machinery/atmospherics/components/tank/halon
 	gas_type = /datum/gas/halon
 
-/obj/machinery/atmospherics/components/unary/tank/healium
+/obj/machinery/atmospherics/components/tank/healium
 	gas_type = /datum/gas/healium
 
-/obj/machinery/atmospherics/components/unary/tank/hydrogen
+/obj/machinery/atmospherics/components/tank/hydrogen
 	gas_type = /datum/gas/hydrogen
 
-/obj/machinery/atmospherics/components/unary/tank/hypernoblium
+/obj/machinery/atmospherics/components/tank/hypernoblium
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/atmospherics/components/unary/tank/miasma
+/obj/machinery/atmospherics/components/tank/miasma
 	gas_type = /datum/gas/miasma
 
-/obj/machinery/atmospherics/components/unary/tank/nitryl
+/obj/machinery/atmospherics/components/tank/nitryl
 	gas_type = /datum/gas/nitryl
 
-/obj/machinery/atmospherics/components/unary/tank/pluoxium
+/obj/machinery/atmospherics/components/tank/pluoxium
 	gas_type = /datum/gas/pluoxium
 
-/obj/machinery/atmospherics/components/unary/tank/proto_nitrate
+/obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
 
-/obj/machinery/atmospherics/components/unary/tank/stimulum
+/obj/machinery/atmospherics/components/tank/stimulum
 	gas_type = /datum/gas/stimulum
 
-/obj/machinery/atmospherics/components/unary/tank/tritium
+/obj/machinery/atmospherics/components/tank/tritium
 	gas_type = /datum/gas/tritium
 
-/obj/machinery/atmospherics/components/unary/tank/water_vapor
+/obj/machinery/atmospherics/components/tank/water_vapor
 	gas_type = /datum/gas/water_vapor
 
-/obj/machinery/atmospherics/components/unary/tank/zauker
+/obj/machinery/atmospherics/components/tank/zauker
 	gas_type = /datum/gas/zauker
 
-/obj/machinery/atmospherics/components/unary/tank/helium
+/obj/machinery/atmospherics/components/tank/helium
 	gas_type = /datum/gas/helium
 
-/obj/machinery/atmospherics/components/unary/tank/antinoblium
+/obj/machinery/atmospherics/components/tank/antinoblium
 	gas_type = /datum/gas/antinoblium
 
 ///////////////////////////////////////////////////////////////////
@@ -536,7 +536,7 @@
 	var/turf/build_location = drop_location()
 	if(!isturf(build_location))
 		return
-	var/obj/machinery/atmospherics/components/unary/tank/new_tank = new(build_location)
+	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
 	var/list/new_custom_materials = list()
 	new_custom_materials[/datum/material/alloy/plasteel] = 4000
 	new_custom_materials[material_end_product] = 20000
