@@ -192,7 +192,7 @@
 	hardlinked = FALSE // dont qdel my portal nerd
 	force_teleport = TRUE // force teleports because they're a mapmaker tool
 	var/id // var edit or set id in map editor
-	var/event_maptext
+	var/event_maptext = ""
 
 /obj/effect/portal/permanent/Initialize()
 	. = ..()
