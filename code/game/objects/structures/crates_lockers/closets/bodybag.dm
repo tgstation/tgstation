@@ -296,6 +296,9 @@
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
 	. = ..()
+	air_contents = new(50) //liters
+	air_contents.temperature = T20C
+
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
