@@ -5,22 +5,22 @@
  * you can crowbar it to interact with the underneath stuff without destroying the tile...
  * unless you want to!
  */
-/turf/open/floor/catwalk_flooring
-	icon = 'icons/turf/floors/catwalk_flooring.dmi'
+/turf/open/floor/catwalk_floor
+	icon = 'icons/turf/floors/catwalk_plating.dmi'
 	icon_state = "catwalk_below"
-	name = "catwalk flooring"
+	name = "catwalk floor"
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
-	shoefootstep = FOOTSTEP_CATWALK
+	footstep = FOOTSTEP_CATWALK
 	barefootstep = FOOTSTEP_CATWALK
-	mediumxenofootstep = FOOTSTEP_CATWALK
-	var/base_state = "flooring" //Post mapping
+	clawfootstep = FOOTSTEP_CATWALK
+	heavyfootstep = FOOTSTEP_CATWALK
 	var/covered = TRUE
 
-/turf/open/floor/catwalk_flooring/Initialize()
+/turf/open/floor/catwalk_floor/Initialize()
 	. = ..()
 	update_overlays()
 
-/turf/open/floor/catwalk_flooring/update_overlays()
+/turf/open/floor/catwalk_floor/update_overlays()
 	. = ..()
 	var/static/catwalk_overlay
 	if(isnull(catwalk_overlay))
@@ -28,14 +28,14 @@
 	if(covered)
 		add_overlay(catwalk_overlay)
 
-/turf/open/floor/catwalk_flooring/screwdriver_act(mob/living/user, obj/item/tool)
+/turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	cover = !cover
-	user.balloon_alert(user, "[!cover ? "cover removed" : "cover added"]")
-	update_turf_overlay()
+	covered = !covered
+	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
+	update_overlays()
 
-/turf/open/floor/catwalk_flooring/pry_tile(obj/item/crowbar, mob/user, silent)
-	if(cover)
+/turf/open/floor/catwalk_floor/pry_tile(obj/item/crowbar, mob/user, silent)
+	if(covered)
 		user.balloon_alert(user, "remove cover first!")
 		return FALSE
 	. = ..()
