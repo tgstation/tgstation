@@ -1497,6 +1497,7 @@
 #include "code\game\turfs\open\openspace.dm"
 #include "code\game\turfs\open\river.dm"
 #include "code\game\turfs\open\water.dm"
+#include "code\game\turfs\open\floor\catwalk_plating.dm"
 #include "code\game\turfs\open\floor\fancy_floor.dm"
 #include "code\game\turfs\open\floor\hull.dm"
 #include "code\game\turfs\open\floor\iron_floor.dm"
