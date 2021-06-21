@@ -97,12 +97,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3 //It shines so beautiful
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, BOMB = 0, BIO = 0, RAD = 0, FIRE = 1, ACID = 1)
 
-/datum/material/uranium/on_applied(atom/source, amount, material_flags)
-	return
-
-/datum/material/uranium/on_removed(atom/source, amount, material_flags)
-	return
-
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
 	source_item?.reagents?.add_reagent(/datum/reagent/uranium, source_item.reagents.total_volume*(2/5))
