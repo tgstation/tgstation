@@ -868,6 +868,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine_sm_room"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/engineering/turbine_room
+	name = "Turbine Room"
+	icon_state = "engine_turbine_room"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /area/engineering/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine_break"

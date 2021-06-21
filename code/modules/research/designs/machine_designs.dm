@@ -25,13 +25,37 @@
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/* /datum/design/board/turbine_computer
-	name = "Computer Design (Power Turbine Console Board)"
-	desc = "The circuit board for a power turbine console."
-	id = "power_turbine_console"
-	build_path = /obj/item/circuitboard/computer/turbine_computer
+/datum/design/board/turbine_controller
+	name = "Computer Design (Power Turbine Controller Board)"
+	desc = "The circuit board for a power turbine controller."
+	id = "turbine_controller"
+	build_path = /obj/item/circuitboard/machine/turbine_controller
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE */
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/turbine_inlet
+	name = "Computer Design (Turbine Inlet Board)"
+	desc = "The circuit board for a turbine inlet."
+	id = "turbine_inlet"
+	build_path = /obj/item/circuitboard/machine/turbine_inlet
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/turbine_outlet
+	name = "Computer Design (Turbine Outlet Board)"
+	desc = "The circuit board for a turbine outlet."
+	id = "turbine_outlet"
+	build_path = /obj/item/circuitboard/machine/turbine_outlet
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/turbine_shaft
+	name = "Computer Design (Turbine Shaft Board)"
+	desc = "The circuit board for a turbine Shaft."
+	id = "turbine_shaft"
+	build_path = /obj/item/circuitboard/machine/turbine_shaft
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/emitter
 	name = "Machine Design (Emitter Board)"
@@ -40,22 +64,6 @@
 	build_path = /obj/item/circuitboard/machine/emitter
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/* /datum/design/board/power_compressor
-	name = "Machine Design (Power Compressor Board)"
-	desc = "The circuit board for a power compressor."
-	id = "power_compressor"
-	build_path = /obj/item/circuitboard/machine/power_compressor
-	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/power_turbine
-	name = "Machine Design (Power Turbine Board)"
-	desc = "The circuit board for a power turbine."
-	id = "power_turbine"
-	build_path = /obj/item/circuitboard/machine/power_turbine
-	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE */
 
 /datum/design/board/thermomachine
 	name = "Machine Design (Freezer/Heater Board)"
@@ -488,14 +496,6 @@
 	desc = "The circuit board for a tesla coil."
 	id = "tesla_coil"
 	build_path = /obj/item/circuitboard/machine/tesla_coil
-	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/rad_collector
-	name = "Machine Design (Radiation Collector Board)"
-	desc = "The circuit board for a radiation collector array."
-	id = "rad_collector"
-	build_path = /obj/item/circuitboard/machine/rad_collector
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 

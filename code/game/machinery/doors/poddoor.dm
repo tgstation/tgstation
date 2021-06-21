@@ -115,6 +115,10 @@
 	name = "combustion chamber vent"
 	id = INCINERATOR_ATMOS_AUXVENT
 
+/obj/machinery/door/poddoor/turbine_burning_chamber_vent
+	name = "turbine burning chamber vent"
+	id = TURBINE_BURNING_CHAMBER_VENT
+
 /obj/machinery/door/poddoor/atmos_test_room_mainvent_1
 	name = "test chamber 1 vent"
 	id = TEST_ROOM_ATMOS_MAINVENT_1

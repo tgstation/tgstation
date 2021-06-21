@@ -205,11 +205,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/station_alert
 
-/* /obj/item/circuitboard/computer/turbine_computer
-	name = "Turbine Computer (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/turbine_computer
- */
 //Generic
 
 /obj/item/circuitboard/computer/arcade/amputation

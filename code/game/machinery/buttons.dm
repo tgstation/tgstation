@@ -234,6 +234,11 @@
 	id = INCINERATOR_ATMOS_AUXVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
 
+/obj/machinery/button/door/turbine_burning_chamber_vent
+	name = "turbine burning chamber vent control"
+	id = TURBINE_BURNING_CHAMBER_VENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE)
+
 /obj/machinery/button/door/atmos_test_room_mainvent_1
 	name = "test chamber 1 vent control"
 	id = TEST_ROOM_ATMOS_MAINVENT_1

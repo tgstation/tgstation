@@ -198,21 +198,38 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/port_gen/pacman/super
 
-/* /obj/item/circuitboard/machine/power_compressor
-	name = "Power Compressor (Machine Board)"
+/obj/item/circuitboard/machine/turbine_inlet
+	name = "Turbine Inlet (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/compressor
+	build_path = /obj/machinery/atmospherics/components/unary/turbine/turbine_inlet
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/manipulator = 6)
+		/obj/item/stack/sheet/iron = 5)
 
-/obj/item/circuitboard/machine/power_turbine
-	name = "Power Turbine (Machine Board)"
+/obj/item/circuitboard/machine/turbine_outlet
+	name = "Turbine Outlet (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine
+	build_path = /obj/machinery/atmospherics/components/unary/turbine/turbine_outlet
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/capacitor = 6) */
+		/obj/item/stack/sheet/iron = 5)
+
+/obj/item/circuitboard/machine/turbine_shaft
+	name = "Turbine Inlet (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/turbine/turbine_shaft
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5)
+
+
+/obj/item/circuitboard/machine/turbine_controller
+	name = "Turbine Inlet (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/turbine/turbine_controller
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5)
 
 /obj/item/circuitboard/machine/protolathe/department/engineering
 	name = "Departmental Protolathe (Machine Board) - Engineering"

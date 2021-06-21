@@ -427,7 +427,6 @@
 		"pneumatic_seal",
 		"power control",
 		"powermonitor",
-		"rad_collector",
 		"recharger",
 		"recycler",
 		"rped",
@@ -495,9 +494,10 @@
 	prereq_ids = list("engineering")
 	design_ids = list(
 		"hyper_cell",
-		"power_compressor",
-		"power_turbine",
-		"power_turbine_console",
+		"turbine_shaft",
+		"turbine_inlet",
+		"turbine_outlet",
+		"turbine_controller",
 		"smes",
 		"super_capacitor",
 		"super_cell",

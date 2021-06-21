@@ -2959,7 +2959,6 @@
 #include "code\modules\power\solar.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"
-#include "code\modules\power\turbine.dm"
 #include "code\modules\power\singularity\boh_tear.dm"
 #include "code\modules\power\singularity\collector.dm"
 #include "code\modules\power\singularity\containment_field.dm"

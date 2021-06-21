@@ -451,6 +451,7 @@
 #define INCINERATOR_ATMOS_IGNITER "atmos_incinerator_igniter"
 #define INCINERATOR_ATMOS_MAINVENT "atmos_incinerator_mainvent"
 #define INCINERATOR_ATMOS_AUXVENT "atmos_incinerator_auxvent"
+#define TURBINE_BURNING_CHAMBER_VENT "turbine_chamber_vent"
 #define INCINERATOR_ATMOS_DP_VENTPUMP "atmos_incinerator_airlock_pump"
 #define INCINERATOR_ATMOS_AIRLOCK_SENSOR "atmos_incinerator_airlock_sensor"
 #define INCINERATOR_ATMOS_AIRLOCK_CONTROLLER "atmos_incinerator_airlock_controller"

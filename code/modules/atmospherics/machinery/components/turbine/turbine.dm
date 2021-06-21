@@ -7,6 +7,10 @@
 	var/initial_volume = 500
 	var/base_icon = ""
 
+/obj/machinery/atmospherics/components/unary/turbine/Initialize()
+	. = ..()
+	airs[1].volume = initial_volume
+
 /obj/machinery/atmospherics/components/unary/turbine/attackby(obj/item/I, mob/user, params)
 	if(!on)
 		if(default_deconstruction_screwdriver(user, "[base_icon]", "[base_icon]", I))
@@ -38,40 +42,25 @@
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/turbine/Initialize()
-	. = ..()
-	airs[1].volume = initial_volume
-
 /obj/machinery/atmospherics/components/unary/turbine/turbine_inlet
 	icon_state = "turbine_inlet"
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
-	circuit = /obj/item/circuitboard/machine/thermomachine
+	name = "turbine inlet port"
+	desc = "Input port for the turbine."
+	circuit = /obj/item/circuitboard/machine/turbine_inlet
 	initial_volume = 500
 	base_icon = "turbine_inlet"
 
 /obj/machinery/atmospherics/components/unary/turbine/turbine_outlet
 	icon_state = "turbine_outlet"
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
-	circuit = /obj/item/circuitboard/machine/thermomachine
+	name = "turbine outlet port"
+	desc = "Output port for the turbine."
+	circuit = /obj/item/circuitboard/machine/turbine_outlet
 	initial_volume = 1000
 	base_icon = "turbine_outlet"
-
-
-
-
-
-
-
-
-
-
 
 /obj/machinery/power/turbine
 	icon = 'icons/obj/atmospherics/components/turbine.dmi'
 	layer = OBJ_LAYER
-	density = TRUE
 	var/connected = FALSE
 	var/base_icon = ""
 	var/on = FALSE
@@ -89,30 +78,22 @@
 
 /obj/machinery/power/turbine/turbine_shaft
 	icon_state = "turbine_shaft"
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
-	circuit = /obj/item/circuitboard/machine/thermomachine
+	name = "turbine shaft"
+	desc = "Main body of the turbine multipart."
+	circuit = /obj/item/circuitboard/machine/turbine_shaft
 	base_icon = "turbine_shaft"
-
-/obj/machinery/power/turbine/turbine_mod
-	icon_state = "turbine_mod"
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
-	circuit = /obj/item/circuitboard/machine/thermomachine
-	base_icon = "turbine_mod"
-	var/modify_behaviour = FALSE
+	density = TRUE
 
 /obj/machinery/power/turbine/turbine_controller
 	icon_state = "turbine_interface"
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
-	circuit = /obj/item/circuitboard/machine/thermomachine
+	name = "turbine controller"
+	desc = "Controller that connects the turbine parts in one and allows control of the machine."
+	circuit = /obj/item/circuitboard/machine/turbine_controller
 	base_icon = "turbine_interface"
-	var/list/machine_types = list()
+	var/list/turbine_parts = list()
 	var/obj/machinery/atmospherics/components/unary/turbine/turbine_inlet/inlet
 	var/obj/machinery/atmospherics/components/unary/turbine/turbine_outlet/outlet
 	var/obj/machinery/power/turbine/turbine_shaft/shaft
-	var/list/turbine_mods = list()
 	var/datum/gas_mixture/first_point
 	var/datum/gas_mixture/second_point
 	var/efficiency = 0.9
@@ -120,71 +101,109 @@
 	var/second_volume = 1000
 	var/rpm = 0
 	var/generated_power = 0
+	var/input_ratio = 50
 
 /obj/machinery/power/turbine/turbine_controller/Initialize()
 	. = ..()
 	SSair.start_processing_machine(src)
 	first_point = new
-	first_point.volume = 500
+	first_point.volume = first_volume
 	second_point = new
-	second_point.volume = 1000
+	second_point.volume = second_volume
 
 /obj/machinery/power/turbine/turbine_controller/Destroy()
 	SSair.stop_processing_machine(src)
+	if(inlet)
+		inlet.connected = FALSE
+		inlet = null
+	if(outlet)
+		outlet.connected = FALSE
+		outlet = null
+	if(shaft)
+		shaft.connected = FALSE
+		shaft = null
 	return ..()
 
 /obj/machinery/power/turbine/turbine_controller/multitool_act(mob/living/user, obj/item/multitool/I)
-	. = ..()
 	if(istype(I))
 		if(connect_to_network())
-			check_connection()
-			return TRUE
-	return FALSE
+			check_connection(user)
+			return
+		balloon_alert(user, "machine lacks a working power cable underneath")
 
-/obj/machinery/power/turbine/turbine_controller/proc/check_connection()
+/obj/machinery/power/turbine/turbine_controller/proc/check_connection(mob/living/user)
+	if(connected)
+		return
 	var/turf/controller = get_turf(src)
 	var/turf/vertical = get_step(controller, turn(dir, 180))
 	var/turf/horizontal = get_step(get_step(controller, turn(dir, 90)), turn(dir, 90))
-	var/turf/diagonal = locate(horizontal.x, vertical.y, controller.z)
+	var/turf/diagonal
 	if(dir & NORTH || dir & SOUTH)
 		diagonal = locate(horizontal.x, vertical.y, controller.z)
 	else
 		diagonal = locate(vertical.x, horizontal.y, controller.z)
 
-	for(var/turf/floor in block(controller, diagonal))
+	for(var/turf/floor in block(vertical, diagonal))
 		for(var/obj/machinery/machine in floor.contents)
 			if(istype(machine, /obj/machinery/atmospherics/components/unary/turbine/turbine_inlet))
 				if(machine.dir == turn(dir, 270))
-					machine_types |= machine
+					turbine_parts |= machine
 					inlet = machine
+					RegisterSignal(inlet, COMSIG_PARENT_QDELETING, .proc/deleted_part)
 			if(istype(machine, /obj/machinery/atmospherics/components/unary/turbine/turbine_outlet))
 				if(machine.dir == turn(dir, 90))
-					machine_types |= machine
+					turbine_parts |= machine
 					outlet = machine
+					RegisterSignal(outlet, COMSIG_PARENT_QDELETING, .proc/deleted_part)
 			if(istype(machine, /obj/machinery/power/turbine/turbine_shaft))
 				if(machine.dir == turn(dir, 90))
-					machine_types |= machine
+					turbine_parts |= machine
 					shaft = machine
-			if(istype(machine, /obj/machinery/power/turbine/turbine_mod))
-				if(machine.dir == dir)
-					machine_types |= machine
-					turbine_mods |= machine
-	if(machine_types.len + 1 == 6)
+					RegisterSignal(shaft, COMSIG_PARENT_QDELETING, .proc/deleted_part)
+
+	if(turbine_parts.len == 3)
 		connected = TRUE
 		inlet.connected = TRUE
 		outlet.connected = TRUE
 		shaft.connected = TRUE
-		for(var/obj/machinery/power/turbine/turbine_mod/mod in turbine_mods)
-			mod.connected = TRUE
+		balloon_alert(user, "all parts connected")
+	else
+		if(!inlet)
+			balloon_alert(user, "turbine inlet missing or misplaced")
+		if(!outlet)
+			balloon_alert(user, "turbine outlet missing or misplaced")
+		if(!shaft)
+			balloon_alert(user, "turbine shaft missing or misplaced")
+
+/obj/machinery/power/turbine/turbine_controller/proc/deleted_part()
+	SIGNAL_HANDLER
+	connected = FALSE
+	if(inlet)
+		inlet.connected = FALSE
+		inlet = null
+	if(outlet)
+		outlet.connected = FALSE
+		outlet = null
+	if(shaft)
+		shaft.connected = FALSE
+		shaft = null
+	turbine_parts = list()
+	UnregisterSignal(inlet, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(outlet, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(shaft, COMSIG_PARENT_QDELETING)
 
 /obj/machinery/power/turbine/turbine_controller/process_atmos()
-	if(!connected)
+	if(!connected || !on)
 		return
-	var/datum/gas_mixture/input_remove = inlet.airs[1].remove(inlet.airs[1].total_moles())
+
+	if(!inlet.airs[1].gases)
+		return
+
+	var/datum/gas_mixture/input_remove = inlet.airs[1].remove_ratio(input_ratio * 0.01)
 	var/datum/gas_mixture/output = outlet.airs[1]
 
-	first_point.volume = first_volume
-	second_point.volume = second_volume
+	if(!input_remove.heat_capacity())
+		return
 
 	first_point.merge(input_remove)
 	var/first_point_pressure = first_point.return_pressure()
@@ -194,10 +213,11 @@
 	second_point.merge(first_remove)
 	var/second_point_pressure = second_point.return_pressure()
 	var/second_point_temperature = second_point.temperature
+	var/heat_capacity = second_point.heat_capacity()
 
 	var/work_done = 0
 	var/delta_pressure = - (second_point_pressure - first_point_pressure)
-	if(first_point_temperature > 500 || delta_pressure > 500)
+	if(first_point_temperature > 300 || delta_pressure > 500)
 		work_done = efficiency * second_point.total_moles() * R_IDEAL_GAS_EQUATION * first_point_temperature * log((first_point_pressure / second_point_pressure)) - rpm
 
 	rpm = (work_done ** 0.6) * 4
@@ -208,7 +228,6 @@
 
 	add_avail(generated_power)
 
-	var/heat_capacity = second_point.heat_capacity()
 	second_point.temperature = max((second_point.temperature * heat_capacity - work_done * second_point.total_moles() * 0.05) / heat_capacity, TCMB)
 
 	var/datum/gas_mixture/second_remove = second_point.remove(second_point.total_moles())
@@ -217,3 +236,42 @@
 
 	inlet.update_parents()
 	outlet.update_parents()
+
+/obj/machinery/power/turbine/turbine_controller/ui_interact(mob/user, datum/tgui/ui)
+	if(panel_open)
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TurbineController", name)
+		ui.open()
+
+/obj/machinery/power/turbine/turbine_controller/ui_data(mob/user)
+	var/list/data = list()
+	data["on"] = on
+	data["connected"] = connected
+	data["input_ratio"] = input_ratio
+	data["rpm"] = rpm
+	data["powergen"] = generated_power
+	data["first_pressure"] = first_point.return_pressure()
+	data["first_temperature"] = first_point.temperature
+	data["second_pressure"] = second_point.return_pressure()
+	data["second_temperature"] = second_point.temperature
+	return data
+
+/obj/machinery/power/turbine/turbine_controller/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("on")
+			on = !on
+			. = TRUE
+		if("disconnect")
+			if(connected)
+				deleted_part()
+			. = TRUE
+		if("target")
+			var/target = params["target"]
+			input_ratio = clamp(target, 0, 100)
+			. = TRUE
