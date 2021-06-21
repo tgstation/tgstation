@@ -1318,13 +1318,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
-"ki" = (
-/obj/structure/spider/stickyweb,
-/obj/structure/spider/spiderling{
-	faction = faction("hostile")
-	},
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "kj" = (
 /obj/effect/portal/permanent/red/hospital/toward,
 /obj/effect/turf_decal/bot,
@@ -2073,6 +2066,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"pc" = (
+/obj/item/food/spiderling,
+/turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
 "pd" = (
 /obj/machinery/vending/snack,
 /obj/machinery/status_display/evac/directional/north,
@@ -2092,6 +2089,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"pm" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/food/spiderling,
+/turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "pp" = (
 /obj/structure/rack,
@@ -5665,11 +5670,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/dirt/dark,
 /area/awaymission/centcom_away/thunderdome)
-"NJ" = (
-/obj/structure/spider/spiderling,
-/obj/structure/spider/stickyweb,
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "NK" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -8973,7 +8973,7 @@ ir
 ir
 ir
 ir
-ir
+pm
 UL
 sA
 UL
@@ -9042,12 +9042,12 @@ Ml
 YG
 YG
 pq
-ki
+YG
 jv
 Ml
 Ml
 Ml
-Ml
+pc
 Ml
 zh
 Lf
@@ -9169,7 +9169,7 @@ Ml
 Ml
 vq
 Ml
-NJ
+YG
 YG
 Ml
 Ml
@@ -9440,7 +9440,7 @@ Ml
 Ml
 Ml
 Ml
-Ml
+pc
 Ml
 Ml
 Ml
@@ -9564,7 +9564,7 @@ jG
 Ml
 Ml
 Ml
-Ml
+pc
 Ml
 YG
 YG
