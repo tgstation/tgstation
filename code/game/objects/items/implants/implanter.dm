@@ -58,6 +58,6 @@
 
 /obj/item/implanter/Initialize(mapload)
 	. = ..()
-	if(imp_type)
+	if(imp_type && (imp == null))
 		imp = new imp_type(src)
 	update_appearance()
