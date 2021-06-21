@@ -21,7 +21,8 @@
 					return INITIALIZE_HINT_QDEL
 	#ifdef EVENTMODE
 	///AUTO CLEAN
-	if(mapload)
+	src.loc = turf/T
+	if(mapload || T.eventturf == TRUE)
 		return .
 	QDEL_IN(src, 30)
 	return . //skip disease handling

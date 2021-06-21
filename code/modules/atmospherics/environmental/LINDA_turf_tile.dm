@@ -18,6 +18,8 @@
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	//approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 	// If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
+	var/eventturf = FALSE
+	//crying sunglasses
 
 /turf/open
 	//used for spacewind
@@ -36,7 +38,6 @@
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
 	#endif
-	var/eventturf = FALSE
 
 /turf/open/Initialize()
 	if(!blocks_air)

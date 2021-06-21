@@ -192,6 +192,11 @@
 	hardlinked = FALSE // dont qdel my portal nerd
 	force_teleport = TRUE // force teleports because they're a mapmaker tool
 	var/id // var edit or set id in map editor
+	var/event_maptext
+
+/obj/effect/portal/permanent/Initialize()
+	. = ..()
+	maptext = MAPTEXT(event_maptext)
 
 /obj/effect/portal/permanent/green
 	color = "green"
@@ -204,22 +209,20 @@
 
 /obj/effect/portal/permanent/green/grocery/toward
 	name = "Grocery"
-	maptext = MAPTEXT("Grocery")
+	event_maptext = "Grocery"
 
 /obj/effect/portal/permanent/green/grocery/from
 	name = "Green Kitchen"
-
 
 /obj/effect/portal/permanent/green/hospital
 	id = "hospital_green"
 
 /obj/effect/portal/permanent/green/hospital/toward
 	name = "Hospital"
-	maptext = MAPTEXT("Hospital")
+	event_maptext = "Hospital"
 
 /obj/effect/portal/permanent/green/hospital/from
 	name = "Green Kitchen"
-
 
 /obj/effect/portal/permanent/green/zoo
 	id = "zoo_green"
@@ -227,11 +230,10 @@
 
 /obj/effect/portal/permanent/green/zoo/toward
 	name = "Zoo"
-	maptext = MAPTEXT("Zoo")
+	event_maptext = "Zoo"
 
 /obj/effect/portal/permanent/green/zoo/from
 	name = "Green Kitchen"
-
 
 /obj/effect/portal/permanent/green/farm
 	id = "farm_green"
@@ -239,11 +241,10 @@
 
 /obj/effect/portal/permanent/green/farm/toward
 	name = "Farm"
-	maptext = MAPTEXT("Farm")
+	event_maptext = "Farm"
 
 /obj/effect/portal/permanent/green/farm/from
 	name = "Green Kitchen"
-
 
 /obj/effect/portal/permanent/green/lavaland
 	id = "lava_green"
@@ -251,11 +252,10 @@
 
 /obj/effect/portal/permanent/green/lavaland/toward
 	name = "Lavaland"
-	maptext = MAPTEXT("Lavaland")
+	event_maptext = "Lavaland"
 
 /obj/effect/portal/permanent/green/lavaland/from
 	name = "Green Kitchen"
-
 
 /obj/effect/portal/permanent/green/jungle
 	id = "jungle_green"
@@ -263,39 +263,35 @@
 
 /obj/effect/portal/permanent/green/jungle/toward
 	name = "Jungle"
-	maptext = MAPTEXT("Jungle")
+	event_maptext = "Jungle"
 
 /obj/effect/portal/permanent/green/jungle/from
 	name = "Green Kitchen"
-
 
 /obj/effect/portal/permanent/red
 	color = "red"
 	maptext_width = 64
 	maptext_y = 30
 
-
 /obj/effect/portal/permanent/red/grocery
 	id = "grocery_red"
 
 /obj/effect/portal/permanent/red/grocery/toward
 	name = "Grocery"
-	maptext = MAPTEXT("Grocery")
+	event_maptext = "Grocery"
 
 /obj/effect/portal/permanent/red/grocery/from
 	name = "Red Kitchen"
-
 
 /obj/effect/portal/permanent/red/hospital
 	id = "hospital_red"
 
 /obj/effect/portal/permanent/red/hospital/toward
 	name = "Hospital"
-	maptext = MAPTEXT("Hospital")
+	event_maptext = "Hospital"
 
 /obj/effect/portal/permanent/red/hospital/from
 	name = "Red Kitchen"
-
 
 /obj/effect/portal/permanent/red/zoo
 	id = "zoo_red"
@@ -303,11 +299,10 @@
 
 /obj/effect/portal/permanent/red/zoo/toward
 	name = "Zoo"
-	maptext = MAPTEXT("Zoo")
+	event_maptext = "Zoo"
 
 /obj/effect/portal/permanent/red/zoo/from
 	name = "Red Kitchen"
-
 
 /obj/effect/portal/permanent/red/farm
 	id = "farm_red"
@@ -315,11 +310,10 @@
 
 /obj/effect/portal/permanent/red/farm/toward
 	name = "Farm"
-	maptext = MAPTEXT("Farm")
+	event_maptext = "Farm"
 
 /obj/effect/portal/permanent/red/farm/from
 	name = "Red Kitchen"
-
 
 /obj/effect/portal/permanent/red/lavaland
 	id = "lava_red"
@@ -327,11 +321,10 @@
 
 /obj/effect/portal/permanent/red/lavaland/toward
 	name = "Lavaland"
-	maptext = MAPTEXT("Lavaland")
+	event_maptext = "Lavaland"
 
 /obj/effect/portal/permanent/red/lavaland/from
 	name = "Red Kitchen"
-
 
 /obj/effect/portal/permanent/red/jungle
 	id = "jungle_red"
@@ -339,11 +332,10 @@
 
 /obj/effect/portal/permanent/red/jungle/toward
 	name = "Jungle"
-	maptext = MAPTEXT("Jungle")
+	event_maptext = "Jungle"
 
 /obj/effect/portal/permanent/red/jungle/from
 	name = "Red Kitchen"
-
 
 /obj/effect/portal/permanent/blue
 	maptext_width = 64
@@ -354,22 +346,20 @@
 
 /obj/effect/portal/permanent/blue/grocery/toward
 	name = "Grocery"
-	maptext = MAPTEXT("Grocery")
+	event_maptext = "Grocery"
 
 /obj/effect/portal/permanent/blue/grocery/from
 	name = "Blue Kitchen"
-
 
 /obj/effect/portal/permanent/blue/hospital
 	id = "hospital_blue"
 
 /obj/effect/portal/permanent/blue/hospital/toward
 	name = "Hospital"
-	maptext = MAPTEXT("Hospital")
+	event_maptext = "Hospital"
 
 /obj/effect/portal/permanent/blue/hospital/from
 	name = "Blue Kitchen"
-
 
 /obj/effect/portal/permanent/blue/zoo
 	id = "zoo_blue"
@@ -377,11 +367,10 @@
 
 /obj/effect/portal/permanent/blue/zoo/toward
 	name = "Zoo"
-	maptext = MAPTEXT("Zoo")
+	event_maptext = "Zoo"
 
 /obj/effect/portal/permanent/blue/zoo/from
 	name = "Blue Kitchen"
-
 
 /obj/effect/portal/permanent/blue/farm
 	id = "farm_blue"
@@ -389,11 +378,10 @@
 
 /obj/effect/portal/permanent/blue/farm/toward
 	name = "Farm"
-	maptext = MAPTEXT("Farm")
+	event_maptext = "Farm"
 
 /obj/effect/portal/permanent/blue/farm/from
 	name = "Blue Kitchen"
-
 
 /obj/effect/portal/permanent/blue/lavaland
 	id = "lava_blue"
@@ -401,11 +389,10 @@
 
 /obj/effect/portal/permanent/blue/lavaland/toward
 	name = "Lavaland"
-	maptext = MAPTEXT("Lavaland")
+	event_maptext = "Lavaland"
 
 /obj/effect/portal/permanent/blue/lavaland/from
 	name = "Blue Kitchen"
-
 
 /obj/effect/portal/permanent/blue/jungle
 	id = "jungle_blue"
@@ -413,7 +400,7 @@
 
 /obj/effect/portal/permanent/blue/jungle/toward
 	name = "Jungle"
-	maptext = MAPTEXT("Jungle")
+	event_maptext = "Jungle"
 
 /obj/effect/portal/permanent/blue/jungle/from
 	name = "Blue Kitchen"
