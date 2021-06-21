@@ -1357,3 +1357,10 @@
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 4,
 		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/ecto_sniffer
+	name = "Ectoscopic Sniffer (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/ecto_sniffer
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1)

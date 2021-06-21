@@ -124,7 +124,7 @@
 
 	return TRUE
 
-/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
 	if (istype(leaving) && (leaving.pass_flags & pass_flags_self))
@@ -133,7 +133,7 @@
 	if (fulltile)
 		return
 
-	if(get_dir(leaving.loc, new_location) == dir && density)
+	if(direction == dir && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
@@ -305,7 +305,7 @@
 		set_opacity(initial(opacity))
 
 /obj/structure/window/Destroy()
-	density = FALSE
+	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	update_nearby_icons()
 	return ..()

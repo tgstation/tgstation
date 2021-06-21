@@ -84,10 +84,10 @@
 
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
-	if(!(get_dir(leaving.loc, new_location) & dir))
+	if(!(direction & dir))
 		return
 
 	if (!density)

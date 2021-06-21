@@ -140,11 +140,11 @@
 		M.emote("cough")
 		return TRUE
 
-/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/AM, oldloc)
+/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/projectile/beam))
-		var/obj/projectile/beam/B = AM
-		B.damage = (B.damage/2)
+	if(istype(arrived, /obj/projectile/beam))
+		var/obj/projectile/beam/beam = arrived
+		beam.damage *= 0.5
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
