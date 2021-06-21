@@ -492,6 +492,8 @@
 	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	affected_plane_controller.remove_filter("blastoff")
 
+/datum/reagent/drug/blastoff/proc/superflip()
+
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
@@ -528,7 +530,6 @@
 		M.emote("giggle")
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
-
 /datum/reagent/drug/kroncaine
 	name = "kroncaine"
 	description = "A highly illegal stimulant from the edges of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
@@ -553,7 +554,6 @@
 	M.adjustStaminaLoss(-2, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.6)
 	M.Jitter(2)
-
 
 /datum/reagent/drug/kroncaine/overdose_process(mob/living/M)
 	M.Jitter(10)
