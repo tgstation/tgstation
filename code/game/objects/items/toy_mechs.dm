@@ -11,9 +11,6 @@
 /// Max length of a mech battle
 #define MAX_BATTLE_LENGTH 50
 
-/// Amount of mech toys
-#define ALL_MECH_TOYS 18
-
 /obj/item/toy/mecha
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "fivestarstoy"
@@ -22,8 +19,6 @@
 	verb_exclaim = "beeps"
 	verb_yell = "beeps"
 	w_class = WEIGHT_CLASS_SMALL
-	/// Number of the toy, used in it's desc
-	var/series_number = 0
 	/// Timer when it'll be off cooldown
 	var/timer = 0
 	/// Cooldown between play sessions
@@ -57,8 +52,7 @@
 
 /obj/item/toy/mecha/Initialize()
 	. = ..()
-	if(!desc) //some ruins override the desc
-		desc = "Mini-Mecha action figure! Attack your friends or another mech with one to initiate epic mech combat! Collect them all: [series_number]/[ALL_MECH_TOYS]."
+	AddElement(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
 	combat_health = max_combat_health
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE)
@@ -511,7 +505,6 @@
 /obj/item/toy/mecha/ripley
 	name = "toy Ripley MK-I"
 	icon_state = "ripleytoy"
-	series_number = 1
 	max_combat_health = 4 //200 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "CLAMP SMASH"
@@ -519,7 +512,6 @@
 /obj/item/toy/mecha/ripleymkii
 	name = "toy Ripley MK-II"
 	icon_state = "ripleymkiitoy"
-	series_number = 2
 	max_combat_health = 5 //250 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "GIGA DRILL BREAK"
@@ -527,7 +519,6 @@
 /obj/item/toy/mecha/hauler
 	name = "toy Hauler"
 	icon_state = "haulertoy"
-	series_number = 3
 	max_combat_health = 3 //100 integrity?
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "HAUL AWAY"
@@ -535,7 +526,6 @@
 /obj/item/toy/mecha/clarke
 	name = "toy Clarke"
 	icon_state = "clarketoy"
-	series_number = 4
 	max_combat_health = 4 //200 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "ROLL OUT"
@@ -543,7 +533,6 @@
 /obj/item/toy/mecha/odysseus
 	name = "toy Odysseus"
 	icon_state = "odysseustoy"
-	series_number = 5
 	max_combat_health = 4 //120 integrity
 	special_attack_type = SPECIAL_ATTACK_HEAL
 	special_attack_cry = "MECHA BEAM"
@@ -551,7 +540,6 @@
 /obj/item/toy/mecha/gygax
 	name = "toy Gygax"
 	icon_state = "gygaxtoy"
-	series_number = 6
 	max_combat_health = 5 //250 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "SUPER SERVOS"
@@ -559,7 +547,6 @@
 /obj/item/toy/mecha/durand
 	name = "toy Durand"
 	icon_state = "durandtoy"
-	series_number = 7
 	max_combat_health = 6 //400 integrity
 	special_attack_type = SPECIAL_ATTACK_HEAL
 	special_attack_cry = "SHIELD OF PROTECTION"
@@ -567,7 +554,6 @@
 /obj/item/toy/mecha/savannahivanov
 	name = "toy Savannah-Ivanov"
 	icon_state = "savannahivanovtoy"
-	series_number = 8
 	max_combat_health = 7 //450 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "SKYFALL!! IVANOV STRIKE"
@@ -575,7 +561,6 @@
 /obj/item/toy/mecha/phazon
 	name = "toy Phazon"
 	icon_state = "phazontoy"
-	series_number = 9
 	max_combat_health = 6 //200 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "NO-CLIP"
@@ -583,7 +568,6 @@
 /obj/item/toy/mecha/honk
 	name = "toy H.O.N.K."
 	icon_state = "honktoy"
-	series_number = 10
 	max_combat_health = 4 //140 integrity
 	special_attack_type = SPECIAL_ATTACK_OTHER
 	special_attack_type_message = "puts the opposing mech's special move on cooldown and heals this mech."
@@ -597,7 +581,6 @@
 /obj/item/toy/mecha/darkgygax
 	name = "toy Dark Gygax"
 	icon_state = "darkgygaxtoy"
-	series_number = 11
 	max_combat_health = 6 //300 integrity
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "ULTRA SERVOS"
@@ -605,7 +588,6 @@
 /obj/item/toy/mecha/mauler
 	name = "toy Mauler"
 	icon_state = "maulertoy"
-	series_number = 12
 	max_combat_health = 7 //500 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "BULLET STORM"
@@ -613,7 +595,6 @@
 /obj/item/toy/mecha/darkhonk
 	name = "toy Dark H.O.N.K."
 	icon_state = "darkhonktoy"
-	series_number = 13
 	max_combat_health = 5 //300 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "BOMBANANA SPREE"
@@ -621,7 +602,6 @@
 /obj/item/toy/mecha/deathripley
 	name = "toy Death-Ripley"
 	icon_state = "deathripleytoy"
-	series_number = 14
 	max_combat_health = 5 //250 integrity
 	special_attack_type = SPECIAL_ATTACK_OTHER
 	special_attack_type_message = "instantly destroys the opposing mech if its health is less than this mech's health."
@@ -638,7 +618,6 @@
 /obj/item/toy/mecha/reticence
 	name = "toy Reticence"
 	icon_state = "reticencetoy"
-	series_number = 15
 	quiet = TRUE
 	max_combat_health = 4 //100 integrity
 	special_attack_type = SPECIAL_ATTACK_OTHER
@@ -653,7 +632,6 @@
 /obj/item/toy/mecha/marauder
 	name = "toy Marauder"
 	icon_state = "maraudertoy"
-	series_number = 16
 	max_combat_health = 7 //500 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "BEAM BLAST"
@@ -661,7 +639,6 @@
 /obj/item/toy/mecha/seraph
 	name = "toy Seraph"
 	icon_state = "seraphtoy"
-	series_number = 17
 	max_combat_health = 8 //550 integrity
 	special_attack_type = SPECIAL_ATTACK_DAMAGE
 	special_attack_cry = "ROCKET BARRAGE"
@@ -669,7 +646,6 @@
 /obj/item/toy/mecha/firefighter //rip
 	name = "toy Firefighter"
 	icon_state = "firefightertoy"
-	series_number = 18
 	max_combat_health = 5 //250 integrity?
 	special_attack_type = SPECIAL_ATTACK_HEAL
 	special_attack_cry = "FIRE SHIELD"
