@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "H.A.U.L. gauntlets no longer output a message about losing their grip power when you drop them to the floor."
-  - bugfix: "Removing the H.A.U.L. gauntlets while pulling something will now stop the enhanced pulling effect."

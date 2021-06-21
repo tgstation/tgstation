@@ -1,5 +1,0 @@
-author: "SpaceDragon00"
-delete-after: True
-changes: 
-  - bugfix: "People with digitigrade legs are now properly paralyzed by the Paraplegic perk"
-  - bugfix: "Usable_limbs can no longer be set below 0, which let people walk when they shouldn't be able to"

@@ -438,3 +438,36 @@
   Watermelon914:
   - bugfix: Fixed being unable to add extra circuit components when an integrated
       circuit was removed.
+2021-06-21:
+  ArcaneMusic:
+  - qol: Suspenders now uses a GAGS setup, allowing for custom recolors.
+  Melbert:
+  - bugfix: Fixes contractor tablets breaking due to contract targets cryoing.
+  - bugfix: Fixed nuke ops lobby meta exploit
+  RandomGamer123:
+  - bugfix: Makes roleblocks in mafia actually end properly
+  - bugfix: Tachyon-doppler arrays now connect with servers on different z-levels.
+  SpaceDragon00:
+  - bugfix: People with digitigrade legs are now properly paralyzed by the Paraplegic
+      perk
+  - bugfix: Usable_limbs can no longer be set below 0, which let people walk when
+      they shouldn't be able to
+  Timberpoes:
+  - bugfix: H.A.U.L. gauntlets no longer output a message about losing their grip
+      power when you drop them to the floor.
+  - bugfix: Removing the H.A.U.L. gauntlets while pulling something will now stop
+      the enhanced pulling effect.
+  - bugfix: Fix some runtimes with quirks and equipping silicons.
+  Watermelon914:
+  - bugfix: Fixed signal ports receiving signals when a signal is not actually sent
+  Y0SH1M4S73R:
+  - expansion: The DNA console can now edit the nonhuman features of its occupants,
+      as well as allowing injectors to apply those features. Look for the "Features"
+      tab in the DNA console.
+  dragomagol:
+  - spellcheck: multiple projectiles are now pluralized correctly
+  jupyterkat:
+  - qol: you can now press space or enter to select in tgui input lists
+  - bugfix: tgui input lists no longer break when duplicate keys are passed
+  ninjanomnom:
+  - bugfix: Some overlays missing from variant defibs are now properly applied.
