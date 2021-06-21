@@ -277,7 +277,7 @@
 /proc/makeNewConstructFromClass(construct_class, theme, target, creator, cultoverride, loc_override)
 	switch(construct_class)
 		if("Juggernaut")
-			if(ISCULTIST(creator))
+			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
 				if(THEME_WIZARD)
@@ -287,7 +287,7 @@
 				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, target, creator, cultoverride, loc_override)
 		if("Wraith")
-			if(ISCULTIST(creator))
+			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
 				if(THEME_WIZARD)
@@ -297,7 +297,7 @@
 				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, target, creator, cultoverride, loc_override)
 		if("Artificer")
-			if(ISCULTIST(creator))
+			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
 				if(THEME_WIZARD)
