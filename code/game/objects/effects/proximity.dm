@@ -57,7 +57,7 @@
 		QDEL_LAZYLIST(checkers)
 		return
 
-	var/list/turfs = RANGE_TURFS(range, host.loc)
+	var/list/turfs = RANGE_TURFS(range, loc_to_use)
 	var/turfs_len = turfs.len
 	var/old_checkers_used = min(turfs_len, old_checkers_len)
 
