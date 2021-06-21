@@ -38,6 +38,12 @@
 		return
 	update_parents()
 
+/obj/machinery/atmospherics/components/unary/portables_connector/returnAirsForReconcilation(datum/pipeline/requester)
+	. = ..()
+	if(!connected_device)
+		return
+	. += connected_device.return_air()
+
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
 	. = ..()
 	if(. && connected_device)

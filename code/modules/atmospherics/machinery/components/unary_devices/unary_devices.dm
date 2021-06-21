@@ -9,7 +9,8 @@
 	var/static/gl_uid = 1
 
 /obj/machinery/atmospherics/components/unary/SetInitDirections()
-	initialize_directions = dir
+	if(initialize_directions)
+		initialize_directions = dir
 
 /obj/machinery/atmospherics/components/unary/on_construction()
 	..()

@@ -21,6 +21,8 @@
 	..()
 
 	for(var/i in 1 to device_type)
+		if(airs[i])
+			continue
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		airs[i] = A
@@ -205,6 +207,16 @@
 	. = list()
 	for(var/i in 1 to device_type)
 		. += returnPipenet(nodes[i])
+
+/// When this machine is in a pipenet that is reconciling airs, this proc can add pipelines to the calculation.
+/// Can be either a list of pipenets or a single pipenet.
+/obj/machinery/atmospherics/components/proc/returnPipenetsForReconcilation(datum/pipeline/requester)
+	return list()
+
+/// When this machine is in a pipenet that is reconciling airs, this proc can add airs to the calculation.
+/// Can be either a list of airs or a single air mix.
+/obj/machinery/atmospherics/components/proc/returnAirsForReconcilation(datum/pipeline/requester)
+	return list()
 
 // UI Stuff
 
