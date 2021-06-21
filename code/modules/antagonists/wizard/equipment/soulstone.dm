@@ -11,8 +11,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	var/old_shard = FALSE
 	var/spent = FALSE
-	/// This controls the color of the soulstone as well as restrictions for who can use it. THEME_FAKE_CULT is red and is the default of cultist THEME_WIZARD is purple and is the default of wizard and THEME_HOLY is for purified soul stone
-	var/theme = THEME_FAKE_CULT
+	/// This controls the color of the soulstone as well as restrictions for who can use it. THEME_CULT is red and is the default of cultist THEME_WIZARD is purple and is the default of wizard and THEME_HOLY is for purified soul stone
+	var/theme = THEME_CULT
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
 
@@ -124,7 +124,7 @@
 				icon_state = "mystic_soulstone"
 				A.icon_state = "shade_wizard"
 				A.loot = list(/obj/item/ectoplasm/mystic)
-			if(THEME_FAKE_CULT)
+			if(THEME_CULT)
 				icon_state = "soulstone"
 		name = initial(name)
 		if(!silent)
@@ -246,7 +246,7 @@
 					T.mind?.remove_antag_datum(/datum/antagonist/cult)
 				if(theme == THEME_WIZARD)
 					icon_state = "mystic_soulstone2"
-				if(theme == THEME_FAKE_CULT)
+				if(theme == THEME_CULT)
 					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, span_notice("Your soul has been captured by [src]. Its arcane energies are reknitting your ethereal form."))
@@ -260,8 +260,6 @@
 				var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 				if(!T || !T.loc)
 					return
-				if(IS_CULTIST(user))
-					theme = THEME_CULT
 				makeNewConstructFromClass(construct_class, theme, A, user, FALSE, T.loc)
 				A.mind?.remove_antag_datum(/datum/antagonist/cult)
 				qdel(T)
@@ -279,37 +277,35 @@
 /proc/makeNewConstructFromClass(construct_class, theme, target, creator, cultoverride, loc_override)
 	switch(construct_class)
 		if("Juggernaut")
+			if(ISCULTIST(creator))
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
-				if(THEME_CULT)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, target, creator, cultoverride, loc_override)
 				if(THEME_WIZARD)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
-				if(THEME_FAKE_CULT)
+				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, target, creator, cultoverride, loc_override)
 		if("Wraith")
+			if(ISCULTIST(creator))
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
-				if(THEME_CULT)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, target, creator, cultoverride, loc_override)
 				if(THEME_WIZARD)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, target, creator, cultoverride, loc_override)
-				if(THEME_FAKE_CULT)
+				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, target, creator, cultoverride, loc_override)
 		if("Artificer")
+			if(ISCULTIST(creator))
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
-				if(THEME_CULT)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, target, creator, cultoverride, loc_override)
 				if(THEME_WIZARD)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, target, creator, cultoverride, loc_override)
-				if(THEME_FAKE_CULT)
+				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/noncult, target, creator, cultoverride, loc_override)
-		else
-			return
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
 	if(QDELETED(target))
@@ -367,7 +363,7 @@
 			icon_state = "purified_soulstone2"
 		if(THEME_WIZARD)
 			icon_state = "mystic_soulstone2"
-		if(THEME_FAKE_CULT)
+		if(THEME_CULT)
 			icon_state = "soulstone2"
 	if(user)
 		if(IS_CULTIST(user))
