@@ -100,9 +100,16 @@
 	var/turf/hp = locate(max(A.x,B.x),max(A.y,B.y),A.z)
 	return block(lp,hp)
 
+//todo: make sure this actually gets any leftovers from things inside other things that got deleted
 /obj/machinery/computer/arena/proc/clear_arena()
 	for(var/turf/T in get_arena_turfs())
 		T.empty(turf_type = /turf/open/indestructible)
+	var/list/clear_turfs = get_arena_turfs()
+	for(var/obj/iter_object in clear_turfs)
+		//if(!istype()) // whatever we want to allow?
+		qdel(iter_object)
+	for(var/mob/living/iter_mob in clear_turfs)
+		qdel(iter_mob)
 	current_arena_template = "None"
 
 /obj/machinery/computer/arena/proc/load_arena(arena_template,mob/user)
@@ -132,17 +139,20 @@
 	var/datum/roster/the_roster = GLOB.global_roster
 	the_roster.spawns_team1 = null
 	the_roster.spawns_team2 = null
+	the_roster.spawns_br = null
 
 	for(var/obj/machinery/arena_spawn/iter_spawn in GLOB.machines)
 		if(iter_spawn.arena_id != arena_id)
 			continue
-		if(iter_spawn.team == ARENA_RED_TEAM)
+		if(istype(iter_spawn, /obj/machinery/arena_spawn/battle_royale))
+			LAZYADD(the_roster.spawns_br, iter_spawn)
+		else if(iter_spawn.team == ARENA_RED_TEAM)
 			LAZYADD(the_roster.spawns_team1, iter_spawn)
 		else if(iter_spawn.team == ARENA_GREEN_TEAM)
 			LAZYADD(the_roster.spawns_team2, iter_spawn)
 
-	message_admins("[LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
-	log_admin("[LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
+	message_admins("[LAZYLEN(the_roster.spawns_br)] spawns for BR, [LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
+	log_admin("[LAZYLEN(the_roster.spawns_br)] spawns for BR, [LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
 
 /obj/machinery/computer/arena/proc/add_new_arena_template(user,fname,friendly_name)
 	if(!fname)
@@ -651,6 +661,11 @@
 
 /obj/machinery/arena_spawn/green
 	name = "Green Team Spawnpoint"
+	color = "green"
+	team = ARENA_GREEN_TEAM
+
+/obj/machinery/arena_spawn/battle_royale
+	name = "Battle Royale Spawnpoint"
 	color = "green"
 	team = ARENA_GREEN_TEAM
 

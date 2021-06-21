@@ -29,6 +29,8 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/list/spawns_team1
 	/// Holds the list of /obj/machinery/arena_spawn objects for the currently loaded arena keyed for the GREEN team (team2)
 	var/list/spawns_team2
+	/// Holds the list of /obj/machinery/arena_spawn/battle_royale objects for the currently loaded arena keyed for the BR team (im lazy)
+	var/list/spawns_br
 	/// If FALSE, bodyparts cannot suffer wounds by receiving damage. Wounds can still be manually applied as per normal
 	var/enable_random_wounds = FALSE
 
@@ -150,6 +152,29 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		testing("done filling team [new_team]")
 		testing("------")
 	testing("All done divvy'ing teams!")
+
+/datum/roster/proc/setup_battle_royale(mob/user)
+	if(!LAZYLEN(active_contestants))
+		CRASH("No contestants to make into battle royale team!")
+
+	if(active_teams)
+		var/list/options = list("Clear Existing", "Cancel")
+		var/select = input(user, "There are still existing teams, you must clear them first! Proceed with clearing, or cancel?") as null|anything in options
+
+		switch(select)
+			if("Clear Existing")
+				clear_teams(user)
+			else
+				return
+
+	var/datum/event_team/suicide_squad = create_team()
+	suicide_squad.battle_royale = TRUE
+
+	for(var/datum/contestant/iter_contestant in active_contestants)
+		suicide_squad.add_member(user, iter_contestant)
+
+	message_admins("[key_name_admin(user)] has initialized a battle royale team with [LAZYLEN(suicide_squad.members)] members!")
+	log_game("[key_name_admin(user)] has initialized a battle royale team with [LAZYLEN(suicide_squad.members)] members!")
 
 // The direct team modifying/creating/removing procs
 /// Proc for creating a team, returns the new team
@@ -488,7 +513,9 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/team_divvy_factor = prefs["team_divvy_factor"]["value"]
 
 	testing("[user] is setting up match with values: [teams] teams, [divvy_teams_by_num_not_size] divvy mode, [team_divvy_factor] divvy factor")
-	if(divvy_teams_by_num_not_size)
+	if(!teams)
+		setup_battle_royale(user)
+	else if(divvy_teams_by_num_not_size)
 		divvy_into_teams(user, team_divvy_factor, 0)
 	else
 		divvy_into_teams(user, 0, team_divvy_factor)
@@ -559,6 +586,28 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	message_admins("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
 	log_game("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
+
+/datum/roster/proc/spawn_battle_royale(mob/user)
+	if(LAZYLEN(active_teams) != 1)
+		CRASH("There should only be one active team to start battle royale!")
+
+	var/successes = 0
+	var/spawn_index = 1
+	var/num_of_spawns = length(spawns_br)
+
+	if(!num_of_spawns)
+		CRASH("No battle royale spawns detected in spawns_br!")
+
+	log_game("[key_name_admin(user)] has tried spawning battle royale!")
+
+	for(var/datum/contestant/iter_contestant in active_contestants)
+		var/obj/machinery/arena_spawn/iter_spawn = spawns_br[spawn_index]
+		spawn_index = max((spawn_index + 1) % num_of_spawns, 1)
+		if(iter_contestant.spawn_this_contestant(iter_spawn))
+			successes++
+
+	message_admins("[key_name_admin(user)] has spawned [successes] out of [LAZYLEN(active_contestants)] contestants successfully!")
+	log_game("[key_name_admin(user)] has spawned [successes] out of [LAZYLEN(active_contestants)] contestants successfully!")
 
 /datum/roster/proc/generate_antag_huds()
 	for(var/team in teams)
