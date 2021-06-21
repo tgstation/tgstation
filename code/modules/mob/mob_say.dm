@@ -60,9 +60,9 @@
 			to_chat(src, span_danger("You cannot talk in deadchat (muted)."))
 			return
 
-		if(SSlag_switch.measures[SLOWMODE_SAY] && src == usr)
+		if(SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && src == usr)
 			if(!COOLDOWN_FINISHED(client, say_slowmode))
-				to_chat(src, span_warning("Message not sent due to slowmode: \"[message]\""))
+				to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
 				return
 			COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
