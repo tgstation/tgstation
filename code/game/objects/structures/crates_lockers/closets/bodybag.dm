@@ -309,12 +309,12 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_air()
 	if(sinched)
 		return air_contents
-	..()
+	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_analyzable_air()
 	if(sinched)
 		return air_contents
-	..()
+	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/togglelock(mob/living/user, silent)
 	. = ..()
