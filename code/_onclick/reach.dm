@@ -192,7 +192,7 @@
 	 * As we travel through the circle we project a shadow on the square.
 	 * We travel from 0 to 90 degrees (from coordinate 17 to 32).
 	 * At 45 degrees and beyond the shadow is already at its maximum value in the square, reaching and staying at coordinate 32.
-	 * We use a simple cross multiplication and a min function on the result to solve this.
+	 * We could use `min(15, tan((dir_angle % 90)) * 15)` and `min(15, tan(90 - (dir_angle % 90)) * 15)`, but this is simpler.
 	 **/
 	// Sine and/or cosine of 45 degrees:
 	#define SIN_COS_45 0.70710678118
