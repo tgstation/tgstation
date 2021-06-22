@@ -516,3 +516,11 @@
 /datum/config_entry/flag/disable_gc_failure_hard_deletes
 
 /datum/config_entry/flag/disable_all_hard_deletes
+
+/datum/config_entry/number/hard_delete_curfew_start
+	config_entry_value = 0
+	integer = FALSE
+
+/datum/config_entry/number/hard_delete_curfew_end
+	config_entry_value = 24
+	integer = FALSE

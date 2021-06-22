@@ -21,6 +21,8 @@ Note that for any of these tools to work `TESTING` must be defined.
 By using these methods of finding references, you can make your life far, far easier when dealing with `qdel()` failures.
 */
 
+GLOBAL_VAR_INIT(harddels_ignored, FALSE)
+
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = FIRE_PRIORITY_GARBAGE
@@ -108,6 +110,13 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
 	var/queue = GC_QUEUE_CHECK
+
+	if(CONFIG_GET(flag/disable_gc_failure_hard_deletes) || CONFIG_GET(flag/disable_all_hard_deletes))
+		var/harddels_ignored_start = CONFIG_GET(number/hard_delete_curfew_start) HOURS
+		var/harddels_ignored_end = CONFIG_GET(number/hard_delete_curfew_end) HOURS
+		GLOB.harddels_ignored = (world.timeofday > harddels_ignored_start && world.timeofday < harddels_ignored_end)
+		if(harddels_ignored_start > harddels_ignored_end) // Operating over midnight
+			GLOB.harddels_ignored = !GLOB.harddels_ignored
 
 	while (state == SS_RUNNING)
 		switch (queue)
@@ -201,7 +210,7 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
-				if (!CONFIG_GET(flag/disable_gc_failure_hard_deletes))
+				if (!CONFIG_GET(flag/disable_gc_failure_hard_deletes) && !GLOB.harddels_ignored)
 					HardDelete(D)
 				if (MC_TICK_CHECK)
 					return
@@ -243,7 +252,7 @@ SUBSYSTEM_DEF(garbage)
 	++totaldels
 	var/type = D.type
 	var/refID = "\ref[D]"
-	if (!CONFIG_GET(flag/disable_all_hard_deletes))
+	if (!CONFIG_GET(flag/disable_all_hard_deletes) && !GLOB.harddels_ignored)
 		del(D)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
