@@ -162,9 +162,10 @@
 	. = ..()
 	power_change()
 	if(use_power)
-		update_static_power_usage()
+		update_power_usage()
 	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
+	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -172,8 +173,17 @@
 	dump_inventory_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
-	_unset_static_power()
+	unset_static_power()
 	return ..()
+
+/obj/machinery/proc/on_enter_area()
+	SIGNAL_HANDLER
+	update_power_usage()
+	power_change()
+
+/obj/machinery/proc/on_exit_area()
+	SIGNAL_HANDLER
+	unset_static_power()
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
@@ -322,11 +332,12 @@
 	updateUsrDialog()
 	update_appearance()
 
+///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
 /obj/machinery/proc/update_use_power(new_use_power)
 	if(new_use_power == use_power)
 		return FALSE
 
-	_unset_static_power()
+	unset_static_power()
 
 	var/new_usage = 0
 	switch(new_use_power)
@@ -346,11 +357,12 @@
 
 	return TRUE
 
+///updates the power channel this machine uses. removes the static power usage from the old channel and readds it to the new channel
 /obj/machinery/proc/update_power_channel(new_power_channel)
 	if(new_power_channel == power_channel)
 		return FALSE
 
-	var/usage = _unset_static_power()
+	var/usage = unset_static_power()
 
 	var/area/our_area = get_area(src)
 
@@ -361,24 +373,24 @@
 
 	return TRUE
 
-/obj/machinery/proc/_unset_static_power() //make this a macro?
+///internal proc that removes all static power usage from the current area
+/obj/machinery/proc/unset_static_power(area/area_to_unset = null) //make this a macro?
 	var/old_usage = static_power_usage
 
-	var/area/our_area = get_area(src)
+	var/area/our_area = area_to_unset ? area_to_unset : get_area(src)
 
 	if(our_area && old_usage)
-		our_area.addStaticPower(-old_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+		our_area.removeStaticPower(old_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
 		static_power_usage = 0
 
 	return old_usage
 
-//should this just be used without arguments? if so maybe get rid of them
-/obj/machinery/proc/update_static_power_usage(new_use_power = use_power, new_power_channel = power_channel)
-
+///main proc for updating static power usage from this machines area. call this after redefining idle or active power usage
+/obj/machinery/proc/update_power_usage(new_use_power = use_power, new_power_channel = power_channel)
 	if(new_use_power != use_power)
 		update_use_power(new_use_power)
 
-	_unset_static_power()
+	unset_static_power()
 
 	switch(use_power)
 		if(NO_POWER_USE)
@@ -396,13 +408,6 @@
 		power_channel = new_power_channel
 
 	return TRUE
-
-/*
-/area/proc/use_power(amount, chan)
-	switch(chan)
-		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
-			power_usage[chan] += amount
-			*/
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))

@@ -52,7 +52,7 @@
 		use_power = IDLE_POWER_USE
 		using_power = FALSE
 		update_appearance()
-	update_static_power_usage()
+	update_power_usage()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
 	if(G.tool_behaviour == TOOL_WRENCH)

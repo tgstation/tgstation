@@ -401,7 +401,7 @@
 		if("power")
 			on = !on
 			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
-			update_static_power_usage()
+			update_power_usage()
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("cooling")

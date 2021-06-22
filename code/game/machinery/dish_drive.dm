@@ -81,7 +81,7 @@
 		suction_enabled = board.suction
 		transmit_enabled = board.transmit
 
-	update_static_power_usage()
+	update_power_usage()
 
 /obj/machinery/dish_drive/process()
 	if(time_since_dishes <= world.time && transmit_enabled)
