@@ -22,16 +22,15 @@
 	/// The multiplexer inputs. These are what get selected for the output by the input_port.
 	var/list/datum/port/input/multiplexer_inputs
 
-GLOBAL_LIST_INIT(comp_multiplexer_options, list(
-	COMP_TYPE_ANY,
-	PORT_TYPE_STRING,
-	PORT_TYPE_NUMBER,
-	PORT_TYPE_LIST,
-	PORT_TYPE_ATOM
-))
-
 /obj/item/circuit_component/multiplexer/Initialize()
-	options = GLOB.comp_multiplexer_options
+	var/static/component_options = list(
+		COMP_TYPE_ANY,
+		PORT_TYPE_STRING,
+		PORT_TYPE_NUMBER,
+		PORT_TYPE_LIST,
+		PORT_TYPE_ATOM,
+	)
+	options = component_options
 	. = ..()
 	current_option = COMP_TYPE_ANY
 	current_type = COMP_TYPE_ANY

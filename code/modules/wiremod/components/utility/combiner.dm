@@ -14,17 +14,16 @@
 
 	var/current_type
 
-GLOBAL_LIST_INIT(comp_combiner_options, list(
-	COMP_TYPE_ANY,
-	PORT_TYPE_STRING,
-	PORT_TYPE_NUMBER,
-	PORT_TYPE_LIST,
-	PORT_TYPE_ATOM,
-	PORT_TYPE_SIGNAL,
-))
-
 /obj/item/circuit_component/combiner/Initialize()
-	options = GLOB.comp_combiner_options
+	var/static/component_options = list(
+		COMP_TYPE_ANY,
+		PORT_TYPE_STRING,
+		PORT_TYPE_NUMBER,
+		PORT_TYPE_LIST,
+		PORT_TYPE_ATOM,
+		PORT_TYPE_SIGNAL,
+	)
+	options = component_options
 	. = ..()
 	current_option = COMP_TYPE_ANY
 	current_type = COMP_TYPE_ANY

@@ -16,17 +16,16 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-GLOBAL_LIST_INIT(comp_arithmetic_options, list(
-	COMP_ARITHMETIC_ADD,
-	COMP_ARITHMETIC_SUBTRACT,
-	COMP_ARITHMETIC_MULTIPLY,
-	COMP_ARITHMETIC_DIVIDE,
-	COMP_ARITHMETIC_MIN,
-	COMP_ARITHMETIC_MAX,
-))
-
 /obj/item/circuit_component/arithmetic/Initialize()
-	options = GLOB.comp_arithmetic_options
+	var/static/component_options = list(
+		COMP_ARITHMETIC_ADD,
+		COMP_ARITHMETIC_SUBTRACT,
+		COMP_ARITHMETIC_MULTIPLY,
+		COMP_ARITHMETIC_DIVIDE,
+		COMP_ARITHMETIC_MIN,
+		COMP_ARITHMETIC_MAX,
+	)
+	options = component_options
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))

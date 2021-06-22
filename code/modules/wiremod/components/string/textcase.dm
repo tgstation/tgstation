@@ -15,13 +15,12 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-GLOBAL_LIST_INIT(comp_text_operations, list(
-	COMP_TEXT_LOWER,
-	COMP_TEXT_UPPER
-))
-
 /obj/item/circuit_component/textcase/Initialize()
-	options = GLOB.comp_text_operations
+	var/static/component_options = list(
+		COMP_TEXT_LOWER,
+		COMP_TEXT_UPPER,
+	)
+	options = component_options
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_STRING)
