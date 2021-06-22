@@ -102,6 +102,9 @@
 	var/rpm = 0
 	var/generated_power = 0
 	var/input_ratio = 50
+	var/heat_transfer_coefficient = 1
+	var/efficiency_coefficient = 1
+	var/rpm_coefficient = 1
 
 /obj/machinery/power/turbine/turbine_controller/Initialize()
 	. = ..()
@@ -124,12 +127,18 @@
 		shaft = null
 	return ..()
 
+/obj/machinery/power/turbine/turbine_controller/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(!connected)
+		balloon_alert(user, "Connect all parts first by using a multitool on this terminal")
+
 /obj/machinery/power/turbine/turbine_controller/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I))
 		if(connect_to_network())
 			check_connection(user)
-			return
+			return TRUE
 		balloon_alert(user, "machine lacks a working power cable underneath")
+	return TRUE
 
 /obj/machinery/power/turbine/turbine_controller/proc/check_connection(mob/living/user)
 	if(connected)
@@ -205,6 +214,12 @@
 	if(!input_remove.heat_capacity())
 		return
 
+	heat_transfer_coefficient = 1
+	efficiency_coefficient = 0
+	rpm_coefficient = 1
+
+	check_gas_composition(input_remove)
+
 	first_point.merge(input_remove)
 	var/first_point_pressure = first_point.return_pressure()
 	var/first_point_temperature = first_point.return_temperature()
@@ -220,15 +235,15 @@
 	if(first_point_temperature > 300 || delta_pressure > 500)
 		work_done = efficiency * second_point.total_moles() * R_IDEAL_GAS_EQUATION * first_point_temperature * log((first_point_pressure / second_point_pressure)) - rpm
 
-	rpm = (work_done ** 0.6) * 4
+	rpm = (work_done ** 0.6) * 4 * rpm_coefficient
 
-	efficiency = clamp(1 - log(10, max(second_point_temperature, 1e3)) * 0.1, 0, 1)
+	efficiency = clamp(1 - log(10, max(second_point_temperature, 1e3)) * 0.1 + efficiency_coefficient, 0, 1)
 
 	generated_power = rpm * efficiency * 10
 
 	add_avail(generated_power)
 
-	second_point.temperature = max((second_point.temperature * heat_capacity - work_done * second_point.total_moles() * 0.05) / heat_capacity, TCMB)
+	second_point.temperature = max((second_point.temperature * heat_capacity - work_done * second_point.total_moles() * 0.05 * heat_transfer_coefficient) / heat_capacity, TCMB)
 
 	var/datum/gas_mixture/second_remove = second_point.remove(second_point.total_moles())
 
@@ -236,6 +251,32 @@
 
 	inlet.update_parents()
 	outlet.update_parents()
+
+/obj/machinery/power/turbine/turbine_controller/proc/check_gas_composition(datum/gas_mixture/mix_to_check)
+	if(!mix_to_check)
+		return
+	for(var/gas_id in mix_to_check.gases)
+		switch(gas_id)
+			if(/datum/gas/water_vapor)
+				heat_transfer_coefficient += 0.2
+				efficiency_coefficient -= 0.05
+				rpm_coefficient += 0.1
+			if(/datum/gas/carbon_dioxide)
+				heat_transfer_coefficient -= 0.1
+				efficiency_coefficient += 0.1
+				rpm_coefficient += 0.03
+			if(/datum/gas/freon)
+				heat_transfer_coefficient += 0.5
+				efficiency_coefficient -= 0.1
+				rpm_coefficient += 0.3
+			if(/datum/gas/nitrous_oxide)
+				heat_transfer_coefficient += 0.05
+				efficiency_coefficient += 0.3
+				rpm_coefficient += 0.15
+			if(/datum/gas/hypernoblium)
+				heat_transfer_coefficient += 0.7
+				efficiency_coefficient += 0.2
+				rpm_coefficient += 0.3
 
 /obj/machinery/power/turbine/turbine_controller/ui_interact(mob/user, datum/tgui/ui)
 	if(panel_open)
