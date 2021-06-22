@@ -56,7 +56,8 @@
 #define BLOB_RESOURCE_GATHER_ADDED_DELAY            0.25 SECONDS// Every additional resource blob adds this amount to the gather delay
 #define BLOB_RESOURCE_GATHER_AMOUNT                 1           // The amount of points added to the overmind
 
-#define BLOB_REGULAR_MAX_HP                         30
+#define BLOB_REGULAR_MAX_HP                         25
+#define BLOB_REGULAR_HP_INIT			    		21			// The starting HP of the blob node
 #define BLOB_REGULAR_HP_REGEN                       1           // Health regenerated when pulsed by a node/core
 
 #define BLOB_STRONG_MAX_HP                          150
@@ -76,6 +77,7 @@
 
 #define BLOB_REFUND_STRONG_COST                     4           // Points refunded when destroying the structure
 #define BLOB_REFUND_REFLECTOR_COST                  8
+#define BLOB_REFUND_RESOURCE_COST					15
 #define BLOB_REFUND_FACTORY_COST                    25
 #define BLOB_REFUND_NODE_COST                       25
 
