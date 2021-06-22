@@ -11,13 +11,13 @@
 #define TOTAL_SKYFALL_LEAP_TIME 3 SECONDS
 
 /**
- * ## Savannah-Ivanov!
+ * ## Twinning!
  *
  * A two person mecha that delegates moving to the driver and shooting to the pilot.
  * ...Hilarious, right?
  */
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov
-	name = "\improper Savannah-Ivanov"
+	name = "\improper Twinning"
 	desc = "An insanely overbulked mecha that handily crushes single-pilot opponents. The price is that you need two pilots to use it."
 	icon = 'icons/mecha/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
