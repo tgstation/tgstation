@@ -333,5 +333,5 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/togglelock(mob/living/user, silent)
 	. = ..()
 	if(sinched)
-		for(var/mob/living/target in src.contents)
+		for(var/mob/living/target in contents)
 			to_chat(target, span_warning("You hear a faint hiss, and a white mist fills your vision..."))
