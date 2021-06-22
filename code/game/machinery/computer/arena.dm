@@ -391,7 +391,7 @@
 	color = "green"
 	team = ARENA_GREEN_TEAM
 
-/obj/machinery/arena_spawn/battle_royal
+/obj/machinery/arena_spawn/battle_royale
 
 /obj/machinery/arena_spawn/proc/get_controller()
 	if(_controller && !QDELETED(_controller) && _controller.arena_id == arena_id)
