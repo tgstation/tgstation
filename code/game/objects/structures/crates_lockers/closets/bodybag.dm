@@ -158,8 +158,8 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "envirobag"
 	mob_storage_capacity = 1
-	pressure_protection = 0.8
-	thermal_insulation = 0.5
+	contents_pressure_protection = 0.8
+	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental/
 	weather_protection = list(WEATHER_ACID, WEATHER_ASH, WEATHER_RAD, WEATHER_SNOW, WEATHER_VOID) // Does not protect against lava or the The Floor Is Lava spell.
 
@@ -168,8 +168,8 @@
 	desc = "A heavily reinforced and insulated bag, capable of fully isolating its contents from external factors."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "ntenvirobag"
-	pressure_protection = 1
-	thermal_insulation = 1
+	contents_pressure_protection = 1
+	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen/
 	weather_protection = list(WEATHER_ALL)
 
@@ -293,8 +293,8 @@
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured during transport."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag"
-	pressure_protection = 1
-	thermal_insulation = 1
+	contents_pressure_protection = 1
+	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list(WEATHER_ALL)
 	breakout_time = 8 MINUTES

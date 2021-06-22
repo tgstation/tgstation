@@ -98,9 +98,9 @@
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
-	if(istype(loc, /obj/structure/closet))
-		var/obj/structure/closet/current_locker = loc
-		temp_delta *= (1 - current_locker.thermal_insulation)
+	if(ismovable(loc))
+		var/atom/movable/occupied_space = loc
+		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
 
 	if(temp_delta < 0) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
