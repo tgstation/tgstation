@@ -36,16 +36,12 @@ SUBSYSTEM_DEF(machines)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(currentrun.len)
+	while(currentrun.len)// for(var/obj/machinery/thing as anything in processing step -1)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(!QDELETED(thing) && thing.process(wait * 0.1) != PROCESS_KILL)
-			//if(thing.use_power)
-			//	thing.auto_use_power() //add back the power state
-		else
+		if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
 			processing -= thing
-			if (!QDELETED(thing))
-				thing.datum_flags &= ~DF_ISPROCESSING
+			thing.datum_flags &= ~DF_ISPROCESSING
 		if (MC_TICK_CHECK)
 			return
 
