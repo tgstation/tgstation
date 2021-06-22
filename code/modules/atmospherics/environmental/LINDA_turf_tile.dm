@@ -251,9 +251,7 @@
 
 
 	var/planet_atmos = planetary_atmos
-	#ifdef EVENTMODE
-	planet_atmos = TRUE
-	#endif
+
 
 	if (planet_atmos)
 		adjacent_turfs_length++

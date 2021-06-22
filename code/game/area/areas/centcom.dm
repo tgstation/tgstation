@@ -87,9 +87,6 @@
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	eventarea = TRUE
-
-/area/tdome
-	eventareaair = TRUE
 	
 
 /*For the battle royale zone area map*/
