@@ -201,6 +201,52 @@
 /*
  * Book
  */
+///A datum which contains all the metadata of a book
+/datum/book_info
+	///The title of the book
+	var/title
+	///The "author" of the book
+	var/author
+	///The info inside the book
+	var/content
+
+/datum/book_info/New(_title, _author, _content)
+	title = _title
+	author = _author
+	content = _content
+
+/datum/book_info/proc/set_title(_title, legacy = FALSE)
+	if(legacy)
+		title = _title
+		return
+	title = reject_bad_text(trim(html_encode(_title), 200))
+
+/datum/book_info/proc/set_author(_author, legacy = FALSE)
+	if(legacy)
+		author = _author
+		return
+	author = trim(html_encode(_author), 40)
+
+/datum/book_info/proc/set_content(_content, legacy = FALSE) //Legacy should only be used for books read from the db. It is unsafe in all other cases
+	if(legacy)
+		content = _content
+		return
+	content = trim(html_encode(_content), MAX_PAPER_LENGTH)
+
+///Returns a copy of the book_info datum
+/datum/book_info/proc/return_copy()
+	var/datum/book_info/copycat = new(title, author, content)
+	return copycat
+
+/datum/book_info/proc/compare(datum/book_info/cmp_with)
+	if(author != cmp_with.author)
+		return FALSE
+	if(title != cmp_with.title)
+		return FALSE
+	if(content != cmp_with.content)
+		return FALSE
+	return TRUE
+
 /obj/item/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
@@ -215,24 +261,35 @@
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound =  'sound/items/handling/book_pickup.ogg'
-	var/dat //Actual page content
-	var/due_date = 0 //Game time in 1/10th seconds
-	var/author //Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	var/unique = FALSE //false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
-	var/title //The real name of the book.
-	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
+	///Game time in 1/10th seconds
+	var/due_date = 0
+	///false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
+	var/unique = FALSE
+	/// Specific window size for the book, i.e: "1920x1080", Size x Width
+	var/window_size = null
+	///The initial title, for use in var editing and such
+	var/starting_title
+	///The initial author, for use in var editing and such
+	var/starting_author
+	///The initial bit of content, for use in var editing and such
+	var/starting_content
+	///The packet of information that describes this book
+	var/datum/book_info/book_data
 
+/obj/item/book/Initialize()
+	. = ..()
+	book_data = new(starting_title, starting_author, starting_content)
 
 /obj/item/book/attack_self(mob/user)
 	if(!user.can_read(src))
 		return
-	user.visible_message(span_notice("[user] opens a book titled \"[title]\" and begins reading intently."))
+	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 	on_read(user)
 
 /obj/item/book/proc/on_read(mob/user)
-	if(dat)
-		user << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+	if(book_data?.content)
+		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		onclose(user, "book")
 	else
 		to_chat(user, span_notice("This book is completely blank!"))
@@ -264,30 +321,24 @@
 				if(!newtitle)
 					to_chat(user, span_warning("That title is invalid."))
 					return
-				else
-					name = newtitle
-					title = newtitle
+				name = newtitle
+				book_data.set_title(newtitle)
 			if("Contents")
-				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",MAX_PAPER_LENGTH)
+				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):", max_length= MAX_PAPER_LENGTH)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
 					to_chat(user, span_warning("The content is invalid."))
 					return
-				else
-					dat += content
-					if(length(dat) > MAX_PAPER_LENGTH)
-						dat = trim(dat, MAX_PAPER_LENGTH)
-						to_chat(user, span_warning("The text is too long, you've run out of space!"))
+				book_data.set_content(content)
 			if("Author")
-				var/newauthor = stripped_input(user, "Write the author's name:")
+				var/author = stripped_input(user, "Write the author's name:")
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
-				if(!newauthor)
+				if(!author)
 					to_chat(user, span_warning("The name is invalid."))
 					return
-				else
-					author = newauthor
+				book_data.set_author(author)
 			else
 				return
 
@@ -322,19 +373,19 @@
 					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
 	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
-		to_chat(user, span_notice("You begin to carve out [title]..."))
+		to_chat(user, span_notice("You begin to carve out [book_data.title]..."))
 		if(do_after(user, 30, target = src))
-			to_chat(user, span_notice("You carve out the pages from [title]! You didn't want to read it anyway."))
-			var/obj/item/storage/book/B = new
-			B.name = src.name
-			B.title = src.title
-			B.icon_state = src.icon_state
+			to_chat(user, span_notice("You carve out the pages from [book_data.title]! You didn't want to read it anyway."))
+			var/obj/item/storage/book/carved_out = new
+			carved_out.name = src.name
+			carved_out.title = book_data.title
+			carved_out.icon_state = src.icon_state
 			if(user.is_holding(src))
 				qdel(src)
-				user.put_in_hands(B)
+				user.put_in_hands(carved_out)
 				return
 			else
-				B.forceMove(drop_location())
+				carved_out.forceMove(drop_location())
 				qdel(src)
 				return
 		return
