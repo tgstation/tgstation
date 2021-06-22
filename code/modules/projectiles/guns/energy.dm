@@ -69,11 +69,11 @@
 			continue
 		exam_proj = new for_ammo.projectile_type() // Initial loaded projectile cannot be used because its initial value is null
 		if(exam_proj.damage > 0) // Don't divide by 0!!!!!
-			readout += "<span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shot\s on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
-			if(exam_proj.stamina > 0) // In case a projectile does damage AND stamina damage (Energy Crossbow)
-				readout += "<span class='warning'>[round(100 / (exam_proj.damage + exam_proj.stamina), 0.1)]</span> shot\s on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from immense pain."
+			readout += "[span_warning("[round(100 / exam_proj.damage, 0.1)]")] shot\s on [span_warning("[for_ammo.select_name]")] mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
+			if(exam_proj.stamina > 0) // In case a projectile does damage AND stamina damage (Energy Crossbow). Only stamina is considered here
+				readout += "[span_warning("[round(100 / exam_proj.stamina, 0.1)]")] shot\s on [span_warning("[for_ammo.select_name]")] mode before collapsing from immense pain."
 		else
-			readout += "an infinite number of shots on <span class='warning'>[for_ammo.select_name] mode</span>."
+			readout += "an infinite number of shots on [span_warning("[for_ammo.select_name] mode")]."
 		qdel(exam_proj)
 	return readout.Join("\n") // Sending over the singular string, rather than the whole list
 
