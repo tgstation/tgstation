@@ -480,10 +480,9 @@
 	return text
 
 /datum/parsed_map/Destroy()
-	..()
 	turf_blacklist.Cut()
 	parsed_bounds.Cut()
 	bounds.Cut()
 	grid_models.Cut()
 	gridSets.Cut()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()

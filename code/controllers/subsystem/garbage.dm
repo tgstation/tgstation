@@ -31,6 +31,9 @@ SUBSYSTEM_DEF(garbage)
 
 	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS) // deciseconds to wait before moving something up in the queue to the next level
 
+	/// Toggle for enabling/disabling hard deletes. Objects that don't explicitly request hard deletion with this disabled will leak.
+	var/enable_hard_deletes = TRUE
+
 	//Stat tracking
 	var/delslasttick = 0 // number of del()'s we've done this tick
 	var/gcedlasttick = 0 // number of things that gc'ed last tick
@@ -234,14 +237,34 @@ SUBSYSTEM_DEF(garbage)
 	queue[++queue.len] = list(gctime, refid) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
-/datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/D, non_datum = FALSE, override = FALSE)
+	if(!D)
+		return
+
+	if (!override && !enable_hard_deletes)
+		return
+
 	var/time = world.timeofday
 	var/tick = TICK_USAGE
 	var/ticktime = world.time
 	++delslasttick
 	++totaldels
-	var/type = D.type
-	var/refID = "\ref[D]"
+
+	var/type
+	if (!non_datum)
+		type = D.type
+	else if (islist(D))
+		type = "/list"
+	else if (istext(D))
+		type = "string"
+	else if (isnum(D))
+		type = "number"
+	else if (isfile(D))
+		type = "file"
+	else
+		type = "unknown"
+
+	var/refID = "\ref[D]" || "N/A"
 
 	del(D)
 
@@ -291,7 +314,7 @@ SUBSYSTEM_DEF(garbage)
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE, ...)
 	if(!istype(D))
-		del(D)
+		SSgarbage.HardDelete(D, TRUE)
 		return
 
 	var/datum/qdel_item/I = SSgarbage.items[D.type]
@@ -339,7 +362,7 @@ SUBSYSTEM_DEF(garbage)
 			if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
 			if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
-				SSgarbage.HardDelete(D)
+				SSgarbage.HardDelete(D, override = TRUE) // Need to override enable_hard_deletes, stuff like /client uses this
 			#ifdef REFERENCE_TRACKING
 			if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.Queue(D)
