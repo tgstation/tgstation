@@ -70,6 +70,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 3)
 	microwaved_type = null
 	tastes = list("pasta" = 1, "meat" = 1)
+	foodtypes = GRAIN | MEAT
 
 /obj/item/food/spaghetti/chowmein
 	name = "chow mein"
@@ -79,6 +80,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	microwaved_type = null
 	tastes = list("noodle" = 1, "tomato" = 1)
+	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -88,7 +90,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
 	microwaved_type = null
 	tastes = list("noodle" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/butternoodles
 	name = "butter noodles"
@@ -98,4 +100,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2)
 	microwaved_type = null
 	tastes = list("noodle" = 1, "butter" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY 
