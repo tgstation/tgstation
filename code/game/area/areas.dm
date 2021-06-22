@@ -548,8 +548,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
  */
 /area/proc/power_change()
-	for(var/obj/machinery/M in src) //TODOKYLER: make this a signal instead, machines register and deregister to their area in entered and exited
-		M.power_change() // reverify power status (to update icons etc.)
 	SEND_SIGNAL(src, COMSIG_AREA_POWER_CHANGE)
 	update_appearance()
 

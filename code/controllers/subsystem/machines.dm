@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(machines)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(currentrun.len)// for(var/obj/machinery/thing as anything in processing step -1)
+	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
