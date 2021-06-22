@@ -57,7 +57,7 @@
 #define BLOB_RESOURCE_GATHER_AMOUNT                 1           // The amount of points added to the overmind
 
 #define BLOB_REGULAR_MAX_HP                         25
-#define BLOB_REGULAR_HP_INIT			    		21			// The starting HP of the blob node
+#define BLOB_REGULAR_HP_INIT			    		21			// The starting HP of a normal blob tile
 #define BLOB_REGULAR_HP_REGEN                       1           // Health regenerated when pulsed by a node/core
 
 #define BLOB_STRONG_MAX_HP                          150
