@@ -51,6 +51,13 @@
 	var/loading_id = ""
 
 /area/centcom/supplypod/loading/Initialize()
+	#ifdef EVENTMODE
+	// A messy hack to fix special event map pod bays
+	if(loading_id && text2num(loading_id) < 5) // ERT centcom bay is safe (for now)
+		for(var/turf/T in src)
+			if(T.z == 1) // hardcoded magic number for centcom turfs since ZTRAIT_CENTCOM is unreliable for this case
+				contents -= T
+	#endif
 	. = ..()
 	if(!loading_id)
 		CRASH("[type] created without a loading_id")

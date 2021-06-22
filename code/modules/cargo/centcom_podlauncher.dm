@@ -660,6 +660,7 @@
 		var/endX = area_to_order.contents[1].x
 		var/startY = area_to_order.contents[1].y
 		var/endY = area_to_order.contents[1].y
+		var/allZ = area_to_order.contents[1].z
 		for (var/turf/turf_in_area in area_to_order) //For each turf in the area, go through and find:
 			if (turf_in_area.x < startX) //The turf with the smallest x value. This is our startX
 				startX = turf_in_area.x
@@ -671,7 +672,7 @@
 				endY = turf_in_area.y
 		for (var/vertical in endY to startY)
 			for (var/horizontal in startX to endX)
-				orderedArea.Add(locate(horizontal, startY - (vertical - endY), 1)) //After gathering the start/end x and y, go through locating each turf from top left to bottom right, like one would read a book
+				orderedArea.Add(locate(horizontal, startY - (vertical - endY), allZ)) //After gathering the start/end x and y, go through locating each turf from top left to bottom right, like one would read a book
 	return orderedArea //Return the filled list
 
 /datum/centcom_podlauncher/proc/preLaunch() //Creates a list of acceptable items,
