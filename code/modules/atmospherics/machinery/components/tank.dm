@@ -16,6 +16,7 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 	device_type = QUATERNARY
 	initialize_directions = NONE
+	custom_reconcilation = TRUE
 
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
 	smoothing_groups = list(SMOOTH_GROUP_GAS_TANK)

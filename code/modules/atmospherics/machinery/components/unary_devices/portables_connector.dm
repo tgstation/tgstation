@@ -13,6 +13,7 @@
 
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
+	custom_reconcilation = TRUE
 
 	var/obj/machinery/portable_atmospherics/connected_device
 

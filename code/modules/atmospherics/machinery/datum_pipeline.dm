@@ -233,13 +233,10 @@
 		gas_mixture_list += pipeline.other_airs
 		gas_mixture_list += pipeline.air
 		for(var/obj/machinery/atmospherics/components/atmosmch as anything in pipeline.other_atmosmch)
-			var/new_pipelines = atmosmch.returnPipenetsForReconcilation(src)
-			if(new_pipelines)
-				pipeline_list |= new_pipelines
-
-			var/new_airs = atmosmch.returnAirsForReconcilation(src)
-			if(new_airs)
-				gas_mixture_list |= new_airs
+			if(!atmosmch.custom_reconcilation)
+				continue
+			pipeline_list |= atmosmch.returnPipenetsForReconcilation(src)
+			gas_mixture_list |= atmosmch.returnAirsForReconcilation(src)
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0

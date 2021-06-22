@@ -14,6 +14,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
+	custom_reconcilation = TRUE
 	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()
 	var/valve_type = MANUAL_VALVE
 	///Bool to stop interactions while the opening/closing animation is going

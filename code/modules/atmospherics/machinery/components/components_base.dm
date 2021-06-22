@@ -13,6 +13,8 @@
 	var/list/datum/pipeline/parents
 	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
+	///Handles whether the custom reconcilation handling should be used
+	var/custom_reconcilation = FALSE
 
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
