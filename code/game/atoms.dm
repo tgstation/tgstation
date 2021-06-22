@@ -1312,20 +1312,20 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
  */
-/atom/Entered(atom/movable/AM, atom/oldLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
-	SEND_SIGNAL(AM, COMSIG_ATOM_ENTERING, src, oldLoc)
+/atom/Entered(atom/movable/arrived, direction)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, direction)
+	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, direction)
 
 /**
  * An atom is attempting to exit this atom's contents
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
  */
-/atom/Exit(atom/movable/AM, atom/newLoc)
+/atom/Exit(atom/movable/leaving, direction)
 	// Don't call `..()` here, otherwise `Uncross()` gets called.
 	// See the doc comment on `Uncross()` to learn why this is bad.
 
-	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, leaving, direction) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
 
 	return TRUE
@@ -1335,8 +1335,8 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXITED]
  */
-/atom/Exited(atom/movable/AM, atom/newLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
+/atom/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
 
 ///Return atom temperature
 /atom/proc/return_temperature()

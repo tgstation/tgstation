@@ -132,7 +132,7 @@
 	))
 	signal.send_to_receivers()
 
-/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
 	if(!materials.mat_container || panel_open || !powered())

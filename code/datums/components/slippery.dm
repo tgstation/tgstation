@@ -47,11 +47,12 @@
  * source - the source of the signal
  * AM - the atom/movable that is being slipped.
  */
-/datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
+/datum/component/slippery/proc/Slip(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
-
-	var/mob/victim = AM
-	if(istype(victim) && !(victim.movement_type & FLYING) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
+	if(!isliving(arrived))
+		return
+	var/mob/living/victim = arrived
+	if(!(victim.movement_type & FLYING) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 		callback.Invoke(victim)
 
 /*
@@ -105,11 +106,11 @@
  * source - the source of the signal
  * AM - the atom/movable that slipped on us.
  */
-/datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/AM)
+/datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
-		Slip(source, AM)
+		Slip(source, arrived)
 
 /datum/component/slippery/UnregisterFromParent()
 	. = ..()

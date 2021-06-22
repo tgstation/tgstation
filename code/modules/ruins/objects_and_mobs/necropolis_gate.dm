@@ -67,10 +67,10 @@
 	if(!(get_dir(loc, target) == dir))
 		return TRUE
 
-/obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
-	if (get_dir(leaving.loc, new_location) == dir && density)
+	if (direction == dir && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
