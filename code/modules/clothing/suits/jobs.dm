@@ -127,6 +127,9 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	togglename = "straps"
 	species_exception = list(/datum/species/golem)
+	greyscale_config = /datum/greyscale_config/suspenders
+	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
+	greyscale_colors = "#ff0000"
 
 //Security
 /obj/item/clothing/suit/security/officer
@@ -155,7 +158,23 @@
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
-	allowed = list(/obj/item/scalpel, /obj/item/surgical_drapes, /obj/item/cautery, /obj/item/hemostat, /obj/item/retractor)
+	allowed = list(
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/scalpel,
+		/obj/item/surgical_drapes,
+		/obj/item/retractor,
+		/obj/item/bonesetter,
+		/obj/item/flashlight/pen,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/storage/pill_bottle,
+		/obj/item/tank/internals/emergency_oxygen,
+		)
 
 //Curator
 /obj/item/clothing/suit/curator

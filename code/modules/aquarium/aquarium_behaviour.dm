@@ -248,7 +248,7 @@
 /datum/aquarium_behaviour/fish/proc/death()
 	STOP_PROCESSING(SSobj, src)
 	status = FISH_DEAD
-	var/message = "<span class='notice'>\The [name] dies.</span>"
+	var/message = span_notice("\The [name] dies.")
 	if(parent.current_aquarium)
 		parent.current_aquarium.visible_message(message)
 		parent.current_aquarium.alive_fish -= 1

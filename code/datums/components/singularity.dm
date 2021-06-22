@@ -83,7 +83,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/consume,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
@@ -129,7 +129,13 @@
 
 	return COMPONENT_CANCEL_BLOB_ACT
 
+/// Triggered when something enters the component's parent.
+/datum/component/singularity/proc/on_entered(datum/source, atom/movable/arrived, direction)
+	SIGNAL_HANDLER
+	consume(source, arrived)
+
 /datum/component/singularity/proc/consume(datum/source, atom/thing)
+	SIGNAL_HANDLER
 	if (thing == parent)
 		stack_trace("Singularity tried to consume itself.")
 		return
