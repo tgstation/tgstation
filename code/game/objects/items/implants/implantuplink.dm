@@ -8,7 +8,7 @@
 	var/starting_tc = 0
 	var/uplink_flag = UPLINK_TRAITORS
 
-/obj/item/implant/uplink/Initialize(mapload, _owner)
+/obj/item/implant/uplink/Initialize(mapload, _owner, uplink_flag)
 	. = ..()
 	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, uplink_flag, starting_tc)
 	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
@@ -30,7 +30,7 @@
 	imp_type = /obj/item/implant/uplink
 
 /obj/item/implanter/uplink/Initialize(mapload, uplink_flag = UPLINK_TRAITORS)
-	imp = new imp_type(src, uplink_flag)
+	imp = new imp_type(src, null, uplink_flag)
 	. = ..()
 
 /obj/item/implanter/uplink/precharged
