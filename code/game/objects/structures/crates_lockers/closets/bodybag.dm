@@ -296,6 +296,10 @@
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
 	. = ..()
+	refresh_air()
+
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/proc/refresh_air()
+	air_contents = null
 	air_contents = new(50) //liters
 	air_contents.temperature = T20C
 
@@ -311,11 +315,19 @@
 
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_air()
 	if(sinched)
+		refresh_air()
 		return air_contents
 	return ..()
 
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/remove_air(amount)
+	if(sinched)
+		refresh_air()
+		return air_contents // The internals for this bag are bottomless. Syndicate bluespace trickery.
+	return ..(amount)
+
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate/return_analyzable_air()
 	if(sinched)
+		refresh_air()
 		return air_contents
 	return ..()
 
