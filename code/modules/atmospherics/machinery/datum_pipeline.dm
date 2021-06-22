@@ -233,9 +233,6 @@
 		gas_mixture_list += pipeline.other_airs
 		gas_mixture_list += pipeline.air
 		for(var/obj/machinery/atmospherics/components/atmosmch as anything in pipeline.other_atmosmch)
-			if(QDELETED(atmosmch))
-				continue
-
 			var/new_pipelines = atmosmch.returnPipenetsForReconcilation(src)
 			if(new_pipelines)
 				pipeline_list |= new_pipelines
@@ -251,9 +248,6 @@
 	var/list/total_gases = total_gas_mixture.gases
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
-		if(!gas_mixture)
-			continue
-
 		total_gas_mixture.volume += gas_mixture.volume
 
 		// This is sort of a combined merge + heat_capacity calculation

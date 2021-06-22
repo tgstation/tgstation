@@ -230,8 +230,6 @@
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 ///from base of atom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_ATOM_HITBY "atom_hitby"
-///called when an atom is added to a new merger group: (datum/merger/old_merger, datum/merger/new_merger)
-#define COMSIG_ATOM_CHANGE_MERGER "atom_change_merger"
 
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
 #define COMSIG_STORAGE_ENTERED "storage_entered"
