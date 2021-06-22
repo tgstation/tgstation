@@ -1,6 +1,9 @@
 
 //holographic signs and barriers
 
+#define ARENA_RED_TEAM "red" // team1
+#define ARENA_GREEN_TEAM "green" //team2
+
 /obj/structure/holosign
 	name = "holo sign"
 	icon = 'icons/effects/effects.dmi'
@@ -234,3 +237,6 @@
 /obj/structure/holosign/barrier/ctf/green
 	team_allow = ARENA_GREEN_TEAM
 	icon_state = "trap-earth"
+
+#undef ARENA_GREEN_TEAM
+#undef ARENA_RED_TEAM
