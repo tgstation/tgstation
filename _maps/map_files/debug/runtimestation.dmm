@@ -1507,6 +1507,10 @@
 	dir = 4
 	},
 /area/tdome/arena)
+"iH" = (
+/obj/effect/landmark/arena/start,
+/turf/open/floor/iron/smooth,
+/area/tdome/arena)
 "iP" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -3935,9 +3939,6 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
-	},
-/obj/item/toy/plush/lizardplushie{
-	name = "Forges-The-Station"
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/control)
@@ -8042,6 +8043,10 @@
 	},
 /turf/open/floor/carpet/executive,
 /area/centcom/control)
+"XC" = (
+/obj/effect/landmark/arena/end,
+/turf/open/floor/iron/smooth,
+/area/tdome/arena)
 "XE" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -31933,7 +31938,7 @@ hD
 hD
 hD
 hD
-hD
+iH
 Ar
 zK
 zK
@@ -48061,7 +48066,7 @@ zK
 zK
 zK
 Ar
-hD
+XC
 hD
 hD
 hD
