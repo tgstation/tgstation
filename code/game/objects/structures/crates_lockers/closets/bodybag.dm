@@ -87,8 +87,8 @@
 	if(opened)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while unzipped."))
 		return
-	for(var/content_thing in content)
-		if(istype(content_thing, /mob) || istype(content_thing, /obj) || istype(content_thing, /item))
+	for(var/content_thing in contents)
+		if(istype(content_thing, /mob) || istype(content_thing, /obj))
 			to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
 			return
 	// toto we made it!
