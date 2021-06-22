@@ -164,6 +164,7 @@
 	if(use_power)
 		update_power_usage()
 	become_area_sensitive(ROUNDSTART_TRAIT)
+	RegisterSignal(get_area(src), COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
 	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
 
@@ -180,10 +181,12 @@
 	SIGNAL_HANDLER
 	update_power_usage()
 	power_change()
+	RegisterSignal(get_area(src), COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
 /obj/machinery/proc/on_exit_area()
 	SIGNAL_HANDLER
 	unset_static_power()
+	UnregisterSignal(get_area(src), COMSIG_AREA_POWER_CHANGE)
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
