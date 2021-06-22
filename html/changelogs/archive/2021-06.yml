@@ -412,3 +412,29 @@
       back into its natural maintenance habitat
   Timberpoes:
   - rscdel: Removed the fake error texture floor tiles.
+2021-06-20:
+  Krysonism:
+  - rscadd: Added a new machine to the robotics lab; the ectoscopic sniffer.
+  OHJ4Y:
+  - qol: Surgical aprons can now hold more medical-related items in their storage
+      slot.
+  Ryll/Shaps:
+  - bugfix: OOC heart commendations should once again function and poll people as
+      it should during the shuttle's return trip.
+  SmArtKar:
+  - bugfix: Luminescents once again use slime extracts
+  SpaceDragon00:
+  - bugfix: Combat defibs no longer enable their safeties when being EMPed
+  - bugfix: Visible message sends its message to mobs that are also its location
+  - bugfix: shock_touching (Renamed to shock_pulling) now actually uses the damage
+      value provided
+  - code_imp: Removed useless mob/user input for cooldowncheck
+  - code_imp: Added recharge_time variable to paddles for variable charge times
+  - code_imp: Added can_hurt, do_success, and do_cancel to reduce code duplication
+  Timberpoes:
+  - bugfix: Chat feedback is improved when setting down briefcase launchpads.
+  - bugfix: Urinals no longer alert you about the letter "i" being stuck to your hand
+      in certain edge cases.
+  Watermelon914:
+  - bugfix: Fixed being unable to add extra circuit components when an integrated
+      circuit was removed.

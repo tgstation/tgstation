@@ -43,6 +43,11 @@
 /obj/structure/spider/cocoon,
 /turf/open/floor/plating,
 /area/tdome/arena)
+"fT" = (
+/obj/structure/bed,
+/obj/item/bedsheet/clown,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
 "gG" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
@@ -55,6 +60,7 @@
 /obj/structure/table/glass,
 /obj/item/scalpel,
 /obj/item/cautery,
+/obj/item/bonesetter,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "hj" = (
@@ -210,6 +216,13 @@
 "uC" = (
 /turf/open/floor/iron,
 /area/tdome/arena)
+"vb" = (
+/obj/structure/bed,
+/obj/item/bedsheet/captain,
+/turf/open/floor/iron{
+	icon_state = "chapel"
+	},
+/area/tdome/arena)
 "vd" = (
 /turf/open/floor/iron/white,
 /area/tdome/arena)
@@ -278,6 +291,11 @@
 /area/tdome/arena)
 "zR" = (
 /obj/item/patient_spawner,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"zZ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/item/card/id/advanced/gold/captains_spare,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "Ay" = (
@@ -422,6 +440,14 @@
 /obj/structure/chair/office,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
+"IE" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/turf/open/floor/iron{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/tdome/arena)
 "IG" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -470,9 +496,23 @@
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating,
 /area/tdome/arena)
+"Kv" = (
+/obj/structure/bed,
+/obj/item/bedsheet/ian,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
 "KM" = (
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating,
+/area/tdome/arena)
+"LM" = (
+/obj/item/card/id/advanced/gold/captains_spare,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"LQ" = (
+/obj/structure/bed,
+/obj/item/bedsheet/centcom,
+/turf/open/floor/iron/white,
 /area/tdome/arena)
 "LY" = (
 /obj/structure/table/glass,
@@ -481,6 +521,14 @@
 	},
 /obj/item/circular_saw,
 /turf/open/floor/iron/white,
+/area/tdome/arena)
+"Mu" = (
+/obj/structure/bed,
+/obj/item/bedsheet/cosmos,
+/turf/open/floor/iron{
+	dir = 4;
+	icon_state = "chapel"
+	},
 /area/tdome/arena)
 "Na" = (
 /obj/effect/turf_decal/tile/blue,
@@ -507,6 +555,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/tdome/arena)
+"OU" = (
+/obj/structure/bed,
+/obj/item/bedsheet/patriot,
+/turf/open/floor/iron{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/tdome/arena)
 "Qf" = (
 /obj/item/food/meat/slab/spider,
 /turf/open/floor/plating,
@@ -530,6 +586,13 @@
 	pixel_y = 5
 	},
 /obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"Si" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/card/id/advanced/gold/captains_spare,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "Tn" = (
@@ -604,6 +667,11 @@
 "Xk" = (
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
+"Xt" = (
+/obj/structure/bed,
+/obj/item/bedsheet/cult,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
 "Xw" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth_large,
@@ -618,11 +686,6 @@
 "Zc" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/white,
-/area/tdome/arena)
-"ZO" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
 /area/tdome/arena)
 
 (1,1,1) = {"
@@ -830,7 +893,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 qL
 qL
 qL
@@ -896,7 +959,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Di
 Di
 Di
@@ -962,7 +1025,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Di
 vd
 vd
@@ -1028,7 +1091,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Di
 vd
 vd
@@ -1094,7 +1157,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Di
 vd
 zR
@@ -1160,7 +1223,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Di
 vd
 vd
@@ -1226,7 +1289,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Di
 Di
 Di
@@ -1292,7 +1355,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 qL
 qL
 qL
@@ -1358,7 +1421,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Qr
 so
 sr
@@ -1424,7 +1487,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 bD
 vd
 vd
@@ -1490,12 +1553,12 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 ao
 kL
-kL
-kL
-vd
+zZ
+zZ
+LM
 Bi
 vd
 vd
@@ -1556,7 +1619,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 VS
 vd
 vd
@@ -1622,7 +1685,7 @@ Qs
 Xk
 Xk
 Xk
-Xk
+qL
 BW
 vd
 vd
@@ -1688,7 +1751,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 FM
 vd
 vd
@@ -1754,7 +1817,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 Ba
 pj
 jA
@@ -1820,7 +1883,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 vd
 vd
 vd
@@ -1886,7 +1949,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 mf
 as
 Ov
@@ -1952,7 +2015,7 @@ Xk
 Xk
 Xk
 Xk
-Xk
+qL
 qL
 qL
 qL
@@ -2098,13 +2161,13 @@ Xk
 Xk
 Xk
 qL
-Di
+LQ
 vd
-Di
+LQ
 qL
 Di
 vd
-Di
+Kv
 qL
 Di
 vd
@@ -2626,11 +2689,11 @@ Xk
 yk
 Cj
 uv
-Eu
+IE
 GG
 Iy
 Eu
-GG
+OU
 Iy
 Eu
 GG
@@ -2695,11 +2758,11 @@ uv
 Fk
 WY
 Iy
-Fk
+Mu
 WY
 Iy
 Fk
-WY
+vb
 xG
 uv
 yk
@@ -2887,7 +2950,7 @@ Xk
 Xk
 uC
 Xk
-ZO
+yk
 yk
 vd
 yk
@@ -3221,13 +3284,13 @@ Di
 vd
 Di
 qL
-Di
+fT
 vd
 Di
 qL
-Di
+Xt
 vd
-Di
+Xt
 qL
 Xk
 Xk
@@ -3828,9 +3891,9 @@ Xk
 qL
 Ru
 vd
-vd
-jA
-vd
+LM
+Si
+LM
 hj
 hj
 hj

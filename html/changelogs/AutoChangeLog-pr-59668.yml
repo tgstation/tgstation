@@ -1,0 +1,5 @@
+author: "jupyterkat"
+delete-after: True
+changes: 
+  - qol: "you can now press space or enter to select in tgui input lists"
+  - bugfix: "tgui input lists no longer break when duplicate keys are passed"

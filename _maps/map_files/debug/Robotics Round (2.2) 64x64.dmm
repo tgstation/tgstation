@@ -19,10 +19,13 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "au" = (
-/obj/structure/closet/crate,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/computer/rdconsole{
+	dir = 1
+	},
+/obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/tdome/arena)
 "aF" = (
@@ -44,11 +47,66 @@
 	},
 /turf/open/floor/plating,
 /area/tdome/arena)
+"bl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/closet/crate,
+/obj/item/extinguisher/advanced,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"bA" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"cS" = (
+/obj/machinery/arena_spawn/red,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"de" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "dl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
+/area/tdome/arena)
+"dD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "dF" = (
 /obj/effect/turf_decal/stripes/line{
@@ -92,23 +150,6 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
-"ez" = (
-/obj/structure/lattice/catwalk{
-	alpha = 100;
-	color = "#000000";
-	layer = 100;
-	mouse_opacity = 0;
-	pixel_x = -4;
-	pixel_y = 4;
-	plane = -4
-	},
-/obj/structure/lattice/catwalk{
-	layer = 120;
-	mouse_opacity = 0;
-	plane = -4
-	},
-/turf/open/floor/iron/smooth_large,
-/area/tdome/arena)
 "eJ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -137,6 +178,19 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"fB" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"fG" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "gh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -147,15 +201,18 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "gz" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/closet/crate,
+/obj/item/extinguisher/advanced,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "gF" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "gR" = (
@@ -166,8 +223,9 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ho" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "hs" = (
@@ -185,6 +243,16 @@
 "iA" = (
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
+"iJ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"ja" = (
+/obj/effect/turf_decal/trimline/blue/filled/end,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "jS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -200,28 +268,13 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "kF" = (
-/obj/machinery/conveyor/auto{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
 /turf/open/floor/iron/dark,
-/area/tdome/arena)
-"lr" = (
-/obj/structure/lattice{
-	layer = 120;
-	mouse_opacity = 0;
-	plane = -4
-	},
-/obj/structure/lattice{
-	alpha = 100;
-	color = "#000000";
-	layer = 100;
-	mouse_opacity = 0;
-	pixel_x = -4;
-	pixel_y = 4;
-	plane = -4
-	},
-/turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "nB" = (
 /turf/closed/wall,
@@ -232,6 +285,24 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/tdome/arena)
+"nQ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"oe" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "of" = (
 /obj/effect/turf_decal/stripes/line{
@@ -263,14 +334,11 @@
 /mob/living/silicon/robot/model/security,
 /turf/open/floor/carpet,
 /area/tdome/arena)
-"po" = (
-/obj/structure/plasticflaps{
-	resistance_flags = 64
+"pr" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
 	},
-/obj/machinery/conveyor/auto{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/full,
+/obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "pv" = (
@@ -319,6 +387,21 @@
 /obj/structure/railing,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"qm" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"rq" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "ry" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -337,10 +420,11 @@
 /turf/open/floor/carpet,
 /area/tdome/arena)
 "sg" = (
-/obj/structure/closet/crate,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/machinery/computer/rdconsole,
+/obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/tdome/arena)
 "sS" = (
@@ -370,6 +454,20 @@
 	dir = 4
 	},
 /area/tdome/arena)
+"tn" = (
+/obj/machinery/arena_spawn/green,
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "tx" = (
 /obj/effect/turf_decal/trimline/white/line{
 	color = "#FFAA00";
@@ -379,6 +477,19 @@
 	dir = 4
 	},
 /area/tdome/arena)
+"tG" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "tH" = (
 /obj/machinery/mecha_part_fabricator{
 	dir = 4
@@ -387,6 +498,24 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
+/area/tdome/arena)
+"uf" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"uk" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "uo" = (
 /obj/effect/turf_decal/tile/red,
@@ -398,13 +527,15 @@
 	},
 /area/tdome/arena)
 "ve" = (
-/obj/machinery/conveyor/auto{
-	dir = 4
-	},
 /obj/structure/plasticflaps{
 	resistance_flags = 64
 	},
 /obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "vF" = (
@@ -422,6 +553,15 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"vN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -443,6 +583,8 @@
 /obj/machinery/conveyor/auto{
 	dir = 10;
 	icon_state = "conveyor_map_inverted";
+	mouse_opacity = 0;
+	resistance_flags = 64;
 	verted = -1
 	},
 /obj/effect/turf_decal/stripes/full,
@@ -469,10 +611,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"xV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "xY" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/structure/window/reinforced,
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "yw" = (
@@ -484,12 +632,37 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/tdome/arena)
+"yK" = (
+/obj/structure/lattice{
+	layer = 120;
+	mouse_opacity = 0;
+	plane = -4;
+	resistance_flags = 50
+	},
+/obj/effect/decal/fakelattice{
+	alpha = 100;
+	color = "#000000";
+	density = 0;
+	layer = 4;
+	mouse_opacity = 0;
+	pixel_x = -4;
+	pixel_y = 4;
+	plane = -4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/tdome/arena)
 "yN" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/tdome/arena)
+"zv" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "zI" = (
 /obj/structure/rack,
@@ -590,6 +763,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"CO" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Dh" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
@@ -633,6 +813,19 @@
 "EB" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
+/area/tdome/arena)
+"ES" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "EU" = (
 /obj/effect/turf_decal/tile/blue,
@@ -711,19 +904,21 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "GP" = (
-/obj/structure/lattice{
-	layer = 120;
-	mouse_opacity = 0;
-	plane = -4
-	},
-/obj/structure/lattice{
+/obj/effect/decal/fakelattice{
 	alpha = 100;
 	color = "#000000";
-	layer = 100;
+	density = 0;
+	layer = 4;
 	mouse_opacity = 0;
 	pixel_x = -4;
 	pixel_y = 4;
 	plane = -4
+	},
+/obj/structure/lattice{
+	layer = 120;
+	mouse_opacity = 0;
+	plane = -4;
+	resistance_flags = 50
 	},
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
@@ -734,6 +929,19 @@
 	color = "#FFAA00"
 	},
 /turf/open/floor/iron/smooth,
+/area/tdome/arena)
+"Jr" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "JE" = (
 /obj/machinery/door/airlock/research{
@@ -771,14 +979,17 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "KG" = (
-/obj/machinery/arena_spawn/green,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "KN" = (
-/obj/structure/lattice{
+/obj/effect/decal/fakelattice{
 	alpha = 100;
 	color = "#000000";
-	layer = 100;
+	density = 0;
+	layer = 4;
 	mouse_opacity = 0;
 	pixel_x = -4;
 	pixel_y = 4;
@@ -787,7 +998,8 @@
 /obj/structure/lattice{
 	layer = 120;
 	mouse_opacity = 0;
-	plane = -4
+	plane = -4;
+	resistance_flags = 50
 	},
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
@@ -799,6 +1011,19 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/tdome/arena)
+"Lm" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "LO" = (
 /obj/effect/turf_decal/trimline/white/line{
@@ -817,10 +1042,13 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "My" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "MD" = (
@@ -838,7 +1066,7 @@
 /area/tdome/arena)
 "MH" = (
 /obj/item/toy/plush/lizard_plushie{
-	name = "Lizard-Is-Blue"
+	name = "Pretend-I'm-Blue"
 	},
 /turf/open/floor/grass,
 /area/tdome/arena)
@@ -850,8 +1078,18 @@
 /turf/open/floor/grass,
 /area/tdome/arena)
 "MO" = (
-/obj/machinery/arena_spawn/red,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"MR" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "MS" = (
 /obj/structure/railing,
@@ -867,13 +1105,10 @@
 /turf/open/floor/carpet,
 /area/tdome/arena)
 "Nx" = (
-/obj/structure/window/reinforced{
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "NO" = (
@@ -894,16 +1129,27 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay";
-	name = "Mech Bay Shutters"
+	name = "Mech Bay Shutters";
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Pt" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay";
-	name = "Mech Bay Shutters"
+	name = "Mech Bay Shutters";
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
+/area/tdome/arena)
+"PD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "PM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -911,7 +1157,8 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay";
-	name = "Mech Bay Shutters"
+	name = "Mech Bay Shutters";
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
@@ -922,16 +1169,29 @@
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
+"Qe" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Qv" = (
 /obj/structure/lattice/catwalk{
 	layer = 120;
 	mouse_opacity = 0;
-	plane = -4
+	plane = -4;
+	resistance_flags = 50
 	},
-/obj/structure/lattice/catwalk{
+/obj/effect/decal/fakelattice{
 	alpha = 100;
 	color = "#000000";
-	layer = 100;
+	density = 0;
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
+	icon_state = "catwalk-0";
+	layer = 4;
 	mouse_opacity = 0;
 	pixel_x = -4;
 	pixel_y = 4;
@@ -985,19 +1245,21 @@
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "Tb" = (
-/obj/structure/lattice{
-	layer = 120;
-	mouse_opacity = 0;
-	plane = -4
-	},
-/obj/structure/lattice{
+/obj/effect/decal/fakelattice{
 	alpha = 100;
 	color = "#000000";
-	layer = 100;
+	density = 0;
+	layer = 4;
 	mouse_opacity = 0;
 	pixel_x = -4;
 	pixel_y = 4;
 	plane = -4
+	},
+/obj/structure/lattice{
+	layer = 120;
+	mouse_opacity = 0;
+	plane = -4;
+	resistance_flags = 50
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
@@ -1042,6 +1304,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"UH" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "UK" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -1076,15 +1347,33 @@
 /obj/effect/turf_decal/box/red,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/tdome/arena)
+"Va" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Vc" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Vd" = (
-/obj/effect/turf_decal/stripes/box,
 /turf/open/lava/smooth,
 /area/tdome/arena)
 "Vl" = (
-/obj/structure/closet/crate,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/ore_silo,
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Vu" = (
@@ -1108,15 +1397,18 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay2";
-	name = "Mech Bay Shutters"
+	name = "Mech Bay Shutters";
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Wd" = (
-/obj/machinery/conveyor/auto{
-	dir = 6
-	},
 /obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	dir = 6;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Wf" = (
@@ -1137,7 +1429,8 @@
 "Wp" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay2";
-	name = "Mech Bay Shutters"
+	name = "Mech Bay Shutters";
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
@@ -1165,6 +1458,19 @@
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/iron,
 /area/tdome/arena)
+"WX" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Xc" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Xo" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab"
@@ -1179,6 +1485,13 @@
 /area/tdome/arena)
 "Xv" = (
 /turf/open/floor/iron,
+/area/tdome/arena)
+"XL" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Ya" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
@@ -1199,13 +1512,14 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay2";
-	name = "Mech Bay Shutters"
+	name = "Mech Bay Shutters";
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Yy" = (
 /obj/item/toy/plush/lizard_plushie{
-	name = "Lizard-Is-Red"
+	name = "Pretend-I'm-Red"
 	},
 /turf/open/floor/grass,
 /area/tdome/arena)
@@ -1234,22 +1548,27 @@
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "Zp" = (
-/obj/structure/closet/crate,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
+/obj/machinery/ore_silo,
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Zx" = (
-/obj/machinery/conveyor/auto{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ZA" = (
-/obj/machinery/conveyor/auto,
 /obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ZP" = (
@@ -2940,20 +3259,20 @@ QW
 QW
 QW
 Uj
-lr
 KN
 KN
 KN
+yK
 nB
 tx
 tx
 tx
 tx
 Uj
-lr
-lr
-lr
-lr
+KN
+KN
+KN
+KN
 nB
 QW
 QW
@@ -3009,7 +3328,7 @@ nB
 iA
 iA
 iA
-ez
+Qv
 iA
 iA
 iA
@@ -3075,13 +3394,13 @@ nB
 iA
 iA
 iA
-ez
-lr
-lr
-lr
-lr
-lr
-lr
+Qv
+KN
+KN
+KN
+KN
+KN
+KN
 Qv
 iA
 iA
@@ -3102,7 +3421,7 @@ Uc
 Uc
 pv
 Uc
-po
+ve
 Uc
 QW
 QW
@@ -3141,7 +3460,7 @@ nB
 iA
 iA
 iA
-ez
+Qv
 iA
 iA
 iA
@@ -3215,9 +3534,9 @@ LO
 LO
 UV
 Qv
-lr
-lr
-lr
+KN
+KN
+KN
 nB
 QW
 QW
@@ -3384,7 +3703,7 @@ Xv
 MD
 Xv
 MD
-KG
+Xv
 MD
 Xv
 MD
@@ -3433,7 +3752,7 @@ Xv
 UK
 Xv
 UK
-MO
+Xv
 UK
 Xv
 UK
@@ -3581,9 +3900,9 @@ Uc
 fd
 fd
 gz
-gz
-ho
 xY
+ho
+ko
 ko
 ko
 ko
@@ -3600,9 +3919,9 @@ QW
 QW
 QW
 Uj
-lr
-lr
-lr
+KN
+KN
+KN
 Qv
 Se
 Ta
@@ -3611,9 +3930,9 @@ Ta
 Ta
 Vu
 Qv
-lr
-lr
-lr
+KN
+KN
+KN
 nB
 QW
 QW
@@ -3630,10 +3949,10 @@ Uc
 vF
 vF
 vF
-Nx
+vF
 My
 gF
-gF
+bl
 eT
 eT
 Uc
@@ -3736,12 +4055,12 @@ iA
 iA
 iA
 Qv
-lr
-lr
-lr
-lr
-lr
-lr
+KN
+KN
+KN
+KN
+KN
+KN
 Qv
 iA
 iA
@@ -3864,20 +4183,20 @@ QW
 QW
 QW
 Uj
-lr
-lr
-lr
-lr
+KN
+KN
+KN
+KN
 nB
 BL
 BL
 BL
 BL
 Uj
-lr
-lr
-lr
-lr
+KN
+KN
+KN
+KN
 nB
 QW
 QW
@@ -4243,11 +4562,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+KG
+MR
+UH
+bA
+iJ
 Uc
 QW
 QW
@@ -4286,11 +4605,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+CO
+uk
+uk
+uk
+dD
 Uc
 QW
 QW
@@ -4309,11 +4628,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+MO
+WX
+Va
+fB
+fG
 Uc
 QW
 QW
@@ -4352,11 +4671,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+pr
+tG
+Vc
+Jr
+Xc
 Uc
 QW
 QW
@@ -4375,11 +4694,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+Nx
+zv
+tn
+ja
+xV
 Uc
 QW
 QW
@@ -4418,11 +4737,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+pr
+de
+cS
+Jr
+Xc
 Uc
 QW
 QW
@@ -4441,11 +4760,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+oe
+iJ
+qm
+KG
+XL
 Uc
 QW
 QW
@@ -4484,11 +4803,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+pr
+ES
+ES
+Lm
+Xc
 Uc
 QW
 QW
@@ -4507,11 +4826,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+fB
+rq
+uf
+vN
+WX
 Uc
 QW
 QW
@@ -4550,11 +4869,11 @@ QW
 QW
 QW
 Uc
-FD
-FD
-FD
-FD
-FD
+nQ
+Qe
+Qe
+Qe
+PD
 Uc
 QW
 QW
@@ -4578,7 +4897,7 @@ Uc
 Uc
 Uc
 Uc
-QW
+Uc
 QW
 QW
 QW

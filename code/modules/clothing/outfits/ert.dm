@@ -537,3 +537,10 @@
 	name = "Death Commando Officer"
 
 	head = /obj/item/clothing/head/helmet/space/beret
+
+/datum/outfit/centcom/death_commando/disarmed
+	backpack_contents = list()
+	l_pocket = null
+	r_pocket = null
+	l_hand = null
+	belt = null

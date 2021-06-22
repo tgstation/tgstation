@@ -86,7 +86,7 @@
 	death = FALSE
 	roundstart = FALSE
 	instant = FALSE
-	outfit = /datum/outfit/centcom/death_commando
+	outfit = /datum/outfit/centcom/death_commando/disarmed
 	mask = /obj/item/clothing/mask/facehugger/impregnated
 
 /obj/effect/mob_spawn/human/hugged_patient/create()

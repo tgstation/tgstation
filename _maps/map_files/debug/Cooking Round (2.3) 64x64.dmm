@@ -27,12 +27,9 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "ai" = (
-/obj/effect/portal/permanent{
-	id = "farm_r";
-	name = "Farm"
-	},
+/obj/effect/portal/permanent/red/farm/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "al" = (
 /obj/structure/sink/kitchen{
@@ -46,12 +43,13 @@
 /area/awaymission/centcom_away/thunderdome)
 "an" = (
 /obj/effect/turf_decal/siding/white,
-/obj/effect/portal/permanent{
-	color = "green";
-	id = "grocer_g"
+/obj/effect/portal/permanent/green/grocery/from,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
 	},
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "ap" = (
@@ -65,7 +63,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "as" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "av" = (
@@ -73,7 +73,6 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "ay" = (
-/mob/living/simple_animal/hostile/zombie,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -102,7 +101,9 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "aI" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod{
+	max_integrity = 9999
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
@@ -183,7 +184,8 @@
 /area/awaymission/centcom_away/thunderdome)
 "bA" = (
 /obj/machinery/door/window/survival_pod{
-	dir = 8
+	dir = 8;
+	max_integrity = 9999
 	},
 /obj/structure/trap/ctf/red,
 /obj/effect/decal/cleanable/dirt,
@@ -191,21 +193,18 @@
 	dir = 1
 	},
 /area/awaymission/centcom_away/thunderdome)
-"bC" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "bD" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/weather/sand,
 /turf/open/floor/stone,
+/area/awaymission/centcom_away/thunderdome)
+"bF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "bG" = (
 /obj/item/food/grown/wheat,
@@ -233,6 +232,14 @@
 /obj/item/clothing/head/crown,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/awaymission/centcom_away/thunderdome)
+"bL" = (
+/obj/structure/window/reinforced/fulltile/indestructable,
+/turf/open/floor/plating/beach/water{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "lava";
+	name = "lava"
+	},
 /area/awaymission/centcom_away/thunderdome)
 "bP" = (
 /turf/closed/wall/r_wall,
@@ -277,18 +284,44 @@
 	},
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
-"cn" = (
-/obj/effect/portal/permanent{
-	color = "green";
-	id = "jungle_g"
+"cl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/item/food/cnds/random,
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"cn" = (
+/obj/effect/portal/permanent/green/jungle/from,
 /obj/effect/turf_decal/trimline/green/filled,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/awaymission/centcom_away/thunderdome)
+"cq" = (
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/closed/indestructible/fakeglass,
+/area/awaymission/centcom_away/thunderdome)
 "cr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
+/area/awaymission/centcom_away/thunderdome)
+"cu" = (
+/obj/structure/trap/ctf/green,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "cx" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -312,7 +345,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "cL" = (
 /obj/structure/trap/ctf/green,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "cM" = (
@@ -398,6 +433,10 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
+/obj/item/food/grown/pumpkin{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "dp" = (
@@ -476,12 +515,22 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
 /area/awaymission/centcom_away/thunderdome)
+"dV" = (
+/obj/structure/table/wood/fancy/blue,
+/turf/open/floor/iron/dark,
+/area/awaymission/centcom_away/thunderdome)
 "dW" = (
-/mob/living/simple_animal/chicken{
-	faction = list("spiders")
-	},
 /obj/item/food/grown/wheat,
-/obj/item/food/egg,
+/obj/structure/closet/crate/wooden,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "dY" = (
@@ -494,11 +543,6 @@
 "dZ" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
-"eb" = (
-/mob/living/simple_animal/hostile/zombie,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/carpet/green,
 /area/awaymission/centcom_away/thunderdome)
 "ed" = (
 /obj/structure/railing{
@@ -540,16 +584,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"ek" = (
+/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny{
+	faction = list("hostile")
+	},
+/turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
 "el" = (
 /obj/item/food/grown/mushroom/jupitercup,
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
-"eq" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "eu" = (
 /obj/structure/table,
@@ -592,10 +636,6 @@
 	dir = 8
 	},
 /area/awaymission/centcom_away/thunderdome)
-"eP" = (
-/mob/living/simple_animal/hostile/carp,
-/turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
 "eS" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -629,35 +669,23 @@
 /obj/structure/sign/poster/contraband/pwr_game,
 /turf/closed/wall/mineral/iron,
 /area/awaymission/centcom_away/thunderdome)
-"eY" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6
-	},
-/obj/machinery/button/door/directional/south{
-	id = "blue_shutter";
-	name = "blue shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "fc" = (
-/obj/effect/portal/permanent{
-	id = "lava_b";
-	name = "Lavaland"
-	},
+/obj/effect/portal/permanent/blue/lavaland/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "fd" = (
-/turf/open/floor/carpet/green,
+/obj/machinery/button/door/directional/south{
+	id = "green_shutter";
+	name = "green shutter control";
+	req_access_txt = "16"
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "fg" = (
-/obj/effect/portal/permanent{
-	id = "grocer_b";
-	name = "Grocery"
-	},
+/obj/effect/portal/permanent/blue/grocery/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "fi" = (
 /obj/item/food/grown/ash_flora/mushroom_stem,
@@ -669,10 +697,6 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
-"fq" = (
-/obj/structure/spawner/lavaland/legion,
-/turf/open/floor/grass/fakebasalt,
 /area/awaymission/centcom_away/thunderdome)
 "fw" = (
 /obj/item/grown/bananapeel,
@@ -689,12 +713,9 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/centcom_away/thunderdome)
 "fL" = (
-/obj/effect/portal/permanent{
-	id = "zoo_b";
-	name = "Zoo"
-	},
+/obj/effect/portal/permanent/blue/zoo/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "fN" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -794,8 +815,17 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "gR" = (
-/obj/structure/beebox/premade/random,
+/obj/structure/beebox,
 /turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
+"gU" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "gX" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -824,13 +854,6 @@
 	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
-"hg" = (
-/obj/structure/trap/ctf/blue,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "blue_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "hh" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow,
@@ -849,7 +872,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
 "hm" = (
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny{
+	faction = list("hostile")
+	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
@@ -869,6 +894,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
+/area/awaymission/centcom_away/thunderdome)
+"hw" = (
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "hx" = (
 /obj/structure/reagent_dispensers/watertank/high{
@@ -913,7 +947,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "hM" = (
 /obj/structure/trap/ctf/blue,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "hN" = (
@@ -944,16 +980,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
-"hT" = (
-/obj/structure/trap/ctf/red,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "red_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "hX" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
@@ -975,18 +1001,6 @@
 "hZ" = (
 /obj/item/food/grown/tea,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
-"ic" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -4
-	},
-/obj/structure/table/greyscale,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "ie" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1084,10 +1098,7 @@
 /turf/closed/indestructible/riveted,
 /area/awaymission/centcom_away/thunderdome)
 "iH" = (
-/obj/effect/portal/permanent{
-	color = "green";
-	id = "farm_g"
-	},
+/obj/effect/portal/permanent/green/farm/from,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/sandy_dirt,
@@ -1230,13 +1241,6 @@
 	},
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
-"jH" = (
-/obj/structure/trap/ctf/green,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "green_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "jI" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 10
@@ -1287,6 +1291,9 @@
 /obj/item/food/grown/tomato/blood{
 	pixel_y = -5
 	},
+/obj/item/food/grown/tomato/blood{
+	pixel_y = -5
+	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "kd" = (
@@ -1296,21 +1303,25 @@
 /obj/item/organ/lungs,
 /turf/open/floor/iron/smooth_edge,
 /area/awaymission/centcom_away/thunderdome)
-"kf" = (
-/mob/living/simple_animal/hostile/zombie,
-/obj/effect/turf_decal/siding/wood{
+"kg" = (
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white,
+/obj/structure/table/wood,
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "kj" = (
-/obj/effect/portal/permanent{
-	id = "hospital_r";
-	name = "Hospital"
-	},
+/obj/effect/portal/permanent/red/hospital/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "kk" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -1355,47 +1366,19 @@
 	},
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
-"kq" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
-	},
-/obj/machinery/button/door/directional/south{
-	id = "green_shutter";
-	name = "green shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "ks" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
 /turf/open/floor/engine,
 /area/awaymission/centcom_away/thunderdome)
-"kw" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10
-	},
-/obj/machinery/button/door/directional/south{
-	id = "blue_shutter";
-	name = "blue shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "kE" = (
-/obj/effect/portal/permanent{
-	id = "zoo_r";
-	name = "Zoo"
-	},
+/obj/effect/portal/permanent/red/zoo/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "kF" = (
-/obj/effect/portal/permanent{
-	color = "green";
-	id = "hospital_g"
-	},
+/obj/effect/portal/permanent/green/hospital/from,
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -1403,23 +1386,10 @@
 /obj/effect/turf_decal/trimline/green/filled,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
-"kG" = (
-/obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "red_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "kI" = (
 /obj/structure/trap/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "blue_shutter"
+	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
@@ -1437,6 +1407,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
+"kN" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "kO" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -1451,6 +1432,18 @@
 /obj/structure/alien/weeds,
 /obj/item/xenos_claw,
 /turf/open/floor/plating/dirt/dark,
+/area/awaymission/centcom_away/thunderdome)
+"kU" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -4
+	},
+/obj/structure/table/greyscale,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "kW" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -1523,6 +1516,15 @@
 	},
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
+"ll" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "lm" = (
 /obj/item/food/fishmeat/moonfish{
 	pixel_y = 5
@@ -1556,14 +1558,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/awaymission/centcom_away/thunderdome)
 "lx" = (
-/obj/effect/portal/permanent{
-	id = "zoo_g";
-	name = "Zoo"
-	},
+/obj/effect/portal/permanent/green/zoo/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/white{
-	color = "#4AC948"
-	},
+/turf/open/floor/engine/air,
+/area/awaymission/centcom_away/thunderdome)
+"lz" = (
+/obj/structure/trap/ctf/green,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "lE" = (
 /obj/structure/rack,
@@ -1584,14 +1585,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
 "lM" = (
-/obj/effect/portal/permanent{
-	id = "farm_g";
-	name = "Farm"
-	},
+/obj/effect/portal/permanent/green/farm/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/white{
-	color = "#4AC948"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1608,9 +1604,23 @@
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
+"lZ" = (
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 8
+	},
+/obj/structure/table/wood/fancy/blue,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"mb" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/awaymission/centcom_away/thunderdome)
 "mc" = (
 /obj/machinery/door/window/survival_pod{
-	dir = 8
+	dir = 8;
+	max_integrity = 9999
 	},
 /obj/structure/trap/ctf/blue,
 /obj/effect/decal/cleanable/dirt,
@@ -1646,7 +1656,7 @@
 /obj/item/food/grown/wheat,
 /obj/item/food/egg,
 /mob/living/simple_animal/chicken{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
@@ -1670,6 +1680,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
+/area/awaymission/centcom_away/thunderdome)
+"mw" = (
+/obj/structure/chair/comfy/lime{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "mx" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -1755,7 +1771,14 @@
 /turf/open/water,
 /area/awaymission/centcom_away/thunderdome)
 "nd" = (
-/turf/closed/wall,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "ng" = (
 /obj/item/food/grown/banana,
@@ -1796,6 +1819,13 @@
 /obj/structure/flora/rock/pile,
 /turf/open/lava,
 /area/awaymission/centcom_away/thunderdome)
+"nv" = (
+/obj/structure/trap/ctf/blue,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "nw" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/structure/fans/tiny,
@@ -1806,9 +1836,7 @@
 /turf/closed/wall/mineral/iron,
 /area/awaymission/centcom_away/thunderdome)
 "nA" = (
-/obj/effect/portal/permanent{
-	id = "lava_b"
-	},
+/obj/effect/portal/permanent/blue/lavaland/from,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled,
 /turf/open/floor/pod,
@@ -1818,6 +1846,10 @@
 /obj/item/food/grown/blumpkin{
 	pixel_x = -5;
 	pixel_y = 2
+	},
+/obj/item/food/grown/blumpkin{
+	pixel_x = 4;
+	pixel_y = 1
 	},
 /obj/item/food/grown/blumpkin{
 	pixel_x = 4;
@@ -1865,18 +1897,12 @@
 /area/awaymission/centcom_away/thunderdome)
 "nQ" = (
 /obj/structure/flora/ausbushes/grassybush,
-/mob/living/simple_animal/hostile/gorilla,
 /turf/open/water,
 /area/awaymission/centcom_away/thunderdome)
 "nT" = (
 /obj/structure/trap/ctf/green,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
-"of" = (
-/obj/effect/turf_decal/siding/wideplating/dark,
-/mob/living/simple_animal/slime/random{
-	faction = list("hostile")
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
@@ -1886,11 +1912,20 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
-"ot" = (
-/obj/effect/portal/permanent{
-	color = "green";
-	id = "lava_g"
+"oo" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
 	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -4
+	},
+/obj/structure/table/greyscale,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"ot" = (
+/obj/effect/portal/permanent/green/lavaland/from,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/trimline/green/filled,
 /turf/open/floor/pod,
@@ -1907,12 +1942,7 @@
 /area/awaymission/centcom_away/thunderdome)
 "oy" = (
 /obj/structure/trap/ctf/green,
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "green_shutter"
-	},
+/obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "oz" = (
@@ -1964,7 +1994,7 @@
 /area/awaymission/centcom_away/thunderdome)
 "oC" = (
 /mob/living/simple_animal/butterfly{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
@@ -1977,6 +2007,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"oM" = (
+/obj/item/organ/regenerative_core/legion,
+/turf/open/floor/grass/fakebasalt,
 /area/awaymission/centcom_away/thunderdome)
 "oQ" = (
 /obj/structure/rack,
@@ -2032,6 +2066,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"pc" = (
+/obj/item/food/spiderling,
+/turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
 "pd" = (
 /obj/machinery/vending/snack,
 /obj/machinery/status_display/evac/directional/north,
@@ -2051,6 +2089,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"pm" = (
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/food/spiderling,
+/turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "pp" = (
 /obj/structure/rack,
@@ -2100,10 +2146,6 @@
 /obj/item/food/grown/banana/mime,
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
-"pD" = (
-/obj/structure/spider/spiderling,
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "pE" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
@@ -2117,10 +2159,7 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "pH" = (
-/obj/effect/portal/permanent{
-	color = "red";
-	id = "hospital_r"
-	},
+/obj/effect/portal/permanent/red/hospital/from,
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -2135,6 +2174,7 @@
 "pP" = (
 /obj/machinery/computer/pandemic,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bottle/syriniver,
 /turf/open/floor/cult,
 /area/awaymission/centcom_away/thunderdome)
 "pQ" = (
@@ -2142,17 +2182,13 @@
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/dirt/dark,
 /area/awaymission/centcom_away/thunderdome)
-"pR" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "pT" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/oat{
 	pixel_x = -4
+	},
+/obj/item/food/grown/oat{
+	pixel_x = 8
 	},
 /obj/item/food/grown/oat{
 	pixel_x = 8
@@ -2174,10 +2210,7 @@
 	icon_state = "topdoor"
 	},
 /obj/structure/fluff/bus/passable/seat,
-/obj/effect/portal/permanent{
-	color = "red";
-	id = "zoo_r"
-	},
+/obj/effect/portal/permanent/red/zoo/from,
 /obj/effect/turf_decal/trimline/red/filled,
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
@@ -2187,18 +2220,6 @@
 /obj/structure/table/survival_pod,
 /obj/item/storage/firstaid/fire,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
-"qa" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -4
-	},
-/obj/structure/table/greyscale,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "qd" = (
 /obj/structure/healingfountain,
@@ -2223,19 +2244,10 @@
 /obj/item/food/grown/icepepper{
 	pixel_x = -9
 	},
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
-"ql" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 9
-	},
-/obj/item/storage/firstaid/regular{
+/obj/item/food/grown/icepepper{
 	pixel_x = -4
 	},
-/obj/structure/table/greyscale,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/cafeteria,
+/turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "qm" = (
 /obj/item/food/grown/mushroom/amanita,
@@ -2254,6 +2266,10 @@
 	pixel_x = 5;
 	pixel_y = -4
 	},
+/obj/item/food/grown/onion{
+	pixel_x = 5;
+	pixel_y = -4
+	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "qp" = (
@@ -2261,6 +2277,16 @@
 	dir = 5
 	},
 /turf/open/floor/plating/grass/jungle,
+/area/awaymission/centcom_away/thunderdome)
+"qq" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "qs" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -2296,12 +2322,21 @@
 	},
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
+"qH" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "qI" = (
 /obj/structure/railing/corner{
 	color = "#964B00"
 	},
 /mob/living/simple_animal/butterfly{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
@@ -2444,7 +2479,8 @@
 /area/awaymission/centcom_away/thunderdome)
 "rB" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 1
+	dir = 1;
+	max_integrity = 9999
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -2471,7 +2507,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "rE" = (
 /obj/structure/trap/ctf/red,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "rG" = (
@@ -2497,17 +2535,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "rL" = (
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_y = 8
-	},
-/obj/structure/table/wood/fancy/blue,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
-	},
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "blue_shutter"
 	},
-/turf/open/floor/iron/cafeteria,
+/turf/open/floor/carpet/royalblue,
 /area/awaymission/centcom_away/thunderdome)
 "rO" = (
 /obj/structure/alien/weeds,
@@ -2559,9 +2590,11 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "sa" = (
-/obj/vehicle/ridden/speedbike/red{
+/obj/structure/statue/silver/medborg{
 	anchored = 1;
-	dir = 1
+	dir = 1;
+	icon = 'icons/obj/bike.dmi';
+	icon_state = "speedbike_red"
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
@@ -2589,31 +2622,16 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
-"sz" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "sA" = (
 /obj/structure/spider/stickyweb,
 /mob/living/simple_animal/butterfly{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 8
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
-"sC" = (
-/obj/structure/trap/ctf/red,
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "red_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "sD" = (
 /obj/machinery/power/shieldwallgen,
@@ -2652,10 +2670,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
-"sT" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/construct/juggernaut/hostile,
-/turf/open/floor/cult,
+"sS" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "sU" = (
 /obj/structure/rack,
@@ -2747,15 +2769,6 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
-"tn" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "to" = (
 /obj/structure/tubes,
 /obj/structure/chair/comfy/black{
@@ -2830,10 +2843,7 @@
 "tW" = (
 /obj/structure/trap/ctf/green,
 /obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "green_shutter"
+	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
@@ -2866,7 +2876,9 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "un" = (
@@ -2874,6 +2886,10 @@
 /obj/item/food/grown/onion/red{
 	pixel_x = -5;
 	pixel_y = -1
+	},
+/obj/item/food/grown/onion/red{
+	pixel_x = 4;
+	pixel_y = -5
 	},
 /obj/item/food/grown/onion/red{
 	pixel_x = 4;
@@ -2896,19 +2912,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
-"ut" = (
-/obj/machinery/hydroponics/soil,
-/obj/item/food/grown/corn,
-/obj/item/food/grown/corn{
-	pixel_y = -5
+"ur" = (
+/obj/structure/trap/ctf/green,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
 	},
-/obj/item/food/grown/corn{
-	pixel_y = -10
-	},
-/mob/living/simple_animal/hostile/bee{
-	faction = list("spiders")
-	},
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "uv" = (
 /obj/structure/plaque,
@@ -2924,23 +2933,6 @@
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
-"uM" = (
-/obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
-/obj/structure/railing{
-	color = "#964B00"
-	},
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
-"uP" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "uQ" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/mineral/titanium/tiled/white{
@@ -2951,9 +2943,7 @@
 /turf/open/lava,
 /area/awaymission/centcom_away/thunderdome)
 "uV" = (
-/obj/effect/portal/permanent{
-	id = "farm_b"
-	},
+/obj/effect/portal/permanent/blue/farm/from,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/sandy_dirt,
@@ -2971,6 +2961,17 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/item/food/grown/mushroom/amanita,
 /turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
+"va" = (
+/obj/structure/table/wood/fancy/green,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"vb" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "ve" = (
 /obj/item/food/grown/mushroom/reishi,
@@ -3002,13 +3003,6 @@
 	icon_state = "bus"
 	},
 /area/awaymission/centcom_away/thunderdome)
-"vp" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/construct/artificer/hostile,
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 1
-	},
-/area/awaymission/centcom_away/thunderdome)
 "vq" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/plating/grass,
@@ -3029,6 +3023,15 @@
 /obj/item/food/grown/moonflower,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
+"vC" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "vG" = (
 /obj/structure/chair/sofa/right{
 	dir = 8
@@ -3036,16 +3039,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/cnds/random,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
-"vJ" = (
-/obj/structure/trap/ctf/blue,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "blue_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "vK" = (
 /obj/machinery/door/airlock/cult/friendly,
@@ -3168,9 +3161,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
+"ws" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "wt" = (
 /mob/living/simple_animal/butterfly{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /obj/structure/railing{
 	color = "#964B00"
@@ -3207,7 +3209,14 @@
 /obj/item/food/grown/trumpet{
 	pixel_y = -7
 	},
+/obj/item/food/grown/trumpet{
+	pixel_y = -7
+	},
 /turf/open/floor/plating/sandy_dirt,
+/area/awaymission/centcom_away/thunderdome)
+"wA" = (
+/obj/structure/table/wood/fancy/green,
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "wH" = (
 /obj/structure/railing{
@@ -3229,10 +3238,7 @@
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "wL" = (
-/obj/effect/portal/permanent{
-	color = "red";
-	id = "lava_r"
-	},
+/obj/effect/portal/permanent/red/lavaland/from,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/trimline/red/filled,
 /turf/open/floor/pod,
@@ -3300,10 +3306,7 @@
 /obj/structure/fluff/bus/passable{
 	icon_state = "topdoor"
 	},
-/obj/effect/portal/permanent{
-	color = "green";
-	id = "zoo_g"
-	},
+/obj/effect/portal/permanent/green/zoo/from,
 /obj/effect/turf_decal/trimline/green/filled,
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
@@ -3314,7 +3317,9 @@
 	dir = 8;
 	max_integrity = 99999
 	},
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod{
+	max_integrity = 9999
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
@@ -3396,16 +3401,6 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
-"xJ" = (
-/obj/structure/table/wood/fancy/blue,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "blue_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "xN" = (
 /obj/machinery/door/airlock/glass_large,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -3422,14 +3417,9 @@
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
 "xS" = (
-/obj/effect/portal/permanent{
-	id = "jungle_g";
-	name = "Jungle"
-	},
+/obj/effect/portal/permanent/green/jungle/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/white{
-	color = "#4AC948"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "xV" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -3445,11 +3435,13 @@
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
 "xW" = (
-/obj/structure/window/reinforced/fulltile/indestructable,
-/turf/open/floor/plating/beach/water{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "lava"
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
 	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "xZ" = (
 /obj/structure/table/greyscale,
@@ -3500,17 +3492,6 @@
 /obj/structure/sign/poster/party_game,
 /turf/closed/indestructible/wood,
 /area/awaymission/centcom_away/thunderdome)
-"yt" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
-	},
-/obj/machinery/button/door/directional/south{
-	id = "red_shutter";
-	name = "red shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "yw" = (
 /obj/effect/turf_decal/box/white,
 /obj/effect/decal/cleanable/dirt,
@@ -3521,6 +3502,12 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
+/area/awaymission/centcom_away/thunderdome)
+"yz" = (
+/obj/structure/chair/comfy/teal{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "yC" = (
 /obj/structure/railing{
@@ -3535,7 +3522,12 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/awaymission/centcom_away/thunderdome)
 "yH" = (
-/turf/open/floor/carpet/red,
+/obj/machinery/button/door/directional/south{
+	id = "red_shutter";
+	name = "red shutter control";
+	req_access_txt = "16"
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "yK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3628,7 +3620,7 @@
 /area/awaymission/centcom_away/thunderdome)
 "zh" = (
 /mob/living/simple_animal/butterfly{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
@@ -3641,13 +3633,18 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
+"zp" = (
+/obj/structure/trap/ctf/red,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "zA" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
 	max_integrity = 99999
 	},
 /obj/structure/window/reinforced/survival_pod{
-	dir = 1
+	dir = 1;
+	max_integrity = 9999
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
@@ -3736,6 +3733,12 @@
 /obj/item/storage/fancy/rollingpapers,
 /turf/open/floor/holofloor/beach,
 /area/awaymission/centcom_away/thunderdome)
+"Af" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "Ak" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3751,18 +3754,13 @@
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
-"An" = (
-/obj/structure/trap/ctf/red,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "red_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "Av" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "Az" = (
@@ -3785,12 +3783,13 @@
 /area/awaymission/centcom_away/thunderdome)
 "AE" = (
 /obj/effect/turf_decal/siding/white,
-/obj/effect/portal/permanent{
-	color = "red";
-	id = "grocer_r"
+/obj/effect/portal/permanent/red/grocery/from,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
 	},
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "AF" = (
@@ -3817,7 +3816,7 @@
 /area/awaymission/centcom_away/thunderdome)
 "AS" = (
 /mob/living/simple_animal/butterfly{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /obj/structure/railing{
 	color = "#964B00";
@@ -3846,7 +3845,9 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "AY" = (
@@ -3877,35 +3878,20 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
-"Bm" = (
-/obj/structure/table/wood/fancy/green,
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "green_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
-"Bo" = (
-/mob/living/simple_animal/hostile/bee{
-	faction = list("spiders")
-	},
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "Bp" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 6
-	},
-/mob/living/simple_animal/slime/random{
-	faction = list("hostile")
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "Bs" = (
 /obj/effect/turf_decal/siding/white,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
+/obj/structure/window/reinforced/spawner{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "Bv" = (
@@ -3917,13 +3903,6 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/awaymission/centcom_away/thunderdome)
-"By" = (
-/obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
-	faction = faction("carp")
-	},
-/turf/open/floor/plating/dirt/dark,
 /area/awaymission/centcom_away/thunderdome)
 "Bz" = (
 /obj/machinery/hydroponics/soil,
@@ -3975,9 +3954,12 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcom_away/thunderdome)
-"BO" = (
+"BT" = (
 /obj/structure/railing{
-	dir = 8
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -4025,15 +4007,22 @@
 	},
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
-"Cw" = (
-/obj/structure/trap/ctf/green,
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "green_shutter"
+"Cl" = (
+/obj/structure/trap/ctf/blue,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"Co" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "Cx" = (
 /obj/structure/chair/plastic{
@@ -4085,6 +4074,35 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
+"CM" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"CO" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
+/obj/structure/statue/silver/medborg{
+	anchored = 1;
+	desc = "Push it to the limit, walk along the razor's edge.";
+	icon = 'icons/obj/car.dmi';
+	icon_state = "speedwagon";
+	name = "BM Speedwagon"
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/awaymission/centcom_away/thunderdome)
 "CP" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner,
 /area/awaymission/centcom_away/thunderdome)
@@ -4130,12 +4148,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
-"Dd" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "Dg" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -4159,6 +4171,13 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
+"Dr" = (
+/obj/structure/trap/ctf/red,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "Ds" = (
 /obj/item/food/grown/poppy/geranium/fraxinella,
 /turf/open/floor/plating/grass/jungle,
@@ -4180,6 +4199,7 @@
 /obj/item/food/grown/redbeet{
 	pixel_x = 10
 	},
+/obj/item/food/grown/redbeet,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "DE" = (
@@ -4190,12 +4210,9 @@
 /turf/open/floor/iron/smooth,
 /area/awaymission/centcom_away/thunderdome)
 "DH" = (
-/obj/effect/portal/permanent{
-	id = "grocer_r";
-	name = "Grocery"
-	},
+/obj/effect/portal/permanent/red/grocery/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "DI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -4238,6 +4255,10 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
+/obj/item/reagent_containers/glass/bottle/syriniver{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/glass/beaker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
@@ -4251,10 +4272,7 @@
 "Ed" = (
 /obj/structure/trap/ctf/red,
 /obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "red_shutter"
+	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
@@ -4275,9 +4293,7 @@
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "Es" = (
-/obj/effect/portal/permanent{
-	id = "hospital_b"
-	},
+/obj/effect/portal/permanent/blue/hospital/from,
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -4308,6 +4324,9 @@
 /obj/item/food/grown/whitebeet{
 	pixel_x = 10
 	},
+/obj/item/food/grown/whitebeet{
+	pixel_x = 10
+	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "EF" = (
@@ -4318,7 +4337,7 @@
 /area/awaymission/centcom_away/thunderdome)
 "EG" = (
 /mob/living/simple_animal/chicken{
-	faction = list("spiders")
+	faction = list("hostile")
 	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
@@ -4328,42 +4347,24 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/centcom_away/thunderdome)
-"EM" = (
-/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny,
-/obj/structure/spider/stickyweb,
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "EO" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/awaymission/centcom_away/thunderdome)
 "ES" = (
-/obj/effect/portal/permanent{
-	id = "hospital_g";
-	name = "Hospital"
-	},
+/obj/effect/portal/permanent/green/hospital/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/white{
-	color = "#4AC948"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "EU" = (
 /obj/structure/trap/ctf/blue,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "blue_shutter"
-	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "EV" = (
-/obj/effect/portal/permanent{
-	id = "farm_b";
-	name = "Farm"
-	},
+/obj/effect/portal/permanent/blue/farm/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "Fa" = (
 /obj/structure/flora/ausbushes/grassybush,
@@ -4413,17 +4414,10 @@
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
 "Fm" = (
-/obj/structure/table/wood/fancy/green,
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 1
-	},
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "green_shutter"
 	},
-/turf/open/floor/iron/cafeteria,
+/turf/open/floor/carpet/green,
 /area/awaymission/centcom_away/thunderdome)
 "Fn" = (
 /obj/structure/chair/office,
@@ -4458,7 +4452,7 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "Fu" = (
-/mob/living/simple_animal/slime/random{
+/mob/living/simple_animal/slime{
 	faction = list("hostile")
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -4472,11 +4466,11 @@
 /obj/item/food/grown/potato{
 	pixel_x = -4
 	},
+/obj/item/food/grown/potato{
+	pixel_x = -10;
+	pixel_y = -4
+	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
-"FB" = (
-/obj/machinery/arena_spawn/green,
-/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "FD" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4497,7 +4491,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "FL" = (
 /obj/structure/trap/ctf/red,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "FP" = (
@@ -4549,7 +4545,8 @@
 /area/awaymission/centcom_away/thunderdome)
 "Gh" = (
 /obj/machinery/door/window/survival_pod{
-	dir = 8
+	dir = 8;
+	max_integrity = 9999
 	},
 /obj/structure/trap/ctf/green,
 /obj/effect/decal/cleanable/dirt,
@@ -4587,7 +4584,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "GF" = (
 /obj/structure/trap/ctf/blue,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "GG" = (
@@ -4626,6 +4625,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"GR" = (
+/obj/structure/railing/corner{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	color = "#964B00"
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/awaymission/centcom_away/thunderdome)
 "GT" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/southleft,
@@ -4649,6 +4658,15 @@
 /obj/machinery/processor,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
+"Hd" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "Hi" = (
 /obj/structure/table/wood,
@@ -4737,6 +4755,10 @@
 	pixel_x = 2;
 	pixel_y = -5
 	},
+/obj/item/food/grown/tomato{
+	pixel_x = 2;
+	pixel_y = -5
+	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "HV" = (
@@ -4760,6 +4782,9 @@
 "If" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/sugarcane,
+/obj/item/food/grown/sugarcane{
+	pixel_y = -8
+	},
 /obj/item/food/grown/sugarcane{
 	pixel_y = -8
 	},
@@ -4817,6 +4842,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
+/obj/item/organ/regenerative_core/legion,
 /turf/open/floor/pod,
 /area/awaymission/centcom_away/thunderdome)
 "ID" = (
@@ -4843,15 +4869,6 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
-"IO" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "IP" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -4887,7 +4904,9 @@
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "IV" = (
-/obj/structure/table/wood,
+/obj/structure/statue/silver/medborg{
+	anchored = 1
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4912,12 +4931,9 @@
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "Je" = (
-/obj/effect/portal/permanent{
-	id = "lava_r";
-	name = "Lavaland"
-	},
+/obj/effect/portal/permanent/red/lavaland/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "Jg" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -5012,9 +5028,28 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/awaymission/centcom_away/thunderdome)
+"JN" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "JS" = (
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/plating/grass/jungle,
+/area/awaymission/centcom_away/thunderdome)
+"JZ" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -4
+	},
+/obj/structure/table/greyscale,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "Ka" = (
 /obj/item/ammo_casing/c9mm,
@@ -5070,14 +5105,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/awaymission/centcom_away/thunderdome)
-"Ks" = (
-/obj/structure/trap/ctf/blue,
-/obj/effect/turf_decal/trimline/blue/filled/corner,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "blue_shutter"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
 "Ku" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -5087,6 +5114,17 @@
 "Kx" = (
 /obj/item/food/moonfish_eggs,
 /turf/open/floor/holofloor/beach/coast_b,
+/area/awaymission/centcom_away/thunderdome)
+"Kz" = (
+/obj/structure/railing/corner{
+	color = "#964B00";
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	color = "#964B00";
+	dir = 4
+	},
+/turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "KA" = (
 /obj/structure/table,
@@ -5133,14 +5171,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
-"KU" = (
-/obj/structure/railing{
-	color = "#964B00";
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "KY" = (
 /obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/iron,
@@ -5167,6 +5197,7 @@
 /obj/item/food/grown/ghost_chili{
 	pixel_x = -4
 	},
+/obj/item/food/grown/ghost_chili,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "Le" = (
@@ -5205,12 +5236,9 @@
 /turf/open/floor/holofloor/grass,
 /area/awaymission/centcom_away/thunderdome)
 "Lw" = (
-/obj/effect/portal/permanent{
-	id = "hospital_b";
-	name = "Hospital"
-	},
+/obj/effect/portal/permanent/blue/hospital/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "Lx" = (
 /obj/machinery/computer/operating{
@@ -5273,6 +5301,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"LM" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/centcom_away/thunderdome)
 "LO" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
@@ -5331,19 +5365,14 @@
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
-"Mf" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "Mg" = (
 /obj/effect/turf_decal/siding/white,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
+/obj/structure/window/reinforced/spawner{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "Mi" = (
@@ -5358,6 +5387,10 @@
 /area/awaymission/centcom_away/thunderdome)
 "Ml" = (
 /turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
+"Mm" = (
+/obj/structure/sign/poster/official/cleanliness,
+/turf/closed/wall/r_wall,
 /area/awaymission/centcom_away/thunderdome)
 "Mn" = (
 /obj/structure/railing{
@@ -5431,6 +5464,21 @@
 /mob/living/simple_animal/hostile/construct/wraith/hostile,
 /turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
+"MF" = (
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"MH" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "MJ" = (
 /obj/item/toy/balloon,
 /obj/effect/turf_decal/siding/wood{
@@ -5438,6 +5486,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
+/area/awaymission/centcom_away/thunderdome)
+"MK" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "ML" = (
 /obj/structure/flora/ausbushes/grassybush,
@@ -5447,16 +5504,22 @@
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
 "MM" = (
-/obj/effect/portal/permanent{
-	color = "red";
-	id = "farm_r"
-	},
+/obj/effect/portal/permanent/red/farm/from,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
+"MR" = (
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_y = 8
+	},
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "MS" = (
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5468,7 +5531,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/cnds/random,
+/obj/structure/statue/silver/md{
+	anchored = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "MX" = (
@@ -5520,9 +5585,7 @@
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "Ni" = (
-/obj/effect/portal/permanent{
-	id = "jungle_b"
-	},
+/obj/effect/portal/permanent/blue/jungle/from,
 /obj/effect/turf_decal/trimline/blue/filled,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -5607,21 +5670,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating/dirt/dark,
 /area/awaymission/centcom_away/thunderdome)
-"NG" = (
-/obj/structure/girder,
-/obj/item/stack/sheet/iron,
-/turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
-"NJ" = (
-/obj/structure/spider/spiderling,
-/obj/structure/spider/stickyweb,
-/turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
 "NK" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"NL" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "NP" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -5663,15 +5720,6 @@
 /obj/item/food/grown/bungofruit,
 /turf/open/water,
 /area/awaymission/centcom_away/thunderdome)
-"Ok" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "On" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
@@ -5695,12 +5743,6 @@
 /obj/structure/sign/poster/official/work_for_a_future,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/centcom_away/thunderdome)
-"Ot" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "Ov" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow,
@@ -5715,10 +5757,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
-"Ox" = (
-/obj/structure/sign/poster/official/cleanliness,
-/turf/closed/wall,
 /area/awaymission/centcom_away/thunderdome)
 "OC" = (
 /obj/structure/alien/weeds,
@@ -5776,10 +5814,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
-"OO" = (
-/obj/machinery/arena_spawn/red,
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "OS" = (
 /obj/structure/gel_cocoon,
 /turf/open/floor/plating/grass/jungle,
@@ -5825,6 +5859,9 @@
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/cabbage{
 	pixel_x = -4
+	},
+/obj/item/food/grown/cabbage{
+	pixel_x = 4
 	},
 /obj/item/food/grown/cabbage{
 	pixel_x = 4
@@ -5932,6 +5969,7 @@
 	pixel_y = 2
 	},
 /obj/item/food/grown/potato/sweet,
+/obj/item/food/grown/potato/sweet,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "PY" = (
@@ -5939,19 +5977,10 @@
 	color = "#4AC948"
 	},
 /area/awaymission/centcom_away/thunderdome)
-"Qc" = (
-/obj/vehicle/ridden/speedwagon{
-	anchored = 1;
-	pixel_x = -30;
-	pixel_y = -55
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
-"Qi" = (
-/obj/structure/trap/ctf/green,
-/obj/effect/turf_decal/trimline/green/filled/corner,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "green_shutter"
+"Qh" = (
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
@@ -5980,7 +6009,6 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "Qp" = (
-/mob/living/simple_animal/hostile/carp,
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 6
 	},
@@ -6036,7 +6064,9 @@
 /turf/open/floor/plating,
 /area/awaymission/centcom_away/thunderdome)
 "QL" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/east{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "QM" = (
@@ -6044,9 +6074,7 @@
 	icon_state = "topdoor"
 	},
 /obj/structure/fluff/bus/passable/seat,
-/obj/effect/portal/permanent{
-	id = "zoo_b"
-	},
+/obj/effect/portal/permanent/blue/zoo/from,
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
@@ -6069,6 +6097,7 @@
 /obj/item/food/grown/chili{
 	pixel_x = -4
 	},
+/obj/item/food/grown/chili,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "QR" = (
@@ -6134,6 +6163,9 @@
 /obj/item/food/grown/rice{
 	pixel_x = 9
 	},
+/obj/item/food/grown/rice{
+	pixel_x = 9
+	},
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "Rn" = (
@@ -6179,6 +6211,15 @@
 /obj/structure/chair/stool/bar,
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
+"RC" = (
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/obj/structure/railing{
+	climbable = 0
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "RE" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -6209,17 +6250,6 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
-"RJ" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10
-	},
-/obj/machinery/button/door/directional/south{
-	id = "green_shutter";
-	name = "green shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 "RK" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass/jungle,
@@ -6245,14 +6275,9 @@
 /turf/open/floor/pod,
 /area/awaymission/centcom_away/thunderdome)
 "RS" = (
-/obj/effect/portal/permanent{
-	id = "lava_g";
-	name = "Lavaland"
-	},
+/obj/effect/portal/permanent/green/lavaland/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/white{
-	color = "#4AC948"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "RT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6290,14 +6315,9 @@
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
 "Sr" = (
-/obj/effect/portal/permanent{
-	id = "grocer_g";
-	name = "Grocery"
-	},
+/obj/effect/portal/permanent/green/grocery/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/white{
-	color = "#4AC948"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "Su" = (
 /obj/structure/table/wood,
@@ -6337,18 +6357,6 @@
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
-"Sy" = (
-/turf/open/floor/plating/beach/water{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "lava"
-	},
-/area/awaymission/centcom_away/thunderdome)
-"SA" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "SC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -6393,6 +6401,10 @@
 /obj/item/food/grown/mushroom/amanita,
 /turf/open/floor/plating/grass,
 /area/awaymission/centcom_away/thunderdome)
+"SZ" = (
+/obj/structure/beebox/premade,
+/turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
 "Te" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -6403,17 +6415,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "Tg" = (
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_y = 8
-	},
-/obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
-	},
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "red_shutter"
 	},
-/turf/open/floor/iron/cafeteria,
+/turf/open/floor/carpet/red,
 /area/awaymission/centcom_away/thunderdome)
 "Ti" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -6423,12 +6428,9 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "Tj" = (
-/obj/effect/portal/permanent{
-	id = "jungle_r";
-	name = "Jungle"
-	},
+/obj/effect/portal/permanent/red/jungle/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "Tk" = (
 /obj/structure/rack,
@@ -6525,10 +6527,7 @@
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "TQ" = (
-/obj/effect/portal/permanent{
-	color = "red";
-	id = "jungle_r"
-	},
+/obj/effect/portal/permanent/red/jungle/from,
 /obj/effect/turf_decal/trimline/red/filled,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -6554,12 +6553,9 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
 "Uk" = (
-/obj/effect/portal/permanent{
-	id = "jungle_b";
-	name = "Jungle"
-	},
+/obj/effect/portal/permanent/blue/jungle/toward,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium/tiled/blue,
+/turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
 "Ul" = (
 /obj/structure/sign/poster/contraband/space_cola,
@@ -6578,7 +6574,9 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "Uq" = (
@@ -6593,6 +6591,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"Ur" = (
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "Uu" = (
 /obj/effect/decal/cleanable/blood,
@@ -6623,6 +6624,12 @@
 	},
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"Uy" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "Uz" = (
@@ -6780,6 +6787,15 @@
 /obj/effect/turf_decal/siding/wideplating/dark,
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
+"Vy" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "VB" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/water,
@@ -6804,10 +6820,17 @@
 	},
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
+"VK" = (
+/obj/structure/trap/ctf/blue,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "VM" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/eggplant{
 	pixel_x = -4
+	},
+/obj/item/food/grown/eggplant{
+	pixel_y = -2
 	},
 /obj/item/food/grown/eggplant{
 	pixel_x = 6;
@@ -6938,6 +6961,13 @@
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating/sandy_dirt,
 /area/awaymission/centcom_away/thunderdome)
+"WQ" = (
+/obj/structure/trap/ctf/red,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "WR" = (
 /turf/open/floor/holofloor/beach,
 /area/awaymission/centcom_away/thunderdome)
@@ -6953,10 +6983,22 @@
 	pixel_y = 5
 	},
 /obj/item/food/canned_jellyfish,
+/obj/item/food/larvae{
+	pixel_y = 11
+	},
+/obj/item/food/desert_snails{
+	pixel_y = 5
+	},
+/obj/item/food/canned_jellyfish,
 /turf/open/floor/pod,
 /area/awaymission/centcom_away/thunderdome)
 "WT" = (
-/turf/open/floor/carpet/royalblue,
+/obj/machinery/button/door/directional/south{
+	id = "blue_shutter";
+	name = "blue shutter control";
+	req_access_txt = "16"
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "WW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7024,6 +7066,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"XA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
 "XB" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -7033,16 +7088,14 @@
 /area/awaymission/centcom_away/thunderdome)
 "XE" = (
 /obj/effect/turf_decal/siding/white,
-/obj/effect/portal/permanent{
-	id = "grocer_b"
+/obj/effect/portal/permanent/blue/grocery/from,
+/obj/structure/window/reinforced/spawner/west{
+	max_integrity = 9999
 	},
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
-"XH" = (
-/mob/living/simple_animal/crab,
-/turf/open/floor/holofloor/beach/water,
 /area/awaymission/centcom_away/thunderdome)
 "XK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -7066,7 +7119,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/north{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
 "XQ" = (
@@ -7083,13 +7138,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
-"XU" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "XY" = (
@@ -7126,12 +7174,7 @@
 /area/awaymission/centcom_away/thunderdome)
 "Yt" = (
 /obj/structure/trap/ctf/red,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "red_shutter"
-	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "YA" = (
@@ -7160,6 +7203,15 @@
 	pixel_x = -7
 	},
 /turf/open/floor/plating/sandy_dirt,
+/area/awaymission/centcom_away/thunderdome)
+"YC" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
 "YD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -7193,6 +7245,11 @@
 	},
 /obj/item/toy/balloon,
 /turf/open/floor/plating/grass,
+/area/awaymission/centcom_away/thunderdome)
+"YK" = (
+/obj/structure/flora/ausbushes/grassybush,
+/obj/item/food/grown/banana,
+/turf/open/floor/plating/grass/jungle,
 /area/awaymission/centcom_away/thunderdome)
 "YL" = (
 /turf/open/floor/holofloor/beach/water,
@@ -7364,17 +7421,6 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/centcom_away/thunderdome)
-"ZX" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 10
-	},
-/obj/machinery/button/door/directional/south{
-	id = "red_shutter";
-	name = "red shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
 
 (1,1,1) = {"
 pP
@@ -7458,7 +7504,7 @@ WB
 tT
 Pm
 mC
-NG
+mC
 WB
 xa
 PH
@@ -7503,7 +7549,7 @@ io
 io
 io
 io
-io
+MF
 Xs
 Xs
 ri
@@ -7569,8 +7615,8 @@ io
 io
 io
 io
-io
-io
+MF
+Ur
 Xs
 Xs
 "}
@@ -7590,13 +7636,13 @@ mC
 Pm
 Pm
 WB
-NG
+mC
 WB
 gN
 Ls
 dT
 Uw
-PH
+dT
 Tk
 dT
 lf
@@ -7626,7 +7672,6 @@ Xs
 Sr
 uQ
 io
-io
 Dl
 QI
 QI
@@ -7636,12 +7681,13 @@ QI
 QI
 Eh
 io
-io
-io
+MF
+Ur
+Ur
 Xs
 "}
 (5,1,1) = {"
-sT
+Pv
 Pv
 Pv
 rC
@@ -7668,7 +7714,7 @@ dT
 dT
 dT
 HP
-kf
+cS
 mH
 oB
 DI
@@ -7685,26 +7731,26 @@ Xp
 sa
 Xp
 Xp
-of
+Vx
 ri
 Xs
 Xs
 bS
 rt
-io
 Dl
 wW
-nd
+bP
 Lu
+ur
 oy
-Qi
 Lu
-nd
+bP
 QJ
 Eh
-io
-io
-io
+MF
+Ur
+Ur
+Ur
 "}
 (6,1,1) = {"
 Pv
@@ -7756,21 +7802,21 @@ ri
 Xs
 PY
 uQ
-io
 Dl
-kq
-nd
-nd
+wW
+bP
+bP
 IA
 uA
 EF
 AW
-nd
-nd
+bP
+bP
 QJ
-Eh
-io
-io
+hw
+Ur
+Ur
+Ur
 "}
 (7,1,1) = {"
 zE
@@ -7791,7 +7837,7 @@ WA
 oB
 tZ
 gN
-Qu
+Pm
 Pm
 Pm
 Pm
@@ -7822,21 +7868,21 @@ ri
 Xs
 ES
 uQ
-io
 JI
-nd
-nd
-ql
+bP
+bP
+kU
 qA
 zQ
 zQ
 cN
 Fq
+bP
+bP
 nd
-nd
-pR
-io
-io
+Ur
+Ur
+Ur
 "}
 (8,1,1) = {"
 fK
@@ -7888,7 +7934,6 @@ ri
 Xs
 PY
 uQ
-io
 jk
 Lu
 Dg
@@ -7900,9 +7945,10 @@ ju
 EF
 xz
 Lu
-eq
-io
-io
+gU
+Ur
+Ur
+Ur
 "}
 (9,1,1) = {"
 Ws
@@ -7954,7 +8000,6 @@ ri
 Xs
 PY
 uQ
-io
 jk
 Lu
 mR
@@ -7966,9 +8011,10 @@ NR
 ju
 Un
 Lu
-eq
-io
-io
+gU
+Ur
+Ur
+Ur
 "}
 (10,1,1) = {"
 LW
@@ -8020,9 +8066,8 @@ ri
 Xs
 lx
 uQ
-io
 jk
-Cw
+tW
 uA
 zQ
 ju
@@ -8032,9 +8077,10 @@ NR
 ju
 rJ
 Lu
-eq
-io
-io
+gU
+Ur
+wA
+mw
 "}
 (11,1,1) = {"
 UB
@@ -8060,7 +8106,7 @@ Pm
 Pm
 Pm
 Pm
-Qu
+Pm
 Pm
 Pm
 Pm
@@ -8086,9 +8132,8 @@ ri
 Xs
 PY
 uQ
-FB
 jk
-jH
+lz
 ju
 zQ
 ju
@@ -8098,9 +8143,10 @@ ju
 ju
 rJ
 Lu
-Ok
-Ot
-Ot
+Vy
+Ur
+Ur
+Ur
 "}
 (12,1,1) = {"
 QK
@@ -8131,7 +8177,7 @@ Pm
 Pm
 WG
 Pm
-Qu
+Pm
 Pm
 Pm
 SJ
@@ -8152,9 +8198,8 @@ ri
 Xs
 PY
 uQ
-io
 jk
-jH
+lz
 ju
 zQ
 ju
@@ -8163,10 +8208,11 @@ ju
 ju
 ju
 EF
+qq
 Fm
 fd
-fd
-fd
+wA
+mw
 "}
 (13,1,1) = {"
 WB
@@ -8218,9 +8264,8 @@ ri
 Xs
 lM
 uQ
-io
 jk
-Qi
+oy
 Cc
 zQ
 ju
@@ -8229,10 +8274,11 @@ KZ
 tm
 ju
 ii
-Bm
-fd
-fd
-fd
+va
+Fm
+Ur
+Ur
+Ur
 "}
 (14,1,1) = {"
 lr
@@ -8250,7 +8296,7 @@ Ft
 rq
 Uq
 Uq
-Uq
+XA
 WB
 eW
 bK
@@ -8276,7 +8322,7 @@ Xp
 cf
 zN
 Xp
-Fu
+Xp
 Xp
 Xp
 Vx
@@ -8284,7 +8330,6 @@ ri
 Xs
 PY
 uQ
-io
 jk
 Lu
 pv
@@ -8296,9 +8341,10 @@ tm
 ju
 GZ
 Lu
-IO
-BO
-BO
+YC
+Ur
+wA
+mw
 "}
 (15,1,1) = {"
 Sv
@@ -8350,7 +8396,6 @@ ri
 Xs
 PY
 uQ
-io
 jk
 Lu
 py
@@ -8362,12 +8407,13 @@ ju
 ii
 qY
 Lu
-eq
-io
-io
+gU
+Ur
+Ur
+Ur
 "}
 (16,1,1) = {"
-vp
+IN
 cr
 ha
 wx
@@ -8377,7 +8423,7 @@ oZ
 wb
 CR
 Ak
-CR
+kg
 wN
 oB
 jZ
@@ -8416,21 +8462,21 @@ ri
 Xs
 RS
 uQ
-io
 JI
-nd
-nd
+bP
+bP
 bl
 oH
 ju
 ju
 ii
 ap
+bP
+bP
 nd
-nd
-pR
-io
-io
+Ur
+Ur
+Ur
 "}
 (17,1,1) = {"
 vV
@@ -8482,21 +8528,21 @@ ri
 Xs
 PY
 uQ
-io
 on
-RJ
-nd
-Ox
+Uy
+bP
+Mm
 mL
 Cc
 ii
 LF
-nd
-nd
+bP
+bP
 zO
-yR
-io
-io
+RC
+Ur
+Ur
+Ur
 "}
 (18,1,1) = {"
 tw
@@ -8549,20 +8595,20 @@ Xs
 Xs
 jc
 rp
-io
 on
 QR
-nd
+bP
 Lu
+cu
 tW
-Cw
 Lu
-nd
+bP
 zO
 yR
-io
-io
-io
+MF
+Ur
+Ur
+Ur
 "}
 (19,1,1) = {"
 IN
@@ -8574,8 +8620,8 @@ mC
 YX
 oB
 CR
-CR
 IP
+cl
 ZB
 oB
 jZ
@@ -8587,7 +8633,7 @@ Vb
 VW
 pL
 pL
-eb
+pL
 pL
 pL
 pL
@@ -8603,7 +8649,7 @@ wI
 Uo
 Uo
 Uo
-Uo
+CO
 iv
 iv
 iv
@@ -8616,7 +8662,6 @@ Xs
 xS
 uQ
 io
-io
 on
 vU
 vU
@@ -8626,9 +8671,10 @@ vU
 vU
 yR
 io
-io
-io
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (20,1,1) = {"
 ta
@@ -8667,7 +8713,7 @@ ZF
 li
 wI
 Xp
-Qc
+Xp
 Xp
 cf
 zN
@@ -8691,10 +8737,10 @@ io
 io
 io
 io
-io
-io
-Xs
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (21,1,1) = {"
 eH
@@ -8712,7 +8758,7 @@ Is
 Is
 Kb
 Kb
-Kb
+kN
 mC
 iw
 Jq
@@ -8757,10 +8803,10 @@ io
 io
 io
 io
-io
-Xs
-Xs
-ri
+MF
+Ur
+Ur
+Ur
 "}
 (22,1,1) = {"
 mC
@@ -8823,10 +8869,10 @@ Xs
 Xs
 Xs
 Xs
-Xs
-Xs
-ri
-ri
+cq
+Ur
+Ur
+Ur
 "}
 (23,1,1) = {"
 iw
@@ -8889,10 +8935,10 @@ io
 io
 io
 io
-io
-Xs
-Xs
-ri
+MF
+Ur
+Ur
+Ur
 "}
 (24,1,1) = {"
 dj
@@ -8927,7 +8973,7 @@ ir
 ir
 ir
 ir
-ir
+pm
 UL
 sA
 UL
@@ -8935,7 +8981,7 @@ UL
 UL
 UL
 ir
-KU
+ir
 ir
 SL
 cW
@@ -8955,10 +9001,10 @@ io
 io
 io
 io
-io
-io
-Xs
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (25,1,1) = {"
 ID
@@ -8981,27 +9027,27 @@ BG
 yl
 Np
 Tp
-BA
+YL
 YL
 jo
 iw
 ri
 jG
+ek
 Ml
 Ml
-Bo
 Ml
 Ml
 Ml
-hm
+YG
 YG
 pq
-NJ
+YG
 jv
 Ml
 Ml
-Bo
 Ml
+pc
 Ml
 zh
 Lf
@@ -9012,7 +9058,6 @@ Xs
 DH
 ox
 io
-io
 mu
 rZ
 rZ
@@ -9022,9 +9067,10 @@ rZ
 rZ
 HC
 io
-io
-io
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (26,1,1) = {"
 Su
@@ -9071,26 +9117,26 @@ Ml
 bI
 Ix
 av
-uM
+hN
 ri
 Xs
 Xs
 Bv
 zG
-io
 mu
 Qm
-nd
-xW
+bP
+bL
+WQ
 Yt
-sC
-xW
-nd
+bL
+bP
 wP
 HC
-io
-io
-io
+MF
+Ur
+Ur
+Ur
 "}
 (27,1,1) = {"
 YJ
@@ -9123,7 +9169,7 @@ Ml
 Ml
 vq
 Ml
-NJ
+YG
 YG
 Ml
 Ml
@@ -9142,21 +9188,21 @@ ri
 Xs
 bW
 ox
-io
 mu
-yt
-nd
-nd
+Qm
+bP
+bP
 wq
 Yl
 RM
 Bk
-nd
-nd
+bP
+bP
 wP
-HC
-io
-io
+qH
+Ur
+Ur
+Ur
 "}
 (28,1,1) = {"
 Jd
@@ -9175,7 +9221,7 @@ tE
 Ci
 Gy
 wK
-eP
+WR
 WR
 WR
 BG
@@ -9185,7 +9231,7 @@ YL
 iw
 ri
 jG
-gR
+SZ
 Fy
 Fy
 Fy
@@ -9199,7 +9245,7 @@ Bz
 Bz
 YB
 YB
-pD
+Ml
 YG
 av
 av
@@ -9208,21 +9254,21 @@ ri
 Xs
 kj
 ox
-io
 IG
-nd
-nd
-ic
+bP
+bP
+JZ
 Zf
 zQ
 zQ
 Rb
 al
-nd
-nd
-XU
-io
-io
+bP
+bP
+CM
+Ur
+Ur
+Ur
 "}
 (29,1,1) = {"
 Jd
@@ -9261,10 +9307,10 @@ YG
 YG
 YG
 hm
-Bo
 Ml
 Ml
-EM
+Ml
+YG
 YG
 YG
 av
@@ -9274,9 +9320,8 @@ ri
 Xs
 bW
 ox
-io
 AO
-xW
+bL
 zl
 Zf
 ju
@@ -9285,10 +9330,11 @@ ju
 ju
 RM
 yN
+bL
 xW
-SA
-io
-io
+Ur
+Ur
+Ur
 "}
 (30,1,1) = {"
 yO
@@ -9319,7 +9365,7 @@ ri
 ck
 gR
 DX
-ut
+DX
 DX
 qo
 qo
@@ -9340,9 +9386,8 @@ ri
 Xs
 bW
 ox
-io
 AO
-xW
+bL
 Zc
 zQ
 ju
@@ -9351,10 +9396,11 @@ zL
 NR
 ju
 YE
+bL
 xW
-SA
-io
-io
+Ur
+vb
+LM
 "}
 (31,1,1) = {"
 FP
@@ -9389,12 +9435,12 @@ Ml
 My
 Ml
 Ml
-Bo
 Ml
 Ml
 Ml
 Ml
-pD
+Ml
+pc
 Ml
 Ml
 Ml
@@ -9406,9 +9452,8 @@ ri
 Xs
 kE
 ox
-io
 AO
-hT
+Ed
 Yl
 zQ
 ju
@@ -9417,10 +9462,11 @@ VX
 NR
 ju
 hD
-xW
-Mf
-Ot
-Ot
+bL
+ws
+Ur
+Ur
+Ur
 "}
 (32,1,1) = {"
 kn
@@ -9472,9 +9518,8 @@ ri
 Xs
 bW
 ox
-OO
 AO
-An
+zp
 ju
 zQ
 ju
@@ -9483,10 +9528,11 @@ ju
 ju
 ju
 RM
+MR
 Tg
 yH
-yH
-yH
+vb
+LM
 "}
 (33,1,1) = {"
 hb
@@ -9518,7 +9564,7 @@ jG
 Ml
 Ml
 Ml
-Ml
+pc
 Ml
 YG
 YG
@@ -9526,7 +9572,7 @@ YG
 YG
 Ml
 Ml
-Bo
+Ml
 Ml
 Ml
 Ix
@@ -9538,9 +9584,8 @@ ri
 Xs
 bW
 ox
-io
 AO
-An
+zp
 ju
 zQ
 ju
@@ -9549,10 +9594,11 @@ ju
 ju
 ju
 QG
-kG
-yH
-yH
-yH
+Qh
+Tg
+Ur
+Ur
+Ur
 "}
 (34,1,1) = {"
 UV
@@ -9604,9 +9650,8 @@ ri
 Xs
 ai
 ox
-io
 AO
-sC
+Yt
 oR
 zQ
 ju
@@ -9615,10 +9660,11 @@ KZ
 tm
 ju
 hD
-xW
-bC
-BO
-BO
+bL
+vC
+Ur
+vb
+LM
 "}
 (35,1,1) = {"
 JB
@@ -9650,8 +9696,8 @@ AS
 Ml
 YG
 hm
-pD
-Bo
+Ml
+Ml
 Ml
 Ml
 vq
@@ -9660,7 +9706,7 @@ YG
 Ml
 Ml
 Ml
-hm
+YG
 YG
 Ml
 Lf
@@ -9670,9 +9716,8 @@ ri
 Xs
 bW
 ox
-io
 AO
-xW
+bL
 xZ
 zQ
 ju
@@ -9681,10 +9726,11 @@ VX
 tm
 ju
 eG
+bL
 xW
-SA
-io
-io
+Ur
+Ur
+Ur
 "}
 (36,1,1) = {"
 JB
@@ -9736,9 +9782,8 @@ ri
 Xs
 bW
 ox
-io
 AO
-xW
+bL
 PU
 Rz
 ju
@@ -9747,10 +9792,11 @@ ju
 ju
 QG
 fX
+bL
 xW
-SA
-io
-io
+Ur
+Ur
+Ur
 "}
 (37,1,1) = {"
 JB
@@ -9767,7 +9813,7 @@ FU
 FU
 FU
 FU
-tN
+FU
 tQ
 xi
 Gb
@@ -9802,21 +9848,21 @@ ri
 Xs
 Je
 ox
-io
 IG
-nd
-nd
+bP
+bP
 yY
 Rz
 ju
 ju
 QG
 Dp
-nd
-nd
-XU
-io
-io
+bP
+bP
+CM
+Ur
+Ur
+Ur
 "}
 (38,1,1) = {"
 JB
@@ -9847,8 +9893,8 @@ ri
 eU
 iw
 dW
-cM
 Lf
+EG
 Sf
 EG
 jG
@@ -9868,21 +9914,21 @@ ri
 Xs
 bW
 ox
-io
 zS
-ZX
-nd
-Ox
+Af
+bP
+Mm
 ui
 oR
 QG
 ji
-nd
-nd
+bP
+bP
 ix
-gX
-io
-io
+MK
+Ur
+Ur
+Ur
 "}
 (39,1,1) = {"
 JB
@@ -9898,9 +9944,9 @@ FU
 FU
 pQ
 FU
+FU
+FU
 tN
-FU
-FU
 pQ
 Gb
 Gy
@@ -9915,7 +9961,7 @@ iw
 cM
 cM
 Sf
-Lf
+NL
 Lf
 So
 sW
@@ -9935,20 +9981,20 @@ Xs
 Xs
 ew
 Qw
-io
 zS
 Ti
-nd
-xW
+bP
+bL
+Dr
 Ed
-hT
-xW
-nd
+bL
+bP
 ix
 gX
-io
-io
-io
+MF
+Ur
+Ur
+Ur
 "}
 (40,1,1) = {"
 JB
@@ -9973,17 +10019,17 @@ Gy
 Ys
 YL
 YL
-XH
+Pl
 iw
 ri
 eU
 iw
-cM
+Lf
 cM
 EG
 oC
-Lf
-jG
+GR
+Kz
 sW
 iw
 MM
@@ -10002,7 +10048,6 @@ Xs
 Tj
 ox
 io
-io
 zS
 NK
 NK
@@ -10012,9 +10057,10 @@ NK
 NK
 gX
 io
-io
-io
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (41,1,1) = {"
 IK
@@ -10045,7 +10091,7 @@ ri
 fS
 iw
 mr
-cM
+Lf
 Lf
 Sf
 Lf
@@ -10077,10 +10123,10 @@ io
 io
 io
 io
-io
-io
-Xs
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (42,1,1) = {"
 Ml
@@ -10098,7 +10144,7 @@ LO
 FU
 OC
 pQ
-By
+FU
 pQ
 iM
 Gy
@@ -10112,7 +10158,7 @@ Pd
 iw
 bG
 cM
-Lf
+Sf
 Sf
 EG
 RI
@@ -10143,10 +10189,10 @@ io
 io
 io
 io
-io
-Xs
-Xs
-ri
+MF
+Ur
+Ur
+Ur
 "}
 (43,1,1) = {"
 ve
@@ -10209,10 +10255,10 @@ Xs
 Xs
 Xs
 Xs
-Xs
-Xs
-ri
-ri
+cq
+Ur
+Ur
+Ur
 "}
 (44,1,1) = {"
 iw
@@ -10275,10 +10321,10 @@ io
 io
 io
 io
-io
-Xs
-Xs
-ri
+MF
+Ur
+Ur
+Ur
 "}
 (45,1,1) = {"
 sV
@@ -10305,7 +10351,7 @@ KP
 KP
 KP
 KP
-KP
+mb
 ri
 Az
 VB
@@ -10314,9 +10360,9 @@ Az
 Az
 Az
 Az
-dZ
-ng
+YK
 BU
+ng
 RK
 BU
 kP
@@ -10341,10 +10387,10 @@ io
 io
 io
 io
-io
-io
-Xs
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (46,1,1) = {"
 kX
@@ -10371,7 +10417,7 @@ ld
 Vu
 IC
 xv
-KP
+mb
 ri
 Az
 Az
@@ -10379,7 +10425,7 @@ Me
 Az
 dZ
 ey
-kP
+BU
 dZ
 Me
 dZ
@@ -10398,7 +10444,6 @@ Xs
 fg
 EO
 io
-io
 tp
 PS
 PS
@@ -10408,9 +10453,10 @@ PS
 PS
 jx
 io
-io
-io
-Xs
+MF
+Ur
+Ur
+Ur
 "}
 (47,1,1) = {"
 Jb
@@ -10437,7 +10483,7 @@ hF
 hF
 hF
 Vd
-KP
+mb
 ri
 Az
 Az
@@ -10463,20 +10509,20 @@ Xs
 Xs
 UC
 jt
-io
 tp
 TI
-nd
+bP
 qZ
+nv
 EU
-Ks
 nc
-nd
+bP
 gd
 jx
-io
-io
-io
+MF
+Ur
+Ur
+Ur
 "}
 (48,1,1) = {"
 Jb
@@ -10503,7 +10549,7 @@ eA
 YU
 YU
 JE
-KP
+mb
 ri
 Az
 Az
@@ -10529,20 +10575,20 @@ Xs
 oE
 EO
 io
-tp
-eY
-nd
-nd
+TI
+bP
+bP
 jq
 pk
 Fc
 qD
-nd
-nd
+bP
+bP
 gd
-jx
-io
-io
+MH
+Ur
+Ur
+Ur
 "}
 (49,1,1) = {"
 Jb
@@ -10566,10 +10612,10 @@ uT
 KP
 QW
 Vd
-KP
+mb
 qQ
 qQ
-KP
+mb
 ri
 Az
 Az
@@ -10594,21 +10640,21 @@ ri
 Xs
 Lw
 EO
-io
 FF
-nd
-nd
-qa
+bP
+bP
+oo
 mZ
 zQ
 zQ
 Xd
 BM
-nd
-nd
-sz
-io
-io
+bP
+bP
+Co
+Ur
+Ur
+Ur
 "}
 (50,1,1) = {"
 Jb
@@ -10632,10 +10678,10 @@ uT
 KP
 lg
 Sw
-KP
+mb
 Vg
 Vg
-KP
+mb
 ri
 Az
 Tt
@@ -10660,7 +10706,6 @@ ri
 Xs
 oE
 EO
-io
 ya
 nc
 je
@@ -10672,9 +10717,10 @@ ju
 Fc
 YD
 qZ
-Dd
-io
-io
+Hd
+Ur
+dV
+yz
 "}
 (51,1,1) = {"
 Jb
@@ -10698,10 +10744,10 @@ Jb
 KP
 yE
 nw
-KP
-KP
-KP
-KP
+mb
+mb
+mb
+mb
 ri
 Az
 Az
@@ -10726,7 +10772,6 @@ ri
 Xs
 oE
 EO
-io
 ya
 qZ
 hx
@@ -10738,9 +10783,10 @@ NR
 ju
 SC
 qZ
-tn
-Ot
-Ot
+ll
+Ur
+Ur
+Ur
 "}
 (52,1,1) = {"
 UO
@@ -10756,7 +10802,7 @@ Jb
 Jb
 Jb
 Jb
-uT
+Jb
 uT
 gj
 Jb
@@ -10786,15 +10832,14 @@ BU
 Ds
 BU
 BU
-kP
+BU
 Az
 ri
 Xs
 fL
 EO
-io
 ya
-vJ
+kI
 pk
 zQ
 ju
@@ -10803,10 +10848,11 @@ VX
 NR
 ju
 Fc
+lZ
 rL
 WT
-WT
-WT
+dV
+yz
 "}
 (53,1,1) = {"
 Jb
@@ -10858,9 +10904,8 @@ ri
 Xs
 oE
 EO
-io
 ya
-hg
+VK
 ju
 zQ
 ju
@@ -10869,14 +10914,15 @@ ju
 ju
 ju
 ig
-xJ
-WT
-WT
-WT
+JN
+rL
+Ur
+Ur
+Ur
 "}
 (54,1,1) = {"
 Jb
-Sy
+uT
 Jb
 Jb
 Jb
@@ -10901,7 +10947,7 @@ Jb
 qd
 sV
 ri
-MZ
+Az
 BU
 BU
 ZS
@@ -10924,9 +10970,8 @@ ri
 Xs
 oE
 EO
-io
 ya
-hg
+VK
 ju
 zQ
 ju
@@ -10936,9 +10981,10 @@ ju
 ju
 zK
 qZ
-uP
-BO
-BO
+BT
+Ur
+dV
+yz
 "}
 (55,1,1) = {"
 uT
@@ -10952,7 +10998,7 @@ Jb
 Jb
 uT
 uT
-uT
+gj
 uT
 Jb
 Jb
@@ -10973,7 +11019,7 @@ BU
 dZ
 dZ
 RK
-kP
+BU
 BU
 RK
 xG
@@ -10990,9 +11036,8 @@ ri
 Xs
 EV
 EO
-io
 ya
-Ks
+EU
 Jn
 zQ
 ju
@@ -11002,9 +11047,10 @@ tm
 ju
 zK
 qZ
-Dd
-io
-io
+Hd
+Ur
+Ur
+Ur
 "}
 (56,1,1) = {"
 uT
@@ -11017,15 +11063,15 @@ uT
 uT
 uT
 uT
-uT
-uT
+Jb
+Jb
 uT
 uT
 Jb
 af
 Jb
 Jb
-VO
+Jb
 Jb
 RH
 Jb
@@ -11056,7 +11102,6 @@ ri
 Xs
 oE
 EO
-io
 ya
 qZ
 ZA
@@ -11068,24 +11113,25 @@ tm
 ju
 rP
 qZ
-Dd
-io
-io
+Hd
+Ur
+Ur
+Ur
 "}
 (57,1,1) = {"
 Jb
 uT
-uT
-uT
-gj
-uT
-uT
-uT
-uT
+Jb
+Jb
+Jb
+Jb
+Jb
 uT
 uT
 uT
 uT
+Jb
+Jb
 uT
 uT
 kX
@@ -11122,7 +11168,6 @@ ri
 Xs
 oE
 EO
-io
 ya
 qZ
 GO
@@ -11134,9 +11179,10 @@ ju
 ig
 yP
 qZ
-Dd
-io
-io
+Hd
+Ur
+Ur
+Ur
 "}
 (58,1,1) = {"
 Jb
@@ -11146,11 +11192,11 @@ Jb
 Jb
 Jb
 Jb
-uT
-uT
-uT
+Jb
 Jb
 uT
+uT
+gj
 uT
 nt
 uT
@@ -11188,21 +11234,21 @@ ri
 Xs
 fc
 EO
-io
 FF
-nd
-nd
+bP
+bP
 LU
 jV
 ju
 ju
 ig
 Xe
-nd
-nd
-sz
-io
-io
+bP
+bP
+Co
+Ur
+Ur
+Ur
 "}
 (59,1,1) = {"
 sV
@@ -11254,21 +11300,21 @@ ri
 Xs
 oE
 EO
-io
 IS
-kw
-nd
-Ox
+bF
+bP
+Mm
 jI
 Jn
 ig
 Wp
-nd
-nd
+bP
+bP
 KD
-Eb
-io
-io
+sS
+Ur
+Ur
+Ur
 "}
 (60,1,1) = {"
 sV
@@ -11321,20 +11367,20 @@ Xs
 Xs
 lp
 Oq
-io
 IS
 nr
-nd
+bP
 nc
+Cl
 kI
-vJ
 qZ
-nd
+bP
 KD
 Eb
-io
-io
-io
+MF
+Ur
+Ur
+Ur
 "}
 (61,1,1) = {"
 KP
@@ -11388,7 +11434,6 @@ Xs
 Uk
 EO
 io
-io
 IS
 Iv
 Iv
@@ -11398,8 +11443,9 @@ Iv
 Iv
 Eb
 io
-io
-io
+MF
+Ur
+Ur
 Xs
 "}
 (62,1,1) = {"
@@ -11421,7 +11467,7 @@ Jb
 Jb
 Jb
 Jb
-uT
+Jb
 uT
 uT
 uT
@@ -11463,8 +11509,8 @@ io
 io
 io
 io
-io
-io
+MF
+Ur
 Xs
 Xs
 "}
@@ -11484,7 +11530,7 @@ Jb
 Jb
 Jb
 Jb
-fq
+Jb
 Jb
 jf
 Jb
@@ -11529,7 +11575,7 @@ io
 io
 io
 io
-io
+MF
 Xs
 Xs
 ri
@@ -11548,7 +11594,7 @@ KP
 sV
 cZ
 Jb
-Jb
+oM
 Jb
 RH
 Jb

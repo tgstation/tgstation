@@ -91,7 +91,6 @@
 /obj/structure/closet/crate/loot/rare/Initialize()
 	var/list/loot_table = loot_table_rare + loot_table_legendary
 	LAZYADD(loot_content,pickweight(loot_table))
-	src.add_filter("default",10, list("type"="rays","density" = 10, "size" = 32, "color" = "#00BFFF"))
 	..()
 
 /obj/structure/closet/crate/loot/rare/PopulateContents()
@@ -107,7 +106,6 @@
 /obj/structure/closet/crate/loot/legendary/Initialize()
 	var/list/loot_table =  loot_table_legendary
 	LAZYADD(loot_content,pickweight(loot_table))
-	src.add_filter("default",10, list("type"="rays","density" = 10, "size" = 40, "color" = "#f18f1f"))
 	..()
 
 /obj/structure/closet/crate/loot/legendary/PopulateContents()
