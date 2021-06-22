@@ -234,21 +234,3 @@
 /obj/structure/holosign/barrier/ctf/green
 	team_allow = ARENA_GREEN_TEAM
 	icon_state = "trap-earth"
-
-// todo: seriously need to store what team key someone is on on their mob so we don't have to do all these checks
-/obj/structure/holosign/barrier/ctf/CanAllowThrough(atom/movable/mover, turf/target)
-	var/mob/living/carbon/carbon_mover = mover
-	if(!istype(carbon_mover) || (!carbon_mover.ckey && !carbon_mover.mind))
-		return FALSE
-
-	var/datum/roster/the_roster = GLOB.global_roster
-	if(!the_roster || !LAZYLEN(the_roster.all_contestants))
-		return TRUE
-
-	var/datum/contestant/mover_contestant = the_roster.all_contestants[carbon_mover.ckey]
-	if(!istype(mover_contestant) || mover_contestant.eliminated)
-		return FALSE
-
-	var/datum/event_team/mover_team = mover_contestant.current_team
-	if(!istype(mover_team) || the_roster.get_team_slot(mover_team) != team_allow)
-		return FALSE
