@@ -479,7 +479,7 @@
 	icon_state = "rootbread_soup"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bread" = 1, "egg" = 1, "chili" = 1, "garlic" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = MEAT | VEGETABLES
 
 //Egg Dishes
 /obj/item/food/black_eggs
