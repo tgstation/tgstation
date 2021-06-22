@@ -170,7 +170,7 @@
 /turf/open/floor/plating,
 /area/tdome/arena)
 "nE" = (
-/obj/structure/trap/ctf/red,
+/obj/structure/holosign/barrier/ctf/red,
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "nG" = (
@@ -266,7 +266,7 @@
 	},
 /area/tdome/arena)
 "vc" = (
-/obj/structure/trap/ctf/green,
+/obj/structure/holosign/barrier/ctf/green,
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "vd" = (

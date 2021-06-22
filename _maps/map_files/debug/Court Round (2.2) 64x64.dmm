@@ -166,7 +166,7 @@
 /area/tdome/arena)
 "mu" = (
 /obj/machinery/door/airlock/centcom,
-/obj/structure/trap/ctf/green,
+/obj/structure/holosign/barrier/ctf/green,
 /turf/open/floor/wood,
 /area/tdome/arena)
 "nl" = (
@@ -617,7 +617,7 @@
 /area/tdome/arena)
 "Yk" = (
 /obj/machinery/door/airlock/centcom,
-/obj/structure/trap/ctf/red,
+/obj/structure/holosign/barrier/ctf/red,
 /turf/open/floor/wood,
 /area/tdome/arena)
 "YO" = (
