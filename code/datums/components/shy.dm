@@ -58,7 +58,7 @@
 	var/result = FALSE
 	var/mob/owner = parent
 
-	if(target in owner.DirectAccess())
+	if(owner.has_direct_access_to(target, FAR_DEPTH))
 		return
 
 	if(!COOLDOWN_FINISHED(src, result_cooldown))

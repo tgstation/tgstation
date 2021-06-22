@@ -172,7 +172,7 @@
 		span_notice("You post up, looking for a high-five!"), null, 2)
 
 	for(var/mob/living/carbon/possible_taker in orange(1, owner))
-		if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
+		if(!owner.can_reach(possible_taker) || possible_taker.incapacitated())
 			continue
 		register_candidate(possible_taker)
 
@@ -283,7 +283,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/high_fiving/proc/check_taker_in_range(mob/living/carbon/taker)
 	SIGNAL_HANDLER
-	if(owner.CanReach(taker) && !taker.incapacitated())
+	if(owner.can_reach(taker) && !taker.incapacitated())
 		return
 
 	to_chat(taker, span_warning("You left [owner] hanging!"))
@@ -297,7 +297,7 @@
 
 	for(var/i in possible_takers)
 		var/mob/living/carbon/checking_taker = i
-		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || checking_taker.incapacitated())
+		if(!istype(checking_taker) || !owner.can_reach(checking_taker) || checking_taker.incapacitated())
 			remove_candidate(checking_taker)
 
 	if(!possible_takers)

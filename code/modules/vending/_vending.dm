@@ -942,7 +942,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	R.amount--
-	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
+	if(usr.can_reach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [R.name] out of the slot."))
 	else
 		to_chat(usr, span_warning("[capitalize(R.name)] falls onto the floor!"))

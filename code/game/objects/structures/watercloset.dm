@@ -62,7 +62,7 @@
 		else
 			to_chat(user, span_warning("You need a tighter grip!"))
 
-	else if(cistern && !open && user.CanReach(src))
+	else if(cistern && !open && user.can_reach(src))
 		if(!contents.len)
 			to_chat(user, span_notice("The cistern is empty."))
 		else

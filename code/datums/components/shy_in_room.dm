@@ -44,7 +44,7 @@
 /// Returns TRUE or FALSE if you are in a blacklisted area
 /datum/component/shy_in_room/proc/is_shy(atom/target)
 	var/mob/owner = parent
-	if(!length(blacklist) || (target in owner.DirectAccess()))
+	if(!length(blacklist) || owner.has_direct_access_to(target, FAR_DEPTH))
 		return
 
 	var/area/room = get_area(owner)

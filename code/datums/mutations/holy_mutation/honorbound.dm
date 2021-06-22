@@ -56,7 +56,7 @@
 
 	if(!isliving(clickingon))
 		return
-	if(!honorbound.DirectAccess(clickingon) && !isgun(weapon))
+	if(!honorbound.has_direct_access_to(clickingon, FAR_DEPTH) && !isgun(weapon))
 		return
 	if(weapon.item_flags & NOBLUDGEON)
 		return

@@ -1,5 +1,5 @@
 /datum/component/storage/concrete/wallet/open_storage(mob/user)
-	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
+	if(!isliving(user) || !user.can_reach(parent) || user.incapacitated())
 		return FALSE
 	if(locked)
 		to_chat(user, span_warning("[parent] seems to be locked!"))

@@ -206,6 +206,8 @@
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
 	#define COMPONENT_ALLOW_REACH (1<<0)
+///from internal loop in the base of /atom/movable/proc/get_locs(): (list/locs)
+#define COMSIG_ATOM_GET_LOCS "atom_get_locs"
 ///for any tool behaviors: (mob/living/user, obj/item/I, list/recipes)
 #define COMSIG_ATOM_TOOL_ACT(tooltype) "tool_act_[tooltype]"
 	#define COMPONENT_BLOCK_TOOL_ATTACK (1<<0)

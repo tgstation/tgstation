@@ -96,7 +96,7 @@
 	var/locx = (target_turf.x - here_turf.x) + 24
 	var/locy = (here_turf.y - target_turf.y) + 24
 
-	if(get_dist_euclidian(here_turf, target_turf) > 24)
+	if(GET_DIST_EUCLIDEAN(here_turf, target_turf) > 24)
 		userot = TRUE
 		rot = round(Get_Angle(here_turf, target_turf))
 	else
@@ -179,9 +179,9 @@
 			last_icon_state = program_icon_state
 		return
 
-	var/here_turf = get_turf(computer)
-	var/target_turf = get_turf(signal)
-	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
+	var/turf/here_turf = get_turf(computer)
+	var/turf/target_turf = get_turf(signal)
+	var/trackdistance = GET_DIST_EUCLIDEAN(here_turf, target_turf)
 	switch(trackdistance)
 		if(0)
 			program_icon_state = "[initial(program_icon_state)]direct"

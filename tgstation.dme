@@ -250,6 +250,7 @@
 #include "code\_onclick\other_mobs.dm"
 #include "code\_onclick\overmind.dm"
 #include "code\_onclick\pai.dm"
+#include "code\_onclick\reach.dm"
 #include "code\_onclick\telekinesis.dm"
 #include "code\_onclick\hud\_defines.dm"
 #include "code\_onclick\hud\action_button.dm"

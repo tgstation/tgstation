@@ -72,8 +72,8 @@
 	. += get_direction_icon(here, there)
 
 ///Called by update_icon after sanity. There is a target
-/obj/item/pinpointer/proc/get_direction_icon(here, there)
-	if(get_dist_euclidian(here,there) <= minimum_range)
+/obj/item/pinpointer/proc/get_direction_icon(turf/here, turf/there)
+	if(GET_DIST_EUCLIDEAN(here,there) <= minimum_range)
 		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))

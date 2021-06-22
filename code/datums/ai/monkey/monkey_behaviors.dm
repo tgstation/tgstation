@@ -187,7 +187,7 @@
 		controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE
 
 	// attack with weapon if we have one
-	if(living_pawn.CanReach(target, weapon))
+	if(living_pawn.can_reach(target, weapon))
 		if(weapon)
 			weapon.melee_attack_chain(living_pawn, target)
 		else

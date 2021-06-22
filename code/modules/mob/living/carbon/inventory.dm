@@ -178,7 +178,7 @@
 	visible_message(span_notice("[src] is offering [receiving]."), \
 					span_notice("You offer [receiving]."), null, 2)
 	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
-		if(!CanReach(C))
+		if(!can_reach(C))
 			continue
 
 		if(!C.can_hold_items())

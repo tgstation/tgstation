@@ -135,7 +135,7 @@
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(A in DirectAccess())
+	if(has_direct_access_to(A, FAR_DEPTH))
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
@@ -150,7 +150,7 @@
 		return
 
 	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
+	if(can_reach(A, INVENTORY_DEPTH, W?.reach))
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
@@ -192,46 +192,6 @@
 			return TRUE
 	return FALSE
 
-/**
- * A backwards depth-limited breadth-first-search to see if the target is
- * logically "in" anything adjacent to us.
- */
-/atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
-	var/list/direct_access = DirectAccess()
-	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
-
-	var/list/closed = list()
-	var/list/checking = list(ultimate_target)
-	while (checking.len && depth > 0)
-		var/list/next = list()
-		--depth
-
-		for(var/atom/target in checking)  // will filter out nulls
-			if(closed[target] || isarea(target))  // avoid infinity situations
-				continue
-			closed[target] = TRUE
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1)) //Directly accessible atoms
-				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
-					return TRUE
-
-			if (!target.loc)
-				continue
-
-			//Storage and things with reachable internal atoms need add to next here. Or return COMPONENT_ALLOW_REACH.
-			if(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_ALLOW_REACH)
-				next += target.loc
-
-		checking = next
-	return FALSE
-
-/atom/movable/proc/DirectAccess()
-	return list(src, loc)
-
-/mob/DirectAccess(atom/target)
-	return ..() + contents
-
-/mob/living/DirectAccess(atom/target)
-	return ..() + GetAllContents()
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -239,27 +199,6 @@
 /turf/AllowClick()
 	return TRUE
 
-/proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
-	if(!here || !there)
-		return
-	switch(reach)
-		if(0)
-			return FALSE
-		if(1)
-			return FALSE //here.Adjacent(there)
-		if(2 to INFINITY)
-			var/obj/dummy = new(get_turf(here))
-			dummy.pass_flags |= PASSTABLE
-			dummy.invisibility = INVISIBILITY_ABSTRACT
-			for(var/i in 1 to reach) //Limit it to that many tries
-				var/turf/T = get_step(dummy, get_dir(dummy, there))
-				if(dummy.CanReach(there))
-					qdel(dummy)
-					return TRUE
-				if(!dummy.Move(T)) //we're blocked!
-					qdel(dummy)
-					return
-			qdel(dummy)
 
 /// Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)

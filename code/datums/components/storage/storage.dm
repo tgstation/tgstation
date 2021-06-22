@@ -88,7 +88,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
-	RegisterSignal(parent, COMSIG_ATOM_CANREACH, .proc/canreach_react)
 
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
@@ -167,24 +166,12 @@
 	var/datum/component/storage/concrete/master = master()
 	return master? master.real_location() : null
 
-/datum/component/storage/proc/canreach_react(datum/source, list/next)
-	SIGNAL_HANDLER
-
-	var/datum/component/storage/concrete/master = master()
-	if(!master)
-		return
-	. = COMPONENT_ALLOW_REACH
-	next += master.parent
-	for(var/i in master.slaves)
-		var/datum/component/storage/slave = i
-		next += slave.parent
 
 /datum/component/storage/proc/on_move()
 	SIGNAL_HANDLER
 
-	var/atom/A = parent
 	for(var/mob/living/L in can_see_contents())
-		if(!L.CanReach(A))
+		if(!L.can_reach(parent))
 			hide_from(L)
 
 /datum/component/storage/proc/attack_self(datum/source, mob/M)
@@ -602,7 +589,7 @@
 	if(locked && !force)
 		to_chat(M, span_warning("[parent] seems to be locked!"))
 		return FALSE
-	if(force || M.CanReach(parent, view_only = TRUE))
+	if(force || M.can_reach(parent, STORAGE_VIEW_DEPTH))
 		show_to(M)
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
@@ -749,7 +736,7 @@
 
 	if(!force)
 		if(check_adjacent)
-			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
+			if(!user || !user.can_reach(destination) || !user.can_reach(parent))
 				return FALSE
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
 	if(taking.len > amount)
@@ -843,7 +830,7 @@
 
 
 /datum/component/storage/proc/open_storage(mob/user)
-	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
+	if(!isliving(user) || !user.can_reach(parent) || user.incapacitated())
 		return FALSE
 	if(locked)
 		to_chat(user, span_warning("[parent] seems to be locked!"))

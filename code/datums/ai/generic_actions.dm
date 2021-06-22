@@ -87,7 +87,7 @@
 	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
 	var/atom/target = controller.current_movement_target
 
-	if(!target || !pawn.CanReach(target))
+	if(!target || !pawn.can_reach(target))
 		finish_action(controller, FALSE)
 		return
 
@@ -109,7 +109,7 @@
 	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
 	var/atom/target = controller.current_movement_target
 
-	if(!target || !pawn.CanReach(target) || !isliving(target))
+	if(!target || !pawn.can_reach(target) || !isliving(target))
 		finish_action(controller, FALSE)
 		return
 

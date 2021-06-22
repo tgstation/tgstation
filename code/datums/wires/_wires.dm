@@ -14,7 +14,7 @@
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
-	if(!user.CanReach(src))
+	if(!user.can_reach(src))
 		return WIRE_INTERACTION_FAIL
 	wires.interact(user)
 	return WIRE_INTERACTION_BLOCK
