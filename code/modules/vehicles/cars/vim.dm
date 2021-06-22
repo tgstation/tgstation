@@ -18,7 +18,19 @@
 	light_power = 2
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
+	///TRUE while the vim is being welded
+	var/being_repaired = FALSE
 	COOLDOWN_DECLARE(sound_cooldown)
+
+/obj/vehicle/sealed/car/vim/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] can be repaired with a welder.")
+
+/obj/vehicle/sealed/car/vim/obj_destruction(damage_flag)
+	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	do_sparks(5, TRUE, src)
+	visible_message(span_boldannounce("[src] blows apart!"))
+	. = ..()
 
 /obj/vehicle/sealed/car/vim/mob_try_enter(mob/entering)
 	if(!isanimal(entering))
@@ -27,6 +39,30 @@
 	if(animal.mob_size != MOB_SIZE_TINY)
 		return FALSE
 	. = ..()
+
+/obj/vehicle/sealed/car/vim/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	. = TRUE
+	if(!tool.tool_start_check(user))
+		return
+	if(being_repaired)
+		user.balloon_alert(user, "already being repaired!")
+		return
+	if(obj_integrity == max_integrity)
+		user.balloon_alert(user, "already fully repaired!")
+		return
+
+	user.balloon_alert(user, "repairing [src]...")
+	audible_message(span_hear("You hear welding."))
+	being_repaired = TRUE
+	if(!tool.use_tool(src, user, 3 SECONDS, volume=50))
+		being_repaired = FALSE
+		user.balloon_alert(user, "interrupted!")
+		return
+	being_repaired = FALSE
+
+	obj_integrity = min(obj_integrity + VIM_HEAL_AMOUNT, max_integrity)
+	user.balloon_alert(user, "[obj_integrity == max_integrity ? "fully " : ""]repaired [src]")
 
 /obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
 	. = ..()
@@ -47,8 +83,8 @@
 	var/static/piloted_overlay
 	var/static/headlights_overlay
 	if(isnull(piloted_overlay))
-		piloted_overlay = iconstate2appearance(icon, "vim_piloted")
-		headlights_overlay = iconstate2appearance(icon, "vim_headlights")
+		piloted_overlay = image(icon, "vim_piloted")
+		headlights_overlay = image(icon, "vim_headlights")
 
 	var/list/drivers = return_drivers()
 	if(drivers.len)

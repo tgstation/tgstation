@@ -36,4 +36,7 @@
 #define CLOWN_CANNON_READY 2
 
 //Vim defines
+///cooldown between uses of the sound maker
 #define VIM_SOUND_COOLDOWN 1 SECONDS
+///how much vim heals per weld
+#define VIM_HEAL_AMOUNT 20
