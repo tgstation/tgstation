@@ -18,8 +18,8 @@
 			next_locs += checking_movable.get_locs()
 		if(!length(next_locs))
 			return FALSE
-		procesing_locs = next_locs.Copy()
-		next_locs.Cut()
+		procesing_locs = next_locs
+		next_locs = list()
 	return FALSE
 
 
