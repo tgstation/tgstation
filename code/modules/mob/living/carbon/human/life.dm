@@ -64,9 +64,9 @@
 
 	if(chest_covered && head_covered)
 		return ONE_ATMOSPHERE
-	if(istype(src.loc,/obj/structure/closet))
+	if(istype(loc,/obj/structure/closet))
 		/// If we're in a closet with 0.5 pressure protection, it averages the values, for example.
-		var/obj/structure/closet/current_locker = src.loc
+		var/obj/structure/closet/current_locker = loc
 		return (current_locker.pressure_protection * ONE_ATMOSPHERE + (1 - current_locker.pressure_protection) * pressure)
 	return pressure
 

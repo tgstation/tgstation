@@ -98,8 +98,8 @@
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
-	if(istype(src.loc, /obj/structure/closet))
-		var/obj/structure/closet/current_locker = src.loc
+	if(istype(loc, /obj/structure/closet))
+		var/obj/structure/closet/current_locker = loc
 		temp_delta *= (1 - current_locker.thermal_insulation)
 
 	if(temp_delta < 0) // it is cold here

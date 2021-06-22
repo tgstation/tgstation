@@ -252,7 +252,6 @@
 
 
 /obj/structure/closet/body_bag/environmental/prisoner/bust_open()
-	SIGNAL_HANDLER
 	sinched = FALSE
 	// We don't break the bag, because the buckles were backed out as opposed to fully broken.
 	open()
@@ -268,7 +267,7 @@
 	if(iscarbon(user))
 		add_fingerprint(user)
 	if(!sinched)
-		for(var/mob/living/target in src.contents)
+		for(var/mob/living/target in contents)
 			to_chat(target, span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
 		user.visible_message(span_notice("You begin sinching down the buckles on [src]."))
 		if(!(do_after(user,(sinch_time),target = src)))
