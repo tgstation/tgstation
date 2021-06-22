@@ -10,7 +10,7 @@
 	var/datum/callback/on_milk_callback
 
 /datum/component/udder/Initialize(udder_type = /obj/item/udder, on_milk_callback, on_generate_callback)
-	if(!isliving(parent) || iscarbon(parent))
+	if(!isliving(parent) || iscarbon(parent)) //moths may never ever be milkable, i guess all carbons shouldnt either
 		return COMPONENT_INCOMPATIBLE
 	udder = new udder_type(null, parent, on_generate_callback)
 	src.on_milk_callback = on_milk_callback
