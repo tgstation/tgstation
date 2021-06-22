@@ -182,8 +182,12 @@
 	icon_state = "prisonerenvirobag"
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/
 	breakout_time = 4 MINUTES // because it's probably about as hard to get out of this as it is to get out of a straightjacket.
+	/// How long it takes to sinch the bag.
 	var/sinch_time = 10 SECONDS
+	/// Whether or not the bag is sinched. Starts unsinched.
 	var/sinched = FALSE
+	/// The sound that plays when the bag is done sinching.
+	var/sinch_sound = 'sound/items/equip/toolbelt_equip.ogg'
 
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
@@ -264,6 +268,9 @@
 	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
+	if(user in contents)
+		to_chat(user, span_warning("You can't reach the buckles from here!"))
+		return
 	if(iscarbon(user))
 		add_fingerprint(user)
 	if(!sinched)
@@ -273,6 +280,8 @@
 		if(!(do_after(user,(sinch_time),target = src)))
 			return
 	sinched = !sinched
+	if(sinched)
+		playsound(loc, sinch_sound, 15, TRUE, -2)
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
@@ -289,7 +298,7 @@
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
 	weather_protection = list(WEATHER_ALL)
 	breakout_time = 8 MINUTES
-	sinch_time = 30 SECONDS
+	sinch_time = 20 SECONDS
 	// The contents of the gas to be distributed to an occupant once sinched down. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
