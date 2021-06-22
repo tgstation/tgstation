@@ -77,11 +77,11 @@
 		return
 
 	activation_volume = round(clamp(new_volume, 0, buffer))
-	to_chat(user, "<span class='notice'>New activation threshold is now [activation_volume].</span>")
+	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
 
 /obj/machinery/plumbing/buffer/attackby(obj/item/item, mob/user, params)
 	if(item.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='notice'>You reset the automatic buffer.</span>")
+		to_chat(user, span_notice("You reset the automatic buffer."))
 
 		//reset the net
 		buffer_net?.destruct()

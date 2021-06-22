@@ -72,14 +72,14 @@
 	. = ..()
 	if(!buildable_sign)
 		return TRUE
-	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-		"<span class='notice'>You start unfastening [src].</span>")
+	user.visible_message(span_notice("[user] starts removing [src]..."), \
+		span_notice("You start unfastening [src]."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
 		return TRUE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-		"<span class='notice'>You unfasten [src].</span>")
+	user.visible_message(span_notice("[user] unfastens [src]."), \
+		span_notice("You unfasten [src]."))
 	var/obj/item/sign/unwrenched_sign = new (get_turf(user))
 	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
@@ -98,16 +98,16 @@
 	if(user.combat_mode)
 		return FALSE
 	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
+		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
-		"<span class='notice'>You start repairing [src].</span>")
+	user.visible_message(span_notice("[user] starts repairing [src]..."), \
+		span_notice("You start repairing [src]."))
 	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
-		"<span class='notice'>You finish repairing [src].</span>")
+	user.visible_message(span_notice("[user] finishes repairing [src]."), \
+		span_notice("You finish repairing [src]."))
 	obj_integrity = max_integrity
 	return TRUE
 
@@ -116,16 +116,16 @@
 	if(user.combat_mode)
 		return FALSE
 	if(obj_integrity == max_integrity)
-		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
+		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
-		"<span class='notice'>You start repairing [src].</span>")
+	user.visible_message(span_notice("[user] starts repairing [src]..."), \
+		span_notice("You start repairing [src]."))
 	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
 		return TRUE
-	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
-		"<span class='notice'>You finish repairing [src].</span>")
+	user.visible_message(span_notice("[user] finishes repairing [src]."), \
+		span_notice("You finish repairing [src]."))
 	obj_integrity = max_integrity
 	return TRUE
 
@@ -137,10 +137,10 @@
 		if(!choice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, "<span class='warning'>You need to stand next to the sign to change it!</span>")
+			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
 			return
-		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
-			"<span class='notice'>You begin changing [src].</span>")
+		user.visible_message(span_notice("[user] begins changing [src]."), \
+			span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
 			return
 		var/sign_type = GLOB.editable_sign_types[choice]
@@ -152,8 +152,8 @@
 		changedsign.pixel_y = pixel_y
 		changedsign.obj_integrity = obj_integrity
 		qdel(src)
-		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
-			"<span class='notice'>You finish changing the sign.</span>")
+		user.visible_message(span_notice("[user] finishes changing the sign."), \
+			span_notice("You finish changing the sign."))
 		return
 	return ..()
 
@@ -165,15 +165,15 @@
 		if(!choice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, "<span class='warning'>You need to stand next to the sign to change it!</span>")
+			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
 			return
 		if(!choice)
 			return
-		user.visible_message("<span class='notice'>You begin changing [src].</span>")
+		user.visible_message(span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src))
 			return
 		set_sign_type(GLOB.editable_sign_types[choice])
-		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
+		user.visible_message(span_notice("You finish changing the sign."))
 		return
 	return ..()
 
@@ -203,8 +203,8 @@
 		placed_sign.pixel_x = 32
 	else if(dir & WEST)
 		placed_sign.pixel_x = -32
-	user.visible_message("<span class='notice'>[user] fastens [src] to [target_turf].</span>", \
-		"<span class='notice'>You attach the sign to [target_turf].</span>")
+	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
+		span_notice("You attach the sign to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)

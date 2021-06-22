@@ -98,6 +98,8 @@
 
 /datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
+/datum/config_entry/flag/log_timers_on_bucket_reset // logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
+
 /datum/config_entry/flag/allow_admin_ooccolor // Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
@@ -509,3 +511,6 @@
 /datum/config_entry/string/centcom_ban_db // URL for the CentCom Galactic Ban DB API
 
 /datum/config_entry/string/centcom_source_whitelist
+
+/// URL for admins to be redirected to for 2FA
+/datum/config_entry/string/admin_2fa_url

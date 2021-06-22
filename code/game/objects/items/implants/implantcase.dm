@@ -22,7 +22,7 @@
 /obj/item/implantcase/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_held_item() != W)

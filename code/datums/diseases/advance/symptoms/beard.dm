@@ -38,7 +38,7 @@ BONUS
 		var/mob/living/carbon/human/H = M
 		var/index = min(max(beard_order.Find(H.facial_hairstyle)+1, A.stage-1), beard_order.len)
 		if(index > 0 && H.facial_hairstyle != beard_order[index])
-			to_chat(H, "<span class='warning'>Your chin itches.</span>")
+			to_chat(H, span_warning("Your chin itches."))
 			H.facial_hairstyle = beard_order[index]
 			H.update_hair()
 

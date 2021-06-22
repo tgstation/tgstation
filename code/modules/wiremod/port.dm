@@ -15,6 +15,9 @@
 	/// The port type. Ports can only connect to each other if the type matches
 	var/datatype
 
+	/// The default port type. Stores the original datatype of the port set on Initialize.
+	var/default_datatype
+
 	/// The port color. If unset, appears as blue.
 	var/color
 
@@ -28,6 +31,7 @@
 	src.connected_component = to_connect
 	src.name = name
 	src.datatype = datatype
+	src.default_datatype = datatype
 	src.color = datatype_to_color()
 
 
@@ -217,7 +221,9 @@
 
 	connected_port = port_to_register
 	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
-	set_input(connected_port.output_value)
+	// For signals, we don't update the input to prevent sending a signal when connecting ports.
+	if(datatype != PORT_TYPE_SIGNAL)
+		set_input(connected_port.output_value)
 
 
 /**
