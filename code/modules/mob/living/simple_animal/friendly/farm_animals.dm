@@ -49,7 +49,7 @@
 			Retaliate()
 
 		if(enemies.len && DT_PROB(5, delta_time))
-			clear_enemies()
+			enemies.Cut()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
 	if(stat != CONSCIOUS)
