@@ -1228,8 +1228,8 @@
 /**
  * locs is a special list we can't manipulate, internally handled by the engine.
  * Multi-tile objects may be in multiple turfs at the same tiles.
- * Besides this, a feature was added for Paradox Bags, in which two containers may share the same contents.
- * This means movable atoms may be in multiple non-turf locs.
+ * Besides this, a feature was added for Paradox Bags, in which two containers may share the same contents (not the variable, the abstract concept).
+ * This means movable atoms may be conceptually in multiple non-turf locations (but not the `locs` variable).
  * Yes, this violates the principle of locality and causality but it is what it is.
  * The alternative to this is to keep a lazy list in every movable atom, copy of locs plus our own custom extra locations.
  * This is a special case of a justified getter, if we want to support the feature.
