@@ -1249,6 +1249,7 @@
 		force_update = TRUE
 		return
 
+	//dont use any power from that channel if we shut it off
 	lastused_light = (area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT]) * (lighting > APC_CHANNEL_AUTO_OFF)
 	lastused_equip = (area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP]) * (equipment > APC_CHANNEL_AUTO_OFF)
 	lastused_environ = (area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON]) * (environ > APC_CHANNEL_AUTO_OFF)

@@ -327,7 +327,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
-	update_static_power_usage()
+	update_power_usage()
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)

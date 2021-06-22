@@ -97,7 +97,7 @@
 		if(GASMINER_POWER_FULLSCALE)
 			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
 
-	update_static_power_usage()
+	update_power_usage()
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
 	var/turf/T = get_turf(src)
