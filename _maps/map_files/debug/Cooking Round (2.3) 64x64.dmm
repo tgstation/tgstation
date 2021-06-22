@@ -226,7 +226,7 @@
 "bK" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/window/southright,
-/obj/structure/closet/secure_closet/freezer/money{
+/obj/structure/closet/secure_closet/freezer/kitchen{
 	locked = 0
 	},
 /obj/item/clothing/head/crown,
@@ -308,7 +308,8 @@
 /area/awaymission/centcom_away/thunderdome)
 "cq" = (
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/centcom_away/thunderdome)
@@ -418,6 +419,13 @@
 /obj/item/reagent_containers/glass/bucket/wooden,
 /obj/item/clothing/gloves/botanic_leather,
 /obj/item/clothing/under/pants/youngfolksjeans,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
 /turf/open/floor/vault/sandstone,
 /area/awaymission/centcom_away/thunderdome)
 "dm" = (
@@ -522,8 +530,6 @@
 "dW" = (
 /obj/item/food/grown/wheat,
 /obj/structure/closet/crate/wooden,
-/obj/item/food/grown/wheat,
-/obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
@@ -674,14 +680,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine/air,
 /area/awaymission/centcom_away/thunderdome)
-"fd" = (
-/obj/machinery/button/door/directional/south{
-	id = "green_shutter";
-	name = "green shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
 "fg" = (
 /obj/effect/portal/permanent/blue/grocery/toward,
 /obj/effect/turf_decal/bot,
@@ -823,7 +821,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -900,7 +899,8 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -1177,6 +1177,14 @@
 "jk" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"jl" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/machinery/button/door/directional{
+	id = "blue_shutter";
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "jo" = (
 /obj/item/food/fishmeat/armorfish,
@@ -1518,7 +1526,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "ll" = (
 /obj/structure/railing{
-	dir = 6
+	climbable = 0;
+	dir = 6;
+	max_integrity = 9999
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -1776,7 +1786,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -2327,7 +2338,8 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -2592,9 +2604,11 @@
 "sa" = (
 /obj/structure/statue/silver/medborg{
 	anchored = 1;
+	desc = "Yell at coderbus.";
 	dir = 1;
 	icon = 'icons/obj/bike.dmi';
-	icon_state = "speedbike_red"
+	icon_state = "speedbike_red";
+	name = "Speedbike"
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/awaymission/centcom_away/thunderdome)
@@ -2675,7 +2689,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -3025,7 +3040,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "vC" = (
 /obj/structure/railing{
-	dir = 10
+	climbable = 0;
+	dir = 10;
+	max_integrity = 9999
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -3141,7 +3158,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/southleft,
-/obj/structure/closet/secure_closet/freezer/money{
+/obj/structure/closet/secure_closet/freezer/kitchen{
 	locked = 0
 	},
 /obj/item/clothing/head/crown,
@@ -3166,7 +3183,9 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	dir = 6
+	climbable = 0;
+	dir = 6;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -3258,6 +3277,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/documents,
 /turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"wO" = (
+/obj/structure/table/wood/fancy/green,
+/obj/machinery/button/door/directional{
+	id = "green_shutter";
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "wP" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -3439,7 +3466,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -3520,14 +3548,6 @@
 "yE" = (
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
-"yH" = (
-/obj/machinery/button/door/directional/south{
-	id = "red_shutter";
-	name = "red shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "yK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3956,7 +3976,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "BT" = (
 /obj/structure/railing{
-	dir = 10
+	climbable = 0;
+	dir = 10;
+	max_integrity = 9999
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -4020,7 +4042,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -4080,7 +4103,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -4664,7 +4688,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -5466,7 +5491,8 @@
 /area/awaymission/centcom_away/thunderdome)
 "MF" = (
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -5475,7 +5501,8 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -5492,7 +5519,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -5715,6 +5743,14 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
+/area/awaymission/centcom_away/thunderdome)
+"Oa" = (
+/obj/structure/table/wood/fancy,
+/obj/machinery/button/door/directional{
+	id = "red_shutter";
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "Od" = (
 /obj/item/food/grown/bungofruit,
@@ -6216,7 +6252,8 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	climbable = 0
+	climbable = 0;
+	max_integrity = 9999
 	},
 /turf/open/floor/iron,
 /area/awaymission/centcom_away/thunderdome)
@@ -6789,7 +6826,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "Vy" = (
 /obj/structure/railing{
-	dir = 6
+	climbable = 0;
+	dir = 6;
+	max_integrity = 9999
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -6991,14 +7030,6 @@
 	},
 /obj/item/food/canned_jellyfish,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
-"WT" = (
-/obj/machinery/button/door/directional/south{
-	id = "blue_shutter";
-	name = "blue shutter control";
-	req_access_txt = "16"
-	},
-/turf/open/floor/iron/dark,
 /area/awaymission/centcom_away/thunderdome)
 "WW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7206,7 +7237,9 @@
 /area/awaymission/centcom_away/thunderdome)
 "YC" = (
 /obj/structure/railing{
-	dir = 10
+	climbable = 0;
+	dir = 10;
+	max_integrity = 9999
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -8210,8 +8243,8 @@ ju
 EF
 qq
 Fm
-fd
-wA
+Ur
+wO
 mw
 "}
 (13,1,1) = {"
@@ -9530,8 +9563,8 @@ ju
 RM
 MR
 Tg
-yH
-vb
+Ur
+Oa
 LM
 "}
 (33,1,1) = {"
@@ -10850,8 +10883,8 @@ ju
 Fc
 lZ
 rL
-WT
-dV
+Ur
+jl
 yz
 "}
 (53,1,1) = {"
