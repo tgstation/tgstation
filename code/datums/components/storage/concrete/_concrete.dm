@@ -83,11 +83,11 @@
 
 /datum/component/storage/concrete/proc/on_slave_link(datum/component/storage/S)
 	if(S == src)
-		return FALSE
+		return
 	if(!length(slaves))
 		RegisterSignal(parent, COMSIG_ATOM_GET_LOCS, .proc/get_locs_react)
 	slaves += S
-	return TRUE
+
 
 /datum/component/storage/concrete/proc/on_slave_unlink(datum/component/storage/S)
 	slaves -= S
@@ -99,7 +99,7 @@
 	SIGNAL_HANDLER
 	for(var/datum/component/storage/slave as anything in slaves)
 		locs += slave.parent
-	return FALSE
+
 
 /datum/component/storage/concrete/proc/on_contents_del(datum/source, atom/A)
 	SIGNAL_HANDLER
