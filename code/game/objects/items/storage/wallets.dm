@@ -64,6 +64,12 @@
 		var/obj/item/card/id/id_card = card
 		if(!istype(id_card))
 			continue
+
+		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
+		if(HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
+			front_id = id_card
+			break
+
 		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
 		if(card_tally > winning_tally)
 			winning_tally = card_tally
