@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - expansion: "new mech action figures and job action figures"
+  - bugfix: "Intento leaderboard works good"
+  - imageadd: "new sprites for mech action figures"
