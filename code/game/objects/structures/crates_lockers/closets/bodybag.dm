@@ -16,7 +16,6 @@
 	anchorable = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
-	weather_protection = list()
 	has_closed_overlay = FALSE
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
@@ -88,9 +87,10 @@
 	if(opened)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while unzipped."))
 		return
-	if(contents.len > 1) // There's an /atom/movable/emissive_blocker thing in list/contents at all times, hence contents.len > 1 as opposed to > 0.
-		to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
-		return
+	for(var/content_thing in content)
+		if(istype(content_thing, /mob) || istype(content_thing, /obj) || istype(content_thing, /item))
+			to_chat(the_folder, span_warning("There are too many things inside of [src] to fold it up!"))
+			return
 	// toto we made it!
 	return TRUE
 

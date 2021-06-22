@@ -12,7 +12,6 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
-	weather_protection = list()
 	pressure_protection = 0.8
 	var/obj/item/tank/internals/emergency_oxygen/tank
 

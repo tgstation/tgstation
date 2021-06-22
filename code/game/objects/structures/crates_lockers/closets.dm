@@ -44,8 +44,8 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
-	/// Protection against weather (in this case, rad storms) that being inside of it provides.
-	var/weather_protection = list()
+	/// Protection against weather that being inside of it provides.
+	var/list/weather_protection = null
 	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
 	var/pressure_protection = 0
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!

@@ -180,7 +180,6 @@
 	max_integrity = 70
 	open_sound = 'sound/machines/wooden_closet_open.ogg'
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
-	weather_protection = list()
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()

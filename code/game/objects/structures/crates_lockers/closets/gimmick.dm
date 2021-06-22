@@ -8,7 +8,6 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	max_integrity = 70
-	weather_protection = list()
 
 /obj/structure/closet/acloset
 	name = "strange closet"

@@ -95,7 +95,6 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
-	weather_protection = list()
 
 /obj/structure/closet/crate/maint
 

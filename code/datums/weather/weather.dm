@@ -191,8 +191,9 @@
 
 		if(istype(mob_to_check.loc, /obj/structure/closet))
 			var/obj/structure/closet/current_locker = mob_to_check.loc
-			if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
-				return
+			if(current_locker.weather_protection)
+				if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
+					return
 
 	if((immunity_type in mob_to_check.weather_immunities) || (WEATHER_ALL in mob_to_check.weather_immunities))
 		return
