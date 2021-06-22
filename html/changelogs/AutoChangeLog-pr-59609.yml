@@ -1,0 +1,4 @@
+author: "Greniza"
+delete-after: True
+changes: 
+  - imageadd: "New turf decals for alternative tiletypes"
