@@ -48,6 +48,36 @@
 	LAZYADD(members, new_kid)
 	testing("successfully added [new_kid] to [src]")
 
+/// Add a new contestant to this team
+/datum/event_team/proc/query_add_member(mob/user)
+	testing("query add member: user")
+	if(!user)
+		return
+
+	var/datum/roster/the_roster = GLOB.global_roster
+	if(!the_roster)
+		CRASH("Tried querying to add member to a team, but there's no roster???")
+		return
+
+	if(!the_roster.active_contestants)
+		to_chat(user, span_warning("ERROR: No active eligible contestants. If you want to add someone who is eliminated, please un-eliminate them first."))
+		return
+
+	var/list/free_agents = list()
+
+	for(var/datum/contestant/iter_contestant in the_roster.active_contestants)
+		if(!iter_contestant.current_team)
+			free_agents += iter_contestant
+
+	var/datum/contestant/selected_contestant = input(user, "Please select the ckey of the free agent you would like to add to this team.", "Who?") as null|anything in free_agents
+	if(!istype(selected_contestant))
+		return
+	if(selected_contestant.current_team)
+		to_chat(user, span_warning("[selected_contestant] is already on [selected_contestant.current_team == src ? "this" : "another"] team!"))
+		return
+
+	add_member(user, selected_contestant)
+
 /// Remove a contestant from this team
 /datum/event_team/proc/remove_member(datum/contestant/dead_kid)
 	if(!dead_kid)

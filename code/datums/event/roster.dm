@@ -29,6 +29,8 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/list/spawns_team1
 	/// Holds the list of /obj/machinery/arena_spawn objects for the currently loaded arena keyed for the GREEN team (team2)
 	var/list/spawns_team2
+	/// Holds the list of /obj/machinery/arena_spawn/battle_royale objects for the currently loaded arena keyed for the BR team (im lazy)
+	var/list/spawns_br
 	/// If FALSE, bodyparts cannot suffer wounds by receiving damage. Wounds can still be manually applied as per normal
 	var/enable_random_wounds = FALSE
 
@@ -55,7 +57,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	if(!joining_player?.ckey)
 		return
 
-	if(!LAZYACCESS(ckeys_at_large, joining_player.ckey))
+	if(!LAZYFIND(ckeys_at_large, joining_player.ckey))
 		return
 
 	register_contestant(null, joining_player)
@@ -75,7 +77,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 		switch(select)
 			if("Clear All")
-				clear_contestants(user)
+				reset_roster(user)
 			if("Add New")
 				testing("okk") // doesn't work!!! TODO: make it work
 			else
@@ -151,6 +153,29 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		testing("------")
 	testing("All done divvy'ing teams!")
 
+/datum/roster/proc/setup_battle_royale(mob/user)
+	if(!LAZYLEN(active_contestants))
+		CRASH("No contestants to make into battle royale team!")
+
+	if(active_teams)
+		var/list/options = list("Clear Existing", "Cancel")
+		var/select = input(user, "There are still existing teams, you must clear them first! Proceed with clearing, or cancel?") as null|anything in options
+
+		switch(select)
+			if("Clear Existing")
+				clear_teams(user)
+			else
+				return
+
+	var/datum/event_team/suicide_squad = create_team()
+	suicide_squad.battle_royale = TRUE
+
+	for(var/datum/contestant/iter_contestant in active_contestants)
+		suicide_squad.add_member(user, iter_contestant)
+
+	message_admins("[key_name_admin(user)] has initialized a battle royale team with [LAZYLEN(suicide_squad.members)] members!")
+	log_game("[key_name_admin(user)] has initialized a battle royale team with [LAZYLEN(suicide_squad.members)] members!")
+
 // The direct team modifying/creating/removing procs
 /// Proc for creating a team, returns the new team
 /datum/roster/proc/create_team(mob/user)
@@ -218,10 +243,47 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	LAZYADDASSOC(all_contestants, new_kid.ckey, new_kid)
 	LAZYADD(active_contestants, new_kid)
 	LAZYREMOVE(ckeys_at_large, target.ckey)
+	if(user)
+		message_admins("[key_name_admin(user)] registered [target] as a contestant.")
 	log_game("[key_name_admin(user)] registered [target] as a contestant.")
 
-/// Deletes (not just eliminate) all existing contestant datums, basically resetting the entire thing
-/datum/roster/proc/clear_contestants(mob/user)
+/// For asking the user a single, specific ckey they'd like to add to the contestants
+/datum/roster/proc/add_specific_contestant(mob/user)
+	if(!user)
+		return
+
+	var/ckey_to_add = stripped_input(user, "Please enter the ckey of the contestant you wish to add.") as text|null
+	ckey_to_add = ckey(ckey_to_add)
+
+	if(!ckey_to_add)
+		return
+	if(LAZYACCESS(all_contestants, ckey_to_add))
+		to_chat(user, "<span class='warning'>[ckey_to_add] already has an <b>activated</b> contestant datum!</span>")
+		return
+	if(LAZYFIND(ckeys_at_large, ckey_to_add))
+		to_chat(user, "<span class='warning'>[ckey_to_add] already has a contestant datum, and is waiting for the player to join!</span>")
+		return
+
+	if(GLOB.directory[ckey_to_add]) //connected to the server (not sure if currently??) and need a contestant datum
+		register_contestant(user, get_mob_by_key(ckey_to_add)) //uhhhhhhh? check what happens to people who connected but are DC'd when this runs, or are still new_player
+	else
+		LAZYADD(ckeys_at_large, ckey_to_add) // otherwise watch for them with signal
+		log_game("[key_name_admin(user)] registered [ckey_to_add] as a contestant, pending the player claiming it.")
+
+/// Deletes (not just eliminate) all existing contestant datums and teams, basically resetting the entire thing
+/datum/roster/proc/reset_roster(mob/user)
+	if(!LAZYLEN(active_contestants))
+		return
+
+	if(user)
+		var/select = input(user, "Are you sure you want to nuke all the contestants (and existing teams)? There's no going back!!") as null|anything in list("Yes, delete them", "Cancel")
+
+		switch(select)
+			if("Yes, delete them")
+				message_admins("Clearing contestants...")
+			else
+				return
+
 	clear_teams(user) // clear the teams first
 	//maybe dump the info in an easily undoable way in case someone fucks up
 	for(var/contestant_ckey in all_contestants)
@@ -235,6 +297,36 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	message_admins("[key_name_admin(user)] has cleared all contestants.") // log which they chose
 	log_game("[key_name_admin(user)] has cleared all contestants!")
 
+/// Dumps the current state of the roster to the game log in case this is accidentally triggered during the tourney, so we can at least try to recover
+/datum/roster/proc/dump_contestant_log(mob/user)
+	if(!LAZYLEN(active_contestants))
+		message_admins("Tried dumping contestant logs, but no contestants found.")
+		return
+
+	var/list/text_dump = list("Text dump of roster log:")
+
+	for(var/datum/contestant/iter_contestant in all_contestants)
+		text_dump += iter_contestant.dump_info()
+
+	text_dump.Join("\n")
+	log_game(text_dump) // lol is this okay? maybe spit it out in its own file
+	message_admins("Roster dump hopefully completed successfully!")
+
+/// Eliminates the chosen contestant, taking them out of further contention. Can still be undone and returned to the active list in the contestant menu (not actually rn, but will be added (TODO:))
+/datum/roster/proc/remove_ckey_at_large(mob/user, target_ckey)
+	if(!target_ckey)
+		to_chat(user, "<span class='warning'>No target supplied.</span>")
+		return
+
+	target_ckey = ckey(target_ckey)
+	if(!LAZYFIND(ckeys_at_large, target_ckey))
+		to_chat(user, "<span class='warning'>Target ckey [target_ckey] is not on the ckeys_at_large watchlist.</span>")
+		return
+
+	LAZYREMOVE(ckeys_at_large, target_ckey)
+	message_admins("[key_name_admin(user)] has removed [target_ckey] from ckeys_at_large watchlist.")
+	log_game("[key_name_admin(user)] has removed [target_ckey] from ckeys_at_large watchlist.")
+
 /// Eliminates the chosen contestant, taking them out of further contention. Can still be undone and returned to the active list in the contestant menu (not actually rn, but will be added (TODO:))
 /datum/roster/proc/eliminate_contestant(mob/user, datum/contestant/target)
 	if(!target)
@@ -247,7 +339,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 			to_chat(user, "<span class='warning'>Couldn't find that target to eliminate.</span>")
 			return
 
-	if(LAZYACCESS(losers, target))
+	if(LAZYFIND(losers, target))
 		to_chat(user, "<span class='warning'>[target] has already been eliminated!</span>")
 		return
 
@@ -274,10 +366,10 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 			to_chat(user, "<span class='warning'>Couldn't find that target to eliminate.</span>")
 			return
 
-	if(LAZYACCESS(losers, target))
+	if(LAZYFIND(losers, target))
 		to_chat(user, "<span class='warning'>[target] has already been eliminated!</span>")
 		return
-	if(LAZYACCESS(losers, target) || target.eliminated)
+	if(target.eliminated || LAZYFIND(losers, target))
 		testing("already a loser")
 		return
 
@@ -285,18 +377,18 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	log_game("[key_name_admin(user)] has unmarked for elimination [target]!")
 
 /// Outright delete a contestant, not to be confused with marking for elimination or eliminating, this shouldn't be done to actual tournament participants during the tournament.
-/datum/roster/proc/delete_contestant(mob/user, datum/contestant/target)
+/datum/roster/proc/delete_contestant(mob/user, datum/contestant/target, target_ckey = null)
 	if(!target)
 		to_chat(user, "<span class='warning'>No target supplied.</span>")
 		return
 
 	if(!istype(target))
-		target = locate(target) in active_contestants
+		target = locate(target) in (active_contestants + losers)
 		if(!istype(target))
 			to_chat(user, "<span class='warning'>Couldn't find that target to eliminate.</span>")
 			return
 
-	LAZYREMOVEASSOC(all_contestants, target.ckey, target)
+	LAZYREMOVE(all_contestants, target.ckey)
 	LAZYREMOVE(active_contestants, target)
 	LAZYREMOVE(losers, target)
 
@@ -421,7 +513,9 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/team_divvy_factor = prefs["team_divvy_factor"]["value"]
 
 	testing("[user] is setting up match with values: [teams] teams, [divvy_teams_by_num_not_size] divvy mode, [team_divvy_factor] divvy factor")
-	if(divvy_teams_by_num_not_size)
+	if(!teams)
+		setup_battle_royale(user)
+	else if(divvy_teams_by_num_not_size)
 		divvy_into_teams(user, team_divvy_factor, 0)
 	else
 		divvy_into_teams(user, 0, team_divvy_factor)
@@ -492,6 +586,28 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 
 	message_admins("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
 	log_game("[key_name_admin(user)] has spawned [spawning_team ? "[spawning_team]" : "all slotted teams!"]")
+
+/datum/roster/proc/spawn_battle_royale(mob/user)
+	if(LAZYLEN(active_teams) != 1)
+		CRASH("There should only be one active team to start battle royale!")
+
+	var/successes = 0
+	var/spawn_index = 1
+	var/num_of_spawns = length(spawns_br)
+
+	if(!num_of_spawns)
+		CRASH("No battle royale spawns detected in spawns_br!")
+
+	log_game("[key_name_admin(user)] has tried spawning battle royale!")
+
+	for(var/datum/contestant/iter_contestant in active_contestants)
+		var/obj/machinery/arena_spawn/iter_spawn = spawns_br[spawn_index]
+		spawn_index = max((spawn_index + 1) % num_of_spawns, 1)
+		if(iter_contestant.spawn_this_contestant(iter_spawn))
+			successes++
+
+	message_admins("[key_name_admin(user)] has spawned [successes] out of [LAZYLEN(active_contestants)] contestants successfully!")
+	log_game("[key_name_admin(user)] has spawned [successes] out of [LAZYLEN(active_contestants)] contestants successfully!")
 
 /datum/roster/proc/generate_antag_huds()
 	for(var/team in teams)

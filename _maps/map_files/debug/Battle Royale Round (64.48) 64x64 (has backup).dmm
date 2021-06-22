@@ -53,7 +53,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/tdome/arena/five)
 "hN" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/four)
 "hP" = (
@@ -170,7 +170,7 @@
 /turf/open/floor/iron,
 /area/tdome/arena/fourteen)
 "wp" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/three)
 "wB" = (
@@ -300,7 +300,7 @@
 /turf/open/floor/iron,
 /area/tdome/arena/thirteen)
 "Lx" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/two)
 "Md" = (
@@ -311,7 +311,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/tdome/arena/one)
 "NO" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/five)
 "NZ" = (
@@ -379,7 +379,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/tdome/arena/two)
 "VP" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/six)
 "VS" = (
