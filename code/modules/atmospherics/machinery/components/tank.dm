@@ -106,7 +106,7 @@
 
 /obj/machinery/atmospherics/components/tank/examine(mob/user, thats)
 	. = ..()
-	var/wrench_hint = examine_hint_leftclick("wrench")
+	var/wrench_hint = examine_hint("wrench")
 	if(!initialize_directions)
 		. += "<span class='notice'>A pipe port can be opened with a [wrench_hint].</span>"
 	else
@@ -422,7 +422,7 @@
 
 /obj/structure/tank_frame/examine(mob/user)
 	. = ..()
-	var/wrenched_hint = examine_hint_leftclick("wrenched")
+	var/wrenched_hint = examine_hint("wrenched")
 
 	if(!anchored)
 		. += "<span class='notice'>[src] has not been [wrenched_hint] to the floor yet.</span>"
@@ -431,12 +431,12 @@
 
 	switch(construction_state)
 		if(TANK_FRAME)
-			var/screwed_hint = examine_hint_rightclick("screwed")
-			var/plating_hint = examine_hint_leftclick("metal plating")
+			var/screwed_hint = examine_hint("screwed")
+			var/plating_hint = examine_hint("metal plating")
 			. += "<span class='notice'>[src] is [screwed_hint] together and now just needs some [plating_hint].</span>"
 		if(TANK_PLATING_UNSECURED)
-			var/crowbar_hint = examine_hint_rightclick("crowbar")
-			var/welder_hint = examine_hint_leftclick("welder")
+			var/crowbar_hint = examine_hint("crowbar")
+			var/welder_hint = examine_hint("welder")
 			. += "<span class='notice'>The plating has been firmly attached and would need a [crowbar_hint] to detach, but still needs to be sealed by a [welder_hint].</span>"
 
 /obj/structure/tank_frame/deconstruct(disassembled)

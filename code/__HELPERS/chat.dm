@@ -76,11 +76,3 @@ In TGS3 it will always be sent to all connected designated game chats.
 /// Handles text formatting for item use hints in examine text
 /proc/examine_hint(text)
 	return "<b>[text]</b>"
-
-/// Same as [/proc/examine_hint] but is specifically for actions requiring a left click
-/proc/examine_hint_leftclick(text)
-	return "[examine_hint(text)]"
-
-/// Same as [/proc/examine_hint] but is specifically for actions requiring a right click
-/proc/examine_hint_rightclick(text)
-	return "[examine_hint(text)]"
