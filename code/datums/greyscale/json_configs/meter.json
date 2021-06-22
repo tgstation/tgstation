@@ -1,0 +1,15 @@
+{
+	"meter": [
+		{
+			"type": "icon_state",
+			"icon_state": "meterX",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pressure_readout",
+			"blend_mode": "overlay",
+		}
+	]
+}

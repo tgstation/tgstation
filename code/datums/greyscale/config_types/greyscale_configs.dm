@@ -332,3 +332,8 @@
 	name = "Wrapping Paper"
 	icon_file = 'icons/obj/stack_objects.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wrap_paper.json'
+
+/datum/greyscale_config/meter
+	name = "Meter"
+	icon_file = 'icons/obj/atmospherics/pipes/meter.dmi'
+	json_config = 'code/datums/greyscale/json_configs/meter.json'

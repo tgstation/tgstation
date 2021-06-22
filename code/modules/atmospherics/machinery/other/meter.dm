@@ -13,6 +13,8 @@
 	var/frequency = 0
 	var/atom/target
 	var/target_layer = PIPING_LAYER_DEFAULT
+	greyscale_config = /datum/greyscale_config/meter
+	greyscale_colors = "00FF00"
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
