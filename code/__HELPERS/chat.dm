@@ -74,4 +74,4 @@ In TGS3 it will always be sent to all connected designated game chats.
 	world.TgsTargetedChatBroadcast("[category] | [message]", TRUE)
 
 /// Handles text formatting for item use hints in examine text
-#define EXAMINE_HINT(text) "<b>[text]</b>"
+#define EXAMINE_HINT(text) ("<b>" + text + "</b>")

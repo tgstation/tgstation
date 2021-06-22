@@ -501,6 +501,7 @@
 			else
 				amount_more = "an indeterminate amount more"
 		to_chat(user, "<span class='notice'>You don't have enough [stack] to add all the plating. Maybe [amount_more].</span>")
+		return
 
 	material_end_product = stack_mat
 	construction_state = TANK_PLATING_UNSECURED
