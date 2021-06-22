@@ -164,6 +164,11 @@
 "mo" = (
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
+"mu" = (
+/obj/machinery/door/airlock/centcom,
+/obj/structure/trap/ctf/green,
+/turf/open/floor/wood,
+/area/tdome/arena)
 "nl" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/cult,
@@ -612,6 +617,7 @@
 /area/tdome/arena)
 "Yk" = (
 /obj/machinery/door/airlock/centcom,
+/obj/structure/trap/ctf/red,
 /turf/open/floor/wood,
 /area/tdome/arena)
 "YO" = (
@@ -2380,7 +2386,7 @@ iB
 FN
 df
 df
-Yk
+mu
 df
 df
 df

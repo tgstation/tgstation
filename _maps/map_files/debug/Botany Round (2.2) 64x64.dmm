@@ -176,6 +176,7 @@
 	pixel_x = 13;
 	pixel_y = 5
 	},
+/obj/item/storage/box/syringes,
 /turf/open/floor/plating/dirt/jungle,
 /area/tdome/arena)
 "Ms" = (
@@ -283,7 +284,7 @@
 /area/tdome/arena)
 "Zi" = (
 /obj/machinery/door/airlock/alarmlock,
-/obj/structure/trap/ctf/blue,
+/obj/structure/trap/ctf/green,
 /turf/open/floor/iron/showroomfloor,
 /area/tdome/arena)
 "ZO" = (

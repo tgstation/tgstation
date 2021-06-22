@@ -8,22 +8,22 @@
 "bL" = (
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "cX" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
 /obj/item/storage/fancy/heart_box,
 /obj/item/food/tinychocolate,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "eL" = (
 /obj/structure/fence/post{
 	dir = 4
 	},
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "fz" = (
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "fX" = (
 /turf/open/floor/iron/smooth_corner,
 /area/tdome/arena)
@@ -33,35 +33,35 @@
 	},
 /obj/structure/table/rolling,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "gc" = (
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/tdome)
+/area/tdome/arena)
 "gs" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
 /obj/item/valentine,
 /obj/item/grenade/c4,
 /obj/item/clothing/accessory/medal/conduct,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "gT" = (
 /obj/effect/turf_decal/bot,
 /obj/item/pressure_plate/hologrid{
 	reward = /obj/item/keycard/eventtwo
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "hm" = (
 /obj/structure/fence/corner,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "hq" = (
 /obj/machinery/arena_spawn/red,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "hV" = (
 /obj/effect/turf_decal/arrows/white{
 	dir = 1
@@ -71,7 +71,7 @@
 "iK" = (
 /obj/structure/fence/door,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "iL" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_half{
@@ -93,42 +93,42 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "jI" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "jV" = (
 /obj/machinery/launchpad,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "ka" = (
 /turf/closed/indestructible/reinforced,
-/area/tdome)
+/area/tdome/arena)
 "ld" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/indestructible/reinforced,
-/area/tdome)
+/area/tdome/arena)
 "lp" = (
 /obj/structure/flora/rock/icy,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "lt" = (
 /obj/machinery/arena_spawn/green,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "lE" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "mj" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/textured,
-/area/tdome)
+/area/tdome/arena)
 "mx" = (
 /obj/effect/turf_decal/loading_area/white{
 	dir = 8
@@ -138,12 +138,12 @@
 "nf" = (
 /obj/structure/sign/poster/official/obey,
 /turf/closed/indestructible/reinforced,
-/area/tdome)
+/area/tdome/arena)
 "nt" = (
 /obj/item/food/grown/coffee,
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "nI" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -151,40 +151,40 @@
 /obj/effect/mob_spawn/human/skeleton,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "nO" = (
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "oe" = (
 /turf/closed/indestructible/rock,
-/area/tdome)
+/area/tdome/arena)
 "pA" = (
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "qe" = (
 /obj/machinery/door/airlock/mining/glass,
 /turf/open/floor/noslip,
-/area/tdome)
+/area/tdome/arena)
 "qO" = (
 /obj/structure/holobox,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/tdome)
+/area/tdome/arena)
 "rd" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
-/area/tdome)
+/area/tdome/arena)
 "re" = (
 /obj/structure/sign/poster/official/obey,
 /turf/closed/wall/r_wall,
-/area/tdome)
+/area/tdome/arena)
 "rz" = (
 /obj/item/reagent_containers/food/drinks/trophy/gold_cup,
 /turf/open/floor/carpet/green,
-/area/tdome)
+/area/tdome/arena)
 "rA" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_edge,
@@ -202,7 +202,7 @@
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "sG" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth_large,
@@ -210,50 +210,47 @@
 "ut" = (
 /obj/machinery/door/keycard,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "uW" = (
 /obj/item/food/strawberryicecreamsandwich,
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
-/area/tdome)
+/area/tdome/arena)
 "vE" = (
 /obj/structure/flora/tree/pine,
 /turf/open/floor/plating/grass,
-/area/tdome)
-"vG" = (
-/turf/open/floor/iron/smooth_half,
-/area/tdome)
+/area/tdome/arena)
 "vY" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/tdome)
+/area/tdome/arena)
 "wo" = (
 /obj/effect/decal/cleanable/wrapping,
 /obj/item/c_tube,
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "wy" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "wR" = (
 /obj/structure/chair/plastic{
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "xx" = (
 /obj/structure/chair/office/light{
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "xV" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
@@ -262,15 +259,15 @@
 	reward = /mob/living/simple_animal/pet/dog/bullterrier
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "yl" = (
 /obj/structure/closet/crate/secure,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "yR" = (
 /obj/machinery/computer/launchpad,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "zm" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_half,
@@ -282,25 +279,25 @@
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "Be" = (
 /obj/structure/closet/crate/mail{
 	icon_state = "mailopen"
 	},
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "Bq" = (
 /obj/item/ticket_machine_ticket,
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "BS" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall/r_wall,
-/area/tdome)
+/area/tdome/arena)
 "BT" = (
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "BW" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/structure/chair/plastic{
@@ -311,7 +308,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "BY" = (
 /obj/item/pressure_plate/hologrid{
 	reward = /obj/item/keycard/eventone
@@ -320,28 +317,28 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "Cs" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/iron/textured,
-/area/tdome)
+/area/tdome/arena)
 "Cz" = (
 /turf/closed/indestructible/riveted,
-/area/tdome)
+/area/tdome/arena)
 "CD" = (
 /turf/open/floor/carpet/green,
-/area/tdome)
+/area/tdome/arena)
 "CN" = (
 /obj/effect/decal/cleanable/plasma,
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "CT" = (
 /obj/structure/holobox,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "Dj" = (
 /obj/structure/closet/crate/mail{
 	icon_state = "mailopen"
@@ -350,11 +347,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "DH" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "Eg" = (
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
@@ -369,15 +366,15 @@
 /obj/item/food/grown/coffee/robusta,
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "Gg" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "GE" = (
 /obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "GS" = (
 /turf/open/floor/iron/smooth_half{
 	dir = 4
@@ -386,7 +383,7 @@
 "GX" = (
 /obj/structure/closet/crate/mail/full,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "HJ" = (
 /obj/effect/turf_decal/arrows/white,
 /turf/open/floor/iron/smooth_large,
@@ -394,24 +391,24 @@
 "HU" = (
 /obj/structure/table/greyscale,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "HW" = (
 /obj/structure/closet/crate/mail{
 	icon_state = "mailopen"
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "In" = (
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
 "Ir" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/smooth_large,
-/area/tdome)
+/area/tdome/arena)
 "IO" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "Ja" = (
 /turf/open/floor/iron/smooth,
 /area/tdome/arena)
@@ -422,18 +419,18 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/tdome)
+/area/tdome/arena)
 "Kd" = (
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "Kh" = (
 /obj/machinery/door/keycard/eventtwo,
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "Kl" = (
 /obj/structure/fence,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "Lm" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/smooth_large,
@@ -444,7 +441,7 @@
 	},
 /obj/item/flashlight/glowstick/orange,
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "Lt" = (
 /turf/open/floor/iron/smooth_half{
 	dir = 1
@@ -453,7 +450,7 @@
 "Lx" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 "LQ" = (
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
@@ -463,42 +460,37 @@
 /obj/effect/decal/cleanable/wrapping,
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron/smooth_half,
-/area/tdome)
+/area/tdome/arena)
 "MY" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth,
 /area/tdome/arena)
-"Na" = (
-/turf/open/floor/iron/smooth_corner{
-	dir = 4
-	},
-/area/tdome)
 "NM" = (
 /obj/structure/chair/plastic{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "Po" = (
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 8
 	},
 /turf/open/floor/carpet/green,
-/area/tdome)
+/area/tdome/arena)
 "Pt" = (
 /obj/structure/sign/poster/ripped,
 /turf/closed/indestructible/reinforced,
-/area/tdome)
+/area/tdome/arena)
 "Qg" = (
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/door/keycard/eventone,
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "Qh" = (
 /obj/effect/turf_decal/stripes/white/box,
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "Qr" = (
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/arrows{
@@ -512,27 +504,27 @@
 "QP" = (
 /obj/item/trash/can,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "Ra" = (
 /obj/machinery/door/keycard/eventtwo,
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "Ru" = (
 /obj/structure/chair/office/light{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_corner,
-/area/tdome)
+/area/tdome/arena)
 "RG" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "SV" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/carpet/green,
-/area/tdome)
+/area/tdome/arena)
 "Tr" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_edge{
@@ -547,14 +539,14 @@
 	reward = /obj/item/keycard/eventone
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "TH" = (
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "TS" = (
 /obj/machinery/ticket_machine/directional/north,
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "TU" = (
 /turf/open/floor/iron/smooth_corner{
 	dir = 8
@@ -565,28 +557,28 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/tdome)
+/area/tdome/arena)
 "UL" = (
 /turf/open/floor/iron/smooth_half,
 /area/tdome/arena)
 "VE" = (
 /turf/open/floor/iron/white,
-/area/tdome)
+/area/tdome/arena)
 "VY" = (
 /turf/closed/wall/r_wall,
-/area/tdome)
+/area/tdome/arena)
 "WW" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/reinforced,
-/area/tdome)
+/area/tdome/arena)
 "WX" = (
 /obj/structure/sign/warning/nosmoking/circle,
 /turf/closed/indestructible/reinforced,
-/area/tdome)
+/area/tdome/arena)
 "XE" = (
 /obj/item/food/grown/coffee/robusta,
 /turf/open/floor/iron/smooth_half,
-/area/tdome)
+/area/tdome/arena)
 "Ya" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window{
@@ -598,22 +590,17 @@
 /obj/structure/window/spawner/east,
 /obj/item/toy/figure/cargotech,
 /turf/open/floor/noslip,
-/area/tdome)
+/area/tdome/arena)
 "Yc" = (
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
 /area/tdome/arena)
-"Yh" = (
-/turf/open/floor/iron/smooth_corner{
-	dir = 8
-	},
-/area/tdome)
 "YW" = (
 /obj/structure/holobox,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "Zm" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -621,7 +608,7 @@
 /obj/effect/decal/remains/human,
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/textured,
-/area/tdome)
+/area/tdome/arena)
 "ZU" = (
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
@@ -635,13 +622,13 @@
 	reward = /obj/item/toy/plush/moth
 	},
 /turf/open/floor/plating,
-/area/tdome)
+/area/tdome/arena)
 "ZX" = (
 /obj/structure/table/greyscale,
 /obj/item/flashlight/lamp,
 /obj/item/trash/candle,
 /turf/open/floor/carpet/royalblack,
-/area/tdome)
+/area/tdome/arena)
 
 (1,1,1) = {"
 Ja
@@ -1928,7 +1915,7 @@ oe
 TH
 ka
 fZ
-vG
+UL
 GE
 Ab
 VY
@@ -1994,8 +1981,8 @@ oe
 TH
 nf
 rK
-Yh
-Na
+TU
+LQ
 Be
 WX
 mj
@@ -3446,7 +3433,7 @@ oe
 TH
 ka
 fZ
-vG
+UL
 GE
 Ab
 VY
@@ -3512,8 +3499,8 @@ oe
 TH
 nf
 rK
-Yh
-Na
+TU
+LQ
 Be
 WX
 mj

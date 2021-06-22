@@ -30,6 +30,10 @@
 "fi" = (
 /turf/open/lava/smooth,
 /area/tdome/arena/thirteen)
+"fl" = (
+/obj/structure/closet/crate/loot/basic,
+/turf/open/floor/plating/asteroid/basalt,
+/area/tdome/arena/ten)
 "fy" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -37,6 +41,10 @@
 "fH" = (
 /turf/open/floor/plating,
 /area/tdome/arena/twelve)
+"fP" = (
+/obj/structure/closet/crate/loot/legendary,
+/turf/open/floor/plating,
+/area/tdome/arena/sixteen)
 "gk" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -53,7 +61,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/tdome/arena/five)
 "hN" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/four)
 "hP" = (
@@ -62,6 +70,10 @@
 "hQ" = (
 /turf/closed/indestructible/rock,
 /area/tdome/arena/five)
+"ih" = (
+/obj/structure/closet/crate/loot/rare,
+/turf/open/floor/iron,
+/area/tdome/arena/thirteen)
 "iB" = (
 /turf/closed/indestructible/rock,
 /area/tdome/arena/four)
@@ -117,6 +129,7 @@
 /turf/open/lava/smooth,
 /area/tdome/arena/seven)
 "qC" = (
+/obj/structure/closet/crate/loot/legendary,
 /turf/open/floor/iron,
 /area/tdome/arena/twelve)
 "qD" = (
@@ -165,12 +178,16 @@
 	},
 /turf/open/lava/smooth,
 /area/tdome/arena/six)
+"vR" = (
+/obj/structure/closet/crate/loot/basic,
+/turf/open/floor/plating/asteroid/basalt,
+/area/tdome/arena/nine)
 "wi" = (
 /obj/structure/table/greyscale,
 /turf/open/floor/iron,
 /area/tdome/arena/fourteen)
 "wp" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/three)
 "wB" = (
@@ -256,6 +273,10 @@
 "EE" = (
 /turf/open/indestructible/necropolis,
 /area/tdome/arena/five)
+"Gv" = (
+/obj/structure/closet/crate/loot/rare,
+/turf/open/floor/iron,
+/area/tdome/arena/fourteen)
 "GB" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
@@ -279,6 +300,10 @@
 	},
 /turf/open/lava/smooth,
 /area/tdome/arena/five)
+"IQ" = (
+/obj/structure/closet/crate/loot/rare,
+/turf/open/floor/iron,
+/area/tdome/arena/fifteen)
 "Ja" = (
 /obj/structure/lattice/catwalk,
 /turf/open/lava/smooth,
@@ -300,7 +325,7 @@
 /turf/open/floor/iron,
 /area/tdome/arena/thirteen)
 "Lx" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/two)
 "Md" = (
@@ -311,7 +336,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/tdome/arena/one)
 "NO" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/five)
 "NZ" = (
@@ -361,12 +386,24 @@
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/lava/smooth,
 /area/tdome/arena/seven)
+"Tj" = (
+/obj/structure/closet/crate/loot/rare,
+/turf/open/floor/plating/asteroid/basalt,
+/area/tdome/arena/twelve)
+"Tq" = (
+/obj/structure/closet/crate/loot/rare,
+/turf/open/floor/plating/asteroid/basalt,
+/area/tdome/arena/fourteen)
 "Tr" = (
 /turf/closed/wall,
 /area/tdome/arena/twelve)
 "TO" = (
 /turf/closed/indestructible/opshuttle,
 /area/tdome/arena/four)
+"Uo" = (
+/obj/structure/closet/crate/loot/rare,
+/turf/open/floor/iron,
+/area/tdome/arena/twelve)
 "US" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
@@ -379,7 +416,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/tdome/arena/two)
 "VP" = (
-/obj/machinery/arena_spawn/battle_royal,
+/obj/machinery/arena_spawn/battle_royale,
 /turf/open/indestructible/light,
 /area/tdome/arena/six)
 "VS" = (
@@ -494,7 +531,7 @@ PL
 ME
 ME
 ME
-ME
+tn
 PL
 PL
 PL
@@ -1274,7 +1311,7 @@ PL
 "}
 (14,1,1) = {"
 PL
-ME
+tn
 OL
 OL
 NZ
@@ -1579,7 +1616,7 @@ VS
 VS
 VS
 VS
-VS
+vR
 yx
 yx
 yx
@@ -1671,7 +1708,7 @@ PL
 (20,1,1) = {"
 PL
 PL
-OL
+VG
 OL
 NZ
 NZ
@@ -1689,7 +1726,7 @@ yx
 yx
 WZ
 WZ
-kU
+fl
 WZ
 kU
 kU
@@ -1715,7 +1752,7 @@ kU
 WZ
 kU
 kU
-VS
+vR
 yx
 uC
 uC
@@ -1871,7 +1908,7 @@ PL
 PL
 ZC
 ZC
-NZ
+AH
 NZ
 Lu
 Lu
@@ -2027,12 +2064,12 @@ DC
 DC
 DC
 Sa
-Lv
+ih
 US
 US
 US
 US
-Lv
+ih
 Sa
 DC
 DC
@@ -2166,7 +2203,7 @@ KJ
 KJ
 KJ
 pr
-Qt
+Tq
 Qt
 Qt
 DC
@@ -2293,11 +2330,11 @@ pr
 of
 Bb
 Bb
+IQ
 Bb
 Bb
 Bb
-Bb
-Bb
+IQ
 bL
 DV
 DV
@@ -2492,7 +2529,7 @@ KJ
 Bb
 bL
 CS
-CS
+fP
 aA
 xT
 Bb
@@ -2752,10 +2789,10 @@ PN
 DC
 fi
 pr
+Gv
 KJ
 KJ
-KJ
-KJ
+Gv
 KJ
 KJ
 KJ
@@ -3017,14 +3054,14 @@ PN
 PN
 PN
 Tr
-qC
+Uo
 HS
 HS
 HS
 HS
 qC
 Tr
-PN
+Tj
 PN
 PN
 PN
@@ -3125,7 +3162,7 @@ PL
 PL
 ZC
 ZC
-NZ
+AH
 NZ
 Lu
 Lu
@@ -3232,7 +3269,7 @@ Kt
 Kt
 Kt
 kU
-kU
+fl
 yx
 yx
 uC
@@ -3338,7 +3375,7 @@ uC
 yx
 yx
 WZ
-kU
+fl
 WZ
 kU
 kU
@@ -3360,7 +3397,7 @@ kU
 kU
 kU
 WZ
-kU
+fl
 WZ
 WZ
 WZ
@@ -3408,7 +3445,7 @@ WZ
 WZ
 WZ
 kU
-kU
+fl
 WZ
 kU
 kU
@@ -4522,7 +4559,7 @@ PL
 PL
 PL
 PL
-ME
+tn
 PL
 PL
 PL
@@ -4556,7 +4593,7 @@ PL
 PL
 PL
 PL
-ME
+tn
 PL
 PL
 PL

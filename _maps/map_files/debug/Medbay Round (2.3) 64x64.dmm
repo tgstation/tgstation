@@ -15,6 +15,7 @@
 /area/tdome/arena)
 "as" = (
 /obj/structure/table/glass,
+/obj/item/storage/box/syringes,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "aG" = (
@@ -24,6 +25,10 @@
 /area/tdome/arena)
 "bD" = (
 /obj/structure/closet/secure_closet/medical3,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"cA" = (
+/obj/structure/trap/ctf/red,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "cC" = (
@@ -37,6 +42,20 @@
 /area/tdome/arena)
 "cF" = (
 /obj/structure/table/optable,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"cG" = (
+/obj/structure/trap/ctf/green,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"cY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "dk" = (
@@ -54,6 +73,11 @@
 /area/tdome/arena)
 "gT" = (
 /obj/machinery/computer/operating,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"gX" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "hi" = (
@@ -145,6 +169,10 @@
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating,
 /area/tdome/arena)
+"nE" = (
+/obj/structure/trap/ctf/red,
+/turf/open/floor/iron/smooth_large,
+/area/tdome/arena)
 "nG" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_large,
@@ -179,6 +207,20 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating,
+/area/tdome/arena)
+"rW" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/rnd/production/techfab/department/medical,
+/turf/open/floor/iron/white,
 /area/tdome/arena)
 "so" = (
 /obj/structure/table/glass,
@@ -222,6 +264,10 @@
 /turf/open/floor/iron{
 	icon_state = "chapel"
 	},
+/area/tdome/arena)
+"vc" = (
+/obj/structure/trap/ctf/green,
+/turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "vd" = (
 /turf/open/floor/iron/white,
@@ -344,6 +390,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/white,
 /area/tdome/arena)
 "Di" = (
@@ -362,6 +409,13 @@
 	dir = 1;
 	icon_state = "chapel"
 	},
+/area/tdome/arena)
+"EO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/iron/white,
 /area/tdome/arena)
 "EZ" = (
 /obj/structure/alien/weeds/node,
@@ -539,6 +593,14 @@
 /obj/structure/alien/weeds,
 /obj/item/shard,
 /turf/open/floor/plating,
+/area/tdome/arena)
+"Nv" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/iron/white,
 /area/tdome/arena)
 "Ov" = (
 /obj/structure/table/glass,
@@ -1360,7 +1422,7 @@ qL
 qL
 qL
 qL
-vd
+cG
 qL
 qL
 qL
@@ -2020,7 +2082,7 @@ qL
 qL
 qL
 qL
-Xk
+vc
 yk
 yk
 yk
@@ -2557,14 +2619,14 @@ Xk
 yk
 Di
 vd
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
+EO
+EO
+EO
+EO
+EO
+EO
+EO
+EO
 vd
 Di
 yk
@@ -2698,7 +2760,7 @@ Iy
 Eu
 GG
 xG
-uv
+Nv
 yk
 Xk
 uC
@@ -2753,18 +2815,18 @@ Xk
 uC
 Xk
 yk
-xG
+cY
 uv
 Fk
 WY
-Iy
+rW
 Mu
 WY
 Iy
 Fk
 vb
 xG
-uv
+Nv
 yk
 Xk
 uC
@@ -2887,14 +2949,14 @@ Xk
 yk
 Di
 vd
-kL
-kL
-kL
-kL
-kL
-kL
-kL
-kL
+gX
+gX
+gX
+gX
+gX
+gX
+gX
+gX
 vd
 Di
 yk
@@ -3431,7 +3493,7 @@ yk
 yk
 yk
 yk
-Xk
+nE
 qL
 qL
 qL
@@ -4091,7 +4153,7 @@ qL
 qL
 qL
 qL
-vd
+cA
 qL
 qL
 qL

@@ -195,6 +195,7 @@
 /area/tdome/arena)
 "BX" = (
 /obj/structure/table/reinforced,
+/obj/item/soap/omega,
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Cg" = (
