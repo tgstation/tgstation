@@ -61,13 +61,11 @@
 		if(!movable_atom.pixel_x)
 			movable_atom.pixel_x = rand(-3,3)
 	LAZYNULL(papers)
-	LAZYINITLIST(papers)
 	update_appearance()
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(LAZYLEN(papers))
 		LAZYNULL(papers)
-		LAZYINITLIST(papers)
 		update_appearance()
 	..()
 
@@ -94,7 +92,7 @@
 		update_appearance()
 	else if(LAZYLEN(papers))
 		var/obj/item/paper/top_paper = papers[papers.len]
-		papers.Remove(top_paper)
+		LAZYREMOVE(papers, top_paper)
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
 		user.put_in_hands(top_paper)
@@ -114,7 +112,7 @@
 		if(!user.transferItemToLoc(paper, src))
 			return
 		to_chat(user, span_notice("You put [paper] in [src]."))
-		papers.Add(paper)
+		LAZYADD(papers, paper)
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/pen = I
