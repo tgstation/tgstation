@@ -57,10 +57,15 @@
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
+	populate_options()
 	if(length(options))
 		current_option = options[1]
 
 	return INITIALIZE_HINT_LATELOAD
+
+/// Called when the options variable should be set.
+/obj/item/circuit_component/proc/populate_options()
+	return
 
 /obj/item/circuit_component/LateInitialize()
 	. = ..()

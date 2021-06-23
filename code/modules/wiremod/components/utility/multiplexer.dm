@@ -22,7 +22,7 @@
 	/// The multiplexer inputs. These are what get selected for the output by the input_port.
 	var/list/datum/port/input/multiplexer_inputs
 
-/obj/item/circuit_component/multiplexer/Initialize()
+/obj/item/circuit_component/multiplexer/populate_options()
 	var/static/component_options = list(
 		COMP_TYPE_ANY,
 		PORT_TYPE_STRING,
@@ -31,6 +31,8 @@
 		PORT_TYPE_ATOM,
 	)
 	options = component_options
+
+/obj/item/circuit_component/multiplexer/Initialize()
 	. = ..()
 	current_option = COMP_TYPE_ANY
 	current_type = COMP_TYPE_ANY

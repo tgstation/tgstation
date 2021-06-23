@@ -14,7 +14,7 @@
 
 	var/current_type
 
-/obj/item/circuit_component/combiner/Initialize()
+/obj/item/circuit_component/combiner/populate_options()
 	var/static/component_options = list(
 		COMP_TYPE_ANY,
 		PORT_TYPE_STRING,
@@ -24,6 +24,8 @@
 		PORT_TYPE_SIGNAL,
 	)
 	options = component_options
+
+/obj/item/circuit_component/combiner/Initialize()
 	. = ..()
 	current_option = COMP_TYPE_ANY
 	current_type = COMP_TYPE_ANY
