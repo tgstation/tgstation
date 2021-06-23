@@ -497,3 +497,27 @@
   - refactor: Refactors dbcore.dm to possibly resolve the crashes that happen on Terry.
   carshalash:
   - bugfix: Eggs now give 5u yolk no matter what it is cracked in
+2021-06-23:
+  Fikou:
+  - expansion: new mech action figures and job action figures
+  - bugfix: Intento leaderboard works good
+  - imageadd: new sprites for mech action figures
+  Greniza:
+  - imageadd: New turf decals for alternative tiletypes
+  MMMiracles:
+  - rscadd: Tramstation's Tram is now more capable of making things regret being in
+      the way of it
+  - bugfix: Tramstation's Tram is now less likely to unintentionally explode
+  RandomGamer123:
+  - bugfix: Cigarettes with the smoke_all property actually let you smoke in everything
+      the cigarette contains now.
+  - qol: Adds more intercoms and a new fire extinguisher to Metastation's new medbay.
+  - bugfix: Replaces broken valueless space cash item in old AI sat ruin with a 200
+      credit one
+  Semoro and azizonkg:
+  - bugfix: Ported fixes of SStimer subsystem from RU SS220 Paradise
+  - config: 'Added a new config var: flag/log_timers_on_bucket_reset'
+  TemporalOroboros:
+  - bugfix: Specific chem dispenser recipes no longer create fonts of infinite power.
+  Watermelon914:
+  - bugfix: Fixed explosions delimbing you if they're weaker

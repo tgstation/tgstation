@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Specific chem dispenser recipes no longer create fonts of infinite power."

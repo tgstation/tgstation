@@ -1,5 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - rscadd: "Tramstation's Tram is now more capable of making things regret being in the way of it"
-  - bugfix: "Tramstation's Tram is now less likely to unintentionally explode"
