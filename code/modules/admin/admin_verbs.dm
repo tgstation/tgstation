@@ -184,9 +184,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/export_dynamic_json,
 	/client/proc/run_dynamic_simulations,
 	#endif
-	#ifdef SENDMAPS_PROFILE
 	/client/proc/display_sendmaps,
-	#endif
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/check_timer_sources,
 	/client/proc/toggle_cdn,
@@ -815,10 +813,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/datum/admins/admin = GLOB.admin_datums[ckey]
 	admin?.associate(src)
 
-#ifdef SENDMAPS_PROFILE
 /client/proc/display_sendmaps()
 	set name = "Send Maps Profile"
 	set category = "Debug"
 
 	src << link("?debug=profile&type=sendmaps&window=test")
-#endif
