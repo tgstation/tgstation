@@ -40,7 +40,7 @@
 		COMSIG_PARENT_EXAMINE,
 	))
 
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.unregister_usb_parent(parent)
 
 	unregister_circuit_signals()
