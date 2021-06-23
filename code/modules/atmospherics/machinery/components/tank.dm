@@ -157,8 +157,6 @@
 	. = ..()
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
-		if(tank == src)
-			continue
 		. += tank.parents
 
 /obj/machinery/atmospherics/components/tank/proc/ToggleSidePort(new_dir)
