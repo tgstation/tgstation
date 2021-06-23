@@ -43,12 +43,12 @@
 				armed = TRUE
 				if(!user.put_in_hands(gun))
 					armed = FALSE
-					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
+					to_chat(user, span_warning("You need a free hand to hold the gun!"))
 					return
 				update_appearance()
 				user.update_inv_back()
 		else
-			to_chat(user, "<span class='warning'>You are already holding the gun!</span>")
+			to_chat(user, span_warning("You are already holding the gun!"))
 	else
 		..()
 
@@ -90,9 +90,9 @@
 	gun.forceMove(src)
 	armed = FALSE
 	if(user)
-		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
+		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
 	else
-		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
+		src.visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
 	update_appearance()
 	user.update_inv_back()
 
@@ -140,10 +140,10 @@
 
 /obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
-		to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
+		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
 	..()
-	ammo_pack.overheat += burst_size
+	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/totransfer = min(100, ammo_pack.battery.charge)
 		var/transferred = cell.give(totransfer)
@@ -152,7 +152,7 @@
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
-		to_chat(user, "<span class='warning'>You need the backpack power source to fire the gun!</span>")
+		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
 	. = ..()
 
 /obj/item/stock_parts/cell/minigun

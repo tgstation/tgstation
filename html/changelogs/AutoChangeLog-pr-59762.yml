@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - qol: "Admin ghosts can now use the :j speech prefix to relay messages from deadchat to their current linked body, if one exists. Perfect for keeping in touch with your deployed ERT via headset without needing to stay in your body back at Centcom!"

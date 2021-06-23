@@ -85,7 +85,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/leaper_bubble/ComponentInitialize()
 	. = ..()
@@ -205,7 +205,7 @@
 	if(z != target.z)
 		return
 	hopping = TRUE
-	density = FALSE
+	set_density(FALSE)
 	pass_flags |= PASSMOB
 	notransform = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
@@ -218,7 +218,7 @@
 	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, .proc/FinishHop))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
-	density = TRUE
+	set_density(TRUE)
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
@@ -235,12 +235,12 @@
 	addtimer(CALLBACK(src, .proc/BellyFlopHop, new_turf), 30)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
-	density = FALSE
+	set_density(FALSE)
 	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, .proc/Crush))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
-	density = TRUE
+	set_density(TRUE)
 	notransform = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))
@@ -251,7 +251,7 @@
 				throw_dir = pick(GLOB.alldirs)
 			var/throwtarget = get_edge_target_turf(src, throw_dir)
 			L.throw_at(throwtarget, 3, 1)
-			visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
+			visible_message(span_warning("[L] is thrown clear of [src]!"))
 	if(ckey)//Lessens ability to chain stun as a player
 		ranged_cooldown = ranged_cooldown_time + world.time
 		update_icons()

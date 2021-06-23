@@ -20,7 +20,7 @@
 		return FALSE
 	var/area/noteleport_check = get_area(user)
 	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
-		to_chat(user, "<span class='danger'>Some dull, universal force is between you and your other existence, preventing you from blood crawling.</span>")
+		to_chat(user, span_danger("Some dull, universal force is between you and your other existence, preventing you from blood crawling."))
 		return FALSE
 
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
@@ -29,7 +29,7 @@
 			perform(target)
 			return
 	revert_cast()
-	to_chat(user, "<span class='warning'>There must be a nearby source of blood!</span>")
+	to_chat(user, span_warning("There must be a nearby source of blood!"))
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
@@ -47,4 +47,4 @@
 		start_recharge()
 		return
 	revert_cast()
-	to_chat(user, "<span class='warning'>You are unable to blood crawl!</span>")
+	to_chat(user, span_warning("You are unable to blood crawl!"))

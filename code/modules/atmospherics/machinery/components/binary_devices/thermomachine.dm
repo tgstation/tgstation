@@ -107,14 +107,14 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += "<span class='notice'>Something seems wrong with [src]'s thermal safeties.</span>"
-	. += "<span class='notice'>With the panel open:</span>"
-	. += "<span class='notice'>-use a wrench with left-click to rotate [src] and right-click to unanchor it.</span>"
-	. += "<span class='notice'>-use a multitool with left-click to change the piping layer and right-click to change the piping color.</span>"
-	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
+		. += span_notice("Something seems wrong with [src]'s thermal safeties.")
+	. += span_notice("With the panel open:")
+	. += span_notice("-use a wrench with left-click to rotate [src] and right-click to unanchor it.")
+	. += span_notice("-use a multitool with left-click to change the piping layer and right-click to change the piping color.")
+	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.</span>"
-		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.</span>"
+		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
+		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
 
 /obj/machinery/atmospherics/components/binary/thermomachine/AltClick(mob/living/user)
 	if(!can_interact(user))
@@ -196,14 +196,14 @@
 
 		if (exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
-			visible_message("<span class='warning'>The heat reservoir has reached critical levels, shutting down...</span>")
+			visible_message(span_warning("The heat reservoir has reached critical levels, shutting down..."))
 			update_appearance()
 			return
 
 		else if(exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && !safeties)
 			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
 				lastwarning = REALTIMEOFDAY
-				visible_message("<span class='warning'>The heat reservoir has reached critical levels!</span>")
+				visible_message(span_warning("The heat reservoir has reached critical levels!"))
 				if(check_explosion(exchange_target.temperature))
 					explode()
 					return PROCESS_KILL //We're dying anyway, so let's stop processing
@@ -228,7 +228,7 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
 	if(!on && item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!anchored)
-			to_chat(user, "<span class='notice'>Anchor [src] first!</span>")
+			to_chat(user, span_notice("Anchor [src] first!"))
 			return
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, item))
 			change_pipe_connection(panel_open)
@@ -240,7 +240,7 @@
 
 	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
 		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+		to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
 		update_appearance()
 		return
 	return ..()
@@ -306,7 +306,7 @@
 		if(device == src)
 			continue
 		if(device.piping_layer == piping_layer)
-			visible_message("<span class='warning'>A pipe is hogging the ports, remove the obstruction or change the machine piping layer.</span>")
+			visible_message(span_warning("A pipe is hogging the ports, remove the obstruction or change the machine piping layer."))
 			return TRUE
 	return FALSE
 
@@ -315,7 +315,7 @@
 		return
 	if(panel_open && !anchored)
 		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+		to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
 		update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/emag_act(mob/user)
@@ -328,7 +328,7 @@
 		sparks.attach(src)
 		sparks.start()
 		obj_flags |= EMAGGED
-		user.visible_message("<span class='warning'>You emag [src], overwriting thermal safety restrictions.</span>")
+		user.visible_message(span_warning("You emag [src], overwriting thermal safety restrictions."))
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal safety restrictions.")
 
 /obj/machinery/atmospherics/components/binary/thermomachine/emp_act()

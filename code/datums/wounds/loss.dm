@@ -46,7 +46,7 @@
 
 	var/msg = "<span class='bolddanger'>[victim]'s [dismembered_part.name] [occur_text]!</span>"
 
-	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [self_msg ? self_msg : occur_text]!</span>")
+	victim.visible_message(msg, span_userdanger("Your [dismembered_part.name] [self_msg ? self_msg : occur_text]!"))
 
 	set_limb(dismembered_part)
 	second_wind()

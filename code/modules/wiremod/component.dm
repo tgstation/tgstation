@@ -68,8 +68,10 @@
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
-		parent.remove_component(src)
+		// Prevents a Destroy() recursion
+		var/obj/item/integrated_circuit/old_parent = parent
 		parent = null
+		old_parent.remove_component(src)
 
 	trigger_input = null
 	trigger_output = null
@@ -135,6 +137,9 @@
 		if(connected_port.datatype != output_port.datatype)
 			output_port.set_datatype(connected_port.datatype)
 			return TRUE
+	else
+		output_port.set_datatype(output_port.default_datatype)
+		return TRUE
 	return FALSE
 
 

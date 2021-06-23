@@ -22,7 +22,7 @@
 
 /turf/open/floor/wood/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>"
+	. += span_notice("There's a few <b>screws</b> and a <b>small crack</b> visible.")
 
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -51,15 +51,15 @@
 		broken = FALSE
 		burnt = FALSE
 		if(user && !silent)
-			to_chat(user, "<span class='notice'>You remove the broken planks.</span>")
+			to_chat(user, span_notice("You remove the broken planks."))
 	else
 		if(make_tile)
 			if(user && !silent)
-				to_chat(user, "<span class='notice'>You unscrew the planks.</span>")
+				to_chat(user, span_notice("You unscrew the planks."))
 			spawn_tile()
 		else
 			if(user && !silent)
-				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
+				to_chat(user, span_notice("You forcefully pry off the planks, destroying them in the process."))
 	return make_plating(force_plating)
 
 /turf/open/floor/wood/cold
@@ -117,7 +117,7 @@
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if((C.tool_behaviour == TOOL_SHOVEL) && params)
 		new ore_type(src, 2)
-		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [turfverb] [src].</span>")
+		user.visible_message(span_notice("[user] digs up [src]."), span_notice("You [turfverb] [src]."))
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 		make_plating()
 	if(..())
@@ -228,7 +228,7 @@
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
+	. += span_notice("There's a <b>small crack</b> on the edge of it.")
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
@@ -757,20 +757,6 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/neon/simple/pink/nodots/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/fake_error
-	name = ""
-	desc = "Neon carpet produced when a software error occured at the production line."
-	icon = 'icons/turf/floors.dmi'
-	base_icon_state = "fake_error"
-	icon_state = "fake_error"
-
-/turf/open/floor/fake_error/update_overlays()
-	. = ..()
-	. += emissive_appearance(icon, "fake_error_glow", alpha=src.alpha)
-
-/turf/open/floor/fake_error/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/fakepit

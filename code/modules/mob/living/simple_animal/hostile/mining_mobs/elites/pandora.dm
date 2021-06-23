@@ -146,15 +146,15 @@
 	for(var/t in RANGE_TURFS(1, source))
 		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
-	density = FALSE
+	visible_message(span_hierophant_warning("[src] fades out!"))
+	set_density(FALSE)
 	addtimer(CALLBACK(src, .proc/pandora_teleport_3, T), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_3(turf/T)
 	forceMove(T)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	density = TRUE
-	visible_message("<span class='hierophant_warning'>[src] fades in!</span>")
+	set_density(TRUE)
+	visible_message(span_hierophant_warning("[src] fades in!"))
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares(target)
 	ranged_cooldown = world.time + cooldown_time

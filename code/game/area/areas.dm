@@ -605,15 +605,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * If the area has ambience, then it plays some ambience music to the ambience channel
  */
-/area/Entered(atom/movable/M)
+/area/Entered(atom/movable/arrived, direction)
 	set waitfor = FALSE
-	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, direction)
+	for(var/atom/movable/recipient as anything in arrived.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
-	if(!isliving(M))
+	if(!isliving(arrived))
 		return
 
-	var/mob/living/L = M
+	var/mob/living/L = arrived
 	if(!L.ckey)
 		return
 
@@ -637,9 +637,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
  */
-/area/Exited(atom/movable/M)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+/area/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	for(var/atom/movable/recipient as anything in gone.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 

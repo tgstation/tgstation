@@ -37,7 +37,7 @@
 /obj/item/stack/tile/examine(mob/user)
 	. = ..()
 	if(tile_reskin_types || tile_rotate_dirs)
-		. += "<span class='notice'>Use while in your hand to change what type of [src] you want.</span>"
+		. += span_notice("Use while in your hand to change what type of [src] you want.")
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
 		var/verb
 		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
@@ -53,7 +53,7 @@
 				verb = "mediocre"
 		if(!verb)
 			return
-		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
+		. += span_notice("Those could work as a [verb] throwing weapon.")
 
 
 /obj/item/stack/tile/proc/place_tile(turf/open/T)
@@ -892,33 +892,6 @@
 	amount = 30
 
 /obj/item/stack/tile/carpet/neon/simple/pink/nodots/sixty
-	amount = 60
-
-/obj/item/stack/tile/fake_error
-	name = "misproduced carpet"
-	singular_name = "misproduced carpet tile"
-	desc = "A piece of neon carpet produced under a software error."
-	icon_state = "tile-error"
-	inhand_icon_state = "tile-error"
-	turf_type = /turf/open/floor/fake_error
-	merge_type = /obj/item/stack/tile/fake_error
-	resistance_flags = FLAMMABLE
-
-/obj/item/stack/tile/fake_error/update_overlays()
-	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = alpha)
-
-/obj/item/stack/tile/fake_error/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha, appearance_flags = KEEP_APART)
-
-/obj/item/stack/tile/fake_error/ten
-	amount = 10
-
-/obj/item/stack/tile/fake_error/thirty
-	amount = 30
-
-/obj/item/stack/tile/fake_error/sixty
 	amount = 60
 
 /obj/item/stack/tile/fakespace

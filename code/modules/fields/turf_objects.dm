@@ -34,10 +34,10 @@
 		return parent.field_turf_crossed(AM, src)
 	return TRUE
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/on_uncrossed(datum/source, atom/movable/AM)
+/obj/effect/abstract/proximity_checker/advanced/field_turf/on_uncrossed(datum/source, atom/movable/gone, direction)
 	. = ..()
 	if(parent)
-		return parent.field_turf_uncrossed(AM, src)
+		return parent.field_turf_uncrossed(gone, src)
 	return TRUE
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge
@@ -55,9 +55,9 @@
 		return parent.field_edge_crossed(AM, src)
 	return TRUE
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/on_uncrossed(datum/source, atom/movable/AM)
+/obj/effect/abstract/proximity_checker/advanced/field_edge/on_uncrossed(datum/source, atom/movable/gone, direction)
 	if(parent)
-		return parent.field_edge_uncrossed(AM, src)
+		return parent.field_edge_uncrossed(gone, src)
 	return TRUE
 
 /proc/is_turf_in_field(turf/T, datum/proximity_monitor/advanced/F) //Looking for ways to optimize this!
