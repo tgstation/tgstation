@@ -214,6 +214,7 @@
 // diagonal turfs that can share atmos with *both* of the cardinal turfs
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
+	adjacent_turfs.Cut()
 	var/turf/T = get_turf(src)
 	adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
 

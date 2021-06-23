@@ -149,7 +149,8 @@
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
-	A?.addStaticPower(value, powerchannel)
+	if(A)
+		A.addStaticPower(value, powerchannel)
 
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
