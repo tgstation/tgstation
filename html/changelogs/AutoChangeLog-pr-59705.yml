@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - refactor: "Cow tipping and medibot tipping is now a component."
