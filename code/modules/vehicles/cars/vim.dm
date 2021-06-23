@@ -82,8 +82,8 @@
 	var/static/piloted_overlay
 	var/static/headlights_overlay
 	if(isnull(piloted_overlay))
-		piloted_overlay = image(icon, "vim_piloted")
-		headlights_overlay = image(icon, "vim_headlights")
+		piloted_overlay = iconstate2appearance(icon, "vim_piloted")
+		headlights_overlay = iconstate2appearance(icon, "vim_headlights")
 
 	var/list/drivers = return_drivers()
 	if(drivers.len)
