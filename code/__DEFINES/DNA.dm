@@ -239,7 +239,6 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_FLY "fly"
 #define SPECIES_MONKEY "monkey"
-
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
 #define SPECIES_LUMINESCENT "lum"
@@ -247,7 +246,6 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_LIZARD "lizard"
 #define SPECIES_LIZARD_ASH "ashlizard"
 #define SPECIES_LIZARD_SILVER "silverlizard"
-
 #define SPECIES_DULLAHAN "dullahan"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_VAMPIRE "vampire"
