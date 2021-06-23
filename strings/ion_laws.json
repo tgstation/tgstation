@@ -145,8 +145,6 @@
         "INVISIBLE",
         "PAINFUL",
         "HARMFUL",
-        "HOMOSEXUAL",
-        "HETEROSEXUAL",
         "SEXUAL",
         "BLOODY",
         "COLORFUL",
@@ -837,7 +835,8 @@
         "SLIME PEOPLE",
         "GOLEMS",
         "SHADOW PEOPLE",
-        "CHANGELINGS"
+        "CHANGELINGS",
+        "MOTHMEN"
     ],
     "ionthings": [
         "ABSENCE OF CYBORG HUGS",
@@ -993,7 +992,6 @@
         "SKELETONS",
         "CAPITALISTS",
         "SINGULARITIES",
-        "ANGRY BLACK MEN",
         "GODS",
         "THIEVES",
         "ASSHOLES",
