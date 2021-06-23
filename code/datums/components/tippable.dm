@@ -4,9 +4,9 @@
 /datum/component/tippable
 	/// Time it takes to tip the mob. Can be 0, for instant tipping.
 	var/tip_time = 3 SECONDS
-	/// Time it takes to untip the mob. Can also be 0.
+	/// Time it takes to untip the mob. Can also be 0, for instant untip.
 	var/untip_time = 1 SECONDS
-	/// Time it takes for the mob to right itself. If 0 or negative, the mob will never self-right.
+	/// Time it takes for the mob to right itself. Can be 0 for instant self-righting, or null, to never self-right.
 	var/self_right_time = 60 SECONDS
 	/// Whether the mob is currently tipped.
 	var/is_tipped = FALSE
@@ -111,7 +111,7 @@
  */
 /datum/component/tippable/proc/do_tip(mob/living/tipped_mob, mob/tipper)
 	if(QDELETED(tipped_mob))
-		CRASH("tippable component do_tip() called for QDELETED tipped_mob!")
+		CRASH("Tippable component: do_tip() called with QDELETED tipped_mob!")
 
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
 	tipped_mob.visible_message(
@@ -122,7 +122,11 @@
 
 	set_tipped_status(tipped_mob, TRUE)
 	post_tipped_callback?.Invoke(tipper)
-	if(!isnull(self_right_time))
+	if(isnull(self_right_time))
+		return
+	else if(self_right_time <= 0)
+		right_self(tipped_mob)
+	else
 		addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time)
 
 /*
@@ -182,7 +186,7 @@
 	post_untipped_callback?.Invoke()
 
 	tipped_mob.visible_message(
-		span_notice("[tipped_mob] rights itself.")
+		span_notice("[tipped_mob] rights itself."),
 		span_notice("You right yourself.")
 		)
 
