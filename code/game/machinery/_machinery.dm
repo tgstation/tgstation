@@ -39,18 +39,22 @@
  *        EMPED -- temporary broken by EMP pulse
  *
  *Class Procs:
- *  Initialize()                     'game/machinery/machine.dm'
+ *  Initialize()
  *
- *  Destroy()                   'game/machinery/machine.dm'
+ *  Destroy()
  *
- *  auto_use_power()            'game/machinery/machine.dm'
- *     This proc determines how power mode power is deducted by the machine.
- *     'auto_use_power()' is called by the 'master_controller' game_controller every
- *     tick.
+ *	update_power_usage()
+ *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
+ *		called after the idle or active power usage has been changed.
  *
- *     Return Value:
- *        return:1 -- if object is powered
- *        return:0 -- if object is not powered.
+ *	update_power_channel()
+ *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
+ *		called after the power_channel var has been changed or called to change the var itself.
+ *
+ *	unset_static_power()
+ *		completely removes the current static power usage of this machine from its area.
+ *		used in the other power updating procs to then readd the correct power usage.
+ *
  *
  *     Default definition uses 'use_power', 'power_channel', 'active_power_usage',
  *     'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
@@ -164,7 +168,9 @@
 	if(use_power)
 		update_power_usage()
 	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(get_area(src), COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	var/area/our_area = get_area(src)
+	if(our_area)
+		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
 	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
 
@@ -177,16 +183,16 @@
 	unset_static_power()
 	return ..()
 
-/obj/machinery/proc/on_enter_area()
+/obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
 	update_power_usage()
 	power_change()
-	RegisterSignal(get_area(src), COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
-/obj/machinery/proc/on_exit_area()
+/obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
 	unset_static_power()
-	UnregisterSignal(get_area(src), COMSIG_AREA_POWER_CHANGE)
+	UnregisterSignal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
@@ -412,6 +418,7 @@
 
 	return TRUE
 
+//TODOKYLER: remove
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
 		return FALSE
