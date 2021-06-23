@@ -10,7 +10,7 @@
 	var/cultist_examine_message
 
 /obj/structure/destructible/cult/proc/conceal() //for spells that hide cult presence
-	density = FALSE
+	set_density(FALSE)
 	visible_message(span_danger("[src] fades away."))
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100 //To help ghosts distinguish hidden runes
@@ -20,7 +20,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/cult/proc/reveal() //for spells that reveal cult presence
-	density = initial(density)
+	set_density(initial(density))
 	invisibility = 0
 	visible_message(span_danger("[src] suddenly appears!"))
 	alpha = initial(alpha)

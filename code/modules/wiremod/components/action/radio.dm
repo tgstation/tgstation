@@ -17,13 +17,14 @@
 
 	var/datum/radio_frequency/radio_connection
 
-GLOBAL_LIST_INIT(comp_radio_options, list(
-	COMP_RADIO_PUBLIC,
-	COMP_RADIO_PRIVATE,
-))
+/obj/item/circuit_component/radio/populate_options()
+	var/static/component_options = list(
+		COMP_RADIO_PUBLIC,
+		COMP_RADIO_PRIVATE,
+	)
+	options = component_options
 
 /obj/item/circuit_component/radio/Initialize()
-	options = GLOB.comp_radio_options
 	. = ..()
 	freq = add_input_port("Frequency", PORT_TYPE_NUMBER, default = FREQ_SIGNALER)
 	code = add_input_port("Code", PORT_TYPE_NUMBER, default = DEFAULT_SIGNALER_CODE)

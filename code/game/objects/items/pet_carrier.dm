@@ -31,10 +31,10 @@
 			remove_occupant(V)
 	return ..()
 
-/obj/item/pet_carrier/Exited(atom/movable/occupant)
-	if(occupant in occupants && isliving(occupant))
-		var/mob/living/L = occupant
-		occupants -= occupant
+/obj/item/pet_carrier/Exited(atom/movable/gone, direction)
+	if(isliving(gone) && (gone in occupants))
+		var/mob/living/L = gone
+		occupants -= gone
 		occupant_weight -= L.mob_size
 
 /obj/item/pet_carrier/handle_atom_del(atom/A)
