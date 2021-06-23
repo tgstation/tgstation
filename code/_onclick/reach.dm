@@ -93,7 +93,7 @@
 	return do_sloping_reach(target, movement_dir, reach, dir_angle)
 
 
-#define CAN_CLICK_TROUGH(source, goal) (source.ClickCross(get_dir(source, goal), TRUE) && goal.ClickCross(get_dir(goal, source), TRUE))
+#define CAN_CLICK_THROUGH(source, goal) (source.ClickCross(get_dir(source, goal), TRUE) && goal.ClickCross(get_dir(goal, source), TRUE))
 
 
 /// Avoid calling this directly unless you also guarantee the safety checks euclidian_reach() does.
@@ -101,7 +101,7 @@
 	var/turf/last_processed_turf = src
 	for(var/i in 1 to reach)
 		var/turf/next_turf = get_step(last_processed_turf, movement_dir)
-		if(!CAN_CLICK_TROUGH(last_processed_turf, next_turf))
+		if(!CAN_CLICK_THROUGH(last_processed_turf, next_turf))
 			return last_processed_turf
 		last_processed_turf = next_turf
 	return last_processed_turf
@@ -130,13 +130,13 @@
 		var/valid_routes = 0
 		if(!(cardinal_blocked & horizontal_dir))
 			var/turf/horizontal_step = get_step(last_processed_turf, horizontal_dir)
-			if(CAN_CLICK_TROUGH(last_processed_turf, horizontal_step) && CAN_CLICK_TROUGH(horizontal_step, next_turf))
+			if(CAN_CLICK_THROUGH(last_processed_turf, horizontal_step) && CAN_CLICK_THROUGH(horizontal_step, next_turf))
 				valid_routes++
 			else
 				cardinal_blocked |= horizontal_dir
 		if(!(cardinal_blocked & vertical_dir))
 			var/turf/vertical_step = get_step(last_processed_turf, vertical_dir)
-			if(CAN_CLICK_TROUGH(last_processed_turf, vertical_step) && CAN_CLICK_TROUGH(vertical_step, next_turf))
+			if(CAN_CLICK_THROUGH(last_processed_turf, vertical_step) && CAN_CLICK_THROUGH(vertical_step, next_turf))
 				valid_routes++
 			else
 				cardinal_blocked |= vertical_dir
@@ -220,14 +220,14 @@
 			first_dir = right_dir
 			second_dir = left_dir
 		var/turf/crossing = get_step(last_processed_turf, first_dir)
-		if(!CAN_CLICK_TROUGH(last_processed_turf, crossing))
+		if(!CAN_CLICK_THROUGH(last_processed_turf, crossing))
 			return last_processed_turf // Blocked!
 		if(crossing == target)
 			return crossing // Hit!
 		last_processed_turf = crossing
 		if(second_dir)
 			crossing = get_step(last_processed_turf, second_dir)
-			if(!CAN_CLICK_TROUGH(last_processed_turf, crossing))
+			if(!CAN_CLICK_THROUGH(last_processed_turf, crossing))
 				return last_processed_turf // Blocked!
 			if(crossing == target)
 				return crossing // Hit!
@@ -236,4 +236,4 @@
 	return last_processed_turf // Ran out of breath in the process!
 
 
-#undef CAN_CLICK_TROUGH
+#undef CAN_CLICK_THROUGH
