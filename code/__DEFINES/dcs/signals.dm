@@ -1271,7 +1271,7 @@
 ///from /obj/item/assembly/proc/pulsed()
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
-///from /obj/item/paicard/setPersonality(): (mob/living/silicon/pai/old_personality, mob/living/silicon/pai/new_personality)
+///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
 /// Exoprobe adventure finished: (result) result is ADVENTURE_RESULT_??? values
