@@ -1,0 +1,7 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds the multiplexer circuit component."
+  - expansion: "Changed the drone circuit to have a lower movement delay."
+  - qol: "Circuit components can now be directly inserted into shells."
+  - qol: "Added the description and special details to each circuit component that can be accessed when it is inside an integrated circuit. These will have specific details, such as power usage, distance effectiveness and more."
