@@ -2,14 +2,9 @@
 	"meter": [
 		{
 			"type": "icon_state",
-			"icon_state": "meterX",
+			"icon_state": "pressure0",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pressure_readout",
-			"blend_mode": "overlay",
 		}
 	]
 }

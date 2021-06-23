@@ -2,7 +2,7 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "meterX"
+	icon_state = "pressure0"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
@@ -61,23 +61,23 @@
 
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
-		icon_state = "meterX"
+		icon_state = "pressure0" //add overlay for buttons0
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
-		icon_state = "meter0"
+		icon_state = "pressure0"
 		return FALSE
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
-		icon_state = "meterX"
+		icon_state = "pressure0" //add overlay for buttons0
 		return FALSE
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
-		icon_state = "meter0"
+		icon_state = "pressure0"
 	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
 		var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
 		icon_state = "meter1_[val]"
