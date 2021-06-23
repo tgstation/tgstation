@@ -427,6 +427,7 @@
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
+	flags_1 = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/suit/hooded/wintercoat/custom/MakeHood()
 	. = ..()

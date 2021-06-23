@@ -299,6 +299,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
 	greyscale_colors = "#13d968#ffffff"
+	flags_1 = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -307,6 +308,7 @@
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
 	greyscale_colors = "#d565d3#f8db18"
+	flags_1 = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()

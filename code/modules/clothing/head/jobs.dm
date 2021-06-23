@@ -128,6 +128,7 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
+	flags_1 = IS_PLAYER_COLORABLE
 
 /obj/item/clothing/head/beret/vintage
 	name = "vintage beret"
@@ -283,6 +284,7 @@
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 20, ACID = 50, WOUND = 4)
 	strip_delay = 60
 	dog_fashion = null
+	flags_1 = NONE
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"
@@ -315,6 +317,7 @@
 	name = "science beret"
 	desc = "A science-themed beret for our hardworking scientists."
 	greyscale_colors = "#8D008F"
+	flags_1 = NONE
 
 //Curator
 /obj/item/clothing/head/fedora/curator

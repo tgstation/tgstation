@@ -59,6 +59,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CAN_BE_DIRTY_1 (1<<20)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
 #define HTML_USE_INITAL_ICON_1 (1<<21)
+/// Can players recolor this in-game via vendors (and maybe more if support is added)?
+#define IS_PLAYER_COLORABLE (1<<22)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name

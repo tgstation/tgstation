@@ -2050,3 +2050,11 @@
 		usr.hud_used.screentip_text.maptext = ""
 	else
 		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+
+/**
+ * Returns whether or not an atom is player colorable GAGS-wise.
+ *
+ * Returns FALSE by default, to be overriden whenever it needs to be colorable.
+ */
+/atom/proc/is_player_colorable()
+	return FALSE
