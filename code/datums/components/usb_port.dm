@@ -151,7 +151,7 @@
 	if (isnull(usb_cable))
 		return
 
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		UnregisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED)
 		attached_circuit.remove_component(component)
 		component.moveToNullspace()
