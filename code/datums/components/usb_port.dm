@@ -70,7 +70,7 @@
 		UnregisterSignal(shell, COMSIG_PARENT_EXAMINE)
 
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		circuitboard.add_component(component)
 		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
 
