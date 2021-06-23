@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/radio
 	display_name = "Radio"
+	display_desc = "A component that can listen and send frequencies."
 
 	/// Frequency input
 	var/datum/port/input/freq

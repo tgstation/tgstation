@@ -3592,6 +3592,7 @@
 #include "code\modules\wiremod\components\utility\clock.dm"
 #include "code\modules\wiremod\components\utility\combiner.dm"
 #include "code\modules\wiremod\components\utility\delay.dm"
+#include "code\modules\wiremod\components\utility\multiplexer.dm"
 #include "code\modules\wiremod\components\utility\ram.dm"
 #include "code\modules\wiremod\components\utility\typecheck.dm"
 #include "code\modules\wiremod\preset\hello_world.dm"
