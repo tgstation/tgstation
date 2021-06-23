@@ -14,7 +14,7 @@
 	var/datum/callback/pre_tipped_callback
 	/// Callback to additional behavior after successfully tipping the mob.
 	var/datum/callback/post_tipped_callback
-	/// Callback to additoinal behavior after sucessfuly being untipped.
+	/// Callback to additional behavior after being untipped.
 	var/datum/callback/post_untipped_callback
 
 /datum/component/tippable/Initialize(
@@ -82,7 +82,7 @@
  * tipper - the mob tipping the tipped_mob
  */
 /datum/component/tippable/proc/try_tip(mob/living/tipped_mob, mob/tipper)
-	if(tipped_mob.stat)
+	if(tipped_mob.stat != CONSCIOUS)
 		return
 
 	if(pre_tipped_callback?.Invoke(tipper))
@@ -90,8 +90,12 @@
 
 	if(tip_time > 0)
 		to_chat(tipper, span_warning("You begin tipping over [tipped_mob]..."))
-		to_chat(tipped_mob, span_userdanger("[tipper] begins tipping you over!"))
-		tipper.visible_message(span_warning("[tipper] begins tipping over [tipped_mob]."), ignored_mobs = list(tipped_mob, tipper))
+		tipped_mob.visible_message(
+			span_warning("[tipper] begins tipping over [tipped_mob]."),
+			span_userdanger("[tipper] begins tipping you over!"),
+			ignored_mobs = tipper
+		)
+
 		if(!do_after(tipper, tip_time, target = tipped_mob))
 			to_chat(tipper, span_danger("You fail to tip over [tipped_mob]."))
 			return
@@ -107,15 +111,18 @@
  */
 /datum/component/tippable/proc/do_tip(mob/living/tipped_mob, mob/tipper)
 	if(QDELETED(tipped_mob))
-		return
+		CRASH("tippable component do_tip() called for QDELETED tipped_mob!")
 
-	to_chat(tipped_mob, span_userdanger("You are tipped over by [tipper]!"))
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
-	tipped_mob.visible_message(span_warning("[tipper] tips over [tipped_mob]."), ignored_mobs = list(tipped_mob, tipper))
+	tipped_mob.visible_message(
+		span_warning("[tipper] tips over [tipped_mob]."),
+		span_userdanger("You are tipped over by [tipper]!"),
+		ignored_mobs = tipper
+		)
 
 	set_tipped_status(tipped_mob, TRUE)
 	post_tipped_callback?.Invoke(tipper)
-	if(self_right_time > 0)
+	if(!isnull(self_right_time))
 		addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time)
 
 /*
@@ -128,8 +135,12 @@
 /datum/component/tippable/proc/try_untip(mob/living/tipped_mob, mob/untipper)
 	if(untip_time > 0)
 		to_chat(untipper, span_notice("You begin righting [tipped_mob]..."))
-		to_chat(tipped_mob, span_notice("[untipper] begins righting you!"))
-		untipper.visible_message(span_notice("[untipper] begins righting [tipped_mob]."), ignored_mobs = list(tipped_mob, untipper))
+		tipped_mob.visible_message(
+			span_notice("[untipper] begins righting [tipped_mob]."),
+			span_notice("[untipper] begins righting you."),
+			ignored_mobs = untipper
+		)
+
 		if(!do_after(untipper, untip_time, target = tipped_mob))
 			to_chat(untipper, span_warning("You fail to right [tipped_mob]."))
 			return
@@ -147,9 +158,12 @@
 	if(QDELETED(tipped_mob))
 		return
 
-	to_chat(tipped_mob, span_notice("You are righted by [untipper]!"))
 	to_chat(untipper, span_notice("You right [tipped_mob]."))
-	tipped_mob.visible_message(span_notice("[untipper] rights [tipped_mob]."), ignored_mobs = list(tipped_mob, untipper))
+	tipped_mob.visible_message(
+		span_notice("[untipper] rights [tipped_mob]."),
+		span_notice("You are righted by [untipper]!"),
+		ignored_mobs = untipper
+		)
 
 	set_tipped_status(tipped_mob, FALSE)
 	post_untipped_callback?.Invoke(untipper)
@@ -167,8 +181,10 @@
 	set_tipped_status(tipped_mob, FALSE)
 	post_untipped_callback?.Invoke()
 
-	to_chat(tipped_mob, span_notice("You right yourself."))
-	tipped_mob.visible_message(span_notice("[tipped_mob] rights itself."), ignored_mobs = tipped_mob)
+	tipped_mob.visible_message(
+		span_notice("[tipped_mob] rights itself.")
+		span_notice("You right yourself.")
+		)
 
 /*
  * Toggles our tipped status between tipped or untipped (TRUE or FALSE)

@@ -261,7 +261,13 @@
 		return
 
 	COOLDOWN_START(src, last_tipping_action_voice, 15 SECONDS) // message for tipping happens when we start interacting, message for righting comes after finishing
-	var/list/messagevoice = list("Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',"Please don't..." = 'sound/voice/medbot/please_dont.ogg',"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg', "Nooo..." = 'sound/voice/medbot/nooo.ogg', "Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg')
+	var/static/list/messagevoice = list(
+		"Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',
+		"Please don't..." = 'sound/voice/medbot/please_dont.ogg',
+		"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg',
+		"Nooo..." = 'sound/voice/medbot/nooo.ogg',
+		"Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg',
+		)
 	var/message = pick(messagevoice)
 	speak(message)
 	playsound(src, messagevoice[message], 70, FALSE)
