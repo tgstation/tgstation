@@ -74,7 +74,7 @@
 	)
 
 	if (flags_1 & ON_BORDER_1)
-		AddElement(/datum/element/connect_loc, src, loc_connections)
+		AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
@@ -124,7 +124,7 @@
 
 	return TRUE
 
-/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
 	if (istype(leaving) && (leaving.pass_flags & pass_flags_self))
@@ -133,7 +133,7 @@
 	if (fulltile)
 		return
 
-	if(get_dir(leaving.loc, new_location) == dir && density)
+	if(direction == dir && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 

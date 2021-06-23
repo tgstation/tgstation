@@ -1,13 +1,19 @@
+<<<<<<< HEAD:tgui/packages/tgui/interfaces/IntegratedCircuit.js
 import { useBackend, useLocalState } from '../backend';
 import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane } from '../components';
+=======
+import { useBackend, useLocalState } from '../../backend';
+import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane, Tooltip } from '../../components';
+>>>>>>> upstream/master:tgui/packages/tgui/interfaces/IntegratedCircuit/index.js
 import { Component, createRef } from 'inferno';
-import { Window } from '../layouts';
-import { CSS_COLORS } from '../constants';
-import { classes, shallowDiffers } from '../../common/react';
-import { resolveAsset } from '../assets';
+import { Window } from '../../layouts';
+import { CSS_COLORS } from '../../constants';
+import { classes, shallowDiffers } from '../../../common/react';
+import { resolveAsset } from '../../assets';
+import { CircuitInfo } from './CircuitInfo';
 
 const NULL_REF = "[0x0]";
-const SVG_Y_OFFSET = -32;
+const ABSOLUTE_Y_OFFSET = -32;
 const SVG_CURVE_INTENSITY = 64;
 
 const BasicInput = (props, context) => {
@@ -138,6 +144,7 @@ export class IntegratedCircuit extends Component {
       locations: {},
     };
     this.handlePortLocation = this.handlePortLocation.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
   }
 
   // Helper function to get an element's exact position
@@ -152,7 +159,7 @@ export class IntegratedCircuit extends Component {
     }
     return {
       x: xPos,
-      y: yPos + SVG_Y_OFFSET,
+      y: yPos + ABSOLUTE_Y_OFFSET,
     };
   }
 
@@ -177,9 +184,33 @@ export class IntegratedCircuit extends Component {
     this.setState({ locations: locations });
   }
 
+  componentDidMount() {
+    window.addEventListener("mousedown", this.handleMouseDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("mousedown", this.handleMouseDown);
+  }
+
+  handleMouseDown(event) {
+    const { act, data } = useBackend(this.context);
+    const { examined_name } = data;
+    if (examined_name) {
+      act("remove_examined_component");
+    }
+  }
+
   render() {
     const { act, data } = useBackend(this.context);
-    const { components, display_name } = data;
+    const {
+      components,
+      display_name,
+      examined_name,
+      examined_desc,
+      examined_notices,
+      examined_rel_x,
+      examined_rel_y,
+    } = data;
     const { locations } = this.state;
 
     return (
@@ -217,6 +248,17 @@ export class IntegratedCircuit extends Component {
             ))}
             <Connections locations={locations} />
           </InfinitePlane>
+          {!!examined_name && (
+            <CircuitInfo
+              position="absolute"
+              className="CircuitInfo__Examined"
+              top={`${examined_rel_y}px`}
+              left={`${examined_rel_x}px`}
+              name={examined_name}
+              desc={examined_desc}
+              notices={examined_notices}
+            />
+          )}
         </Window.Content>
       </Window>
     );
@@ -425,6 +467,18 @@ export class ObjectComponent extends Component {
                 />
               </Stack.Item>
             )}
+            <Stack.Item>
+              <Button
+                color="transparent"
+                icon="info"
+                compact
+                onClick={(e) => act("set_examined_component", {
+                  component_id: index,
+                  x: e.pageX,
+                  y: e.pageY + ABSOLUTE_Y_OFFSET,
+                })}
+              />
+            </Stack.Item>
             {!!removable && (
               <Stack.Item>
                 <Button

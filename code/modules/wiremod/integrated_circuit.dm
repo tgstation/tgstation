@@ -32,6 +32,15 @@
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
+	/// The current examined component. Used in IntegratedCircuit UI
+	var/datum/weakref/examined_component
+
+	/// X position of the examined_component
+	var/examined_rel_x = 0
+
+	/// Y position of the examined component
+	var/examined_rel_y = 0
+
 /obj/item/integrated_circuit/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
@@ -44,7 +53,10 @@
 	for(var/obj/item/circuit_component/to_delete in attached_components)
 		remove_component(to_delete)
 		qdel(to_delete)
+	attached_components.Cut()
 	shell = null
+	examined_component = null
+	owner_id = null
 	QDEL_NULL(cell)
 	return ..()
 
@@ -232,6 +244,16 @@
 
 	.["display_name"] = display_name
 
+	var/obj/item/circuit_component/examined
+	if(examined_component)
+		examined = examined_component.resolve()
+
+	.["examined_name"] = examined?.display_name
+	.["examined_desc"] = examined?.display_desc
+	.["examined_notices"] = examined?.get_ui_notices()
+	.["examined_rel_x"] = examined_rel_x
+	.["examined_rel_y"] = examined_rel_y
+
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
 		return shell
@@ -402,6 +424,17 @@
 				else
 					shell.name = initial(shell.name)
 
+			. = TRUE
+		if("set_examined_component")
+			var/component_id = text2num(params["component_id"])
+			if(!WITHIN_RANGE(component_id, attached_components))
+				return
+			examined_component = WEAKREF(attached_components[component_id])
+			examined_rel_x = text2num(params["x"])
+			examined_rel_y = text2num(params["y"])
+			. = TRUE
+		if("remove_examined_component")
+			examined_component = null
 			. = TRUE
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)

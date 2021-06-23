@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/machines/cryopod.dmi'
 	icon_state = "cellconsole_1"
+	icon_keyboard = null
 	// circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
@@ -172,8 +173,17 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			for(var/datum/mind/mind in objective.team.members)
 				to_chat(mind.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
 				mind.announce_objectives()
-		else if(objective.target && istype(objective.target, /datum/mind))
-			if(objective.target == mob_occupant.mind)
+		else if(istype(objective.target) && objective.target == mob_occupant.mind)
+			if(istype(objective, /datum/objective/contract))
+				var/datum/antagonist/traitor/affected_traitor = objective.owner.has_antag_datum(/datum/antagonist/traitor)
+				var/datum/contractor_hub/affected_contractor_hub = affected_traitor.contractor_hub
+				for(var/datum/syndicate_contract/affected_contract as anything in affected_contractor_hub.assigned_contracts)
+					if(affected_contract.contract == objective)
+						affected_contract.generate(affected_contractor_hub.assigned_targets)
+						affected_contractor_hub.assigned_targets.Add(affected_contract.contract.target)
+						to_chat(objective.owner.current, "<BR>[span_userdanger("Contract target out of reach. Contract rerolled.")]")
+						break
+			else
 				var/old_target = objective.target
 				objective.target = null
 				if(!objective)
@@ -249,11 +259,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/mob_content in mob_occupant)
-		var/obj/item/item_content = mob_content
+	for(var/obj/item/item_content as anything in mob_occupant)
 		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
 			continue
 
