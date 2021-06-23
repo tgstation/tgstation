@@ -62,11 +62,11 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/post_buckle_mob(mob/living/user)
 	. = ..()
-	density = TRUE
+	set_density(TRUE)
 
 /obj/vehicle/ridden/wheelchair/motorized/post_unbuckle_mob()
 	. = ..()
-	density = FALSE
+	set_density(FALSE)
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)

@@ -467,10 +467,10 @@
 		return FALSE
 	return master._removal_reset(thing)
 
-/datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
+/datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	_removal_reset(thing)
+	_removal_reset(gone)
 	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted

@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 					M.buckled.unbuckle_mob(M, TRUE) // Unbuckle them to prevent anchoring problems
 			else
 				A.set_anchored(TRUE)
-				A.density = FALSE
+				A.set_density(FALSE)
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.forceMove(holder_obj)
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(4)
 			holder_obj.cut_overlay(balloon3)
 			A.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
-			A.density = initial(A.density)
+			A.set_density(initial(A.density))
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
 			A.forceMove(holder_obj.loc)

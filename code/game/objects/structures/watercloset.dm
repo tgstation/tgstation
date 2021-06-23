@@ -215,7 +215,7 @@
 			to_chat(user, span_warning("[I] is too large for the drain enclosure."))
 			return
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
+			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
 		hiddenitem = I
 		to_chat(user, span_notice("You place [I] into the drain enclosure."))
@@ -656,11 +656,11 @@
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		density = FALSE
+		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		density = TRUE
+		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
 
@@ -756,14 +756,14 @@
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
-	density = FALSE
+	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
-	density = TRUE
+	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)
 		set_opacity(TRUE)

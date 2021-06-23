@@ -76,7 +76,10 @@ SUBSYSTEM_DEF(time_track)
 			"air_hotspot_count",
 			"air_network_count",
 			"air_delta_count",
-			"air_superconductive_count"
+			"air_superconductive_count",
+			"all_queries",
+			"queries_active",
+			"queries_standby"
 #ifdef SENDMAPS_PROFILE
 		) + sendmaps_shorthands
 #else
@@ -142,13 +145,18 @@ SUBSYSTEM_DEF(time_track)
 			length(SSair.hotspots),
 			length(SSair.networks),
 			length(SSair.high_pressure_delta),
-			length(SSair.active_super_conductivity)
+			length(SSair.active_super_conductivity),
+			SSdbcore.all_queries_num,
+			SSdbcore.queries_active_num,
+			SSdbcore.queries_standby_num
 #ifdef SENDMAPS_PROFILE
 		) + send_maps_values
 #else
 		)
 #endif
 	)
+
+	SSdbcore.reset_tracking()
 
 #ifdef SENDMAPS_PROFILE
 /datum/controller/subsystem/time_track/proc/scream_maptick_data()
