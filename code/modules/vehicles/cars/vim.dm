@@ -66,11 +66,10 @@
 
 /obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
 	. = ..()
-	update_overlays()
+	update_appearance()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(obj_integrity == max_integrity)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
-
 
 /obj/vehicle/sealed/car/vim/generate_actions()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/climb_out/vim, VEHICLE_CONTROL_DRIVE)
