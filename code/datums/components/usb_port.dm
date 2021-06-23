@@ -30,7 +30,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
 
 /datum/component/usb_port/UnregisterFromParent()
