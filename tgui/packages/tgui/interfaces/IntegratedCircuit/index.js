@@ -1,10 +1,5 @@
-<<<<<<< HEAD:tgui/packages/tgui/interfaces/IntegratedCircuit.js
-import { useBackend, useLocalState } from '../backend';
-import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane } from '../components';
-=======
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane, Tooltip } from '../../components';
->>>>>>> upstream/master:tgui/packages/tgui/interfaces/IntegratedCircuit/index.js
+import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane } from '../../components';
 import { Component, createRef } from 'inferno';
 import { Window } from '../../layouts';
 import { CSS_COLORS } from '../../constants';
