@@ -99,7 +99,7 @@ export class Changelog extends Component {
 
     if (dates) {
       dates.forEach(
-        date => this.dateChoices.push(dateformat(date, 'mmmm yyyy'))
+        date => this.dateChoices.push(dateformat(date, 'mmmm yyyy', true))
       );
       this.setSelectedDate(this.dateChoices[0]);
       this.getData(dates[0]);
@@ -289,7 +289,7 @@ export class Changelog extends Component {
 
     const changes = typeof data === 'object' && Object.keys(data).length > 0 && (
       Object.entries(data).reverse().map(([date, authors]) => (
-        <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
+        <Section key={date} title={dateformat(date, 'd mmmm yyyy', true)}>
           <Box ml={3}>
             {Object.entries(authors).map(([name, changes]) => (
               <Fragment key={name}>

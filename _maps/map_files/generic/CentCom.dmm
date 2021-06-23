@@ -8506,7 +8506,6 @@
 /area/centcom/supplypod/loading/one)
 "AL" = (
 /obj/structure/table/reinforced,
-/obj/item/flashlight/seclite,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8517,6 +8516,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/toy/figure/dsquad{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/flashlight/seclite,
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "AM" = (

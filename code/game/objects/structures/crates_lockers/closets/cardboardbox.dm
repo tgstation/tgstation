@@ -16,6 +16,7 @@
 	close_sound = 'sound/machines/cardboard_box.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 35
+	enable_door_overlay = FALSE
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
 	var/egged = 0
