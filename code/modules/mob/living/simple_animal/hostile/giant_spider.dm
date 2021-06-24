@@ -509,8 +509,7 @@
 					var/egg_choice = enriched ? /obj/effect/mob_spawn/spider/enriched : /obj/effect/mob_spawn/spider
 					var/obj/effect/mob_spawn/spider/new_eggs = new egg_choice(get_turf(spider))
 					new_eggs.directive = spider.directive
-					if(length(spider.faction))
-						new_eggs.faction = string_list(spider.faction)
+					new_eggs.faction = spider.faction
 					if(enriched)
 						spider.fed--
 					UpdateButtonIcon(TRUE)
