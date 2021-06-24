@@ -661,6 +661,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
 
+	AddComponent(/datum/component/kneecapping)
+
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
