@@ -1,6 +1,6 @@
 /mob/living/simple_animal/ant
 	name = "giant ant"
-	desc = "Ain't it just the cutest thing?"
+	desc = "A writhing mass of ants, glued together to make an adorable pet!"
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "ant"
 	icon_living = "ant"

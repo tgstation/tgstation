@@ -913,12 +913,14 @@
 	results = list(/datum/reagent/ants = 3)
 	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 6)
 
-/datum/chemical_reaction/big_ant // We're basically glueing ants together with synthflesh & maint sludge to make a bigger ant.
+/datum/chemical_reaction/ant_slurry // We're basically glueing ants together with synthflesh & maint sludge to make a bigger ant.
 	required_reagents = list(/datum/reagent/ants = 40, /datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/drug/maint/sludge = 5)
-	required_temp = 374
+	required_temp = 480
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
-/datum/chemical_reaction/big_ant/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/ant_slurry/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = rand(1, created_volume), i <= created_volume, i++)
+	for(var/i in rand(1, created_volume) to created_volume)
 		new /mob/living/simple_animal/ant(location)
 	..()
