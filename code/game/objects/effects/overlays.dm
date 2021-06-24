@@ -75,6 +75,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	vis_flags = NONE
+	blocks_emissive = NONE
 
 /obj/effect/overlay/light_cone
 	name = ""
@@ -85,3 +86,4 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	vis_flags = NONE
 	alpha = 110
+	blocks_emissive = NONE

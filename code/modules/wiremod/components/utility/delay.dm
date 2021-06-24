@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/delay
 	display_name = "Delay"
+	display_desc = "A component that delays a signal by a specified duration."
 
 	/// Amount to delay by
 	var/datum/port/input/delay_amount

@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The description of the component shown on the UI
+	var/display_desc = "A generic component"
+
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -54,10 +57,15 @@
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
+	populate_options()
 	if(length(options))
 		current_option = options[1]
 
 	return INITIALIZE_HINT_LATELOAD
+
+/// Called when the options variable should be set.
+/obj/item/circuit_component/proc/populate_options()
+	return
 
 /obj/item/circuit_component/LateInitialize()
 	. = ..()
@@ -187,3 +195,31 @@
 
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
+
+/**
+ * Gets the UI notices to be displayed on the CircuitInfo panel.
+ *
+ * Returns a list of buttons in the following format
+ * list(
+ *   "icon" = ICON(string)
+ *   "content" = CONTENT(string)
+ *   "color" = COLOR(string, not a hex)
+ * )
+ */
+/obj/item/circuit_component/proc/get_ui_notices()
+	. = list()
+
+	if(!removable)
+		. += list(list(
+			"icon" = "lock",
+			"content" = "Unremovable",
+			"color" = "red"
+		))
+
+
+	if(length(input_ports))
+		. += list(list(
+			"icon" = "bolt",
+			"content" = "Power Usage Per Input: [power_usage_per_input]",
+			"color" = "orange",
+		))

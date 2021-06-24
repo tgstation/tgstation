@@ -427,7 +427,7 @@
 			visible_message(span_warning("[document_copy] is shoved out of the way by [ass]!"))
 			document_copy = null
 
-/obj/machinery/photocopier/Exited(atom/movable/AM, atom/newloc)
+/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
 	check_ass() // There was potentially a person sitting on the copier, check if they're still there.
 	return ..()
 
