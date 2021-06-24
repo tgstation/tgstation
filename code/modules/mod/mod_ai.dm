@@ -3,14 +3,16 @@
 	if(!.)
 		return
 	if(!open) //mod must be open
-		to_chat(user, span_warning("[src] must be open in order to allow a transfer."))
+		balloon_alert(user, "suit must be open to transfer!")
 		return
 	switch(interaction)
 		if(AI_TRANS_TO_CARD)
 			if(!ai)
-				to_chat(user, span_warning("No AI detected in [src]."))
+				balloon_alert(user, "no AI in suit!")
 				return
+			balloon_alert(user, "transferring to card...")
 			if(!do_after(user, 5 SECONDS, target = src))
+				balloon_alert(user, "interrupted!")
 				return
 			intAI = ai
 			intAI.ai_restore_power()//So the AI initially has power.
@@ -25,23 +27,25 @@
 					qdel(action)
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
-			to_chat(intAI, span_notice("You have been downloaded to a mobile storage device. Wireless connection offline."))
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [intAI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
+			balloon_alert(intAI, "transferred to a card")
+			balloon_alert("AI transferred to card")
 			ai = null
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
 			intAI = card.AI
 			if(!intAI)
-				to_chat(user, span_warning("There is no AI currently installed on this device."))
+				balloon_alert(user, "no AI in card!")
 				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
 			if(intAI.stat || !intAI.client)
-				to_chat(user, span_warning("[intAI.name] is currently unresponsive, and cannot be uploaded."))
+				balloon_alert(user, "AI unresponsive!")
 				return
+			balloon_alert(user, "transferring to suit...")
 			if(!do_after(user, 5 SECONDS, target = src))
+				balloon_alert(user, "interrupted!")
 				return
-			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [intAI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			balloon_alert("AI transferred to suit")
 			ai_enter_mod(intAI)
 			card.AI = null
 
@@ -54,7 +58,7 @@
 	newAI.remote_control = src
 	newAI.forceMove(src)
 	ai = newAI
-	to_chat(newAI, span_notice("You have been uploaded to a MODsuit's onboard system."))
+	balloon_alert(newAI, "transferred to a suit")
 	for(var/datum/action/action in actions)
 		var/datum/action/newaction = action.type
 		newaction = new newaction(src)

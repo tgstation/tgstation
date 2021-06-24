@@ -53,127 +53,132 @@
 	var/screwed_assembly = FALSE
 	var/icon_to_use
 
-/obj/item/mod/construction/shell/attackby(obj/item/I, mob/user, params)
+/obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, params)
 	. = ..()
-	if(!core && istype(I, /obj/item/mod/construction/core)) //Construct
-		if(!user.transferItemToLoc(I, src))
+	if(!core && istype(part, /obj/item/mod/construction/core)) //Construct
+		if(!user.transferItemToLoc(part, src))
+			balloon_alert(user, "core stuck to your hand!")
 			return
 		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-		to_chat(user, span_notice("You insert [I] into [src]."))
-		core = I
+		balloon_alert(user, "core inserted")
+		core = part
 		icon_to_use = "core"
 
 	if(core)
-		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
-			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, span_notice("You screw [I] into [src]."))
+		if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
+			if(part.use_tool(src, user, 0, volume=30))
+				balloon_alert(user, "core screwed")
 				screwed_core = TRUE
 				icon_to_use = "screwed_core"
-		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
+		else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
 				core.forceMove(drop_location())
-				to_chat(user, span_notice("You remove [core] from [src]."))
+				balloon_alert(user, "core taken out")
 				core = null
 				icon_to_use = null
 
 	if(screwed_core)
-		if(istype(I, /obj/item/mod/construction/helmet)) //Construct
-			if(!user.transferItemToLoc(I, src))
+		if(istype(part, /obj/item/mod/construction/helmet)) //Construct
+			if(!user.transferItemToLoc(part, src))
+				balloon_alert(user, "helmet stuck to your hand!")
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, span_notice("You fit [I] onto [src]."))
-			helmet = I
+			balloon_alert(user, "helmet added")
+			helmet = part
 			icon_to_use = "helmet"
-		else if(I.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, span_notice("You unscrew the core from [src]."))
+		else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
+				balloon_alert(user, "core unscrewed")
 				screwed_core = FALSE
 				icon_to_use = "core"
 
 	if(helmet)
-		if(istype(I, /obj/item/mod/construction/chestplate)) //Construct
-			if(!user.transferItemToLoc(I, src))
+		if(istype(part, /obj/item/mod/construction/chestplate)) //Construct
+			if(!user.transferItemToLoc(part, src))
+				balloon_alert(user, "chestplate stuck to your hand!")
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, span_notice("You fit [I] onto [src]."))
-			chestplate = I
+			balloon_alert(user, "chestplate added")
+			chestplate = part
 			icon_to_use = "chestplate"
-		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
+		else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
 				helmet.forceMove(drop_location())
-				to_chat(user, span_notice("You pry [helmet] from [src]."))
+				balloon_alert(user, "helmet removed")
 				helmet = null
 				icon_to_use = "screwed_core"
 
 	if(chestplate)
-		if(istype(I, /obj/item/mod/construction/gauntlets)) //Construct
-			if(!user.transferItemToLoc(I, src))
+		if(istype(part, /obj/item/mod/construction/gauntlets)) //Construct
+			if(!user.transferItemToLoc(part, src))
+				balloon_alert(user, "gauntlets stuck to your hand!")
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, span_notice("You fit [I] onto [src]."))
-			gauntlets = I
+			balloon_alert(user, "gauntlets added")
+			gauntlets = part
 			icon_to_use = "gauntlets"
-		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
+		else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
 				chestplate.forceMove(drop_location())
-				to_chat(user, span_notice("You pry [chestplate] from [src]."))
+				balloon_alert(user, "chestplate removed")
 				chestplate = null
 				icon_to_use = "helmet"
 
 	if(gauntlets)
-		if(istype(I, /obj/item/mod/construction/boots)) //Construct
-			if(!user.transferItemToLoc(I, src))
+		if(istype(part, /obj/item/mod/construction/boots)) //Construct
+			if(!user.transferItemToLoc(part, src))
+				balloon_alert(user, "boots added")
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, span_notice("You fit [I] onto [src]."))
-			boots = I
+			balloon_alert(user, "You fit [part] onto [src].")
+			boots = part
 			icon_to_use = "boots"
-		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
+		else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
 				gauntlets.forceMove(drop_location())
-				to_chat(user, span_notice("You pry [gauntlets] from [src]."))
+				balloon_alert(user, "gauntlets removed")
 				gauntlets = null
 				icon_to_use = "chestplate"
 
 	if(boots)
-		if(I.tool_behaviour == TOOL_WRENCH) //Construct
-			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, span_notice("You wrench together the assembly."))
+		if(part.tool_behaviour == TOOL_WRENCH) //Construct
+			if(part.use_tool(src, user, 0, volume=30))
+				balloon_alert(user, "assembly secured")
 				wrenched_assembly = TRUE
 				icon_to_use = "wrenched_assembly"
-		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
+		else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
 				boots.forceMove(drop_location())
-				to_chat(user, span_notice("You pry [boots] from [src]."))
+				balloon_alert(user, "boots removed")
 				boots = null
 				icon_to_use = "gauntlets"
 
 	if(wrenched_assembly)
-		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
-			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, span_notice("You screw together the assembly."))
+		if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
+			if(part.use_tool(src, user, 0, volume=30))
+				balloon_alert(user, "assembly screwed")
 				screwed_assembly = TRUE
 				icon_to_use = "screwed_assembly"
-		else if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
-			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, span_notice("You unwrench the assembled parts."))
+		else if(part.tool_behaviour == TOOL_WRENCH) //Deconstruct
+			if(part.use_tool(src, user, 0, volume=30))
+				balloon_alert(user, "assembly unsecured")
 				wrenched_assembly = FALSE
 				icon_to_use = "boots"
 
 	if(screwed_assembly)
-		if(istype(I, /obj/item/mod/construction/armor)) //Construct
-			var/obj/item/mod/construction/armor/external_armor = I
-			if(!user.transferItemToLoc(I, src))
+		if(istype(part, /obj/item/mod/construction/armor)) //Construct
+			var/obj/item/mod/construction/armor/external_armor = part
+			if(!user.transferItemToLoc(part, src))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, span_notice("You fit [external_armor] onto [src], finishing your MODsuit."))
+			balloon_alert(user, "suit finished")
 			var/obj/item/modsuit = new /obj/item/mod/control(drop_location(), external_armor.theme)
 			qdel(src)
 			user.put_in_hands(modsuit)
 			return
-		else if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
-			if(I.use_tool(src, user, 0, volume=30))
-				to_chat(user, span_notice("You unscrew the assembled parts."))
+		else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
+			if(part.use_tool(src, user, 0, volume=30))
+				balloon_alert(user, "assembly unscrewed")
 				screwed_assembly = FALSE
 				icon_to_use = "wrenched_assembly"
 	update_icon_state()

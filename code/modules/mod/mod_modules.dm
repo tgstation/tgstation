@@ -94,12 +94,11 @@
 		mod.selected_module = src
 		if(device)
 			mod.wearer.put_in_hands(device)
-			to_chat(mod.wearer, span_notice("You extend [device]."))
+			balloon_alert(mod.wearer, "[device] extended")
 			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 		else
-			to_chat(mod.wearer, span_notice("You activate [src]. You can use the middle-mouse button or alt-click to use it."))
-			RegisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON, .proc/on_select_use)
-			RegisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON, .proc/on_select_use)
+			balloon_alert(mod.wearer, "[src] activated, middle-click or alt-click to use")
+			RegisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_special_click)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
@@ -111,12 +110,11 @@
 		mod.selected_module = null
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, TRUE)
-			to_chat(mod.wearer, span_notice("You retract [device]."))
+			balloon_alert(mod.wearer, "[device] retracted")
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else
-			to_chat(mod.wearer, span_notice("You deactivate [src]."))
-			UnregisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON)
-			UnregisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON)
+			balloon_alert(mod.wearer, "[src] deactivated")
+			UnregisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 	mod.wearer.update_inv_back()
 	return TRUE
 
@@ -127,16 +125,21 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+	balloon_alert(mod.wearer, "cooling down...")
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
 
-/// Called when an activated module without a device is used with middle/alt click
-/obj/item/mod/module/proc/on_select_use(mob/source, atom/target)
-	SIGNAL_HANDLER
-
+/// Called when an activated module without a device is used
+/obj/item/mod/module/proc/on_select_use(atom/target)
 	if(!on_use())
-		return NONE
+		return FALSE
+	return TRUE
+
+/// Called when an activated module without a device is active and the user alt/middle-clicks
+/obj/item/mod/module/proc/on_special_click(mob/source, atom/target)
+	SIGNAL_HANDLER
+	on_select_use(target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process
@@ -506,17 +509,17 @@
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!holding)
-			to_chat(mod.wearer, span_notice("You aren't holding anything to holster!"))
+			balloon_alert(mod.wearer, "nothing to holster!")
 			return
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
-			to_chat(mod.wearer, span_notice("[holding] doesn't fit in the holster!"))
+			balloon_alert(mod.wearer, "it doesn't fit!")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
 			holstered = holding
-			to_chat(mod.wearer, span_notice("You holster [holstered]."))
+			balloon_alert(mod.wearer, "holstered")
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
-		to_chat(mod.wearer, span_notice("You draw [holstered]."))
+		balloon_alert(mod.wearer, "drawn")
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 
@@ -540,12 +543,12 @@
 
 /obj/item/mod/module/tether/on_use()
 	if(mod.wearer.has_gravity(get_turf(src)))
-		to_chat(mod.wearer, span_warning("You need to be in a 0-G environment to use [src]!"))
+		balloon_alert(mod.wearer, "too much gravity!")
 		playsound(src, 'sound/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/tether/on_select_use(mob/source, atom/target)
+/obj/item/mod/module/tether/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
