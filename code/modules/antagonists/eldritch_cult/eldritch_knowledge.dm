@@ -315,5 +315,5 @@
 	gain_text = "Their hand is at your throat, yet you see Them not."
 	cost = 0
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
-	result_atoms = list(/obj/item/forbidden_book)
+	result_atoms = list(/obj/item/forbidden_book/ritual)
 	route = "Start"

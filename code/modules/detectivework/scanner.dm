@@ -38,9 +38,6 @@
 	else
 		to_chat(user, span_notice("The scanner has no logs or is in use."))
 
-/obj/item/detective_scanner/attack(mob/living/M, mob/user)
-	return
-
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
 	var/obj/item/paper/P = new(get_turf(src))
@@ -62,6 +59,10 @@
 	// Clear the logs
 	log = list()
 	scanning = FALSE
+
+/obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
+	scan(A, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
