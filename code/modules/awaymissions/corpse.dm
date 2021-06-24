@@ -20,7 +20,7 @@
 	var/short_desc = "The mapper forgot to set this!"
 	var/flavour_text = ""
 	var/important_info = ""
-	/// Lazy list of factions that the spawned mob will be in upon spawn
+	/// Lazy string list of factions that the spawned mob will be in upon spawn
 	var/list/faction
 	var/permanent = FALSE //If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE //Don't set a name or gender, just go random
@@ -67,6 +67,8 @@
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
+	if(LAZYLEN(faction))
+		faction = string_list(faction)
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
@@ -103,7 +105,7 @@
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
 	if(LAZYLEN(faction))
-		M.faction = faction.Copy()
+		M.faction = faction
 	if(disease)
 		M.ForceContractDisease(new disease)
 	if(death)
