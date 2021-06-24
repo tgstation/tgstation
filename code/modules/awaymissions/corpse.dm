@@ -104,7 +104,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
-	if(LAZYLEN(faction))
+	if(faction)
 		M.faction = faction
 	if(disease)
 		M.ForceContractDisease(new disease)
