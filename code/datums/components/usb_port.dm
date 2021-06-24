@@ -30,7 +30,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
 
 /datum/component/usb_port/UnregisterFromParent()
@@ -40,7 +40,7 @@
 		COMSIG_PARENT_EXAMINE,
 	))
 
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.unregister_usb_parent(parent)
 
 	unregister_circuit_signals()
@@ -70,7 +70,7 @@
 		UnregisterSignal(shell, COMSIG_PARENT_EXAMINE)
 
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		circuitboard.add_component(component)
 		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
 
@@ -151,7 +151,7 @@
 	if (isnull(usb_cable))
 		return
 
-	for(var/obj/item/circuit_component/component in circuit_components)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		UnregisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED)
 		attached_circuit.remove_component(component)
 		component.moveToNullspace()
