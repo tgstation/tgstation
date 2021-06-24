@@ -129,7 +129,7 @@
 	var/environ = APC_CHANNEL_AUTO_ON
 	var/operating = TRUE
 	var/charging = APC_NOT_CHARGING
-	var/chargemode = 1
+	var/chargemode = TRUE
 	var/chargecount = 0
 	var/locked = TRUE
 	var/coverlocked = TRUE
@@ -149,6 +149,7 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
+	///buffer state that makes apcs not shut off channels immediately as long as theres some power left, effect visible in apcs only slowly losing power
 	var/longtermpower = 10
 	var/auto_name = FALSE
 	var/failure_timer = 0
@@ -1334,7 +1335,7 @@
 				environ = autoset(environ, AUTOSET_ON)
 				area.poweralert(FALSE, src)
 
-		/*
+		/* //TODOKYLER: pick either this or the one above
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
