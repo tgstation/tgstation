@@ -158,6 +158,7 @@
 /obj/effect/mob_spawn/spider/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	potentialspawns = string_list(potentialspawns)
 	egg = new cluster_type(get_turf(loc))
 	egg.spawner = src
 	forceMove(egg)
