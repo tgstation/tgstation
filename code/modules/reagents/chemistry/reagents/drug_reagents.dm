@@ -540,7 +540,7 @@
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
 	. = ..()
 	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 20)
-	to_chat(L, "<span='notice'>You feel pins and needles all over your skin as your body suddenly becomes transparent!</span>")
+	to_chat(L, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
 	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
 
 	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -569,7 +569,7 @@
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
-	to_chat(M, "<span='notice'>As you sober up, opacity once again returns to your body meats.</span>")
+	to_chat(M, span_nicegreen("As you sober up, opacity once again returns to your body meats."))
 	M.update_body()
 
 	var/datum/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
