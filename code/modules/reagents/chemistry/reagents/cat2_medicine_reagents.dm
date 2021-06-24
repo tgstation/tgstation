@@ -152,6 +152,29 @@
 
 	..()
 
+/datum/reagent/medicine/c2/purabital
+	name = "Purabital"
+	description = "A purified reagent that heals brute with no side effects. It heals more based on purity."
+	color = "#d2eb62"
+	ph = 9
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	overdose_threshold = 15
+
+/datum/reagent/medicine/c2/purabital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjustBruteLoss(LERP(-1.25 * REM, normalise_creation_purity()*-1.05, 0.85) * delta_time, FALSE)	//Heals ~0.2 - 2.2 brute
+	..()
+	return TRUE
+
+/datum/reagent/medicine/c2/purabital/overdose_process(mob/living/M, delta_time, times_fired)
+	M.adjustBruteLoss(2 * REM * delta_time, FALSE)
+	M.adjustOxyLoss(7 * delta_time)
+	if(prob(10))
+		M.emote("gasp")
+	else if (prob(10))
+		M.emote("cough")
+	..()
+	return TRUE
+
 /******BURN******/
 /*Suffix: -uri*/
 /datum/reagent/medicine/c2/lenturi
@@ -232,6 +255,28 @@
 		humi.adjust_coretemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
 	..()
 
+/datum/reagent/medicine/c2/purauri
+	name = "Purauri"
+	description = "A purified reagent that heals burns without side effects. It heals more based on purity."
+	color = "#6bf0c3"
+	ph = 9.7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	overdose_threshold = 15
+
+/datum/reagent/medicine/c2/purauri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjustFireLoss(LERP(-1.25 * REM, normalise_creation_purity()*-1.05, 0.85) * delta_time, FALSE)	//Heals ~0.2 - 2.2 burn
+	..()
+	return TRUE
+
+/datum/reagent/medicine/c2/purauri/overdose_process(mob/living/M, delta_time, times_fired)
+	M.adjustFireLoss(2 * REM * delta_time, FALSE)
+	M.adjustOxyLoss(7 * delta_time)
+	if(prob(10))
+		M.emote("gasp")
+	else if (prob(10))
+		M.emote("cough")
+	..()
+	return TRUE
 
 /******OXY******/
 /*Suffix: -mol*/

@@ -84,6 +84,27 @@
 	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
+/datum/chemical_reaction/medicine/purabital
+	results = list(/datum/reagent/medicine/c2/purabital = 1)
+	required_reagents = list(/datum/reagent/medicine/c2/probital = 1, /datum/reagent/stabilizing_agent = 3)
+	required_temp = 615
+	optimal_temp = 750
+	overheat_temp = 1000
+	optimal_ph_min = 0
+	optimal_ph_max = 13
+	temp_exponent_factor = 1.25
+	thermic_constant = 75
+	H_ion_release = 0.05
+	rate_up_lim = 50
+	//reaction_flags = REACTION_INSTANT	//This -would- be instant, but apparently being instant only calls one proc!
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
+
+/datum/chemical_reaction/medicine/purabital/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
+	var/datum/reagent/medicine/c2/purabital/P = holder.get_reagent(/datum/reagent/medicine/c2/purabital)
+	var/datum/reagent/medicine/c2/probital/R = holder.get_reagent(/datum/reagent/medicine/c2/probital)
+	if(R && P)
+		P.purity = R.purity*0.85	//End result is slightly more pure (~0.06) than the probital
+
 /*****BURN*****/
 //These are all endothermic!
 
@@ -159,6 +180,27 @@
 	var/radius = max((equilibrium.step_target_vol/50), 1)
 	freeze_radius(holder, equilibrium, 200, radius, 60 SECONDS) //drying agent exists
 	explode_shockwave(holder, equilibrium, sound_and_text = FALSE)
+
+/datum/chemical_reaction/medicine/purauri
+	results = list(/datum/reagent/medicine/c2/purauri = 2)
+	required_reagents = list(/datum/reagent/medicine/c2/aiuri = 1, /datum/reagent/stabilizing_agent = 1, /datum/reagent/stable_plasma = 1)
+	required_temp = 215
+	optimal_temp = 220
+	overheat_temp = 250
+	optimal_ph_min = 0
+	optimal_ph_max = 13
+	temp_exponent_factor = 0.25
+	thermic_constant = -5
+	H_ion_release = 0
+	rate_up_lim = 100
+	//reaction_flags = REACTION_INSTANT	//This -would- be instant, but apparently being instant only calls one proc!
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
+
+/datum/chemical_reaction/medicine/purauri/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
+	var/datum/reagent/medicine/c2/purauri/P = holder.get_reagent(/datum/reagent/medicine/c2/purauri)
+	var/datum/reagent/medicine/c2/aiuri/R = holder.get_reagent(/datum/reagent/medicine/c2/aiuri)
+	if(R && P)
+		P.purity = R.purity*0.85	//End result is slightly less pure (~0.06) than the aiuri
 
 /*****OXY*****/
 //These react faster with optional oxygen, and have blastback effects! (the oxygen makes their fail states deadlier)
