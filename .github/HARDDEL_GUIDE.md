@@ -24,7 +24,7 @@ You want your coders to be able to pass around objects without doing a full copy
     var/name = "some shit"
 ```
 
-Then you them to be able to pass that object into say a proc, without doing a full copy. So you let them pass in the object's location in memory instead
+Then you want them to be able to pass that object into say a proc, without doing a full copy. So you let them pass in the object's location in memory instead
 This is called passing something by reference
 
 ```dm
