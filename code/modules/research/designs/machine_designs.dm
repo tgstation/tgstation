@@ -507,6 +507,14 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/proto_sh_emitter
+	name = "Machine Design (Prototype Shield Emitter Board)"
+	desc = "The circuit board for a Prototype Shield Emitter."
+	id = "proto_sh_emitter"
+	build_path = /obj/item/circuitboard/machine/proto_sh_emitter
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/board/ntnet_relay
 	name = "Machine Design (NTNet Relay Board)"
 	desc = "The circuit board for a wireless network relay."

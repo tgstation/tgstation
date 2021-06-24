@@ -4601,6 +4601,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 1
 	},
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron/checker,
 /area/maintenance/disposal/incinerator)
 "aGS" = (
@@ -60132,6 +60133,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
+"kyv" = (
+/obj/machinery/power/proto_sh_emitter,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "kyQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -76891,6 +76896,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "oIv" = (
@@ -87311,6 +87317,12 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"rrs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/proto_sh_emitter,
+/turf/open/floor/iron,
+/area/engineering/supermatter/room)
 "rru" = (
 /obj/structure/table,
 /obj/machinery/light/directional/east,
@@ -136481,7 +136493,7 @@ xul
 xPF
 dSm
 jYB
-jYB
+rrs
 hdG
 jYB
 eTO
@@ -138217,7 +138229,7 @@ mBn
 qVY
 awb
 svM
-wLZ
+kyv
 xNR
 aQx
 pkM

@@ -7159,6 +7159,7 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron,
 /area/science/mixing)
 "awZ" = (
@@ -7731,6 +7732,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "ayU" = (
@@ -32709,6 +32711,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/commons/lounge)
+"iBg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/power/proto_sh_emitter,
+/turf/open/floor/engine,
+/area/engineering/supermatter/room)
 "iBt" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Power Storage";
@@ -103107,7 +103116,7 @@ vFB
 dTU
 ayG
 tBO
-cjg
+iBg
 tLr
 hAq
 xKC

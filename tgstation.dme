@@ -2962,6 +2962,7 @@
 #include "code\modules\power\port_gen.dm"
 #include "code\modules\power\power.dm"
 #include "code\modules\power\powernet.dm"
+#include "code\modules\power\proto_sh_emitter.dm"
 #include "code\modules\power\rtg.dm"
 #include "code\modules\power\smes.dm"
 #include "code\modules\power\solar.dm"

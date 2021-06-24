@@ -5,7 +5,7 @@
 	icon_state = "engine"
 	holodeck_compatible = TRUE
 	thermal_conductivity = 0.025
-	heat_capacity = INFINITY
+	heat_capacity = 312500
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

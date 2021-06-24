@@ -22182,6 +22182,10 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/proto_sh_emitter,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "eUQ" = (
@@ -42899,6 +42903,7 @@
 	pixel_x = -26;
 	pixel_y = -24
 	},
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron/white,
 /area/science/storage)
 "mge" = (
@@ -45038,6 +45043,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "mPK" = (
@@ -75887,6 +75893,9 @@
 /area/engineering/atmos)
 "wST" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "wTm" = (

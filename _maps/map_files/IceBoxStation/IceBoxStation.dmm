@@ -13770,6 +13770,7 @@
 "bAP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bAQ" = (
@@ -42711,6 +42712,13 @@
 /obj/structure/fluff/fokoff_sign,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"pAG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/power/proto_sh_emitter,
+/turf/open/floor/engine,
+/area/engineering/supermatter/room)
 "pAI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -53128,6 +53136,7 @@
 	network = list("ss13","rd")
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron,
 /area/science/mixing)
 "vrR" = (
@@ -86337,7 +86346,7 @@ ssw
 dcE
 iaH
 iLd
-hYK
+pAG
 mZc
 fHf
 dTq

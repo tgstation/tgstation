@@ -17321,6 +17321,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "bcf" = (
@@ -42250,6 +42251,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "dEI" = (
@@ -77782,6 +77784,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/ash,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},

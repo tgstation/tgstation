@@ -59,6 +59,15 @@
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/proto_sh_emitter
+	name = "Prototype Shield Emitter (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/power/proto_sh_emitter
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 3,
+		/obj/item/stock_parts/capacitor = 4,
+		/obj/item/stock_parts/manipulator = 4,
+		/obj/item/stack/cable_coil = 5)
 
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster (Machine Board)"

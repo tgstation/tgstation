@@ -115,7 +115,7 @@
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
 //Should not exceed 0.4 else strange heat flow occur
-#define WALL_HEAT_TRANSFER_COEFFICIENT 0.0
+#define WALL_HEAT_TRANSFER_COEFFICIENT 0.2
 #define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
 /// a hack for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1
