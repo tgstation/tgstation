@@ -57,7 +57,7 @@
 	if(!group_name || !(group_name in GLOB.mob_spawners))
 		return
 	var/list/spawnerlist = GLOB.mob_spawners[group_name]
-	for(var/obj/effect/mob_spawn/current_spawner in spawnerlist)
+	for(var/obj/effect/mob_spawn/current_spawner as anything in spawnerlist)
 		if(!current_spawner.ready)
 			spawnerlist -= current_spawner
 	if(!spawnerlist.len)
