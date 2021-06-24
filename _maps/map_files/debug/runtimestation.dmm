@@ -4374,6 +4374,10 @@
 	},
 /turf/open/floor/vault,
 /area/centcom/control)
+"Bo" = (
+/obj/machinery/computer/arena,
+/turf/open/floor/grass,
+/area/centcom/control)
 "Bq" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Events Supplypod Loading";
@@ -7931,16 +7935,6 @@
 	req_access_txt = "101"
 	},
 /turf/open/floor/iron/dark/textured_half{
-	dir = 1
-	},
-/area/centcom/control)
-"Xc" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/door/poddoor/shutters{
-	id = "bluHall";
-	name = "Blue Hall"
-	},
-/turf/open/floor/iron/textured_half{
 	dir = 1
 	},
 /area/centcom/control)
@@ -54220,7 +54214,7 @@ mf
 ew
 YQ
 KT
-GS
+Bo
 Mu
 MC
 zK
@@ -55466,8 +55460,8 @@ Mu
 Mu
 Mu
 Mu
-Xc
-Xc
+jH
+gp
 Mu
 Mu
 Mu
