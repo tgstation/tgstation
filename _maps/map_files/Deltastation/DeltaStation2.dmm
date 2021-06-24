@@ -24922,12 +24922,19 @@
 /area/command/heads_quarters/cmo)
 "deG" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/toy/figure/paramedic{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/storage/pill_bottle/dice{
+	pixel_x = -4;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/medical/medbay/central)
@@ -24984,6 +24991,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
 	},
 /turf/open/floor/iron/white,
 /area/medical/psychology)
@@ -30437,6 +30447,10 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/bot,
+/obj/machinery/ecto_sniffer{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "dCq" = (
@@ -53729,6 +53743,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "iLS" = (
@@ -59624,6 +59639,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "krI" = (
@@ -69771,6 +69787,12 @@
 "mZD" = (
 /turf/closed/wall,
 /area/engineering/atmos)
+"mZH" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/iron/grimy,
+/area/commons/vacant_room/office)
 "mZW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -74504,6 +74526,7 @@
 	c_tag = "Vacant Office";
 	dir = 1
 	},
+/obj/item/toy/figure/assistant,
 /turf/open/floor/iron/grimy,
 /area/commons/vacant_room/office)
 "oft" = (
@@ -89633,6 +89656,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/item/toy/figure/prisoner,
 /turf/open/floor/iron/dark,
 /area/security/execution/education)
 "rZb" = (
@@ -111898,6 +111922,11 @@
 /obj/effect/landmark/start/captain,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/captain)
+"xYl" = (
+/obj/structure/lattice,
+/obj/item/toy/figure/ninja,
+/turf/open/space,
+/area/space/nearstation)
 "xYr" = (
 /obj/machinery/light_switch/directional/west,
 /obj/structure/table/reinforced,
@@ -146408,7 +146437,7 @@ gNW
 vAo
 gQS
 xJg
-oLJ
+mZH
 ldY
 alg
 gvd
@@ -159300,7 +159329,7 @@ aaa
 aaa
 aad
 aaa
-aad
+xYl
 aaa
 aad
 aaa

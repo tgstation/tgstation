@@ -18,7 +18,7 @@
 	var/blockers = NONE
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/rot_react,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
 /datum/component/rot/Initialize(delay, scaling, severity)
@@ -112,6 +112,11 @@
 /datum/component/rot/proc/rot_react_touch(datum/source, mob/living/react_to)
 	SIGNAL_HANDLER
 	rot_react(source, react_to, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+
+/// Triggered when something enters the component's parent.
+/datum/component/rot/proc/on_entered(datum/source, atom/movable/arrived, direction)
+	SIGNAL_HANDLER
+	rot_react(source, arrived)
 
 ///The main bit of logic for the rot component, does a temperature check and has a chance to infect react_to
 /datum/component/rot/proc/rot_react(source, mob/living/react_to, target_zone = null)
