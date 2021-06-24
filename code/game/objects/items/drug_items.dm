@@ -52,7 +52,7 @@
 		spillable = TRUE
 		return update_icon()
 
-/obj/item/reagent_containers/food/drinks/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/glass/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!.) //if the bottle wasn't caught
 		if(QDELING(src) || !hit_atom)		//Invalid loc
 			return
