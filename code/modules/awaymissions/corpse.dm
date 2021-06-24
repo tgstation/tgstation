@@ -67,7 +67,7 @@
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
-	if(LAZYLEN(faction))
+	if(faction)
 		faction = string_list(faction)
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
