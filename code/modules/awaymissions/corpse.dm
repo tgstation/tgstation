@@ -102,7 +102,8 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
-	M.faction = LAZYCOPY(faction)
+	if(LAZYLEN(faction))
+		M.faction = faction.Copy()
 	if(disease)
 		M.ForceContractDisease(new disease)
 	if(death)
