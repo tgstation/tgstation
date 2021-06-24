@@ -470,101 +470,6 @@
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 15)
-
-/datum/reagent/drug/blastoff/on_mob_add(mob/living/L)
-	. = ..()
-	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	var/list/col_filter_blue = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.764,0,0,0) //most blue color
-	var/list/col_filter_mid = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.832,0,0,0) //red/blue mix midpoint
-	var/list/col_filter_red = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.900,0,0,0) //most red color
-
-	affected_plane_controller.add_filter("blastoff", 1, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY))
-
-	for(var/i in affected_plane_controller.get_filters("blastoff"))
-		animate(i, color = col_filter_blue, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN, loop = -1)
-		animate(color = col_filter_mid, time = 1 SECONDS, easing = CUBIC_EASING|EASE_OUT)
-		animate(color = col_filter_red, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN)
-		animate(color = col_filter_mid, time = 1 SECONDS, easing = CUBIC_EASING|EASE_OUT)
-
-/datum/reagent/drug/blastoff/on_mob_delete(mob/living/L)
-	. = ..()
-	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	affected_plane_controller.remove_filter("blastoff")
-
-/datum/reagent/drug/blastoff/proc/superflip()
-
-/datum/reagent/drug/saturnx
-	name = "SaturnX"
-	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
-	reagent_state = SOLID
-	color = "#638b9b"
-	overdose_threshold = 25
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
-
-/datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.6 * REM * delta_time)
-
-/datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
-	. = ..()
-	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 20)
-	to_chat(L, "<span='notice'>You feel pins and needles all over your skin as your body suddenly becomes transparent!</span>")
-	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
-
-///This proc turns the guy who took the drug invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
-/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
-		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
-		invisible_man.update_body()
-
-/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
-	. = ..()
-	REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
-	to_chat(M, "<span='notice'>As you sober up, opacity once again returns to your body meats.</span>")
-	M.update_body()
-
-/datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
-	. = ..()
-	if(prob(8))
-		M.emote("giggle")
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
-
-/datum/reagent/drug/kroncaine
-	name = "kroncaine"
-	description = "A highly illegal stimulant from the edges of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
-	reagent_state = LIQUID
-	color = "#FAFAFA"
-	overdose_threshold = 20
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	addiction_types = list(/datum/addiction/stimulants = 18)
-
-/datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
-	..()
-	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
-	L.adjustStaminaLoss(-4 * volume, 0)
-
-/datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
-	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
-	..()
-
-/datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustAllImmobility(-10, FALSE)
-	M.adjustStaminaLoss(-2, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.6)
-	M.Jitter(2)
-
-/datum/reagent/drug/kroncaine/overdose_process(mob/living/M)
-	M.Jitter(10)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
-	if(prob(15))
-		to_chat(M, span_danger(pick("You feel your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
-
-/datum/reagent/drug/blastoff
-	name = "bLaSToFF"
-	addiction_types = list(/datum/addiction/hallucinogens = 15)
 	///This is multiplied by the amount of units to get the chance to flip per second
 	var/flip_chance_per_unit = 1
 	///How many flips have we done so far?
@@ -572,11 +477,10 @@
 	///How many flips for a super flip?
 	var/super_flip_requirement = 3
 
-
-/datum/reagent/drug/blastoff/on_mob_add(mob/living/L, amount)
+/datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/L)
 	. = ..()
 
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_blue = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.764,0,0,0) //most blue color
 	var/list/col_filter_mid = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.832,0,0,0) //red/blue mix midpoint
@@ -590,10 +494,10 @@
 		animate(color = col_filter_red, time = 3 SECONDS)
 		animate(color = col_filter_mid, time = 3 SECONDS)
 
-/datum/reagent/drug/blastoff/on_mob_delete(mob/living/L)
+/datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/datum/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.remove_filter("blastoff_filter")
 
@@ -620,69 +524,26 @@
 	if(overdosed)
 		M.adjust_disgust(1 * REM * delta_time)
 
-
-/datum/reagent/drug/kroncaine
-	name = "Kroncaine"
-	addiction_types = list(/datum/addiction/stimulants = 20)
-
-
-/datum/reagent/drug/kroncaine/on_mob_add(mob/living/L, amount)
-	. = ..()
-
-	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
-
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
-	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
-	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
-	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
-
-	game_plane_master_controller.add_filter("kroncaine_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
-
-	for(var/filter in game_plane_master_controller.get_filters("kroncaine_filter"))
-		animate(filter, loop = -1, color = col_filter_identity, time = 0, easing = JUMP_EASING)
-		animate(color = col_filter_green, time = 4 SECONDS)
-		animate(color = col_filter_blue, time = 4 SECONDS)
-		animate(color = col_filter_red, time = 4 SECONDS)
-
-/datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
-	M.Jitter(2 * REM * delta_time)
-	M.AdjustSleeping(-20 * REM * delta_time)
-	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
-
-/datum/reagent/drug/kroncaine/overdose_process(mob/living/M, delta_time, times_fired)
-	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 2 * REM * delta_time)
-	M.Jitter(4 * REM * delta_time)
-
-/datum/reagent/drug/kroncaine/on_mob_delete(mob/living/L)
-	. = ..()
-
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	game_plane_master_controller.remove_filter("kroncaine_filter")
-	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
-
-
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
+	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
+	reagent_state = SOLID
+	color = "#638b9b"
+	overdose_threshold = 25
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
 
-
-/datum/reagent/drug/saturnx/on_mob_add(mob/living/L, amount)
+/datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.6 * REM * delta_time)
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/drugged_human = L
-		drugged_human?.dna?.species?.body_alpha = 0
-		drugged_human.update_body()
-		drugged_human.update_hair()
-		drugged_human.update_body_parts()
-		drugged_human.update_mutations_overlay()
+/datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
+	. = ..()
+	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 20)
+	to_chat(L, "<span='notice'>You feel pins and needles all over your skin as your body suddenly becomes transparent!</span>")
+	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
 
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_full = list(1,0,0,0, 0,1.00,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 	var/list/col_filter_twothird = list(1,0,0,0, 0,0.68,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
@@ -700,15 +561,74 @@
 		animate(color = col_filter_half, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
 		animate(color = col_filter_twothird, time = 9 SECONDS, easing = LINEAR_EASING)
 
-/datum/reagent/drug/saturnx/on_mob_delete(mob/living/L)
+///This proc turns the guy who took the drug invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
+/datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
+		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+		invisible_man.update_body()
+
+/datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
 	. = ..()
+	REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
+	to_chat(M, "<span='notice'>As you sober up, opacity once again returns to your body meats.</span>")
+	M.update_body()
 
-	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
+	var/datum/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("saturnx_filter")
 
+/datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	if(prob(8))
+		M.emote("giggle")
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
+/datum/reagent/drug/kroncaine
+	name = "kroncaine"
+	description = "A highly illegal stimulant from the edges of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
+	reagent_state = LIQUID
+	color = "#FAFAFA"
+	overdose_threshold = 20
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	addiction_types = list(/datum/addiction/stimulants = 20)
 
+/datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
+	..()
+	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
 
+	L.adjustStaminaLoss(-4 * volume, 0)
 
+	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
+	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
+	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
+	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
+	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
+
+	game_plane_master_controller.add_filter("kroncaine_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/filter in game_plane_master_controller.get_filters("kroncaine_filter"))
+		animate(filter, loop = -1, color = col_filter_identity, time = 0, easing = JUMP_EASING)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
+
+/datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
+	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.remove_filter("kroncaine_filter")
+	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+	. = ..()
+
+/datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	. = ..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
+	M.Jitter(2 * REM * delta_time)
+	M.AdjustSleeping(-20 * REM * delta_time)
+	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+
+/datum/reagent/drug/kroncaine/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time)
+	M.Jitter(10 * REM * delta_time)
+	if(prob(15))
+		to_chat(M, span_danger(pick("You feel your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
