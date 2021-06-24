@@ -173,6 +173,11 @@
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
 
+/datum/design/component/mmi
+	name = "MMI Component"
+	id = "comp_mmi"
+	build_path = /obj/item/circuit_component/mmi
+
 /datum/design/component/multiplexer
 	name = "Multiplexer Component"
 	id = "comp_multiplexer"
