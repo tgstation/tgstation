@@ -29,7 +29,10 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
  * Called by finish_interact(), switch between open and closed, reconcile the air between two pipelines
  */
 /obj/machinery/atmospherics/components/binary/valve/proc/set_open(to_open)
+	if(on == to_open)
+		return
 	SEND_SIGNAL(src, COMSIG_VALVE_SET_OPEN, to_open)
+	. = on
 	on = to_open
 	if(on)
 		update_icon_nopipes()
