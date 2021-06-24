@@ -198,7 +198,7 @@
 
 	..()
 
-/obj/machinery/microwave/RightClick(mob/user)
+/obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.canUseTopic(src, !issilicon(usr)))
 		cook()
 
