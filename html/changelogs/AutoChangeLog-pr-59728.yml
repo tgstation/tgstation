@@ -1,0 +1,7 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds the airlock shell. The circuit has full control over the airlock."
+  - expansion: "Implements USB cables for the binary valve to be able to open/close the valve."
+  - expansion: "Adds a private channel for radios that only lets circuits with the same owner's ID to interact with it."
+  - refactor: "Refactors USB code to be easier to use for less experienced coders."

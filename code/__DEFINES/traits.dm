@@ -461,6 +461,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
 #define TRAIT_FIREDOOR_STOP "firedoor_stop"
 
+/// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
+#define TRAIT_COMPONENT_MMI "component_mmi"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -605,8 +608,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SOULSTONE_TRAIT "soulstone"
 /// Trait applied to slimes by low temperature
 #define SLIME_COLD "slime-cold"
-/// Trait applied to bots by being tipped over
-#define BOT_TIPPED_OVER "bot-tipped-over"
+/// Trait applied to mobs by being tipped over
+#define TIPPED_OVER "tipped-over"
 /// Trait applied to PAIs by being folded
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
