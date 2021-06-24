@@ -526,7 +526,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			queue_node.last_fire = world.time
 			queue_node.times_fired++
 			
-			var/postpone = queue_node.next_fire - queue_node.queued_time 
+			var/postpone = queue_node.next_fire - (queue_node.queued_time || world.time) 
 			
 			if (queue_node_flags & SS_TICKER)
 				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
