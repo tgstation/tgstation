@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 /**
+ * Build script for /tg/station 13 codebase.
+ *
+ * This script uses Juke Build, read the docs here:
+ * https://github.com/stylemistake/juke-build
+ *
  * @file
  * @copyright 2021 Aleksej Komarov
  * @license MIT
