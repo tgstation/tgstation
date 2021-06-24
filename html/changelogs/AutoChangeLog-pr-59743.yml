@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds the MMI circuit component."
+  - qol: "Allows inputting signals into signal ports."

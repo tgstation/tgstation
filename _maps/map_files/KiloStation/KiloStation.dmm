@@ -12050,6 +12050,9 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/bookcase/random/reference,
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aOy" = (
@@ -15349,8 +15352,13 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/ecto_sniffer{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "aXj" = (
@@ -29819,10 +29827,6 @@
 /area/hallway/primary/aft)
 "bZX" = (
 /obj/structure/table,
-/obj/item/toy/figure/dsquad{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -88957,6 +88961,10 @@
 	desc = "Often used to flavor food or make people sneeze. Fashionably moved to the left side of the table.";
 	pixel_x = -8;
 	pixel_y = 2
+	},
+/obj/item/toy/figure/prisoner{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)

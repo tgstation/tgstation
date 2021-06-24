@@ -45,6 +45,10 @@
 		return ..()
 
 /obj/item/clothing/under/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	toggle()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

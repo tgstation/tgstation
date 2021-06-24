@@ -1,0 +1,4 @@
+author: "SpaceVampire"
+delete-after: True
+changes: 
+  - bugfix: "The spare Codex Cicatrix created by the ritual, no longer comes with free charges."

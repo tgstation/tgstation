@@ -162,6 +162,7 @@
 	if(brainmob == new_brainmob)
 		return FALSE
 	. = brainmob
+	SEND_SIGNAL(src, COMSIG_MMI_SET_BRAINMOB, new_brainmob)
 	brainmob = new_brainmob
 	if(new_brainmob)
 		if(mecha)
