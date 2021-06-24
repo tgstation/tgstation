@@ -278,7 +278,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
-	if(!istype(loc) || src != smoker.wear_mask)
+	if(!istype(smoker) || src != smoker.wear_mask)
 		reagents.remove_any(to_smoke)
 		return
 
