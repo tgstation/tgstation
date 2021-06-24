@@ -510,7 +510,6 @@
 					var/obj/effect/mob_spawn/spider/new_eggs = new egg_choice(get_turf(spider))
 					new_eggs.directive = spider.directive
 					if(length(spider.faction))
-						LAZYINITLIST(new_eggs.faction)
 						new_eggs.faction = spider.faction.Copy()
 					if(enriched)
 						spider.fed--
