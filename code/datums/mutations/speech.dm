@@ -240,3 +240,31 @@
 		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message
+
+/datum/mutation/human/uwu
+	name = "UwU"
+	desc = "An howwible mutation owiginating fwom a distant past. Thought we ewadicated it aftew 'weeducating' the fiwst Felinids in owdew to integwate them to the Society."
+	quality = MINOR_NEGATIVE
+	locked = TRUE
+	text_gain_indication = "<span class='notice'>You feew like you commited wawcwimes ~</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel like participating in a furcon.</span>"
+
+/datum/mutation/human/uwu/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/uwu/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/uwu/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		message = replacetext(message,"r","w")
+		message = replacetext(message,"l","w")
+		message += "~"
+		speech_args[SPEECH_MESSAGE] = trim(message)

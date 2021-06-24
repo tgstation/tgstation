@@ -444,6 +444,14 @@
 	name = "\improper DNA injector (Anti-Webbing)"
 	remove_mutations = list(SPIDER_WEB)
 
+/obj/item/dnainjector/uwu
+	name = "\improper DNA injector (Webbing)"
+	add_mutations = list(UWU)
+
+/obj/item/dnainjector/antiuwu
+	name = "\improper DNA injector (Webbing)"
+	remove_mutations = list(UWU)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 

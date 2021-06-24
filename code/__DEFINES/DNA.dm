@@ -55,6 +55,7 @@
 #define TONGUESPIKECHEM /datum/mutation/human/tongue_spike/chem
 #define TOURETTES /datum/mutation/human/tourettes
 #define UNINTELLIGIBLE /datum/mutation/human/unintelligible
+#define UWU /datum/mutation/human/uwu
 #define VOID /datum/mutation/human/void
 #define WACKY /datum/mutation/human/wacky
 #define XRAY /datum/mutation/human/xray
