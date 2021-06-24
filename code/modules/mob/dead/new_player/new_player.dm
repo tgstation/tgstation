@@ -222,7 +222,12 @@
 		new_player_panel()
 		return FALSE
 
-	var/mob/dead/observer/observer = new()
+	/**
+	 * COUNTING THIS AS THE UNIQUE SIGN THAT SOMEONE IS JOINING THE EVENT
+	 * I'm probably going to disable the join game button
+	 */
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAYER_ENTER, src)
+	var/mob/dead/observer/observer = new
 	spawning = TRUE
 
 	observer.started_as_observer = TRUE

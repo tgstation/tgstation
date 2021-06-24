@@ -1,0 +1,5906 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/space)
+"aN" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/space)
+"ba" = (
+/obj/effect/turf_decal/arrows/white{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"bo" = (
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/smooth_half,
+/area/space)
+"cW" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/space)
+"df" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"ds" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"dy" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"ea" = (
+/obj/effect/turf_decal/trimline/red/filled/end,
+/obj/effect/turf_decal/trimline/blue/end,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/space)
+"en" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"eY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/railing/corner,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"fS" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"fW" = (
+/obj/effect/turf_decal/trimline/blue/filled/end,
+/obj/effect/turf_decal/trimline/red/end,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/space)
+"fX" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"gc" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"hc" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"hk" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/red/corner,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"hQ" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"iC" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/smooth_edge,
+/area/space)
+"jd" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"jJ" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark,
+/area/space)
+"kB" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/closed/indestructible/hotelwall,
+/area/space)
+"kC" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 10
+	},
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/space)
+"kE" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"kS" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"kX" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"lB" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"lT" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 9
+	},
+/area/space)
+"mk" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"mJ" = (
+/obj/item/kirbyplants,
+/obj/structure/sign/departments/restroom{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"mN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"nm" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"nu" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"nx" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/arena_spawn/red,
+/turf/open/floor/iron/dark,
+/area/space)
+"nE" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/structure/railing/corner,
+/turf/open/floor/iron/dark,
+/area/space)
+"nS" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"oe" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/structure/sign/departments/custodian{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"ok" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"os" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"oJ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/space)
+"oY" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"pl" = (
+/turf/open/floor/iron/dark,
+/area/space)
+"px" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/item/cardboard_cutout{
+	name = "audience member"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"qw" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/red/line,
+/turf/open/floor/iron/dark/side,
+/area/space)
+"qK" = (
+/obj/effect/turf_decal/arrows{
+	dir = 8;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/space)
+"qM" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"qV" = (
+/obj/structure/table/abductor,
+/turf/open/floor/iron/dark,
+/area/space)
+"rP" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/space)
+"sn" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"sv" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/item/kirbyplants,
+/turf/open/floor/iron/dark,
+/area/space)
+"sE" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"sN" = (
+/turf/closed/indestructible/fakeglass,
+/area/space)
+"tf" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/space)
+"tj" = (
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"tu" = (
+/obj/machinery/smartfridge/drinks,
+/turf/closed/indestructible/hotelwall,
+/area/space)
+"tx" = (
+/obj/effect/turf_decal/arrows/white{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"tP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"tV" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"tY" = (
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"ux" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/right,
+/area/space)
+"uY" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"vf" = (
+/turf/open/floor/iron/smooth,
+/area/space)
+"wE" = (
+/obj/structure/table/abductor,
+/obj/item/toy/redbutton{
+	pixel_y = 7
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"xq" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"xP" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
+/area/space)
+"yx" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"yV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"yZ" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/space)
+"zt" = (
+/turf/open/floor/iron/smooth_half{
+	dir = 4
+	},
+/area/space)
+"zV" = (
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
+/area/space)
+"Ay" = (
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"AA" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark,
+/area/space)
+"Bl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line,
+/turf/open/floor/iron/dark,
+/area/space)
+"Bm" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Br" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/space)
+"Bx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"BK" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark/side,
+/area/space)
+"BO" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Cb" = (
+/obj/effect/turf_decal/arrows/white{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"Di" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"Dn" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/space)
+"DO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"Ef" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/obj/item/cardboard_cutout{
+	layer = 2.9;
+	name = "audience member"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"EH" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark,
+/area/space)
+"EJ" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"EU" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/iron/dark,
+/area/space)
+"EW" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
+/area/space)
+"Ge" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Gf" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"Gp" = (
+/turf/closed/indestructible/hotelwall{
+	icon_state = "hoteldoor";
+	name = "hotel door"
+	},
+/area/space)
+"Hd" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark/side,
+/area/space)
+"Hi" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/iron/dark/corner,
+/area/space)
+"HO" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Io" = (
+/obj/effect/turf_decal/arrows/white,
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"Iz" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/space)
+"IJ" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/corner,
+/turf/open/floor/iron/dark,
+/area/space)
+"IQ" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"IY" = (
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/arrows{
+	dir = 8;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/space)
+"Jh" = (
+/obj/structure/table/abductor,
+/obj/item/toy/redbutton{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Jl" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/space)
+"Jx" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/space)
+"JE" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"JI" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/space)
+"Kj" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Kl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"KR" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"LV" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/space)
+"Ml" = (
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
+/area/space)
+"My" = (
+/turf/open/floor/iron/smooth_edge,
+/area/space)
+"MI" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth_large,
+/area/space)
+"MS" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/space)
+"Nx" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"NF" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"NX" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron/dark,
+/area/space)
+"Oj" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Ox" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/iron/dark,
+/area/space)
+"OT" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/item/cardboard_cutout{
+	layer = 2.9;
+	name = "audience member"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"PB" = (
+/turf/open/floor/iron/smooth_half,
+/area/space)
+"PD" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/railing/corner,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"PF" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"PL" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line,
+/turf/open/floor/iron/dark,
+/area/space)
+"PZ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/siding/thinplating,
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"Qh" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/iron/dark,
+/area/space)
+"QF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"QI" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"QT" = (
+/obj/structure/chair/sofa/corp{
+	dir = 1
+	},
+/obj/item/cardboard_cutout{
+	layer = 2.9;
+	name = "audience member"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"QU" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/space)
+"QY" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/corner,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Rm" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"RG" = (
+/obj/structure/chair/stool/bar/directional/east,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron/dark,
+/area/space)
+"RO" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Sd" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/iron/dark,
+/area/space)
+"SI" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"SK" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"SO" = (
+/turf/closed/indestructible/hotelwall,
+/area/space)
+"Tj" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Tu" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/space)
+"TD" = (
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/space)
+"TL" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"TO" = (
+/turf/open/floor/iron/smooth_corner,
+/area/space)
+"TQ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/kirbyplants,
+/turf/open/floor/iron/dark,
+/area/space)
+"TU" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/space)
+"Uj" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/blue/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark/side,
+/area/space)
+"Uu" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/space)
+"UG" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/left,
+/area/space)
+"UK" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/space)
+"UU" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Vd" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron/dark,
+/area/space)
+"Wl" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"WW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/arena_spawn/green,
+/turf/open/floor/iron/dark,
+/area/space)
+"WZ" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/red/line,
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark/side,
+/area/space)
+"Xh" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/structure/railing/corner,
+/turf/open/floor/iron/dark,
+/area/space)
+"Yd" = (
+/obj/effect/turf_decal/siding/thinplating,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 6
+	},
+/obj/structure/railing,
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/space)
+"Yq" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"Zn" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/smooth,
+/area/space)
+"ZJ" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/space)
+"ZP" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"ZS" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"ZT" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+
+(1,1,1) = {"
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+"}
+(2,1,1) = {"
+vf
+Zn
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+Yq
+nS
+nS
+nS
+nS
+Yq
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+nS
+Zn
+vf
+"}
+(3,1,1) = {"
+vf
+My
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+Ml
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+Ml
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+aN
+vf
+"}
+(4,1,1) = {"
+vf
+My
+PB
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+PB
+aN
+vf
+"}
+(5,1,1) = {"
+vf
+My
+PB
+PB
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+zt
+PB
+aN
+vf
+"}
+(6,1,1) = {"
+vf
+My
+PB
+PB
+zt
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+zt
+zt
+PB
+aN
+vf
+"}
+(7,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(8,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(9,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(10,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+TO
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+EW
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(11,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+kX
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+MI
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+MI
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+kX
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(12,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(13,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(14,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+ba
+ba
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(15,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(16,1,1) = {"
+vf
+My
+bo
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+bo
+aN
+vf
+"}
+(17,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(18,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(19,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(20,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(21,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+MI
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+MI
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(22,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(23,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+sN
+sN
+sN
+sN
+sN
+sN
+sN
+sN
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(24,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+Tj
+Tj
+Tj
+Tj
+Tj
+Tj
+WW
+lB
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(25,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+sN
+sN
+Tj
+tV
+tV
+tV
+tV
+tV
+Tj
+nE
+SO
+Gp
+SO
+sN
+sN
+sN
+sN
+sN
+SO
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(26,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+TQ
+KR
+Tj
+ZP
+ZP
+ZP
+ZP
+ZP
+Tj
+DO
+UG
+uY
+QU
+QU
+QU
+QU
+QU
+ZS
+mJ
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(27,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+Gp
+KR
+KR
+lT
+Tu
+Tu
+Tu
+ab
+Tj
+Tj
+eY
+ux
+pl
+Br
+Jx
+Br
+Jx
+Br
+QI
+pl
+Gp
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(28,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+KR
+KR
+mN
+IJ
+kS
+BO
+Dn
+Tu
+ab
+Ge
+ZT
+pl
+Ef
+UU
+Ef
+UU
+Ef
+UU
+pl
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(29,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+KR
+KR
+mN
+PL
+tf
+QY
+kS
+BO
+qw
+Tj
+hc
+pl
+QT
+UU
+QT
+UU
+QT
+UU
+pl
+SO
+SO
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(30,1,1) = {"
+vf
+iC
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+sn
+QF
+qM
+PL
+Bl
+ds
+tf
+Kl
+Dn
+Tu
+kC
+pl
+OT
+UU
+OT
+UU
+OT
+UU
+px
+qV
+SO
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+rP
+vf
+"}
+(31,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+sN
+hk
+ok
+Gf
+PL
+Bl
+JE
+tP
+yV
+kS
+BO
+WZ
+pl
+qV
+UU
+qV
+UU
+qV
+UU
+Sd
+qV
+tu
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(32,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+Io
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+EH
+Bx
+wE
+mN
+PL
+TU
+gc
+df
+gc
+fW
+Kl
+WZ
+pl
+Ef
+UU
+Ef
+UU
+Ef
+UU
+px
+qV
+SO
+tY
+Cb
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(33,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+Io
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+sE
+EU
+fX
+nu
+Ox
+os
+os
+os
+os
+os
+yx
+Uj
+pl
+QT
+UU
+QT
+UU
+QT
+UU
+Sd
+qV
+kB
+tY
+Cb
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(34,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+Bm
+TL
+Jh
+xq
+jJ
+oJ
+kE
+mk
+Nx
+ea
+en
+Hd
+pl
+OT
+UU
+OT
+UU
+OT
+UU
+px
+qV
+SO
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(35,1,1) = {"
+vf
+iC
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+sN
+EJ
+Rm
+Di
+jJ
+Qh
+Ay
+AA
+dy
+HO
+hQ
+Hd
+pl
+qV
+UU
+qV
+UU
+qV
+UU
+Sd
+qV
+tu
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+rP
+vf
+"}
+(36,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+RO
+PF
+MS
+jJ
+Qh
+jd
+TD
+fS
+Hi
+LV
+Yd
+pl
+Ef
+UU
+Ef
+UU
+Ef
+UU
+px
+qV
+SO
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(37,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+SK
+SK
+xq
+jJ
+TD
+Kj
+HO
+hQ
+BK
+NX
+PZ
+pl
+QT
+UU
+QT
+UU
+QT
+UU
+pl
+SO
+SO
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(38,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+SK
+SK
+xq
+Oj
+HO
+hQ
+Hi
+LV
+Iz
+Xh
+SI
+pl
+OT
+UU
+OT
+UU
+OT
+UU
+pl
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(39,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+Gp
+SK
+SK
+JI
+LV
+LV
+LV
+Iz
+NX
+NX
+NF
+UG
+pl
+ZJ
+Jl
+ZJ
+Jl
+ZJ
+nm
+pl
+Gp
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(40,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+oY
+SK
+NX
+Vd
+Vd
+Vd
+Vd
+Vd
+NX
+PD
+ux
+tj
+Uu
+Uu
+Uu
+Uu
+Uu
+IQ
+oe
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(41,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+SO
+sN
+sN
+NX
+RG
+RG
+RG
+RG
+RG
+NX
+Wl
+SO
+Gp
+SO
+sN
+sN
+sN
+sN
+sN
+SO
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(42,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+NX
+NX
+NX
+NX
+NX
+NX
+nx
+sv
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(43,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+sN
+sN
+sN
+sN
+sN
+sN
+sN
+sN
+sN
+SO
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(44,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+MI
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+MI
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(45,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(46,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(47,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(48,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(49,1,1) = {"
+vf
+My
+bo
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+bo
+aN
+vf
+"}
+(50,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(51,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tx
+tx
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(52,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(53,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(54,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+PB
+kX
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+MI
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+MI
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+tY
+kX
+PB
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(55,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+PB
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+PB
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(56,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+PB
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+PB
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(57,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+PB
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+PB
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(58,1,1) = {"
+vf
+My
+PB
+PB
+zt
+PB
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+PB
+zt
+zt
+PB
+aN
+vf
+"}
+(59,1,1) = {"
+vf
+My
+PB
+PB
+zt
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+zt
+zt
+PB
+aN
+vf
+"}
+(60,1,1) = {"
+vf
+My
+PB
+PB
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+zt
+PB
+aN
+vf
+"}
+(61,1,1) = {"
+vf
+My
+PB
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+PB
+aN
+vf
+"}
+(62,1,1) = {"
+vf
+My
+UK
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+Ml
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+Ml
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+zV
+xP
+aN
+vf
+"}
+(63,1,1) = {"
+vf
+Zn
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+qK
+IY
+yZ
+yZ
+yZ
+yZ
+IY
+qK
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+yZ
+Zn
+vf
+"}
+(64,1,1) = {"
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+cW
+cW
+vf
+vf
+vf
+vf
+cW
+cW
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+"}
