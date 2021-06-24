@@ -329,7 +329,8 @@
 				return
 			component.disconnect()
 			remove_component(component)
-			usr.put_in_hands(component)
+			if(component.loc == src)
+				usr.put_in_hands(component)
 			. = TRUE
 		if("set_component_coordinates")
 			var/component_id = text2num(params["component_id"])

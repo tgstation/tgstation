@@ -84,6 +84,10 @@
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
 
+// Radio component
+#define COMP_RADIO_PUBLIC "public"
+#define COMP_RADIO_PRIVATE "private"
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -94,6 +98,9 @@
 
 /// Whether or not the shell has a USB port.
 #define SHELL_FLAG_USB_PORT (1<<2)
+
+/// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
+#define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10

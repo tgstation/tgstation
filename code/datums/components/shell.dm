@@ -133,6 +133,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -148,6 +150,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 

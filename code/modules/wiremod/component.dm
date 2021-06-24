@@ -231,3 +231,9 @@
 			"content" = "Power Usage Per Input: [power_usage_per_input]",
 			"color" = "orange",
 		))
+
+/obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
+	return
+
+/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/parent)
+	return
