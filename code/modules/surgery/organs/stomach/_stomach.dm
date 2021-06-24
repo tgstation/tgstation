@@ -240,11 +240,11 @@
 			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert("disgust")
 		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "disgust")
-		human.clear_alert("nutrition")
+		human_owner.clear_alert("nutrition")
 
 	return ..()
 
