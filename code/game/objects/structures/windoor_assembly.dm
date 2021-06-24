@@ -39,7 +39,7 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -74,13 +74,13 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
 	if (leaving.pass_flags & pass_flags_self)
 		return
 
-	if (get_dir(loc, new_location) == dir && density)
+	if (direction == dir && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 

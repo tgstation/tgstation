@@ -388,3 +388,136 @@
       files.
   tralezab:
   - expansion: dullahans are now considered undead
+2021-06-18:
+  RandomGamer123:
+  - bugfix: Power fist no longer occasionally and randomly says it does not have enough
+      gas when it has enough
+  - bugfix: Connects Delta's cryopod room to the station's power grid
+2021-06-19:
+  Maurukas:
+  - bugfix: Nitrile gloves have been restocked on Metastation.
+  - bugfix: Disconnected scrubber pipe on Metastation
+  - bugfix: Batteries are now included with defibrillators on Metastation
+  - bugfix: Broken power cable on metastation
+  - qol: KiloStation's fire safety budget has been reduced, resulting in the removal
+      of some redundant firelocks
+  - bugfix: Restores drug vendor to Kilostation Medbay
+  - bugfix: Restores Crew Health Monitor to to the Kilostation medbay
+  - bugfix: Additional scrubbers/vents to some areas on Kilo that had inadequate coverage
+  - qol: Declutter pass of Kilo medbay, holodeck area
+  - bugfix: Some cameras in Kilostation now have better names
+  - bugfix: Misc. piping and wiring issues on Kilostation have been repaired
+  - bugfix: Missing air alarm added to Kilostation Botany
+  - bugfix: The water tank stuck in a door in Kilostation engineering has been released
+      back into its natural maintenance habitat
+  Timberpoes:
+  - rscdel: Removed the fake error texture floor tiles.
+2021-06-20:
+  Krysonism:
+  - rscadd: Added a new machine to the robotics lab; the ectoscopic sniffer.
+  OHJ4Y:
+  - qol: Surgical aprons can now hold more medical-related items in their storage
+      slot.
+  Ryll/Shaps:
+  - bugfix: OOC heart commendations should once again function and poll people as
+      it should during the shuttle's return trip.
+  SmArtKar:
+  - bugfix: Luminescents once again use slime extracts
+  SpaceDragon00:
+  - bugfix: Combat defibs no longer enable their safeties when being EMPed
+  - bugfix: Visible message sends its message to mobs that are also its location
+  - bugfix: shock_touching (Renamed to shock_pulling) now actually uses the damage
+      value provided
+  - code_imp: Removed useless mob/user input for cooldowncheck
+  - code_imp: Added recharge_time variable to paddles for variable charge times
+  - code_imp: Added can_hurt, do_success, and do_cancel to reduce code duplication
+  Timberpoes:
+  - bugfix: Chat feedback is improved when setting down briefcase launchpads.
+  - bugfix: Urinals no longer alert you about the letter "i" being stuck to your hand
+      in certain edge cases.
+  Watermelon914:
+  - bugfix: Fixed being unable to add extra circuit components when an integrated
+      circuit was removed.
+2021-06-21:
+  ArcaneMusic:
+  - qol: Suspenders now uses a GAGS setup, allowing for custom recolors.
+  Melbert:
+  - bugfix: Fixes contractor tablets breaking due to contract targets cryoing.
+  - bugfix: Fixed nuke ops lobby meta exploit
+  RandomGamer123:
+  - bugfix: Makes roleblocks in mafia actually end properly
+  - bugfix: Tachyon-doppler arrays now connect with servers on different z-levels.
+  SpaceDragon00:
+  - bugfix: People with digitigrade legs are now properly paralyzed by the Paraplegic
+      perk
+  - bugfix: Usable_limbs can no longer be set below 0, which let people walk when
+      they shouldn't be able to
+  Timberpoes:
+  - bugfix: H.A.U.L. gauntlets no longer output a message about losing their grip
+      power when you drop them to the floor.
+  - bugfix: Removing the H.A.U.L. gauntlets while pulling something will now stop
+      the enhanced pulling effect.
+  - bugfix: Fix some runtimes with quirks and equipping silicons.
+  Watermelon914:
+  - bugfix: Fixed signal ports receiving signals when a signal is not actually sent
+  Y0SH1M4S73R:
+  - expansion: The DNA console can now edit the nonhuman features of its occupants,
+      as well as allowing injectors to apply those features. Look for the "Features"
+      tab in the DNA console.
+  dragomagol:
+  - spellcheck: multiple projectiles are now pluralized correctly
+  jupyterkat:
+  - qol: you can now press space or enter to select in tgui input lists
+  - bugfix: tgui input lists no longer break when duplicate keys are passed
+  ninjanomnom:
+  - bugfix: Some overlays missing from variant defibs are now properly applied.
+2021-06-22:
+  ATHATH:
+  - qol: Contractor batons will now stun cyborgs on a left click and harmbaton them
+      on a right click, instead of stunning cyborgs if you're NOT in combat mode and
+      harmbatonning them if you are.
+  - bugfix: Stunning a cyborg with a contractor baton now puts your contractor baton
+      on cooldown, just like knocking a human down does. Don't worry, you can still
+      easily chainstun/baton 'n' bash borgs with contractor batons.
+  - soundadd: Attempting to stun a cyborg with a classic baton or a telebaton will
+      play a CLONGing noise, produce a special message, and put your baton on cooldown.
+      Harmbatonning cyborgs with classic batons and telebatons still works, of course.
+  - refactor: The code for classic batons, telebatons, and contractor batons has been
+      doc'd slightly better and refactored a bit.
+  - bugfix: Some edge cases involving cyborgs who somehow both are clumsy and can
+      wield a classic baton have been accounted for. This shouldn't affect normal
+      gameplay unless an admin tries some REALLY weird stuff. Like, clumsy contractor
+      cyborg level weird.
+  Timberpoes:
+  - balance: The traitor's Agent ID card has a new option available during forging
+      called Wallet ID Spoofing. Selecting this option will automatically snap the
+      Agent ID card to the front of any wallet, allowing the traitor to hide more
+      valuable ID cards behind it. This is disabled when the card is unforged.
+  Watermelon914:
+  - refactor: Refactors dbcore.dm to possibly resolve the crashes that happen on Terry.
+  carshalash:
+  - bugfix: Eggs now give 5u yolk no matter what it is cracked in
+2021-06-23:
+  Fikou:
+  - expansion: new mech action figures and job action figures
+  - bugfix: Intento leaderboard works good
+  - imageadd: new sprites for mech action figures
+  Greniza:
+  - imageadd: New turf decals for alternative tiletypes
+  MMMiracles:
+  - rscadd: Tramstation's Tram is now more capable of making things regret being in
+      the way of it
+  - bugfix: Tramstation's Tram is now less likely to unintentionally explode
+  RandomGamer123:
+  - bugfix: Cigarettes with the smoke_all property actually let you smoke in everything
+      the cigarette contains now.
+  - qol: Adds more intercoms and a new fire extinguisher to Metastation's new medbay.
+  - bugfix: Replaces broken valueless space cash item in old AI sat ruin with a 200
+      credit one
+  Semoro and azizonkg:
+  - bugfix: Ported fixes of SStimer subsystem from RU SS220 Paradise
+  - config: 'Added a new config var: flag/log_timers_on_bucket_reset'
+  TemporalOroboros:
+  - bugfix: Specific chem dispenser recipes no longer create fonts of infinite power.
+  Watermelon914:
+  - bugfix: Fixed explosions delimbing you if they're weaker

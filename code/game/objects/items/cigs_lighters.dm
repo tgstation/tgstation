@@ -276,17 +276,19 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	reagents.expose_temperature(heat, 0.05)
 
-	var/to_smoke = smoke_all ? REAGENTS_METABOLISM : ((reagents.total_volume * dragtime) / smoketime)
+	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
-	if(!istype(smoker) || src != smoker.wear_mask)
+	if(!istype(loc) || src != smoker.wear_mask)
 		reagents.remove_any(to_smoke)
 		return
 
+	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/lungs/lungs = smoker.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(to_smoke)
+
 
 /obj/item/clothing/mask/cigarette/process(delta_time)
 	var/turf/location = get_turf(src)

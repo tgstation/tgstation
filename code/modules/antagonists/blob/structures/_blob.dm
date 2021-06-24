@@ -159,7 +159,7 @@
 	if(make_blob) //well, can we?
 		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
 		B.set_density(TRUE)
-		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
 			B.forceMove(T)
 			B.update_appearance()
