@@ -12,7 +12,7 @@
 	airs[1].volume = initial_volume
 
 /obj/machinery/atmospherics/components/unary/turbine/attackby(obj/item/I, mob/user, params)
-	if(!on)
+	if(!connected)
 		if(default_deconstruction_screwdriver(user, "[base_icon]", "[base_icon]", I))
 			update_appearance()
 			return
@@ -42,6 +42,15 @@
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
+/obj/machinery/atmospherics/components/unary/turbine/turbine_inlet/update_appearance()
+	. = ..()
+	if(connected)
+		icon_state = "[base_icon]_conn"
+	else
+		icon_state = base_icon
+	if(on)
+		icon_state = "[base_icon]_on"
+
 /obj/machinery/atmospherics/components/unary/turbine/turbine_inlet
 	icon_state = "turbine_inlet"
 	name = "turbine inlet port"
@@ -65,9 +74,18 @@
 	var/base_icon = ""
 	var/on = FALSE
 
+/obj/machinery/power/turbine/update_appearance()
+	. = ..()
+	if(connected)
+		icon_state = "[base_icon]_conn"
+	else
+		icon_state = base_icon
+	if(on)
+		icon_state = "[base_icon]_on"
+
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon]", "[base_icon]", I))
+	if(!connected)
+		if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]", I))
 			update_appearance()
 			return
 	if(default_change_direction_wrench(user, I))
@@ -184,6 +202,8 @@
 		if(!shaft)
 			balloon_alert(user, "turbine shaft missing or misplaced")
 
+	call_update_appearances()
+
 /obj/machinery/power/turbine/turbine_controller/proc/deleted_part()
 	SIGNAL_HANDLER
 	connected = FALSE
@@ -278,6 +298,15 @@
 				efficiency_coefficient += 0.2
 				rpm_coefficient += 0.3
 
+/obj/machinery/power/turbine/turbine_controller/proc/call_update_appearances()
+	update_appearance()
+	if(inlet)
+		inlet.update_appearance()
+	if(outlet)
+		outlet.update_appearance()
+	if(shaft)
+		shaft.update_appearance()
+
 /obj/machinery/power/turbine/turbine_controller/ui_interact(mob/user, datum/tgui/ui)
 	if(panel_open)
 		return
@@ -307,6 +336,9 @@
 	switch(action)
 		if("on")
 			on = !on
+			inlet.on = !on
+			outlet.on = !on
+			shaft.on = !on
 			. = TRUE
 		if("disconnect")
 			if(connected)
@@ -316,3 +348,5 @@
 			var/target = params["target"]
 			input_ratio = clamp(target, 0, 100)
 			. = TRUE
+
+	call_update_appearances()
