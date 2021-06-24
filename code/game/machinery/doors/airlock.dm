@@ -304,7 +304,10 @@
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/set_bolt(should_bolt)
+	if(locked == should_bolt)
+		return
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT, should_bolt)
+	. = locked 
 	locked = should_bolt
 
 /obj/machinery/door/airlock/unlock()
