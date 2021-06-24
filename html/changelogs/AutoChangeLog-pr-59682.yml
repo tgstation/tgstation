@@ -1,0 +1,5 @@
+author: "eeSPee"
+delete-after: True
+changes: 
+  - bugfix: "Fixed heretic ghouls having reduced max health after being revived after deghouled"
+  - qol: "heretic ghouls now have a little moodlet tooltip"
