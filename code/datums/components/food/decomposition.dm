@@ -4,6 +4,10 @@
 #define DECOMPOSITION_TIME_RAW 5 MINUTES
 #define DECOMPOSITION_TIME_GROSS 7 MINUTES
 
+#define DECOMP_EXAM_NORMAL 0
+#define DECOMP_EXAM_GROSS 1
+#define DECOMP_EXAM_RAW 2
+
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Makes sure food only starts decomposing if a player's EVER picked it up before
@@ -17,7 +21,7 @@
 	/// Used to give raw/gross food lower timers
 	var/decomp_flags
 	/// Used for examining
-	var/examine_type = 0
+	var/examine_type = DECOMP_EXAM_NORMAL
 
 /datum/component/decomposition/Initialize(decomp_flags = NONE)
 	if(!isatom(parent))
@@ -36,12 +40,12 @@
 		.proc/dropped)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine) // Self-explanitory
 
-	if(decomp_flags & GROSS && !(decomp_flags & RAW))
-		time_remaining = DECOMPOSITION_TIME_GROSS
-		examine_type = 1
 	if(decomp_flags & RAW) // Raw food overrides gross
 		time_remaining = DECOMPOSITION_TIME_RAW
-		examine_type = 2
+		examine_type = DECOMP_EXAM_RAW
+	else if(decomp_flags & GROSS)
+		time_remaining = DECOMPOSITION_TIME_GROSS
+		examine_type = DECOMP_EXAM_GROSS
 
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -105,7 +109,7 @@
 	SIGNAL_HANDLER
 	if(active_timers) // Is the timer currently applied to this?
 		switch(examine_type)
-			if(0)// All other types
+			if(DECOMP_EXAM_NORMAL)// All other types
 				switch(timeleft(timerid)) // Deciseconds used so there's no gaps between examine times.
 					if(3001 to 4500) // 7.5 to 5 Minutes left
 						examine_list += "[parent] looks kinda stale."
@@ -113,7 +117,7 @@
 						examine_list += "[parent] is starting to look pretty gross."
 					if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
 						examine_list += "[parent] looks barely edible."
-			if(1) // Gross food
+			if(DECOMP_EXAM_GROSS) // Gross food
 				switch(timeleft(timerid))
 					if(2101 to 3150) // 5.25 to 3.5 Minutes
 						examine_list += "[parent] looks kinda stale."
@@ -121,7 +125,7 @@
 						examine_list += "[parent] is starting to look pretty gross."
 					if(1 to 1051) // 1.75 Minutes to 1 Decisecond left
 						examine_list += "[parent] looks barely edible."
-			if(2) // Raw food
+			if(DECOMP_EXAM_RAW) // Raw food
 				switch(timeleft(timerid))
 					if(1501 to 2250) // 3.75 to 2.5 Minutes left
 						examine_list += "[parent] looks kinda stale."
@@ -131,7 +135,7 @@
 						examine_list += "[parent] looks barely edible."
 	else // No timer currently running.
 		switch(examine_type)
-			if(0) // All other types
+			if(DECOMP_EXAM_NORMAL) // All other types
 				switch(time_remaining)
 					if(3001 to 4500) // 7.5 to 5 Minutes left
 						examine_list += "[parent] looks kinda stale."
@@ -139,7 +143,7 @@
 						examine_list += "[parent] is starting to look pretty gross."
 					if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
 						examine_list += "[parent] looks barely edible."
-			if(1) // Gross food
+			if(DECOMP_EXAM_GROSS) // Gross food
 				switch(time_remaining)
 					if(2101 to 3150) // 5.25 to 3.5 Minutes
 						examine_list += "[parent] looks kinda stale."
@@ -147,7 +151,7 @@
 						examine_list += "[parent] is starting to look pretty gross."
 					if(1 to 1051) // 1.75 Minutes to 1 Decisecond left
 						examine_list += "[parent] looks barely edible."
-			if(2) // Raw food
+			if(DECOMP_EXAM_RAW) // Raw food
 				switch(time_remaining)
 					if(1501 to 2250) // 3.75 to 2.5 Minutes left
 						examine_list += "[parent] looks kinda stale."
@@ -160,3 +164,6 @@
 #undef DECOMPOSITION_TIME_GROSS
 #undef DECOMPOSITION_TIME_RAW
 
+#undef DECOMP_EXAM_NORMAL
+#undef DECOMP_EXAM_GROSS
+#undef DECOMP_EXAM_RAW

@@ -277,7 +277,6 @@
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
-	///Used to get the last turf this table was on so we can add the TRAIT_PROTECT_FOOD trait to it
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
