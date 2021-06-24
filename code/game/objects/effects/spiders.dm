@@ -152,7 +152,7 @@
 	var/list/potentialspawns = list(
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/giant_spider/hunter,
-		/mob/living/simple_animal/hostile/giant_spider/nurse
+		/mob/living/simple_animal/hostile/giant_spider/nurse,
 	)
 
 /obj/effect/mob_spawn/spider/Initialize(mapload)
@@ -207,7 +207,7 @@
 	potentialspawns = list(
 		/mob/living/simple_animal/hostile/giant_spider/tarantula,
 		/mob/living/simple_animal/hostile/giant_spider/viper,
-		/mob/living/simple_animal/hostile/giant_spider/midwife
+		/mob/living/simple_animal/hostile/giant_spider/midwife,
 	)
 
 /obj/effect/mob_spawn/spider/bloody
@@ -217,7 +217,7 @@
 	directive = "You are the spawn of a visicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh
+		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh,
 	)
 
 /obj/effect/mob_spawn/spider/midwife
@@ -226,7 +226,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/simple_animal/hostile/giant_spider/midwife
+		/mob/living/simple_animal/hostile/giant_spider/midwife,
 	)
 
 /**
