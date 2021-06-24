@@ -11,7 +11,7 @@
 /datum/action/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
 		return FALSE
-	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
+	to_chat(user, span_warning("Our genes cry out!"))
 	..()
 
 	user.monkeyize()

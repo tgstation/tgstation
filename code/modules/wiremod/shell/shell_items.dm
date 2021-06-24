@@ -11,11 +11,11 @@
 	var/screw_delay = 3 SECONDS
 
 /obj/item/shell/screwdriver_act(mob/living/user, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] begins finishing [src].</span>", "<span class='notice'>You begin finishing [src].</span>")
+	user.visible_message(span_notice("[user] begins finishing [src]."), span_notice("You begin finishing [src]."))
 	tool.play_tool_sound(src)
 	if(!do_after(user, screw_delay, src))
 		return
-	user.visible_message("<span class='notice'>[user] finishes [src].</span>", "<span class='notice'>You finish [src].</span>")
+	user.visible_message(span_notice("[user] finishes [src]."), span_notice("You finish [src]."))
 
 	var/turf/drop_loc = drop_location()
 
@@ -44,4 +44,11 @@
 	name = "server assembly"
 	icon_state = "setup_stationary-open"
 	shell_to_spawn = /obj/structure/server
+	screw_delay = 10 SECONDS
+
+/obj/item/shell/airlock
+	name = "circuit airlock assembly"
+	icon = 'icons/obj/doors/airlocks/station/public.dmi'
+	icon_state = "construction"
+	shell_to_spawn = /obj/machinery/door/airlock/shell
 	screw_delay = 10 SECONDS

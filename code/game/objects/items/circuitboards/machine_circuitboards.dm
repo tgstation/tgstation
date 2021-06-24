@@ -287,11 +287,11 @@
 	. = ..()
 	if (istype(I))
 		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
-		to_chat(user, "<span class='notice'>You change the circuitboard to layer [pipe_layer].</span>")
+		to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
-	. += "<span class='notice'>It is set to layer [pipe_layer].</span>"
+	. += span_notice("It is set to layer [pipe_layer].")
 
 /obj/item/circuitboard/machine/HFR_fuel_input
 	name = "HFR Fuel Input (Machine Board)"
@@ -393,7 +393,7 @@
 		else
 			build_path = /obj/machinery/holopad/secure
 			secure = TRUE
-		to_chat(user, "<span class='notice'>You [secure? "en" : "dis"]able the security on the [src]</span>")
+		to_chat(user, span_notice("You [secure? "en" : "dis"]able the security on the [src]"))
 	. = ..()
 
 /obj/item/circuitboard/machine/holopad/examine(mob/user)
@@ -470,7 +470,7 @@
 		var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
 		position = (position == fridges_name_paths.len) ? 1 : (position + 1)
 		build_path = fridges_name_paths[position]
-		to_chat(user, "<span class='notice'>You set the board to [fridges_name_paths[build_path]].</span>")
+		to_chat(user, span_notice("You set the board to [fridges_name_paths[build_path]]."))
 	else
 		return ..()
 
@@ -478,7 +478,7 @@
 	. = ..()
 	if(is_special_type)
 		return
-	. += "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>"
+	. += span_info("[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.")
 
 
 /obj/item/circuitboard/machine/space_heater
@@ -704,7 +704,7 @@
 
 		build_path = new_path
 		name = "[new_name] 3000 (Machine Board)"
-		to_chat(user, "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
+		to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
 	else
 		return ..()
 
@@ -743,10 +743,10 @@
 	. = ..()
 	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
 	if(!new_cost || (loc != user))
-		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its cost!</span>")
+		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
 		return
 	custom_cost = clamp(round(new_cost, 1), 10, 1000)
-	to_chat(user, "<span class='notice'>The cost is now set to [custom_cost].</span>")
+	to_chat(user, span_notice("The cost is now set to [custom_cost]."))
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
 	. = ..()
@@ -934,7 +934,7 @@
 	. = ..()
 	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
 	if(!new_cloud || (loc != user))
-		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its Cloud ID!</span>")
+		to_chat(user, span_warning("You must hold the circuitboard to change its Cloud ID!"))
 		return
 	cloud_id = clamp(round(new_cloud, 1), 1, 100)
 
@@ -1096,18 +1096,18 @@
 
 /obj/item/circuitboard/machine/dish_drive/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>"
-	. += "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>"
+	. += span_notice("Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.")
+	. += span_notice("Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.")
 
 /obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
 	suction = !suction
-	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
+	to_chat(user, span_notice("You [suction ? "enable" : "disable"] the board's suction function."))
 
 /obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
 	if(!user.Adjacent(src))
 		return
 	transmit = !transmit
-	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
+	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
 
 /obj/item/circuitboard/machine/gibber
 	name = "Gibber (Machine Board)"
@@ -1153,11 +1153,11 @@
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
-			to_chat(user, "<span class='notice'>Name protocols successfully updated.</span>")
+			to_chat(user, span_notice("Name protocols successfully updated."))
 		else
 			name = "Food Processor (Machine Board)"
 			build_path = /obj/machinery/processor
-			to_chat(user, "<span class='notice'>Defaulting name protocols.</span>")
+			to_chat(user, span_notice("Defaulting name protocols."))
 	else
 		return ..()
 
@@ -1357,3 +1357,10 @@
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 4,
 		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/ecto_sniffer
+	name = "Ectoscopic Sniffer (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/ecto_sniffer
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1)

@@ -15,7 +15,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 		var/response = tgui_alert(usr, "Anon mode is currently enabled. Disable?", "cold feet", list("Disable Anon Names", "Keep it Enabled"))
 		if(response != "Disable Anon Names")
 			return
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disabled anonymous names.</span>")
+		message_admins(span_adminnotice("[key_name_admin(usr)] has disabled anonymous names."))
 		QDEL_NULL(GLOB.current_anonymous_theme)
 		return
 	var/list/input_list = list("Cancel")
@@ -36,7 +36,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	extras_enabled = extras_enabled == "Yes"
 	alert_players = alert_players == "Yes"
 	GLOB.current_anonymous_theme = new chosen_theme(extras_enabled, alert_players)
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has enabled anonymous names. THEME: [GLOB.current_anonymous_theme].</span>")
+	message_admins(span_adminnotice("[key_name_admin(usr)] has enabled anonymous names. THEME: [GLOB.current_anonymous_theme]."))
 
 /* Datum singleton initialized by the client proc to hold the naming generation */
 /datum/anonymous_theme
@@ -93,11 +93,13 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 		if(issilicon(player))
 			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
 		else
+			var/mob/living/carbon/human/human_mob = player
 			var/original_name = player.real_name //id will not be changed if you do not do this
 			randomize_human(player) //do this first so the special name can be given
 			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
 			if(extras_enabled)
 				player_extras(player)
+			human_mob.dna.update_dna_identity()
 
 /**
  * restore_all_players: sets all crewmembers on station back to their preference name.

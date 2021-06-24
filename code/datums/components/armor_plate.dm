@@ -38,16 +38,16 @@
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
-				examine_list += "<span class='notice'>Its armor is enhanced with [amount] [upgrade_name].</span>"
+				examine_list += span_notice("Its armor is enhanced with [amount] [upgrade_name].")
 			else
-				examine_list += "<span class='notice'>It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.</span>"
+				examine_list += span_notice("It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.")
 		else
-			examine_list += "<span class='notice'>It has attachment points for strapping monster hide on for added protection.</span>"
+			examine_list += span_notice("It has attachment points for strapping monster hide on for added protection.")
 	else
 		if(amount)
-			examine_list += "<span class='notice'>It has been strengthened with [amount]/[maxamount] [upgrade_name].</span>"
+			examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [upgrade_name].")
 		else
-			examine_list += "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>"
+			examine_list += span_notice("It can be strengthened with up to [maxamount] [upgrade_name].")
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
 	SIGNAL_HANDLER
@@ -55,14 +55,14 @@
 	if(!istype(I,upgrade_item))
 		return
 	if(amount >= maxamount)
-		to_chat(user, "<span class='warning'>You can't improve [parent] any further!</span>")
+		to_chat(user, span_warning("You can't improve [parent] any further!"))
 		return
 
 	if(istype(I,/obj/item/stack))
 		I.use(1)
 	else
 		if(length(I.contents))
-			to_chat(user, "<span class='warning'>[I] cannot be used for armoring while there's something inside!</span>")
+			to_chat(user, span_warning("[I] cannot be used for armoring while there's something inside!"))
 			return
 		qdel(I)
 
@@ -73,10 +73,10 @@
 	if(ismecha(O))
 		var/obj/vehicle/sealed/mecha/R = O
 		R.update_appearance()
-		to_chat(user, "<span class='info'>You strengthen [R], improving its resistance against melee, bullet and laser damage.</span>")
+		to_chat(user, span_info("You strengthen [R], improving its resistance against melee, bullet and laser damage."))
 	else
 		SEND_SIGNAL(O, COMSIG_ARMOR_PLATED, amount, maxamount)
-		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
+		to_chat(user, span_info("You strengthen [O], improving its resistance against melee attacks."))
 
 
 /datum/component/armor_plate/proc/dropplates(datum/source, force)

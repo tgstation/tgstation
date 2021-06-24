@@ -81,7 +81,7 @@
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
 	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), (LAZYLEN(swarmerlist) * 2 SECONDS) + 5 SECONDS)
-	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.</span>")
+	to_chat(newswarmer, span_boldannounce("SWARMER CONSTRUCTION INITIALIZED."))
 	processing_swarmer = TRUE
 	return TRUE
 
@@ -135,7 +135,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
