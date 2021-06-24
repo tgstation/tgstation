@@ -92,7 +92,7 @@
 */
 /turf/proc/ClickCross(target_dir, border_only, target_atom = null, atom/movable/mover = null)
 	for(var/obj/O in src)
-		if((mover && O.CanPass(mover,get_step(src,target_dir))) || (!mover && !O.density))
+		if((mover && O.CanPass(mover, target_dir)) || (!mover && !O.density))
 			continue
 		if(O == target_atom || O == mover || (O.pass_flags_self & LETPASSTHROW)) //check if there's a dense object present on the turf
 			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)

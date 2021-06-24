@@ -535,7 +535,7 @@ Difficulty: Hard
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(QDELETED(caster))
 		return FALSE

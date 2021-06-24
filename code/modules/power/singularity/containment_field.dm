@@ -117,7 +117,7 @@
 		return
 
 
-/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
