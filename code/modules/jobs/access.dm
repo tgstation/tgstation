@@ -110,7 +110,7 @@
 		return "hudno_id"
 
 	var/card_assignment
-	if(!istype(id_card, /obj/item/card/id/advanced))
+	if(istype(id_card, /obj/item/card/id/advanced))
 		var/obj/item/card/id/advanced/advanced_id_card = id_card
 		if(advanced_id_card.trim_assignment_override)
 			card_assignment = advanced_id_card.trim_assignment_override
