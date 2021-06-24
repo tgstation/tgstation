@@ -161,7 +161,7 @@
 	overdose_threshold = 15
 
 /datum/reagent/medicine/c2/purabital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustBruteLoss(LERP(-1.25 * REM, normalise_creation_purity()*-1.05, 0.85) * delta_time, FALSE)	//Heals ~0.2 - 2.2 brute
+	M.adjustBruteLoss(LERP(-1.25 * REM, normalise_creation_purity()*-1.05, 0.85) * delta_time, FALSE)	//Heals ~1 - 2.2 brute
 	..()
 	return TRUE
 
@@ -264,7 +264,7 @@
 	overdose_threshold = 15
 
 /datum/reagent/medicine/c2/purauri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss(LERP(-1.25 * REM, normalise_creation_purity()*-1.05, 0.85) * delta_time, FALSE)	//Heals ~0.2 - 2.2 burn
+	M.adjustFireLoss(LERP(-1.25 * REM, normalise_creation_purity()*-1.05, 0.85) * delta_time, FALSE)	//Heals ~1 - 2.2 burn
 	..()
 	return TRUE
 
