@@ -242,7 +242,7 @@
 		speech_args[SPEECH_MESSAGE] = message
 
 /datum/mutation/human/uwu
-	name = "UwU"
+	name = "uwuspeech"
 	desc = "An howwible mutation owiginating fwom a distant past. Thought we ewadicated it aftew 'weeducating' the fiwst Felinids in owdew to integwate them to the Society."
 	quality = MINOR_NEGATIVE
 	locked = TRUE
