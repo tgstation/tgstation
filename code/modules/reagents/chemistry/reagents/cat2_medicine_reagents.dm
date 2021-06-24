@@ -154,7 +154,7 @@
 
 /datum/reagent/medicine/c2/purabital
 	name = "Purabital"
-	description = "A purified reagent that heals brute with no side effects. It heals more based on purity."
+	description = "A purified reagent that heals brute damage without side effects, scales with purity."
 	color = "#d2eb62"
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -257,7 +257,7 @@
 
 /datum/reagent/medicine/c2/purauri
 	name = "Purauri"
-	description = "A purified reagent that heals burns without side effects. It heals more based on purity."
+	description = "A purified reagent that heals burn damages without side effects, scales with purity."
 	color = "#6bf0c3"
 	ph = 9.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
