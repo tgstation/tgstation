@@ -764,7 +764,7 @@
 // /obj/machinery/atmospherics/components/binary/valve signals
 
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
-#define COMSIG_VALVE_TOGGLED "valve_toggled"
+#define COMSIG_VALVE_SET_OPEN "valve_toggled"
 
 // /obj/machinery/door/airlock signals
 
@@ -772,11 +772,8 @@
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
 //from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
-///from /obj/machinery/door/airlock/bolt():
-#define COMSIG_AIRLOCK_BOLT "airlock_bolt"
-//from /obj/machinery/door/airlock/unbolt():
-#define COMSIG_AIRLOCK_UNBOLT "airlock_unbolt"
-
+///from /obj/machinery/door/airlock/set_bolt():
+#define COMSIG_AIRLOCK_SET_BOLT "airlock_set_bolt"
 // /obj/item signals
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)

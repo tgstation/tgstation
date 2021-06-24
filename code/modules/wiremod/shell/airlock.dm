@@ -79,37 +79,33 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
-		RegisterSignal(shell, COMSIG_AIRLOCK_BOLT, .proc/airlock_bolted)
-		RegisterSignal(shell, COMSIG_AIRLOCK_UNBOLT, .proc/airlock_unbolted)
-		RegisterSignal(shell, COMSIG_AIRLOCK_OPEN, .proc/airlock_open)
-		RegisterSignal(shell, COMSIG_AIRLOCK_CLOSE, .proc/airlock_closed)
+		RegisterSignal(shell, COMSIG_AIRLOCK_SET_BOLT, .proc/on_airlock_set_bolted)
+		RegisterSignal(shell, COMSIG_AIRLOCK_OPEN, .proc/on_airlock_open)
+		RegisterSignal(shell, COMSIG_AIRLOCK_CLOSE, .proc/on_airlock_closed)
 
 /obj/item/circuit_component/airlock/unregister_shell(atom/movable/shell)
 	attached_airlock = null
 	UnregisterSignal(shell, list(
-		COMSIG_AIRLOCK_BOLT,
-		COMSIG_AIRLOCK_UNBOLT,
+		COMSIG_AIRLOCK_SET_BOLT,
 		COMSIG_AIRLOCK_OPEN,
 		COMSIG_AIRLOCK_CLOSE,
 	))
 	return ..()
 
-/obj/item/circuit_component/airlock/proc/airlock_bolted(datum/source)
+/obj/item/circuit_component/airlock/proc/on_airlock_set_bolted(datum/source, should_bolt)
 	SIGNAL_HANDLER
-	is_bolted.set_output(TRUE)
-	bolted.set_output(COMPONENT_SIGNAL)
+	is_bolted.set_output(should_bolt)
+	if(should_bolt)
+		bolted.set_output(COMPONENT_SIGNAL)
+	else
+		unbolted.set_output(COMPONENT_SIGNAL)
 
-/obj/item/circuit_component/airlock/proc/airlock_unbolted(datum/source)
-	SIGNAL_HANDLER
-	is_bolted.set_output(FALSE)
-	unbolted.set_output(COMPONENT_SIGNAL)
-
-/obj/item/circuit_component/airlock/proc/airlock_open(datum/source, force)
+/obj/item/circuit_component/airlock/proc/on_airlock_open(datum/source, force)
 	SIGNAL_HANDLER
 	is_open.set_output(TRUE)
 	opened.set_output(COMPONENT_SIGNAL)
 
-/obj/item/circuit_component/airlock/proc/airlock_closed(datum/source, forced)
+/obj/item/circuit_component/airlock/proc/on_airlock_closed(datum/source, forced)
 	SIGNAL_HANDLER
 	is_open.set_output(FALSE)
 	closed.set_output(COMPONENT_SIGNAL)
