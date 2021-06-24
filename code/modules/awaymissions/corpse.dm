@@ -20,8 +20,8 @@
 	var/short_desc = "The mapper forgot to set this!"
 	var/flavour_text = ""
 	var/important_info = ""
-	/// List of factions that the spawned mob will be in
-	var/list/faction = list()
+	/// Lazy list of factions that the spawned mob will be in upon spawn
+	var/list/faction
 	var/permanent = FALSE //If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE //Don't set a name or gender, just go random
 	var/antagonist_type
@@ -102,8 +102,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
-	if(faction)
-		M.faction = faction.Copy()
+	M.faction = LAZYCOPY(faction)
 	if(disease)
 		M.ForceContractDisease(new disease)
 	if(death)

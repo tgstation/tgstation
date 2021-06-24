@@ -509,7 +509,7 @@
 					var/egg_choice = enriched ? /obj/effect/mob_spawn/spider/enriched : /obj/effect/mob_spawn/spider
 					var/obj/effect/mob_spawn/spider/new_eggs = new egg_choice(get_turf(spider))
 					new_eggs.directive = spider.directive
-					new_eggs.faction = spider.faction.Copy()
+					new_eggs.faction = LAZYLISTDUPLICATE(spider.faction)
 					if(enriched)
 						spider.fed--
 					UpdateButtonIcon(TRUE)
