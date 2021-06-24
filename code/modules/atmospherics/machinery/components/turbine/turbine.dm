@@ -3,8 +3,11 @@
 	layer = OBJ_LAYER
 	density = TRUE
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	///Check to see if we are connected to the other parts
 	var/connected = FALSE
+	///volume size of our internal component
 	var/initial_volume = 500
+	///base icon for appearance changes
 	var/base_icon = ""
 
 /obj/machinery/atmospherics/components/unary/turbine/Initialize()
@@ -70,8 +73,11 @@
 /obj/machinery/power/turbine
 	icon = 'icons/obj/atmospherics/components/turbine.dmi'
 	layer = OBJ_LAYER
+	///Check to see if we are connected to the other parts
 	var/connected = FALSE
+	///base icon for appearance changes
 	var/base_icon = ""
+	///Check if the machine is turned on
 	var/on = FALSE
 
 /obj/machinery/power/turbine/update_appearance()
@@ -108,20 +114,35 @@
 	desc = "Controller that connects the turbine parts in one and allows control of the machine."
 	circuit = /obj/item/circuitboard/machine/turbine_controller
 	base_icon = "turbine_interface"
+	///Stores all connected parts
 	var/list/turbine_parts = list()
+	///Stores a reference to the turbine inlet
 	var/obj/machinery/atmospherics/components/unary/turbine/turbine_inlet/inlet
+	///Stores a reference to the turbine outlet
 	var/obj/machinery/atmospherics/components/unary/turbine/turbine_outlet/outlet
+	///Stores a reference to the turbine shaft
 	var/obj/machinery/power/turbine/turbine_shaft/shaft
+	///Gasmix between the inlet and the shaft
 	var/datum/gas_mixture/first_point
+	///Gasmix between the shaft and the outlet
 	var/datum/gas_mixture/second_point
+	///How well the machine is working
 	var/efficiency = 0.9
+	///Volume of the first point
 	var/first_volume = 500
+	///Volume of the second point
 	var/second_volume = 1000
+	///Rotation per minute of the turbine
 	var/rpm = 0
+	///Amount of power generated each tick
 	var/generated_power = 0
+	///Amount of gas allowed to enter in the inlet
 	var/input_ratio = 50
+	///Variable determined by the gas passing through, affect the heat movement after the passage
 	var/heat_transfer_coefficient = 1
+	///Variable determined by the gas passing through, affect the efficiency of the machine
 	var/efficiency_coefficient = 1
+	///Variable determined by the gas passing through, affect the rotation per minute of the machine
 	var/rpm_coefficient = 1
 
 /obj/machinery/power/turbine/turbine_controller/Initialize()
@@ -134,15 +155,10 @@
 
 /obj/machinery/power/turbine/turbine_controller/Destroy()
 	SSair.stop_processing_machine(src)
-	if(inlet)
-		inlet.connected = FALSE
-		inlet = null
-	if(outlet)
-		outlet.connected = FALSE
-		outlet = null
-	if(shaft)
-		shaft.connected = FALSE
-		shaft = null
+	disconnect_parts()
+	first_point = null
+	second_point = null
+	turbine_parts = null
 	return ..()
 
 /obj/machinery/power/turbine/turbine_controller/attackby(obj/item/I, mob/user, params)
@@ -158,6 +174,7 @@
 		balloon_alert(user, "machine lacks a working power cable underneath")
 	return TRUE
 
+///Check if all the parts are properly placed and connect them all
 /obj/machinery/power/turbine/turbine_controller/proc/check_connection(mob/living/user)
 	if(connected)
 		return
@@ -176,17 +193,17 @@
 				if(machine.dir == turn(dir, 270))
 					turbine_parts |= machine
 					inlet = machine
-					RegisterSignal(inlet, COMSIG_PARENT_QDELETING, .proc/deleted_part)
+					RegisterSignal(inlet, COMSIG_PARENT_QDELETING, .proc/disconnect_parts)
 			if(istype(machine, /obj/machinery/atmospherics/components/unary/turbine/turbine_outlet))
 				if(machine.dir == turn(dir, 90))
 					turbine_parts |= machine
 					outlet = machine
-					RegisterSignal(outlet, COMSIG_PARENT_QDELETING, .proc/deleted_part)
+					RegisterSignal(outlet, COMSIG_PARENT_QDELETING, .proc/disconnect_parts)
 			if(istype(machine, /obj/machinery/power/turbine/turbine_shaft))
 				if(machine.dir == turn(dir, 90))
 					turbine_parts |= machine
 					shaft = machine
-					RegisterSignal(shaft, COMSIG_PARENT_QDELETING, .proc/deleted_part)
+					RegisterSignal(shaft, COMSIG_PARENT_QDELETING, .proc/disconnect_parts)
 
 	if(turbine_parts.len == 3)
 		connected = TRUE
@@ -204,7 +221,8 @@
 
 	call_update_appearances()
 
-/obj/machinery/power/turbine/turbine_controller/proc/deleted_part()
+///Disconnect all parts, unregister signals
+/obj/machinery/power/turbine/turbine_controller/proc/disconnect_parts()
 	SIGNAL_HANDLER
 	connected = FALSE
 	if(inlet)
@@ -272,6 +290,7 @@
 	inlet.update_parents()
 	outlet.update_parents()
 
+///Check the input mixture for specific gases that will affect the performances of the turbine
 /obj/machinery/power/turbine/turbine_controller/proc/check_gas_composition(datum/gas_mixture/mix_to_check)
 	if(!mix_to_check)
 		return
@@ -298,6 +317,7 @@
 				efficiency_coefficient += 0.2
 				rpm_coefficient += 0.3
 
+///Call all update_appearance() of the connected machines
 /obj/machinery/power/turbine/turbine_controller/proc/call_update_appearances()
 	update_appearance()
 	if(inlet)
@@ -342,7 +362,7 @@
 			. = TRUE
 		if("disconnect")
 			if(connected)
-				deleted_part()
+				disconnect_parts()
 			. = TRUE
 		if("target")
 			var/target = params["target"]
