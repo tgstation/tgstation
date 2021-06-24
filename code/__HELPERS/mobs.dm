@@ -207,6 +207,9 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target.pixel_x != 0) //shifts the progress bar if target has an offset sprite
 		progbar.bar.pixel_x -= target.pixel_x
 
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		time *= user.cached_multiplicative_actions_slowdown
+
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = TRUE
@@ -284,7 +287,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/holding = user.get_active_held_item()
 
-	delay *= user.cached_multiplicative_actions_slowdown
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
 	if(progress)
@@ -340,7 +344,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 	var/user_loc = user.loc
 
-	time *= user.cached_multiplicative_actions_slowdown
+	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
+		time *= user.cached_multiplicative_actions_slowdown
 
 	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
