@@ -209,7 +209,13 @@
 /datum/tgui_window/proc/send_message(type, payload, force)
 	if(!client)
 		return
+
+	var/tick_usage = TICK_USAGE
 	var/message = TGUI_CREATE_MESSAGE(type, payload)
+	var/delta = TICK_USAGE - tick_usage
+
+	SStgui.queued_calculate_deltas += list(list(message, TICK_USAGE_TO_MS(delta)))
+
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)

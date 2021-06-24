@@ -26,6 +26,9 @@ SUBSYSTEM_DEF(tgui)
 	/// The HTML base used for all UIs.
 	var/basehtml
 
+	/// Queued logs for the time it takes to calculate tgui messages
+	var/list/queued_calculate_deltas = list()
+
 /datum/controller/subsystem/tgui/PreInit()
 	basehtml = file2text('tgui/public/tgui.html')
 
@@ -51,6 +54,12 @@ SUBSYSTEM_DEF(tgui)
 			open_uis.Remove(ui)
 		if(MC_TICK_CHECK)
 			return
+
+	var/list/calculate_delta_logs = queued_calculate_deltas
+	queued_calculate_deltas = null
+
+	for (var/log in calculate_delta_logs)
+		WRITE_LOG(GLOB.tgui_delta_log, "MESSAGE: [log[1]]\nDELTA: [log[2]]\n")
 
 /**
  * public

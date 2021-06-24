@@ -143,6 +143,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
+	GLOB.tgui_delta_log = "[GLOB.log_directory]/tgui_delta.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
 
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
