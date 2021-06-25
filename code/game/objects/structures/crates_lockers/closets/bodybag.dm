@@ -260,7 +260,7 @@
 	// We don't break the bag, because the buckles were backed out as opposed to fully broken.
 	open()
 
-/obj/structure/closet/body_bag/environmental/prisoner/RightClick(mob/user, modifiers)
+/obj/structure/closet/body_bag/environmental/prisoner/attack_hand_secondary(mob/user, modifiers)
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 	if(!opened)
