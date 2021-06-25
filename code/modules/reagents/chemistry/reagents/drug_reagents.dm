@@ -565,12 +565,16 @@
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
 		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
 		invisible_man.update_body()
+		invisible_man.remove_from_all_data_huds()
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
-	to_chat(M, span_nicegreen("As you sober up, opacity once again returns to your body meats."))
+	if(HAS_TRAIT(M, TRAIT_INVISIBLE_MAN))
+		M.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
+		REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
+		to_chat(M, span_notice("As you sober up, opacity once again returns to your body meats."))
 	M.update_body()
+
 
 	var/datum/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("saturnx_filter")
@@ -619,7 +623,6 @@
 TODO:
 
 saturnx implementation
-	make saturnx hide data huds
 	make saturx make you unknown
 	Make saturnx fade you out instead of instantly dissapearing you?
 	make saturnx colour matrix fade back to normal saturation rather than going from 0 -> orginal saturation in one tick
