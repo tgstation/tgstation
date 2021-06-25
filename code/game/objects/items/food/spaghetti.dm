@@ -100,4 +100,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2)
 	microwaved_type = null
 	tastes = list("noodle" = 1, "butter" = 1)
-	foodtypes = GRAIN | DAIRY 
+	foodtypes = GRAIN | DAIRY
