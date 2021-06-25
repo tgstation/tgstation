@@ -158,7 +158,7 @@
 	desc = "Deliciously sassy."
 	icon_state = "sassysagepizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT 
+	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 
 
 /obj/item/food/pizza/pineapple
