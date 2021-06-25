@@ -138,7 +138,7 @@
 	var/datum/callback/callback
 
 /datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout)
-	..(user, title, message, buttons, timeout)
+	..(user, message, title, buttons, timeout)
 	src.callback = callback
 
 /datum/tgui_modal/async/Destroy(force, ...)
