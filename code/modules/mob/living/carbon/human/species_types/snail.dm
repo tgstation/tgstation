@@ -6,15 +6,13 @@
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_NOSLIPALL,
+		TRAIT_CAN_STRIP
 	)
 	attack_verb = "slap"
 	attack_effect = ATTACK_EFFECT_DISARM
 	say_mod = "slurs"
 	coldmod = 0.5 //snails only come out when its cold and wet
 	burnmod = 2
-	speedmod = 6
 	punchdamagehigh = 0.5 //snails are soft and squishy
 	siemens_coeff = 2 //snails are mostly water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
@@ -23,6 +21,7 @@
 	mutanteyes = /obj/item/organ/eyes/snail
 	mutanttongue = /obj/item/organ/tongue/snail
 	exotic_blood = /datum/reagent/lube
+	mutantliver = /obj/item/organ/liver/snail
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(istype(chem,/datum/reagent/consumable/salt))
@@ -37,11 +36,10 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(C.dropItemToGround(bag)) //returns TRUE even if its null
 			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), ITEM_SLOT_BACK)
-	C.AddElement(/datum/element/snailcrawl)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.RemoveElement(/datum/element/snailcrawl)
+
 	var/obj/item/storage/backpack/bag = C.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()

@@ -7,6 +7,10 @@
 	multiplicative_slowdown = -7
 	movetypes = GROUND
 
+/datum/movespeed_modifier/snail_organ
+	multiplicative_slowdown = 6
+	movetypes = GROUND
+
 /datum/movespeed_modifier/sanity
 	id = MOVESPEED_ID_SANITY
 	movetypes = (~FLYING)

@@ -250,4 +250,29 @@
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 
+///A snails liver. Makes you lube when crawling and generally slows you down
+/obj/item/organ/liver/snail
+	name = "slimy ganglea"
+	icon_state = "liver-s"
+	desc = "Supposedly a snails liver. Extremely slippery."
+
+/obj/item/organ/liver/snail/Initialize()
+	. = ..()
+
+	AddElement(/datum/element/snailcrawl) //of course this would also be a lube machine
+	AddComponent(/datum/component/slippery, 10, SLIDE | GALOSHES_DONT_HELP | SLIP_WHEN_CRAWLING)
+
+/obj/item/organ/liver/snail/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+
+	receiver.AddElement(/datum/element/snailcrawl)
+	receiver.add_movespeed_modifier(/datum/movespeed_modifier/snail_organ)
+	ADD_TRAIT(receiver, TRAIT_NOSLIPALL, src)
+
+/obj/item/organ/liver/snail/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+
+	organ_owner.RemoveElement(/datum/element/snailcrawl)
+	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/snail_organ)
+	REMOVE_TRAIT(organ_owner, TRAIT_NOSLIPALL, src)
 
