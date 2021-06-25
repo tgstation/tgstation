@@ -189,7 +189,7 @@
 	icon_state = "mountainwind_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/spacemountainwind = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "mountain wind" = 5)
-	foodtypes = SUGAR 
+	foodtypes = SUGAR
 
 
 /obj/item/food/snowcones/pwrgame
