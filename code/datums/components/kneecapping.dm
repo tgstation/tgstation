@@ -84,7 +84,7 @@
 		var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
 		var/datum/wound/blunt/critical/critical_wound_type = /datum/wound/blunt/critical
 		leg.receive_damage(brute = weapon.force, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10))
-		log_combat(attacker, target, "broke ther kneecaps of", weapon)
+		log_combat(attacker, target, "broke the kneecaps of", weapon)
 		target.update_damage_overlays()
 		attacker.do_attack_animation(target, used_item = weapon)
 		playsound(source = get_turf(weapon), soundin = weapon.hitsound, vol = weapon.get_clamped_volume(), vary = TRUE)
