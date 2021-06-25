@@ -8,6 +8,8 @@
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "jumpsuit"
+	inhand_icon_state = "jumpsuit"
+	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
 
 /obj/item/clothing/under/color/jumpskirt

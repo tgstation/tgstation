@@ -40,7 +40,7 @@
 		/obj/item/stamp),
 		list(/obj/item/screwdriver/power))
 
-/obj/item/storage/wallet/Exited(atom/movable/AM)
+/obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
 	refreshID(removed = TRUE)
 
@@ -64,6 +64,12 @@
 		var/obj/item/card/id/id_card = card
 		if(!istype(id_card))
 			continue
+
+		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
+		if(HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
+			front_id = id_card
+			break
+
 		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
 		if(card_tally > winning_tally)
 			winning_tally = card_tally
@@ -85,7 +91,7 @@
 	update_appearance(UPDATE_ICON)
 	update_slot_icon()
 
-/obj/item/storage/wallet/Entered(atom/movable/AM)
+/obj/item/storage/wallet/Entered(atom/movable/arrived, direction)
 	. = ..()
 	refreshID(removed = FALSE)
 
@@ -117,7 +123,7 @@
 /obj/item/storage/wallet/examine()
 	. = ..()
 	if(front_id)
-		. += "<span class='notice'>Alt-click to remove the id.</span>"
+		. += span_notice("Alt-click to remove the id.")
 
 /obj/item/storage/wallet/get_id_examine_strings(mob/user)
 	. = ..()

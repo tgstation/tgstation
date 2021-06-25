@@ -186,6 +186,7 @@ all available horizontal space.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
 - `nowrap: boolean` - Stops text from wrapping.
+- `preserveWhitespace: boolean` - Preserves line-breaks and spacing in text.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
@@ -1138,7 +1139,7 @@ Example:
 - `title: string` - Window title.
 - `width: number` - Window width.
 - `height: number` - Window height.
-- `noClose: boolean` - Controls the ability to close the window.
+- `canClose: boolean` - Controls the ability to close the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be

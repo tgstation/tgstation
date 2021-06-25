@@ -111,7 +111,7 @@
 #define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting objects
+///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100
 #define LIGHTING_RENDER_TARGET "LIGHT_PLANE"
 
@@ -147,6 +147,9 @@
 
 ///Popup Chat Messages
 #define RUNECHAT_PLANE 250
+
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 251
 
 ///Debug Atmos Overlays
 #define ATMOS_GROUP_PLANE 450

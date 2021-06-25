@@ -995,6 +995,7 @@
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bN" = (
@@ -1060,7 +1061,6 @@
 /area/shuttle/abandoned/medbay)
 "bT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
@@ -1205,11 +1205,7 @@
 /area/shuttle/abandoned/medbay)
 "ci" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1;
-	name = "Connector Port (Air Supply)"
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "cj" = (
@@ -1336,6 +1332,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cw" = (
@@ -1920,17 +1917,39 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
+"kG" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
+/turf/template_noop,
+/area/shuttle/abandoned/engine)
 "vk" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
+"AX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
+"Hf" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/medbay)
 "JU" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Pp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "Tw" = (
 /obj/structure/shuttle/engine/propulsion/left{
@@ -2100,7 +2119,7 @@ ar
 at
 bm
 at
-aa
+kG
 at
 bm
 at
@@ -2119,7 +2138,7 @@ as
 aT
 bn
 at
-aa
+kG
 at
 cr
 cy
@@ -2138,7 +2157,7 @@ at
 aU
 bo
 at
-aa
+kG
 at
 cs
 cz
@@ -2157,7 +2176,7 @@ at
 bl
 aV
 at
-aa
+kG
 at
 bp
 bl
@@ -2176,7 +2195,7 @@ aF
 aW
 bq
 at
-ah
+Hf
 at
 cu
 cB
@@ -2196,8 +2215,8 @@ aX
 at
 at
 bM
-at
-at
+Pp
+Pp
 cC
 aG
 at
@@ -2235,7 +2254,7 @@ al
 bA
 bO
 ce
-al
+AX
 cE
 cO
 cZ
@@ -2254,7 +2273,7 @@ al
 al
 bP
 al
-al
+AX
 cF
 cP
 da
@@ -2273,7 +2292,7 @@ al
 bB
 bQ
 cf
-al
+AX
 cG
 cQ
 db
@@ -2292,7 +2311,7 @@ bs
 bC
 bR
 cg
-al
+AX
 cH
 cR
 dc
@@ -2311,7 +2330,7 @@ bt
 bD
 bS
 ch
-al
+AX
 al
 cS
 dd
@@ -2330,7 +2349,7 @@ bu
 bE
 bT
 ci
-al
+AX
 cI
 cT
 de
@@ -2349,7 +2368,7 @@ bI
 bF
 bU
 cj
-al
+AX
 cJ
 al
 df
