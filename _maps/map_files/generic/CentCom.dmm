@@ -640,11 +640,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supply)
-"je" = (
-/turf/open/floor/iron/yellowsiding{
-	dir = 1
-	},
-/area/centcom/supply)
 "jf" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/brown,
@@ -1301,9 +1296,6 @@
 	},
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
-"kw" = (
-/turf/open/floor/iron/yellowsiding,
-/area/centcom/supply)
 "kx" = (
 /obj/structure/filingcabinet/medical,
 /obj/effect/turf_decal/stripes/line{
@@ -5918,9 +5910,17 @@
 /turf/open/floor/iron,
 /area/centcom/evac)
 "tT" = (
-/turf/open/floor/iron/yellowsiding{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/centcom/evac)
 "tU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -8459,7 +8459,17 @@
 /turf/open/floor/iron/white,
 /area/centcom/control)
 "At" = (
-/turf/open/floor/iron/yellowsiding,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
 /area/centcom/evac)
 "Au" = (
 /obj/machinery/abductor/experiment{
@@ -55811,15 +55821,15 @@ aa
 iG
 iR
 iY
-je
-iO
 iY
 iO
 iY
 iO
 iY
 iO
-kw
+iY
+iO
+iY
 iY
 lo
 lJ
@@ -56068,15 +56078,15 @@ aa
 iG
 iR
 iY
-je
-jp
 iY
 jp
 iY
 jp
 iY
 jp
-kw
+iY
+jp
+iY
 iY
 lo
 iF
@@ -56325,15 +56335,15 @@ aa
 iF
 iR
 iY
-je
-jp
 iY
 jp
 iY
 jp
 iY
 jp
-kw
+iY
+jp
+iY
 iY
 EK
 iF
@@ -56582,15 +56592,15 @@ aa
 iG
 iR
 iY
-je
-jp
 iY
 jp
 iY
 jp
 iY
 jp
-kw
+iY
+jp
+iY
 iY
 lp
 iF
