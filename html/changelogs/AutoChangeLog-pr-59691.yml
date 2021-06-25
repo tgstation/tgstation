@@ -1,5 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "QMs can now use the Nanotrasen Internal Requisition Network program on modular computers to order things remotely."
-  - qol: "All people may now download the Nanotrasen Internal Requisition Network program on modular computers to request to order things remotely."

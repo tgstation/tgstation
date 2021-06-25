@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - qol: "Right clicking containers such as backpacks with certain items may now perform that item's action instead of opening the backpack. The behaviour has been implemented with the forensic scanner, which can now scan objects it was previously unable to in melee range, such as backpacks, by right clicking. Any items you'd want to use againt backpacks without inserting the item or opening the backpack should be reported as issues so they can be implemented."

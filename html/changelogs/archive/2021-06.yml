@@ -542,3 +542,34 @@
   YakumoChen:
   - bugfix: Dynamic will no longer create malf humans for players for never play silicon
       in the first place.
+2021-06-25:
+  Cheshify:
+  - balance: The Forcefield Projector takes a second to put a forcefield down.
+  RandomGamer123:
+  - bugfix: QMs can now use the Nanotrasen Internal Requisition Network program on
+      modular computers to order things remotely.
+  - qol: All people may now download the Nanotrasen Internal Requisition Network program
+      on modular computers to request to order things remotely.
+  SpaceVampire:
+  - bugfix: The spare Codex Cicatrix created by the ritual, no longer comes with free
+      charges.
+  Timberpoes:
+  - qol: Right clicking containers such as backpacks with certain items may now perform
+      that item's action instead of opening the backpack. The behaviour has been implemented
+      with the forensic scanner, which can now scan objects it was previously unable
+      to in melee range, such as backpacks, by right clicking. Any items you'd want
+      to use againt backpacks without inserting the item or opening the backpack should
+      be reported as issues so they can be implemented.
+  Watermelon914:
+  - expansion: Adds the MMI circuit component.
+  - qol: Allows inputting signals into signal ports.
+  - expansion: Adds the airlock shell. The circuit has full control over the airlock.
+  - expansion: Implements USB cables for the binary valve to be able to open/close
+      the valve.
+  - expansion: Adds a private channel for radios that only lets circuits with the
+      same owner's ID to interact with it.
+  - refactor: Refactors USB code to be easier to use for less experienced coders.
+  eeSPee:
+  - bugfix: Fixed heretic ghouls having reduced max health after being revived after
+      deghouled
+  - qol: heretic ghouls now have a little moodlet tooltip
