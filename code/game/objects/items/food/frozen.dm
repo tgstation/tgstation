@@ -173,7 +173,7 @@
 	icon_state = "clown_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/laughter = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "jokes" = 5, "brainfreeze" = 5, "joy" = 5)
-	foodtypes = SUGAR | FRUIT 
+	foodtypes = SUGAR | FRUIT
 
 /obj/item/food/snowcones/soda
 	name = "space cola snowcone"
