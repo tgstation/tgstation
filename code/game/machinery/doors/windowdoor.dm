@@ -141,6 +141,9 @@
 /obj/machinery/door/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
+	if(leaving == src)
+		return // Let's not block ourselves.
+
 	if((pass_flags_self & leaving.pass_flags) || ((pass_flags_self & LETPASSTHROW) && leaving.throwing))
 		return
 

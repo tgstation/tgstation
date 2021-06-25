@@ -77,6 +77,9 @@
 /obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
+	if(leaving == src)
+		return // Let's not block ourselves.
+
 	if (leaving.pass_flags & pass_flags_self)
 		return
 
