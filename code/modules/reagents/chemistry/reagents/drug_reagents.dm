@@ -593,28 +593,9 @@
 /datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
-
 	L.adjustStaminaLoss(-4 * volume, 0)
 
-	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
-	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
-	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
-	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
-
-	game_plane_master_controller.add_filter("kroncaine_filter", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
-
-	for(var/filter in game_plane_master_controller.get_filters("kroncaine_filter"))
-		animate(filter, loop = -1, color = col_filter_identity, time = 0, easing = JUMP_EASING)
-		animate(color = col_filter_green, time = 4 SECONDS)
-		animate(color = col_filter_blue, time = 4 SECONDS)
-		animate(color = col_filter_red, time = 4 SECONDS)
-
 /datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
-	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-
-	game_plane_master_controller.remove_filter("kroncaine_filter")
 	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
 	. = ..()
 
@@ -631,4 +612,30 @@
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time)
 	M.Jitter(10 * REM * delta_time)
 	if(prob(15))
-		to_chat(M, span_danger(pick("You feel your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
+		to_chat(M, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
+
+/*
+
+TODO:
+
+saturnx implementation
+	make saturnx hide data huds
+	make saturx make you unknown
+	Make saturnx fade you out instead of instantly dissapearing you?
+	make saturnx colour matrix fade back to normal saturation rather than going from 0 -> orginal saturation in one tick
+	add blur(angular?) filter or staic wave filter
+
+blastoff implementation
+	make ampoule visible(wrong icon_state name?)
+	fix flipping.
+	maybe make superflips and spin use signals so flips from other sources count?
+	add animated ripple filter?
+
+mushroom_hallucinogen implementation
+	add an animated wave filter.
+
+make sure the design doc and code aligns.
+make saturnx, mushroom_hallucinogen and blastoff use the drugged soundscape thing?
+
+Testing
+*/
