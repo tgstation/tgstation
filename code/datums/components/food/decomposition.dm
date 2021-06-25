@@ -24,7 +24,7 @@
 	var/examine_type = DECOMP_EXAM_NORMAL
 
 /datum/component/decomposition/Initialize(decomp_flags = NONE)
-	if(!isatom(parent))
+	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
@@ -57,7 +57,7 @@
 		COMSIG_PARENT_EXAMINE))
 
 /datum/component/decomposition/proc/handle_movement() // Assuming it is guaranteed to be food
-	var/obj/item/food/food = parent
+	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
 	var/atom/last_loc = food.loc
 
 	var/clean = FALSE // Used to check if it's on a clean surface
@@ -98,7 +98,7 @@
 		handled = TRUE
 
 /datum/component/decomposition/proc/decompose()
-	var/obj/item/food/decomp = parent //Lets us spawn things at decomp
+	var/obj/decomp = parent //Lets us spawn things at decomp
 	new /obj/effect/decal/cleanable/ants(decomp.loc)
 	new /obj/item/food/badrecipe/moldy(decomp.loc)
 	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold and ants! Gross!</span>")
