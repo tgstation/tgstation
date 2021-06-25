@@ -165,7 +165,7 @@
 	icon_state = "mime_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nothing = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "nothing" = 5)
-	foodtypes = SUGAR 
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/clown
 	name = "clown snowcone"
