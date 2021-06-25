@@ -610,7 +610,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	return ..()
 
 /turf/closed/consider_superconductivity(starting)
-	if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
+	if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION) || temperature < (heat_capacity * 0.95))
 		return FALSE
 	return ..()
 
