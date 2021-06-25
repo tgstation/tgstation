@@ -181,7 +181,7 @@
 	icon_state = "soda_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/space_cola = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
-	foodtypes = SUGAR 
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/spacemountainwind
 	name = "Space Mountain Wind snowcone"
