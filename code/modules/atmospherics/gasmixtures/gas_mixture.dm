@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	/// Used for analyzer feedback - not initialized until its used
 	var/list/analyzer_results
 	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
-	var/gc_share = FALSE 
+	var/gc_share = FALSE
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -250,7 +250,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
-
+	garbage_collect()
+	other.garbage_collect()
 
 ///Creates new, identical gas mixture
 ///Returns: duplicate gas mixture
