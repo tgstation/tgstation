@@ -326,6 +326,8 @@
 	return !requiresID() || ..()
 
 /obj/machinery/door/window/proc/ntnet_receive(datum/source, datum/netdata/data)
+	SIGNAL_HANDLER
+
 	// Check if the airlock is powered.
 	if(!hasPower())
 		return
