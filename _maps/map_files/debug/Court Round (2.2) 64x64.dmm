@@ -29,6 +29,7 @@
 /area/tdome/arena)
 "dx" = (
 /obj/machinery/light/directional/west,
+/obj/item/paper/courtcase,
 /turf/open/floor/wood,
 /area/tdome/arena)
 "dH" = (
@@ -40,6 +41,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
+/area/tdome/arena)
+"dQ" = (
+/obj/item/paper/courtcase,
+/obj/item/paper/courtcase,
+/turf/open/floor/wood,
 /area/tdome/arena)
 "dS" = (
 /obj/structure/rack,
@@ -73,6 +79,7 @@
 	dir = 4
 	},
 /obj/item/megaphone,
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/red,
 /area/tdome/arena)
 "hg" = (
@@ -245,6 +252,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"sN" = (
+/obj/item/paper/courtcase,
+/turf/open/floor/wood,
+/area/tdome/arena)
 "tG" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -287,6 +298,7 @@
 	dir = 4
 	},
 /obj/item/flashlight/lamp/green,
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/red,
 /area/tdome/arena)
 "uL" = (
@@ -307,6 +319,7 @@
 	dir = 4
 	},
 /obj/item/folder/red,
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/red,
 /area/tdome/arena)
 "vP" = (
@@ -350,6 +363,7 @@
 	name = "Jury";
 	obj_integrity = 300
 	},
+/obj/item/paper/courtcase,
 /turf/open/floor/wood,
 /area/tdome/arena)
 "zn" = (
@@ -397,6 +411,7 @@
 /obj/item/folder/blue{
 	pixel_x = -3
 	},
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/blue,
 /area/tdome/arena)
 "CX" = (
@@ -405,6 +420,7 @@
 	dir = 4
 	},
 /obj/item/megaphone,
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/blue,
 /area/tdome/arena)
 "Du" = (
@@ -488,6 +504,7 @@
 	dir = 4
 	},
 /obj/item/flashlight/lamp/green,
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/blue,
 /area/tdome/arena)
 "Ns" = (
@@ -518,6 +535,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/paper/courtcase,
 /turf/open/floor/wood,
 /area/tdome/arena)
 "QL" = (
@@ -525,6 +543,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/red,
 /area/tdome/arena)
 "QP" = (
@@ -569,6 +588,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/purple,
 /area/tdome/arena)
 "TH" = (
@@ -576,6 +596,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/paper/courtcase,
 /turf/open/floor/carpet/blue,
 /area/tdome/arena)
 "Uc" = (
@@ -2452,14 +2473,14 @@ iB
 FN
 df
 JK
-Ve
+sN
 dx
-Ve
+dQ
 JK
 df
 JK
 dx
-Ve
+sN
 JK
 df
 hg
@@ -2518,14 +2539,14 @@ iB
 FN
 df
 JK
-Ve
+sN
 zn
-Ve
+sN
 JK
 df
 JK
 rG
-Ve
+sN
 JK
 df
 wL
@@ -2584,14 +2605,14 @@ iB
 FN
 df
 ir
-Ve
-Ve
-Ve
+sN
+sN
+dQ
 ir
 df
 dS
-Ve
-Ve
+sN
+sN
 dS
 df
 Ve
@@ -3248,8 +3269,8 @@ Ve
 YO
 XE
 Pa
-Ve
-Ve
+sN
+sN
 zg
 XE
 we

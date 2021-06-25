@@ -60,15 +60,6 @@
 /obj/machinery/door/airlock/alarmlock,
 /turf/open/floor/wood/parquet,
 /area/tdome/arena)
-"rF" = (
-/obj/structure/spacevine,
-/obj/structure/spacevine,
-/obj/item/restraints/legcuffs/beartrap{
-	armed = 1;
-	icon_state = "beartrap1"
-	},
-/turf/open/floor/holofloor/grass,
-/area/tdome/arena)
 "rO" = (
 /turf/open/floor/carpet/orange,
 /area/tdome/arena)
@@ -161,14 +152,6 @@
 "Jy" = (
 /turf/open/floor/plating/grass/jungle,
 /area/tdome/arena)
-"Kc" = (
-/obj/structure/spacevine,
-/obj/structure/spacevine,
-/obj/item/grown/bananapeel{
-	anchored = 1
-	},
-/turf/open/floor/holofloor/grass,
-/area/tdome/arena)
 "Ml" = (
 /obj/structure/table/reinforced,
 /obj/item/watertank,
@@ -188,13 +171,6 @@
 "NL" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/plating/grass/jungle,
-/area/tdome/arena)
-"Ou" = (
-/obj/item/grown/bananapeel{
-	anchored = 1
-	},
-/obj/structure/spacevine,
-/turf/open/floor/holofloor/grass,
 /area/tdome/arena)
 "OD" = (
 /obj/machinery/hydroponics/constructable,
@@ -242,14 +218,6 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/grass,
 /area/tdome/arena)
-"Ui" = (
-/obj/structure/spacevine,
-/obj/item/restraints/legcuffs/beartrap{
-	armed = 1;
-	icon_state = "beartrap1"
-	},
-/turf/open/floor/holofloor/grass,
-/area/tdome/arena)
 "Ve" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /turf/open/floor/iron,
@@ -289,13 +257,6 @@
 /area/tdome/arena)
 "ZO" = (
 /turf/open/floor/plating/dirt/jungle,
-/area/tdome/arena)
-"ZX" = (
-/obj/structure/spacevine,
-/obj/item/grown/bananapeel{
-	anchored = 1
-	},
-/turf/open/floor/holofloor/grass,
 /area/tdome/arena)
 
 (1,1,1) = {"
@@ -2048,9 +2009,9 @@ Ve
 OK
 OK
 Ie
-YN
+Gl
 Wr
-Ui
+Gl
 Ie
 Tt
 sA
@@ -2114,9 +2075,9 @@ GH
 GH
 OK
 Ie
-ZX
+Wr
 YN
-YN
+Wr
 Ie
 Tt
 sA
@@ -2248,7 +2209,7 @@ Ms
 OK
 Ie
 YN
-ZX
+Gl
 tr
 Tt
 sA
@@ -2312,9 +2273,9 @@ zc
 Iy
 OK
 Ie
-Ou
 YN
 YN
+Wr
 ag
 Tt
 sA
@@ -2377,8 +2338,8 @@ zc
 zc
 zc
 oY
-YN
-YN
+Gl
+Gl
 Gl
 tr
 ag
@@ -2443,8 +2404,8 @@ zc
 zc
 zc
 oY
-Ui
-ZX
+Wr
+Wr
 Wr
 ag
 Ie
@@ -2510,9 +2471,9 @@ zc
 Iy
 OK
 Ie
-YN
 Wr
-Ui
+Wr
+Gl
 ag
 Tt
 sA
@@ -2578,7 +2539,7 @@ OM
 jb
 tr
 YN
-YN
+Wr
 ag
 Tt
 sA
@@ -2644,7 +2605,7 @@ wZ
 OK
 ag
 YN
-Kc
+Gl
 OK
 Tt
 sA
@@ -2710,7 +2671,7 @@ OK
 Ie
 ag
 Wr
-YN
+Wr
 ag
 Tt
 sA
@@ -2774,9 +2735,9 @@ GH
 GH
 OK
 Ie
-ZX
+Gl
 YN
-rF
+Wr
 Ie
 Tt
 sA
@@ -2840,7 +2801,7 @@ Ve
 OK
 OK
 Ie
-YN
+Wr
 YN
 Ie
 Ie

@@ -136,6 +136,12 @@
 /obj/item/rcl,
 /turf/open/floor/iron,
 /area/tdome/arena)
+"sT" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/turf/open/floor/iron,
+/area/tdome/arena)
 "tg" = (
 /obj/machinery/arena_spawn/green,
 /turf/open/floor/iron,
@@ -143,6 +149,13 @@
 "tn" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_half,
+/area/tdome/arena)
+"tK" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/turf/open/floor/iron,
 /area/tdome/arena)
 "wa" = (
 /obj/item/stack/pipe_cleaner_coil/pink{
@@ -1369,7 +1382,7 @@ Rp
 Rp
 Rp
 kC
-XP
+tK
 dw
 UU
 UU
@@ -1435,7 +1448,7 @@ TI
 TI
 TI
 SN
-XP
+tK
 dw
 UU
 UU
@@ -2227,7 +2240,7 @@ TI
 TI
 TI
 SN
-XP
+sT
 dw
 UU
 UU
@@ -2293,7 +2306,7 @@ cu
 cu
 cu
 qm
-XP
+sT
 dw
 UU
 UU
@@ -2623,7 +2636,7 @@ Rp
 Rp
 Rp
 kC
-XP
+tK
 dw
 UU
 UU
@@ -2689,7 +2702,7 @@ TI
 TI
 TI
 SN
-XP
+tK
 dw
 UU
 UU
@@ -3481,7 +3494,7 @@ TI
 TI
 TI
 SN
-XP
+sT
 dw
 UU
 UU
@@ -3547,7 +3560,7 @@ cu
 cu
 cu
 qm
-XP
+sT
 dw
 UU
 UU
