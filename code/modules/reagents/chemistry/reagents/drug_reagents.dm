@@ -442,7 +442,7 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_add(mob/living/L)
 	. = ..()
-	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
 	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
@@ -459,7 +459,7 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_delete(mob/living/L)
 	. = ..()
-	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	affected_plane_controller.remove_filter("rainbow")
 
 /datum/reagent/drug/blastoff
@@ -480,7 +480,7 @@
 /datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/L)
 	. = ..()
 
-	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_blue = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.764,0,0,0) //most blue color
 	var/list/col_filter_mid = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.832,0,0,0) //red/blue mix midpoint
@@ -497,7 +497,7 @@
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 
-	var/datum/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.remove_filter("blastoff_filter")
 
@@ -543,7 +543,7 @@
 	to_chat(L, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
 	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
 
-	var/datum/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_full = list(1,0,0,0, 0,1.00,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 	var/list/col_filter_twothird = list(1,0,0,0, 0,0.68,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
@@ -576,7 +576,7 @@
 	M.update_body()
 
 
-	var/datum/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("saturnx_filter")
 
 /datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)

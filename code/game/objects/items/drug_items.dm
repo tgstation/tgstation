@@ -47,11 +47,11 @@
 		icon_state = "blastoff_ampoule"
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/attack_self(mob/user)
-	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
 		reagent_flags = OPENCONTAINER
 		spillable = TRUE
 		return update_icon()
+	. = ..()
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!.) //if the bottle wasn't caught
