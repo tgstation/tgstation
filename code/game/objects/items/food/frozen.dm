@@ -206,7 +206,7 @@
 	icon_state = "amber_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/honey = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "flowers" = 5, "sweetness" = 5, "wax" = 1)
-	foodtypes = SUGAR 
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/rainbow
 	name = "rainbow snowcone"
