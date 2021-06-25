@@ -252,7 +252,7 @@
 
 ///A snails liver. Makes you lube when crawling and generally slows you down
 /obj/item/organ/liver/snail
-	name = "slimy ganglea"
+	name = "slimy liver"
 	icon_state = "liver-s"
 	desc = "Supposedly a snails liver. Extremely slippery."
 
