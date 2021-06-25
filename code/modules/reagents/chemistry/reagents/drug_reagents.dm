@@ -626,7 +626,6 @@ saturnx implementation
 	add blur(angular?) filter or staic wave filter
 
 blastoff implementation
-	make ampoule visible(wrong icon_state name?)
 	fix flipping.
 	maybe make superflips and spin use signals so flips from other sources count?
 	add animated ripple filter?
