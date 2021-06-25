@@ -214,7 +214,7 @@
 	icon_state = "rainbow_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/laughter = 25, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "sunlight" = 5, "light" = 5, "slime" = 5, "paint" = 3, "clouds" = 3)
-	foodtypes = SUGAR 
+	foodtypes = SUGAR
 
 /obj/item/food/popsicle
 	name = "bug popsicle"
