@@ -5910,15 +5910,8 @@
 /turf/open/floor/iron,
 /area/centcom/evac)
 "tT" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/siding/yellow{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/centcom/evac)
@@ -6249,6 +6242,10 @@
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet,
 /area/wizard_station)
+"uG" = (
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/centcom/supply)
 "uJ" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
@@ -8459,16 +8456,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/control)
 "At" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/centcom/evac)
 "Au" = (
@@ -14139,6 +14127,12 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Qx" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/supply)
 "QA" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
@@ -55821,7 +55815,7 @@ aa
 iG
 iR
 iY
-iY
+Qx
 iO
 iY
 iO
@@ -55829,7 +55823,7 @@ iY
 iO
 iY
 iO
-iY
+uG
 iY
 lo
 lJ
@@ -56078,7 +56072,7 @@ aa
 iG
 iR
 iY
-iY
+Qx
 jp
 iY
 jp
@@ -56086,7 +56080,7 @@ iY
 jp
 iY
 jp
-iY
+uG
 iY
 lo
 iF
@@ -56335,7 +56329,7 @@ aa
 iF
 iR
 iY
-iY
+Qx
 jp
 iY
 jp
@@ -56343,7 +56337,7 @@ iY
 jp
 iY
 jp
-iY
+uG
 iY
 EK
 iF
@@ -56592,7 +56586,7 @@ aa
 iG
 iR
 iY
-iY
+Qx
 jp
 iY
 jp
@@ -56600,7 +56594,7 @@ iY
 jp
 iY
 jp
-iY
+uG
 iY
 lp
 iF
