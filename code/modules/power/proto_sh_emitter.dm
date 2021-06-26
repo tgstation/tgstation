@@ -87,12 +87,22 @@
 	message_admins("[src] turned off at [ADMIN_VERBOSEJMP(loc_turf)]")
 	log_game("[src] turned off at [AREACOORD(loc_turf)]")
 
-/** The vars you'll see in the proc() are referred to a mob looking north; NEx NEy refers to the North East corner x and y,
- * all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis, i = internal, o = outline). This way of naming the vars
+/** The vars you'll see in the proc() are referred to the machine looking north. This way of naming the vars
  * won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup
- *  This proc builds the barriers
+ * This proc builds the barriers
 **/
-/obj/machinery/power/proto_sh_emitter/proc/build_barrier(SWxi,SWyi,NExi,NEyi,SWxo,SWyo,NExo,NEyo,mob/user)
+/obj/machinery/power/proto_sh_emitter/proc/build_barrier(\
+	south_west_internal_x_axis,\
+	south_west_internal_y_axis,\
+	north_east_internal_x_axis,\
+	north_east_internal_y_axis,\
+	south_west_outer_x_axis,\
+	south_west_outer_y_axis,\
+	north_east_outer_x_axis,\
+	north_east_outer_y_axis,\
+	mob/user\
+	)
+
 	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
 	if(!do_after(user, 1.5 SECONDS, target = src))
 		return
@@ -107,17 +117,17 @@
 	is_on = TRUE
 	switch(dir) //this part check the direction of the machine and create the block in front of it
 		if(NORTH)
-			internal.Add(block(locate(x - SWxi, y + SWyi, z), locate(x + NExi, y + NEyi, z)))
-			outline.Add(block(locate(x - SWxo, y + SWyo, z), locate(x + NExo, y + NEyo, z)) - internal)
+			internal.Add(block(locate(x - south_west_internal_x_axis, y + south_west_internal_y_axis, z), locate(x + north_east_internal_x_axis, y + north_east_internal_y_axis, z)))
+			outline.Add(block(locate(x - south_west_outer_x_axis, y + south_west_outer_y_axis, z), locate(x + north_east_outer_x_axis, y + north_east_outer_y_axis, z)) - internal)
 		if(SOUTH)
-			internal.Add(block(locate(x - NExi, y - SWyi, z), locate(x + SWxi, y - NEyi, z)))
-			outline.Add(block(locate(x - NExo, y - SWyo, z), locate(x + SWxo, y - NEyo, z)) - internal)
+			internal.Add(block(locate(x - north_east_internal_x_axis, y - south_west_internal_y_axis, z), locate(x + south_west_internal_x_axis, y - north_east_internal_y_axis, z)))
+			outline.Add(block(locate(x - north_east_outer_x_axis, y - south_west_outer_y_axis, z), locate(x + south_west_outer_x_axis, y - north_east_outer_y_axis, z)) - internal)
 		if(EAST)
-			internal.Add(block(locate(x + SWyi, y - NExi, z), locate(x + NEyi, y + SWxi, z)))
-			outline.Add(block(locate(x + SWyo, y - NExo, z), locate(x + NEyo, y + SWxo, z)) - internal)
+			internal.Add(block(locate(x + south_west_internal_y_axis, y - north_east_internal_x_axis, z), locate(x + north_east_internal_y_axis, y + south_west_internal_x_axis, z)))
+			outline.Add(block(locate(x + south_west_outer_y_axis, y - north_east_outer_x_axis, z), locate(x + north_east_outer_y_axis, y + south_west_outer_x_axis, z)) - internal)
 		if(WEST)
-			internal.Add(block(locate(x - SWyi, y - SWxi, z), locate(x - NEyi, y + NExi, z)))
-			outline.Add(block(locate(x - SWyo, y - SWxo, z), locate(x - NEyo, y + NExo, z)) - internal)
+			internal.Add(block(locate(x - south_west_internal_y_axis, y - south_west_internal_x_axis, z), locate(x - north_east_internal_y_axis, y + north_east_internal_x_axis, z)))
+			outline.Add(block(locate(x - south_west_outer_y_axis, y - south_west_outer_x_axis, z), locate(x - north_east_outer_y_axis, y + north_east_outer_x_axis, z)) - internal)
 	for(var/turf in outline)
 		new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
 	for(var/turf in internal)
@@ -134,24 +144,29 @@
 	log_game("[src] turned off at [AREACOORD(emitter_turf)] by [key_name(user)]")
 	QDEL_LAZYLIST(shields)
 
-/** The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
- * all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
+/** The vars you'll see in the proc() are referred to the machine looking north and they define an EDGE. This way of naming the vars
  * won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup
  * This proc check if the machine is generating the barriers inside the map borders
 **/
-/obj/machinery/power/proto_sh_emitter/proc/check_map_borders(NWx,NWy,NEx,NEy)
+/obj/machinery/power/proto_sh_emitter/proc/check_map_borders(
+	north_west_x_axis,\
+	north_west_y_axis,\
+	north_east_x_axis,\
+	north_east_y_axis\
+	)
+
 	switch(dir) //Check for map limits.
 		if(NORTH)
-			if(!locate(x - NWx, y + NWy, z) || !locate(x + NEx, y + NEy, z))
+			if(!locate(x - north_west_x_axis, y + north_west_y_axis, z) || !locate(x + north_east_x_axis, y + north_east_y_axis, z))
 				return FALSE
 		if(SOUTH)
-			if(!locate(x - NEx, y - NWy, z) || !locate(x + NWx, y - NEy, z))
+			if(!locate(x - north_east_x_axis, y - north_west_y_axis, z) || !locate(x + north_west_x_axis, y - north_east_y_axis, z))
 				return FALSE
 		if(EAST)
-			if(!locate(x + NWy, y -NEx, z) || !locate(x + NEy, y + NWx, z))
+			if(!locate(x + north_west_y_axis, y -north_east_x_axis, z) || !locate(x + north_east_y_axis, y + north_west_x_axis, z))
 				return FALSE
 		if(WEST)
-			if(!locate(x - NWy, y - NWx, z) || !locate(x - NEy, y + NEx, z))
+			if(!locate(x - north_west_y_axis, y - north_west_x_axis, z) || !locate(x - north_east_y_axis, y + north_east_x_axis, z))
 				return FALSE
 
 	return TRUE
