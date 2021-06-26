@@ -54,7 +54,7 @@
 		sleep(jaunt_out_time)
 		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	var/turf/exit_point = get_turf(holder) //Hopefully this gets updated, otherwise this is our fallback
-	exit_point_list = new /list(5) //Clear list, if it was still full from the last jaunt
+	exit_point_list = list() //Clear list, if it was still full from the last jaunt
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
 	sleep(jaunt_duration)
 
@@ -64,8 +64,8 @@
 		return
 
 	var/found_exit = FALSE
-	for(var/turf/possible_exit in exit_point_list)
-		if(possible_exit.is_blocked_turf(ignore_climbable = TRUE))
+	for(var/turf/possible_exit as anything in exit_point_list)
+		if(possible_exit.is_blocked_turf_ignore_climbable())
 			continue
 		exit_point = possible_exit
 		found_exit = TRUE
@@ -104,10 +104,11 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/update_exit_point(mob/living/target)
 	SIGNAL_HANDLER
 	var/turf/location = get_turf(target)
-	if(location.is_blocked_turf(ignore_climbable = TRUE))
+	if(location.is_blocked_turf_ignore_climbable())
 		return
-	exit_point_list[5] = null
 	exit_point_list.Insert(1, location)
+	if(length(exit_point_list) >= 5)
+		exit_point_list.Cut(5)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()

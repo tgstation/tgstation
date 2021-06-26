@@ -185,7 +185,30 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * source_atom - If this is not null, will check whether any contents on the turf can block this atom specifically. Also ignores itself on the turf.
  * * ignore_atoms - Check will ignore any atoms in this list. Useful to prevent an atom from blocking itself on the turf.
  */
-/turf/proc/is_blocked_turf(exclude_mobs = FALSE, ignore_climbable = FALSE, source_atom = null, list/ignore_atoms)
+/turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms)
+	if(density)
+		return TRUE
+
+	for(var/content in contents)
+		// We don't want to block ourselves or consider any ignored atoms.
+		if((content == source_atom) || (content in ignore_atoms))
+			continue
+		var/atom/atom_content = content
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf,  we consider the turf blocked.
+		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)))
+			if(source_atom && atom_content.CanPass(source_atom, src))
+				continue
+			return TRUE
+	return FALSE
+
+/**
+ * Checks whether the specified turf is blocked by something dense inside it, but ignores anything with the climbable trait
+ *
+ * Works the same way is_blocked_turf() works, except with an extra check for TRAIT_CLIMBABLE in atoms. So lockers
+ * and walls will return blocked, but not tables.
+ */
+/turf/proc/is_blocked_turf_ignore_climbable(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms)
 	if(density)
 		return TRUE
 
@@ -198,11 +221,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		// if we're not excluding climbables while the thing is climbable AND
 		// if there's a source atom AND
 		// it cannot pass through the thing on the turf,  we consider the turf blocked.
-		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)) && !(ignore_climbable && HAS_TRAIT(atom_content, TRAIT_CLIMBABLE)))
+		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)) && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
 			if(source_atom && atom_content.CanPass(source_atom, src))
 				continue
 			return TRUE
 	return FALSE
+
 
 //zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
