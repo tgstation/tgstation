@@ -32,14 +32,7 @@ SUBSYSTEM_DEF(chat)
 			var/client/client = CLIENT_FROM_VAR(_target)
 			if(client)
 				LAZYADD(payload_by_client[client], list(message))
-			else if(!IS_VALID_CHAT_TARGET(_target))
-				stack_trace("Chat message queued with invalid target: \[[_target]\].")
 		return
-
 	var/client/client = CLIENT_FROM_VAR(target)
 	if(client)
 		LAZYADD(payload_by_client[client], list(message))
-		return
-
-	if(!IS_VALID_CHAT_TARGET(target))
-		CRASH("Chat message queued with invalid target: \[[target]\].")
