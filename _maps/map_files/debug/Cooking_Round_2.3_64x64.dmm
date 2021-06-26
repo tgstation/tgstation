@@ -1414,7 +1414,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
 "kI" = (
-/obj/structure/trap/ctf/blue,
+/obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
@@ -1858,7 +1858,7 @@
 /turf/open/lava,
 /area/awaymission/centcom_away/thunderdome)
 "nv" = (
-/obj/structure/trap/ctf/blue,
+/obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
@@ -4086,7 +4086,7 @@
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
 "Cl" = (
-/obj/structure/trap/ctf/blue,
+/obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
@@ -4441,7 +4441,7 @@
 /turf/open/floor/engine,
 /area/awaymission/centcom_away/thunderdome)
 "EU" = (
-/obj/structure/trap/ctf/blue,
+/obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
@@ -6935,7 +6935,7 @@
 /turf/open/floor/stone,
 /area/awaymission/centcom_away/thunderdome)
 "VK" = (
-/obj/structure/trap/ctf/blue,
+/obj/structure/holosign/barrier/ctf/blue,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "VM" = (

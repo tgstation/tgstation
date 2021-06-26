@@ -133,16 +133,21 @@
 		current_arena_template = arena_template
 	loading = FALSE
 
+	find_spawns()
+
 	message_admins("[key_name_admin(user)] loaded [arena_template] event arena for [arena_id] arena.")
 	log_admin("[key_name(user)] loaded [arena_template] event arena for [arena_id] arena.")
 
+/// A proc for looping through all the machines and finding the spawns we need
+/obj/machinery/computer/arena/proc/find_spawns(allow_different_ids = FALSE)
 	var/datum/roster/the_roster = GLOB.global_roster
 	the_roster.spawns_team1 = null
 	the_roster.spawns_team2 = null
+	the_roster.spawns_team3 = null
 	the_roster.spawns_br = null
 
 	for(var/obj/machinery/arena_spawn/iter_spawn in GLOB.machines)
-		if(iter_spawn.arena_id != arena_id)
+		if(!allow_different_ids && (iter_spawn.arena_id != arena_id))
 			continue
 		if(istype(iter_spawn, /obj/machinery/arena_spawn/battle_royale))
 			LAZYADD(the_roster.spawns_br, iter_spawn)
@@ -150,9 +155,11 @@
 			LAZYADD(the_roster.spawns_team1, iter_spawn)
 		else if(iter_spawn.team == ARENA_GREEN_TEAM)
 			LAZYADD(the_roster.spawns_team2, iter_spawn)
+		else if(iter_spawn.team == ARENA_BLUE_TEAM)
+			LAZYADD(the_roster.spawns_team3, iter_spawn)
 
-	message_admins("[LAZYLEN(the_roster.spawns_br)] spawns for BR, [LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
-	log_admin("[LAZYLEN(the_roster.spawns_br)] spawns for BR, [LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2.")
+	message_admins("[LAZYLEN(the_roster.spawns_br)] spawns for BR, [LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2, [LAZYLEN(the_roster.spawns_team3)] spawns for team 3.")
+	log_admin("[LAZYLEN(the_roster.spawns_br)] spawns for BR, [LAZYLEN(the_roster.spawns_team1)] spawns for team 1, [LAZYLEN(the_roster.spawns_team2)] spawns for team 2, [LAZYLEN(the_roster.spawns_team3)] spawns for team 3.")
 
 /obj/machinery/computer/arena/proc/add_new_arena_template(user,fname,friendly_name)
 	if(!fname)
@@ -352,8 +359,8 @@
 		else
 			GLOB.global_roster.spawn_team(usr)
 
-	//if(href_list["despawn_all"])
-		//GLOB.global_roster.despawn_everyone(usr)
+	if(href_list["despawn_all"])
+		GLOB.global_roster.despawn_everyone(usr)
 
 	if(href_list["select_team_slot"])
 		GLOB.global_roster.try_load_team_slot(usr, text2num(href_list["select_team_slot"]))
@@ -369,7 +376,14 @@
 		if(!istype(elim_team) || !LAZYLEN(elim_team.members))
 			testing("failed to find team")
 			return
-		GLOB.global_roster.eliminate_team(usr, elim_team)
+		var/how_many = input(usr, "How many to eliminate?", "How many?") as null|anything in list("Whole Team", "One Random Member", "Cancel")
+		switch(how_many)
+			if("Whole Team")
+				GLOB.global_roster.eliminate_team(usr, elim_team)
+			if("One Random Member")
+				elim_team.eliminate_random_member(usr)
+			else
+				return
 
 	if(href_list["unmark_team"])
 		var/datum/event_team/unmark_team = locate(href_list["unmark_team"]) in GLOB.global_roster.active_teams
@@ -398,6 +412,16 @@
 
 	if(href_list["upload"])
 		add_new_arena_template(user)
+	if(href_list["refind_spawns"])
+		var/allow_different_ids = input(usr, "Only include spawns that came with the arena?", "???") as null|anything in list("Yes, only loaded map spawns.", "No, include all found spawns.", "Cancel.")
+
+		switch(allow_different_ids)
+			if("Yes, only loaded map spawns.")
+				find_spawns()
+			if("No, include all found spawns.")
+				find_spawns(TRUE)
+			else
+
 	if(href_list["change_arena"])
 		load_arena(href_list["change_arena"],user)
 	if(href_list["special"])
@@ -472,6 +496,7 @@
 
 			var/datum/event_team/team1 = GLOB.global_roster.team1
 			var/datum/event_team/team2 = GLOB.global_roster.team2
+			var/datum/event_team/team3 = GLOB.global_roster.team3
 			dat += ""
 
 			if(team1)
@@ -482,11 +507,9 @@
 					i++
 					var/mob/the_guy = iter_member.get_mob()
 					dat += "\t\tMember #[i]: [iter_member] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_member)];unteam_team_target=[REF(team1)]'>Remove Member</a>"
+				dat += "<br>--------<br>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=1'>Select Team 1</a>"
-
-			if(team1 && team2) // since it can be busy with both teams there
-				dat += "--------"
 
 			if(team2)
 				dat += "\tTeam 2 ([team2.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=2'>Remove [team2] <a href='?src=[REF(src)];spawn_team=[REF(team2)]'>Spawn Team (GREEN)</a>"
@@ -496,18 +519,30 @@
 					i++
 					var/mob/the_guy = iter_member.get_mob()
 					dat += "\t\tMember #[i]: [iter_member] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_member)];unteam_team_target=[REF(team2)]'>Remove Member</a>"
+				dat += "<br>--------<br>"
 			else
 				dat += "<a href='?src=[REF(src)];select_team_slot=2'>Select Team 2</a>"
 
-			if(istype(team1) ||istype(team2))
+			if(GLOB.global_roster.three_team_round)
+				if(team3)
+					dat += "\tTeam 3 ([team3.rostered_id]): <a href='?src=[REF(src)];remove_team_slot=3'>Remove [team3] <a href='?src=[REF(src)];spawn_team=[REF(team3)]'>Spawn Team (BLUE)</a>"
+					dat += "\t\t<a href='?src=[REF(src)];set_freeze=[REF(team3)]'><b>[team3.frozen ? "Unfreeze" : "Freeze"]</span></b></a> <a href='?src=[REF(src)];set_godmode=[REF(team3)]'><b>[team3.godmode ? "Disable Godmode" : "Enable Godmode"]</span></b></a>"
+					var/i = 0
+					for(var/datum/contestant/iter_member in team3.members)
+						i++
+						var/mob/the_guy = iter_member.get_mob()
+						dat += "\t\tMember #[i]: [iter_member] ([the_guy]) <a href='?src=[REF(src)];unteam_member=[REF(iter_member)];unteam_team_target=[REF(team3)]'>Remove Member</a>"
+					dat += "<br>--------<br>"
+				else
+					dat += "<a href='?src=[REF(src)];select_team_slot=3'>Select Team 3</a>"
+
+			if(istype(team1) || istype(team2) || istype(team3))
 				//dat += "<a href='?src=[REF(src)];set_freeze_all=on'><b>Freeze All</b></a><a href='?src=[REF(src)];set_freeze_all=off'><b>Unfreeze All</b></a>"
 				//dat += "<a href='?src=[REF(src)];set_godmode_all=on'><b>Godmode All</b></a><a href='?src=[REF(src)];set_godmode_all=off'><b>Ungodmode All</b></a>"
-				dat += "<a href='?src=[REF(src)];spawn_team=1'><b>Spawn Teams</b></a><a href='?src=[REF(src)];despawn_all=1'><b>Unspawn Everyone</b></a>"
+				dat += "<a href='?src=[REF(src)];spawn_team=1'><b>Spawn Teams</b></a> <a href='?src=[REF(src)];despawn_all=1'><b>Unspawn Everyone</b></a>"
 
 			if(istype(team1) && istype(team2))
-				dat += "<a href='?src=[REF(src)];start_match=1'><b>Start Match</b></a>"
-				dat += "<a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
-
+				dat += "<br><a href='?src=[REF(src)];start_match=1'><b>Start Match</b></a> <a href='?src=[REF(src)];resolve_match=1'><b>Resolve Match</b></a>"
 
 			var/list/waiting_teams = list()
 			var/list/finished_teams = list()
@@ -523,17 +558,17 @@
 					waiting_teams += iter_team
 
 			if(length(waiting_teams))
-				dat += "<br><b>Waiting Teams:</b>"
+				dat += "<br><b>Waiting Teams: ([LAZYLEN(waiting_teams)])</b>"
 				for(var/datum/event_team/iter_team in waiting_teams)
 					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
 
 			if(length(finished_teams))
-				dat += "<br><b>Proven Teams:</b>"
+				dat += "<br><b>Proven Teams: ([LAZYLEN(finished_teams)])</b>"
 				for(var/datum/event_team/iter_team in finished_teams)
 					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a>"
 
 			if(length(marked_teams))
-				dat += "<br><b>Marked Teams:</b>"
+				dat += "<br><b>Marked Teams: ([LAZYLEN(marked_teams)])</b>"
 				for(var/datum/event_team/iter_team in marked_teams)
 					dat += "\tTeam [iter_team.rostered_id]: <a href='?src=[REF(src)];change_page=team;[iter_team]'>[iter_team]</a> <a href='?src=[REF(src)];confirm_elim_team=[REF(iter_team)]'>Confirm Elimination</a> <a href='?src=[REF(src)];unmark_team=[REF(iter_team)]'>Unmark</a>"
 
@@ -558,35 +593,35 @@
 			dat += "<a href='?src=[REF(src)];load_roster=1'>Load Roster</a>"
 			dat += "<a href='?src=[REF(src)];add_specific_contestant=1'>Add Contestant</a>"
 			dat += "<a href='?src=[REF(src)];reset_roster=1'><b>Reset Roster</b></a>"
-			dat += "<b>Contestants:</b>"
 
 			var/list/flagged_contestants = list()
 			var/list/still_in = null
 			if(GLOB.global_roster.active_contestants)
 				still_in = GLOB.global_roster.active_contestants - GLOB.global_roster.losers
 
+			dat += "<b>Contestants: ([LAZYLEN(still_in)])</b>"
 			for(var/datum/contestant/iter_contestant in still_in)
 				if(iter_contestant.flagged_for_elimination)
 					flagged_contestants += iter_contestant
 					continue
 
 				var/mob/the_guy = iter_contestant.get_mob()
-				dat += "\t[iter_contestant.ckey] ([the_guy]) <a href='?src=[REF(src)];eliminate_contestant=[REF(iter_contestant)]'>Eliminate</a> <a href='?src=[REF(src)];delete_contestant=[REF(iter_contestant)]'>Delete</a>"
+				dat += "\t[iter_contestant.ckey] ([the_guy]) [the_guy?.client ? "" : "(NO CLIENT) "]<a href='?src=[REF(src)];eliminate_contestant=[REF(iter_contestant)]'>Eliminate</a> <a href='?src=[REF(src)];delete_contestant=[REF(iter_contestant)]'>Delete</a>"
 
 			if(length(flagged_contestants))
-				dat += "<br><b>Contestants Flagged for Elimination:"
+				dat += "<br><b>Contestants Flagged for Elimination: ([LAZYLEN(flagged_contestants)])"
 				for(var/datum/contestant/flagged_contestant in flagged_contestants)
 					var/mob/the_guy = flagged_contestant.get_mob()
-					dat += "\t[flagged_contestant.ckey] ([the_guy]) <a href='?src=[REF(src)];eliminate_contestant=[REF(flagged_contestant)]'>Confirm Elimination</a> <a href='?src=[REF(src)];unmark_contestant=[REF(flagged_contestant)]'>Unmark</a>"
+					dat += "\t[flagged_contestant.ckey] ([the_guy]) [the_guy?.client ? "" : "(NO CLIENT) "]<a href='?src=[REF(src)];eliminate_contestant=[REF(flagged_contestant)]'>Confirm Elimination</a> <a href='?src=[REF(src)];unmark_contestant=[REF(flagged_contestant)]'>Unmark</a>"
 
 			if(LAZYLEN(GLOB.global_roster.losers))
-				dat += "<br><b><span class='danger'>Eliminated Contestants</span></b>:"
+				dat += "<br><b><span class='danger'>Eliminated Contestants</span></b>: ([LAZYLEN(GLOB.global_roster.losers)])"
 				for(var/datum/contestant/iter_loser in GLOB.global_roster.losers)
 					var/mob/the_guy = iter_loser.get_mob()
-					dat += "\t[iter_loser.ckey] ([the_guy]) (Eliminated) <a href='?src=[REF(src)];delete_contestant=[REF(iter_loser)]'>Delete</a>"
+					dat += "\t[iter_loser.ckey] ([the_guy]) (Eliminated) [the_guy?.client ? "" : "(NO CLIENT) "]<a href='?src=[REF(src)];delete_contestant=[REF(iter_loser)]'>Delete</a>"
 
 			if(LAZYLEN(GLOB.global_roster.ckeys_at_large))
-				dat += "<br><b><span class='danger'>Ckeys at Large</span></b>:"
+				dat += "<br><b><span class='danger'>Ckeys at Large</span></b>: ([LAZYLEN(GLOB.global_roster.ckeys_at_large)])"
 				for(var/iter_ckey in GLOB.global_roster.ckeys_at_large)
 					dat += "\t[iter_ckey] <a href='?src=[REF(src)];remove_ckey_at_large=[iter_ckey]'>Delete</a>"
 
@@ -602,6 +637,7 @@
 			dat += "<a href='?src=[REF(src)];upload=1'>Upload new arena</a><br>"
 			dat += "<hr>"
 			//Special actions
+			dat += "<a href='?src=[REF(src)];refind_spawns=1'>Refind Spawns.</a><br>"
 			dat += "<a href='?src=[REF(src)];special=reset'>Reset Arena.</a><br>"
 			dat += "<a href='?src=[REF(src)];special=randomarena'>Load random arena.</a><br>"
 
@@ -664,6 +700,11 @@
 	color = "green"
 	team = ARENA_GREEN_TEAM
 
+/obj/machinery/arena_spawn/blue
+	name = "Blue Team Spawnpoint"
+	color = "blue"
+	team = ARENA_BLUE_TEAM
+
 /obj/machinery/arena_spawn/battle_royale
 	name = "Battle Royale Spawnpoint"
 	color = "green"
@@ -688,8 +729,6 @@
 			return
 		C.spawn_member(src,user.ckey,team)
 
-//#undef ARENA_GREEN_TEAM
-//#undef ARENA_RED_TEAM
 #undef ARENA_DEFAULT_ID
 #undef ARENA_CORNER_A
 #undef ARENA_CORNER_B

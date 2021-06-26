@@ -93,6 +93,19 @@
 	LAZYREMOVE(members, dead_kid)
 	testing("removed [dead_kid] from [src]")
 
+/// Eliminate a random contestant from this team
+/datum/event_team/proc/eliminate_random_member(mob/user)
+	if(!LAZYLEN(members))
+		message_admins("[key_name_admin(user)] tried eliminating random contestant from team with no members!")
+		log_game("[key_name_admin(user)] tried eliminating random contestant from team with no members!")
+		return
+
+	var/datum/contestant/dead_kid = pick(members)
+	message_admins("[key_name_admin(user)] randomly eliminated a member of team [src]: [dead_kid]!")
+	log_game("[key_name_admin(user)] randomly eliminated a member of team [src]: [dead_kid]!")
+	remove_member(dead_kid)
+	GLOB.global_roster.eliminate_contestant(null, dead_kid)
+
 /// If the arg is TRUE, mark the team and members as successfully completing a round. If the arg is FALSE, mark them for elimination
 /datum/event_team/proc/match_result(victorious)
 	finished_round = TRUE
