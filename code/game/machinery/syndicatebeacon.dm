@@ -133,12 +133,12 @@
 /obj/item/sbeacondrop/red
 	name = "red beacon"
 	color = COLOR_RED
-	droptype = /obj/machinery/power/singularity_beacon/red
+	droptype = /obj/machinery/power/singularity_beacon/team/red
 
 /obj/item/sbeacondrop/green
 	name = "green beacon"
 	color = COLOR_GREEN
-	droptype = /obj/machinery/power/singularity_beacon/green
+	droptype = /obj/machinery/power/singularity_beacon/team/green
 
 // SINGULO BEACON SPAWNER
 /obj/item/sbeacondrop
