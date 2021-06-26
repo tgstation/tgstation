@@ -116,7 +116,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
 	if(oldbody?.client) // debug testing with empty contestant datums
 		oldbody.client.prefs.copy_to(M)
-	if(!(M.dna?.species in list(/datum/species/human, /datum/species/moth, /datum/species/lizard)))
+	if(!(M.dna?.species in list(/datum/species/human, /datum/species/moth, /datum/species/lizard, /datum/species/human/felinid)))
 		M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(/datum/outfit/job/assistant) // TODO: ADD CONTROLS FOR THIS
 	//M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
