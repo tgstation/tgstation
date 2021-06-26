@@ -19,8 +19,7 @@
 
 
 /turf/open/floor/glass/Initialize()
-	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()

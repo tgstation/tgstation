@@ -15,10 +15,12 @@
 
 	var/active = FALSE
 	var/icontype = "beacon"
+	var/needs_power = TRUE
+	var/team
 
 
 /obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
-	if(surplus() < 1500)
+	if(needs_power && surplus() < 1500)
 		if(user)
 			to_chat(user, span_notice("The connected wire doesn't have enough current."))
 		return
@@ -65,15 +67,15 @@
 
 		if(anchored)
 			set_anchored(FALSE)
-			to_chat(user, span_notice("You unbolt \the [src] from the floor and detach it from the cable."))
+			to_chat(user, span_notice("You unbolt \the [src] from the floor."))
 			disconnect_from_network()
 			return
 		else
-			if(!connect_to_network())
+			if(needs_power && !connect_to_network())
 				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
 				return
 			set_anchored(TRUE)
-			to_chat(user, span_notice("You bolt \the [src] to the floor and attach it to the cable."))
+			to_chat(user, span_notice("You bolt \the [src] to the floor."))
 			return
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		user.visible_message( \
@@ -91,9 +93,10 @@
 /obj/machinery/power/singularity_beacon/process()
 	if(!active)
 		return
-
-	if(surplus() >= 1500)
-		add_load(1500)
+	var/works = surplus() >= 1500
+	if(!needs_power || works)
+		if(works)
+			add_load(1500)
 		if(cooldown <= world.time)
 			cooldown = world.time + 80
 			for(var/_singulo_component in GLOB.singularities)
@@ -109,6 +112,33 @@
 /obj/machinery/power/singularity_beacon/syndicate
 	icontype = "beaconsynd"
 	icon_state = "beaconsynd0"
+
+/obj/machinery/power/singularity_beacon/team
+	needs_power = FALSE
+
+/obj/machinery/power/singularity_beacon/team/Initialize()
+	. = ..()
+	Activate()
+
+/obj/machinery/power/singularity_beacon/team/red
+	name = "red team singularity beacon"
+	team = "red"
+	color = COLOR_RED
+
+/obj/machinery/power/singularity_beacon/team/green
+	name = "green team singularity beacon"
+	team = "green"
+	color = COLOR_GREEN
+
+/obj/item/sbeacondrop/red
+	name = "red beacon"
+	color = COLOR_RED
+	droptype = /obj/machinery/power/singularity_beacon/red
+
+/obj/item/sbeacondrop/green
+	name = "green beacon"
+	color = COLOR_GREEN
+	droptype = /obj/machinery/power/singularity_beacon/green
 
 // SINGULO BEACON SPAWNER
 /obj/item/sbeacondrop

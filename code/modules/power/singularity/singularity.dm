@@ -29,6 +29,7 @@
 	var/event_chance = 10 //Prob for event each tick
 	var/move_self = TRUE
 	var/consumed_supermatter = FALSE //If the singularity has eaten a supermatter shard and can go to stage six
+	var/team
 
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -41,7 +42,6 @@
 
 	START_PROCESSING(SSobj, src)
 	AddElement(/datum/element/point_of_interest)
-	GLOB.singularities |= src
 
 	var/datum/component/singularity/new_component = AddComponent(
 		/datum/component/singularity, \
@@ -53,7 +53,7 @@
 	expand(current_size)
 
 	for (var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
-		if (singubeacon.active)
+		if (singubeacon.active && singubeacon.team == team)
 			new_component.target = singubeacon
 			break
 
@@ -62,7 +62,6 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.singularities.Remove(src)
 	return ..()
 
 /obj/singularity/attack_tk(mob/user)
@@ -135,6 +134,7 @@
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
+		radiation_pulse(src, min(5000, (energy*4.5)+1000), RAD_DISTANCE_COEFFICIENT*0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	dissipate(delta_time)
@@ -430,3 +430,8 @@
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
 
+/obj/singularity/red
+	team = "red"
+
+/obj/singularity/green
+	team = "green"
