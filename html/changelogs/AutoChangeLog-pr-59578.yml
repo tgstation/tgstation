@@ -1,6 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - rscadd: "Cigarettes heat their contents while they are lit."
-  - balance: "Candy cigarettes now caramelize their own sugar. Their temperature has been reduced to ensure they don't charcoalize it too."
-  - code_imp: "Cleaned up cigarette code a bit."

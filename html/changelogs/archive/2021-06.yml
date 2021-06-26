@@ -573,3 +573,35 @@
   - bugfix: Fixed heretic ghouls having reduced max health after being revived after
       deghouled
   - qol: heretic ghouls now have a little moodlet tooltip
+2021-06-26:
+  Arkatos:
+  - qol: Improved radial info messages for some spider variants to better reflect
+      their strengths and weaknesses.
+  - bugfix: Spider egg clusters now stop processing when they mature to improve performance.
+  - refactor: Spider egg clusters were integrated into the mob spawner system. This
+      means you will now see grown spider eggs in the ghost spawners interface.
+  - admin: Alien-banned players are no longer allowed to spawn from the spider egg
+      clusters.
+  Sheits:
+  - bugfix: Made android and skeleton wings work instead of telling the user "you
+      feel nothing but a terrible aftertaste" when they drink strange elixir
+  - bugfix: Made android and skeleton wings not use a mutant colour overlay like lizard
+      wings
+  - imageadd: Fly wings :)
+  - code_imp: Added android species check
+  TemporalOroboros:
+  - rscadd: Cigarettes heat their contents while they are lit.
+  - balance: Candy cigarettes now caramelize their own sugar. Their temperature has
+      been reduced to ensure they don't charcoalize it too.
+  - code_imp: Cleaned up cigarette code a bit.
+  Timberpoes:
+  - balance: Agent ID cards can now steal accesses wirelessly from other players by
+      right click slapping them with the agent ID card. This operation is completely
+      covert, minus the fact you have to hold your ID card in your hand to initiate
+      it.
+  - balance: Agent ID cards can now steal accesses wirelessly from ID cards in containers
+      including bags, wallets, tablets and PDAs without having to open them or remove
+      ID cards first by right clicking. You can still open containers to steal accesses
+      from exact cards as before.
+  carshalash:
+  - bugfix: fixed inaccurate foodtypes/taste tags
