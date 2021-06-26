@@ -43,7 +43,7 @@
 		return
 
 	new_kid.set_frozen(frozen) // are these needed?
-	new_kid.set_godmode(godmode)
+	new_kid.set_godmode(null, godmode)
 	new_kid.current_team = src
 	LAZYADD(members, new_kid)
 	testing("successfully added [new_kid] to [src]")

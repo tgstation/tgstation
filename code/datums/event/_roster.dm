@@ -524,7 +524,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 	var/teams = prefs["team_event"]["value"] == "Yes"
 	var/divvy_teams_by_num_not_size = prefs["team_num_instead_of_size"]["value"] == "Yes"
 	var/team_divvy_factor = prefs["team_divvy_factor"]["value"]
-	var/three_team = prefs["three_team"]["value"]
+	var/three_team = prefs["three_team"]["value"] == "Yes"
 
 	three_team_round = three_team
 
@@ -606,8 +606,9 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 /datum/roster/proc/spawn_team(mob/user, datum/event_team/spawning_team)
 	log_game("[key_name_admin(user)] has tried spawning teams!")
 
-	if(istype(spawning_team) && spawning_team.battle_royale)
+	if(battle_royale_active)
 		spawn_battle_royale(user)
+		return
 
 	if(!istype(spawning_team))
 		team1?.spawn_members(user, spawns_team1)
@@ -679,7 +680,7 @@ GLOBAL_DATUM_INIT(global_roster, /datum/roster, new)
 		return team_huds[ARENA_RED_TEAM]
 	else if(check_team == team2)
 		return team_huds[ARENA_GREEN_TEAM]
-	else if(check_team == team2)
+	else if(check_team == team3)
 		return team_huds[ARENA_BLUE_TEAM]
 
 /*

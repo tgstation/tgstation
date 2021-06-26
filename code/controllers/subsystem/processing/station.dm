@@ -25,6 +25,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
+	#ifdef EVENTMODE
+	return
+	#endif
 	for(var/i in subtypesof(/datum/station_trait))
 		var/datum/station_trait/trait_typepath = i
 		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)

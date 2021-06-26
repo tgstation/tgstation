@@ -4,4 +4,4 @@
 #define ARENA_BLUE_TEAM "blue" // team3
 
 /// the delay between elimination messages
-#define BATTLE_ROYALE_ELIMINATION_VOICE_DELAY 7 SECONDS
+#define BATTLE_ROYALE_ELIMINATION_VOICE_DELAY 3 SECONDS
