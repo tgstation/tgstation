@@ -260,9 +260,9 @@ SUBSYSTEM_DEF(garbage)
 		time = TICK_DELTA_TO_MS(tick)/100
 	if (time > highest_del_time)
 		highest_del_time = time
-	if (time > 0.1 SECONDS)
-		log_game("Error: [type]([refID]) took longer than 0.1 seconds to delete (took [time/10] seconds to delete)")
-		message_admins("Error: [type]([refID]) took longer than 0.1 seconds to delete (took [time/10] seconds to delete).")
+	if (time > 10)
+		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
+		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time)
 
 /datum/controller/subsystem/garbage/Recover()
