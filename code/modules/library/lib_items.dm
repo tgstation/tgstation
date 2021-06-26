@@ -358,18 +358,18 @@
 				if(2)
 					scanner.book = src
 					for(var/datum/borrowbook/b in scanner.computer.checkouts)
-						if(b.bookname == name)
-							scanner.computer.checkouts.Remove(b)
+						if(b.loanedto == name)
+							scanner.computer.checkouts -= b
 							to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
 							return
 					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
 				if(3)
 					scanner.book = src
-					for(var/obj/item/book in scanner.computer.inventory)
-						if(book == src)
+					for(var/datum/book_info/info as anything in scanner.computer.inventory)
+						if(info.compare(src))
 							to_chat(user, span_alert("[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"))
 							return
-					scanner.computer.inventory.Add(src)
+					scanner.computer.inventory.Add(book_data.return_copy())
 					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
 	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
@@ -404,7 +404,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/computer/libraryconsole/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
 	var/obj/item/book/book //Currently scanned book
 	var/mode = 0 //0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
