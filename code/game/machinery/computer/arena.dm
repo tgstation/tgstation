@@ -223,6 +223,9 @@
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
+	#ifdef EVENTMODE
+	ADD_TRAIT(M, TRAIT_BYPASS_MEASURES, "arena_member") // Arena contestants get to bypass some SSlag_switch restrictions
+	#endif
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()

@@ -42,6 +42,8 @@
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 /// the unique signal for a player becoming available
 #define COMSIG_GLOB_PLAYER_ENTER "!player_enter"
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
 
 /// signals from globally accessible objects
 

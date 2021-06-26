@@ -214,7 +214,10 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = tgui_alert(usr, "Are you sure you wish to observe? You will not be able to play this round!","Player Setup",list("Yes","No"))
+	var/less_input_message
+	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
+		less_input_message = " - Notice: Observer freelook is currently disabled."
+	var/this_is_like_playing_right = tgui_alert(usr, "Are you sure you wish to observe? You will not be able to play this round![less_input_message]","Player Setup",list("Yes","No"))
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -300,8 +303,8 @@
 		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
-	if(SSticker.late_join_disabled)
-		tgui_alert(usr, "An administrator has disabled late join spawning.")
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		tgui_alert(usr, "Late join spawning is currently disabled.")
 		return FALSE
 
 	var/arrivals_docked = TRUE
@@ -393,7 +396,10 @@
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/list/dat = list("<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>")
+	var/list/dat = list()
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		dat += "<div class='notice red' style='font-size: 125%'>Only Observers may join. Below is informational only.</div><br>"
+	dat += "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
