@@ -69,11 +69,12 @@
 	if(user)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
+		to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
 	else
 		I.forceMove(src)
 
 	stored_card = I
-	to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 	var/holder_loc = holder.loc
@@ -88,15 +89,18 @@
 
 /obj/item/computer_hardware/card_slot/try_eject(mob/living/user = null, forced = FALSE)
 	if(!stored_card)
-		to_chat(user, span_warning("There are no cards in \the [src]."))
+		if(user)
+			to_chat(user, span_warning("There are no cards in \the [src]."))
 		return FALSE
 
-	if(user && !issilicon(user) && in_range(src, user))
-		user.put_in_hands(stored_card)
+	if(user)
+		if(!issilicon(user) && in_range(src, user))
+			user.put_in_hands(stored_card)
+		to_chat(user, span_notice("You remove the card from \the [src]."))
 	else
 		stored_card.forceMove(drop_location())
 
-	to_chat(user, span_notice("You remove the card from \the [src]."))
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
@@ -106,7 +110,8 @@
 		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stored_card)
-			to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
+			if(user)
+				to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
 			try_eject(user)
 			return
 		swap_slot()
