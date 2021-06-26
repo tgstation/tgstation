@@ -517,6 +517,12 @@
 	smooth_icon = 'icons/turf/walls/red_wall.dmi'
 	base_icon_state = "red_wall"
 
+/turf/closed/mineral/asteroid/porous
+	name = "porous rock"
+	desc = "This rock is filled with pockets of breathable air, which interfere with the efficiency of some high speed mining equipment."
+	baseturfs = /turf/open/floor/plating/asteroid
+	break_time = 5 SECONDS
+
 //GIBTONITE
 
 /turf/closed/mineral/gibtonite
