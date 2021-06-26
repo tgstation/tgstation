@@ -519,9 +519,8 @@
 
 /turf/closed/mineral/asteroid/porous
 	name = "porous rock"
-	desc = "This rock is filled with pockets of breathable air, which interfere with the efficiency of some high speed mining equipment."
+	desc = "This rock is filled with pockets of breathable air."
 	baseturfs = /turf/open/floor/plating/asteroid
-	break_time = 5 SECONDS
 
 //GIBTONITE
 

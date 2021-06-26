@@ -120,9 +120,16 @@
 	sheet_amount = 1
 	hardness = 50
 	girder_type = null
-	baseturfs = /turf/closed/mineral/asteroid
+	var/rock_type = /turf/closed/mineral/asteroid
+
+/turf/closed/wall/rock/Initialize()
+	. = ..()
+	if(length(baseturfs))
+		baseturfs += rock_type
+	else
+		baseturfs = list(baseturfs, rock_type)
 
 /turf/closed/wall/rock/porous
 	name = "reinforced porous rock"
 	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
-	baseturfs = /turf/closed/mineral/asteroid/porous
+	rock_type = /turf/closed/mineral/asteroid/porous
