@@ -64,7 +64,7 @@
 	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
 		to_chat_immediate(target, html, type, text)
 		return
-	if(!IS_VALID_CHAT_TARGET(target))
+	if(!IS_VALID_TO_CHAT_TARGET(target))
 		CRASH("Chat message sent to invalid target: \[[target]\].")
 	if(!html && !text)
 		CRASH("Chat message sent to \[[target]\] with no text or HTML provided.")

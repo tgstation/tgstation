@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
 
-/// Helper macro for ascertaining if the target is of a type that *could* potentially receieve chat messages. Does not guarantee the target has a client.
+/// Helper macro for ascertaining if the target is of a type that *could* potentially receieve chat messages. Does not guarantee the target has a client or that it can receive messages, just that it's a valid input type.
 #define IS_VALID_CHAT_TARGET(target) (ismob(target) || istype(target, /client) || istype(target, /datum/mind) || (target == world) || islist(target))
 
 #define AREASELECT_CORNERA "corner A"
