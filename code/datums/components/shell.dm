@@ -105,6 +105,10 @@
 		source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
 		return COMPONENT_NO_AFTERATTACK
 
+	if(attached_circuit && istype(item, /obj/item/circuit_component))
+		attached_circuit.add_component(item, attacker)
+		return
+
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
 	var/obj/item/integrated_circuit/logic_board = item
@@ -129,6 +133,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -144,6 +150,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -167,10 +175,15 @@
 	SIGNAL_HANDLER
 	remove_circuit()
 
-/datum/component/shell/proc/on_circuit_add_component_manually(datum/source, obj/item/circuit_component/added_comp)
+/datum/component/shell/proc/on_circuit_add_component_manually(atom/source, obj/item/circuit_component/added_comp, mob/living/user)
 	SIGNAL_HANDLER
+	if(locked)
+		source.balloon_alert(user, "it's locked!")
+		return COMPONENT_CANCEL_ADD_COMPONENT
 
-	return COMPONENT_CANCEL_ADD_COMPONENT
+	if(length(attached_circuit.attached_components) - length(unremovable_circuit_components) >= capacity)
+		source.balloon_alert(user, "it's at maximum capacity!")
+		return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.

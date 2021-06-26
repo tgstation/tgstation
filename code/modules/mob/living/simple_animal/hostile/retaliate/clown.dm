@@ -382,9 +382,9 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/AM, atom/newLoc)
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/gone, direction)
 	. = ..()
-	prank_pouch -= AM
+	prank_pouch -= gone
 
 ///This ability will let you fire one random item from your pouch,
 /obj/effect/proc_holder/regurgitate

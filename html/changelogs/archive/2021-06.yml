@@ -438,3 +438,138 @@
   Watermelon914:
   - bugfix: Fixed being unable to add extra circuit components when an integrated
       circuit was removed.
+2021-06-21:
+  ArcaneMusic:
+  - qol: Suspenders now uses a GAGS setup, allowing for custom recolors.
+  Melbert:
+  - bugfix: Fixes contractor tablets breaking due to contract targets cryoing.
+  - bugfix: Fixed nuke ops lobby meta exploit
+  RandomGamer123:
+  - bugfix: Makes roleblocks in mafia actually end properly
+  - bugfix: Tachyon-doppler arrays now connect with servers on different z-levels.
+  SpaceDragon00:
+  - bugfix: People with digitigrade legs are now properly paralyzed by the Paraplegic
+      perk
+  - bugfix: Usable_limbs can no longer be set below 0, which let people walk when
+      they shouldn't be able to
+  Timberpoes:
+  - bugfix: H.A.U.L. gauntlets no longer output a message about losing their grip
+      power when you drop them to the floor.
+  - bugfix: Removing the H.A.U.L. gauntlets while pulling something will now stop
+      the enhanced pulling effect.
+  - bugfix: Fix some runtimes with quirks and equipping silicons.
+  Watermelon914:
+  - bugfix: Fixed signal ports receiving signals when a signal is not actually sent
+  Y0SH1M4S73R:
+  - expansion: The DNA console can now edit the nonhuman features of its occupants,
+      as well as allowing injectors to apply those features. Look for the "Features"
+      tab in the DNA console.
+  dragomagol:
+  - spellcheck: multiple projectiles are now pluralized correctly
+  jupyterkat:
+  - qol: you can now press space or enter to select in tgui input lists
+  - bugfix: tgui input lists no longer break when duplicate keys are passed
+  ninjanomnom:
+  - bugfix: Some overlays missing from variant defibs are now properly applied.
+2021-06-22:
+  ATHATH:
+  - qol: Contractor batons will now stun cyborgs on a left click and harmbaton them
+      on a right click, instead of stunning cyborgs if you're NOT in combat mode and
+      harmbatonning them if you are.
+  - bugfix: Stunning a cyborg with a contractor baton now puts your contractor baton
+      on cooldown, just like knocking a human down does. Don't worry, you can still
+      easily chainstun/baton 'n' bash borgs with contractor batons.
+  - soundadd: Attempting to stun a cyborg with a classic baton or a telebaton will
+      play a CLONGing noise, produce a special message, and put your baton on cooldown.
+      Harmbatonning cyborgs with classic batons and telebatons still works, of course.
+  - refactor: The code for classic batons, telebatons, and contractor batons has been
+      doc'd slightly better and refactored a bit.
+  - bugfix: Some edge cases involving cyborgs who somehow both are clumsy and can
+      wield a classic baton have been accounted for. This shouldn't affect normal
+      gameplay unless an admin tries some REALLY weird stuff. Like, clumsy contractor
+      cyborg level weird.
+  Timberpoes:
+  - balance: The traitor's Agent ID card has a new option available during forging
+      called Wallet ID Spoofing. Selecting this option will automatically snap the
+      Agent ID card to the front of any wallet, allowing the traitor to hide more
+      valuable ID cards behind it. This is disabled when the card is unforged.
+  Watermelon914:
+  - refactor: Refactors dbcore.dm to possibly resolve the crashes that happen on Terry.
+  carshalash:
+  - bugfix: Eggs now give 5u yolk no matter what it is cracked in
+2021-06-23:
+  Fikou:
+  - expansion: new mech action figures and job action figures
+  - bugfix: Intento leaderboard works good
+  - imageadd: new sprites for mech action figures
+  Greniza:
+  - imageadd: New turf decals for alternative tiletypes
+  MMMiracles:
+  - rscadd: Tramstation's Tram is now more capable of making things regret being in
+      the way of it
+  - bugfix: Tramstation's Tram is now less likely to unintentionally explode
+  RandomGamer123:
+  - bugfix: Cigarettes with the smoke_all property actually let you smoke in everything
+      the cigarette contains now.
+  - qol: Adds more intercoms and a new fire extinguisher to Metastation's new medbay.
+  - bugfix: Replaces broken valueless space cash item in old AI sat ruin with a 200
+      credit one
+  Semoro and azizonkg:
+  - bugfix: Ported fixes of SStimer subsystem from RU SS220 Paradise
+  - config: 'Added a new config var: flag/log_timers_on_bucket_reset'
+  TemporalOroboros:
+  - bugfix: Specific chem dispenser recipes no longer create fonts of infinite power.
+  Watermelon914:
+  - bugfix: Fixed explosions delimbing you if they're weaker
+2021-06-24:
+  Ed640:
+  - bugfix: Paper bins after being stacked too high to fall over or getting burnt
+      will no longer void your "important" paper forms when trying to add more paper
+      afterwards.
+  Melbert:
+  - refactor: Cow tipping and medibot tipping is now a component.
+  Ryll/Shaps:
+  - qol: Admin ghosts can now use the :j speech prefix to relay messages from deadchat
+      to their current linked body, if one exists. Perfect for keeping in touch with
+      your deployed ERT via headset without needing to stay in your body back at Centcom!
+  Watermelon914:
+  - expansion: Adds the multiplexer circuit component.
+  - expansion: Changed the drone circuit to have a lower movement delay.
+  - qol: Circuit components can now be directly inserted into shells.
+  - qol: Added the description and special details to each circuit component that
+      can be accessed when it is inside an integrated circuit. These will have specific
+      details, such as power usage, distance effectiveness and more.
+  YakumoChen:
+  - bugfix: Dynamic will no longer create malf humans for players for never play silicon
+      in the first place.
+2021-06-25:
+  Cheshify:
+  - balance: The Forcefield Projector takes a second to put a forcefield down.
+  RandomGamer123:
+  - bugfix: QMs can now use the Nanotrasen Internal Requisition Network program on
+      modular computers to order things remotely.
+  - qol: All people may now download the Nanotrasen Internal Requisition Network program
+      on modular computers to request to order things remotely.
+  SpaceVampire:
+  - bugfix: The spare Codex Cicatrix created by the ritual, no longer comes with free
+      charges.
+  Timberpoes:
+  - qol: Right clicking containers such as backpacks with certain items may now perform
+      that item's action instead of opening the backpack. The behaviour has been implemented
+      with the forensic scanner, which can now scan objects it was previously unable
+      to in melee range, such as backpacks, by right clicking. Any items you'd want
+      to use againt backpacks without inserting the item or opening the backpack should
+      be reported as issues so they can be implemented.
+  Watermelon914:
+  - expansion: Adds the MMI circuit component.
+  - qol: Allows inputting signals into signal ports.
+  - expansion: Adds the airlock shell. The circuit has full control over the airlock.
+  - expansion: Implements USB cables for the binary valve to be able to open/close
+      the valve.
+  - expansion: Adds a private channel for radios that only lets circuits with the
+      same owner's ID to interact with it.
+  - refactor: Refactors USB code to be easier to use for less experienced coders.
+  eeSPee:
+  - bugfix: Fixed heretic ghouls having reduced max health after being revived after
+      deghouled
+  - qol: heretic ghouls now have a little moodlet tooltip

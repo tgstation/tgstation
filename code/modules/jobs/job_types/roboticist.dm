@@ -29,7 +29,7 @@
 
 /datum/job/roboticist/New()
 	. = ..()
-	family_heirlooms += subtypesof(/obj/item/toy/prize)
+	family_heirlooms += subtypesof(/obj/item/toy/mecha)
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

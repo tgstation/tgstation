@@ -61,7 +61,7 @@
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
-/obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
@@ -78,7 +78,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
 
-/obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
@@ -149,7 +149,7 @@
 	. = ..()
 	. += span_notice("The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.")
 
-/obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(force_allaccess)
 		return TRUE
@@ -178,7 +178,7 @@
 	return TRUE
 
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
-	if(CanPass(user) && !user.combat_mode)
+	if(!user.combat_mode && CanPass(user, get_dir(src, user)))
 		force_allaccess = !force_allaccess
 		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
 	else

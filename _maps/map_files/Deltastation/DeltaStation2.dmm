@@ -1753,23 +1753,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
-<<<<<<< HEAD
-"ajp" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/command/heads_quarters/rd)
-=======
->>>>>>> gameshow
 "ajr" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
@@ -2721,32 +2704,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/commons/dorms)
-"aqF" = (
-/obj/machinery/button/door{
-	id = "Disposal Exit";
-	name = "Disposal Vent Control";
-	pixel_x = -25;
-	pixel_y = 4;
-	req_access_txt = "12"
-	},
-/obj/structure/chair/stool,
-/obj/machinery/light/small/directional/west,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/computer/pod/old/mass_driver_controller/trash{
-	pixel_x = -24;
-	pixel_y = -7
-	},
-/turf/open/floor/iron,
-/area/commons/dorms)
-=======
 /area/maintenance/disposal)
->>>>>>> gameshow
 "aqG" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
@@ -5045,28 +5003,6 @@
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/port/fore)
-<<<<<<< HEAD
-"aJP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/commons/storage/mining)
-=======
->>>>>>> gameshow
 "aKc" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown{
@@ -5153,15 +5089,7 @@
 /obj/item/folder/red,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/engineering/break_room)
-"aKU" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/wood,
-/area/service/electronic_marketing_den)
-=======
 /area/security/checkpoint/supply)
->>>>>>> gameshow
 "aKV" = (
 /turf/closed/wall,
 /area/security/prison)
@@ -5689,37 +5617,7 @@
 	},
 /obj/item/soap/homemade,
 /turf/open/floor/iron/white,
-<<<<<<< HEAD
-/area/command/heads_quarters/hop)
-"aPp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall15";
-	location = "hall14"
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L7"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/maintenance/starboard/central)
-"aPq" = (
-/obj/structure/chair/stool,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/cmo)
-"aPr" = (
-/obj/structure/chair/stool,
-/turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/cmo)
-=======
 /area/security/prison/safe)
->>>>>>> gameshow
 "aPs" = (
 /obj/structure/table,
 /obj/item/kitchen/fork/plastic,
@@ -6545,18 +6443,7 @@
 	pixel_y = -30
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/command/heads_quarters/hop)
-"aWk" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/command/heads_quarters/cmo)
-=======
 /area/security/prison)
->>>>>>> gameshow
 "aWl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light_switch/directional/south,
@@ -17823,25 +17710,6 @@
 	},
 /obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/engineering/supermatter)
-"cqy" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/structure/chair/stool/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-=======
->>>>>>> gameshow
 /area/service/bar/atrium)
 "cqC" = (
 /obj/structure/chair/comfy/brown{
@@ -19860,18 +19728,6 @@
 "cIu" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/maintenance/aft)
-"cIE" = (
-/obj/machinery/status_display/ai,
-/turf/closed/wall,
-/area/commons/toilet/locker)
-"cIR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/disposal/incinerator)
-=======
 /area/maintenance/port)
 "cIB" = (
 /obj/structure/chair/stool/directional/west,
@@ -19890,7 +19746,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
->>>>>>> gameshow
 "cIV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -23567,23 +23422,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/maintenance/external/aft)
-"dbv" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron,
-/area/commons/toilet/restrooms)
-=======
 /area/medical/medbay/central)
->>>>>>> gameshow
 "dbw" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -24076,25 +23915,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/commons/toilet/restrooms)
-"ddi" = (
-/obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-=======
 /area/medical/medbay/central)
->>>>>>> gameshow
 "ddj" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -24496,12 +24317,19 @@
 /area/commons/toilet/locker)
 "deG" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/toy/figure/paramedic{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/storage/pill_bottle/dice{
+	pixel_x = -4;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/medical/medbay/central)
@@ -24558,6 +24386,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
 	},
 /turf/open/floor/iron/white,
 /area/commons/locker)
@@ -25601,61 +25432,17 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
-<<<<<<< HEAD
-"djn" = (
-/obj/structure/table/reinforced,
-/obj/item/screwdriver,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-=======
->>>>>>> gameshow
 "djo" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/commons/storage/mining)
-"djp" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/turf/open/floor/iron,
-/area/maintenance/port)
-"djr" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos)
-=======
 /area/science/research/abandoned)
->>>>>>> gameshow
 "djs" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/commons/storage/tools)
-"djv" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
-/obj/structure/rack,
-/turf/open/floor/iron,
-/area/engineering/atmos)
-=======
 /area/science/research/abandoned)
->>>>>>> gameshow
 "djw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/mousetraps,
@@ -26146,12 +25933,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/abandoned_gambling_den)
-<<<<<<< HEAD
-"dle" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-=======
 "dlf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -26162,7 +25943,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
->>>>>>> gameshow
 "dlh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -26968,46 +26748,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/command/heads_quarters/hos)
-"dof" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-"doh" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/commons/storage/tools)
-"doj" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dol" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron/white,
-/area/commons/toilet/restrooms)
-"doo" = (
-/obj/structure/closet/crate,
-/obj/item/target/alien,
-/obj/item/target/alien,
-/obj/item/target/clown,
-/obj/item/target/clown,
-/obj/item/target/syndicate,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice,
-/turf/open/floor/iron/white,
-/area/science/misc_lab/range)
-=======
 /area/maintenance/starboard/aft)
 "doi" = (
 /obj/effect/turf_decal/stripes/line,
@@ -27023,7 +26763,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/science/research/abandoned)
->>>>>>> gameshow
 "doq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27293,16 +27032,7 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/command/heads_quarters/hos)
-"dpX" = (
-/obj/structure/training_machine,
-/obj/item/target/syndicate,
-/turf/open/floor/iron,
-/area/commons/storage/tools)
-=======
 /area/maintenance/starboard/aft)
->>>>>>> gameshow
 "dpY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -27527,18 +27257,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/commons/lounge)
-"drA" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-=======
 /area/hallway/secondary/construction)
->>>>>>> gameshow
 "drB" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -27556,38 +27275,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/space/nearstation)
-"drC" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
-/turf/open/floor/iron/white,
-/area/commons/toilet/locker)
-"drD" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/commons/toilet/restrooms)
-"drE" = (
-/obj/structure/sign/poster/official/build{
-	pixel_y = -32
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/iron/white,
-/area/commons/toilet/restrooms)
-"drF" = (
-/obj/machinery/vending/assist,
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/light_switch/directional/south,
-/turf/open/floor/iron/white,
-/area/engineering/atmos)
-=======
 /area/ai_monitored/aisat/exterior)
->>>>>>> gameshow
 "drG" = (
 /obj/machinery/light/directional/south,
 /obj/structure/reagent_dispensers/water_cooler,
@@ -30728,66 +30416,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/command/heads_quarters/rd)
-"dFz" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dFA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dFB" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/status_display/evac/directional/north,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/clothing/mask/gas,
-/obj/machinery/camera{
-	c_tag = "Science - Toxins Launch Site";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dFC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dFD" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dFE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/newscaster/directional/north,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = 26
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-=======
 /area/security/detectives_office/private_investigators_office)
->>>>>>> gameshow
 "dFI" = (
 /obj/item/assembly/signaler{
 	pixel_y = 8
@@ -31046,61 +30675,7 @@
 "dGX" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/space/nearstation)
-"dGY" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen/toxins{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"dHa" = (
-/obj/effect/landmark/xeno_spawn,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/science/misc_lab)
-"dHc" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-"dHe" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-"dHg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-=======
 /area/science/test_area)
->>>>>>> gameshow
 "dHh" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/toxins,
@@ -31324,28 +30899,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-<<<<<<< HEAD
-/area/space/nearstation)
-"dIj" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/iron,
-/area/science/misc_lab)
-"dIk" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-=======
 /area/science/test_area)
->>>>>>> gameshow
 "dIx" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -31727,67 +31281,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-<<<<<<< HEAD
-/area/space/nearstation)
-"dJJ" = (
-/obj/machinery/doppler_array/research/science{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/extinguisher_cabinet/directional/south{
-	pixel_x = -26
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-"dJK" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-"dJM" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-"dJN" = (
-/obj/machinery/research/explosive_compressor,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-"dJO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/obj/machinery/firealarm/directional/east,
-/turf/open/floor/iron,
-/area/science/misc_lab)
-"dJQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-"dJS" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-=======
 /area/science/test_area)
->>>>>>> gameshow
 "dJT" = (
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot,
@@ -31950,27 +31444,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-<<<<<<< HEAD
-/area/space/nearstation)
-"dKA" = (
-/obj/structure/sign/warning/vacuum,
-/turf/closed/wall,
-/area/commons/storage/tools)
-"dKC" = (
-/obj/machinery/door/window/southleft{
-	name = "Mass Driver Door";
-	req_access_txt = "8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
-	pixel_x = 28
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-=======
 /area/science/test_area)
->>>>>>> gameshow
 "dKE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -32304,54 +31778,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-<<<<<<< HEAD
-/area/cargo/miningdock)
-"dLI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/commons/storage/tools)
-"dLJ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/commons/storage/tools)
-"dLK" = (
-/obj/machinery/door/poddoor/massdriver_toxins,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/commons/storage/tools)
-"dLL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/commons/storage/mining)
-"dLN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/commons/storage/tools)
-"dLO" = (
-/obj/machinery/mass_driver/toxins{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/obj/effect/spawner/lootdrop/lootcrate,
-/turf/open/floor/iron,
-/area/commons/storage/tools)
-=======
 /area/science/test_area)
->>>>>>> gameshow
 "dLP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/fueltank,
@@ -32958,28 +32385,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/commons/storage/mining)
-"dOY" = (
-/obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/commons/storage/mining)
-=======
 /area/science/research)
->>>>>>> gameshow
 "dOZ" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -33049,15 +32455,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/commons/storage/primary)
-=======
 /area/medical/virology)
 "dPx" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
->>>>>>> gameshow
 "dPI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -36251,9 +35653,6 @@
 /obj/item/flashlight,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/plating,
-<<<<<<< HEAD
-/area/command/heads_quarters/captain)
-=======
 /area/maintenance/port/aft)
 "edS" = (
 /obj/structure/chair/stool/bar/directional/north,
@@ -36269,7 +35668,6 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
->>>>>>> gameshow
 "edX" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -37704,15 +37102,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
-<<<<<<< HEAD
-"eqQ" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron/white/corner,
-/area/command/gateway)
-=======
->>>>>>> gameshow
 "eqU" = (
 /turf/open/space,
 /area/space)
@@ -39242,27 +38631,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
-<<<<<<< HEAD
-"eMI" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/stool/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/engineering/break_room)
-=======
->>>>>>> gameshow
 "eMJ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -46184,22 +45552,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/engineering/engine_smes)
-"gGj" = (
-/obj/item/kirbyplants/random,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/maintenance/external/port/bow)
-"gGp" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3"
-	},
-/area/service/abandoned_gambling_den/secondary)
-=======
 /area/science/nanite)
->>>>>>> gameshow
 "gGK" = (
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 8
@@ -47773,13 +47126,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
-<<<<<<< HEAD
-"hfn" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/wood,
-/area/commons/dorms)
-=======
->>>>>>> gameshow
 "hfp" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -50186,17 +49532,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
-<<<<<<< HEAD
-/area/commons/dorms)
-"hNZ" = (
-/obj/structure/chair/office/light{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/maintenance/port)
-=======
 /area/commons/vacant_room/office)
->>>>>>> gameshow
 "hOg" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -56805,15 +56141,7 @@
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
-<<<<<<< HEAD
-/area/cargo/miningdock)
-"jAr" = (
-/obj/structure/chair/stool,
-/turf/open/floor/wood,
-/area/service/abandoned_gambling_den)
-=======
 /area/solars/starboard/fore)
->>>>>>> gameshow
 "jAt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -57132,43 +56460,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
-<<<<<<< HEAD
-"jEi" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/science/misc_lab)
-"jEz" = (
-/obj/machinery/camera{
-	c_tag = "Science - Firing Range";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
-/obj/structure/table/reinforced,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/iron/white,
-/area/commons/toilet/locker)
-"jEC" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/maintenance/aft)
-=======
->>>>>>> gameshow
 "jEG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
@@ -57956,9 +57247,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/maintenance/external/aft)
-=======
 /area/service/hydroponics)
 "jOV" = (
 /obj/effect/turf_decal/tile/red{
@@ -57974,7 +57262,6 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
->>>>>>> gameshow
 "jOW" = (
 /obj/structure/sign/warning/nosmoking,
 /turf/closed/wall,
@@ -59708,9 +58995,6 @@
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/engineering/atmospherics_engine)
-=======
 /area/cargo/miningoffice)
 "kno" = (
 /obj/structure/chair/stool/directional/west,
@@ -59728,7 +59012,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
->>>>>>> gameshow
 "knt" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/decal/cleanable/dirt,
@@ -60599,21 +59882,6 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
-<<<<<<< HEAD
-"kxv" = (
-/obj/structure/chair/stool,
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron,
-/area/command/heads_quarters/hop)
-"kxA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/departments/medbay/alt,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/commons/lounge)
-=======
->>>>>>> gameshow
 "kxN" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet,
@@ -61417,19 +60685,7 @@
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
-<<<<<<< HEAD
-/area/commons/toilet/restrooms)
-"kIA" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 1
-	},
-/area/command/heads_quarters/captain)
-=======
 /area/engineering/atmos)
->>>>>>> gameshow
 "kIC" = (
 /obj/structure/table/wood,
 /obj/item/instrument/guitar,
@@ -64326,16 +63582,6 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-<<<<<<< HEAD
-/area/medical/break_room)
-"ltt" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/maintenance/starboard/central)
-=======
 /area/command/corporate_showroom)
 "ltn" = (
 /obj/structure/chair/stool/directional/south,
@@ -64351,7 +63597,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
->>>>>>> gameshow
 "ltx" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
@@ -65277,14 +64522,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/engineering/lobby)
-"lHz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/engineering/lobby)
-=======
 /area/service/bar/atrium)
 "lHp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -65292,7 +64529,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
->>>>>>> gameshow
 "lHI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -65375,9 +64611,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/commons/locker)
-=======
 /area/service/theater/abandoned)
 "lIN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -65385,7 +64618,6 @@
 	},
 /turf/closed/wall,
 /area/engineering/atmos)
->>>>>>> gameshow
 "lIP" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck Control";
@@ -66727,9 +65959,6 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/maintenance/starboard/fore)
-=======
 /area/hallway/primary/fore)
 "map" = (
 /obj/effect/turf_decal/stripes/line{
@@ -66737,7 +65966,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab)
->>>>>>> gameshow
 "mat" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
@@ -70544,6 +69772,12 @@
 "mZD" = (
 /turf/closed/wall,
 /area/engineering/atmos)
+"mZH" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/iron/grimy,
+/area/commons/vacant_room/office)
 "mZW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -72059,9 +71293,6 @@
 /obj/item/clipboard,
 /obj/item/electronics/apc,
 /turf/open/floor/wood,
-<<<<<<< HEAD
-/area/commons/locker)
-=======
 /area/service/electronic_marketing_den)
 "nsn" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -72075,7 +71306,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
->>>>>>> gameshow
 "nsp" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -73072,16 +72302,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/engineering/break_room)
-<<<<<<< HEAD
-"nDZ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/spawner/lootdrop/lootcrate,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-=======
->>>>>>> gameshow
 "nEf" = (
 /obj/structure/table/wood,
 /obj/item/clothing/head/papersack/smiley,
@@ -74717,9 +73937,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/medical/break_room)
-=======
 /area/ai_monitored/command/storage/eva)
 "nXC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -74727,7 +73944,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
->>>>>>> gameshow
 "nXD" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light_switch/directional/west,
@@ -75437,6 +74653,7 @@
 	c_tag = "Vacant Office";
 	dir = 1
 	},
+/obj/item/toy/figure/assistant,
 /turf/open/floor/iron/grimy,
 /area/commons/vacant_room/office)
 "oft" = (
@@ -75928,28 +75145,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-<<<<<<< HEAD
-"okL" = (
-/obj/structure/chair/stool,
-/obj/effect/landmark/start/assistant,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/commons/locker)
-=======
->>>>>>> gameshow
 "okN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -77405,12 +76600,6 @@
 "oDi" = (
 /obj/machinery/air_sensor/atmos/nitrogen_tank,
 /turf/open/floor/engine/n2,
-<<<<<<< HEAD
-/area/engineering/engine_smes)
-"oDl" = (
-/turf/open/floor/iron/grimy,
-/area/engineering/lobby)
-=======
 /area/engineering/atmos)
 "oDB" = (
 /obj/machinery/door/window/southleft{
@@ -77424,7 +76613,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
->>>>>>> gameshow
 "oDC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -77465,23 +76653,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/construction)
-<<<<<<< HEAD
-"oEu" = (
-/obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-=======
->>>>>>> gameshow
 "oEw" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue{
@@ -77600,19 +76771,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/commons/storage/mining)
-"oFL" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/command/heads_quarters/ce)
-=======
 /area/engineering/atmos)
 "oFL" = (
 /obj/effect/turf_decal/stripes/line{
@@ -77620,7 +76778,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
->>>>>>> gameshow
 "oFV" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -79946,30 +79103,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
-<<<<<<< HEAD
-"pkB" = (
-/obj/structure/chair/stool,
-/obj/effect/landmark/start/assistant,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/supermatter)
-"pkG" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/engineering/main)
-=======
->>>>>>> gameshow
 "pkM" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -80219,13 +79352,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/commons/cryopods)
-<<<<<<< HEAD
-"pmQ" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-=======
->>>>>>> gameshow
 "pmV" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
@@ -81648,9 +80774,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/engineering/lobby)
-=======
 /area/cargo/storage)
 "pHC" = (
 /obj/structure/chair/stool/directional/east,
@@ -81670,7 +80793,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
->>>>>>> gameshow
 "pHV" = (
 /obj/structure/table/glass,
 /obj/item/folder/yellow,
@@ -83631,15 +82753,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-<<<<<<< HEAD
-"qhc" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-=======
->>>>>>> gameshow
 "qhd" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -87756,24 +86869,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/engineering/atmos)
-<<<<<<< HEAD
-"rfb" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/stool/bar,
-/turf/open/floor/iron,
-/area/maintenance/aft)
-=======
->>>>>>> gameshow
 "rfe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -87958,9 +87053,6 @@
 "rgL" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
-<<<<<<< HEAD
-/area/engineering/engine_smes)
-=======
 /area/ai_monitored/command/nuke_storage)
 "rgO" = (
 /obj/structure/chair/stool/directional/west,
@@ -87977,7 +87069,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
->>>>>>> gameshow
 "rgQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/engine,
@@ -91166,6 +90257,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/item/toy/figure/prisoner,
 /turf/open/floor/iron/dark,
 /area/security/execution/education)
 "rZb" = (
@@ -91653,9 +90745,6 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/medical/chemistry)
-=======
 /area/hallway/secondary/command)
 "sfm" = (
 /obj/structure/cable,
@@ -91679,7 +90768,6 @@
 	heat_capacity = 1e+006
 	},
 /area/science/misc_lab/range)
->>>>>>> gameshow
 "sfo" = (
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/engine/vacuum,
@@ -93675,20 +92763,9 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/engineering/atmos)
-"sDw" = (
-/obj/structure/chair/stool/bar,
-/obj/machinery/light/small/directional/west,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/grimy,
-=======
 /area/engineering/main)
 "sDz" = (
 /turf/closed/wall,
->>>>>>> gameshow
 /area/command/heads_quarters/hop)
 "sDD" = (
 /obj/effect/decal/cleanable/dirt,
@@ -94963,30 +94040,6 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos)
-<<<<<<< HEAD
-"sTI" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/locker)
-"sTT" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/cargo/sorting)
-"sTX" = (
-/obj/machinery/power/solar{
-	id = "aftstarboard";
-	name = "Aft-Starboard Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
-/area/command/heads_quarters/captain)
-=======
->>>>>>> gameshow
 "sUa" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/departments/medbay/alt,
@@ -97704,9 +96757,6 @@
 	},
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/command/heads_quarters/captain)
-=======
 /area/service/chapel/office)
 "tDV" = (
 /turf/open/floor/engine/vacuum,
@@ -97716,7 +96766,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
->>>>>>> gameshow
 "tDX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
@@ -98234,19 +97283,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/escape)
-<<<<<<< HEAD
-"tKa" = (
-/obj/structure/chair/stool,
-/obj/structure/window{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/cmo)
-=======
->>>>>>> gameshow
 "tKi" = (
 /obj/structure/chair/sofa/left{
 	dir = 8
@@ -98468,19 +97504,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)
-<<<<<<< HEAD
-"tMk" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/commons/toilet/auxiliary)
-"tMl" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall,
-/area/engineering/lobby)
-=======
->>>>>>> gameshow
 "tMm" = (
 /obj/machinery/photocopier,
 /obj/effect/turf_decal/tile/neutral{
@@ -99517,25 +98540,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
-<<<<<<< HEAD
-/area/medical/coldroom)
-"tYC" = (
-/obj/machinery/status_display/ai,
-/turf/closed/wall,
-/area/commons/storage/mining)
-"tYX" = (
-/obj/structure/chair/stool/bar,
-/obj/structure/sign/poster/random{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/grimy,
-/area/service/bar/atrium)
-=======
 /area/command/heads_quarters/hop)
 "tYJ" = (
 /turf/closed/wall/r_wall,
 /area/command/teleporter)
->>>>>>> gameshow
 "tZP" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/cigar/cohiba{
@@ -101346,17 +100354,6 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
-<<<<<<< HEAD
-/area/engineering/main)
-"uxW" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/maintenance/starboard/upper)
-=======
 /area/hallway/primary/port)
 "uxQ" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -101370,7 +100367,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
->>>>>>> gameshow
 "uyh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown,
@@ -107579,18 +106575,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/command/heads_quarters/ce)
-"wed" = (
-/turf/open/floor/iron/grimy,
-/area/engineering/supermatter)
-"wei" = (
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/white,
-/area/science/misc_lab/range)
-=======
 /area/commons/fitness/recreation)
->>>>>>> gameshow
 "wew" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -108408,38 +107393,12 @@
 	},
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark,
-<<<<<<< HEAD
-/area/commons/storage/primary)
-"wpO" = (
-/obj/effect/spawner/randomarcade{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/commons/storage/primary)
-"wpS" = (
-/obj/structure/table/reinforced,
-/obj/item/phone{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/food/drinks/britcup{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/turf/open/floor/iron,
-/area/commons/storage/tools)
-=======
 /area/commons/locker)
 "wpR" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
->>>>>>> gameshow
 "wpW" = (
 /turf/closed/wall/r_wall,
 /area/command/heads_quarters/hop)
@@ -109340,18 +108299,6 @@
 /obj/item/clipboard,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
-<<<<<<< HEAD
-"wAA" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/r_wall,
-/area/engineering/break_room)
-"wAU" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/open/space,
-/area/command/heads_quarters/cmo)
-=======
->>>>>>> gameshow
 "wAZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -114236,14 +113183,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
-<<<<<<< HEAD
-"xTD" = (
-/obj/structure/chair/stool/bar,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/engineering/lobby)
-=======
->>>>>>> gameshow
 "xTK" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -114277,26 +113216,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/storage_shared)
-<<<<<<< HEAD
-"xUH" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/structure/chair/stool/bar{
-	dir = 1
-	},
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron,
-/area/engineering/break_room)
-=======
->>>>>>> gameshow
 "xUM" = (
 /obj/structure/plaque/static_plaque/golden/captain{
 	pixel_x = 32
@@ -114555,11 +113474,12 @@
 	},
 /obj/effect/landmark/start/captain,
 /turf/open/floor/iron/grimy,
-/area/maintenance/external/port/bow)
-"xYh" = (
-/obj/structure/grille,
-/turf/closed/wall/r_wall,
-/area/command/heads_quarters/ce)
+/area/command/heads_quarters/captain)
+"xYl" = (
+/obj/structure/lattice,
+/obj/item/toy/figure/ninja,
+/turf/open/space,
+/area/space/nearstation)
 "xYr" = (
 /obj/machinery/light_switch/directional/west,
 /obj/structure/table/reinforced,
@@ -133999,8 +132919,6 @@ aad
 aad
 aad
 aad
-<<<<<<< HEAD
-=======
 ish
 pRv
 ole
@@ -134008,7 +132926,6 @@ uJw
 rAA
 fET
 ish
->>>>>>> gameshow
 aad
 aaa
 qYo
@@ -134186,8 +133103,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 jjm
 aFr
 mVI
@@ -134285,7 +133200,6 @@ nPM
 nPM
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -134492,8 +133406,6 @@ aaa
 (71,1,1) = {"
 aaa
 aaa
-<<<<<<< HEAD
-=======
 ajr
 aad
 eBF
@@ -134594,7 +133506,6 @@ nPM
 aad
 ajr
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -135010,8 +133921,6 @@ aad
 rfe
 aad
 aad
-<<<<<<< HEAD
-=======
 vFd
 orZ
 iGx
@@ -135096,7 +134005,6 @@ jgK
 wFi
 kqi
 nPM
->>>>>>> gameshow
 aad
 aaa
 aad
@@ -135255,8 +134163,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 lYc
 pcP
 aGQ
@@ -135354,7 +134260,6 @@ uAx
 ish
 ish
 ish
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -135560,8 +134465,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 rSK
 qYo
 aad
@@ -135673,7 +134576,6 @@ lsT
 ahe
 fET
 ish
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -135880,8 +134782,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 mIc
 iqM
 fph
@@ -135993,7 +134893,6 @@ fSA
 nPM
 aad
 abj
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -136217,8 +135116,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 mIc
 hfC
 fph
@@ -136328,7 +135225,6 @@ hak
 fET
 uty
 ish
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -136539,8 +135435,6 @@ aaa
 aaa
 aaa
 qYo
-<<<<<<< HEAD
-=======
 aFs
 aGU
 aIt
@@ -136584,7 +135478,6 @@ ksX
 dwO
 mIK
 fAl
->>>>>>> gameshow
 xPF
 qAm
 rdH
@@ -136615,8 +135508,6 @@ caE
 ign
 caE
 caE
-<<<<<<< HEAD
-=======
 iVI
 kfO
 mDX
@@ -136635,7 +135526,6 @@ oxk
 nPM
 aad
 abj
->>>>>>> gameshow
 aad
 aad
 aaa
@@ -136833,51 +135723,6 @@ ajr
 ajr
 aad
 ajr
-<<<<<<< HEAD
-ajr
-ajr
-ajr
-ajr
-aad
-ajr
-aad
-aad
-aad
-let
-xeo
-nGS
-eZu
-gDQ
-oWZ
-eCo
-vka
-vka
-kxX
-pJJ
-kxX
-vdR
-kxX
-oLh
-oLh
-wZs
-oLh
-wZs
-oLh
-oLh
-oLh
-eKA
-glz
-ulh
-ulh
-uao
-wqK
-vXq
-wWd
-hxm
-wWd
-iAa
-sHo
-=======
 mIc
 vsT
 cAy
@@ -136956,7 +135801,6 @@ wTm
 dVe
 aOl
 kIE
->>>>>>> gameshow
 xPF
 qpq
 ceb
@@ -136974,25 +135818,6 @@ hiu
 nIl
 ddD
 caE
-<<<<<<< HEAD
-aad
-ajr
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-=======
 ahe
 kfO
 bOv
@@ -137009,7 +135834,6 @@ fJD
 ahe
 uXJ
 ish
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -137190,8 +136014,6 @@ aaa
 aad
 aaa
 aad
-<<<<<<< HEAD
-=======
 fOP
 hLW
 qHt
@@ -137300,7 +136122,6 @@ lEd
 ish
 ish
 ish
->>>>>>> gameshow
 aaa
 aad
 aaa
@@ -137581,8 +136402,6 @@ aad
 aad
 cWs
 aad
-<<<<<<< HEAD
-=======
 iqM
 iqM
 iqM
@@ -137647,7 +136466,6 @@ qtg
 eJC
 eJC
 xul
->>>>>>> gameshow
 xPF
 bQG
 gCD
@@ -137675,23 +136493,6 @@ ceb
 yfF
 cMO
 cMO
-<<<<<<< HEAD
-cMO
-cMO
-cMO
-cMO
-cMO
-cMO
-cMO
-xNh
-cfT
-caE
-aad
-aad
-aaa
-ish
-ish
-=======
 kLZ
 gmc
 xra
@@ -137708,7 +136509,6 @@ cvn
 hgo
 wFi
 pAO
->>>>>>> gameshow
 nPM
 ish
 nPM
@@ -137924,8 +136724,6 @@ pIZ
 aad
 cWs
 aad
-<<<<<<< HEAD
-=======
 fbQ
 rTO
 rum
@@ -138001,7 +136799,6 @@ xPF
 xPF
 xPF
 wTm
->>>>>>> gameshow
 xPF
 bQG
 gCD
@@ -138567,8 +137364,6 @@ ygx
 xcq
 xzZ
 nPM
-<<<<<<< HEAD
-=======
 nPM
 nPM
 nPM
@@ -138585,7 +137380,6 @@ dhQ
 dhQ
 dhQ
 dhQ
->>>>>>> gameshow
 aad
 ajr
 ajr
@@ -138738,83 +137532,6 @@ aad
 ajr
 aad
 aaa
-<<<<<<< HEAD
-aad
-aaa
-aad
-aaa
-aad
-ajr
-aad
-ajr
-ajr
-aad
-jjm
-aFr
-mVI
-aIp
-qiG
-aFr
-aFq
-niz
-aJH
-aFq
-abj
-vFd
-gse
-ikU
-uWU
-vFd
-rcU
-xJA
-tcF
-vFd
-mjZ
-wYE
-gmN
-vFd
-tDV
-tDV
-wNz
-vFd
-mOB
-mLw
-uTr
-tak
-uJe
-rGw
-eLv
-oUf
-pIZ
-hbO
-ptk
-wQx
-xDI
-nPG
-oRe
-sXh
-xPF
-nTX
-otP
-otP
-otP
-otP
-vNO
-wTm
-rKr
-hhS
-hWu
-rgQ
-uqa
-wrL
-tLP
-vyP
-eZx
-pDs
-hpb
-wnE
-xPF
-=======
 cJl
 fuB
 mdD
@@ -138890,42 +137607,8 @@ mUD
 eWR
 mUD
 eqe
->>>>>>> gameshow
 tXV
 tXV
-<<<<<<< HEAD
-cjp
-vyo
-cMO
-tbj
-iUP
-lir
-pDj
-cVr
-xEC
-xKu
-cMP
-oOe
-cea
-caE
-igc
-gXC
-vTj
-xLu
-mCz
-mCz
-mZd
-mCz
-pzz
-kBX
-sQY
-vKW
-uxo
-ish
-aad
-aad
-aad
-=======
 cJX
 qCY
 gmc
@@ -138957,7 +137640,6 @@ dAp
 dBT
 dDg
 dhQ
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -139184,36 +137866,6 @@ wnE
 eyE
 fqV
 hnN
-<<<<<<< HEAD
-cJM
-eCZ
-cMO
-cOs
-cQi
-cRD
-cTq
-cVs
-dXI
-peM
-cMO
-jIv
-ddH
-caE
-xHT
-fcw
-hgo
-pQp
-ahe
-rCn
-lOV
-uxo
-fET
-lsT
-jgK
-wFi
-kqi
-nPM
-=======
 tXV
 jRF
 oMh
@@ -139254,7 +137906,6 @@ dpZ
 dBU
 djo
 dhQ
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -139407,116 +138058,6 @@ qYo
 aaa
 aad
 aaa
-<<<<<<< HEAD
-eqU
-aaa
-eqU
-aaa
-aaa
-eqU
-aaa
-aaa
-aaa
-aaa
-lYc
-pcP
-aGQ
-aIr
-hZo
-aLe
-aMz
-hTt
-aPB
-aFs
-abj
-vFd
-aUp
-jEV
-nZf
-vFd
-aUp
-jEV
-nZf
-vFd
-aUp
-jEV
-nZf
-vFd
-nZf
-jEV
-gLS
-vFd
-mOB
-mLw
-htv
-vHV
-uJe
-pJd
-rch
-oUf
-pIZ
-odU
-uFq
-sJx
-xDI
-uZA
-xCx
-oCQ
-xPF
-otP
-otP
-vyR
-otP
-otP
-lON
-lgs
-oZO
-ezC
-qzf
-qzf
-tSQ
-qzf
-qzf
-qzf
-qzf
-hdp
-miV
-ren
-iev
-byf
-kep
-cJN
-jJY
-cMO
-cMO
-cQj
-cMO
-cQj
-cMO
-cQj
-cMO
-cMO
-gPx
-cjp
-caE
-ipD
-dkX
-obm
-oWX
-jho
-jho
-jho
-jho
-jho
-naG
-jgK
-heL
-uAx
-ish
-ish
-ish
-aaa
-=======
 cJl
 weP
 xPL
@@ -139633,7 +138174,6 @@ dpY
 dxL
 dhQ
 aad
->>>>>>> gameshow
 aad
 ajr
 aaa
@@ -139861,37 +138401,6 @@ eyE
 apH
 hnN
 cea
-<<<<<<< HEAD
-lKe
-cMO
-cOt
-cQk
-cRF
-cTr
-cVt
-cWL
-cYC
-cMO
-moY
-ddI
-caE
-fXi
-uLz
-lBN
-inK
-wFi
-wFi
-nCS
-nCS
-fET
-pSE
-iah
-lsT
-lsT
-ahe
-fET
-ish
-=======
 kEw
 tCh
 mLI
@@ -139914,7 +138423,6 @@ aaa
 abj
 aad
 aad
->>>>>>> gameshow
 aaa
 aad
 ajr
@@ -140028,8 +138536,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 iqM
 jiB
 iqZ
@@ -140148,7 +138654,6 @@ dhQ
 aad
 aad
 abj
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -140364,8 +138869,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 ajr
 aad
 rSK
@@ -140486,7 +138989,6 @@ doi
 don
 dhQ
 aad
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -140706,8 +139208,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 cJl
 eEQ
 xNR
@@ -140825,7 +139325,6 @@ dun
 dhQ
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -140930,8 +139429,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 ajr
 aad
 ajr
@@ -141055,7 +139552,6 @@ dDi
 dhQ
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -141318,12 +139814,6 @@ aaa
 ajr
 aad
 ajr
-<<<<<<< HEAD
-ajr
-ajr
-ajr
-ajr
-=======
 aaa
 qYo
 aaa
@@ -141442,7 +139932,6 @@ dzh
 dBW
 dDj
 dhQ
->>>>>>> gameshow
 aad
 ajr
 mIc
@@ -141686,8 +140175,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 cJl
 eEQ
 wLZ
@@ -141805,7 +140292,6 @@ dDk
 dhQ
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -141998,8 +140484,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 ajr
 aad
 aad
@@ -142126,7 +140610,6 @@ aaa
 aaa
 aaa
 aad
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -143090,11 +141573,6 @@ dhQ
 dhQ
 dhQ
 aad
-<<<<<<< HEAD
-ajr
-aaa
-aaa
-=======
 saw
 skA
 skA
@@ -143117,7 +141595,6 @@ aad
 aad
 aad
 aad
->>>>>>> gameshow
 aad
 aaa
 aad
@@ -143356,23 +141833,6 @@ exk
 swm
 pfQ
 caE
-<<<<<<< HEAD
-djn
-dle
-saw
-dog
-nDZ
-drz
-saw
-dul
-dvZ
-dxH
-qiJ
-dAp
-dBT
-dDg
-dhQ
-=======
 xjb
 cMY
 cNd
@@ -143433,7 +141893,6 @@ ecm
 eal
 aad
 aad
->>>>>>> gameshow
 aad
 ajr
 aaa
@@ -143692,11 +142151,6 @@ dBU
 djo
 dhQ
 aad
-<<<<<<< HEAD
-aaa
-aaa
-aaa
-=======
 skA
 nXC
 lra
@@ -143727,7 +142181,6 @@ ecn
 eal
 dOM
 dOM
->>>>>>> gameshow
 aad
 aaa
 aad
@@ -144023,8 +142476,6 @@ mdV
 jgb
 mdV
 aaa
-<<<<<<< HEAD
-=======
 saw
 emq
 cBP
@@ -144058,7 +142509,6 @@ edl
 aad
 ajr
 ajr
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -144256,26 +142706,6 @@ cNd
 cNd
 cNd
 cMY
-<<<<<<< HEAD
-cea
-kEw
-caE
-qpq
-qpq
-saw
-qhc
-rCv
-drA
-saw
-dum
-dli
-dpZ
-dzf
-dAq
-dpY
-dDh
-dhQ
-=======
 djD
 hrT
 drK
@@ -144320,7 +142750,6 @@ dLW
 ecv
 edf
 edl
->>>>>>> gameshow
 aad
 aaa
 abj
@@ -144603,8 +143032,6 @@ aad
 ajr
 aad
 aad
-<<<<<<< HEAD
-=======
 veG
 iqz
 vqp
@@ -144707,7 +143134,6 @@ dLY
 dLY
 dLY
 dLY
->>>>>>> gameshow
 aad
 aad
 aad
@@ -144819,9 +143245,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-ajr
-=======
 tXR
 lZt
 cXR
@@ -144865,7 +143288,6 @@ alf
 alf
 bqs
 sPw
->>>>>>> gameshow
 aaa
 ajr
 aad
@@ -144987,8 +143409,6 @@ doi
 don
 dhQ
 aad
-<<<<<<< HEAD
-=======
 saw
 puE
 ujY
@@ -145026,7 +143446,6 @@ ajr
 aaa
 ajr
 aaa
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -145268,23 +143687,6 @@ cMY
 deX
 joJ
 caE
-<<<<<<< HEAD
-xMn
-dok
-saw
-jEz
-eJF
-drC
-saw
-duo
-dmu
-eMD
-sBM
-dxM
-doi
-dun
-dhQ
-=======
 saw
 saw
 saw
@@ -145319,7 +143721,6 @@ eeo
 eff
 aad
 ajr
->>>>>>> gameshow
 aad
 ajr
 aaa
@@ -145563,22 +143964,6 @@ deY
 oAw
 caE
 cea
-<<<<<<< HEAD
-djr
-saw
-dol
-myW
-drD
-saw
-dup
-dlg
-dxL
-sBM
-dAs
-dpY
-dDi
-dhQ
-=======
 dEo
 kVu
 wrZ
@@ -145611,7 +143996,6 @@ ecL
 edL
 eep
 eff
->>>>>>> gameshow
 aad
 ajr
 aaa
@@ -145841,42 +144225,6 @@ tFK
 wCk
 cMY
 cMY
-<<<<<<< HEAD
-wzY
-cMY
-cXa
-cTC
-cVD
-cWX
-cYM
-dar
-enx
-cMY
-cjp
-hST
-caE
-cea
-cea
-saw
-wei
-fQl
-drE
-saw
-duq
-dlh
-dxM
-wcg
-dzh
-dBW
-dDj
-dhQ
-aad
-ajr
-aaa
-aaa
-aad
-aaa
-=======
 djI
 wjF
 dmI
@@ -145923,7 +144271,6 @@ edh
 edM
 eeq
 dLY
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -146197,8 +144544,6 @@ ajr
 ajr
 aad
 aad
-<<<<<<< HEAD
-=======
 vqp
 jhN
 uHf
@@ -146298,7 +144643,6 @@ edi
 edN
 dOM
 dLY
->>>>>>> gameshow
 aad
 aad
 jgb
@@ -146548,8 +144892,6 @@ aad
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 kfc
 kmg
 pNE
@@ -146696,7 +145038,6 @@ edj
 edO
 eer
 dLY
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -146821,96 +145162,6 @@ aaa
 aaa
 ajr
 aaa
-<<<<<<< HEAD
-ajr
-aad
-rSK
-qYo
-iqM
-ioU
-wLZ
-wLZ
-xNR
-wLZ
-ylo
-rcv
-aPa
-qxG
-cyD
-uXM
-wLZ
-irL
-wLZ
-wLZ
-nXp
-twf
-faJ
-sdO
-oMW
-bEW
-qNT
-awb
-iZY
-ipq
-mnY
-gCB
-ipq
-ooJ
-bGZ
-mDy
-gOp
-fgn
-qwx
-bIM
-uvq
-fgn
-cPj
-txZ
-kPH
-iem
-vgF
-ndV
-jmq
-szg
-yeR
-ccm
-xRn
-gqE
-kPH
-uqQ
-vXh
-vLj
-bMc
-bOh
-bQe
-bSn
-bUh
-bWx
-bYG
-bOf
-gOY
-leM
-maI
-xnj
-tXV
-ckK
-cmf
-tXV
-vfU
-wnb
-onJ
-puN
-uly
-tFK
-tLk
-xtg
-wQI
-fVF
-tOW
-oYf
-wVG
-tFK
-=======
 tXR
 fWi
 tht
@@ -146995,7 +145246,6 @@ iNf
 nJo
 cea
 cjp
->>>>>>> gameshow
 wCk
 cMY
 cNb
@@ -147169,123 +145419,6 @@ ajr
 aad
 qYo
 aaa
-<<<<<<< HEAD
-iqM
-iqM
-cJl
-cJl
-cJl
-cJl
-cJl
-iqM
-iqM
-xwC
-wLZ
-xNR
-xNR
-irL
-wLZ
-wLZ
-nXp
-twf
-awb
-mBn
-mBn
-xpD
-xpD
-tyw
-kPH
-kPH
-wQP
-xOM
-xXs
-kne
-uNG
-pDE
-xXs
-rFD
-uNG
-pDE
-xXs
-rFD
-kPH
-tdb
-kPH
-aDn
-jVn
-pLD
-okK
-seW
-oCU
-lxM
-fgq
-oOH
-kPH
-syY
-uai
-eae
-bOf
-bOi
-bQf
-bOf
-bUi
-bWy
-bYH
-bQg
-qyj
-eHv
-lIU
-oVk
-tXV
-ckL
-sqY
-tXV
-vfU
-bin
-fcG
-fdk
-uly
-tFK
-tFK
-tFK
-tFK
-tFK
-tFK
-tFK
-tFK
-tFK
-otJ
-cMY
-cMY
-cMY
-cMY
-cMY
-cMY
-jSw
-cXb
-cYP
-cMY
-cMY
-cMY
-dfb
-dgq
-cMY
-djx
-eCM
-dmA
-epU
-nty
-drG
-gCK
-dhQ
-dhS
-dhQ
-ihd
-dhQ
-dhQ
-dhQ
-dhQ
-=======
 kfc
 nsj
 xWJ
@@ -147432,7 +145565,6 @@ dYu
 dLW
 eet
 eff
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -149097,8 +147229,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 abf
 iQJ
 ajW
@@ -149254,7 +147384,6 @@ hAD
 hCR
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -149508,89 +147637,78 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-tXR
-lZt
-cXR
-gdO
-aKU
-aKU
-tXR
-arG
-arC
-avp
-awn
-axI
-ayU
-etu
-oJi
-qsP
-qsP
-kmT
-gBt
-sfI
-aIH
-ary
-alf
-alf
-alf
-alf
-alf
-aqV
-aqV
-aqV
-alf
-aqV
-aqV
-aqV
-alf
-aqV
-aqV
-aqV
-alf
-alf
-alf
-bqs
-sPw
-aaa
-iqz
-rWP
-mzQ
-iqz
-kOP
-aIu
-jQH
-tEE
-iLY
-wHh
-agh
-aIu
-iED
-sPw
-lZn
+aad
+aad
+aad
+aad
+aad
+aad
+aad
+aad
+aaO
+tRN
+ajX
+ldY
+oLJ
+gNW
+vAo
+gQS
+xJg
+mZH
+ldY
+alg
+gvd
+aug
+aug
+wqc
+arB
+avm
+alg
+dHX
+aDI
+aDG
+mNP
+aFW
+aDI
+aIQ
+gYZ
+aLF
+pwZ
+nwW
+nDa
+gqQ
+fqn
+gUR
+pwZ
+wBb
+qZr
+vtW
+pUO
+pwm
+qZr
+kYo
+rcK
+tVf
+gkn
+qPM
+sGh
+sGh
+pOb
+jbH
+lQO
+qZr
+gvd
+tst
+oSc
+tnc
+vyQ
+fbj
+eUy
+vyQ
+tho
+uJM
+tst
+hWc
 bWD
 uxO
 caE
@@ -151305,173 +149423,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-agS
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-kfc
-nsj
-xWJ
-hFt
-nMv
-jXt
-tXR
-bvm
-alf
-avt
-alg
-axN
-ayY
-etu
-oJi
-kmT
-qsP
-kmT
-hTo
-sfI
-gvd
-aKk
-vNR
-lxv
-tPM
-xTD
-chr
-xRY
-vHY
-vNR
-dHX
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-qZr
-dHX
-tst
-tst
-tst
-tst
-tst
-tst
-tst
-tst
-tst
-tst
-ooH
-bWD
-aam
-nJo
-tSS
-mFG
-vmj
-nJo
-xUO
-chR
-tpf
-tQq
-plY
-tQq
-ybZ
-mNh
-nJo
-rtJ
-uyv
-nDV
-tVz
-lxk
-pVn
-nJo
-ceb
-cjp
-wss
-cMY
-cNh
-cOO
-sWA
-llu
-tfT
-kgo
-pKR
-rvX
-daC
-dcq
-cTT
-dfd
-dgv
-cQM
-djM
-cNq
-dmL
-qYs
-dqu
-jSe
-dtj
-xmt
-wkG
-dxQ
-dzu
-dAx
-bfC
-wcu
-qKp
-ePP
-mrY
-uwB
-dJU
-drP
-dLU
-dQA
-qoX
-ert
-ert
-ert
-ert
-ert
-esF
-ert
-tkH
-wtc
-prZ
-tSb
-tyz
-ert
-nbF
-eap
-eaX
-=======
 fFy
 jWj
 uNS
@@ -151552,7 +149503,6 @@ hDz
 dPR
 dfm
 gKO
->>>>>>> gameshow
 dYu
 ect
 ecO
@@ -151823,8 +149773,6 @@ aaa
 aad
 aaa
 aaa
-<<<<<<< HEAD
-=======
 abf
 eWE
 aka
@@ -151874,11 +149822,8 @@ vrq
 haj
 jRM
 twc
->>>>>>> gameshow
 aaa
 aaa
-<<<<<<< HEAD
-=======
 fFy
 iLS
 nzz
@@ -151984,7 +149929,6 @@ aad
 ajr
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -152078,9 +150022,6 @@ aaO
 aaO
 ehy
 aaO
-<<<<<<< HEAD
-aaa
-=======
 abf
 abf
 hTb
@@ -152131,7 +150072,6 @@ wxO
 rAe
 owE
 vPh
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -152653,156 +150593,6 @@ aiQ
 abZ
 aju
 ajV
-<<<<<<< HEAD
-abf
-alg
-alW
-amW
-alg
-aoW
-alg
-alf
-arz
-lCh
-auf
-arB
-awv
-axQ
-alf
-sTz
-jFZ
-aDI
-aDI
-aDI
-aDI
-aDI
-aDI
-aDI
-aDI
-pwZ
-pwZ
-pwZ
-vKa
-pwZ
-pwZ
-pwZ
-wBb
-qZr
-sjo
-kLl
-uKt
-qfw
-jZU
-ceG
-rrT
-haE
-uwy
-mDE
-gpC
-wJU
-mDk
-xaP
-qZr
-dHX
-bBs
-hEX
-lep
-ksz
-ybP
-gXU
-qEu
-bhf
-oJh
-pgZ
-sMC
-bWD
-bYO
-nJo
-mhX
-mFG
-ycz
-nJo
-etU
-hcc
-ybZ
-vcW
-gxv
-lxr
-fVp
-qGH
-nJo
-ssD
-nbt
-pAm
-nJo
-tHl
-dhg
-tDX
-jSd
-sfG
-qrt
-cMY
-cMY
-cMY
-cMY
-cMY
-cTV
-cVT
-cXm
-cZb
-cXm
-dcu
-ddV
-cMY
-drW
-cQM
-vaR
-cOR
-cOR
-xdD
-xdD
-xdD
-xdD
-qGJ
-xdD
-fno
-eTv
-kdX
-oIl
-drP
-drP
-drP
-drQ
-ccL
-dJY
-drP
-dLY
-dLY
-dLY
-dLY
-dPI
-sEJ
-vYt
-nPB
-nPB
-nPB
-nPB
-nPB
-nPB
-nPB
-nPB
-nPB
-dLX
-dLW
-dLW
-dLW
-ecv
-sxV
-edl
-aad
-aad
-aad
-=======
 akE
 akE
 akE
@@ -152850,7 +150640,6 @@ nih
 jRM
 twc
 aaa
->>>>>>> gameshow
 aad
 aad
 aad
@@ -152940,156 +150729,6 @@ abD
 abZ
 abD
 abD
-<<<<<<< HEAD
-uBh
-qzU
-qzU
-qzU
-qzU
-qzU
-qzU
-qzU
-qzU
-lis
-skT
-skT
-skT
-gOL
-skT
-rXs
-xTx
-lYa
-snL
-kIj
-iZQ
-bIc
-eYj
-kry
-kry
-qnr
-nUI
-pBz
-vMV
-fMK
-alf
-avw
-lhr
-axR
-alf
-aAe
-jFZ
-aDI
-aDD
-aEH
-aFT
-aDI
-aIN
-aKm
-aLC
-pwZ
-fiJ
-gvH
-xRN
-fKX
-wfK
-pwZ
-ehX
-qZr
-vND
-pUO
-lsL
-qZr
-sKy
-bym
-lQk
-xon
-oYG
-qju
-xon
-sLR
-mDk
-wHq
-qZr
-seu
-mnr
-fxY
-mMy
-kDZ
-gXU
-nhf
-kDZ
-ncF
-eUy
-fNT
-lZn
-bWD
-aaI
-nJo
-rhJ
-mFG
-mfh
-lxk
-xUO
-hcc
-ybZ
-vHf
-lii
-kBt
-xGs
-gta
-nJo
-tAv
-ime
-gKR
-nJo
-kbN
-jhd
-vFR
-wUH
-sfG
-jQA
-pND
-cNj
-cOR
-cQz
-cMY
-cMY
-cMY
-cMY
-cMY
-cMY
-cMY
-cMY
-cMY
-oay
-cQL
-gPv
-cOR
-qYo
-svv
-sfo
-qnx
-efb
-hSn
-efb
-mkm
-lyd
-lti
-xDZ
-drQ
-dEv
-qBj
-fnS
-lwu
-dJZ
-dKF
-dLZ
-dLZ
-olS
-dOT
-dPJ
-dQC
-=======
 aiU
 abZ
 tRN
@@ -153216,7 +150855,6 @@ dHw
 dIN
 dyg
 dKO
->>>>>>> gameshow
 gKO
 nPB
 rMW
@@ -153593,8 +151231,6 @@ aaO
 aaO
 aaO
 aaO
-<<<<<<< HEAD
-=======
 abf
 ajh
 tRN
@@ -153749,7 +151385,6 @@ fjV
 efv
 egi
 eeb
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -154173,8 +151808,6 @@ aaa
 ajr
 aaa
 aaa
-<<<<<<< HEAD
-=======
 abf
 pSi
 ajV
@@ -154224,7 +151857,6 @@ vnO
 ekM
 kOK
 twc
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -154326,158 +151958,6 @@ aaO
 abf
 pQQ
 ajV
-<<<<<<< HEAD
-ldY
-kdQ
-pMB
-qNM
-ewj
-pMB
-kfv
-ldY
-arC
-bBf
-iXT
-nGu
-nIT
-aXx
-iXT
-rDl
-uPA
-aDI
-aDH
-uzY
-aFX
-aDI
-aDI
-uIe
-aDI
-pwZ
-mgF
-fxz
-jah
-fUl
-cVG
-pwZ
-qvC
-qZr
-sIl
-vwQ
-lbh
-qZr
-jQY
-gJO
-vHS
-qZr
-qZr
-vhQ
-nHT
-jiK
-oUA
-qZr
-qZr
-wWP
-tst
-tst
-fVr
-fVr
-scZ
-jhq
-fVr
-fVr
-tst
-ntj
-sTm
-bWK
-bWK
-pdr
-nJo
-nJo
-nJo
-sVJ
-mzj
-sMO
-sVJ
-nJo
-nJo
-nJo
-nJo
-nJo
-nJo
-nJo
-nJo
-nJo
-nJo
-srL
-tdj
-hhA
-lSZ
-sfG
-ngC
-caE
-caE
-cOV
-cQD
-cSl
-ucJ
-cSl
-cQD
-cQD
-cSl
-cSl
-cQD
-dfi
-fvP
-dib
-djS
-rsY
-tUR
-qTt
-fJg
-rAE
-qwF
-pGb
-sGK
-nwa
-ndz
-fqj
-tMt
-rsY
-dEz
-dFQ
-dHp
-dIE
-dKd
-dKH
-dMa
-dMa
-rzc
-dOT
-dLX
-emM
-gKO
-dLW
-nlB
-mHJ
-hPv
-hPv
-eht
-ieh
-qGI
-wWh
-rVN
-mhj
-qEv
-ojz
-pnS
-lSw
-rcM
-nPB
-say
-kKF
-ibv
-hCR
-=======
 akE
 akE
 amm
@@ -154629,7 +152109,6 @@ bmJ
 egk
 eeb
 aad
->>>>>>> gameshow
 aad
 ajr
 aaa
@@ -154732,163 +152211,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-aad
-adq
-agk
-tRN
-ajY
-wCM
-pVq
-qGb
-jmG
-hfp
-kXP
-wTo
-ldY
-arC
-mRw
-nIV
-nIV
-nIV
-nIV
-nIV
-nIV
-dHX
-aDI
-aDI
-leW
-aDI
-aDI
-ehG
-pJR
-ehI
-pwZ
-pwZ
-xqe
-xek
-pwZ
-pwZ
-pwZ
-spo
-aDI
-aDI
-rwU
-beV
-aDI
-bhH
-eil
-blm
-bnn
-rCA
-lqP
-lqP
-lDs
-lqP
-lqP
-poj
-lPY
-lqP
-hsR
-hfl
-hfl
-tvS
-hfl
-hfl
-hfl
-qGs
-lDs
-lPY
-xiQ
-kqI
-kqI
-mBp
-kqI
-lUY
-kqI
-uqh
-pDX
-kqI
-nWu
-kqI
-ccM
-ayd
-ayd
-ayd
-ayd
-xJd
-ayd
-hVE
-ayd
-nUr
-ayd
-ayd
-rqG
-wcj
-lTm
-vuZ
-cOV
-cQE
-cSm
-tbw
-mzR
-cXo
-cSl
-daG
-dcv
-cSl
-kCI
-kYV
-dic
-jdO
-srs
-pZv
-kLO
-tic
-ksh
-ioP
-kHF
-hVo
-uGB
-sjF
-uEE
-kms
-rsY
-dEA
-dEA
-dEA
-dEA
-dEA
-cOR
-cOR
-cOR
-cOR
-cOR
-dfm
-dfm
-vYt
-dSD
-nlB
-wEc
-hPv
-eDl
-lny
-sIP
-iWi
-sIP
-jWo
-oli
-lny
-rrN
-coa
-nlB
-qqB
-nPB
-uco
-uRT
-jJc
-nPB
-=======
 aaa
 abf
 lET
@@ -155043,7 +152365,6 @@ eeL
 efy
 egl
 egE
->>>>>>> gameshow
 aad
 ajr
 aad
@@ -160031,56 +157352,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-aaO
-tRN
-icj
-akM
-aaO
-amr
-ojT
-ano
-ano
-aqp
-abf
-arP
-fBq
-cwC
-oZo
-vdb
-teB
-hsd
-hsd
-hsd
-amy
-and
-ueP
-xvS
-sfF
-aiy
-xvS
-wAt
-iZH
-hsd
-nAl
-cve
-jez
-xIT
-eqJ
-oXn
-hsd
-vSC
-cve
-nOA
-nCg
-pji
-nOA
-wMd
-oZo
-vyL
-aRA
-nZv
-=======
 aad
 abi
 abT
@@ -160152,7 +157423,6 @@ pDA
 tnv
 hxn
 lIF
->>>>>>> gameshow
 twc
 aaa
 khQ
@@ -160362,53 +157632,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-aaO
-tRN
-aco
-akN
-abf
-ams
-mIm
-aom
-apn
-aqq
-abf
-arQ
-fcn
-aup
-aRn
-ssB
-ssB
-ssB
-ssB
-ssB
-hOg
-ssB
-iZZ
-wYC
-fmd
-fmd
-wsM
-fmd
-iZZ
-iZZ
-iZZ
-iZZ
-unx
-kjN
-xzz
-sNC
-unx
-unx
-bdN
-bfk
-lHS
-bhW
-bfk
-blE
-bnu
-=======
 aac
 aad
 abi
@@ -160478,7 +157701,6 @@ gZh
 lcH
 vqG
 mFE
->>>>>>> gameshow
 mLz
 ncp
 naF
@@ -161475,8 +158697,6 @@ aaa
 aad
 aad
 aad
-<<<<<<< HEAD
-=======
 abi
 aeF
 aeF
@@ -161620,7 +158840,6 @@ cbg
 dNS
 aaa
 aaa
->>>>>>> gameshow
 aaa
 aad
 aaa
@@ -161874,159 +159093,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-aaP
-abf
-abf
-abf
-abf
-abf
-aaO
-aaO
-abf
-ads
-aaO
-eAM
-aaO
-afb
-afz
-afV
-agk
-aaO
-gJw
-aaO
-adq
-abf
-aaO
-aaO
-abf
-ajh
-tRN
-ajV
-akQ
-alA
-pir
-dDZ
-tJv
-apq
-aqs
-aqZ
-aij
-fmH
-sGo
-ssB
-ssB
-ssB
-ssB
-omx
-ssB
-ssB
-ssB
-iZZ
-xub
-jtJ
-xuZ
-xaj
-oFV
-iZZ
-vbX
-iZZ
-iZZ
-wPU
-vTt
-rqC
-llC
-kvl
-unx
-bdS
-bfo
-iUE
-bfo
-mam
-blJ
-bdN
-xha
-bkA
-djc
-vPh
-aad
-aad
-aad
-khQ
-xQz
-xTi
-oOD
-iUx
-glH
-pNO
-wvX
-gaN
-xtC
-glH
-glH
-glH
-rWM
-rWM
-rWM
-rWM
-rWM
-rWM
-tYJ
-tYJ
-tYJ
-tYJ
-tYJ
-tYJ
-mJr
-cum
-vZj
-xsl
-bAs
-kMC
-kaN
-iog
-fWV
-peu
-vZj
-lLA
-irp
-xCi
-jSD
-bqZ
-wiZ
-eUx
-mga
-tML
-osc
-ppn
-dbf
-dcR
-dep
-cbi
-hGr
-sXR
-stM
-dcM
-nNI
-dpi
-dcO
-dqW
-dqW
-dqW
-etr
-dsA
-dCB
-gqD
-pJU
-dDJ
-aaH
-xvf
-dHH
-qlz
-dNO
-dKZ
-bjK
-=======
 aac
 aad
 acf
@@ -162175,7 +159241,6 @@ dJg
 dCy
 dKY
 qGA
->>>>>>> gameshow
 dNS
 aaa
 aaa
@@ -162358,83 +159423,6 @@ lIF
 twc
 aaa
 aad
-<<<<<<< HEAD
-aaa
-khQ
-oxn
-xTi
-oOD
-vfg
-glH
-otq
-rAf
-gaN
-gaN
-sXr
-jpd
-wQc
-rWM
-lEN
-vtq
-lIk
-hft
-rWM
-txO
-txO
-mKA
-lmD
-eyu
-tYJ
-pbl
-jlX
-vZj
-lQY
-jfV
-eyc
-irC
-irC
-jmz
-lbJ
-vZj
-vkA
-irp
-xCi
-jSD
-eVj
-iLt
-eUx
-pzC
-eXB
-eCr
-pxG
-dbg
-dgZ
-dgZ
-dgZ
-dgZ
-dgZ
-xPJ
-dlW
-rKo
-dpi
-dcO
-dqW
-dcO
-dcO
-etr
-dsA
-dCB
-dAV
-dCy
-dCy
-dCy
-dCy
-max
-dCy
-dCy
-dLa
-moJ
-=======
 aad
 acf
 acO
@@ -162581,7 +159569,6 @@ ivY
 ivY
 dKY
 cpN
->>>>>>> gameshow
 dNT
 aaa
 aaa
@@ -162843,8 +159830,6 @@ dNS
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 acf
 acP
 acf
@@ -162911,7 +159896,6 @@ eID
 aig
 bxe
 aig
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -163167,8 +160151,6 @@ bMb
 aEi
 dNS
 aaa
-<<<<<<< HEAD
-=======
 abi
 aeF
 aeF
@@ -163230,7 +160212,6 @@ jBB
 jSR
 jgO
 aig
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -164867,8 +161848,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 aad
 aad
 aad
@@ -164884,7 +161863,6 @@ asf
 atD
 ggg
 aoF
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -164896,9 +161874,8 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aad
+xYl
+aaa
 aad
 acf
 acu
@@ -166948,11 +163925,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-aac
-aaa
-aaa
-=======
 bHr
 bJm
 ryw
@@ -167024,7 +163996,6 @@ vFc
 dLp
 xAi
 cHU
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -167505,8 +164476,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 bHr
 bHr
 gXi
@@ -167578,7 +164547,6 @@ vFc
 cIW
 kjS
 dfX
->>>>>>> gameshow
 aaa
 "}
 (178,1,1) = {"
@@ -168412,268 +165380,6 @@ aaa
 aad
 aaa
 aaa
-<<<<<<< HEAD
-aad
-aig
-mxb
-lmi
-mix
-aig
-aad
-aoE
-qaK
-aAS
-aqE
-ase
-atB
-kyY
-aoF
-qCn
-qFI
-qFI
-qFI
-qKI
-ozy
-hMg
-vyf
-umL
-qFI
-qFI
-qFI
-qFI
-qFI
-qFI
-oBs
-epP
-bsl
-fFl
-xbK
-xyb
-oBs
-qpB
-hqz
-ouD
-gZh
-gZh
-eNW
-suu
-aig
-aig
-aig
-aad
-lhY
-sHL
-qaI
-uRh
-qaI
-rNq
-lhY
-aad
-bHq
-bJf
-bJc
-bMW
-mHu
-kRN
-kRN
-tSO
-tSO
-bYJ
-bYJ
-cMR
-cMR
-dOT
-dOT
-qsO
-qsO
-umZ
-umZ
-fmX
-fmX
-aRr
-aRr
-nbs
-nbs
-qah
-qbp
-xik
-pGD
-wPH
-kLA
-qVX
-asJ
-aud
-avs
-awq
-axM
-ayW
-tXd
-ucu
-hbc
-hAE
-pQx
-iVF
-ika
-aur
-gHh
-aMK
-wsZ
-jGK
-oVQ
-sFU
-gGp
-shN
-pQO
-rVg
-fGu
-bix
-bix
-lAO
-xit
-bix
-lAO
-bix
-xit
-xit
-bqw
-xpW
-vSZ
-vSZ
-gbC
-vSZ
-tHz
-tHz
-tHz
-tHz
-tHz
-tHz
-tHz
-tHz
-tHz
-tHz
-tHz
-bUs
-jmv
-bYQ
-vyT
-fAt
-rYw
-evE
-utY
-hmo
-nNt
-gaT
-fAt
-rYw
-fAt
-fAt
-fAt
-orh
-fAt
-pqQ
-lFu
-lfR
-rBy
-rUO
-vSZ
-bix
-gWf
-wLf
-tHz
-vSZ
-vSZ
-vSZ
-vSZ
-cTP
-wdc
-jXP
-jVS
-cTP
-vSZ
-vSZ
-xKK
-xKK
-dhU
-pQO
-nKJ
-sNC
-doC
-kKm
-vqp
-vqp
-bnJ
-bnJ
-oCa
-oCa
-aVe
-aVe
-dHY
-dHY
-oPq
-oPq
-dIt
-oJK
-xiO
-eYQ
-owx
-dOk
-xHn
-sKr
-mnS
-mvJ
-sHV
-rPg
-dNO
-dNO
-wzs
-wzs
-gwY
-wmj
-gXi
-dZL
-bNH
-eba
-ebP
-ecs
-ePh
-edj
-edO
-eer
-fUY
-qzY
-euF
-kRN
-xqF
-mHu
-bMW
-bUX
-bXr
-pwP
-cbk
-cda
-ceP
-cgD
-clm
-cmO
-clm
-cmT
-cov
-cpX
-crl
-rhH
-cbk
-enp
-jgo
-lOj
-pZu
-gni
-hxv
-ekw
-pZu
-pZu
-pZu
-hzs
-=======
 aaa
 aaa
 aaa
@@ -168754,7 +165460,6 @@ dma
 dBt
 cHW
 dEh
->>>>>>> gameshow
 cIW
 cHW
 dJp
@@ -169244,46 +165949,6 @@ bRf
 bHr
 bVc
 bXx
-<<<<<<< HEAD
-rzU
-cbk
-cdc
-ceR
-cgF
-bfs
-bfU
-leH
-kly
-cox
-bib
-crn
-toG
-cbk
-eCf
-hVx
-oAx
-pZu
-lcG
-tyX
-mNs
-pZu
-pZu
-pZu
-cfk
-cNK
-cNL
-cPD
-cRf
-cST
-cUM
-cWu
-cRe
-vPq
-qLS
-qjJ
-eXa
-riX
-=======
 hUH
 fof
 fjU
@@ -169322,7 +165987,6 @@ jQl
 ddj
 deJ
 dfL
->>>>>>> gameshow
 cPv
 diJ
 agv
@@ -169661,8 +166325,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 aad
 bnD
 bnD
@@ -169770,7 +166432,6 @@ aad
 ajr
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -170024,8 +166685,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 aac
 aad
 aad
@@ -170122,7 +166781,6 @@ gRT
 fOX
 fTV
 jWB
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -172085,44 +168743,6 @@ fAX
 vbb
 vbb
 vbb
-<<<<<<< HEAD
-vbb
-fKA
-bOV
-raB
-jDV
-osV
-fmC
-qHe
-jQl
-ddj
-deJ
-dfL
-cPv
-diM
-xXo
-wEm
-tyl
-dnG
-dro
-dsQ
-dtT
-nUZ
-dxo
-dyJ
-dma
-dBu
-tyy
-heo
-hqi
-gIm
-sPI
-uSi
-hqi
-gnq
-omp
-cHU
-=======
 cIW
 cfk
 eHJ
@@ -172153,7 +168773,6 @@ uyM
 uyM
 ogh
 fjt
->>>>>>> gameshow
 aaa
 dPq
 dQl
@@ -175639,115 +172258,6 @@ aaa
 uHd
 aaa
 pff
-<<<<<<< HEAD
-tqQ
-kZV
-wMU
-obt
-lbK
-iQj
-bcI
-lbK
-sKL
-bcI
-lbK
-eoZ
-bcI
-spx
-kAm
-lxn
-rZH
-aFn
-beq
-wmA
-bhb
-biE
-bnI
-bnI
-bnI
-bnI
-acA
-btl
-buK
-bTe
-bTe
-bTe
-eXl
-dWQ
-efK
-suN
-mqx
-bTe
-bLo
-bTe
-bPr
-bTe
-bTe
-bTe
-bXG
-sGn
-bnI
-cdo
-uer
-bnI
-lkC
-lzr
-rZz
-enG
-coO
-cqh
-bJc
-kRf
-cuG
-bHq
-rhF
-cza
-vbb
-vZG
-eLV
-yaE
-eSH
-vbb
-oRk
-gko
-mRI
-vbb
-ojK
-yaC
-idG
-myF
-vbb
-cYk
-aVB
-cIW
-ddm
-deQ
-gAm
-dhz
-dhw
-dkM
-dmh
-dnR
-dpG
-dpG
-dpG
-dpG
-dpG
-dxu
-dyQ
-dAj
-dBC
-awO
-jWB
-pKe
-gIf
-xPI
-lOE
-lIG
-ghk
-utJ
-jWB
-=======
 lGy
 nFI
 lxf
@@ -175857,7 +172367,6 @@ aad
 aad
 aad
 aad
->>>>>>> gameshow
 aad
 aad
 aad
@@ -175867,11 +172376,6 @@ aaa
 aad
 aad
 aad
-<<<<<<< HEAD
-ajr
-ajr
-aad
-=======
 wZU
 sqI
 gTH
@@ -175896,7 +172400,6 @@ eVR
 uqs
 sUD
 wZU
->>>>>>> gameshow
 aad
 aad
 ajr
@@ -176091,59 +172594,6 @@ clD
 nPk
 coP
 clA
-<<<<<<< HEAD
-crA
-ctf
-cuH
-bHq
-lnw
-czb
-vbb
-kvy
-mTl
-dvf
-wBp
-fuK
-mAt
-eut
-oHK
-cBM
-eWr
-uhs
-xvn
-xuD
-vbb
-cYj
-aVB
-dbC
-ddm
-deR
-iTy
-sAB
-sAm
-dkN
-dmh
-dnS
-dpG
-dpG
-dpG
-dpG
-dvN
-dxv
-dyR
-dmh
-dBu
-gBp
-dEk
-dEk
-dEk
-dEk
-dEk
-dEk
-dEk
-dEk
-dEk
-=======
 aaa
 aaa
 wZU
@@ -176194,7 +172644,6 @@ aad
 aaa
 aaa
 aad
->>>>>>> gameshow
 aad
 ajr
 ajr
@@ -176344,11 +172793,6 @@ aaa
 aaa
 uHd
 aaa
-<<<<<<< HEAD
-xjZ
-gWz
-cJq
-=======
 pff
 lce
 mNS
@@ -176360,7 +172804,6 @@ vgo
 lsG
 lpW
 vXz
->>>>>>> gameshow
 vXz
 mrC
 jZX
@@ -176469,8 +172912,6 @@ dEk
 aad
 aaa
 aaa
-<<<<<<< HEAD
-=======
 crD
 aaa
 wZU
@@ -176509,7 +172950,6 @@ abj
 aad
 aad
 eqU
->>>>>>> gameshow
 aad
 aaa
 aad
@@ -176654,26 +173094,6 @@ aaa
 uHd
 aaa
 aaa
-<<<<<<< HEAD
-uHd
-qYo
-xjZ
-mdG
-qlx
-vXz
-sfb
-vFU
-vXz
-sfb
-qBp
-vXz
-mdG
-sQr
-vXz
-aUv
-tgb
-xjZ
-=======
 pff
 ihX
 pWW
@@ -176694,7 +173114,6 @@ aSH
 osN
 lsG
 pff
->>>>>>> gameshow
 aZo
 whb
 aFm
@@ -176732,63 +173151,6 @@ jTW
 cgZ
 ciI
 bgZ
-<<<<<<< HEAD
-clF
-eLw
-coR
-clA
-crB
-ctg
-crB
-bHq
-oSM
-czd
-vbb
-vbb
-vbb
-vbb
-vbb
-vbb
-eIk
-jVy
-uAo
-vbb
-vbb
-vbb
-vbb
-vbb
-vbb
-cYm
-eRS
-cIW
-vOp
-cHW
-hwT
-cHW
-cIW
-jPq
-dmh
-dmh
-dmh
-dmh
-dmh
-dud
-dmh
-dmh
-dmh
-dmh
-dBu
-vnq
-sOG
-kuc
-aag
-dIe
-dJC
-dKt
-dLx
-dNj
-dGQ
-=======
 aaa
 aad
 aad
@@ -176835,7 +173197,6 @@ aad
 dyV
 dBM
 dyV
->>>>>>> gameshow
 aad
 aad
 ajr
@@ -176974,8 +173335,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 pff
 nYb
 rJj
@@ -177011,7 +173370,6 @@ ybi
 ybi
 hCK
 frV
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -177134,8 +173492,6 @@ dGQ
 aad
 aad
 aaa
-<<<<<<< HEAD
-=======
 aaa
 aaa
 aaa
@@ -177163,7 +173519,6 @@ vQD
 krH
 sjP
 wZU
->>>>>>> gameshow
 aad
 aaa
 aaa
@@ -177433,8 +173788,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 qYo
 qYo
 aFm
@@ -177460,11 +173813,8 @@ aFm
 qFn
 baM
 aFn
->>>>>>> gameshow
 aaa
 aaa
-<<<<<<< HEAD
-=======
 tKS
 jEN
 fCk
@@ -177529,7 +173879,6 @@ wZU
 aad
 ajr
 qYo
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -177812,8 +174161,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 wZU
 xTN
 auP
@@ -177840,7 +174187,6 @@ fXp
 wZU
 aad
 ajr
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -178301,8 +174647,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
 tKS
 rLV
 ybi
@@ -178367,7 +174711,6 @@ wZU
 aad
 qYo
 qYo
->>>>>>> gameshow
 aaa
 aaa
 aaa
@@ -178723,30 +175066,6 @@ clA
 aad
 aad
 wZU
-<<<<<<< HEAD
-sqI
-gTH
-uhI
-vyd
-uhI
-uhI
-uhI
-trW
-uhI
-uhI
-kXk
-xCc
-uhI
-uhI
-uhI
-uhI
-uhI
-uhI
-trW
-eVR
-auP
-sUD
-=======
 yew
 yew
 yew
@@ -178769,7 +175088,6 @@ wZU
 jpS
 aPQ
 ury
->>>>>>> gameshow
 wZU
 gpe
 nAp
@@ -179893,34 +176211,9 @@ clA
 aaa
 aaa
 wZU
-<<<<<<< HEAD
-sqI
-auP
-ktn
-iLh
-mkO
-qhE
-auP
-sjP
-hLN
-nvt
-nvt
-sWc
-rvP
-uNj
-wRt
-qBh
-qBh
-nzf
-qsr
-geR
-qBh
-tEe
-=======
 flF
 nOw
 wbt
->>>>>>> gameshow
 wZU
 aaa
 dhC
@@ -179931,496 +176224,10 @@ cHU
 dfX
 dfX
 vVc
-<<<<<<< HEAD
-oPw
-tAG
-wzs
-xyQ
-aqE
-aqE
-ase
-atB
-auK
-kcX
-kCB
-wtz
-mpq
-eHl
-ibg
-eJE
-iAN
-gBz
-heR
-gHX
-yfc
-yfc
-enF
-enF
-pxB
-mQn
-erL
-erL
-sxF
-wvS
-tLy
-kKm
-nRx
-cQM
-pQk
-wNk
-xAE
-kKm
-lDw
-mfm
-uqH
-rdP
-rqH
-neA
-rgU
-unx
-bpa
-unx
-oAx
-pRX
-aMa
-kff
-hpq
-gDD
-pWT
-pRX
-oAx
-unx
-mVk
-unx
-rlh
-lHI
-ohq
-unx
-kSX
-tWG
-csM
-unx
-ccY
-ceO
-ceO
-ceO
-gAv
-ceO
-ceO
-ceO
-ceO
-crj
-csL
-unx
-uAE
-cIg
-nFl
-unx
-kip
-ocl
-sRX
-qDN
-khD
-unx
-sfV
-mVk
-rqH
-nCP
-unx
-kPY
-mRh
-ene
-iQC
-hym
-mxt
-eDj
-mRh
-unx
-abY
-wOb
-rUY
-kKm
-oyn
-dpv
-dpv
-dsG
-vqp
-ekR
-wwP
-tIZ
-eIs
-noY
-iXe
-qOe
-rca
-fcl
-vaH
-nZN
-oJK
-dLi
-dMN
-bKS
-rAC
-ttG
-eMB
-ihR
-ihR
-rGk
-rGk
-nbs
-nbs
-aRr
-aRr
-fmX
-fmX
-umZ
-umZ
-qsO
-qsO
-dOT
-dOT
-cMR
-cMR
-bYJ
-bYJ
-tSO
-tSO
-kRN
-kRN
-mHu
-mHu
-bMW
-juS
-juS
-kJM
-kJM
-ixS
-ixS
-nJu
-nJu
-tdu
-tdu
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-"}
-(178,1,1) = {"
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-axH
-mIc
-tEw
-ciZ
-tEw
-mIc
-raZ
-fqA
-lxM
-nJu
-oDV
-nwi
-bDV
-kJM
-tLN
-pDM
-bMW
-gpe
-nAp
-nAp
-qzY
-tSO
-rKG
-rKG
-aiJ
-cMR
-oQt
-dOT
-sqg
-sqg
-mGy
-mGy
-tAG
-tAG
-sCP
-apE
-dNO
-dNO
-asf
-atC
-auL
-kcX
-kCB
-kCB
-mpq
-oTV
-wpS
-eJE
-ayR
-eAa
-pqG
-pqG
-sDD
-bTO
-fFU
-eRs
-vPe
-rqh
-qFL
-qFL
-vxk
-wvS
-suJ
-lPZ
-pxq
-ekq
-oti
-yfe
-qIO
-aMK
-xFl
-epk
-yfe
-fDc
-yiD
-vYl
-rmA
-aMK
-bpb
-aMK
-vfI
-vqp
-koH
-eQr
-rgL
-eQr
-wuB
-vqp
-vfI
-aMK
-iTP
-aMK
-aMK
-aMK
-aMK
-aMK
-bUW
-bXq
-bZv
-aMK
-lPZ
-lPZ
-lPZ
-lPZ
-cjX
-lPZ
-lPZ
-lPZ
-lPZ
-oAm
-csN
-aMK
-mkx
-yfe
-ibP
-nZc
-nVI
-tnL
-nES
-wHB
-nEp
-cIZ
-cKM
-iTP
-cNJ
-nTi
-aMK
-hSu
-xAZ
-gSL
-ipL
-lZJ
-fpT
-vfx
-mrz
-lPZ
-dho
-oOC
-dkx
-wpl
-lPZ
-tTI
-tTI
-lPZ
-vru
-xFF
-hTn
-htI
-oCa
-iDR
-aVe
-dHY
-dHY
-oPq
-oPq
-oJK
-oJK
-cSQ
-dMO
-bKS
-bKS
-kZo
-kZo
-svB
-svB
-xjZ
-rGk
-qFI
-qFI
-uEO
-gqO
-uan
-oAN
-vkG
-umZ
-qsO
-qsO
-dOT
-dOT
-cMR
-cMR
-bYJ
-bYJ
-tSO
-tSO
-kRN
-kRN
-mHu
-mHu
-bMW
-juS
-juS
-kJM
-kJM
-ixS
-ixS
-nJu
-nJu
-tdu
-tdu
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-"}
-(179,1,1) = {"
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-axH
-=======
 aUN
 aaa
 aaa
 aaa
->>>>>>> gameshow
 aad
 tEw
 ciZ
@@ -181584,16 +177391,11 @@ mIc
 axH
 mIc
 aad
-<<<<<<< HEAD
-mIc
-mIc
-=======
 oNH
 pzg
 wvq
 ijH
 wWo
->>>>>>> gameshow
 aad
 ciZ
 aad
@@ -183138,263 +178940,6 @@ axH
 mIc
 mIc
 aad
-<<<<<<< HEAD
-mIc
-mIc
-raZ
-fqA
-lxM
-nJu
-ixS
-hKR
-kJM
-kJM
-fzX
-juS
-bMW
-mHu
-kRN
-kRN
-tSO
-tSO
-bYJ
-bYJ
-cMR
-cMR
-dOT
-dOT
-qsO
-qsO
-umZ
-umZ
-fmX
-fmX
-aRr
-aRr
-nbs
-nbs
-rGk
-rGk
-ihR
-ihR
-eMB
-eMB
-gAt
-gAt
-kVS
-kVS
-mhU
-mhU
-mhU
-mhU
-mhU
-vsD
-mhU
-vsD
-mhU
-mhU
-mhU
-mhU
-mhU
-mhU
-jeB
-vsD
-vsD
-mhU
-mhU
-vsD
-mhU
-mhU
-mhU
-tUy
-tUy
-tUy
-tUy
-tUy
-mhU
-vsD
-vsD
-vsD
-dQh
-buA
-wkf
-vsD
-wkf
-buA
-dQh
-vsD
-vsD
-oJK
-bJo
-bLi
-bNg
-bPm
-bRn
-oJK
-sUF
-dKS
-bZF
-sfG
-fjU
-xKt
-pcN
-tEy
-rCa
-sfG
-cnd
-eAI
-sfG
-tSy
-knJ
-eRH
-hSp
-iFs
-bwJ
-ffY
-mDs
-hdD
-ktt
-tSy
-sfG
-sfG
-sfG
-sfG
-sfG
-cPL
-cRo
-cSY
-cUS
-cWz
-cYd
-cZO
-dby
-ddj
-deJ
-nFc
-vNp
-eNp
-dkE
-dme
-tyl
-aHA
-qZa
-dsQ
-dtT
-dvH
-lbV
-dyJ
-sfG
-qjD
-dCQ
-mcI
-dPU
-dGC
-dQJ
-dJq
-dPU
-lOC
-dMY
-bKS
-gAt
-kZo
-xHn
-oHL
-dSg
-qah
-cJO
-dNO
-dNO
-gqO
-crv
-oAN
-dYZ
-vkG
-gXi
-qzf
-qzf
-qzX
-qzX
-aiJ
-xYh
-bYJ
-bYJ
-tSO
-tSO
-kRN
-kRN
-mHu
-mHu
-bMW
-juS
-juS
-kJM
-kJM
-ixS
-ixS
-nJu
-nJu
-tdu
-tdu
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-"}
-(191,1,1) = {"
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-mIc
-axH
-axH
-=======
 wZU
 aaa
 eoX
@@ -183415,7 +178960,6 @@ hDq
 iQu
 crW
 wWo
->>>>>>> gameshow
 aad
 axH
 axH

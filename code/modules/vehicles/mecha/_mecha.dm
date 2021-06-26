@@ -267,12 +267,12 @@
 		return base_icon_state
 	return "[base_icon_state]-open"
 
-/obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+/obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
 	if(!phasing || get_charge() <= phasing_energy_drain || throwing)
 		return ..()
 	if(phase_state)
 		flick(phase_state, src)
-	var/area/destination_area = target.loc
+	var/area/destination_area = get_step(loc, movement_dir).loc
 	if(destination_area.area_flags & NOTELEPORT)
 		return FALSE
 	return TRUE
@@ -722,7 +722,7 @@
 		if(COOLDOWN_FINISHED(src, mecha_bump_smash))
 			obstacle.mech_melee_attack(src)
 			COOLDOWN_START(src, mecha_bump_smash, smashcooldown)
-			if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
+			if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
 				step(src,dir)
 	if(isobj(obstacle))
 		var/obj/obj_obstacle = obstacle

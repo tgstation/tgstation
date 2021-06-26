@@ -221,7 +221,9 @@
 
 	connected_port = port_to_register
 	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
-	set_input(connected_port.output_value)
+	// For signals, we don't update the input to prevent sending a signal when connecting ports.
+	if(datatype != PORT_TYPE_SIGNAL)
+		set_input(connected_port.output_value)
 
 
 /**

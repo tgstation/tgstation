@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	icon = 'icons/turf/floors.dmi'
 	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE// Important for interaction with and visualization of openspace.
 	luminosity = 1
+
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
 	var/intact = 1
@@ -165,6 +166,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	vis_contents.Cut()
 
+/// WARNING WARNING
+/// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
+/// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
+/// We do it because moving signals over was needlessly expensive, and bloated a very commonly used bit of code
+/turf/clear_signal_refs()
+	return
+
 /turf/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -194,15 +202,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(density)
 		return TRUE
 
-	for(var/content in contents)
+	for(var/atom/movable/movable_content as anything in contents)
 		// We don't want to block ourselves or consider any ignored atoms.
-		if((content == source_atom) || (content in ignore_atoms))
+		if((movable_content == source_atom) || (movable_content in ignore_atoms))
 			continue
-		var/atom/atom_content = content
 		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
 		// it cannot pass through the thing on the turf,  we consider the turf blocked.
-		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)))
-			if(source_atom && atom_content.CanPass(source_atom, src))
+		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
+			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
 				continue
 			return TRUE
 	return FALSE
@@ -291,13 +298,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return FALSE
 
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
-/turf/Enter(atom/movable/mover, atom/oldloc)
+/turf/Enter(atom/movable/mover)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/canPassSelf = CanPass(mover, src)
+	var/canPassSelf = CanPass(mover, get_dir(src, mover))
 	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
@@ -323,26 +330,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return (mover.movement_type & PHASING)
 	return TRUE
 
-/turf/Exit(atom/movable/mover, atom/newloc)
-	. = ..()
-	if(!. || QDELETED(mover))
-		return FALSE
-	for(var/i in contents)
-		if(i == mover)
-			continue
-		if(QDELETED(mover))
-			return FALSE //We were deleted.
 
-
-/turf/open/Entered(atom/movable/AM)
+/turf/open/Entered(atom/movable/arrived, direction)
 	..()
 	//melting
-	if(isobj(AM) && air && air.temperature > T0C)
-		var/obj/O = AM
+	if(isobj(arrived) && air && air.temperature > T0C)
+		var/obj/O = arrived
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
-	if(!AM.zfalling)
-		zFall(AM)
+	if(!arrived.zfalling)
+		zFall(arrived)
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)

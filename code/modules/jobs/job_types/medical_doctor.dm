@@ -26,7 +26,7 @@
 		/obj/item/scalpel/advanced = 6,
 		/obj/item/retractor/advanced = 6,
 		/obj/item/cautery/advanced = 6,
-		/datum/reagent/toxin/formaldehyde = 6,
+		/obj/item/reagent_containers/glass/bottle/formaldehyde = 6,
 		/obj/effect/spawner/lootdrop/organ_spawner = 5,
 		/obj/effect/spawner/lootdrop/memeorgans = 1
 	)

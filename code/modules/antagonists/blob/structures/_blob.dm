@@ -145,11 +145,11 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T)) //is the target turf impassable
+	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T)) //is anything in the turf impassable
+		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
 			make_blob = FALSE
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
@@ -159,7 +159,7 @@
 	if(make_blob) //well, can we?
 		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
 		B.set_density(TRUE)
-		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
+		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
 			B.forceMove(T)
 			B.update_appearance()

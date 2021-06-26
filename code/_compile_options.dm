@@ -61,21 +61,12 @@ List of things this does
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 513
-#define MIN_COMPILER_BUILD 1514
-#if DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD
+#define MIN_COMPILER_VERSION 514
+#define MIN_COMPILER_BUILD 1556
+#if (DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD) && !defined(SPACEMAN_DMM)
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513.1514 or higher
-#endif
-
-//Don't load extools on 514 and 513.1539+
-#if DM_VERSION < 514 && DM_BUILD < 1540
-#define USE_EXTOOLS
-#endif
-//Log the full sendmaps profile on 514.1556+, any earlier and we get bugs or it not existing
-#if DM_VERSION >= 514 && DM_BUILD >= 1556
-#define SENDMAPS_PROFILE
+#error You need version 514.1556 or higher
 #endif
 
 //Additional code for the above flags.

@@ -25,6 +25,9 @@
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
+/// Any datatype (USED ONLY FOR DISPLAY, DO NOT USE)
+#define COMP_TYPE_ANY "any"
+
 
 /// The maximum range between a port and an atom
 #define PORT_ATOM_MAX_RANGE 7
@@ -81,8 +84,9 @@
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
 
-// Combiner component
-#define COMP_COMBINER_ANY "any"
+// Radio component
+#define COMP_RADIO_PUBLIC "public"
+#define COMP_RADIO_PRIVATE "private"
 
 // Shells
 
@@ -94,6 +98,9 @@
 
 /// Whether or not the shell has a USB port.
 #define SHELL_FLAG_USB_PORT (1<<2)
+
+/// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
+#define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10
