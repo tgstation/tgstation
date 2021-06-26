@@ -44,16 +44,12 @@
 		air = new
 		air.copy_from_turf(src)
 		#ifdef EVENTMODE
-	var/area/A = src.loc
-	if(A.eventareaair)
-		planetary_atmos = FALSE
-	else
-		planetary_atmos = TRUE
-		if(planetary_atmos)
-			if(!SSair.planetary[initial_gas_mix])
-				var/datum/gas_mixture/immutable/planetary/mix = new
-				mix.parse_string_immutable(initial_gas_mix)
-				SSair.planetary[initial_gas_mix] = mix
+	planetary_atmos = TRUE
+	if(planetary_atmos)
+		if(!SSair.planetary[initial_gas_mix])
+			var/datum/gas_mixture/immutable/planetary/mix = new
+			mix.parse_string_immutable(initial_gas_mix)
+			SSair.planetary[initial_gas_mix] = mix
 	. = ..()
 
 /turf/open/Destroy()

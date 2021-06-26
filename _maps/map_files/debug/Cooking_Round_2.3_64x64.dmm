@@ -402,6 +402,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/centcom_away/thunderdome)
+"cV" = (
+/obj/machinery/arena_spawn/red,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/centcom_away/thunderdome)
 "cW" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
@@ -643,15 +647,6 @@
 /obj/machinery/processor,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
-"eH" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured_corner{
-	dir = 8
-	},
 /area/awaymission/centcom_away/thunderdome)
 "eS" = (
 /obj/structure/railing/corner{
@@ -1567,14 +1562,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/awaymission/centcom_away/thunderdome)
-"lr" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured_corner,
-/area/awaymission/centcom_away/thunderdome)
 "lv" = (
 /obj/item/food/grown/ash_flora/mushroom_leaf,
 /obj/item/food/grown/ash_flora/mushroom_cap,
@@ -1838,6 +1825,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
+/area/awaymission/centcom_away/thunderdome)
+"nj" = (
+/obj/machinery/arena_spawn/green,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "np" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2685,16 +2676,6 @@
 "sD" = (
 /obj/machinery/power/shieldwallgen,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
-"sN" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 8
-	},
 /area/awaymission/centcom_away/thunderdome)
 "sO" = (
 /obj/structure/frame/computer,
@@ -4365,6 +4346,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/awaymission/centcom_away/thunderdome)
+"Em" = (
+/obj/machinery/arena_spawn/blue,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/centcom_away/thunderdome)
 "En" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -8259,7 +8244,7 @@ lz
 ju
 zQ
 ju
-ju
+nj
 ju
 ju
 ju
@@ -8403,9 +8388,9 @@ Ur
 Ur
 "}
 (14,1,1) = {"
-lr
-sN
-sN
+vV
+lw
+lw
 vM
 Lx
 mC
@@ -8601,9 +8586,9 @@ Ur
 Ur
 "}
 (17,1,1) = {"
-vV
-lw
-lw
+tw
+rn
+rn
 wx
 uo
 mC
@@ -8667,9 +8652,9 @@ Ur
 Ur
 "}
 (18,1,1) = {"
-tw
-rn
-rn
+vV
+lw
+lw
 LZ
 Kl
 Cb
@@ -8865,8 +8850,8 @@ Ur
 Ur
 "}
 (21,1,1) = {"
-eH
-JA
+rn
+rn
 JA
 VU
 fU
@@ -9645,7 +9630,7 @@ zp
 ju
 zQ
 ju
-ju
+cV
 ju
 ju
 ju
@@ -11031,7 +11016,7 @@ VK
 ju
 zQ
 ju
-ju
+Em
 ju
 ju
 ju

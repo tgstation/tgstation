@@ -91,8 +91,6 @@
 	var/max_ambience_cooldown = 90 SECONDS
 	///Used to determine if we should allow dynamic lighting in this area
 	var/eventarea = FALSE
-	///Used to determine if we should force planetary atmos
-	var/eventareaair = FALSE
 /**
  * A list of teleport locations
  *

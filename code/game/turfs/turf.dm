@@ -107,10 +107,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-
 	var/area/A = loc
-	if(A.eventarea == TRUE)
-		eventturf = TRUE
+	if(loc)
+		if(A.eventarea == TRUE)
+			eventturf = TRUE
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
 		add_overlay(/obj/effect/fullbright)
 

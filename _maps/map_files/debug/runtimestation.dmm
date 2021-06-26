@@ -5218,6 +5218,15 @@
 	dir = 8
 	},
 /area/tdome/arena)
+"Gw" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/telecomms/allinone/indestructable,
+/turf/open/floor/grass,
+/area/centcom/control)
 "GA" = (
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
@@ -7704,6 +7713,22 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/orange,
+/area/centcom/control)
+"Wm" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/observer_start,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
 /area/centcom/control)
 "Wp" = (
 /obj/effect/turf_decal/siding/white{
@@ -19012,7 +19037,7 @@ GS
 Mu
 GS
 Mu
-GS
+Gw
 Mu
 iu
 fO
@@ -29003,7 +29028,7 @@ Mu
 Oo
 oY
 oY
-oY
+Wm
 oY
 oY
 oY
