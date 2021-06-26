@@ -29,31 +29,36 @@
 		return FALSE
 
 	if(stored_card)
-		to_chat(user, span_warning("You try to insert \the [I] into \the [src], but the slot is occupied."))
+		if(user)
+			to_chat(user, span_warning("You try to insert \the [I] into \the [src], but the slot is occupied."))
 		return FALSE
 	if(user && !user.transferItemToLoc(I, src))
 		return FALSE
 
 	stored_card = I
-	to_chat(user, span_notice("You insert \the [I] into \the [src]."))
+
+	if(user)
+		to_chat(user, span_notice("You insert \the [I] into \the [src]."))
 
 	return TRUE
 
 
 /obj/item/computer_hardware/ai_slot/try_eject(mob/living/user = null, forced = FALSE)
 	if(!stored_card)
-		to_chat(user, span_warning("There is no card in \the [src]."))
+		if(user)
+			to_chat(user, span_warning("There is no card in \the [src]."))
 		return FALSE
 
 	if(locked && !forced)
-		to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
+		if(user)
+			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
 		return FALSE
 
 	if(stored_card)
-		to_chat(user, span_notice("You remove [stored_card] from [src]."))
 		locked = FALSE
 		if(user)
 			user.put_in_hands(stored_card)
+			to_chat(user, span_notice("You remove [stored_card] from [src]."))
 		else
 			stored_card.forceMove(drop_location())
 
