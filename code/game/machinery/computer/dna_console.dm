@@ -823,8 +823,7 @@
 				say("ERROR: This mutation is anomalous, and cannot be saved.")
 				return
 
-			var/datum/mutation/human/A = new HM.type()
-			A.copy_mutation(HM)
+			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
 			stored_mutations += A
 			to_chat(usr,span_notice("Mutation successfully stored."))
 			return
@@ -873,8 +872,7 @@
 			if(!HM)
 				return
 
-			var/datum/mutation/human/A = new HM.type()
-			A.copy_mutation(HM)
+			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
 			diskette.mutations += A
 			to_chat(usr,span_notice("Mutation successfully stored to disk."))
 			return
