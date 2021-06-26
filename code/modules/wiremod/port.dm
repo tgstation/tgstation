@@ -52,10 +52,6 @@
 			return "grey"
 
 /datum/port/Destroy(force)
-	if(!force && !QDELETED(connected_component))
-		// This should never happen. Ports should be deleted with their components
-		stack_trace("Attempted to delete a port with a non-destroyed connected_component! (port name: [name], component type: [connected_component.type])")
-		return QDEL_HINT_LETMELIVE
 	connected_component = null
 	return ..()
 
