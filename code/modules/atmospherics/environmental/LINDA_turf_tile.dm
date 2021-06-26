@@ -582,6 +582,13 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 	finish_superconduction()
 
+/turf/closed/super_conduct()
+	if(temperature < (heat_capacity * 0.95))
+		radiate_to_spess()
+		finish_superconduction()
+		return
+	return ..()
+
 /turf/proc/finish_superconduction(temp = temperature)
 	//Make sure still hot enough to continue conducting heat
 	if(temp < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
@@ -610,7 +617,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	return ..()
 
 /turf/closed/consider_superconductivity(starting)
-	if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION) || temperature < (heat_capacity * 0.95))
+	if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
 	return ..()
 

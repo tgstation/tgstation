@@ -1,5 +1,7 @@
 ///Amount of drained power per tile
 #define TILE_POWER_CONSUMPTION 3500
+///What the shields will set the turf conductivity to
+#define SHIELDED_CONDUCTIVITY 0
 
 /obj/machinery/power/proto_sh_emitter
 	name = "Prototype Shield Emitter"
@@ -12,20 +14,20 @@
 	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/proto_sh_emitter
 	///Store the powered shields placed in the world, used when turned off to removed them
-	var/list/signs
+	var/list/shields
 	///Check if the machine is turned on or off
 	var/is_on = FALSE
 	///Used to check if the machine is placed inside the borders of the map
 	var/borders = TRUE
 	///Is the machines currently projecting a barrier?
 	var/has_barrier = FALSE
-	///Vars used in the GUI to be able to setup a size
-	var/a_i = 1
-	var/b_i = 1
-	var/c_i = 2
-	var/a_o = 2
-	var/b_o = 2
-	var/c_o = 3
+	///Vars used in the GUI to be able to setup a size, their name is referred to the machine facing NORTH
+	var/south_west_internal_corner = 1
+	var/south_east_internal_corner = 1
+	var/north_internal_edge = 2
+	var/south_west_outer_corner = 2
+	var/south_east_outer_corner = 2
+	var/north_outer_edge = 3
 
 /obj/machinery/power/proto_sh_emitter/anchored
 	anchored = TRUE
@@ -42,7 +44,7 @@
 		var/turf/T = get_turf(src)
 		stack_trace("Prototype Shield Emitter deleted at [ADMIN_VERBOSEJMP(T)]")
 		log_game("Prototype Shield Emitter deleted at [AREACOORD(T)]")
-	QDEL_LIST(signs)
+	QDEL_LAZYLIST(shields)
 	return ..()
 
 /obj/machinery/power/proto_sh_emitter/update_icon_state()
@@ -66,15 +68,12 @@
 	. = ..()
 	if(panel_open && item.tool_behaviour == TOOL_WRENCH)
 		if(default_unfasten_wrench(user, item))
-			return SECONDARY_ATTACK_CONTINUE_CHAIN
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/proto_sh_emitter/process()
 	if(!is_on)
 		return
 	var/power_use = idle_power_usage
-	if(LAZYLEN(signs))
-		for(var/i in 1 to LAZYLEN(signs))
-			power_use += TILE_POWER_CONSUMPTION
 	use_power(power_use)
 
 /obj/machinery/power/proto_sh_emitter/proc/check_power()
@@ -83,7 +82,7 @@
 	var/turf/loc_turf = get_turf(src)
 	is_on = FALSE
 	has_barrier = FALSE
-	QDEL_LIST(signs)
+	QDEL_LAZYLIST(shields)
 	update_icon_state()
 	message_admins("[src] turned off at [ADMIN_VERBOSEJMP(loc_turf)]")
 	log_game("[src] turned off at [AREACOORD(loc_turf)]")
@@ -121,10 +120,8 @@
 			outline.Add(block(locate(x - SWyo, y - SWxo, z), locate(x - NEyo, y + NExo, z)) - internal)
 	for(var/turf in outline)
 		new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
-		outline.Remove(turf)
 	for(var/turf in internal)
 		new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
-		internal.Remove(turf)
 
 ///This proc removes the barriers
 /obj/machinery/power/proto_sh_emitter/proc/remove_barrier(mob/user)
@@ -135,7 +132,7 @@
 	to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
 	message_admins("[src] turned off at [ADMIN_VERBOSEJMP(emitter_turf)] by [ADMIN_LOOKUPFLW(user)]")
 	log_game("[src] turned off at [AREACOORD(emitter_turf)] by [key_name(user)]")
-	QDEL_LIST(signs)
+	QDEL_LAZYLIST(shields)
 
 /** The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
  * all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
@@ -181,8 +178,8 @@
 	data["powered"] = is_operational
 	data["has_barrier"] = has_barrier
 
-	data["width"] = a_o + b_o
-	data["height"] = c_o
+	data["width"] = south_west_outer_corner + south_east_outer_corner
+	data["height"] = north_outer_edge
 
 	return data
 
@@ -196,8 +193,8 @@
 			is_on = !is_on
 			. = TRUE
 		if("emit")
-			if(is_on && !has_barrier && check_map_borders(a_o, c_o, b_o, c_o))
-				build_barrier(a_i, 2, b_i, c_i, a_o, 1, b_o, c_o, usr)
+			if(is_on && !has_barrier && check_map_borders(south_west_outer_corner, north_outer_edge, south_east_outer_corner, north_outer_edge))
+				build_barrier(south_west_internal_corner, 2, south_east_internal_corner, north_internal_edge, south_west_outer_corner, 1, south_east_outer_corner, north_outer_edge, usr)
 				has_barrier = TRUE
 			. = TRUE
 		if("disable")
@@ -206,40 +203,40 @@
 				has_barrier = FALSE
 			. = TRUE
 		if("increase_left")
-			a_i++
-			a_o++
-			a_i = clamp(a_i, 0, 1)
-			a_o = clamp(a_o, 1, 2)
+			south_west_internal_corner++
+			south_west_outer_corner++
+			south_west_internal_corner = clamp(south_west_internal_corner, 0, 1)
+			south_west_outer_corner = clamp(south_west_outer_corner, 1, 2)
 			. = TRUE
 		if("decrease_left")
-			a_i--
-			a_o--
-			a_i = clamp(a_i, 0, 1)
-			a_o = clamp(a_o, 1, 2)
+			south_west_internal_corner--
+			south_west_outer_corner--
+			south_west_internal_corner = clamp(south_west_internal_corner, 0, 1)
+			south_west_outer_corner = clamp(south_west_outer_corner, 1, 2)
 			. = TRUE
 		if("increase_right")
-			b_i++
-			b_o++
-			b_i = clamp(b_i, 0, 1)
-			b_o = clamp(b_o, 1, 2)
+			south_east_internal_corner++
+			south_east_outer_corner++
+			south_east_internal_corner = clamp(south_east_internal_corner, 0, 1)
+			south_east_outer_corner = clamp(south_east_outer_corner, 1, 2)
 			. = TRUE
 		if("decrease_right ")
-			b_i--
-			b_o--
-			b_i = clamp(b_i, 0, 1)
-			b_o = clamp(b_o, 1, 2)
+			south_east_internal_corner--
+			south_east_outer_corner--
+			south_east_internal_corner = clamp(south_east_internal_corner, 0, 1)
+			south_east_outer_corner = clamp(south_east_outer_corner, 1, 2)
 			. = TRUE
 		if("increase_up")
-			c_i++
-			c_o++
-			c_i = clamp(c_i, 2, 4)
-			c_o = clamp(c_o, 3, 5)
+			north_internal_edge++
+			north_outer_edge++
+			north_internal_edge = clamp(north_internal_edge, 2, 4)
+			north_outer_edge = clamp(north_outer_edge, 3, 5)
 			. = TRUE
 		if("decrease_up")
-			c_i--
-			c_o--
-			c_i = clamp(c_i, 2, 4)
-			c_o = clamp(c_o, 3, 5)
+			north_internal_edge--
+			north_outer_edge--
+			north_internal_edge = clamp(north_internal_edge, 2, 4)
+			north_outer_edge = clamp(north_outer_edge, 3, 5)
 			. = TRUE
 	update_appearance()
 
@@ -249,40 +246,47 @@
 	icon = 'icons/effects/effects.dmi'
 	density = FALSE
 	anchored = TRUE
-	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = FIRE_PROOF
 	///store the conductivity value of the turf is applyed so that it can be restored on removal
 	var/stored_conductivity = 0
 	///power drain from the apc, in W (so 5000 is 5 kW), per each holosign placed
-	var/obj/item/holosign_creator/shield_projector
+	var/power_consumption = TILE_POWER_CONSUMPTION
+	///store the reference to the shield projector
+	var/obj/machinery/power/proto_sh_emitter/shield_projector
 
 /obj/machinery/holosign/barrier/power_shield/Initialize(loc, source_projector)
 	. = ..()
+	shield_turf(TRUE)
+	air_update_turf(TRUE)
 	if(source_projector)
 		shield_projector = source_projector
-		LAZYADD(shield_projector.signs, src)
-		air_update_turf(TRUE)
-		shield_turf()
+		LAZYADD(shield_projector.shields, src)
+		shield_projector.idle_power_usage += power_consumption
 
 /obj/machinery/holosign/barrier/power_shield/Destroy()
-	var/turf/current_turf = loc
-	current_turf.thermal_conductivity = stored_conductivity
-	LAZYREMOVE(shield_projector.signs, src)
-	shield_projector = null
+	shield_turf(FALSE)
+	air_update_turf(TRUE)
+	if(shield_projector)
+		LAZYREMOVE(shield_projector.shields, src)
+		shield_projector.idle_power_usage -= power_consumption
+		shield_projector = null
 	return ..()
 
 ///Proc that takes the thermal conductivity of the turf its on and store it inside a variable
-/obj/machinery/holosign/barrier/power_shield/proc/shield_turf()
+/obj/machinery/holosign/barrier/power_shield/proc/shield_turf(shielding = TRUE)
 	var/turf/current_turf = loc
-	if(isturf(loc))
+	if(shielding)
 		stored_conductivity = current_turf.thermal_conductivity
-		current_turf.thermal_conductivity = 0
+		current_turf.thermal_conductivity = SHIELDED_CONDUCTIVITY
+		return
+	current_turf.thermal_conductivity = stored_conductivity
 
 /obj/machinery/holosign/barrier/power_shield/wall
 	name = "Shield Wall"
 	desc = "A powered wall to stop changes in atmospheric and the spread of heat"
 	icon_state = "powershield_wall"
 	layer = ABOVE_MOB_LAYER
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/machinery/holosign/barrier/power_shield/floor
 	name = "Shield Floor"
