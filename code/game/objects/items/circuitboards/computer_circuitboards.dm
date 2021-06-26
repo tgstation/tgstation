@@ -236,15 +236,19 @@
 	name = "Library Visitor Console (Computer Board)"
 	build_path = /obj/machinery/computer/libraryconsole
 
+/obj/item/circuitboard/computer/bookconsole
+	name =  "Book Inventory Management Console (Machine Board)"
+	build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/bookmanagement)
+		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
 			to_chat(user, span_notice("Defaulting access protocols."))
 		else
 			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/bookmanagement
+			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 			to_chat(user, span_notice("Access protocols successfully updated."))
 	else
 		return ..()

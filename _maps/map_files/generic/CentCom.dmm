@@ -8712,7 +8712,7 @@
 /area/centcom/holding)
 "Bs" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Bu" = (

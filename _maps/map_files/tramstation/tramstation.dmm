@@ -5662,7 +5662,7 @@
 /area/hallway/primary/tram/left)
 "ast" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -63140,7 +63140,7 @@
 /area/hallway/primary/tram/left)
 "upI" = (
 /obj/structure/table,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},

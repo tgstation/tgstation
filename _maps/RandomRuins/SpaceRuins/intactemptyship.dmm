@@ -69,7 +69,7 @@
 /area/ruin/space/has_grav/powered/authorship)
 "o" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "p" = (

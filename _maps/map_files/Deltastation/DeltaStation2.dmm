@@ -4783,7 +4783,7 @@
 /area/security/checkpoint/supply)
 "aIf" = (
 /obj/structure/table,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -64855,7 +64855,7 @@
 /area/maintenance/port)
 "lKp" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/service/library)
