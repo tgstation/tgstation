@@ -220,7 +220,7 @@
 			south_east_internal_corner = clamp(south_east_internal_corner, 0, 1)
 			south_east_outer_corner = clamp(south_east_outer_corner, 1, 2)
 			. = TRUE
-		if("decrease_right ")
+		if("decrease_right")
 			south_east_internal_corner--
 			south_east_outer_corner--
 			south_east_internal_corner = clamp(south_east_internal_corner, 0, 1)
