@@ -148,13 +148,16 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				return
-			choice = buttons_map[params["choice"]]
+			set_choice(buttons_map[params["choice"]])
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
 			SStgui.close_uis(src)
 			closed = TRUE
 			return TRUE
+
+/datum/tgui_list_input/proc/set_choice(choice)
+	src.choice = choice
 
 /**
  * # async tgui_list_input
@@ -173,16 +176,10 @@
 	QDEL_NULL(callback)
 	. = ..()
 
-/datum/tgui_list_input/async/ui_close(mob/user)
+/datum/tgui_list_input/async/set_choice(choice)
 	. = ..()
-	qdel(src)
-
-/datum/tgui_list_input/async/ui_act(action, list/params)
-	. = ..()
-	if (!. || choice == null)
-		return
-	callback.InvokeAsync(choice)
-	qdel(src)
+	if(!isnull(src.choice))
+		callback?.InvokeAsync(src.choice)
 
 /datum/tgui_list_input/async/wait()
 	return
