@@ -52,8 +52,9 @@
 		spawn_index = max((spawn_index + 1) % num_of_spawns, 1)
 		if(iter_contestant.spawn_this_contestant(iter_spawn))
 			iter_contestant.set_flag_on_death(TRUE)
-			RegisterSignal(iter_contestant, COMSIG_MOB_STATCHANGE, .proc/check_br_elimination_stat)
-			RegisterSignal(iter_contestant, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/check_br_elimination_dead)
+			var/mob/the_guy = iter_contestant.get_mob()
+			RegisterSignal(the_guy, COMSIG_MOB_STATCHANGE, .proc/check_br_elimination_stat)
+			RegisterSignal(the_guy, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/check_br_elimination_dead)
 			successes++
 
 	message_admins("[key_name_admin(user)] has spawned [successes] out of [LAZYLEN(active_contestants)] contestants successfully!")
@@ -63,7 +64,7 @@
 /datum/roster/proc/end_battle_royale(mob/user)
 	battle_royale_active = FALSE
 	priority_announce("Battle Royale complete!")
-	
+
 	if(user)
 		message_admins("[key_name_admin(user)] has ended the BATTLE ROYALE mode.")
 		log_game("[key_name_admin(user)] has ended the BATTLE ROYALE mode.")
@@ -73,6 +74,8 @@
 		var/list/text_dump = list("BR winners:")
 
 		for(var/datum/contestant/iter_contestant in live_contestants)
+			var/mob/the_guy = iter_contestant.get_mob()
+			to_chat(the_guy, span_hypnophrase("You survived the battle royale! Congrats!"))
 			iter_contestant.set_flag_on_death(FALSE)
 			text_dump += "[iter_contestant.ckey]"
 
@@ -80,13 +83,15 @@
 		log_game(text_dump) // lol is this okay? maybe spit it out in its own file
 
 	for(var/datum/contestant/iter_contestant in all_contestants)
-		UnregisterSignal(iter_contestant, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+		var/mob/the_guy = iter_contestant.get_mob()
+		UnregisterSignal(the_guy, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 		iter_contestant.despawn()
 
 /// A check for when a mob's stat changes, to see if we've fallen unconscious or worse, which is as good as dead.
 /datum/roster/proc/check_br_elimination_stat(mob/living/loser, new_stat)
 	SIGNAL_HANDLER
 
+	testing("check br elim stat [new_stat]")
 	if(new_stat < UNCONSCIOUS)
 		return
 
@@ -96,17 +101,19 @@
 /datum/roster/proc/check_br_elimination_dead(mob/living/loser)
 	SIGNAL_HANDLER
 
+	testing("check br elim dead")
 	battle_royale_elimination(loser)
 
 /// For enabling/disabling random wounds
 /datum/roster/proc/battle_royale_elimination(mob/living/loser)
+	testing("try elim")
 	if(!istype(loser))
 		CRASH("Something's gone wrong! Tried eliminating someone who's not there.")
-	if(LAZYLEN(active_contestants))
+	if(!LAZYLEN(active_contestants))
 		CRASH("Something's gone wrong! Tried eliminating someone when there's no active contestants.")
 
 	var/loser_ckey = loser.ckey
-	var/datum/contestant/loser_contestant = active_contestants[loser_ckey]
+	var/datum/contestant/loser_contestant = all_contestants[loser_ckey]
 	if(!istype(loser_contestant))
 		CRASH("Something's gone wrong! Tried eliminating someone who's not there.")
 
@@ -114,33 +121,20 @@
 	loser_contestant.despawn()
 	message_admins("[key_name_admin(loser)] has been eliminated! Place: [remaining_contestants].")
 	log_game("[key_name_admin(loser)] has been eliminated! Place: [remaining_contestants].")
-	UnregisterSignal(loser_contestant, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
-	loser.dust()
+	UnregisterSignal(loser, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+	loser.dust(drop_items=TRUE)
 
 	if(remaining_contestants % 5 == 0)
 		for(var/mob/M in GLOB.player_list)
-			to_chat(M, "[span_minorannounce("<font color = red>Battle Royale Update</font color><BR>[remaining_contestants] contestants remaining!")]<BR>")
+			to_chat(M, span_minorannounce("<font color = red>Battle Royale Update</font color><BR>[remaining_contestants] contestants remaining!"))
+	else
+		for(var/mob/M in GLOB.player_list)
+			to_chat(M, span_deadsay("Battle Royale Update: [loser] has been eliminated! [remaining_contestants] contestants remaining!"))
 
 	if(COOLDOWN_FINISHED(src, battle_royale_voice_cd))
 		COOLDOWN_START(src, battle_royale_voice_cd, BATTLE_ROYALE_ELIMINATION_VOICE_DELAY)
 
-		var/vol = 70
-		var/sound/admin_sound = new()
-		admin_sound.file = pick(br_elimination_voice_files)
-		admin_sound.priority = 250
-		admin_sound.channel = CHANNEL_ADMIN
-		admin_sound.frequency = 1
-		admin_sound.wait = 1
-		admin_sound.repeat = FALSE
-		admin_sound.status = SOUND_STREAM
-		admin_sound.volume = vol
-
-		for(var/mob/M in GLOB.player_list)
-			if(!(M.client?.prefs.toggles & SOUND_MIDI))
-				continue
-			admin_sound.volume = vol * M.client.admin_music_volume
-			SEND_SOUND(M, admin_sound)
-			admin_sound.volume = vol
+		sound_to_playing_players(pick(br_elimination_voice_files), 100, 0)
 
 	if(remaining_contestants <= br_end_population)
 		end_battle_royale()

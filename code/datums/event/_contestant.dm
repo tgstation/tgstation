@@ -95,9 +95,9 @@
 	if(!istype(our_boy))
 		return
 	if(godmode)
-		our_boy.status_traits |= GODMODE
+		our_boy.status_flags |= GODMODE
 	else
-		our_boy &= GODMODE
+		our_boy.status_flags &= ~GODMODE
 
 /// Spawn this guy in as a human at the appropriate spawnpoint. Returns TRUE if successful, so we can count off how many successfully spawn when needed
 /datum/contestant/proc/spawn_this_contestant(obj/machinery/arena_spawn/spawnpoint)
@@ -116,7 +116,8 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
 	if(oldbody?.client) // debug testing with empty contestant datums
 		oldbody.client.prefs.copy_to(M)
-	M.set_species(/datum/species/human) // Could use setting per team
+	if(!(M.dna?.species in list(/datum/species/human, /datum/species/moth, /datum/species/lizard)))
+		M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(/datum/outfit/job/assistant) // TODO: ADD CONTROLS FOR THIS
 	//M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	//M.faction += team //In case anyone wants to add team based stuff to arena special effects
