@@ -178,7 +178,7 @@
 	data["powered"] = is_operational
 	data["has_barrier"] = has_barrier
 
-	data["width"] = south_west_outer_corner + south_east_outer_corner
+	data["width"] = south_west_outer_corner + south_east_outer_corner + 1
 	data["height"] = north_outer_edge
 
 	return data
