@@ -14,6 +14,7 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 
 ///How many books should we load per page?
 #define BOOKS_PER_PAGE 20
+
 /*
  * Library Public Computer
  */
@@ -35,11 +36,15 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	var/list/page_content = list()
 	///The the total pages last we checked
 	var/page_count = 0
-	///The page of our last query
+	///The page of our current query
 	var/search_page = 0
 	///Can we connect to the db?
 	var/can_connect = FALSE
-	///Guess
+	///A hash of the last search we did, prevents spam in a different way then the cooldown
+	var/last_search_hash = ""
+	///Have the search params changed at all since the last search?
+	var/params_changed = FALSE
+	///Prevents spamming the search button
 	COOLDOWN_DECLARE(search_run_cooldown)
 
 /obj/machinery/computer/libraryconsole/Initialize(mapload)
@@ -63,6 +68,7 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	data["our_page"] = search_page
 	data["pages"] = page_content
 	data["can_connect"] = can_connect
+	data["params_changed"] = params_changed
 	return data
 
 /obj/machinery/computer/libraryconsole/ui_act(action, params)
@@ -72,24 +78,34 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	switch(action)
 		if("set-title")
 			var/newtitle = params["title"]
-			title = sanitize(newtitle)
+			newtitle = sanitize(newtitle)
+			if(newtitle != title)
+				params_changed = TRUE
+			title = newtitle
 			return TRUE
 		if("set-category")
 			var/newcategory = params["category"]
 			if(!(newcategory in GLOB.book_categories)) //Nice try
-				category = GLOB.default_book_category
-				return TRUE
-			category = sanitize(newcategory)
+				newcategory = GLOB.default_book_category
+			newcategory = sanitize(newcategory)
+			if(newcategory != category)
+				params_changed = TRUE
+			category = newcategory
 			return TRUE
 		if("set-author")
 			var/newauthor = params["author"]
-			author = sanitize(newauthor)
+			newauthor = sanitize(newauthor)
+			if(newauthor != author)
+				params_changed = TRUE
+			author = newauthor
 			return TRUE
 		if("search")
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
 		if("switch-page")
-			search_page = params["page"]
+			var/parsed = text2num(params["page"])
+			search_page = parsed || params["page"]
+			search_page = min(max(0, search_page), page_count)
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
 		if("clear-data") //The cap just walked in on your browsing, quick! delete it!
@@ -100,21 +116,28 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 			return TRUE
 
 /obj/machinery/computer/libraryconsole/proc/update_db_info()
+	var/hashed_search = hash_search_info()
+	if(last_search_hash == hashed_search) //You're not allowed to make the same search twice, waste of resources
+		return
 	if(!COOLDOWN_FINISHED(src, search_run_cooldown))
 		//Say omethsing about the cooldown
 		return
 	COOLDOWN_START(src, search_run_cooldown, 1 SECONDS)
-
 	if (!SSdbcore.Connect())
 		can_connect = FALSE
 		page_count = 0
 		page_content = list()
 		return
 	can_connect = TRUE
+	params_changed = FALSE
+	last_search_hash = hashed_search
 
 	update_page_count()
 	update_page_contents()
 	SStgui.update_uis(src) //We need to do this because we sleep here, so we've gotta update manually
+
+/obj/machinery/computer/libraryconsole/proc/hash_search_info()
+	return "[title]-[author]-[category]-[search_page]-[page_count]"
 
 /obj/machinery/computer/libraryconsole/proc/update_page_contents()
 	page_content.Cut()
@@ -126,6 +149,7 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
+		ORDER BY id DESC
 		LIMIT :skip, :take
 	"}, list("author" = author, "title" = title, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
 	if(!query_library_list_books.Execute())
