@@ -185,7 +185,6 @@ export const PageSelect = (props, context) => {
   const {
     page_count,
     our_page,
-    can_connect,
   } = data;
   return (
     <Stack>

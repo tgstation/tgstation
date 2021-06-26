@@ -64,8 +64,8 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	data["category"] = category || GLOB.default_book_category
 	data["author"] = author
 	data["title"] = title
-	data["page_count"] = page_count
-	data["our_page"] = search_page
+	data["page_count"] = page_count + 1 //Increase these by one so it looks like we're not indexing at 0
+	data["our_page"] = search_page + 1
 	data["pages"] = page_content
 	data["can_connect"] = can_connect
 	data["params_changed"] = params_changed
@@ -105,7 +105,8 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 		if("switch-page")
 			var/parsed = text2num(params["page"])
 			search_page = parsed || params["page"]
-			search_page = min(max(0, search_page), page_count)
+			//We expect the search page to be one greater then it should be, because we're lying about indexing at 1
+			search_page = min(max(0, search_page - 1), page_count)
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
 		if("clear-data") //The cap just walked in on your browsing, quick! delete it!
