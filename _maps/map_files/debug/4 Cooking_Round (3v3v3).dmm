@@ -5,12 +5,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/grown/ambrosia/gaia,
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "af" = (
 /obj/item/food/grown/ash_flora/mushroom_stem,
 /obj/item/food/grown/ash_flora/mushroom_cap,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ag" = (
 /obj/machinery/vending/wallmed/directional/north{
 	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/libital = 2, /obj/item/reagent_containers/pill/patch/aiuri = 2, /obj/item/reagent_containers/pill/multiver = 2, /obj/item/reagent_containers/medigel/sterilizine = 1);
@@ -18,19 +18,19 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ah" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ai" = (
 /obj/effect/portal/permanent/red/farm/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "al" = (
 /obj/structure/sink/kitchen{
 	dir = 1;
@@ -40,7 +40,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "an" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/portal/permanent/green/grocery/from,
@@ -51,7 +51,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ap" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
@@ -61,24 +61,24 @@
 	},
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "as" = (
 /obj/structure/window/reinforced/spawner/west{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "av" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ay" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "aC" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -92,14 +92,14 @@
 	pixel_x = 6
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "aG" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/human/corpse/charredskeleton,
 /obj/item/organ/brain,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "aI" = (
 /obj/structure/window/reinforced/survival_pod{
 	max_integrity = 9999
@@ -108,7 +108,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "aK" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -124,19 +124,19 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "aT" = (
 /obj/effect/mob_spawn/human/corpse/assistant,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "aW" = (
 /obj/structure/destructible/cult/talisman,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/gibspawner/human/bodypartless,
 /obj/effect/mob_spawn/human/clown/corpse,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bc" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -149,12 +149,12 @@
 /obj/item/clothing/mask/fakemoustache,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "be" = (
 /obj/effect/decal/cleanable/garbage,
 /obj/structure/closet/crate/trashcart,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bl" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/beakers/bluespace,
@@ -175,15 +175,15 @@
 	},
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bs" = (
 /obj/machinery/door/airlock/grunge,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bt" = (
 /obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bA" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 8;
@@ -194,26 +194,26 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bD" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/weather/sand,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bG" = (
 /obj/item/food/grown/wheat,
 /obj/item/food/egg,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bI" = (
 /obj/item/clothing/under/costume/scarecrow,
 /obj/item/clothing/mask/scarecrow{
@@ -224,7 +224,7 @@
 	pixel_y = 16
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bK" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/window/southright,
@@ -234,7 +234,7 @@
 /obj/item/clothing/head/crown,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bL" = (
 /obj/structure/window/reinforced/fulltile/indestructable,
 /turf/open/floor/plating/beach/water{
@@ -242,42 +242,42 @@
 	icon_state = "lava";
 	name = "lava"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bP" = (
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bQ" = (
 /obj/structure/table,
 /obj/item/trash/waffles{
 	pixel_y = 6
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bS" = (
 /obj/effect/turf_decal/siding/thinplating/corner,
 /turf/open/floor/mineral/titanium/tiled/white{
 	color = "#4AC948"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "bW" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/circuitboard/computer,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cd" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cf" = (
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ck" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
@@ -285,7 +285,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cl" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -301,38 +301,38 @@
 /obj/structure/table/wood,
 /obj/item/food/cnds/random,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cn" = (
 /obj/effect/portal/permanent/green/jungle/from,
 /obj/effect/turf_decal/trimline/green/filled,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cq" = (
 /obj/structure/railing{
 	climbable = 0;
 	max_integrity = 9999
 	},
 /turf/closed/indestructible/fakeglass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cu" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cx" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cC" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -346,25 +346,25 @@
 /obj/item/food/grown/holymelon,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cL" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/structure/window/reinforced/spawner/east{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cM" = (
 /obj/item/food/grown/wheat,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cN" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cO" = (
 /obj/structure/sign/departments/restroom{
 	pixel_y = -32
@@ -375,7 +375,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cQ" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -394,18 +394,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cV" = (
 /obj/machinery/arena_spawn/red,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cW" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
@@ -413,11 +413,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "cZ" = (
 /obj/structure/flora/rock,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dj" = (
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
@@ -439,10 +439,10 @@
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /turf/open/floor/vault/sandstone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dm" = (
 /turf/open/floor/holofloor/beach/coast_t,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "do" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/pumpkin{
@@ -458,14 +458,14 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dp" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dq" = (
 /obj/structure/table/greyscale,
 /obj/structure/window/reinforced/spawner,
@@ -479,13 +479,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dx" = (
 /obj/structure/chair/plastic{
 	dir = 8
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dB" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -493,28 +493,28 @@
 	color = "#964B00"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dC" = (
 /obj/item/ammo_casing/c9mm{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dF" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 8
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dO" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -522,7 +522,7 @@
 /obj/item/melee/baseball_bat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dS" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -530,15 +530,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dV" = (
 /obj/structure/table/wood/fancy/blue,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dW" = (
 /obj/item/food/grown/wheat,
 /obj/structure/closet/crate/wooden{
@@ -553,25 +553,25 @@
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dY" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
 	dir = 4
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "dZ" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ed" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 4
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ef" = (
 /obj/machinery/computer/camera_advanced,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -582,7 +582,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eg" = (
 /obj/structure/railing{
 	dir = 5
@@ -590,32 +590,32 @@
 /obj/machinery/power/shieldwallgen/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eh" = (
 /obj/structure/chair/sofa/left{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ej" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ek" = (
 /mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny{
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "el" = (
 /obj/item/food/grown/mushroom/jupitercup,
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eu" = (
 /obj/structure/table,
 /obj/item/storage/box/papersack{
@@ -628,26 +628,26 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ew" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ey" = (
 /obj/item/food/grown/cocoapod,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eA" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eG" = (
 /obj/machinery/processor,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eS" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -655,7 +655,7 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eT" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -665,7 +665,7 @@
 /obj/item/stock_parts/cell/computer/super,
 /obj/item/stock_parts/cell/computer/super,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eU" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -676,58 +676,58 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "eW" = (
 /obj/structure/sign/poster/contraband/pwr_game,
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fc" = (
 /obj/effect/portal/permanent/blue/lavaland/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fg" = (
 /obj/effect/portal/permanent/blue/grocery/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fi" = (
 /obj/item/food/grown/ash_flora/mushroom_stem,
 /obj/item/food/grown/ash_flora/mushroom_cap,
 /turf/closed/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fj" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fw" = (
 /obj/item/grown/bananapeel,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fK" = (
 /obj/machinery/door/airlock/virology,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fL" = (
 /obj/effect/portal/permanent/blue/zoo/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fN" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /obj/item/food/grown/mushroom/libertycap,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fS" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -739,7 +739,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fU" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/table,
@@ -750,7 +750,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fV" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -758,30 +758,30 @@
 	},
 /obj/item/food/grown/mushroom/angel,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "fX" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
 /obj/machinery/gibber,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gd" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gj" = (
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gk" = (
 /mob/living/simple_animal/mouse{
 	faction = list("hostile")
 	},
 /obj/item/trash/can/food/beans,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gl" = (
 /obj/item/food/grown/ash_flora/seraka{
 	pixel_x = 4;
@@ -791,12 +791,12 @@
 	pixel_x = -4
 	},
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "go" = (
 /mob/living/simple_animal/hostile/carp,
 /obj/item/food/moonfish_eggs,
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gJ" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
@@ -808,22 +808,22 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gN" = (
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gO" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gR" = (
 /obj/structure/beebox,
 /obj/item/reagent_containers/honeycomb,
 /obj/item/reagent_containers/honeycomb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gU" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -833,34 +833,34 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gX" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "gY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ha" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hb" = (
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hd" = (
 /mob/living/simple_animal/hostile/retaliate/goat{
 	faction = list("carp")
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hh" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -879,14 +879,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hm" = (
 /mob/living/simple_animal/hostile/giant_spider/hunter/scrawny{
 	faction = list("hostile")
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ho" = (
 /obj/structure/table/greyscale,
 /obj/structure/microscope,
@@ -895,7 +895,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ht" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
@@ -903,7 +903,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hw" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
@@ -913,7 +913,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hx" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -922,7 +922,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hB" = (
 /obj/structure/alien/weeds,
 /obj/item/melee/sabre{
@@ -932,21 +932,21 @@
 	wound_bonus = 0
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hD" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hF" = (
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hG" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 6
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hH" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/window/reinforced/survival_pod{
@@ -954,21 +954,21 @@
 	max_integrity = 99999
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hM" = (
 /obj/structure/trap/ctf/blue,
 /obj/structure/window/reinforced/spawner/east{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hN" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hQ" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -991,7 +991,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hX" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
@@ -1004,38 +1004,38 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hY" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "hZ" = (
 /obj/item/food/grown/tea,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ie" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sink{
 	pixel_y = 20
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ig" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ih" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ii" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "io" = (
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ip" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -1066,21 +1066,21 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ir" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 8
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iu" = (
 /obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 8
 	},
 /obj/machinery/door/airlock/alarmlock,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iv" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -1089,41 +1089,41 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iw" = (
 /turf/closed/indestructible/wood,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ix" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iD" = (
 /obj/structure/railing/corner,
 /obj/structure/cable,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iF" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
 	dir = 1
 	},
 /turf/closed/indestructible/riveted,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iH" = (
 /obj/effect/portal/permanent/green/farm/from,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iM" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iN" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
@@ -1131,14 +1131,14 @@
 	dir = 10
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iQ" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /obj/item/food/grown/mushroom/libertycap,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "iY" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -1156,7 +1156,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jc" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -1164,7 +1164,7 @@
 /turf/open/floor/mineral/titanium/tiled/white{
 	color = "#4AC948"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "je" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -1173,11 +1173,11 @@
 	dir = 9
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jf" = (
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ji" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
@@ -1187,11 +1187,11 @@
 	pixel_y = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jk" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jl" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/machinery/button/door/directional{
@@ -1199,11 +1199,11 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jo" = (
 /obj/item/food/fishmeat/armorfish,
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jq" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -1211,42 +1211,42 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/chem_heater,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "js" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/indestructible/wood,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jt" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ju" = (
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jv" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jx" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jy" = (
 /obj/effect/turf_decal/mining/survival,
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jz" = (
 /obj/structure/fluff/empty_sleeper{
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jD" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -1255,14 +1255,14 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jG" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jI" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 10
@@ -1271,37 +1271,37 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jN" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 4
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jQ" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 9
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jV" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "jZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/royalblue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kb" = (
 /obj/effect/decal/cleanable/oil/streak,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kc" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/tomato/blood{
@@ -1317,14 +1317,14 @@
 	pixel_y = -5
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kd" = (
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mob_spawn/human/corpse/assistant,
 /obj/item/organ/lungs,
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kg" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1339,29 +1339,29 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kj" = (
 /obj/effect/portal/permanent/red/hospital/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kk" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "km" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kn" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ko" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral{
@@ -1372,7 +1372,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kp" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -1387,18 +1387,18 @@
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ks" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kE" = (
 /obj/effect/portal/permanent/red/zoo/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kF" = (
 /obj/effect/portal/permanent/green/hospital/from,
 /obj/structure/toilet{
@@ -1407,14 +1407,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kI" = (
 /obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kM" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
@@ -1428,7 +1428,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -1439,18 +1439,18 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kO" = (
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kR" = (
 /obj/structure/alien/weeds,
 /obj/item/xenos_claw,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kU" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -1462,7 +1462,7 @@
 /obj/structure/table/greyscale,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kW" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -1470,11 +1470,11 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "kX" = (
 /obj/item/food/grown/ash_flora/seraka,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ld" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/latex,
@@ -1489,7 +1489,7 @@
 	},
 /obj/item/clothing/glasses/science,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "le" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -1505,7 +1505,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lf" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -1518,7 +1518,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -1528,7 +1528,7 @@
 /obj/item/clothing/head/bio_hood,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "li" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
@@ -1537,7 +1537,7 @@
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ll" = (
 /obj/structure/railing{
 	climbable = 0;
@@ -1548,40 +1548,40 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lm" = (
 /obj/item/food/fishmeat/moonfish{
 	pixel_y = 5
 	},
 /obj/item/food/fishmeat/moonfish,
 /turf/open/floor/holofloor/beach/coast_t,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lp" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lv" = (
 /obj/item/food/grown/ash_flora/mushroom_leaf,
 /obj/item/food/grown/ash_flora/mushroom_cap,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lw" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lx" = (
 /obj/effect/portal/permanent/green/zoo/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lz" = (
 /obj/structure/holosign/barrier/ctf/green,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lE" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -1594,34 +1594,34 @@
 /obj/item/clothing/head/wizard,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lH" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lM" = (
 /obj/effect/portal/permanent/green/farm/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lV" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/item/chair/plastic,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lY" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/item/food/grown/mushroom/libertycap,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "lZ" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_y = 8
@@ -1631,10 +1631,10 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mb" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mc" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 8;
@@ -1643,7 +1643,7 @@
 /obj/structure/trap/ctf/blue,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "me" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
@@ -1653,12 +1653,12 @@
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ml" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/grown/sunflower,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mo" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/carrot{
@@ -1669,7 +1669,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mr" = (
 /obj/item/food/grown/wheat,
 /obj/item/food/egg,
@@ -1677,17 +1677,17 @@
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mt" = (
 /obj/structure/railing/corner,
 /obj/structure/cable,
 /obj/item/banner,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mu" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mv" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/brown{
@@ -1698,22 +1698,22 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mw" = (
 /obj/structure/chair/comfy/lime{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mx" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mC" = (
 /turf/closed/indestructible/reinforced,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mH" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -1725,13 +1725,13 @@
 /obj/machinery/computer/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mJ" = (
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/wheat,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mL" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 10
@@ -1740,15 +1740,15 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mN" = (
 /turf/closed/indestructible/opsglass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mQ" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mR" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -1757,43 +1757,43 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mV" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mW" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "mZ" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "na" = (
 /obj/effect/turf_decal/mining/survival{
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nb" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nc" = (
 /obj/structure/window/reinforced/fulltile/indestructable,
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nd" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -1804,11 +1804,11 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ng" = (
 /obj/item/food/grown/banana,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nh" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -1818,58 +1818,58 @@
 	icon_state = "frontwallbottom"
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ni" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nj" = (
 /obj/machinery/arena_spawn/green,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "np" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nt" = (
 /obj/structure/flora/rock/pile,
 /turf/open/lava,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nv" = (
 /obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nw" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nx" = (
 /obj/structure/sign/departments/drop,
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nA" = (
 /obj/effect/portal/permanent/blue/lavaland/from,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nB" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/blumpkin{
@@ -1885,35 +1885,35 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nC" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/l3closet,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nF" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/machinery/door/window/survival_pod,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nG" = (
 /obj/structure/flora/tree/jungle,
 /obj/item/food/grown/banana,
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nI" = (
 /mob/living/simple_animal/cow{
 	faction = list("carp")
 	},
 /turf/open/floor/vault/sandstone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nJ" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/window/southright,
@@ -1923,24 +1923,24 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nQ" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "nT" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/structure/window/reinforced/spawner/west{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "on" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oo" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -1952,28 +1952,28 @@
 /obj/structure/table/greyscale,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ot" = (
 /obj/effect/portal/permanent/green/lavaland/from,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/trimline/green/filled,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ov" = (
 /obj/item/food/fishmeat/gunner_jellyfish,
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 10
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ox" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oy" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oz" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
@@ -2010,37 +2010,37 @@
 /obj/effect/decal/cleanable/oil/streak,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oA" = (
 /mob/living/simple_animal/hostile/retaliate/goat{
 	faction = list("carp")
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oC" = (
 /mob/living/simple_animal/butterfly{
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oE" = (
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oH" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oM" = (
 /obj/item/organ/regenerative_core/legion,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oQ" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2059,18 +2059,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oR" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oY" = (
 /obj/structure/railing,
 /obj/structure/cable,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "oZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2081,7 +2081,7 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pa" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2098,31 +2098,31 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pc" = (
 /obj/item/food/spiderling,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pd" = (
 /obj/machinery/vending/snack,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pf" = (
 /obj/machinery/smartfridge/drying_rack,
 /turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pj" = (
 /obj/structure/marker_beacon,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pk" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pm" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -2130,7 +2130,7 @@
 	},
 /obj/item/food/spiderling,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pp" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2150,12 +2150,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pq" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pv" = (
 /obj/structure/table/greyscale,
 /obj/machinery/microwave{
@@ -2165,7 +2165,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "py" = (
 /obj/structure/table/greyscale,
 /obj/machinery/microwave{
@@ -2175,11 +2175,11 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pA" = (
 /obj/item/food/grown/banana/mime,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pE" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
@@ -2191,7 +2191,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pH" = (
 /obj/effect/portal/permanent/red/hospital/from,
 /obj/structure/toilet{
@@ -2200,22 +2200,22 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/red/filled,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pP" = (
 /obj/machinery/computer/pandemic,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bottle/syriniver,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pQ" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pT" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/oat{
@@ -2228,14 +2228,14 @@
 	pixel_x = 8
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pV" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pW" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
@@ -2249,17 +2249,17 @@
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "pZ" = (
 /obj/structure/table/survival_pod,
 /obj/item/storage/firstaid/fire,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qd" = (
 /obj/structure/healingfountain,
 /obj/item/food/grown/apple/gold,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qe" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -2271,7 +2271,7 @@
 /obj/item/paper_bin/carbon,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qf" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/icepepper,
@@ -2282,14 +2282,14 @@
 	pixel_x = -4
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qm" = (
 /obj/item/food/grown/mushroom/amanita,
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qo" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/onion{
@@ -2305,13 +2305,13 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qp" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qq" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -2321,19 +2321,19 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qs" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/item/food/grown/korta_nut/sweet,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qA" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring{
@@ -2341,21 +2341,21 @@
 	icon_state = "singular"
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qD" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qE" = (
 /obj/item/food/grown/banana,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qH" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -2365,7 +2365,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qI" = (
 /obj/structure/railing/corner{
 	color = "#964B00"
@@ -2374,16 +2374,16 @@
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qK" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qQ" = (
 /obj/structure/curtain/cloth,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qR" = (
 /obj/structure/flora/tree/jungle{
 	pixel_x = -34;
@@ -2393,15 +2393,15 @@
 	dir = 9
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qU" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qW" = (
 /obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qX" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2421,19 +2421,19 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qY" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
 /obj/machinery/gibber,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "qZ" = (
 /obj/structure/window/reinforced/fulltile/indestructable,
 /obj/structure/flora/rock/pile,
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rc" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -2443,14 +2443,14 @@
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rh" = (
 /obj/item/food/grown/mushroom/jupitercup,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ri" = (
 /turf/closed/indestructible/riveted,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rj" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/vanillapod{
@@ -2461,12 +2461,12 @@
 	pixel_x = -7
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rl" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rm" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
@@ -2474,7 +2474,7 @@
 	faction = list("carp")
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rn" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -2482,7 +2482,7 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rp" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 10
@@ -2490,7 +2490,7 @@
 /turf/open/floor/mineral/titanium/tiled/white{
 	color = "#4AC948"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -2500,7 +2500,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rt" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
@@ -2508,12 +2508,12 @@
 /turf/open/floor/mineral/titanium/tiled/white{
 	color = "#4AC948"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ry" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rB" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1;
@@ -2521,7 +2521,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rC" = (
 /obj/structure/table/greyscale,
 /obj/item/reagent_containers/food/condiment/enzyme{
@@ -2537,23 +2537,23 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rD" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rE" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/structure/window/reinforced/spawner/west{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rG" = (
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rI" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/table,
@@ -2566,17 +2566,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rJ" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rL" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "blue_shutter"
 	},
 /turf/open/floor/carpet/royalblue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rO" = (
 /obj/structure/alien/weeds,
 /obj/structure/railing{
@@ -2585,19 +2585,19 @@
 /obj/machinery/power/shieldwallgen/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rP" = (
 /obj/machinery/processor,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rV" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2611,7 +2611,7 @@
 /obj/item/food/grown/watermelon,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rX" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
@@ -2620,13 +2620,13 @@
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "rZ" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sa" = (
 /obj/structure/statue/silver/medborg{
 	anchored = 1;
@@ -2637,31 +2637,31 @@
 	name = "Speedbike"
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sb" = (
 /obj/structure/fluff/bus/passable/seat,
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sc" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sd" = (
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sh" = (
 /obj/structure/flora/tree/jungle,
 /obj/item/food/grown/bungofruit,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sw" = (
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sA" = (
 /obj/structure/spider/stickyweb,
 /mob/living/simple_animal/butterfly{
@@ -2672,11 +2672,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sD" = (
 /obj/machinery/power/shieldwallgen,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sO" = (
 /obj/structure/frame/computer,
 /obj/structure/window/reinforced/spawner/north,
@@ -2694,12 +2694,12 @@
 /obj/item/coin/silver,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sR" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sS" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -2709,7 +2709,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sU" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2730,17 +2730,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sV" = (
 /turf/closed/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sW" = (
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sX" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/railing{
@@ -2748,7 +2748,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "sZ" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2763,7 +2763,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ta" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/human/clown/corpse,
@@ -2771,18 +2771,18 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tc" = (
 /obj/structure/holosign/barrier/ctf/red,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tf" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
 	dir = 8
 	},
 /turf/closed/indestructible/riveted,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "th" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -2795,17 +2795,17 @@
 /obj/item/clothing/mask/gas/clown_hat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tk" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/peanuts,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tm" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "to" = (
 /obj/structure/tubes,
 /obj/structure/chair/comfy/black{
@@ -2814,16 +2814,16 @@
 /obj/effect/mob_spawn/human/miner,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tp" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tv" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tw" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -2833,33 +2833,33 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tz" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/fluff/bus/dense{
 	icon_state = "frontwallbottomrear"
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tE" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 1
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tN" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel{
 	faction = list("carp")
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tQ" = (
 /obj/structure/alien/weeds/node,
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tT" = (
 /obj/structure/mirror/directional/north,
 /obj/structure/sink{
@@ -2867,7 +2867,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair{
@@ -2876,27 +2876,27 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tW" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tY" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "tZ" = (
 /turf/closed/indestructible/fakedoor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ug" = (
 /obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 4
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ui" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 10
@@ -2905,7 +2905,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uk" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -2917,7 +2917,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "un" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/onion/red{
@@ -2933,11 +2933,11 @@
 	pixel_y = -5
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uo" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "up" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -2948,68 +2948,68 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ur" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uv" = (
 /obj/structure/plaque,
 /turf/closed/indestructible/wood,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uA" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uD" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uQ" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/mineral/titanium/tiled/white{
 	color = "#4AC948"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uT" = (
 /turf/open/lava,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uV" = (
 /obj/effect/portal/permanent/blue/farm/from,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uW" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/membrane,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uY" = (
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "uZ" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/item/food/grown/mushroom/amanita,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "va" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vb" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ve" = (
 /obj/item/food/grown/mushroom/reishi,
 /obj/item/food/grown/mushroom/reishi{
@@ -3017,11 +3017,11 @@
 	pixel_y = -7
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vh" = (
 /obj/structure/holosign/barrier/ctf/green,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
@@ -3030,7 +3030,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vo" = (
 /obj/structure/fluff/bus/passable/seat{
 	density = 1;
@@ -3039,27 +3039,27 @@
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vq" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vs" = (
 /obj/machinery/vending/sustenance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vt" = (
 /mob/living/simple_animal/mouse{
 	faction = list("hostile")
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vy" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/moonflower,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vC" = (
 /obj/structure/railing{
 	climbable = 0;
@@ -3070,7 +3070,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vG" = (
 /obj/structure/chair/sofa/right{
 	dir = 8
@@ -3078,11 +3078,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/cnds/random,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vK" = (
 /obj/machinery/door/airlock/cult/friendly,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vM" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -3090,14 +3090,14 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vN" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
 /obj/structure/holosign/barrier/ctf/green,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vP" = (
 /mob/living/simple_animal/crab{
 	faction = list("carp")
@@ -3107,7 +3107,7 @@
 /obj/item/food/grown/cannabis,
 /obj/structure/fluff/beach_umbrella,
 /turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vS" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/window/southright,
@@ -3117,13 +3117,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vU" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vV" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/delivery/white,
@@ -3131,7 +3131,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vX" = (
 /obj/structure/railing{
 	dir = 6
@@ -3139,26 +3139,26 @@
 /obj/machinery/power/shieldwallgen/anchored,
 /obj/structure/cable,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "vY" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wf" = (
 /obj/structure/chair/plastic{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wg" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -3170,19 +3170,19 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wj" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wn" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "hoodbottom"
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wo" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/window/reinforced/spawner/west,
@@ -3193,7 +3193,7 @@
 /obj/item/clothing/head/crown,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wq" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -3201,12 +3201,12 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/chem_heater,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wr" = (
 /obj/machinery/door/airlock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ws" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -3217,7 +3217,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wt" = (
 /mob/living/simple_animal/butterfly{
 	faction = list("hostile")
@@ -3226,7 +3226,7 @@
 	color = "#964B00"
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ww" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/neutral{
@@ -3244,13 +3244,13 @@
 	faction = list("cult")
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wx" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wz" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/trumpet,
@@ -3261,36 +3261,36 @@
 	pixel_y = -7
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wA" = (
 /obj/structure/table/wood/fancy/green,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wH" = (
 /obj/structure/railing{
 	color = "#964B00";
 	dir = 8
 	},
 /turf/closed/indestructible/riveted,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wI" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wK" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wL" = (
 /obj/effect/portal/permanent/red/lavaland/from,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/trimline/red/filled,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wN" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -3306,7 +3306,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/documents,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wO" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/button/door/directional{
@@ -3314,23 +3314,23 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wP" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wT" = (
 /obj/structure/sign/poster/contraband/space_up,
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wU" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wV" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -3349,17 +3349,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "wW" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xa" = (
 /obj/structure/sign/poster/official/fruit_bowl,
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xc" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "topdoor"
@@ -3369,7 +3369,7 @@
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xg" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
@@ -3380,11 +3380,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xi" = (
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xo" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -3402,13 +3402,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xp" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xv" = (
 /obj/machinery/plumbing/grinder_chemical,
 /obj/effect/turf_decal/bot,
@@ -3416,7 +3416,7 @@
 	dir = 10
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xy" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -3435,34 +3435,34 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xz" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xF" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/machinery/door/airlock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xG" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xI" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xN" = (
 /obj/machinery/door/airlock/glass_large,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -3470,19 +3470,19 @@
 	},
 /obj/effect/turf_decal/weather/sand,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xO" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xS" = (
 /obj/effect/portal/permanent/green/jungle/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xV" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -3495,7 +3495,7 @@
 	pixel_y = 25
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xW" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -3505,7 +3505,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "xZ" = (
 /obj/structure/table/greyscale,
 /obj/machinery/microwave{
@@ -3515,19 +3515,19 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ya" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yd" = (
 /obj/item/food/grown/mushroom/glowshroom/glowcap,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yg" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yi" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -3540,38 +3540,38 @@
 /obj/item/pen/fourcolor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yk" = (
 /obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yl" = (
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 8
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ys" = (
 /obj/structure/sign/poster/party_game,
 /turf/closed/indestructible/wood,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yw" = (
 /obj/effect/turf_decal/box/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yx" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yz" = (
 /obj/structure/chair/comfy/teal{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yC" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -3579,16 +3579,16 @@
 	},
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yE" = (
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yM" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
@@ -3600,14 +3600,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yN" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yO" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -3615,20 +3615,20 @@
 	},
 /obj/item/banner,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yP" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
 /obj/machinery/gibber,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yR" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yT" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
@@ -3638,7 +3638,7 @@
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yY" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/beakers/bluespace,
@@ -3659,7 +3659,7 @@
 	},
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "yZ" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -3667,18 +3667,18 @@
 	pixel_x = 9
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zb" = (
 /obj/structure/sign/poster/contraband/robust_softdrinks,
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zh" = (
 /mob/living/simple_animal/butterfly{
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zl" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -3687,11 +3687,11 @@
 	dir = 9
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zp" = (
 /obj/structure/holosign/barrier/ctf/red,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zA" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
@@ -3703,43 +3703,43 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zE" = (
 /obj/structure/trap/cult,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zG" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zJ" = (
 /obj/item/food/candy_trash/nicotine,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zL" = (
 /obj/structure/table/greyscale,
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zN" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zO" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zP" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/garlic{
@@ -3750,27 +3750,27 @@
 	pixel_y = -5
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zQ" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zS" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "zT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Aa" = (
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ac" = (
 /obj/structure/chair/stool{
 	dir = 1;
@@ -3779,21 +3779,21 @@
 /obj/item/sales_tagger,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ad" = (
 /obj/effect/turf_decal/mining,
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ae" = (
 /obj/item/storage/fancy/rollingpapers,
 /turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Af" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ak" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3808,7 +3808,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Av" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -3817,10 +3817,10 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Az" = (
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AC" = (
 /obj/structure/table/greyscale,
 /obj/structure/window/reinforced/spawner/north,
@@ -3835,7 +3835,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AE" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/portal/permanent/red/grocery/from,
@@ -3846,14 +3846,14 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AF" = (
 /obj/structure/trap/ctf/blue,
 /obj/machinery/door/window/survival_pod{
 	dir = 8
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AI" = (
 /obj/structure/table/greyscale,
 /obj/structure/window/reinforced/spawner,
@@ -3864,11 +3864,11 @@
 /obj/item/storage/fancy/candle_box,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AO" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AS" = (
 /mob/living/simple_animal/butterfly{
 	faction = list("hostile")
@@ -3878,21 +3878,21 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AV" = (
 /obj/structure/holosign/barrier/ctf/green,
 /obj/machinery/door/window/survival_pod{
 	dir = 1
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AW" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AX" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -3904,41 +3904,41 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "AY" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Be" = (
 /obj/item/food/moonfish_eggs,
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bf" = (
 /mob/living/simple_animal/hostile/bear/russian{
 	faction = list("jungle")
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bg" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bk" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bp" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 6
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bs" = (
 /obj/effect/turf_decal/siding/white,
 /obj/structure/window/reinforced/spawner/west{
@@ -3948,27 +3948,27 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bv" = (
 /obj/effect/turf_decal/siding/thinplating/corner,
 /turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Bz" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/soybeans,
 /obj/item/food/grown/soybeans,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BA" = (
 /mob/living/simple_animal/hostile/carp,
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BC" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
@@ -3977,18 +3977,18 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BE" = (
 /mob/living/simple_animal/cow{
 	faction = list("carp")
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BG" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
 	dir = 8
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BM" = (
 /obj/structure/sink/kitchen{
 	dir = 1;
@@ -3998,7 +3998,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
@@ -4008,7 +4008,7 @@
 	pixel_y = 20
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BT" = (
 /obj/structure/railing{
 	climbable = 0;
@@ -4019,10 +4019,10 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BU" = (
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BY" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -4039,7 +4039,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "BZ" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -4047,32 +4047,32 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Cb" = (
 /obj/machinery/door/airlock/grunge,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Cc" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ci" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Cl" = (
 /obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Co" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -4083,14 +4083,14 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Cx" = (
 /obj/structure/chair/plastic{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Cy" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -4108,18 +4108,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CD" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CI" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CK" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -4131,13 +4131,13 @@
 /obj/item/clothing/glasses/regular/jamjar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CL" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CM" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -4148,7 +4148,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CO" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -4167,10 +4167,10 @@
 	name = "BM Speedwagon"
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CP" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4184,13 +4184,13 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CV" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "CZ" = (
 /obj/effect/food_cart_stand,
 /obj/structure/table,
@@ -4201,7 +4201,7 @@
 	pixel_x = -4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dc" = (
 /mob/living/simple_animal/hostile/zombie,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -4212,7 +4212,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dg" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -4221,11 +4221,11 @@
 	dir = 9
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dl" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dp" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
@@ -4235,29 +4235,29 @@
 	},
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dr" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ds" = (
 /obj/item/food/grown/poppy/geranium/fraxinella,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dv" = (
 /obj/effect/turf_decal/mining/survival{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Dy" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DB" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/redbeet,
@@ -4266,43 +4266,43 @@
 	},
 /obj/item/food/grown/redbeet,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DE" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DH" = (
 /obj/effect/portal/permanent/red/grocery/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DK" = (
 /obj/structure/alien/weeds,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring{
 	icon_state = "singular"
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "DX" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/corn,
@@ -4313,7 +4313,7 @@
 	pixel_y = -10
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ea" = (
 /obj/structure/table/greyscale,
 /obj/item/reagent_containers/glass/beaker{
@@ -4327,40 +4327,40 @@
 /obj/item/reagent_containers/glass/beaker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Eb" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ed" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Eh" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Em" = (
 /obj/machinery/arena_spawn/blue,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "En" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Eq" = (
 /obj/item/food/grown/mushroom/plumphelmet,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Es" = (
 /obj/effect/portal/permanent/blue/hospital/from,
 /obj/structure/toilet{
@@ -4369,14 +4369,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/blue/filled,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ev" = (
 /obj/structure/alien/weeds,
 /obj/structure/railing{
 	dir = 10
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ex" = (
 /obj/item/food/canned/beans{
 	pixel_x = -2;
@@ -4386,7 +4386,7 @@
 	pixel_x = 7
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ED" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/whitebeet,
@@ -4397,44 +4397,44 @@
 	pixel_x = 10
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "EF" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "EG" = (
 /mob/living/simple_animal/chicken{
 	faction = list("hostile")
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "EH" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "EO" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ES" = (
 /obj/effect/portal/permanent/green/hospital/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "EU" = (
 /obj/structure/holosign/barrier/ctf/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "EV" = (
 /obj/effect/portal/permanent/blue/farm/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fa" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -4442,13 +4442,13 @@
 	dir = 6
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fc" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fd" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -4458,7 +4458,7 @@
 /obj/item/grown/log/tree,
 /obj/item/grown/log/tree,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fh" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -4477,19 +4477,19 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fi" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fm" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "green_shutter"
 	},
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fn" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/neutral{
@@ -4504,7 +4504,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fq" = (
 /obj/structure/sink/kitchen{
 	dir = 1;
@@ -4514,20 +4514,20 @@
 	dir = 10
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ft" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fu" = (
 /mob/living/simple_animal/slime{
 	faction = list("hostile")
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Fy" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/potato{
@@ -4542,16 +4542,16 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FF" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FG" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -4559,25 +4559,25 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FL" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/structure/window/reinforced/spawner/east{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FP" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FQ" = (
 /obj/item/grown/bananapeel,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FS" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -4595,27 +4595,27 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FU" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "FX" = (
 /obj/item/food/grown/bungofruit,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Gb" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Gd" = (
 /obj/structure/alien/weeds,
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Gh" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 8;
@@ -4624,7 +4624,7 @@
 /obj/structure/holosign/barrier/ctf/green,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Gs" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -4639,29 +4639,29 @@
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Gv" = (
 /obj/structure/chair/plastic,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/trap/cult,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Gy" = (
 /obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GA" = (
 /obj/structure/sign/poster/contraband/clown,
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GF" = (
 /obj/structure/trap/ctf/blue,
 /obj/structure/window/reinforced/spawner/west{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GG" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -4670,18 +4670,18 @@
 	pixel_y = 10
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GK" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GM" = (
 /obj/item/food/grown/mushroom/libertycap,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GO" = (
 /obj/structure/table/greyscale,
 /obj/machinery/microwave{
@@ -4691,13 +4691,13 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GQ" = (
 /obj/structure/trap/ctf/blue,
 /obj/machinery/door/airlock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GR" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -4707,7 +4707,7 @@
 	color = "#964B00"
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GT" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/southleft,
@@ -4717,21 +4717,21 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GU" = (
 /obj/item/food/fishmeat/gunner_jellyfish,
 /turf/open/floor/holofloor/beach/coast_t,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GX" = (
 /obj/effect/decal/cleanable/wrapping,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "GZ" = (
 /obj/machinery/processor,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Hd" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -4741,12 +4741,12 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Hi" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Hk" = (
 /obj/structure/table,
 /obj/item/plate,
@@ -4757,7 +4757,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Hu" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -4773,13 +4773,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HC" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HE" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4790,17 +4790,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ectoplasm,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HG" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HO" = (
 /obj/item/banner,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HP" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
@@ -4817,7 +4817,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HS" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/tomato{
@@ -4835,7 +4835,7 @@
 	pixel_y = -5
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HV" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -4843,17 +4843,17 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/trap/cult,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "HX" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/item/food/grown/mushroom/glowshroom/glowcap,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "If" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/sugarcane,
@@ -4864,11 +4864,11 @@
 	pixel_y = -8
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ip" = (
 /obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/vault/sandstone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Is" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -4876,22 +4876,22 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Iv" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ix" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Iy" = (
 /mob/living/simple_animal/hostile/carp,
 /turf/open/floor/holofloor/beach/coast_t,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IA" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -4899,7 +4899,7 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/chem_heater,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IC" = (
 /obj/structure/table/reinforced,
 /obj/item/food/grown/ambrosia/deus{
@@ -4919,7 +4919,7 @@
 	},
 /obj/item/organ/regenerative_core/legion,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ID" = (
 /obj/structure/table/wood,
 /obj/item/saddle{
@@ -4927,24 +4927,24 @@
 	},
 /obj/item/saddle,
 /turf/open/floor/vault/sandstone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IG" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IK" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "wheredahoodat"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4961,13 +4961,13 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IS" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IT" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 9
@@ -4977,7 +4977,7 @@
 	pixel_y = -31
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "IV" = (
 /obj/structure/statue/silver/medborg{
 	anchored = 1
@@ -4994,28 +4994,28 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jb" = (
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jd" = (
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /obj/item/toy/balloon,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Je" = (
 /obj/effect/portal/permanent/red/lavaland/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jg" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jj" = (
 /obj/item/toy/beach_ball{
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen";
@@ -5023,7 +5023,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jm" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -5041,13 +5041,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jn" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Jq" = (
 /obj/structure/chair/stool{
 	dir = 1
@@ -5057,7 +5057,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JA" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/delivery/white,
@@ -5065,17 +5065,17 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JB" = (
 /obj/structure/fluff/bus/dense,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JE" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JF" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -5094,30 +5094,30 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JI" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JJ" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JN" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JS" = (
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "JZ" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -5129,7 +5129,7 @@
 /obj/structure/table/greyscale,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ka" = (
 /obj/item/ammo_casing/c9mm,
 /obj/item/ammo_casing/c9mm{
@@ -5139,7 +5139,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kb" = (
 /obj/structure/chair{
 	dir = 8
@@ -5150,7 +5150,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kd" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -5161,39 +5161,39 @@
 	dir = 1
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ki" = (
 /obj/machinery/processor/slime,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kk" = (
 /obj/item/grown/bananapeel,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kl" = (
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ko" = (
 /obj/structure/alien/weeds,
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kq" = (
 /obj/structure/destructible/cult/forge,
 /obj/item/paper/secretrecipe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ku" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kx" = (
 /obj/item/food/moonfish_eggs,
 /turf/open/floor/holofloor/beach/coast_b,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Kz" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
@@ -5204,7 +5204,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KA" = (
 /obj/structure/table,
 /obj/machinery/computer/bookmanagement,
@@ -5216,44 +5216,44 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KG" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring,
 /obj/item/circuitboard/computer,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KP" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KQ" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "reartire"
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KS" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/machinery/door/airlock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KY" = (
 /obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "KZ" = (
 /obj/structure/table/greyscale,
 /obj/item/plate,
@@ -5261,13 +5261,13 @@
 /obj/item/plate,
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lb" = (
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lc" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/ghost_chili{
@@ -5278,7 +5278,7 @@
 	},
 /obj/item/food/grown/ghost_chili,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Le" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
@@ -5287,19 +5287,19 @@
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lf" = (
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Li" = (
 /obj/structure/sign/poster/contraband/donut_corp,
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lj" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ls" = (
 /obj/item/ammo_casing/c9mm{
 	dir = 9;
@@ -5307,18 +5307,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lu" = (
 /obj/structure/window/reinforced/fulltile/indestructable,
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/holofloor/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lw" = (
 /obj/effect/portal/permanent/blue/hospital/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Lx" = (
 /obj/machinery/computer/operating{
 	dir = 4
@@ -5326,7 +5326,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ly" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring{
@@ -5338,7 +5338,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LC" = (
 /obj/structure/railing/corner{
 	color = "#964B00"
@@ -5349,7 +5349,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LF" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -5359,7 +5359,7 @@
 	},
 /obj/structure/table/greyscale,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LI" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -5381,18 +5381,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LM" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LO" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LU" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/beakers/bluespace,
@@ -5416,36 +5416,36 @@
 	},
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LV" = (
 /obj/effect/turf_decal/mining/survival{
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LW" = (
 /obj/machinery/door/airlock/virology,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "LZ" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
 /obj/item/ectoplasm,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Md" = (
 /obj/item/candle,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Me" = (
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mg" = (
 /obj/effect/turf_decal/siding/white,
 /obj/structure/window/reinforced/spawner/east{
@@ -5455,7 +5455,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mi" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/southleft,
@@ -5465,21 +5465,21 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ml" = (
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mm" = (
 /obj/structure/sign/poster/official/cleanliness,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mn" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mu" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm,
@@ -5489,22 +5489,22 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mv" = (
 /obj/structure/sign/plaques/kiddie/library,
 /turf/closed/indestructible/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "My" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Mz" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MA" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -5526,11 +5526,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MB" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MC" = (
 /obj/structure/fluff/bus/passable,
 /obj/structure/fluff/bus/passable/seat{
@@ -5540,20 +5540,20 @@
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ME" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/construct/wraith/hostile,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MF" = (
 /obj/structure/railing{
 	climbable = 0;
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MH" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -5563,7 +5563,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MJ" = (
 /obj/item/toy/balloon,
 /obj/effect/turf_decal/siding/wood{
@@ -5571,7 +5571,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MK" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -5581,20 +5581,20 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ML" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MM" = (
 /obj/effect/portal/permanent/red/farm/from,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MR" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_y = 8
@@ -5604,7 +5604,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5621,7 +5621,7 @@
 	anchored = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MX" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -5629,7 +5629,7 @@
 	},
 /obj/item/food/grown/mushroom/angel,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "MY" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
@@ -5649,13 +5649,13 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Nd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ne" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -5665,13 +5665,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ni" = (
 /obj/effect/portal/permanent/blue/jungle/from,
 /obj/effect/turf_decal/trimline/blue/filled,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Nk" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -5707,7 +5707,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Nm" = (
 /obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 4
@@ -5717,7 +5717,7 @@
 	layer = 3
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Nn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5734,49 +5734,49 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Np" = (
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 10
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Nv" = (
 /obj/structure/sign/poster/contraband/eat,
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NA" = (
 /obj/structure/railing/corner{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NK" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NL" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NP" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NR" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NU" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -5791,13 +5791,13 @@
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "NX" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Oa" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/button/door/directional{
@@ -5805,11 +5805,11 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Od" = (
 /obj/item/food/grown/bungofruit,
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "On" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
@@ -5822,17 +5822,17 @@
 	layer = 3
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Oq" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 10
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Os" = (
 /obj/structure/sign/poster/official/work_for_a_future,
 /turf/closed/indestructible/reinforced,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ov" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -5849,12 +5849,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OC" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OG" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -5873,7 +5873,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OH" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -5883,7 +5883,7 @@
 	max_integrity = 99999
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OJ" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -5892,11 +5892,11 @@
 /obj/structure/spider/stickyweb,
 /obj/structure/spider/cocoon,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OK" = (
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OM" = (
 /obj/structure/stairs{
 	dir = 8
@@ -5906,18 +5906,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OS" = (
 /obj/structure/gel_cocoon,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "OZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pb" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -5925,7 +5925,7 @@
 /obj/structure/cable,
 /obj/item/banner,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pd" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -5937,7 +5937,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pf" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -5947,7 +5947,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pg" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/cabbage{
@@ -5960,27 +5960,27 @@
 	pixel_x = 4
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ph" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/chair,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pk" = (
 /turf/closed/indestructible/syndicate,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pl" = (
 /mob/living/simple_animal/crab{
 	faction = list("carp")
 	},
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pq" = (
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -5990,61 +5990,61 @@
 	},
 /obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pr" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Pz" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
 /obj/structure/holosign/barrier/ctf/red,
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PE" = (
 /obj/item/gps/computer,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PH" = (
 /mob/living/simple_animal/hostile/zombie,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PL" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PS" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PT" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PU" = (
 /obj/structure/table/greyscale,
 /obj/machinery/microwave{
@@ -6054,7 +6054,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PV" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/potato/sweet{
@@ -6064,24 +6064,24 @@
 /obj/item/food/grown/potato/sweet,
 /obj/item/food/grown/potato/sweet,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "PY" = (
 /turf/open/floor/mineral/titanium/tiled/white{
 	color = "#4AC948"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qe" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/structure/holosign/barrier/ctf/green,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qh" = (
 /obj/structure/table/wood/fancy,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qk" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -6091,7 +6091,7 @@
 	color = "#964B00"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ql" = (
 /obj/item/food/fishmeat/armorfish{
 	pixel_x = -4;
@@ -6099,74 +6099,74 @@
 	},
 /obj/item/food/fishmeat/armorfish,
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qm" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qp" = (
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 6
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qu" = (
 /mob/living/simple_animal/hostile/zombie,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qv" = (
 /turf/open/floor/holofloor/beach/coast_b{
 	dir = 4
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Qw" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QD" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4;
 	max_integrity = 99999
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QE" = (
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QG" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QI" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QJ" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/l3closet,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QL" = (
 /obj/structure/window/reinforced/spawner/east{
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QM" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "topdoor"
@@ -6176,7 +6176,7 @@
 /turf/open/floor/iron/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QN" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/parsnip{
@@ -6186,7 +6186,7 @@
 	pixel_x = 7
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QQ" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/chili{
@@ -6197,14 +6197,14 @@
 	},
 /obj/item/food/grown/chili,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QS" = (
 /obj/structure/railing{
 	color = "#964B00"
@@ -6216,7 +6216,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QW" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -6224,25 +6224,25 @@
 /obj/structure/table/reinforced,
 /obj/item/analyzer,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "QX" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "hoodtop"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rb" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Re" = (
 /obj/structure/table/greyscale,
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rg" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -6254,7 +6254,7 @@
 /obj/item/clothing/glasses/eyepatch,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ri" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/rice{
@@ -6267,7 +6267,7 @@
 	pixel_x = 9
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rn" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/turf_decal/weather/dirt{
@@ -6275,20 +6275,20 @@
 	},
 /obj/item/food/grown/korta_nut/sweet,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rq" = (
 /obj/structure/bonfire,
 /obj/item/lighter,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rs" = (
 /obj/structure/fans,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rt" = (
 /obj/structure/trap/ctf/green,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ru" = (
 /obj/structure/table,
 /obj/machinery/paystand{
@@ -6299,18 +6299,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Rz" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RB" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RC" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -6320,7 +6320,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RE" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -6328,7 +6328,7 @@
 /obj/structure/cable,
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RF" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
@@ -6338,11 +6338,11 @@
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RH" = (
 /obj/item/food/grown/korta_nut,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RI" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -6350,11 +6350,11 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RK" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RL" = (
 /obj/item/food/fishmeat/moonfish{
 	pixel_y = 6
@@ -6363,23 +6363,23 @@
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 6
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RM" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RQ" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RS" = (
 /obj/effect/portal/permanent/green/lavaland/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/temp_visual/cult/rune_spawn/rune5/center,
@@ -6387,25 +6387,25 @@
 /obj/effect/temp_visual/cult/rune_spawn/rune7,
 /obj/effect/temp_visual/cult/rune_spawn,
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "RW" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/construct/artificer/hostile,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Sb" = (
 /obj/item/ammo_casing/c9mm,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Sf" = (
 /obj/item/food/egg,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Sn" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "So" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -6414,12 +6414,12 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Sr" = (
 /obj/effect/portal/permanent/green/grocery/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Su" = (
 /obj/structure/table/wood,
 /obj/item/clothing/shoes/cowboy{
@@ -6440,7 +6440,7 @@
 	pixel_x = 2
 	},
 /turf/open/floor/vault/sandstone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Sv" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
@@ -6449,7 +6449,7 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Sw" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -6458,31 +6458,31 @@
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SE" = (
 /obj/structure/alien/weeds,
 /obj/item/stack/rods{
 	amount = 4
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SJ" = (
 /obj/machinery/door/airlock/alarmlock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SL" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -6492,16 +6492,16 @@
 	dir = 8
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SQ" = (
 /obj/structure/sign/poster/contraband/red_rum,
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "SY" = (
 /obj/item/food/grown/mushroom/amanita,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Te" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -6510,25 +6510,25 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Tg" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "red_shutter"
 	},
 /turf/open/floor/carpet/red,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ti" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Tj" = (
 /obj/effect/portal/permanent/red/jungle/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Tk" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -6544,23 +6544,23 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Tp" = (
 /turf/open/floor/holofloor/beach/coast_b,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Tq" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/mob_spawn/human/corpse/assistant,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TB" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 10
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TF" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -6579,13 +6579,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TG" = (
 /obj/structure/table,
 /obj/item/trash/tray,
 /obj/item/reagent_containers/food/condiment/pack/hotsauce,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TH" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -6595,18 +6595,18 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TK" = (
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TM" = (
 /obj/machinery/camera/xray{
 	dir = 6
@@ -6619,48 +6619,48 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TQ" = (
 /obj/effect/portal/permanent/red/jungle/from,
 /obj/effect/turf_decal/trimline/red/filled,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TV" = (
 /obj/item/food/fishmeat/armorfish{
 	pixel_y = 4
 	},
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TW" = (
 /obj/structure/sign/poster/official/here_for_your_safety,
 /turf/closed/wall/mineral/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "TX" = (
 /obj/machinery/door/airlock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ua" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/poppy,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uk" = (
 /obj/effect/portal/permanent/blue/jungle/toward,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ul" = (
 /obj/structure/sign/poster/contraband/space_cola,
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/r_wall,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Un" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uo" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -6672,7 +6672,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uq" = (
 /obj/structure/chair{
 	dir = 4
@@ -6685,15 +6685,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ur" = (
 /turf/open/floor/iron/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uu" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uw" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -6709,7 +6709,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ux" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral{
@@ -6721,13 +6721,13 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uy" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Uz" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -6743,15 +6743,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UC" = (
 /obj/effect/turf_decal/siding/thinplating/corner,
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring{
@@ -6761,18 +6761,18 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UJ" = (
 /obj/item/ammo_casing/c9mm{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UK" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/smooth_edge,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UL" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
@@ -6780,27 +6780,27 @@
 	dir = 8
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UO" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "UV" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4;
 	max_integrity = 99999
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Va" = (
 /obj/structure/urinal/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vb" = (
 /mob/living/simple_animal/hostile/zombie,
 /obj/item/chair/stool,
@@ -6814,17 +6814,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vg" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/random,
 /obj/effect/turf_decal/trimline/neutral/filled,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vk" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -6832,12 +6832,12 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vl" = (
 /obj/effect/decal/cleanable/ash/large,
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vq" = (
 /obj/effect/decal/cleanable/wrapping,
 /obj/structure/chair/office{
@@ -6845,7 +6845,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vr" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -6863,7 +6863,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vu" = (
 /obj/structure/table/reinforced,
 /obj/item/food/grown/ambrosia/vulgaris{
@@ -6879,11 +6879,11 @@
 	dir = 8
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vx" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Vy" = (
 /obj/structure/railing{
 	climbable = 0;
@@ -6894,21 +6894,21 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VB" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VD" = (
 /obj/item/clothing/suit/xenos,
 /obj/item/clothing/head/xenos,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VG" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/grown/novaflower,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VJ" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
@@ -6918,11 +6918,11 @@
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VK" = (
 /obj/structure/holosign/barrier/ctf/blue,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VM" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/eggplant{
@@ -6936,11 +6936,11 @@
 	pixel_y = -5
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VO" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 /turf/open/floor/grass/fakebasalt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VU" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -6956,18 +6956,18 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 4
 	},
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VW" = (
 /obj/structure/mineral_door/paperframe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VX" = (
 /obj/structure/table/greyscale,
 /obj/item/storage/bag/tray,
 /obj/item/kitchen/knife,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "VZ" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -6977,14 +6977,14 @@
 	layer = 3
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Wk" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Wo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -6994,7 +6994,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Wp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -7004,22 +7004,22 @@
 	},
 /obj/structure/table/greyscale,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ws" = (
 /obj/machinery/shower{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/iron/freezer,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WA" = (
 /obj/machinery/vending/cola/pwr_game,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WB" = (
 /turf/closed/wall/r_wall/rust,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WC" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/turf_decal/weather/dirt{
@@ -7027,19 +7027,19 @@
 	},
 /obj/item/food/grown/tea,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WG" = (
 /obj/item/toy/balloon,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WI" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/railing{
 	color = "#964B00"
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WK" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -7057,21 +7057,21 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WP" = (
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WQ" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WR" = (
 /turf/open/floor/holofloor/beach,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WS" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -7092,30 +7092,30 @@
 	},
 /obj/item/food/canned_jellyfish,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/chair,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "WZ" = (
 /obj/structure/railing,
 /obj/structure/alien/weeds,
 /obj/structure/cable,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xb" = (
 /obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xd" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xe" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
@@ -7125,23 +7125,23 @@
 	},
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xh" = (
 /obj/structure/railing/corner{
 	color = "#964B00";
 	dir = 1
 	},
 /turf/open/floor/plating/dirt/dark,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xi" = (
 /turf/open/floor/vault/sandstone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xp" = (
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xs" = (
 /turf/closed/indestructible/fakeglass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Xy" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -7160,7 +7160,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -7173,14 +7173,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XB" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XE" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/portal/permanent/blue/grocery/from,
@@ -7191,7 +7191,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -7201,7 +7201,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XN" = (
 /obj/structure/railing{
 	dir = 4
@@ -7209,7 +7209,7 @@
 /obj/structure/cable,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XP" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -7218,7 +7218,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XQ" = (
 /obj/structure/table/wood,
 /obj/item/keycard/office,
@@ -7234,38 +7234,38 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "XY" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Yc" = (
 /mob/living/simple_animal/hostile/gorilla{
 	desc = "This 'rilla is a straight killa. Due to budget cuts he rolls solo.";
 	name = "Junior"
 	},
 /turf/open/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Yd" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /obj/structure/flora/junglebush/large,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Yl" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Yp" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron/dark/smooth_large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Ys" = (
 /obj/item/food/fishmeat/armorfish{
 	pixel_x = 5;
@@ -7273,12 +7273,12 @@
 	},
 /obj/item/food/fishmeat/armorfish,
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Yt" = (
 /obj/structure/holosign/barrier/ctf/red,
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YA" = (
 /obj/structure/rack{
 	max_integrity = 9999
@@ -7296,7 +7296,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YB" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/food/grown/peas{
@@ -7307,7 +7307,7 @@
 	pixel_x = -7
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YC" = (
 /obj/structure/railing{
 	climbable = 0;
@@ -7318,32 +7318,32 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YE" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YG" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YH" = (
 /obj/effect/decal/cleanable/wrapping,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YI" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YJ" = (
 /obj/structure/railing{
 	color = "#964B00";
@@ -7351,15 +7351,15 @@
 	},
 /obj/item/toy/balloon,
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YK" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/item/food/grown/banana,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YL" = (
 /turf/open/floor/holofloor/beach/water,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YO" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
@@ -7369,13 +7369,13 @@
 	dir = 8
 	},
 /turf/open/floor/stone,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "YX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7385,7 +7385,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zc" = (
 /obj/structure/reagent_dispensers/watertank/high{
 	anchored = 1
@@ -7394,21 +7394,21 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zf" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zj" = (
 /obj/effect/decal/cleanable/garbage,
 /mob/living/simple_animal/mouse{
 	faction = list("hostile")
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zo" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -7417,12 +7417,12 @@
 	dir = 1
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zr" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/noslip,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zv" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7439,11 +7439,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "Zw" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZA" = (
 /obj/structure/table/greyscale,
 /obj/machinery/microwave{
@@ -7453,7 +7453,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZB" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -7470,18 +7470,18 @@
 /obj/item/folder/documents,
 /obj/item/pen/fountain,
 /turf/open/floor/iron,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZF" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/iron,
 /turf/open/floor/plating,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZI" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -7490,7 +7490,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/grass,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZJ" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/rack{
@@ -7509,25 +7509,25 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZK" = (
 /obj/item/food/grown/korta_nut/sweet,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZM" = (
 /obj/structure/flora/junglebush/large,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZS" = (
 /obj/effect/overlay/coconut,
 /turf/open/floor/plating/grass/jungle,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 "ZT" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/awaymission/centcom_away/thunderdome)
+/area/tdome/arena)
 
 (1,1,1) = {"
 pP

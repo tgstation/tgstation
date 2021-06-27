@@ -199,6 +199,10 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/one)
+"be" = (
+/obj/item/scrying,
+/turf/open/floor/iron/edge,
+/area/centcom/control)
 "bh" = (
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/directional/west,
@@ -239,6 +243,15 @@
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
+/area/centcom/control)
+"bq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/scrying,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/centcom/control)
 "bs" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -421,6 +434,13 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/half,
 /area/centcom/supplypod)
+"cn" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
 "cx" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -1354,6 +1374,7 @@
 "hM" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/table/wood,
+/obj/item/scrying,
 /turf/open/floor/iron,
 /area/centcom/control)
 "hP" = (
@@ -1572,6 +1593,11 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/centcom/control)
+"jl" = (
+/obj/structure/table/wood,
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
 "jm" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -1585,6 +1611,11 @@
 "jp" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/carpet/lone,
+/area/centcom/control)
+"jr" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/scrying,
+/turf/open/floor/iron,
 /area/centcom/control)
 "js" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2267,9 +2298,25 @@
 	},
 /turf/open/floor/carpet/stellar,
 /area/centcom/control)
+"nL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
 "nM" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/grimy,
+/area/centcom/control)
+"nP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/scrying,
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
 /area/centcom/control)
 "nQ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2659,6 +2706,13 @@
 	dir = 8
 	},
 /area/centcom/control)
+"qD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
 "qE" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/bookcase/random,
@@ -2827,6 +2881,23 @@
 /obj/structure/rack,
 /turf/open/floor/iron/smooth,
 /area/centcom/supplypod)
+"rG" = (
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
+"rH" = (
+/obj/item/scrying,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/centcom/control)
+"rI" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/item/scrying,
+/turf/open/floor/iron/edge,
+/area/centcom/control)
 "rJ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -2975,6 +3046,15 @@
 	},
 /obj/structure/chair/stool/bar,
 /turf/open/floor/iron/dark/smooth_half,
+/area/centcom/control)
+"sB" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/scrying,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
 /area/centcom/control)
 "sC" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -3343,6 +3423,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
+/obj/item/scrying,
 /turf/open/floor/iron,
 /area/centcom/control)
 "vg" = (
@@ -4137,6 +4218,7 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
+/obj/item/scrying,
 /turf/open/floor/iron,
 /area/centcom/control)
 "zK" = (
@@ -4916,6 +4998,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/item/scrying,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -4932,6 +5015,7 @@
 	dir = 6
 	},
 /obj/machinery/light/directional/south,
+/obj/item/scrying,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -5022,6 +5106,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
+/area/centcom/control)
+"EY" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/item/scrying,
+/turf/open/floor/iron/edge,
 /area/centcom/control)
 "Fa" = (
 /obj/effect/turf_decal/siding/wood{
@@ -5176,6 +5265,13 @@
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/control)
+"FZ" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
 "Ga" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/siding/thinplating{
@@ -5245,6 +5341,7 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/item/scrying,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -5582,6 +5679,11 @@
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/machinery/light/directional/west,
 /turf/open/floor/vault,
+/area/centcom/control)
+"Ic" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/item/scrying,
+/turf/open/floor/iron,
 /area/centcom/control)
 "Ie" = (
 /obj/structure/chair/sofa/corp/right{
@@ -6387,6 +6489,7 @@
 	dir = 5
 	},
 /obj/machinery/light/directional/north,
+/obj/item/scrying,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -6451,6 +6554,7 @@
 	dir = 10
 	},
 /obj/machinery/light/directional/south,
+/obj/item/scrying,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -6618,6 +6722,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
+/obj/item/scrying,
 /turf/open/floor/iron,
 /area/centcom/control)
 "OI" = (
@@ -6885,6 +6990,13 @@
 	pixel_y = 21
 	},
 /turf/open/space/basic,
+/area/centcom/control)
+"QV" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/scrying,
+/turf/open/floor/iron,
 /area/centcom/control)
 "QW" = (
 /obj/structure/chair/sofa/corp/left{
@@ -7154,6 +7266,7 @@
 	dir = 5
 	},
 /obj/machinery/light/directional/north,
+/obj/item/scrying,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -7279,6 +7392,13 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/centcom/control)
+"TI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/scrying,
+/turf/open/floor/iron,
+/area/centcom/control)
 "TL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -7339,6 +7459,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/centcom/control)
+"TY" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/item/scrying,
+/turf/open/floor/iron/edge{
 	dir = 1
 	},
 /area/centcom/control)
@@ -7423,6 +7552,16 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/bronze,
+/area/centcom/control)
+"UB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/item/scrying,
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
 /area/centcom/control)
 "UC" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -7927,6 +8066,7 @@
 	dir = 6
 	},
 /obj/machinery/light/directional/south,
+/obj/item/scrying,
 /turf/open/floor/iron/edge,
 /area/centcom/control)
 "WR" = (
@@ -23111,20 +23251,20 @@ bU
 Wa
 Mu
 GE
-eY
-eY
-gf
-eY
-eY
-eY
-eY
-eY
-eY
-eY
-eY
-gf
-eY
-eY
+nP
+nP
+UB
+nP
+nP
+nP
+nP
+nP
+nP
+nP
+nP
+UB
+nP
+nP
 Nt
 Mu
 Rd
@@ -23367,7 +23507,7 @@ tt
 Mu
 Mu
 Mu
-cM
+nL
 Wx
 dq
 dq
@@ -23382,7 +23522,7 @@ Wx
 dq
 dq
 HF
-Ny
+jr
 Mu
 Mu
 Mu
@@ -23624,7 +23764,7 @@ ab
 zx
 Mu
 Me
-MZ
+QV
 Ny
 Mu
 Mu
@@ -23639,7 +23779,7 @@ Ny
 Mu
 Mu
 cM
-VV
+cn
 zx
 Mu
 Me
@@ -23873,15 +24013,15 @@ oY
 Mu
 ex
 Sc
-up
+jl
 ab
 ab
 ab
 ab
-VN
+rI
 eY
 uC
-ab
+rG
 Ny
 Mu
 Mu
@@ -23896,15 +24036,15 @@ Ny
 Mu
 Mu
 cM
-ab
+rG
 VN
 eY
-uC
+sB
 ab
 ab
 ab
 ab
-up
+jl
 WJ
 fO
 Mu
@@ -24130,18 +24270,18 @@ oY
 Mu
 TL
 up
-up
+jl
 ab
 ab
 ab
 ab
-gp
+be
 ab
 jH
-ab
+rG
 VV
-fp
-fp
+qD
+qD
 MZ
 ab
 SZ
@@ -24149,20 +24289,20 @@ Mu
 Mu
 PF
 ab
-VV
-fp
-fp
+cn
+qD
+qD
 MZ
-ab
+rG
 gp
 ab
-jH
+rH
 QN
 ab
 ab
 ab
-up
-up
+jl
+jl
 Kw
 Mu
 oY
@@ -24392,28 +24532,28 @@ ab
 ab
 ab
 ab
-gp
+be
 ab
 jH
+rG
 ab
+rG
+rG
+rG
+rG
+cn
+qD
+qD
+QV
+rG
+rG
+rG
+rG
 ab
-ab
-ab
-ab
-ab
-VV
-fp
-fp
-MZ
-ab
-ab
-ab
-ab
-ab
-ab
+rG
 gp
 ab
-jH
+rH
 ab
 ab
 ab
@@ -24649,28 +24789,28 @@ ab
 ab
 ab
 ab
-gp
+be
 ab
 jH
+rG
 ab
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rG
 gp
 ab
-jH
+rH
 ab
 ab
 ab
@@ -24906,28 +25046,28 @@ ab
 ab
 ab
 ab
-gp
+be
 ab
 jH
+rG
 ab
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
+rG
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rG
 gp
 ab
-jH
+rH
 ab
 ab
 ab
@@ -25158,39 +25298,39 @@ oY
 Mu
 TL
 up
-up
+jl
 ab
 ab
 ab
 ab
-gp
-ab
-jH
-ab
-ab
-ab
-ab
-ab
-ab
-Wx
-dq
-dq
-HF
-ab
-ab
-ab
-ab
-ab
-ab
-gp
+be
 ab
 jH
+rG
+ab
+rG
+rG
+rG
+rG
+Ic
+TI
+TI
+FZ
+rG
+rG
+rG
+rG
+ab
+rG
+gp
+ab
+rH
 ab
 ab
 ab
 ab
-up
-up
+jl
+jl
 Kw
 Mu
 oY
@@ -25415,18 +25555,18 @@ oY
 Mu
 Il
 Tz
-up
+jl
 ab
 ab
 ab
 ab
-gp
+be
 ab
 jH
-ab
+rG
 Wx
-dq
-dq
+TI
+TI
 HF
 ab
 SZ
@@ -25434,19 +25574,19 @@ Mu
 Mu
 PF
 ab
-Wx
-dq
-dq
+Ic
+TI
+TI
 HF
-ab
+rG
 gp
 ab
-jH
+rH
 ab
 ab
 ab
 ab
-up
+jl
 Wx
 ZF
 Mu
@@ -25672,15 +25812,15 @@ oY
 Mu
 Mu
 cM
-up
+jl
 ab
 ab
 ab
 ab
-ET
+EY
 Xe
 UC
-ab
+rG
 Ny
 Mu
 Mu
@@ -25695,15 +25835,15 @@ Ny
 Mu
 Mu
 cM
-ab
+rG
 ET
 Xe
-UC
+TY
 ab
 ab
 QN
 ab
-up
+jl
 fo
 Mu
 Mu
@@ -25937,7 +26077,7 @@ Wx
 WP
 Mu
 ix
-HF
+FZ
 Ny
 Mu
 Mu
@@ -25952,7 +26092,7 @@ Ny
 Mu
 Mu
 cM
-Wx
+Ic
 WI
 Mu
 MY
@@ -26194,7 +26334,7 @@ xC
 Mu
 Mu
 Mu
-cM
+nL
 VV
 fp
 fp
@@ -26209,7 +26349,7 @@ VV
 fp
 fp
 MZ
-Ny
+jr
 Mu
 Mu
 Mu
@@ -26452,20 +26592,20 @@ ga
 XV
 Mu
 SG
-Xe
-Xe
+bq
+bq
 EC
-Xe
-Xe
-Xe
-Xe
-Xe
-Xe
-Xe
-Xe
+bq
+bq
+bq
+bq
+bq
+bq
+bq
+bq
 EC
-Xe
-Xe
+bq
+bq
 EE
 Mu
 XV
