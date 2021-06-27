@@ -87,10 +87,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	if (should_generate_icons)
 		for (var/choice in choices)
-			serialized_choices += serialize(choice)
+			serialized_choices[serialize(choice)] = choices[choice]
 	else
 		for (var/choice in choices)
-			serialized_choices[serialize(choice)] = choices[choice]
+			serialized_choices += serialize(choice)
 
 	return serialized_choices
 
