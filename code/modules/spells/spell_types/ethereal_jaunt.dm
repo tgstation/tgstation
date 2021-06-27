@@ -54,7 +54,7 @@
 		sleep(jaunt_out_time)
 		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	var/turf/exit_point = get_turf(holder) //Hopefully this gets updated, otherwise this is our fallback
-	exit_point_list = list() //Clear list, if it was still full from the last jaunt
+	LAZYINITLIST(exit_point_list)
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
 	sleep(jaunt_duration)
 
@@ -72,6 +72,7 @@
 		break
 	if(!found_exit)
 		to_chat(target, "<span='danger'>Unable to find an unobstructed space, you find yourself ripped back to where you started.</span>")
+	exit_point_list.Cut()
 	holder.forceMove(exit_point)
 
 	mobloc = get_turf(target.loc)
