@@ -28,6 +28,11 @@
 	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
 
+/datum/greyscale_config/stationary_canister
+	name = "Stationary Canister"
+	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
+	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary.json'
+
 /datum/greyscale_config/carp
 	name = "Space Carp"
 	icon_file = 'icons/mob/carp.dmi'
@@ -277,6 +282,16 @@
 	name = "Gold Worn Cleric Mace"
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
+
+/datum/greyscale_config/suspenders
+	name = "Suspenders"
+	icon_file = 'icons/obj/clothing/belts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/suspenders.json'
+
+/datum/greyscale_config/suspenders/worn
+	name = "Worn Suspenders"
+	icon_file = 'icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/giftdeliverybox
 	name = "Gift Box"

@@ -23,6 +23,7 @@
 
 /obj/item/circuit_component/controller
 	display_name = "Controller"
+	display_desc = "Used to receive inputs from the controller shell. Use the shell in hand to trigger the output signal. Alt-click for the alternate signal. Right click for the extra signal."
 
 	/// The three separate buttons that are called in attack_hand on the shell.
 	var/datum/port/output/signal
@@ -44,12 +45,12 @@
 /obj/item/circuit_component/controller/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
 	RegisterSignal(shell, COMSIG_CLICK_ALT, .proc/send_alternate_signal)
-	RegisterSignal(shell, COMSIG_CLICK_RIGHT, .proc/send_right_signal)
+	RegisterSignal(shell, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/send_right_signal)
 
 /obj/item/circuit_component/controller/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
 		COMSIG_ITEM_ATTACK_SELF,
-		COMSIG_CLICK_RIGHT,
+		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
 		COMSIG_CLICK_ALT,
 	))
 

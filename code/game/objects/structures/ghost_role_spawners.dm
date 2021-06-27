@@ -865,7 +865,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	faction = "nanotrasenprivate"
+	faction = list("nanotrasenprivate")
 	short_desc = "You are a Nanotrasen Private Security Officer!"
 
 /obj/effect/mob_spawn/human/commander/alive
