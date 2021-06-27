@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - server: "Added configs to disable laggy hard deletes once they lag the server too much."
+  - admin: "laggy hard deletes only output once per type path."
