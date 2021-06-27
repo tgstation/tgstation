@@ -9,7 +9,7 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on
-	var/datum/port/input/received_list
+	var/datum/port/input/received_table
 
 	/// The name of the column to check
 	var/datum/port/input/column_name
@@ -18,7 +18,7 @@
 	var/datum/port/input/comparison_input
 
 	/// The filtered list
-	var/datum/port/output/filtered_list
+	var/datum/port/output/filtered_table
 
 	var/current_type = PORT_TYPE_ANY
 
@@ -35,17 +35,17 @@
 
 /obj/item/circuit_component/select/Initialize()
 	. = ..()
-	received_list = add_input_port("Input List", PORT_TYPE_TABLE)
+	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	column_name = add_input_port("Column Name", PORT_TYPE_STRING)
 	comparison_input = add_input_port("Comparison Input", PORT_TYPE_ANY)
 
-	filtered_list = add_output_port("Output", PORT_TYPE_TABLE)
+	filtered_table = add_output_port("Output", PORT_TYPE_TABLE)
 
 /obj/item/circuit_component/select/Destroy()
-	received_list = null
+	received_table = null
 	column_name = null
 	comparison_input = null
-	filtered_list = null
+	filtered_table = null
 	return ..()
 
 /obj/item/circuit_component/select/input_received(datum/port/input/port)
@@ -63,7 +63,7 @@
 	if(.)
 		return
 
-	var/list/input_list = received_list.input_value
+	var/list/input_list = received_table.input_value
 	if(!islist(input_list) || isnum(column_name.input_value))
 		return
 
@@ -71,7 +71,7 @@
 	var/list/new_list = list()
 	for(var/list/entry in input_list)
 		var/anything = entry[column_name.input_value]
-		if(!anything || islist(anything))
+		if(islist(anything))
 			continue
 		if(current_option != COMP_COMPARISON_EQUAL && current_option != COMP_COMPARISON_NOT_EQUAL && !isnum(anything))
 			continue
@@ -93,4 +93,4 @@
 		if(add_to_list)
 			new_list += list(entry)
 
-	filtered_list.set_output(new_list)
+	filtered_table.set_output(new_list)
