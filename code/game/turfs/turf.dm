@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return TRUE
 
 	for(var/atom/movable/atom_content as anything in contents)
-		if(atom_content.density && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
+		if(atom_content.density && !(atom_content.flags_1 & ON_BORDER_1) && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
 			return TRUE
 	return FALSE
 
