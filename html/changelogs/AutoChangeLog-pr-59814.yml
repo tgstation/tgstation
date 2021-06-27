@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an issue where right clicking on an ID-secured locker would unintentionally trigger twice, locking then unlocking the locker. Right clicking now correctly attempts to lock and unlock a locker only once."
