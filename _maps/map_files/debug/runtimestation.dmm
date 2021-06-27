@@ -1,7 +1,61 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 1
+/turf/open/space/basic,
+/area/space)
+"ab" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
+"ac" = (
+/turf/open/space,
+/area/space/nearstation)
+"ad" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/department/bridge)
+"ae" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space,
+/area/space/nearstation)
+"af" = (
+/turf/open/floor/plating,
+/area/maintenance/department/bridge)
+"ag" = (
+/turf/closed/wall/r_wall,
+/area/security/brig)
+"ah" = (
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
+"ai" = (
+/obj/structure/lattice,
+/turf/closed/wall/r_wall,
+/area/engineering/main)
+"aj" = (
+/turf/closed/wall/r_wall,
+/area/engineering/main)
+"ak" = (
+/turf/closed/wall/r_wall,
+/area/engineering/gravity_generator)
+"al" = (
+/obj/machinery/ntnet_relay,
+/turf/open/floor/iron,
+/area/engineering/main)
+"am" = (
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/plating,
+/area/engineering/atmos)
+"an" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/space/nearstation)
+"ao" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/space,
+/area/space/nearstation)
+"ap" = (
+/obj/structure/closet/secure_closet/engineering_electrical{
+	locked = 0
 	},
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
@@ -662,7 +716,32 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/chair/comfy/beige{
+=======
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"dQ" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
+"dR" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/security/brig)
+"dS" = (
+/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/camera/autoname,
+/turf/open/floor/plating,
+/area/engineering/atmos)
+"dT" = (
+/obj/machinery/camera/autoname,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
+"dU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+>>>>>>> master
 	dir = 4
 	},
 /turf/open/floor/iron/edge{
@@ -2138,6 +2217,13 @@
 	pixel_x = 7;
 	pixel_y = 11
 	},
+<<<<<<< HEAD
+=======
+/turf/open/floor/plating,
+/area/engineering/atmos)
+"XU" = (
+/obj/machinery/atmospherics/components/tank/air,
+>>>>>>> master
 /obj/machinery/light/directional/north,
 /turf/open/floor/carpet/donk,
 /area/centcom/control)

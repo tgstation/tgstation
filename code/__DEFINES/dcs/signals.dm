@@ -704,7 +704,7 @@
 #define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
-///from base of [/obj/proc/update_integrity]: ()
+///from base of [/obj/proc/update_integrity]: (old_value, new_value)
 #define COMSIG_OBJ_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
@@ -1253,6 +1253,8 @@
 	#define COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN (1<<0)
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
+/// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
+#define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
@@ -1359,3 +1361,11 @@
 
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
+
+// Merger datum signals
+/// Called on the object being added to a merger group: (datum/merger/new_merger)
+#define COMSIG_MERGER_ADDING "comsig_merger_adding"
+/// Called on the object being removed from a merger group: (datum/merger/old_merger)
+#define COMSIG_MERGER_REMOVING "comsig_merger_removing"
+/// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
+#define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
