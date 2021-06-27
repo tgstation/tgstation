@@ -212,7 +212,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return TRUE
 
 	for(var/atom/movable/atom_content as anything in contents)
-		to_chat(world, "DEBUG -- Evaluating atom [atom_content].")
 		if(atom_content.density && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
 			return TRUE
 	return FALSE
