@@ -85,6 +85,7 @@
 	for(var/datum/contestant/iter_contestant in all_contestants)
 		var/mob/the_guy = iter_contestant.get_mob()
 		UnregisterSignal(the_guy, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+		the_guy.dust()
 		iter_contestant.despawn()
 
 /// A check for when a mob's stat changes, to see if we've fallen unconscious or worse, which is as good as dead.
