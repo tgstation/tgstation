@@ -4,7 +4,10 @@
 
 /datum/asset/spritesheet/preferences/register()
 	for (var/preference_key in GLOB.preference_entries_by_key)
-		var/datum/preference/preference = GLOB.preference_entries_by_key[preference_key]
+		var/datum/preference/choiced/preference = GLOB.preference_entries_by_key[preference_key]
+		if (!istype(preference))
+			continue
+
 		if (!preference.should_generate_icons)
 			continue
 

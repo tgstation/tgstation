@@ -181,7 +181,7 @@ GLOBAL_VAR(preferences_species_data)
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 
-	var/species_type = read_preference(/datum/preference/species)
+	var/species_type = read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 	real_name = species.random_name(gender,1)
 
@@ -258,8 +258,8 @@ GLOBAL_VAR(preferences_species_data)
 		if ("request_values")
 			var/requested_preference_key = params["preference"]
 
-			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
-			if (isnull(requested_preference))
+			var/datum/preference/choiced/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
+			if (!istype(requested_preference))
 				return TRUE
 
 			if (isnull(generated_preference_values[requested_preference_key]))
@@ -302,7 +302,7 @@ GLOBAL_VAR(preferences_species_data)
 
 	client?.register_map_obj(character_preview_view)
 
-/datum/preferences/proc/generate_preference_values(datum/preference/preference)
+/datum/preferences/proc/generate_preference_values(datum/preference/choiced/preference)
 	var/list/values
 	var/list/choices = preference.get_choices_serialized()
 
@@ -324,15 +324,7 @@ GLOBAL_VAR(preferences_species_data)
 		LAZYINITLIST(preferences[preference.category])
 
 		var/value = read_preference(preference_type)
-		var/data
-
-		if (preference.should_generate_icons)
-			data = list(
-				"icon" = preference.get_spritesheet_key(value),
-				"value" = preference.serialize(value),
-			)
-		else
-			data = preference.serialize(value)
+		var/data = preference.compile_ui_data(user, value)
 
 		preferences[preference.category][preference.savefile_key] = data
 
@@ -453,7 +445,7 @@ GLOBAL_VAR(preferences_species_data)
 			hardcore_random_setup(character, antagonist, is_latejoiner)
 
 	if(roundstart_checks)
-		if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/species) == /datum/species/human))
+		if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/choiced/species) == /datum/species/human))
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
 			if(!firstspace) //we need a surname

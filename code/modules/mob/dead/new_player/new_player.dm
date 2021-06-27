@@ -446,7 +446,7 @@
 	if(frn)
 		client.prefs.random_character()
 
-		var/species_type = client.prefs.read_preference(/datum/preference/species)
+		var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
 		var/datum/species/species = new species_type
 		client.prefs.real_name = species.random_name(gender,1)
 

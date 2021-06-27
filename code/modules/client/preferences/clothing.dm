@@ -15,24 +15,24 @@
 	return possible_values
 
 /// Underwear preference
-/datum/preference/underwear
+/datum/preference/choiced/underwear
 	savefile_key = "underwear"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
 
-/datum/preference/underwear/init_possible_values()
+/datum/preference/choiced/underwear/init_possible_values()
 	return possible_values_for_sprite_accessory_list(GLOB.underwear_list)
 
-/datum/preference/underwear/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/underwear/apply(mob/living/carbon/human/target, value)
 	target.underwear = value
 
 /// Backpack preference
-/datum/preference/backpack
+/datum/preference/choiced/backpack
 	savefile_key = "backpack"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
 
-/datum/preference/backpack/init_possible_values()
+/datum/preference/choiced/backpack/init_possible_values()
 	var/list/values = list()
 
 	values[GBACKPACK] = /obj/item/storage/backpack
@@ -50,7 +50,7 @@
 
 	return values
 
-/datum/preference/backpack/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/backpack/apply(mob/living/carbon/human/target, value)
 	target.backpack = value
 
 #undef PREFERENCE_CATEGORY_CLOTHING

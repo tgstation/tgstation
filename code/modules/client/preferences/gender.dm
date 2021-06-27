@@ -1,9 +1,9 @@
 /// Gender preference
-/datum/preference/gender
+/datum/preference/choiced/gender
 	savefile_key = "gender"
 
-/datum/preference/gender/init_possible_values()
+/datum/preference/choiced/gender/init_possible_values()
 	return list(MALE, FEMALE, PLURAL)
 
-/datum/preference/gender/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/gender/apply(mob/living/carbon/human/target, value)
 	target.gender = value

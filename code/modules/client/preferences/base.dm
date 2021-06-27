@@ -6,13 +6,17 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /proc/init_preference_entries()
 	var/list/output = list()
-	for (var/preference_type in subtypesof(/datum/preference))
+	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
+		if (initial(preference_type.abstract_type) == preference_type)
+			continue
 		output[preference_type] = new preference_type
 	return output
 
 /proc/init_preference_entries_by_key()
 	var/list/output = list()
 	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
+		if (initial(preference_type.abstract_type) == preference_type)
+			continue
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 
@@ -28,21 +32,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// It is up to the PreferencesMenu UI itself to interpret it.
 	var/category = "misc"
 
-	/// If this is TRUE, icons will be generated.
-	/// This is necessary for if your `init_possible_values()` override
-	/// returns an assoc list of names to atoms/icons.
-	var/should_generate_icons = FALSE
-
-	var/list/cached_values
+	/// Do not instantiate if type matches this.
+	var/abstract_type = /datum/preference
 
 /// Called on the saved input when retrieving.
 /// Input is the value inside the savefile, output is to tell other code
 /// what the value is.
 /// This is useful either for more optimal data saving or for migrating
 /// older data.
+/// Must be overridden by subtypes.
 /datum/preference/proc/deserialize(input)
 	SHOULD_NOT_SLEEP(TRUE)
-	return sanitize_inlist(input, get_choices())
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("`deserialize()` was not implemented on [type]!")
 
 /// Called on the input while saving.
 /// Input is the current value, output is what to save in the savefile.
@@ -52,71 +54,11 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Produce a potentially random value for when no value for this preference is
 /// found in the savefile.
-/// If not overridden, will choose a random filtered value.
+/// Must be overriden by subtypes.
 /datum/preference/proc/create_default_value()
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
-	return pick(get_choices())
-
-/// Returns a list of every possible value.
-/// The first time this is called, will run `init_values()`.
-/// Return value can be in the form of:
-/// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of raw values to atoms/icons.
-// MOTHBLOCKS TODO: Let preferences be text-only.
-/datum/preference/proc/get_choices()
-	// Override `init_values()` instead.
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	if (isnull(cached_values))
-		cached_values = init_possible_values()
-		ASSERT(cached_values.len)
-
-	return cached_values
-
-/// Returns a list of every possible value, serialized.
-/// Return value can be in the form of:
-/// - A flat list of serialized values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of serialized values to atoms/icons.
-/datum/preference/proc/get_choices_serialized()
-	// Override `init_values()` instead.
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	var/list/serialized_choices = list()
-	var/choices = get_choices()
-
-	if (should_generate_icons)
-		for (var/choice in choices)
-			serialized_choices[serialize(choice)] = choices[choice]
-	else
-		for (var/choice in choices)
-			serialized_choices += serialize(choice)
-
-	return serialized_choices
-
-/// Returns a list of every possible value.
-/// This must be overriden by `/datum/preference` subtypes.
-/// Return value can be in the form of:
-/// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of raw values to atoms/icons, in which case
-/// icons will be generated.
-// MOTHBLOCKS TODO: Unit test this
-/datum/preference/proc/init_possible_values()
-	SHOULD_NOT_SLEEP(TRUE)
-	CRASH("`init_possible_values()` was not implemented for [type]!")
-
-/// Private.
-/// Caches a list of every possible value.
-/datum/preference/proc/cache_possible_values()
-	SHOULD_NOT_OVERRIDE(TRUE)
-	PRIVATE_PROC(TRUE)
-	RETURN_TYPE(/list)
-
-	if (isnull(cached_values))
-		cached_values = init_possible_values()
-		ASSERT(cached_values.len)
-
-	return cached_values
+	CRASH("`create_default_value()` was not implemented on [type]!")
 
 /// Given a savefile, return either the saved data or an acceptable default.
 /datum/preference/proc/read(savefile/savefile)
@@ -169,6 +111,107 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	return preference.write(savefile, preference_value)
 
 /// Checks that a given value is valid.
+/// Must be overriden by subtypes.
 /// Any type can be passed through.
 /datum/preference/proc/is_valid(value)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(FALSE)
+
+	// MOTHBLOCKS TODO: Unit test this
+	CRASH("`is_valid()` was not implemented for [type]!")
+
+/// Returns data to be sent to users in the menu
+/datum/preference/proc/compile_ui_data(mob/user, value)
+	SHOULD_NOT_SLEEP(TRUE)
+
+	return serialize(value)
+
+/// A preference that is a choice of one option among a fixed set.
+/// Used for preferences such as clothing.
+/datum/preference/choiced
+	/// If this is TRUE, icons will be generated.
+	/// This is necessary for if your `init_possible_values()` override
+	/// returns an assoc list of names to atoms/icons.
+	var/should_generate_icons = FALSE
+
+	var/list/cached_values
+
+	abstract_type = /datum/preference/choiced
+
+/// Returns a list of every possible value.
+/// The first time this is called, will run `init_values()`.
+/// Return value can be in the form of:
+/// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
+/// - An assoc list of raw values to atoms/icons.
+// MOTHBLOCKS TODO: Let preferences be text-only.
+/datum/preference/choiced/proc/get_choices()
+	// Override `init_values()` instead.
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if (isnull(cached_values))
+		cached_values = init_possible_values()
+		ASSERT(cached_values.len)
+
+	return cached_values
+
+/// Returns a list of every possible value, serialized.
+/// Return value can be in the form of:
+/// - A flat list of serialized values, such as list(MALE, FEMALE, PLURAL).
+/// - An assoc list of serialized values to atoms/icons.
+/datum/preference/choiced/proc/get_choices_serialized()
+	// Override `init_values()` instead.
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/list/serialized_choices = list()
+	var/choices = get_choices()
+
+	if (should_generate_icons)
+		for (var/choice in choices)
+			serialized_choices[serialize(choice)] = choices[choice]
+	else
+		for (var/choice in choices)
+			serialized_choices += serialize(choice)
+
+	return serialized_choices
+
+/// Returns a list of every possible value.
+/// This must be overriden by `/datum/preference/choiced` subtypes.
+/// Return value can be in the form of:
+/// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
+/// - An assoc list of raw values to atoms/icons, in which case
+/// icons will be generated.
+// MOTHBLOCKS TODO: Unit test this
+/datum/preference/choiced/proc/init_possible_values()
+	SHOULD_NOT_SLEEP(TRUE)
+	CRASH("`init_possible_values()` was not implemented for [type]!")
+
+/// Private.
+/// Caches a list of every possible value.
+/datum/preference/choiced/proc/cache_possible_values()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
+	RETURN_TYPE(/list)
+
+	if (isnull(cached_values))
+		cached_values = init_possible_values()
+		ASSERT(cached_values.len)
+
+	return cached_values
+
+/datum/preference/choiced/is_valid(value)
 	return value in get_choices_serialized()
+
+/datum/preference/choiced/deserialize(input)
+	return sanitize_inlist(input, get_choices())
+
+/datum/preference/choiced/create_default_value()
+	return pick(get_choices())
+
+/datum/preference/choiced/compile_ui_data(mob/user, value)
+	if (should_generate_icons)
+		return list(
+			"icon" = get_spritesheet_key(value),
+			"value" = serialize(value),
+		)
+
+	return ..()
