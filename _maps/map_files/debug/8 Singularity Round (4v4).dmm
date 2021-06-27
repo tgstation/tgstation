@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/machinery/power/solar/fake,
+/turf/open/floor/iron/solarpanel,
+/area/tdome/arena/fifteen)
 "aN" = (
 /turf/open/floor/iron/smooth_half{
 	dir = 4
@@ -63,8 +67,8 @@
 /turf/open/floor/iron/textured,
 /area/tdome/arena/fifteen)
 "dX" = (
-/turf/open/floor/iron/smooth_large,
-/area/space)
+/turf/open/floor/iron/solarpanel,
+/area/tdome/arena/fifteen)
 "fG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -132,9 +136,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/textured_large,
 /area/tdome/arena/fifteen)
-"mG" = (
-/turf/closed/indestructible/riveted,
-/area/space)
 "mJ" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /turf/open/floor/iron/textured,
@@ -243,9 +244,6 @@
 	dir = 8
 	},
 /area/tdome/arena/fifteen)
-"vj" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "vD" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
@@ -253,9 +251,9 @@
 /turf/open/floor/iron/textured,
 /area/tdome/arena/fifteen)
 "wn" = (
-/obj/machinery/field/generator/anchored,
 /obj/structure/cable,
 /obj/effect/turf_decal/box/white,
+/obj/machinery/field/generator/anchored/green,
 /turf/open/floor/iron/dark/textured,
 /area/tdome/arena/fifteen)
 "wq" = (
@@ -498,9 +496,6 @@
 	dir = 4
 	},
 /area/tdome/arena/fifteen)
-"IB" = (
-/turf/open/floor/glass/hardlight,
-/area/space)
 "Jm" = (
 /turf/open/floor/iron/textured_edge{
 	dir = 4
@@ -531,10 +526,12 @@
 "KM" = (
 /turf/open/floor/glass/hardlight,
 /area/tdome/arena/fifteen)
-"Le" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/space)
+"KR" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/box/white,
+/obj/machinery/field/generator/anchored/red,
+/turf/open/floor/iron/dark/textured,
+/area/tdome/arena/fifteen)
 "LZ" = (
 /obj/structure/lattice/catwalk,
 /turf/open/floor/glass/hardlight,
@@ -627,7 +624,7 @@
 "UU" = (
 /obj/effect/baseturf_helper/space,
 /turf/open/floor/glass/hardlight,
-/area/space)
+/area/tdome/arena/fifteen)
 "UV" = (
 /obj/structure/cable,
 /turf/open/floor/iron/textured_corner,
@@ -2233,13 +2230,13 @@ dr
 dr
 sA
 sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
+sA
+sA
+sA
+sA
+sA
+sA
+sA
 sA
 sA
 dr
@@ -2298,15 +2295,15 @@ xd
 xd
 dr
 dr
-sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
-sA
+xd
+ac
+dX
+ac
+dX
+ac
+dX
+ac
+xd
 dr
 dr
 xd
@@ -2364,15 +2361,15 @@ Nl
 xd
 xd
 dr
-sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
-sA
+xd
+ac
+dX
+ac
+dX
+ac
+dX
+ac
+xd
 dr
 xd
 xd
@@ -2430,15 +2427,15 @@ St
 Ps
 xd
 dr
-sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
-sA
+xd
+ac
+dX
+ac
+dX
+ac
+dX
+ac
+xd
 dr
 xd
 Ps
@@ -2496,15 +2493,15 @@ ZD
 gN
 xd
 dr
-sA
-mG
-mG
-mG
-mG
-mG
-mG
-mG
-sA
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
 dr
 xd
 gN
@@ -2563,13 +2560,13 @@ gN
 xd
 dr
 dr
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+dr
+dr
+dr
+dr
+dr
+dr
+dr
 dr
 dr
 xd
@@ -2577,13 +2574,13 @@ gN
 dA
 zz
 dP
-wn
+KR
 ZT
 ZT
 ZT
 ZT
 ZT
-wn
+KR
 jV
 MO
 yW
@@ -2629,13 +2626,13 @@ gN
 xd
 xd
 xd
-vj
-vj
-vj
-vj
-vj
-vj
-vj
+xd
+xd
+xd
+xd
+xd
+xd
+xd
 xd
 xd
 xd
@@ -2695,13 +2692,13 @@ gN
 TU
 Hh
 Hh
-Le
-Le
-Le
-Le
-Le
-Le
-Le
+Hh
+Hh
+Hh
+Hh
+Hh
+Hh
+Hh
 Hh
 Hh
 TU
@@ -2761,13 +2758,13 @@ gN
 TU
 KM
 KM
-IB
-IB
-IB
+KM
+KM
+KM
 UU
-IB
-IB
-IB
+KM
+KM
+KM
 KM
 KM
 TU
@@ -2827,13 +2824,13 @@ gN
 TU
 Hh
 Hh
-Le
-Le
-Le
-Le
-Le
-Le
-Le
+Hh
+Hh
+Hh
+Hh
+Hh
+Hh
+Hh
 Hh
 Hh
 TU
@@ -2893,13 +2890,13 @@ gN
 xd
 xd
 xd
-vj
-vj
-vj
-vj
-vj
-vj
-vj
+xd
+xd
+xd
+xd
+xd
+xd
+xd
 xd
 xd
 xd
@@ -2959,13 +2956,13 @@ gN
 xd
 dr
 dr
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+dr
+dr
+dr
+dr
+dr
+dr
+dr
 dr
 dr
 xd
@@ -2973,13 +2970,13 @@ gN
 dA
 zz
 dP
-wn
+KR
 KM
 KM
 KM
 KM
 KM
-wn
+KR
 jV
 MO
 yW
@@ -3024,15 +3021,15 @@ ZD
 gN
 xd
 dr
-sA
-mG
-mG
-mG
-mG
-mG
-mG
-mG
-sA
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
 dr
 xd
 gN
@@ -3090,15 +3087,15 @@ Su
 Ps
 xd
 dr
-sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
-sA
+xd
+ac
+dX
+ac
+dX
+ac
+dX
+ac
+xd
 dr
 xd
 Ps
@@ -3156,15 +3153,15 @@ Nl
 xd
 xd
 dr
-sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
-sA
+xd
+ac
+dX
+ac
+dX
+ac
+dX
+ac
+xd
 dr
 xd
 xd
@@ -3222,15 +3219,15 @@ xd
 xd
 dr
 dr
-sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
-sA
+xd
+ac
+dX
+ac
+dX
+ac
+dX
+ac
+xd
 dr
 dr
 xd
@@ -3289,13 +3286,13 @@ dr
 dr
 sA
 sA
-VG
-VG
-VG
-VG
-VG
-VG
-VG
+sA
+sA
+sA
+sA
+sA
+sA
+sA
 sA
 sA
 dr

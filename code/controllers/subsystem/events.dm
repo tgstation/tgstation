@@ -153,6 +153,9 @@ SUBSYSTEM_DEF(events)
 
 //sets up the holidays and holidays list
 /datum/controller/subsystem/events/proc/getHoliday()
+	#ifdef EVENTMODE
+	return
+	#endif
 	if(!CONFIG_GET(flag/allow_holidays))
 		return // Holiday stuff was not enabled in the config!
 	for(var/H in subtypesof(/datum/holiday))

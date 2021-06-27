@@ -109,9 +109,6 @@
 		//return
 
 	var/mob/oldbody = get_mob()
-	if(oldbody && !isobserver(oldbody))
-		testing("Spawning in [ckey] even though already in body [oldbody]")
-		//return
 
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
 	if(oldbody?.client) // debug testing with empty contestant datums

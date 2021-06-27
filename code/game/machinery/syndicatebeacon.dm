@@ -27,6 +27,10 @@
 	for (var/_singulo in GLOB.singularities)
 		var/datum/component/singularity/singulo = _singulo
 		var/atom/singulo_atom = singulo.parent
+		if(istype(singulo_atom, /obj/singularity))
+			var/obj/singularity/real_deal = singulo_atom
+			if(team != real_deal.team)
+				continue
 		if(singulo_atom.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
@@ -102,6 +106,10 @@
 			for(var/_singulo_component in GLOB.singularities)
 				var/datum/component/singularity/singulo_component = _singulo_component
 				var/atom/singulo = singulo_component.parent
+				if(istype(singulo, /obj/singularity))
+					var/obj/singularity/real_deal = singulo
+					if(team != real_deal.team)
+						continue
 				if(singulo.z == z)
 					say("[singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
 	else
@@ -119,6 +127,9 @@
 /obj/machinery/power/singularity_beacon/team/Initialize()
 	. = ..()
 	Activate()
+
+/obj/machinery/power/singularity_beacon/team/singularity_pull()
+	return
 
 /obj/machinery/power/singularity_beacon/team/red
 	name = "red team singularity beacon"

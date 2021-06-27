@@ -104,6 +104,7 @@
 // Used for overriding certain procs
 
 /obj/machinery/field
+	var/team
 	var/hasShocked = FALSE //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
 /obj/machinery/field/Bumped(atom/movable/mover)
@@ -151,3 +152,9 @@
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))
 	AM.throw_at(target, 200, 4)
 	addtimer(CALLBACK(src, .proc/clear_shock), 5)
+
+/obj/machinery/field/containment/red
+	team = "red"
+
+/obj/machinery/field/containment/green
+	team = "green"

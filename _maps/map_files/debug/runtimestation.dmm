@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/plating,
+/area/centcom/control)
 "ab" = (
 /turf/open/floor/iron,
 /area/centcom/control)
@@ -138,7 +138,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	pixel_y = -5
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "aN" = (
 /turf/open/floor/iron/checker,
@@ -2190,7 +2190,7 @@
 /area/centcom/control)
 "ng" = (
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "nh" = (
 /obj/machinery/door/airlock/centcom{
@@ -2328,7 +2328,7 @@
 	id = "ETram";
 	name = "Tram Transit"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "oa" = (
 /obj/machinery/door/airlock/centcom{
@@ -3062,7 +3062,7 @@
 "sG" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "sK" = (
 /obj/effect/turf_decal{
@@ -3099,7 +3099,7 @@
 "ta" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/light/directional/north,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "tc" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3386,6 +3386,17 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/centcom/control)
+"uY" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/centcom/control)
 "va" = (
 /turf/open/floor/iron/sepia,
@@ -3715,7 +3726,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	pixel_y = -5
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "wN" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -3936,6 +3947,16 @@
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
 	},
+/area/centcom/control)
+"xS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-10";
+	pixel_x = 3
+	},
+/turf/open/floor/wood,
 /area/centcom/control)
 "xU" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -5594,7 +5615,7 @@
 	id = "ETram";
 	name = "Tram Transit"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "HJ" = (
 /obj/structure/closet/secure_closet/security,
@@ -5834,7 +5855,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	pixel_y = 21
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "Jc" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -6455,7 +6476,7 @@
 	id = "ETram";
 	name = "Tram Transit"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "MU" = (
 /obj/effect/turf_decal/siding/wood{
@@ -7238,7 +7259,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	pixel_y = 21
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "SB" = (
 /obj/structure/rack,
@@ -7584,7 +7605,7 @@
 	id = "ETram";
 	name = "Tram Transit"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/centcom/control)
 "UQ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -24743,7 +24764,7 @@ ky
 va
 va
 va
-aa
+va
 Mu
 Mu
 Rs
@@ -25773,11 +25794,11 @@ va
 va
 Mu
 Vr
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 ng
 Mu
 ex
@@ -25852,11 +25873,11 @@ ex
 fO
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Mu
 va
@@ -26030,11 +26051,11 @@ va
 va
 Mu
 Vr
-Ri
+aa
 cz
 cz
 cz
-Ri
+aa
 ng
 ga
 ex
@@ -26109,11 +26130,11 @@ ex
 fO
 ga
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Mu
 va
@@ -26366,11 +26387,11 @@ iu
 fO
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 UD
 va
@@ -26623,11 +26644,11 @@ ex
 fO
 ga
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Py
 va
@@ -26880,11 +26901,11 @@ iu
 Kw
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 qi
 Py
 va
@@ -27137,11 +27158,11 @@ ex
 fO
 ga
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Py
 va
@@ -27394,11 +27415,11 @@ ex
 fO
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Py
 va
@@ -27651,11 +27672,11 @@ ex
 fO
 ga
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 qi
 Py
 va
@@ -27908,11 +27929,11 @@ iu
 fO
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Py
 va
@@ -28165,11 +28186,11 @@ ex
 fO
 ga
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 HP
 va
@@ -28343,11 +28364,11 @@ Mq
 qV
 Mu
 Vr
-Ri
+aa
 cz
 cz
 cz
-Ri
+aa
 ng
 Mu
 ex
@@ -28422,11 +28443,11 @@ TL
 fO
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Mu
 Hi
@@ -28600,11 +28621,11 @@ Mu
 ga
 Mu
 Vr
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 ng
 Mu
 cM
@@ -28679,11 +28700,11 @@ QN
 fO
 Mu
 ng
-Ri
-Ri
-Ri
-Ri
-Ri
+aa
+aa
+aa
+aa
+aa
 Ni
 Mu
 ga
@@ -56356,11 +56377,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Mu
 Mu
@@ -56435,11 +56456,11 @@ Mu
 Mu
 Mu
 Vr
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 ng
 Mu
 zK
@@ -56613,11 +56634,11 @@ zK
 zK
 Mu
 ta
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 eA
 Mu
 an
@@ -56692,11 +56713,11 @@ cE
 fl
 Mu
 lm
-Ri
+aa
 cz
 cz
 cz
-Ri
+aa
 sG
 Mu
 zK
@@ -56870,11 +56891,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Py
 va
@@ -57127,11 +57148,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Py
 va
@@ -57384,11 +57405,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 qi
 Py
 va
@@ -57641,11 +57662,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Py
 va
@@ -57898,11 +57919,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Py
 va
@@ -58155,11 +58176,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 qi
 Py
 va
@@ -58412,11 +58433,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Py
 va
@@ -58669,11 +58690,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Py
 va
@@ -58926,11 +58947,11 @@ zK
 zK
 Mu
 ta
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 eA
 Mu
 Xa
@@ -59005,11 +59026,11 @@ va
 tA
 Mu
 lm
-Ri
+aa
 cz
 cz
 cz
-Ri
+aa
 sG
 Mu
 zK
@@ -59183,11 +59204,11 @@ zK
 zK
 Mu
 ng
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 Ni
 Mu
 va
@@ -59262,11 +59283,11 @@ va
 va
 Mu
 Vr
-Ri
+aa
 aM
-rJ
+uY
 Ja
-Ri
+aa
 ng
 Mu
 zK
@@ -59448,7 +59469,7 @@ ga
 Mu
 Mu
 rh
-eQ
+xS
 rh
 Mu
 xq

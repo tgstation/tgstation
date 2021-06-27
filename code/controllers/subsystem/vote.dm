@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(vote)
 	var/question
 	var/started_time
 	var/time_remaining
+	var/period
 	var/list/voted = list()
 	var/list/voting = list()
 
@@ -21,7 +22,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/fire()
 	if(!mode)
 		return
-	time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
+	time_remaining = round((started_time + period - world.time)/10)
 	if(time_remaining < 0)
 		result()
 		SStgui.close_uis(src)
@@ -196,6 +197,9 @@ SUBSYSTEM_DEF(vote)
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return FALSE
+				period = input(usr,"Set a custom time (in seconds) or hit cancel to use config time") as num|null
+				if(isnum(period))
+					period *= 10
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
@@ -203,6 +207,8 @@ SUBSYSTEM_DEF(vote)
 					choices.Add(option)
 			else
 				return FALSE
+		if(!period)
+			period = CONFIG_GET(number/vote_period)
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
@@ -210,9 +216,8 @@ SUBSYSTEM_DEF(vote)
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		var/vp = CONFIG_GET(number/vote_period)
-		to_chat(world, "\n<span class='infoplain'><font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font></span>")
-		time_remaining = round(vp/10)
+		to_chat(world, "\n<span class='infoplain'><font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\nYou have [DisplayTimeText(period)] to vote.</font></span>")
+		time_remaining = round(period/10)
 		for(var/c in GLOB.clients)
 			var/client/C = c
 			var/datum/action/vote/V = new

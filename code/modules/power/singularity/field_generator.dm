@@ -43,6 +43,7 @@ no power level overlay is currently in the overlays list.
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
 	var/clean_up = 0
+	var/containment_type = /obj/machinery/field/containment
 
 /obj/machinery/field/generator/update_overlays()
 	. = ..()
@@ -311,7 +312,7 @@ no power level overlay is currently in the overlays list.
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/field/containment) in T)
-			var/obj/machinery/field/containment/CF = new(T)
+			var/obj/machinery/field/containment/CF = new containment_type(T)
 			CF.set_master(src,G)
 			CF.setDir(field_dir)
 			fields += CF
@@ -395,6 +396,14 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/bump_field(atom/movable/AM as mob|obj)
 	if(fields.len)
 		..()
+
+/obj/machinery/field/generator/anchored/red
+	team = "red"
+	containment_type = /obj/machinery/field/containment/red
+
+/obj/machinery/field/generator/anchored/green
+	team = "green"
+	containment_type = /obj/machinery/field/containment/green
 
 #undef FG_UNSECURED
 #undef FG_SECURED

@@ -346,11 +346,15 @@
 /obj/singularity/proc/can_move(turf/T)
 	if(!T)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
+	if(locate(/obj/machinery/shieldwall) in T)
 		return FALSE
+	else if(locate(/obj/machinery/field/containment) in T)
+		var/obj/machinery/field/containment/C = locate(/obj/machinery/field/containment) in T
+		if(C?.team != team)
+			return FALSE
 	else if(locate(/obj/machinery/field/generator) in T)
 		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
-		if(G?.active)
+		if(G?.active || G?.team != team)
 			return FALSE
 	else if(locate(/obj/machinery/power/shieldwallgen) in T)
 		var/obj/machinery/power/shieldwallgen/S = locate(/obj/machinery/power/shieldwallgen) in T

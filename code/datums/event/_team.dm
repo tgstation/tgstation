@@ -57,7 +57,6 @@
 	var/datum/roster/the_roster = GLOB.global_roster
 	if(!the_roster)
 		CRASH("Tried querying to add member to a team, but there's no roster???")
-		return
 
 	if(!the_roster.active_contestants)
 		to_chat(user, span_warning("ERROR: No active eligible contestants. If you want to add someone who is eliminated, please un-eliminate them first."))
@@ -154,11 +153,6 @@
 		message_admins("[key_name_admin(user)] has spawned [src]!")
 		log_game("[key_name_admin(user)] has spawned [src]!")
 
-	var/successes = 0
 	for(var/datum/contestant/iter_member in members)
 		var/obj/machinery/arena_spawn/random_spawn = pick(spawnpoints)
-		if(iter_member.spawn_this_contestant(random_spawn))
-			successes++
-
-	testing("Team [src]: [successes]/[LAZYLEN(members)] spawned!")
-
+		iter_member.spawn_this_contestant(random_spawn)
