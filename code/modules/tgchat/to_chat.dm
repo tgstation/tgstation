@@ -61,11 +61,16 @@
 		handle_whitespace = TRUE,
 		trailing_newline = TRUE,
 		confidential = FALSE)
+	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
+	html = "[html]"
+	text = "[text]"
 	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
 		to_chat_immediate(target, html, type, text)
 		return
-	if(!target || (!html && !text))
+	if(!target)
 		return
+	if(!html && !text)
+		CRASH("Empty or null string in to_chat proc call.")
 	if(target == world)
 		target = GLOB.clients
 	// Build a message
