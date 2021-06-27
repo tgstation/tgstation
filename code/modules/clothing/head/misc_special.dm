@@ -155,6 +155,18 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 
+/obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
+	. = ..()
+	cut_overlays()
+	if(light_on)
+		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(isinhands)
+	. = ..()
+	var/static/on_overlay
+	if(!isinhands)
+		. += emissive_appearance(worn_icon, "carved_pumpkin-emissive", alpha = src.alpha)
+
 /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
 	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
