@@ -83,7 +83,7 @@
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
 	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
-	var/list/custom_materials
+	var/list/datum/material/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
@@ -132,6 +132,9 @@
 	var/greyscale_config
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
+
+	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
+	var/list/datum/merger/mergers
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
@@ -748,6 +751,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
+		return
+	update_atom_colour()
+	QUEUE_SMOOTH(src)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
@@ -2051,3 +2058,14 @@
 			usr.hud_used.screentip_text.maptext = ""
 		else
 			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+
+/// Gets a merger datum representing the connected blob of objects in the allowed_types argument
+/atom/proc/GetMergeGroup(id, list/allowed_types)
+	RETURN_TYPE(/datum/merger)
+	var/datum/merger/candidate
+	if(mergers)
+		candidate = mergers[id]
+	if(!candidate)
+		new /datum/merger(id, allowed_types, src)
+		candidate = mergers[id]
+	return candidate
