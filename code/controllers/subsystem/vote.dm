@@ -134,6 +134,11 @@ SUBSYSTEM_DEF(vote)
 	return .
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
+	#ifdef EVENTMODE
+	if(usr.stat != DEAD)
+		to_chat(usr, span_warning("Only ghosts and the dead may vote in event polls!"))
+		return FALSE
+	#endif
 	if(!mode)
 		return FALSE
 	if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
