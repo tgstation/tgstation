@@ -677,6 +677,7 @@
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
+		var/movement_dir = get_dir(src, destination)
 
 		moving_diagonally = 0
 
@@ -684,18 +685,18 @@
 
 		if(!same_loc)
 			if(oldloc)
-				oldloc.Exited(src, destination)
+				oldloc.Exited(src, movement_dir)
 				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
+					old_area.Exited(src, movement_dir)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
 			var/dest_z = (destturf ? destturf.z : null)
 			if (old_z != dest_z)
 				onTransitZ(old_z, dest_z)
-			destination.Entered(src, oldloc)
+			destination.Entered(src, movement_dir)
 			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
+				destarea.Entered(src, movement_dir)
 
 		. = TRUE
 
@@ -705,9 +706,9 @@
 		loc = null
 		if (oldloc)
 			var/area/old_area = get_area(oldloc)
-			oldloc.Exited(src, null)
+			oldloc.Exited(src, NONE)
 			if(old_area)
-				old_area.Exited(src, null)
+				old_area.Exited(src, NONE)
 
 	Moved(oldloc, NONE, TRUE)
 
