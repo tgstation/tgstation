@@ -25,6 +25,30 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_half,
 /area/tdome/arena)
+"cF" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"cP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/structure/table/abductor,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "cW" = (
 /obj/effect/turf_decal/loading_area/white{
 	dir = 8
@@ -61,6 +85,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
+/obj/structure/table/abductor,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "dy" = (
@@ -73,10 +98,34 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"dQ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line,
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "ea" = (
 /obj/effect/turf_decal/trimline/red/filled/end,
 /obj/effect/turf_decal/trimline/blue/end,
 /obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"em" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line,
+/obj/structure/table/abductor,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "en" = (
@@ -119,6 +168,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
+/obj/structure/table/abductor,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "fW" = (
@@ -200,6 +250,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"ie" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/structure/table/abductor,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "iC" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth_edge,
@@ -213,6 +275,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
+/obj/structure/table/abductor,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "jJ" = (
@@ -277,6 +340,32 @@
 "kX" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth_large,
+/area/tdome/arena)
+"lr" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/structure/chair/stool/bar/directional/west{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"lx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line,
+/obj/structure/table/abductor,
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "lB" = (
 /obj/effect/turf_decal/tile/blue{
@@ -365,20 +454,6 @@
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
-/area/tdome/arena)
-"nx" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/arena_spawn/red,
-/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "nE" = (
 /obj/effect/turf_decal/tile/blue{
@@ -562,6 +637,7 @@
 	dir = 8
 	},
 /obj/machinery/light/floor,
+/obj/structure/table/abductor,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "tj" = (
@@ -592,25 +668,23 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"tV" = (
-/obj/structure/chair/stool/bar/directional/west,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "ux" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/iron/stairs/right,
+/area/tdome/arena)
+"uA" = (
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/end{
+	dir = 4
+	},
+/obj/structure/chair/stool/bar/directional/west{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "uY" = (
 /obj/structure/railing/corner{
@@ -639,6 +713,20 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"wY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/arena_spawn/green,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "xq" = (
@@ -1076,6 +1164,9 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
+/obj/structure/chair/stool/bar/directional/west{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Kl" = (
@@ -1088,6 +1179,22 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"KF" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/west{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -1104,6 +1211,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"KW" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/structure/table/abductor,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "LV" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -1114,6 +1233,22 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
+/area/tdome/arena)
+"Mj" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Ml" = (
 /obj/effect/turf_decal/bot_white,
@@ -1342,6 +1477,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Rm" = (
@@ -1351,20 +1487,6 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
-"RG" = (
-/obj/structure/chair/stool/bar/directional/east,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "RO" = (
@@ -1451,6 +1573,7 @@
 	dir = 4
 	},
 /obj/machinery/light/floor,
+/obj/structure/table/abductor,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "TL" = (
@@ -1539,20 +1662,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"Vd" = (
-/obj/structure/table/abductor,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "Wl" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -1572,20 +1681,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"WW" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/arena_spawn/green,
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "WZ" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -1593,6 +1688,25 @@
 /obj/structure/railing,
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark/side,
+/area/tdome/arena)
+"Xb" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional/west{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Xh" = (
 /obj/effect/turf_decal/tile/red{
@@ -1607,6 +1721,20 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/siding/thinplating/corner,
 /obj/structure/railing/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Ya" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/arena_spawn/red,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Yd" = (
@@ -1633,6 +1761,23 @@
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/smooth,
 /area/tdome/arena)
+"ZI" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 4
+	},
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "ZJ" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -1643,20 +1788,6 @@
 /turf/open/floor/iron/stairs/left{
 	dir = 1
 	},
-/area/tdome/arena)
-"ZP" = (
-/obj/structure/table/abductor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ZS" = (
 /obj/structure/railing/corner{
@@ -3243,7 +3374,7 @@ Tj
 Tj
 Tj
 Tj
-WW
+Tj
 lB
 SO
 CO
@@ -3304,11 +3435,11 @@ SO
 sN
 sN
 Tj
-tV
-tV
-tV
-tV
-tV
+Tj
+Tj
+Tj
+Tj
+Tj
 Tj
 nE
 SO
@@ -3370,11 +3501,11 @@ SO
 TQ
 KR
 Tj
-ZP
-ZP
-ZP
-ZP
-ZP
+Tj
+Tj
+Tj
+Tj
+Tj
 Tj
 DO
 UG
@@ -3434,7 +3565,7 @@ CO
 CO
 Gp
 KR
-KR
+wY
 lT
 Tu
 Tu
@@ -3568,11 +3699,11 @@ SO
 KR
 KR
 mN
-PL
-tf
+dQ
+cF
 QY
-kS
-BO
+Mj
+ZI
 qw
 Tj
 hc
@@ -3634,11 +3765,11 @@ sN
 sn
 QF
 qM
-PL
-Bl
+em
+lx
 ds
 tf
-Kl
+cP
 Dn
 Tu
 kC
@@ -4030,8 +4161,8 @@ sN
 RO
 PF
 MS
-jJ
-Qh
+ie
+KW
 jd
 TD
 fS
@@ -4096,11 +4227,11 @@ SO
 SK
 SK
 xq
-jJ
-TD
+lr
+uA
 Kj
-HO
-hQ
+KF
+Xb
 BK
 NX
 PZ
@@ -4226,7 +4357,7 @@ CO
 CO
 Gp
 SK
-SK
+Ya
 JI
 LV
 LV
@@ -4294,11 +4425,11 @@ SO
 oY
 SK
 NX
-Vd
-Vd
-Vd
-Vd
-Vd
+NX
+NX
+NX
+NX
+NX
 NX
 PD
 ux
@@ -4360,11 +4491,11 @@ SO
 sN
 sN
 NX
-RG
-RG
-RG
-RG
-RG
+NX
+NX
+NX
+NX
+NX
 NX
 Wl
 SO
@@ -4431,7 +4562,7 @@ NX
 NX
 NX
 NX
-nx
+NX
 sv
 SO
 CO
