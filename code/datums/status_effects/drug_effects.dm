@@ -82,7 +82,7 @@
 
 /datum/status_effect/stoned/on_remove()
 	if(!ishuman(owner))
-			stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
+		stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis)
 	human_owner.eye_color = original_eye_color
@@ -94,5 +94,5 @@
 
 /atom/movable/screen/alert/status_effect/stoned
 	name = "Stoned"
-	desc = "Cannabis is impairing your speed, motor skills, and mental cognition. Make sure to act like it."
+	desc = "Cannabis is impairing your speed, motor skills, and mental cognition."
 	icon_state = "stoned"

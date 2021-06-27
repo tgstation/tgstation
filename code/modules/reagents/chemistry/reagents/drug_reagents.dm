@@ -46,10 +46,10 @@
 /datum/reagent/drug/cannabis/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.apply_status_effect(/datum/status_effect/stoned)
 	if(DT_PROB(1, delta_time))
-		var/smoke_message = pick("You feel relaxed.","You feel calmed.","Your mouth feels dry.","You could use a glass of water.","Your heart beats quickly.","You feel clumsy.","You crave junk food.","You notice you've been moving more slowly.")
+		var/smoke_message = pick("You feel relaxed.","You feel calmed.","Your mouth feels dry.","You could use some water.","Your heart beats quickly.","You feel clumsy.","You crave junk food.","You notice you've been moving more slowly.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	if(DT_PROB(2, delta_time))
-		M.emote(pick("chuckle","smile","laugh","giggle"))
+		M.emote(pick("smile","laugh","giggle"))
 	M.adjust_nutrition(-1 * REM * delta_time) //munchies
 	if(DT_PROB(4, delta_time) && M.body_position == LYING_DOWN && !M.IsSleeping()) //chance to fall asleep if lying down
 		to_chat(M, "<span class='warning'>You doze off...</span>")
