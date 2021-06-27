@@ -8,12 +8,12 @@
 	var/drain_time = 0
 
 /obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
-	..()
+	. = ..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 	handle_charge(owner, delta_time, times_fired)
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
-	..()
+	. = ..()
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
 	ADD_TRAIT(owner, TRAIT_NOHUNGER, src)
@@ -26,7 +26,7 @@
 	carbon.clear_alert("ethereal_charge")
 	carbon.clear_alert("ethereal_overcharge")
 
-	..()
+	return ..()
 
 /obj/item/organ/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
 	human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - crystal_charge / 100)))
