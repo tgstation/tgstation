@@ -17,7 +17,7 @@
 	var/auto_deadmin_role_flags = NONE
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
-	var/faction = "None"
+	var/faction = FACTION_NONE
 
 	//How many players can be this job
 	var/total_positions = 0
@@ -82,6 +82,18 @@
 
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
+
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK)
+	var/job_flags = NONE
+
+	/// Multiplier for general usage of the voice of god.
+	var/voice_of_god_power = 1
+	/// Multiplier for the silence command of the voice of god.
+	var/voice_of_god_silence_power = 1
+
+	/// String. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
+	var/policy_index = ""
+
 
 /datum/job/New()
 	. = ..()
@@ -302,3 +314,7 @@
 /// An overridable getter for more dynamic goodies.
 /datum/job/proc/get_mail_goodies(mob/recipient)
 	return mail_goodies
+
+
+/datum/job/proc/award_service(client/winner, award)
+	return

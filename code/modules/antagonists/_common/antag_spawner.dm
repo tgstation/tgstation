@@ -87,10 +87,8 @@
 		app.wiz_team = master_wizard.wiz_team
 		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
-	//TODO Kill these if possible
-	app_mind.assigned_role = "Apprentice"
-	app_mind.special_role = "apprentice"
-	//
+	app_mind.set_assigned_role(SSjob.GetJobType(/datum/job/wizard_apprentice))
+	app_mind.special_role = ROLE_WIZARD_APPRENTICE
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 
 ///////////BORGS AND OPERATIVES
@@ -105,7 +103,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
-	var/special_role_name = "Nuclear Operative" ///The name of the special role given to the recruit
+	var/special_role_name = ROLE_NUCLEAR_OPERATIVE ///The name of the special role given to the recruit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
 	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
 	/// Style used by the droppod
@@ -165,7 +163,7 @@
 /obj/item/antag_spawner/nuke_ops/clown
 	name = "clown operative beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement clown operatives into the field."
-	special_role_name = "Clown Operative"
+	special_role_name = ROLE_CLOWN_OPERATIVE
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
@@ -265,8 +263,8 @@
 	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
 	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
 	S.key = C.key
-	S.mind.assigned_role = S.name
-	S.mind.special_role = S.name
+	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+	S.mind.special_role = ROLE_SLAUGHTER_DEMON
 	S.mind.add_antag_datum(antag_type)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \

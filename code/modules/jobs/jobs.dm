@@ -102,7 +102,29 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 GLOBAL_LIST_INIT(exp_specialmap, list(
 	EXP_TYPE_LIVING = list(), // all living mobs
 	EXP_TYPE_ANTAG = list(),
-	EXP_TYPE_SPECIAL = list("Lifebringer","Ash Walker","Exile","Servant Golem","Free Golem","Hermit","Translocated Vet","Escaped Prisoner","Hotel Staff","SuperFriend","Space Syndicate","Ancient Crew","Space Doctor","Space Bartender","Beach Bum","Skeleton","Zombie","Space Bar Patron","Lavaland Syndicate","Maintenance Drone","Ghost Role"), // Ghost roles
+	EXP_TYPE_SPECIAL = list(
+		"Lifebringer",
+		"Ash Walker",
+		"Exile",
+		ROLE_SERVANT_GOLEM,
+		ROLE_FREE_GOLEM,
+		"Hermit",
+		"Translocated Vet",
+		"Escaped Prisoner",
+		"Hotel Staff",
+		"SuperFriend",
+		"Space Syndicate",
+		"Ancient Crew",
+		"Space Doctor",
+		"Space Bartender",
+		"Beach Bum",
+		"Skeleton",
+		"Zombie",
+		"Space Bar Patron",
+		"Lavaland Syndicate",
+		"Maintenance Drone",
+		"Ghost Role",
+		), // Ghost roles
 	EXP_TYPE_GHOST = list() // dead people, observers
 ))
 GLOBAL_PROTECT(exp_jobsmap)
@@ -114,9 +136,9 @@ GLOBAL_PROTECT(exp_specialmap)
 	if(!job_title)
 		return list()
 
-	for(var/datum/job/J in SSjob.occupations)
-		if(J.title == job_title)
-			return J.department_head //this is a list
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if(job.title == job_title)
+			return job.department_head //this is a list
 
 /proc/get_full_job_name(job)
 	var/static/regex/cap_expand = new("cap(?!tain)")

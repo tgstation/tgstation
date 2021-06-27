@@ -1,7 +1,7 @@
 /datum/job/chaplain
 	title = "Chaplain"
 	department_head = list("Head of Personnel")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
@@ -25,6 +25,11 @@
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/ratplush = 1
 	)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+
+	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
+
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	. = ..()

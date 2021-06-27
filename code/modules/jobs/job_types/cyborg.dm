@@ -1,7 +1,7 @@
 /datum/job/cyborg
 	title = "Cyborg"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 1
 	supervisors = "your laws and the AI" //Nodrak
@@ -13,6 +13,7 @@
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 	departments = DEPARTMENT_SILICON
 	random_spawns_possible = FALSE
+	job_flags = JOB_NEW_PLAYER_JOINABLE
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source = null)
 	if(visualsOnly)

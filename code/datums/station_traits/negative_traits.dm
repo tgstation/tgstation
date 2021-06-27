@@ -86,11 +86,20 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	var/list/jobs_to_use = list("Clown", "Bartender", "Cook", "Botanist", "Cargo Technician", "Mime", "Janitor", "Prisoner")
 	var/chosen_job
 
 /datum/station_trait/overflow_job_bureaucracy/New()
 	. = ..()
+	var/list/jobs_to_use = list(
+		/datum/job/clown,
+		/datum/job/bartender,
+		/datum/job/cook,
+		/datum/job/botanist,
+		/datum/job/cargo_technician,
+		/datum/job/mime,
+		/datum/job/janitor,
+		/datum/job/prisoner,
+		)
 	chosen_job = pick(jobs_to_use)
 	RegisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/set_overflow_job_override)
 
