@@ -105,8 +105,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	visibilityChanged()
 
-	for(var/atom/movable/AM in src)
-		Entered(AM)
+	for(var/atom/movable/content as anything in src)
+		Entered(content, NONE)
 
 	var/area/A = loc
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
