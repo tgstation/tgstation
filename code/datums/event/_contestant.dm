@@ -119,15 +119,16 @@
 	if(!(M.dna?.species in list(/datum/species/human, /datum/species/moth, /datum/species/lizard, /datum/species/human/felinid)))
 		M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(/datum/outfit/job/assistant) // TODO: ADD CONTROLS FOR THIS
+	ADD_TRAIT(M, TRAIT_BYPASS_MEASURES, "arena_member") // bypass some SSlag_switch restrictions: slowmode, runechat, examine icons
 	if(M.ears)
 		var/obj/item/radio/R = M.ears
 		switch(spawnpoint.color)
-		if("red")
-			R.set_frequency(FREQ_CTF_RED)
-		if("green")
-			R.set_frequency(FREQ_CTF_GREEN)
-		if("blue")
-			R.set_frequency(FREQ_CTF_BLUE)
+			if("red")
+				R.set_frequency(FREQ_CTF_RED)
+			if("green")
+				R.set_frequency(FREQ_CTF_GREEN)
+			if("blue")
+				R.set_frequency(FREQ_CTF_BLUE)
 	//M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	//M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
