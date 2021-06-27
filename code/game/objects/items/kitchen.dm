@@ -186,7 +186,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_EASY * 5
 	wound_bonus = 15
-	bare_wound_bonus = 10
 
 /obj/item/kitchen/knife/hunting
 	name = "hunting knife"
