@@ -511,6 +511,9 @@
 	smooth_icon = 'icons/turf/walls/red_wall.dmi'
 	base_icon_state = "red_wall"
 
+/turf/closed/mineral/asteroid/event
+	baseturfs = /turf/open/floor/plating/ironsand
+
 /turf/closed/mineral/random/stationside/asteroid
 	name = "iron rock"
 	icon = 'icons/turf/mining.dmi'

@@ -6,18 +6,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron,
 /area/tdome/arena)
-"as" = (
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab"
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "au" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -29,22 +17,30 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "aF" = (
-/obj/machinery/computer/mech_bay_power_console,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"aV" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "bh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/mech_bay_recharge_port{
-	dir = 2
-	},
+/obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plating,
 /area/tdome/arena)
 "bl" = (
@@ -57,65 +53,89 @@
 /obj/item/extinguisher,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"bA" = (
+"bt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
+	dir = 10
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"cS" = (
-/obj/machinery/arena_spawn/red,
-/obj/effect/turf_decal/trimline/red/filled/corner{
+"bA" = (
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/mech_bay_recharge_floor,
+/area/tdome/arena)
+"cS" = (
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
+	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "de" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
+/obj/machinery/mech_bay_recharge_port{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"dl" = (
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/mech_bay_recharge_floor,
+/area/tdome/arena)
+"dE" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
-"dl" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron,
-/area/tdome/arena)
-"dD" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 10
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "dF" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/mech_bay_recharge_port{
-	dir = 2
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mech_bay_recharge_floor,
+/area/tdome/arena)
+"dL" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/tdome/arena)
 "dT" = (
 /obj/effect/turf_decal/stripes/line{
@@ -138,10 +158,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/tdome/arena)
-"ec" = (
-/obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ef" = (
 /obj/machinery/rnd/production/protolathe/department/science,
@@ -178,18 +194,14 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"fB" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "fG" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
+/obj/structure/closet,
+/obj/item/clothing/under/costume/mech_suit,
+/obj/item/clothing/under/costume/mech_suit/blue,
+/obj/item/clothing/under/costume/mech_suit/white,
+/obj/item/clothing/glasses/hud/diagnostic,
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses,
+/turf/open/floor/iron,
 /area/tdome/arena)
 "gh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -212,26 +224,35 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"gR" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+"gQ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ho" = (
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/structure/window/reinforced,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "hs" = (
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
+/area/tdome/arena)
+"ht" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ie" = (
 /obj/effect/turf_decal/stripes/line,
@@ -243,25 +264,14 @@
 "iA" = (
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
-"iJ" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "ja" = (
-/obj/effect/turf_decal/trimline/blue/filled/end,
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
-"jS" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
+/obj/machinery/mech_bay_recharge_port{
+	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/tdome/arena)
 "jY" = (
-/turf/closed/mineral/asteroid,
+/turf/closed/mineral/asteroid/event,
 /area/tdome/arena)
 "ko" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -276,6 +286,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
+"kV" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"nv" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "nB" = (
 /turf/closed/wall,
 /area/tdome/arena)
@@ -286,24 +311,6 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
-"nQ" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
-"oe" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "of" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -311,16 +318,6 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
-"or" = (
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "oO" = (
@@ -333,13 +330,6 @@
 "pc" = (
 /mob/living/silicon/robot/model/security,
 /turf/open/floor/carpet,
-/area/tdome/arena)
-"pr" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/filled/line,
-/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "pv" = (
 /obj/structure/plasticflaps{
@@ -358,20 +348,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/box/white{
-	color = "#52B4E9"
-	},
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron,
 /area/tdome/arena)
 "pJ" = (
 /obj/structure/showcase/mecha/marauder,
 /turf/open/floor/carpet,
 /area/tdome/arena)
 "pU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "qe" = (
@@ -387,17 +373,17 @@
 /obj/structure/railing,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"qm" = (
-/obj/effect/turf_decal/trimline/blue/filled/end{
+"rk" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"rq" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
+"rw" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -414,6 +400,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/tdome/arena)
+"rV" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "sc" = (
 /mob/living/silicon/robot/model/syndicate,
@@ -455,16 +450,17 @@
 	},
 /area/tdome/arena)
 "tn" = (
-/obj/machinery/arena_spawn/green,
-/obj/effect/turf_decal/trimline/blue/filled/corner,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -477,19 +473,6 @@
 	dir = 4
 	},
 /area/tdome/arena)
-"tG" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "tH" = (
 /obj/machinery/mecha_part_fabricator{
 	dir = 4
@@ -499,22 +482,39 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
-"uf" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
+"tJ" = (
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"ub" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"uk" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
+"uf" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"um" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "uo" = (
@@ -525,6 +525,12 @@
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
+/area/tdome/arena)
+"uL" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ve" = (
 /obj/structure/plasticflaps{
@@ -556,15 +562,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"vN" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "vP" = (
 /obj/machinery/autolathe,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -578,6 +575,34 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron,
+/area/tdome/arena)
+"wx" = (
+/obj/machinery/arena_spawn/red,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"wy" = (
+/obj/effect/turf_decal/box/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mech_bay_recharge_floor,
 /area/tdome/arena)
 "wW" = (
 /obj/machinery/conveyor/auto{
@@ -612,15 +637,20 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "xV" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/iron,
 /area/tdome/arena)
 "xY" = (
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"yk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "yw" = (
@@ -631,6 +661,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/side,
+/area/tdome/arena)
+"yH" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "yK" = (
 /obj/structure/lattice{
@@ -659,45 +696,66 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "zv" = (
-/obj/effect/turf_decal/trimline/blue/filled/end{
+/obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"zC" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"zE" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "zI" = (
-/obj/structure/rack,
-/obj/item/storage/belt/utility/full,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/toolbox/electrical,
-/turf/open/floor/iron,
-/area/tdome/arena)
-"zS" = (
-/obj/structure/closet,
-/obj/item/clothing/under/costume/mech_suit,
-/obj/item/clothing/glasses/hud/diagnostic,
-/obj/item/clothing/under/costume/mech_suit/blue,
-/obj/item/clothing/under/costume/mech_suit/white,
-/obj/item/clothing/glasses/hud/diagnostic/sunglasses,
-/turf/open/floor/iron,
-/area/tdome/arena)
-"Ai" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"zS" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"zV" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Ai" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
 	},
-/obj/effect/turf_decal/box/red,
-/turf/open/floor/mech_bay_recharge_floor,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Ak" = (
 /obj/machinery/rnd/production/protolathe/department/science,
@@ -723,14 +781,19 @@
 	},
 /area/tdome/arena)
 "BV" = (
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/machinery/vending/wardrobe/robo_wardrobe,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"Ci" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -748,33 +811,27 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "CB" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
-"CF" = (
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab"
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
+/obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "CO" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Dh" = (
-/obj/machinery/computer/mech_bay_power_console{
+/obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/structure/railing/corner{
+/obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -782,6 +839,19 @@
 "Dz" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab"
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"DN" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -796,18 +866,33 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/box/white{
-	color = "#52B4E9"
+/turf/open/floor/iron,
+/area/tdome/arena)
+"DV" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
 	},
-/turf/open/floor/mech_bay_recharge_floor,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Ec" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Eg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/mech_bay_recharge_port{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/tdome/arena)
 "EB" = (
@@ -816,14 +901,10 @@
 /area/tdome/arena)
 "ES" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -888,19 +969,15 @@
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "GI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
+	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "GP" = (
@@ -924,6 +1001,22 @@
 	dir = 1
 	},
 /area/tdome/arena)
+"GZ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"In" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "IX" = (
 /obj/effect/turf_decal/trimline/white/line{
 	color = "#FFAA00"
@@ -931,27 +1024,14 @@
 /turf/open/floor/iron/smooth,
 /area/tdome/arena)
 "Jr" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/window/reinforced,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "JE" = (
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -962,15 +1042,19 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
-"Kr" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -3;
-	pixel_y = 3
+"Kl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
 	},
-/obj/item/storage/belt/utility/full,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Kr" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "KA" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -979,8 +1063,11 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "KG" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -1013,15 +1100,11 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Lm" = (
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -1045,10 +1128,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "MD" = (
@@ -1085,11 +1165,14 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "MR" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
+/obj/structure/rack,
+/obj/item/storage/belt/utility/full,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -3;
+	pixel_y = 3
 	},
-/obj/effect/turf_decal/trimline/blue/filled/corner,
-/turf/open/floor/iron/dark,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron,
 /area/tdome/arena)
 "MS" = (
 /obj/structure/railing,
@@ -1115,6 +1198,63 @@
 /obj/structure/showcase/mecha/ripley,
 /turf/open/floor/carpet,
 /area/tdome/arena)
+"NS" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Os" = (
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted,
+/area/tdome/arena)
+"OH" = (
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"OJ" = (
+/obj/effect/turf_decal/box/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mech_bay_recharge_floor,
+/area/tdome/arena)
+"ON" = (
+/obj/effect/turf_decal/trimline/blue/filled/end,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Pc" = (
 /mob/living/silicon/robot/model/syndicate/kiltborg,
 /turf/open/floor/carpet,
@@ -1134,6 +1274,15 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
+"Pq" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Pt" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "mechbay";
@@ -1144,11 +1293,15 @@
 /area/tdome/arena)
 "PD" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
+	dir = 4
 	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"PH" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
+	dir = 4
 	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "PM" = (
@@ -1169,11 +1322,27 @@
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
-"Qe" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
+"Qc" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/red/filled/line{
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Qe" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"Qp" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -1199,8 +1368,23 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
+"Qw" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "QW" = (
 /turf/open/floor/plating/ironsand,
+/area/tdome/arena)
+"Rl" = (
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Rs" = (
 /obj/effect/turf_decal/trimline/white/line{
@@ -1208,6 +1392,19 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
+/area/tdome/arena)
+"Rt" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "RF" = (
 /obj/effect/turf_decal/trimline/white/line{
@@ -1227,8 +1424,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/mech_bay_recharge_port{
-	dir = 1
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
@@ -1264,10 +1461,18 @@
 /turf/open/floor/iron/smooth_edge,
 /area/tdome/arena)
 "TC" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/box/red,
+/turf/open/floor/mech_bay_recharge_floor,
 /area/tdome/arena)
 "TY" = (
 /obj/effect/turf_decal/tile/red{
@@ -1292,24 +1497,46 @@
 	layer = 130
 	},
 /area/tdome/arena)
-"UB" = (
-/obj/machinery/door/airlock/research{
-	name = "Robotics Lab"
+"Uz" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"UB" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
-"UH" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
+"UF" = (
+/obj/effect/turf_decal/stripes/full,
+/obj/machinery/conveyor/auto{
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"UJ" = (
+/obj/machinery/door/airlock/research{
+	name = "Robotics Lab"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -1334,36 +1561,23 @@
 /turf/open/floor/iron/smooth_large,
 /area/tdome/arena)
 "UW" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/box/red,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Va" = (
-/obj/effect/turf_decal/trimline/blue/filled/end{
-	dir = 8
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Vc" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
+/obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Vd" = (
@@ -1402,6 +1616,15 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
+"VU" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "Wd" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/machinery/conveyor/auto{
@@ -1412,13 +1635,11 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Wf" = (
-/obj/item/clothing/glasses/hud/diagnostic/sunglasses,
-/obj/structure/closet,
-/obj/item/clothing/under/costume/mech_suit/white,
-/obj/item/clothing/under/costume/mech_suit/blue,
-/obj/item/clothing/under/costume/mech_suit,
-/obj/item/clothing/glasses/hud/diagnostic,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/turf/open/floor/iron/dark,
 /area/tdome/arena)
 "Wn" = (
 /obj/structure/railing{
@@ -1443,6 +1664,15 @@
 	dir = 8
 	},
 /area/tdome/arena)
+"WP" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
 "WU" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1454,31 +1684,23 @@
 	dir = 4
 	},
 /area/tdome/arena)
-"WV" = (
-/obj/machinery/vending/wardrobe/robo_wardrobe,
-/turf/open/floor/iron,
-/area/tdome/arena)
-"WX" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena)
 "Xc" = (
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/obj/structure/closet,
+/obj/item/clothing/under/costume/mech_suit,
+/obj/item/clothing/glasses/hud/diagnostic,
+/obj/item/clothing/under/costume/mech_suit/blue,
+/obj/item/clothing/under/costume/mech_suit/white,
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses,
+/turf/open/floor/iron,
 /area/tdome/arena)
 "Xo" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab"
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -1487,7 +1709,9 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "XL" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
@@ -1569,6 +1793,20 @@
 	mouse_opacity = 0;
 	resistance_flags = 64
 	},
+/turf/open/floor/iron/dark,
+/area/tdome/arena)
+"ZE" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/machinery/arena_spawn/blue,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "ZP" = (
@@ -3498,12 +3736,12 @@ QW
 QW
 "}
 (30,1,1) = {"
-QW
+Uc
 Uc
 Uc
 Vd
 kF
-kF
+zv
 kF
 kF
 wW
@@ -3556,16 +3794,16 @@ MS
 Wd
 ZA
 ZA
-ZA
+UF
 ZA
 Vd
 Uc
 Uc
-QW
+Uc
 "}
 (31,1,1) = {"
-QW
 Uc
+bh
 aF
 eM
 Fy
@@ -3626,13 +3864,13 @@ FD
 FD
 Wn
 Dh
+bh
 Uc
-QW
 "}
 (32,1,1) = {"
-QW
 Uc
-bh
+bA
+Mv
 py
 Mv
 dT
@@ -3690,16 +3928,16 @@ TY
 oO
 TY
 oO
-Ai
+TY
 Eg
+OJ
 Uc
-QW
 "}
 (33,1,1) = {"
-QW
 Uc
+de
 dl
-Xv
+xV
 MD
 Xv
 MD
@@ -3756,15 +3994,15 @@ Xv
 UK
 Xv
 UK
-Xv
+dL
 TC
+NS
 Uc
-QW
 "}
 (34,1,1) = {"
-QW
 Uc
 dF
+gh
 DR
 gh
 ry
@@ -3822,15 +4060,15 @@ YF
 KP
 YF
 KP
-UW
+YF
 Sr
+wy
 Uc
-QW
 "}
 (35,1,1) = {"
-QW
 Uc
-ec
+ja
+CB
 FD
 FD
 FD
@@ -3889,12 +4127,12 @@ FD
 FD
 FD
 FD
-CB
+kV
+ja
 Uc
-QW
 "}
 (36,1,1) = {"
-QW
+Uc
 Uc
 Uc
 fd
@@ -3902,7 +4140,7 @@ fd
 gz
 xY
 ho
-ko
+Jr
 ko
 ko
 ko
@@ -3949,7 +4187,7 @@ Uc
 vF
 vF
 vF
-vF
+ht
 My
 gF
 bl
@@ -3957,7 +4195,7 @@ eT
 eT
 Uc
 Uc
-QW
+Uc
 "}
 (37,1,1) = {"
 QW
@@ -4233,7 +4471,7 @@ QW
 Uc
 Uc
 Uc
-or
+FX
 Uc
 FX
 Uc
@@ -4276,7 +4514,7 @@ QW
 Uc
 Uc
 Uc
-CF
+Xo
 Uc
 Xo
 Uc
@@ -4296,15 +4534,15 @@ QW
 QW
 QW
 QW
-QW
 Uc
-WV
-gR
-Ya
+zS
+XL
 GI
-WV
+XL
+GI
+KG
+Wf
 Uc
-QW
 QW
 QW
 Uc
@@ -4339,15 +4577,15 @@ jY
 Uc
 QW
 QW
-QW
 Uc
-WV
+Pq
+ES
 pU
-Ya
-jS
-WV
+ES
+pU
+ES
+zE
 Uc
-QW
 QW
 QW
 QW
@@ -4362,58 +4600,58 @@ QW
 QW
 QW
 QW
-QW
 Uc
+Ai
 zI
-gR
-Ya
-GI
 Kr
-Uc
-QW
-QW
-QW
-Uc
-jY
-QW
-QW
-QW
-QW
-QW
-nB
-jY
-jY
-jY
-jY
-nB
-hs
-hs
-hs
-hs
-nB
-jY
-jY
-jY
-jY
-nB
-QW
-QW
-QW
-QW
-jY
-jY
-Uc
-QW
-QW
-QW
-Uc
+uf
 zI
-pU
-Ya
-jS
 Kr
+Qp
 Uc
 QW
+QW
+Uc
+jY
+QW
+QW
+QW
+QW
+QW
+nB
+jY
+jY
+jY
+jY
+nB
+hs
+hs
+hs
+hs
+nB
+jY
+jY
+jY
+jY
+nB
+QW
+QW
+QW
+QW
+jY
+jY
+Uc
+QW
+QW
+Uc
+dE
+PH
+Qe
+PD
+PH
+Qe
+nv
+Uc
 QW
 QW
 QW
@@ -4427,16 +4665,16 @@ QW
 QW
 QW
 QW
-QW
-QW
 Uc
-zS
-gR
-Ya
-GI
-Wf
 Uc
-QW
+CO
+Uc
+Uc
+CO
+Uc
+Uc
+CO
+Uc
 QW
 QW
 Uc
@@ -4470,16 +4708,16 @@ jY
 jY
 Uc
 QW
-QW
-QW
 Uc
-zS
-pU
-Ya
-jS
-Wf
 Uc
-QW
+tJ
+Uc
+Uc
+tJ
+Uc
+Uc
+tJ
+Uc
 QW
 QW
 QW
@@ -4493,16 +4731,16 @@ QW
 QW
 QW
 QW
-QW
-QW
-Uc
 Uc
 BV
+Va
 Uc
-JE
+BV
+Va
 Uc
+BV
+yk
 Uc
-QW
 QW
 QW
 Uc
@@ -4536,16 +4774,16 @@ jY
 Uc
 Uc
 QW
-QW
-QW
 Uc
+BV
+Vc
 Uc
-as
+BV
+Vc
 Uc
-UB
+BV
+Vc
 Uc
-Uc
-QW
 QW
 QW
 QW
@@ -4559,16 +4797,16 @@ QW
 QW
 QW
 QW
-QW
-QW
 Uc
-KG
 MR
-UH
-bA
-iJ
+Va
 Uc
-QW
+MR
+Va
+Uc
+MR
+yk
+Uc
 QW
 QW
 QW
@@ -4602,16 +4840,16 @@ jY
 Uc
 QW
 QW
-QW
-QW
 Uc
-CO
-uk
-uk
-uk
-dD
+MR
+Vc
 Uc
-QW
+MR
+Vc
+Uc
+MR
+Vc
+Uc
 QW
 QW
 QW
@@ -4625,16 +4863,16 @@ QW
 QW
 QW
 QW
-QW
-QW
 Uc
-MO
-WX
+Xc
 Va
-fB
-fG
 Uc
-QW
+Xc
+Va
+Uc
+fG
+yk
+Uc
 QW
 QW
 QW
@@ -4668,16 +4906,16 @@ jY
 Uc
 QW
 QW
-QW
-QW
 Uc
-pr
-tG
-Vc
-Jr
 Xc
+Vc
 Uc
-QW
+Xc
+Vc
+Uc
+Xc
+Vc
+Uc
 QW
 QW
 QW
@@ -4691,16 +4929,16 @@ QW
 QW
 QW
 QW
-QW
-QW
 Uc
-Nx
-zv
+Uc
 tn
-ja
-xV
 Uc
-QW
+Uc
+tn
+Uc
+Uc
+Os
+Uc
 QW
 QW
 QW
@@ -4734,16 +4972,16 @@ jY
 Uc
 QW
 QW
-QW
-QW
 Uc
-pr
-de
+Uc
 cS
-Jr
-Xc
 Uc
-QW
+Uc
+cS
+Uc
+Uc
+cS
+Uc
 QW
 QW
 QW
@@ -4758,18 +4996,18 @@ QW
 QW
 QW
 QW
-QW
 Uc
-oe
-iJ
-qm
+zS
 KG
 XL
+GI
+KG
+XL
+Wf
 Uc
 QW
 QW
 QW
-QW
 Uc
 Uc
 jY
@@ -4801,15 +5039,15 @@ Uc
 QW
 QW
 QW
-QW
 Uc
-pr
-ES
-ES
+rk
 Lm
-Xc
+ES
+pU
+Lm
+ES
+zE
 Uc
-QW
 QW
 QW
 QW
@@ -4824,19 +5062,19 @@ QW
 QW
 QW
 QW
-QW
 Uc
-fB
-rq
+Ai
 uf
-vN
-WX
+Kr
+uf
+zI
+uf
+Qp
 Uc
 QW
 QW
 QW
 QW
-QW
 Uc
 jY
 jY
@@ -4867,15 +5105,15 @@ QW
 QW
 QW
 QW
-QW
 Uc
-nQ
-Qe
-Qe
+dE
+PD
 Qe
 PD
+PH
+PD
+ub
 Uc
-QW
 QW
 QW
 QW
@@ -4890,58 +5128,58 @@ QW
 QW
 QW
 QW
-QW
 Uc
 Uc
 Uc
 Uc
+OH
 Uc
 Uc
-Uc
-QW
-QW
-QW
-QW
-QW
-Uc
-Uc
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
-jY
 Uc
 Uc
 QW
 QW
 QW
 QW
+Uc
+Uc
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+jY
+Uc
+Uc
+QW
+QW
+QW
 QW
 Uc
 Uc
 Uc
 Uc
+UJ
 Uc
 Uc
 Uc
-QW
+Uc
 QW
 QW
 QW
@@ -4957,13 +5195,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+JE
+Wf
+Qw
+zS
+bt
+Uc
 QW
 QW
 QW
@@ -5000,13 +5238,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+um
+Uz
+Uz
+Uz
+In
+Uc
 QW
 QW
 QW
@@ -5023,13 +5261,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+MO
+gQ
+rw
+UW
+Kl
+Uc
 QW
 QW
 QW
@@ -5066,13 +5304,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+GZ
+zC
+Rt
+Ci
+zV
+Uc
 QW
 QW
 QW
@@ -5089,13 +5327,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+Nx
+uL
+ZE
+ON
+Ec
+Uc
 QW
 QW
 QW
@@ -5132,13 +5370,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+GZ
+aV
+wx
+Ci
+zV
+Uc
 QW
 QW
 QW
@@ -5155,13 +5393,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+UB
+bt
+Rl
+JE
+yH
+Uc
 QW
 QW
 QW
@@ -5198,13 +5436,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+GZ
+DN
+DN
+DV
+zV
+Uc
 QW
 QW
 QW
@@ -5221,6 +5459,13 @@ QW
 QW
 QW
 QW
+Uc
+UW
+Qp
+Qc
+Ai
+gQ
+Uc
 QW
 QW
 QW
@@ -5257,20 +5502,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+VU
+rV
+rV
+rV
+WP
+Uc
 QW
 QW
 QW
@@ -5287,6 +5525,13 @@ QW
 QW
 QW
 QW
+Uc
+Uc
+Uc
+Uc
+Uc
+Uc
+Uc
 QW
 QW
 QW
@@ -5323,20 +5568,13 @@ QW
 QW
 QW
 QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
-QW
+Uc
+Uc
+Uc
+Uc
+Uc
+Uc
+Uc
 QW
 QW
 QW
