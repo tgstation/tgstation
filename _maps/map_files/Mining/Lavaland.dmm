@@ -641,17 +641,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/bodybag/environmental/prisoner{
-	pixel_x = -3;
-	pixel_y = 12
-	},
-/obj/item/bodybag/environmental/prisoner{
-	pixel_y = 9
-	},
-/obj/item/bodybag/environmental/prisoner{
-	pixel_x = 3;
-	pixel_y = 6
-	},
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "cc" = (
