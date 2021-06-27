@@ -6,7 +6,7 @@
 	/// The ckey we try to match with
 	var/ckey
 	/// How many rounds this contestant has participated in? Incremented when their team has [/datum/event_team/proc/match_result] called on it
-	var/rounds_participated
+	var/rounds_participated = 0
 	/// What team datum we're on right now
 	var/datum/event_team/current_team
 	/// If we've been marked for elimination

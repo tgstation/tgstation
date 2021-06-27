@@ -606,7 +606,7 @@
 					continue
 
 				var/mob/the_guy = iter_contestant.get_mob()
-				dat += "\t[iter_contestant.ckey] ([the_guy]) [the_guy?.client ? "" : "(NO CLIENT) "]<a href='?src=[REF(src)];eliminate_contestant=[REF(iter_contestant)]'>Eliminate</a> <a href='?src=[REF(src)];delete_contestant=[REF(iter_contestant)]'>Delete</a>"
+				dat += "\t[iter_contestant.ckey] ([the_guy]) [the_guy?.client ? "" : "(NO CLIENT) "] competed in [iter_contestant.rounds_participated] rounds <a href='?src=[REF(src)];eliminate_contestant=[REF(iter_contestant)]'>Eliminate</a> <a href='?src=[REF(src)];delete_contestant=[REF(iter_contestant)]'>Delete</a>"
 
 			if(length(flagged_contestants))
 				dat += "<br><b>Contestants Flagged for Elimination: ([LAZYLEN(flagged_contestants)])"
