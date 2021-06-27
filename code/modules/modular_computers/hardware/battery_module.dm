@@ -52,7 +52,8 @@
 
 /obj/item/computer_hardware/battery/try_eject(mob/living/user, forced = FALSE)
 	if(!battery)
-		to_chat(user, span_warning("There is no power cell connected to \the [src]."))
+		if(user)
+			to_chat(user, span_warning("There is no power cell connected to \the [src]."))
 		return FALSE
 	else
 		if(user)
