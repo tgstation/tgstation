@@ -81,15 +81,16 @@
 	return TRUE
 
 /datum/status_effect/stoned/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis)
-		human_owner.eye_color = original_eye_color
-		human_owner.update_body()
-		REMOVE_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type)
-		REMOVE_TRAIT(human_owner, TRAIT_CLUMSY, type)
-		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "stoned")
-		human_owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
+	if(!ishuman(owner))
+			stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis)
+	human_owner.eye_color = original_eye_color
+	human_owner.update_body()
+	REMOVE_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type)
+	REMOVE_TRAIT(human_owner, TRAIT_CLUMSY, type)
+	SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "stoned")
+	human_owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 /atom/movable/screen/alert/status_effect/stoned
 	name = "Stoned"
