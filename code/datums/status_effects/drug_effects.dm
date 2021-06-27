@@ -67,16 +67,17 @@
 	var/original_eye_color
 
 /datum/status_effect/stoned/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		original_eye_color = human_owner.eye_color
-		human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis) //slows you down
-		human_owner.eye_color = BLOODCULT_EYE //makes cult eyes less obvious
-		human_owner.update_body() //updates eye color
-		ADD_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type) //dilates blood vessels in eyes
-		ADD_TRAIT(human_owner, TRAIT_CLUMSY, type) //impairs motor coordination
-		SEND_SIGNAL(human_owner, COMSIG_ADD_MOOD_EVENT, "stoned", /datum/mood_event/stoned) //improves mood
-		human_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED //not realistic but very immersive
+	if(!ishuman(owner))
+		CRASH("[type] status effect added to non-human owner: [owner ? owner.type : "null owner"]")
+	var/mob/living/carbon/human/human_owner = owner
+	original_eye_color = human_owner.eye_color
+	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis) //slows you down
+	human_owner.eye_color = BLOODCULT_EYE //makes cult eyes less obvious
+	human_owner.update_body() //updates eye color
+	ADD_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type) //dilates blood vessels in eyes
+	ADD_TRAIT(human_owner, TRAIT_CLUMSY, type) //impairs motor coordination
+	SEND_SIGNAL(human_owner, COMSIG_ADD_MOOD_EVENT, "stoned", /datum/mood_event/stoned) //improves mood
+	human_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED //not realistic but very immersive
 	return TRUE
 
 /datum/status_effect/stoned/on_remove()
