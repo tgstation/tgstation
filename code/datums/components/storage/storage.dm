@@ -134,6 +134,8 @@
 	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
 /datum/component/storage/proc/update_actions()
+	SIGNAL_HANDLER
+
 	QDEL_NULL(modeswitch_action)
 	if(!isitem(parent) || !allow_quick_gather)
 		return

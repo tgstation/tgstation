@@ -1,0 +1,5 @@
+author: "Coconutwarrior97"
+delete-after: True
+changes: 
+  - rscadd: "Added funtionality so free golems get an alert from policy.json."
+  - rscdel: "Deleted a line of text for Free golem's flavor text. Since in my opinion the spawn-in text, with the addition of the policy.json text was a bit too much."
