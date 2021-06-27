@@ -61,10 +61,6 @@
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
 
-///It is faster as a macro than a proc
-#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-
 GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/basic,/datum/eldritch_knowledge/living_heart,/datum/eldritch_knowledge/codex_cicatrix))
 
 
@@ -84,3 +80,44 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 /// TC to charge someone if they get a free implant through choice or
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
+
+/// The Classic Wizard wizard loadout.
+#define WIZARD_LOADOUT_CLASSIC "loadout_classic"
+/// Mjolnir's Power wizard loadout.
+#define WIZARD_LOADOUT_MJOLNIR "loadout_hammer"
+/// Fantastical Army wizard loadout.
+#define WIZARD_LOADOUT_WIZARMY "loadout_army"
+/// Soul Tapper wizard loadout.
+#define WIZARD_LOADOUT_SOULTAP "loadout_tap"
+/// Convenient list of all wizard loadouts for unit testing.
+#define ALL_WIZARD_LOADOUTS list( \
+	WIZARD_LOADOUT_CLASSIC, \
+	WIZARD_LOADOUT_MJOLNIR, \
+	WIZARD_LOADOUT_WIZARMY, \
+	WIZARD_LOADOUT_SOULTAP, \
+)
+
+/// Checks if the given mob is a blood cultist
+#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+
+/// Checks if the given mind is a leader of the monkey antagonists
+#define IS_MONKEY_LEADER(mind) mind?.has_antag_datum(/datum/antagonist/monkey/leader)
+
+/// Checks if the given mind is a monkey antagonist
+#define IS_INFECTED_MONKEY(mind) mind?.has_antag_datum(/datum/antagonist/monkey)
+
+/// Checks if the given mob is a nuclear operative
+#define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
+
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+
+/// Checks if the given mob is a wizard
+#define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
+
+/// Checks if the given mob is a revolutionary. Will return TRUE for rev heads as well.
+#define IS_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev))
+
+/// Checks if the given mob is a head revolutionary.
+#define IS_HEAD_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev/head))

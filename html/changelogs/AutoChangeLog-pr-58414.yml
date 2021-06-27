@@ -1,5 +1,0 @@
-author: "John Willard"
-delete-after: True
-changes: 
-  - imageadd: "Fly eyes are now its own eyes, rather than being attached to the head."
-  - bugfix: "Flypeople cultists' eyes now properly glow red (More then they already do)"

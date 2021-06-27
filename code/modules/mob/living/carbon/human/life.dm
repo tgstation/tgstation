@@ -148,6 +148,12 @@
 		return dna.species.bodytemp_normal
 	return dna.species.bodytemp_normal + get_body_temp_normal_change()
 
+/mob/living/carbon/human/get_body_temp_heat_damage_limit()
+	return dna.species.bodytemp_heat_damage_limit
+
+/mob/living/carbon/human/get_body_temp_cold_damage_limit()
+	return dna.species.bodytemp_cold_damage_limit
+
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire(delta_time, times_fired)
 	. = ..()

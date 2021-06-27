@@ -91,7 +91,7 @@
 			if(!ignoregloves)
 				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = 1 to avoid infinite loop.
 				return
-		var/full_print = md5(H.dna.uni_identity)
+		var/full_print = md5(H.dna.unique_identity)
 		LAZYSET(fingerprints, full_print, full_print)
 	return TRUE
 
@@ -161,12 +161,12 @@
 			hasgloves = "(gloves)"
 	var/current_time = time_stamp()
 	if(!LAZYACCESS(hiddenprints, M.key))
-		LAZYSET(hiddenprints, M.key, "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]")
+		LAZYSET(hiddenprints, M.key, "First: \[[current_time]\] \"[M.real_name]\"[hasgloves]. Ckey: [M.ckey]")
 	else
-		var/laststamppos = findtext(LAZYACCESS(hiddenprints, M.key), " Last: ")
+		var/laststamppos = findtext(LAZYACCESS(hiddenprints, M.key), "\nLast: ")
 		if(laststamppos)
 			LAZYSET(hiddenprints, M.key, copytext(hiddenprints[M.key], 1, laststamppos))
-		hiddenprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]" //made sure to be existing by if(!LAZYACCESS);else
+		hiddenprints[M.key] += "\nLast: \[[current_time]\] \"[M.real_name]\"[hasgloves]. Ckey: [M.ckey]" //made sure to be existing by if(!LAZYACCESS);else
 	var/atom/A = parent
 	A.fingerprintslast = M.ckey
 	return TRUE

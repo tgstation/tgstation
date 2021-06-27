@@ -94,7 +94,7 @@
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
 				for(var/thing in SSdisease.active_diseases)
@@ -118,13 +118,6 @@
 			holder << browse(dat, "window=lawchanges;size=800x500")
 		if("showailaws")
 			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
-		if("showgm")
-			if(!SSticker.HasRoundStarted())
-				alert("The game hasn't started yet!")
-			else if (SSticker.mode)
-				alert("The game mode is [SSticker.mode.name]")
-			else
-				alert("For some reason there's a SSticker, but not a game mode")
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
@@ -147,18 +140,18 @@
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.unique_identity)]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=fingerprints;size=440x410")
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")
 		if("tdomereset")
-			var/delete_mobs = alert("Clear all mobs?","Confirm","Yes","No","Cancel")
+			var/delete_mobs = tgui_alert(usr,"Clear all mobs?","Confirm",list("Yes","No","Cancel"))
 			if(delete_mobs == "Cancel")
 				return
 
 			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
 
 			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
 			if(delete_mobs == "Yes")
@@ -176,16 +169,16 @@
 				return
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] renamed the station to \"[new_name]\".")
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] renamed the station to: [new_name].</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the station name.</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] reset the station name."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("night_shift_set")
-			var/val = alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
+			var/val = tgui_alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
 					if(CONFIG_GET(flag/enable_night_shifts))
@@ -213,7 +206,7 @@
 				message_admins("[key_name_admin(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
-				to_chat(holder, "<span class='admin'>There is no arrivals shuttle.</span>", confidential = TRUE)
+				to_chat(holder, span_admin("There is no arrivals shuttle."), confidential = TRUE)
 		if("movelaborshuttle")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Labor Shuttle"))
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
@@ -224,7 +217,7 @@
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
-			switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
+			switch(tgui_alert(usr,"Do you want this to be a random disease or do you have something in mind?",,list("Make Your Own","Random","Choose")))
 				if("Make Your Own")
 					AdminCreateVirus(holder)
 				if("Random")
@@ -253,21 +246,21 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All APCs"))
 			log_admin("[key_name(holder)] made all areas powered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] made all areas powered</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas powered"))
 			power_restore()
 		if("unpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Depower All APCs"))
 			log_admin("[key_name(holder)] made all areas unpowered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] made all areas unpowered</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas unpowered"))
 			power_failure()
 		if("quickpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All SMESs"))
 			log_admin("[key_name(holder)] made all SMESs powered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] made all SMESs powered</span>")
+			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
 			if(!is_funmin)
@@ -282,7 +275,7 @@
 		if("onlyone")
 			if(!is_funmin)
 				return
-			var/response = alert("Delay by 40 seconds?", "There can, in fact, only be one", "Instant!", "40 seconds (crush the hope of a normal shift)")
+			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", "40 seconds (crush the hope of a normal shift)"))
 			if(response == "Instant!")
 				holder.only_one()
 			else
@@ -293,7 +286,7 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Guns"))
 			var/survivor_probability = 0
-			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(tgui_alert(usr,"Do you want this to create survivors antagonists?",,list("No Antags","Some Antags","All Antags!")))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
@@ -305,7 +298,7 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Magic"))
 			var/survivor_probability = 0
-			switch(alert("Do you want this to create magician antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(tgui_alert(usr,"Do you want this to create magician antagonists?",,list("No Antags","Some Antags","All Antags!")))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
@@ -316,12 +309,12 @@
 			if(!is_funmin)
 				return
 			if(!SSevents.wizardmode)
-				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
 					summonevents()
 					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
 
 			else
-				switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
+				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
 						summonevents()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
@@ -368,7 +361,7 @@
 
 			var/list/settings = list(
 				"mainsettings" = list(
-					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
+					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/bee),
 					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
@@ -391,7 +384,7 @@
 				var/list/prefs = settings["mainsettings"]
 
 				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(holder, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>", confidential = TRUE)
+					to_chat(holder, span_warning("Number of portals and mobs to spawn must be at least 1."), confidential = TRUE)
 					return
 
 				var/mob/pathToSpawn = prefs["typepath"]["value"]
@@ -399,7 +392,7 @@
 					pathToSpawn = text2path(pathToSpawn)
 
 				if (!ispath(pathToSpawn))
-					to_chat(holder, "<span class='notice'>Invalid path [pathToSpawn].</span>", confidential = TRUE)
+					to_chat(holder, span_notice("Invalid path [pathToSpawn]."), confidential = TRUE)
 					return
 
 				var/list/candidates = list()
@@ -441,7 +434,7 @@
 			if (!CONFIG_SET(number/bombcap, newBombCap))
 				return
 
-			message_admins("<span class='boldannounce'>[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
+			message_admins(span_boldannounce("[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]"))
 			log_admin("[key_name(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
@@ -457,34 +450,34 @@
 			if(!is_funmin)
 				return
 			if(!SSticker.HasRoundStarted())
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
-			for(var/mob/living/H in GLOB.player_list)
-				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
+			for(var/mob/living/player in GLOB.player_list)
+				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.mind || ispAI(H))
+				if(player.stat == DEAD || !player.mind || ispAI(player))
 					continue
-				if(is_special_character(H))
+				if(is_special_character(player))
 					continue
-				var/datum/antagonist/traitor/T = new()
-				T.give_objectives = FALSE
+				var/datum/antagonist/traitor/traitor_datum = new()
+				traitor_datum.give_objectives = FALSE
 				var/datum/objective/new_objective = new
-				new_objective.owner = H
+				new_objective.owner = player
 				new_objective.explanation_text = objective
-				T.add_objective(new_objective)
-				H.mind.add_antag_datum(T)
-			message_admins("<span class='adminnotice'>[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]</span>")
+				traitor_datum.objectives += new_objective
+				player.mind.add_antag_datum(traitor_datum)
+			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]"))
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>", confidential = TRUE)
+				to_chat(H, span_boldannounce("You suddenly feel stupid."), confidential = TRUE)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(holder)] made everybody brain damaged")
 		if("floorlava")
@@ -492,11 +485,11 @@
 		if("anime")
 			if(!is_funmin)
 				return
-			var/animetype = alert("Would you like to have the clothes be changed?",,"Yes","No","Cancel")
+			var/animetype = tgui_alert(usr,"Would you like to have the clothes be changed?",,list("Yes","No","Cancel"))
 
 			var/droptype
 			if(animetype =="Yes")
-				droptype = alert("Make the uniforms Nodrop?",,"Yes","No","Cancel")
+				droptype = tgui_alert(usr,"Make the uniforms Nodrop?",,list("Yes","No","Cancel"))
 
 			if(animetype == "Cancel" || droptype == "Cancel")
 				return
@@ -506,7 +499,7 @@
 				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
-				if(H.dna.species.id == "human")
+				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
@@ -528,7 +521,7 @@
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>", confidential = TRUE)
+					to_chat(H, span_warning("You're not kawaii enough for this!"), confidential = TRUE)
 		if("masspurrbation")
 			if(!is_funmin)
 				return
@@ -557,10 +550,36 @@
 			message_admins("[key_name_admin(holder)] has Un-Fully Immersed \
 				everyone!")
 			log_admin("[key_name(holder)] has Un-Fully Immersed everyone.")
+		if("makeNerd")
+			var/spawnpoint = pick(GLOB.blobstart)
+			var/list/mob/dead/observer/candidates
+			var/mob/dead/observer/chosen_candidate
+			var/mob/living/simple_animal/drone/nerd
+			var/teamsize
+
+			teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
+
+			if(teamsize <= 0)
+				return FALSE
+
+			candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+
+			if(length(candidates) == 0)
+				return FALSE
+
+			while(length(candidates) && teamsize)
+				chosen_candidate = pick(candidates)
+				candidates -= chosen_candidate
+				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
+				nerd.key = chosen_candidate.key
+				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+				teamsize--
+
+			return TRUE
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
-			switch(alert(holder, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel"))
+			switch(tgui_alert(holder, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
 				if("Yes")
 					E.announceChance = 100
 				if("Cancel")

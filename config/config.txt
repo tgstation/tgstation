@@ -3,7 +3,6 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
-$include antag_rep.txt
 $include resources.txt
 $include interviews.txt
 
@@ -154,6 +153,9 @@ LOG_CLONING
 
 ## log shuttle actions
 LOG_SHUTTLE
+
+## Log all timers on timer auto reset
+# LOG_TIMERS_ON_BUCKET_RESET
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -520,6 +522,11 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Uncomment to enable source whitelisting, a comma-separated list (no spaces) of CentCom sources (sourceName).
 ## If enabled, only bans from these servers will be shown to admins using CentCom. The default sources list is an example.
 #CENTCOM_SOURCE_WHITELIST Beestation MRP,TGMC,FTL13
+
+## If uncommented, this will enable admin 2FA (two-factor authentication).
+## The URL admins will be asked to go to will be here, with %ID% being the ID
+## of their connection attempt.
+#ADMIN_2FA_URL https://example.com/id/%ID%
 
 #### DISCORD STUFFS ####
 ## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING

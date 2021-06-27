@@ -19,13 +19,13 @@
 	var/glass_colour_type //colors your vision when worn
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/examine(mob/user)
 	. = ..()
 	if(glass_colour_type && ishuman(user))
-		. += "<span class='notice'>Alt-click to toggle [p_their()] colors.</span>"
+		. += span_notice("Alt-click to toggle [p_their()] colors.")
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
@@ -48,7 +48,7 @@
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(!H.is_blind())
 			if(H.glasses == src)
-				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
+				to_chat(H, span_danger("[src] overloads and blinds you!"))
 				H.flash_act(visual = 1)
 				H.blind_eyes(3)
 				H.blur_eyes(5)
@@ -62,9 +62,9 @@
 				if(src == H.glasses)
 					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
 					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, "<span class='notice'>You will now see glasses colors.</span>")
+						to_chat(H, span_notice("You will now see glasses colors."))
 					else
-						to_chat(H, "<span class='notice'>You will no longer see glasses colors.</span>")
+						to_chat(H, span_notice("You will no longer see glasses colors."))
 					H.update_glasses_color(src, 1)
 	else
 		return ..()
@@ -99,7 +99,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/clothing/glasses/meson/night
@@ -151,7 +151,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 /obj/item/clothing/glasses/eyepatch
@@ -201,6 +201,46 @@
 	icon_state = "glasses"
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
+
+/obj/item/clothing/glasses/regular/Initialize()
+	. = ..()
+	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+
+/obj/item/clothing/glasses/regular/proc/on_entered(datum/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	if(damaged_clothes == CLOTHING_SHREDDED)
+		return
+	if(isliving(movable))
+		var/mob/living/crusher = movable
+		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
+			playsound(src, 'sound/effects/glass_step.ogg', 30, TRUE)
+			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
+			take_damage(100, sound_effect = FALSE)
+
+/obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
+	. = ..()
+	vision_correction = FALSE
+
+/obj/item/clothing/glasses/regular/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(damaged_clothes == CLOTHING_PRISTINE)
+		return
+	if(!I.tool_start_check(user, amount=1))
+		return
+	if(I.use_tool(src, user, 10, volume=30, amount=1))
+		user.visible_message(span_notice("[user] welds [src] back together."),\
+					span_notice("You weld [src] back together."))
+		repair()
+		return TRUE
+
+/obj/item/clothing/glasses/regular/repair()
+	. = ..()
+	vision_correction = TRUE
 
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
@@ -320,11 +360,11 @@
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_EYES)
-		user.become_blind("blindfold_[REF(src)]")
+		user.become_blind(BLINDFOLD_TRAIT)
 
 /obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
-	user.cure_blind("blindfold_[REF(src)]")
+	user.cure_blind(BLINDFOLD_TRAIT)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"
@@ -339,7 +379,7 @@
 	inhand_icon_state = "blindfoldwhite"
 	var/colored_before = FALSE
 
-/obj/item/clothing/glasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		update_icon(ALL, user)
 		user.update_inv_glasses() //Color might have been changed by update_icon.
@@ -351,14 +391,16 @@
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
-	. = list()
-	if(!isinhands && ishuman(loc) && !colored_before)
-		var/mob/living/carbon/human/H = loc
-		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
-		M.appearance_flags |= RESET_COLOR
-		M.color = "#[H.eye_color]"
-		. += M
+/obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
+	. = ..()
+	if(isinhands || !ishuman(loc) || colored_before)
+		return
+
+	var/mob/living/carbon/human/H = loc
+	var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
+	M.appearance_flags |= RESET_COLOR
+	M.color = "#[H.eye_color]"
+	. += M
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
@@ -510,14 +552,14 @@
 			desc = initial(T.desc)
 			double = TRUE
 		else
-			to_chat(user, "<span class='notice'>[W] winks at you and vanishes into the abyss, you feel really unlucky.</span>")
+			to_chat(user, span_notice("[W] winks at you and vanishes into the abyss, you feel really unlucky."))
 		qdel(W)
 	..()
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
 	// If pain/pain immunity ever implemented, check for it here.
 
-	to_chat(victim, "<span class='userdanger'>You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull.</span>")
+	to_chat(victim, span_userdanger("You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull."))
 	victim.emote("scream")
 	victim.flash_act()
 

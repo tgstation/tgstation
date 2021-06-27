@@ -572,7 +572,6 @@ const PodStatusPage = (props, context) => {
                             : effect.title)
                           : effect.title}
                         tooltipPosition={list.tooltipPosition}
-                        tooltipOverrideLong
                         icon={effect.icon}
                         content={effect.content}
                         selected={effect.soloSelected
@@ -609,7 +608,7 @@ const PodStatusPage = (props, context) => {
                     color="transparent"
                     icon="list-alt"
                     tooltip="Game Panel"
-                    tooltipPosition="top-left"
+                    tooltipPosition="top-start"
                     onClick={() => act('gamePanel')} />
                   <Button
                     inline
@@ -617,7 +616,7 @@ const PodStatusPage = (props, context) => {
                     color="transparent"
                     icon="hammer"
                     tooltip="Build Mode"
-                    tooltipPosition="top-left"
+                    tooltipPosition="top-start"
                     onClick={() => act('buildMode')} />
                   {compact && (
                     <Button
@@ -626,7 +625,7 @@ const PodStatusPage = (props, context) => {
                       color="transparent"
                       icon="expand"
                       tooltip="Maximize"
-                      tooltipPosition="top-left"
+                      tooltipPosition="top-start"
                       onClick={() => {
                         toggleCompact();
                         act('refreshView');
@@ -638,7 +637,7 @@ const PodStatusPage = (props, context) => {
                       color="transparent"
                       icon="compress"
                       tooltip="Compact mode"
-                      tooltipPosition="top-left"
+                      tooltipPosition="top-start"
                       onClick={() => toggleCompact()} />
                   )}
                 </Box>
@@ -671,8 +670,7 @@ const ReverseMenu = (props, context) => {
             Afer landing, returns to
             dropoff turf (or bay
             if none specified).`}
-          tooltipOverrideLong
-          tooltipPosition="top-left"
+          tooltipPosition="top-start"
           onClick={() => {
             act('effectReverse');
             if (tabPageIndex === 2) {
@@ -691,8 +689,7 @@ const ReverseMenu = (props, context) => {
               tooltip={multiline`
                 Where reverse pods
                 go after landing`}
-              tooltipOverrideLong
-              tooltipPosition="bottom-right"
+              tooltipPosition="bottom-end"
               onClick={() => act('pickDropoffTurf')} />
             <Button
               inline
@@ -703,7 +700,6 @@ const ReverseMenu = (props, context) => {
                 location. Reverse pods will
                 instead dropoff at the
                 selected bay.`}
-              tooltipOverrideLong
               tooltipPosition="bottom"
               onClick={() => {
                 act('clearDropoffTurf');
@@ -727,7 +723,6 @@ const ReverseMenu = (props, context) => {
                     : data.reverse_option_list[option.title]
                 }
                 tooltip={option.title}
-                tooltipOverrideLong
                 onClick={() => act('reverseOption', {
                   reverseOption: option.key
                     ? option.key
@@ -829,7 +824,6 @@ class PresetsPage extends Component {
               content=""
               icon="download"
               tooltip="Saves preset"
-              tooltipOverrideLong
               tooltipPosition="bottom"
               onClick={() => this.saveDataToPreset(presetIndex, data)} />
             <Button
@@ -846,7 +840,7 @@ class PresetsPage extends Component {
               color="transparent"
               icon="trash"
               tooltip="Deletes the selected preset"
-              tooltipPosition="bottom-left"
+              tooltipPosition="bottom-start"
               onClick={() => this.deletePreset(presetIndex)} />
           </>
         )}>
@@ -927,7 +921,6 @@ const LaunchPage = (props, context) => {
       tooltip={multiline`
         You should know what the
         Codex Astartes says about this`}
-      tooltipOverrideLong
       selected={data.giveLauncher}
       tooltipPosition="top"
       content={(
@@ -959,7 +952,7 @@ const StylePage = (props, context) => {
           tooltip={multiline`
             Edit pod's
             name/desc.`}
-          tooltipPosition="bottom-left"
+          tooltipPosition="bottom-start"
           onClick={() => act('effectName')} />
       )}>
       {STYLES.map((page, i) => (
@@ -969,8 +962,8 @@ const StylePage = (props, context) => {
           height="45px"
           tooltipPosition={
             i >= STYLES.length-2
-              ? (i%2===1 ? "top-left" : "top-right")
-              : (i%2===1 ? "bottom-left" : "bottom-right")
+              ? (i%2===1 ? "top-start" : "top-end")
+              : (i%2===1 ? "bottom-start" : "bottom-end")
           }
           tooltip={page.title}
           style={{
@@ -1006,8 +999,7 @@ const Bays = (props, context) => {
             tooltip={multiline`
               Clears everything
               from the selected bay`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act('clearBay')} />
           <Button
             icon="question"
@@ -1020,15 +1012,14 @@ const Bays = (props, context) => {
               in these areas according
               to the "Load from Bay"
               options at the top left.`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right" />
+            tooltipPosition="bottom-end" />
         </>
       )}>
       {BAYS.map((bay, i) => (
         <Button
           key={i}
           content={bay.title}
-          tooltipPosition={"bottom-right"}
+          tooltipPosition="bottom-end"
           selected={data.bayNumber === ""+(i+1)}
           onClick={() => act('switchBay', { bayNumber: (""+(i+1)) })} />
       ))}
@@ -1050,8 +1041,7 @@ const Timing = (props, context) => {
             tooltip={multiline`
             Reset all pod
             timings/delays`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act('resetTiming')} />
           <Button
             icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
@@ -1063,8 +1053,7 @@ const Timing = (props, context) => {
             Note: Top set is
             normal delays, bottom set
             is reversing pod's delays`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act('toggleRevDelays')} />
         </>
       )}>
@@ -1132,7 +1121,6 @@ const Sounds = (props, context) => {
           selected={data.soundVolume !== data.defaultSoundVolume}
           tooltip={multiline`
             Sound Volume:` + data.soundVolume}
-          tooltipOverrideLong
           onClick={() => act('soundVolume')} />
       )}>
       {SOUNDS.map((sound, i) => (
@@ -1140,8 +1128,7 @@ const Sounds = (props, context) => {
           key={i}
           content={sound.title}
           tooltip={sound.tooltip}
-          tooltipPosition="top-right"
-          tooltipOverrideLong
+          tooltipPosition="top-end"
           selected={data[sound.act]}
           onClick={() => act(sound.act)} />
       ))}

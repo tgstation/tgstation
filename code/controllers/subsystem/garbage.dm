@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(garbage)
 		dellog += "\tqdel() Count: [I.qdels]"
 		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
 		if (I.hard_deletes)
-			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
+			dellog += "\tTotal Hard Deletes: [I.hard_deletes]"
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
@@ -170,27 +170,34 @@ SUBSYSTEM_DEF(garbage)
 
 		// Something's still referring to the qdel'd object.
 		fail_counts[level]++
+
+		#ifdef REFERENCE_TRACKING
+		var/ref_searching = FALSE
+		#endif
+
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				if(reference_find_on_fail[refID])
-					D.find_references()
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references()
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#endif
 				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				#ifdef TESTING
+
 				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
+				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
 					var/client/admin = c
 					if(!check_rights_for(admin, R_ADMIN))
 						continue
 					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
-				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
 				#endif
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
@@ -200,6 +207,11 @@ SUBSYSTEM_DEF(garbage)
 				continue
 
 		Queue(D, level+1)
+
+		#ifdef REFERENCE_TRACKING
+		if(ref_searching)
+			return
+		#endif
 
 		if (MC_TICK_CHECK)
 			return
@@ -248,9 +260,9 @@ SUBSYSTEM_DEF(garbage)
 		time = TICK_DELTA_TO_MS(tick)/100
 	if (time > highest_del_time)
 		highest_del_time = time
-	if (time > 10)
-		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
-		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
+	if (time > 0.1 SECONDS)
+		log_game("Error: [type]([refID]) took longer than 0.1 seconds to delete (took [time/10] seconds to delete)")
+		message_admins("Error: [type]([refID]) took longer than 0.1 seconds to delete (took [time/10] seconds to delete).")
 		postpone(time)
 
 /datum/controller/subsystem/garbage/Recover()

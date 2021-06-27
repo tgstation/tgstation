@@ -17,6 +17,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/attach_rot(mapload)
 	return
 
+/mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
+	return item.visual_equipped(src, slot, initial)
+
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
 	cut_overlays(TRUE)

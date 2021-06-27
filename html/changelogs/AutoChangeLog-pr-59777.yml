@@ -1,0 +1,7 @@
+author: "SpaceDragon00"
+delete-after: True
+changes: 
+  - bugfix: "Reverted the normal blob's max HP and initial HP values, which were accidentally modified (Old: 30 and 30, New: 25 and 21)"
+  - bugfix: "Fixed an issue where certain strains with bonus core regeneration were regenerating faster than intended"
+  - code_imp: "Used a few unimplemented defines from the PR, like for the Strong and Resource blobs"
+  - code_imp: "Added an initial HP define that is set as a normal blob's integrity upon Initialize"

@@ -1,7 +1,7 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Lizardperson"
-	id = "lizard"
+	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
@@ -113,10 +113,16 @@ Lizard subspecies: ASHWALKERS
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "ashlizard"
+	id = SPECIES_LIZARD_ASH
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH,TRAIT_VIRUSIMMUNE)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_NOBREATH,
+		TRAIT_VIRUSIMMUNE,
+	)
 	species_language_holder = /datum/language_holder/lizard/ash
 
 /*
@@ -124,10 +130,17 @@ Lizard subspecies: SILVER SCALED
 */
 /datum/species/lizard/silverscale
 	name = "Silver Scale"
-	id = "silverlizard"
+	id = SPECIES_LIZARD_SILVER
 	limbs_id = "lizard"
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_HOLY,TRAIT_NOBREATH,TRAIT_VIRUSIMMUNE,TRAIT_WINE_TASTER)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_HOLY,
+		TRAIT_NOBREATH,
+		TRAIT_VIRUSIMMUNE,
+		TRAIT_WINE_TASTER,
+	)
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/tongue/lizard/silver
 	armor = 10 //very light silvery scales soften blows

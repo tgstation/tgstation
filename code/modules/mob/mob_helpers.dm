@@ -160,7 +160,7 @@
 	. = ""
 	var/newletter = ""
 	var/rawchar = ""
-	var/static/regex/nostutter = regex(@@[aeiouAEIOU "'()[\]{}.!?,:;_`~-]@)
+	var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
 	for(var/i = 1, i <= leng, i += length(rawchar))
 		rawchar = newletter = phrase[i]
 		if(prob(80) && !nostutter.Find(rawchar))
@@ -320,7 +320,7 @@
 		var/orbit_link
 		if (source && action == NOTIFY_ORBIT)
 			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
+		to_chat(O, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
 		if(ghost_sound)
 			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
 		if(flashwindow)
@@ -355,11 +355,11 @@
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
-			user.visible_message("<span class='notice'>[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
-			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
+			user.visible_message(span_notice("[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name]."), \
+			span_notice("You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			return 1 //successful heal
 		else
-			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
+			to_chat(user, span_warning("[affecting] is already in good condition!"))
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)
@@ -400,7 +400,7 @@
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -486,9 +486,9 @@
 			dissectionmsg = " via Experimental Dissection"
 		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
 			dissectionmsg = " via Thorough Dissection"
-		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+		. += "[span_notice("This body has been dissected and analyzed[dissectionmsg].")]<br>"
 	if(HAS_TRAIT(src,TRAIT_HUSK))
-		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
+		. += span_warning("This body has been reduced to a grotesque husk.")
 
 /**
  * Get the list of keywords for policy config

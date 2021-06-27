@@ -119,11 +119,11 @@
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.</span>"
+	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.")
 	if(anchored)
-		. += "<span class='notice'>It is anchored to the ground.</span>"
+		. += span_notice("It is anchored to the ground.")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.</span>"
+		. += span_notice("The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -171,7 +171,7 @@
 		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
-	explosion(src.loc, 2, 5, 2, -1)
+	explosion(src, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 2, flash_range = -1)
 
 /obj/machinery/power/port_gen/pacman/set_anchored(anchorvalue)
 	. = ..()
@@ -187,9 +187,9 @@
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
+			to_chat(user, span_notice("The [src.name] is full!"))
 			return
-		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+		to_chat(user, span_notice("You add [amount] sheets to the [src.name]."))
 		sheets += amount
 		addstack.use(amount)
 		return
@@ -197,10 +197,10 @@
 		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
 				set_anchored(TRUE)
-				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
+				to_chat(user, span_notice("You secure the generator to the floor."))
 			else if(anchored)
 				set_anchored(FALSE)
-				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
+				to_chat(user, span_notice("You unsecure the generator from the floor."))
 
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
@@ -208,9 +208,9 @@
 			panel_open = !panel_open
 			O.play_tool_sound(src)
 			if(panel_open)
-				to_chat(user, "<span class='notice'>You open the access panel.</span>")
+				to_chat(user, span_notice("You open the access panel."))
 			else
-				to_chat(user, "<span class='notice'>You close the access panel.</span>")
+				to_chat(user, span_notice("You close the access panel."))
 			return
 		else if(default_deconstruction_crowbar(O))
 			return
@@ -285,4 +285,4 @@
 	time_per_sheet = 85
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
-	explosion(src.loc, 3, 3, 3, -1)
+	explosion(src, devastation_range = 3, heavy_impact_range = 3, light_impact_range = 3, flash_range = -1)

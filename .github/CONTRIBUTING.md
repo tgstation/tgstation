@@ -463,7 +463,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
@@ -547,6 +547,147 @@ for (var/month in 1 to 12)
 for (var/i in reagents)
 ```
 
+### Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
+BYOND will allow you to use a raw icon file or even an icon datum for underlays, overlays, and what not (you can even use strings to refer to an icon state on the current icon). The issue is these get converted by BYOND to appearances on every overlay insert or removal involving them, and this process requires inserting the new appearance into the global list of appearances, and informing clients about them.
+
+Converting them yourself to appearances and storing this converted value will ensure this process only has to happen once for the lifetime of the round. Helper functions exist to do most of the work for you.
+
+
+Bad:
+```dm
+/obj/machine/update_overlays(blah)
+	if (stat & broken)
+		add_overlay(icon(broken_icon))  //this icon gets created, passed to byond, converted to an appearance, then deleted.
+		return
+	if (is_on)
+		add_overlay("on") //also bad, the converstion to an appearance still has to happen
+	else
+		add_overlay(iconstate2appearance(icon, "off")) //this might seem alright, but not storing the value just moves the repeated appearance generation to this proc rather then the core overlay management. It would only be acceptable (and to some degree perferred) if this overlay is only ever added once (like in init code)
+```
+
+Good:
+```dm
+/obj/machine/update_overlays(var/blah)
+	var/static/on_overlay
+	var/static/off_overlay
+	var/static/broken_overlay
+	if(isnull(on_overlay)) //static vars initialize with global variables, meaning src is null and this won't pass integration tests unless you check.
+		on_overlay = iconstate2appearance(icon, "on")
+		off_overlay = iconstate2appearance(icon, "off")
+		broken_overlay = icon2appearance(broken_icon)
+	if (stat & broken)
+		add_overlay(broken_overlay) 
+		return
+	if (is_on)
+		add_overlay(on_overlay)
+	else
+		add_overlay(off_overlay)
+	...
+```
+
+Note: images are appearances with extra steps, and don't incur the overhead in conversion.
+
+
+### Do not abuse associated lists.
+Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
+
+
+Bad:
+```dm
+/obj/machine/update_overlays(var/blah)
+	var/static/our_overlays
+	if(isnull(our_overlays)
+		our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
+	if (stat & broken)
+		add_overlay(our_overlays["broken"]) 
+		return
+	...
+```
+
+Good:
+```dm
+#define OUR_ON_OVERLAY 1
+#define OUR_OFF_OVERLAY 2
+#define OUR_BROKEN_OVERLAY 3
+/obj/machine/update_overlays(var/blah
+	var/static/our_overlays
+	if(isnull(our_overlays)
+		our_overlays = list(iconstate2appearance(overlay_icon, "on"), iconstate2appearance(overlay_icon, "off"), iconstate2appearance(overlay_icon, "broken"))
+	if (stat & broken)
+		add_overlay(our_overlays[OUR_BROKEN_OVERLAY])
+		return
+	...
+
+#undef OUR_ON_OVERLAY
+#undef OUR_OFF_OVERLAY
+#undef OUR_BROKEN_OVERLAY
+```
+Storing these in a flat (non-associated) list saves on memory, and using defines to reference locations in the list saves CPU time searching the list.
+
+Also good:
+```dm
+/obj/machine/update_overlays(var/blah)
+	var/static/on_overlay
+	var/static/off_overlay
+	var/static/broken_overlay
+	if(isnull(on_overlay))
+		on_overlay = iconstate2appearance(overlay_icon, "on")
+		off_overlay = iconstate2appearance(overlay_icon, "off")
+		broken_overlay = iconstate2appearance(overlay_icon, "broken")
+	if (stat & broken)
+		add_overlay(broken_overlay)
+		return
+	...
+```
+Proc variables, static variables, and global variables are resolved at compile time, so the above is equivalent to the second example, but is easier to read, and avoids the need to store a list.
+
+Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
+
+### When passing vars through New() or Initialize()'s arguments, use src.var
+Using src.var + naming the arguments the same as the var is the most readable and intuitive way to pass arguments into a new instance's vars. The main benefit is that you do not need to give arguments odd names with prefixes and suffixes that are easily forgotten in `new()` when sending named args.
+
+This is very bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, enable_red)
+	is_red = enable_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, enable_red = TRUE)
+```
+
+Future coders using this code will have to remember two differently named variables which are near-synonyms of eachother. One of them is only used in Initialize for one line.
+
+This is bad:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, _is_red)
+	is_red = _is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, _is_red = TRUE)
+```
+
+`_is_red` is being used to set `is_red` and yet means a random '_' needs to be appended to the front of the arg, same as all other args like this.
+
+This is good:
+```DM
+/atom/thing
+	var/is_red
+
+/atom/thing/Initialize(mapload, is_red)
+	src.is_red = is_red
+
+/proc/make_red_thing()
+	new /atom/thing(null, is_red = TRUE)
+```
+
+Setting `is_red` in args is simple, and directly names the variable the argument sets.
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
@@ -563,6 +704,7 @@ for (var/i in reagents)
 * Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
 
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
+
 
 #### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:

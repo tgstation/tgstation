@@ -30,7 +30,7 @@
 
 /obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.get_sharpness())
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", MSG_VISUAL)
+		user.show_message(span_notice("You carve a face into [src]!"), MSG_VISUAL)
 		new carved_type(user.loc)
 		qdel(src)
 		return
@@ -54,6 +54,8 @@
 	name = "blumpkin"
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
+	bite_consumption_mod = 3
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/blumpkinjuice = 0)
 	wine_power = 50
 	carved_type = /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin

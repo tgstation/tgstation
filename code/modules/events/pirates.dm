@@ -6,7 +6,6 @@
 	min_players = 10
 	earliest_start = 30 MINUTES
 	dynamic_should_hijack = TRUE
-	gamemode_blacklist = list("nuclear")
 
 #define PIRATES_ROGUES "Rogues"
 #define PIRATES_SILVERSCALES "Silverscales"
@@ -108,10 +107,10 @@
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)
-				var/mob/M = candidates[1]
-				spawner.create(M.ckey)
-				candidates -= M
-				announce_to_ghosts(M)
+				var/mob/our_candidate = candidates[1]
+				spawner.create(our_candidate)
+				candidates -= our_candidate
+				announce_to_ghosts(our_candidate)
 			else
 				announce_to_ghosts(spawner)
 
@@ -151,13 +150,13 @@
 	SSshuttle.registerTradeBlockade(src)
 	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
-	to_chat(user,"<span class='notice'>You toggle [src] [active ? "on":"off"].</span>")
-	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by GPS.</span>")
+	to_chat(user,span_notice("You toggle [src] [active ? "on":"off"]."))
+	to_chat(user,span_warning("The scrambling signal can be now tracked by GPS."))
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
 	if(!active)
-		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
+		if(tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel")) == "Cancel")
 			return
 		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
@@ -178,10 +177,10 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
-		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+		to_chat(user,span_notice("You retrieve the siphoned credits!"))
 		credits_stored = 0
 	else
-		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
+		to_chat(user,span_notice("There's nothing to withdraw."))
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
@@ -239,7 +238,7 @@
 
 /obj/machinery/loot_locator/interact(mob/user)
 	if(world.time <= next_use)
-		to_chat(user,"<span class='warning'>[src] is recharging.</span>")
+		to_chat(user,span_warning("[src] is recharging."))
 		return
 	next_use = world.time + cooldown
 	var/atom/movable/AM = find_random_loot()
@@ -274,7 +273,7 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, "<span class='notice'>You register [src] in [I]s buffer.</span>")
+		to_chat(user, span_notice("You register [src] in [I]s buffer."))
 		I.buffer = src
 		return TRUE
 
@@ -296,7 +295,7 @@
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
-		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
+		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
 		pad = I.buffer
 		return TRUE
 
@@ -398,7 +397,7 @@
 	if(!value)
 		status_report += "Nothing"
 
-	pad.visible_message("<span class='notice'>[pad] activates!</span>")
+	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	sending = FALSE
@@ -408,7 +407,7 @@
 		return
 	sending = TRUE
 	status_report = "Sending... "
-	pad.visible_message("<span class='notice'>[pad] starts charging up.</span>")
+	pad.visible_message(span_notice("[pad] starts charging up."))
 	pad.icon_state = pad.warmup_state
 	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
 

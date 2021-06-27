@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes: 
-  - bugfix: "Hangover trait applies rest rather than sleep so that the roundstart held items of MDs and plasmamen aren't lost."

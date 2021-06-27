@@ -32,7 +32,7 @@
 
 /atom/movable/screen/alert/status_effect/high_blood_pressure
 	name = "High blood pressure"
-	desc = "This stuff is driving my blood pressure up the wall...I'll probably bleed like crazy."
+	desc = "Your blood pressure is real high right now ... You'd probably bleed like a stuck pig."
 	icon_state = "highbloodpressure"
 
 
@@ -50,8 +50,8 @@
 	duration = amplitude
 	owner.Jitter(50)
 	owner.Paralyze(duration)
-	owner.visible_message("<span class='warning'>[owner] drops to the ground as [owner.p_they()] start seizing up.</span>", \
-	"<span class='warning'>[pick("You can't collect your thoughts...", "You suddenly feel extremely dizzy...", "You cant think straight...","You can't move your face properly anymore...")]</span>")
+	owner.visible_message(span_warning("[owner] drops to the ground as [owner.p_they()] start seizing up."), \
+	span_warning("[pick("You can't collect your thoughts...", "You suddenly feel extremely dizzy...", "You cant think straight...","You can't move your face properly anymore...")]"))
 	return TRUE
 
 /atom/movable/screen/alert/status_effect/seizure

@@ -107,7 +107,7 @@
 
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
-			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
 		ranged_cooldown = world.time + 30
 		telegraph()
 		dir_shots(GLOB.alldirs)
@@ -150,11 +150,11 @@
 	icon_state = "eva_attack"
 	if(health < maxHealth/3)
 		return double_spiral()
-	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+	visible_message(span_colossus("\"<b>Judgement.</b>\""))
 	return spiral_shoot()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+	visible_message(span_colossus("\"<b>Die.</b>\""))
 
 	SLEEP_CHECK_DEATH(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
@@ -225,7 +225,7 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	visible_message(span_colossus("[src] disintegrates [L]!"))
 	L.dust()
 
 /obj/effect/temp_visual/at_shield
@@ -272,10 +272,9 @@
 		else
 			SSexplosions.medturf += target
 
-
-
+//There can only ever be one blackbox, and we want to know if there already is one when we spawn
+GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 //Black Box
-
 /obj/machinery/smartfridge/black_box
 	name = "black box"
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
@@ -299,17 +298,15 @@
 	if(!istype(O))
 		return FALSE
 	if(blacklist[O])
-		visible_message("<span class='boldwarning'>[src] ripples as it rejects [O]. The device will not accept items that have been removed from it.</span>")
+		visible_message(span_boldwarning("[src] ripples as it rejects [O]. The device will not accept items that have been removed from it."))
 		return FALSE
 	return TRUE
 
 /obj/machinery/smartfridge/black_box/Initialize()
 	. = ..()
-	var/static/obj/machinery/smartfridge/black_box/current
-	if(current && current != src)
-		qdel(src, force=TRUE)
-		return
-	current = src
+	if(GLOB.blackbox != src)
+		return INITIALIZE_HINT_QDEL_FORCE
+	GLOB.blackbox = src
 	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
@@ -354,6 +351,8 @@
 
 /obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
 	if(force)
+		if(GLOB.blackbox == src)
+			GLOB.blackbox = null
 		for(var/thing in src)
 			qdel(thing)
 		return ..()
@@ -623,7 +622,7 @@
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be revived!)",,"Yes","No")
+		var/be_helper = tgui_alert(usr,"Become a Lightgeist? (Warning, You can no longer be revived!)",,list("Yes","No"))
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
 			W.key = user.key
@@ -657,7 +656,6 @@
 	friendly_verb_continuous = "taps"
 	friendly_verb_simple = "tap"
 	density = FALSE
-	is_flying_animal = TRUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -680,6 +678,7 @@
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	remove_verb(src, /mob/living/verb/pulled)
 	remove_verb(src, /mob/verb/me_verb)
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
@@ -693,7 +692,7 @@
 		if(L.stat != DEAD)
 			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
-			visible_message("<span class='notice'>[src] mends the wounds of [target].</span>","<span class='notice'>You mend the wounds of [target].</span>")
+			visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))
 
 /mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()
@@ -745,6 +744,7 @@
 	name = "quantum entanglement stasis warp field"
 	desc = "You can hardly comprehend this thing... which is why you can't see it."
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
+	enable_door_overlay = FALSE //For obvious reasons
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
@@ -763,9 +763,9 @@
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/closet/stasis/Entered(atom/A)
-	if(isliving(A) && holder_animal)
-		var/mob/living/L = A
+/obj/structure/closet/stasis/Entered(atom/movable/arrived, direction)
+	if(isliving(arrived) && holder_animal)
+		var/mob/living/L = arrived
 		L.notransform = 1
 		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags |= GODMODE

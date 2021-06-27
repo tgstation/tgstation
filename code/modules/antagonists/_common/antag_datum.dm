@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(removing) // They're a clown becoming an antag, remove clumsy
 			H.dna.remove_mutation(CLOWNMUT)
 			if(!silent && message)
-				to_chat(H, "<span class='boldnotice'>[message]</span>")
+				to_chat(H, span_boldnotice("[message]"))
 		else
 			H.dna.add_mutation(CLOWNMUT) // We're removing their antag status, add back clumsy
 
@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")

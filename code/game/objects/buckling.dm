@@ -105,7 +105,7 @@
 			var/mob/living/L = M.pulledby
 			L.reset_pull_offsets(M, TRUE)
 
-	if (CanPass(M, loc))
+	if (CanPass(M, get_dir(loc, M)))
 		M.Move(loc)
 	else
 		if (!check_loc && M.loc != loc)
@@ -156,7 +156,7 @@
 	if(anchored)
 		REMOVE_TRAIT(buckled_mob, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 	if(!length(buckled_mobs))
-		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
+		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
 	post_unbuckle_mob(.)
@@ -289,9 +289,9 @@
 	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
 	// we'll try it with a 2 second do_after delay.
 	if(M != user && (get_turf(M) != get_turf(src)))
-		M.visible_message("<span class='warning'>[user] starts buckling [M] to [src]!</span>",\
-			"<span class='userdanger'>[user] starts buckling you to [src]!</span>",\
-			"<span class='hear'>You hear metal clanking.</span>")
+		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
+			span_userdanger("[user] starts buckling you to [src]!"),\
+			span_hear("You hear metal clanking."))
 		if(!do_after(user, 2 SECONDS, M))
 			return FALSE
 
@@ -303,13 +303,13 @@
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
 		if(M == user)
-			M.visible_message("<span class='notice'>[M] buckles [M.p_them()]self to [src].</span>",\
-				"<span class='notice'>You buckle yourself to [src].</span>",\
-				"<span class='hear'>You hear metal clanking.</span>")
+			M.visible_message(span_notice("[M] buckles [M.p_them()]self to [src]."),\
+				span_notice("You buckle yourself to [src]."),\
+				span_hear("You hear metal clanking."))
 		else
-			M.visible_message("<span class='warning'>[user] buckles [M] to [src]!</span>",\
-				"<span class='warning'>[user] buckles you to [src]!</span>",\
-				"<span class='hear'>You hear metal clanking.</span>")
+			M.visible_message(span_warning("[user] buckles [M] to [src]!"),\
+				span_warning("[user] buckles you to [src]!"),\
+				span_hear("You hear metal clanking."))
 /**
  * Handles a user unbuckling a mob from src and sends a visible_message
  *
@@ -323,13 +323,13 @@
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
 		if(M != user)
-			M.visible_message("<span class='notice'>[user] unbuckles [M] from [src].</span>",\
-				"<span class='notice'>[user] unbuckles you from [src].</span>",\
-				"<span class='hear'>You hear metal clanking.</span>")
+			M.visible_message(span_notice("[user] unbuckles [M] from [src]."),\
+				span_notice("[user] unbuckles you from [src]."),\
+				span_hear("You hear metal clanking."))
 		else
-			M.visible_message("<span class='notice'>[M] unbuckles [M.p_them()]self from [src].</span>",\
-				"<span class='notice'>You unbuckle yourself from [src].</span>",\
-				"<span class='hear'>You hear metal clanking.</span>")
+			M.visible_message(span_notice("[M] unbuckles [M.p_them()]self from [src]."),\
+				span_notice("You unbuckle yourself from [src]."),\
+				span_hear("You hear metal clanking."))
 		add_fingerprint(user)
 		if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby

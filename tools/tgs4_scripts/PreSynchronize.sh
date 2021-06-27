@@ -26,7 +26,7 @@ pip3 install PyYaml beautifulsoup4
 cd $1
 
 echo "Running changelog script..."
-python3 tools/ss13_genchangelog.py html/changelog.html html/changelogs
+python3 tools/ss13_genchangelog.py html/changelogs
 
 echo "Committing changes..."
 git add html

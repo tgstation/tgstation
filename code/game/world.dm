@@ -29,11 +29,6 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-#ifdef USE_EXTOOLS
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
-	if (fexists(extools))
-		call(extools, "maptick_initialize")()
-#endif
 	enable_debugger()
 
 	log_world("World loaded at [time_stamp()]!")
@@ -165,7 +160,8 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_shuttle_log)
 
-	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
+	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
+	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
@@ -209,7 +205,7 @@ GLOBAL_VAR(restart_counter)
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
+	var/final_composed = span_announce("PR: [announcement]")
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
@@ -239,9 +235,9 @@ GLOBAL_VAR(restart_counter)
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request.</span>")
+		to_chat(world, span_boldannounce("Rebooting World immediately due to host request."))
 	else
-		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
+		to_chat(world, span_boldannounce("Rebooting world..."))
 		Master.Shutdown() //run SS shutdowns
 
 	#ifdef UNIT_TESTS
@@ -280,9 +276,6 @@ GLOBAL_VAR(restart_counter)
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
-		features += GLOB.master_mode
-
 	if (!GLOB.enter_allowed)
 		features += "closed"
 
@@ -293,8 +286,6 @@ GLOBAL_VAR(restart_counter)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
 		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		if(CONFIG_GET(flag/allow_vote_mode))
-			features += "vote"
 		if(CONFIG_GET(flag/allow_ai))
 			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)

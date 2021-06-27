@@ -11,9 +11,9 @@
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
-/obj/item/latexballon/ComponentInitialize()
+/obj/item/latexballon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/latexballon/proc/blow(obj/item/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
@@ -21,7 +21,7 @@
 	icon_state = "latexballon_blow"
 	inhand_icon_state = "latexballon"
 	user.update_inv_hands()
-	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
+	to_chat(user, span_notice("You blow up [src] with [tank]."))
 	air_contents = tank.remove_air_volume(3)
 
 /obj/item/latexballon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "insuls will give you the trait TRAIT_CHUNKYFINGERS (you can't shoot gun with normal firing pins while wearing them)"
-  - balance: "you can't use modular computers with this trait now (you can open them before putting the gloves on)"
-  - balance: "CE now has advanced insuls that won't give the debuff traits (on the same idea of the advanced mag boots and the suit)"

@@ -18,7 +18,7 @@
 	if(!usr.control_object) //If you're not already possessing something...
 		usr.name_archive = usr.real_name
 
-	usr.loc = O
+	usr.forceMove(O)
 	usr.real_name = O.name
 	usr.name = O.name
 	usr.reset_perspective(O)
@@ -39,7 +39,7 @@
 			H.name = H.get_visible_name()
 
 
-	usr.loc = get_turf(usr.control_object)
+	usr.forceMove(get_turf(usr.control_object))
 	usr.reset_perspective()
 	usr.control_object = null
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Release Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

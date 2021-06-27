@@ -1,13 +1,13 @@
 /datum/species/fly
 	name = "Flyperson"
-	id = "fly"
+	id = SPECIES_FLY
 	say_mod = "buzzes"
 	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	mutanteyes = /obj/item/organ/eyes/fly
 	liked_food = GROSS
-	disliked_food = CLOTH
+	disliked_food = NONE
 	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
@@ -76,8 +76,8 @@
 		// we do not loss any nutrition as a fly when vomiting out food
 		body.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge_ratio = 0.67)
 		playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-		body.visible_message("<span class='danger'>[body] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
+		body.visible_message(span_danger("[body] vomits on the floor!"), \
+					span_userdanger("You throw up on the floor!"))
 	return ..()
 
 /obj/item/organ/appendix/fly

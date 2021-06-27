@@ -28,7 +28,7 @@
 		if(voting_active)
 			apply_vote(I,user)
 		else
-			to_chat(user,"<span class='warning'>[src] is in maintenance mode. Voting is not possible at the moment.</span>")
+			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
 		return
 	return ..()
 
@@ -64,7 +64,7 @@
 	if(!can_interact(user))
 		return
 	if(!is_operator(user))
-		to_chat(user,"<span class='warning'>Voting box operator authorization required!</span>")
+		to_chat(user,span_warning("Voting box operator authorization required!"))
 		return
 
 	if(href_list["act"])
@@ -77,7 +77,7 @@
 			if("reset_voted")
 				if(voted)
 					voted.Cut()
-				to_chat(user,"<span class='notice'>You reset the voter buffer. Everyone can vote again.</span>")
+				to_chat(user,span_notice("You reset the voter buffer. Everyone can vote again."))
 			if("raffle")
 				raffle(user)
 			if("shred")
@@ -90,7 +90,7 @@
 
 /obj/structure/votebox/proc/register_owner(obj/item/card/id/I,mob/living/user)
 	owner = I
-	to_chat(user,"<span class='notice'>You register [src] to your ID card.</span>")
+	to_chat(user,span_notice("You register [src] to your ID card."))
 	ui_interact(user)
 
 /obj/structure/votebox/proc/set_description(mob/user)
@@ -105,16 +105,16 @@
 	var/obj/item/card/id/voter_card = user.get_idcard()
 	if(id_auth)
 		if(!voter_card)
-			to_chat(user,"<span class='warning'>[src] requires a valid ID card to vote!</span>")
+			to_chat(user,span_warning("[src] requires a valid ID card to vote!"))
 			return
 		if(voted && (voter_card in voted))
-			to_chat(user,"<span class='warning'>[src] allows only one vote per person.</span>")
+			to_chat(user,span_warning("[src] allows only one vote per person."))
 			return
 	if(user.transferItemToLoc(I,src))
 		if(!voted)
 			voted = list()
 		voted += voter_card
-		to_chat(user,"<span class='notice'>You cast your vote.</span>")
+		to_chat(user,span_notice("You cast your vote."))
 
 /obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
 	if(length_char(I.info) > VOTE_TEXT_LIMIT || findtext(I.info,"<h1>Voting Results:</h1><hr><ol>"))
@@ -124,7 +124,7 @@
 /obj/structure/votebox/proc/shred(mob/user)
 	for(var/obj/item/paper/P in contents)
 		qdel(P)
-	to_chat(user,"<span class='notice'>You shred the current votes.</span>")
+	to_chat(user,span_notice("You shred the current votes."))
 
 /obj/structure/votebox/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -134,10 +134,10 @@
 /obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(voting_active)
-		to_chat(user,"<span class='warning'>You can only retrieve votes if maintenance mode is active!</span>")
+		to_chat(user,span_warning("You can only retrieve votes if maintenance mode is active!"))
 		return FALSE
 	dump_contents()
-	to_chat(user,"<span class='notice'>You open vote retrieval hatch and dump all the votes.</span>")
+	to_chat(user,span_notice("You open vote retrieval hatch and dump all the votes."))
 	return TRUE
 
 /obj/structure/votebox/dump_contents()
@@ -158,7 +158,7 @@
 	else
 		var/obj/item/paper/P = pick(options)
 		user.put_in_hands(P)
-		to_chat(user,"<span class='notice'>[src] pops out random vote.</span>")
+		to_chat(user,span_notice("[src] pops out random vote."))
 
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()
@@ -207,7 +207,7 @@
 	P.name = "Voting Results"
 	P.update_appearance()
 	user.put_in_hands(P)
-	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
+	to_chat(user,span_notice("[src] prints out the voting tally."))
 
 /obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"

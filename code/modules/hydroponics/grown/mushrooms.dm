@@ -1,6 +1,6 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	wine_power = 40
 
@@ -30,7 +30,6 @@
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
-
 
 // Fly Amanita
 /obj/item/seeds/amanita
@@ -151,6 +150,7 @@
 	endurance = 30
 	maturation = 5
 	yield = 1
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
@@ -163,19 +163,6 @@
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	can_distill = FALSE
-
-/obj/item/food/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(isspaceturf(user.loc))
-		return
-	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
-	M.maxHealth += round(seed.endurance / 4)
-	M.melee_damage_lower += round(seed.potency / 20)
-	M.melee_damage_upper += round(seed.potency / 20)
-	M.move_to_delay -= round(seed.production / 50)
-	M.health = M.maxHealth
-	qdel(src)
-	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
-
 
 // Chanterelle
 /obj/item/seeds/chanter
@@ -226,7 +213,6 @@
 /obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
 	. = ..()
 	if(!nogenes)
-		unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
 		unset_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/food/grown/mushroom/jupitercup
@@ -270,7 +256,7 @@
 	if(isspaceturf(user.loc))
 		return FALSE
 	if(!isturf(user.loc))
-		to_chat(user, "<span class='warning'>You need more space to plant [src].</span>")
+		to_chat(user, span_warning("You need more space to plant [src]."))
 		return FALSE
 	var/count = 0
 	var/maxcount = 1
@@ -281,10 +267,10 @@
 	for(var/obj/structure/glowshroom/G in user.loc)
 		count++
 	if(count >= maxcount)
-		to_chat(user, "<span class='warning'>There are too many shrooms here to plant [src].</span>")
+		to_chat(user, span_warning("There are too many shrooms here to plant [src]."))
 		return FALSE
 	new effect_path(user.loc, seed)
-	to_chat(user, "<span class='notice'>You plant [src].</span>")
+	to_chat(user, span_notice("You plant [src]."))
 	qdel(src)
 	return TRUE
 

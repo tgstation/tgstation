@@ -81,7 +81,11 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
-	RegisterSignal(parent, list(COMSIG_ATOM_BUMPED, COMSIG_MOVABLE_CROSSED), .proc/consume)
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
 
@@ -111,7 +115,6 @@
 		COMSIG_ATOM_BSA_BEAM,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
-		COMSIG_MOVABLE_CROSSED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_PARENT_ATTACKBY,
 	))
@@ -126,7 +129,17 @@
 
 	return COMPONENT_CANCEL_BLOB_ACT
 
+/// Triggered when something enters the component's parent.
+/datum/component/singularity/proc/on_entered(datum/source, atom/movable/arrived, direction)
+	SIGNAL_HANDLER
+	consume(source, arrived)
+
 /datum/component/singularity/proc/consume(datum/source, atom/thing)
+	SIGNAL_HANDLER
+	if (thing == parent)
+		stack_trace("Singularity tried to consume itself.")
+		return
+
 	consume_callback?.Invoke(thing, src)
 
 /datum/component/singularity/proc/consume_attack(datum/source, mob/user)
@@ -283,6 +296,7 @@
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
+	SIGNAL_HANDLER
 	if (!bsa_targetable)
 		return
 

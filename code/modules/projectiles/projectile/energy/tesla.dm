@@ -36,4 +36,4 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/victim = target
-		victim.electrocute_act(shock_damage, src, siemens_coeff = 1, flags = SHOCK_NOSTUN)
+		victim.electrocute_act(shock_damage, src, siemens_coeff = 1, flags = SHOCK_NOSTUN|SHOCK_TESLA)

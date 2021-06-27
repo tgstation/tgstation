@@ -32,7 +32,7 @@
 
 			// If the new name is something that would be restricted by IC chat filters,
 			// give the admin a warning but allow them to do it anyway if they want.
-			if(CHAT_FILTER_CHECK(new_name) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") == "Cancel")
+			if(CHAT_FILTER_CHECK(new_name) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) == "Cancel")
 				return
 
 			if( !new_name || !M )
@@ -69,7 +69,7 @@
 				to_chat(usr, "This can only be done to monkeys", confidential = TRUE)
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
 				return
 			if(!Mo)
 				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)

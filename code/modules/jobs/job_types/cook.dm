@@ -26,7 +26,6 @@
 
 /datum/job/cook/New()
 	. = ..()
-	SSmapping.HACK_LoadMapConfig()
 	var/list/job_changes = SSmapping.config.job_changes
 
 	if(!length(job_changes))
@@ -53,6 +52,17 @@
 			continue
 
 		kitchen_areas |= path
+
+	mail_goodies = list(
+		/obj/item/storage/box/ingredients/random = 80,
+		/obj/item/reagent_containers/glass/bottle/caramel = 20,
+		/obj/item/reagent_containers/food/condiment/flour = 20,
+		/obj/item/reagent_containers/food/condiment/rice = 20,
+		/obj/item/reagent_containers/food/condiment/enzyme = 15,
+		/obj/item/reagent_containers/food/condiment/soymilk = 15,
+		/obj/item/kitchen/knife = 4,
+		/obj/item/kitchen/knife/butcher = 2
+	)
 
 /datum/outfit/job/cook
 	name = "Cook"

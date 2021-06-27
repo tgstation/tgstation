@@ -82,9 +82,9 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
-		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
+		to_chat(user, span_notice("You already activated the machine."))
 		return
-	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
+	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
 	update_appearance()
 	linked_interface.active = TRUE
@@ -113,6 +113,7 @@
  * * only_signals: default FALSE, if true the proc will not call the deactivate() proc
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
+	SIGNAL_HANDLER
 	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
@@ -203,7 +204,7 @@
  * Check the integrity level and returns the status of the machine
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_status()
-	var/integrity = get_integrity()
+	var/integrity = get_integrity_percent()
 	if(integrity < HYPERTORUS_MELTING_PERCENT)
 		return HYPERTORUS_MELTING
 
@@ -238,7 +239,7 @@
 /**
  * Getter for the machine integrity
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity_percent()
 	var/integrity = critical_threshold_proximity / melting_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
@@ -256,18 +257,18 @@
 		alarm()
 
 		if(critical_threshold_proximity > emergency_point)
-			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity_percent()]%", common_channel)
 			lastwarning = REALTIMEOFDAY
 			if(!has_reached_emergency)
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
 		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
-			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
 
 		else // Phew, we're safe
-			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
+			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
 
 	//Melt
@@ -309,18 +310,30 @@
  * Create the explosion + the gas emission before deleting the machine core.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
-	explosion(loc, 0, 0, power_level * 5, power_level * 6, 1, 1)
+	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
 	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
-	empulse(loc, power_level * 5, power_level * 7)
-	var/fusion_moles = internal_fusion.total_moles() ? internal_fusion.total_moles() : 0
-	var/moderator_moles = moderator_internal.total_moles() ? moderator_internal.total_moles() : 0
+	empulse(loc, power_level * 5, power_level * 7, TRUE)
+	var/list/around_turfs = circlerangeturfs(src, power_level * 5)
+	for(var/turf/turf as anything in around_turfs)
+		if(isclosedturf(turf) || isspaceturf(turf))
+			around_turfs -= turf
+			continue
 	var/datum/gas_mixture/remove_fusion
 	if(internal_fusion.total_moles() > 0)
-		remove_fusion = internal_fusion.remove(fusion_moles)
-		loc.assume_air(remove_fusion)
+		remove_fusion = internal_fusion.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to 10)
+			remove = remove_fusion.remove_ratio(0.1)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(internal_fusion)
 	var/datum/gas_mixture/remove_moderator
 	if(moderator_internal.total_moles() > 0)
-		remove_moderator = moderator_internal.remove(moderator_moles)
-		loc.assume_air(remove_moderator)
-	air_update_turf(FALSE, FALSE)
+		remove_moderator = moderator_internal.remove_ratio(0.2)
+		var/datum/gas_mixture/remove
+		for(var/i in 1 to 10)
+			remove = remove_moderator.remove_ratio(0.1)
+			var/turf/local = pick(around_turfs)
+			local.assume_air(remove)
+		loc.assume_air(moderator_internal)
 	qdel(src)

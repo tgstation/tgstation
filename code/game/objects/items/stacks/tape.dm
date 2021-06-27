@@ -17,37 +17,36 @@
 	splint_factor = 0.8
 	merge_type = /obj/item/stack/sticky_tape
 	var/list/conferred_embed = EMBED_HARMLESS
-	var/overwrite_existing = FALSE
 
 /obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user, proximity)
 	if(!proximity)
 		return
-		
+
 	if(!istype(I))
 		return
 
 	if(I.embedding && I.embedding == conferred_embed)
-		to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
+		to_chat(user, span_warning("[I] is already coated in [src]!"))
 		return
 
-	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
+	user.visible_message(span_notice("[user] begins wrapping [I] with [src]."), span_notice("You begin wrapping [I] with [src]."))
 
 	if(do_after(user, 30, target=I))
 		use(1)
 		if(istype(I, /obj/item/clothing/gloves/fingerless))
 			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
-			to_chat(user, "<span class='notice'>You turn [I] into [O] with [src].</span>")
+			to_chat(user, span_notice("You turn [I] into [O] with [src]."))
 			QDEL_NULL(I)
 			user.put_in_hands(O)
 			return
 
 		if(I.embedding && I.embedding == conferred_embed)
-			to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
+			to_chat(user, span_warning("[I] is already coated in [src]!"))
 			return
 
 		I.embedding = conferred_embed
 		I.updateEmbedding()
-		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
+		to_chat(user, span_notice("You finish wrapping [I] with [src]."))
 		I.name = "[prefix] [I.name]"
 
 		if(istype(I, /obj/item/grenade))
