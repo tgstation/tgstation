@@ -220,38 +220,38 @@
 		if("increase_left")
 			south_west_internal_corner++
 			south_west_outer_corner++
-			south_west_internal_corner = clamp(south_west_internal_corner, 0, 1)
-			south_west_outer_corner = clamp(south_west_outer_corner, 1, 2)
+			south_west_internal_corner = clamp(south_west_internal_corner, 0, 2)
+			south_west_outer_corner = clamp(south_west_outer_corner, 1, 3)
 			. = TRUE
 		if("decrease_left")
 			south_west_internal_corner--
 			south_west_outer_corner--
-			south_west_internal_corner = clamp(south_west_internal_corner, 0, 1)
-			south_west_outer_corner = clamp(south_west_outer_corner, 1, 2)
+			south_west_internal_corner = clamp(south_west_internal_corner, 0, 2)
+			south_west_outer_corner = clamp(south_west_outer_corner, 1, 3)
 			. = TRUE
 		if("increase_right")
 			south_east_internal_corner++
 			south_east_outer_corner++
-			south_east_internal_corner = clamp(south_east_internal_corner, 0, 1)
-			south_east_outer_corner = clamp(south_east_outer_corner, 1, 2)
+			south_east_internal_corner = clamp(south_east_internal_corner, 0, 2)
+			south_east_outer_corner = clamp(south_east_outer_corner, 1, 3)
 			. = TRUE
 		if("decrease_right")
 			south_east_internal_corner--
 			south_east_outer_corner--
-			south_east_internal_corner = clamp(south_east_internal_corner, 0, 1)
-			south_east_outer_corner = clamp(south_east_outer_corner, 1, 2)
+			south_east_internal_corner = clamp(south_east_internal_corner, 0, 2)
+			south_east_outer_corner = clamp(south_east_outer_corner, 1, 3)
 			. = TRUE
 		if("increase_up")
 			north_internal_edge++
 			north_outer_edge++
-			north_internal_edge = clamp(north_internal_edge, 2, 4)
-			north_outer_edge = clamp(north_outer_edge, 3, 5)
+			north_internal_edge = clamp(north_internal_edge, 2, 6)
+			north_outer_edge = clamp(north_outer_edge, 3, 7)
 			. = TRUE
 		if("decrease_up")
 			north_internal_edge--
 			north_outer_edge--
-			north_internal_edge = clamp(north_internal_edge, 2, 4)
-			north_outer_edge = clamp(north_outer_edge, 3, 5)
+			north_internal_edge = clamp(north_internal_edge, 2, 6)
+			north_outer_edge = clamp(north_outer_edge, 3, 7)
 			. = TRUE
 	update_appearance()
 
@@ -262,6 +262,7 @@
 	density = FALSE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	///store the conductivity value of the turf is applyed so that it can be restored on removal
 	var/stored_conductivity = 0
 	///power drain from the apc, in W (so 5000 is 5 kW), per each holosign placed
