@@ -19,6 +19,191 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
+/obj/machinery/computer/secure_data/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/arrest_console_data,
+		/obj/item/circuit_component/arrest_console_arrest,
+	))
+
+/obj/item/circuit_component/arrest_console_data
+	display_name = "Security Records Data"
+	display_desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	/// The records retrieved
+	var/datum/port/output/records
+
+	/// Sends a signal on failure
+	var/datum/port/output/on_fail
+
+	var/obj/machinery/computer/secure_data/attached_console
+
+/obj/item/circuit_component/arrest_console_data/Initialize()
+	. = ..()
+	records = add_output_port("Security Records", PORT_TYPE_TABLE)
+	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/arrest_console_data/Destroy()
+	records = null
+	on_fail = null
+	return ..()
+
+
+/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/secure_data))
+		attached_console = parent
+
+/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/parent)
+	attached_console = null
+	return ..()
+
+/obj/item/circuit_component/arrest_console_data/get_ui_notices()
+	. = ..()
+	var/static/entries = list(
+		"name",
+		"id",
+		"rank",
+		"arrest_status",
+		"gender",
+		"age",
+		"species",
+		"fingerprint",
+	)
+
+	. += list(list(
+		"icon" = "question-circle",
+		"content" = "Available Columns:",
+		"color" = "grey"
+	))
+
+
+	for(var/entry in entries)
+		. += list(list(
+			"icon" = "columns",
+			"content" = "Column Name: '[entry]'",
+			"color" = "grey"
+		))
+
+/obj/item/circuit_component/arrest_console_data/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
+
+	if(!attached_console || !attached_console.authenticated)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	if(isnull(GLOB.data_core.general))
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	var/list/new_table = list()
+	for(var/datum/data/record/p_rec as anything in GLOB.data_core.general)
+		var/list/entry = list()
+		for(var/datum/data/record/ps_rec as anything in GLOB.data_core.security)
+			if((p_rec.fields["name"] == ps_rec.fields["name"]) && (p_rec.fields["id"] == ps_rec.fields["id"]))
+				entry["arrest_status"] = ps_rec.fields["criminal"]
+				entry["security_record"] = ps_rec
+				break
+		entry["name"] = p_rec.fields["name"]
+		entry["id"] = p_rec.fields["id"]
+		entry["rank"] = p_rec.fields["rank"]
+		entry["gender"] = p_rec.fields["gender"]
+		entry["age"] = p_rec.fields["age"]
+		entry["species"] = p_rec.fields["species"]
+		entry["fingerprint"] = p_rec.fields["fingerprint"]
+
+		new_table += list(entry)
+
+	records.set_output(new_table)
+
+/obj/item/circuit_component/arrest_console_arrest
+	display_name = "Security Records Set Status"
+	display_desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	/// The targets to set the status of.
+	var/datum/port/input/targets
+
+	/// Sets the new status of the targets. If set to null, the status is taken from the options.
+	var/datum/port/input/new_status
+
+	/// Returns the new status set once the setting is complete. Good for locating errors.
+	var/datum/port/output/new_status_set
+
+	/// Sends a signal on failure
+	var/datum/port/output/on_fail
+
+	var/obj/machinery/computer/secure_data/attached_console
+
+/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/secure_data))
+		attached_console = parent
+
+/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/parent)
+	attached_console = null
+	return ..()
+
+/obj/item/circuit_component/arrest_console_arrest/populate_options()
+	var/static/list/component_options = list(
+		COMP_STATE_ARREST,
+		COMP_STATE_PRISONER,
+		COMP_STATE_PAROL,
+		COMP_STATE_DISCHARGED,
+		COMP_STATE_NONE,
+	)
+	options = component_options
+
+/obj/item/circuit_component/arrest_console_arrest/Initialize()
+	. = ..()
+	targets = add_input_port("Targets", PORT_TYPE_TABLE)
+	new_status = add_input_port("New Status", PORT_TYPE_STRING)
+	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
+	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/arrest_console_arrest/Destroy()
+	targets = null
+	new_status = null
+	new_status_set = null
+	on_fail = null
+	return ..()
+
+/obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
+
+	if(!attached_console || !attached_console.authenticated)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	var/status_to_set = new_status.input_value
+	if(!status_to_set || !(status_to_set in options))
+		status_to_set = current_option
+
+	new_status_set.set_output(status_to_set)
+	var/list/target_table = targets.input_value
+	if(!target_table)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	var/successful_set = 0
+	for(var/list/target in target_table)
+		var/datum/data/record/sec_record = target["security_record"]
+		if(!sec_record)
+			continue
+
+		successful_set++
+		sec_record.fields["criminal"] = status_to_set
+
+	if(successful_set > 0)
+		investigate_log("[length(target_table)] security entries have been set to [status_to_set] by [parent?.shell || parent].", INVESTIGATE_RECORDS)
+		message_admins("[length(target_table)] security entries have been set to [status_to_set] by [parent?.shell || parent]. [ADMIN_COORDJMP(src)]")
+		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
+			human.sec_hud_set_security_status()
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"

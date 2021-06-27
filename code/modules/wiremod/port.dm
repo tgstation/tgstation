@@ -48,6 +48,8 @@
 			return "white"
 		if(PORT_TYPE_SIGNAL)
 			return "teal"
+		if(PORT_TYPE_TABLE)
+			return "grey"
 
 /datum/port/Destroy(force)
 	if(!force && !QDELETED(connected_component))
@@ -94,8 +96,8 @@
 	datatype = type_to_set
 	color = datatype_to_color()
 	disconnect()
-	if(connected_component)
-		SStgui.update_uis(connected_component)
+	if(connected_component?.parent)
+		SStgui.update_uis(connected_component.parent)
 
 /**
  * Disconnects a port from all other ports
@@ -187,10 +189,6 @@
 	/// The connected output port
 	var/datum/port/output/connected_port
 
-	/// The delay before updating the input value whenever a modification is made.
-	/// This does not apply when when the output port is registered
-	var/input_receive_delay = PORT_INPUT_RECEIVE_DELAY
-
 	/// Whether this port triggers an update whenever an output is received.
 	var/trigger = FALSE
 
@@ -236,10 +234,7 @@
  */
 /datum/port/input/proc/receive_output(datum/port/output/connected_port, new_value)
 	SIGNAL_HANDLER
-	if(input_receive_delay)
-		addtimer(CALLBACK(src, .proc/set_input, new_value), input_receive_delay, timer_subsystem = SScircuit_component)
-	else
-		set_input(new_value)
+	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, new_value))
 
 /**
  * Updates the value of the input
