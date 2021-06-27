@@ -99,31 +99,30 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 	EXP_TYPE_SERVICE = list("titles" = service_positions)
 ))
 
+// TO DO: Replace this with job datum flags instead.
 GLOBAL_LIST_INIT(exp_specialmap, list(
 	EXP_TYPE_LIVING = list(), // all living mobs
 	EXP_TYPE_ANTAG = list(),
 	EXP_TYPE_SPECIAL = list(
-		"Lifebringer",
-		"Ash Walker",
-		"Exile",
+		ROLE_LIFEBRINGER,
+		ROLE_ASHWALKER,
+		ROLE_EXILE,
 		ROLE_SERVANT_GOLEM,
 		ROLE_FREE_GOLEM,
-		"Hermit",
-		"Translocated Vet",
-		"Escaped Prisoner",
-		"Hotel Staff",
-		"SuperFriend",
-		"Space Syndicate",
-		"Ancient Crew",
-		"Space Doctor",
-		"Space Bartender",
-		"Beach Bum",
-		"Skeleton",
-		"Zombie",
-		"Space Bar Patron",
-		"Lavaland Syndicate",
-		"Maintenance Drone",
-		"Ghost Role",
+		ROLE_HERMIT,
+		ROLE_ESCAPED_PRISONER,
+		ROLE_HOTEL_STAFF,
+		ROLE_SPACE_SYNDICATE,
+		ROLE_ANCIENT_CREW,
+		ROLE_SPACE_DOCTOR,
+		ROLE_SPACE_BARTENDER,
+		ROLE_BEACH_BUM,
+		ROLE_SKELETON,
+		ROLE_ZOMBIE,
+		ROLE_SPACE_BAR_PATRON,
+		ROLE_LAVALAND_SYNDICATE,
+		ROLE_MAINTENANCE_DRONE,
+		ROLE_GHOST_ROLE,
 		), // Ghost roles
 	EXP_TYPE_GHOST = list() // dead people, observers
 ))
