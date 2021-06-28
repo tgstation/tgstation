@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Jaunting spells of all types (except for Nightmare) no longer allow for the user to end up inside a wall or most other dense objects. Instead, you will be moved to a valid spot on the path you took, or returned to your start location."
