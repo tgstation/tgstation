@@ -74,14 +74,13 @@
 		active_power_usage = 0
 		use_power = NO_POWER_USE
 	else
-		idle_power_usage = max(0, idle_power_usage - total_rating)
-		active_power_usage = max(0, active_power_usage - total_rating)
+		update_power_usage(IDLE_POWER_USE, max(0, idle_power_usage - total_rating))
+		update_power_usage(ACTIVE_POWER_USE, max(0, active_power_usage - total_rating))
 	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
 	if(board)
 		suction_enabled = board.suction
 		transmit_enabled = board.transmit
 
-	update_power_usage()
 
 /obj/machinery/dish_drive/process()
 	if(time_since_dishes <= world.time && transmit_enabled)

@@ -447,9 +447,8 @@
 		set_light(0)
 	update_appearance()
 
-	active_power_usage = (brightness * 30)
+	update_power_usage(ACTIVE_POWER_USE, brightness * 30)
 
-	update_power_usage()
 	broken_sparks(start_only=TRUE)
 
 /obj/machinery/light/update_atom_colour()
