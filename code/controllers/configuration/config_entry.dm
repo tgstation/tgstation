@@ -58,7 +58,7 @@
 	return ..()
 
 /datum/config_entry/proc/VASProcCallGuard(str_val)
-	. = !((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	. = !((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall())
 	if(!.)
 		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
 
