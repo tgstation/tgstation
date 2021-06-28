@@ -23854,9 +23854,6 @@
 	},
 /turf/open/floor/wood,
 /area/service/library)
-"ffc" = (
-/turf/closed/wall,
-/area/service/kitchen/coldroom)
 "ffe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -24580,17 +24577,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
-"ftR" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/white,
-/area/science/research)
 "fub" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -26576,11 +26562,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"ggv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/science/research)
 "ggA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -35910,6 +35891,7 @@
 	name = "Security Requests Console"
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "jNk" = (
@@ -49812,6 +49794,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/security/prison)
+"pgZ" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/science/research)
 "phh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -55109,6 +55102,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "roW" = (
@@ -55684,6 +55678,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
+"rzx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/science/research)
 "rzK" = (
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
@@ -73465,6 +73464,9 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/command/nuke_storage)
+"yiX" = (
+/turf/closed/wall,
+/area/service/kitchen/coldroom)
 "yja" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
@@ -114933,7 +114935,7 @@ hmN
 hmN
 vXT
 ecX
-ftR
+pgZ
 ecX
 tSp
 der
@@ -117243,9 +117245,9 @@ der
 der
 der
 der
-ggv
+rzx
 nFJ
-ggv
+rzx
 der
 der
 der
@@ -160125,10 +160127,10 @@ sUz
 nqs
 qxK
 amK
-ffc
+yiX
 adp
-ffc
-ffc
+yiX
+yiX
 ayP
 vRt
 ltP
@@ -160385,7 +160387,7 @@ amK
 acK
 gQi
 aXK
-ffc
+yiX
 aBQ
 msi
 aTJ
@@ -160642,7 +160644,7 @@ acw
 aUO
 mQa
 apq
-ffc
+yiX
 ltD
 hmf
 aEU
@@ -161156,7 +161158,7 @@ amK
 acW
 hFl
 auC
-ffc
+yiX
 wzb
 fAF
 anI
@@ -161413,7 +161415,7 @@ amK
 abv
 atV
 aKQ
-ffc
+yiX
 aiT
 jGO
 wDL
@@ -161667,10 +161669,10 @@ ssw
 vFb
 azY
 amK
-ffc
-ffc
-ffc
-ffc
+yiX
+yiX
+yiX
+yiX
 afA
 qVG
 tzb
