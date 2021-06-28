@@ -257,7 +257,7 @@
 		return
 	var/list/display_names = list()
 	var/list/nullrod_icons = list()
-	for(var/rod in subtypesof(/obj/item/nullrod))
+	for(var/rod in typesof(/obj/item/nullrod))
 		var/obj/item/nullrod/rodtype = rod
 		if(initial(rodtype.chaplain_spawnable))
 			var/datum/radial_menu_choice/option = new
