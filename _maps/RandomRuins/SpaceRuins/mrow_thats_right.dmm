@@ -430,7 +430,6 @@
 /obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/bodybag/environmental/prisoner,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "bs" = (

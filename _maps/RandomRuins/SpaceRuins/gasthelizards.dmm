@@ -212,21 +212,9 @@
 /area/ruin/space/has_grav/gasthelizard)
 "D" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/straight_jacket{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/syringe/lethal{
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/syringe/lethal/choral{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/bodybag/environmental/prisoner{
-	pixel_x = 5;
-	pixel_y = 13
-	},
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/reagent_containers/syringe/lethal,
+/obj/item/reagent_containers/syringe/lethal/choral,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "E" = (

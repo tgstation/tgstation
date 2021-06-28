@@ -617,9 +617,6 @@
 /area/tcommsat/oldaisat)
 "cg" = (
 /obj/structure/table,
-/obj/item/bodybag/environmental/prisoner{
-	pixel_y = 8
-	},
 /obj/item/circular_saw,
 /turf/open/floor/iron/dark/airless,
 /area/tcommsat/oldaisat)
