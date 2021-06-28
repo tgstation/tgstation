@@ -1,0 +1,5 @@
+author: "Sheits"
+delete-after: True
+changes: 
+  - balance: "Reduces the maximum weight paradox bags can hold"
+  - imageadd: "Adds paradox bag icon and belt sprites"
