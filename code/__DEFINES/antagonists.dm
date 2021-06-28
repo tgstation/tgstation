@@ -71,6 +71,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_FLESH "Flesh"
 #define PATH_VOID "Void"
 
+#define CONSTRUCT_JUGGERNAUT "Juggernaut"
+#define CONSTRUCT_WRAITH "Wraith"
+#define CONSTRUCT_ARTIFICER "Artificer"
+
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20

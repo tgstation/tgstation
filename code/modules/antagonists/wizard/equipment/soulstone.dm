@@ -260,7 +260,7 @@
 				var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 				if(!T || !T.loc)
 					return
-				makeNewConstructFromClass(construct_class, theme, A, user, FALSE, T.loc)
+				make_new_construct_from_class(construct_class, theme, A, user, FALSE, T.loc)
 				A.mind?.remove_antag_datum(/datum/antagonist/cult)
 				qdel(T)
 				qdel(src)
@@ -274,9 +274,9 @@
 		return FALSE
 	return TRUE
 
-/proc/makeNewConstructFromClass(construct_class, theme, mob/target, mob/creator, cultoverride, loc_override)
+/proc/make_new_construct_from_class(construct_class, theme, mob/target, mob/creator, cultoverride, loc_override)
 	switch(construct_class)
-		if("Juggernaut")
+		if(CONSTRUCT_JUGGERNAUT)
 			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
@@ -286,7 +286,7 @@
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, target, creator, cultoverride, loc_override)
-		if("Wraith")
+		if(CONSTRUCT_WRAITH)
 			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
@@ -296,7 +296,7 @@
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
 					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, target, creator, cultoverride, loc_override)
-		if("Artificer")
+		if(CONSTRUCT_ARTIFICER)
 			if(IS_CULTIST(creator))
 				makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 			switch(theme)
