@@ -63,7 +63,9 @@
 		START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		to_chat(quirk_holder, gain_text)
+		// Not all quirks have gain_text. Some inflict traumas and use their gain_text, others have no feedback at all.
+		if(gain_text)
+			to_chat(quirk_holder, gain_text)
 		add_unique()
 
 		if(quirk_holder.client)
