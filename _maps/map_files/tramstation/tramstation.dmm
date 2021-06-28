@@ -7148,6 +7148,7 @@
 	dir = 5
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "awX" = (
@@ -18385,6 +18386,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
 "cXQ" = (
@@ -25019,6 +25021,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"fDe" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/science/research)
 "fDf" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
@@ -28258,17 +28271,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
-"gPs" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/white,
-/area/science/research)
 "gPt" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -42906,11 +42908,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
-"mtk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/science/research)
 "mtB" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -57749,6 +57746,11 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
+"spB" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/science/research)
 "spP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -114927,7 +114929,7 @@ hmN
 hmN
 vXT
 ecX
-gPs
+fDe
 ecX
 tSp
 der
@@ -117237,9 +117239,9 @@ der
 der
 der
 der
-mtk
+spB
 nFJ
-mtk
+spB
 der
 der
 der
