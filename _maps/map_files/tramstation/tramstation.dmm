@@ -5644,6 +5644,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint)
 "ass" = (
@@ -20806,17 +20807,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/command/storage/eva)
-"dSa" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/white,
-/area/science/research)
 "dSb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -23864,6 +23854,9 @@
 	},
 /turf/open/floor/wood,
 /area/service/library)
+"ffc" = (
+/turf/closed/wall,
+/area/service/kitchen/coldroom)
 "ffe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -24587,6 +24580,17 @@
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
+"ftR" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/science/research)
 "fub" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -26572,6 +26576,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"ggv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/science/research)
 "ggA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -46855,9 +46864,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/research)
-"oei" = (
-/turf/closed/wall,
-/area/service/kitchen/coldroom)
 "oep" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -51347,11 +51353,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
-"pLF" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/science/research)
 "pLR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -114932,7 +114933,7 @@ hmN
 hmN
 vXT
 ecX
-dSa
+ftR
 ecX
 tSp
 der
@@ -117242,9 +117243,9 @@ der
 der
 der
 der
-pLF
+ggv
 nFJ
-pLF
+ggv
 der
 der
 der
@@ -160124,10 +160125,10 @@ sUz
 nqs
 qxK
 amK
-oei
+ffc
 adp
-oei
-oei
+ffc
+ffc
 ayP
 vRt
 ltP
@@ -160384,7 +160385,7 @@ amK
 acK
 gQi
 aXK
-oei
+ffc
 aBQ
 msi
 aTJ
@@ -160641,7 +160642,7 @@ acw
 aUO
 mQa
 apq
-oei
+ffc
 ltD
 hmf
 aEU
@@ -161155,7 +161156,7 @@ amK
 acW
 hFl
 auC
-oei
+ffc
 wzb
 fAF
 anI
@@ -161412,7 +161413,7 @@ amK
 abv
 atV
 aKQ
-oei
+ffc
 aiT
 jGO
 wDL
@@ -161666,10 +161667,10 @@ ssw
 vFb
 azY
 amK
-oei
-oei
-oei
-oei
+ffc
+ffc
+ffc
+ffc
 afA
 qVG
 tzb
