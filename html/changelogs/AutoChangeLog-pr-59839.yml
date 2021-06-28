@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Obsessed antags will now recieve a chat message stating the antag's policy flavour text, if any such policy exists in config."
