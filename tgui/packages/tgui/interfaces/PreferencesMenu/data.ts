@@ -29,6 +29,11 @@ export enum Food {
   Vegetables = "VEGETABLES",
 }
 
+export type Name = {
+  explanation: string;
+  value: string;
+};
+
 export type ServerSpeciesData = {
   name: string;
 
@@ -54,10 +59,9 @@ export type PreferencesMenuData = {
   character_preview_view: string;
   character_profiles: (CharacterProfile | null)[];
 
-  real_name: string;
-
   character_preferences: {
     clothing: Record<string, AssetWithIcon>;
+    names: Record<string, Name>;
 
     misc: {
       gender: Gender;
@@ -67,4 +71,6 @@ export type PreferencesMenuData = {
 
   generated_preference_values?: Record<string, Record<string, string>>;
   species: Record<string, ServerSpeciesData>;
+
+  name_to_use: string;
 };

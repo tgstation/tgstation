@@ -1,7 +1,6 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
-import { Window } from "../../layouts";
+import { Box, Button, ByondUi, FitText, Flex, Icon, Input, Popper, Stack } from "../../components";
 import { createSetPreference, PreferencesMenuData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
@@ -146,6 +145,38 @@ const GenderButton = (props: {
   );
 };
 
+const NameItem = (props) => {
+  return (
+    <Stack.Item style={{
+      position: "relative",
+    }}>
+      <Button fontSize="20px" textAlign="center" width="100%">
+        <Box as="span" width="97%">
+          <Icon name="edit" opacity="60%" />
+
+          <FitText maxFontSize={18} maxWidth={150}>
+            {props.name}
+          </FitText>
+        </Box>
+      </Button>
+
+      <Button as="span" tooltip="Alternate Names" tooltipPosition="bottom" style={{
+        background: "rgba(0, 0, 0, 0.7)",
+        position: "absolute",
+        right: "2px",
+        top: "20%",
+        width: "2%",
+      }}>
+        <Icon name="ellipsis-v" style={{
+          "position": "relative",
+          "left": "1px",
+          "min-width": "0px",
+        }} />
+      </Button>
+    </Stack.Item>
+  );
+};
+
 export const MainPage = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState(context, "currentClothingMenu", null);
@@ -175,6 +206,12 @@ export const MainPage = (props, context) => {
               height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
               id={data.character_preview_view} />
           </Stack.Item>
+
+          <NameItem name="Lord Sport Shooter Gavin XBIV" />
+          <NameItem name="Jimmy Pneumonoultramicroscopicsilicovolcan" />
+          <NameItem name="Capt. Paxium LXIX" />
+          <NameItem name="Mothblocks" />
+          <NameItem name="Asher Feigenbaum" />
         </Stack>
       </Stack.Item>
 

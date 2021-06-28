@@ -238,7 +238,7 @@
 	observer.client = client
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
-		observer.real_name = observer.client.prefs.real_name
+		observer.real_name = observer.client.prefs.read_preference(/datum/preference/name/real_name)
 		observer.name = observer.real_name
 		observer.client.init_verbs()
 	observer.update_appearance()
@@ -446,9 +446,8 @@
 	if(frn)
 		client.prefs.random_character()
 
-		var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
-		var/datum/species/species = new species_type
-		client.prefs.real_name = species.random_name(gender,1)
+		// MOTHBLOCKS TODO: Species specific random names
+		// client.prefs.real_name = species.random_name(gender,1)
 
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)

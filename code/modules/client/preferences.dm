@@ -67,7 +67,6 @@ GLOBAL_VAR(preferences_species_data)
 
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
-	var/real_name //our character's name
 	var/gender = MALE //gender of character (well duh)
 	var/age = 30 //age of character
 	var/underwear_color = "000" //underwear color
@@ -81,6 +80,7 @@ GLOBAL_VAR(preferences_species_data)
 	var/skin_tone = "caucasian1" //Skin color
 	var/eye_color = "000" //Eye color
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
+	/// MOTHBLOCKS TODO: Remove and make this a part of random_character's arguments
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/phobia = "spiders"
 
@@ -181,10 +181,6 @@ GLOBAL_VAR(preferences_species_data)
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 
-	var/species_type = read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
-	real_name = species.random_name(gender,1)
-
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
@@ -220,7 +216,9 @@ GLOBAL_VAR(preferences_species_data)
 	data["character_profiles"] = create_character_profiles()
 	data["character_preferences"] = compile_character_preferences(user)
 	data["character_preview_view"] = character_preview_view.assigned_map
-	data["real_name"] = real_name
+
+	// MOTHBLOCKS TODO: If there is ever more than this, add a /datum/preference_middleware type
+	data["name_to_use"] = "real_name" // MOTHBLOCKS TODO: Change to AI name, clown name, etc depending on circumstances
 
 	return data
 
@@ -251,7 +249,6 @@ GLOBAL_VAR(preferences_species_data)
 			// SAFETY: `load_character` performs sanitization the slot number
 			if (!load_character(params["slot"]))
 				random_character()
-				real_name = random_unique_name(gender)
 				// save_character()
 
 			character_preview_view.update_body()
@@ -444,21 +441,19 @@ GLOBAL_VAR(preferences_species_data)
 		if(can_be_random_hardcore())
 			hardcore_random_setup(character, antagonist, is_latejoiner)
 
-	if(roundstart_checks)
-		if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/choiced/species) == /datum/species/human))
-			var/firstspace = findtext(real_name, " ")
-			var/name_length = length(real_name)
-			if(!firstspace) //we need a surname
-				real_name += " [pick(GLOB.last_names)]"
-			else if(firstspace == name_length)
-				real_name += "[pick(GLOB.last_names)]"
+	// MOTHBLOCKS TODO: Put this on name/real_name/apply
+	// if(roundstart_checks)
+	// 	if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/choiced/species) == /datum/species/human))
+	// 		var/firstspace = findtext(real_name, " ")
+	// 		var/name_length = length(real_name)
+	// 		if(!firstspace) //we need a surname
+	// 			real_name += " [pick(GLOB.last_names)]"
+	// 		else if(firstspace == name_length)
+	// 			real_name += "[pick(GLOB.last_names)]"
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		preference.apply(character, read_preference(preference_type))
-
-	character.real_name = real_name
-	character.name = character.real_name
 
 	character.age = age
 	if(gender == MALE || gender == FEMALE)

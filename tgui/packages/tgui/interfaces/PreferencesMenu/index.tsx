@@ -57,6 +57,7 @@ export const PreferencesMenu = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
+            {/* MOTHBLOCKS TODO: Change activeName to slot indexes */}
             <CharacterProfiles activeName={data.real_name} onClick={(slot) => {
               act("change_slot", {
                 slot: slot + 1,

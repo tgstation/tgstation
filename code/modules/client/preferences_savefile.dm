@@ -376,7 +376,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 
 	//Character
-	READ_FILE(S["real_name"], real_name)
 	READ_FILE(S["gender"], gender)
 	READ_FILE(S["body_type"], body_type)
 	READ_FILE(S["age"], age)
@@ -445,11 +444,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S) //needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	real_name = reject_bad_name(real_name)
 	gender = sanitize_gender(gender)
 	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
-	if(!real_name)
-		real_name = random_unique_name(gender)
 
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
@@ -526,7 +522,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	WRITE_FILE(S["real_name"] , real_name)
 	WRITE_FILE(S["gender"] , gender)
 	WRITE_FILE(S["body_type"] , body_type)
 	WRITE_FILE(S["age"] , age)
