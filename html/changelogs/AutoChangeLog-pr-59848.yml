@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - balance: "Knives (such as the kitchen knife, hunting knife, combat knife, etc...) are generally more effective at causing slashing wounds now. The butcher's cleaver in particular is now equal to a circular saw in terms of wounding."
+  - balance: "Scalpels are an eensy bit less effective at wounding enemies wearing armor, though they are still very effective at causing bleeding."
