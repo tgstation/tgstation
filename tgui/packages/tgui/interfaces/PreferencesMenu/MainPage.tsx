@@ -145,54 +145,76 @@ const GenderButton = (props: {
   );
 };
 
-const NameItem = (props) => {
-  return (
-    <Stack.Item style={{
-      position: "relative",
-    }}>
-      <Button textAlign="center" width="100%" height="28px">
-        <Stack align="center" fill>
-          <Stack.Item>
-            <Icon style={{
-              "color": "rgba(255, 255, 255, 0.5)",
-              "font-size": "17px",
-            }} name="edit" />
-          </Stack.Item>
+const NameInput = (props: {
+  handleUpdateName: (name: string) => void,
+  name: string,
+}, context) => {
+  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useLocalState(context, "lastNameBeforeEdit", null);
+  const [input, setInput] = useLocalState(context, "input", props.name);
 
-          <Stack.Item grow position="relative">
+  const updateName = (e, value) => {
+    setLastNameBeforeEdit(null);
+    props.handleUpdateName(value);
+  };
+
+  return (
+    <Button onClick={() => {
+      setLastNameBeforeEdit(props.name);
+      setInput(props.name);
+    }} textAlign="center" width="100%" height="28px">
+      <Stack align="center" fill>
+        <Stack.Item>
+          <Icon style={{
+            "color": "rgba(255, 255, 255, 0.5)",
+            "font-size": "17px",
+          }} name="edit" />
+        </Stack.Item>
+
+        <Stack.Item grow position="relative">
+          {lastNameBeforeEdit === props.name && (
+            <Input
+              autoSelect
+              onEnter={updateName}
+              onChange={updateName}
+              onEscape={() => {
+                setLastNameBeforeEdit(null);
+              }}
+              value={input}
+            />
+          ) || (
             <FitText maxFontSize={16} maxWidth={130}>
               {props.name}
             </FitText>
+          )}
 
-            <Box style={{
-              "border-bottom": "2px dotted rgba(255, 255, 255, 0.6)",
-              right: "50%",
-              transform: "translateX(50%)",
-              position: "absolute",
-              width: "90%",
-              bottom: "-1px",
+          <Box style={{
+            "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
+            right: "50%",
+            transform: "translateX(50%)",
+            position: "absolute",
+            width: "90%",
+            bottom: "-1px",
+          }} />
+        </Stack.Item>
+
+        <Stack.Item>
+          <Button as="span" tooltip="Alternate Names" tooltipPosition="bottom" style={{
+            background: "rgba(0, 0, 0, 0.7)",
+            position: "absolute",
+            right: "2px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "2%",
+          }}>
+            <Icon name="ellipsis-v" style={{
+              "position": "relative",
+              "left": "1px",
+              "min-width": "0px",
             }} />
-          </Stack.Item>
-
-          <Stack.Item>
-            <Button as="span" tooltip="Alternate Names" tooltipPosition="bottom" style={{
-              background: "rgba(0, 0, 0, 0.7)",
-              position: "absolute",
-              right: "2px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              width: "2%",
-            }}>
-              <Icon name="ellipsis-v" style={{
-                "position": "relative",
-                "left": "1px",
-                "min-width": "0px",
-              }} />
-            </Button>
-          </Stack.Item>
-        </Stack>
-      </Button>
-    </Stack.Item>
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </Button>
   );
 };
 
@@ -226,11 +248,13 @@ export const MainPage = (props, context) => {
               id={data.character_preview_view} />
           </Stack.Item>
 
-          <NameItem name="Lord Sport Shooter Gavin XBIV" />
-          <NameItem name="Jimmy Pneumonoultramicroscopicsilicovolcan" />
-          <NameItem name="Capt. Paxium LXIX" />
-          <NameItem name="Mothblocks" />
-          <NameItem name="Asher Feigenbaum" />
+          <Stack.Item position="relative">
+            <NameInput
+              name={data.character_preferences.names[data.name_to_use].value}
+              handleUpdateName={createSetPreference(act, data.name_to_use)}
+            />
+          </Stack.Item>
+
         </Stack>
       </Stack.Item>
 
