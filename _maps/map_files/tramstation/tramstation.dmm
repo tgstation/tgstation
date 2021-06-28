@@ -17725,6 +17725,17 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
+"cKv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/science/research)
 "cKC" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -18752,9 +18763,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
-"deT" = (
-/turf/closed/wall,
-/area/service/kitchen/coldroom)
 "dfo" = (
 /obj/machinery/power/apc/auto_name/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -21124,6 +21132,9 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"dYT" = (
+/turf/closed/wall,
+/area/service/kitchen/coldroom)
 "dYV" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
@@ -41442,6 +41453,13 @@
 	},
 /turf/open/floor/iron,
 /area/medical/virology)
+"lNh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit)
 "lNm" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -46236,11 +46254,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"nQc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/science/research)
 "nQj" = (
 /turf/closed/wall,
 /area/tcommsat/server)
@@ -46404,17 +46417,6 @@
 "nTn" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
-"nTp" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/white,
-/area/science/research)
 "nTD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	name = "Server Vent"
@@ -65522,6 +65524,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
+"vmf" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/science/research)
 "vml" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -114939,7 +114946,7 @@ hmN
 hmN
 vXT
 ecX
-nTp
+cKv
 ecX
 tSp
 der
@@ -117249,9 +117256,9 @@ der
 der
 der
 der
-nQc
+vmf
 nFJ
-nQc
+vmf
 der
 der
 der
@@ -160131,10 +160138,10 @@ sUz
 nqs
 qxK
 amK
-deT
+dYT
 adp
-deT
-deT
+dYT
+dYT
 ayP
 vRt
 ltP
@@ -160391,7 +160398,7 @@ amK
 acK
 gQi
 aXK
-deT
+dYT
 aBQ
 msi
 aTJ
@@ -160648,7 +160655,7 @@ acw
 aUO
 mQa
 apq
-deT
+dYT
 ltD
 hmf
 aEU
@@ -161162,7 +161169,7 @@ amK
 acW
 hFl
 auC
-deT
+dYT
 wzb
 fAF
 anI
@@ -161419,7 +161426,7 @@ amK
 abv
 atV
 aKQ
-deT
+dYT
 aiT
 jGO
 wDL
@@ -161673,10 +161680,10 @@ ssw
 vFb
 azY
 amK
-deT
-deT
-deT
-deT
+dYT
+dYT
+dYT
+dYT
 afA
 qVG
 tzb
@@ -185083,7 +185090,7 @@ vNK
 ooX
 aEQ
 kkf
-xNV
+lNh
 xNV
 the
 abm
