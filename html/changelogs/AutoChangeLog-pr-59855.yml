@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fixed issue which made cooked steaks inedible. You should now be able to eat griddled steaks again."
