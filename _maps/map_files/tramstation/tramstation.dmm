@@ -15486,6 +15486,7 @@
 /obj/item/mmi,
 /obj/item/mmi,
 /obj/item/mmi,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "bPs" = (
@@ -18751,6 +18752,9 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
+"deT" = (
+/turf/closed/wall,
+/area/service/kitchen/coldroom)
 "dfo" = (
 /obj/machinery/power/apc/auto_name/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -21245,6 +21249,7 @@
 "ebe" = (
 /obj/structure/table,
 /obj/item/ai_module/reset,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "ebt" = (
@@ -34470,6 +34475,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "jjN" = (
@@ -46230,6 +46236,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"nQc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/science/research)
 "nQj" = (
 /turf/closed/wall,
 /area/tcommsat/server)
@@ -46393,6 +46404,17 @@
 "nTn" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
+"nTp" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/science/research)
 "nTD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	name = "Server Vent"
@@ -48736,6 +48758,7 @@
 	id = "cytologylockdown";
 	name = "Cytology Lockdown"
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "oNe" = (
@@ -49794,17 +49817,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/security/prison)
-"pgZ" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/white,
-/area/science/research)
 "phh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -55678,11 +55690,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
-"rzx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/science/research)
 "rzK" = (
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
@@ -73464,9 +73471,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/command/nuke_storage)
-"yiX" = (
-/turf/closed/wall,
-/area/service/kitchen/coldroom)
 "yja" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
@@ -114935,7 +114939,7 @@ hmN
 hmN
 vXT
 ecX
-pgZ
+nTp
 ecX
 tSp
 der
@@ -117245,9 +117249,9 @@ der
 der
 der
 der
-rzx
+nQc
 nFJ
-rzx
+nQc
 der
 der
 der
@@ -160127,10 +160131,10 @@ sUz
 nqs
 qxK
 amK
-yiX
+deT
 adp
-yiX
-yiX
+deT
+deT
 ayP
 vRt
 ltP
@@ -160387,7 +160391,7 @@ amK
 acK
 gQi
 aXK
-yiX
+deT
 aBQ
 msi
 aTJ
@@ -160644,7 +160648,7 @@ acw
 aUO
 mQa
 apq
-yiX
+deT
 ltD
 hmf
 aEU
@@ -161158,7 +161162,7 @@ amK
 acW
 hFl
 auC
-yiX
+deT
 wzb
 fAF
 anI
@@ -161415,7 +161419,7 @@ amK
 abv
 atV
 aKQ
-yiX
+deT
 aiT
 jGO
 wDL
@@ -161669,10 +161673,10 @@ ssw
 vFb
 azY
 amK
-yiX
-yiX
-yiX
-yiX
+deT
+deT
+deT
+deT
 afA
 qVG
 tzb
