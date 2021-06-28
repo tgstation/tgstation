@@ -215,6 +215,7 @@
 		"comp_ram",
 		"comp_random",
 		"comp_self",
+		"comp_soundemitter",
 		"comp_species",
 		"comp_speech",
 		"comp_speech",
