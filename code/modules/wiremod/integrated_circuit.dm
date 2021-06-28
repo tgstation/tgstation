@@ -439,6 +439,7 @@
 			. = TRUE
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
+	SIGNAL_HANDLER
 	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
 

@@ -431,6 +431,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			continue
 		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
+		if (SS.postponed_fires >= 1)
+			SS.postponed_fires--
+			SS.update_nextfire()
+			continue
 		SS.enqueue()
 	. = 1
 
@@ -525,20 +529,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 			queue_node.last_fire = world.time
 			queue_node.times_fired++
-			
-			var/postpone = queue_node.next_fire - queue_node.queued_time 
-			
-			if (queue_node_flags & SS_TICKER)
-				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
-			else if (queue_node_flags & SS_POST_FIRE_TIMING)
-				queue_node.next_fire = world.time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
-			else if (queue_node_flags & SS_KEEP_TIMING)
-				queue_node.next_fire += queue_node.wait
-			else
-				queue_node.next_fire = queue_node.queued_time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
 
-			if (postpone >= world.tick_lag)
-				queue_node.next_fire += postpone
+			queue_node.update_nextfire()
 
 			queue_node.queued_time = 0
 
