@@ -103,14 +103,14 @@
 
 	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
-		//0 = dont run the auto
-		//1 = run auto, use idle
-		//2 = run auto, use active
+		//0 = dont use power
+		//1 = use idle_power_usage
+		//2 = use active_power_usage
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
 	var/idle_power_usage = 0
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
 	var/active_power_usage = 0
-	///the current amount of static power load this machine gives to its area
+	///the current amount of static power usage this machine is taking from its area
 	var/static_power_usage = 0 //try to not use this at first, just the idle and active power usage vars
 	var/power_channel = AREA_USAGE_EQUIP
 		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
@@ -166,7 +166,7 @@
 	. = ..()
 	power_change()
 	if(use_power)
-		update_power_usage()
+		update_power_usage(use_power, use_power == IDLE_POWER_USE ? idle_power_usage : active_power_usage)
 	become_area_sensitive(ROUNDSTART_TRAIT)
 	var/area/our_area = get_area(src)
 	if(our_area)
@@ -185,7 +185,8 @@
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
-	update_power_usage()
+	update_power_usage(use_power, use_power == IDLE_POWER_USE ? idle_power_usage : active_power_usage)
+	//TODOKYLER: get an actual updating proc for this
 	power_change()
 	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
@@ -394,27 +395,33 @@
 
 	return old_usage
 
-///main proc for updating static power usage from this machines area. call this after redefining idle or active power usage
-/obj/machinery/proc/update_power_usage(new_use_power = use_power, new_power_channel = power_channel)
-	if(new_use_power != use_power)
-		update_use_power(new_use_power)
+//TODOKYLER: holy fuck this autodoc sucks make this clearer
+/**
+ * updates the specified power mode usage of this machine and if the machine is using that mode, the actual power usage
+ *
+ * Arguments:
+ * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
+ * * new_usage - the new value to set the specified power mode var to
+ */
+/obj/machinery/proc/update_power_usage(use_power_mode, new_usage)
+	if(use_power_mode == NO_POWER_USE && new_usage)
+		return FALSE
+	if(use_power_mode && use_power_mode == use_power)
+		unset_static_power() //completely remove our static_power_usage from our area, then readd new_usage
 
-	unset_static_power()
-
-	switch(use_power)
-		if(NO_POWER_USE)
-			return
+	switch(use_power_mode)
 		if(IDLE_POWER_USE)
-			static_power_usage = idle_power_usage
+			idle_power_usage = new_usage
 		if(ACTIVE_POWER_USE)
-			static_power_usage = active_power_usage
+			active_power_usage = new_usage
+
+	if(use_power_mode == use_power)
+		static_power_usage = new_usage
 
 	var/area/our_area = get_area(src)
 
 	if(our_area)
-		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(new_power_channel))
-
-		power_channel = new_power_channel
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
 
 	return TRUE
 

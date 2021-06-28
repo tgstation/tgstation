@@ -1308,34 +1308,6 @@
 		else if(longtermpower > -10)
 			longtermpower -= 2
 
-		switch(cell.percent())
-			if(-INFINITY to 0)
-				equipment = autoset(equipment, AUTOSET_FORCE_OFF)
-				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
-				environ = autoset(environ, AUTOSET_FORCE_OFF)
-				area.poweralert(TRUE, src)
-
-			if(0 to 15)
-				if(longtermpower < 0)
-					equipment = autoset(equipment, AUTOSET_OFF)
-					lighting = autoset(lighting, AUTOSET_OFF)
-					environ = autoset(environ, AUTOSET_ON)
-					area.poweralert(TRUE, src)
-
-			if(0 to 30)
-				if(longtermpower < 0)
-					equipment = autoset(equipment, AUTOSET_OFF)
-					lighting = autoset(lighting, AUTOSET_ON)
-					environ = autoset(environ, AUTOSET_ON)
-					area.poweralert(TRUE, src)
-
-			else
-				equipment = autoset(equipment, AUTOSET_ON)
-				lighting = autoset(lighting, AUTOSET_ON)
-				environ = autoset(environ, AUTOSET_ON)
-				area.poweralert(FALSE, src)
-
-		/* //TODOKYLER: pick either this or the one above
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
@@ -1358,7 +1330,6 @@
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
 			area.poweralert(FALSE, src)
-		*/
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
