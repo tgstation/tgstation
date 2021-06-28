@@ -8,9 +8,9 @@
 /datum/config_entry
 	/// Read-only, this is determined by the last portion of the derived entry type
 	var/name
-	/// The configured value for this entry
+	/// The configured value for this entry. This shouldn't be initialized in code, instead set default
 	var/config_entry_value
-	/// Read-only default value for this config entry, used for resetting value to defaults when necessary
+	/// Read-only default value for this config entry, used for resetting value to defaults when necessary. This is what config_entry_value is initially set to
 	var/default
 	/// The file which this was loaded from, if any
 	var/resident_file
@@ -34,6 +34,7 @@
 		CRASH("Abstract config entry [type] instatiated!")
 	name = lowertext(type2top(type))
 	default_protection = protection
+	set_default()
 
 /datum/config_entry/Destroy()
 	config.RemoveEntry(src)
@@ -92,7 +93,7 @@
 	return
 
 /datum/config_entry/string
-	config_entry_value = ""
+	default = ""
 	abstract_type = /datum/config_entry/string
 	var/auto_trim = TRUE
 
@@ -106,7 +107,7 @@
 	return TRUE
 
 /datum/config_entry/number
-	config_entry_value = 0
+	default = 0
 	abstract_type = /datum/config_entry/number
 	var/integer = TRUE
 	var/max_val = INFINITY
@@ -128,7 +129,7 @@
 	return !(var_name in banned_edits) && ..()
 
 /datum/config_entry/flag
-	config_entry_value = FALSE
+	default = FALSE
 	abstract_type = /datum/config_entry/flag
 
 /datum/config_entry/flag/ValidateAndSet(str_val)
@@ -140,7 +141,7 @@
 /// List config entry, used for configuring a list of strings
 /datum/config_entry/str_list
 	abstract_type = /datum/config_entry/str_list
-	config_entry_value = list()
+	default = list()
 	dupes_allowed = TRUE
 
 /datum/config_entry/str_list/ValidateAndSet(str_val)
@@ -153,7 +154,7 @@
 
 /datum/config_entry/number_list
 	abstract_type = /datum/config_entry/number_list
-	config_entry_value = list()
+	default = list()
 
 /datum/config_entry/number_list/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
@@ -173,7 +174,7 @@
 
 /datum/config_entry/keyed_list
 	abstract_type = /datum/config_entry/keyed_list
-	config_entry_value = list()
+	default = list()
 	dupes_allowed = TRUE
 	vv_VAS = FALSE //VAS will not allow things like deleting from lists, it'll just bug horribly.
 	var/key_mode
