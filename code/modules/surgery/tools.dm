@@ -152,7 +152,7 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
-	wound_bonus = 15
+	wound_bonus = 10
 	bare_wound_bonus = 15
 
 /obj/item/scalpel/Initialize()
