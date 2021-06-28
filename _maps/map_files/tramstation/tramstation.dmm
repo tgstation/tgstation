@@ -45792,7 +45792,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/white,
 /area/science/research)
 "nGc" = (
@@ -50808,7 +50808,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
 /area/science/mixing)
 "pCt" = (
@@ -58111,8 +58111,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
 /area/science/mixing)
 "svV" = (
@@ -59073,7 +59073,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
 /area/science/mixing)
 "sSU" = (
@@ -66508,6 +66508,11 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"vIq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/science/research)
 "vIB" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -117222,9 +117227,9 @@ der
 der
 der
 der
-lar
+vIq
 nFJ
-lar
+vIq
 der
 der
 der
