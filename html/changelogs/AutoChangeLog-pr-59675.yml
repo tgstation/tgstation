@@ -1,0 +1,5 @@
+author: "RandomGamer123 and IndieanaJones"
+delete-after: True
+changes: 
+  - qol: "Offering a cyborg on a cult rune now allows the cultist to transform the cyborg into a construct of their choosing."
+  - bugfix: "Offering a cyborg on a cult offer rune no longer creates an empty soulstone and round removes the cyborg."
