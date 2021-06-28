@@ -26,40 +26,45 @@
 		* Passing through in this case ignores anything with the LETPASSTHROW pass flag, such as tables, racks, and morgue trays.
 */
 /turf/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
-	var/turf/T0 = get_turf(neighbor)
+	var/turf/neighbor_turf = get_turf(neighbor)
 
-	if(T0 == src) //same turf
+	if(neighbor_turf == src) //same turf
 		return TRUE
 
-	if(get_dist(src, T0) > 1 || z != T0.z) //too far
+	if(get_dist(src, neighbor_turf) > 1 || z != neighbor_turf.z) //too far
 		return FALSE
 
+	var/border_dir = get_dir(src, neighbor)
 	// Non diagonal case
-	if(T0.x == x || T0.y == y)
+	if(neighbor_turf.x == x || neighbor_turf.y == y)
 		// Check for border blockages
-		return T0.ClickCross(get_dir(T0, src), TRUE, target, mover) && ClickCross(get_dir(src, T0), TRUE, target, mover)
+		return can_click_out_through_dir(border_dir, target, mover) && neighbor_turf.can_click_out_through_dir(REVERSE_DIR(border_dir), target, mover)
+		//return T0.ClickCross(get_dir(T0, src), TRUE, target, mover) && ClickCross(get_dir(src, T0), TRUE, target, mover)
 
 	// Diagonal case
-	var/in_dir = get_dir(T0, src) // eg. northwest (1+8) = 9 (00001001)
-	var/d1 = in_dir & (NORTH|SOUTH)      // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
-	var/d2 = in_dir & (EAST|WEST)  // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
-
-	for(var/d in list(d1,d2))
-		if(!T0.ClickCross(d, TRUE, target, mover))
-			continue // could not leave T0 in that direction
-
-		var/turf/T1 = get_step(T0,d)
-		if(!T1 || T1.density)
-			continue
-		if(!T1.ClickCross(get_dir(T1, src), FALSE, target, mover) || !T1.ClickCross(get_dir(T1, T0), FALSE, target, mover))
-			continue // couldn't enter or couldn't leave T1
-
-		if(!ClickCross(get_dir(src, T1), TRUE, target, mover))
-			continue // could not enter src
-
-		return TRUE // we don't care about our own density
-
+	var/horizontal_dir = border_dir & (EAST|WEST)
+	var/vertical_dir = border_dir & (NORTH|SOUTH)
+	var/turf/cardinal_neighbor = get_step(neighbor, vertical_dir)
+	// Vertical case.
+	if(\
+		cardinal_neighbor\
+		&& can_click_out_through_dir(vertical_dir, target, mover)\
+		&& cardinal_neighbor.can_let_clicks_pass_through_dir(REVERSE_DIR(vertical_dir) | horizontal_dir, target, mover)\
+		&& neighbor_turf.can_click_out_through_dir(REVERSE_DIR(horizontal_dir), target, mover)\
+		)
+		return TRUE
+	else // Horizontal case.
+		cardinal_neighbor = get_step(neighbor, horizontal_dir)
+		if(\
+			cardinal_neighbor\
+			&& can_click_out_through_dir(horizontal_dir, target, mover)\
+			&& cardinal_neighbor.can_let_clicks_pass_through_dir(REVERSE_DIR(horizontal_dir) | vertical_dir, target, mover)\
+			&& neighbor_turf.can_click_out_through_dir(REVERSE_DIR(vertical_dir), target, mover)\
+			)
+			return TRUE
+	
 	return FALSE
+
 
 /*
 	Adjacency (to anything else):
@@ -92,16 +97,142 @@
 	This is defined as any dense ON_BORDER_1 object, or any dense object without LETPASSTHROW.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
-/turf/proc/ClickCross(target_dir, border_only, atom/target, atom/movable/mover)
-	for(var/obj/O in src)
-		if((mover && O.CanPass(mover, target_dir)) || (!mover && !O.density))
-			continue
-		if(O == target || O == mover || (O.pass_flags_self & LETPASSTHROW)) //check if there's a dense object present on the turf
+/turf/proc/ClickCross(target_dir, border_only = FALSE, atom/target, atom/movable/mover)
+	for(var/obj/blocker in src)
+		if(blocker == target || (blocker.pass_flags_self & LETPASSTHROW)) //check if there's a dense object present on the turf
 			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
 
-		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
-			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
+		if(mover)
+			if(blocker == mover)
+				continue
+			if(blocker.CanPass(mover, target_dir))
+				continue
+		else if(!blocker.density)
+			continue
+
+		if(blocker.flags_1 & ON_BORDER_1) // windows are on border, check them first
+			if((blocker.dir & target_dir) || ISDIAGONALDIR(blocker.dir)) // full tile windows are just diagonals mechanically
 				return FALSE   //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
-		else if( !border_only ) // dense, not on border, cannot pass over
+		else if(!border_only) // dense, not on border, cannot pass over
 			return FALSE
+
 	return TRUE
+
+
+/// Checks whether this turf has dense directional blockages on the given direction, taking into account target and mover.
+/turf/proc/can_click_out_through_dir(target_dir, atom/target, atom/movable/mover)
+	for(var/obj/blocker in src)
+		if(blocker == target || (blocker.pass_flags_self & LETPASSTHROW))
+			continue // LETPASSTHROW is used for anything you can click through
+
+		if(mover)
+			if(blocker == mover)
+				continue
+			if(blocker.CanPass(mover, target_dir))
+				continue
+		else if(!blocker.density)
+			continue
+
+		if(!(blocker.flags_1 & ON_BORDER_1)) // windows are on border, check them first
+			continue
+		if((blocker.dir & target_dir) || ISDIAGONALDIR(blocker.dir)) // full tile windows are just diagonals mechanically
+			return FALSE
+
+	return TRUE
+
+
+/// Checks whether this turf has any kind of dense blockers, either full tile or on-border in the given direction, taking into account target and mover.
+/turf/proc/can_let_clicks_pass_through_dir(target_dir, atom/target, atom/movable/mover)
+	if(density)
+		return FALSE
+	for(var/obj/blocker in src)
+		if(blocker == target || (blocker.pass_flags_self & LETPASSTHROW)) //check if there's a dense object present on the turf
+			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
+
+		if(mover)
+			if(blocker == mover)
+				continue
+			if(blocker.CanPass(mover, target_dir))
+				continue
+		else if(!blocker.density)
+			continue
+
+		if(blocker.flags_1 & ON_BORDER_1) // windows are on border, check them first
+			if((blocker.dir & target_dir) || ISDIAGONALDIR(blocker.dir)) // full tile windows are just diagonals mechanically
+				return FALSE
+		else // Dense, not on border, cannot pass over
+			return FALSE
+
+	return TRUE
+
+
+/**
+ * Checks whether this turf can be left from the given direction.
+ */
+/turf/proc/can_move_uncross(border_dir, atom/movable/mover)
+	for(var/obj/blocker in src)
+		if(blocker == mover)
+			continue
+		if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1) || !(blocker.dir & border_dir))
+			continue
+		if(blocker.CanPass(mover, border_dir))
+			continue
+		return FALSE
+	return TRUE
+
+
+/**
+ * Checks whether this turf can be entered by the given mover.
+ */
+/turf/proc/can_move_cross(border_dir, atom/movable/mover)
+	if(density)
+		return FALSE
+	for(var/atom/movable/blocker as anything in src)
+		if(blocker == mover)
+			continue
+		if(!blocker.density)
+			continue
+		if(blocker.CanPass(mover, border_dir))
+			continue
+		return FALSE
+	return TRUE
+
+
+/**
+ * Checks whether a hypothetical mover with given pass_flags can enter this turf from the given direction.
+ * 
+ */
+/turf/proc/can_reach_cross(border_dir, pass_flags_check, atom/movable/target)
+	if(pass_flags_check & PHASING)
+		return TRUE
+	if(density)
+		return FALSE
+	for(var/atom/movable/blocker as anything in src)
+		if(blocker == target)
+			continue
+		if(!blocker.density || blocker.pass_flags_self & pass_flags_check)
+			continue
+		if(blocker.flags_1 & ON_BORDER_1)
+			var/blocker_dir = blocker.dir
+			if(!ISDIAGONALDIR(blocker_dir) && !(blocker_dir & border_dir))
+				continue
+		return FALSE
+	return TRUE
+
+
+/**
+ * Checks whether this turf can be left from the given direction by a hypothetical mover with given pass_flags.
+ */
+/turf/proc/can_reach_uncross(border_dir, pass_flags_check, atom/movable/mover)
+	if(pass_flags_check & PHASING)
+		return TRUE
+	for(var/obj/blocker in src)
+		if(blocker == mover)
+			continue
+		if(!blocker.density || blocker.pass_flags_self & pass_flags_check)
+			continue
+		if(!(blocker.flags_1 & ON_BORDER_1) || !(blocker.dir & border_dir))
+			continue
+		return FALSE
+	return TRUE
+

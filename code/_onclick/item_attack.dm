@@ -270,6 +270,8 @@
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	if(max_reach >= 2 && has_range_for_melee_attack(target, user))
+		return ranged_melee_attack(target, user, click_parameters)
 
 /**
  * Called at the end of the attack chain if the user right-clicked.
@@ -281,7 +283,29 @@
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
 /obj/item/proc/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(max_reach >= 2 && has_range_for_melee_attack(target, user))
+		return ranged_secondary_melee_attack(target, user, click_parameters)
 	return SECONDARY_ATTACK_CALL_NORMAL
+
+
+/// Checks whether the target and the user are on the same z-level, and if there's a direct line allowing for a melee ranged attack.
+/obj/item/proc/has_range_for_melee_attack(atom/target, mob/living/user)
+	if(user.z != target.z)
+		return FALSE
+	var/euclidean_distance = GET_DIST_EUCLIDEAN(user, target)
+	if(euclidean_distance < max(min_reach, 2) || round(euclidean_distance) > max_reach)
+		return FALSE // No need to waste time calculating the path.
+	return user.euclidian_reach(target, max_reach, REACH_ATTACK) == get_turf(target)
+
+
+/// Polearms, extend-o-hands and other long reach item attacks.
+/obj/item/proc/ranged_melee_attack(atom/target, mob/user, click_parameters)
+
+
+/// Polearms, extend-o-hands and other long reach item secondary attacks.
+/obj/item/proc/ranged_secondary_melee_attack(atom/target, mob/user, click_parameters)
+	return SECONDARY_ATTACK_CALL_NORMAL
+
 
 /// Called if the target gets deleted by our attack
 /obj/item/proc/attack_qdeleted(atom/target, mob/user, proximity_flag, click_parameters)

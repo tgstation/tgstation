@@ -60,7 +60,7 @@
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
 	if(!ishuman(mover))
-		if(get_dir(src, mover) == EAST)
+		if(get_dir(src, mover) & EAST)
 			return
 	return FALSE
 

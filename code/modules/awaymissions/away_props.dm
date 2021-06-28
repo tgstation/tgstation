@@ -8,7 +8,7 @@
 
 /obj/effect/oneway/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	return . && border_dir == dir
+	return . && border_dir & dir
 
 
 /obj/effect/wind

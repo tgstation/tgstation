@@ -772,20 +772,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 0
 	throwforce = 5
-	reach = 2
-	var/min_reach = 2
+	max_reach = 2
+
 
 /obj/item/extendohand/acme
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
-/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, params)
-	var/dist = get_dist(M, user)
-	if(dist < min_reach)
-		to_chat(user, span_warning("[M] is too close to use [src] on."))
-		return
-	var/list/modifiers = params2list(params)
-	M.attack_hand(user, modifiers)
+/obj/item/extendohand/acme/ranged_melee_attack(atom/target, mob/user, click_parameters)
+	var/list/modifiers = params2list(click_parameters)
+	target.attack_hand(user, modifiers)
+	return TRUE
+
 
 /obj/item/gohei
 	name = "gohei"

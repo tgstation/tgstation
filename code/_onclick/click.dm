@@ -150,7 +150,7 @@
 		return
 
 	//Standard reach turf to turf or reaching inside storage
-	if(can_reach(A, INVENTORY_DEPTH, W?.reach))
+	if(can_reach(A, INVENTORY_DEPTH))
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
@@ -158,6 +158,8 @@
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A,1,modifiers)
 	else
+		if(!isturf(A) && !isturf(A.loc))
+			return
 		if(W)
 			if(LAZYACCESS(modifiers, RIGHT_CLICK))
 				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)

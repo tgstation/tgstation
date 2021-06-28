@@ -166,8 +166,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
-	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
-	var/reach = 1
+
+	///In tiles, how far this weapon can reach; 1 for adjacent, which is default.
+	var/max_reach = 1
+	///In tiles, how far should target be for this item to be able to interact with it, while held in hands, on click.
+	var/min_reach = 0
 
 	///The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot. For default list, see [/mob/proc/equip_to_appropriate_slot]
 	var/list/slot_equipment_priority = null

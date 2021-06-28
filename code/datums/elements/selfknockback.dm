@@ -41,7 +41,7 @@ clamping the Knockback_Force value below. */
 
 	if(isturf(attacktarget) && !attacktarget.density)
 		return
-	if(proximity_flag || (get_dist(attacktarget, usertarget) <= I.reach))
+	if(proximity_flag || (get_dist(attacktarget, usertarget) <= I.max_reach))
 		var/knockback_force = Get_Knockback_Force(clamp(CEILING((I.force / 10), 1), 1, 5))
 		var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 

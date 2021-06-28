@@ -32,7 +32,7 @@
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
+	if(border_dir & eat_dir)
 		return TRUE
 
 /obj/machinery/plumbing/fermenter/proc/on_entered(datum/source, atom/movable/AM)
