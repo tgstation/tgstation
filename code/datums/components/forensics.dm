@@ -7,10 +7,10 @@
 	var/list/fibers //assoc print = print
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original) //Use of | and |= being different here is INTENTIONAL.
-	fingerprints = LAZYLEN(F.fingerprints) ? fingerprints | F.fingerprints : fingerprints
-	hiddenprints = LAZYLEN(F.hiddenprints) ? hiddenprints | F.hiddenprints : hiddenprints
-	blood_DNA = LAZYLEN(F.blood_DNA) ? blood_DNA | F.blood_DNA : blood_DNA
-	fibers = LAZYLEN(F.fibers) ? fibers | F.fibers : fibers
+	fingerprints = or_two_lazy_lists(fingerprints, F.fingerprints)
+	hiddenprints = or_two_lazy_lists(hiddenprints, F.hiddenprints)
+	blood_DNA = or_two_lazy_lists(blood_DNA, F.blood_DNA)
+	fibers = or_two_lazy_lists(fibers, F.fibers)
 	check_blood()
 	return ..()
 
