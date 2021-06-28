@@ -169,12 +169,6 @@
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 		return
-
-	// If we've gotten this far and haven't early returned, but there's no valid message, use the alt_msg instead as a final fallback.
-	if(!msg)
-		to_chat(src, alt_msg, avoid_highlighting = avoid_highlighting)
-		return
-
 	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
 
 /**
