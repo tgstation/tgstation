@@ -150,28 +150,47 @@ const NameItem = (props) => {
     <Stack.Item style={{
       position: "relative",
     }}>
-      <Button fontSize="20px" textAlign="center" width="100%">
-        <Box as="span" width="97%">
-          <Icon name="edit" opacity="60%" />
+      <Button textAlign="center" width="100%" height="28px">
+        <Stack align="center" fill>
+          <Stack.Item>
+            <Icon style={{
+              "color": "rgba(255, 255, 255, 0.5)",
+              "font-size": "17px",
+            }} name="edit" />
+          </Stack.Item>
 
-          <FitText maxFontSize={18} maxWidth={150}>
-            {props.name}
-          </FitText>
-        </Box>
-      </Button>
+          <Stack.Item grow position="relative">
+            <FitText maxFontSize={16} maxWidth={130}>
+              {props.name}
+            </FitText>
 
-      <Button as="span" tooltip="Alternate Names" tooltipPosition="bottom" style={{
-        background: "rgba(0, 0, 0, 0.7)",
-        position: "absolute",
-        right: "2px",
-        top: "20%",
-        width: "2%",
-      }}>
-        <Icon name="ellipsis-v" style={{
-          "position": "relative",
-          "left": "1px",
-          "min-width": "0px",
-        }} />
+            <Box style={{
+              "border-bottom": "2px dotted rgba(255, 255, 255, 0.6)",
+              right: "50%",
+              transform: "translateX(50%)",
+              position: "absolute",
+              width: "90%",
+              bottom: "-1px",
+            }} />
+          </Stack.Item>
+
+          <Stack.Item>
+            <Button as="span" tooltip="Alternate Names" tooltipPosition="bottom" style={{
+              background: "rgba(0, 0, 0, 0.7)",
+              position: "absolute",
+              right: "2px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: "2%",
+            }}>
+              <Icon name="ellipsis-v" style={{
+                "position": "relative",
+                "left": "1px",
+                "min-width": "0px",
+              }} />
+            </Button>
+          </Stack.Item>
+        </Stack>
       </Button>
     </Stack.Item>
   );
