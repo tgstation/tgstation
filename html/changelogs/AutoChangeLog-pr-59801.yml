@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - refactor: "hunger mechanics are now inherent to stomaches"
-  - expansion: "ethereal charge mechanic is now unique to their stomache and can be transferred freely"
