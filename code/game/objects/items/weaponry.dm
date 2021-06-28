@@ -634,7 +634,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
-	desc = "There ain't a skull in the league that can withstand a swatter."
+	desc = "There ain't a skull in the league that can withstand a swatter. Despite what some may say, it's not a plant."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "baseball_bat"
 	inhand_icon_state = "baseball_bat"
