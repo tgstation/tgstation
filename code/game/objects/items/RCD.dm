@@ -287,14 +287,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		var/skip_to_next_turf = FALSE
 
-		#if MIN_COMPILER_VERSION >= 514
-		#warn Please replace the loop below this warning with an `as anything` loop.
-		#endif
 
-		for (var/_content_of_turf in surrounding_turf.contents)
-			// `as anything` doesn't play well on 513 with special lists such as contents.
-			// When the minimum version is raised to 514, upgrade this to `as anything`.
-			var/atom/content_of_turf = _content_of_turf
+		for (var/atom/content_of_turf as anything in surrounding_turf.contents)
 			if (content_of_turf.density)
 				skip_to_next_turf = TRUE
 				break
@@ -765,7 +759,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	if(has_ammobar)
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
-		. += "[icon_state]_charge[ratio]"
+		if(ratio > 0)
+			. += "[icon_state]_charge[ratio]"
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()

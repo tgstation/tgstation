@@ -122,10 +122,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
 		Bump(atom_crossed_over)
 
-/obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/atom_entered)
+/obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/destination, direction)
 	SIGNAL_HANDLER
-	if(atom_entered.density && isturf(atom_entered))
-		Bump(atom_entered)
+	if(destination.density && isturf(destination))
+		Bump(destination)
 
 /obj/effect/immovablerod/Moved()
 	if(!loc)

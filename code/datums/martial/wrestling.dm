@@ -169,9 +169,10 @@ If you make a derivative work from this code, you must include this notification
 			A.setDir(turn(A.dir, 90))
 			var/turf/T = get_step(A, A.dir)
 			var/turf/S = D.loc
-			if ((S && isturf(S) && S.Exit(D)) && (T && isturf(T) && T.Enter(A)))
+			var/direction = get_dir(D, A)
+			if ((S && isturf(S) && S.Exit(D, direction)) && (T && isturf(T) && T.Enter(A)))
 				D.forceMove(T)
-				D.setDir(get_dir(D, A))
+				D.setDir(direction)
 		else
 			return
 

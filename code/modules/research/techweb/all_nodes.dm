@@ -208,6 +208,8 @@
 		"comp_length",
 		"comp_light",
 		"comp_logic",
+		"comp_mmi",
+		"comp_multiplexer",
 		"comp_not",
 		"comp_radio",
 		"comp_ram",
@@ -642,6 +644,7 @@
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
 		"bot_shell",
+		"door_shell",
 		"controller_shell",
 		"money_bot_shell",
 	)

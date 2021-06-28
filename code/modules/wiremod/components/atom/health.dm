@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/health
 	display_name = "Get Health"
+	display_desc = "A component that returns the health of an organism."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -23,6 +24,14 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/max_range = 5
+
+/obj/item/circuit_component/health/get_ui_notices()
+	. = ..()
+	. += list(list(
+		"icon" = "info",
+		"content" = "Maximum Range: [max_range] tiles",
+		"color" = "orange",
+	))
 
 /obj/item/circuit_component/health/Initialize()
 	. = ..()
