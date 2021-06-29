@@ -232,7 +232,7 @@
 	/// If this item can be used in a reskin variant selection
 	var/chaplain_spawnable = TRUE
 	/// Short description of what this item is capable of, for radial menu uses
-	var/menu_description = "A classic chaplain weapon dealing a decent amount of damage. Fits in pockets. Can be worn on the belt."
+	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/Initialize()
 	. = ..()
@@ -311,19 +311,19 @@
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
 	attack_verb_simple = list("punch", "cross counter", "pummel")
-	menu_description = "An undroppable hand dealing a decent amount of burn damage. Disappears if the arm holding it is cut off."
+	menu_description = "An undroppable god hand dealing a burn damage. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/godhand/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /obj/item/nullrod/staff
+	name = "red holy staff"
+	desc = "It has a mysterious, protective aura."
 	icon_state = "godstaff-red"
 	inhand_icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	name = "red holy staff"
-	desc = "It has a mysterious, protective aura."
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
@@ -359,7 +359,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks and deals a decent amount of damage. Can be worn on the back or belt."
+	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -377,7 +377,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	hitsound = 'sound/hallucinations/growl1.ogg'
-	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks and deals a decent amount of damage. Can be worn on the back or belt."
+	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/chainsaw_sword
 	name = "sacred chainsaw sword"
@@ -391,7 +391,7 @@
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //slower than a real saw
-	menu_description = "A sharp chainsaw sword which provides a low chance of blocking incoming melee attacks and deals a decent amount of damage. Can be used as a slower saw tool. Can be worn on the belt."
+	menu_description = "A sharp chainsaw sword which provides a low chance of blocking incoming melee attacks. Can be used as a slower saw tool. Can be worn on the belt."
 
 /obj/item/nullrod/claymore/glowing
 	name = "force weapon"
@@ -399,7 +399,7 @@
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
 	worn_icon_state = "swordon"
-	menu_description = "A sharp weapon which provides a low chance of blocking incoming melee attacks and deals a decent amount of damage. Can be worn on the back or belt."
+	menu_description = "A sharp weapon which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/katana
 	name = "\improper Hanzo steel"
@@ -407,7 +407,7 @@
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
-	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks and deals a decent amount of damage. Can be worn on the back or belt."
+	menu_description = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
@@ -434,7 +434,7 @@
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/blade1.ogg'
-	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks and deals a decent amount of damage. Can be worn on the belt."
+	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks. Can be worn on the belt."
 
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
@@ -484,7 +484,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
-	menu_description = "A sharp scythe dealing a decent amount of damage which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp scythe which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/Initialize()
 	. = ..()
@@ -501,7 +501,7 @@
 	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
 	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade dealing a decent amount of damage which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade dealing which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/spellblade
 	name = "dormant spellblade"
@@ -513,7 +513,7 @@
 	worn_icon_state = "spellblade"
 	icon = 'icons/obj/guns/magic.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade dealing a decent amount of damage which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade dealing which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/talking
 	name = "possessed blade"
@@ -526,7 +526,7 @@
 	attack_verb_continuous = list("chops", "slices", "cuts")
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade dealing a decent amount of damage which partially penetrates armor. Able to awaken a friendly spirit providing guidance. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit providing guidance. Very effective at butchering bodies. Can be worn on the back."
 	/// If there is a ghost possessing the item
 	var/possessed = FALSE
 
@@ -597,7 +597,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches")
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
-	menu_description = "A hammer dealing a decent amount of damage. Capable of tapping knees to measure brain health. Can be worn on the belt."
+	menu_description = "A war hammer. Capable of tapping knees to measure brain health. Can be worn on the belt."
 
 /obj/item/nullrod/hammer/Initialize()
 	. = ..()
@@ -619,7 +619,7 @@
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 2 //slower than a real saw
-	menu_description = "An undroppable sharp hand dealing a decent amount of damage. Can be used as a very slow saw tool. Capable of butchering bodies. Disappears if the arm holding it is cut off."
+	menu_description = "An undroppable sharp chainsaw hand. Can be used as a very slow saw tool. Capable of slowly butchering bodies. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
@@ -637,7 +637,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	menu_description = "A sharp dagger dealing a decent amount of damage. Fits in pockets. Can be worn on the belt. Honk."
+	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
 
 /obj/item/nullrod/pride_hammer
 	name = "Pride-struck Hammer"
@@ -654,7 +654,7 @@
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
 	hitsound = 'sound/weapons/blade1.ogg'
-	menu_description = "A hammer dealing a decent amount of damage held back a little by a it's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
+	menu_description = "A hammer dealing a little less damage due to it's user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
 
 /obj/item/nullrod/pride_hammer/Initialize()
 	. = ..()
@@ -682,7 +682,7 @@
 	attack_verb_continuous = list("whips", "lashes")
 	attack_verb_simple = list("whip", "lash")
 	hitsound = 'sound/weapons/chainhit.ogg'
-	menu_description = "A whip dealing a decent amount of damage. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
+	menu_description = "A whip. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/fedora
 	name = "atheist's fedora"
@@ -698,7 +698,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("enlightens", "redpills")
 	attack_verb_simple = list("enlighten", "redpill")
-	menu_description = "A sharp fedora dealing a very high amount of throw damage. Can also be worn on the head, obviously."
+	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Can be worn on the head, obviously."
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
@@ -714,7 +714,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
 	bare_wound_bonus = 25
-	menu_description = "An undroppable sharp armblade dealing a decent amount of damage and inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
+	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()
@@ -725,7 +725,7 @@
 	name = "unholy blessing"
 	icon_state = "tentacle"
 	inhand_icon_state = "tentacle"
-	menu_description = "An undroppable sharp tentacle dealing a decent amount of damage and inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
+	menu_description = "An undroppable sharp tentacle capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
@@ -740,7 +740,7 @@
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	hitsound = 'sound/weapons/bite.ogg'
-	menu_description = "A plushie dealing a decent amount of damage held back a little by it's cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of wild space carps. Fits in pockets. Can be worn on the belt."
+	menu_description = "A plushie dealing a little less damage due to it's cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
 	/// If the item has already been used to bless someone
 	var/used_blessing = FALSE
 
@@ -768,7 +768,7 @@
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	menu_description = "A staff which provides a medium chance of blocking incoming melee attacks and deals a decent amount of damage held back a little by it's wood material. Can be worn on the back."
+	menu_description = "A staff which provides a medium chance of blocking incoming melee attacks and deals a little less damage due to it's wood material. Can be worn on the back."
 
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
@@ -784,7 +784,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
-	menu_description = "A sharp knife dealing a decent amount of damage. Randomly speeds or slows it's user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
+	menu_description = "A sharp knife. Randomly speeds or slows it's user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
@@ -816,7 +816,7 @@
 	attack_verb_simple = list("poke", "impale", "pierce", "jab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
-	menu_description = "A sharp pitchfork dealing a decent amount of damage. Can be worn on the back."
+	menu_description = "A sharp pitchfork. Can be worn on the back."
 
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
@@ -831,7 +831,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("bashes", "smacks", "whacks")
 	attack_verb_simple = list("bash", "smack", "whack")
-	menu_description = "A staff dealing a decent amount of damage. Can be used as a tool to craft exclusive egyptian items. Easily stored. Can be worn on the back."
+	menu_description = "A staff. Can be used as a tool to craft exclusive egyptian items. Easily stored. Can be worn on the back."
 
 /obj/item/nullrod/hypertool
 	name = "hypertool"
@@ -848,7 +848,7 @@
 	attack_verb_continuous = list("pulses", "mends", "cuts")
 	attack_verb_simple = list("pulse", "mend", "cut")
 	hitsound = 'sound/effects/sparks4.ogg'
-	menu_description = "A tool dealing a decent amount of brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
+	menu_description = "A tool dealing a brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/spear
 	name = "ancient spear"
@@ -865,4 +865,4 @@
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	menu_description = "A pointy spear dealing a decent amount of damage which penetrates armor a little. Can be worn only on the belt."
+	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
