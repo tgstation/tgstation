@@ -63,7 +63,8 @@
 		START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		to_chat(quirk_holder, gain_text)
+		if(gain_text) //Some quirks are silent
+			to_chat(quirk_holder, gain_text)
 		add_unique()
 
 		if(quirk_holder.client)
@@ -85,7 +86,8 @@
 	quirk_holder.quirks -= src
 
 	if(!quirk_transfer)
-		to_chat(quirk_holder, lose_text)
+		if(lose_text) //Some quirks are silent
+			to_chat(quirk_holder, lose_text)
 
 	if(mob_trait)
 		REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
