@@ -25,12 +25,14 @@
 #define GELADIKINESIS /datum/mutation/human/geladikinesis
 #define GIGANTISM /datum/mutation/human/gigantism
 #define GLOWY /datum/mutation/human/glow
+#define GOOD_LOOKING /datum/mutation/human/good_looking
 #define HARS /datum/mutation/human/headless
 #define HULK /datum/mutation/human/hulk
 #define INSULATED /datum/mutation/human/insulated
 #define LASEREYES /datum/mutation/human/laser_eyes
 #define MARTYRDOM /datum/mutation/human/martyrdom
 #define MEDIEVAL /datum/mutation/human/medieval
+#define LIGHT_MEDIEVAL /datum/mutation/human/medieval/no_startings
 #define MINDREAD /datum/mutation/human/mindreader
 #define MUTATE /datum/mutation/human/bad_dna
 #define MUT_MUTE /datum/mutation/human/mute

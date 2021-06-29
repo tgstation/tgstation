@@ -404,3 +404,6 @@
 	force = 15
 	block_chance = 30
 	armour_penetration = 5
+
+/obj/item/claymore/weak/prince
+	desc = "A blade fit for a king, a heirloom passed down the ages."

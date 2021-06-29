@@ -348,6 +348,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
 
 /datum/game_mode/dynamic/pre_setup()
+	. = ..()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))

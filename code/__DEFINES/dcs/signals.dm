@@ -40,6 +40,10 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// Before a gamemode is setup
+#define COMSIG_GLOB_PRE_GAMEMODE_SETUP "!pre_gamemode_setup"
+/// After a gamemode is setup
+#define COMSIG_GLOB_POST_GAMEMODE_SETUP "!post_gamemode_setup"
 
 /// signals from globally accessible objects
 

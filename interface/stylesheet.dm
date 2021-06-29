@@ -74,7 +74,7 @@ h1.alert, h2.alert		{color: #000000;}
 .announce				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
 .minorannounce			{					font-weight: bold;  font-size: 3;}
-.greenannounce			{color: #00ff00;	font-weight: bold;}
+.greenannounce			{color: #008f00;	font-weight: bold;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}

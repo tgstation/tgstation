@@ -16,10 +16,12 @@
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_GAMEMODE_SETUP, src)
 	return TRUE
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_POST_GAMEMODE_SETUP, src)
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
@@ -50,6 +52,7 @@
 			query_round_game_mode.Execute()
 			qdel(query_round_game_mode)
 	generate_station_goals()
+
 	return TRUE
 
 

@@ -207,6 +207,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='notice'>You feel like seeking the holy grail!</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like seeking anything.</span>"
+	var/has_startings = TRUE
 
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -236,7 +237,12 @@
 				value = capitalize(value)
 			message = replacetextEx(message,regex("\b[REGEX_QUOTE(key)]\b","ig"), value)
 		message = trim(message)
-		var/chosen_starting = pick(startings)
-		message = "[chosen_starting] [message]"
+		if(has_startings)
+			var/chosen_starting = pick(startings)
+			message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message
+
+
+/datum/mutation/human/medieval/no_startings
+	has_startings = FALSE

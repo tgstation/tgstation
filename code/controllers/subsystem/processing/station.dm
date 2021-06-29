@@ -11,6 +11,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/selectable_traits_by_types = list(STATION_TRAIT_POSITIVE = list(), STATION_TRAIT_NEUTRAL = list(), STATION_TRAIT_NEGATIVE = list())
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
+	///All picked protagonist minds
+	var/list/protagonists = list()
 
 /datum/controller/subsystem/processing/station/Initialize(timeofday)
 
@@ -32,7 +34,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
 	var/positive_trait_count = pick(20;0, 5;1, 1;2)
-	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
+	var/neutral_trait_count = pick(10;0, 10;1, 30000000;2)
 	var/negative_trait_count = pick(20;0, 5;1, 1;2)
 
 	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)

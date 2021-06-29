@@ -42,7 +42,9 @@
 #define ROLE_FAMILIES "Familes Antagonists"
 #define ROLE_SYNDICATE_CYBERSUN "Cybersun Space Syndicate" //Ghost role syndi from Forgottenship ruin
 #define ROLE_SYNDICATE_CYBERSUN_CAPTAIN "Cybersun Space Syndicate Captain" //Forgottenship captain syndie
-#define ROLE_FREE_GOLEM "Free Golem" 
+#define ROLE_FREE_GOLEM "Free Golem"
+#define ROLE_PROTAGONIST "Protagonist"
+
 
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's
@@ -69,6 +71,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SENTIENCE = 0,
 	ROLE_FAMILIES = 0,
 	ROLE_HERETIC = 0,
+	ROLE_PROTAGONIST = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
