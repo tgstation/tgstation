@@ -6,6 +6,9 @@
 	/// The display name when showing on the "other names" panel
 	var/explanation
 
+	/// These will be grouped together on the preferences menu
+	var/group
+
 /datum/preference/name/apply(mob/living/carbon/human/target, value)
 	target.real_name = value
 	target.name = value
@@ -24,6 +27,7 @@
 /datum/preference/name/compile_ui_data(mob/user, value)
 	return list(
 		"explanation" = explanation,
+		"group" = group,
 		"value" = value,
 	)
 
@@ -33,5 +37,5 @@
 	savefile_key = "real_name"
 
 /datum/preference/name/real_name/create_default_value()
-	// MOTHBLOCKS TODO: Use gender
+	// MOTHBLOCKS TODO: Use gender and species
 	return random_unique_name()

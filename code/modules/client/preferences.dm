@@ -217,6 +217,8 @@ GLOBAL_VAR(preferences_species_data)
 	data["character_preferences"] = compile_character_preferences(user)
 	data["character_preview_view"] = character_preview_view.assigned_map
 
+	data["active_name"] = read_preference(/datum/preference/name/real_name)
+
 	// MOTHBLOCKS TODO: If there is ever more than this, add a /datum/preference_middleware type
 	data["name_to_use"] = "real_name" // MOTHBLOCKS TODO: Change to AI name, clown name, etc depending on circumstances
 

@@ -21,12 +21,12 @@ const CharacterProfiles = (props: {
 
   return (
     <Stack justify="center" wrap>
-      {profiles.map((profile, index) => (
-        <Stack.Item key={index}>
+      {profiles.map((profile, slot) => (
+        <Stack.Item key={slot}>
           <Button
-            selected={profile && profile.name === props.activeName}
+            selected={profile?.name === props.activeName}
             onClick={() => {
-              props.onClick(index);
+              props.onClick(slot);
             }} fluid>{profile ? profile.name : "New Character"}
           </Button>
         </Stack.Item>
@@ -57,12 +57,13 @@ export const PreferencesMenu = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            {/* MOTHBLOCKS TODO: Change activeName to slot indexes */}
-            <CharacterProfiles activeName={data.real_name} onClick={(slot) => {
-              act("change_slot", {
-                slot: slot + 1,
-              });
-            }} profiles={data.character_profiles} />
+            <CharacterProfiles
+              activeName={data.active_name}
+              onClick={(slot) => {
+                act("change_slot", {
+                  slot: slot + 1,
+                });
+              }} profiles={data.character_profiles} />
           </Stack.Item>
 
           <Stack.Divider />

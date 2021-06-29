@@ -72,5 +72,7 @@ export type PreferencesMenuData = {
   generated_preference_values?: Record<string, Record<string, string>>;
   species: Record<string, ServerSpeciesData>;
 
+  active_name: string;
+
   name_to_use: string;
 };
