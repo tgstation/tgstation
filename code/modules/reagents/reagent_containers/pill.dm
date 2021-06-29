@@ -304,9 +304,10 @@
 	
 /obj/item/reagent_containers/pill/floor_pill/Initialize()
 	var/list/picked_reagents = list()
-	for(var/reagent in typesof(/datum/reagent/))
-		if(prob(rand(1,100)))
-			picked_reagents += reagent
+	var/list/all_reagents = subtypesof(/datum/reagent/)
+	var/reagent_count = rand(1,all_reagents.len)
+	for(var/i in 1 to reagent_count)
+		picked_reagents += pick_n_take(all_reagents)
 	if(picked_reagents)
 		volume = (picked_reagents.len * 10)
 	for(var/picked_reagent in picked_reagents)
