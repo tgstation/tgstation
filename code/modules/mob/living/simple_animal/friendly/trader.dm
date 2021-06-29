@@ -83,14 +83,26 @@
 /**
  * Checks if the user is ok to use the radial
  *
- * Checks if the user is not a mob or is incapacitated or not adjacent to the source of the radial, in those cases returns FALSE, otherwise returns TRUE
+ * Checks if the user is not a mob or is otherwise unable to open the menu. returns FALSE if something blocks using the menu, otherwise returns TRUE
+ * The adjacency check can be bypassed by having a table between you and the trader
  * Arguments:
  * * user - The mob checking the menu
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
+		return FALSE
+	if(user.Adjacent(src))
+		return TRUE
+	//one last check to see if there is a table between the trader and the user
+	var/dir_to_trader = get_dir(user, trader)
+	var/turf/first_step = get_turf(user)
+	var/turf/second_step = get_step(first_step, dir_to_trader)
+	if(!(locate(/obj/structure/table) in second_step))
+		return FALSE
+	var/turf/third_step = get_step(second_step, dir_to_trader)
+	if(!(locate(src) in third_step))
 		return FALSE
 	return TRUE
 

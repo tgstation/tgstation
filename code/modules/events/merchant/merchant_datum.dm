@@ -37,7 +37,7 @@
 
 /datum/merchant/friendly_pirates
 	name = "Friendly Pirates"
-	map_template_path = /datum/map_template/shuttle/merchant/amorphous
+	map_template_path = /datum/map_template/shuttle/merchant/friendly_pirates
 	message_greet = "Hey! We've secured ourselves some rare curios your station may be interested in. For %VISITCOST credits, we'll dock and open shop."
 	message_docking = "Alright, we're docking now. No enquiries on where we got this stuff, please."
 	message_leaving = "Thanks for taking those off our hands, we're heading off."

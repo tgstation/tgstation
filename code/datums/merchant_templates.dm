@@ -9,5 +9,5 @@
 	name = "merchant ship (Amorphous)"
 
 /datum/map_template/shuttle/merchant/friendly_pirates
-	suffix = "pirates"
+	suffix = "friendly_pirates"
 	name = "merchant ship (Friendly Pirates)"
