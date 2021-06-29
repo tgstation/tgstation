@@ -109,7 +109,7 @@
 /// A layer created by using another greyscale icon's configuration
 /datum/greyscale_layer/reference
 	layer_type = "reference"
-	var/icon_state
+	var/icon_state = ""
 	var/datum/greyscale_config/reference_type
 
 /datum/greyscale_layer/reference/GetExpectedValues(list/required_values, list/optional_values)
