@@ -95,15 +95,15 @@
 		placement_override = BLOB_RANDOM_PLACEMENT
 		to_chat(owner, "<span class='boldwarning'>Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!</span>")
 
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
-	owner.mind.transfer_to(B)
+	var/mob/camera/blob/blob_cam = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
-	B.place_blob_core(placement_override, pop_override = TRUE)
-	playsound(get_turf(B), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
+	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
+	playsound(get_turf(blob_cam), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
 
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)
-		var/mob/camera/blob/B = owner.current
-		if(istype(B))
-			. += "(Progress: [B.blobs_legit.len]/[B.blobwincount])"
+		var/mob/camera/blob/blob_cam = owner.current
+		if(istype(blob_cam))
+			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"

@@ -473,7 +473,7 @@
 	candidates = living_players
 	for(var/mob/living/player as anything in candidates)
 		var/turf/player_turf = get_turf(player)
-		if(!player_turf || is_centcom_level(player_turf.z))
+		if(!player_turf || !is_station_level(player_turf.z))
 			candidates -= player
 			continue
 
