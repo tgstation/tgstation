@@ -95,6 +95,8 @@
 	name = "\improper Amorphous Medibot"
 	desc = "Creation of Amorphous. It's completely covered in cables and wires. Seems like it's configured to only operate on metallic lifeforms."
 	skin = "amorph"
+	firstaid = /obj/effect/gibspawner/robot
+	healthanalyzer = /obj/item/analyzer
 	acceptable_mobtypes = list(
 		/mob/living/silicon,
 		/mob/living/simple_animal/drone,

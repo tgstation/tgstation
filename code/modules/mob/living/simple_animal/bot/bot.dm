@@ -479,11 +479,11 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 			return final_result
 
 /mob/living/simple_animal/bot/proc/checkscan(scan, scan_type, old_target)
-	if(islist(scan_type))
-		if(!is_type_in_list(scan, scan_type))
+	if(!islist(scan_type))
+		if(!istype(scan, scan_type))
 			return FALSE
-	else if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
-		return FALSE //If not, keep searching!
+	else if(!is_type_in_list(scan, scan_type))
+		return FALSE
 	if(REF(scan) in ignore_list || scan == old_target) //Filter for blacklisted elements, usually unreachable or previously processed oness
 		return FALSE
 
