@@ -12967,7 +12967,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Foyer";
+	c_tag = "Atmospherics Project Room";
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -13776,7 +13776,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/camera{
-	c_tag = "Gateway";
+	c_tag = "Incinerator";
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -24914,7 +24914,7 @@
 "frS" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera{
-	c_tag = "Brig Central";
+	c_tag = "Atmospherics Project Room";
 	dir = 1
 	},
 /turf/open/floor/iron,
