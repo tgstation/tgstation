@@ -39,10 +39,10 @@
 	return priority_reactions
 
 /datum/gas_reaction
-	/** 
+	/**
 	 * Regarding the requirements list: the minimum or maximum requirements must be non-zero.
 	 * When in doubt, use MINIMUM_MOLE_COUNT.
-	 * Another thing to note is that reactions will not fire if we have any requirements outside of gas id path or MIN_TEMP or MAX_TEMP. 
+	 * Another thing to note is that reactions will not fire if we have any requirements outside of gas id path or MIN_TEMP or MAX_TEMP.
 	 * More complex implementations will require modifications to gas_mixture.react()
 	 */
 	var/list/requirements
@@ -814,7 +814,7 @@
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/burned_fuel = 0
-	burned_fuel = min(20, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
+	burned_fuel = min(5, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
 	if(cached_gases[/datum/gas/zauker][MOLES] - burned_fuel < 0)
 		return NO_REACTION
 	cached_gases[/datum/gas/zauker][MOLES] -= burned_fuel

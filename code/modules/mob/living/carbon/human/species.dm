@@ -1609,6 +1609,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  */
 /datum/species/proc/handle_environment(mob/living/carbon/human/humi, datum/gas_mixture/environment, delta_time, times_fired)
 	handle_environment_pressure(humi, environment, delta_time, times_fired)
+	handle_gas_interaction(humi, environment, delta_time, times_fired)
 
 /**
  * Body temperature handler for species
@@ -1892,6 +1893,77 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * delta_time)
 				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 
+/datum/species/proc/handle_gas_interaction(mob/living/carbon/human/humi, datum/gas_mixture/environment, delta_time, times_fired)
+	if((humi?.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE) && (humi?.head?.clothing_flags & STOPSPRESSUREDAMAGE))
+		return
+
+	for(var/gas_id in environment.gases)
+		var/gas_amount = environment.gases[gas_id][MOLES]
+		switch(gas_id)
+			if(/datum/gas/antinoblium)
+				if(gas_amount > 70)
+					to_chat(humi, span_warning("You start to fade away!"))
+					humi.adjustCloneLoss(gas_amount * 0.01 * delta_time)
+					if(prob(5))
+						to_chat(humi, span_notice("You fade to nothingness."))
+						humi.dust(TRUE, TRUE, TRUE)
+			if(/datum/gas/freon)
+				if(gas_amount > 5 && gas_amount < 10)
+					to_chat(humi, span_warning("[pick("Your skin feels cold.", "You feel cold.")]"))
+				else
+					to_chat(humi, span_warning("[pick("Your skin starts to freeze!", "You feel very cold!")]"))
+					var/current_stamina = humi.getStaminaLoss()
+					if(current_stamina > 25)
+						humi.adjustStaminaLoss(gas_amount * 0.15 * delta_time)
+					humi.adjust_bodytemperature(max(- gas_amount * 0.25, BODYTEMP_COOLING_MAX) * delta_time)
+			if(/datum/gas/healium)
+				if(gas_amount > 5)
+					to_chat(humi, span_notice("You feel better."))
+					humi.adjustBruteLoss(- gas_amount * 0.5 * delta_time)
+					humi.adjustFireLoss(- gas_amount * 0.15 * delta_time)
+					humi.adjustStaminaLoss(- gas_amount * 0.15 * delta_time)
+			if(/datum/gas/nitryl)
+				if(gas_amount > 5 && gas_amount < 10)
+					to_chat(humi, span_warning("[pick("Your skin feels itchy.", "You feel like burning.")]"))
+				else
+					to_chat(humi, span_warning("[pick("Your skin feels hot.", "You feel like burning.")]"))
+					humi.adjustFireLoss(gas_amount * 0.5 * delta_time)
+			if(/datum/gas/plasma)
+				if(gas_amount > 5 && gas_amount < 20)
+					to_chat(humi, span_warning("[pick("Your skin feels hot.", "You feel like burning.")]"))
+				else
+					to_chat(humi, span_warning("[pick("Your skin burns!", "You feel like burning!")]"))
+					humi.adjustFireLoss(gas_amount * 0.15 * delta_time)
+			if(/datum/gas/pluoxium)
+				if(gas_amount > 10)
+					humi.adjustOxyLoss(- gas_amount * 0.15 * delta_time)
+			if(/datum/gas/tritium)
+				if(gas_amount > 1 && gas_amount < 5)
+					to_chat(humi, span_warning("[pick("Your skin feels tingly.", "You feel tingly all over.")]"))
+				else
+					to_chat(humi, span_warning("[pick("Your skin burns!", "You feel weak!")]"))
+					humi.radiation += gas_amount * 0.15 * delta_time
+					var/current_stamina = humi.getStaminaLoss()
+					if(current_stamina > 25)
+						humi.adjustStaminaLoss(gas_amount * 0.15 * delta_time)
+			if(/datum/gas/water_vapor)
+				if(humi.wear_mask?.clothing_flags & BLOCK_GAS_SMOKE_EFFECT || humi.wear_mask?.clothing_flags & MASKCOVERSEYES || humi.head?.flags_cover & HEADCOVERSEYES)
+					continue
+				if(gas_amount > 5 && gas_amount < 15)
+					to_chat(humi, span_notice("You can't see beyond a few meters from you due to the fog."))
+					humi.overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1)
+				else if(gas_amount < 30)
+					to_chat(humi, span_warning("You can't see almost right next to you due to the fog."))
+					humi.overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+				else
+					to_chat(humi, span_warning("The fog stops you from seeing around you!"))
+					humi.become_blind(EYES_COVERED)
+				addtimer(CALLBACK(humi, /mob/living/proc/cure_blind, EYES_COVERED), 1 SECONDS * delta_time)
+				addtimer(CALLBACK(humi, /mob/proc/clear_fullscreen, "tint", 0), 1 SECONDS * delta_time)
+			if(/datum/gas/zauker)
+				if(gas_amount > 0.5)
+					to_chat(humi, span_warning("[pick("Your skin peels off!", "You feel very nauseous!")]"))
+					humi.adjustCloneLoss(gas_amount * 0.5 * delta_time)
 
 //////////
 // FIRE //
