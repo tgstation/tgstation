@@ -464,7 +464,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Can be worn on the belt."
+	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/sord/suicide_act(mob/user) //a near-exact copy+paste of the actual sord suicide_act()
 	user.visible_message(span_suicide("[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY."), \
@@ -501,7 +501,7 @@
 	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
 	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade dealing which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/spellblade
 	name = "dormant spellblade"
@@ -513,7 +513,7 @@
 	worn_icon_state = "spellblade"
 	icon = 'icons/obj/guns/magic.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade dealing which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/scythe/talking
 	name = "possessed blade"
