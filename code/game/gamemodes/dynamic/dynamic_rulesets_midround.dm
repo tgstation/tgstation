@@ -477,7 +477,7 @@
 			candidates -= player
 			continue
 
-		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/blob_infection/execute()
