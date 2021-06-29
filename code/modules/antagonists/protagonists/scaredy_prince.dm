@@ -1,6 +1,7 @@
 /datum/antagonist/protagonist/scaredy_prince
 	name = "Scaredy royalty"
 	outfit_type = /datum/outfit/royal_prince
+	max_age = 25
 	var/family_name
 
 /datum/antagonist/protagonist/scaredy_prince/New()
@@ -14,6 +15,7 @@
 	royalty_human.dna.add_mutation(LIGHT_MEDIEVAL, MUT_OTHER)
 	royalty_human.dna.add_mutation(GOOD_LOOKING, MUT_OTHER)
 	royalty_human.add_quirk(/datum/quirk/badback)
+	ADD_TRAIT(royalty_human, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION) //Thick fingers is probably a weird way to explain it but I don't want to add a new trait. They are a feudal nerd that doesn't use guns. f
 	royalty_human.gain_trauma(new /datum/brain_trauma/mild/phobia/supernatural(), TRAUMA_RESILIENCE_ABSOLUTE) //The gods are out for me!
 
 
