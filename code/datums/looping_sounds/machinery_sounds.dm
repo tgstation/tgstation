@@ -119,3 +119,8 @@
 	volume = 40
 	falloff_distance = 5
 	falloff_exponent = 20
+
+/datum/looping_sound/satellite
+	mid_sounds = list('sound/machines/beep.ogg'=1)
+	mid_length = 10
+	extra_range = 7 //well obviously

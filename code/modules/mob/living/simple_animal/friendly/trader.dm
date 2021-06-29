@@ -268,7 +268,9 @@
 	icon_state = "amorphous"
 	pixel_x = -16
 	base_pixel_x = -16
-	casingtype = /obj/item/ammo_casing/shotgun/stunslug
+	casingtype = null
+	projectiletype = /obj/projectile/energy/electrode
+	projectilesound = 'sound/weapons/lasercannonfire.ogg'
 	move_resist = MOVE_FORCE_OVERPOWERING
 	speak_emote = list("beeps", "clicks")
 	speech_span = SPAN_ROBOT
@@ -307,7 +309,7 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/living_victim = target
-	if(living_victim.AmountStun())
+	if(living_victim.IsStun())
 		podspawn(list(
 			"target" = get_turf(living_victim),
 			"style" = STYLE_MISSILE,
@@ -316,9 +318,7 @@
 		))
 		enemies -= WEAKREF(living_victim) //one missile dropped on you per times you piss me off
 		return
-	. = ..()
-
-
+	return ..()
 
 ///base subtype of the pirates that handles lines they all have.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate

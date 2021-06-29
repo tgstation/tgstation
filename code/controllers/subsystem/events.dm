@@ -86,6 +86,8 @@ SUBSYSTEM_DEF(events)
 				return
 
 /datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
+	if(ispath(E))
+		E = locate(E) in control
 	. = E.preRunEvent()
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
