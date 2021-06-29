@@ -311,7 +311,7 @@
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
 	attack_verb_simple = list("punch", "cross counter", "pummel")
-	menu_description = "An undroppable god hand dealing a burn damage. Disappears if the arm holding it is cut off."
+	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/godhand/Initialize()
 	. = ..()
