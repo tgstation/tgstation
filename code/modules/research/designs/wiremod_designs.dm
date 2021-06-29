@@ -173,6 +173,11 @@
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
 
+/datum/design/component/mmi
+	name = "MMI Component"
+	id = "comp_mmi"
+	build_path = /obj/item/circuit_component/mmi
+
 /datum/design/component/multiplexer
 	name = "Multiplexer Component"
 	id = "comp_multiplexer"
@@ -237,5 +242,17 @@
 		/datum/material/gold = 1500,
 	)
 	build_path = /obj/item/shell/server
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/airlock_shell
+	name = "Airlock Shell"
+	desc = "A door shell that cannot be moved around when assembled."
+	id = "door_shell"
+	materials = list(
+		/datum/material/glass = 5000,
+		/datum/material/iron = 15000,
+	)
+	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")

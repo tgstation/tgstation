@@ -107,10 +107,10 @@
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)
-				var/mob/M = candidates[1]
-				spawner.create(M.ckey)
-				candidates -= M
-				announce_to_ghosts(M)
+				var/mob/our_candidate = candidates[1]
+				spawner.create(our_candidate)
+				candidates -= our_candidate
+				announce_to_ghosts(our_candidate)
 			else
 				announce_to_ghosts(spawner)
 

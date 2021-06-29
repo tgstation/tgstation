@@ -62,7 +62,7 @@
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(istype(mover, /obj/structure/blob))
 		return TRUE

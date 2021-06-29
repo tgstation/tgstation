@@ -582,6 +582,8 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range,
 		light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(src)
 	if(T.z != epicenter.z)
 		return

@@ -119,7 +119,7 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
-/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(wall_mounted)
 		return TRUE
@@ -466,12 +466,13 @@
 	broken = TRUE //applies to secure lockers only
 	open()
 
-/obj/structure/closet/RightClick(mob/user, modifiers)
+/obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
+
 	if(!opened && secure)
 		togglelock(user)
-	return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)

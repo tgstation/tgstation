@@ -196,6 +196,14 @@
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
 
+/// Called when this component is about to be added to an integrated_circuit.
+/obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	return TRUE
+
+/// Called when this component is removed from an integrated_circuit.
+/obj/item/circuit_component/proc/removed_from(obj/item/integrated_circuit/removed_from)
+	return
+
 /**
  * Gets the UI notices to be displayed on the CircuitInfo panel.
  *
@@ -223,3 +231,9 @@
 			"content" = "Power Usage Per Input: [power_usage_per_input]",
 			"color" = "orange",
 		))
+
+/obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
+	return
+
+/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/parent)
+	return

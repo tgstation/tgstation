@@ -1894,7 +1894,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			hardcore_random_setup(character, antagonist, is_latejoiner)
 
 	if(roundstart_checks)
-		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
+		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == SPECIES_HUMAN))
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
 			if(!firstspace) //we need a surname
