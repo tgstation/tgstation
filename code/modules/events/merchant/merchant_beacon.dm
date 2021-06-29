@@ -35,6 +35,7 @@
 		toggle() //toggle it off, maybe do something cool with this later
 
 		SSevents.TriggerEvent(/datum/round_event_control/merchant)
+		WRITE_LOG(GLOB.world_game_log, "Merchant event being triggered by [src] at [AREACOORD(src)].")
 
 /obj/machinery/satellite/merchant/toggle(mob/user)
 	. = ..()
