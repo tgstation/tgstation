@@ -27,8 +27,10 @@ export class FitText extends Component<{
     window.addEventListener("resize", this.resize);
   }
 
-  componentDidUpdate() {
-    this.resize();
+  componentDidUpdate(prevProps) {
+    if (prevProps.children !== this.props.children) {
+      this.resize();
+    }
   }
 
   componentWillUnmount() {

@@ -150,7 +150,7 @@ const NameInput = (props: {
   name: string,
 }, context) => {
   const [lastNameBeforeEdit, setLastNameBeforeEdit] = useLocalState(context, "lastNameBeforeEdit", null);
-  const [input, setInput] = useLocalState(context, "input", props.name);
+  const editing = lastNameBeforeEdit === props.name;
 
   const updateName = (e, value) => {
     setLastNameBeforeEdit(null);
@@ -158,9 +158,8 @@ const NameInput = (props: {
   };
 
   return (
-    <Button onClick={() => {
+    <Button captureKeys={!editing} onClick={() => {
       setLastNameBeforeEdit(props.name);
-      setInput(props.name);
     }} textAlign="center" width="100%" height="28px">
       <Stack align="center" fill>
         <Stack.Item>
@@ -171,7 +170,7 @@ const NameInput = (props: {
         </Stack.Item>
 
         <Stack.Item grow position="relative">
-          {lastNameBeforeEdit === props.name && (
+          {editing && (
             <Input
               autoSelect
               onEnter={updateName}
@@ -179,7 +178,7 @@ const NameInput = (props: {
               onEscape={() => {
                 setLastNameBeforeEdit(null);
               }}
-              value={input}
+              value={props.name}
             />
           ) || (
             <FitText maxFontSize={16} maxWidth={130}>
