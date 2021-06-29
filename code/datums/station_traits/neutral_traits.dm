@@ -140,7 +140,7 @@
 	name = "Royal Visit"
 	report_message = "This station has received an esteemed guest! They will most likely be a high value target for any Syndicate invasions. Be sure to keep them safe! It seems this guest is a royal prince or princess! Although they are of royal blood, they don't seem to be the most brave person."
 	role_to_give = /datum/antagonist/protagonist/scaredy_prince
-	weight = 5000000
+	weight = 4
 	trait_flags = NONE
 
 ///Pick a family name and put it in the title!
