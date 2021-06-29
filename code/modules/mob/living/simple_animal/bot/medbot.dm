@@ -39,8 +39,10 @@
 	var/firstaid = /obj/item/storage/firstaid
 	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
 	var/skin
-	var/mob/living/carbon/patient
-	var/mob/living/carbon/oldpatient
+	///current patient
+	var/mob/living/patient
+	///old patient
+	var/mob/living/oldpatient
 	var/oldloc
 	var/last_found = 0
 	/// Don't spam the "HEY I'M COMING" messages
@@ -57,6 +59,8 @@
 	var/declare_cooldown = FALSE
 	/// If enabled, the Medibot will not move automatically.
 	var/stationary_mode = FALSE
+	/// List of types that the Medibot can heal
+	var/list/acceptable_mobtypes = list(/mob/living/carbon/human)
 
 	/// silences the medbot if TRUE
 	var/shut_up = FALSE
@@ -87,15 +91,28 @@
 	declare_crit = 0
 	heal_amount = 5
 
-/mob/living/simple_animal/bot/medbot/shambles
-	name = "Shambles"
-	desc = "Creation of Amorphous. It's completely covered in cables and wires."
+/mob/living/simple_animal/bot/medbot/amorphous
+	name = "\improper Amorphous Medibot"
+	desc = "Creation of Amorphous. It's completely covered in cables and wires. Seems like it's configured to only operate on metallic lifeforms."
 	skin = "amorph"
+	firstaid = /obj/effect/gibspawner/robot
+	healthanalyzer = /obj/item/analyzer
+	acceptable_mobtypes = list(
+		/mob/living/silicon,
+		/mob/living/simple_animal/drone,
+		/mob/living/simple_animal/bot,
+		/mob/living/simple_animal/hostile/swarmer,
+		/mob/living/simple_animal/hostile/hivebot,
+		/mob/living/simple_animal/hostile/retaliate/trader/ai
+		)
 
-/mob/living/simple_animal/bot/medbot/disarray
+/mob/living/simple_animal/bot/medbot/amorphous/shambles
+	name = "Shambles"
+	initial_language_holder = /datum/language_holder/swarmer
+
+/mob/living/simple_animal/bot/medbot/amorphous/disarray
 	name = "Disarray"
-	desc = "Creation of Amorphous. It's completely covered in cables and wires."
-	skin = "amorph"
+	initial_language_holder = /datum/language_holder/drone
 
 /mob/living/simple_animal/bot/medbot/update_icon_state()
 	. = ..()
@@ -122,8 +139,8 @@
 	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
 	access_card.add_access(para_trim.access + para_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
-
-	skin = new_skin
+	if(new_skin)
+		skin = new_skin
 	update_appearance()
 	linked_techweb = SSresearch.science_tech
 	if(damagetype_healer == "all")
@@ -242,22 +259,22 @@
 		if(user)
 			oldpatient = user
 
-/mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
-	if(H.stat == DEAD)
+/mob/living/simple_animal/bot/medbot/process_scan(mob/living/scan_target)
+	if(scan_target.stat == DEAD)
 		return
 
-	if((H == oldpatient) && (world.time < last_found + 200))
+	if((scan_target == oldpatient) && (world.time < last_found + 200))
 		return
 
-	if(assess_patient(H))
+	if(assess_patient(scan_target))
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+			var/list/messagevoice = list("Hey, [scan_target.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [scan_target.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[scan_target.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(src, messagevoice[message], 50, FALSE)
 			last_newpatient_speak = world.time
-		return H
+		return scan_target
 	else
 		return
 
@@ -394,7 +411,7 @@
 				speak(message)
 				playsound(src, messagevoice[message], 50)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
-		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
+		patient = scan(acceptable_mobtypes, oldpatient, scan_range)
 		oldpatient = patient
 
 	if(patient && (get_dist(src,patient) <= 1) && !tending) //Patient is next to us, begin treatment!
@@ -441,49 +458,49 @@
 
 	return
 
-/mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
+/mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/healing)
 	. = FALSE
 	//Time to see if they need medical help!
-	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
+	if(stationary_mode && !Adjacent(healing)) //YOU come to ME, BRO
 		return FALSE
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+	if(healing.stat == DEAD || (HAS_TRAIT(healing, TRAIT_FAKEDEATH)))
 		return FALSE //welp too late for them!
 
-	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
+	if(!(loc == healing.loc) && !(isturf(healing.loc) && isturf(loc)))
 		return FALSE
 
-	if(C.suiciding)
+	if(healing.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
-	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
+	if(HAS_TRAIT(healing,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(healing,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
 		return FALSE
 
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
+	if(ishuman(healing))
+		var/mob/living/carbon/human/H = healing
 		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
 			var/obj/item/clothing/CS = H.wear_suit
 			var/obj/item/clothing/CH = H.head
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
 				return FALSE // Skip over them if they have no exposed flesh.
 
-	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
-		declare(C)
+	if(declare_crit && healing.health <= 0) //Critical condition! Call for help!
+		declare(healing)
 
 	//They're injured enough for it!
 	var/list/treat_me_for = list()
-	if(C.getBruteLoss() > heal_threshold)
+	if(healing.getBruteLoss() > heal_threshold)
 		treat_me_for += BRUTE
 
-	if(C.getOxyLoss() > (5 + heal_threshold))
+	if(healing.getOxyLoss() > (5 + heal_threshold))
 		treat_me_for += OXY
 
-	if(C.getFireLoss() > heal_threshold)
+	if(healing.getFireLoss() > heal_threshold)
 		treat_me_for += BURN
 
-	if(C.getToxLoss() > heal_threshold)
+	if(healing.getToxLoss() > heal_threshold)
 		treat_me_for += TOX
 
 	if(damagetype_healer in treat_me_for)
@@ -494,12 +511,12 @@
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(iscarbon(A) && !tending)
-		var/mob/living/carbon/C = A
-		patient = C
+	if(!tending && is_type_in_list(A, acceptable_mobtypes))
+		var/mob/living/healing = A
+		patient = healing
 		mode = BOT_HEALING
 		update_appearance()
-		medicate_patient(C)
+		medicate_patient(healing)
 		update_appearance()
 	else
 		..()
@@ -509,16 +526,16 @@
 	if(!is_blind())
 		chemscan(src, A)
 
-/mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
+/mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/healing)
 	if(!on)
 		return
 
-	if(!istype(C))
+	if(!istype(healing))
 		oldpatient = patient
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+	if(healing.stat == DEAD || (HAS_TRAIT(healing, TRAIT_FAKEDEATH)))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -532,16 +549,16 @@
 		var/treatment_method
 		var/list/potential_methods = list()
 
-		if(C.getBruteLoss() > heal_threshold)
+		if(healing.getBruteLoss() > heal_threshold)
 			potential_methods += BRUTE
 
-		if(C.getFireLoss() > heal_threshold)
+		if(healing.getFireLoss() > heal_threshold)
 			potential_methods += BURN
 
-		if(C.getOxyLoss() > (5 + heal_threshold))
+		if(healing.getOxyLoss() > (5 + heal_threshold))
 			potential_methods += OXY
 
-		if(C.getToxLoss() > heal_threshold)
+		if(healing.getToxLoss() > heal_threshold)
 			potential_methods += TOX
 
 		for(var/i in potential_methods)
@@ -553,8 +570,8 @@
 			treatment_method = pick(potential_methods)
 
 		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
-			if(C.maxHealth - C.get_organic_health() < heal_threshold)
-				to_chat(src, span_notice("[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
+			if(healing.maxHealth - healing.get_organic_health() < heal_threshold)
+				to_chat(src, span_notice("[healing] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
 
 			var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
 			var/message = pick(messagevoice)
@@ -563,7 +580,7 @@
 			bot_reset()
 			tending = FALSE
 		else if(patient)
-			C.visible_message(span_danger("[src] is trying to tend the wounds of [patient]!"), \
+			healing.visible_message(span_danger("[src] is trying to tend the wounds of [patient]!"), \
 				span_userdanger("[src] is trying to tend your wounds!"))
 
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
@@ -579,7 +596,7 @@
 					else
 						patient.apply_damage_type((healies*-1),treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
-					C.visible_message(span_notice("[src] tends the wounds of [patient]!"), \
+					healing.visible_message(span_notice("[src] tends the wounds of [patient]!"), \
 						"<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
 					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)
 					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (30 SECONDS))
