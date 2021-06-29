@@ -295,3 +295,21 @@
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
+	
+/obj/item/reagent_containers/pill/floor_pill
+	name = "☼Floor Pill☼"
+	desc = "This is a masterful floor pill. It is decorated with ashwalker bone and encircled with bands of iron and silver. The object menaces with spikes of wood. On the item is an image of an assistant eating a floor pill. The assistant is dying. On the item is an image of four medical doctors. The medical doctors are praying."
+	icon_state = "pill8"
+	list_reagents = list()
+	
+/obj/item/reagent_containers/pill/floor_pill/Initialize()
+	var/list/picked_reagents = list()
+	for(var/reagent in typesof(/datum/reagent/))
+		if(prob(rand(1,100)))
+			picked_reagents += reagent
+	if(picked_reagents)
+		volume = (picked_reagents.len * 10)
+	for(var/picked_reagent in picked_reagents)
+		list_reagents[picked_reagent] = 10
+	..()
+
