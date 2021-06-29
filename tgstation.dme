@@ -411,6 +411,7 @@
 #include "code\datums\http.dm"
 #include "code\datums\hud.dm"
 #include "code\datums\map_config.dm"
+#include "code\datums\merchant_templates.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\movement_detector.dm"
 #include "code\datums\mutable_appearance.dm"
