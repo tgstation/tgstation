@@ -30,6 +30,10 @@
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/projectile/beam/ctf/
 
+/obj/item/ammo_casing/caseless/laser/ctf/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
 // LASER RIFLE
 
 /obj/item/gun/ballistic/automatic/laser/ctf
@@ -60,8 +64,11 @@
 /obj/item/gun/ballistic/shotgun/ctf
 	name = "laser shotgun"
 	desc = "This looks like it could really hurt in melee."
+	icon_state = "ctfshotgun"
+	inhand_icon_state = "shotgun_combat"
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
+	empty_indicator = TRUE
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	semi_auto = TRUE
 	internal_magazine = FALSE
@@ -91,6 +98,8 @@
 
 /obj/item/gun/ballistic/automatic/laser/ctf/marksman
 	name = "designated marksman rifle"
+	icon_state = "ctfmarksman"
+	inhand_icon_state = "ctfmarksman"
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	fire_delay = 1 SECONDS
 

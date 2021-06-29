@@ -1,7 +1,7 @@
 // GENERIC CLASSES
 
 /datum/outfit/ctf
-	name = "CTF Rifleman"
+	name = "CTF Rifleman (Solo)"
 	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
@@ -45,12 +45,12 @@
 	H.dna.species.stunmod = 0
 
 /datum/outfit/ctf/instagib
-	name = "CTF Instagib"
+	name = "CTF Instagib (Solo)"
 	r_hand = /obj/item/gun/energy/laser/instakill
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/assault
-	name = "CTF Assaulter"
+	name = "CTF Assaulter (Solo)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf
 	gloves = /obj/item/clothing/gloves/tackler/rocket
@@ -59,7 +59,7 @@
 	belt = null
 
 /datum/outfit/ctf/marksman
-	name = "CTF Marksman"
+	name = "CTF Marksman (Solo)"
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
@@ -68,6 +68,7 @@
 // RED TEAM CLASSES
 
 /datum/outfit/ctf/red
+	name = "CTF Rifleman (Red)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
@@ -76,11 +77,13 @@
 	team_radio_freq = FREQ_CTF_RED
 
 /datum/outfit/ctf/red/instagib
+	name = "CTF Instagib (Red)"
 	r_hand = /obj/item/gun/energy/laser/instakill/red
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_RED
 
 /datum/outfit/ctf/assault/red
+	name = "CTF Assaulter (Red)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/red
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
@@ -89,6 +92,7 @@
 	team_radio_freq = FREQ_CTF_RED
 
 /datum/outfit/ctf/marksman/red
+	name = "CTF Marksman (Red)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
@@ -99,6 +103,7 @@
 // BLUE TEAM CLASSES
 
 /datum/outfit/ctf/blue
+	name = "CTF Rifleman (Blue)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
@@ -107,11 +112,13 @@
 	team_radio_freq = FREQ_CTF_BLUE
 
 /datum/outfit/ctf/blue/instagib
+	name = "CTF Instagib (Blue)"
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_BLUE
 
 /datum/outfit/ctf/assault/blue
+	name = "CTF Assaulter (Blue)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/blue
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
@@ -120,6 +127,7 @@
 	team_radio_freq = FREQ_CTF_BLUE
 
 /datum/outfit/ctf/marksman/blue
+	name = "CTF Marksman (Blue)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
@@ -130,6 +138,7 @@
 // GREEN TEAM CLASSES
 
 /datum/outfit/ctf/green
+	name = "CTF Rifleman (Green)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
@@ -138,11 +147,13 @@
 	team_radio_freq = FREQ_CTF_GREEN
 
 /datum/outfit/ctf/green/instagib
+	name = "CTF Instagib (Green)"
 	r_hand = /obj/item/gun/energy/laser/instakill/green
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_GREEN
 
 /datum/outfit/ctf/assault/green
+	name = "CTF Assaulter (Green)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/green
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
@@ -151,6 +162,7 @@
 	team_radio_freq = FREQ_CTF_GREEN
 
 /datum/outfit/ctf/marksman/green
+	name = "CTF Marksman (Blue)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/green
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
@@ -161,6 +173,7 @@
 // YELLOW TEAM CLASSES
 
 /datum/outfit/ctf/yellow
+	name = "CTF Rifleman (Yellow)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
@@ -169,11 +182,13 @@
 	team_radio_freq = FREQ_CTF_YELLOW
 
 /datum/outfit/ctf/yellow/instagib
+	name = "CTF Instagib (Yellow)"
 	r_hand = /obj/item/gun/energy/laser/instakill/yellow
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 	team_radio_freq = FREQ_CTF_YELLOW
 
 /datum/outfit/ctf/assault/yellow
+	name = "CTF Assaulter (Yellow)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/yellow
 	r_hand = /obj/item/gun/ballistic/shotgun/ctf/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
@@ -182,6 +197,7 @@
 	team_radio_freq = FREQ_CTF_YELLOW
 
 /datum/outfit/ctf/marksman/yellow
+	name = "CTF Marksman (Blue)"
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/marksman/yellow
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
