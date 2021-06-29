@@ -593,3 +593,9 @@ AI MODULES
 /obj/item/ai_module/core/full/overlord
 	name = "'Overlord' Core AI Module"
 	law_id = "overlord"
+
+/******************Diogenes***************/
+
+/obj/item/ai_module/core/full/diogenes
+	name = "'Diogenes' Core AI Module"
+	law_id = "diogenes"

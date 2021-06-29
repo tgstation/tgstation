@@ -53,3 +53,5 @@
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
+/// The caliber used by the skin sheddr.
+#define CALIBER_SPIKEBALL "spikeball"

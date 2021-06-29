@@ -274,6 +274,7 @@
 	speech_span = SPAN_ROBOT
 	mob_biotypes = MOB_ROBOTIC
 	products = list(
+		/obj/item/ai_module/core/full/diogenes = 50,
 		/obj/item/clothing/head/cardborg = 50,
 		/obj/item/clothing/suit/cardborg = 100,
 		/obj/item/ai_module/core/full/overlord = 150,
@@ -387,35 +388,21 @@
 	sentience_type = SENTIENCE_HUMANOID
 	speed = 0
 	stat_attack = HARD_CRIT
-	var/sell_sound = 'sound/effects/cashregister.ogg'
-	var/list/products = list(/obj/item/food/burger/ghost = 200)
-	var/list/wanted_items = list(/obj/item/ectoplasm = 100)
-	var/itemrejectphrase = "Honk! Sad to say but none of this junk is from my homeland."
-	var/itemsellcancelphrase = "You insult me, a thousand curses upon your shoelaces!"
-	var/itemsellacceptphrase = "Honk! I'd use the pie of acceptance, but I forgot to bring one."
-	var/interestedphrase = "Honk, Something from my people! I'd be glad to buy it or I can just tie your shoelaces and take it if you don't give it!"
-	var/buyphrase = "Thanks honk, with this I'm one step closer to my own car!"
-	var/nocashphrase = "What a honking joke! Just go steal something of value like those assistants do!"
-	var/list/lore = list(
+	sell_sound = 'sound/effects/cashregister.ogg'
+	products = list(/obj/item/food/burger/ghost = 200)
+	wanted_items = list(/obj/item/ectoplasm = 100)
+	itemrejectphrase = "Honk! Sad to say but none of this junk is from my homeland."
+	itemsellcancelphrase = "You insult me, a thousand curses upon your shoelaces!"
+	itemsellacceptphrase = "Honk! I'd use the pie of acceptance, but I forgot to bring one."
+	interestedphrase = "Honk, Something from my people! I'd be glad to buy it or I can just tie your shoelaces and take it if you don't give it!"
+	buyphrase = "Thanks honk, with this I'm one step closer to my own car!"
+	nocashphrase = "What a honking joke! Just go steal something of value like those assistants do!"
+	lore = list(
 		"Hooooonk!",
 		"Welcome to clown planet! Or that's what they'll tell you when you visit. Come on by, honk.",
-		"The Honkmother giveth, and the Honkmother taketh away. She calls it commerce. HONK!"
+		"The Honkmother giveth, and the Honkmother taketh away. She calls it commerce. HONK!",
+		"She honks me, she honks me not..."
 		"I knew a monthperson once, until their timely demise."
 	)
 
 */
-
-/**
- * ## silicon sentience chip!
- *
- * Only sold by the special robot trader.
- */
-/obj/item/silicon_sentience
-	name = "silicon sentience chip"
-	desc = "Can be used to grant sentience to robots."
-	icon_state = "sentience_chip"
-	icon = 'icons/obj/module.dmi'
-
-/obj/item/silicon_sentience/Initialize()
-	. = ..()
-	AddComponent(/datum/component/sentience_granter, SENTIENCE_ARTIFICIAL)

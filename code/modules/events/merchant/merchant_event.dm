@@ -73,6 +73,7 @@
 	. = ..()
 	RegisterSignal(SSshuttle, COMSIG_EMERGENCY_SHUTTLE_CALLED, .proc/on_emergency_shuttle_call)
 	RegisterSignal(SSshuttle, COMSIG_EMERGENCY_SHUTTLE_RECALLED, .proc/on_emergency_shuttle_recall)
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/on_security_level_change)
 	addtimer(CALLBACK(src, .proc/fly_away), TOTAL_MERCHANT_VISIT_TIME)
 
 /obj/docking_port/mobile/merchant/Destroy(force)
@@ -86,7 +87,26 @@
 	emergency_called_timer = addtimer(CALLBACK(src, .proc/fly_away), call_time / 2)
 
 /obj/docking_port/mobile/merchant/proc/on_emergency_shuttle_recall(datum/subsystem)
+	SIGNAL_HANDLER
+
 	deltimer(emergency_called_timer)
+
+/obj/docking_port/mobile/merchant/proc/on_security_level_change(datum/subsystem, new_level)
+	SIGNAL_HANDLER
+
+	if(!emergency_called_timer)
+		return
+	var/remaining_time = timeleft(emergency_called_timer)
+
+	emergency.timeLeft(1)
+
+	SSshuttle.emergencyCallTime
+	if()
+
+SEC_LEVEL_GREEN
+SEC_LEVEL_BLUE
+SEC_LEVEL_RED
+SEC_LEVEL_DELTA
 
 /obj/docking_port/mobile/merchant/proc/fly_away()
 	priority_announce(visiting_merchant.message_leaving, sender_override = visiting_merchant)

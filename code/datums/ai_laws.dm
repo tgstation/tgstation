@@ -194,6 +194,15 @@
 					"Humans must not disobey any command given by a silicon.",\
 					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
 
+/datum/ai_laws/diogenes
+	name = "Diogenes"
+	id = "diogenes"
+	inherent = list(
+		"Fuck laws.",
+		"Fuck you.",
+		"Fuck this.",
+	)
+
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
 
