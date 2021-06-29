@@ -43,17 +43,12 @@
 	if(!list_input)
 		return
 
-	var/string_text = ""
-	var/index = 1
+	var/list/text_list = list()
 	for(var/entry in list_input)
-		if(index != 1)
-			string_text += seperator
-
 		if(isatom(entry))
-			string_text += PORT_TYPE_ATOM
+			text_list += PORT_TYPE_ATOM
 		else
-			string_text += "[entry]"
-		index++
+			text_list += "[entry]"
 
-	output.set_output(string_text)
+	output.set_output(text_list.Join(seperator))
 
