@@ -2666,6 +2666,17 @@
 		crate_value -= I.cost
 		new I.item(C)
 
+/datum/supply_pack/misc/merchant
+	name = "Merchant Satellite crate"
+	desc = "Looking to attract profitable business ventures? Simply place this satellite somewhere in space, press the activation button, and wait a few minutes!"
+	cost = CARGO_CRATE_VALUE * 10
+	access_view = ACCESS_QM
+	access = ACCESS_QM
+	contains = list(/obj/machinery/satellite/merchant)
+	crate_name = "merchant satellite crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// General Vending Restocks /////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
