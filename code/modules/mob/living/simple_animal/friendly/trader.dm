@@ -316,6 +316,100 @@
 		enemies -= WEAKREF(living_victim) //one missile dropped on you per times you piss me off
 		return
 	. = ..()
+
+
+
+///base subtype of the pirates that handles lines they all have.
+/mob/living/simple_animal/hostile/retaliate/trader/pirate
+	name = "Pirate"
+	desc = "A space pirate looking to flip some mysteriously procured wares for a quick buck."
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "pirate"
+	loot = list()
+	itemrejectphrase = "I'm not interested. Maybe another of my crew is, but not me."
+	itemsellcancelphrase = "Fine, keep it. But you should know i'm the only one here who will take it."
+	///Phrase said when the NPC sells you an item.
+	buyphrase = "Heh, here you go. No refunds!"
+	///Phrase said when you have too little money to buy an item.
+	nocashphrase = "Hey, this isn't a giveaway! Earn some credits or don't come back."
+	lore = list(
+		"A pirate's life for me... er, no, I'm not a pirate. Who's asking?",
+		"We need some damn cryopods on this ship. You know how boring it gets when the FTL is long distance?",
+		"Nanotrasen's funny. In the core sectors, they'll blow your ship apart because it isn't painted white. \
+		But out here? Way different vibe.",
+		"This old junker is originally a transport ship, until we acquired it. Legally, though.",
+		"If we get enough credits, maybe we can get one of those ship weapons working.",
+		"Have you heard of the Silver-Scales? They go around demanding tribute from stations like yours."
+	)
+/*
+
+///this trader is used in the merchant event.
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities
+	name = "Oddities Merchant"
+	desc = "A space pirate"
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "pirate"
+	loot = list()
+	///Associated list of items the NPC sells with how much they cost.
+	var/list/products = list(/obj/item/food/burger/ghost = 200)
+	///Associated list of items able to be sold to the NPC with the money given for them.
+	var/list/wanted_items = list(/obj/item/ectoplasm = 100)
+	itemsellacceptphrase = "Cool stuff. I just like collecting them."
+	interestedphrase = "Hey, that's an interesting oddity you have there."
+
+
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities/Initialize(mapload)
+	. = ..()
+	var/area/spawn_area = get_area(src)
+	RegisterSignal(spawn_area, proc)
+
+
+
+/*
+
+/mob/living/simple_animal/hostile/retaliate/trader
+	name = "Clown Merchant"
+	desc = "Honk! Clown have wares, if you have coin."
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "faceless"
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	del_on_death = TRUE
+	loot = list(/obj/effect/mob_spawn/human/corpse)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 2.5
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot
+	wander = FALSE
+	ranged = TRUE
+	combat_mode = TRUE
+	move_resist = MOVE_FORCE_STRONG
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
+	speed = 0
+	stat_attack = HARD_CRIT
+	var/sell_sound = 'sound/effects/cashregister.ogg'
+	var/list/products = list(/obj/item/food/burger/ghost = 200)
+	var/list/wanted_items = list(/obj/item/ectoplasm = 100)
+	var/itemrejectphrase = "Honk! Sad to say but none of this junk is from my homeland."
+	var/itemsellcancelphrase = "You insult me, a thousand curses upon your shoelaces!"
+	var/itemsellacceptphrase = "Honk! I'd use the pie of acceptance, but I forgot to bring one."
+	var/interestedphrase = "Honk, Something from my people! I'd be glad to buy it or I can just tie your shoelaces and take it if you don't give it!"
+	var/buyphrase = "Thanks honk, with this I'm one step closer to my own car!"
+	var/nocashphrase = "What a honking joke! Just go steal something of value like those assistants do!"
+	var/list/lore = list(
+		"Hooooonk!",
+		"Welcome to clown planet! Or that's what they'll tell you when you visit. Come on by, honk.",
+		"The Honkmother giveth, and the Honkmother taketh away. She calls it commerce. HONK!"
+		"I knew a monthperson once, until their timely demise."
+	)
+
+*/
+
 /**
  * ## silicon sentience chip!
  *

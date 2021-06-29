@@ -23,7 +23,7 @@
 	return TRUE
 
 /datum/map_template/shuttle/New()
-	shuttle_id = "[port_id]_[suffix]"
+	shuttle_id = "[port_id][port_id ? "_" : ""][suffix]"
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 

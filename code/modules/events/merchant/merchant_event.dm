@@ -8,6 +8,8 @@
 		return FALSE //They can't pay?
 	if(!EMERGENCY_IDLE_OR_RECALLED)
 		return FALSE //merchant docks where escape is
+	if(istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))
+		return FALSE //don't undo manual player engineering, it also would unload people and ghost them, there's just a lot of problems
 	return ..()
 
 /datum/round_event/merchant
@@ -90,6 +92,8 @@
 	priority_announce(visiting_merchant.message_leaving, sender_override = visiting_merchant)
 	var/area/shuttle_area = get_area(src)
 	for(var/mob/living/needs_to_leave in shuttle_area)
+		if(!needs_to_leave.ckey)
+			continue
 		to_chat(needs_to_leave, span_boldwarning("The shuttle activates some kind of dispersal teleporter, and you are flung away to a safe location!"))
 		needs_to_leave.forceMove(get_safe_random_station_turf())
 	jumpToNullSpace()
