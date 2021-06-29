@@ -219,7 +219,7 @@
 		if(shock(user))
 			return
 	if(open && cell && loc == user)
-		balloon_alert(user, "removing cell..."))
+		balloon_alert(user, "removing cell...")
 		if(do_after(user, 1.5 SECONDS, target = src))
 			balloon_alert(user, "cell removed")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
