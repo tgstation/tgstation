@@ -111,6 +111,6 @@
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver
 
 /obj/item/autosurgeon/organ/robo_tongue
-	desc = "A single use autosurgeon that contains a robotic voicebox."
+	desc = "A single use autosurgeon that contains a robotic voicebox. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/tongue/robot
