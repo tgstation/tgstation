@@ -325,12 +325,10 @@
 	desc = "A space pirate looking to flip some mysteriously procured wares for a quick buck."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "pirate"
-	loot = list()
+	loot = list(/obj/effect/gibspawner/human)
 	itemrejectphrase = "I'm not interested. Maybe another of my crew is, but not me."
 	itemsellcancelphrase = "Fine, keep it. But you should know i'm the only one here who will take it."
-	///Phrase said when the NPC sells you an item.
 	buyphrase = "Heh, here you go. No refunds!"
-	///Phrase said when you have too little money to buy an item.
 	nocashphrase = "Hey, this isn't a giveaway! Earn some credits or don't come back."
 	lore = list(
 		"A pirate's life for me... er, no, I'm not a pirate. Who's asking?",
@@ -345,8 +343,8 @@
 
 ///this trader is used in the merchant event.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities
-	name = "Oddities Merchant"
-	desc = "A space pirate"
+	name = "Oddities Pirate"
+	desc = "A space pirate looking to buy and sell miscellaneous curios."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "pirate"
 	loot = list()
@@ -363,9 +361,6 @@
 	var/area/spawn_area = get_area(src)
 	RegisterSignal(spawn_area, proc)
 
-
-
-/*
 
 /mob/living/simple_animal/hostile/retaliate/trader
 	name = "Clown Merchant"
