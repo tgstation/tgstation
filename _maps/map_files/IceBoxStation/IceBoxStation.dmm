@@ -12966,6 +12966,10 @@
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering Foyer";
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos/project)
 "bwd" = (
@@ -13771,6 +13775,10 @@
 "bAP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/camera{
+	c_tag = "Gateway";
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bAQ" = (
@@ -22243,7 +22251,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	sortType = 11
+	sortType = 28
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -24905,6 +24913,10 @@
 /area/ai_monitored/turret_protected/aisat/maint)
 "frS" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/camera{
+	c_tag = "Brig Central";
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos/project)
 "frW" = (
