@@ -297,7 +297,7 @@
 		to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
 		return FALSE
 	for(var/obj/O in T)
-		if(O.density && !O.CanPass(src, T))
+		if(O.density && !O.CanPass(src, get_dir(T, src)))
 			to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
 			return FALSE
 	if(inhibited)

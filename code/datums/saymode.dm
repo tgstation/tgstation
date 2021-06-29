@@ -72,7 +72,7 @@
 	if(!mind)
 		return TRUE
 	if(IS_MONKEY_LEADER(mind) || (ismonkey(user) && IS_INFECTED_MONKEY(mind)))
-		user.log_talk(message, LOG_SAY, tag="monkey")
+		user.log_talk(message, LOG_SAY, tag=SPECIES_MONKEY)
 		if(prob(75) && ismonkey(user))
 			user.visible_message(span_notice("\The [user] chimpers."))
 		var/msg = "<span class='[IS_MONKEY_LEADER(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[IS_MONKEY_LEADER(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"

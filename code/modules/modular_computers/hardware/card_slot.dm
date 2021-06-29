@@ -9,8 +9,8 @@
 	var/obj/item/card/id/stored_card
 
 ///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
-/obj/item/computer_hardware/card_slot/Exited(atom/A, atom/newloc)
-	if(A == stored_card)
+/obj/item/computer_hardware/card_slot/Exited(atom/movable/gone, direction)
+	if(stored_card == gone)
 		stored_card = null
 		if(holder)
 			if(holder.active_program)

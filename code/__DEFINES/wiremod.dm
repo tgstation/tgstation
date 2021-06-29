@@ -25,6 +25,9 @@
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
+/// Any datatype (USED ONLY FOR DISPLAY, DO NOT USE)
+#define COMP_TYPE_ANY "any"
+
 
 /// The maximum range between a port and an atom
 #define PORT_ATOM_MAX_RANGE 7
@@ -81,8 +84,9 @@
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
 
-// Combiner component
-#define COMP_COMBINER_ANY "any"
+// Radio component
+#define COMP_RADIO_PUBLIC "public"
+#define COMP_RADIO_PRIVATE "private"
 
 // Shells
 
@@ -92,11 +96,20 @@
 /// Whether the shell needs to be anchored for the circuit to be on.
 #define SHELL_FLAG_REQUIRE_ANCHOR (1<<1)
 
+/// Whether or not the shell has a USB port.
+#define SHELL_FLAG_USB_PORT (1<<2)
+
+/// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
+#define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
+
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10
 #define SHELL_CAPACITY_MEDIUM 25
 #define SHELL_CAPACITY_LARGE 50
 #define SHELL_CAPACITY_VERY_LARGE 500
+
+/// The maximum range a USB cable can be apart from a source
+#define USB_CABLE_MAX_RANGE 2
 
 // Circuit flags
 /// Creates an input trigger that means the component won't be triggered unless the trigger is pulsed.

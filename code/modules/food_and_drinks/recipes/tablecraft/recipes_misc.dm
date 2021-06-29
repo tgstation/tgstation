@@ -68,6 +68,16 @@
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/poutine
+	name = "Poutine"
+	reqs = list(
+		/obj/item/food/fries = 1,
+		/obj/item/food/cheese = 1,
+		/datum/reagent/consumable/gravy = 3
+	)
+	result = /obj/item/food/poutine
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/beans
 	name = "Beans"
 	time = 40

@@ -28,7 +28,7 @@
 	QDEL_NULL(tank)
 	return ..()
 
-/obj/structure/tank_holder/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/tank_holder/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(istype(mover) && mover.throwing)
 		return TRUE
@@ -106,7 +106,7 @@
 /// and density.
 /obj/structure/tank_holder/proc/after_detach_tank()
 	tank = null
-	density = FALSE
+	set_density(FALSE)
 	icon_state = "holder"
 
 /obj/structure/tank_holder/oxygen

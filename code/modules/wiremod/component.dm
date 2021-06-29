@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The description of the component shown on the UI
+	var/display_desc = "A generic component"
+
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -54,10 +57,15 @@
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
+	populate_options()
 	if(length(options))
 		current_option = options[1]
 
 	return INITIALIZE_HINT_LATELOAD
+
+/// Called when the options variable should be set.
+/obj/item/circuit_component/proc/populate_options()
+	return
 
 /obj/item/circuit_component/LateInitialize()
 	. = ..()
@@ -68,8 +76,10 @@
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
-		parent.remove_component(src)
+		// Prevents a Destroy() recursion
+		var/obj/item/integrated_circuit/old_parent = parent
 		parent = null
+		old_parent.remove_component(src)
 
 	trigger_input = null
 	trigger_output = null
@@ -135,6 +145,9 @@
 		if(connected_port.datatype != output_port.datatype)
 			output_port.set_datatype(connected_port.datatype)
 			return TRUE
+	else
+		output_port.set_datatype(output_port.default_datatype)
+		return TRUE
 	return FALSE
 
 
@@ -182,3 +195,45 @@
 
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
+
+/// Called when this component is about to be added to an integrated_circuit.
+/obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	return TRUE
+
+/// Called when this component is removed from an integrated_circuit.
+/obj/item/circuit_component/proc/removed_from(obj/item/integrated_circuit/removed_from)
+	return
+
+/**
+ * Gets the UI notices to be displayed on the CircuitInfo panel.
+ *
+ * Returns a list of buttons in the following format
+ * list(
+ *   "icon" = ICON(string)
+ *   "content" = CONTENT(string)
+ *   "color" = COLOR(string, not a hex)
+ * )
+ */
+/obj/item/circuit_component/proc/get_ui_notices()
+	. = list()
+
+	if(!removable)
+		. += list(list(
+			"icon" = "lock",
+			"content" = "Unremovable",
+			"color" = "red"
+		))
+
+
+	if(length(input_ports))
+		. += list(list(
+			"icon" = "bolt",
+			"content" = "Power Usage Per Input: [power_usage_per_input]",
+			"color" = "orange",
+		))
+
+/obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
+	return
+
+/obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/parent)
+	return
