@@ -320,45 +320,6 @@
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/energy/laser/instakill
-	name = "instakill rifle"
-	icon_state = "instagib"
-	inhand_icon_state = "instagib"
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
-	w_class = WEIGHT_CLASS_BULKY
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
-	force = 60
-	charge_sections = 5
-	ammo_x_offset = 2
-	shaded_charge = FALSE
-
-/obj/item/gun/energy/laser/instakill/red
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
-	icon_state = "instagibred"
-	inhand_icon_state = "instagibred"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
-
-/obj/item/gun/energy/laser/instakill/blue
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
-	icon_state = "instagibblue"
-	inhand_icon_state = "instagibblue"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
-
-/obj/item/gun/energy/laser/instakill/green
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a green design."
-	icon_state = "instagibgreen"
-	inhand_icon_state = "instagibgreen"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/green)
-
-/obj/item/gun/energy/laser/instakill/yellow
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a yellow design."
-	icon_state = "instagibyellow"
-	inhand_icon_state = "instagibyellow"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/yellow)
-
-/obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
-	return
-
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."

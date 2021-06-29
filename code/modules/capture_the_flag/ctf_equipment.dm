@@ -52,6 +52,7 @@
 
 /obj/projectile/beam/ctf/rifle
 	damage = 30
+	light_color = LIGHT_COLOR_BLUE
 
 // LASER SHOTGUN
 
@@ -82,6 +83,7 @@
 
 /obj/projectile/beam/ctf/shotgun
 	damage = 15
+	light_color = LIGHT_COLOR_BLUE
 
 // MARKSMAN RIFLE
 
@@ -128,6 +130,46 @@
 /obj/projectile/beam/ctf/deagle
 	damage = 60
 
+// INSTAKILL RIFLE
+
+/obj/item/gun/energy/laser/instakill
+	name = "instakill rifle"
+	icon_state = "instagib"
+	inhand_icon_state = "instagib"
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
+	w_class = WEIGHT_CLASS_BULKY
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
+	force = 60
+	charge_sections = 5
+	ammo_x_offset = 2
+	shaded_charge = FALSE
+
+/obj/item/gun/energy/laser/instakill/Initialize()
+	. = ..()
+	AddElement(/datum/element/delete_on_drop)
+
+/obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
+	return
+
+/obj/item/ammo_casing/energy/instakill
+	projectile_type = /obj/projectile/beam/instakill
+	e_cost = 0
+	select_name = "DESTROY"
+
+/obj/projectile/beam/instakill
+	name = "instagib laser"
+	icon_state = "purple_laser"
+	damage = 200
+	damage_type = BURN
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	light_color = LIGHT_COLOR_PURPLE
+
+/obj/projectile/beam/instakill/on_hit(atom/target)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.visible_message(span_danger("[M] explodes into a shower of gibs!"))
+		M.gib()
 
 // SHIELDED HARDSUIT
 
@@ -180,6 +222,7 @@
 
 /obj/projectile/beam/ctf/rifle/red
 	icon_state = "laser"
+	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 
@@ -195,6 +238,7 @@
 
 /obj/projectile/beam/ctf/shotgun/red
 	icon_state = "laser"
+	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 
@@ -213,6 +257,22 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
+
+
+// Instakill
+/obj/item/gun/energy/laser/instakill/red
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
+	icon_state = "instagibred"
+	inhand_icon_state = "instagibred"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
+
+/obj/item/ammo_casing/energy/instakill/red
+	projectile_type = /obj/projectile/beam/instakill/red
+
+/obj/projectile/beam/instakill/red
+	icon_state = "red_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	light_color = COLOR_SOFT_RED
 
 // BLUE TEAM GUNS
 
@@ -257,6 +317,22 @@
 
 /obj/projectile/beam/ctf/marksman/blue
 
+
+// Instakill
+/obj/item/gun/energy/laser/instakill/blue
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
+	icon_state = "instagibblue"
+	inhand_icon_state = "instagibblue"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
+
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/projectile/beam/instakill/blue
+
+/obj/projectile/beam/instakill/blue
+	icon_state = "blue_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
+
 // GREEN TEAM GUNS
 
 // Rifle
@@ -271,6 +347,7 @@
 
 /obj/projectile/beam/ctf/rifle/green
 	icon_state = "xray"
+	light_color = COLOR_VERY_PALE_LIME_GREEN
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
 
@@ -286,6 +363,7 @@
 
 /obj/projectile/beam/ctf/shotgun/green
 	icon_state = "xray"
+	light_color = COLOR_VERY_PALE_LIME_GREEN
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
 
@@ -305,6 +383,22 @@
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
 
+
+// Instakill
+/obj/item/gun/energy/laser/instakill/green
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a green design."
+	icon_state = "instagibgreen"
+	inhand_icon_state = "instagibgreen"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/green)
+
+/obj/item/ammo_casing/energy/instakill/green
+	projectile_type = /obj/projectile/beam/instakill/green
+
+/obj/projectile/beam/instakill/green
+	icon_state = "green_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	light_color = COLOR_VERY_PALE_LIME_GREEN
+
 // YELLOW TEAM GUNS
 
 // Rifle
@@ -319,6 +413,7 @@
 
 /obj/projectile/beam/ctf/rifle/yellow
 	icon_state = "gaussstrong"
+	light_color = COLOR_VERY_SOFT_YELLOW
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 
 
@@ -334,6 +429,7 @@
 
 /obj/projectile/beam/ctf/shotgun/yellow
 	icon_state = "gaussstrong"
+	light_color = COLOR_VERY_SOFT_YELLOW
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 
 
@@ -352,6 +448,22 @@
 	tracer_type = /obj/effect/projectile/tracer/solar
 	muzzle_type = /obj/effect/projectile/muzzle/solar
 	impact_type = /obj/effect/projectile/impact/solar
+
+
+// Instakill
+/obj/item/gun/energy/laser/instakill/yellow
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a yellow design."
+	icon_state = "instagibyellow"
+	inhand_icon_state = "instagibyellow"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/yellow)
+
+/obj/item/ammo_casing/energy/instakill/yellow
+	projectile_type = /obj/projectile/beam/instakill/yellow
+
+/obj/projectile/beam/instakill/yellow
+	icon_state = "yellow_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	light_color = COLOR_VERY_SOFT_YELLOW
 
 // RED TEAM SUITS
 
