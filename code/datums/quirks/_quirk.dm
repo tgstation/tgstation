@@ -63,7 +63,7 @@
 		START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		if(gain_text) //Some quirks are silent
+		if(gain_text)
 			to_chat(quirk_holder, gain_text)
 		add_unique()
 
