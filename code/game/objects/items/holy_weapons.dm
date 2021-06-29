@@ -698,7 +698,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("enlightens", "redpills")
 	attack_verb_simple = list("enlighten", "redpill")
-	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Can be worn on the head, obviously."
+	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Fits in pockets. Can be worn on the head, obviously."
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
