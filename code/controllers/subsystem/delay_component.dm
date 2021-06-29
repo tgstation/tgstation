@@ -24,5 +24,11 @@ SUBSYSTEM_DEF(circuit_component)
 		if(MC_TICK_CHECK)
 			return
 
+/**
+ * Adds a callback to be invoked when the next fire() is done. Used by the integrated circuit system.
+ *
+ * Prevents race conditions as it acts like a queue system.
+ * Those that registered first will be executed first and those registered last will be executed last.
+ */
 /datum/controller/subsystem/circuit_component/proc/add_callback(datum/callback/to_call)
 	callbacks_to_invoke += to_call

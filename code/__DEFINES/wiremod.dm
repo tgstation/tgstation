@@ -95,6 +95,8 @@
 #define COMP_STATE_DISCHARGED "Discharged"
 #define COMP_STATE_NONE "None"
 
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 0
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)

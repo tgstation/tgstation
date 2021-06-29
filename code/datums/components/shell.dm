@@ -125,6 +125,7 @@
 		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
+	logic_board.inserter_mind = WEAKREF(attacker.mind)
 	attach_circuit(logic_board, attacker)
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
