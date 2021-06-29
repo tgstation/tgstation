@@ -358,6 +358,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
+#define TRAIT_SHREWD_NEGOTIATOR "shrewd_negotiator"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"

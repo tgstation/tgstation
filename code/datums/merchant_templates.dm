@@ -7,3 +7,7 @@
 /datum/map_template/shuttle/merchant/amorphous
 	suffix = "amorphous"
 	name = "merchant ship (Amorphous)"
+
+/datum/map_template/shuttle/merchant/friendly_pirates
+	suffix = "pirates"
+	name = "merchant ship (Friendly Pirates)"

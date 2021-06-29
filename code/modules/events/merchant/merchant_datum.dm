@@ -34,3 +34,16 @@
 	message_leaving = "OUR TIME HAS COME TO AN END. GOODBYE MEATBAGS."
 	message_too_poor = "THIS STATION HAS NO CREDITS FOR ME TO BARTER. THIS IS A WASTE OF MY TIME."
 	message_too_late = "YOU ARE RUNNING FROM ME. I AM NOT GOING TO BE BELITTLED BY MEATBAGS."
+
+/datum/merchant/friendly_pirates
+	name = "Friendly Pirates"
+	map_template_path = /datum/map_template/shuttle/merchant/amorphous
+	message_greet = "Hey! We've secured ourselves some rare curios your station may be interested in. For %VISITCOST credits, we'll dock and open shop."
+	message_docking = "Alright, we're docking now. No enquiries on where we got this stuff, please."
+	message_leaving = "Thanks for taking those off our hands, we're heading off."
+	message_too_poor = "Trying to scam us?! You're lucky we're a bit light on arms at the moment, else we'd be blowing your garbage dump of a station to smithereens."
+	message_too_late = "You're already trying to leave, this is a waste of our time."
+
+/datum/merchant/friendly_pirates/New()
+	. = ..()
+	name = pick(strings(PIRATE_NAMES_FILE, "rogue_names"))

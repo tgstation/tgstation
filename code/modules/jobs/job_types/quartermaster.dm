@@ -42,5 +42,6 @@
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1)
 
 	chameleon_extras = /obj/item/stamp/qm
+	skillchips = list(/obj/item/skillchip/shrewd_negotiator)
 
 	id_trim = /datum/id_trim/job/quartermaster

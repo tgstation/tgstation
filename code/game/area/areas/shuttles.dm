@@ -49,6 +49,11 @@
 /area/shuttle/syndicate/airlock
 	name = "Syndicate Infiltrator Airlock"
 
+////////////////////////////Merchant Shuttle////////////////////////////
+
+/area/shuttle/merchant
+	name = "Merchant Shuttle"
+
 ////////////////////////////Pirate Shuttle////////////////////////////
 
 /area/shuttle/pirate

@@ -12,6 +12,8 @@
 
 ///cost for the merchant ship to visit
 #define INITIAL_VISIT_COST 500
+///max time merchant will stay, regardless of emergency shuttle calls
+#define TOTAL_MERCHANT_VISIT_TIME 20 MINUTES
 ///index of the comm response to say yes
 #define RESPONSE_MERCHANT_DOCK 1
 ///index of the comm response to say no

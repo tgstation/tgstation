@@ -142,6 +142,8 @@
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_buy(mob/user, obj/item/item_to_buy)
 	var/cost = products[item_to_buy]
+	if(HAS_TRAIT(user, TRAIT_SHREWD_NEGOTIATOR))
+		cost -= min(cost / 6, 200)
 	to_chat(user, span_notice("It will cost you [cost] credits to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?"))
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
@@ -246,7 +248,7 @@
 		"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
 	)
 
-///this trader is used in the merchant event
+///this trader is used in the merchant event. rarely, sells a roburger!
 /mob/living/simple_animal/hostile/retaliate/trader/ai
 	name = "Amorphous"
 	desc = "A pile of wires and circuitry powering some kind of sentience. It wants to trade with you?"
@@ -254,8 +256,7 @@
 	icon_state = "amorphous"
 	pixel_x = -16
 	base_pixel_x = -16
-	//you mustnt move sir
-	turns_per_move = INFINITY
+	casingtype = /obj/item/ammo_casing/shotgun/stunslug
 	move_resist = MOVE_FORCE_OVERPOWERING
 	speak_emote = list("beeps", "clicks")
 	speech_span = SPAN_ROBOT
@@ -286,7 +287,23 @@
 /mob/living/simple_animal/hostile/retaliate/trader/ai/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, name)
+	if(prob(20))
+		products[/obj/item/food/burger/roburger] = 750
 
+/mob/living/simple_animal/hostile/retaliate/trader/ai/OpenFire(atom/thing)
+	if(!isliving(target))
+		return ..()
+	var/mob/living/living_victim = target
+	if(living_victim.AmountStun())
+		podspawn(list(
+			"target" = get_turf(living_victim),
+			"style" = STYLE_MISSILE,
+			"effectMissile" = TRUE,
+			"explosionSize" = list(0,0,1,2)
+		))
+		enemies -= WEAKREF(living_victim) //one missile dropped on you per times you piss me off
+		return
+	. = ..()
 /**
  * ## silicon sentience chip!
  *
@@ -295,7 +312,7 @@
 /obj/item/silicon_sentience
 	name = "silicon sentience chip"
 	desc = "Can be used to grant sentience to robots."
-	icon_state = "door_electronics"
+	icon_state = "sentience_chip"
 	icon = 'icons/obj/module.dmi'
 
 /obj/item/silicon_sentience/Initialize()

@@ -36,3 +36,5 @@
 	l_hand = /obj/item/export_scanner
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo = 1)
 	id_trim = /datum/id_trim/job/cargo_technician
+
+	skillchips = list(/obj/item/skillchip/shrewd_negotiator)

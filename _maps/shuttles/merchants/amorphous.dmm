@@ -157,6 +157,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/space)
+"wL" = (
+/mob/living/simple_animal/bot/medbot/shambles,
+/turf/open/floor/pod,
+/area/space)
 "yc" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -178,6 +182,7 @@
 /area/space)
 "Hy" = (
 /obj/effect/gibspawner/robot,
+/mob/living/simple_animal/bot/medbot/disarray,
 /turf/open/floor/iron/dark,
 /area/space)
 "IO" = (
@@ -356,7 +361,7 @@ ad
 ah
 an
 tF
-Oe
+wL
 Oe
 LL
 Tt

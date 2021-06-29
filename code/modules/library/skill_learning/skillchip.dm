@@ -433,3 +433,12 @@
 	skill_icon = "lungs"
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/shrewd_negotiator
+	name = "\"shrewd negotiations\" skillchip"
+	auto_traits = list(TRAIT_SHREWD_NEGOTIATOR)
+	skill_name = "Shrewd Negotiations"
+	skill_description = "Slightly and discretely modifies how you speak to give you better deals with merchants. They'll never know what hit em!"
+	skill_icon = "comment-dollar"
+	activate_message = "<span class='notice'>You feel some subconscious confidence from somewhere.</span>"
+	deactivate_message = "<span class='notice'>The feeling of subconscious confidence subsides.</span>"
