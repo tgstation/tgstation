@@ -343,6 +343,7 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 
+	SEND_SIGNAL(SSshuttle, COMSIG_EMERGENCY_SHUTTLE_CALLED, call_time)
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.adminEmergencyNoRecall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
@@ -350,6 +351,8 @@
 		return
 	if(SSshuttle.emergencyNoRecall)
 		return
+
+	SEND_SIGNAL(SSshuttle, COMSIG_EMERGENCY_SHUTTLE_RECALLED)
 
 	invertTimer()
 	mode = SHUTTLE_RECALL

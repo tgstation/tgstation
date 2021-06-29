@@ -52,6 +52,13 @@
 ///from SSsecurity_level when the security level changes : (new_level)
 #define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
 
+///from SSshuttle when emergency shuttle calls and recalls
+
+/// (call_time)
+#define COMSIG_EMERGENCY_SHUTTLE_CALLED "emergency shuttle called"
+/// ()
+#define COMSIG_EMERGENCY_SHUTTLE_RECALLED "emergency shuttle recalled"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals

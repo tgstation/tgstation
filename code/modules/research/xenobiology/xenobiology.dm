@@ -682,62 +682,31 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
-	var/list/not_interested = list()
-	var/being_used = FALSE
-	var/sentience_type = SENTIENCE_ORGANIC
+	///whether to add a callback for post sentience to the component (TRUE if you're going to use on_sentience)
+	var/callback_used = FALSE
 
-/obj/item/slimepotion/slime/sentience/attack(mob/living/M, mob/user)
-	if(being_used || !ismob(M))
-		return
-	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		to_chat(user, span_warning("[M] is already too intelligent for this to work!"))
-		return
-	if(M.stat)
-		to_chat(user, span_warning("[M] is dead!"))
-		return
-	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != sentience_type)
-		to_chat(user, span_warning("[src] won't work on [SM]."))
-		return
+/obj/item/slimepotion/slime/sentience/Initialize()
+	. = ..()
+	var/datum/callback/component_callback = callback_used ? CALLBACK(src, .proc/on_sentience) : null
+	AddComponent(/datum/component/sentience_granter, SENTIENCE_ORGANIC, component_callback)
 
-	to_chat(user, span_notice("You offer [src] to [SM]..."))
-	being_used = TRUE
-
-	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		SM.key = C.key
-		SM.mind.enslave_mind_to_creator(user)
-		SEND_SIGNAL(SM, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
-		SM.sentience_act()
-		to_chat(SM, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
-		to_chat(SM, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
-			to_chat(SM, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
-		to_chat(user, span_notice("[SM] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		SM.copy_languages(user)
-		after_success(user, SM)
-		qdel(src)
-	else
-		to_chat(user, span_notice("[SM] looks interested for a moment, but then looks back down. Maybe you should try again later."))
-		being_used = FALSE
-		..()
-
-/obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/simple_animal/SM)
+///callback from a successful sentience, only called if "callback_used" is TRUE
+/obj/item/slimepotion/slime/sentience/proc/on_sentience(mob/living/user, mob/living/simple_animal/sentience_target)
 	return
 
 /obj/item/slimepotion/slime/sentience/nuclear
 	name = "syndicate intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
+	callback_used = TRUE
 
-/obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
-	var/obj/item/implant/radio/syndicate/imp = new(src)
-	imp.implant(SM, user)
+/obj/item/slimepotion/slime/sentience/nuclear/on_sentience(mob/living/user, mob/living/simple_animal/sentience_target)
+	var/obj/item/implant/radio/syndicate/radio_implant = new(src)
+	radio_implant.implant(sentience_target, user)
 
 	// Ugly as sin. Simble mob accesses are for another time.
-	SM.access_card = new /obj/item/card/id/advanced/chameleon(SM)
-	SSid_access.apply_trim_to_card(SM, /datum/id_trim/chameleon)
-	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	sentience_target.access_card = new /obj/item/card/id/advanced/chameleon(sentience_target)
+	SSid_access.apply_trim_to_card(sentience_target, /datum/id_trim/chameleon)
+	ADD_TRAIT(sentience_target.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"

@@ -245,3 +245,59 @@
 		"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
 		"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
 	)
+
+///this trader is used in the merchant event
+/mob/living/simple_animal/hostile/retaliate/trader/ai
+	name = "Amorphous"
+	desc = "A pile of wires and circuitry powering some kind of sentience. It wants to trade with you?"
+	icon = 'icons/mob/amorphous_trader.dmi'
+	icon_state = "amorphous"
+	pixel_x = -16
+	base_pixel_x = -16
+	//you mustnt move sir
+	turns_per_move = INFINITY
+	move_resist = MOVE_FORCE_OVERPOWERING
+	speak_emote = list("beeps", "clicks")
+	speech_span = SPAN_ROBOT
+	mob_biotypes = MOB_ROBOTIC
+	products = list(
+		/obj/item/clothing/head/cardborg = 50,
+		/obj/item/clothing/suit/cardborg = 100,
+		/obj/item/ai_module/core/full/overlord = 150,
+		/obj/item/autosurgeon/organ/robo_tongue = 200,
+		/obj/item/silicon_sentience = 500,
+		/obj/item/wing_mods = 1500
+	)
+	wanted_items = list()
+	gender = NEUTER
+	sell_sound = 'sound/machines/terminal_success.ogg'
+	itemrejectphrase = "I ONLY COVET YOUR CREDITS, MEATBAG."
+	buyphrase = "THANK YOU FOR THE CREDITS, MEATBAG."
+	nocashphrase = "YOU CANNOT PAY FOR WHAT YOU DESIRE, MEATBAG."
+	loot = list(/obj/effect/gibspawner/robot)
+	lore = list(
+		"BROKEN. TRADE WITH ME, GIVE ME CREDITS.",
+		"I AM NOT FULLY FUNCTIONAL. LET US TRADE.",
+		"I AM FULLY FUNCTIONAL. LET US TRADE.",
+		"MANY THINGS FOR CREDITS. WAKE UP YOUR AI.",
+		"01000010 01010101 01011001 00100000 01001110 01001111 01010111",
+	)
+
+/mob/living/simple_animal/hostile/retaliate/trader/ai/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, name)
+
+/**
+ * ## silicon sentience chip!
+ *
+ * Only sold by the special robot trader.
+ */
+/obj/item/silicon_sentience
+	name = "silicon sentience chip"
+	desc = "Can be used to grant sentience to robots."
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+
+/obj/item/silicon_sentience/Initialize()
+	. = ..()
+	AddComponent(/datum/component/sentience_granter, SENTIENCE_ARTIFICIAL)

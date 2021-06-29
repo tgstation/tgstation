@@ -464,7 +464,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		fly.Remove(C)
 		QDEL_NULL(fly)
 		if(C.movement_type & FLYING)
-			ToggleFlight(C)
+			toggle_flight(C)
 	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
 		C.dna.species.mutant_bodyparts -= "wings"
 		C.dna.features["wings"] = "None"
@@ -1032,7 +1032,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
 	if(flying_species)
-		HandleFlight(H)
+		handle_flight(H)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1974,7 +1974,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(flying_species && H.movement_type & FLYING)
-		ToggleFlight(H)
+		toggle_flight(H)
 		flyslip(H)
 	. = stunmod * H.physiology.stun_mod * amount
 
@@ -2067,12 +2067,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //FLIGHT SHIT//
 ///////////////
 
-/datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H)
+/datum/species/proc/grant_flight(mob/living/carbon/human/flying_mob)
 	if(flying_species) //species that already have flying traits should not work with this proc
 		return
 	flying_species = TRUE
+	if(flying_mob.dna.species.has_innate_wings)
+		to_chat(flying_mob, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
+		if(!flying_mob.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
+			flying_mob.dna.features["original_moth_wings"] = flying_mob.dna.features["moth_wings"]
+		flying_mob.dna.features["moth_wings"] = "None"
+		if(!flying_mob.dna.features["original_moth_antennae"]) //Stores their antennae type as well
+			flying_mob.dna.features["original_moth_antennae"] = flying_mob.dna.features["moth_antennae"]
+		flying_mob.dna.features["moth_antennae"] = "Regal"
+	else
+		to_chat(flying_mob, span_userdanger("A terrible pain travels down your back as wings burst out!"))
 	if(wings_icons.len > 1)
-		if(!H.client)
+		if(!flying_mob.client)
 			wings_icon = pick(wings_icons)
 		else
 			var/list/wings = list()
@@ -2085,83 +2095,83 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					stack_trace("Different wing types with repeated names. Please fix as this may cause issues.")
 				else
 					wings[S.name] = img
-			wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
+			wings_icon = show_radial_menu(flying_mob, flying_mob, wings, tooltips = TRUE)
 			if(!wings_icon)
 				wings_icon = pick(wings_icons)
 	else
 		wings_icon = wings_icons[1]
 	if(isnull(fly))
 		fly = new
-		fly.Grant(H)
-	if(H.dna.features["wings"] != wings_icon)
+		fly.Grant(flying_mob)
+	if(flying_mob.dna.features["wings"] != wings_icon)
 		mutant_bodyparts["wings"] = wings_icon
-		H.dna.features["wings"] = wings_icon
-		H.update_body()
+		flying_mob.dna.features["wings"] = wings_icon
+		flying_mob.update_body()
 
-/datum/species/proc/HandleFlight(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		if(!CanFly(H))
-			ToggleFlight(H)
+/datum/species/proc/handle_flight(mob/living/carbon/human/flying_mob)
+	if(flying_mob.movement_type & FLYING)
+		if(!can_fly(flying_mob))
+			toggle_flight(flying_mob)
 			return FALSE
 		return TRUE
 	else
 		return FALSE
 
-/datum/species/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.body_position == LYING_DOWN)
+/datum/species/proc/can_fly(mob/living/carbon/human/flying_mob)
+	if(flying_mob.stat || flying_mob.body_position == LYING_DOWN)
 		return FALSE
-	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))) //Jumpsuits have tail holes, so it makes sense they have wing holes too
-		to_chat(H, span_warning("Your suit blocks your wings from extending!"))
+	if(flying_mob.wear_suit && ((flying_mob.wear_suit.flags_inv & HIDEJUMPSUIT) && (!flying_mob.wear_suit.species_exception || !is_type_in_list(src, flying_mob.wear_suit.species_exception)))) //Jumpsuits have tail holes, so it makes sense they have wing holes too
+		to_chat(flying_mob, span_warning("Your suit blocks your wings from extending!"))
 		return FALSE
-	var/turf/T = get_turf(H)
+	var/turf/T = get_turf(flying_mob)
 	if(!T)
 		return FALSE
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
-		to_chat(H, span_warning("The atmosphere is too thin for you to fly!"))
+		to_chat(flying_mob, span_warning("The atmosphere is too thin for you to fly!"))
 		return FALSE
 	else
 		return TRUE
 
-/datum/species/proc/flyslip(mob/living/carbon/human/H)
+/datum/species/proc/flyslip(mob/living/carbon/human/flying_mob)
 	var/obj/buckled_obj
-	if(H.buckled)
-		buckled_obj = H.buckled
+	if(flying_mob.buckled)
+		buckled_obj = flying_mob.buckled
 
-	to_chat(H, span_notice("Your wings spazz out and launch you!"))
+	to_chat(flying_mob, span_notice("Your wings spazz out and launch you!"))
 
-	playsound(H.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+	playsound(flying_mob.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-	for(var/obj/item/I in H.held_items)
-		H.accident(I)
+	for(var/obj/item/I in flying_mob.held_items)
+		flying_mob.accident(I)
 
-	var/olddir = H.dir
+	var/olddir = flying_mob.dir
 
-	H.stop_pulling()
+	flying_mob.stop_pulling()
 	if(buckled_obj)
-		buckled_obj.unbuckle_mob(H)
+		buckled_obj.unbuckle_mob(flying_mob)
 		step(buckled_obj, olddir)
 	else
-		new /datum/forced_movement(H, get_ranged_target_turf(H, olddir, 4), 1, FALSE, CALLBACK(H, /mob/living/carbon/.proc/spin, 1, 1))
+		new /datum/forced_movement(flying_mob, get_ranged_target_turf(flying_mob, olddir, 4), 1, FALSE, CALLBACK(flying_mob, /mob/living/carbon/.proc/spin, 1, 1))
 	return TRUE
 
-//UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
-/datum/species/proc/ToggleFlight(mob/living/carbon/human/H)
-	if(!HAS_TRAIT_FROM(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
+//UNSAFE PROC, should only be called through the Activate or other sources that check for can_fly
+/datum/species/proc/toggle_flight(mob/living/carbon/human/flying_mob)
+	if(!HAS_TRAIT_FROM(flying_mob, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		stunmod *= 2
 		speedmod -= 0.35
-		ADD_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		ADD_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_on(H, SPECIES_TRAIT)
-		H.OpenWings()
+		ADD_TRAIT(flying_mob, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
+		ADD_TRAIT(flying_mob, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
+		passtable_on(flying_mob, SPECIES_TRAIT)
+		flying_mob.OpenWings()
 	else
 		stunmod *= 0.5
 		speedmod += 0.35
-		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_off(H, SPECIES_TRAIT)
-		H.CloseWings()
+		REMOVE_TRAIT(flying_mob, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
+		REMOVE_TRAIT(flying_mob, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
+		passtable_off(flying_mob, SPECIES_TRAIT)
+		flying_mob.CloseWings()
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
@@ -2170,20 +2180,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	button_icon_state = "flight"
 
 /datum/action/innate/flight/Activate()
-	var/mob/living/carbon/human/H = owner
-	var/datum/species/S = H.dna.species
-	if(S.CanFly(H))
-		S.ToggleFlight(H)
-		if(!(H.movement_type & FLYING))
-			to_chat(H, span_notice("You settle gently back onto the ground..."))
+	var/mob/living/carbon/human/flying_mob = owner
+	var/datum/species/S = flying_mob.dna.species
+	if(S.can_fly(flying_mob))
+		S.toggle_flight(flying_mob)
+		if(!(flying_mob.movement_type & FLYING))
+			to_chat(flying_mob, span_notice("You settle gently back onto the ground..."))
 		else
-			to_chat(H, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			H.set_resting(FALSE, TRUE)
+			to_chat(flying_mob, span_notice("You beat your wings and begin to hover gently above the ground..."))
+			flying_mob.set_resting(FALSE, TRUE)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
  */
-/datum/species/proc/get_biological_state(mob/living/carbon/human/H)
+/datum/species/proc/get_biological_state(mob/living/carbon/human/species_holder)
 	. = BIO_INORGANIC
 	if(HAS_FLESH in species_traits)
 		. |= BIO_JUST_FLESH
@@ -2193,7 +2203,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ///Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.
 /datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	return FALSE
-
 
 ///Removes any non-native limbs from the mob
 /datum/species/proc/fix_non_native_limbs(mob/living/carbon/human/H)

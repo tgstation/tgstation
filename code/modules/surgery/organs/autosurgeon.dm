@@ -109,3 +109,8 @@
 
 /obj/item/autosurgeon/organ/syndicate/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver
+
+/obj/item/autosurgeon/organ/robo_tongue
+	desc = "A single use autosurgeon that contains a robotic voicebox."
+	uses = 1
+	starting_organ = /obj/item/organ/tongue/robot

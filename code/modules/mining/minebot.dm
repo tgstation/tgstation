@@ -298,28 +298,36 @@
 	to_chat(user, "<span class='notice'>You reinforce the armor of [minebot].")
 	qdel(src)
 
-//AI
-
-/obj/item/slimepotion/slime/sentience/mining
+/**
+ * ## minebot sentience chip!
+ *
+ * sentient minebots are penalized for being sentient; they have their stats reset to normal plus the values on the chip.
+ */
+/obj/item/minebot_sentience
 	name = "minebot AI upgrade"
 	desc = "Can be used to grant sentience to minebots. It's incompatible with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
-	sentience_type = SENTIENCE_MINEBOT
-	var/base_health_add = 5 //sentient minebots are penalized for beign sentient; they have their stats reset to normal plus these values
-	var/base_damage_add = 1 //this thus disables other minebot upgrades
+	w_class = WEIGHT_CLASS_TINY
+	///health ups given to sentienced mob
+	var/base_health_add = 5
+	///damage ups given to sentienced mob
+	var/base_damage_add = 1
+	///speed ups given to sentienced mob
 	var/base_speed_add = 1
-	var/base_cooldown_add = 10 //base cooldown isn't reset to normal, it's just added on, since it's not practical to disable the cooldown module
+	///base cooldown isn't reset to normal, it's just added on, since it's not practical to disable the cooldown module
+	var/base_cooldown_add = 10
 
-/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/simple_mob)
-	if(!istype(simple_mob, /mob/living/simple_animal/hostile/mining_drone))
-		return
-	var/mob/living/simple_animal/hostile/mining_drone/minebot = simple_mob
-	minebot.maxHealth = initial(minebot.maxHealth) + base_health_add
-	minebot.melee_damage_lower = initial(minebot.melee_damage_lower) + base_damage_add
-	minebot.melee_damage_upper = initial(minebot.melee_damage_upper) + base_damage_add
-	minebot.move_to_delay = initial(minebot.move_to_delay) + base_speed_add
-	minebot.stored_gun?.overheat_time += base_cooldown_add
+/obj/item/minebot_sentience/Initialize()
+	. = ..()
+	AddComponent(/datum/component/sentience_granter, SENTIENCE_MINEBOT, CALLBACK(src, .proc/on_sentience))
+
+/obj/item/minebot_sentience/proc/on_sentience(mob/user, mob/living/simple_animal/hostile/mining_drone/mining_drone)
+	mining_drone.maxHealth = initial(mining_drone.maxHealth) + base_health_add
+	mining_drone.melee_damage_lower = initial(mining_drone.melee_damage_lower) + base_damage_add
+	mining_drone.melee_damage_upper = initial(mining_drone.melee_damage_upper) + base_damage_add
+	mining_drone.move_to_delay = initial(mining_drone.move_to_delay) + base_speed_add
+	mining_drone.stored_gun?.overheat_time += base_cooldown_add
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK

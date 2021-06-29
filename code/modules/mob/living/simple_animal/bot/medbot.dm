@@ -87,6 +87,16 @@
 	declare_crit = 0
 	heal_amount = 5
 
+/mob/living/simple_animal/bot/medbot/shambles
+	name = "Shambles"
+	desc = "Creation of Amorphous. It's completely covered in cables and wires."
+	skin = "amorph"
+
+/mob/living/simple_animal/bot/medbot/disarray
+	name = "Disarray"
+	desc = "Creation of Amorphous. It's completely covered in cables and wires."
+	skin = "amorph"
+
 /mob/living/simple_animal/bot/medbot/update_icon_state()
 	. = ..()
 	if(!on)

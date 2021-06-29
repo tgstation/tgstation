@@ -1,0 +1,491 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"ah" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/space)
+"al" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_corner,
+/area/space)
+"an" = (
+/obj/structure/statue/silver/secborg,
+/turf/open/floor/iron/dark/smooth_half,
+/area/space)
+"ao" = (
+/obj/structure/table/optable,
+/turf/open/floor/pod,
+/area/space)
+"av" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron/dark,
+/area/space)
+"aK" = (
+/turf/template_noop,
+/area/space)
+"bk" = (
+/obj/effect/gibspawner/robot,
+/turf/open/floor/iron/dark/smooth_large,
+/area/space)
+"bm" = (
+/obj/docking_port/mobile/emergency{
+	dir = 8;
+	dwidth = 8;
+	height = 9;
+	name = "Mini emergency shuttle";
+	width = 21
+	},
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"bG" = (
+/turf/open/floor/black,
+/area/space)
+"bS" = (
+/obj/structure/railing,
+/obj/structure/statue/silver/secborg,
+/turf/open/floor/iron/dark/smooth_half,
+/area/space)
+"cx" = (
+/turf/open/floor/iron/dark/smooth_large,
+/area/space)
+"cC" = (
+/obj/effect/gibspawner/robot,
+/turf/open/floor/pod,
+/area/space)
+"dM" = (
+/obj/effect/gibspawner/robot,
+/turf/open/floor/iron/dark/smooth_half,
+/area/space)
+"fW" = (
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/plating,
+/area/space)
+"gW" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/toy/mecha/savannahivanov{
+	pixel_y = 10
+	},
+/turf/open/floor/pod,
+/area/space)
+"hg" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 1
+	},
+/area/space)
+"hi" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/space)
+"jy" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/item/bodypart/head/robot,
+/turf/open/floor/iron/dark,
+/area/space)
+"jG" = (
+/obj/structure/railing,
+/turf/open/floor/iron/dark,
+/area/space)
+"pg" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/item/bodypart/l_leg/robot,
+/turf/open/floor/iron/dark/smooth_corner,
+/area/space)
+"qN" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 4
+	},
+/area/space)
+"sU" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/circuit/red/anim,
+/area/space)
+"tF" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/backpack/duffelbag/med/surgery{
+	pixel_y = 8
+	},
+/turf/open/floor/pod,
+/area/space)
+"uG" = (
+/turf/open/floor/circuit/red,
+/area/space)
+"vh" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"vv" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/organ/eyes/robotic/flashlight{
+	pixel_y = 8
+	},
+/turf/open/floor/pod,
+/area/space)
+"wG" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"yc" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"El" = (
+/mob/living/simple_animal/hostile/retaliate/trader/ai,
+/obj/effect/gibspawner/robot,
+/turf/open/floor/pod,
+/area/space)
+"Fi" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/space)
+"Hy" = (
+/obj/effect/gibspawner/robot,
+/turf/open/floor/iron/dark,
+/area/space)
+"IO" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 1
+	},
+/area/space)
+"Jt" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"JN" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 8
+	},
+/area/space)
+"Kf" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Kr" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/nanite_programmer,
+/turf/open/floor/iron/dark,
+/area/space)
+"Lg" = (
+/obj/structure/railing/corner,
+/turf/open/floor/iron/dark,
+/area/space)
+"LL" = (
+/turf/open/floor/iron/dark/smooth_half,
+/area/space)
+"Oe" = (
+/turf/open/floor/pod,
+/area/space)
+"OL" = (
+/turf/open/floor/circuit/red/anim,
+/area/space)
+"OR" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 4
+	},
+/area/space)
+"Pj" = (
+/obj/structure/railing,
+/turf/open/floor/circuit/red/anim,
+/area/space)
+"Qc" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/item/bodypart/r_arm/robot,
+/turf/open/floor/iron/dark,
+/area/space)
+"RY" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"Tt" = (
+/turf/open/floor/iron/dark,
+/area/space)
+"Tu" = (
+/obj/effect/gibspawner/robot,
+/turf/open/floor/circuit/red/anim,
+/area/space)
+"Ua" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space)
+"Ze" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Zi" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/circuit/red/anim,
+/area/space)
+"Zs" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/black,
+/obj/item/bodypart/r_leg/robot,
+/turf/open/floor/iron/dark,
+/area/space)
+
+(1,1,1) = {"
+aK
+RY
+RY
+RY
+RY
+RY
+RY
+RY
+fW
+fW
+fW
+RY
+RY
+RY
+RY
+RY
+RY
+RY
+RY
+RY
+aK
+"}
+(2,1,1) = {"
+RY
+RY
+OL
+bG
+OL
+uG
+uG
+OL
+Kr
+Hy
+jG
+OL
+uG
+uG
+OL
+OL
+uG
+OL
+bG
+Ua
+RY
+"}
+(3,1,1) = {"
+ad
+ah
+al
+hi
+Zi
+hi
+qN
+wG
+yc
+Tt
+Ze
+Zs
+jy
+Qc
+pg
+hi
+Zi
+hi
+OR
+OL
+fW
+"}
+(4,1,1) = {"
+ad
+ah
+an
+tF
+Oe
+Oe
+LL
+Tt
+cx
+Tt
+cx
+Tt
+bk
+Tt
+LL
+Oe
+Oe
+Oe
+bS
+uG
+fW
+"}
+(5,1,1) = {"
+ad
+ah
+Tu
+gW
+cC
+ao
+dM
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+LL
+Oe
+El
+Oe
+Pj
+OL
+fW
+"}
+(6,1,1) = {"
+ad
+ah
+an
+vv
+Oe
+Oe
+LL
+Tt
+cx
+Tt
+cx
+Tt
+cx
+Tt
+LL
+Oe
+Oe
+Oe
+bS
+bG
+fW
+"}
+(7,1,1) = {"
+ad
+ah
+JN
+Fi
+sU
+Fi
+IO
+Lg
+Jt
+Jt
+Jt
+Kf
+Lg
+Jt
+JN
+Fi
+sU
+Fi
+hg
+bG
+fW
+"}
+(8,1,1) = {"
+RY
+RY
+uG
+OL
+OL
+bG
+vh
+jG
+bG
+bG
+bG
+vh
+jG
+uG
+uG
+bG
+OL
+uG
+OL
+Ua
+RY
+"}
+(9,1,1) = {"
+aK
+RY
+RY
+RY
+RY
+RY
+av
+RY
+RY
+fW
+RY
+RY
+bm
+RY
+RY
+RY
+RY
+RY
+RY
+RY
+aK
+"}

@@ -116,7 +116,7 @@
 
 	var/datum/component/spawner/nest
 
-	///Sentience type, for slime potions.
+	///Sentience type, for sentience granters.
 	var/sentience_type = SENTIENCE_ORGANIC
 
 	///List of things spawned at mob's loc when it dies.

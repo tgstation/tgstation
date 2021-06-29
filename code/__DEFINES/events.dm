@@ -7,3 +7,12 @@
 #define EVENT_READY 1
 #define EVENT_CANCELLED 2
 #define EVENT_INTERRUPTED 3
+
+//defines for merchant event//
+
+///cost for the merchant ship to visit
+#define INITIAL_VISIT_COST 500
+///index of the comm response to say yes
+#define RESPONSE_MERCHANT_DOCK 1
+///index of the comm response to say no
+#define RESPONSE_MERCHANT_LEAVE 2
