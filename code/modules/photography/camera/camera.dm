@@ -259,7 +259,7 @@
 			picture.log_to_file()
 
 
-// Code related to the USB-implementation of the camera
+/// Code related to the USB-implementation of the camera
 /obj/item/circuit_component/camera
 	display_name = "Camera"
 
