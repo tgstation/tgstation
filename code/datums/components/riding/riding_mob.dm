@@ -179,7 +179,6 @@
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	former_rider.set_density(TRUE)
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
