@@ -100,7 +100,7 @@
 
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/station_trait/protagonist/proc/trim_candidates(list/candidates)
-	for(var/mob/dead/new_player/candidate_player in candidates)
+	for(var/mob/dead/new_player/candidate_player as anything in candidates)
 		var/client/candidate_client = GET_CLIENT(candidate_player)
 		if (!candidate_client || !candidate_player.mind) // Are they connected?
 			candidates.Remove(candidate_player)
