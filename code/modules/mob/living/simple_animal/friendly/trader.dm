@@ -96,7 +96,7 @@
 	if(user.Adjacent(src))
 		return TRUE
 	//one last check to see if there is a table between the trader and the user
-	var/dir_to_trader = get_dir(user, trader)
+	var/dir_to_trader = get_dir(user, src)
 	var/turf/first_step = get_turf(user)
 	var/turf/second_step = get_step(first_step, dir_to_trader)
 	if(!(locate(/obj/structure/table) in second_step))
