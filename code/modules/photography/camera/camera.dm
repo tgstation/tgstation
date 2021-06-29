@@ -41,6 +41,11 @@
 	var/can_customise = TRUE
 	var/default_picture_name
 
+/obj/item/camera/Initialize()
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/camera))
+
+
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -121,7 +126,8 @@
 			return FALSE
 	return TRUE
 
-/obj/item/camera/afterattack(atom/target, mob/user, flag)
+// Called when the camera tries to make a photo
+/obj/item/camera/proc/try_take_photo(atom/target, mob/user, flag)
 	if (disk)
 		if(ismob(target))
 			if (disk.record)
@@ -131,7 +137,7 @@
 			var/mob/M = target
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
-		else
+		else if(istype(user)) //User can be an atom.
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return
 
@@ -146,6 +152,10 @@
 	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)
 
 
+/obj/item/camera/afterattack(atom/target, mob/user, flag)
+	try_take_photo(target, user, flag)
+
+
 /obj/item/camera/proc/cooldown()
 	UNTIL(!blending)
 	icon_state = state_on
@@ -158,6 +168,8 @@
 	qdel(P)
 
 /obj/item/camera/proc/captureimage(atom/target, mob/user, flag, size_x = 1, size_y = 1)
+	if(!istype(user)) //this runtimes because it assumes user has a client and is the correct type
+		user = null
 	if(flash_enabled)
 		set_light_on(TRUE)
 		addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -175,7 +187,7 @@
 	var/list/seen
 	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user.client? user.client.eye : target
+	var/viewc = user?.client ? user.client.eye : target
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/list/mobs = list()
@@ -245,3 +257,48 @@
 		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))
 			picture.log_to_file()
+
+
+// Code related to the USB-implementation of the camera
+/obj/item/circuit_component/camera
+	display_name = "Camera"
+
+	/// The trigger to take a photo
+	var/datum/port/input/take_photo
+
+	/// The camera object used to make the photo!
+	var/obj/item/camera/camera
+
+/obj/item/circuit_component/camera/Initialize()
+	. = ..()
+	take_photo = add_input_port("Take Photo", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/camera/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if (istype(parent, /obj/item/camera))
+		camera = parent
+
+/obj/item/circuit_component/camera/unregister_usb_parent(atom/movable/parent)
+	camera = null
+	return ..()
+
+/obj/item/circuit_component/camera/Destroy()
+	take_photo = null
+	camera = null
+	return ..()
+
+/obj/item/circuit_component/camera/input_received(datum/port/input/port)
+	. = ..()
+	if (.)
+		return
+
+	if (!COMPONENT_TRIGGERED_BY(take_photo, port))
+		return
+
+	if (isnull(camera))
+		return
+
+	if (!camera.on || camera.pictures_left <= 0)
+		return
+
+	camera.try_take_photo(get_turf(camera), camera)
