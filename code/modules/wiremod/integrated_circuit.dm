@@ -448,9 +448,15 @@
 #undef WITHIN_RANGE
 
 /**
+ * Returns the creator of the integrated circuit. Used in admin messages and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator_admin()
+	return get_creator(include_link = TRUE)
+
+/**
  * Returns the creator of the integrated circuit. Used in admin logs and other related things.
  */
-/obj/item/integrated_circuit/proc/get_creator(include_link)
+/obj/item/integrated_circuit/proc/get_creator(include_link = FALSE)
 	var/datum/mind/inserter
 	if(inserter_mind)
 		inserter = inserter_mind.resolve()

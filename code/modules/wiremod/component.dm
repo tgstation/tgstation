@@ -238,6 +238,22 @@
 		"color" = color,
 	))
 
+/**
+ * Creates a table UI notice entry to be used in get_ui_notices()
+ *
+ * Returns a list that can then be added to the return list in get_ui_notices()
+ * Used by components to list their available columns. Recommended to use at the end of get_ui_notices()
+ */
+/obj/item/circuit_component/proc/create_table_notices(list/entries)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	. = list()
+	. += create_ui_notice("Available Columns:", "grey", "question-circle")
+
+
+	for(var/entry in entries)
+		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
+
 /obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
 	return
 

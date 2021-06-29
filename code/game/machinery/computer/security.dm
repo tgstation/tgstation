@@ -61,7 +61,7 @@
 
 /obj/item/circuit_component/arrest_console_data/get_ui_notices()
 	. = ..()
-	var/static/entries = list(
+	. += create_table_notices(list(
 		"name",
 		"id",
 		"rank",
@@ -70,13 +70,8 @@
 		"age",
 		"species",
 		"fingerprint",
-	)
+	))
 
-	. += create_ui_notice("Available Columns:", "grey", "question-circle")
-
-
-	for(var/entry in entries)
-		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
 
 /obj/item/circuit_component/arrest_console_data/input_received(datum/port/input/port)
 	. = ..()
@@ -92,19 +87,19 @@
 		return
 
 	var/list/new_table = list()
-	for(var/datum/data/record/player_rec as anything in GLOB.data_core.general)
+	for(var/datum/data/record/player_record as anything in GLOB.data_core.general)
 		var/list/entry = list()
-		var/datum/data/record/player_security_record = find_record("id", player_rec.fields["id"], GLOB.data_core.security)
+		var/datum/data/record/player_security_record = find_record("id", player_record.fields["id"], GLOB.data_core.security)
 		if(player_security_record)
 			entry["arrest_status"] = player_security_record.fields["criminal"]
 			entry["security_record"] = player_security_record
-		entry["name"] = player_rec.fields["name"]
-		entry["id"] = player_rec.fields["id"]
-		entry["rank"] = player_rec.fields["rank"]
-		entry["gender"] = player_rec.fields["gender"]
-		entry["age"] = player_rec.fields["age"]
-		entry["species"] = player_rec.fields["species"]
-		entry["fingerprint"] = player_rec.fields["fingerprint"]
+		entry["name"] = player_record.fields["name"]
+		entry["id"] = player_record.fields["id"]
+		entry["rank"] = player_record.fields["rank"]
+		entry["gender"] = player_record.fields["gender"]
+		entry["age"] = player_record.fields["age"]
+		entry["species"] = player_record.fields["species"]
+		entry["fingerprint"] = player_record.fields["fingerprint"]
 
 		new_table += list(entry)
 
@@ -195,7 +190,7 @@
 	if(successful_set > 0)
 		investigate_log("[names_of_entries.Join(", ")] have been set to [status_to_set] by [parent.get_creator()].", INVESTIGATE_RECORDS)
 		if(successful_set > COMP_SECURITY_ARREST_AMOUNT_TO_FLAG)
-			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator(TRUE)]. [ADMIN_COORDJMP(src)]")
+			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator_admin()]. [ADMIN_COORDJMP(src)]")
 		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
 			human.sec_hud_set_security_status()
 
