@@ -56,6 +56,10 @@
 	optional_values[NAMEOF(src, color_ids)] = /datum/json_reader/number_color_list
 	required_values[NAMEOF(src, blend_mode)] = /datum/json_reader/blend_mode
 
+/// Use this proc for extra verification needed by a particular layer, gets run after all greyscale configs have finished reading their json files.
+/datum/greyscale_layer/proc/CrossVerify()
+	return
+
 /// Used to actualy create the layer using the given colors
 /// Do not override, use InternalGenerate instead
 /datum/greyscale_layer/proc/Generate(list/colors, list/render_steps)
@@ -112,6 +116,11 @@
 	. = ..()
 	optional_values[NAMEOF(src, icon_state)] = /datum/json_reader/text
 	required_values[NAMEOF(src, reference_type)] = /datum/json_reader/greyscale_config
+
+/datum/greyscale_layer/reference/CrossVerify()
+	. = ..()
+	if(!reference_type.icon_states[icon_state])
+		CRASH("[src] expects icon_state '[icon_state]' but referenced configuration '[reference_type]' does not have it.")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
 	if(render_steps)
