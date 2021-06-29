@@ -11842,9 +11842,10 @@
 "ckz" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
-/obj/item/clothing/mask/cigarette/carp{
-	pixel_x = 6;
-	pixel_y = 13
+/obj/item/clothing/mask/cigarette/rollie/nicotine{
+	name = "Hal's Custom";
+	pixel_x = 7;
+	pixel_y = 14
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
@@ -12023,7 +12024,7 @@
 /area/maintenance/starboard/secondary)
 "cmb" = (
 /obj/structure/frame/machine,
-/obj/item/circuitboard/machine/chem_dispenser,
+/obj/item/circuitboard/machine/chem_master,
 /turf/open/floor/iron/showroomfloor,
 /area/maintenance/starboard/secondary)
 "cmd" = (
