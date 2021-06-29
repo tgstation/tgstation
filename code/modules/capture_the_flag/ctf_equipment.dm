@@ -53,6 +53,7 @@
 /obj/projectile/beam/ctf/rifle
 	damage = 30
 	light_color = LIGHT_COLOR_BLUE
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
 // LASER SHOTGUN
 
@@ -84,6 +85,7 @@
 /obj/projectile/beam/ctf/shotgun
 	damage = 15
 	light_color = LIGHT_COLOR_BLUE
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
 // MARKSMAN RIFLE
 
