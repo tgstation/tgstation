@@ -105,6 +105,9 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/self_grasp])
 	var/obj/item/self_grasp/grasped_by
 
+	///A list of all the external organs we've got stored
+	var/list/obj/item/organ/external/external_organs = list()
+
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
@@ -907,6 +910,25 @@
 			aux_em_block.dir = image_dir
 			aux_em_block.color = GLOB.em_block_color
 			aux.overlays += aux_em_block
+
+	//Draw external organs like horns and frills
+	for(var/obj/item/organ/external/external_organ in external_organs)
+		if(!dropped && !external_organ.can_draw_on_bodypart(owner))
+			continue
+		//Some externals have multiple layers for some reason
+		for(var/e_layer in external_organ.layers)
+			limb.overlays += image(external_organ.icon, external_organ.icon_state + mutant_bodyparts_layertext(e_layer), layer = e_layer)
+
+//This exists so sprite accessories can still be per-layer without having to include that layer's
+//number in their sprite name, which causes issues when those numbers change.
+/obj/item/bodypart/proc/mutant_bodyparts_layertext(layer)
+	switch(layer)
+		if(BODY_BEHIND_LAYER)
+			return "_BEHIND"
+		if(BODY_ADJ_LAYER)
+			return "_ADJ"
+		if(BODY_FRONT_LAYER)
+			return "_FRONT"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
