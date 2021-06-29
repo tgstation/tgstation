@@ -17530,8 +17530,7 @@
 	dir = 5
 	},
 /obj/structure/sign/warning/fire{
-	pixel_x = -32;
-	step_x = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
