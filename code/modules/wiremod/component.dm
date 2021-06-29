@@ -218,19 +218,41 @@
 	. = list()
 
 	if(!removable)
-		. += list(list(
-			"icon" = "lock",
-			"content" = "Unremovable",
-			"color" = "red"
-		))
+		. += create_ui_notice("Unremovable", "red", "lock")
 
 
 	if(length(input_ports))
-		. += list(list(
-			"icon" = "bolt",
-			"content" = "Power Usage Per Input: [power_usage_per_input]",
-			"color" = "orange",
-		))
+		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
+
+/**
+ * Creates a UI notice entry to be used in get_ui_notices()
+ *
+ * Returns a list that can then be added to the return list in get_ui_notices()
+ */
+/obj/item/circuit_component/proc/create_ui_notice(content, color, icon)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	return list(list(
+		"icon" = icon,
+		"content" = content,
+		"color" = color,
+	))
+
+/**
+ * Creates a table UI notice entry to be used in get_ui_notices()
+ *
+ * Returns a list that can then be added to the return list in get_ui_notices()
+ * Used by components to list their available columns. Recommended to use at the end of get_ui_notices()
+ */
+/obj/item/circuit_component/proc/create_table_notices(list/entries)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	. = list()
+	. += create_ui_notice("Available Columns:", "grey", "question-circle")
+
+
+	for(var/entry in entries)
+		. += create_ui_notice("Column Name: '[entry]'", "grey", "columns")
 
 /obj/item/circuit_component/proc/register_usb_parent(atom/movable/parent)
 	return

@@ -183,6 +183,26 @@
 	id = "comp_multiplexer"
 	build_path = /obj/item/circuit_component/multiplexer
 
+/datum/design/component/get_column
+	name = "Get Column Component"
+	id = "comp_get_column"
+	build_path = /obj/item/circuit_component/get_column
+
+/datum/design/component/index_table
+	name = "Index Table Component"
+	id = "comp_index_table"
+	build_path = /obj/item/circuit_component/index_table
+
+/datum/design/component/concat_list
+	name = "Concatenate List Component"
+	id = "comp_concat_list"
+	build_path = /obj/item/circuit_component/concat_list
+
+/datum/design/component/select_query
+	name = "Select Query Component"
+	id = "comp_select_query"
+	build_path = /obj/item/circuit_component/select
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."

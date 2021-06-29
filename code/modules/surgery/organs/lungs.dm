@@ -506,8 +506,8 @@
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
 	icon_state = "lungs-plasma"
 
-	safe_oxygen_min = 0 //We don't breath this
-	safe_toxins_min = 16 //We breath THIS!
+	safe_oxygen_min = 0 //We don't breathe this
+	safe_toxins_min = 16 //We breathe THIS!
 	safe_toxins_max = 0
 
 /obj/item/organ/lungs/slime

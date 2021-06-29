@@ -1,5 +1,3 @@
-#define PORT_INPUT_RECEIVE_DELAY 0.2 SECONDS
-
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
 
@@ -21,6 +19,8 @@
 #define PORT_TYPE_SIGNAL "signal"
 /// List datatype
 #define PORT_TYPE_LIST "list"
+/// Table datatype. Derivative of list, contains other lists with matching columns.
+#define PORT_TYPE_TABLE "table"
 
 // Other datatypes
 /// Atom datatype
@@ -87,6 +87,15 @@
 // Radio component
 #define COMP_RADIO_PUBLIC "public"
 #define COMP_RADIO_PRIVATE "private"
+
+// Security Arrest Console
+#define COMP_STATE_ARREST "*Arrest*"
+#define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_PAROL "Paroled"
+#define COMP_STATE_DISCHARGED "Discharged"
+#define COMP_STATE_NONE "None"
+
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
 
 // Shells
 
