@@ -526,7 +526,7 @@
 	attack_verb_continuous = list("chops", "slices", "cuts")
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit providing guidance. Very effective at butchering bodies. Can be worn on the back."
+	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
 	/// If there is a ghost possessing the item
 	var/possessed = FALSE
 
