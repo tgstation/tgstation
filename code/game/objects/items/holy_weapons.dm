@@ -848,7 +848,7 @@
 	attack_verb_continuous = list("pulses", "mends", "cuts")
 	attack_verb_simple = list("pulse", "mend", "cut")
 	hitsound = 'sound/effects/sparks4.ogg'
-	menu_description = "A tool dealing a brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
+	menu_description = "A tool dealing brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/spear
 	name = "ancient spear"
