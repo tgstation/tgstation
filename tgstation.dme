@@ -2163,6 +2163,7 @@
 #include "code\modules\events\holiday\halloween.dm"
 #include "code\modules\events\holiday\vday.dm"
 #include "code\modules\events\holiday\xmas.dm"
+#include "code\modules\events\merchant\merchant_beacon.dm"
 #include "code\modules\events\merchant\merchant_datum.dm"
 #include "code\modules\events\merchant\merchant_event.dm"
 #include "code\modules\events\wizard\aid.dm"
