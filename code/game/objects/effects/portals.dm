@@ -17,6 +17,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = TRUE
+	layer = HIGH_OBJ_LAYER
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
@@ -28,7 +29,7 @@
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
-	var/force_teleport = FALSE
+	var/force_teleport = FALSE //Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flasg
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -45,20 +46,23 @@
 	return ..()
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
-	if(user && Adjacent(user))
-		user.forceMove(get_turf(src))
-		return TRUE
+	if(user)
+		if(get_turf(user) == get_turf(src))
+			teleport(user)
+			return TRUE
+		if(Adjacent(user))
+			user.Move(get_turf(src))
+			return TRUE
 
 /obj/effect/portal/attack_tk(mob/user)
 	return
 
-/obj/effect/portal/proc/on_entered(datum/source, atom/movable/arrived, direction)
-	SIGNAL_HANDLER
-	if(isobserver(arrived))
-		return
-	if(linked && (get_step(source, REVERSE_DIR(direction)) == get_turf(linked)))
-		return
-	teleport(arrived)
+/obj/effect/portal/Cross(atom/movable/crosser)
+	if(isobserver(crosser))
+		return ..()
+	if(teleport(crosser))
+		return FALSE // stop the cross or the allowed teleport fails
+	return ..()
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -67,7 +71,7 @@
 	if(get_turf(user) == get_turf(src))
 		teleport(user)
 	if(Adjacent(user))
-		user.forceMove(get_turf(src))
+		user.Move(get_turf(src))
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
@@ -83,10 +87,6 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/portal/singularity_pull()
 	return
