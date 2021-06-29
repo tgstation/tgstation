@@ -467,6 +467,8 @@
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	var/buildstacktype = null
+	var/buildstackamount = 1
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()
@@ -486,7 +488,25 @@
 		new_sink.setDir(dir)
 		qdel(src)
 		return
+	if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		I.play_tool_sound(src)
+		deconstruct()
+		return
+
 	return ..()
+
+/obj/structure/sinkframe/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	..()
+
+/obj/structure/sinkframe/proc/drop_materials()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
