@@ -13,7 +13,7 @@
 	desc = "Tortilla wrapped goodness."
 	icon_state = "burrito"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2,/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("torilla" = 2, "meat" = 3)
+	tastes = list("torilla" = 2, "beans" = 3)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
@@ -23,7 +23,7 @@
 	desc = "It's a burrito filled with cheese."
 	icon_state = "cheesyburrito"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("torilla" = 2, "meat" = 3, "cheese" = 1)
+	tastes = list("torilla" = 2, "beans" = 3, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
@@ -43,7 +43,7 @@
 	desc = "A super spicy burrito."
 	icon_state = "fuegoburrito"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("torilla" = 2, "meat" = 3, "hot peppers" = 1)
+	tastes = list("torilla" = 2, "beans" = 3, "hot peppers" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
@@ -54,7 +54,7 @@
 	icon_state = "nachos"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("nachos" = 1)
-	foodtypes = VEGETABLES | FRIED
+	foodtypes = GRAIN | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
@@ -64,7 +64,7 @@
 	icon_state = "cheesynachos"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("nachos" = 2, "cheese" = 1)
-	foodtypes = VEGETABLES | FRIED | DAIRY
+	foodtypes = GRAIN | FRIED | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 

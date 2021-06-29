@@ -15,7 +15,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	food_reagents = list(/datum/reagent/consumable/eggyolk = 4)
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 5)
 	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
@@ -150,7 +150,7 @@
 	icon_state = "eggwrap"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/chawanmushi

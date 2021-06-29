@@ -22,9 +22,11 @@
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/try_speedrun)
+	ADD_TRAIT(target, TRAIT_CLIMBABLE, src)
 
 /datum/element/climbable/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_MOUSEDROPPED_ONTO, COMSIG_ATOM_BUMPED))
+	REMOVE_TRAIT(target, TRAIT_CLIMBABLE, src)
 	return ..()
 
 /datum/element/climbable/proc/on_examine(atom/source, mob/user, list/examine_texts)
@@ -80,9 +82,9 @@
 
 
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user)
-	climbed_thing.density = FALSE
+	climbed_thing.set_density(FALSE)
 	. = step(user, get_dir(user,climbed_thing.loc))
-	climbed_thing.density = TRUE
+	climbed_thing.set_density(TRUE)
 
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user)

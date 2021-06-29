@@ -1,7 +1,7 @@
 //Subtype of human
 /datum/species/human/felinid
 	name = "Felinid"
-	id = "felinid"
+	id = SPECIES_FELINE
 	say_mod = "meows"
 	limbs_id = "human"
 

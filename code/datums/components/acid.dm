@@ -201,11 +201,12 @@
 
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
-/datum/component/acid/proc/on_entered(atom/parent_atom, mob/living/crosser)
+/datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
-	if(!isliving(crosser))
+	if(!isliving(arrived))
 		return
+	var/mob/living/crosser = arrived
 	if(crosser.movement_type & FLYING)
 		return
 	if(crosser.m_intent & MOVE_INTENT_WALK)

@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/hear
 	display_name = "Voice Activator"
+	display_desc = "A component that listens for messages. Requires a shell."
 
 	flags_1 = HEAR_1
 

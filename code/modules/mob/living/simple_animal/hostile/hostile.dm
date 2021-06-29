@@ -651,7 +651,7 @@
 			else
 				Stun((knockdown_time * 2), ignore_canstun = TRUE)
 			charge_end()
-		else if(hit_atom.density && !hit_atom.CanPass(src))
+		else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))
 			visible_message(span_danger("[src] smashes into [hit_atom]!"))
 			Stun((knockdown_time * 2), ignore_canstun = TRUE)
 

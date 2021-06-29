@@ -62,7 +62,7 @@
 		return
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
@@ -96,7 +96,7 @@
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
 	sleep(10)
-	density = FALSE
+	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
 	air_update_turf(TRUE, FALSE)
@@ -116,7 +116,7 @@
 	playsound(src, closeSound, 100, TRUE)
 	flick("[initial(icon_state)]closing",src)
 	sleep(10)
-	density = TRUE
+	set_density(TRUE)
 	set_opacity(TRUE)
 	door_opened = FALSE
 	layer = initial(layer)

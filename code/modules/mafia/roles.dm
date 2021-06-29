@@ -469,7 +469,7 @@
 
 	. = ..()
 	if(current_target)
-		current_target.role_flags &= ROLE_ROLEBLOCKED
+		current_target.role_flags &= ~ROLE_ROLEBLOCKED
 		current_target = null
 
 /datum/mafia_role/hop

@@ -157,7 +157,7 @@
 
 /datum/chemical_reaction/food/pancakebatter
 	results = list(/datum/reagent/consumable/pancakebatter = 15)
-	required_reagents = list(/datum/reagent/consumable/eggyolk = 12, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/flour = 5)
+	required_reagents = list(/datum/reagent/consumable/eggyolk = 15, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/flour = 5)
 
 /datum/chemical_reaction/food/ricebowl
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)

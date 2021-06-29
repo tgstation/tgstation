@@ -2522,16 +2522,14 @@ exports.realpath = function realpath(p, cache, cb) {
 
 /***/ }),
 
-/***/ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/common.js":
+/***/ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/common.js":
 /*!******************************************************************************************!*\
-  !*** ./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/common.js ***!
+  !*** ./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/common.js ***!
   \******************************************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 
-exports.alphasort = alphasort;
-exports.alphasorti = alphasorti;
 exports.setopts = setopts;
 exports.ownProp = ownProp;
 exports.makeAbs = makeAbs;
@@ -2552,12 +2550,8 @@ var isAbsolute = __webpack_require__(/*! path-is-absolute */ "./.yarn/cache/path
 
 var Minimatch = minimatch.Minimatch;
 
-function alphasorti(a, b) {
-  return a.toLowerCase().localeCompare(b.toLowerCase());
-}
-
 function alphasort(a, b) {
-  return a.localeCompare(b);
+  return a.localeCompare(b, 'en');
 }
 
 function setupIgnores(self, options) {
@@ -2667,7 +2661,7 @@ function finish(self) {
   }
 
   if (!nou) all = Object.keys(all);
-  if (!self.nosort) all = all.sort(self.nocase ? alphasorti : alphasort); // at *some* point we statted all of these
+  if (!self.nosort) all = all.sort(alphasort); // at *some* point we statted all of these
 
   if (self.mark) {
     for (var i = 0; i < all.length; i++) {
@@ -2746,9 +2740,9 @@ function childrenIgnored(self, path) {
 
 /***/ }),
 
-/***/ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/glob.js":
+/***/ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js":
 /*!****************************************************************************************!*\
-  !*** ./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/glob.js ***!
+  !*** ./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js ***!
   \****************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -2813,12 +2807,10 @@ var assert = __webpack_require__(/*! assert */ "assert");
 
 var isAbsolute = __webpack_require__(/*! path-is-absolute */ "./.yarn/cache/path-is-absolute-npm-1.0.1-31bc695ffd-907e1e3e6a.zip/node_modules/path-is-absolute/index.js");
 
-var globSync = __webpack_require__(/*! ./sync.js */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/sync.js");
+var globSync = __webpack_require__(/*! ./sync.js */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/sync.js");
 
-var common = __webpack_require__(/*! ./common.js */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/common.js");
+var common = __webpack_require__(/*! ./common.js */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/common.js");
 
-var alphasort = common.alphasort;
-var alphasorti = common.alphasorti;
 var setopts = common.setopts;
 var ownProp = common.ownProp;
 
@@ -3456,9 +3448,9 @@ Glob.prototype._stat2 = function (f, abs, er, stat, cb) {
 
 /***/ }),
 
-/***/ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/sync.js":
+/***/ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/sync.js":
 /*!****************************************************************************************!*\
-  !*** ./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/sync.js ***!
+  !*** ./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/sync.js ***!
   \****************************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -3475,7 +3467,7 @@ var minimatch = __webpack_require__(/*! minimatch */ "./.yarn/cache/minimatch-np
 
 var Minimatch = minimatch.Minimatch;
 
-var Glob = __webpack_require__(/*! ./glob.js */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/glob.js").Glob;
+var Glob = __webpack_require__(/*! ./glob.js */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js").Glob;
 
 var util = __webpack_require__(/*! util */ "util");
 
@@ -3485,10 +3477,8 @@ var assert = __webpack_require__(/*! assert */ "assert");
 
 var isAbsolute = __webpack_require__(/*! path-is-absolute */ "./.yarn/cache/path-is-absolute-npm-1.0.1-31bc695ffd-907e1e3e6a.zip/node_modules/path-is-absolute/index.js");
 
-var common = __webpack_require__(/*! ./common.js */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/common.js");
+var common = __webpack_require__(/*! ./common.js */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/common.js");
 
-var alphasort = common.alphasort;
-var alphasorti = common.alphasorti;
 var setopts = common.setopts;
 var ownProp = common.ownProp;
 var childrenIgnored = common.childrenIgnored;
@@ -6310,7 +6300,7 @@ exports.resolveGlob = exports.stat = exports.compareFiles = exports.Glob = expor
 
 var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ "fs"));
 
-var _glob = __webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/glob.js");
+var _glob = __webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6491,7 +6481,7 @@ const logger = {
     console.log(_chalk.default.bold(_chalk.default.blueBright('::'), _chalk.default.whiteBright(...args)));
   },
   debug: (...args) => {
-    if (process.env.DEBUG) {
+    if (process.env.JUKE_DEBUG) {
       console.log(_chalk.default.gray(...args));
     }
   }
@@ -6623,7 +6613,6 @@ const runner = new class Runner {
       }
 
       targetsToRun.set(target, {
-        target,
         args
       });
     }
@@ -6638,14 +6627,13 @@ const runner = new class Runner {
       }
 
       targetsToRun.set(this.defaultTarget, {
-        target: this.defaultTarget,
         args: []
       });
-    } // Walk over the dependency graph
+    } // Walk over the dependency graph and create execution contexts
     // ----------------------------------------------------
 
 
-    let toVisit = Array.from(targetsToRun.values());
+    let toVisit = Array.from(targetsToRun.entries());
 
     while (true) {
       const node = toVisit.shift();
@@ -6654,46 +6642,53 @@ const runner = new class Runner {
         break;
       }
 
-      const {
-        target,
-        args
-      } = node;
+      const [target, meta] = node; // Parse arguments and initialize the context
 
-      for (const dependency of target.dependsOn) {
+      if (!meta.context) {
+        const localParameterMap = (0, _argparse.parseArgs)(meta.args, target.parameters);
+        meta.context = {
+          get: parameter => {
+            var _localParameterMap$ge;
+
+            const value = (_localParameterMap$ge = localParameterMap.get(parameter)) != null ? _localParameterMap$ge : globalParameterMap.get(parameter);
+
+            if (parameter.isArray()) {
+              return value != null ? value : [];
+            } else {
+              var _value$;
+
+              return (_value$ = value == null ? void 0 : value[0]) != null ? _value$ : null;
+            }
+          }
+        };
+      } // Resolve dependencies
+
+
+      if (!meta.dependsOn) {
+        const optionalDependsOn = (typeof target.dependsOn === 'function' ? await target.dependsOn(meta.context) : target.dependsOn) || [];
+        meta.dependsOn = optionalDependsOn.filter(dep => typeof dep === 'object' && dep !== null);
+      } // Add each dependency as a tree node to visit
+
+
+      for (const dependency of meta.dependsOn) {
         if (!targetsToRun.has(dependency)) {
-          const node = {
-            target: dependency,
-            args
+          const depMeta = {
+            args: meta.args
           };
-          targetsToRun.set(dependency, node);
-          toVisit.push(node);
+          targetsToRun.set(dependency, depMeta);
+          toVisit.push([dependency, depMeta]);
+        } else {
+          _logger.logger.debug('Dropped a possible circular dependency', dependency);
         }
       }
     } // Spawn workers
     // ----------------------------------------------------
 
 
-    for (const {
-      target,
-      args
-    } of targetsToRun.values()) {
-      const localParameterMap = (0, _argparse.parseArgs)(args, target.parameters);
-      const context = {
-        get: parameter => {
-          var _localParameterMap$ge;
-
-          const value = (_localParameterMap$ge = localParameterMap.get(parameter)) != null ? _localParameterMap$ge : globalParameterMap.get(parameter);
-
-          if (parameter.isArray()) {
-            return value != null ? value : [];
-          } else {
-            var _value$;
-
-            return (_value$ = value == null ? void 0 : value[0]) != null ? _value$ : null;
-          }
-        }
-      };
-      const spawnedWorker = new Worker(target, context);
+    for (const [target, meta] of targetsToRun.entries()) {
+      const context = meta.context;
+      const dependsOn = meta.dependsOn;
+      const spawnedWorker = new Worker(target, context, dependsOn);
       this.workers.push(spawnedWorker);
       spawnedWorker.onFinish(() => {
         for (const worker of this.workers) {
@@ -6738,12 +6733,13 @@ const runner = new class Runner {
 exports.runner = runner;
 
 class Worker {
-  constructor(target, context) {
+  constructor(target, context, dependsOn) {
     this.emitter = new _events.default();
     this.hasFailed = false;
     this.target = target;
     this.context = context;
-    this.dependencies = new Set(target.dependsOn);
+    this.dependsOn = dependsOn;
+    this.dependencies = new Set(dependsOn);
     this.debugLog('ready');
   }
 
@@ -6801,12 +6797,33 @@ class Worker {
 
       this.emitter.emit('fail');
       return;
+    } // Check onlyWhen condition
+
+
+    if (this.target.onlyWhen) {
+      const result = await this.target.onlyWhen(this.context);
+
+      if (!result) {
+        _logger.logger.info(`Skipping '${nameStr}' (condition unmet)`);
+
+        this.emitter.emit('finish');
+        return;
+      }
+
+      this.debugLog('Needs rebuild based on onlyWhen condition');
     } // Compare inputs and outputs
 
 
     this.debugLog('Comparing inputs and outputs');
-    const inputs = this.target.inputs.flatMap(path => path.includes('*') ? new _fs.Glob(path).toFiles() : new _fs.File(path));
-    const outputs = this.target.outputs.flatMap(path => path.includes('*') ? new _fs.Glob(path).toFiles() : new _fs.File(path));
+
+    const fileMapper = async fileIo => {
+      const optionalPaths = (typeof fileIo === 'function' ? await fileIo(this.context) : fileIo) || [];
+      const paths = optionalPaths.filter(path => typeof path === 'string');
+      return paths.flatMap(path => path.includes('*') ? new _fs.Glob(path).toFiles() : new _fs.File(path));
+    };
+
+    const inputs = await fileMapper(this.target.inputs);
+    const outputs = await fileMapper(this.target.outputs);
 
     if (inputs.length > 0) {
       const needsRebuild = (0, _fs.compareFiles)(inputs, outputs);
@@ -6834,32 +6851,30 @@ class Worker {
     } // Execute the task
 
 
-    if (this.target.executes.length > 0) {
+    if (this.target.executes) {
       _logger.logger.action(`Starting '${nameStr}'`);
 
       const startedAt = Date.now();
 
-      for (const fn of this.target.executes) {
-        try {
-          await fn(this.context);
-        } catch (err) {
-          const time = (Date.now() - startedAt) / 1000 + 's';
+      try {
+        await this.target.executes(this.context);
+      } catch (err) {
+        const time = (Date.now() - startedAt) / 1000 + 's';
 
-          const timeStr = _chalk.default.magenta(time);
+        const timeStr = _chalk.default.magenta(time);
 
-          if (err instanceof _exec.ExitError) {
-            const codeStr = _chalk.default.red(err.code);
+        if (err instanceof _exec.ExitError) {
+          const codeStr = _chalk.default.red(err.code);
 
-            _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, exit code: ${codeStr}`);
-          } else {
-            _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, unhandled exception:`);
+          _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, exit code: ${codeStr}`);
+        } else {
+          _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, unhandled exception:`);
 
-            console.error(err);
-          }
-
-          this.emitter.emit('fail');
-          return;
+          console.error(err);
         }
+
+        this.emitter.emit('fail');
+        return;
       }
 
       const time = (Date.now() - startedAt) / 1000 + 's';
@@ -6897,23 +6912,14 @@ exports.createTarget = void 0;
 const createTarget = target => {
   var _target$dependsOn, _target$inputs, _target$outputs, _target$parameters;
 
-  let executes = [];
-
-  if (target.executes) {
-    if (Array.isArray(target.executes)) {
-      executes = target.executes;
-    } else {
-      executes = [target.executes];
-    }
-  }
-
   return {
     name: target.name,
     dependsOn: (_target$dependsOn = target.dependsOn) != null ? _target$dependsOn : [],
-    executes,
+    executes: target.executes,
     inputs: (_target$inputs = target.inputs) != null ? _target$inputs : [],
     outputs: (_target$outputs = target.outputs) != null ? _target$outputs : [],
-    parameters: (_target$parameters = target.parameters) != null ? _target$parameters : []
+    parameters: (_target$parameters = target.parameters) != null ? _target$parameters : [],
+    onlyWhen: target.onlyWhen
   };
 };
 
@@ -7069,7 +7075,7 @@ exports.chalk = _chalk.default;
 
 var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ "fs"));
 
-var _glob = _interopRequireDefault(__webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.6-1ce3a5189a-789977b524.zip/node_modules/glob/glob.js"));
+var _glob = _interopRequireDefault(__webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js"));
 
 exports.glob = _glob.default;
 

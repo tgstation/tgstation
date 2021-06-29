@@ -48,9 +48,15 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 #define TICKS *world.tick_lag
 
+#define MILLISECONDS * 0.10
+
 #define DS2TICKS(DS) ((DS)/world.tick_lag)
 
 #define TICKS2DS(T) ((T) TICKS)
+
+#define MS2DS(T) ((T) MILLISECONDS)
+
+#define DS2MS(T) ((T) * 100)
 
 /*Timezones*/
 

@@ -1,6 +1,6 @@
 /datum/species/android
 	name = "Android"
-	id = "android"
+	id = SPECIES_ANDROID
 	say_mod = "states"
 	species_traits = list(NOBLOOD)
 	inherent_traits = list(

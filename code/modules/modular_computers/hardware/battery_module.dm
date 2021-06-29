@@ -20,8 +20,8 @@
 	return ..()
 
 ///What happens when the battery is removed (or deleted) from the module, through try_eject() or not.
-/obj/item/computer_hardware/battery/Exited(atom/A, atom/newloc)
-	if(A == battery)
+/obj/item/computer_hardware/battery/Exited(atom/movable/gone, direction)
+	if(battery == gone)
 		battery = null
 		if(holder?.enabled && !holder.use_power())
 			holder.shutdown_computer()

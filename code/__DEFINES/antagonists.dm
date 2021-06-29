@@ -78,6 +78,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 /// Selects a random location for the blob to be placed.
 #define BLOB_RANDOM_PLACEMENT 1
 
+#define CONSTRUCT_JUGGERNAUT "Juggernaut"
+#define CONSTRUCT_WRAITH "Wraith"
+#define CONSTRUCT_ARTIFICER "Artificer"
+
+
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
 /// How many telecrystals mapper/admin only "precharged" uplink implant

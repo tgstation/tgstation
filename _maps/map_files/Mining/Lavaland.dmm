@@ -1033,7 +1033,7 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dr" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /turf/open/floor/plating,

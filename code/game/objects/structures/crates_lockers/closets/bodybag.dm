@@ -16,6 +16,7 @@
 	anchorable = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
+	has_closed_overlay = FALSE
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
@@ -62,7 +63,7 @@
 /obj/structure/closet/body_bag/close()
 	. = ..()
 	if(.)
-		density = FALSE
+		set_density(FALSE)
 		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
