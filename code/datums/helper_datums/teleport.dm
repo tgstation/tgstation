@@ -5,7 +5,6 @@
 // effectout: effect to show right after teleportation
 // asoundin: soundfile to play before teleportation
 // asoundout: soundfile to play after teleportation
-// forceMove: if false, teleport will use Move() proc (dense objects will prevent teleportation)
 // no_effects: disable the default effectin/effectout of sparks
 // forced: whether or not to ignore no_teleport
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
