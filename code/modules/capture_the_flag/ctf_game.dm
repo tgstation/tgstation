@@ -373,7 +373,7 @@
 		for(var/key in ctf_gear)
 			var/datum/outfit/ctf/class = ctf_gear[key]
 			var/datum/radial_menu_choice/option = new
-			option.image  = image(icon = get_flat_human_icon(null, null, new_team_member.prefs, DUMMY_HUMAN_SLOT_CTF, showDirs = list(SOUTH), outfit_override = class))
+			option.image  = image(icon = initial(class.icon), icon_state = initial(class.icon_state))
 			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
 			display_classes[key] = option
 

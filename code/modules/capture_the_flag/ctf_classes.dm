@@ -18,6 +18,10 @@
 	var/class_description = "General purpose combat class. Armed with a laser rifle and backup pistol."
 	///Radio frequency to assign players with this outfit
 	var/team_radio_freq = FREQ_COMMON // they won't be able to use this on the centcom z-level, so ffa players cannot use radio
+	///Icon file for the class radial menu icons
+	var/icon = 'icons/hud/radial_ctf.dmi'
+	///Icon state for this class
+	var/icon_state = "ctf_rifleman"
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -48,6 +52,8 @@
 	name = "CTF Instagib (Solo)"
 	r_hand = /obj/item/gun/energy/laser/instakill
 	shoes = /obj/item/clothing/shoes/jackboots/fast
+	icon_state = "ctf_instakill"
+	class_description = "General purpose combat class. Armed with a laser rifle and backup pistol."
 
 /datum/outfit/ctf/assault
 	name = "CTF Assaulter (Solo)"
@@ -57,6 +63,8 @@
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	belt = null
+	icon_state = "ctf_assaulter"
+	class_description = "Close combat class. Armed with a shotgun and rocket gloves."
 
 /datum/outfit/ctf/marksman
 	name = "CTF Marksman (Solo)"
@@ -64,6 +72,8 @@
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/marksman
 	belt = null
+	icon_state = "ctf_marksman"
+	class_description = "Long range class. Armed with a hitscan laser rifle."
 
 // RED TEAM CLASSES
 
