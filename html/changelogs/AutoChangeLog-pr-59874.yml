@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - server: "Added the $reset directive to reset a configuration entry's values to its default"
