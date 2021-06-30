@@ -561,7 +561,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //faster than normal saw
 
-/obj/item/nullrod/hammmer
+/obj/item/nullrod/hammer
 	name = "relic war hammer"
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
 	icon_state = "hammeron"
