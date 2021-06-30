@@ -15,11 +15,16 @@
 	var/datum/port/input/frequency
 
 	/// The cooldown for this component of how often it can play sounds.
-	var/sound_cooldown = 1 SECONDS
+	var/sound_cooldown = 2 SECONDS
 
 	var/list/options_map
 
 	COOLDOWN_DECLARE(next_sound)
+
+/obj/item/circuit_component/soundemitter/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
+
 
 /obj/item/circuit_component/soundemitter/Initialize()
 	. = ..()
