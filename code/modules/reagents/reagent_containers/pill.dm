@@ -309,8 +309,11 @@
 	var/reagent_count = rand(1,all_reagents.len)
 	for(var/i in 1 to reagent_count)
 		picked_reagents += pick_n_take(all_reagents)
+	var/reagent_volume = 0
 	if(picked_reagents)
-		volume = (picked_reagents.len * 10)
+		volume = min(picked_reagents.len * 10, 1000)
+		reagent_volume = volume / picked_reagents.len
+	
 	for(var/picked_reagent in picked_reagents)
-		list_reagents[picked_reagent] = 10
+		list_reagents[picked_reagent] = reagent_volume
 	..()
