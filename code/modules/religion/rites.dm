@@ -280,6 +280,27 @@
 	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
 	return TRUE
 
+/datum/religion_rites/greed/shrewd_negotiator
+	name = "Purchase Negotiative Skills"
+	desc = "Become a shrewd negotiator, spending less money on trades with merchants."
+	invoke_msg = "With negotiative skills, I can spend more money!"
+	money_cost = 150
+
+/datum/religion_rites/greed/shrewd_negotiator/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/invoker = user
+		var/obj/item/skillchip/skillchip = new /obj/item/skillchip/shrewd_negotiator()
+		var/obj/item/organ/brain/brane = invoker.getorganslot(ORGAN_SLOT_BRAIN)
+		invoker.implant_skillchip(skillchip)
+		if(!(skillchip in brane.skillchips))
+			to_chat(user, span_warning("The negotiative skills are incompatible with your brain!"))
+			qdel(skillchip)
+			return FALSE
+		skillchip.try_activate_skillchip(TRUE, TRUE)
+	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
+	return TRUE
+
 /*********Honorbound God**********/
 
 ///Makes the person holy, but they now also have to follow the honorbound code (CBT). Actually earns favor, convincing others to uphold the code (tm) is not easy
