@@ -97,13 +97,14 @@
 	skin = "amorph"
 	firstaid = /obj/effect/gibspawner/robot
 	healthanalyzer = /obj/item/analyzer
+	faction = list("amorphous", "turret")
 	acceptable_mobtypes = list(
 		/mob/living/silicon,
 		/mob/living/simple_animal/drone,
 		/mob/living/simple_animal/bot,
 		/mob/living/simple_animal/hostile/swarmer,
 		/mob/living/simple_animal/hostile/hivebot,
-		/mob/living/simple_animal/hostile/retaliate/trader/ai
+		/mob/living/simple_animal/hostile/retaliate/trader/amorphous
 		)
 
 /mob/living/simple_animal/bot/medbot/amorphous/shambles

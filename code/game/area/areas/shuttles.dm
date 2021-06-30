@@ -55,6 +55,8 @@
 	name = "Merchant Shuttle"
 	area_flags = NOTELEPORT
 
+/area/shuttle/merchant/offlimits
+
 ////////////////////////////Pirate Shuttle////////////////////////////
 
 /area/shuttle/pirate

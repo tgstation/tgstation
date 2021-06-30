@@ -19,7 +19,7 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/shuttle/merchant)
 "an" = (
-/obj/structure/statue/silver/secborg,
+/obj/structure/statue/silver/medborg,
 /turf/open/floor/iron/dark/smooth_half,
 /area/shuttle/merchant)
 "ao" = (
@@ -168,7 +168,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/merchant)
 "El" = (
-/mob/living/simple_animal/hostile/retaliate/trader/ai,
+/mob/living/simple_animal/hostile/retaliate/trader/amorphous,
 /obj/effect/gibspawner/robot,
 /turf/open/floor/pod,
 /area/shuttle/merchant)
