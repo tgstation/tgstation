@@ -173,6 +173,11 @@
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
 
+/datum/design/component/soundemitter
+	name = "Sound Emitter Component"
+	id = "comp_soundemitter"
+	build_path = /obj/item/circuit_component/soundemitter
+
 /datum/design/component/mmi
 	name = "MMI Component"
 	id = "comp_mmi"

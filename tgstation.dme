@@ -3577,6 +3577,7 @@
 #include "code\modules\wiremod\components\action\mmi.dm"
 #include "code\modules\wiremod\components\action\pull.dm"
 #include "code\modules\wiremod\components\action\radio.dm"
+#include "code\modules\wiremod\components\action\soundemitter.dm"
 #include "code\modules\wiremod\components\action\speech.dm"
 #include "code\modules\wiremod\components\atom\direction.dm"
 #include "code\modules\wiremod\components\atom\gps.dm"

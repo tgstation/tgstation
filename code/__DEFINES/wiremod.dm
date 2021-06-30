@@ -88,6 +88,16 @@
 #define COMP_RADIO_PUBLIC "public"
 #define COMP_RADIO_PRIVATE "private"
 
+// Sound component
+#define COMP_SOUND_BUZZ "Buzz"
+#define COMP_SOUND_BUZZ_TWO "Buzz Twice"
+#define COMP_SOUND_CHIME "Chime"
+#define COMP_SOUND_HONK "Honk"
+#define COMP_SOUND_PING "Ping"
+#define COMP_SOUND_SAD "Sad Trombone"
+#define COMP_SOUND_WARN "Warn"
+#define COMP_SOUND_SLOWCLAP "Slow Clap"
+
 // Security Arrest Console
 #define COMP_STATE_ARREST "*Arrest*"
 #define COMP_STATE_PRISONER "Incarcerated"
