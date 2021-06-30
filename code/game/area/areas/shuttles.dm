@@ -54,6 +54,8 @@
 /area/shuttle/merchant
 	name = "Merchant Shuttle"
 
+/area/shuttle/merchant/offlimits
+
 ////////////////////////////Pirate Shuttle////////////////////////////
 
 /area/shuttle/pirate

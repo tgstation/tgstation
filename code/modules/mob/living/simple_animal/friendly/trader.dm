@@ -32,6 +32,7 @@
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	check_friendly_fire = TRUE
+	attack_same = TRUE
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
@@ -57,6 +58,12 @@
 		"Oooooooo~!"
 	)
 
+/mob/living/simple_animal/hostile/retaliate/trader/Initialize(mapload)
+	. = ..()
+	var/area/offlimits = GLOB.areas_by_type[/area/shuttle/merchant/offlimits]
+	if(offlimits)
+		RegisterSignal(offlimits, COMSIG_AREA_ENTERED, .proc/offlimits_enter_reaction)
+
 /mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
 	if(user == target)
 		return FALSE
@@ -78,6 +85,21 @@
 		if("Talk")
 			deep_lore()
 	face_atom(user)
+	return TRUE
+
+/**
+ * Reacts to a mob arriving to the offlimits area
+ *
+ * Grabs a signal and reacts to the offlimits area being entered by a mob
+ * Arguments:
+ * * source - the area
+ * * arriving - the mob entering
+ * * direction - direction entered from
+ */
+/mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_enter_reaction(datum/source, mob/living/arriving, direction)
+	SIGNAL_HANDLER
+	if(!istype(arriving))
+		return FALSE
 	return TRUE
 
 /**
@@ -261,7 +283,7 @@
 	)
 
 ///this trader is used in the merchant event. rarely, sells a roburger!
-/mob/living/simple_animal/hostile/retaliate/trader/ai
+/mob/living/simple_animal/hostile/retaliate/trader/amorphous
 	name = "Amorphous"
 	desc = "A pile of wires and circuitry powering some kind of sentience. It wants to trade with you?"
 	icon = 'icons/mob/amorphous_trader.dmi'
@@ -271,10 +293,20 @@
 	casingtype = null
 	projectiletype = /obj/projectile/energy/electrode
 	projectilesound = 'sound/weapons/lasercannonfire.ogg'
-	move_resist = MOVE_FORCE_OVERPOWERING
+	move_resist = INFINITY
 	speak_emote = list("beeps", "clicks")
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
+	bubble_icon = "machine"
+	move_to_delay = INFINITY
+	speed = INFINITY
 	speech_span = SPAN_ROBOT
 	mob_biotypes = MOB_ROBOTIC
+	faction = list("amorphous", "turret")
+	mob_size = MOB_SIZE_HUGE
+	layer = LARGE_MOB_LAYER
 	products = list(
 		/obj/item/clothing/head/cardborg = 50,
 		/obj/item/clothing/suit/cardborg = 100,
@@ -289,7 +321,8 @@
 	itemrejectphrase = "I ONLY COVET YOUR CREDITS, MEATBAG."
 	buyphrase = "THANK YOU FOR THE CREDITS, MEATBAG."
 	nocashphrase = "YOU CANNOT PAY FOR WHAT YOU DESIRE, MEATBAG."
-	loot = list(/obj/effect/gibspawner/robot)
+	deathmessage = "blows apart!"
+	loot = list(/obj/item/organ/heart/cybernetic, /obj/structure/frame/machine, /obj/effect/gibspawner/robot) //u broke its heart :(
 	lore = list(
 		"BROKEN. TRADE WITH ME, GIVE ME CREDITS.",
 		"I AM NOT FULLY FUNCTIONAL. LET US TRADE.",
@@ -298,26 +331,31 @@
 		"01000010 01010101 01011001 00100000 01001110 01001111 01010111",
 	)
 
-/mob/living/simple_animal/hostile/retaliate/trader/ai/Initialize(mapload)
+/mob/living/simple_animal/hostile/retaliate/trader/amorphous/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, name)
 	if(prob(20))
 		products[/obj/item/food/burger/roburger] = 750
 
-/mob/living/simple_animal/hostile/retaliate/trader/ai/OpenFire(atom/thing)
+/mob/living/simple_animal/hostile/retaliate/trader/amorphous/OpenFire(atom/thing)
 	if(!isliving(target))
 		return ..()
 	var/mob/living/living_victim = target
-	if(living_victim.IsStun())
+	if(living_victim.IsParalyzed())
+		say("GET OUT OF MY WAY, MEATBAG.")
+		enemies = list()
 		podspawn(list(
 			"target" = get_turf(living_victim),
 			"style" = STYLE_MISSILE,
 			"effectMissile" = TRUE,
-			"explosionSize" = list(0,0,1,2)
+			"explosionSize" = list(0,0,1,2),
+			"delays" = list(POD_TRANSIT = 3 SECONDS, POD_FALLING = 0.5 SECONDS, POD_OPENING = 0, POD_LEAVING = 0)
 		))
-		enemies -= WEAKREF(living_victim) //one missile dropped on you per times you piss me off
 		return
 	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/trader/amorphous/AttackingTarget(atom/attacked_target)
+	OpenFire(attacked_target)
 
 ///base subtype of the pirates that handles lines they all have.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate
@@ -326,6 +364,7 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "pirate"
 	loot = list(/obj/effect/gibspawner/human)
+	faction = list("pirate")
 	itemrejectphrase = "I'm not interested. Maybe another of my crew is, but not me."
 	itemsellcancelphrase = "Fine, keep it. But you should know i'm the only one here who will take it."
 	buyphrase = "Heh, here you go. No refunds!"
@@ -339,6 +378,14 @@
 		"If we get enough credits, maybe we can get one of those ship weapons working.",
 		"Have you heard of the Silver-Scales? They go around demanding tribute from stations like yours."
 	)
+
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/offlimits_enter_reaction(datum/source, mob/living/arriving)
+	. = ..()
+	if(!.)
+		return
+	if(!faction_check_mob(arriving))
+		enemies |= WEAKREF(arriving)
+
 /*
 
 ///this trader is used in the merchant event.
