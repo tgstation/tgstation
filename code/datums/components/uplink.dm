@@ -50,6 +50,11 @@
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 	if(_owner)
 		owner = _owner
+		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
+		if(GLOB.uplink_purchase_logs_by_key[owner])
+			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
+		else
+			purchase_log = new(owner, src)
 	lockable = _lockable
 	active = _enabled
 	src.uplink_flag = uplink_flag
@@ -248,12 +253,6 @@
 
 	var/mob/user = arguments[2]
 	owner = "[user.key]"
-	if(owner)
-		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
-		if(GLOB.uplink_purchase_logs_by_key[owner])
-			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
-		else
-			purchase_log = new(owner, src)
 
 /datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	SIGNAL_HANDLER
