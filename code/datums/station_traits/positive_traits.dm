@@ -217,3 +217,43 @@
 	var/obj/item/implant/deathrattle/implant_to_give = new()
 	deathrattle_group.register(implant_to_give)
 	implant_to_give.implant(living_mob, living_mob, TRUE, TRUE)
+
+
+/datum/station_trait/wallets
+	name = "Wallets!"
+	trait_type = STATION_TRAIT_POSITIVE
+	show_in_report = TRUE
+	weight = 10
+	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
+
+/datum/station_trait/wallets/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+
+/datum/station_trait/wallets/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+	SIGNAL_HANDLER
+
+	var/obj/item/card/id/advanced/id_card = living_mob.get_item_by_slot(ITEM_SLOT_ID)
+	if(!istype(id_card))
+		return
+
+	living_mob.temporarilyRemoveItemFromInventory(id_card, force=TRUE)
+
+	// "Doc, what's wrong with me?"
+	var/obj/item/storage/wallet/wallet = new(src)
+	// "You've got a wallet embedded in your chest."
+	wallet.add_fingerprint(living_mob, ignoregloves = TRUE)
+
+	living_mob.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial=TRUE)
+
+	id_card.forceMove(wallet)
+
+	var/holochip_amount = id_card.registered_account.account_balance
+	new /obj/item/holochip(wallet, holochip_amount)
+	id_card.registered_account.adjust_money(-holochip_amount)
+
+	new /obj/effect/spawner/lootdrop/wallet_loot(wallet)
+
+	// Put our filthy fingerprints all over the contents
+	for(var/obj/item/item as anything in wallet.contents)
+		item.add_fingerprint(living_mob, ignoregloves = TRUE)
