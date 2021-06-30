@@ -316,4 +316,4 @@
 	
 	for(var/picked_reagent in picked_reagents)
 		list_reagents[picked_reagent] = reagent_volume
-	..()
+	return ..()
