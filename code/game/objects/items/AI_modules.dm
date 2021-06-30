@@ -76,7 +76,7 @@ AI MODULES
 	var/list/borg_flw = list()
 	if(isAI(law_datum.owner))
 		var/mob/living/silicon/ai/owner = law_datum.owner
-		for(var/mob/living/silicon/robot/owned_borg in owner.connected_robots)
+		for(var/mob/living/silicon/robot/owned_borg as anything in owner.connected_robots)
 			if(owned_borg.connected_ai && owned_borg.lawupdate)
 				affected_cyborgs += owned_borg
 				borg_flw += "[ADMIN_LOOKUPFLW(owned_borg)], "
