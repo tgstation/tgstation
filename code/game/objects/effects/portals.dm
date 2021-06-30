@@ -30,7 +30,8 @@
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
-	var/force_teleport = FALSE //Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flasg
+	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
+	var/force_teleport = FALSE
 
 /obj/effect/portal/anom
 	name = "wormhole"
