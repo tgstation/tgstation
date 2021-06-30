@@ -589,7 +589,7 @@
 			sleep(12)
 		if(!prev_lockcharge)
 			R.SetLockdown(FALSE)
-		R.set_anchored = FALSE
+		R.set_anchored(FALSE)
 		R.notransform = FALSE
 		R.resize = 2
 		R.hasExpanded = TRUE
