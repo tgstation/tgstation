@@ -64,7 +64,7 @@
 	. = ..()
 	if(.)
 		return
-	if(Adjacent(user) || get_turf(user) == get_turf(src))
+	if(Adjacent(user))
 		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
