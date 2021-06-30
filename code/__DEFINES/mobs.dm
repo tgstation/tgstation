@@ -145,6 +145,10 @@
 #define BEAUTY_LEVEL_GOOD 66
 #define BEAUTY_LEVEL_GREAT 100
 
+
+//Defines for beauty values
+#define GOOD_LOOKING_BEAUTY_LEVEL 2500
+
 //Moods levels for humans
 #define MOOD_LEVEL_HAPPY4 15
 #define MOOD_LEVEL_HAPPY3 10

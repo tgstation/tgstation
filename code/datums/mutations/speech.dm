@@ -207,6 +207,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='notice'>You feel like seeking the holy grail!</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like seeking anything.</span>"
+	///Whether or not the mutation adds starters to speech like "I quothe"
 	var/has_startings = TRUE
 
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
@@ -246,3 +247,4 @@
 
 /datum/mutation/human/medieval/no_startings
 	has_startings = FALSE
+	locked = TRUE

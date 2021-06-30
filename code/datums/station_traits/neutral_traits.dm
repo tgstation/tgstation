@@ -117,8 +117,7 @@
 /datum/station_trait/protagonist/proc/on_gamemode_setup(datum/gamemode/gamemode_ref)
 	SIGNAL_HANDLER
 	var/list/candidates = list()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
 			candidates.Add(player)
 	trim_candidates(candidates)
@@ -146,6 +145,5 @@
 ///Pick a family name and put it in the title!
 /datum/station_trait/protagonist/scaredy_prince/New()
 	. = ..()
-	if(istype(antag_datum_instance, /datum/antagonist/protagonist/scaredy_prince))
-		var/datum/antagonist/protagonist/scaredy_prince/prince_antag_datum = antag_datum_instance
-		name = "Royalty from house [prince_antag_datum.family_name]"
+	var/datum/antagonist/protagonist/scaredy_prince/prince_antag_datum = antag_datum_instance
+	name = "Royalty from house [prince_antag_datum.family_name]"

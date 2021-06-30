@@ -305,13 +305,13 @@
 		objectives += new_target
 
 	var/untracked_protagonists = SSstation.protagonists
-	for(var/datum/objective/mutiny/O in objectives)
-		untracked_protagonists -= O.target
+	for(var/datum/objective/mutiny/mutiny_objective in objectives)
+		untracked_protagonists -= mutiny_objective.target
 
-	for(var/datum/mind/M in untracked_protagonists)
+	for(var/datum/mind/protagonist_mind in untracked_protagonists)
 		var/datum/objective/mutiny/new_target = new()
 		new_target.team = src
-		new_target.target = M
+		new_target.target = protagonist_mind
 		new_target.update_explanation_text()
 		objectives += new_target
 

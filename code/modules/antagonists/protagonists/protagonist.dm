@@ -5,11 +5,11 @@
 	job_rank = ROLE_PROTAGONIST
 	show_to_ghosts = TRUE
 	///Some protagonists have min ages
-	var/min_age = 16
+	var/min_age = 17
 	///Some protagonists have max ages
 	var/max_age = 99
 	///Outfit to put onto the character
-	var/outfit_type = /datum/outfit/wizard
+	var/outfit_type = /datum/outfit
 
 
 /datum/antagonist/protagonist/on_gain()
@@ -20,18 +20,18 @@
 /datum/antagonist/protagonist/proc/equip_protagonist()
 	if(!owner)
 		CRASH("Antag datum with no owner.")
-	var/mob/living/carbon/human/H = owner.current
-	if(!istype(H))
+	var/mob/living/carbon/human/protagonist_human = owner.current
+	if(!istype(protagonist_human))
 		return
 
-	H.delete_equipment()
+	protagonist_human.delete_equipment()
 
-	if(H.age > max_age)
-		H.age = max_age
-	else if (H.age < min_age)
-		H.age = min_age
+	if(protagonist_human.age > max_age)
+		protagonist_human.age = max_age
+	else if (protagonist_human.age < min_age)
+		protagonist_human.age = min_age
 
-	H.equipOutfit(outfit_type)
+	protagonist_human.equipOutfit(outfit_type)
 
 /datum/antagonist/protagonist/proc/create_objectives()
 	var/datum/objective/escape/escape_objective = new
