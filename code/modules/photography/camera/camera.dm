@@ -191,7 +191,7 @@
 	if(ismob(user))
 		var/mob/mob_user = user
 		viewlist = getviewsize(mob_user.client.view)
-		viewc = mob_user.client.eye
+		viewc = mob_user.client?.eye
 	else
 		viewlist = getviewsize(world.view)
 		viewc = target
