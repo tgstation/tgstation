@@ -3,7 +3,7 @@
 /**
  * ## silicon sentience chip!
  *
- * Only sold by the special robot trader.
+ * Only sold by the special robot trader, makes a robot sentient
  */
 /obj/item/silicon_sentience
 	name = "silicon sentience chip"
@@ -14,6 +14,23 @@
 /obj/item/silicon_sentience/Initialize()
 	. = ..()
 	AddComponent(/datum/component/sentience_granter, SENTIENCE_ARTIFICIAL)
+
+/**
+ * ## LFLINE pack!
+ *
+ * Only sold by the special robot trader, LFLINE bulks you down but gives you the momento mori effect
+ */
+/obj/item/lfline
+	name = "LFLINE pack"
+	desc = "You wear this on your back, let it plug into your organs... and you're invincible! Allegedly."
+	icon_state = "backpack"
+	inhand_icon_state = "backpack"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = NONE
+	max_integrity = 150
 
 /// pirate merchant weapons (you can trade in your lasers for these) ///
 
@@ -46,10 +63,10 @@
 	projectile_type = /obj/projectile/bullet/spikeball
 
 ///This projectile embeds into mobs, but has no special effects
-/obj/projectile/globule
-	name = "spikeball"
+/obj/projectile/scrapball
+	name = "scrapball"
 	icon_state = "glob_projectile"
-	shrapnel_type = /obj/item/mending_globule
+	shrapnel_type = /obj/item/scrapball
 	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
 	nodamage = TRUE
 	damage = 0
@@ -59,15 +76,15 @@
 	desc = "A bunch of metal scrap hammered into a spikey ball. Worrysome!"
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "globule"
-	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
+	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0.4)
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules
-/obj/item/scrapball
-	name = "mending globule"
-	desc = "A bunch of "
+/obj/item/sheddrball
+	name = "SHEDDRball"
+	desc = "A semicomplicated chunk of spinning blades that digs into the flesh of a victim and tears the limb apart."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "globule"
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
+	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.1)
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
@@ -95,3 +112,4 @@
 	heals_left--
 	if(heals_left <= 0)
 		qdel(src)
+

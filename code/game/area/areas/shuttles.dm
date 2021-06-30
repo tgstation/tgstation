@@ -53,6 +53,7 @@
 
 /area/shuttle/merchant
 	name = "Merchant Shuttle"
+	area_flags = NOTELEPORT
 
 ////////////////////////////Pirate Shuttle////////////////////////////
 

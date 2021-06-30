@@ -340,7 +340,6 @@
 		"If we get enough credits, maybe we can get one of those ship weapons working.",
 		"Have you heard of the Silver-Scales? They go around demanding tribute from stations like yours."
 	)
-/*
 
 ///this trader is used in the merchant event.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities
@@ -348,11 +347,16 @@
 	desc = "A space pirate looking to buy and sell miscellaneous curios."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "pirate"
-	loot = list()
 	///Associated list of items the NPC sells with how much they cost.
-	var/list/products = list(/obj/item/food/burger/ghost = 200)
+	products = list(
+		/obj/item/flashlight/lantern/jade = 200,
+		/obj/item/seeds/random = 350,
+		/obj/item/pda/clear = 400,
+		/obj/item/reagent_containers/food/drinks/bottle/holywater = 500,
+		/obj/item/storage/backpack/satchel/flat/empty = 800,
+	)
 	///Associated list of items able to be sold to the NPC with the money given for them.
-	var/list/wanted_items = list(/obj/item/ectoplasm = 100)
+	wanted_items = list(/obj/item/ectoplasm = 100)
 	itemsellacceptphrase = "Cool stuff. I just like collecting them."
 	interestedphrase = "Hey, that's an interesting oddity you have there."
 
@@ -401,7 +405,8 @@
 		"Hooooonk!",
 		"Welcome to clown planet! Or that's what they'll tell you when you visit. Come on by, honk.",
 		"The Honkmother giveth, and the Honkmother taketh away. She calls it commerce. HONK!",
-		"She honks me, she honks me not..."
+		"She honks me, she honks me not...",
+		"I'll buy anything from clown planet!! You know, if you have em!",
 		"I knew a monthperson once, until their timely demise."
 	)
 
