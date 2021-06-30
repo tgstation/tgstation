@@ -292,6 +292,8 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 			) = 1,
+		// the forbidden medicine
+		/obj/item/reagent_containers/pill/floor_pill = 1,
 		) = 1,
 
 	list(//misc
