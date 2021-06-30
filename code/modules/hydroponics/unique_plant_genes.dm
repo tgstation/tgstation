@@ -71,7 +71,7 @@
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
- * target - the person who is attacked by the plant
+ * target - the atom which is attacked by the plant
  */
 /datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	SIGNAL_HANDLER
