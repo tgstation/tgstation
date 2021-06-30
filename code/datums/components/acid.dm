@@ -201,7 +201,7 @@
 
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
-/datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(!isliving(arrived))

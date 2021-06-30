@@ -258,7 +258,7 @@
 		T.active_hotspot = null
 	return ..()
 
-/obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 	if(isliving(arrived))
 		var/mob/living/immolated = arrived
