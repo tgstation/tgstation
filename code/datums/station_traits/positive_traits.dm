@@ -255,5 +255,5 @@
 	new /obj/effect/spawner/lootdrop/wallet_loot(wallet)
 
 	// Put our filthy fingerprints all over the contents
-	for(var/obj/item/item as anything in wallet.contents)
+	for(var/obj/item/item in wallet)
 		item.add_fingerprint(living_mob, ignoregloves = TRUE)
