@@ -19,11 +19,7 @@
 
 /obj/item/circuit_component/speech/get_ui_notices()
 	. = ..()
-	. += list(list(
-		"icon" = "stopwatch",
-		"content" = "Speech Cooldown: [DisplayTimeText(speech_cooldown)]",
-		"color" = "orange",
-	))
+	. += create_ui_notice("Speech Cooldown: [DisplayTimeText(speech_cooldown)]", "orange", "stopwatch")
 
 /obj/item/circuit_component/speech/Initialize()
 	. = ..()
