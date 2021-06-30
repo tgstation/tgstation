@@ -72,7 +72,9 @@
 /obj/machinery/field/containment/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
-		shock(AM)
+		var/mob/living/L = AM
+		if(!L.incorporeal_move)
+			shock(AM)
 
 	if(ismachinery(AM) || isstructure(AM) || ismecha(AM))
 		bump_field(AM)
