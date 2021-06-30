@@ -7987,6 +7987,7 @@
 /area/hallway/primary/central)
 "brd" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "brr" = (
@@ -8406,8 +8407,23 @@
 /area/hallway/secondary/entry)
 "bwf" = (
 /obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
 /obj/machinery/firealarm/directional/north,
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "bwN" = (
@@ -9461,16 +9477,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/item/clothing/glasses/hud/health{
-	pixel_y = 6
-	},
-/obj/item/clothing/glasses/hud/health{
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/hud/health{
+/obj/item/storage/box/bodybags{
 	pixel_y = 2
 	},
-/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -13102,6 +13111,20 @@
 	dir = 8;
 	name = "First Aid Supplies";
 	req_access_txt = "5"
+	},
+/obj/item/clothing/gloves/color/latex/nitrile{
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/color/latex/nitrile{
+	pixel_y = 4
+	},
+/obj/item/clothing/gloves/color/latex/nitrile{
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 5;
+	pixel_y = -7
 	},
 /turf/open/floor/iron/dark,
 /area/medical/storage)
@@ -18929,10 +18952,6 @@
 "dUs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/research{
-	name = "Chemical Storage";
-	req_access_txt = "69"
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -18942,6 +18961,10 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Chemical Storage";
+	req_access_txt = "69"
 	},
 /turf/open/floor/iron/textured,
 /area/medical/medbay/central)
@@ -19736,6 +19759,7 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 1
 	},
+/obj/item/stack/medical/suture,
 /turf/open/floor/iron/white/side{
 	dir = 6
 	},
@@ -19842,7 +19866,14 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/stack/sticky_tape/surgical,
-/obj/item/stack/medical/bone_gel,
+/obj/item/stack/medical/bone_gel{
+	pixel_x = -5;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 9;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "ejn" = (
@@ -25092,16 +25123,14 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/item/storage/belt/medical{
-	pixel_y = 6
+/obj/item/reagent_containers/chem_pack{
+	pixel_x = -4;
+	pixel_y = 5
 	},
-/obj/item/storage/belt/medical{
-	pixel_y = 4
+/obj/item/stack/medical/gauze{
+	pixel_x = 5;
+	pixel_y = -5
 	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -25278,7 +25307,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/machinery/vending/wardrobe/medi_wardrobe,
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "fXQ" = (
@@ -29756,6 +29785,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/vending/medical,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "hGO" = (
@@ -32116,12 +32146,9 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/siding/white/corner,
 /obj/item/storage/box/gloves{
-	pixel_y = 8
+	pixel_y = 3
 	},
-/obj/item/storage/box/masks{
-	pixel_y = 4
-	},
-/obj/item/storage/box/bodybags,
+/obj/item/storage/box/masks,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -32416,7 +32443,6 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "iCa" = (
-/obj/machinery/rnd/production/techfab/department/medical,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
@@ -40285,7 +40311,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/research/glass{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
 	req_access_txt = "33"
 	},
@@ -42071,6 +42097,8 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
+/obj/item/book/manual/wiki/medicine,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "lUQ" = (
@@ -49849,10 +49877,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Pharmacy";
-	req_access_txt = "69"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -49862,6 +49886,10 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Pharmacy";
+	req_access_txt = "69"
 	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
@@ -52417,16 +52445,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/reagent_containers/chem_pack{
-	pixel_x = 10;
-	pixel_y = 10
-	},
 /obj/item/storage/box/rxglasses{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/stack/medical/gauze{
-	pixel_x = 8
+	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -54538,8 +54558,9 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "pRp" = (
-/obj/machinery/vending/medical,
 /obj/machinery/light/directional/south,
+/obj/machinery/cell_charger,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "pRS" = (
@@ -61704,7 +61725,9 @@
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "sjt" = (
-/obj/machinery/door/airlock/medical,
+/obj/machinery/door/airlock/medical{
+	name = "Coldroom"
+	},
 /turf/open/floor/iron,
 /area/medical/coldroom)
 "sjL" = (
@@ -73175,11 +73198,22 @@
 "vTp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/wrench/medical,
+/obj/item/storage/belt/medical{
+	pixel_y = 8
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 6
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 4
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical{
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "vTw" = (
@@ -79963,13 +79997,11 @@
 /area/engineering/atmos)
 "yiT" = (
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/medicine,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/wrench/medical,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/medical/cryo)
 "yjb" = (
