@@ -108,18 +108,19 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
+/obj/item/camera/proc/can_target(atom/target, atom/user, prox_flag)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
 	if(!T)
 		return FALSE
-	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
+	if(ismob(user))
+		var/mob/mob_user = user
+		if(isAI(mob_user) && !GLOB.cameranet.checkTurfVis(T))
 			return FALSE
-		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+		else if(mob_user.client && !(get_turf(target) in get_hear(mob_user.client.view, user)))
 			return FALSE
-		else if(!(get_turf(target) in get_hear(world.view, user)))
+		else if(!(get_turf(target) in get_hear(world.view, mob_user)))
 			return FALSE
 	else //user is an atom
 		if(!(get_turf(target) in view(world.view, user)))
@@ -127,7 +128,7 @@
 	return TRUE
 
 // Called when the camera tries to make a photo
-/obj/item/camera/proc/try_take_photo(atom/target, mob/user, flag)
+/obj/item/camera/proc/try_take_photo(atom/target, atom/user, flag)
 	if (disk)
 		if(ismob(target))
 			if (disk.record)
@@ -137,7 +138,7 @@
 			var/mob/M = target
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
-		else if(istype(user)) //User can be an atom.
+		else if(ismob(user)) //User can be an atom.
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return
 
@@ -167,7 +168,7 @@
 	to_chat(user, P.desc)
 	qdel(P)
 
-/obj/item/camera/proc/captureimage(atom/target, mob/user, flag, size_x = 1, size_y = 1)
+/obj/item/camera/proc/captureimage(atom/target, atom/user, flag, size_x = 1, size_y = 1)
 	if(!istype(user)) //this runtimes because it assumes user has a client and is the correct type
 		user = null
 	if(flash_enabled)
@@ -185,9 +186,18 @@
 	var/list/dead_spotted = list()
 	var/ai_user = isAI(user)
 	var/list/seen
-	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
+	var/list/viewlist
+	var/viewc
+	if(ismob(user))
+		var/mob/mob_user = user
+		viewlist = getviewsize(mob_user.client.view)
+		viewc = mob_user.client.eye
+	else
+		viewlist = getviewsize(world.view)
+		viewc = target
+
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user?.client ? user.client.eye : target
+
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/list/mobs = list()
@@ -228,13 +238,14 @@
 	set_light_on(FALSE)
 
 
-/obj/item/camera/proc/after_picture(mob/user, datum/picture/picture, proximity_flag)
+/obj/item/camera/proc/after_picture(atom/user, datum/picture/picture, proximity_flag)
 	printpicture(user, picture)
 
-/obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
+/obj/item/camera/proc/printpicture(atom/user, datum/picture/picture) //Normal camera proc for creating photos
 	var/obj/item/photo/p = new(get_turf(src), picture)
-	if(in_range(src, user)) //needed because of TK
-		user.put_in_hands(p)
+	if(ismob(user) && in_range(src, user)) //needed because of TK
+		var/mob/mob_user = user
+		mob_user.put_in_hands(p)
 		pictures_left--
 		to_chat(user, span_notice("[pictures_left] photos left."))
 		var/customise = "No"
