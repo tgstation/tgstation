@@ -17,6 +17,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = TRUE
+	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
@@ -46,32 +47,22 @@
 	return ..()
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
-	if(user)
-		if(get_turf(user) == get_turf(src))
-			teleport(user)
-			return TRUE
-		if(Adjacent(user))
-			user.Move(get_turf(src))
-			return TRUE
+	if(user && (Adjacent(user) || get_turf(user) == get_turf(src)))
+		teleport(user)
+		return TRUE
 
-/obj/effect/portal/attack_tk(mob/user)
-	return
-
-/obj/effect/portal/Cross(atom/movable/crosser)
-	if(isobserver(crosser))
-		return ..()
-	if(teleport(crosser))
-		return FALSE // stop the cross or the allowed teleport fails
-	return ..()
+/obj/effect/portal/Bumped(atom/movable/bumber)
+	if(!teleport(bumber)) // if they fail to teleport try to move them past
+		density = FALSE
+		bumber.Move(src, bumber.dir)
+		density = TRUE
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(get_turf(user) == get_turf(src))
+	if(Adjacent(user) || get_turf(user) == get_turf(src))
 		teleport(user)
-	if(Adjacent(user))
-		user.Move(get_turf(src))
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
