@@ -1,15 +1,19 @@
-/client/var/adminhelptimerid = 0 //a timer id for returning the ahelp verb
-/client/var/datum/admin_help/current_ticket //the current ticket the (usually) not-admin client is dealing with
-
-//
-//TICKET MANAGER
-//
+/// Client var used for returning the ahelp verb
+/client/var/adminhelptimerid = 0
+/// Client var used for tracking the ticket the (usually) not-admin client is dealing with
+/client/var/datum/admin_help/current_ticket
 
 GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
+/**
+ * # Adminhelp Ticket Manager
+ */
 /datum/admin_help_tickets
+	/// The set of all active tickets
 	var/list/active_tickets = list()
+	/// The set of all closed tickets
 	var/list/closed_tickets = list()
+	/// The set of all resolved tickets
 	var/list/resolved_tickets = list()
 
 	var/obj/effect/statclick/ticket_list/astatclick = new(null, null, AHELP_ACTIVE)
@@ -149,32 +153,42 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ticket_list/proc/Action()
 	Click()
 
-//
-//TICKET DATUM
-//
-
+/**
+ * # Adminhelp Ticket
+ */
 /datum/admin_help
+	/// Unique ID of the ticket
 	var/id
+	/// The current name of the ticket
 	var/name
+	/// The current state of the ticket
 	var/state = AHELP_ACTIVE
-
+	/// The time at which the ticket was opened
 	var/opened_at
+	/// The time at which the ticket was closed
 	var/closed_at
-
-	var/client/initiator //semi-misnomer, it's the person who ahelped/was bwoinked
+	/// Semi-misnomer, it's the person who ahelped/was bwoinked
+	var/client/initiator
+	/// The ckey of the initiator
 	var/initiator_ckey
+	/// The key name of the initiator
 	var/initiator_key_name
+	/// If any admins were online when the ticket was initialized
 	var/heard_by_no_admins = FALSE
-
-	var/list/_interactions //use AddInteraction() or, preferably, admin_ticket_log()
-
+	/// The collection of interactions with this ticket. Use AddInteraction() or, preferably, admin_ticket_log()
+	var/list/_interactions
+	/// Statclick holder for the ticket
 	var/obj/effect/statclick/ahelp/statclick
-
+	/// Static counter used for generating each ticket ID
 	var/static/ticket_counter = 0
 
-//call this on its own to create a ticket, don't manually assign current_ticket
-//msg is the title of the ticket: usually the ahelp text
-//is_bwoink is TRUE if this ticket was started by an admin PM
+/**
+ * Call this on its own to create a ticket, don't manually assign current_ticket
+ *
+ * Arguments:
+ * * msg - The title of the ticket: usually the ahelp text
+ * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
+ */
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
@@ -411,17 +425,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Ticket #[id]</title></head>")
 	var/ref_src = "[REF(src)]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
-	dat += "<b>State: "
-	switch(state)
-		if(AHELP_ACTIVE)
-			dat += "<font color='red'>OPEN</font>"
-		if(AHELP_RESOLVED)
-			dat += "<font color='green'>RESOLVED</font>"
-		if(AHELP_CLOSED)
-			dat += "CLOSED"
-		else
-			dat += "UNKNOWN"
-	dat += "</b>[FOURSPACES][TicketHref("Refresh", ref_src)][FOURSPACES][TicketHref("Re-Title", ref_src, "retitle")]"
+	dat += "<b>State: [ticket_status()]</b>"
+	dat += "[FOURSPACES][TicketHref("Refresh", ref_src)][FOURSPACES][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
 		dat += "[FOURSPACES][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
@@ -436,7 +441,31 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in _interactions)
 		dat += "[I]<br>"
 
+	// Append any tickets also opened by this user if relevant
+	var/list/related_tickets = GLOB.ahelp_tickets.TicketsByCKey(initiator_ckey)
+	if (related_tickets.len > 1)
+		dat += "<br/><b>Other Tickets by User</b><br/>"
+		for (var/datum/admin_help/related_ticket in related_tickets)
+			if (related_ticket.id == id)
+				continue
+			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
+
 	usr << browse(dat.Join(), "window=ahelp[id];size=620x480")
+
+/**
+ * Renders the current status of the ticket into a displayable string
+ */
+/datum/admin_help/proc/ticket_status()
+	switch(state)
+		if(AHELP_ACTIVE)
+			return "<font color='red'>OPEN</font>"
+		if(AHELP_RESOLVED)
+			return "<font color='green'>RESOLVED</font>"
+		if(AHELP_CLOSED)
+			return "CLOSED"
+		else
+			stack_trace("Invalid ticket state: [state]")
+			return "INVALID, CALL A CODER"
 
 /datum/admin_help/proc/Retitle()
 	var/new_title = input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null

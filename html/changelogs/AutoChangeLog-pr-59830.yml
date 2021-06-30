@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "RD consoles now have hardware supporting ID changes by default."

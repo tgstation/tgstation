@@ -46,10 +46,10 @@ SUBSYSTEM_DEF(time_track)
 	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.config?.map_name].csv"
 	world.Profile(PROFILE_RESTART, type = "sendmaps")
 	//Need to do the sendmaps stuff in its own file, since it works different then everything else
-	var/list/sendmaps_shorthands = list()
+	var/list/sendmaps_headers = list()
 	for(var/proper_name in sendmaps_names_map)
-		sendmaps_shorthands += sendmaps_names_map[proper_name]
-		sendmaps_shorthands += "[sendmaps_names_map[proper_name]]_count"
+		sendmaps_headers += sendmaps_names_map[proper_name]
+		sendmaps_headers += "[sendmaps_names_map[proper_name]]_count"
 	log_perf(
 		list(
 			"time",
@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(time_track)
 			"all_queries",
 			"queries_active",
 			"queries_standby"
-		) + sendmaps_shorthands
+		) + sendmaps_headers
 	)
 
 
@@ -109,7 +109,12 @@ SUBSYSTEM_DEF(time_track)
 		send_maps_sort[packet["name"]] = packet
 
 	var/list/send_maps_values = list()
-	for(var/list/packet in send_maps_sort)
+	for(var/entry_name in sendmaps_names_map)
+		var/list/packet = send_maps_sort[entry_name]
+		if(!packet) //If the entry does not have a value for us, just put in 0 for both
+			send_maps_values += 0
+			send_maps_values += 0
+			continue
 		send_maps_values += packet["value"]
 		send_maps_values += packet["calls"]
 
@@ -144,13 +149,3 @@ SUBSYSTEM_DEF(time_track)
 	)
 
 	SSdbcore.reset_tracking()
-
-/datum/controller/subsystem/time_track/proc/scream_maptick_data()
-	var/current_profile_data = world.Profile(PROFILE_REFRESH, type = "sendmaps", format="json")
-	log_world(current_profile_data)
-	current_profile_data = json_decode(current_profile_data)
-	var/output = ""
-	for(var/list/entry in current_profile_data)
-		output += "[entry["name"]],[entry["value"]],[entry["calls"]]\n"
-	log_world(output)
-	return output

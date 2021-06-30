@@ -35,6 +35,9 @@
 	/// The current examined component. Used in IntegratedCircuit UI
 	var/datum/weakref/examined_component
 
+	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
+	var/datum/weakref/inserter_mind
+
 	/// X position of the examined_component
 	var/examined_rel_x = 0
 
@@ -444,3 +447,23 @@
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 #undef WITHIN_RANGE
+
+/**
+ * Returns the creator of the integrated circuit. Used in admin messages and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator_admin()
+	return get_creator(include_link = TRUE)
+
+/**
+ * Returns the creator of the integrated circuit. Used in admin logs and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator(include_link = FALSE)
+	var/datum/mind/inserter
+	if(inserter_mind)
+		inserter = inserter_mind.resolve()
+
+	var/obj/item/card/id/id_card
+	if(owner_id)
+		id_card = owner_id.resolve()
+
+	return "(Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
