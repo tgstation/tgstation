@@ -360,11 +360,9 @@ SUBSYSTEM_DEF(ticker)
 			CHECK_TICK
 			continue
 		if(!ishuman(new_player_mob.new_character))
-			CHECK_TICK
 			continue
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 		if(!new_player_human.mind || is_unassigned_job(new_player_human.mind.assigned_role))
-			CHECK_TICK
 			continue
 		// Keep a rolling tally of who'll get the cap's spare ID vault code.
 		// Check assigned_role's priority and curate the candidate list appropriately.
