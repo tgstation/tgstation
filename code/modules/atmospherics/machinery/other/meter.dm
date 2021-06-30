@@ -2,7 +2,7 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "pressure0"
+	icon_state = "meter0"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
@@ -14,7 +14,17 @@
 	var/atom/target
 	var/target_layer = PIPING_LAYER_DEFAULT
 	greyscale_config = /datum/greyscale_config/meter
-	greyscale_colors = "00FF00"
+	greyscale_colors = "#00ff00"
+	var/static/list/meter_colors = list(
+		"grey" = "#808080",
+		"red" = "#ff0000",
+		"orange" = "#ff7f00",
+		"yellow" = "#feff00",
+		"green" = "#00ff00",
+		"light green" = "#00ff7f",
+		"cyan" = "#00feff",
+		"blue" = "#0000ff"
+	)
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
@@ -61,23 +71,23 @@
 
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
-		icon_state = "pressure0" //add overlay for buttons0
+		icon_state = "meter0"
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
-		icon_state = "pressure0"
+		icon_state = "meter"
 		return FALSE
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
-		icon_state = "pressure0" //add overlay for buttons0
+		icon_state = "meter0"
 		return FALSE
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
-		icon_state = "pressure0"
+		icon_state = "meter0"
 	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
 		var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
 		icon_state = "meter1_[val]"
@@ -89,6 +99,24 @@
 		icon_state = "meter3_[val]"
 	else
 		icon_state = "meter4"
+
+	var/env_temperature = environment.temperature
+	if (env_temperature == 0) // this also means there is no pressure
+		set_greyscale(colors=list(meter_colors["grey"]))
+	else if(env_temperature <= BODYTEMP_COLD_WARNING_3)
+		set_greyscale(colors=list(meter_colors["blue"]))
+	else if(env_temperature <= BODYTEMP_COLD_WARNING_2)
+		set_greyscale(colors=list(meter_colors["cyan"]))
+	else if(env_temperature <= BODYTEMP_COLD_WARNING_1)
+		set_greyscale(colors=list(meter_colors["light green"]))
+	else if(env_temperature <= BODYTEMP_HEAT_WARNING_1)
+		set_greyscale(colors=list(meter_colors["green"]))
+	else if(env_temperature <= BODYTEMP_HEAT_WARNING_2)
+		set_greyscale(colors=list(meter_colors["yellow"]))
+	else if(env_temperature <= BODYTEMP_HEAT_WARNING_3)
+		set_greyscale(colors=list(meter_colors["orange"]))
+	else
+		set_greyscale(colors=list(meter_colors["red"]))
 
 	if(frequency)
 		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
