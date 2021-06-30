@@ -41,6 +41,7 @@
 			return
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
 		mybag = I
+		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
 		update_appearance()
 	else if(istype(I, /obj/item/janiupgrade))
 		if(floorbuffer)
@@ -70,6 +71,7 @@
 	mybag.forceMove(get_turf(user))
 	user.put_in_hands(mybag)
 	mybag = null
+	SEND_SIGNAL(src, COMSIG_VACUUM_BAG_DETACH)
 	update_appearance()
 
 /obj/vehicle/ridden/janicart/upgraded
