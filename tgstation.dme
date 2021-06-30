@@ -1374,6 +1374,7 @@
 #include "code\game\objects\structures\artstuff.dm"
 #include "code\game\objects\structures\barsigns.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
+#include "code\game\objects\structures\bonfire.dm"
 #include "code\game\objects\structures\cannon.dm"
 #include "code\game\objects\structures\chess.dm"
 #include "code\game\objects\structures\destructible_structures.dm"
