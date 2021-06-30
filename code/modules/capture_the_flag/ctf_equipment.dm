@@ -66,7 +66,9 @@
 	desc = "This looks like it could really hurt in melee."
 	icon_state = "ctfshotgun"
 	inhand_icon_state = "shotgun_combat"
+	worn_icon_state = "gun"
 	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_BELT
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	empty_indicator = TRUE
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
