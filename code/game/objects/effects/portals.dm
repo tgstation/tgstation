@@ -48,7 +48,7 @@
 	return ..()
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
-	if(user && (Adjacent(user) || get_turf(user) == get_turf(src)))
+	if(user && Adjacent(user))
 		teleport(user)
 		return TRUE
 
