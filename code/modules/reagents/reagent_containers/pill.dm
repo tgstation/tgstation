@@ -300,6 +300,7 @@
 	name = "☼Floor Pill☼"
 	desc = "This is a masterful floor pill. It is decorated with ashwalker bone and encircled with bands of iron and silver. The object menaces with spikes of wood. On the item is an image of an assistant eating a floor pill. The assistant is dying. On the item is an image of four medical doctors. The medical doctors are praying."
 	icon_state = "pill8"
+	reagent_flags = NO_REACT
 	list_reagents = list()
 	
 /obj/item/reagent_containers/pill/floor_pill/Initialize()
@@ -313,4 +314,3 @@
 	for(var/picked_reagent in picked_reagents)
 		list_reagents[picked_reagent] = 10
 	..()
-
