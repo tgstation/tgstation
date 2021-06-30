@@ -148,4 +148,4 @@
 	. = ..()
 	if(istype(antag_datum_instance, /datum/antagonist/protagonist/scaredy_prince))
 		var/datum/antagonist/protagonist/scaredy_prince/prince_antag_datum = antag_datum_instance
-		name = "Royal prince of house [prince_antag_datum.family_name]"
+		name = "Royalty from house [prince_antag_datum.family_name]"
