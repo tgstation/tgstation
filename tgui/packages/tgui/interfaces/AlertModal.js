@@ -23,7 +23,7 @@ export class AlertModal extends Component {
 
     this.buttonRefs = [createRef()];
     this.state = { current: 0 };
-    this.autofocus = true; // stops the autofocusing from functioning
+    this.autofocus = true; // stops the autofocusing from functioning if set to false
   }
 
   componentDidMount() {
