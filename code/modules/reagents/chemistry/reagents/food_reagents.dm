@@ -977,6 +977,13 @@
 	taste_description = "peppery sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/whipped_cream
+	name = "Whipped Cream"
+	description = "A white fluffy cream made from whipping cream at intense speed."
+	color = "#efeff0"
+	taste_description = "fluffy sweet cream"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/consumable/peanut_butter
 	name = "Peanut Butter"
 	description = "A rich, creamy spread produced by grinding peanuts."
