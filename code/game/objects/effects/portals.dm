@@ -51,11 +51,13 @@
 		teleport(user)
 		return TRUE
 
-/obj/effect/portal/Bumped(atom/movable/bumber)
-	if(!teleport(bumber)) // if they fail to teleport try to move them past
-		density = FALSE
-		bumber.Move(src, bumber.dir)
-		density = TRUE
+/obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
+		return TRUE
+
+/obj/effect/portal/Bumped(atom/movable/bumper)
+	teleport(bumper)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
