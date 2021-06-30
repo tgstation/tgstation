@@ -342,6 +342,7 @@
 		return ..()
 	var/mob/living/living_victim = target
 	if(living_victim.IsParalyzed())
+		say("GET OUT OF MY WAY, MEATBAG.")
 		enemies = list()
 		podspawn(list(
 			"target" = get_turf(living_victim),

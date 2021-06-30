@@ -19,7 +19,7 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/shuttle/merchant)
 "an" = (
-/obj/structure/statue/silver/secborg,
+/obj/structure/statue/silver/medborg,
 /turf/open/floor/iron/dark/smooth_half,
 /area/shuttle/merchant)
 "ao" = (
