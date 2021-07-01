@@ -917,12 +917,9 @@
 			continue
 		//Some externals have multiple layers for some reason
 		for(var/e_layer in external_organ.layers)
-			var/obj/item/soap/soap = new(get_turf(src))
-
-			soap.icon = external_organ.icon
-			soap.icon_state = external_organ.mob_sprite + mutant_bodyparts_layertext(e_layer)
-
-			limb.overlays += image(external_organ.icon, external_organ.mob_sprite + mutant_bodyparts_layertext(e_layer), layer = e_layer)
+			var/mutable_appearance/pain = mutable_appearance(external_organ.icon, external_organ.mob_sprite + mutant_bodyparts_layertext(e_layer), layer = -e_layer, appearance_flags = KEEP_APART)
+			pain.dir = image_dir
+			limb.overlays += pain
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.

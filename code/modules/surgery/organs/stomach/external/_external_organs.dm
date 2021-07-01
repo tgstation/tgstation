@@ -24,13 +24,25 @@
 	limb.external_organs.Add(src)
 	ownerlimb = limb
 
-	return ..()
+	. =  ..()
+
+	limb.contents.Add(src)
 
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 
 	if(ownerlimb)
 		ownerlimb.external_organs.Remove(src)
+		ownerlimb.contents.Remove(src)
+
+
+/obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
+	. = ..()
+
+	bodypart.external_organs.Add(src)
+	bodypart.contents.Add(src)
+
+/obj/item/organ/external/attach_limb
 
 /obj/item/organ/external/proc/prepare_sprite(base_icon, body_type)
 	if(!base_icon)
@@ -38,7 +50,7 @@
 
 	var/g = (body_type == FEMALE) ? "f" : "m"
 
-	mob_sprite = (gender_specific ? g : "m") + "_" + base_icon
+	mob_sprite = (gender_specific ? g : "m") + "_" + slot + "_" + base_icon
 
 /obj/item/organ/external/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
 	return TRUE
@@ -49,7 +61,9 @@
 	layers = list(BODY_ADJ_LAYER)
 
 /obj/item/organ/external/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.head.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+
+	if(!(head.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
 
 /obj/item/organ/external/frills
@@ -58,7 +72,9 @@
 	layers = list(BODY_ADJ_LAYER)
 
 /obj/item/organ/external/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.head.flags_inv & HIDEEARS))
+	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+
+	if(!(head.flags_inv & HIDEEARS))
 		return TRUE
 
 /obj/item/organ/external/snout
@@ -67,7 +83,9 @@
 	layers = list(BODY_ADJ_LAYER)
 
 /obj/item/organ/external/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
+	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+
+	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(head.flags_inv & HIDESNOUT))
 		return TRUE
 
 /obj/item/organ/external/antennae

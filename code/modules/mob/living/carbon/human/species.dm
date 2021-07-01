@@ -411,7 +411,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/mob/living/carbon/human/human = C
 		for(var/path in external_organs)
 			//TODO: use preference
-			var/obj/item/organ/external/new_organ = new path(external_organs[path], human.body_type)
+			var/obj/item/organ/external/new_organ = new path(null, external_organs[path], human.body_type)
 
 			new_organ.Insert(human)
 
@@ -928,12 +928,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					accessory = GLOB.spines_list[source.dna.features["spines"]]
 				if("waggingspines")
 					accessory = GLOB.animated_spines_list[source.dna.features["spines"]]
-				if("snout")
-					accessory = GLOB.snouts_list[source.dna.features["snout"]]
-				if("frills")
-					accessory = GLOB.frills_list[source.dna.features["frills"]]
-				if("horns")
-					accessory = GLOB.horns_list[source.dna.features["horns"]]
 				if("ears")
 					accessory = GLOB.ears_list[source.dna.features["ears"]]
 				if("body_markings")
@@ -1023,11 +1017,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/mutant_bodyparts_layertext(layer)
 	switch(layer)
 		if(BODY_BEHIND_LAYER)
-			return "_BEHIND"
+			return "BEHIND"
 		if(BODY_ADJ_LAYER)
-			return "_ADJ"
+			return "ADJ"
 		if(BODY_FRONT_LAYER)
-			return "_FRONT"
+			return "FRONT"
 
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
