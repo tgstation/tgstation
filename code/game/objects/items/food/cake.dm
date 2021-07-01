@@ -474,7 +474,7 @@
 	icon_state = "pavlova"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
-	foodtypes = DAIRY | FRUITS | SUGAR
+	foodtypes = DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/pavlova/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovacream, 5, 30)
@@ -484,7 +484,7 @@
 	desc = "A cracked slice of pavlova stacked with berries"
 	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
-	foodtypes = DAIRY | FRUITS | SUGAR
+	foodtypes = DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/pavlovakorta
 	name = "pavlova"
@@ -492,7 +492,7 @@
 	icon_state = "pavlova"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
-	foodtypes = NUTS | FRUITS | SUGAR
+	foodtypes = NUTS | FRUIT | SUGAR
 
 /obj/item/food/cake/pavlova/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovakorta, 5, 30)
@@ -502,4 +502,4 @@
 	desc = "A cracked slice of pavlova stacked with berries"
 	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
-	foodtypes = NUTS | FRUITS | SUGAR
+	foodtypes = NUTS | FRUIT | SUGAR
