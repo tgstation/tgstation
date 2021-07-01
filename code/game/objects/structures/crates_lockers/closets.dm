@@ -181,8 +181,6 @@
 	opened = TRUE
 	if(!dense_when_open)
 		set_density(FALSE)
-	var/obj/structure/closet/container = src
-	REMOVE_TRAIT(container, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 	dump_contents()
 	update_appearance()
 	after_open(user, force)
@@ -237,8 +235,6 @@
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
 		return FALSE
-	var/obj/structure/closet/container = src
-	ADD_TRAIT(container, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
 	opened = FALSE

@@ -11,7 +11,6 @@
 /obj/item/storage/Initialize()
 	. = ..()
 	PopulateContents()
-	ADD_TRAIT(src, TRAIT_PROTECT_FOOD, INNATE_TRAIT)
 
 /obj/item/storage/ComponentInitialize()
 	AddComponent(component_type)

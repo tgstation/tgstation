@@ -62,7 +62,7 @@
 
 	var/clean = FALSE // Used to check if it's on a clean surface
 	while(last_loc && !isarea(last_loc))
-		if(HAS_TRAIT(food.loc, TRAIT_PROTECT_FOOD))
+		if(!(istype(food.loc, /turf/open)))
 			clean = TRUE
 			break
 		else if(locate(/obj/structure/table) in food.loc)
