@@ -307,9 +307,9 @@
 		var/list/style
 
 		if (item_type == "pill")
-			vol_each_max = min(50, vol_each_max)
+			vol_each_max = min(15, vol_each_max)
 		else if (item_type == "patch")
-			vol_each_max = min(40, vol_each_max)
+			vol_each_max = min(25, vol_each_max)
 		else if (item_type == "bottle")
 			vol_each_max = min(30, vol_each_max)
 		else if (item_type == "condimentPack")

@@ -5,7 +5,7 @@
 	icon_state = "bandaid"
 	inhand_icon_state = "bandaid"
 	possible_transfer_amounts = list()
-	volume = 40
+	volume = 25 // Patches are non-instant, so they can be larger than pills
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30 // three seconds
