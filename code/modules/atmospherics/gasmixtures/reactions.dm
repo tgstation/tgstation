@@ -814,7 +814,7 @@
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/burned_fuel = 0
-	burned_fuel = min(5, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
+	burned_fuel = min(1, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
 	if(cached_gases[/datum/gas/zauker][MOLES] - burned_fuel < 0)
 		return NO_REACTION
 	cached_gases[/datum/gas/zauker][MOLES] -= burned_fuel
