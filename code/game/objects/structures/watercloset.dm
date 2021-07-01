@@ -486,21 +486,23 @@
 		new_sink.setDir(dir)
 		qdel(src)
 		return
-	if(I.tool_behaviour == TOOL_WRENCH && !(flags_1 & NODECONSTRUCT_1))
-		I.play_tool_sound(src)
-		deconstruct()
-		return
-
 	return ..()
+
+/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	tool.play_tool_sound(src)
+	deconstruct()
+	return TRUE
 
 /obj/structure/sinkframe/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		drop_materials()
-	..()
+	return ..()
 
 /obj/structure/sinkframe/proc/drop_materials()
-	for(var/datum/material/mat in custom_materials)
+	for(var/datum/material/mat as anything in custom_materials)
 		new mat.sheet_type(loc, FLOOR(custom_materials[mat] / MINERAL_MATERIAL_AMOUNT, 1))
+	return
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
