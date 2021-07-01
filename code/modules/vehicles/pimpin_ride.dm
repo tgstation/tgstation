@@ -4,8 +4,8 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
-	var/obj/item/storage/bag/trash/mybag = null
-	var/floorbuffer = FALSE
+	var/obj/item/storage/bag/trash/trash_bag
+	var/obj/item/janicart_upgrade/installed_upgrade
 	movedelay = 1
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
@@ -13,66 +13,114 @@
 	update_appearance()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
-	if(floorbuffer)
-		AddElement(/datum/element/cleaning)
+	if (installed_upgrade)
+		installed_upgrade.install(src)
 
 /obj/vehicle/ridden/janicart/Destroy()
-	if(mybag)
-		QDEL_NULL(mybag)
+	if (trash_bag)
+		QDEL_NULL(trash_bag)
+	if (installed_upgrade)
+		QDEL_NULL(installed_upgrade)
 	return ..()
-
-/obj/item/janiupgrade
-	name = "floor buffer upgrade"
-	desc = "An upgrade for mobile janicarts."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "upgrade"
 
 /obj/vehicle/ridden/janicart/examine(mob/user)
 	. = ..()
-	if(floorbuffer)
-		. += "It has been upgraded with a floor buffer."
+	if (installed_upgrade)
+		. += "It has been upgraded with [installed_upgrade]."
 
 /obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))
-		if(mybag)
+		if(trash_bag)
 			to_chat(user, span_warning("[src] already has a trashbag hooked!"))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
-		mybag = I
+		trash_bag = I
 		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
 		update_appearance()
-	else if(istype(I, /obj/item/janiupgrade))
-		if(floorbuffer)
-			to_chat(user, span_warning("[src] already has a floor buffer!"))
+	else if(istype(I, /obj/item/janicart_upgrade))
+		if(installed_upgrade)
+			to_chat(user, span_warning("[src] already has an upgrade installed!"))
 			return
-		floorbuffer = TRUE
-		qdel(I)
-		to_chat(user, span_notice("You upgrade [src] with the floor buffer."))
-		AddElement(/datum/element/cleaning)
+		var/obj/item/janicart_upgrade/new_upgrade = I
+		new_upgrade.forceMove(src)
+		new_upgrade.install(src)
+		installed_upgrade = new_upgrade
+		to_chat(user, span_notice("You upgrade [src] with [new_upgrade]."))
 		update_appearance()
-	else if(mybag)
-		mybag.attackby(I, user)
+	else if (istype(I, /obj/item/screwdriver) && installed_upgrade)
+		installed_upgrade.uninstall(src)
+		installed_upgrade.forceMove(get_turf(user))
+		user.put_in_hands(installed_upgrade)
+		to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
+		installed_upgrade = null
+		update_appearance()
+	else if(trash_bag)
+		trash_bag.attackby(I, user)
 	else
 		return ..()
 
 /obj/vehicle/ridden/janicart/update_overlays()
 	. = ..()
-	if(mybag)
+	if(trash_bag)
 		. += "cart_garbage"
-	if(floorbuffer)
-		. += "cart_buffer"
+	if(installed_upgrade)
+		. += installed_upgrade.overlay
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(. || !mybag)
+	if(. || !trash_bag)
 		return
-	mybag.forceMove(get_turf(user))
-	user.put_in_hands(mybag)
-	mybag = null
+	trash_bag.forceMove(get_turf(user))
+	user.put_in_hands(trash_bag)
+	trash_bag = null
 	SEND_SIGNAL(src, COMSIG_VACUUM_BAG_DETACH)
 	update_appearance()
 
 /obj/vehicle/ridden/janicart/upgraded
-	floorbuffer = TRUE
+	installed_upgrade = new /obj/item/janicart_upgrade/buffer
+
+/obj/vehicle/ridden/janicart/upgraded/vacuum
+	installed_upgrade = new /obj/item/janicart_upgrade/vacuum
+
+/obj/item/janicart_upgrade
+	name = "base upgrade"
+	desc = "An abstract upgrade for mobile janicarts."
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "upgrade"
+	var/overlay
+
+/obj/item/janicart_upgrade/proc/install(obj/vehicle/ridden/janicart/installee)
+	return FALSE
+
+/obj/item/janicart_upgrade/proc/uninstall(obj/vehicle/ridden/janicart/installee)
+	return FALSE
+
+/obj/item/janicart_upgrade/buffer
+	name = "floor buffer upgrade"
+	desc = "An upgrade for mobile janicarts which adds a floor buffer functionality."
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "upgrade"
+	overlay = "cart_buffer"
+
+/obj/item/janicart_upgrade/buffer/install(obj/vehicle/ridden/janicart/installee)
+	installee._AddElement(list(/datum/element/cleaning))
+
+/obj/item/janicart_upgrade/buffer/uninstall(obj/vehicle/ridden/janicart/installee)
+	installee._RemoveElement(list(/datum/element/cleaning))
+
+/obj/item/janicart_upgrade/vacuum
+	name = "vacuum upgrade"
+	desc = "An upgrade for mobile janicarts which adds a vacuum functionality."
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "upgrade"
+	overlay = "cart_buffer"
+
+/obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)
+	installee._AddComponent(list(/datum/component/vacuum))
+	if (installee.trash_bag)
+		SEND_SIGNAL(installee, COMSIG_VACUUM_BAG_ATTACH, installee.trash_bag)
+
+/obj/item/janicart_upgrade/vacuum/uninstall(obj/vehicle/ridden/janicart/installee)
+	qdel(installee.GetComponent(/datum/component/vacuum))

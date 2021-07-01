@@ -22,11 +22,20 @@
 		return
 
 	// suck the things
+	INVOKE_ASYNC(src, .proc/suck_items, tile)
+
+/datum/component/vacuum/proc/suck_items(turf/tile)
+	var/sucked = FALSE
 	for (var/potential_item in tile)
 		if (!isitem(potential_item))
 			continue
 		var/obj/item/item = potential_item
-		INVOKE_ASYNC(vacuum_bag, /atom/.proc/attackby, item)
+		if (vacuum_bag.attackby(item))
+			sucked = TRUE
+
+	// if we did indeed suck up something, play a funny noise
+	if (sucked)
+		playsound(parent, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
 
 /datum/component/vacuum/proc/attach_bag(datum/source, obj/item/storage/bag/trash/new_bag)
 	SIGNAL_HANDLER
