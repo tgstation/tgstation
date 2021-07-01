@@ -264,7 +264,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spaceants"
 	beauty = -150
-	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
 	. = ..()
