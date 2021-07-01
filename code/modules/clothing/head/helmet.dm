@@ -158,7 +158,7 @@
 
 /obj/item/clothing/head/helmet/justice/Initialize()
 	. = ..()
-	weewooloop = new(list(src), FALSE, FALSE)
+	weewooloop = new(src, FALSE, FALSE)
 
 /obj/item/clothing/head/helmet/justice/Destroy()
 	QDEL_NULL(weewooloop)

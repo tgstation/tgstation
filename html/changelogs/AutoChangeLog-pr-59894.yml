@@ -1,9 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an infinite loop bug with portal teleports. The cake is a stack overflow."
-  - bugfix: "Fixed portals layer so they appear over most other objects."
-  - bugfix: "Fixed hand teleporter portals moving in zero gravity."
-  - qol: "Portals on dense objects no longer require clicking to enter and can be walked into."
-  - qol: "Portals you are standing on may be entered by clicking even with a tool in hand."
-  - code_imp: "Removed an unused teleport arg that may cause issues with new portal code."
