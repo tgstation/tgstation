@@ -476,7 +476,7 @@
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = DAIRY | FRUIT | SUGAR
 
-/obj/item/food/cake/pavlova/MakeProcessable()
+/obj/item/food/cake/pavlovacream/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovacream, 5, 30)
 
 /obj/item/food/cakeslice/pavlovacream
@@ -494,7 +494,7 @@
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = NUTS | FRUIT | SUGAR
 
-/obj/item/food/cake/pavlova/MakeProcessable()
+/obj/item/food/cake/pavlovakorta/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovakorta, 5, 30)
 
 /obj/item/food/cakeslice/pavlovakorta
