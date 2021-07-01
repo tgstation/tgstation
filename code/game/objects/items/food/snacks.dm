@@ -220,7 +220,7 @@
 
 /obj/item/food/peanuts/random/Initialize()
 	// Generate a sample p
-	var/peanut_type = pick(subtypesof(/obj/item/food/peanuts) - /obj/item/food/peanuts/random - /obj/item/food/peanuts/banappeal)
+	var/peanut_type = pick(subtypesof(/obj/item/food/peanuts) - /obj/item/food/peanuts/random - /obj/item/food/peanuts/ban_appeal)
 	var/obj/item/food/sample = new peanut_type(loc)
 
 	name = sample.name
