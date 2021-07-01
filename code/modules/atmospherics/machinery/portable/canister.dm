@@ -6,8 +6,9 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	desc = "A canister for the storage of gas."
-	icon = 'icons/obj/pipes_n_cables/canisters.dmi'
-	icon_state = "#mapme"
+	icon = 'icons/map_icons.dmi'
+	icon_state = "/obj/machinery/portable_atmospherics/canister"
+	post_init_icon_state = ""
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#6b6b80"
 	density = TRUE
@@ -118,11 +119,13 @@
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Air canister"
 	desc = "Pre-mixed air."
+	icon_state = "/obj/machinery/portable_atmospherics/canister/air"
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#c6c0b5"
 
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/antinoblium"
 	gas_type = /datum/gas/antinoblium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -130,18 +133,21 @@
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/bz"
 	gas_type = /datum/gas/bz
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#d0d2a0"
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/carbon_dioxide"
 	gas_type = /datum/gas/carbon_dioxide
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#4e4c48#eaeaea"
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/freon"
 	gas_type = /datum/gas/freon
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -149,6 +155,7 @@
 
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "Halon canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/halon"
 	gas_type = /datum/gas/halon
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -156,6 +163,7 @@
 
 /obj/machinery/portable_atmospherics/canister/healium
 	name = "Healium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/healium"
 	gas_type = /datum/gas/healium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -163,6 +171,7 @@
 
 /obj/machinery/portable_atmospherics/canister/helium
 	name = "Helium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/helium"
 	gas_type = /datum/gas/helium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -170,6 +179,7 @@
 
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/hydrogen"
 	gas_type = /datum/gas/hydrogen
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -177,6 +187,7 @@
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/miasma"
 	gas_type = /datum/gas/miasma
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -184,12 +195,14 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/nitrogen"
 	gas_type = /datum/gas/nitrogen
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#e9ff5c#f4fce8"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/nitrous_oxide"
 	gas_type = /datum/gas/nitrous_oxide
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
@@ -202,24 +215,28 @@
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "Hyper-noblium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/nob"
 	gas_type = /datum/gas/hypernoblium
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6399fc#b2b2b2"
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Oxygen canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/oxygen"
 	gas_type = /datum/gas/oxygen
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#2786e5#e8fefe"
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/pluoxium"
 	gas_type = /datum/gas/pluoxium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#2786e5"
 
 /obj/machinery/portable_atmospherics/canister/proto_nitrate
 	name = "Proto Nitrate canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/proto_nitrate"
 	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -227,18 +244,21 @@
 
 /obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/toxins"
 	gas_type = /datum/gas/plasma
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#f62800#000000"
 
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "Tritium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/tritium"
 	gas_type = /datum/gas/tritium
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#3fcd40#000000"
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "Water vapor canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/water_vapor"
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -246,6 +266,7 @@
 
 /obj/machinery/portable_atmospherics/canister/zauker
 	name = "Zauker canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/zauker"
 	gas_type = /datum/gas/zauker
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -256,6 +277,7 @@
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"
 	desc = "Don't be a badmin."
+	icon_state = "/obj/machinery/portable_atmospherics/canister/fusion_test"
 	temp_limit = 1e12
 	pressure_limit = 1e14
 
