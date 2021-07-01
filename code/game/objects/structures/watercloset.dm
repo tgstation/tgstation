@@ -500,8 +500,8 @@
 	return ..()
 
 /obj/structure/sinkframe/proc/drop_materials()
-	for(var/datum/material/mat as anything in custom_materials)
-		new mat.sheet_type(loc, FLOOR(custom_materials[mat] / MINERAL_MATERIAL_AMOUNT, 1))
+	for(var/datum/material/material as anything in custom_materials)
+		new material.sheet_type(loc, FLOOR(custom_materials[material] / MINERAL_MATERIAL_AMOUNT, 1))
 	return
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.
