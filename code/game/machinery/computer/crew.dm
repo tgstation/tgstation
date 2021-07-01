@@ -54,10 +54,10 @@
 		"name",
 		"job",
 		"life_status",
-		"oxydam",
-		"toxdam",
-		"burndam",
-		"brutedam",
+		"suffocation",
+		"toxin",
+		"burn",
+		"brute",
 		"location",
 	))
 
@@ -76,10 +76,10 @@
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
 		entry["life_status"] = player_record["life_status"]
-		entry["oxydam"] = player_record["oxydam"]
-		entry["toxdam"] = player_record["toxdam"]
-		entry["burndam"] = player_record["burndam"]
-		entry["brutedam"] = player_record["brutedam"]
+		entry["suffocation"] = player_record["oxydam"]
+		entry["toxin"] = player_record["toxdam"]
+		entry["burn"] = player_record["burndam"]
+		entry["brute"] = player_record["brutedam"]
 		entry["location"] = player_record["area"]
 
 		new_table += list(entry)
