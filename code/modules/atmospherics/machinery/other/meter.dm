@@ -21,9 +21,9 @@
 		"orange" = "#ff7f00",
 		"yellow" = "#feff00",
 		"green" = "#00ff00",
-		"light green" = "#00ff7f",
 		"cyan" = "#00feff",
-		"blue" = "#0000ff"
+		"blue" = "#0000ff",
+		"purple" = "cc66ff"
 	)
 
 /obj/machinery/meter/atmos
@@ -106,11 +106,11 @@
 	if(env_pressure == 0 || env_temperature == 0)
 		set_greyscale(colors=list(meter_colors["grey"]))
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_3)
-		set_greyscale(colors=list(meter_colors["blue"]))
+		set_greyscale(colors=list(meter_colors["purple"]))
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_2)
-		set_greyscale(colors=list(meter_colors["cyan"]))
+		set_greyscale(colors=list(meter_colors["blue"]))
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_1)
-		set_greyscale(colors=list(meter_colors["light green"]))
+		set_greyscale(colors=list(meter_colors["cyan"]))
 	else if(env_temperature <= BODYTEMP_HEAT_WARNING_1)
 		set_greyscale(colors=list(meter_colors["green"]))
 	else if(env_temperature <= BODYTEMP_HEAT_WARNING_2)
