@@ -498,7 +498,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlovakorta, 5, 30)
 
 /obj/item/food/cakeslice/pavlovakorta
-	name = "pumpkin spice cake slice"
+	name = "pavlova slice"
 	desc = "A cracked slice of pavlova stacked with berries"
 	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
