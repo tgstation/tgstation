@@ -32,7 +32,7 @@
 
 /obj/item/circuit_component/medical_console_data/Initialize()
 	. = ..()
-	records = add_output_port("Security Records", PORT_TYPE_TABLE)
+	records = add_output_port("Crew Monitoring Data", PORT_TYPE_TABLE)
 
 /obj/item/circuit_component/medical_console_data/Destroy()
 	records = null
