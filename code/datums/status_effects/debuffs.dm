@@ -980,4 +980,16 @@
 	name = "Flesh Servant"
 	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
 	icon_state = "mind_control"
-	
+
+/datum/status_effect/gas_rash
+	id = "gas_rash"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 3 SECONDS
+
+/datum/status_effect/gas_rash/on_apply()
+	. = ..()
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "gas_rash", /datum/mood_event/gas_rash)
+
+/datum/status_effect/gas_rash/on_remove()
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "gas_rash")
+	return..()
