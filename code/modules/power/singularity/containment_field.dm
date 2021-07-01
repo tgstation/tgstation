@@ -72,8 +72,8 @@
 /obj/machinery/field/containment/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
-		var/mob/living/L = AM
-		if(!L.incorporeal_move)
+		var/mob/living/living_moving_through_field = AM
+		if(!living_moving_through_field.incorporeal_move)
 			shock(AM)
 
 	if(ismachinery(AM) || isstructure(AM) || ismecha(AM))
