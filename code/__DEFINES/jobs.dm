@@ -7,6 +7,7 @@
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
+#define DEFAULT_BIBLE "Default Bible Name"
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
 

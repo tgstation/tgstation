@@ -1,0 +1,772 @@
+2018-02-01:
+  CosmicScientist:
+  - balance: tomatoes and similar ovary laden edibles are fruit, not veg, beware plasmamen
+      and mothmen
+  Denton:
+  - bugfix: Added a missing distress signal to the space ambush ruin.
+  Jalleo:
+  - rscdel: Space ghost syndicate comms guy removed.
+  Jittai:
+  - bugfix: Cloning doesn't runtime (and indefinitely get stuck) on cloning non-humans.
+  - tweak: Some of the Morgue Trays and Crematoriums on Box, Delta, and Meta have
+      been re-positioned to make use of their new directional states.
+  - imageadd: New Horizontal Coffin Sprites
+  SpaceManiac:
+  - tweak: The Whiteship spawn point is now a space ruin rather than being fixed every
+      round.
+  Xhuis:
+  - balance: Servant golems no longer appear in the magic mirror race list.
+  - bugfix: Cogs now fucking work
+  cebutris:
+  - spellcheck: The text you get when you examine a stunbaton to see the battery level
+      now uses the item's name instead of "baton"
+2018-02-02:
+  Dax Dupont:
+  - tweak: Hijack objectives will only be given out if there are 30 or more players.
+  DeityLink:
+  - rscadd: You can now see the rays from a holopad displaying a hologram!
+  Epoc:
+  - bugfix: Soap now has inhand sprites
+  Xhuis:
+  - balance: Brass skewers now must be at least one tile apart.
+  - balance: Steam vents can no longer be placed within cardinal directions of other
+      steam vents, and will not hide objects they're placed on top of.
+  - bugfix: Races that have eyes that look different from regular humans' no longer
+      have white eyespots where human eyes appear.
+  Xhuis, Cosmic, Fwoosh, and epochayur:
+  - rscadd: Added pineapples to botany, and a recipe for Hawaiian pizza.
+  improvedname:
+  - rscadd: adds yeehaw to the dj's disco soundboard
+  oranges:
+  - rscdel: removes ketrazine
+2018-02-03:
+  Dax Dupont:
+  - tweak: Moved the lathe from box's cargo room to box's cargo office which miners
+      now can access.
+  - tweak: Harmonized medbay storage access requirements so all maps allow all medbay
+      personnel into medbay storage like on Meta and Delta.
+  - tweak: Moved service lathes into a dedicated service hall/storage area if they
+      weren't accessible by janitor or bartender.
+  SpaceManiac:
+  - code_imp: Removed the now-unused revenant spawn landmark.
+  Xhuis:
+  - bugfix: Servant cyborgs with the Standard module now correctly have Abscond.
+  - bugfix: Securing pipe fittings now transfers fingerprints to the new pipe.
+  - bugfix: The firelock below the Circuitry Lab airlock on Boxstation will no longer
+      cover it up when the airlock is open.
+  uraniummeltdown:
+  - bugfix: Some airlock animations should no longer be glitchy and restart in the
+      middle
+2018-02-04:
+  Buggy123:
+  - rscadd: Morgue trays now detect if a body inside them possesses a consciousness,
+      and alerts people nearby
+  Cruix:
+  - rscadd: The Rapid Piping Device can now dispense transit tubes.
+  Dax Dupont:
+  - rscadd: Added logout button to the record screen in the security records console.
+  - rscadd: Allows you to print photos that are in the security records.
+  Incoming5643:
+  - rscadd: The ability to throw drinks without spilling them has been moved from
+      something bartender's just know how to do to a book that they spawn with, the
+      ability has also been made into a toggle.
+  - rscadd: Any number of people can read the book to learn the ability, and it can
+      also be ordered in the bartending crate in cargo. Bartenders are encouraged
+      to keep their trade secrets close to their stylish black vests.
+  Kor:
+  - bugfix: Fixed mecha grav catapults not being included in techwebs.
+  MrDoomBringer:
+  - imageadd: Conveyor Belts now look better when they are crowbar'd off the ground.
+  - rscadd: Due to complicated quantum-bluespace-entanglement shenanigans, the Bluespace
+      Drop Pod upgrade for the express supply console is now slightly more difficult
+      to research.
+  Robustin:
+  - bugfix: Vape Pens (e-cigs) will now consume reagents proportional to the vape
+      size and static smoke production.
+  - bugfix: Command reports should now properly weight the appearance of modes based
+      on their existence in our actual game rotation.
+  - balance: The current mode now has a 35% chance of not appearing in the report.
+  ShiggyDiggyDo:
+  - rscadd: You can now win stylish steampunk watches at your local arcade machine!
+  ShizCalev:
+  - bugfix: Fixed some broken cultist & wizard antagonist ghost polls.
+  - rscadd: The Syndicate Comms Officer ghost role has been readded with a minor chance
+      of actually existing.
+  Slignerd:
+  - balance: Following an immense number of complaints filed by security and command
+      personnel, the Captain's spare ID will from now on be placed inside his locker.
+      We fail to see how this would help the Captain access the spare in the event
+      he lost his ID, but the complainants have been VERY insistent.
+  SpaceManiac:
+  - bugfix: The pirate ship can now fly again.
+  Xhuis:
+  - balance: Integration cog power generation has been increased to 10 W per second
+      (up from 5 W per second.) Power consumed from the APC remains at 5 W per second.
+  - balance: Integration cogs will now continue generating power at half-speed when
+      the APC they are in has no energy.
+  coiax:
+  - balance: Romerol is now effective on dead bodies, not just ones that are still
+      alive.
+  nicbn:
+  - rscadd: Destroying windows will now spawn tiny shards
+2018-02-05:
+  Dax Dupont:
+  - balance: Regular cyborgs now start with a normal high capacity cell instead of
+      a snowflake cell. Resulting in less confusing and 2.5MJ more electric charge.
+  - bugfix: Fixed name of the upgraded power cell
+  - refactor: Removed duplicate cell giving code in transformation proc.
+  - bugfix: Fixed the crematorium on meta and box.
+  Denton:
+  - tweak: Rearranged the mining vendor items by price and item group.
+  - tweak: In order to promote back-breaking physical labor, Nanotrasen has additionally
+      made conscription kits available at mining equipment vendors.
+  Iamgoofball:
+  - rscdel: Blood cultists can't space base anymore
+  MMMiracles:
+  - rscadd: A once-thought abandoned arctic post has recently had its gateway coordinates
+      re-enabled for access via the Gateway link. Contact your local Exploration Division
+      for more details.
+  More Robust Than You:
+  - bugfix: Holorays are now properly deleted if you switch holopads automatically
+  Naksu and kevinz000:
+  - tweak: Ores are no longer completely impervious to explosions, but rather "proper"
+      ores are destroyed by the strongest explosions and sand is blown away everything
+      but the weakest ones. This shouldn't affect ore spawns from explosions
+  - tweak: Lavaland bomb cap reduced to double the station bombcap.
+  - refactor: Ores are now stackable. Ore stacks now have the appearance of loose
+      ores and are not called "sheets" by machines that consume them.
+  - code_imp: Material container component now uses the singular names of stack objects.
+  - refactor: /obj/item/ore/Crossed() is now removed in favor of the ore satchel utilizing
+      a redirect component
+  ShiggyDiggyDo:
+  - spellcheck: You no longer win double the articles at the arcade
+  SpaceManiac:
+  - bugfix: Research investigate logs now actually include the name of the researcher.
+  XDTM:
+  - bugfix: Fixes intelligence potions removing previously known mob languages
+  - tweak: Slime scanning now has a more readable output, especially when scanning
+      multiple slimes at once
+  - tweak: Eggs from the abductor egg gland now have a random reagent instead of acid
+2018-02-06:
+  Dax Dupont:
+  - bugfix: AIs can no longer turn on broken APCs,
+  SpaceManiac:
+  - bugfix: Defibrillator mounts no longer spam the error log while empty.
+  - bugfix: The various ships in the caravan ambush space ruin can now fly again.
+2018-02-07:
+  DaedalusGame:
+  - bugfix: Fixes Noblium Formation being multiplicative, so having 500 moles of tritium
+      and 500 moles of nitrogen no longer produces 2500 moles of noblium (it should
+      correctly produce 10 moles)
+  - bugfix: Fixes most reactions deleting more gas than exists and making gas out
+      of nowhere
+  - bugfix: Fixes Stim Formation invoking a byond bug and not using its intended polynomial
+      formula
+  - bugfix: Fixes Cryo Cells not having garbage_collect and clamping
+  - bugfix: Fixes Rad Collectors not having clamping
+  - bugfix: Fixes Division by Zero when Fusion has no impurities.
+  - bugfix: Removes a redundant line in lungs
+  - bugfix: Fixes rad_act signal not firing from turfs, living mobs, rad collectors
+      and geiger counters
+  - bugfix: fixes lava burning into chasm tiles i hate hate hate hate them so much
+      grrrr
+  - tweak: NT Scientists have started looking into data from small-scale detonations
+      and found that there's still potential data to be gathered from explosive yields
+      lower than 4.184 petajoules
+  Dax Dupont:
+  - tweak: Moved the pocket protector to lockers instead of on the uniform.
+  - rscadd: You can now insert holodisks into cameras and take a static holographic
+      picture of someone!
+  - rscadd: Hologram recordings can now be offset slightly.
+  - rscadd: Posibrains have gotten a small firmware update, they will now play a sound
+      on successful activation.
+  - rscadd: Killing a revenant will now result in an unique shuttle to be able to
+      be bought. You probably won't like it though.
+  - rscadd: Fake emag now available.
+  Denton:
+  - spellcheck: Mining drone upgrades are no longer referred to as "ugprade"
+  - tweak: Fungal tuberculosis spores can no longer be synthesized by machinery.
+  Kor:
+  - rscadd: Spawning as a syndicate comms officer will now activate an encrypted signal
+      in the Lavaland Syndicate Base, to aid the crew in retaliating.
+  Ordo:
+  - rscadd: Mamma-mia! The chef speaks-a so different now!
+  Robustin:
+  - balance: The "construct shell" option from the cult archives structure will now
+      only yield one shell instead of two.
+  - balance: Sacrificing suicide victims will now only yield an empty shard.
+  - balance: Synths and Androids are no longer available species at the magic mirror.
+  ShiggyDiggyDo:
+  - rscadd: You can now win Toy Daggers at your local arcade!
+  Skylar Lineman:
+  - rscadd: Nanotrasen has new intelligence that the newest batch of Syndicate agent
+      equipment includes sticky explosives disguised as potatoes, designed to incite
+      terror among whoever is unlucky enough to have one stuck onto their hands.
+  - rscadd: 'Nanotrasen''s toy suppliers have also started making faux versions of
+      these, with less-forceful attachment mechanisms and absolutely zero explosive
+      materials for a child-safe experience. experimental: Explosive Hot Potatoes
+      are now available for purchase by syndicate-affiliated cooks, botanists, clowns,
+      and mimes.'
+  SpaceManiac:
+  - bugfix: Pressure damage now takes effect in certain situations where it should
+      have but did not.
+  Xhuis:
+  - rscadd: Nanotrasen's anomalous materials division has recently experienced a containment
+      breach, during which a certain pizza box went missing. Be on the lookout for
+      any slipups in cargo.
+  - spellcheck: Pizza margherita is now named "pizza margherita" (the proper way!)
+      instead of just "margherita."
+  - tweak: Brass chairs now stop spinning after eight rotations, so you can't crash
+      the server with them.
+  coiax:
+  - rscadd: Eggs now contain 5u of egg yolk. Breaking an egg in a glass container
+      adds all reagents inside to the container. If you're laying abductor gland eggs,
+      then you'll get 5u of egg yolk and 10u of random reagent. Egg glands now make
+      you act like a chicken while laying eggs. Egg laying makes you use the aliennotice
+      span.
+  kevinz000:
+  - balance: Explosive holoparasites must now be adjacent to turn objects into bombs,
+      instead of being able to do so from any range.
+2018-02-09:
+  Cyberboss:
+  - balance: Printed power cells must now be charged before use
+  Dax Dupont:
+  - bugfix: Supermatter can again blow up again on space tiles.
+  - bugfix: Fixed borgs applying cuffs on people without the right number of arms.
+  - refactor: Handcuff code has been rejiggled and snowflake code has been removed.
+  - rscdel: Removed unused cable cuffs module stuff for borgs.
+  - bugfix: Telecom equipment now can only be printed by engineers and scientists
+      as intended.
+  - bugfix: WT-550 AP can only be printed by sec now.
+  - tweak: Removed engineering requirement for arcade machines to bring it in line
+      with others.
+  - rscadd: Defibs can now be researched and printed.
+  - balance: Hatches are now small instead of tiny.
+  Denton:
+  - code_imp: Changed can_synth values from 0/1 to FALSE/TRUE
+  - code_imp: Removes grind_results from empty soda cans since they can't be ground.
+  - spellcheck: For consistency's sake, aluminium is now universally spelled with
+      two 'i'.
+  Epoc:
+  - imageadd: Belt items now have inhand sprites
+  Evsey9:
+  - balance: Integrated Circuit Drones are now bulky to improve safety ratings, and
+      therefore, cannot be stored in normal backpacks or pockets, but now can accept
+      modules that bulky circuit machinery can.
+  - balance: Grabbers can now grab items up to the size of the circuit assembly they
+      are in.
+  - balance: Grabbers cannot store circuit machinery the same or larger size than
+      the circuit assembly they are in.
+  - tweak: Throwers now can throw items up to the size of circuit assembly they are
+      in.
+  MMMiracles:
+  - rscadd: A brand new space-farm, where your family sends all your old/sick catpeople
+      to live out the rest of their days being free to roam the acres and chase the
+      field grayshirts.
+  Naksu:
+  - bugfix: Cyborg engineering module geiger counters now work properly again
+  PKPenguin321:
+  - rscadd: As it would happen, the chef does not actually have Italian genes, but
+      rather was being influenced by a strange moustache-a.
+  Robustin:
+  - bugfix: Fixes the cult master getting two notifications on the cult forge
+  - rscadd: Blood spells will now "follow" the spell creation button, which is now
+      unlocked by default. If you want your spell "hotbar" to appear somewhere else,
+      just move the blood spell button, it will update when you prepare a new spell.
+      Also, individual spells start off locked but if you unlock them they will no
+      longer reposition when the spells are updated.
+  Robustin and More Robust Than You:
+  - rscadd: A heart disease event has been added. The cure is heart replacement surgery.
+      Effects of cardiac arrest are halted by the chemical Corazone. Once cardiac
+      arrest begins at Stage 5, the disease can be cured by a defibrillator or from
+      a lucky electric shock.
+  - rscadd: Using gym equipment will now grant a hidden exercise buff that prevents
+      heart disease for 20 minutes.
+  SpaceManiac:
+  - bugfix: Goliath hide plates now properly apply to explorer suits and APLUs again.
+  oranges:
+  - rscdel: Removed the saltmine grief shuttle
+2018-02-10:
+  Cruix:
+  - balance: Changed the chemical recipe for Lexorin from plasma, hydrogen, and nitrogen
+      to plasma, hydrogen, and oxygen.
+  - bugfix: These were necessary due to recipe conflicts
+  Dax Dupont:
+  - bugfix: Cloner UI now properly updates cloning pod status when autocloning starts
+      cloning someone.
+  Ordo:
+  - tweak: Replaced nitrogen with ethanol in morphine recipe. The recipe now has a
+      lower yield.
+  Robustin:
+  - bugfix: Fixed the limb grower having a max volume of 0.
+  UI Changes:
+  - tweak: The Scan with Debugger/Device button now reads Copy Ref and no longer sends
+      you to the circuit's page when clicked
+  - tweak: The assembly's menu is now slightly wider
+  - tweak: The advanced in "integrated advanced medical analyser" is now abbreviated
+      to adv.
+  Xhuis:
+  - bugfix: The preference to lock action buttons in place is now correctly saved
+      across rounds.
+2018-02-11:
+  DaedalusGame:
+  - bugfix: Prevents megafauna (and other large things like spiders and mulebots)
+      from going into machines
+  Dax Dupont:
+  - rscadd: You can now win a fake cryptographic sequencer, perfect to go with your
+      fake space suit!
+  - tweak: 'To login with an emag on the APC console you will now need to hit it with
+      the emag. removed: Snowflake emagging implants is no more, Swipe it before install.'
+  - refactor: everything uses emag_act() now
+  - balance: Grabbers/throwers no longer can contain/throw things equal to the assembly
+      size.
+  - bugfix: Fixes duplicate air alarm on meta.
+  Kor:
+  - rscadd: Mining sentience upgrades now grant minebots an ID and radio.
+  Mokiros:
+  - rscadd: All-In-One Grinder can now be built with researchable curcuit and micro-manipulator.
+  More Robust Than You:
+  - rscadd: You can now squish urinal cakes
+  More Robust Than You, Basilman, and MMMiracles:
+  - rscadd: Deep in space, a valuable artifact awaits
+  Naksu:
+  - rscdel: Steam engines have been removed from maintenance, engineering, atmos and
+      teleportation areas.
+  - rscadd: The chef is now trained for working under siege
+  Shadowlight213:
+  - admin: The notify irc/discord bot chat command no longer requires admin privileges.
+  ShizCalev:
+  - bugfix: Corrected a number of missing checks when using alt-click actions. Please
+      report any strange behavior to a coder.
+  - spellcheck: Corrected typo in NTNet Scanner circuits' name, make sure to update
+      your blueprints.
+  uraniummeltdown:
+  - rscadd: You can now smelt titanium glass and plastitanium glass
+  - rscadd: Use titanium glass and plastitanium glass to build shuttle windows and
+      plastitanium windows
+2018-02-12:
+  Dax Dupont:
+  - bugfix: AI no longers block ark after mass_recall
+  - bugfix: Placed the dispersal logic AFTER the mass_recall on ark activation instead
+      of infront(did nothing before basically).
+  - rscadd: Cell chargers can now be built and upgraded with capacitors!
+  - bugfix: Fixed empty subtype batteries not updating icons
+  Denton:
+  - bugfix: Fixes lye/plastic/charcoal conflicts when mixing.
+  - bugfix: Lye is now made by combining ash with water and carbon. Plastic sheets
+      by heating ash, sulphuric acid and oil.
+  More Robust Than You:
+  - bugfix: Your hand no longer magically squishes urinal cakes when trying to pick
+      them up
+  - bugfix: SCP-294 no longer looks fucked up
+  Robustin:
+  - balance: The rift created by teleporting in from space will now include a description
+      indicating the direction of the "origin" teleport rune - giving the examiner
+      a fair idea of where the "space base" is located.
+  - balance: You can no longer manifest spirits or summon cultists while in space
+      or Lavaland. You may still ascend as a spirit (formerly spirit sight, astral
+      jaunt, etc.) in either of these locations.
+  - balance: Juggernauts have lost 20% reflect rate on energy projectiles (now around
+      50% for standard lasers).
+  - balance: Wraiths and Juggernauts have -5 melee damage (20 and 25 now, respectively).
+  - balance: Construct shells now cost 50 metal through the "twisted construction"
+      spell. Twisted construction is now a "single use" spell.
+  - balance: The Concealment spell will now work on cult airlocks (including converted
+      airlocks). The "concealed" airlock will appear as a generic airlock but will
+      deny access to any non-cultist.
+  - balance: The draw blood effect on blood splatters will now draw more blood from
+      stains with low blood levels.
+  - tweak: Unanchored (via ritual dagger) cult structures are no longer "dense", meaning
+      you can move them through teleport runes more efficiently.
+  - tweak: The button to nominate yourself for cult master now has a confirmation
+      prompt seeking assurance that the user is prepared to be the cult's master.
+  - tweak: The reveal aspect of the concealment spell is slightly smaller, albeit
+      still slightly larger (6 range) than the concealment aspect (5 range).
+  - imageadd: Juggernauts "gauntlet echo" now has a more cult-themed appearance.
+  - bugfix: Using a shuttle curse to push the shuttle timer above its default can
+      no longer be "reset" with a recall. This also adds a block_recall(time_in_deciseconds)
+      helper-proc to the shuttle subsystem.
+  - bugfix: Using runed metal on a regular girder is no longer an option, preventing
+      runtimes and deletions associated with the (unintended) combination.
+2018-02-13:
+  Buggy123:
+  - tweak: After consulting with their in-house physicists, Nanotrasen has updated
+      their worst-case disaster training simulation "Space Station 13". The combustion
+      of hydrogen isotopes now produces water vapor instead of carbon dioxide.
+  Dax Dupont:
+  - rscadd: Added hooray emoji!
+  Iamgoofball:
+  - bugfix: The Cook now ONLY works under siege.
+  TehZombehz:
+  - rscadd: Heart-shaped boxes of chocolates are now included in Valentine's Day event
+      gifts
+2018-02-14:
+  Dax Dupont:
+  - bugfix: Integrated circuits no longer start upgraded.
+  - balance: The IC printers that are available on round start in the IC labs are
+      no longer upgraded by default. You will need to research these as was intended
+  Frozenguy5:
+  - bugfix: You can craft rat kebabs now.
+  Naksu:
+  - bugfix: Chasms no longer eat shuttle docking ports, rendering them unusable and
+      unresponsive
+  - tweak: The clogged vents event has been removed for pressing ceremonial reasons
+  coiax:
+  - rscadd: Transference potions now just rename the mob that you are transferring
+      into with your name, rather than your name plus the old name of the mob.
+2018-02-15:
+  Kor:
+  - rscadd: Bluespace slime extracts now have a new chemical reaction with water,
+      which create slime radio potions. When applied to a simple animal, that mob
+      gains an internal radio.
+  MrStonedOne:
+  - balance: You no longer need an aggressive grab to table someone.
+  SpaceManiac:
+  - refactor: Map initialization now supports stations with multiple z-levels.
+  - bugfix: The map reader no longer sometimes expands the world size inappropriately.
+  - tweak: Pride's Mirror's destination has become less predictable.
+2018-02-16:
+  AnturK:
+  - rscdel: Minimap gone from crew monitoring
+  DaedalusGame:
+  - code_imp: made powercell rigging no longer set rigged to the plasma reagent datum
+      what the hell and makes it use TRUE/FALSE defines
+  Denton:
+  - tweak: Emagging meteor shield satellites now shows you a message.
+  - spellcheck: Fixed a typo when emagging RnD servers.
+  MMMiracles:
+  - rscadd: You can now produce a cryostatis variant of the shotgun dart after researching
+      Medical Weaponry. Holds 10u and doesn't have reagents react inside it.
+  MetroidLover:
+  - rscadd: Added the ability to gain smoke bomb charges by attacking the initiated
+      ninja suit with a beaker containing smoke powder
+  More Robust Than You:
+  - bugfix: Fixes SCP-294 losing its top sometimes
+  Naksu:
+  - code_imp: replaced some item-specific movement hooks with components
+  Xhuis:
+  - tweak: Removing and printing integrated circuits will now attempt to place them
+      into a free hand.
+  - tweak: You can now hit an integrated circuit printer with an unsecured electronic
+      assembly to recycle all of the parts in the assembly en masse.
+  - tweak: You can now recycle empty electronic assemblies in an integrated circuit
+      printer!
+  - soundadd: Integrated circuit printers now have sounds for printing circuits and
+      assemblies.
+  - bugfix: The RPG loot event will no longer break circuit analyzers.
+  coiax:
+  - rscadd: Centcom now reports that thanks to extensive bioengineering, apples and
+      oranges now taste of apples and oranges, rather than nothing as they did before.
+2018-02-17:
+  DaedalusGame:
+  - bugfix: fixes lava and fire burning HE-pipes
+  - rscadd: added a subreaction for rainbow slime cores, injecting 5u of plasma now
+      makes them explode into random slimecores.
+  - rscadd: added a slimejelly reaction to rainbow slime cores that does the above
+      but all the cores that spawn get 5u each of plasma, water and blood injected.
+      (aka chaos)
+  - code_imp: improved clusterbuster code with Initialize, addtimer, vars for sounds
+      and payload spawners, etc
+  Dax Dupont:
+  - bugfix: After an incident where a very eager roboticist kept expanding a borg's
+      size leading to a structural collapse of the entire station proper safety limitations
+      have been implemented.
+  - bugfix: You can rotate freezers and cryo again.
+  - rscadd: Nanotrasen has invested in better reflective materials for it's reflectors.
+      You can now make complex laser shows again.
+  Modafinil:
+  - rscadd: Adds new medicine chem that suppresses sleep and very lightly reduces
+      stunrates, has a very low metabolic rate which is randomized and a low overdose
+      treshold. Overdosing is a lethal oxyloss unless treated. (With epipen urgently
+      and with charcoal/calomel before it puts you to sleep)
+  TankNut:
+  - tweak: Corpses spawned in ruins have their suit sensors disabled
+  coiax:
+  - admin: Admins can use the Select Equipment verb on observers. Doing so will humanise
+      them and then apply the equipment.
+  - bugfix: Species with RESISTHOT (golems, skeletons) can extinguish burning items
+      as if they were wearing fireproof gloves.
+  jakeramsay007:
+  - bugfix: Jellypeople/Slimepeople now are able to speak their Slime language, as
+      intended when it was added.
+  yorii:
+  - bugfix: removes the maintenance panel examination message on poddoors (blast doors)
+2018-02-18:
+  More Robust Than You:
+  - bugfix: Actually fixes SCP 294 overlay problems
+  Naksu:
+  - rscadd: Exosuit fabricators can now build RPED and crew pinpointer upgrades for
+      engineering and medical borgs respectively.
+  Ordo:
+  - rscadd: Adds a few new liquors to the bar, and a few new cocktails to boot!
+  Xhuis:
+  - tweak: Crew pinpointers now fit on medical belts!
+  YPOQ:
+  - bugfix: Bicycles are rideable again
+2018-02-19:
+  DaedalusGame:
+  - bugfix: Fixed paper bins not catching fire properly
+  - bugfix: fixed multiserver mining formula
+  Improvedname:
+  - bugfix: Fried eggs don't require boiled eggs anymore and just normal eggs
+  Kevinz000 and Naksu:
+  - bugfix: Ore stacks will now initialize with proper visuals and no longer show
+      a NO SPRITE text when you gather more than 20 ores to a stack.
+  XDTM:
+  - rscadd: 'Added three new techweb nodes: Advanced Surgery, Experimental Surgery,
+      and Alien Surgery(requires abductor tech)'
+  - rscadd: Added several new surgical procedures, which require these techweb nodes.
+      To enable an advanced surgery, print its relative disk from a protolathe, and
+      load it on an Operating Computer. Advanced surgery can only be performed at
+      operating tables.
+  - tweak: You can now intentionally fail surgical procedures by initiating them with
+      disarm intent instead of help intent.
+  - rscadd: Brain traumas now have a custom resilience system. Some trauma sources
+      can cause traumas which require more extensive treatment, such as the new Lobotomy
+      surgery.
+  - rscadd: Traitors can now purchase a Brainwashing Surgery Disk for 5 TC.
+  Xhuis:
+  - bugfix: New blob tiles are no longer invincible after their blob's death.
+  - bugfix: Blob nodes no longer produce blob tiles even after the blob's death.
+  coiax:
+  - rscadd: Mime's Bane, a toxin that prevents people from emoting while it's in their
+      system, can now be created by mixing 1 part Mute Toxin, 1 part Nothing and 1
+      part Radium.
+2018-02-20:
+  Anonmare:
+  - rscadd: Nanotrasen psychologists have identified new phobias emerging amongst
+      the workforce. Nanotrasen's surgeon general advises all personnel to just buck
+      up and deal with it.
+  AverageJoe82:
+  - rscadd: Circuits integrity, charge, and overall circuit composition is displayed
+      on diagnostic huds. If the assembly has dangerous circuits then the status icon
+      will display exclamation points, if the assembly can communicate with something
+      far away a wifi icon will appear next to the status icon, and if the circuit
+      can not operate the status icon will display an 'X'.
+  - rscadd: AR interface circuit which can modify the status icon if it is not displaying
+      the exclamation points or the 'X'.
+  - tweak: Locomotive circuits can no longer be added to assemblies that can't use
+      them.
+  - spellcheck: Fixed a typo in the grenade primer description.
+  - code_imp: Added flags to circuits that help group subsets of circuits and regulate
+      them.
+  DaedalusGame:
+  - bugfix: fixed ghost spawners showing up in the spawner menu when you can't use
+      them
+  - bugfix: fixed walls under doors breaking to space
+  - tweak: changed doors to no longer spawn on top of walls
+  Dax Dupont:
+  - rscadd: Adds special tutorial holopads for the hazard course.
+  Jittai:
+  - tweak: Ctrl+Clicking progresses through grab cycle on living mobs (not just humans)
+  Joan:
+  - tweak: The crusher kit now includes an advanced mining scanner.
+  - tweak: The resonator kit now includes webbing and a small extinguisher.
+  - tweak: 'The minebot kit now includes a minebot passthrough kinetic accelerator
+      module, which will cause kinetic accelerator shots to pass through minebots.
+      The welding goggles have been replaced with a welding helmet, allowing you to
+      wear mesons and still be able to repair the minebot without eye damage. feature:
+      You can now install kinetic accelerator modkits on minebots. Some exceptions
+      may apply. Crowbar to remove modkits.'
+  - balance: Minebots now shoot 33% faster by default(3 seconds to 2). The minebot
+      cooldown upgrade still produces a fire rate of 1 second.
+  - balance: Minebots are now slightly less likely to sit in melee like idiots, and
+      are now healed for 15 instead of 10 when welded.
+  - balance: Sentient minebots are penalized; they cannot have armor and melee upgrades
+      installed, and making them sentient will override those upgrades if they were
+      installed. In addition, they move very slightly slower and have their kinetic
+      accelerator's cooldown increased by 1 second.
+  NTnet circuit fix:
+  - bugfix: Now NTnet circuits can recieve sender adress properly.Also, now messages
+      could be sended to multiple recepiens.
+  Xhuis:
+  - rscadd: Admins may now spawn a debug circuit printer that can always print circuits,
+      and has infinite metal.
+  - bugfix: Buttons, number pads, and text pads in integrated circuits now correctly
+      show their labels.
+  - bugfix: Integrated hypo-injectors can now correctly draw blood.
+  - tweak: The circuit analyzer output has been slightly tweaked and includes usage
+      instructions.
+  - rscadd: The round-end report now shows information about the first person to die
+      in that round.
+  - rscadd: Added the dish drive. This machine, the future in plate disposal, can
+      be researched from techwebs (Biological Processing) and built with a standard
+      machine frame using two matter bins, a micro manipulator, and a glass sheet.
+  - rscadd: A circuit board for the dish drive can be found in the chef's and bartender's
+      wardrobes.
+  - rscadd: You can hit a dish drive with any dish (like a plate or drinking glass),
+      and the dish drive will convert it from matter to energy, allowing it to store
+      an infinite amount of dishes. You can also interact with it to get things back
+      from it.
+  - rscadd: Dish drives also have an automatic "suction" function that sucks in all
+      loose dishes within four tiles. This can be toggled by activating its circuit
+      board in-hand.
+  - rscadd: Dish drives automatically beam their stored dishes into any disposal unit
+      that it can see within seven tiles every minute. You can toggle this by alt-clicking
+      its circuit board.
+  - tweak: Plastic surgery now lets you choose from a list of ten random names, so
+      you can pick the one that you prefer.
+  - tweak: Abductors performing plastic surgery can now give their target spooky subject
+      names, with one normal name available for standard plastique.
+2018-02-21:
+  Denton:
+  - code_imp: Renamed the IDs of various reagents to be more descriptive.
+  - spellcheck: Fixed the descriptions of changeling adrenaling reagents.
+  - tweak: Changed Santa event earliest start from 33 minutes & 20 seconds to 30 minutes.
+      Changed shuttle loan earliest start from 6 minutes & 40 seconds to 7 minutes.
+  - spellcheck: Tweaked the message you see when emagging meteor shield satellites.
+  Kevinz000 & Deathride58:
+  - rscadd: A separate round time has been added to status panel. This will start
+      at 00:00:00.
+  - rscadd: Night shift lighting [if enabled in the same configuration] will activate
+      between station time 7:30 PM and 7:30 AM. This will dim all lights affected,
+      but they will still have the same range.
+  - rscadd: APCs now have an option to set night lighting mode on or off, regardless
+      of time.
+  Naksu:
+  - bugfix: Flightsuits should be controllable again
+2018-02-22:
+  Buggy123:
+  - tweak: Nanotrasen has begun a campaign to inform their employees that you can
+      alt-click to disable morgue tray beeping.
+  Jittai / ChuckTheSheep:
+  - imageadd: NT has stopped buying re-boxed storebrand Donkpockets and now stocks
+      stations with real, genuine, tasty Donkpockets!
+  MetroidLover:
+  - balance: rebalanced Ninja event to allow it to happen earlier.
+  - bugfix: fixed Ninja welcome text to no longer tell you to right click your suit.
+  Naksu:
+  - code_imp: removed unused poisoned apple variant
+  Repukan:
+  - bugfix: fixed windoors dropping more cable than what was used to build them.
+  Robustin:
+  - bugfix: The clock cult's marauder limit now works properly, temporarily lower
+      the marauder limit when one has recently been summoned.
+  Super3222, TheMythicGhost, DaedalusGame:
+  - rscadd: Adds a barometer function to the standard atmos analyzer.
+  - imageadd: Adds a new sprite for the atmos analyzer to resemble a barometer.
+  kevinz000, Denton:
+  - rscadd: Nanotrasen's RnD division has integrated all stationary tachyon doppler
+      arrays into the techweb system. Record increasingly large explosions with them
+      and you will generate research points!
+  - spellcheck: Fixed a few typos in the RnD doppler array name/description.
+2018-02-25:
+  Astral:
+  - rscadd: Traitor CMOs and Chemists, for 12 TC, can now get a reagent dartgun, which
+      is capable of synthesizing it's own syringes, but does so slowly, and can be
+      easily identified as syndicate by anyone who isn't blind!
+  Cebutris:
+  - tweak: Toxin loving species now properly take toxin damage from liver failiure
+  DaedalusGame:
+  - bugfix: enables the RPED to construct/replace other parts commonly used in machines
+      (igniters, beakers, bs crystals)
+  - bugfix: fixes part ratings of cells so slime cells are correctly more desirable
+      than bluespace cells and other such nonsense
+  - bugfix: shivering symptom now works properly instead of only cooling you if you're
+      already cold
+  - bugfix: fixed bodytemp going negative in a few cases
+  - code_imp: removes input/output plates and changes autogibbers to use input dir
+  - tweak: The last scientists have reported that thermonuclear blasts triggered by
+      so called 'power gamers' have shorted the doppler array. We've readjusted the
+      ALU and are confident that this will not happen again.
+  Denton:
+  - tweak: The outer airlocks of most space ruin airlocks are now cycle linked.
+  - tweak: The outer airlocks of various lavaland ruins and ships now cycle lock.
+  - bugfix: Players can no longer kill themselves by whispering inside clone pods.
+  - tweak: The 'neurotoxin2' toxin has been renamed to Fentanyl.
+  Naksu:
+  - admin: Admins can now start the game as extended revs, a version of revs that
+      doesn't end when head(rev)s are dead. Admins can also use the speedy mode, which
+      nukes the station after 20 minutes.
+  Repukan:
+  - rscadd: Whiskey to the flask
+  - rscdel: Hearty Punch from the flask
+  ShizCalev:
+  - tweak: Silicons no longer have to be adjacent to morguetrays to disable the alarms
+      on then.
+  ThePainkiller:
+  - tweak: Tweaked the inventory management of the black fedora to be more like the
+      detective's
+  Xhuis:
+  - rscadd: Added Bastion Bourbon, which you can mix with tea, creme de menthe, triple
+      citrus, and berry juice. When it's in your system, it will very slowly heal
+      you as long as you're not in critical. When it's first added to your system,
+      you heal an amount of each damage type equal to the volume taken in, with a
+      max of 10. This is turned to a max of 20 for anyone in critical.
+  - rscadd: Added Squirt Cider, which you can mix with water, tomato juice, and nutriment.
+      It's nutritious and healthy!
+  - tweak: Reskinning objects now shows their possible appearances in the chat box.
+  deathride58:
+  - rscadd: Lights will now actually glow in the dark!
+2018-02-26:
+  DaedalusGame:
+  - balance: livers don't unfail automatically every second life cycle you have to
+      get a new one or get some corazone stat
+  - balance: increased liver damage from alcohol significantly because apparently
+      your liver regenerates faster than you can chug unless you drink 100 liters
+      of bacchus blessing
+  - bugfix: fixed cyber livers thinking they should fail at half durability
+  MMMiracles:
+  - rscadd: Added tinfoil hats, headgear that can help protect against government
+      conspiracies and extra-terrestrials. Found in hacked autolathes.
+  Robustin:
+  - bugfix: Twisted Construction will now consume ALL available plasteel in a stack.
+  - bugfix: Runes will no longer count the original invoker more than once.
+  XDTM:
+  - balance: Wizard spells and items can now be resisted/ignored with anti-magic items/clothing
+      such as null rods!
+  - balance: Revenant spells can now be resisted with "holy" items like null rods
+      and bibles.
+  - balance: Wizard hardsuits are now magic immune, but not holy.
+  - balance: Immortality Talismans now grant both spell and holy immunity.
+  - tweak: Inquisitor Hardsuits already granted spell and holy immunity, but now they
+      do it properly instead of having a null rod embedded inside.
+  - tweak: Holy Melons now grant holy immunity.
+  - tweak: Operating computers now display the chemicals required to complete a surgery
+      step, if there are any.
+  - tweak: Completing a surgery without the required chems will always result in failure,
+      instead of a success with no effect.
+  - balance: You can no longer gain the same trauma more than once.
+  - balance: 'You can no longer gain more than a certain amount of brain traumas per
+      resilience tier. (Example: You cannot gain 4 mild traumas, but you can gain
+      3 mild and 1 severe)'
+  - tweak: Abductors' trauma gland now gives traumas of random resilience, instead
+      of lobotomy every time.
+  Xhuis:
+  - balance: Instead of starting unable to clone circuits at all, circuit printers
+      can now print circuits over time from roundstart. The formula for this is equal
+      to (metal cost / 150) seconds, with a maximum of 3 minutes. You can see printing
+      progress by using the printer's interface, and you can print normal components
+      during this time.
+  - balance: If circuit printing is disabled in the config, cloning remains unavailable.
+  - balance: The upgrade disk to allow circuit printers to clone circuits has been
+      replaced with an upgrade disk to make circuit cloning instant.
+  - balance: Both circuit printer upgrade disks now cost 5000 metal and glass, down
+      from 10000.
+  - code_imp: Butchering has been refactored.
+  - balance: Some items now take longer to butcher, and have a chance to harvest fewer
+      items, like spears. Others, however, are faster, like circular saws.
+  - balance: Certain creatures will always drop certain items on butchering, regardless
+      of butchering effectiveness or chances.
+  - balance: Items that are very effective at butchering may yield bonus loot from
+      butchered creatures!
+  - rscadd: Plain hamburgers may now spawn as steamed hams with a very low chance.
+2018-02-27:
+  Astral:
+  - rscadd: blood cultists can now use a nar nar plushie as an extra invoker for runes!
+  Iamgoofball:
+  - rscadd: Look sir, free crabs!
+  Poojawa:
+  - rscadd: Tesla Corona Analyzers! Study the seemingly magic Edison's Bane for supplemental
+      research points!
+  Robustin:
+  - bugfix: The heart attack event will now actually make the victim acquire the heart
+      disease
+  - bugfix: Clicking the chatbox link will let you orbit the victim
+  - tweak: The event is now significantly more sensitive to junk food. Recent consumption
+      of multiple junk food items will triple your chances of having a heart attack
+      (exercise will still block it).
+  selea:
+  - bugfix: fixed floorbot
+  - bugfix: fixed cleanbot
+  - refactor: improved pathiding in case of given minimal distance;improved sanitation

@@ -21,6 +21,10 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
@@ -59,14 +63,14 @@
 		qdel(src)
 		return
 	if(ismegafauna(user))
-		user.visible_message("<span class='warning'>[user] glows fiercely as the containment field flickers out!</span>")
+		user.visible_message(span_warning("[user] glows fiercely as the containment field flickers out!"))
 		FG1.calc_power(INFINITY) //rip that 'containment' field
 		user.adjustHealth(-user.obj_damage)
 	else
 		return ..()
 
-/obj/machinery/field/containment/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/field/containment/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		shock(AM)
 
@@ -113,7 +117,7 @@
 		return
 
 
-/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
@@ -129,9 +133,9 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(0, shock_damage)
-		user.visible_message("<span class='danger'>[user.name] is shocked by the [src.name]!</span>", \
-		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
-		"<span class='hear'>You hear an electrical crack.</span>")
+		user.visible_message(span_danger("[user.name] is shocked by the [src.name]!"), \
+		span_userdanger("Energy pulse detected, system damaged!"), \
+		span_hear("You hear an electrical crack."))
 
 	user.updatehealth()
 	bump_field(user)

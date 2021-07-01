@@ -62,7 +62,7 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/roundstart_quirks = list()
+	var/list/quirks = list()
 
 	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
 	///Mob specific surgery speed modifier

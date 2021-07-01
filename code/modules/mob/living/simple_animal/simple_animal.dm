@@ -111,8 +111,6 @@
 	///Simple_animal access.
 	///Innate access uses an internal ID card.
 	var/obj/item/card/id/access_card = null
-	///In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against.
-	var/buffed = 0
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
@@ -136,9 +134,6 @@
 	var/dextrous = FALSE
 	var/dextrous_hud_type = /datum/hud/dextrous
 
-	///If the creature should have an innate TRAIT_MOVE_FLYING trait added on init that is also toggled off/on on death/revival.
-	var/is_flying_animal = FALSE
-
 	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
@@ -146,15 +141,6 @@
 
 	///convenience var for forcibly waking up an idling AI on next check.
 	var/shouldwakeup = FALSE
-
-	///Domestication.
-	var/tame = FALSE
-	///What the mob eats, typically used for taming or animal husbandry.
-	var/list/food_type
-	///Starting success chance for taming.
-	var/tame_chance
-	///Added success chance after every failed tame attempt.
-	var/bonus_tame_chance
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
@@ -169,11 +155,6 @@
 	var/sharpness = NONE
 	///Generic flags
 	var/simple_mob_flags = NONE
-
-	/// Used for making mobs show a heart emoji and give a mood boost when pet.
-	var/pet_bonus = FALSE
-	/// A string for an emote used when pet_bonus == true for the mob being pet.
-	var/pet_bonus_emote = ""
 
 
 /mob/living/simple_animal/Initialize(mapload)
@@ -190,8 +171,6 @@
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
-	if(is_flying_animal)
-		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -207,9 +186,9 @@
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
-	if(!unsuitable_cold_damage)
+	if(!isnull(unsuitable_cold_damage))
 		unsuitable_cold_damage = unsuitable_atmos_damage
-	if(!unsuitable_heat_damage)
+	if(!isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
 /mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
@@ -230,42 +209,14 @@
 	if (T && AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
+	//Walking counts as a reference, putting this here because most things don't walk, clean this up once walk() procs are dead
+	walk(src, 0)
 	return ..()
-
-/mob/living/simple_animal/vv_edit_var(var_name, var_value)
-	. = ..()
-	switch(var_name)
-		if(NAMEOF(src, is_flying_animal))
-			if(stat != DEAD)
-				if(!is_flying_animal)
-					REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
-				else
-					ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
-
-/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
-	if(!is_type_in_list(O, food_type))
-		return ..()
-	if(stat == DEAD)
-		to_chat(user, "<span class='warning'>[src] is dead!</span>")
-		return
-	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
-	qdel(O)
-	if(tame)
-		return
-	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-		tame = TRUE
-		tamed(user)
-	else
-		tame_chance += bonus_tame_chance
-
-///Extra effects to add when the mob is tamed, such as adding a riding component
-/mob/living/simple_animal/proc/tamed(whomst)
-	tame = TRUE
 
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
+		. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
 	if(access_card)
 		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
@@ -498,13 +449,11 @@
 		del_on_death = FALSE
 		qdel(src)
 	else
-		if(is_flying_animal)
-			REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 		health = 0
 		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
-		density = FALSE
+		set_density(FALSE)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -538,9 +487,7 @@
 	if(!.)
 		return
 	icon_state = icon_living
-	density = initial(density)
-	if(is_flying_animal)
-		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+	set_density(initial(density))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())

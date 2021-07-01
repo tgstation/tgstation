@@ -67,7 +67,7 @@
 	base_icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(15)
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.4
@@ -122,9 +122,9 @@
 		var/obj/item/food/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>[src] is full.</span>")
+				to_chat(user, span_notice("[src] is full."))
 			else
-				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
+				to_chat(user, span_notice("You break [E] in [src]."))
 				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 5)
 				qdel(E)
 			return

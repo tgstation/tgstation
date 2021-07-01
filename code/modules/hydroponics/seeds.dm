@@ -103,11 +103,11 @@
 
 /obj/item/seeds/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
+	. += span_notice("Use a pen on it to rename it or change its description.")
 	if(reagents_add && user.can_see_reagents())
-		. += "<span class='notice'>- Plant Reagents -</span>"
+		. += span_notice("- Plant Reagents -")
 		for(var/datum/plant_gene/reagent/G in genes)
-			. += "<span class='notice'>- [G.get_name()] -</span>"
+			. += span_notice("- [G.get_name()] -")
 
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/copy_seed = new type(null, TRUE)
@@ -217,18 +217,15 @@
 	while(t_amount < product_count)
 		var/obj/item/food/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
-			var/obj/item/seeds/new_prod = pick(mutatelist)
-			t_prod = initial(new_prod.product)
+			var/obj/item/seeds/mutated_seed = pick(mutatelist)
+			t_prod = initial(mutated_seed.product)
 			if(!t_prod)
 				continue
-			t_prod = new t_prod(output_loc, src)
-			t_prod.seed = new new_prod
-			t_prod.seed.name = initial(new_prod.name)
-			t_prod.seed.desc = initial(new_prod.desc)
-			t_prod.seed.plantname = initial(new_prod.plantname)
+			mutated_seed = new mutated_seed
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
-				if(trait.can_add(t_prod.seed))
-					t_prod.seed.genes += trait
+				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
+					mutated_seed.genes += trait
+			t_prod = new t_prod(output_loc, mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, user)
@@ -299,14 +296,14 @@
 
 		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
 		if(get_gene(/datum/plant_gene/trait/chem_heating))
-			T.visible_message("<span class='notice'>[T] releases freezing air, consuming its nutriments to heat its contents.</span>")
+			T.visible_message(span_notice("[T] releases freezing air, consuming its nutriments to heat its contents."))
 			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
 			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
 		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
 		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
-			T.visible_message("<span class='notice'>[T] releases a blast of hot air, consuming its nutriments to cool its contents.</span>")
+			T.visible_message(span_notice("[T] releases a blast of hot air, consuming its nutriments to cool its contents."))
 			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
 			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
 			T.reagents.handle_reactions()
@@ -505,7 +502,7 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/pen))
-		var/choice = input("What would you like to change?") in list("Plant Name", "Seed Description", "Product Description", "Cancel")
+		var/choice = tgui_input_list(usr, "What would you like to change?",, list("Plant Name", "Seed Description", "Product Description", "Cancel"))
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		switch(choice)
@@ -514,10 +511,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newplantname) > 20)
-					to_chat(user, "<span class='warning'>That name is too long!</span>")
+					to_chat(user, span_warning("That name is too long!"))
 					return
 				if(!newplantname)
-					to_chat(user, "<span class='warning'>That name is invalid.</span>")
+					to_chat(user, span_warning("That name is invalid."))
 					return
 				else
 					name = "[lowertext(newplantname)]"
@@ -527,10 +524,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newdesc) > 180)
-					to_chat(user, "<span class='warning'>That description is too long!</span>")
+					to_chat(user, span_warning("That description is too long!"))
 					return
 				if(!newdesc)
-					to_chat(user, "<span class='warning'>That description is invalid.</span>")
+					to_chat(user, span_warning("That description is invalid."))
 					return
 				else
 					desc = newdesc
@@ -541,10 +538,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newproductdesc) > 180)
-					to_chat(user, "<span class='warning'>That description is too long!</span>")
+					to_chat(user, span_warning("That description is too long!"))
 					return
 				if(!newproductdesc)
-					to_chat(user, "<span class='warning'>That description is invalid.</span>")
+					to_chat(user, span_warning("That description is invalid."))
 					return
 				else
 					productdesc = newproductdesc
@@ -578,12 +575,12 @@
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
 	var/amount_random_traits = rand(lower, upper)
 	for(var/i in 1 to amount_random_traits)
-		var/random_trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
-		var/datum/plant_gene/trait/T = new random_trait
-		if(T.can_add(src))
-			genes += T
+		var/random_trait = pick(subtypesof(/datum/plant_gene/trait))
+		var/datum/plant_gene/trait/picked_random_trait = new random_trait
+		if((picked_random_trait.mutability_flags & PLANT_GENE_MUTATABLE) && picked_random_trait.can_add(src))
+			genes += picked_random_trait
 		else
-			qdel(T)
+			qdel(picked_random_trait)
 
 /obj/item/seeds/proc/add_random_plant_type(normal_plant_chance = 75)
 	if(prob(normal_plant_chance))
@@ -611,7 +608,6 @@
  */
 /obj/item/seeds/proc/create_graft()
 	var/obj/item/graft/snip = new(loc, graft_gene)
-	snip.parent_seed = src
 	snip.parent_name = plantname
 	snip.name += "([plantname])"
 
@@ -630,15 +626,19 @@
  *
  * Adds the graft trait to this plant if possible.
  * Increases plant stats by 2/3 of the grafts stats to a maximum of 100 (10 for yield).
- * Returns [TRUE]
+ * Returns TRUE if the graft could apply its trait successfully, FALSE if it fails to apply the trait.
+ * NOTE even if the graft fails to apply the trait it still adjusts the plant's stats and reagents.
  *
  * Arguments:
  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
  */
 /obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
+	. = TRUE
 	var/datum/plant_gene/new_trait = snip.stored_trait
 	if(new_trait?.can_add(src))
 		genes += new_trait.Copy()
+	else
+		. = FALSE
 
 	// Adjust stats based on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.lifespan - lifespan)))))
@@ -651,7 +651,7 @@
 	// Add in any reagents, too.
 	reagents_from_genes()
 
-	return TRUE
+	return
 
 /*
  * Both `/item/food/grown` and `/item/grown` implement a seed variable which tracks

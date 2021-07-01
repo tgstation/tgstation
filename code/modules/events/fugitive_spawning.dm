@@ -4,7 +4,6 @@
 	max_occurrences = 1
 	min_players = 20
 	earliest_start = 30 MINUTES //deadchat sink, lets not even consider it early on.
-	gamemode_blacklist = list("nuclear")
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1
@@ -21,7 +20,7 @@
 		return MAP_ERROR
 	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
+	var/list/candidates = get_candidates(ROLE_TRAITOR, ROLE_TRAITOR)
 	if(candidates.len >= 1) //solo refugees
 		if(prob(30))
 			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering

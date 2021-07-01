@@ -94,7 +94,7 @@
 	if(issilicon(crosser))
 		return
 	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
-		to_chat(crosser, "<span class='alert'>You accidentally touch the vine and feel a strange sensation.</span>")
+		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
@@ -115,7 +115,7 @@
 		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
-	explosion(holder.loc, 0, 0, severity, 0, 0)
+	explosion(holder, light_impact_range = severity, adminlog = FALSE)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -168,16 +168,16 @@
 			C.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			C.Stun(1 SECONDS) //Stopped in place for a moment.
 			playsound(M, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
-			M.visible_message("<span class='danger'>[M] is nailed by a sharp thorn!</span>", \
-			"<span class='userdanger'>You are nailed by a sharp thorn!</span>")
+			M.visible_message(span_danger("[M] is nailed by a sharp thorn!"), \
+			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(S, M, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
 		else
 			if(prob(80))
 				C.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 				C.Knockdown(2 SECONDS)
 				playsound(M, 'sound/weapons/whip.ogg', 50, TRUE, -1)
-				M.visible_message("<span class='danger'>[M] is lacerated by an outburst of vines!</span>", \
-				"<span class='userdanger'>You are lacerated by an outburst of vines!</span>")
+				M.visible_message(span_danger("[M] is lacerated by an outburst of vines!"), \
+				span_userdanger("You are lacerated by an outburst of vines!"))
 				log_combat(S, M, "aggressively lacerated")
 			else
 				C.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = NONE)
@@ -185,14 +185,14 @@
 				var/atom/throw_target = get_edge_target_turf(C, get_dir(S, get_step_away(C, S)))
 				C.throw_at(throw_target, 3, 6)
 				playsound(M, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-				M.visible_message("<span class='danger'>[M] is smashed by a large vine!</span>", \
-				"<span class='userdanger'>You are smashed by a large vine!</span>")
+				M.visible_message(span_danger("[M] is smashed by a large vine!"), \
+				span_userdanger("You are smashed by a large vine!"))
 				log_combat(S, M, "aggressively smashed")
 	else //Living but not a carbon? Maybe a silicon? Can't be wounded so have a big chunk of simple bruteloss with no special effects. They can be entangled.
 		M.adjustBruteLoss(75)
 		playsound(M, 'sound/weapons/whip.ogg', 50, TRUE, -1)
-		M.visible_message("<span class='danger'>[M] is brutally threshed by [S]!</span>", \
-		"<span class='userdanger'>You are brutally threshed by [S]!</span>")
+		M.visible_message(span_danger("[M] is brutally threshed by [S]!"), \
+		span_userdanger("You are brutally threshed by [S]!"))
 		log_combat(S, M, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
 
 /datum/spacevine_mutation/transparency
@@ -274,13 +274,13 @@
 	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
-		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
+		to_chat(M, span_alert("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
-		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
+		to_chat(M, span_alert("You cut yourself on the thorny vines."))
 	. = expected_damage
 
 /datum/spacevine_mutation/woodening
@@ -290,9 +290,8 @@
 
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
-		holder.density = TRUE
-	holder.max_integrity = 100
-	holder.obj_integrity = holder.max_integrity
+		holder.set_density(TRUE)
+	holder.modify_max_integrity(100)
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(I?.get_sharpness())
@@ -331,13 +330,14 @@
 	var/datum/spacevine_controller/master = null
 	var/list/mutations = list()
 
-/obj/structure/spacevine/Initialize()
+/obj/structure/spacevine/Initialize(mapload)
 	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
-
-/obj/structure/spacevine/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/spacevine/examine(mob/user)
 	. = ..()
@@ -398,8 +398,8 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spacevine/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/spacevine/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -450,7 +450,7 @@
 /datum/spacevine_controller/vv_do_topic(href_list)
 	. = ..()
 	if(href_list[VV_HK_SPACEVINE_PURGE])
-		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", list("Yes", "No")) == "Yes")
 			DeleteVines()
 
 /datum/spacevine_controller/proc/DeleteVines() //this is kill
@@ -473,12 +473,12 @@
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		SV.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
-			var/datum/spacevine_mutation/randmut = pick(vine_mutations_list - SV.mutations)
-			randmut.add_mutation_to_vinepiece(SV)
+			var/datum/spacevine_mutation/random_mutate = pick(vine_mutations_list - SV.mutations)
+			random_mutate.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
-	location.Entered(SV)
+	location.Entered(SV, NONE)
 	return SV
 
 /datum/spacevine_controller/proc/VineDestroyed(obj/structure/spacevine/S)
@@ -549,7 +549,7 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
+		to_chat(V, span_danger("The vines [pick("wind", "tangle", "tighten")] around you!"))
 		buckle_mob(V, 1)
 
 /// Finds a target tile to spread to. If checks pass it will spread to it and also proc on_spread on target.
@@ -570,7 +570,7 @@
 	var/i
 	for(var/datum/spacevine_mutation/SM in mutations)
 		i += SM.on_explosion(severity, target, src)
-	if(!i && prob(100/severity))
+	if(!i && prob(34 * severity))
 		qdel(src)
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -583,7 +583,7 @@
 			return
 	qdel(src)
 
-/obj/structure/spacevine/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(isvineimmune(mover))
 		return TRUE

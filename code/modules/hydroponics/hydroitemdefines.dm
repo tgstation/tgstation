@@ -14,7 +14,7 @@
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
-	. += "<span class='notice'>Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.</span>"
+	. += span_notice("Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.")
 
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
@@ -104,8 +104,8 @@
  * user - the person doing the scanning
  */
 /obj/item/plant_analyzer/proc/plant_biotype_health_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
-						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
+	user.visible_message(span_notice("[user] analyzes [scanned_mob]'s vitals."), \
+						span_notice("You analyze [scanned_mob]'s vitals."))
 
 	healthscan(user, scanned_mob, advanced = TRUE)
 	add_fingerprint(user)
@@ -117,8 +117,8 @@
  * user - the person doing the scanning
  */
 /obj/item/plant_analyzer/proc/plant_biotype_chem_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s bloodstream.</span>", \
-						"<span class='notice'>You analyze [scanned_mob]'s bloodstream.</span>")
+	user.visible_message(span_notice("[user] analyzes [scanned_mob]'s bloodstream."), \
+						span_notice("You analyze [scanned_mob]'s bloodstream."))
 	chemscan(user, scanned_mob)
 	add_fingerprint(user)
 
@@ -134,19 +134,19 @@
 	var/returned_message = "<span class='info'>*---------*\n"
 	if(scanned_tray.myseed)
 		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
-		returned_message += "- Plant Age: <span class='notice'>[scanned_tray.age]</span></span>\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]</span>\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
-		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
+		returned_message += "[span_info("<B>No plant found.</B>")]\n"
 
 	returned_message += "<span class='info'>"
-	returned_message += "- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
-	returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]</span>\n"
-	returned_message += "- Toxicity level: <span class='notice'>[scanned_tray.toxic] / [MAX_TRAY_TOXINS]</span>\n"
-	returned_message += "- Water level: <span class='notice'>[scanned_tray.waterlevel] / [scanned_tray.maxwater]</span>\n"
-	returned_message += "- Nutrition level: <span class='notice'>[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]</span>\n"
+	returned_message += "- Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]\n"
+	returned_message += "- Pest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]\n"
+	returned_message += "- Toxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]\n"
+	returned_message += "- Water level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]\n"
+	returned_message += "- Nutrition level: [span_notice("[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]")]\n"
 	if(scanned_tray.yieldmod != 1)
-		returned_message += "- Yield modifier on harvest: <span class='notice'>[scanned_tray.yieldmod]x</span>\n"
+		returned_message += "- Yield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]\n"
 
 	returned_message += "*---------*</span>"
 	return returned_message
@@ -163,19 +163,19 @@
 	var/returned_message = "<span class='info'>*---------*\n"
 	if(scanned_tray.myseed)
 		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
-		returned_message += "- Plant Age: <span class='notice'>[scanned_tray.age]</span></span>\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]</span>\n"
 		returned_message += scan_plant_chems(scanned_tray.myseed)
 	else
-		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
+		returned_message += "[span_info("<B>No plant found.</B>")]\n"
 
 	returned_message += "<span class='info'>"
 
 	returned_message += "- Tray contains:\n"
 	if(scanned_tray.reagents.reagent_list.len)
 		for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
-			returned_message += "- <span class='notice'>[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]</span>\n"
+			returned_message += "- [span_notice("[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]\n"
 	else
-		returned_message += "<span class='notice'>No reagents found.</span>\n"
+		returned_message += "[span_notice("No reagents found.")]\n"
 
 	returned_message += "*---------*</span>"
 	return returned_message
@@ -189,7 +189,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
+	var/returned_message = "[span_info("*---------*\nThis is \a <span class='name'>[scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -211,7 +211,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
-	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
+	var/returned_message = "[span_info("*---------*\nThis is \a <span class='name'>[scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -236,36 +236,42 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_traits(obj/item/seeds/scanned)
 	var/text = ""
 	if(scanned.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-		text += "- Plant type: <span class='notice'>Weed. Can grow in nutrient-poor soil.</span>\n"
+		text += "- Plant type: [span_notice("Weed. Can grow in nutrient-poor soil.")]\n"
 	else if(scanned.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-		text += "- Plant type: <span class='notice'>Mushroom. Can grow in dry soil.</span>\n"
+		text += "- Plant type: [span_notice("Mushroom. Can grow in dry soil.")]\n"
 	else if(scanned.get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
+		text += "- Plant type: [span_warning("UNKNOWN")] \n"
 	else
-		text += "- Plant type: <span class='notice'>Normal plant</span>\n"
+		text += "- Plant type: [span_notice("Normal plant")]\n"
 
 	if(scanned.potency != -1)
-		text += "- Potency: <span class='notice'>[scanned.potency]</span>\n"
+		text += "- Potency: [span_notice("[scanned.potency]")]\n"
 	if(scanned.yield != -1)
-		text += "- Yield: <span class='notice'>[scanned.yield]</span>\n"
-	text += "- Maturation speed: <span class='notice'>[scanned.maturation]</span>\n"
+		text += "- Yield: [span_notice("[scanned.yield]")]\n"
+	text += "- Maturation speed: [span_notice("[scanned.maturation]")]\n"
 	if(scanned.yield != -1)
-		text += "- Production speed: <span class='notice'>[scanned.production]</span>\n"
-	text += "- Endurance: <span class='notice'>[scanned.endurance]</span>\n"
-	text += "- Lifespan: <span class='notice'>[scanned.lifespan]</span>\n"
-	text += "- Instability: <span class='notice'>[scanned.instability]</span>\n"
-	text += "- Weed Growth Rate: <span class='notice'>[scanned.weed_rate]</span>\n"
-	text += "- Weed Vulnerability: <span class='notice'>[scanned.weed_chance]</span>\n"
+		text += "- Production speed: [span_notice("[scanned.production]")]\n"
+	text += "- Endurance: [span_notice("[scanned.endurance]")]\n"
+	text += "- Lifespan: [span_notice("[scanned.lifespan]")]\n"
+	text += "- Instability: [span_notice("[scanned.instability]")]\n"
+	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
+	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
 	if(scanned.rarity)
-		text += "- Species Discovery Value: <span class='notice'>[scanned.rarity]</span>\n"
-	var/all_traits = ""
+		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]</span>\n"
+	var/all_removable_traits = ""
+	var/all_immutable_traits = ""
 	for(var/datum/plant_gene/trait/traits in scanned.genes)
 		if(istype(traits, /datum/plant_gene/trait/plant_type))
 			continue
-		all_traits += "[(all_traits == "") ? "" : ", "][traits.get_name()]"
-	text += "- Plant Traits: <span class='notice'>[all_traits? all_traits : "None."]</span>\n"
+		if(traits.mutability_flags & PLANT_GENE_REMOVABLE)
+			all_removable_traits += "[(all_removable_traits == "") ? "" : ", "][traits.get_name()]"
+		else
+			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
+
+	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]</span>\n"
+	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]</span>\n"
 	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
-	text += "- Grafting this plant would give: <span class='notice'>[scanned_graft_result.get_name()]</span>\n"
+	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
 	text += "*---------*"
 	var/unique_text = scanned.get_unique_analyzer_text()
@@ -301,21 +307,21 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "<br><span class='info'>- Plant Reagents -</span>"
-	text += "<br><span class='info'>Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]</span>"
+	text += "<br>[span_info("- Plant Reagents -")]"
+	text += "<br>[span_info("Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]")]"
 	var/chem_cap = 0
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
 		var/datum/reagent/reagent  = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
-		reagents_text += "\n<span class='info'>- [reagent.name]: [amount]</span>"
+		reagents_text += "\n[span_info("- [reagent.name]: [amount]")]"
 	if(chem_cap > 100)
-		text += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
+		text += "<br>[span_warning("- Reagent Traits Over 100% Production")]</br>"
 
 	if(reagents_text)
-		text += "<br><span class='info'>*---------*</span>"
+		text += "<br>[span_info("*---------*")]"
 		text += reagents_text
-	text += "<br><span class='info'>*---------*</span>"
+	text += "<br>[span_info("*---------*")]"
 	return text
 
 /**
@@ -326,18 +332,18 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_graft_text(obj/item/graft/scanned_graft)
-	var/text = "<span class='info'>*---------*</span>\n<span class='info'>- Plant Graft -\n"
+	var/text = "[span_info("*---------*")]\n<span class='info'>- Plant Graft -\n"
 	if(scanned_graft.parent_name)
-		text += "- Parent Plant: <span class='notice'>[scanned_graft.parent_name]</span> -\n"
+		text += "- Parent Plant: [span_notice("[scanned_graft.parent_name]")] -\n"
 	if(scanned_graft.stored_trait)
-		text += "- Graftable Traits: <span class='notice'>[scanned_graft.stored_trait.get_name()]</span> -\n"
+		text += "- Graftable Traits: [span_notice("[scanned_graft.stored_trait.get_name()]")] -\n"
 	text += "*---------*\n"
-	text += "- Yield: <span class='notice'>[scanned_graft.yield]</span>\n"
-	text += "- Production speed: <span class='notice'>[scanned_graft.production]</span>\n"
-	text += "- Endurance: <span class='notice'>[scanned_graft.endurance]</span>\n"
-	text += "- Lifespan: <span class='notice'>[scanned_graft.lifespan]</span>\n"
-	text += "- Weed Growth Rate: <span class='notice'>[scanned_graft.weed_rate]</span>\n"
-	text += "- Weed Vulnerability: <span class='notice'>[scanned_graft.weed_chance]</span>\n"
+	text += "- Yield: [span_notice("[scanned_graft.yield]")]\n"
+	text += "- Production speed: [span_notice("[scanned_graft.production]")]\n"
+	text += "- Endurance: [span_notice("[scanned_graft.endurance]")]\n"
+	text += "- Lifespan: [span_notice("[scanned_graft.lifespan]")]\n"
+	text += "- Weed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]\n"
+	text += "- Weed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]\n"
 	text += "*---------*</span>"
 	return text
 
@@ -359,7 +365,7 @@
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (TOXLOSS)
 
 /obj/item/reagent_containers/spray/pestspray // -- Skie
@@ -375,7 +381,7 @@
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (TOXLOSS)
 
 /obj/item/cultivator
@@ -396,7 +402,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/cultivator/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/cultivator/rake
@@ -410,8 +416,15 @@
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
-/obj/item/cultivator/rake/Crossed(atom/movable/AM)
+/obj/item/cultivator/rake/Initialize()
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/cultivator/rake/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
@@ -419,8 +432,8 @@
 		H.set_confusion(max(H.get_confusion(), 10))
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
-						  "<span class='userdanger'>You step on [src] causing the handle to hit you right in the face!</span>")
+		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
+						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -448,7 +461,7 @@
 	AddComponent(/datum/component/butchering, 70, 100)
 
 /obj/item/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
@@ -482,7 +495,7 @@
 	AddComponent(/datum/component/butchering, 90, 105)
 
 /obj/item/scythe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)

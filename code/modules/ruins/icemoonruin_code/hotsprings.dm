@@ -17,11 +17,11 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 	planetary_atmos = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-/turf/open/water/cursed_spring/Entered(atom/movable/thing, atom/oldLoc)
+/turf/open/water/cursed_spring/Entered(atom/movable/arrived, direction)
 	. = ..()
-	if(!isliving(thing))
+	if(!isliving(arrived))
 		return
-	var/mob/living/L = thing
+	var/mob/living/L = arrived
 	if(!L.client || L.incorporeal_move)
 		return
 	if(GLOB.cursed_minds[L.mind])
@@ -42,15 +42,16 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 					all_species += stype
 			var/random_race = pick(all_species)
 			H.set_species(random_race)
-			H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
+			H.dna.update_dna_identity()
 			L = H
 	var/turf/T = find_safe_turf()
 	L.forceMove(T)
-	to_chat(L, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
+	to_chat(L, span_notice("You blink and find yourself in [get_area_name(T)]."))
 
 /**
  * Deletes minds from the cursed minds list after their deletion
  *
  */
 /turf/open/water/cursed_spring/proc/remove_from_cursed(datum/mind/M)
+	SIGNAL_HANDLER
 	GLOB.cursed_minds -= M

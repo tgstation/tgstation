@@ -103,10 +103,7 @@
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "s" = (
-/obj/machinery/light{
-	dir = 4;
-	light_color = "#DDFFD3"
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table/wood/fancy/black,
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 7;
@@ -173,7 +170,7 @@
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "z" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "A" = (

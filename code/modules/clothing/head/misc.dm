@@ -40,7 +40,7 @@
 
 /obj/item/clothing/head/that/proc/abracadabra(obj/item/hitby_wand, mob/magician)
 	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
-		to_chat("<span class='warning'>You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet...</span>")
+		to_chat(span_warning("You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet..."))
 		return
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
@@ -48,16 +48,16 @@
 	do_smoke(range=1, location=src, smoke_type=/obj/effect/particle_effect/smoke/quick)
 
 	if(prob(10))
-		magician.visible_message("<span class='danger'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!</span>", "<span class='danger'>You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b></span>")
+		magician.visible_message(span_danger("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!"), span_danger("You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b>"))
 		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
 		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
-			var/mob/living/simple_animal/hostile/poison/bees/barry = new(get_turf(magician))
-			barry.target = magician
+			var/mob/living/simple_animal/hostile/bee/barry = new(get_turf(magician))
+			barry.GiveTarget(magician)
 			if(prob(20))
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
-		magician.visible_message("<span class='notice'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!</span>", "<span class='notice'>You tap [src] with your [hitby_wand.name] and pull out a cute bunny!</span>")
-		var/mob/living/simple_animal/chicken/rabbit/empty/bunbun = new(get_turf(magician))
+		magician.visible_message(span_notice("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!"), span_notice("You tap [src] with your [hitby_wand.name] and pull out a cute bunny!"))
+		var/mob/living/simple_animal/rabbit/empty/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 
 #undef RABBIT_CD_TIME
@@ -174,16 +174,16 @@
 		return
 	if(slot == ITEM_SLOT_HEAD)
 		user.grant_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
-		to_chat(user, "<span class='boldnotice'>You suddenly know how to speak like a pirate!</span>")
+		to_chat(user, span_boldnotice("You suddenly know how to speak like a pirate!"))
 
 /obj/item/clothing/head/pirate/dropped(mob/user)
 	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(ITEM_SLOT_HEAD) == src)
+	if(H.get_item_by_slot(ITEM_SLOT_HEAD) == src && !QDELETED(src)) //This can be called as a part of destroy
 		user.remove_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
-		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
+		to_chat(user, span_boldnotice("You can no longer speak like a pirate."))
 
 /obj/item/clothing/head/pirate/armored
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
@@ -273,7 +273,7 @@
 	if(user.gender == FEMALE)
 		return 0
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
+	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls."))
 	user.say("M'lady.", forced = "fedora suicide")
 	sleep(10)
 	H.facial_hairstyle = "Neckbeard"
@@ -288,13 +288,17 @@
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
+	greyscale_config = /datum/greyscale_config/sombrero
+	greyscale_config_worn = /datum/greyscale_config/sombrero/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sombrero/lefthand
+	greyscale_config_inhand_right = /datum/greyscale_config/sombrero/righthand
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
-	icon_state = "greensombrero"
-	inhand_icon_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
+	greyscale_colors = "#13d968#ffffff"
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -302,6 +306,7 @@
 	inhand_icon_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
+	greyscale_colors = "#d565d3#f8db18"
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
@@ -442,6 +447,7 @@
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/clothing/head/frenchberet/proc/handle_speech(datum/source, mob/speech_args)
+	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = " [message]"

@@ -39,31 +39,9 @@
 	plantname = "Corpse flower"
 	production = 2
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	genes = list()
+	genes = list(/datum/plant_gene/trait/gas_production)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1)
-
-/obj/item/seeds/starthistle/corpse_flower/pre_attack(obj/machinery/hydroponics/I)
-	if(istype(I, /obj/machinery/hydroponics))
-		if(!I.myseed)
-			START_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/seeds/starthistle/corpse_flower/process(delta_time)
-	var/obj/machinery/hydroponics/parent = loc
-	if(parent.age < maturation) // Start a little before it blooms
-		return
-
-	var/turf/open/T = get_turf(parent)
-	if(abs(ONE_ATMOSPHERE - T.return_air().return_pressure()) > (potency/10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
-		return
-
-	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*3.5*MIASMA_CORPSE_MOLES*delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
-	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
-	T.assume_air(stank)
-	T.air_update_turf(FALSE, FALSE)
 
 //Galaxy Thistle
 /obj/item/seeds/galaxythistle
@@ -97,7 +75,7 @@
 	name = "galaxythistle flower head"
 	desc = "This spiny cluster of florets reminds you of the highlands."
 	icon_state = "galaxythistle"
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 35
 	tastes = list("thistle" = 2, "artichoke" = 1)
@@ -128,7 +106,6 @@
 	name = "cabbage"
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
-	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 20
 
@@ -199,6 +176,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/food/grown/cherry_bomb
 	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/bomb_plant, /datum/plant_gene/trait/modified_volume/cherry_bomb)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
 	rarity = 60 //See above
 
@@ -206,31 +184,10 @@
 	name = "cherry bombs"
 	desc = "You think you can hear the hissing of a tiny fuse."
 	icon_state = "cherry_bomb"
+	alt_icon = "cherry_bomb_lit"
 	seed = /obj/item/seeds/cherry/bomb
-	bite_consumption_mod = 2
-	max_volume = 125 //Gives enough room for the gunpowder at max potency
-	max_integrity = 40
+	bite_consumption_mod = 3
 	wine_power = 80
-
-/obj/item/food/grown/cherry_bomb/attack_self(mob/living/user)
-	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
-	log_bomber(user, "primed a", src, "for detonation")
-	detonate()
-
-/obj/item/food/grown/cherry_bomb/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		detonate()
-	if(!QDELETED(src))
-		qdel(src)
-
-/obj/item/food/grown/cherry_bomb/ex_act(severity)
-	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
-
-/obj/item/food/grown/cherry_bomb/proc/detonate(mob/living/lanced_by)
-	icon_state = "cherry_bomb_lit"
-	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
-	reagents.chem_temp = 1000 //Sets off the gunpowder
-	reagents.handle_reactions()
 
 // aloe
 /obj/item/seeds/aloe
@@ -254,7 +211,7 @@
 	name = "aloe"
 	desc = "Cut leaves from the aloe plant."
 	icon_state = "aloe"
-	bite_consumption_mod = 5
+	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
@@ -289,8 +246,8 @@
 	var/turf/player_turf = get_turf(user)
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
-	user.visible_message("<span class='danger'>[user] begins to plant \the [src]...</span>")
+	user.visible_message(span_danger("[user] begins to plant \the [src]..."))
 	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
 		new /obj/structure/fluff/hedge/opaque(user.drop_location())
-		to_chat(user, "<span class='notice'>You plant \the [src].</span>")
+		to_chat(user, span_notice("You plant \the [src]."))
 		qdel(src)

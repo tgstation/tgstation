@@ -19,10 +19,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(!check_rights(R_FUN))
 		return
 
-	var/aimed = alert("Aimed at current location?", "Sniperod", "Yes", "No")
+	var/aimed = tgui_alert(usr,"Aimed at current location?", "Sniperod", list("Yes", "No"))
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
-	var/looper = alert("Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", "Yes", "No")
+	var/looper = tgui_alert(usr,"Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", list("Yes", "No"))
 	if(looper == "Yes")
 		force_looping = TRUE
 	message_admins("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
@@ -83,7 +83,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	AddElement(/datum/element/point_of_interest)
 
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over_movable)
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
 	if(special_target)
@@ -92,7 +91,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
 	RemoveElement(/datum/element/point_of_interest)
 	SSaugury.unregister_doom(src)
 
@@ -104,7 +103,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return
 
 	if(!num_mobs_hit)
-		. += "<span class='notice'>So far, this rod has not hit any mobs.</span>"
+		. += span_notice("So far, this rod has not hit any mobs.")
 		return
 
 	. += "\t<span class='notice'>So far, this rod has hit: \n\
@@ -118,17 +117,24 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(ghost))
 			ghost.ManualFollow(src)
 
-/obj/effect/immovablerod/proc/on_crossed_over_movable(datum/source, atom/movable/atom_crossed_over)
+/obj/effect/immovablerod/proc/on_entered_over_movable(datum/source, atom/movable/atom_crossed_over)
 	SIGNAL_HANDLER
 	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
 		Bump(atom_crossed_over)
 
-/obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/atom_entered)
+/obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/destination, direction)
 	SIGNAL_HANDLER
-	if(atom_entered.density && isturf(atom_entered))
-		Bump(atom_entered)
+	if(destination.density && isturf(destination))
+		Bump(destination)
 
 /obj/effect/immovablerod/Moved()
+	if(!loc)
+		return ..()
+
+	for(var/atom/movable/to_bump in loc)
+		if((to_bump != src) && !QDELETED(to_bump) && (to_bump.density || isliving(to_bump)))
+			Bump(to_bump)
+
 	// If we have a special target, we should definitely make an effort to go find them.
 	if(special_target)
 		var/turf/target_turf = get_turf(special_target)
@@ -140,14 +146,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			var/direction = z_diff > 0 ? UP : DOWN
 			var/turf/target_z_turf = get_step_multiz(src, direction)
 
-			visible_message("<span class='danger'>[src] phases out of reality.</span>")
+			visible_message(span_danger("[src] phases out of reality."))
 
 			if(!do_teleport(src, target_z_turf))
 				// We failed to teleport. Might as well admit defeat.
 				qdel(src)
 				return
 
-			visible_message("<span class='danger'>[src] phases into reality.</span>")
+			visible_message(span_danger("[src] phases into reality."))
 			walk_towards(src, special_target, 1)
 
 		if(loc == target_turf)
@@ -192,7 +198,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		audible_message("<span class='danger'>You hear a CLANG!</span>")
+		audible_message(span_danger("You hear a CLANG!"))
 
 	if(special_target && clong == special_target)
 		complete_trajectory()
@@ -200,7 +206,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	// If rod meets rod, they collapse into a singularity. Yes, this means that if two wizard rods collide,
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
-		visible_message("<span class='danger'>[src] collides with [clong]! This cannot end well.</span>")
+		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(2, get_turf(src))
 		smoke.start()
@@ -233,7 +239,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
-	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
+	smeared_mob.visible_message(span_danger("[smeared_mob] is penetrated by an immovable rod!") , span_userdanger("The rod penetrates you!") , span_danger("You hear a CLANG!"))
 
 	if(smeared_mob.stat != DEAD)
 		num_mobs_hit++
@@ -269,14 +275,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		shake_camera(M, 2, 3)
 
 	if(wizard)
-		user.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [user] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
-		to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [user] somehow manages to grab you, slamming you into the ground!</span>")
+		user.visible_message(span_boldwarning("[src] transforms into [wizard] as [user] suplexes them!"), span_warning("As you grab [src], it suddenly turns into [wizard] as you suplex them!"))
+		to_chat(wizard, span_boldwarning("You're suddenly jolted out of rod-form as [user] somehow manages to grab you, slamming you into the ground!"))
 		wizard.Stun(60)
 		wizard.apply_damage(25, BRUTE)
 		qdel(src)
 	else
 		user.client.give_award(/datum/award/achievement/misc/feat_of_strength, user) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
-		user.visible_message("<span class='boldwarning'>[user] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
+		user.visible_message(span_boldwarning("[user] suplexes [src] into the ground!"), span_warning("You suplex [src] into the ground!"))
 		new /obj/structure/festivus/anchored(drop_location())
 		new /obj/effect/anomaly/flux(drop_location())
 		qdel(src)

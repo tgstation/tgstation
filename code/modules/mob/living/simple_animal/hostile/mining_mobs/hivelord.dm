@@ -73,7 +73,6 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	is_flying_animal = TRUE
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -92,6 +91,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 
 //Legion
@@ -143,7 +143,7 @@
 	dwarf_mob = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
+	visible_message(span_warning("The skulls on [src] wail in anger as they flee from their dying host!"))
 	var/turf/T = get_turf(src)
 	if(T)
 		if(stored_mob)
@@ -213,9 +213,9 @@
 
 ///Create a new legion using the supplied human H
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
-	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
+	visible_message(span_warning("[name] burrows into the flesh of [H]!"))
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = make_legion(H)
-	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
+	visible_message(span_warning("[L] staggers to [L.p_their()] feet!"))
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H

@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/launchpad,
 		/obj/machinery/disposal,
 		/obj/structure/disposalpipe,
+		/obj/item/mail,
 		/obj/item/hilbertshotel,
 		/obj/machinery/camera,
 		/obj/item/gps,
@@ -81,6 +82,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
+		create_mail()
 	. = ..() // Fly/enter transit.
 	if(. != DOCKING_SUCCESS)
 		return
@@ -196,6 +198,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SO.generateCombo(miscboxes[I], I, misc_contents[I])
 		qdel(SO)
 
+	SSeconomy.import_total += value
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
@@ -229,8 +232,30 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		msg += export_text + "\n"
 		D.adjust_money(ex.total_value[E])
 
+	SSeconomy.export_total += (D.account_balance - presale_points)
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+
+/*
+	Generates a box of mail depending on our exports and imports.
+	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
+	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
+*/
+/obj/docking_port/mobile/supply/proc/create_mail()
+	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
+	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked)
+		return
+
+	//spawn crate
+	var/list/empty_turfs = list()
+	for(var/place as anything in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/turf/open/floor/shuttle_floor in shuttle_area)
+			if(shuttle_floor.is_blocked_turf())
+				continue
+			empty_turfs += shuttle_floor
+
+	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

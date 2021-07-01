@@ -56,7 +56,7 @@
  * Displays a message, spawns a human venus trap, then qdels itself.
  */
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
-	visible_message("<span class='danger'>The plant has borne fruit!</span>")
+	visible_message(span_danger("The plant has borne fruit!"))
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
 	qdel(src)
 
@@ -72,13 +72,20 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "A thick vine, painful to the touch."
 
-/obj/effect/ebeam/vine/Crossed(atom/movable/AM)
+/obj/effect/ebeam/vine/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/ebeam/vine/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
 			L.adjustBruteLoss(5)
-			to_chat(L, "<span class='alert'>You cut yourself on the thorny vines.</span>")
+			to_chat(L, span_alert("You cut yourself on the thorny vines."))
 
 /**
  * Venus Human Trap
@@ -170,7 +177,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/Login()
 	. = ..()
-	to_chat(src, "<span class='boldwarning'>You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!</span>")
+	to_chat(src, span_boldwarning("You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"))
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
@@ -189,11 +196,11 @@
 /mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
 	if(key || !playable_plant || stat)
 		return
-	var/plant_ask = alert("Become a venus human trap?", "Are you reverse vegan?", "Yes", "No")
+	var/plant_ask = tgui_alert(usr,"Become a venus human trap?", "Are you reverse vegan?", list("Yes", "No"))
 	if(plant_ask == "No" || QDELETED(src))
 		return
 	if(key)
-		to_chat(user, "<span class='warning'>Someone else already took this plant!</span>")
+		to_chat(user, span_warning("Someone else already took this plant!"))
 		return
 	key = user.key
 	log_game("[key_name(src)] took control of [name].")
@@ -223,4 +230,6 @@
  * * datum/beam/vine - The vine to be removed from the list.
  */
 /mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine)
+	SIGNAL_HANDLER
+
 	vines -= vine

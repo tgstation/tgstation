@@ -4,7 +4,7 @@
  * Used for broken glass, cactuses and four sided dice.
  */
 /datum/element/caltrop
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
 
 	///Minimum damage done when crossed
@@ -19,6 +19,11 @@
 	///Miscelanous caltrop flags; shoe bypassing, walking interaction, silence
 	var/flags
 
+	///given to connect_loc to listen for something moving over target
+	var/static/list/crossed_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+
 /datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE)
 	. = ..()
 	if(!isatom(target))
@@ -29,18 +34,21 @@
 	src.probability = probability
 	src.flags = flags
 
-	RegisterSignal(target, COMSIG_MOVABLE_CROSSED, .proc/Crossed)
+	if(ismovable(target))
+		AddElement(/datum/element/connect_loc_behalf, target, crossed_connections)
+	else
+		RegisterSignal(get_turf(target), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-/datum/element/caltrop/proc/Crossed(atom/caltrop, atom/movable/AM)
+/datum/element/caltrop/proc/on_entered(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
 	if(!prob(probability))
 		return
 
-	if(!ishuman(AM))
+	if(!ishuman(arrived))
 		return
 
-	var/mob/living/carbon/human/H = AM
+	var/mob/living/carbon/human/H = arrived
 	if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 		return
 
@@ -76,8 +84,15 @@
 
 	if(!(flags & CALTROP_SILENT) && !H.has_status_effect(/datum/status_effect/caltropped))
 		H.apply_status_effect(/datum/status_effect/caltropped)
-		H.visible_message("<span class='danger'>[H] steps on [caltrop].</span>", \
-					"<span class='userdanger'>You step on [caltrop]!</span>")
+		H.visible_message(
+			span_danger("[H] steps on [source]."),
+			span_userdanger("You step on [source]!")
+		)
 
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 	H.Paralyze(60)
+
+/datum/element/caltrop/Detach(datum/target)
+	. = ..()
+	if(ismovable(target))
+		RemoveElement(/datum/element/connect_loc_behalf, target, crossed_connections)

@@ -5,6 +5,7 @@
 	icon_state = "screwdriver_map"
 	inhand_icon_state = "screwdriver"
 	worn_icon_state = "screwdriver"
+	belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -25,6 +26,10 @@
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
+	greyscale_config = /datum/greyscale_config/screwdriver
+	greyscale_config_inhand_left = /datum/greyscale_config/screwdriver_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/screwdriver_inhand_right
+	greyscale_config_belt = /datum/greyscale_config/screwdriver_belt
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -37,32 +42,17 @@
 		"cyan" = "#18a2d5",
 		"yellow" = "#ffa500"
 	)
-	/// Colored belt appearance for adding it as a belt overlay
-	var/mutable_appearance/colored_belt_appearance
 
 /obj/item/screwdriver/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/Initialize()
 	if(random_color)
-		set_greyscale_config(/datum/greyscale_config/screwdriver)
 		var/our_color = pick(screwdriver_colors)
-		set_greyscale_colors(list(screwdriver_colors[our_color]))
-		inhand_icon_state = null
-		lefthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors)
-		righthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors)
-		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
+		set_greyscale(colors=list(screwdriver_colors[our_color]))
 	. = ..()
 	AddElement(/datum/element/eyestab)
-	if(prob(75))
-		pixel_y = rand(0, 16)
-
-/obj/item/screwdriver/get_belt_overlay()
-	if(random_color)
-		return colored_belt_appearance
-	else
-		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
@@ -73,6 +63,8 @@
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
@@ -97,6 +89,8 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.7
 	random_color = FALSE
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 
 /obj/item/screwdriver/power/examine()
 	. = ..()
@@ -104,9 +98,9 @@
 
 /obj/item/screwdriver/power/suicide_act(mob/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
-		user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
 	return(BRUTELOSS)
 
@@ -114,11 +108,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
-		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
+		to_chat(user, span_notice("You attach the bolt bit to [src]."))
 		icon_state = "drill_bolt"
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
+		to_chat(user, span_notice("You attach the screw bit to [src]."))
 		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg
