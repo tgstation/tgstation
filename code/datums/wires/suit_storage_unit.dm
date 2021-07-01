@@ -11,8 +11,6 @@
 	..()
 
 /datum/wires/suit_storage_unit/interactable(mob/user)
-	if(!..())
-		return FALSE
 	var/obj/machinery/suit_storage_unit/SSU = holder
 	if(SSU.panel_open)
 		return TRUE

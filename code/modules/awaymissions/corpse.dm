@@ -20,8 +20,7 @@
 	var/short_desc = "The mapper forgot to set this!"
 	var/flavour_text = ""
 	var/important_info = ""
-	/// Lazy string list of factions that the spawned mob will be in upon spawn
-	var/list/faction
+	var/faction = null
 	var/permanent = FALSE //If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE //Don't set a name or gender, just go random
 	var/antagonist_type
@@ -36,39 +35,32 @@
 	var/show_flavour = TRUE
 	var/banType = ROLE_LAVALAND
 	var/ghost_usable = TRUE
-	// If the spawner is ready to function at the moment
-	var/ready = TRUE
-	/// If the spawner uses radials
-	var/radial_based = FALSE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
-	if(!radial_based)
-		var/ghost_role = tgui_alert(usr, "Become [mob_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
-		if(ghost_role == "No" || !loc || QDELETED(user))
-			return
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
+	if(ghost_role == "No" || !loc || QDELETED(user))
+		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
-		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
+		to_chat(user, "<span class='warning'>An admin has temporarily disabled non-admin ghost roles!</span>")
 		return
 	if(!uses)
-		to_chat(user, span_warning("This spawner is out of charges!"))
+		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
 	if(is_banned_from(user.key, banType))
-		to_chat(user, span_warning("You are jobanned!"))
+		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	if(!allow_spawn(user))
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
 	log_game("[key_name(user)] became [mob_name]")
-	create(user)
+	create(ckey = user.ckey)
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
-	if(faction)
-		faction = string_list(faction)
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
@@ -91,12 +83,12 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(mob/user, newname)
+/obj/effect/mob_spawn/proc/create(ckey, newname)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random || newname)
 		if(newname)
 			M.real_name = newname
-		else if(!M.unique_name)
+		else
 			M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
@@ -105,7 +97,7 @@
 			var/mob/living/carbon/human/hoomie = M
 			hoomie.body_type = mob_gender
 	if(faction)
-		M.faction = faction
+		M.faction = list(faction)
 	if(disease)
 		M.ForceContractDisease(new disease)
 	if(death)
@@ -117,14 +109,14 @@
 	M.color = mob_color
 	equip(M)
 
-	if(user?.ckey)
-		M.ckey = user.ckey
+	if(ckey)
+		M.ckey = ckey
 		if(show_flavour)
-			var/output_message = "<span class='infoplain'><span class='big bold'>[short_desc]</span></span>"
+			var/output_message = "<span class='big bold'>[short_desc]</span>"
 			if(flavour_text != "")
-				output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
+				output_message += "\n<span class='bold'>[flavour_text]</span>"
 			if(important_info != "")
-				output_message += "\n[span_userdanger("[important_info]")]"
+				output_message += "\n<span class='userdanger'>[important_info]</span>"
 			to_chat(M, output_message)
 		var/datum/mind/MM = M.mind
 		var/datum/antagonist/A
@@ -274,7 +266,7 @@
 
 //Non-human spawners
 
-/obj/effect/mob_spawn/AICorpse/create(mob/user) //Creates a corrupted AI
+/obj/effect/mob_spawn/AICorpse/create(ckey) //Creates a corrupted AI
 	var/A = locate(/mob/living/silicon/ai) in loc
 	if(A)
 		return
@@ -294,7 +286,7 @@
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
 
-/obj/effect/mob_spawn/facehugger/create(mob/user) //Creates a squashed facehugger
+/obj/effect/mob_spawn/facehugger/create(ckey) //Creates a squashed facehugger
 	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
 	O.Die() //call the facehugger's death proc

@@ -18,13 +18,6 @@
 
 	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 
-	mail_goodies = list(
-		/obj/item/reagent_containers/food/drinks/bottle/holywater = 30,
-		/obj/item/toy/plush/awakenedplushie = 10,
-		/obj/item/grenade/chem_grenade/holy = 5,
-		/obj/item/toy/plush/narplush = 2,
-		/obj/item/toy/plush/ratplush = 1
-	)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	. = ..()
@@ -41,7 +34,7 @@
 			B.icon_state = GLOB.bible_icon_state
 		if(GLOB.bible_inhand_icon_state)
 			B.inhand_icon_state = GLOB.bible_inhand_icon_state
-		to_chat(H, span_boldnotice("There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain."))
+		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.</span>")
 		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
@@ -62,49 +55,69 @@
 
 	B.deity_name = new_deity
 
-	var/new_bible = DEFAULT_BIBLE
-	if(M.client && M.client.prefs.custom_names["bible"])
-		new_bible = M.client.prefs.custom_names["bible"]
-
 	switch(lowertext(new_religion))
-		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
-			new_bible = pick("Guys Gone Wild","Coming Out of The Closet","War of Cocks")
-			switch(new_bible)
-				if("War of Cocks")
-					B.deity_name = pick("Dick Powers", "King Cock")
-				else
-					B.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
+		if("christianity") // DEFAULT_RELIGION
+			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+		if("buddhism")
+			B.name = "The Sutras"
+		if("clownism","honkmother","honk","honkism","comedy")
+			B.name = pick("The Holy Joke Book", "Just a Prank", "Hymns to the Honkmother")
+		if("chaos")
+			B.name = "The Book of Lorgar"
+		if("cthulhu")
+			B.name = "The Necronomicon"
+		if("hinduism")
+			B.name = "The Vedas"
+		if("homosexuality")
+			B.name = pick("Guys Gone Wild","Coming Out of The Closet")
+		if("imperium")
+			B.name = "Uplifting Primer"
+		if("islam")
+			B.name = "Quran"
+		if("judaism")
+			B.name = "The Torah"
+		if("lampism")
+			B.name = "Fluorescent Incandescence"
+		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
+			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition","F.A.T.A.L. Rulebook")
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
-		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes")
-			new_bible = pick("Woody's Got Wood: The Aftermath", "Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook")
-			switch(new_bible)
-				if("Woody's Got Wood: The Aftermath")
-					B.deity_name = pick("Woody", "Andy", "Cherry Flavored Lube")
-				if("Sweet Bro and Hella Jeff: Expanded Edition")
-					B.deity_name = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
-				if("F.A.T.A.L. Rulebook")
-					B.deity_name = "Twenty Ten-Sided Dice"
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
+		if("monkeyism","apism","gorillism","primatism")
+			B.name = pick("Going Bananas", "Bananas Out For Harambe")
+		if("mormonism")
+			B.name = "The Book of Mormon"
+		if("pastafarianism")
+			B.name = "The Gospel of the Flying Spaghetti Monster"
+		if("rastafarianism","rasta")
+			B.name = "The Holy Piby"
+		if("satanism")
+			B.name = "The Unholy Bible"
+		if("sikhism")
+			B.name = "Guru Granth Sahib"
+		if("science")
+			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+		if("scientology")
+			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
 		if("servicianism", "partying")
+			B.name = "The Tenets of Servicia"
+			B.deity_name = pick("Servicia", "Space Bacchus", "Space Dionysus")
 			B.desc = "Happy, Full, Clean. Live it and give it."
+		if("subgenius")
+			B.name = "Book of the SubGenius"
+		if("toolboxia","greytide")
+			B.name = pick("Toolbox Manifesto","iGlove Assistants")
 		if("weeaboo","kawaii")
-			new_bible = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
-			B.deity_name = "Anime"
+			B.name = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
 		else
-			if(new_bible == DEFAULT_BIBLE)
-				new_bible = "The Holy Book of [new_religion]"
-
-	B.name = new_bible
+			B.name = "The Holy Book of [new_religion]"
 
 	GLOB.religion = new_religion
-	GLOB.bible_name = new_bible
+	GLOB.bible_name = B.name
 	GLOB.deity = B.deity_name
 
 	H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 
 	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
-	SSblackbox.record_feedback("text", "religion_bible", 1, "[new_bible]", 1)
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"

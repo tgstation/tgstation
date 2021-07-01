@@ -130,14 +130,14 @@
 	var/msg = "[victim.p_they(TRUE)] [victim.p_have()] [description] on [victim.p_their()] [precise_location]."
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
-			msg = span_tinynoticeital("[msg]")
+			msg = "<span class='tinynoticeital'>[msg]</span>"
 		if(WOUND_SEVERITY_SEVERE)
-			msg = span_smallnoticeital("[msg]")
+			msg = "<span class='smallnoticeital'>[msg]</span>"
 		if(WOUND_SEVERITY_CRITICAL)
-			msg = span_smallnoticeital("<b>[msg]</b>")
+			msg = "<span class='smallnoticeital'><b>[msg]</b></span>"
 		if(WOUND_SEVERITY_LOSS)
 			msg = "[victim.p_their(TRUE)] [limb.name] [description]." // different format
-			msg = span_notice("<i><b>[msg]</b></i>")
+			msg = "<span class='notice'><i><b>[msg]</b></i></span>"
 	return "\t[msg]"
 
 /// Whether a scar can currently be seen by the viewer

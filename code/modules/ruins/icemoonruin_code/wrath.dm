@@ -25,7 +25,6 @@
 	butchering.butchering_enabled = FALSE
 
 /obj/item/clothing/gloves/butchering/proc/butcher_target(mob/user, atom/target, proximity)
-	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
 	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)

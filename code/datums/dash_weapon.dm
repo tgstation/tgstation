@@ -6,6 +6,7 @@
 	var/current_charges = 1
 	var/max_charges = 1
 	var/charge_rate = 250
+	var/mob/living/carbon/human/holder
 	var/obj/item/dashing_item
 	var/dash_sound = 'sound/magic/blink.ogg'
 	var/recharge_sound = 'sound/magic/charge.ogg'
@@ -16,10 +17,7 @@
 /datum/action/innate/dash/Grant(mob/user, obj/dasher)
 	. = ..()
 	dashing_item = dasher
-
-/datum/action/innate/dash/Destroy()
-	dashing_item = null
-	return ..()
+	holder = user
 
 /datum/action/innate/dash/IsAvailable()
 	if(current_charges > 0)
@@ -28,7 +26,7 @@
 		return FALSE
 
 /datum/action/innate/dash/Activate()
-	dashing_item.attack_self(owner) //Used to toggle dash behavior in the dashing item
+	dashing_item.attack_self(holder) //Used to toggle dash behavior in the dashing item
 
 /datum/action/innate/dash/proc/Teleport(mob/user, atom/target)
 	if(!IsAvailable())
@@ -41,12 +39,12 @@
 		var/obj/spot2 = new phasein(get_turf(user), user.dir)
 		spot1.Beam(spot2,beam_effect,time=2 SECONDS)
 		current_charges--
-		owner.update_action_buttons_icon()
+		holder.update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
 /datum/action/innate/dash/proc/charge()
 	current_charges = clamp(current_charges + 1, 0, max_charges)
-	owner.update_action_buttons_icon()
+	holder.update_action_buttons_icon()
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, TRUE)
-	to_chat(owner, span_notice("[src] now has [current_charges]/[max_charges] charges."))
+	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")

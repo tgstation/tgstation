@@ -23,10 +23,10 @@
 	mouse_control_probability = 100
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef."))
+	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef.</span>")
 	user.say("Bork Bork Bork!", forced = "chef hat suicide")
 	sleep(20)
-	user.visible_message(span_suicide("[user] climbs into an imaginary oven!"))
+	user.visible_message("<span class='suicide'>[user] climbs into an imaginary oven!</span>")
 	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
 	return(FIRELOSS)
@@ -96,7 +96,7 @@
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to take a candy corn.")
+	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	. = ..()
@@ -105,10 +105,10 @@
 	if(candy_cooldown < world.time)
 		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
 		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
+		to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
 		candy_cooldown = world.time+1200
 	else
-		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
 
 
 //Mime
@@ -194,22 +194,22 @@
 		return TRUE
 	switch(mode)
 		if(DRILL_DEFAULT)
-			to_chat(user, span_notice("You set the voice circuit to the middle position."))
+			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
 			mode = DRILL_SHOUTING
 		if(DRILL_SHOUTING)
-			to_chat(user, span_notice("You set the voice circuit to the last position."))
+			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
 			mode = DRILL_YELLING
 		if(DRILL_YELLING)
-			to_chat(user, span_notice("You set the voice circuit to the first position."))
+			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
 			mode = DRILL_DEFAULT
 		if(DRILL_CANADIAN)
-			to_chat(user, span_danger("You adjust voice circuit but nothing happens, probably because it's broken."))
+			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
 	return TRUE
 
 /obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
 	..()
 	if(mode != DRILL_CANADIAN)
-		to_chat(user, span_danger("You broke the voice circuit!"))
+		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
 		mode = DRILL_CANADIAN
 	return TRUE
 
@@ -225,7 +225,6 @@
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
-	SIGNAL_HANDLER
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		switch (mode)

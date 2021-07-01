@@ -68,14 +68,14 @@
 		var/obj/item/keycard/key = I
 		if((!puzzle_id || puzzle_id == key.puzzle_id)  && density)
 			if(open_message)
-				to_chat(user, span_notice("[open_message]"))
+				to_chat(user, "<span class='notice'>[open_message]</span>")
 			open()
 			return
 		else if(puzzle_id != key.puzzle_id)
-			to_chat(user, span_notice("[src] buzzes. This must not be the right key."))
+			to_chat(user, "<span class='notice'>[src] buzzes. This must not be the right key.</span>")
 			return
 		else
-			to_chat(user, span_notice("This door doesn't appear to close."))
+			to_chat(user, "<span class='notice'>This door doesn't appear to close.</span>")
 			return
 
 //Test doors. Gives admins a few doors to use quickly should they so choose for events.
@@ -122,12 +122,13 @@
 
 /obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
+
 	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
-		. += span_notice("This one appears to be spent already.")
+		. += "<span class='notice'>This one appears to be spent already.</span>"
 
 /obj/item/pressure_plate/hologrid/trigger()
 	if(!claimed)
@@ -136,7 +137,7 @@
 	icon_state = "lasergrid_full"
 	claimed = TRUE
 
-/obj/item/pressure_plate/hologrid/on_entered(datum/source, atom/movable/AM)
+/obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
 	. = ..()
 	if(trigger_item && istype(AM, specific_item) && !claimed)
 		AM.set_anchored(TRUE)

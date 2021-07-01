@@ -68,16 +68,6 @@
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/poutine
-	name = "Poutine"
-	reqs = list(
-		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1,
-		/datum/reagent/consumable/gravy = 3
-	)
-	result = /obj/item/food/poutine
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/beans
 	name = "Beans"
 	time = 40
@@ -94,6 +84,19 @@
 		/obj/item/food/grown/eggplant = 1
 	)
 	result = /obj/item/food/eggplantparm
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/melonfruitbowl
+	name ="Melon fruit bowl"
+	reqs = list(
+		/obj/item/food/grown/watermelon = 1,
+		/obj/item/food/grown/apple = 1,
+		/obj/item/food/grown/citrus/orange = 1,
+		/obj/item/food/grown/citrus/lemon = 1,
+		/obj/item/food/grown/banana = 1,
+		/obj/item/food/grown/ambrosia = 1
+	)
+	result = /obj/item/food/melonfruitbowl
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/melonkeg
@@ -146,17 +149,6 @@
 		/obj/item/food/salad/boiledrice = 1
 	)
 	result = /obj/item/food/salad/ricepudding
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/risotto
-	name = "Risotto"
-	reqs = list(
-		/obj/item/food/cheese = 1,
-		/datum/reagent/consumable/ethanol/wine = 5,
-		/obj/item/food/salad/boiledrice = 1,
-		/obj/item/food/grown/mushroom/chanterelle = 1
-	)
-	result = /obj/item/food/salad/risotto
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!

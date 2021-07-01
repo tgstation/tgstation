@@ -41,7 +41,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	base_icon_state = "standard"
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
 	var/uses_stored = TRUE
@@ -253,7 +252,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				toggle_on()
 				return TRUE
 			else
-				to_chat(usr, span_warning("It has to be secured first!"))
+				to_chat(usr, "<span class='warning'>It has to be secured first!</span>")
 		if("authweapon")
 			turret_flags ^= TURRET_FLAG_AUTH_WEAPONS
 			return TRUE
@@ -300,19 +299,19 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(I.tool_behaviour == TOOL_CROWBAR)
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
-			to_chat(user, span_notice("You begin prying the metal coverings off..."))
+			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
 			if(I.use_tool(src, user, 20))
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
 						stored_gun = null
-					to_chat(user, span_notice("You remove the turret and salvage some components."))
+					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(prob(50))
 						new /obj/item/stack/sheet/iron(loc, rand(1,4))
 					if(prob(50))
 						new /obj/item/assembly/prox_sensor(loc)
 				else
-					to_chat(user, span_notice("You remove the turret but did not manage to salvage anything."))
+					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
 
 	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
@@ -324,13 +323,13 @@ DEFINE_BITFIELD(turret_flags, list(
 			set_anchored(TRUE)
 			invisibility = INVISIBILITY_MAXIMUM
 			update_appearance()
-			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
+			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
 			set_anchored(FALSE)
-			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
+			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			power_change()
 			invisibility = 0
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
@@ -339,23 +338,23 @@ DEFINE_BITFIELD(turret_flags, list(
 		//Behavior lock/unlock mangement
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
+			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
-			to_chat(user, span_alert("Access denied."))
+			to_chat(user, "<span class='alert'>Access denied.</span>")
 	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
 		if(!multitool_check_buffer(user, I))
 			return
 		var/obj/item/multitool/M = I
 		M.buffer = src
-		to_chat(user, span_notice("You add [src] to multitool buffer."))
+		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
 	else
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_warning("You short out [src]'s threat assessment circuits."))
-	audible_message(span_hear("[src] hums oddly..."))
+	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+	audible_message("<span class='hear'>[src] hums oddly...</span>")
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	toggle_on(FALSE) //turns off the turret temporarily
@@ -687,7 +686,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return FALSE
 	if(remote_controller)
 		if(warning_message)
-			to_chat(remote_controller, span_warning("Your uplink to [src] has been severed!"))
+			to_chat(remote_controller, "<span class='warning'>Your uplink to [src] has been severed!</span>")
 		quit_action.Remove(remote_controller)
 		toggle_action.Remove(remote_controller)
 		remote_controller.click_intercept = null
@@ -911,8 +910,8 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && !(machine_stat & BROKEN))
-		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
-					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
+		. += {"<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>
+					<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>"}
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(machine_stat & BROKEN)
@@ -924,7 +923,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
-			to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
+			to_chat(user, "<span class='notice'>You link \the [M.buffer] with \the [src].</span>")
 			return
 
 	if (issilicon(user))
@@ -933,18 +932,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	if ( get_dist(src, user) == 0 ) // trying to unlock the interface
 		if (allowed(usr))
 			if(obj_flags & EMAGGED)
-				to_chat(user, span_warning("The turret control is unresponsive!"))
+				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
 				return
 
 			locked = !locked
-			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>")
 		else
-			to_chat(user, span_alert("Access denied."))
+			to_chat(user, "<span class='alert'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_notice("You short out the turret controls' access analysis module."))
+	to_chat(user, "<span class='notice'>You short out the turret controls' access analysis module.</span>")
 	obj_flags |= EMAGGED
 	locked = FALSE
 
@@ -952,7 +951,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!ailock || isAdminGhostAI(user))
 		return attack_hand(user)
 	else
-		to_chat(user, span_warning("There seems to be a firewall preventing you from accessing this device!"))
+		to_chat(user, "<span class='warning'>There seems to be a firewall preventing you from accessing this device!</span>")
 
 /obj/machinery/turretid/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -979,7 +978,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			if(!usr.has_unlimited_silicon_privilege)
 				return
 			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
-				to_chat(usr, span_warning("The turret control is unresponsive!"))
+				to_chat(usr, "<span class='warning'>The turret control is unresponsive!</span>")
 				return
 			locked = !locked
 			return TRUE

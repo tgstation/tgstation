@@ -74,27 +74,27 @@
 
 /obj/structure/canister_frame/machine/examine(user)
 	. = ..()
-	. += span_notice("It can be dismantled by removing the <b>bolts</b>.")
+	. += "<span class='notice'>It can be dismantled by removing the <b>bolts</b>.</span>"
 
 	if(ispath(next_tier))
 		var/item_name = initial(next_tier_reqitem.singular_name)
 		if(!item_name)
 			item_name = initial(next_tier_reqitem.name)
 		if(next_tier_reqitem_am > 1)
-			. += span_notice("It can be improved using [next_tier_reqitem_am] [item_name]\s.")
+			. += "<span class='notice'>It can be improved using [next_tier_reqitem_am] [item_name]\s.</span>"
 		else
-			. += span_notice("It can be improved using \a [item_name].")
+			. += "<span class='notice'>It can be improved using \a [item_name].</span>"
 
 	if(ispath(finished_obj))
-		. += span_notice("It can be finished off by <b>screwing</b> it together.")
+		. += "<span class='notice'>It can be finished off by <b>screwing</b> it together.</span>"
 
 /obj/structure/canister_frame/machine/attackby(obj/item/S, mob/user, params)
 	if (ispath(next_tier) && istype(S, next_tier_reqitem))
 		var/obj/item/stack/ST = S
 		var/reqitem_name = ST.singular_name ? ST.singular_name : ST.name
-		to_chat(user, span_notice("You start adding [next_tier_reqitem_am] [reqitem_name]\s to the frame..."))
+		to_chat(user, "<span class='notice'>You start adding [next_tier_reqitem_am] [reqitem_name]\s to the frame...</span>")
 		if (ST.use_tool(src, user, 2 SECONDS, amount=next_tier_reqitem_am, volume=50))
-			to_chat(user, span_notice("You added [next_tier_reqitem_am] [reqitem_name]\s to the frame, turning it into \a [initial(next_tier.name)]."))
+			to_chat(user, "<span class='notice'>You added [next_tier_reqitem_am] [reqitem_name]\s to the frame, turning it into \a [initial(next_tier.name)].</span>")
 			new next_tier(drop_location())
 			qdel(src)
 		return
@@ -105,9 +105,9 @@
 	if(..())
 		return
 	if(ispath(finished_obj))
-		to_chat(user, span_notice("You start tightening the screws on \the [src]."))
+		to_chat(user, "<span class='notice'>You start tightening the screws on \the [src].</span>")
 		if (I.use_tool(src, user, 2 SECONDS, volume=50))
-			to_chat(user, span_notice("You tighten the last screws on \the [src]."))
+			to_chat(user, "<span class='notice'>You tighten the last screws on \the [src].</span>")
 			new finished_obj(drop_location())
 			qdel(src)
 		return
@@ -117,7 +117,7 @@
 	. = TRUE
 	if(..())
 		return
-	to_chat(user, span_notice("You start to dismantle \the [src]..."))
+	to_chat(user, "<span class='notice'>You start to dismantle \the [src]...</span>")
 	if (I.use_tool(src, user, 2 SECONDS, volume=50))
-		to_chat(user, span_notice("You dismantle \the [src]."))
+		to_chat(user, "<span class='notice'>You dismantle \the [src].</span>")
 		deconstruct()

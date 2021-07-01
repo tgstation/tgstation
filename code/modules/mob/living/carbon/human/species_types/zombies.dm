@@ -3,7 +3,7 @@
 /datum/species/zombie
 	// 1spooky
 	name = "High-Functioning Zombie"
-	id = SPECIES_ZOMBIE_HALLOWEEN
+	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
@@ -42,7 +42,7 @@
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
-	id = SPECIES_ZOMBIE
+	id = "memezombies"
 	limbs_id = "zombie"
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
@@ -111,7 +111,7 @@
 // Your skin falls off
 /datum/species/krokodil_addict
 	name = "Human"
-	id = SPECIES_ADDICT
+	id = "goofzombies"
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie

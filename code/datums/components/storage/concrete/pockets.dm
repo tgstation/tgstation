@@ -8,9 +8,9 @@
 	. = ..()
 	if(. && silent && !prevent_warning)
 		if(quickdraw)
-			to_chat(user, span_notice("You discreetly slip [I] into [parent]. Right-click [parent] to remove it."))
+			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent]. Alt-click [parent] to remove it.</span>")
 		else
-			to_chat(user, span_notice("You discreetly slip [I] into [parent]."))
+			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent].</span>")
 
 /datum/component/storage/concrete/pockets/small
 	max_items = 1

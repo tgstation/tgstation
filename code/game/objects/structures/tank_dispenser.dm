@@ -54,17 +54,17 @@
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(!user.combat_mode)
-		to_chat(user, span_notice("[I] does not fit into [src]."))
+		to_chat(user, "<span class='notice'>[I] does not fit into [src].</span>")
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, span_notice("[src] can't hold any more of [I]."))
+		to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	to_chat(user, span_notice("You put [I] in [src]."))
+	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	update_appearance()
 
 /obj/structure/tank_dispenser/ui_state(mob/user)

@@ -126,7 +126,7 @@
 	if(!can_use(user))
 		return
 	if(current_user)
-		to_chat(user, span_warning("The console is already in use!"))
+		to_chat(user, "<span class='warning'>The console is already in use!</span>")
 		return
 	var/mob/living/L = user
 	if(!eyeobj)
@@ -136,7 +136,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static != FALSE)
+		if(eyeobj.use_static != USE_STATIC_NONE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -195,7 +195,7 @@
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
-	return TRUE
+	return 1
 
 /mob/camera/ai_eye/remote/Destroy()
 	if(origin && eye_user)
@@ -215,19 +215,16 @@
 		return TRUE
 	return FALSE
 
-/mob/camera/ai_eye/remote/setLoc(destination)
+/mob/camera/ai_eye/remote/setLoc(T)
 	if(eye_user)
-		destination = get_turf(destination)
-		if (destination)
-			abstract_move(destination)
+		T = get_turf(T)
+		if (T)
+			forceMove(T)
 		else
 			moveToNullspace()
-
 		update_ai_detect_hud()
-
-		if(use_static)
+		if(use_static != USE_STATIC_NONE)
 			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
-
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
@@ -316,9 +313,9 @@
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
 	if(remote_eye.zMove(UP, FALSE))
-		to_chat(user_mob, span_notice("You move upwards."))
+		to_chat(user_mob, "<span class='notice'>You move upwards.</span>")
 	else
-		to_chat(user_mob, span_notice("You couldn't move upwards!"))
+		to_chat(user_mob, "<span class='notice'>You couldn't move upwards!</span>")
 
 /datum/action/innate/camera_multiz_down
 	name = "Move down a floor"
@@ -331,6 +328,6 @@
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
 	if(remote_eye.zMove(DOWN, FALSE))
-		to_chat(user_mob, span_notice("You move downwards."))
+		to_chat(user_mob, "<span class='notice'>You move downwards.</span>")
 	else
-		to_chat(user_mob, span_notice("You couldn't move downwards!"))
+		to_chat(user_mob, "<span class='notice'>You couldn't move downwards!</span>")

@@ -42,7 +42,7 @@
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)
-		return tank.return_air()
+		return tank.air_contents
 	else
 		return loc.return_air()
 

@@ -32,7 +32,7 @@
 	host = null
 	last_host_loc = null
 	hasprox_receiver = null
-	QDEL_LAZYLIST(checkers)
+	QDEL_LIST(checkers)
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
@@ -69,7 +69,7 @@
 			if(old_checkers_len)
 				pc = checkers_local[old_checkers_len]
 				--checkers_local.len
-				QDEL_LAZYLIST(checkers_local)
+				QDEL_LIST(checkers_local)
 			else
 				pc = new(loc_to_use, src)
 
@@ -107,21 +107,12 @@
 	else
 		stack_trace("proximity_checker created without host")
 		return INITIALIZE_HINT_QDEL
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-		COMSIG_ATOM_EXITED =.proc/on_uncrossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/effect/abstract/proximity_checker/proc/on_uncrossed(datum/source, atom/movable/gone, direction)
-	SIGNAL_HANDLER
-	return
 
 /obj/effect/abstract/proximity_checker/Destroy()
-	LAZYREMOVE(monitor.checkers, src)
 	monitor = null
 	return ..()
 
-/obj/effect/abstract/proximity_checker/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
+/obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
+	set waitfor = FALSE
+	. = ..()
 	monitor?.hasprox_receiver?.HasProximity(AM)

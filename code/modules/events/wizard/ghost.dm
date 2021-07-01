@@ -6,7 +6,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/ghost/start()
-	var/msg = span_warning("You suddenly feel extremely obvious...")
+	var/msg = "<span class='warning'>You suddenly feel extremely obvious...</span>"
 	set_observer_default_invisibility(0, msg)
 
 

@@ -74,7 +74,7 @@
 	if(isliving(usr))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	if(!allowed(usr))
-		to_chat(usr, span_warning("Access denied."))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 	switch(action)
 		if("scan_teleporter")
@@ -99,13 +99,13 @@
 			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)
-				to_chat(usr, span_alert("The teleporter must be unlocked first."))
+				to_chat(usr, "<span class='alert'>The teleporter must be unlocked first.</span>")
 				return
 			teleporter.toggle_open()
 			return TRUE
 		if("teleporter_lock")
 			if(teleporter.state_open)
-				to_chat(usr, span_alert("The teleporter must be closed first."))
+				to_chat(usr, "<span class='alert'>The teleporter must be closed first.</span>")
 				return
 			teleporter.locked = !teleporter.locked
 			return TRUE
@@ -144,7 +144,7 @@
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
-	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
+	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(teleporter.locked)

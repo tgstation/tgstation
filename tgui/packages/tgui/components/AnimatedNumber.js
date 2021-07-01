@@ -63,7 +63,7 @@ export class AnimatedNumber extends Component {
     if (!isSafeNumber(targetValue)) {
       return targetValue || null;
     }
-    let formattedValue;
+    let formattedValue = currentValue;
     // Use custom formatter
     if (format) {
       formattedValue = format(currentValue);

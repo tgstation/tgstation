@@ -10,8 +10,6 @@
 	..()
 
 /datum/wires/radio/interactable(mob/user)
-	if(!..())
-		return FALSE
 	var/obj/item/radio/R = holder
 	return R.unscrewed
 

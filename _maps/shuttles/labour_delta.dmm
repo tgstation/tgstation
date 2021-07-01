@@ -10,7 +10,9 @@
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = -31
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
@@ -26,8 +28,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "f" = (
+/obj/structure/grille,
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "g" = (
@@ -40,7 +43,7 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "i" = (
@@ -94,7 +97,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/labor)
 "p" = (
@@ -125,8 +130,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/flasher/directional/east{
-	id = "gulagshuttleflasher"
+/obj/machinery/flasher{
+	id = "gulagshuttleflasher";
+	pixel_x = 25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6

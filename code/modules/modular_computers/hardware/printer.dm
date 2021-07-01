@@ -11,11 +11,11 @@
 
 /obj/item/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
-	to_chat(user, span_notice("Paper level: [stored_paper]/[max_paper]."))
+	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>")
 
 /obj/item/computer_hardware/printer/examine(mob/user)
 	. = ..()
-	. += span_notice("Paper level: [stored_paper]/[max_paper].")
+	. += "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>"
 
 
 /obj/item/computer_hardware/printer/proc/print_text(text_to_print, paper_title = "")
@@ -41,12 +41,12 @@
 /obj/item/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
 	if(istype(I, /obj/item/paper))
 		if(stored_paper >= max_paper)
-			to_chat(user, span_warning("You try to add \the [I] into [src], but its paper bin is full!"))
+			to_chat(user, "<span class='warning'>You try to add \the [I] into [src], but its paper bin is full!</span>")
 			return FALSE
 
 		if(user && !user.temporarilyRemoveItemFromInventory(I))
 			return FALSE
-		to_chat(user, span_notice("You insert \the [I] into [src]'s paper recycler."))
+		to_chat(user, "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>")
 		qdel(I)
 		stored_paper++
 		return TRUE

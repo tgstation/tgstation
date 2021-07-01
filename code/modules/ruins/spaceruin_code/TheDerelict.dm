@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/monitor/examine(mob/user)
 	. = ..()
-	. += span_notice("It appears to be powered via a cable connector.")
+	. += "<span class='notice'>It appears to be powered via a cable connector.</span>"
 
 //Checks for cable connection, charges if possible.
 /obj/machinery/computer/vaultcontroller/process()

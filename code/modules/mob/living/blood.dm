@@ -36,25 +36,25 @@
 		switch(blood_volume)
 			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
 				if(DT_PROB(7.5, delta_time))
-					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
 					inflate_gib()
 			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 				if(DT_PROB(5, delta_time))
-					to_chat(src, span_warning("You feel terribly bloated."))
+					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(DT_PROB(2.5, delta_time))
-					to_chat(src, span_warning("You feel [word]."))
+					to_chat(src, "<span class='warning'>You feel [word].</span>")
 				adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
 				if(DT_PROB(2.5, delta_time))
 					blur_eyes(6)
-					to_chat(src, span_warning("You feel very [word]."))
+					to_chat(src, "<span class='warning'>You feel very [word].</span>")
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(2.5 * delta_time)
 				if(DT_PROB(7.5, delta_time))
 					Unconscious(rand(20,60))
-					to_chat(src, span_warning("You feel extremely [word]."))
+					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 				if(!HAS_TRAIT(src, TRAIT_NODEATH))
 					death()
@@ -157,7 +157,7 @@
 				if(BLOOD_FLOW_DECREASING) // this only matters if none of the wounds fit the above two cases, included here for completeness
 					continue
 
-	to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
+	to_chat(src, "<span class='warning'>[bleeding_severity][rate_of_change]</span>")
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
 
 /mob/living/carbon/human/bleed_warn(bleed_amt = 0, forced = FALSE)
@@ -223,6 +223,7 @@
 	if(blood_id == /datum/reagent/blood) //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
+		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
 		for(var/thing in diseases)
@@ -253,7 +254,7 @@
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
 		blood_data["quirks"] = list()
-		for(var/V in quirks)
+		for(var/V in roundstart_quirks)
 			var/datum/quirk/T = V
 			blood_data["quirks"] += T.type
 		return blood_data

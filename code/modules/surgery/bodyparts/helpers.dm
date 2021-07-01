@@ -5,9 +5,10 @@
 /mob/living/carbon/get_bodypart(zone)
 	if(!zone)
 		zone = BODY_ZONE_CHEST
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
-			return bodypart
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/L = X
+		if(L.body_zone == zone)
+			return L
 
 
 /mob/living/carbon/has_hand_for_held_index(i)
@@ -43,7 +44,7 @@
 
 
 /mob/living/carbon/alien/larva/has_left_hand()
-	return TRUE
+	return 1
 
 
 /mob/proc/has_right_hand(check_disabled = TRUE)
@@ -59,7 +60,7 @@
 
 
 /mob/living/carbon/alien/larva/has_right_hand()
-	return TRUE
+	return 1
 
 
 /mob/living/proc/get_missing_limbs()
@@ -102,88 +103,90 @@
 	return disabled
 
 ///Remove a specific embedded item from the carbon mob
-/mob/living/carbon/proc/remove_embedded_object(obj/item/embedded)
-	SEND_SIGNAL(src, COMSIG_CARBON_EMBED_REMOVAL, embedded)
+/mob/living/carbon/proc/remove_embedded_object(obj/item/I)
+	SEND_SIGNAL(src, COMSIG_CARBON_EMBED_REMOVAL, I)
 
 ///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		for(var/obj/item/embedded in bodypart.embedded_objects)
-			remove_embedded_object(embedded)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/L = X
+		for(var/obj/item/I in L.embedded_objects)
+			remove_embedded_object(I)
 
 /mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		for(var/obj/item/embedded in bodypart.embedded_objects)
-			if(!include_harmless && embedded.isEmbedHarmless())
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/L = X
+		for(var/obj/item/I in L.embedded_objects)
+			if(!include_harmless && I.isEmbedHarmless())
 				continue
 			return TRUE
 
 //Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by
 /mob/living/carbon/proc/newBodyPart(zone, robotic, fixed_icon)
-	var/obj/item/bodypart/new_bodypart
+	var/obj/item/bodypart/L
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
-			new_bodypart = new /obj/item/bodypart/l_arm()
+			L = new /obj/item/bodypart/l_arm()
 		if(BODY_ZONE_R_ARM)
-			new_bodypart = new /obj/item/bodypart/r_arm()
+			L = new /obj/item/bodypart/r_arm()
 		if(BODY_ZONE_HEAD)
-			new_bodypart = new /obj/item/bodypart/head()
+			L = new /obj/item/bodypart/head()
 		if(BODY_ZONE_L_LEG)
-			new_bodypart = new /obj/item/bodypart/l_leg()
+			L = new /obj/item/bodypart/l_leg()
 		if(BODY_ZONE_R_LEG)
-			new_bodypart = new /obj/item/bodypart/r_leg()
+			L = new /obj/item/bodypart/r_leg()
 		if(BODY_ZONE_CHEST)
-			new_bodypart = new /obj/item/bodypart/chest()
-	if(new_bodypart)
-		new_bodypart.update_limb(fixed_icon, src)
+			L = new /obj/item/bodypart/chest()
+	if(L)
+		L.update_limb(fixed_icon, src)
 		if(robotic)
-			new_bodypart.change_bodypart_status(BODYPART_ROBOTIC)
-	. = new_bodypart
+			L.change_bodypart_status(BODYPART_ROBOTIC)
+	. = L
 
 /mob/living/carbon/human/newBodyPart(zone, robotic, fixed_icon)
-	var/obj/item/bodypart/bodypart
+	var/obj/item/bodypart/L
 	var/datum/species/species = dna.species
 	var/obj/item/bodypart/selected_type = species.bodypart_overides[zone]
-	bodypart = new selected_type()
-	if(bodypart)
-		bodypart.update_limb(fixed_icon, src)
+	L = new selected_type()
+	if(L)
+		L.update_limb(fixed_icon, src)
 		if(robotic)
-			bodypart.change_bodypart_status(BODYPART_ROBOTIC)
-	. = bodypart
+			L.change_bodypart_status(BODYPART_ROBOTIC)
+	. = L
 
 /mob/living/carbon/alien/larva/newBodyPart(zone, robotic, fixed_icon)
-	var/obj/item/bodypart/new_bodypart
+	var/obj/item/bodypart/L
 	switch(zone)
 		if(BODY_ZONE_HEAD)
-			new_bodypart = new /obj/item/bodypart/head/larva()
+			L = new /obj/item/bodypart/head/larva()
 		if(BODY_ZONE_CHEST)
-			new_bodypart = new /obj/item/bodypart/chest/larva()
-	if(new_bodypart)
-		new_bodypart.update_limb(fixed_icon, src)
+			L = new /obj/item/bodypart/chest/larva()
+	if(L)
+		L.update_limb(fixed_icon, src)
 		if(robotic)
-			new_bodypart.change_bodypart_status(BODYPART_ROBOTIC)
-	. = new_bodypart
+			L.change_bodypart_status(BODYPART_ROBOTIC)
+	. = L
 
 /mob/living/carbon/alien/humanoid/newBodyPart(zone, robotic, fixed_icon)
-	var/obj/item/bodypart/new_bodypart
+	var/obj/item/bodypart/L
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
-			new_bodypart = new /obj/item/bodypart/l_arm/alien()
+			L = new /obj/item/bodypart/l_arm/alien()
 		if(BODY_ZONE_R_ARM)
-			new_bodypart = new /obj/item/bodypart/r_arm/alien()
+			L = new /obj/item/bodypart/r_arm/alien()
 		if(BODY_ZONE_HEAD)
-			new_bodypart = new /obj/item/bodypart/head/alien()
+			L = new /obj/item/bodypart/head/alien()
 		if(BODY_ZONE_L_LEG)
-			new_bodypart = new /obj/item/bodypart/l_leg/alien()
+			L = new /obj/item/bodypart/l_leg/alien()
 		if(BODY_ZONE_R_LEG)
-			new_bodypart = new /obj/item/bodypart/r_leg/alien()
+			L = new /obj/item/bodypart/r_leg/alien()
 		if(BODY_ZONE_CHEST)
-			new_bodypart = new /obj/item/bodypart/chest/alien()
-	if(new_bodypart)
-		new_bodypart.update_limb(fixed_icon, src)
+			L = new /obj/item/bodypart/chest/alien()
+	if(L)
+		L.update_limb(fixed_icon, src)
 		if(robotic)
-			new_bodypart.change_bodypart_status(BODYPART_ROBOTIC)
-	. = new_bodypart
+			L.change_bodypart_status(BODYPART_ROBOTIC)
+	. = L
 
 
 /proc/skintone2hex(skin_tone)
@@ -218,34 +221,35 @@
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE
-	for(var/obj/item/bodypart/existing_bodypart as anything in bodyparts)
-		var/obj/item/bodypart/new_bodypart
-		if((!existing_bodypart.use_digitigrade && swap_back == FALSE) || (existing_bodypart.use_digitigrade && swap_back == TRUE))
-			if(existing_bodypart.body_part == LEG_LEFT)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		var/obj/item/bodypart/N
+		if((!O.use_digitigrade && swap_back == FALSE) || (O.use_digitigrade && swap_back == TRUE))
+			if(O.body_part == LEG_LEFT)
 				if(swap_back == TRUE)
-					new_bodypart = new /obj/item/bodypart/l_leg
+					N = new /obj/item/bodypart/l_leg
 				else
-					new_bodypart = new /obj/item/bodypart/l_leg/digitigrade
-			else if(existing_bodypart.body_part == LEG_RIGHT)
+					N = new /obj/item/bodypart/l_leg/digitigrade
+			else if(O.body_part == LEG_RIGHT)
 				if(swap_back == TRUE)
-					new_bodypart = new /obj/item/bodypart/r_leg
+					N = new /obj/item/bodypart/r_leg
 				else
-					new_bodypart = new /obj/item/bodypart/r_leg/digitigrade
-		if(!new_bodypart)
+					N = new /obj/item/bodypart/r_leg/digitigrade
+		if(!N)
 			continue
 		body_plan_changed = TRUE
-		existing_bodypart.drop_limb(1)
-		qdel(existing_bodypart)
-		new_bodypart.attach_limb(src) //no sanity for if this fails here because we just dropped out a limb of the same zone, SHOULD be okay
+		O.drop_limb(1)
+		qdel(O)
+		N.attach_limb(src) //no sanity for if this fails here because we just dropped out a limb of the same zone, SHOULD be okay
 	if(body_plan_changed && ishuman(src))
-		var/mob/living/carbon/human/leg_owner = src
-		if(leg_owner.w_uniform)
-			var/obj/item/clothing/under/uniform = leg_owner.w_uniform
-			if(uniform.mutantrace_variation)
+		var/mob/living/carbon/human/H = src
+		if(H.w_uniform)
+			var/obj/item/clothing/under/U = H.w_uniform
+			if(U.mutantrace_variation)
 				if(swap_back)
-					uniform.adjusted = NORMAL_STYLE
+					U.adjusted = NORMAL_STYLE
 				else
-					uniform.adjusted = DIGITIGRADE_STYLE
-				leg_owner.update_inv_w_uniform()
-		if(leg_owner.shoes && !swap_back)
-			leg_owner.dropItemToGround(leg_owner.shoes)
+					U.adjusted = DIGITIGRADE_STYLE
+				H.update_inv_w_uniform()
+		if(H.shoes && !swap_back)
+			H.dropItemToGround(H.shoes)

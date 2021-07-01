@@ -52,9 +52,9 @@
 	. = ..()
 	interrupt_operation()
 
-/obj/machinery/skill_station/Exited(atom/movable/gone, direction)
+/obj/machinery/skill_station/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
-	if(gone == inserted_skillchip)
+	if(AM == inserted_skillchip)
 		inserted_skillchip = null
 		interrupt_operation()
 
@@ -85,7 +85,7 @@
 /obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I,/obj/item/skillchip))
 		if(inserted_skillchip)
-			to_chat(user,span_notice("There's already a skillchip inside."))
+			to_chat(user,"<span class='notice'>There's already a skillchip inside.</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
@@ -125,9 +125,9 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
-		to_chat(carbon_occupant,span_notice("Operation failed! [implant_msg]"))
+		to_chat(carbon_occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
 	else
-		to_chat(carbon_occupant,span_notice("Operation complete!"))
+		to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 		inserted_skillchip = null
 
 	update_appearance()
@@ -138,7 +138,7 @@
 		return
 
 	if(to_be_removed.is_on_cooldown())
-		to_chat(occupant, span_notice("DANGER! Operation cannot be completed, removal is unsafe."))
+		to_chat(occupant, "<span class='notice'>DANGER! Operation cannot be completed, removal is unsafe.</span>")
 		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
@@ -154,15 +154,15 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(to_be_removed.is_on_cooldown())
-		to_chat(carbon_occupant,span_notice("Safety mechanisms activated! Skillchip cannot be safely removed."))
+		to_chat(carbon_occupant,"<span class='notice'>Safety mechanisms activated! Skillchip cannot be safely removed.</span>")
 		return
 
 	if(!istype(carbon_occupant))
-		to_chat(carbon_occupant,span_notice("Occupant does not appear to be a carbon-based lifeform!"))
+		to_chat(carbon_occupant,"<span class='notice'>Occupant does not appear to be a carbon-based lifeform!</span>")
 		return
 
 	if(!carbon_occupant.remove_skillchip(to_be_removed))
-		to_chat(carbon_occupant,span_notice("Failed to remove skillchip!"))
+		to_chat(carbon_occupant,"<span class='notice'>Failed to remove skillchip!</span>")
 		return
 
 	if(to_be_removed.removable)
@@ -170,29 +170,29 @@
 	else
 		qdel(to_be_removed)
 
-	to_chat(carbon_occupant, span_notice("Operation complete!"))
+	to_chat(carbon_occupant, "<span class='notice'>Operation complete!</span>")
 
 /obj/machinery/skill_station/proc/toggle_chip_active(obj/item/skillchip/to_be_toggled)
 	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(to_be_toggled.is_on_cooldown())
-		to_chat(carbon_occupant,span_notice("Safety mechanisms activated! Skillchip cannot be safely modified."))
+		to_chat(carbon_occupant,"<span class='notice'>Safety mechanisms activated! Skillchip cannot be safely modified.</span>")
 		return
 
 	if(!istype(carbon_occupant))
-		to_chat(carbon_occupant,span_notice("Occupant does not appear to be a carbon-based lifeform!"))
+		to_chat(carbon_occupant,"<span class='notice'>Occupant does not appear to be a carbon-based lifeform!</span>")
 		return
 
 	if(to_be_toggled.is_active())
 		var/active_msg = to_be_toggled.try_deactivate_skillchip(FALSE, FALSE)
 		if(active_msg)
-			to_chat(carbon_occupant,span_notice("Failed to deactivate skillchip! [active_msg]"))
+			to_chat(carbon_occupant,"<span class='notice'>Failed to deactivate skillchip! [active_msg]</span>")
 		return
 
 	// This code will fire when to_be_toggled.active is FALSE
 	var/active_msg = to_be_toggled.try_activate_skillchip(FALSE, FALSE)
 	if(active_msg)
-		to_chat(carbon_occupant,span_notice("Failed to activate skillchip! [active_msg]"))
+		to_chat(carbon_occupant,"<span class='notice'>Failed to activate skillchip! [active_msg]</span>")
 
 /obj/machinery/skill_station/ui_data(mob/user)
 	. = ..()
@@ -285,7 +285,7 @@
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
 			if(inserted_skillchip)
-				to_chat(occupant,span_notice("You eject the skillchip."))
+				to_chat(occupant,"<span class='notice'>You eject the skillchip.</span>")
 				var/mob/living/carbon/human/H = occupant
 				H.put_in_hands(inserted_skillchip)
 				inserted_skillchip = null

@@ -134,10 +134,10 @@
 	if(owner.drowsyness)
 		sleep_chance += 3
 	if(DT_PROB(0.5 * sleep_chance, delta_time))
-		to_chat(owner, span_warning("You fall asleep."))
+		to_chat(owner, "<span class='warning'>You fall asleep.</span>")
 		owner.Sleeping(60)
 	else if(!owner.drowsyness && DT_PROB(sleep_chance, delta_time))
-		to_chat(owner, span_warning("You feel tired..."))
+		to_chat(owner, "<span class='warning'>You feel tired...</span>")
 		owner.drowsyness += 10
 
 /datum/brain_trauma/severe/monophobia
@@ -151,9 +151,9 @@
 /datum/brain_trauma/severe/monophobia/on_gain()
 	..()
 	if(check_alone())
-		to_chat(owner, span_warning("You feel really lonely..."))
+		to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
 	else
-		to_chat(owner, span_notice("You feel safe, as long as you have people around you."))
+		to_chat(owner, "<span class='notice'>You feel safe, as long as you have people around you.</span>")
 
 /datum/brain_trauma/severe/monophobia/on_life(delta_time, times_fired)
 	..()
@@ -182,18 +182,18 @@
 	switch(rand(1,6))
 		if(1)
 			if(!high_stress)
-				to_chat(owner, span_warning("You feel sick..."))
+				to_chat(owner, "<span class='warning'>You feel sick...</span>")
 			else
-				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
+				to_chat(owner, "<span class='warning'>You feel really sick at the thought of being alone!</span>")
 			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
 		if(2)
 			if(!high_stress)
-				to_chat(owner, span_warning("You can't stop shaking..."))
+				to_chat(owner, "<span class='warning'>You can't stop shaking...</span>")
 				owner.dizziness += 20
 				owner.add_confusion(20)
 				owner.Jitter(20)
 			else
-				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
+				to_chat(owner, "<span class='warning'>You feel weak and scared! If only you weren't alone...</span>")
 				owner.dizziness += 20
 				owner.add_confusion(20)
 				owner.Jitter(20)
@@ -201,22 +201,22 @@
 
 		if(3, 4)
 			if(!high_stress)
-				to_chat(owner, span_warning("You feel really lonely..."))
+				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
 			else
-				to_chat(owner, span_warning("You're going mad with loneliness!"))
+				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
 				owner.hallucination += 30
 
 		if(5)
 			if(!high_stress)
-				to_chat(owner, span_warning("Your heart skips a beat."))
+				to_chat(owner, "<span class='warning'>Your heart skips a beat.</span>")
 				owner.adjustOxyLoss(8)
 			else
 				if(prob(15) && ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.set_heartattack(TRUE)
-					to_chat(H, span_userdanger("You feel a stabbing pain in your heart!"))
+					to_chat(H, "<span class='userdanger'>You feel a stabbing pain in your heart!</span>")
 				else
-					to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
+					to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
 					owner.adjustOxyLoss(8)
 
 /datum/brain_trauma/severe/discoordination
@@ -293,8 +293,8 @@
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
 		addtimer(CALLBACK(src, .proc/hypnotrigger), 10) //to react AFTER the chat message
-		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
+		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='hypnophrase'>*********</span>")
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
-	to_chat(owner, span_warning("The words trigger something deep within you, and you feel your consciousness slipping away..."))
+	to_chat(owner, "<span class='warning'>The words trigger something deep within you, and you feel your consciousness slipping away...</span>")
 	owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)

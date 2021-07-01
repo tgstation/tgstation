@@ -86,7 +86,7 @@
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
 		update_appearance()
 		return
@@ -117,11 +117,11 @@
 		product_types[make_type] += amount
 		var/obj/item/food/icecream/cone = cone_prototypes[make_type]
 		if(cone)
-			visible_message(span_info("[user] cooks up some [cone.name]s."))
+			visible_message("<span class='info'>[user] cooks up some [cone.name]s.</span>")
 		else
-			visible_message(span_info("[user] whips up some [make_type] icecream."))
+			visible_message("<span class='info'>[user] whips up some [make_type] icecream.</span>")
 	else
-		to_chat(user, span_warning("You don't have the ingredients to make this!"))
+		to_chat(user, "<span class='warning'>You don't have the ingredients to make this!</span>")
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(..())
@@ -130,7 +130,7 @@
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["select"]]
 		if(!flavour || flavour.hidden) //Nice try, tex.
 			return
-		visible_message(span_notice("[usr] sets [src] to dispense [href_list["select"]] flavoured ice cream."))
+		visible_message("<span class='notice'>[usr] sets [src] to dispense [href_list["select"]] flavoured ice cream.</span>")
 		selected_flavour = flavour.name
 
 	if(href_list["cone"])
@@ -140,9 +140,9 @@
 		if(product_types[cone_path] >= 1)
 			product_types[cone_path]--
 			var/obj/item/food/icecream/cone = new cone_path(loc)
-			visible_message(span_info("[usr] dispenses a crunchy [cone.name] from [src]."))
+			visible_message("<span class='info'>[usr] dispenses a crunchy [cone.name] from [src].</span>")
 		else
-			to_chat(usr, span_warning("There are no [initial(cone_path.name)]s left!"))
+			to_chat(usr, "<span class='warning'>There are no [initial(cone_path.name)]s left!</span>")
 
 	if(href_list["make"])
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[href_list["make"]]

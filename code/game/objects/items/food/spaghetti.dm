@@ -14,8 +14,8 @@
 	. = ..()
 	if(!microwaved_type) // This isn't cooked, why would you put uncooked spaghetti in your pocket?
 		var/list/display_message = list(
-			span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
-			span_warning("Oh shit! All your pocket [name] fell out!"))
+			"<span class='notice'>Something wet falls out of their pocket and hits the ground. Is that... [name]?</span>",
+			"<span class='warning'>Oh shit! All your pocket [name] fell out!</span>")
 		AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg')
 
 /obj/item/food/spaghetti/boiledspaghetti
@@ -70,7 +70,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 3)
 	microwaved_type = null
 	tastes = list("pasta" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT
 
 /obj/item/food/spaghetti/chowmein
 	name = "chow mein"
@@ -80,7 +79,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	microwaved_type = null
 	tastes = list("noodle" = 1, "tomato" = 1)
-	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -90,7 +88,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
 	microwaved_type = null
 	tastes = list("noodle" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT | VEGETABLES
+	foodtypes = GRAIN | MEAT
 
 /obj/item/food/spaghetti/butternoodles
 	name = "butter noodles"

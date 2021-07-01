@@ -16,13 +16,7 @@
 	var/mob/living/silicon/owner
 	var/id = DEFAULT_AI_LAWID
 
-/datum/ai_laws/Destroy(force=FALSE, ...)
-	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
-		if(force) //Unless we're forced...
-			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
-			return ..()
-		stack_trace("AI law datum for [owner] has ignored Destroy() call; the owner variable must be cleared first!")
-		return QDEL_HINT_LETMELIVE
+/datum/ai_laws/Destroy()
 	owner = null
 	return ..()
 
@@ -205,7 +199,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law(span_danger("ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010"))
+	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010</span>")
 	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.

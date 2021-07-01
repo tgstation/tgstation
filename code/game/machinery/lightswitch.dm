@@ -10,22 +10,6 @@
 	/// instead of the switch's location.
 	var/area/area = null
 
-/obj/machinery/light_switch/directional/north
-	dir = SOUTH
-	pixel_y = 26
-
-/obj/machinery/light_switch/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/light_switch/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/light_switch/directional/west
-	dir = EAST
-	pixel_x = -26
-
 /obj/machinery/light_switch/Initialize()
 	. = ..()
 	if(istext(area))
@@ -54,7 +38,7 @@
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
 	if(!(machine_stat & NOPOWER))
-		. += emissive_appearance(icon, "[base_icon_state]-glow", alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-glow", 0, EMISSIVE_PLANE, alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()

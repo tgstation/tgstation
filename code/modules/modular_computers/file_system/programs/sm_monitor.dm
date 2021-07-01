@@ -37,15 +37,11 @@
 	refresh()
 
 /datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)
-	for(var/supermatter in supermatters)
-		clear_supermatter(supermatter)
 	supermatters = null
 	..()
 
 // Refreshes list of active supermatter crystals
 /datum/computer_file/program/supermatter_monitor/proc/refresh()
-	for(var/supermatter in supermatters)
-		clear_supermatter(supermatter)
 	supermatters = list()
 	var/turf/T = get_turf(ui_host())
 	if(!T)
@@ -55,7 +51,9 @@
 		if (!isturf(S.loc) || !(is_station_level(S.z) || is_mining_level(S.z) || S.z == T.z))
 			continue
 		supermatters.Add(S)
-		RegisterSignal(S, COMSIG_PARENT_QDELETING, .proc/react_to_del)
+
+	if(!(active in supermatters))
+		active = null
 
 /datum/computer_file/program/supermatter_monitor/proc/get_status()
 	. = SUPERMATTER_INACTIVE
@@ -93,7 +91,6 @@
  * the supermatter probably don't need constant beeping to distract them.
  */
 /datum/computer_file/program/supermatter_monitor/proc/send_alert()
-	SIGNAL_HANDLER
 	if(!computer.get_ntnet_status())
 		return
 	if(computer.active_program != src)
@@ -110,13 +107,12 @@
  * minimized or closed to avoid double-notifications.
  */
 /datum/computer_file/program/supermatter_monitor/proc/send_start_alert()
-	SIGNAL_HANDLER
 	if(!computer.get_ntnet_status())
 		return
 	if(computer.active_program == src)
 		computer.alert_call(src, "Crystal delamination in progress!")
 
-/datum/computer_file/program/supermatter_monitor/ui_data(mob/user)
+/datum/computer_file/program/supermatter_monitor/ui_data()
 	var/list/data = get_header_data()
 
 	if(istype(active))
@@ -130,9 +126,30 @@
 			active = null
 			return
 
-		data += active.ui_data()
-		data["singlecrystal"] = FALSE
+		data["active"] = TRUE
+		data["SM_integrity"] = active.get_integrity()
+		data["SM_power"] = active.power
+		data["SM_ambienttemp"] = air.temperature
+		data["SM_ambientpressure"] = air.return_pressure()
+		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency 
+		data["SM_moles"] = 0
 		
+		var/list/gasdata = list()
+
+		if(air.total_moles())
+			data["SM_moles"] = air.total_moles()
+			for(var/gasid in air.gases)
+				gasdata.Add(list(list(
+				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
+				"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
+
+		else
+			for(var/gasid in air.gases)
+				gasdata.Add(list(list(
+					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
+					"amount" = 0)))
+
+		data["gases"] = gasdata
 	else
 		var/list/SMS = list()
 		for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
@@ -140,7 +157,7 @@
 			if(A)
 				SMS.Add(list(list(
 				"area_name" = A.name,
-				"integrity" = S.get_integrity_percent(),
+				"integrity" = S.get_integrity(),
 				"uid" = S.uid
 				)))
 
@@ -169,13 +186,3 @@
 					active = S
 					set_signals()
 			return TRUE
-
-/datum/computer_file/program/supermatter_monitor/proc/react_to_del(datum/source)
-	SIGNAL_HANDLER
-	clear_supermatter(source)
-
-/datum/computer_file/program/supermatter_monitor/proc/clear_supermatter(matter)
-	supermatters -= matter
-	if(matter == active)
-		active = null
-	UnregisterSignal(matter, COMSIG_PARENT_QDELETING)

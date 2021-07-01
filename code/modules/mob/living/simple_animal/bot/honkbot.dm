@@ -46,10 +46,6 @@
 	var/datum/id_trim/job/clown_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/clown]
 	access_card.add_access(clown_trim.access + clown_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE
@@ -73,7 +69,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	set_anchored(FALSE)
+	anchored = FALSE
 	walk_to(src,0)
 	last_found = world.time
 	limiting_spam = FALSE
@@ -135,9 +131,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!")
+			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
 			oldtarget_name = user.name
-		audible_message(span_danger("[src] gives out an evil laugh!"))
+		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 		update_appearance()
 
@@ -167,9 +163,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM
-		var/mob/thrown_by = I.thrownby?.resolve()
-		if(I.throwforce < health && thrown_by && (istype(thrown_by, /mob/living/carbon/human)))
-			var/mob/living/carbon/human/H = thrown_by
+		if(I.throwforce < health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
+			var/mob/living/carbon/human/H = I.thrownby
 			retaliate(H)
 	..()
 
@@ -221,8 +216,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			log_combat(src,C,"honked")
 
-			C.visible_message(span_danger("[src] honks [C]!"),\
-					span_userdanger("[src] honks you!"))
+			C.visible_message("<span class='danger'>[src] honks [C]!</span>",\
+					"<span class='userdanger'>[src] honks you!</span>")
 		else
 			C.stuttering = 20
 			C.Paralyze(80)
@@ -285,7 +280,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_idle()
-	set_anchored(FALSE)
+	anchored = FALSE
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -293,13 +288,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
-	set_anchored(FALSE)
+	anchored = FALSE
 	frustration = 0
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action) // responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/look_for_perp()
-	set_anchored(FALSE)
+	anchored = FALSE
 	for (var/mob/living/carbon/C in view(7,src))
 		if((C.stat) || (C.handcuffed))
 			continue
@@ -334,7 +329,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/explode()
 
 	walk_to(src,0)
-	visible_message(span_boldannounce("[src] blows apart!"))
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))
@@ -355,8 +350,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = user
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
+/mob/living/simple_animal/bot/honkbot/Crossed(atom/movable/AM)
 	if(ismob(AM) && (on)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
@@ -372,9 +366,10 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.Paralyze(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 			if(!client)
-				INVOKE_ASYNC(src, /mob/living/simple_animal/bot/proc/speak, "Honk!")
+				speak("Honk!")
 			sensor_blink()
 			return
+	..()
 
 /obj/machinery/bot_core/honkbot
 	req_one_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)

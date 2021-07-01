@@ -26,26 +26,26 @@
 				if(M.mind)
 					for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
 						S.charge_counter = S.charge_max
-				to_chat(M, span_notice("You feel raw magic flowing through you. It feels good!"))
+				to_chat(M, "<span class='notice'>You feel raw magic flowing through you. It feels good!</span>")
 			else
-				to_chat(M, span_notice("You feel very strange for a moment, but then it passes."))
+				to_chat(M, "<span class='notice'>You feel very strange for a moment, but then it passes.</span>")
 				burnt_out = TRUE
 			charged_item = M
 			break
 		for(var/obj/item in hand_items)
 			if(istype(item, /obj/item/spellbook))
-				to_chat(L, span_danger("Glowing red letters appear on the front cover..."))
-				to_chat(L, span_warning("[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]"))
+				to_chat(L, "<span class='danger'>Glowing red letters appear on the front cover...</span>")
+				to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
 				burnt_out = TRUE
 			else if(istype(item, /obj/item/book/granter/spell))
 				var/obj/item/book/granter/spell/I = item
 				if(!I.oneuse)
-					to_chat(L, span_notice("This book is infinite use and can't be recharged, yet the magic has improved the book somehow..."))
+					to_chat(L, "<span class='notice'>This book is infinite use and can't be recharged, yet the magic has improved the book somehow...</span>")
 					burnt_out = TRUE
 					I.pages_to_mastery--
 					break
 				if(prob(80))
-					L.visible_message(span_warning("[I] catches fire!"))
+					L.visible_message("<span class='warning'>[I] catches fire!</span>")
 					qdel(I)
 				else
 					I.used = FALSE
@@ -93,9 +93,9 @@
 						charged_item = item
 						break
 		if(!charged_item)
-			to_chat(L, span_notice("You feel magical power surging through your hands, but the feeling rapidly fades..."))
+			to_chat(L, "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>")
 		else if(burnt_out)
-			to_chat(L, span_warning("[charged_item] doesn't seem to be reacting to the spell!"))
+			to_chat(L, "<span class='warning'>[charged_item] doesn't seem to be reacting to the spell!</span>")
 		else
 			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, TRUE)
-			to_chat(L, span_notice("[charged_item] suddenly feels very warm!"))
+			to_chat(L, "<span class='notice'>[charged_item] suddenly feels very warm!</span>")

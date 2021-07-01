@@ -69,7 +69,9 @@
 	pixel_x = -32
 	},
 /obj/item/clipboard,
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/item/folder/red,
 /obj/item/toy/figure/syndie,
 /obj/effect/turf_decal/tile/neutral{
@@ -121,7 +123,9 @@
 	pixel_x = 32
 	},
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -277,7 +281,9 @@
 	dir = 4;
 	name = "tactical chair"
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -295,7 +301,9 @@
 	dir = 8;
 	name = "tactical chair"
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -389,12 +397,15 @@
 /area/shuttle/syndicate/airlock)
 "aU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "aV" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "aW" = (
@@ -420,13 +431,21 @@
 	name = "tactical chair"
 	},
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
 "aY" = (
 /obj/machinery/door/poddoor{
 	id = "smindicate";
 	name = "outer blast door"
+	},
+/obj/machinery/button/door{
+	id = "smindicate";
+	name = "external door control";
+	pixel_y = 26;
+	req_access_txt = "150"
 	},
 /obj/docking_port/mobile{
 	dheight = 1;
@@ -443,11 +462,6 @@
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/obj/machinery/button/door/directional/north{
-	id = "smindicate";
-	name = "external door control";
-	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
@@ -502,11 +516,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "bg" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/eva)
 "bh" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
 "bi" = (
@@ -553,7 +569,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bs" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bt" = (
@@ -600,11 +618,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bv" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
 "bw" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/armory)
 "bx" = (
@@ -630,7 +650,9 @@
 /obj/item/wrench,
 /obj/item/assembly/infra,
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/armory)
 "bA" = (
@@ -669,7 +691,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bE" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -683,7 +707,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "bF" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -968,7 +994,9 @@
 /obj/item/surgicaldrill,
 /obj/item/circular_saw,
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -986,7 +1014,9 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror/directional/east,
+/obj/structure/mirror{
+	pixel_x = 30
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1004,7 +1034,9 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "cn" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

@@ -76,12 +76,12 @@ const HelpfulTab = (props, context) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="clipboard"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Show Gamemode"
+              onClick={() => act("showgm")} />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -252,12 +252,12 @@ const FunTab = (props, context) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <Button
-              icon="robot"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={-0.5}
               width={buttonWidthNormal}
-              content="Make N.E.R.D."
-              onClick={() => act("makeNerd")} />
+              height={lineHeightNormal}>
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <NoticeBox

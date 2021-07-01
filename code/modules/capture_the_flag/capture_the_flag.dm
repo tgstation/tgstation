@@ -40,7 +40,6 @@
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
-		reset.flag = src
 	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/ComponentInitialize()
@@ -56,15 +55,12 @@
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
 	SIGNAL_HANDLER
 
-	var/turf/our_turf = get_turf(src.reset)
-	if(!our_turf)
-		return TRUE
-	forceMove(our_turf)
+	forceMove(get_turf(src.reset))
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
 			if(!capture)
-				to_chat(M, span_userdanger("[src] has been returned to the base!"))
+				to_chat(M, "<span class='userdanger'>[src] has been returned to the base!</span>")
 	STOP_PROCESSING(SSobj, src)
 	return TRUE //so if called by a signal, it doesn't delete
 
@@ -72,10 +68,10 @@
 /obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
 	//pre normal check item stuff, this is for our special flag checks
 	if(!is_ctf_target(user) && !anyonecanpickup)
-		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
+		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
 		return
 	if(team in user.faction)
-		to_chat(user, span_warning("You can't move your own flag!"))
+		to_chat(user, "<span class='warning'>You can't move your own flag!</span>")
 		return
 	if(loc == user)
 		if(!user.dropItemToGround(src))
@@ -83,12 +79,12 @@
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, span_userdanger("\The [initial(src.name)] has been taken!"))
+			to_chat(M, "<span class='userdanger'>\The [initial(src.name)] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
-	anchored = FALSE // Hacky usage that bypasses set_anchored(), because normal checks need this to be FALSE to pass
+	anchored = FALSE //normal checks need this to be FALSE to pass
 	. = ..() //this is the actual normal item checks
 	if(.) //only apply these flag passives
-		anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
+		anchored = TRUE
 		return
 	//passing means the user picked up the flag so we can now apply this
 	user.set_anchored(TRUE)
@@ -96,15 +92,15 @@
 
 /obj/item/ctf/dropped(mob/user)
 	..()
-	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
+	user.set_anchored(FALSE)
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 20 SECONDS
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, span_userdanger("\The [initial(name)] has been dropped!"))
-	anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
+			to_chat(M, "<span class='userdanger'>\The [initial(name)] has been dropped!</span>")
+	anchored = TRUE
 
 
 /obj/item/ctf/red
@@ -147,13 +143,6 @@
 	icon_state = "banner"
 	desc = "This is where a banner with Nanotrasen's logo on it would go."
 	layer = LOW_ITEM_LAYER
-	var/obj/item/ctf/flag
-
-/obj/effect/ctf/flag_reset/Destroy()
-	if(flag)
-		flag.reset = null
-		flag = null
-	return ..()
 
 /obj/effect/ctf/flag_reset/red
 	name = "red flag landmark"
@@ -290,18 +279,18 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
-			var/response = tgui_alert(usr,"Enable this CTF game?", "CTF", list("Yes", "No"))
+			var/response = alert("Enable this CTF game?", "CTF", "Yes", "No")
 			if(response == "Yes")
 				toggle_id_ctf(user, game_id)
 			return
 
 
 		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
-			to_chat(user, span_warning("CTF has been temporarily disabled by admins."))
+			to_chat(user, "<span class='warning'>CTF has been temporarily disabled by admins.</span>")
 			return
 		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 			if(CTF.game_id != game_id && CTF.ctf_enabled)
-				to_chat(user, span_warning("There is already an ongoing game in the [get_area(CTF)]!"))
+				to_chat(user, "<span class='warning'>There is already an ongoing game in the [get_area(CTF)]!</span>")
 				return
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
@@ -310,7 +299,7 @@
 			people_who_want_to_play.Cut()
 			toggle_id_ctf(null, game_id)
 		else
-			to_chat(user, span_notice("CTF has been requested. [num]/[CTF_REQUIRED_PLAYERS] have readied up."))
+			to_chat(user, "<span class='notice'>CTF has been requested. [num]/[CTF_REQUIRED_PLAYERS] have readied up.</span>")
 
 		return
 
@@ -318,7 +307,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, span_warning("It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!"))
+			to_chat(user, "<span class='warning'>It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!</span>")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -330,10 +319,10 @@
 		if(CTF.game_id != game_id || CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
-			to_chat(user, span_warning("No switching teams while the round is going!"))
+			to_chat(user, "<span class='warning'>No switching teams while the round is going!</span>")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, span_warning("[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up."))
+			to_chat(user, "<span class='warning'>[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up.</span>")
 			return
 	var/client/new_team_member = user.client
 	if(user.mind && user.mind.current)
@@ -371,7 +360,7 @@
 	else //2-3 choices
 		var/list/names_only = assoc_list_strip_value(ctf_gear)
 		names_only.len += 1 //create a new null entry so if it's a 2-sized list, names_only[3] is null instead of out of bounds
-		var/result = tgui_alert(new_team_member, "Select a class.", "CTF", list(names_only[1], names_only[2], names_only[3]))
+		var/result = alert(new_team_member, "Select a class.", "CTF", names_only[1], names_only[2], names_only[3])
 		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
 		chosen_class = ctf_gear[result]
@@ -464,7 +453,7 @@
 			continue
 		if(isstructure(atm))
 			var/obj/structure/S = atm
-			S.repair_damage(S.max_integrity - S.get_integrity())
+			S.obj_integrity = S.max_integrity
 		else if(!is_type_in_typecache(atm, ctf_object_typecache))
 			qdel(atm)
 
@@ -764,7 +753,7 @@
 	if(!is_ctf_target(L))
 		return
 	if(!(src.team in L.faction))
-		to_chat(L, span_danger("<B>Stay out of the enemy spawn!</B>"))
+		to_chat(L, "<span class='danger'><B>Stay out of the enemy spawn!</B></span>")
 		L.death()
 
 /obj/structure/trap/ctf/red
@@ -817,13 +806,6 @@
 			continue
 		CTF.dead_barricades += src
 
-/obj/effect/ctf/dead_barricade/Destroy()
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
-		if(CTF.game_id != game_id)
-			continue
-		CTF.dead_barricades -= src
-	return ..()
-
 /obj/effect/ctf/dead_barricade/proc/respawn()
 	if(!QDELETED(src))
 		new /obj/structure/barricade/security/ctf(get_turf(src))
@@ -866,7 +848,7 @@
 				for(var/mob/M in GLOB.player_list)
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, game_area))
-						to_chat(M, span_userdanger("[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!"))
+						to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>")
 				break
 
 #undef WHITE_TEAM

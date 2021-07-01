@@ -136,14 +136,12 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_appearance()
 
-/obj/item/clothing/head/hardhat/weldhat/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/hardhat/weldhat/worn_overlays(isinhands)
 	. = ..()
-	if(isinhands)
-		return
-
-	. += mutable_appearance('icons/mob/clothing/head.dmi', "weldhelmet")
-	if(!up)
-		. += mutable_appearance('icons/mob/clothing/head.dmi', "weldvisor")
+	if(!isinhands)
+		. += mutable_appearance('icons/mob/clothing/head.dmi', "weldhelmet")
+		if(!up)
+			. += mutable_appearance('icons/mob/clothing/head.dmi', "weldvisor")
 
 /obj/item/clothing/head/hardhat/weldhat/update_overlays()
 	. = ..()

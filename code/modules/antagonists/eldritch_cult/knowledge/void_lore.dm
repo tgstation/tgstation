@@ -2,14 +2,7 @@
 	name = "Glimmer of Winter"
 	desc = "Opens up the path of void to you. Allows you to transmute a knife in a sub-zero temperature into a void blade."
 	gain_text = "I feel a shimmer in the air, atmosphere around me gets colder. I feel my body realizing the emptiness of existance. Something's watching me"
-	banned_knowledge = list(
-		/datum/eldritch_knowledge/base_ash,
-		/datum/eldritch_knowledge/base_flesh,
-		/datum/eldritch_knowledge/final/ash_final,
-		/datum/eldritch_knowledge/final/flesh_final,
-		/datum/eldritch_knowledge/base_rust,
-		/datum/eldritch_knowledge/final/rust_final
-	)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/rust_final)
 	next_knowledge = list(/datum/eldritch_knowledge/void_grasp)
 	required_atoms = list(/obj/item/kitchen/knife)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
@@ -45,12 +38,12 @@
 	. = ..()
 	if(!ishuman(target))
 		return
-	var/mob/living/carbon/human/victim = target
-	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh)  || victim.has_status_effect(/datum/status_effect/eldritch/void)
-	if(!effect)
+	var/mob/living/carbon/human/H = target
+	var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)  || H.has_status_effect(/datum/status_effect/eldritch/void)
+	if(!E)
 		return
-	effect.on_effect()
-	victim.silent += 3
+	E.on_effect()
+	H.silent += 3
 
 /datum/eldritch_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -62,12 +55,12 @@
 
 /datum/eldritch_knowledge/cold_snap/on_gain(mob/user)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_RESISTCOLD, MAGIC_TRAIT)
+	ADD_TRAIT(user,TRAIT_RESISTCOLD,MAGIC_TRAIT)
 	ADD_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/cold_snap/on_lose(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, MAGIC_TRAIT)
+	REMOVE_TRAIT(user,TRAIT_RESISTCOLD,MAGIC_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/void_cloak
@@ -85,11 +78,7 @@
 	desc = "Your mansus grasp now applies mark of void status effect. To proc the mark, use your sickly blade on the marked. Mark of void when procced lowers the victims body temperature significantly."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/void_phase)
-	banned_knowledge = list(
-		/datum/eldritch_knowledge/rust_mark,
-		/datum/eldritch_knowledge/ash_mark,
-		/datum/eldritch_knowledge/flesh_mark
-	)
+	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
 	route = PATH_VOID
 
 /datum/eldritch_knowledge/void_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
@@ -106,11 +95,7 @@
 	desc = "You gain a long range pointed blink that allows you to instantly teleport to your location, it causes aoe damage around you and your chosen location."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_blink
-	next_knowledge = list(
-		/datum/eldritch_knowledge/rune_carver,
-		/datum/eldritch_knowledge/crucible,
-		/datum/eldritch_knowledge/void_blade_upgrade
-	)
+	next_knowledge = list(/datum/eldritch_knowledge/rune_carver,/datum/eldritch_knowledge/crucible,/datum/eldritch_knowledge/void_blade_upgrade)
 	route = PATH_VOID
 
 /datum/eldritch_knowledge/rune_carver
@@ -137,11 +122,7 @@
 	desc = "You can now use your blade on a distant marked target to move to them and attack them."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/voidpull)
-	banned_knowledge = list(
-		/datum/eldritch_knowledge/ash_blade_upgrade,
-		/datum/eldritch_knowledge/flesh_blade_upgrade,
-		/datum/eldritch_knowledge/rust_blade_upgrade
-	)
+	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade)
 	route = PATH_VOID
 
 /datum/eldritch_knowledge/void_blade_upgrade/on_ranged_attack_eldritch_blade(atom/target, mob/user, click_parameters)
@@ -164,11 +145,7 @@
 	desc = "You gain an ability that let's you pull people around you closer to you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
-	next_knowledge = list(
-		/datum/eldritch_knowledge/final/void_final,
-		/datum/eldritch_knowledge/spell/blood_siphon,
-		/datum/eldritch_knowledge/summon/rusty
-	)
+	next_knowledge = list(/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_VOID
 
 /datum/eldritch_knowledge/final/void_final
@@ -184,14 +161,14 @@
 	var/datum/weather/void_storm/storm
 
 /datum/eldritch_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/mob/living/carbon/human/waltzing = user
-	waltzing.physiology.brute_mod *= 0.5
-	waltzing.physiology.burn_mod *= 0.5
-	ADD_TRAIT(waltzing, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
-	waltzing.client?.give_award(/datum/award/achievement/misc/void_ascension, waltzing)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [waltzing.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
+	var/mob/living/carbon/human/H = user
+	H.physiology.brute_mod *= 0.5
+	H.physiology.burn_mod *= 0.5
+	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
+	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 
-	sound_loop = new(user, TRUE, TRUE)
+	sound_loop = new(list(user),TRUE,TRUE)
 	return ..()
 
 /datum/eldritch_knowledge/final/void_final/on_death()

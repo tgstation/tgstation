@@ -49,9 +49,9 @@
 		track.namecounts[name] = 1
 
 		if(ishuman(L))
-			track.humans[name] = WEAKREF(L)
+			track.humans[name] = L
 		else
-			track.others[name] = WEAKREF(L)
+			track.others[name] = L
 
 	var/list/targets = sortList(track.humans) + sortList(track.others)
 
@@ -67,9 +67,9 @@
 	if(!track.initialized)
 		trackable_mobs()
 
-	var/datum/weakref/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
-	ai_actual_track(target.resolve())
+	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))
@@ -80,11 +80,11 @@
 	U.tracking = 1
 
 	if(!target || !target.can_track(usr))
-		to_chat(U, span_warning("Target is not near any active cameras."))
+		to_chat(U, "<span class='warning'>Target is not near any active cameras.</span>")
 		U.cameraFollow = null
 		return
 
-	to_chat(U, span_notice("Now tracking [target.get_visible_name()] on camera."))
+	to_chat(U, "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>")
 
 	INVOKE_ASYNC(src, .proc/do_track, target, U)
 
@@ -98,11 +98,11 @@
 		if(!target.can_track(usr))
 			U.tracking = TRUE
 			if(!cameraticks)
-				to_chat(U, span_warning("Target is not near any active cameras. Attempting to reacquire..."))
+				to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
 			cameraticks++
 			if(cameraticks > 9)
 				U.cameraFollow = null
-				to_chat(U, span_warning("Unable to reacquire, cancelling track..."))
+				to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
 				tracking = FALSE
 				return
 			else

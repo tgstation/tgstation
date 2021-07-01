@@ -54,8 +54,8 @@
 		health = 100
 		maxHealth = 100
 
-/mob/living/simple_animal/bot/floorbot/Exited(atom/movable/gone, direction)
-	if(tilestack == gone)
+/mob/living/simple_animal/bot/floorbot/Exited(atom/movable/A, atom/newloc)
+	if(A == tilestack)
 		if(tilestack && tilestack.max_amount < tilestack.amount) //split the stack if it exceeds its normal max_amount
 			var/iterations = round(tilestack.amount/tilestack.max_amount) //round() without second arg floors the value
 			for(var/a in 1 to iterations)
@@ -117,17 +117,17 @@
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
 	if(istype(W, /obj/item/stack/tile/iron))
-		to_chat(user, span_notice("The floorbot can produce normal tiles itself."))
+		to_chat(user, "<span class='notice'>The floorbot can produce normal tiles itself.</span>")
 		return
 	if(istype(W, /obj/item/stack/tile))
 		var/old_amount = tilestack ? tilestack.amount : 0
 		var/obj/item/stack/tile/tiles = W
 		if(tilestack)
 			if(!tiles.can_merge(tilestack))
-				to_chat(user, span_warning("Different custom tiles are already inside the floorbot."))
+				to_chat(user, "<span class='warning'>Different custom tiles are already inside the floorbot.</span>")
 				return
 			if(tilestack.amount >= maxtiles)
-				to_chat(user, span_warning("The floorbot can't hold any more custom tiles."))
+				to_chat(user, "<span class='warning'>The floorbot can't hold any more custom tiles.</span>")
 				return
 			tiles.merge(tilestack, maxtiles)
 		else
@@ -136,7 +136,7 @@
 			else
 				tilestack = W
 			tilestack.forceMove(src)
-		to_chat(user, span_notice("You load [tilestack.amount - old_amount] tiles into the floorbot. It now contains [tilestack.amount] tiles."))
+		to_chat(user, "<span class='notice'>You load [tilestack.amount - old_amount] tiles into the floorbot. It now contains [tilestack.amount] tiles.</span>")
 		return
 	else
 		..()
@@ -145,7 +145,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, span_danger("[src] buzzes and beeps."))
+			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
 ///mobs should use move_resist instead of anchored.
 /mob/living/simple_animal/bot/floorbot/proc/toggle_magnet(engage = TRUE, change_icon = TRUE)
@@ -261,7 +261,7 @@
 					F.ReplaceWithLattice()
 				else
 					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-				audible_message(span_danger("[src] makes an excited booping sound."))
+				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
 				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
 			path = list()
 			return
@@ -347,7 +347,7 @@
 		return
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
 		toggle_magnet()
-		visible_message(span_notice("[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] "))
+		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
 			if(autotile) //Build the floor and include a tile.
@@ -368,14 +368,14 @@
 		if(F.broken || F.burnt || isplatingturf(F))
 			toggle_magnet()
 			mode = BOT_REPAIRING
-			visible_message(span_notice("[src] begins [(F.broken || F.burnt) ? "repairing the floor" : "placing a floor tile"]."))
+			visible_message("<span class='notice'>[src] begins [(F.broken || F.burnt) ? "repairing the floor" : "placing a floor tile"].</span>")
 			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
 				success = TRUE
 
 		else if(replacetiles && tilestack && F.type != tilestack.turf_type)
 			toggle_magnet()
 			mode = BOT_REPAIRING
-			visible_message(span_notice("[src] begins replacing the floor tiles."))
+			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING && tilestack)
 				success = TRUE
 
@@ -398,7 +398,7 @@
 /mob/living/simple_animal/bot/floorbot/explode()
 	on = FALSE
 	target = null
-	visible_message(span_boldannounce("[src] blows apart!"))
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
 	drop_part(toolbox, Tsec)
@@ -411,7 +411,7 @@
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 
-	new /obj/item/stack/tile/iron/base(Tsec, 1)
+	new /obj/item/stack/tile/iron(Tsec, 1)
 
 	do_sparks(3, TRUE, src)
 	..()

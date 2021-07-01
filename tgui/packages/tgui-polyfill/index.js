@@ -14,4 +14,8 @@ import './ie8';
 import './dom4';
 import './css-om';
 import './inferno';
-import 'unfetch/polyfill';
+
+// Fetch is required for Webpack HMR
+if (module.hot) {
+  require('whatwg-fetch');
+}

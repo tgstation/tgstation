@@ -27,7 +27,7 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/policy = get_policy(ROLE_OBSESSED)
 	if(policy)
-		to_chat(owner, policy)
+		to_chat(policy)
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()
@@ -48,19 +48,17 @@
 	var/datum/objective/assassinate/obsessed/kill = new
 	kill.owner = owner
 	kill.target = obsessionmind
-	var/obj/family_heirloom
+	var/datum/quirk/family_heirloom/family_heirloom
 
-	for(var/datum/quirk/quirky in obsessionmind.current.quirks)
-		if(istype(quirky, /datum/quirk/item_quirk/family_heirloom))
-			var/datum/quirk/item_quirk/family_heirloom/heirloom_quirk = quirky
-			family_heirloom = heirloom_quirk.heirloom?.resolve()
+	for(var/datum/quirk/quirky in obsessionmind.current.roundstart_quirks)
+		if(istype(quirky, /datum/quirk/family_heirloom))
+			family_heirloom = quirky
 			break
-	if(family_heirloom)
+	if(family_heirloom)//oh, they have an heirloom? Well you know we have to steal that.
 		objectives_left += "heirloom"
 
-	// If they have no coworkers, jealousy will pick someone else on the station. This will never be a free objective.
 	if(obsessionmind.assigned_role && obsessionmind.assigned_role != "Captain")
-		objectives_left += "jealous"
+		objectives_left += "jealous"//if they have no coworkers, jealousy will pick someone else on the station. this will never be a free objective, nice.
 
 	for(var/i in 1 to 3)
 		var/chosen_objective = pick(objectives_left)
@@ -85,7 +83,7 @@
 				var/datum/objective/steal/heirloom_thief/heirloom_thief = new
 				heirloom_thief.owner = owner
 				heirloom_thief.target = obsessionmind//while you usually wouldn't need this for stealing, we need the name of the obsession
-				heirloom_thief.steal_target = family_heirloom
+				heirloom_thief.steal_target = family_heirloom.heirloom
 				objectives += heirloom_thief
 			if("jealous")
 				var/datum/objective/assassinate/jealous/jealous = new
@@ -117,11 +115,11 @@
 				break
 	if(trauma)
 		if(trauma.total_time_creeping > 0)
-			report += span_greentext("The [name] spent a total of [DisplayTimeText(trauma.total_time_creeping)] being near [trauma.obsession]!")
+			report += "<span class='greentext'>The [name] spent a total of [DisplayTimeText(trauma.total_time_creeping)] being near [trauma.obsession]!</span>"
 		else
-			report += span_redtext("The [name] did not go near their obsession the entire round! That's extremely impressive!")
+			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive!</span>"
 	else
-		report += span_redtext("The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!")
+		report += "<span class='redtext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
 
 	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"

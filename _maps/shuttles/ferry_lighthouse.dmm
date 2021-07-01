@@ -86,6 +86,10 @@
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
 /area/shuttle/transport)
+"aw" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
 "az" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -117,7 +121,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aH" = (
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/newscaster{
+	pixel_y = 30
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aI" = (
@@ -201,6 +207,10 @@
 "aX" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"aY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ba" = (
 /obj/machinery/conveyor{
@@ -508,7 +518,7 @@ aa
 aa
 aa
 aa
-az
+aw
 aE
 aN
 aE
@@ -526,7 +536,7 @@ aa
 aa
 aa
 aa
-az
+aw
 aE
 aE
 aE
@@ -548,7 +558,7 @@ ad
 ak
 aE
 ak
-ad
+aY
 aa
 aa
 aa
@@ -566,7 +576,7 @@ ad
 aF
 aE
 aT
-az
+aw
 aa
 aa
 aa

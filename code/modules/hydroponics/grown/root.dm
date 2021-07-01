@@ -27,7 +27,7 @@
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
-		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
+		to_chat(user, "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>")
 		var/obj/item/kitchen/knife/shiv/carrot/Shiv = new /obj/item/kitchen/knife/shiv/carrot
 		remove_item_from_storage(user)
 		qdel(src)
@@ -52,6 +52,7 @@
 	name = "parsnip"
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/parsnipjuice = 0)
 	wine_power = 35
@@ -79,7 +80,7 @@
 	name = "white-beet"
 	desc = "You can't beat white-beet."
 	icon_state = "whitebeet"
-	bite_consumption_mod = 3
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 40
 

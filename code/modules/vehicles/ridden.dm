@@ -10,9 +10,9 @@
 	. = ..()
 	if(key_type)
 		if(!inserted_key)
-			. += span_notice("Put a key inside it by clicking it with the key.")
+			. += "<span class='notice'>Put a key inside it by clicking it with the key.</span>"
 		else
-			. += span_notice("Alt-click [src] to remove the key.")
+			. += "<span class='notice'>Alt-click [src] to remove the key.</span>"
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -32,9 +32,9 @@
 	if(!key_type || is_key(inserted_key) || !is_key(I))
 		return ..()
 	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
+		to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
-	to_chat(user, span_notice("You insert \the [I] into \the [src]."))
+	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = I
@@ -43,9 +43,9 @@
 	if(!inserted_key || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !issilicon(user)))
 		return ..()
 	if(!is_occupant(user))
-		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
+		to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
 		return
-	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
+	to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
 	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null

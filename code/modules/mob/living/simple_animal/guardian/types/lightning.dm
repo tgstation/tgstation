@@ -105,9 +105,9 @@
 				if(successfulshocks > 4)
 					L.electrocute_act(0)
 					L.visible_message(
-						span_danger("[L] was shocked by the lightning chain!"), \
-						span_userdanger("You are shocked by the lightning chain!"), \
-						span_hear("You hear a heavy electrical crack.") \
+						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
+						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
+						"<span class='hear'>You hear a heavy electrical crack.</span>" \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

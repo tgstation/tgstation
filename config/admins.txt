@@ -143,4 +143,3 @@ Time-Green = Game Master
 StyleMistake = Game Master
 actioninja = Game Master
 bobbahbrown = Game Master
-Jaredfogle = Game Master

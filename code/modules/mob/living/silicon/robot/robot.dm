@@ -99,7 +99,7 @@
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_appearance()
 		else
-			to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug."))
+			to_chat(src, "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>")
 			ghostize()
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
@@ -119,7 +119,6 @@
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
-	QDEL_NULL(spark_system)
 	cell = null
 	return ..()
 
@@ -137,7 +136,7 @@
 		return
 
 	if(wires.is_cut(WIRE_RESET_MODEL))
-		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
+		to_chat(src,"<span class='userdanger'>ERROR: Model installer reply timeout. Please check internal connections.</span>")
 		return
 
 	var/list/model_list = list("Engineering" = /obj/item/robot_model/engineering, \
@@ -171,8 +170,8 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(GLOB.current_anonymous_theme) //only robotic renames will allow for anything other than the anonymous one
-		changed_name = GLOB.current_anonymous_theme.anonymous_ai_name(FALSE)
+	if(SSticker.anonymousnames) //only robotic renames will allow for anything other than the anonymous one
+		changed_name = SSticker.anonymousnames.anonymous_ai_name(FALSE)
 	if(!changed_name && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
 		apply_pref_name("cyborg", C)
 		return //built in camera handled in proc
@@ -220,7 +219,7 @@
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
 	if(!ionpulse)
-		to_chat(src, span_notice("No thrusters are installed!"))
+		to_chat(src, "<span class='notice'>No thrusters are installed!</span>")
 		return
 
 	if(!ion_trail)
@@ -228,7 +227,7 @@
 		ion_trail.set_up(src)
 
 	ionpulse_on = !ionpulse_on
-	to_chat(src, span_notice("You [ionpulse_on ? null :"de"]activate your ion thrusters."))
+	to_chat(src, "<span class='notice'>You [ionpulse_on ? null :"de"]activate your ion thrusters.</span>")
 	if(ionpulse_on)
 		ion_trail.start()
 	else
@@ -388,9 +387,9 @@
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		QDEL_NULL(mmi)
-		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src, devastation_range = -1, light_impact_range = 2)
+		explosion(loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -473,7 +472,7 @@
 	lamp_functional = FALSE
 	playsound(src, 'sound/effects/glass_step.ogg', 50)
 	toggle_headlamp(TRUE)
-	to_chat(src, span_danger("Your headlamp is broken! You'll need a human to help replace it."))
+	to_chat(src, "<span class='danger'>Your headlamp is broken! You'll need a human to help replace it.</span>")
 
 /**
  * Handles headlamp toggling, disabling, and color setting.
@@ -554,19 +553,19 @@
 		return
 	switch(notifytype)
 		if(NEW_BORG) //New Cyborg
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a></span><br>")
 		if(NEW_MODEL) //New Model
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.")]<br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.</span><br>")
 		if(RENAME) //New Name
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].")]<br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 		if(AI_SHELL) //New Shell
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a></span><br>")
 		if(DISCONNECT) //Tampering with the wires
-			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	if(lockcharge || low_power_mode)
-		to_chat(src, span_warning("You can't do that right now!"))
+		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	return ..()
 
@@ -742,8 +741,8 @@
 	*Checking Exited() to detect if a hat gets up and walks off.
 	*Drones and pAIs might do this, after all.
 */
-/mob/living/silicon/robot/Exited(atom/movable/gone, direction)
-	if(hat && hat == gone)
+/mob/living/silicon/robot/Exited(atom/A)
+	if(hat && hat == A)
 		hat = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
@@ -756,10 +755,10 @@
 	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
 		return FALSE
 	if(!new_upgrade.action(src, user))
-		to_chat(user, span_danger("Upgrade error."))
+		to_chat(user, "<span class='danger'>Upgrade error.</span>")
 		new_upgrade.forceMove(loc) //gets lost otherwise
 		return FALSE
-	to_chat(user, span_notice("You apply the upgrade to [src]."))
+	to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 	to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[new_upgrade]</b>\"...Setup complete.\n----------------")
 	if(new_upgrade.one_use)
 		logevent("Firmware [new_upgrade] run successfully.")
@@ -900,13 +899,13 @@
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= RIDER_NEEDS_ARM)
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message(span_warning("[M] really can't seem to mount [src]..."))
+		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
 
 	if(stat || incapacitated())
 		return
 	if(model && !model.allow_riding)
-		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))
+		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 		return
 
 	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
@@ -938,7 +937,6 @@
 			aicamera.stored[i] = TRUE
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
-	SIGNAL_HANDLER
 	if(model)
 		model.respawn_consumable(src, amount * 0.005)
 	if(cell)
@@ -982,10 +980,3 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
-
-/mob/living/silicon/robot/get_exp_list(minutes)
-	. = ..()
-
-	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
-
-	.[cyborg_job_ref.title] = minutes

@@ -142,7 +142,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_rain()
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Fire rains from the sky!"))
+	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	var/turf/targetturf = get_turf(target)
 	for(var/turf/turf as anything in RANGE_TURFS(9,targetturf))
 		if(prob(11))
@@ -151,7 +151,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(amount, delay = 0.8)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Lava starts to pool up around you!"))
+	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
 
 	while(amount > 0)
 		if(QDELETED(target))
@@ -191,7 +191,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("[src] encases you in an arena of fire!"))
+	target.visible_message("<span class='boldwarning'>[src] encases you in an arena of fire!</span>")
 	var/amount = 3
 	var/turf/center = get_turf(target)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
@@ -242,7 +242,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0)
 	SetRecoveryTime(80)
-	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
+	visible_message("<span class='boldwarning'>[src] starts to glow vibrantly as its wounds close up!</span>")
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
@@ -293,11 +293,11 @@
 			hit_list += L
 			if(!frozen)
 				L.adjustFireLoss(20)
-				to_chat(L, span_userdanger("You're hit by [source]'s fire breath!"))
+				to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
 				continue
 			L.adjustFireLoss(10)
 			L.apply_status_effect(/datum/status_effect/ice_block_talisman, 20)
-			to_chat(L, span_userdanger("You're hit by [source]'s freezing breath!"))
+			to_chat(L, "<span class='userdanger'>You're hit by [source]'s freezing breath!</span>")
 
 		// deals damage to mechs
 		for(var/obj/vehicle/sealed/mecha/M in T.contents)
@@ -311,14 +311,14 @@
 	if(stat || swooping)
 		return
 	if(manual_target)
-		GiveTarget(manual_target)
+		target = manual_target
 	if(!target)
 		return
 	stop_automated_movement = TRUE
 	swooping |= SWOOP_DAMAGEABLE
-	set_density(FALSE)
+	density = FALSE
 	icon_state = "shadow"
-	visible_message(span_boldwarning("[src] swoops up high!"))
+	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 
 	var/negative
 	var/initial_x = x
@@ -376,7 +376,7 @@
 	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
+			visible_message("<span class='warning'>[src] slams down on [L], crushing [L.p_them()]!</span>")
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
@@ -386,14 +386,14 @@
 					throw_dir = pick(GLOB.alldirs)
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
-				visible_message(span_warning("[L] is thrown clear of [src]!"))
+				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 	for(var/obj/vehicle/sealed/mecha/M in orange(1, src))
 		M.take_damage(75, BRUTE, MELEE, 1)
 
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
 
-	set_density(TRUE)
+	density = TRUE
 	SLEEP_CHECK_DEATH(1)
 	swooping &= ~SWOOP_DAMAGEABLE
 	SetRecoveryTime(swoop_cooldown)
@@ -401,7 +401,7 @@
 		arena_escape_enrage()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
-	if(severity <= EXPLODE_LIGHT)
+	if(severity == EXPLODE_LIGHT)
 		return FALSE
 	return ..()
 
@@ -453,7 +453,7 @@
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
 		L.adjustFireLoss(10)
-		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
+		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
 
 	// deals damage to mechs
 	for(var/obj/vehicle/sealed/mecha/M in T.contents)
@@ -573,7 +573,7 @@
 			continue
 		if(islist(flame_hit) && !flame_hit[L])
 			L.adjustFireLoss(40)
-			to_chat(L, span_userdanger("You're hit by the drake's fire breath!"))
+			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			flame_hit[L] = TRUE
 		else
 			L.adjustFireLoss(10) //if we've already hit them, do way less damage
@@ -597,7 +597,7 @@
 	if(!istype(A))
 		return
 	if(player_cooldown >= world.time)
-		to_chat(src, span_warning("You need to wait [(player_cooldown - world.time) / 10] seconds before swooping again!"))
+		to_chat(src, "<span class='warning'>You need to wait [(player_cooldown - world.time) / 10] seconds before swooping again!</span>")
 		return
 	swoop_attack(FALSE, A)
 	lava_pools(10, 2) // less pools but longer delay before spawns

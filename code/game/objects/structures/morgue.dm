@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open()
 
@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(.)
 		return
 	if(locked)
-		to_chat(user, span_danger("It's locked."))
+		to_chat(user, "<span class='danger'>It's locked.</span>")
 		return
 	if(!connected)
 		to_chat(user, "That doesn't appear to have a tray.")
@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	add_fingerprint(user)
 	if(istype(P, /obj/item/pen))
 		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
@@ -109,13 +109,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
-		span_notice("You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear a metallic creaking from [src]."))
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
 		open()
 
 /obj/structure/bodycontainer/proc/open()
@@ -165,14 +165,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
-	. += span_notice("The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.")
+	. += "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>"
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	beeper = !beeper
-	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
 /obj/structure/bodycontainer/morgue/update_icon_state()
 	if(!connected || connected.loc != src) // Open or tray is gone.
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
-	to_chat(user, span_warning("[src] is locked against you."))
+	to_chat(user, "<span class='warning'>[src] is locked against you.</span>")
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
@@ -254,11 +254,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	var/list/conts = GetAllContents() - src - connected
 
 	if(!conts.len)
-		audible_message(span_hear("You hear a hollow crackle."))
+		audible_message("<span class='hear'>You hear a hollow crackle.</span>")
 		return
 
 	else
-		audible_message(span_hear("You hear a roar as the crematorium activates."))
+		audible_message("<span class='hear'>You hear a roar as the crematorium activates.</span>")
 
 		locked = TRUE
 		update_appearance()
@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		connected.close()
 		add_fingerprint(user)
 	else
-		to_chat(user, span_warning("That's not connected to anything!"))
+		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
 
 /obj/structure/tray/attackby(obj/P, mob/user, params)
 	if(!istype(P, /obj/item/riding_offhand))
@@ -368,7 +368,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			return
 	O.forceMove(src.loc)
 	if (user != O)
-		visible_message(span_warning("[user] stuffs [O] into [src]."))
+		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
 	return
 
 /*
@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "morguet"
 	pass_flags_self = PASSTABLE
 
-/obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
 		return

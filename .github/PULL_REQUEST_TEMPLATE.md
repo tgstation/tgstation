@@ -11,9 +11,8 @@
 
 ## Changelog
 :cl:
-add: Added new mechanics or gameplay changes
+add: Added new things
 add: Added more things
-expansion: Expands content of an existing thing
 del: Removed old things
 qol: made something easier to use
 balance: rebalanced something

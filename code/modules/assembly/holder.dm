@@ -43,7 +43,6 @@
 	else
 		a_right = A
 	A.holder_movement()
-	A.on_attach()
 
 /obj/item/assembly_holder/update_appearance(updates=ALL)
 	. = ..()
@@ -70,6 +69,13 @@
 	for(var/right_overlay in a_right.attached_overlays)
 		right.add_overlay("[right_overlay]_l")
 	. += right
+
+/obj/item/assembly_holder/Crossed(atom/movable/AM as mob|obj)
+	. = ..()
+	if(a_left)
+		a_left.Crossed(AM)
+	if(a_right)
+		a_right.Crossed(AM)
 
 /obj/item/assembly_holder/on_found(mob/finder)
 	if(a_left)
@@ -103,7 +109,7 @@
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())
 		return TRUE
-	to_chat(user, span_notice("You disassemble [src]!"))
+	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(a_left)
 		a_left.on_detach()
 		a_left = null
@@ -116,10 +122,10 @@
 /obj/item/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(!a_left || !a_right)
-		to_chat(user, span_danger("Assembly part missing!"))
+		to_chat(user, "<span class='danger'>Assembly part missing!</span>")
 		return
 	if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
-		switch(tgui_alert(usr,"Which side would you like to use?",,list("Left","Right")))
+		switch(alert("Which side would you like to use?",,"Left","Right"))
 			if("Left")
 				a_left.attack_self(user)
 			if("Right")

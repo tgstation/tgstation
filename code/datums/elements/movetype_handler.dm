@@ -33,15 +33,13 @@
 		DO_FLOATING_ANIM(movable_target)
 
 /datum/element/movetype_handler/Detach(datum/source)
-	var/list/signals_to_remove = list(
+	UnregisterSignal(source, list(
+		GLOB.movement_type_addtrait_signals,
+		GLOB.movement_type_removetrait_signals,
 		SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM),
 		SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM),
 		COMSIG_PAUSE_FLOATING_ANIM
-	)
-	signals_to_remove += GLOB.movement_type_addtrait_signals
-	signals_to_remove += GLOB.movement_type_removetrait_signals
-	UnregisterSignal(source, signals_to_remove)
-
+	))
 	attached_atoms -= source
 	paused_floating_anim_atoms -= source
 	stop_floating(source)

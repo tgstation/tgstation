@@ -65,7 +65,7 @@
 /area/shuttle/hunter)
 "o" = (
 /obj/effect/mob_spawn/human/fugitive/russian{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
@@ -221,10 +221,6 @@
 /area/shuttle/hunter)
 "Q" = (
 /obj/item/book/manual/ripley_build_and_repair,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/hunter)
-"V" = (
-/obj/effect/mob_spawn/human/fugitive/russian,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "Y" = (
@@ -453,7 +449,7 @@ a
 a
 a
 b
-V
+o
 k
 r
 z

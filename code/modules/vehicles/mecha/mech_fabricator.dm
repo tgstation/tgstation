@@ -53,7 +53,6 @@
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
-								"Savannah-Ivanov",
 								"Exosuit Equipment",
 								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
@@ -102,7 +101,7 @@
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
+		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
 
 /**
  * Generates an info list for a given part.
@@ -177,6 +176,37 @@
 	)
 
 	return part
+
+/**
+ * Generates a list of resources / materials available to this Exosuit Fab
+ *
+ * Returns null if there is no material container available.
+ * List format is list(material_name = list(amount = ..., ref = ..., etc.))
+ */
+/obj/machinery/mecha_part_fabricator/proc/output_available_resources()
+	var/datum/component/material_container/materials = rmat.mat_container
+
+	var/list/material_data = list()
+
+	if(materials)
+		for(var/mat_id in materials.materials)
+			var/datum/material/M = mat_id
+			var/list/material_info = list()
+			var/amount = materials.materials[mat_id]
+
+			material_info = list(
+				"name" = M.name,
+				"ref" = REF(M),
+				"amount" = amount,
+				"sheets" = round(amount / MINERAL_MATERIAL_AMOUNT),
+				"removable" = amount >= MINERAL_MATERIAL_AMOUNT
+			)
+
+			material_data += list(material_info)
+
+		return material_data
+
+	return null
 
 /**
  * Intended to be called when an item starts printing.
@@ -458,7 +488,7 @@
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = rmat.mat_container?.ui_data()
+	data["materials"] = output_available_resources()
 
 	if(being_built)
 		var/list/part = list(
@@ -558,17 +588,35 @@
 					queue.Swap(index,new_index)
 			return
 		if("remove_mat")
-			var/datum/material/material = locate(params["ref"])
+			// Remove a material from the fab
+			var/mat_ref = params["ref"]
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return
-
-			// SAFETY: eject_sheets checks for valid mats
-			rmat.eject_sheets(material, amount)
+			var/datum/material/mat = locate(mat_ref)
+			eject_sheets(mat, amount)
 			return
 
 	return FALSE
+
+/**
+ * Eject material sheets.
+ *
+ * Returns the number of sheets successfully ejected.
+ * eject_sheet - Byond REF of the material to eject.
+ * eject_amt - Number of sheets to attempt to eject.
+ */
+/obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
+	var/datum/component/material_container/mat_container = rmat.mat_container
+	if (!mat_container)
+		say("No access to material storage, please contact the quartermaster.")
+		return 0
+	if (rmat.on_hold())
+		say("Mineral access is on hold, please contact the quartermaster.")
+		return 0
+	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
+	var/list/matlist = list()
+	matlist[eject_sheet] = text2num(eject_amt)
+	rmat.silo_log(src, "ejected", -count, "sheets", matlist)
+	return count
 
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted
@@ -579,7 +627,7 @@
 	if(..())
 		return TRUE
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 		return FALSE
 	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", I)
 
@@ -587,16 +635,16 @@
 	if(..())
 		return TRUE
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 		return FALSE
 	return default_deconstruction_crowbar(I)
 
 /obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		to_chat(user, span_warning("You can't load [src] while it's opened!"))
+		to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
 		return FALSE
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 		return FALSE
 
 	return TRUE

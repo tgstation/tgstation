@@ -202,6 +202,8 @@
 		else // Many other things have registered here
 			lookup[sig_type][src] = TRUE
 
+	datum_flags |= DF_SIGNAL_ENABLED
+
 /**
  * Stop listening to a given signal from target
  *
@@ -221,8 +223,6 @@
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
 		if(!signal_procs[target][sig])
-			if(!istext(sig))
-				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue
 		switch(length(lookup[sig]))
 			if(2)
@@ -235,8 +235,6 @@
 						target.comp_lookup = null
 						break
 			if(0)
-				if(lookup[sig] != src)
-					continue
 				lookup -= sig
 				if(!length(lookup))
 					target.comp_lookup = null
@@ -312,17 +310,18 @@
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
-		var/datum/listening_datum = target
-		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		var/datum/C = target
+		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
+			return NONE
+		var/proctype = C.signal_procs[src][sigtype]
+		return NONE | CallAsync(C, proctype, arguments)
 	. = NONE
-	// This exists so that even if one of the signal receivers unregisters the signal,
-	// all the objects that are receiving the signal get the signal this final time.
-	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
-	var/list/queued_calls = list()
-	for(var/datum/listening_datum as anything in target)
-		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
-	for(var/datum/listening_datum as anything in queued_calls)
-		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
+	for(var/I in target)
+		var/datum/C = I
+		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
+			continue
+		var/proctype = C.signal_procs[src][sigtype]
+		. |= CallAsync(C, proctype, arguments)
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -445,8 +444,9 @@
 					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
-					for(var/datum/component/existing_component as anything in GetComponents(new_type))
-						if(existing_component.CheckDupeComponent(arglist(arguments)))
+					for(var/i in GetComponents(new_type))
+						var/datum/component/C = i
+						if(C.CheckDupeComponent(arglist(arguments)))
 							make_new_component = FALSE
 							QDEL_NULL(new_comp)
 							break
@@ -471,10 +471,10 @@
  * * component_type The typepath of the component to create or return
  * * ... additional arguments to be passed when creating the component if it does not exist
  */
-/datum/proc/_LoadComponent(list/arguments)
-	. = GetComponent(arguments[1])
+/datum/proc/LoadComponent(component_type, ...)
+	. = GetComponent(component_type)
 	if(!.)
-		return _AddComponent(arguments)
+		return _AddComponent(args)
 
 /**
  * Removes the component from parent, ends up with a null parent

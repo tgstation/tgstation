@@ -3,7 +3,7 @@
 	update_turf_movespeed(loc)
 
 
-/mob/living/CanAllowThrough(atom/movable/mover, border_dir)
+/mob/living/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
 		return

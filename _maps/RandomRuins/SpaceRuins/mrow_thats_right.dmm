@@ -110,7 +110,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "av" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aw" = (
@@ -123,7 +123,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "ax" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -139,7 +141,9 @@
 "az" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -163,7 +167,9 @@
 "aC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aD" = (
@@ -189,7 +195,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aH" = (
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -307,7 +316,9 @@
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aY" = (
@@ -330,15 +341,18 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bb" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/structure/closet/cabinet,
 /obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bc" = (
-/obj/machinery/button/door/directional/west{
+/obj/machinery/button/door{
 	id = "meow";
-	name = "Emergency Kitty Lockdown"
+	name = "Emergency Kitty Lockdown";
+	pixel_x = -24
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -422,7 +436,9 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bq" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "br" = (
@@ -454,7 +470,10 @@
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bv" = (
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -540,7 +559,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -637,7 +656,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bT" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -653,7 +672,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -712,7 +731,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "cd" = (
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
@@ -877,7 +898,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cw" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cx" = (

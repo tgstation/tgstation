@@ -2,11 +2,6 @@
 #define CELL_POWER_GAIN 60
 #define CELL_POWER_DRAIN 750
 
-/**
- * # Power cell
- *
- * Batteries.
- */
 /obj/item/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargeable electrochemical power cell."
@@ -20,22 +15,15 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	///Current charge in cell units
-	var/charge = 0
-	///Maximum charge in cell units
+	var/charge = 0 // note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
-	///If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
-	var/rigged = FALSE
-	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
-	var/corrupted = FALSE
-	///how much power is given every tick in a recharger
-	var/chargerate = 100
-	///If true, the cell will state it's maximum charge in it's description
+	var/rigged = FALSE /// If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
+	var/corrupted = FALSE /// If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
+	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/ratingdesc = TRUE
-	///If it's a grown that acts as a battery, add a wire overlay to it.
-	var/grown_battery = FALSE
+	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -98,12 +86,12 @@
 /obj/item/stock_parts/cell/examine(mob/user)
 	. = ..()
 	if(rigged)
-		. += span_danger("This power cell seems to be faulty!")
+		. += "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
 		. += "The charge meter reads [round(src.percent() )]%."
 
 /obj/item/stock_parts/cell/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/proc/on_reagent_change(datum/reagents/holder, ...)
@@ -116,11 +104,11 @@
 	var/turf/T = get_turf(src.loc)
 	if (charge==0)
 		return
-	var/range_devastation = -1 //round(charge/11000)
-	var/range_heavy = round(sqrt(charge)/60)
-	var/range_light = round(sqrt(charge)/30)
-	var/range_flash = range_light
-	if (range_light==0)
+	var/devastation_range = -1 //round(charge/11000)
+	var/heavy_impact_range = round(sqrt(charge)/60)
+	var/light_impact_range = round(sqrt(charge)/30)
+	var/flash_range = light_impact_range
+	if (light_impact_range==0)
 		rigged = FALSE
 		corrupt()
 		return
@@ -129,7 +117,7 @@
 	log_game("[key_name(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
 
 	//explosion(T, 0, 1, 2, 2)
-	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
+	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	qdel(src)
 
 /obj/item/stock_parts/cell/proc/corrupt()
@@ -161,34 +149,31 @@
 				corrupt()
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
-	if(ishuman(user))
+	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-
-		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
-
-			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
-			if((stomach.drain_time > world.time) || !stomach)
-				return
-			if(charge < CELL_POWER_DRAIN)
-				to_chat(H, span_warning("[src] doesn't have enough power!"))
-				return
-			if(stomach.crystal_charge > charge_limit)
-				to_chat(H, span_warning("Your charge is full!"))
-				return
-			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
-			stomach.drain_time = world.time + CELL_DRAIN_TIME
-			if(do_after(user, CELL_DRAIN_TIME, target = src))
-				if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
-					return
-				if(istype(stomach))
-					to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))
-					stomach.adjust_charge(CELL_POWER_GAIN)
-					charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
-				else
-					to_chat(H, span_warning("You can't receive charge from [src]!"))
+		var/datum/species/ethereal/E = H.dna.species
+		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if((E.drain_time > world.time) || !stomach)
 			return
+		if(charge < CELL_POWER_DRAIN)
+			to_chat(H, "<span class='warning'>[src] doesn't have enough power!</span>")
+			return
+		if(stomach.crystal_charge > charge_limit)
+			to_chat(H, "<span class='warning'>Your charge is full!</span>")
+			return
+		to_chat(H, "<span class='notice'>You begin clumsily channeling power from [src] into your body.</span>")
+		E.drain_time = world.time + CELL_DRAIN_TIME
+		if(do_after(user, CELL_DRAIN_TIME, target = src))
+			if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+				return
+			if(istype(stomach))
+				to_chat(H, "<span class='notice'>You receive some charge from [src], wasting some in the process.</span>")
+				stomach.adjust_charge(CELL_POWER_GAIN)
+				charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+			else
+				to_chat(H, "<span class='warning'>You can't receive charge from [src]!</span>")
+		return
 
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
@@ -207,7 +192,6 @@
 /obj/item/stock_parts/cell/empty/Initialize()
 	. = ..()
 	charge = 0
-	update_appearance()
 
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"

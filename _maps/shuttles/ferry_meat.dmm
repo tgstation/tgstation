@@ -71,7 +71,9 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "k" = (
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "l" = (
@@ -92,7 +94,8 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "o" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/window/shuttle,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "p" = (

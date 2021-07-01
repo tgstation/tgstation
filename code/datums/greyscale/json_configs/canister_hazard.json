@@ -18,13 +18,5 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
-	],
-	"window-base": [
-		{
-			"type": "icon_state",
-			"icon_state": "window-base",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		}
 	]
 }

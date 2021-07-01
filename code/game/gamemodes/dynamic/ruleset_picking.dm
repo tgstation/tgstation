@@ -63,14 +63,13 @@
 	if (!rule.repeatable)
 		latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 	addtimer(CALLBACK(src, .proc/execute_midround_latejoin_rule, rule), rule.delay)
-	return TRUE
 
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	spend_midround_budget(rule.cost)
 	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
-	rule.pre_execute(GLOB.alive_player_list.len)
+	rule.pre_execute(current_players[CURRENT_LIVING_PLAYERS].len)
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		if(rule.flags & HIGH_IMPACT_RULESET)
@@ -94,7 +93,7 @@
 /// Fired when an admin cancels the current midround injection.
 /datum/game_mode/dynamic/proc/admin_cancel_midround(mob/user, timer_id)
 	if (midround_injection_timer_id != timer_id || !deltimer(midround_injection_timer_id))
-		to_chat(user, span_notice("Too late!"))
+		to_chat(user, "<span class='notice'>Too late!</span>")
 		return
 
 	log_admin("[key_name(user)] cancelled the next midround injection.")
@@ -105,7 +104,7 @@
 /// Fired when an admin requests a different midround injection.
 /datum/game_mode/dynamic/proc/admin_different_midround(mob/user, timer_id)
 	if (midround_injection_timer_id != timer_id || !deltimer(midround_injection_timer_id))
-		to_chat(user, span_notice("Too late!"))
+		to_chat(user, "<span class='notice'>Too late!</span>")
 		return
 
 	midround_injection_timer_id = null

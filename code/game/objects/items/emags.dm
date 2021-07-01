@@ -22,7 +22,7 @@
 
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
-		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [name].</span>", "<span class='notice'>You show [src].</span>")
 	add_fingerprint(user)
 
 /obj/item/card/emag/bluespace
@@ -48,7 +48,7 @@
 
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
-		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [name].</span>", "<span class='notice'>You show [src].</span>")
 	add_fingerprint(user)
 
 /obj/item/card/emagfake/afterattack()
@@ -75,7 +75,7 @@
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)
 		if (target.type in subtypelist)
-			to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
+			to_chat(user, "<span class='warning'>The [target] cannot be affected by the [src]! A more specialized hacking device is required.</span>")
 			return FALSE
 	return TRUE
 
@@ -99,7 +99,7 @@
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
-	to_chat(user, span_notice("You use [src]. It now has [charges] charges remaining."))
+	to_chat(user, "<span class='notice'>You use [src]. It now has [charges] charges remaining.</span>")
 	charge_timers.Add(addtimer(CALLBACK(src, .proc/recharge), charge_time, TIMER_STOPPABLE))
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
@@ -109,20 +109,20 @@
 
 /obj/item/card/emag/doorjack/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [charges] charges remaining.")
+	. += "<span class='notice'>It has [charges] charges remaining.</span>"
 	if (length(charge_timers))
-		. += "[span_notice("<b>A small display on the back reads:")]</b>"
+		. += "<span class='notice'><b>A small display on the back reads:</span></b>"
 	for (var/i in 1 to length(charge_timers))
 		var/timeleft = timeleft(charge_timers[i])
 		var/loadingbar = num2loadingbar(timeleft/charge_time)
-		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([timeleft*0.1]s)</b>")
+		. += "<span class='notice'><b>CHARGE #[i]: [loadingbar] ([timeleft*0.1]s)</b></span>"
 
 /obj/item/card/emag/doorjack/can_emag(atom/target, mob/user)
 	if (charges <= 0)
-		to_chat(user, span_warning("[src] is recharging!"))
+		to_chat(user, "<span class='warning'>[src] is recharging!</span>")
 		return FALSE
 	for (var/list/subtypelist in type_whitelist)
 		if (target.type in subtypelist)
 			return TRUE
-	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
+	to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
 	return FALSE

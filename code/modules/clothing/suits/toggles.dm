@@ -64,10 +64,10 @@
 			return
 		var/mob/living/carbon/human/H = loc
 		if(H.wear_suit != src)
-			to_chat(H, span_warning("You must be wearing [src] to put up the hood!"))
+			to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
 			return
 		if(H.head)
-			to_chat(H, span_warning("You're already wearing something on your head!"))
+			to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 			return
 		else
 			if(alternative_mode)
@@ -124,7 +124,7 @@
 	if(!can_use(usr))
 		return 0
 
-	to_chat(usr, span_notice("You toggle [src]'s [togglename]."))
+	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = FALSE
@@ -146,11 +146,10 @@
 	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	if(!QDELETED(helmet))
+	if(helmet)
 		helmet.suit = null
 		qdel(helmet)
-		helmet = null
-	QDEL_NULL(jetpack)
+	qdel(jetpack)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
@@ -187,7 +186,7 @@
 			helmet.attack_self(H)
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
-		to_chat(H, span_notice("The helmet on the hardsuit disengages."))
+		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	else
 		helmet.forceMove(src)
@@ -201,18 +200,18 @@
 	if(!helmettype)
 		return
 	if(!helmet)
-		to_chat(H, span_warning("The helmet's lightbulb seems to be damaged! You'll need a replacement bulb."))
+		to_chat(H, "<span class='warning'>The helmet's lightbulb seems to be damaged! You'll need a replacement bulb.</span>")
 		return
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
-				to_chat(H, span_warning("You must be wearing [src] to engage the helmet!"))
+				to_chat(H, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
 				return
 			if(H.head)
-				to_chat(H, span_warning("You're already wearing something on your head!"))
+				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
-				to_chat(H, span_notice("You engage the helmet on the hardsuit."))
+				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)

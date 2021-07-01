@@ -9,29 +9,17 @@
 	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
-	// If the hardware uses extra power, change this.
-	var/power_usage = 0
-	// If the hardware is turned off set this to 0.
-	var/enabled = TRUE
-	// Prevent disabling for important component, like the CPU.
-	var/critical = FALSE
-	// Prevents direct installation of removable media.
-	var/can_install = TRUE
-	// Hardware that fits into expansion bays.
-	var/expansion_hw = FALSE
-	// Whether the hardware is removable or not.
-	var/removable = TRUE
-	// Current damage level
-	var/damage = 0
-// Maximal damage level.
-	var/max_damage = 100
-	// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
-	var/damage_malfunction = 20
-	// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
-	var/damage_failure = 50
-	// Chance of malfunction when the component is damaged
-	var/malfunction_probability = 10
-	// What define is used to qualify this piece of hardware? Important for upgraded versions of the same hardware.
+	var/power_usage = 0 // If the hardware uses extra power, change this.
+	var/enabled = TRUE // If the hardware is turned off set this to 0.
+	var/critical = FALSE // Prevent disabling for important component, like the CPU.
+	var/can_install = TRUE // Prevents direct installation of removable media.
+	var/expansion_hw = FALSE // Hardware that fits into expansion bays.
+	var/removable = TRUE // Whether the hardware is removable or not.
+	var/damage = 0 // Current damage level
+	var/max_damage = 100 // Maximal damage level.
+	var/damage_malfunction = 20 // "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
+	var/damage_failure = 50 // "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
+	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
 	var/device_type
 
 /obj/item/computer_hardware/New(obj/L)
@@ -50,10 +38,10 @@
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
 		if(obj_integrity == max_integrity)
-			to_chat(user, span_warning("\The [src] doesn't seem to require repairs."))
+			to_chat(user, "<span class='warning'>\The [src] doesn't seem to require repairs.</span>")
 			return 1
 		if(S.use(1))
-			to_chat(user, span_notice("You patch up \the [src] with a bit of \the [I]."))
+			to_chat(user, "<span class='notice'>You patch up \the [src] with a bit of \the [I].</span>")
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 		return 1
 
@@ -90,11 +78,11 @@
 /obj/item/computer_hardware/examine(mob/user)
 	. = ..()
 	if(damage > damage_failure)
-		. += span_danger("It seems to be severely damaged!")
+		. += "<span class='danger'>It seems to be severely damaged!</span>"
 	else if(damage > damage_malfunction)
-		. += span_warning("It seems to be damaged!")
+		. += "<span class='warning'>It seems to be damaged!</span>"
 	else if(damage)
-		. += span_notice("It seems to be slightly damaged.")
+		. += "<span class='notice'>It seems to be slightly damaged.</span>"
 
 // Component-side compatibility check.
 /obj/item/computer_hardware/proc/can_install(obj/item/modular_computer/M, mob/living/user = null)

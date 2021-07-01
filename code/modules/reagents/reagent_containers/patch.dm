@@ -5,7 +5,7 @@
 	icon_state = "bandaid"
 	inhand_icon_state = "bandaid"
 	possible_transfer_amounts = list()
-	volume = 40
+	volume = 25 //Patches have an application delay, so they can have more maximum volume than pills
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30 // three seconds
@@ -15,10 +15,10 @@
 	if(ishuman(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
-			to_chat(user, span_warning("The limb is missing!"))
+			to_chat(user, "<span class='warning'>The limb is missing!</span>")
 			return
 		if(affecting.status != BODYPART_ORGANIC)
-			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
+			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
 	..()
 

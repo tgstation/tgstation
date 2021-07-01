@@ -23,6 +23,7 @@
 	desc = "It's pretty bland, but oh the possibilities..."
 	gender = PLURAL
 	icon_state = "soybeans"
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/soymilk = 0)
 	tastes = list("soy" = 1)
@@ -46,6 +47,7 @@
 	name = "koibean"
 	desc = "Something about these seems fishy."
 	icon_state = "koibeans"
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40

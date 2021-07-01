@@ -50,7 +50,6 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
 	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
 	var/thermal_on = FALSE /// Status of the thermal regulator
-	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
@@ -93,7 +92,7 @@
 	if(!cell.use(THERMAL_REGULATOR_COST))
 		toggle_spacesuit()
 		update_hud_icon(user)
-		to_chat(user, span_warning("The thermal regulator cuts off as [cell] runs out of charge."))
+		to_chat(user, "<span class='warning'>The thermal regulator cuts off as [cell] runs out of charge.</span>")
 		return
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
@@ -152,15 +151,15 @@
 			([range_low]-[range_high] degrees celcius)") as null|num
 		if(deg_c && deg_c >= range_low && deg_c <= range_high)
 			temperature_setting = round(T0C + deg_c, 0.1)
-			to_chat(user, span_notice("You see the readout change to [deg_c] c."))
+			to_chat(user, "<span class='notice'>You see the readout change to [deg_c] c.</span>")
 		return
 	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
-			to_chat(user, span_warning("[src] already has a cell installed."))
+			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
 			return
 		if(user.transferItemToLoc(I, src))
 			cell = I
-			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
+			to_chat(user, "<span class='notice'>You successfully install \the [cell] into [src].</span>")
 			return
 	return ..()
 
@@ -185,8 +184,8 @@
 /// Remove the cell from the suit if the cell cover is open
 /obj/item/clothing/suit/space/proc/remove_cell(mob/user)
 	if(cell_cover_open && cell)
-		user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
-			span_notice("You remove [cell]."))
+		user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
+			"<span class='notice'>You remove [cell].</span>")
 		cell.add_fingerprint(user)
 		user.put_in_hands(cell)
 		cell = null
@@ -194,7 +193,7 @@
 /// Toggle the space suit's cell cover
 /obj/item/clothing/suit/space/proc/toggle_spacesuit_cell(mob/user)
 	cell_cover_open = !cell_cover_open
-	to_chat(user, span_notice("You [cell_cover_open ? "open" : "close"] the cell cover on \the [src]."))
+	to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
 
 /// Toggle the space suit's thermal regulator status
 /obj/item/clothing/suit/space/proc/toggle_spacesuit()
@@ -203,29 +202,26 @@
 	// thermal protection value and should just return out early.
 	var/mob/living/carbon/human/user = src.loc
 	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
-		to_chat(user, span_warning("The thermal regulator on \the [src] has no charge."))
+		to_chat(user, "<span class='warning'>The thermal regulator on \the [src] has no charge.</span>")
 		return
 
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	if(user)
-		to_chat(user, span_notice("You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator."))
+		to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator.</span>")
 	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
 
 // let emags override the temperature settings
 /obj/item/clothing/suit/space/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
+		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
 	var/mob/living/carbon/human/human = user
-
-	if(!show_hud)
-		return
 
 	if(!cell)
 		human.update_spacesuit_hud_icon("missing")

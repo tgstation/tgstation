@@ -9,21 +9,10 @@
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
-	///if we are attached to an assembly holder, we attach a connect_loc element to ourselves that listens to this from the holder
-	var/static/list/holder_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-
-/obj/item/assembly/mousetrap/Initialize()
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()
-	. += span_notice("The pressure plate is [armed?"primed":"safe"].")
+	. += "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>"
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())
@@ -32,7 +21,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
 				if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(FALSE)
 		update_appearance()
 		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
@@ -44,14 +33,6 @@
 /obj/item/assembly/mousetrap/update_icon(updates=ALL)
 	. = ..()
 	holder?.update_icon(updates)
-
-/obj/item/assembly/mousetrap/on_attach()
-	. = ..()
-	AddElement(/datum/element/connect_loc_behalf, holder, holder_connections)
-
-/obj/item/assembly/mousetrap/on_detach()
-	. = ..()
-	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
@@ -79,15 +60,15 @@
 				H.update_damage_overlays()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
-		visible_message(span_boldannounce("SPLAT!"))
+		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
 	else if(israt(target))
 		var/mob/living/simple_animal/hostile/rat/ratt = target
-		visible_message(span_boldannounce("Clink!"))
+		visible_message("<span class='boldannounce'>Clink!</span>")
 		ratt.apply_damage(5) //Not lethal, but just enought to make a mark.
 		ratt.Stun(1 SECONDS)
 	else if(isregalrat(target))
-		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
+		visible_message("<span class='boldannounce'>Skreeeee!</span>") //He's simply too large to be affected by a tiny mouse trap.
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	armed = FALSE
 	update_appearance()
@@ -96,17 +77,17 @@
 
 /obj/item/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
 	if(!armed)
-		to_chat(user, span_notice("You arm [src]."))
+		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = BODY_ZONE_PRECISE_L_HAND
 			if(!(user.active_hand_index % 2))
 				which_hand = BODY_ZONE_PRECISE_R_HAND
 			triggered(user, which_hand)
-			user.visible_message(span_warning("[user] accidentally sets off [src], breaking their fingers."), \
-				span_warning("You accidentally trigger [src]!"))
+			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
+				"<span class='warning'>You accidentally trigger [src]!</span>")
 			return
-		to_chat(user, span_notice("You disarm [src]."))
+		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_appearance()
 	playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
@@ -120,14 +101,13 @@
 			if(!(user.active_hand_index % 2))
 				which_hand = BODY_ZONE_PRECISE_R_HAND
 			triggered(user, which_hand)
-			user.visible_message(span_warning("[user] accidentally sets off [src], breaking their fingers."), \
-					span_warning("You accidentally trigger [src]!"))
+			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
+					"<span class='warning'>You accidentally trigger [src]!</span>")
 			return
 	return ..()
 
 
-/obj/item/assembly/mousetrap/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
-	SIGNAL_HANDLER
+/obj/item/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)
 	if(armed)
 		if(ismob(AM))
 			var/mob/MM = AM
@@ -135,23 +115,25 @@
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
 					if(H.m_intent == MOVE_INTENT_RUN)
-						INVOKE_ASYNC(src, .proc/triggered, H)
-						H.visible_message(span_warning("[H] accidentally steps on [src]."), \
-							span_warning("You accidentally step on [src]"))
+						triggered(H)
+						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
+							"<span class='warning'>You accidentally step on [src]</span>")
 				else if(ismouse(MM) || israt(MM) || isregalrat(MM))
-					INVOKE_ASYNC(src, .proc/triggered, MM)
+					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
-			INVOKE_ASYNC(src, .proc/triggered, AM)
+			triggered(AM)
+	..()
+
 
 /obj/item/assembly/mousetrap/on_found(mob/finder)
 	if(armed)
 		if(finder)
-			finder.visible_message(span_warning("[finder] accidentally sets off [src], breaking their fingers."), \
-							   span_warning("You accidentally trigger [src]!"))
+			finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
+							   "<span class='warning'>You accidentally trigger [src]!</span>")
 			triggered(finder, (finder.active_hand_index % 2 == 0) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
 			return TRUE //end the search!
 		else
-			visible_message(span_warning("[src] snaps shut!"))
+			visible_message("<span class='warning'>[src] snaps shut!</span>")
 			triggered(loc)
 			return FALSE
 	return FALSE
@@ -160,7 +142,7 @@
 /obj/item/assembly/mousetrap/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(!armed)
 		return ..()
-	visible_message(span_warning("[src] is triggered by [AM]."))
+	visible_message("<span class='warning'>[src] is triggered by [AM].</span>")
 	triggered(null)
 
 

@@ -79,10 +79,10 @@
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
 
-/turf/open/indestructible/honk/Entered(atom/movable/arrived, direction)
-	. = ..()
-	if(ismob(arrived))
-		playsound(src, sound, 50, TRUE)
+/turf/open/indestructible/honk/Entered(atom/movable/AM)
+	..()
+	if(ismob(AM))
+		playsound(src,sound,50,TRUE)
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"
@@ -168,13 +168,13 @@
 			excited = TRUE
 			SSair.active_turfs += src
 
-/turf/open/GetHeatCapacity()
+/turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
 
-/turf/open/GetTemperature()
+/turf/open/proc/GetTemperature()
 	. = air.temperature
 
-/turf/open/TakeTemperature(temp)
+/turf/open/proc/TakeTemperature(temp)
 	air.temperature += temp
 	air_update_turf(FALSE, FALSE)
 
@@ -219,7 +219,7 @@
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return FALSE
 		if(!(lube&SLIDE_ICE))
-			to_chat(C, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
+			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)

@@ -5,10 +5,12 @@ SUBSYSTEM_DEF(vis_overlays)
 	init_order = INIT_ORDER_VIS
 
 	var/list/vis_overlay_cache
+	var/list/unique_vis_overlays
 	var/list/currentrun
 
 /datum/controller/subsystem/vis_overlays/Initialize()
 	vis_overlay_cache = list()
+	unique_vis_overlays = list()
 	return ..()
 
 /datum/controller/subsystem/vis_overlays/fire(resumed = FALSE)
@@ -43,6 +45,7 @@ SUBSYSTEM_DEF(vis_overlays)
 		overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 		overlay.cache_expiration = -1
 		var/cache_id = "\ref[overlay]@{[world.time]}"
+		unique_vis_overlays += overlay
 		vis_overlay_cache[cache_id] = overlay
 		. = overlay
 	thing.vis_contents += overlay

@@ -79,7 +79,7 @@ const RobotInfo = (props, context) => {
           <Button
             icon="home"
             tooltip="Travel Home."
-            tooltipPosition="bottom-start"
+            tooltipPosition="bottom-left"
             onClick={() => act('home', {
               robot: mule.mule_ref,
             })} />

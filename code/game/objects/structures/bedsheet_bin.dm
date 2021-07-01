@@ -36,12 +36,12 @@ LINEN BINS
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
-		to_chat(user, span_notice("You cover yourself with [src]."))
+		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
 		pixel_x = 0
 		pixel_y = 0
 	else
 		layer = initial(layer)
-		to_chat(user, span_notice("You smooth [src] out beneath you."))
+		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")
 	add_fingerprint(user)
 	return
 
@@ -49,11 +49,10 @@ LINEN BINS
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
 			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), 3)
-			if(!QDELETED(shreds)) //stacks merged
-				transfer_fingerprints_to(shreds)
-				shreds.add_fingerprint(user)
+			transfer_fingerprints_to(shreds)
+			shreds.add_fingerprint(user)
 		qdel(src)
-		to_chat(user, span_notice("You tear [src] up."))
+		to_chat(user, "<span class='notice'>You tear [src] up.</span>")
 	else
 		return ..()
 
@@ -340,7 +339,7 @@ LINEN BINS
 			return
 		sheets.Add(I)
 		amount++
-		to_chat(user, span_notice("You put [I] in [src]."))
+		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		update_appearance()
 
 	else if(default_unfasten_wrench(user, I, 5))
@@ -359,10 +358,10 @@ LINEN BINS
 
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot hide it among the sheets!"))
+			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
 			return
 		hidden = I
-		to_chat(user, span_notice("You hide [I] among the sheets."))
+		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
 /obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
@@ -389,12 +388,12 @@ LINEN BINS
 
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
-		to_chat(user, span_notice("You take [B] out of [src]."))
+		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 		update_appearance()
 
 		if(hidden)
 			hidden.forceMove(drop_location())
-			to_chat(user, span_notice("[hidden] falls out of [B]!"))
+			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
 	add_fingerprint(user)
@@ -413,7 +412,7 @@ LINEN BINS
 			B = new /obj/item/bedsheet(loc)
 
 		B.forceMove(drop_location())
-		to_chat(user, span_notice("You telekinetically remove [B] from [src]."))
+		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_appearance()
 
 		if(hidden)

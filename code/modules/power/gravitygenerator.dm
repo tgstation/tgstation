@@ -32,17 +32,13 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/Initialize()
 	. = ..()
-	soundloop = new(src, TRUE)
-
-/obj/machinery/gravity_generator/main/Destroy()
-	. = ..()
-	QDEL_NULL(soundloop)
+	soundloop = new(list(src), TRUE)
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
-	if(severity >= EXPLODE_DEVASTATE) // Very sturdy.
+	if(severity == EXPLODE_DEVASTATE) // Very sturdy.
 		set_broken()
 
 /obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
@@ -166,7 +162,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(count == 5) // Middle
 			middle = part
 		if(count <= 3) // Their sprite is the top part of the generator
-			part.set_density(FALSE)
+			part.density = FALSE
 			part.layer = WALL_OBJ_LAYER
 		part.sprite_number = count
 		part.main_part = src
@@ -205,7 +201,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER)
-				to_chat(user, span_notice("You secure the screws of the framework."))
+				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
 				I.play_tool_sound(src)
 				broken_state++
 				update_appearance()
@@ -213,7 +209,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(GRAV_NEEDS_WELDING)
 			if(I.tool_behaviour == TOOL_WELDER)
 				if(I.use_tool(src, user, 0, volume=50, amount=1))
-					to_chat(user, span_notice("You mend the damaged framework."))
+					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
 					broken_state++
 					update_appearance()
 				return
@@ -222,16 +218,16 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				var/obj/item/stack/sheet/plasteel/PS = I
 				if(PS.get_amount() >= 10)
 					PS.use(10)
-					to_chat(user, span_notice("You add the plating to the framework."))
+					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
 					broken_state++
 					update_appearance()
 				else
-					to_chat(user, span_warning("You need 10 sheets of plasteel!"))
+					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
 			if(I.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, span_notice("You secure the plating to the framework."))
+				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
 				I.play_tool_sound(src)
 				set_fix()
 				return

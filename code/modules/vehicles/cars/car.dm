@@ -25,7 +25,7 @@
 		return FALSE
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/kidnapped = dropping
-		kidnapped.visible_message(span_warning("[M] starts forcing [kidnapped] into [src]!"))
+		kidnapped.visible_message("<span class='warning'>[M] starts forcing [kidnapped] into [src]!</span>")
 		mob_try_forced_enter(M, kidnapped)
 	return ..()
 
@@ -33,10 +33,10 @@
 	if(M != user || !(LAZYACCESS(occupants, M) & VEHICLE_CONTROL_KIDNAPPED))
 		mob_exit(M, silent)
 		return TRUE
-	to_chat(user, span_notice("You push against the back of \the [src]'s trunk to try and get out."))
+	to_chat(user, "<span class='notice'>You push against the back of \the [src]'s trunk to try and get out.</span>")
 	if(!do_after(user, escape_time, target = src))
 		return FALSE
-	to_chat(user,span_danger("[user] gets out of [src]."))
+	to_chat(user,"<span class='danger'>[user] gets out of [src].</span>")
 	mob_exit(M, silent)
 	return TRUE
 
@@ -44,14 +44,14 @@
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return
-	to_chat(user, span_notice("You start opening [src]'s trunk."))
+	to_chat(user, "<span class='notice'>You start opening [src]'s trunk.</span>")
 	if(!do_after(user, 30))
 		return
 	if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
-		to_chat(user, span_notice("The people stuck in [src]'s trunk all come tumbling out."))
+		to_chat(user, "<span class='notice'>The people stuck in [src]'s trunk all come tumbling out.</span>")
 		dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 		return
-	to_chat(user, span_notice("It seems [src]'s trunk was empty."))
+	to_chat(user, "<span class='notice'>It seems [src]'s trunk was empty.</span>")
 
 ///attempts to force a mob into the car
 /obj/vehicle/sealed/car/proc/mob_try_forced_enter(mob/forcer, mob/kidnapped, silent = FALSE)
@@ -70,12 +70,12 @@
 ///Proc called when someone is forcefully stuffedd into a car
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/kidnapped, silent = FALSE)
 	if(!silent)
-		kidnapped.visible_message(span_warning("[kidnapped] is forced into \the [src]!"))
+		kidnapped.visible_message("<span class='warning'>[kidnapped] is forced into \the [src]!</span>")
 	kidnapped.forceMove(src)
 	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/obj_destruction(damage_flag)
-	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
+	explosion(loc, 0, 1, 2, 3, 0)
 	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 

@@ -350,7 +350,7 @@ const PageMain = (props, context) => {
                 "You do not have permission to recall the emergency shuttle."
               )
             )}
-            tooltipPosition="bottom-end"
+            tooltipPosition="bottom-right"
             onClick={() => act("recallShuttle")}
           />
         ) || (
@@ -363,7 +363,7 @@ const PageMain = (props, context) => {
                 ? shuttleCanEvacOrFailReason
                 : undefined
             }
-            tooltipPosition="bottom-end"
+            tooltipPosition="bottom-right"
             onClick={() => setCallingShuttle(true)}
           />
         )}

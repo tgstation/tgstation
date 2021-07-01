@@ -2,7 +2,7 @@
 /* EMOTE DATUMS */
 /datum/emote/living
 	mob_type_allowed_typecache = /mob/living
-	mob_type_blacklist_typecache = list(/mob/living/brain)
+	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
 
 /datum/emote/living/blush
 	key = "blush"
@@ -208,10 +208,10 @@
 
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))
-		to_chat(user, span_notice("You ready your kiss-blowing hand."))
+		to_chat(user, "<span class='notice'>You ready your kiss-blowing hand.</span>")
 	else
 		qdel(kiss_blower)
-		to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
+		to_chat(user, "<span class='warning'>You're incapable of blowing a kiss in your current state.</span>")
 
 /datum/emote/living/laugh
 	key = "laugh"
@@ -219,7 +219,6 @@
 	message = "laughs."
 	message_mime = "laughs silently!"
 	emote_type = EMOTE_AUDIBLE
-	audio_cooldown = 5 SECONDS
 	vary = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
@@ -231,7 +230,7 @@
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == SPECIES_HUMAN && (!H.mind || !H.mind.miming))
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
 				return 'sound/voice/human/womanlaugh.ogg'
 			else
@@ -262,10 +261,10 @@
 		var/mob/living/carbon/human/H = user
 		if(H.usable_hands == 0)
 			if(H.usable_legs != 0)
-				message_param = "tries to point at %t with a leg, [span_userdanger("falling down")] in the process!"
+				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
 				H.Paralyze(20)
 			else
-				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
+				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	return ..()
 
@@ -362,7 +361,7 @@
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
-	message = "puts their hands on their head and falls to the ground, they surrender%s!"
+	message = "puts their hands on their head and falls to the ground, they surrender!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
@@ -376,11 +375,6 @@
 	key = "sway"
 	key_third_person = "sways"
 	message = "sways around dizzily."
-
-/datum/emote/living/tilt
-	key = "tilt"
-	key_third_person = "tilts"
-	message = "tilts their head to the side."
 
 /datum/emote/living/tremble
 	key = "tremble"
@@ -436,41 +430,38 @@
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	var/static/regex/stop_bad_mime = regex(@"says|exclaims|yells|asks")
 	if(stop_bad_mime.Find(input, 1, 1))
-		to_chat(user, span_danger("Invalid emote."))
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
 		return TRUE
 	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
-	var/custom_emote
-	var/custom_emote_type
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
-		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
+		to_chat(user, "<span class='boldwarning'>You cannot send custom emotes (banned).</span>")
 		return FALSE
 	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
+		to_chat(user, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 		return FALSE
 	else if(!params)
-		custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
 				if("Visible")
-					custom_emote_type = EMOTE_VISIBLE
+					emote_type = EMOTE_VISIBLE
 				if("Hearable")
-					custom_emote_type = EMOTE_AUDIBLE
+					emote_type = EMOTE_AUDIBLE
 				else
-					tgui_alert(usr,"Unable to use this emote, must be either hearable or visible.")
+					alert("Unable to use this emote, must be either hearable or visible.")
 					return
+			message = custom_emote
 	else
-		custom_emote = params
+		message = params
 		if(type_override)
-			custom_emote_type = type_override
-	message = custom_emote
-	emote_type = custom_emote_type
+			emote_type = type_override
 	. = ..()
 	message = null
 	emote_type = EMOTE_VISIBLE

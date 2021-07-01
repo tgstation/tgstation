@@ -28,7 +28,7 @@
 			M.dna.remove_mutation(HM)
 		for(var/HM in add_mutations)
 			if(HM == RACEMUT)
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] [span_danger("(MONKEY)")]")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 			if(M.dna.mutation_in_sequence(HM))
 				M.dna.activate_mutation(HM)
@@ -41,21 +41,18 @@
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"]) //UI+UE
-				M.dna.unique_identity = merge_text(M.dna.unique_identity, fields["UI"])
-			if(fields["UF"])
-				M.dna.unique_features = merge_text(M.dna.unique_features, fields["UF"])
-			if(fields["UI"] || fields["UF"])
-				M.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
+				M.updateappearance(mutations_overlay_update=1)
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(used)
-		to_chat(user, span_warning("This injector is used up!"))
+		to_chat(user, "<span class='warning'>This injector is used up!</span>")
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
@@ -64,20 +61,20 @@
 	log_combat(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
-			span_userdanger("[user] is trying to inject you with [src]!"))
+		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", \
+			"<span class='userdanger'>[user] is trying to inject you with [src]!</span>")
 		if(!do_mob(user, target) || used)
 			return
-		target.visible_message(span_danger("[user] injects [target] with the syringe with [src]!"), \
-						span_userdanger("[user] injects you with the syringe with [src]!"))
+		target.visible_message("<span class='danger'>[user] injects [target] with the syringe with [src]!</span>", \
+						"<span class='userdanger'>[user] injects you with the syringe with [src]!</span>")
 
 	else
-		to_chat(user, span_notice("You inject yourself with [src]."))
+		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
 
 	log_combat(user, target, "injected", src)
 
 	if(!inject(target, user)) //Now we actually do the heavy lifting.
-		to_chat(user, span_notice("It appears that [target] does not have compatible DNA."))
+		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
 
 	used = 1
 	icon_state = "dnainjector0"
@@ -436,20 +433,12 @@
 	name = "\improper DNA injector (Anti-Antiglowy)"
 	remove_mutations = list(ANTIGLOWY)
 
-/obj/item/dnainjector/webbing
-	name = "\improper DNA injector (Webbing)"
-	add_mutations = list(SPIDER_WEB)
-
-/obj/item/dnainjector/antiwebbing
-	name = "\improper DNA injector (Anti-Webbing)"
-	remove_mutations = list(SPIDER_WEB)
-
 /obj/item/dnainjector/timed
 	var/duration = 600
 
 /obj/item/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
 	if(M.stat == DEAD) //prevents dead people from having their DNA changed
-		to_chat(user, span_notice("You can't modify [M]'s DNA while [M.p_theyre()] dead."))
+		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
 	if(M.has_dna() && !(HAS_TRAIT(M, TRAIT_BADDNA)))
@@ -467,7 +456,7 @@
 			if(M.dna.get_mutation(mutation))
 				continue //Skip permanent mutations we already have.
 			if(mutation == RACEMUT && !ismonkey(M))
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] [span_danger("(MONKEY)")]")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 				M = M.dna.add_mutation(mutation, MUT_OTHER, endtime)
 			else
@@ -487,16 +476,10 @@
 				M.dna.temporary_mutations[UE_CHANGED] = endtime
 			if(fields["UI"]) //UI+UE
 				if(!M.dna.previous["UI"])
-					M.dna.previous["UI"] = M.dna.unique_identity
-				M.dna.unique_identity = merge_text(M.dna.unique_identity, fields["UI"])
+					M.dna.previous["UI"] = M.dna.uni_identity
+				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
+				M.updateappearance(mutations_overlay_update=1)
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
-			if(fields["UF"]) //UI+UE
-				if(!M.dna.previous["UF"])
-					M.dna.previous["UF"] = M.dna.unique_features
-				M.dna.unique_features = merge_text(M.dna.unique_features, fields["UF"])
-				M.dna.temporary_mutations[UF_CHANGED] = endtime
-			if(fields["UI"] || fields["UF"])
-				M.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	else

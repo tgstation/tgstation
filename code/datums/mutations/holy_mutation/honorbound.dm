@@ -83,10 +83,10 @@
 		if(job in (GLOB.security_positions + GLOB.medical_positions))
 			return
 	if(declaration)
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] from your declaration."))
+		to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] from your declaration.</span>")
 	else
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] for attacking you first."))
-	to_chat(user, span_danger("[GLOB.deity] no longer considers you innocent!"))
+		to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] for attacking you first.</span>")
+	to_chat(user, "<span class='danger'>[GLOB.deity] no longer considers you innocent!</span>")
 	guilty += user
 
 /**
@@ -102,7 +102,7 @@
 	if(honorbound_human == target_creature)
 		return TRUE //oh come on now
 	if(target_creature.IsSleeping() || target_creature.IsUnconscious() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
-		to_chat(honorbound_human, span_warning("There is no honor in attacking the <b>unready</b>."))
+		to_chat(honorbound_human, "<span class='warning'>There is no honor in attacking the <b>unready</b>.</span>")
 		return FALSE
 	//THE JUST (Applies over guilt except for med, so you best be careful!)
 	if(ishuman(target_creature))
@@ -110,14 +110,14 @@
 		var/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
 		if(job in GLOB.security_positions || is_holy)
-			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>just</b>."))
+			to_chat(honorbound_human, "<span class='warning'>There is nothing righteous in attacking the <b>just</b>.</span>")
 			return FALSE
 		if(job in GLOB.medical_positions)
-			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
+			to_chat(honorbound_human, "<span class='warning'>If you truly think this healer is not <b>innocent</b>, declare them guilty.</span>")
 			return FALSE
 	//THE INNOCENT
 	if(!is_guilty)
-		to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
+		to_chat(honorbound_human, "<span class='warning'>There is nothing righteous in attacking the <b>innocent</b>.</span>")
 		return FALSE
 	return TRUE
 
@@ -160,9 +160,8 @@
 	if(istype(thrown_movable, /obj/item))
 		var/mob/living/honorbound = source
 		var/obj/item/thrown_item = thrown_movable
-		var/mob/thrown_by = thrown_item.thrownby?.resolve()
-		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
-			guilty(thrown_by)
+		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_item.thrownby))
+			guilty(thrown_item.thrownby)
 
 //spell checking
 /datum/mutation/human/honorbound/proc/spell_check(mob/user, obj/effect/proc_holder/spell/spell_cast)
@@ -188,14 +187,14 @@
 		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION)
 			return
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
-			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
+			to_chat(user, "<span class='userdanger'>[GLOB.deity] is enraged by your use of forbidden magic!</span>")
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/banished)
 			user.dna.remove_mutation(HONORBOUND)
 			user.mind.holy_role = NONE
-			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
+			to_chat(user, "<span class='userdanger'>You have been excommunicated! You are no longer holy!</span>")
 		else
-			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school] magic!"))
+			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [school] magic!</span>")
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
@@ -227,21 +226,21 @@
 	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
 	var/datum/religion_sect/honorbound/honorsect = GLOB.religious_sect
 	if(honorsect.favor < 150)
-		to_chat(user, span_warning("You need at least 150 favor to declare someone evil!"))
+		to_chat(user, "<span class='warning'>You need at least 150 favor to declare someone evil!</span>")
 		return FALSE
 	if(!honormut)
 		return FALSE
 	if(!targets.len)
 		if(!silent)
-			to_chat(user, span_warning("Nobody to declare evil here!"))
+			to_chat(user, "<span class='warning'>Nobody to declare evil here!</span>")
 		return FALSE
 	if(targets.len > 1)
 		if(!silent)
-			to_chat(user, span_warning("Too many people to declare! Pick ONE!"))
+			to_chat(user, "<span class='warning'>Too many people to declare! Pick ONE!</span>")
 		return FALSE
 	var/declaration_message = "[targets[1]]! By the divine light of [GLOB.deity], You are an evil of this world that must be wrought low!"
 	if(!user.can_speak(declaration_message))
-		to_chat(user, span_warning("You can't get the declaration out!"))
+		to_chat(user, "<span class='warning'>You can't get the declaration out!</span>")
 		return FALSE
 	if(!can_target(targets[1], user, silent))
 		return FALSE
@@ -256,24 +255,24 @@
 		return FALSE
 	if(!isliving(target))
 		if(!silent)
-			to_chat(user, span_warning("You can only declare living beings evil!"))
+			to_chat(user, "<span class='warning'>You can only declare living beings evil!</span>")
 		return FALSE
 	var/mob/living/victim = target
 	if(victim.stat == DEAD)
 		if(!silent)
-			to_chat(user, span_warning("Declaration on the dead? Really?"))
+			to_chat(user, "<span class='warning'>Declaration on the dead? Really?</span>")
 		return FALSE
 	var/datum/mind/guilty_conscience = victim.mind
 	if(!victim.key ||!guilty_conscience) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
 		if(!silent)
-			to_chat(user, span_warning("There is no evil a vacant mind can do."))
+			to_chat(user, "<span class='warning'>There is no evil a vacant mind can do.</span>")
 		return FALSE
 	if(guilty_conscience.holy_role)//also handles any kind of issues with self declarations
 		if(!silent)
-			to_chat(user, span_warning("Followers of [GLOB.deity] cannot be evil!"))
+			to_chat(user, "<span class='warning'>Followers of [GLOB.deity] cannot be evil!</span>")
 		return FALSE
 	if(guilty_conscience.assigned_role in GLOB.security_positions)
 		if(!silent)
-			to_chat(user, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
+			to_chat(user, "<span class='warning'>Members of security are uncorruptable! You cannot declare one evil!</span>")
 		return FALSE
 	return TRUE

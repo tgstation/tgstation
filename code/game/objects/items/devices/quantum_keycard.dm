@@ -13,16 +13,16 @@
 	. = ..()
 	if(qpad)
 		. += "It's currently linked to a quantum pad."
-		. += span_notice("Alt-click to unlink the keycard.")
+		. += "<span class='notice'>Alt-click to unlink the keycard.</span>"
 	else
-		. += span_notice("Insert [src] into an active quantum pad to link it.")
+		. += "<span class='notice'>Insert [src] into an active quantum pad to link it.</span>"
 
 /obj/item/quantum_keycard/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
-	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
+	to_chat(user, "<span class='notice'>You start pressing [src]'s unlink button...</span>")
 	if(do_after(user, 40, target = src))
-		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
+		to_chat(user, "<span class='notice'>The keycard beeps twice and disconnects the quantum link.</span>")
 		qpad = null
 
 /obj/item/quantum_keycard/update_icon_state()

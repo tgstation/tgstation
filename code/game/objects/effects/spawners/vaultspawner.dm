@@ -20,8 +20,9 @@
 		for(var/j = lowBoundY,j<=hiBoundY,j++)
 			var/turf/T = locate(i,j,z)
 			if(i == lowBoundX || i == hiBoundX || j == lowBoundY || j == hiBoundY)
-				T.PlaceOnTop(text2path("/turf/closed/wall/vault/[type]"))
+				T.PlaceOnTop(/turf/closed/wall/vault)
 			else
-				T.PlaceOnTop(text2path("/turf/open/floor/vault/[type]"))
+				T.PlaceOnTop(/turf/open/floor/vault)
+			T.icon_state = "[type]vault"
 
 	qdel(src)

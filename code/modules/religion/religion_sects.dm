@@ -98,7 +98,7 @@
 	for(var/X in blessed.bodyparts)
 		var/obj/item/bodypart/bodypart = X
 		if(bodypart.status == BODYPART_ROBOTIC)
-			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
+			to_chat(chap, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
 
 	var/heal_amt = 10
@@ -109,8 +109,8 @@
 			var/obj/item/bodypart/affecting = X
 			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
 				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+		blessed.visible_message("<span class='notice'>[chap] heals [blessed] with the power of [GLOB.deity]!</span>")
+		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
 		playsound(chap, "punch", 25, TRUE, -1)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
@@ -143,8 +143,8 @@
 		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
 			charge_amt *= 2
 		R.cell?.charge += charge_amt
-		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
-		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
+		R.visible_message("<span class='notice'>[chap] charges [R] with the power of [GLOB.deity]!</span>")
+		to_chat(R, "<span class='boldnotice'>You are charged by the power of [GLOB.deity]!</span>")
 		SEND_SIGNAL(R, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 		return TRUE
@@ -163,10 +163,10 @@
 	var/obj/item/bodypart/bodypart = blessed.get_bodypart(chap.zone_selected)
 	if(bodypart.status != BODYPART_ROBOTIC)
 		if(!did_we_charge)
-			to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of healing such fleshy matter!"))
+			to_chat(chap, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
 		else
-			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
-			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
+			blessed.visible_message("<span class='notice'>[chap] charges [blessed] with the power of [GLOB.deity]!</span>")
+			to_chat(blessed, "<span class='boldnotice'>You feel charged by the power of [GLOB.deity]!</span>")
 			SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
@@ -175,8 +175,8 @@
 	if(bodypart.heal_damage(5,5,null,BODYPART_ROBOTIC))
 		blessed.update_damage_overlays()
 
-	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!"))
+	blessed.visible_message("<span class='notice'>[chap] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!</span>")
+	to_chat(blessed, "<span class='boldnotice'>The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!</span>")
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
@@ -186,10 +186,10 @@
 	if(!istype(the_cell)) //how...
 		return
 	if(the_cell.charge < 300)
-		to_chat(chap,span_notice("[GLOB.deity] does not accept pity amounts of power."))
+		to_chat(chap,"<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
 		return
 	adjust_favor(round(the_cell.charge/300), chap)
-	to_chat(chap, span_notice("You offer [the_cell]'s power to [GLOB.deity], pleasing them."))
+	to_chat(chap, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
 	return TRUE
 
@@ -214,9 +214,9 @@
 	if(!istype(offering))
 		return
 	if(!offering.lit)
-		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
+		to_chat(user, "<span class='notice'>The candle needs to be lit to be offered!</span>")
 		return
-	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
+	to_chat(user, "<span class='notice'>[GLOB.deity] is pleased with your sacrifice.</span>")
 	adjust_favor(20, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
@@ -239,17 +239,17 @@
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
 	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
-		to_chat(chap, span_warning("You need a way to pay for the heal!"))
+		to_chat(chap, "<span class='warning'>You need a way to pay for the heal!</span>")
 		return TRUE
 	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
+		to_chat(chap, "<span class='warning'>Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!</span>")
 		return TRUE
 	if(!ishuman(blessed_living))
 		return FALSE
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
 		if(robolimb.status == BODYPART_ROBOTIC)
-			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
+			to_chat(chap, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
 
 	account.adjust_money(-GREEDY_HEAL_COST)
@@ -259,8 +259,8 @@
 		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
 			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
 				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
+		blessed.visible_message("<span class='notice'>[chap] barters a heal for [blessed] from [GLOB.deity]!</span>")
+		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!</span>")
 		playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
@@ -288,7 +288,7 @@
  */
 /datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
 	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"))
 	currently_asking -= invited
 	if(ask == "Yes")
 		possible_crusaders += invited
@@ -296,10 +296,10 @@
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
+		to_chat("<span class='warning'>[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound.</span>")
 		return FALSE
 	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
+		to_chat("<span class='warning'>[GLOB.deity] has deemed your species as one that could never show honor.</span>")
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(HONORBOUND)
@@ -317,10 +317,10 @@
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
+		to_chat("<span class='warning'>[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened.</span>")
 		return
 	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
+		to_chat("<span class='warning'>[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened.</span>")
 		return
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(/datum/mutation/human/burdened)
@@ -350,11 +350,11 @@
 		return TRUE
 	var/mob/living/carbon/human/blessed = blessed_living
 	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
-		to_chat(blessed, span_warning("[GLOB.deity] has already empowered them."))
+		to_chat(blessed, "<span class='warning'>[GLOB.deity] has already empowered them.</span>")
 		return TRUE
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
-	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
+	blessed.visible_message("<span class='notice'>[chap] empowers [blessed] with the power of [GLOB.deity]!</span>")
+	to_chat(blessed, "<span class='boldnotice'>The power of [GLOB.deity] has made you harder to wound for a while!</span>")
 	playsound(chap, "punch", 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
@@ -365,9 +365,9 @@
 	var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
 	var/favor_earned = offering.reagents.get_reagent_amount(/datum/reagent/yuck)
 	if(!wanted_yuck)
-		to_chat(user, span_warning("[offering] does not have enough organic slurry for [GLOB.deity] to enjoy."))
+		to_chat(user, "<span class='warning'>[offering] does not have enough organic slurry for [GLOB.deity] to enjoy.</span>")
 		return
-	to_chat(user, span_notice("[GLOB.deity] loves organic slurry."))
+	to_chat(user, "<span class='notice'>[GLOB.deity] loves organic slurry.</span>")
 	adjust_favor(favor_earned, user)
 	playsound(get_turf(offering), 'sound/items/drink.ogg', 50, TRUE)
 	offering.reagents.clear_reagents()

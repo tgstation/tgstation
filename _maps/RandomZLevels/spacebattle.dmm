@@ -1654,9 +1654,10 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gr" = (
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "spacebattlestorage";
-	name = "Secure Storage"
+	name = "Secure Storage";
+	pixel_x = 24
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -2346,7 +2347,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jm" = (
-/turf/open/floor/vault/alien,
+/turf/open/floor/iron/rockvault/alien,
 /area/awaymission/spacebattle/secret)
 "jn" = (
 /obj/machinery/door/airlock/plasma,
@@ -2354,7 +2355,7 @@
 /area/awaymission/spacebattle/secret)
 "jo" = (
 /obj/item/clothing/suit/space/hardsuit/wizard,
-/turf/open/floor/vault/alien,
+/turf/open/floor/iron/rockvault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
 /obj/vehicle/sealed/mecha/combat/gygax,

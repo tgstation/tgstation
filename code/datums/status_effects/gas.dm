@@ -18,7 +18,7 @@
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
 	if(!owner.stat)
-		to_chat(owner, span_userdanger("You become frozen in a cube!"))
+		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
 
@@ -32,16 +32,16 @@
 	INVOKE_ASYNC(src, .proc/do_resist)
 
 /datum/status_effect/freon/proc/do_resist()
-	to_chat(owner, span_notice("You start breaking out of the ice cube..."))
+	to_chat(owner, "<span class='notice'>You start breaking out of the ice cube...</span>")
 	if(do_mob(owner, owner, 40))
 		if(!QDELETED(src))
-			to_chat(owner, span_notice("You break out of the ice cube!"))
+			to_chat(owner, "<span class='notice'>You break out of the ice cube!</span>")
 			owner.remove_status_effect(/datum/status_effect/freon)
 
 
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
-		to_chat(owner, span_notice("The cube melts!"))
+		to_chat(owner, "<span class='notice'>The cube melts!</span>")
 	owner.cut_overlay(cube)
 	owner.adjust_bodytemperature(100)
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)

@@ -66,7 +66,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(severity != EXPLODE_DEVASTATE && is_shielded())
 		return FALSE
 
 	if(target)
@@ -179,7 +179,7 @@
 		return TRUE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	if(T.turf_type == type && T.turf_dir == dir)
+	if(T.turf_type == type)
 		return
 	var/obj/item/crowbar/CB = user.is_holding_item_of_type(/obj/item/crowbar)
 	if(!CB)
@@ -198,10 +198,10 @@
 		broken = FALSE
 		burnt = FALSE
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the broken plating."))
+			to_chat(user, "<span class='notice'>You remove the broken plating.</span>")
 	else
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the floor tile."))
+			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
 		if(make_tile)
 			spawn_tile()
 	return make_plating(force_plating)
@@ -272,17 +272,17 @@
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
-			to_chat(user, span_notice("You build a wall."))
+			to_chat(user, "<span class='notice'>You build a wall.</span>")
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
 			for(var/obj/machinery/door/door in src)
 				if(door.sub_door)
 					continue
-				to_chat(user, span_notice("There is another door here!"))
+				to_chat(user, "<span class='notice'>There is another door here!</span>")
 				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
-				to_chat(user, span_notice("You build a windoor."))
+				to_chat(user, "<span class='notice'>You build a windoor.</span>")
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
 				if(the_rcd.airlock_electronics)
 					new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
@@ -291,7 +291,7 @@
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
-			to_chat(user, span_notice("You build an airlock."))
+			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
 			new_airlock.electronics = new /obj/item/electronics/airlock(new_airlock)
 			if(the_rcd.airlock_electronics)
@@ -310,12 +310,12 @@
 		if(RCD_DECONSTRUCT)
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE
-			to_chat(user, span_notice("You deconstruct [src]."))
+			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)
 				return FALSE
-			to_chat(user, span_notice("You construct the grille."))
+			to_chat(user, "<span class='notice'>You construct the grille.</span>")
 			var/obj/structure/grille/new_grille = new(src)
 			new_grille.set_anchored(TRUE)
 			return TRUE

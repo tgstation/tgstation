@@ -40,7 +40,6 @@
 	seed = /obj/item/seeds/tea/astra
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
-	bite_consumption_mod = 2
 	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
 
 
@@ -69,6 +68,7 @@
 	name = "coffee arabica beans"
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
+	bite_consumption_mod = 2
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/kahlua

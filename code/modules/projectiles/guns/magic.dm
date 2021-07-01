@@ -28,13 +28,13 @@
 		var/area/A = get_area(user)
 		if(istype(A, /area/wizard_station))
 			add_fingerprint(user)
-			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
+			to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 			return
 		else
 			no_den_usage = 0
 	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
 		add_fingerprint(user)
-		to_chat(user, span_warning("Something is interfering with [src]."))
+		to_chat(user, "<span class='warning'>Something is interfering with [src].</span>")
 		return
 	. = ..()
 
@@ -80,10 +80,10 @@
 
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, span_warning("The [name] whizzles quietly."))
+	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")
 
 /obj/item/gun/magic/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message("<span class='suicide'>[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, fire_sound, 50, TRUE, -1)
 	return (FIRELOSS)
 
@@ -94,7 +94,6 @@
 			recharge_newshot()
 
 /obj/item/gun/magic/proc/instant_recharge()
-	SIGNAL_HANDLER
 	charges = max_charges
 	recharge_newshot()
 	update_appearance()

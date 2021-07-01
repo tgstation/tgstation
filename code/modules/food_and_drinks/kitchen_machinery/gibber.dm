@@ -33,10 +33,10 @@
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
+		. += "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.</span>"
 		for(var/obj/item/stock_parts/manipulator/M in component_parts)
 			if(M.rating >= 2)
-				. += span_notice("Gibber has been upgraded to process inorganic materials.")
+				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
@@ -68,36 +68,36 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		to_chat(user, span_danger("It's locked and running."))
+		to_chat(user, "<span class='danger'>It's locked and running.</span>")
 		return
 
 	if(!anchored)
-		to_chat(user, span_warning("[src] cannot be used unless bolted to the ground!"))
+		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			to_chat(user, span_warning("This item is not suitable for the gibber!"))
+			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
-			to_chat(user, span_warning("[C] is attached to something!"))
+			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
 			return
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
 				if(!HAS_TRAIT(I, TRAIT_NODROP))
-					to_chat(user, span_warning("Subject may not have abiotic items on!"))
+					to_chat(user, "<span class='warning'>Subject may not have abiotic items on!</span>")
 					return
 
-		user.visible_message(span_danger("[user] starts to put [C] into the gibber!"))
+		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
 
 		add_fingerprint(user)
 
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
-				user.visible_message(span_danger("[user] stuffs [C] into the gibber!"))
+				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				set_occupant(C)
 				update_appearance()
@@ -123,9 +123,8 @@
 	set category = "Object"
 	set name = "Empty gibber"
 	set src in oview(1)
+
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-	if(!usr.canUseTopic())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -139,11 +138,11 @@
 	if(operating)
 		return
 	if(!occupant)
-		audible_message(span_hear("You hear a loud metallic grinding sound."))
+		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 
 	use_power(1000)
-	audible_message(span_hear("You hear a loud squelchy grinding sound."))
+	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_appearance()

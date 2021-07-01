@@ -24,7 +24,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "g" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining)
 "h" = (

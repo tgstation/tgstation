@@ -27,16 +27,12 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
 	. = ..()
-	soundloop = new(src, FALSE, TRUE)
+	soundloop = new(list(), FALSE, TRUE)
 	soundloop.volume = 5
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
 	. = ..()
-	if(!QDELETED(suit))
-		qdel(suit)
-	suit = null
-	QDEL_NULL(soundloop)
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
@@ -74,7 +70,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("[icon2html(src, wearer)]<b>[span_robot("[msg]")]</b>", MSG_VISUAL)
+		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", MSG_VISUAL)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(amount)
 	. = ..()
@@ -116,6 +112,7 @@
 	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
 
+
 /obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
@@ -128,49 +125,49 @@
 /obj/item/clothing/suit/space/hardsuit/examine(mob/user)
 	. = ..()
 	if(!helmet && helmettype)
-		. += span_notice("The helmet on [src] seems to be malfunctioning. Its light bulb needs to be replaced.")
+		. += "<span class='notice'>The helmet on [src] seems to be malfunctioning. Its light bulb needs to be replaced.</span>"
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/tank/jetpack/suit))
 		if(jetpack)
-			to_chat(user, span_warning("[src] already has a jetpack installed."))
+			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
 			return
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING)) //Make sure the player is not wearing the suit before applying the upgrade.
-			to_chat(user, span_warning("You cannot install the upgrade to [src] while wearing it."))
+			to_chat(user, "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>")
 			return
 
 		if(user.transferItemToLoc(I, src))
 			jetpack = I
-			to_chat(user, span_notice("You successfully install the jetpack into [src]."))
+			to_chat(user, "<span class='notice'>You successfully install the jetpack into [src].</span>")
 			return
 	else if(!cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!jetpack)
-			to_chat(user, span_warning("[src] has no jetpack installed."))
+			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
-			to_chat(user, span_warning("You cannot remove the jetpack from [src] while wearing it."))
+			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
 		jetpack.turn_off(user)
 		jetpack.forceMove(drop_location())
 		jetpack = null
-		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
+		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 		return
 	else if(istype(I, /obj/item/light) && helmettype)
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
-			to_chat(user, span_warning("You cannot replace the bulb in the helmet of [src] while wearing it."))
+			to_chat(user, "<span class='warning'>You cannot replace the bulb in the helmet of [src] while wearing it.</span>")
 			return
 		if(helmet)
-			to_chat(user, span_warning("The helmet of [src] does not require a new bulb."))
+			to_chat(user, "<span class='warning'>The helmet of [src] does not require a new bulb.</span>")
 			return
 		var/obj/item/light/L = I
 		if(L.status)
-			to_chat(user, span_warning("This bulb is too damaged to use as a replacement!"))
+			to_chat(user, "<span class='warning'>This bulb is too damaged to use as a replacement!</span>")
 			return
 		if(do_after(user, 5 SECONDS, src))
 			qdel(I)
 			helmet = new helmettype(src)
-			to_chat(user, span_notice("You have successfully repaired [src]'s helmet."))
+			to_chat(user, "<span class='notice'>You have successfully repaired [src]'s helmet.</span>")
 			new /obj/item/light/bulb/broken(drop_location())
 	return ..()
 
@@ -199,7 +196,7 @@
 	var/mob/living/carbon/human/user = src.loc
 	if(istype(user))
 		user.apply_damage(HARDSUIT_EMP_BURN, BURN, spread_damage=TRUE)
-		to_chat(user, span_warning("You feel \the [src] heat up from the EMP burning you slightly."))
+		to_chat(user, "<span class='warning'>You feel \the [src] heat up from the EMP burning you slightly.</span>")
 
 		// Chance to scream
 		if (user.stat < UNCONSCIOUS && prob(10))
@@ -227,7 +224,7 @@
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit helmet"
-	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has thermal shielding."
 	icon_state = "hardsuit0-atmospherics"
 	inhand_icon_state = "atmo_helm"
 	hardsuit_type = "atmospherics"
@@ -237,7 +234,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit"
-	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has thermal shielding."
 	icon_state = "hardsuit-atmospherics"
 	inhand_icon_state = "atmo_hardsuit"
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 25, FIRE = 100, ACID = 75, WOUND = 10)
@@ -360,11 +357,11 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
-		to_chat(user, span_warning("You cannot toggle your helmet while in this [user.loc]!") )
+		to_chat(user, "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" )
 		return
 	on = !on
 	if(on || force)
-		to_chat(user, span_notice("You switch your hardsuit to EVA mode, sacrificing speed for space protection."))
+		to_chat(user, "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>")
 		name = initial(name)
 		desc = initial(desc)
 		set_light_on(TRUE)
@@ -373,7 +370,7 @@
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		to_chat(user, span_notice("You switch your hardsuit to combat mode and can now run at full speed."))
+		to_chat(user, "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
 		name += " (combat)"
 		desc = alt_desc
 		set_light_on(FALSE)
@@ -582,8 +579,6 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range,
 		light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
-	SIGNAL_HANDLER
-
 	var/turf/T = get_turf(src)
 	if(T.z != epicenter.z)
 		return
@@ -739,7 +734,6 @@
 	var/mob/listeningTo
 
 /obj/item/clothing/suit/space/hardsuit/ancient/proc/on_mob_move()
-	SIGNAL_HANDLER
 	var/mob/living/carbon/human/H = loc
 	if(!istype(H) || H.wear_suit != src)
 		return
@@ -891,7 +885,10 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
 	shield_icon = "shield-red"
-	jetpack = /obj/item/tank/jetpack/suit
+
+/obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
+	jetpack = new /obj/item/tank/jetpack/suit(src)
+	. = ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	name = "blood-red hardsuit helmet"

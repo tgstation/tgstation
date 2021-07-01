@@ -11,8 +11,6 @@
 	..()
 
 /datum/wires/apc/interactable(mob/user)
-	if(!..())
-		return FALSE
 	var/obj/machinery/power/apc/A = holder
 	if(A.panel_open && !A.opened)
 		return TRUE

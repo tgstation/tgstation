@@ -639,13 +639,13 @@
 	name = "blue suspenders"
 	desc = "The symbol of hard labor and dirty jobs."
 	icon = 'icons/obj/clothing/belts.dmi'
-	greyscale_colors = "#0000ff"
+	icon_state = "suspenders_blue"
 
 /obj/item/clothing/suit/toggle/suspenders/gray
 	name = "gray suspenders"
 	desc = "The symbol of hard labor and dirty jobs."
 	icon = 'icons/obj/clothing/belts.dmi'
-	greyscale_colors = "#888888"
+	icon_state = "suspenders_gray"
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"

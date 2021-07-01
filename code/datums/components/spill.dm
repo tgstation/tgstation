@@ -52,11 +52,8 @@
 
 	UnregisterSignal(dropper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
-/datum/component/spill/proc/knockdown_react(mob/living/fool, amount)
+/datum/component/spill/proc/knockdown_react(mob/living/fool)
 	SIGNAL_HANDLER
-
-	if(amount <= 0)
-		return
 
 	var/obj/item/master = parent
 	fool.dropItemToGround(master)

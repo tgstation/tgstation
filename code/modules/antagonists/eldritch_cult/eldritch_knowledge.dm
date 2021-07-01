@@ -29,8 +29,9 @@
 /datum/eldritch_knowledge/New()
 	. = ..()
 	var/list/temp_list
-	for(var/atom/required_atom as anything in required_atoms)
-		temp_list += list(typesof(required_atom))
+	for(var/X in required_atoms)
+		var/atom/A = X
+		temp_list += list(typesof(A))
 	required_atoms = temp_list
 
 /**
@@ -39,7 +40,7 @@
  * This proc is called whenever a new eldritch knowledge is added to an antag datum
  */
 /datum/eldritch_knowledge/proc/on_gain(mob/user)
-	to_chat(user, span_warning("[gain_text]"))
+	to_chat(user, "<span class='warning'>[gain_text]</span>")
 	return
 /**
  * What happens when you loose this
@@ -61,7 +62,7 @@
  *
  * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
  */
-/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms, loc)
+/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms,loc)
 	return TRUE
 
 /**
@@ -77,11 +78,13 @@
  *
  * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
  */
-/datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user, list/atoms, loc)
-	if(!length(result_atoms))
+/datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user,list/atoms,loc)
+	if(result_atoms.len == 0)
 		return FALSE
-	for(var/result in result_atoms)
-		new result(loc)
+
+	for(var/A in result_atoms)
+		new A(loc)
+
 	return TRUE
 
 /**
@@ -90,10 +93,11 @@
  * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
  */
 /datum/eldritch_knowledge/proc/cleanup_atoms(list/atoms)
-	for(var/atom/sacrificed as anything in atoms)
-		if(!isliving(sacrificed))
-			atoms -= sacrificed
-			qdel(sacrificed)
+	for(var/X in atoms)
+		var/atom/A = X
+		if(!isliving(A))
+			atoms -= A
+			qdel(A)
 	return
 
 /**
@@ -129,8 +133,8 @@
 	var/obj/effect/proc_holder/spell/spell_to_add
 
 /datum/eldritch_knowledge/spell/on_gain(mob/user)
-	spell_to_add = new spell_to_add
-	user.mind.AddSpell(spell_to_add)
+	var/obj/effect/proc_holder/S = new spell_to_add
+	user.mind.AddSpell(S)
 	return ..()
 
 /datum/eldritch_knowledge/spell/on_lose(mob/user)
@@ -144,8 +148,9 @@
 
 /datum/eldritch_knowledge/curse/recipe_snowflake_check(list/atoms, loc)
 	fingerprints = list()
-	for(var/atom/requirements as anything in atoms)
-		fingerprints |= requirements.return_fingerprints()
+	for(var/X in atoms)
+		var/atom/A = X
+		fingerprints |= A.return_fingerprints()
 	listclearnulls(fingerprints)
 	if(fingerprints.len == 0)
 		return FALSE
@@ -155,13 +160,14 @@
 
 	var/list/compiled_list = list()
 
-	for(var/mob/living/carbon/human/human_to_check as anything in GLOB.human_list)
-		if(fingerprints[md5(human_to_check.dna.unique_identity)])
+	for(var/H in GLOB.human_list)
+		var/mob/living/carbon/human/human_to_check = H
+		if(fingerprints[md5(human_to_check.dna.uni_identity)])
 			compiled_list |= human_to_check.real_name
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(compiled_list.len == 0)
-		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
+		to_chat(user, "<span class='warning'>These items don't possess the required fingerprints or DNA.</span>")
 		return FALSE
 
 	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
@@ -181,19 +187,20 @@
 	//Mob to summon
 	var/mob/living/mob_to_summon
 
-/datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user, list/atoms, loc)
+
+/datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user,list/atoms,loc)
 	//we need to spawn the mob first so that we can use it in pollCandidatesForMob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 100, summoned)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, null, FALSE, 100, summoned)
 	if(!LAZYLEN(candidates))
-		to_chat(user,span_warning("No ghost could be found..."))
+		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
 		qdel(summoned)
 		return FALSE
-	var/mob/dead/observer/picked_candidate = pick(candidates)
-	log_game("[key_name_admin(picked_candidate)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
+	var/mob/dead/observer/C = pick(candidates)
+	log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
 	summoned.ghostize(FALSE)
-	summoned.key = picked_candidate.key
+	summoned.key = C.key
 	summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
@@ -205,12 +212,12 @@
 
 	var/finished = FALSE
 
-/datum/eldritch_knowledge/final/recipe_snowflake_check(list/atoms, loc, selected_atoms)
+/datum/eldritch_knowledge/final/recipe_snowflake_check(list/atoms, loc,selected_atoms)
 	if(finished)
 		return FALSE
 	var/counter = 0
-	for(var/mob/living/carbon/human/sacrifices in atoms)
-		selected_atoms |= sacrifices
+	for(var/mob/living/carbon/human/H in atoms)
+		selected_atoms |= H
 		counter++
 		if(counter == 3)
 			return TRUE
@@ -224,9 +231,9 @@
 
 /datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
 	. = ..()
-	for(var/mob/living/carbon/human/sacrifices in atoms)
-		atoms -= sacrifices
-		sacrifices.gib()
+	for(var/mob/living/carbon/human/H in atoms)
+		atoms -= H
+		H.gib()
 
 
 ///////////////
@@ -245,35 +252,36 @@
 
 /datum/eldritch_knowledge/spell/basic/recipe_snowflake_check(list/atoms, loc)
 	. = ..()
-	for(var/obj/item/living_heart/heart in atoms)
-		if(!heart.target)
+	for(var/obj/item/living_heart/LH in atoms)
+		if(!LH.target)
 			return TRUE
-		if(heart.target in atoms)
+		if(LH.target in atoms)
 			return TRUE
 	return FALSE
 
 /datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
 	. = TRUE
 	var/mob/living/carbon/carbon_user = user
-	for(var/obj/item/living_heart/heart in atoms)
+	for(var/obj/item/living_heart/LH in atoms)
 
-		if(heart.target && heart.target.stat == DEAD)
-			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
-			var/mob/living/carbon/human/current_target = heart.target
-			current_target.gib()
-			heart.target = null
-			var/datum/antagonist/heretic/heretic_datum = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+		if(LH.target && LH.target.stat == DEAD)
+			to_chat(carbon_user,"<span class='danger'>Your patrons accepts your offer..</span>")
+			var/mob/living/carbon/human/H = LH.target
+			H.gib()
+			LH.target = null
+			var/datum/antagonist/heretic/EC = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
-			heretic_datum.total_sacrifices++
-			for(var/obj/item/forbidden_book/book as anything in carbon_user.get_all_gear())
-				if(!istype(book))
+			EC.total_sacrifices++
+			for(var/X in carbon_user.get_all_gear())
+				if(!istype(X,/obj/item/forbidden_book))
 					continue
-				book.charge += 2
+				var/obj/item/forbidden_book/FB = X
+				FB.charge += 2
 				break
 
-		if(!heart.target)
-			var/datum/objective/temp_objective = new
-			temp_objective.owner = user.mind
+		if(!LH.target)
+			var/datum/objective/A = new
+			A.owner = user.mind
 			var/list/datum/team/teams = list()
 			for(var/datum/antagonist/antag as anything in user.mind.antag_datums)
 				var/datum/team/team = antag.get_team()
@@ -281,7 +289,7 @@
 					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
-				var/datum/mind/targeted =  temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
 				for(var/datum/team/team as anything in teams)
 					if(targeted in team.members)
@@ -290,12 +298,12 @@
 				if(!targeted)
 					break
 				targets["[targeted.current.real_name] the [targeted.assigned_role][is_teammate ? " (ally)" : ""]"] = targeted.current
-			heart.target = targets[input(user,"Choose your next target","Target") in targets]
-			qdel(temp_objective)
-			if(heart.target)
-				to_chat(user,span_warning("Your new target has been selected, go and sacrifice [heart.target.real_name]!"))
+			LH.target = targets[input(user,"Choose your next target","Target") in targets]
+			qdel(A)
+			if(LH.target)
+				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.real_name]!</span>")
 			else
-				to_chat(user, span_warning("target could not be found for living heart."))
+				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 
 /datum/eldritch_knowledge/spell/basic/cleanup_atoms(list/atoms)
 	return
@@ -315,5 +323,5 @@
 	gain_text = "Their hand is at your throat, yet you see Them not."
 	cost = 0
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
-	result_atoms = list(/obj/item/forbidden_book/ritual)
+	result_atoms = list(/obj/item/forbidden_book)
 	route = "Start"

@@ -1,7 +1,7 @@
 /datum/antagonist/blob
 	name = "Blob"
 	roundend_category = "blobs"
-	antagpanel_category = "Biohazards"
+	antagpanel_category = "Blob"
 	show_to_ghosts = TRUE
 	job_rank = ROLE_BLOB
 
@@ -20,7 +20,7 @@
 
 /datum/antagonist/blob/greet()
 	if(!isovermind(owner.current))
-		to_chat(owner,span_userdanger("You feel bloated."))
+		to_chat(owner,"<span class='userdanger'>You feel bloated.</span>")
 
 /datum/antagonist/blob/on_gain()
 	create_objectives()

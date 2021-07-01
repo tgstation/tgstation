@@ -6,7 +6,6 @@
 	device_type = TRINARY
 	layer = GAS_FILTER_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF
-	vent_movement = NONE
 
 	var/flipped = FALSE
 

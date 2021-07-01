@@ -20,7 +20,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "ae" = (
 /obj/structure/table/reinforced,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/bookmanagement,
 /turf/open/floor/iron/dark,
@@ -45,9 +47,13 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/newscaster/directional/north,
-/obj/item/radio/intercom/directional/west{
-	freerange = 1
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/item/radio/intercom{
+	freerange = 1;
+	name = "Syndicate Radio Intercom";
+	pixel_x = -30
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -87,7 +93,6 @@
 	use_power = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "al" = (
@@ -130,7 +135,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ao" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
@@ -154,7 +159,7 @@
 /obj/machinery/shower{
 	pixel_y = 14
 	},
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/item/soap,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
@@ -167,7 +172,9 @@
 /obj/structure/toilet{
 	pixel_y = 18
 	},
-/obj/structure/mirror/directional/east,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
@@ -220,7 +227,12 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "av" = (
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 25
+	},
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/paper/fluff/ruins/listeningstation/reports/november,
@@ -244,9 +256,19 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ax" = (
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "syndie_listeningpost_external";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 24;
+	req_access_txt = "150";
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -265,13 +287,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/button/door/directional/east{
-	id = "syndie_listeningpost_external";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	req_access_txt = "150";
-	specialfunctions = 4
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ay" = (
@@ -333,7 +348,10 @@
 /area/ruin/space/has_grav/listeningstation)
 "aD" = (
 /obj/structure/table,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /obj/item/storage/box/donkpockets{
 	pixel_x = -2;
 	pixel_y = 6
@@ -400,7 +418,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -497,7 +518,10 @@
 /area/ruin/space/has_grav/listeningstation)
 "aN" = (
 /obj/structure/table,
-/obj/machinery/firealarm/directional/west,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
 /obj/machinery/microwave,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -512,7 +536,9 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "aO" = (
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
@@ -636,11 +662,15 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "aW" = (
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -695,7 +725,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "aZ" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -30
+	},
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -4;
 	pixel_y = 14
@@ -725,7 +757,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ba" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
 	piping_layer = 4;
@@ -736,7 +768,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "bb" = (
 /obj/effect/turf_decal/stripes/red/corner,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /obj/machinery/airalarm/syndicate{
 	dir = 8;
 	pixel_x = 24
@@ -752,7 +786,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "bc" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
@@ -769,7 +803,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -29
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "bf" = (
@@ -992,7 +1028,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/photo_album,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "bx" = (
@@ -1029,7 +1065,6 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/clothing/neck/stethoscope,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
@@ -1040,6 +1075,7 @@
 	pixel_x = 11
 	},
 /obj/machinery/iv_drip,
+/obj/machinery/light/small,
 /obj/machinery/airalarm/syndicate{
 	dir = 1;
 	pixel_y = -24
@@ -1076,7 +1112,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "bH" = (
-/obj/machinery/atmospherics/components/tank/air{
+/obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,

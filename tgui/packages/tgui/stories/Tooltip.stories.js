@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { Placement } from '@popperjs/core';
 import { Box, Button, Section, Tooltip } from '../components';
 
 export const meta = {
@@ -12,24 +11,22 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = () => {
+const Story = props => {
   const positions = [
     'top',
     'left',
     'right',
     'bottom',
-    'bottom-start',
-    'bottom-end',
+    'bottom-left',
+    'bottom-right',
   ];
-
   return (
     <Section>
       <Box>
-        <Tooltip content="Tooltip text.">
-          <Box inline position="relative" mr={1}>
-            Box (hover me).
-          </Box>
-        </Tooltip>
+        <Box inline position="relative" mr={1}>
+          Box (hover me).
+          <Tooltip content="Tooltip text." />
+        </Box>
         <Button
           tooltip="Tooltip text."
           content="Button" />

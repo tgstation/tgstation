@@ -151,8 +151,8 @@ Difficulty: Extremely Hard
 		target.ex_act(EXPLODE_HEAVY)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
-	adjustBruteLoss(-30 * severity)
-	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
+	adjustBruteLoss((30 * severity) - 120)
+	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
 	if(enraging)
@@ -291,29 +291,28 @@ Difficulty: Extremely Hard
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)
 	if(!iscarbon(user))
-		to_chat(user, span_notice("A dark presence stops you from absorbing the crystal."))
+		to_chat(user, "<span class='notice'>A dark presence stops you from absorbing the crystal.</span>")
 		return
 	forceMove(user)
-	to_chat(user, span_notice("You feel a bit safer... but a demonic presence lurks in the back of your head..."))
+	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
 	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
-	SIGNAL_HANDLER
 	if(gibbed)
-		to_chat(user, span_notice("This power cannot be used if your entire mortal body is disintegrated..."))
+		to_chat(user, "<span class='notice'>This power cannot be used if your entire mortal body is disintegrated...</span>")
 		return
-	user.visible_message(span_notice("You see [user]'s soul dragged out of their body!"), span_notice("You feel your soul dragged away to a fresh body!"))
+	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a fresh body!</span>")
 	var/typepath = user.type
 	var/mob/living/carbon/clone = new typepath(user.loc)
 	clone.real_name = user.real_name
-	INVOKE_ASYNC(user.dna, /datum/dna.proc/transfer_identity, clone)
+	user.dna.transfer_identity(clone)
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_safe_turf()
 	user.forceMove(T)
 	user.revive(full_heal = TRUE, admin_revive = TRUE)
-	INVOKE_ASYNC(user, /mob/living/carbon.proc/set_species, /datum/species/shadow)
-	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
+	user.set_species(/datum/species/shadow)
+	to_chat(user, "<span class='notice'>You blink and find yourself in [get_area_name(T)]... feeling a bit darker.</span>")
 	clone.dust()
 	qdel(src)
 
@@ -332,20 +331,20 @@ Difficulty: Extremely Hard
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
 	. = ..()
 	// Could have been blown off in an explosion from the previous owner
-	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on
-	to_chat(user, span_notice("You [on ? "activate" : "deactivate"] [src]."))
+	to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] [src].</span>")
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/examine(mob/user)
 	. = ..()
-	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
+	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/proc/on_step()
 	SIGNAL_HANDLER
@@ -405,7 +404,7 @@ Difficulty: Extremely Hard
 /datum/status_effect/ice_block_talisman/on_apply()
 	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/owner_moved)
 	if(!owner.stat)
-		to_chat(owner, span_userdanger("You become frozen in a cube!"))
+		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	var/icon/size_check = icon(owner.icon, owner.icon_state)
 	cube.Scale(size_check.Width(), size_check.Height())
@@ -414,12 +413,11 @@ Difficulty: Extremely Hard
 
 /// Blocks movement from the status effect owner
 /datum/status_effect/ice_block_talisman/proc/owner_moved()
-	SIGNAL_HANDLER
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /datum/status_effect/ice_block_talisman/on_remove()
 	if(!owner.stat)
-		to_chat(owner, span_notice("The cube melts!"))
+		to_chat(owner, "<span class='notice'>The cube melts!</span>")
 	owner.cut_overlay(cube)
 	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
 
@@ -444,10 +442,6 @@ Difficulty: Extremely Hard
 	. = ..()
 	GLOB.frost_miner_prisms |= src
 	set_prism_light(LIGHT_COLOR_BLUE, 5)
-
-/obj/structure/frost_miner_prism/Destroy()
-	GLOB.frost_miner_prisms -= src
-	return ..()
 
 /obj/structure/frost_miner_prism/proc/set_prism_light(new_color, new_range)
 	color = new_color

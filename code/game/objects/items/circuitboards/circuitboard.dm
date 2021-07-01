@@ -6,21 +6,16 @@
 /obj/item/circuitboard
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "circuit_map"
+	icon_state = "id_mod"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/glass=1000)
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
-	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	var/build_path = null
 	///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
-
-/obj/item/circuitboard/Initialize()
-	set_greyscale(new_config=/datum/greyscale_config/circuit)
-	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
 	if(LAZYLEN(M.component_parts))
@@ -101,4 +96,4 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(!ispath(A))
 				continue
 			nice_list += list("[req_components[A]] [initial(A.name)]")
-		. += span_notice("Required components: [english_list(nice_list)].")
+		. += "<span class='notice'>Required components: [english_list(nice_list)].</span>"

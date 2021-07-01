@@ -41,12 +41,12 @@
 			return
 		if(!parent_turret.anchored)
 			parent_turret.set_anchored(TRUE)
-			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
+			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = 0
 			parent_turret.update_appearance()
 		else
 			parent_turret.set_anchored(FALSE)
-			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
+			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = INVISIBILITY_MAXIMUM
 			parent_turret.update_appearance()
 			qdel(src)
@@ -55,9 +55,9 @@
 	if(I.GetID())
 		if(parent_turret.allowed(user))
 			parent_turret.locked = !parent_turret.locked
-			to_chat(user, span_notice("Controls are now [parent_turret.locked ? "locked" : "unlocked"]."))
+			to_chat(user, "<span class='notice'>Controls are now [parent_turret.locked ? "locked" : "unlocked"].</span>")
 		else
-			to_chat(user, span_notice("Access denied."))
+			to_chat(user, "<span class='notice'>Access denied.</span>")
 		return
 
 	if(I.tool_behaviour == TOOL_MULTITOOL && !parent_turret.locked)
@@ -65,7 +65,7 @@
 			return
 		var/obj/item/multitool/M = I
 		M.buffer = parent_turret
-		to_chat(user, span_notice("You add [parent_turret] to multitool buffer."))
+		to_chat(user, "<span class='notice'>You add [parent_turret] to multitool buffer.</span>")
 		return
 	return ..()
 
@@ -86,8 +86,8 @@
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!(parent_turret.obj_flags & EMAGGED))
-		to_chat(user, span_notice("You short out [parent_turret]'s threat assessment circuits."))
-		visible_message(span_hear("[parent_turret] hums oddly..."))
+		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
+		visible_message("<span class='hear'>[parent_turret] hums oddly...</span>")
 		parent_turret.obj_flags |= EMAGGED
 		parent_turret.on = FALSE
 		addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)

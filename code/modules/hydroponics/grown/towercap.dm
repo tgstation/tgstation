@@ -56,7 +56,7 @@
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
-		user.show_message(span_notice("You make [plank_name] out of \the [src]!"), MSG_VISUAL)
+		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", MSG_VISUAL)
 		var/seed_modifier = 0
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
@@ -66,13 +66,13 @@
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
 				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		if(plank.amount > old_plank_amount)
-			to_chat(user, span_notice("You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."))
+			to_chat(user, "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>")
 		qdel(src)
 
 	if(CheckAccepted(W))
 		var/obj/item/food/grown/leaf = W
 		if(HAS_TRAIT(leaf, TRAIT_DRIED))
-			user.show_message(span_notice("You wrap \the [W] around the log, turning it into a torch!"))
+			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/flashlight/flare/torch/T = new /obj/item/flashlight/flare/torch(user.loc)
 			usr.dropItemToGround(W)
 			usr.put_in_active_hand(T)
@@ -80,7 +80,7 @@
 			qdel(src)
 			return
 		else
-			to_chat(usr, span_warning("You must dry this first!"))
+			to_chat(usr, "<span class='warning'>You must dry this first!</span>")
 	else
 		return ..()
 
@@ -174,13 +174,6 @@
 	. = ..()
 	StartBurning()
 
-/obj/structure/bonfire/Initialize()
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
 /obj/structure/bonfire/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
@@ -190,14 +183,14 @@
 				R.use(1)
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
-				to_chat(user, span_notice("You add a rod to \the [src]."))
+				to_chat(user, "<span class='notice'>You add a rod to \the [src].</span>")
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
 				R.use(1)
 				grill = TRUE
-				to_chat(user, span_notice("You add a grill to \the [src]."))
+				to_chat(user, "<span class='notice'>You add a grill to \the [src].</span>")
 				add_overlay("bonfire_grill")
 			else
 				return ..()
@@ -223,7 +216,7 @@
 	if(.)
 		return
 	if(burning)
-		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
+		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!</span>")
 		return
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
 		for(var/obj/item/grown/log/L in contents)
@@ -255,8 +248,8 @@
 /obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
 
-/obj/structure/bonfire/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
+/obj/structure/bonfire/Crossed(atom/movable/AM)
+	. = ..()
 	if(burning & !grill)
 		Burn()
 

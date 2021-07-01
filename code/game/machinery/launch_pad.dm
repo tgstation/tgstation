@@ -43,14 +43,13 @@
 	update_indicator()
 
 /obj/machinery/launchpad/Destroy()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_from_hud(src)
+	qdel(hud_list[DIAG_LAUNCHPAD_HUD])
 	return ..()
 
 /obj/machinery/launchpad/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
+		. += "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.</span>"
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
@@ -64,7 +63,7 @@
 					return
 				var/obj/item/multitool/M = I
 				M.buffer = src
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
+				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 				return 1
 
 		if(default_deconstruction_crowbar(I))
@@ -110,13 +109,13 @@
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
 	if(teleporting)
-		to_chat(user, span_warning("ERROR: Launchpad busy."))
+		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
 		return
 
 	var/turf/dest = get_turf(src)
 
 	if(dest && is_centcom_level(dest.z))
-		to_chat(user, span_warning("ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."))
+		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible.</span>")
 		return
 
 	var/target_x = x + x_offset
@@ -246,7 +245,7 @@
 	if(over_object == usr)
 		if(!briefcase || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
-		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
+		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
 		if(do_after(usr, 30, target = usr))
 			usr.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
@@ -256,10 +255,10 @@
 /obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src)) //do not attempt to link when already linked
+		if(L.pad == src) //do not attempt to link when already linked
 			return ..()
-		L.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [L]."))
+		L.pad = src
+		to_chat(user, "<span class='notice'>You link [src] to [L].</span>")
 	else
 		return ..()
 
@@ -284,7 +283,7 @@
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
+	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
@@ -295,10 +294,10 @@
 /obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
+		if(L.pad == src.pad) //do not attempt to link when already linked
 			return ..()
-		L.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [L]."))
+		L.pad = src.pad
+		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
 	else
 		return ..()
 
@@ -309,17 +308,16 @@
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE
-	//A weakref to our linked pad
-	var/datum/weakref/pad
+	var/obj/machinery/launchpad/briefcase/pad
 
 /obj/item/launchpad_remote/Initialize(mapload, pad) //remote spawns linked to the briefcase pad
 	. = ..()
-	src.pad = WEAKREF(pad)
+	src.pad = pad
 
 /obj/item/launchpad_remote/attack_self(mob/user)
 	. = ..()
 	ui_interact(user)
-	to_chat(user, span_notice("[src] projects a display onto your retina."))
+	to_chat(user, "<span class='notice'>[src] projects a display onto your retina.</span>")
 
 
 /obj/item/launchpad_remote/ui_state(mob/user)
@@ -334,25 +332,24 @@
 
 /obj/item/launchpad_remote/ui_data(mob/user)
 	var/list/data = list()
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
-	data["has_pad"] = our_pad ? TRUE : FALSE
-	if(our_pad)
-		data["pad_closed"] = our_pad.closed
-	if(!our_pad || our_pad.closed)
+	data["has_pad"] = pad ? TRUE : FALSE
+	if(pad)
+		data["pad_closed"] = pad.closed
+	if(!pad || pad.closed)
 		return data
 
-	data["pad_name"] = our_pad.display_name
-	data["range"] = our_pad.range
-	data["x"] = our_pad.x_offset
-	data["y"] = our_pad.y_offset
+	data["pad_name"] = pad.display_name
+	data["range"] = pad.range
+	data["x"] = pad.x_offset
+	data["y"] = pad.y_offset
 	return data
 
 /obj/item/launchpad_remote/proc/teleport(mob/user, obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
-		to_chat(user, span_warning("ERROR: Launchpad not responding. Check launchpad integrity."))
+		to_chat(user, "<span class='warning'>ERROR: Launchpad not responding. Check launchpad integrity.</span>")
 		return
 	if(!pad.isAvailable())
-		to_chat(user, span_warning("ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."))
+		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Make sure the launchpad is ready and powered.</span>")
 		return
 	pad.doteleport(user, sending)
 
@@ -360,22 +357,19 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
-	if(!our_pad)
-		pad = null
-		return TRUE
+
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])
 			var/new_y = text2num(params["y"])
-			our_pad.set_offset(new_x, new_y)
+			pad.set_offset(new_x, new_y)
 			. = TRUE
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			our_pad.set_offset(
-				x = our_pad.x_offset + plus_x,
-				y = our_pad.y_offset + plus_y
+			pad.set_offset(
+				x = pad.x_offset + plus_x,
+				y = pad.y_offset + plus_y
 			)
 			. = TRUE
 		if("rename")
@@ -383,16 +377,16 @@
 			var/new_name = params["name"]
 			if(!new_name)
 				return
-			our_pad.display_name = new_name
+			pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) != "Abort")
-				our_pad = null
+			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
+				pad = null
 		if("launch")
 			sending = TRUE
-			teleport(usr, our_pad)
+			teleport(usr, pad)
 			. = TRUE
 		if("pull")
 			sending = FALSE
-			teleport(usr, our_pad)
+			teleport(usr, pad)
 			. = TRUE

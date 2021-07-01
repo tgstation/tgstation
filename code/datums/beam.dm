@@ -59,16 +59,15 @@
  * direction: in what direction mover moved from.
  */
 /datum/beam/proc/redrawing(atom/movable/mover, atom/oldloc, direction)
-	SIGNAL_HANDLER
 	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
 		QDEL_LIST(elements)
-		INVOKE_ASYNC(src, .proc/Draw)
+		Draw()
 	else
 		qdel(src)
 
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
-	QDEL_NULL(visuals)
+	qdel(visuals)
 	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 	target = null

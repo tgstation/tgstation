@@ -6,7 +6,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32
 	},
@@ -29,11 +31,15 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom{
+	pixel_x = 25
+	},
 /obj/item/storage/pod{
 	pixel_x = -26
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "Z" = (

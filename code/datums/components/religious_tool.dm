@@ -124,7 +124,7 @@
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
 	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,span_warning("You cannot select a sect at this time."))
+		to_chat(user,"<span class='warning'>You cannot select a sect at this time.</span>")
 		return
 	if(GLOB.religious_sect)
 		return
@@ -148,7 +148,7 @@
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
 	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,span_warning("You are not close enough to perform the rite."))
+		to_chat(user,"<span class='warning'>You are not close enough to perform the rite.</span>")
 		return
 	performing_rite = new path(parent)
 	if(!performing_rite.perform_rite(user, parent))
@@ -228,12 +228,12 @@
 
 	if(!can_i_see)
 		return
-	examine_list += span_notice("Use a bible to interact with this.")
+	examine_list += "<span class='notice'>Use a bible to interact with this.</span>"
 	if(!easy_access_sect)
 		if(operation_flags & RELIGION_TOOL_SECTSELECT)
-			examine_list += span_notice("This looks like it can be used to select a sect.")
+			examine_list += "<span class='notice'>This looks like it can be used to select a sect.</span>"
 			return
 	if(operation_flags & RELIGION_TOOL_SACRIFICE)//this can be moved around if things change but usually no rites == no sacrifice
-		examine_list += span_notice("Desired items can be used on this to increase favor.")
+		examine_list += "<span class='notice'>Desired items can be used on this to increase favor.</span>"
 	if(easy_access_sect.rites_list && operation_flags & RELIGION_TOOL_INVOKE)
-		examine_list += span_notice("You can invoke rites from this.")
+		examine_list += "<span class='notice'>You can invoke rites from this.</span>"

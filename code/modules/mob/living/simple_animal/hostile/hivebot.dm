@@ -116,25 +116,25 @@
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
 	if(istype(target, /obj/machinery))
 		var/obj/machinery/fixable = target
-		if(fixable.get_integrity() >= fixable.max_integrity)
-			to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
+		if(fixable.obj_integrity >= fixable.max_integrity)
+			to_chat(src, "<span class='warning'>Diagnostics indicate that this machine is at peak integrity.</span>")
 			return
-		to_chat(src, span_warning("You begin repairs..."))
+		to_chat(src, "<span class='warning'>You begin repairs...</span>")
 		if(do_after(src, 50, target = fixable))
-			fixable.repair_damage(fixable.max_integrity - fixable.get_integrity())
+			fixable.obj_integrity = fixable.max_integrity
 			do_sparks(3, TRUE, fixable)
-			to_chat(src, span_warning("Repairs complete."))
+			to_chat(src, "<span class='warning'>Repairs complete.</span>")
 		return
 	if(istype(target, /mob/living/simple_animal/hostile/hivebot))
 		var/mob/living/simple_animal/hostile/hivebot/fixable = target
 		if(fixable.health >= fixable.maxHealth)
-			to_chat(src, span_warning("Diagnostics indicate that this unit is at peak integrity."))
+			to_chat(src, "<span class='warning'>Diagnostics indicate that this unit is at peak integrity.</span>")
 			return
-		to_chat(src, span_warning("You begin repairs..."))
+		to_chat(src, "<span class='warning'>You begin repairs...</span>")
 		if(do_after(src, 50, target = fixable))
 			fixable.revive(full_heal = TRUE, admin_revive = TRUE)
 			do_sparks(3, TRUE, fixable)
-			to_chat(src, span_warning("Repairs complete."))
+			to_chat(src, "<span class='warning'>Repairs complete.</span>")
 		return
 	return ..()
 
@@ -149,12 +149,12 @@
 	var/mob/living/simple_animal/hostile/hivebot/H = owner
 	var/turf/T = get_turf(H)
 	if(T.density)
-		to_chat(H, span_warning("There's already something on this tile!"))
+		to_chat(H, "<span class='warning'>There's already something on this tile!</span>")
 		return
-	to_chat(H, span_warning("You begin to create a foam wall at your position..."))
+	to_chat(H, "<span class='warning'>You begin to create a foam wall at your position...</span>")
 	if(do_after(H, 50, target = H))
 		for(var/obj/structure/foamedmetal/FM in T.contents)
-			to_chat(H, span_warning("There's already a foam wall on this tile!"))
+			to_chat(H, "<span class='warning'>There's already a foam wall on this tile!</span>")
 			return
 		new /obj/structure/foamedmetal(H.loc)
 		playsound(get_turf(H), 'sound/effects/extinguish.ogg', 50, TRUE, -1)

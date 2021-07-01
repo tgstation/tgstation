@@ -62,7 +62,7 @@
 		return
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
@@ -96,7 +96,7 @@
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
 	sleep(10)
-	set_density(FALSE)
+	density = FALSE
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
 	air_update_turf(TRUE, FALSE)
@@ -116,7 +116,7 @@
 	playsound(src, closeSound, 100, TRUE)
 	flick("[initial(icon_state)]closing",src)
 	sleep(10)
-	set_density(TRUE)
+	density = TRUE
 	set_opacity(TRUE)
 	door_opened = FALSE
 	layer = initial(layer)
@@ -156,38 +156,38 @@
 	if(I.tool_behaviour != TOOL_MINING)
 		return
 	. = TRUE
-	to_chat(user, span_notice("You start digging [src]..."))
+	to_chat(user, "<span class='notice'>You start digging [src]...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
-		to_chat(user, span_notice("You finish digging."))
+		to_chat(user, "<span class='notice'>You finish digging.</span>")
 		deconstruct(TRUE)
 
 /obj/structure/mineral_door/welder_act(mob/living/user, obj/item/I) //override if the door is supposed to be flammable.
 	..()
 	. = TRUE
 	if(anchored)
-		to_chat(user, span_warning("[src] is still firmly secured to the ground!"))
+		to_chat(user, "<span class='warning'>[src] is still firmly secured to the ground!</span>")
 		return
 
-	user.visible_message(span_notice("[user] starts to weld apart [src]!"), span_notice("You start welding apart [src]."))
+	user.visible_message("<span class='notice'>[user] starts to weld apart [src]!</span>", "<span class='notice'>You start welding apart [src].</span>")
 	if(!I.use_tool(src, user, 60, 5, 50))
-		to_chat(user, span_warning("You failed to weld apart [src]!"))
+		to_chat(user, "<span class='warning'>You failed to weld apart [src]!</span>")
 		return
 
-	user.visible_message(span_notice("[user] welded [src] into pieces!"), span_notice("You welded apart [src]!"))
+	user.visible_message("<span class='notice'>[user] welded [src] into pieces!</span>", "<span class='notice'>You welded apart [src]!</span>")
 	deconstruct(TRUE)
 
 /obj/structure/mineral_door/proc/crowbar_door(mob/living/user, obj/item/I) //if the door is flammable, call this in crowbar_act() so we can still decon it
 	. = TRUE
 	if(anchored)
-		to_chat(user, span_warning("[src] is still firmly secured to the ground!"))
+		to_chat(user, "<span class='warning'>[src] is still firmly secured to the ground!</span>")
 		return
 
-	user.visible_message(span_notice("[user] starts to pry apart [src]!"), span_notice("You start prying apart [src]."))
+	user.visible_message("<span class='notice'>[user] starts to pry apart [src]!</span>", "<span class='notice'>You start prying apart [src].</span>")
 	if(!I.use_tool(src, user, 60, volume = 50))
-		to_chat(user, span_warning("You failed to pry apart [src]!"))
+		to_chat(user, "<span class='warning'>You failed to pry apart [src]!</span>")
 		return
 
-	user.visible_message(span_notice("[user] pried [src] into pieces!"), span_notice("You pried apart [src]!"))
+	user.visible_message("<span class='notice'>[user] pried [src] into pieces!</span>", "<span class='notice'>You pried apart [src]!</span>")
 	deconstruct(TRUE)
 
 
@@ -249,9 +249,9 @@
 	icon_state = "plasma"
 	sheetType = /obj/item/stack/sheet/mineral/plasma
 
-/obj/structure/mineral_door/transparent/plasma/Initialize(mapload)
+/obj/structure/mineral_door/transparent/plasma/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/mineral_door/transparent/plasma/welder_act(mob/living/user, obj/item/I)
 	return
@@ -326,7 +326,7 @@
 /obj/structure/mineral_door/paperframe/examine(mob/user)
 	. = ..()
 	if(obj_integrity < max_integrity)
-		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
+		. += "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>"
 
 /obj/structure/mineral_door/paperframe/pickaxe_door(mob/living/user, obj/item/I)
 	return
@@ -343,11 +343,11 @@
 		return
 
 	if((!user.combat_mode) && istype(I, /obj/item/paper) && (obj_integrity < max_integrity))
-		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
+		user.visible_message("<span class='notice'>[user] starts to patch the holes in [src].</span>", "<span class='notice'>You start patching some of the holes in [src]!</span>")
 		if(do_after(user, 2 SECONDS, src))
 			obj_integrity = min(obj_integrity+4,max_integrity)
 			qdel(I)
-			user.visible_message(span_notice("[user] patches some of the holes in [src]."), span_notice("You patch some of the holes in [src]!"))
+			user.visible_message("<span class='notice'>[user] patches some of the holes in [src].</span>", "<span class='notice'>You patch some of the holes in [src]!</span>")
 			return TRUE
 
 	return ..()

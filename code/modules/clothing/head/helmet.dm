@@ -37,7 +37,7 @@
 	if(attached_light)
 		. += "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it."
 		if(can_flashlight)
-			. += span_info("[attached_light] looks like it can be <b>unscrewed</b> from [src].")
+			. += "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
 		. += "It has a mounting point for a <b>seclite</b>."
 
@@ -76,14 +76,14 @@
 	if(issignaler(I))
 		var/obj/item/assembly/signaler/S = I
 		if(attached_light) //Has a flashlight. Player must remove it, else it will be lost forever.
-			to_chat(user, span_warning("The mounted flashlight is in the way, remove it first!"))
+			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
 			return
 
 		if(S.secured)
 			qdel(S)
 			var/obj/item/bot_assembly/secbot/A = new
 			user.put_in_hands(A)
-			to_chat(user, span_notice("You add the signaler to the helmet."))
+			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
 			qdel(src)
 			return
 	return ..()
@@ -136,7 +136,7 @@
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
+			to_chat(user, "<span class='notice'>[up ? alt_toggle_message : toggle_message] \the [src].</span>")
 
 			user.update_inv_head()
 			if(iscarbon(user))
@@ -158,7 +158,7 @@
 
 /obj/item/clothing/head/helmet/justice/Initialize()
 	. = ..()
-	weewooloop = new(src, FALSE, FALSE)
+	weewooloop = new(list(src), FALSE, FALSE)
 
 /obj/item/clothing/head/helmet/justice/Destroy()
 	QDEL_NULL(weewooloop)
@@ -403,12 +403,12 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
-	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---")
-	. += span_warning("BLOOD RAGE")
-	. += span_warning("BRAIN DEATH")
-	. += span_warning("PRIMAL GENE ACTIVATION")
-	. += span_warning("GENETIC MAKEUP MASS SUSCEPTIBILITY")
-	. += span_boldnotice("Ask your CMO if mind magnification is right for you.")
+	. += "<span class='boldwarning'>---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---</span>"
+	. += "<span class='warning'>BLOOD RAGE</span>"
+	. += "<span class='warning'>BRAIN DEATH</span>"
+	. += "<span class='warning'>PRIMAL GENE ACTIVATION</span>"
+	. += "<span class='warning'>GENETIC MAKEUP MASS SUSCEPTIBILITY</span>"
+	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
 	. = ..()
@@ -420,7 +420,7 @@
 		return
 	if(!ismonkey(user) || user.ckey)
 		var/mob/living/something = user
-		to_chat(something, span_boldnotice("You feel a stabbing pain in the back of your head for a moment."))
+		to_chat(something, "<span class='boldnotice'>You feel a stabbing pain in the back of your head for a moment.</span>")
 		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
@@ -428,25 +428,25 @@
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
 		return
 	magnification = user //this polls ghosts
-	visible_message(span_warning("[src] powers up!"))
+	visible_message("<span class='warning'>[src] powers up!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
 	if(!magnification)
 		return
 	if(!candidates.len)
 		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
-		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
+		visible_message("<span class='notice'>[src] falls silent and drops on the floor. Maybe you should try again later?</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		user.dropItemToGround(src)
 		return
 	var/mob/picked = pick(candidates)
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
-	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
+	to_chat(magnification, "<span class='notice'>You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!</span>")
 	var/policy = get_policy(ROLE_MONKEY_HELMET)
 	if(policy)
 		to_chat(magnification, policy)
@@ -461,7 +461,7 @@
 		return
 	if(!polling)//put on a viable head, but taken off after polling finished.
 		if(magnification.client)
-			to_chat(magnification, span_userdanger("You feel your flicker of sentience ripped away from you, as everything becomes dim..."))
+			to_chat(magnification, "<span class='userdanger'>You feel your flicker of sentience ripped away from you, as everything becomes dim...</span>")
 			magnification.ghostize(FALSE)
 		if(prob(10))
 			switch(rand(1,4))
@@ -477,7 +477,7 @@
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	visible_message(span_warning("[src] fizzles and breaks apart!"))
+	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
 	magnification = null
 	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
 
@@ -487,9 +487,8 @@
 		qdel(src)//runs disconnect code
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
-	SIGNAL_HANDLER
 	if(magnification)
-		visible_message(span_warning("[src] falls off of [magnification]'s head as it changes shape!"))
+		visible_message("<span class='warning'>[src] falls off of [magnification]'s head as it changes shape!</span>")
 		magnification.dropItemToGround(src)
 
 //LightToggle
@@ -521,7 +520,7 @@
 		if(can_flashlight && !attached_light)
 			if(!user.transferItemToLoc(S, src))
 				return
-			to_chat(user, span_notice("You click [S] into place on [src]."))
+			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			set_attached_light(S)
 			update_appearance()
 			update_helmlight()
@@ -535,7 +534,7 @@
 	. = ..()
 	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
 		I.play_tool_sound(src)
-		to_chat(user, span_notice("You unscrew [attached_light] from [src]."))
+		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")
 		attached_light.forceMove(drop_location())
 		if(Adjacent(user) && !issilicon(user))
 			user.put_in_hands(attached_light)
@@ -561,7 +560,7 @@
 		return
 	attached_light.on = !attached_light.on
 	attached_light.update_brightness()
-	to_chat(user, span_notice("You toggle the helmet light [attached_light.on ? "on":"off"]."))
+	to_chat(user, "<span class='notice'>You toggle the helmet light [attached_light.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_helmlight()

@@ -61,13 +61,17 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "p" = (
-/obj/machinery/light/broken/directional/east,
+/obj/machinery/light/broken{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/pen,
-/obj/machinery/light/broken/directional/west,
+/obj/machinery/light/broken{
+	dir = 8
+	},
 /obj/item/paper/crumpled/bloody{
 	info = "help...";
 	text = ""

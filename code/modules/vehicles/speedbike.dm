@@ -47,7 +47,7 @@
 		if(ismovable(A))
 			var/atom/movable/AM = A
 			AM.throw_at(get_edge_target_turf(A, dir), 4, 3)
-		visible_message(span_danger("[src] crashes into [A]!"))
+		visible_message("<span class='danger'>[src] crashes into [A]!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 	if(!ishuman(A))
 		return
@@ -57,7 +57,7 @@
 	rammed.apply_damage(rand(20,35), BRUTE)
 	if(!crash_all)
 		rammed.throw_at(get_edge_target_turf(A, dir), 4, 3)
-		visible_message(span_danger("[src] crashes into [rammed]!"))
+		visible_message("<span class='danger'>[src] crashes into [rammed]!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/speedwagon/Moved()

@@ -1,6 +1,6 @@
 /datum/species/android
 	name = "Android"
-	id = SPECIES_ANDROID
+	id = "android"
 	say_mod = "states"
 	species_traits = list(NOBLOOD)
 	inherent_traits = list(
@@ -27,7 +27,6 @@
 	mutanttongue = /obj/item/organ/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	limbs_id = "synth"
-	wings_icons = list("Robotic")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)

@@ -64,7 +64,9 @@
 	},
 /area/ruin/unpowered)
 "l" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop/pizzaparty,
 /obj/effect/decal/cleanable/dirt,
@@ -273,7 +275,9 @@
 	},
 /area/ruin/unpowered)
 "P" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"

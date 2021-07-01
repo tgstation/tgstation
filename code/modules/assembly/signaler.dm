@@ -24,7 +24,7 @@
 	var/last_receive_signal_log
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
+	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	moveToNullspace()
 	suicider = user.mind
@@ -36,9 +36,9 @@
 	if(!istype(user))
 		return
 	if(suicide_mob == REF(user))
-		user.visible_message(span_suicide("[user]'s [src] receives a signal, killing [user.p_them()] instantly!"))
+		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	else
-		user.visible_message(span_suicide("[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!"))
+		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!</span>")
 	user.set_suicide(TRUE)
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
@@ -179,7 +179,7 @@
 
 /obj/item/assembly/signaler/receiver/examine(mob/user)
 	. = ..()
-	. += span_notice("The radio receiver is [on?"on":"off"].")
+	. += "<span class='notice'>The radio receiver is [on?"on":"off"].</span>"
 
 /obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
 	if(!on)

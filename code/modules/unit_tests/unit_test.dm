@@ -50,7 +50,7 @@ GLOBAL_VAR(test_log)
 	// clear the test area
 	for (var/turf/turf in block(locate(1, 1, run_loc_floor_bottom_left.z), locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)))
 		for (var/content in turf.contents)
-			if (istype(content, /obj/effect/landmark))
+			if (iseffect(content))
 				continue
 			qdel(content)
 	return ..()

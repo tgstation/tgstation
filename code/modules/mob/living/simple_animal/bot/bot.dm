@@ -135,7 +135,7 @@
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
 	set_light_on(on)
 	update_appearance()
-	to_chat(src, span_boldnotice("You turned on!"))
+	to_chat(src, "<span class='boldnotice'>You turned on!</span>")
 	diag_hud_set_botstat()
 	return TRUE
 
@@ -146,7 +146,7 @@
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
 	set_light_on(on)
 	bot_reset() //Resets an AI's call, should it exist.
-	to_chat(src, span_userdanger("You turned off!"))
+	to_chat(src, "<span class='userdanger'>You turned off!</span>")
 	update_appearance()
 
 /mob/living/simple_animal/bot/Initialize()
@@ -209,7 +209,7 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
 		emagged = 1
-		to_chat(user, span_notice("You bypass [src]'s controls."))
+		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
@@ -217,12 +217,12 @@
 		locked = TRUE //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
-		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
+		to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
 		if(user)
 			log_combat(user, src, "emagged")
 		return
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
-		to_chat(user, span_warning("You need to open maintenance panel first!"))
+		to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
 
 /mob/living/simple_animal/bot/examine(mob/user)
 	. = ..()
@@ -233,17 +233,17 @@
 			. += "[src]'s parts look very loose!"
 	else
 		. += "[src] is in pristine condition."
-	. += span_notice("Its maintenance panel is [open ? "open" : "closed"].")
-	. += span_info("You can use a <b>screwdriver</b> to [open ? "close" : "open"] it.")
+	. += "<span class='notice'>Its maintenance panel is [open ? "open" : "closed"].</span>"
+	. += "<span class='info'>You can use a <b>screwdriver</b> to [open ? "close" : "open"] it.</span>"
 	if(open)
-		. += span_notice("Its control panel is [locked ? "locked" : "unlocked"].")
+		. += "<span class='notice'>Its control panel is [locked ? "locked" : "unlocked"].</span>"
 		var/is_sillycone = issilicon(user)
 		if(!emagged && (is_sillycone || user.Adjacent(src)))
-			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [locked ? "un" : ""]lock its control panel.")
+			. += "<span class='info'>Alt-click [is_sillycone ? "" : "or use your ID on "]it to [locked ? "un" : ""]lock its control panel.</span>"
 	if(paicard)
-		. += span_notice("It has a pAI device installed.")
+		. += "<span class='notice'>It has a pAI device installed.</span>"
 		if(!open)
-			. += span_info("You can use a <b>hemostat</b> to remove it.")
+			. += "<span class='info'>You can use a <b>hemostat</b> to remove it.</span>"
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
@@ -302,7 +302,7 @@
 	if(!topic_denied(user))
 		interact(user)
 	else
-		to_chat(user, span_warning("[src]'s interface is not responding!"))
+		to_chat(user, "<span class='warning'>[src]'s interface is not responding!</span>")
 
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
@@ -314,51 +314,51 @@
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(emagged)
-		to_chat(user, span_danger("ERROR"))
+		to_chat(user, "<span class='danger'>ERROR</span>")
 		return
 	if(open)
-		to_chat(user, span_warning("Please close the access panel before [locked ? "un" : ""]locking it."))
+		to_chat(user, "<span class='warning'>Please close the access panel before [locked ? "un" : ""]locking it.</span>")
 		return
 	if(!bot_core.allowed(user))
-		to_chat(user, span_warning("Access denied."))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	locked = !locked
-	to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
+	to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 	return TRUE
 
 /mob/living/simple_animal/bot/attackby(obj/item/W, mob/living/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
 			open = !open
-			to_chat(user, span_notice("The maintenance panel is now [open ? "opened" : "closed"]."))
+			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
 		else
-			to_chat(user, span_warning("The maintenance panel is locked!"))
+			to_chat(user, "<span class='warning'>The maintenance panel is locked!</span>")
 	else if(W.GetID())
 		unlock_with_id(user)
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
 	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
-			to_chat(user, span_warning("Close the access panel before manipulating the personality slot!"))
+			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
-			to_chat(user, span_notice("You attempt to pull [paicard] free..."))
+			to_chat(user, "<span class='notice'>You attempt to pull [paicard] free...</span>")
 			if(do_after(user, 30, target = src))
 				if (paicard)
-					user.visible_message(span_notice("[user] uses [W] to pull [paicard] out of [bot_name]!"),span_notice("You pull [paicard] out of [bot_name] with [W]."))
+					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(health >= maxHealth)
-				to_chat(user, span_warning("[src] does not need a repair!"))
+				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
 				return
 			if(!open)
-				to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
+				to_chat(user, "<span class='warning'>Unable to repair with the maintenance panel closed!</span>")
 				return
 
 			if(W.use_tool(src, user, 0, volume=40))
 				adjustHealth(-10)
-				user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
+				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src].</span>")
 		else
 			if(W.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
@@ -379,7 +379,7 @@
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
-		src.visible_message(span_notice("[paicard] is flies out of [bot_name]!"),span_warning("You are forcefully ejected from [bot_name]!"))
+		src.visible_message("<span class='notice'>[paicard] is flies out of [bot_name]!</span>","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
 		ejectpai(0)
 	if(on)
 		turn_off()
@@ -572,15 +572,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
+			to_chat(src, "<span class='notice'><span class='big'>Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.</span><br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds.</span>")
 		if(message)
-			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
+			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination.</span>")
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
 	else
 		if(message)
-			to_chat(calling_ai, span_danger("Failed to calculate a valid route. Ensure destination is clear of obstructions and within range."))
+			to_chat(calling_ai, "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>")
 		calling_ai = null
 		set_path(null)
 
@@ -589,13 +589,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/success = bot_move(ai_waypoint, 3)
 	if(!success)
 		if(calling_ai)
-			to_chat(calling_ai, "[icon2html(src, calling_ai)] [get_turf(src) == ai_waypoint ? span_notice("[src] successfully arrived to waypoint.") : span_danger("[src] failed to reach waypoint.")]")
+			to_chat(calling_ai, "[icon2html(src, calling_ai)] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
 			calling_ai = null
 		bot_reset()
 
 /mob/living/simple_animal/bot/proc/bot_reset()
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
-		to_chat(calling_ai, span_danger("Call command to a bot has been reset."))
+		to_chat(calling_ai, "<span class='danger'>Call command to a bot has been reset.</span>")
 		calling_ai = null
 	if(reset_access_timer_id)
 		deltimer(reset_access_timer_id)
@@ -771,7 +771,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("ejectpai")
 			return
 		else
-			to_chat(src, span_warning("Unidentified control sequence received:[command]"))
+			to_chat(src, "<span class='warning'>Unidentified control sequence received:[command]</span>")
 
 /mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
 	summon_step()
@@ -850,7 +850,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return TRUE
 
 	if(topic_denied(usr))
-		to_chat(usr, span_warning("[src]'s interface is not responding!"))
+		to_chat(usr, "<span class='warning'>[src]'s interface is not responding!</span>")
 		return TRUE
 	add_fingerprint(usr)
 
@@ -871,21 +871,21 @@ Pass a positive integer as an argument to override a bot's default speed.
 				emagged = 2
 				hacked = TRUE
 				locked = TRUE
-				to_chat(usr, span_warning("[text_hack]"))
+				to_chat(usr, "<span class='warning'>[text_hack]</span>")
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
 				log_game("Safety lock of [src] was disabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
 			else if(!hacked)
-				to_chat(usr, span_boldannounce("[text_dehack_fail]"))
+				to_chat(usr, "<span class='boldannounce'>[text_dehack_fail]</span>")
 			else
 				emagged = FALSE
 				hacked = FALSE
-				to_chat(usr, span_notice("[text_dehack]"))
+				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
 		if("ejectpai")
 			if(paicard && (!locked || issilicon(usr) || isAdminGhostAI(usr)))
-				to_chat(usr, span_notice("You eject [paicard] from [bot_name]."))
+				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name].</span>")
 				ejectpai(usr)
 	update_controls()
 
@@ -897,10 +897,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 /obj/machinery/bot_core
 	use_power = NO_POWER_USE
 	anchored = FALSE
+	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
 	. = ..()
-	if(!isbot(loc))
+	owner = loc
+	if(!istype(owner))
 		return INITIALIZE_HINT_QDEL
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
@@ -943,27 +945,27 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
 	if(paicard)
-		to_chat(user, span_warning("A [paicard] is already inserted!"))
+		to_chat(user, "<span class='warning'>A [paicard] is already inserted!</span>")
 	else if(allow_pai && !key)
 		if(!locked && !open)
 			if(card.pai && card.pai.mind)
 				if(!user.transferItemToLoc(card, src))
 					return
 				paicard = card
-				user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
+				user.visible_message("<span class='notice'>[user] inserts [card] into [src]!</span>", "<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)
-				to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
+				to_chat(src, "<span class='notice'>You sense your form change as you are uploaded into [src].</span>")
 				bot_name = name
 				name = paicard.pai.name
 				faction = user.faction.Copy()
 				log_combat(user, paicard.pai, "uploaded to [bot_name],")
 				return TRUE
 			else
-				to_chat(user, span_warning("[card] is inactive."))
+				to_chat(user, "<span class='warning'>[card] is inactive.</span>")
 		else
-			to_chat(user, span_warning("The personality slot is locked."))
+			to_chat(user, "<span class='warning'>The personality slot is locked.</span>")
 	else
-		to_chat(user, span_warning("[src] is not compatible with [card]!"))
+		to_chat(user, "<span class='warning'>[src] is not compatible with [card]!</span>")
 
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
 	if(paicard)
@@ -980,7 +982,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else
 			log_combat(src, paicard.pai, "ejected")
 		if(announce)
-			to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [bot_name]."))
+			to_chat(paicard.pai, "<span class='notice'>You feel your control fade as [paicard] ejects from [bot_name].</span>")
 		paicard = null
 		name = bot_name
 		faction = initial(faction)

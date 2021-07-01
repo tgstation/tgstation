@@ -37,16 +37,16 @@
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
 
 /datum/quirk/foreigner/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.add_blocked_language(/datum/language/common)
-	if(ishumanbasic(human_holder))
-		human_holder.grant_language(/datum/language/uncommon)
+	var/mob/living/carbon/human/H = quirk_holder
+	H.add_blocked_language(/datum/language/common)
+	if(ishumanbasic(H))
+		H.grant_language(/datum/language/uncommon)
 
 /datum/quirk/foreigner/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.remove_blocked_language(/datum/language/common)
-	if(ishumanbasic(human_holder))
-		human_holder.remove_language(/datum/language/uncommon)
+	var/mob/living/carbon/human/H = quirk_holder
+	H.remove_blocked_language(/datum/language/common)
+	if(ishumanbasic(H))
+		H.remove_language(/datum/language/uncommon)
 
 /datum/quirk/vegetarian
 	name = "Vegetarian"
@@ -57,19 +57,19 @@
 	medical_record_text = "Patient reports a vegetarian diet."
 
 /datum/quirk/vegetarian/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
 	species.liked_food &= ~MEAT
 	species.disliked_food |= MEAT
 
 /datum/quirk/vegetarian/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	var/datum/species/species = human_holder.dna.species
-	if(initial(species.liked_food) & MEAT)
-		species.liked_food |= MEAT
-	if(!(initial(species.disliked_food) & MEAT))
-		species.disliked_food &= ~MEAT
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		if(initial(species.liked_food) & MEAT)
+			species.liked_food |= MEAT
+		if(!initial(species.disliked_food) & MEAT)
+			species.disliked_food &= ~MEAT
 
 /datum/quirk/snob
 	name = "Snob"
@@ -89,14 +89,15 @@
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 
 /datum/quirk/pineapple_liker/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
 	species.liked_food |= PINEAPPLE
 
 /datum/quirk/pineapple_liker/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food &= ~PINEAPPLE
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.liked_food &= ~PINEAPPLE
 
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
@@ -107,14 +108,15 @@
 	medical_record_text = "Patient is correct to think that pineapple is disgusting."
 
 /datum/quirk/pineapple_hater/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
 	species.disliked_food |= PINEAPPLE
 
 /datum/quirk/pineapple_hater/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.disliked_food &= ~PINEAPPLE
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~PINEAPPLE
 
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
@@ -125,17 +127,18 @@
 	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 
 /datum/quirk/deviant_tastes/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
 	var/liked = species.liked_food
 	species.liked_food = species.disliked_food
 	species.disliked_food = liked
 
 /datum/quirk/deviant_tastes/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food = initial(species.liked_food)
-	species.disliked_food = initial(species.disliked_food)
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.liked_food = initial(species.liked_food)
+		species.disliked_food = initial(species.disliked_food)
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
@@ -148,56 +151,63 @@
 
 /datum/quirk/monochromatic/post_add()
 	if(quirk_holder.mind.assigned_role == "Detective")
-		to_chat(quirk_holder, span_boldannounce("Mmm. Nothing's ever clear on this station. It's all shades of gray..."))
+		to_chat(quirk_holder, "<span class='boldannounce'>Mmm. Nothing's ever clear on this station. It's all shades of gray...</span>")
 		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
 
 /datum/quirk/monochromatic/remove()
-	quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+	if(quirk_holder)
+		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
 
 /datum/quirk/phobia
 	name = "Phobia"
 	desc = "You are irrationally afraid of something."
 	value = 0
 	medical_record_text = "Patient has an irrational fear of something."
-	var/phobia
-
-/datum/quirk/phobia/add()
-	if(!phobia && quirk_holder.client?.prefs.phobia)
-		phobia = quirk_holder.client?.prefs.phobia
-
-	if(phobia)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/phobia/post_add()
-	if(!phobia)
-		var/mob/living/carbon/human/human_holder = quirk_holder
-		phobia = human_holder.client.prefs.phobia
-		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client?.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/phobia/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		H.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/quirk/item_quirk/needswayfinder
+/datum/quirk/needswayfinder
 	name = "Navigationally Challenged"
 	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
 	value = 0
 	medical_record_text = "Patient demonstrates a keen ability to get lost."
 
-/datum/quirk/item_quirk/needswayfinder/add_unique()
+	var/obj/item/pinpointer/wayfinding/wayfinder
+	var/where
+
+/datum/quirk/needswayfinder/on_spawn()
 	if(!GLOB.wayfindingbeacons.len)
 		return
+	var/mob/living/carbon/human/H = quirk_holder
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+	wayfinder = new /obj/item/pinpointer/wayfinding
+	wayfinder.owner = H.real_name
+	wayfinder.roundstart = TRUE
 
-	var/obj/item/pinpointer/wayfinding/wayfinder = new(get_turf(quirk_holder))
-	wayfinder.owner = human_holder.real_name
-	wayfinder.from_quirk = TRUE
+	var/list/slots = list(
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
+	)
+	where = H.equip_in_one_of_slots(wayfinder, slots, FALSE) || "at your feet"
 
-	give_item_to_holder(wayfinder, list(LOCATION_LPOCKET = ITEM_SLOT_LPOCKET, LOCATION_RPOCKET = ITEM_SLOT_RPOCKET, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+/datum/quirk/needswayfinder/post_add()
+	if(!GLOB.wayfindingbeacons.len)
+		return
+	if(where == "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-/datum/quirk/item_quirk/bald
+	to_chat(quirk_holder, "<span class='notice'>There is a pinpointer [where], which can help you find your way around. Click in-hand to activate.</span>")
+
+/datum/quirk/bald
 	name = "Smooth-Headed"
 	desc = "You have no hair and are quite insecure about it! Keep your wig on, or at least your head covered up."
 	value = 0
@@ -205,39 +215,41 @@
 	gain_text = "<span class='notice'>Your head is as smooth as can be, it's terrible.</span>"
 	lose_text = "<span class='notice'>Your head itches, could it be... growing hair?!</span>"
 	medical_record_text = "Patient starkly refused to take off headwear during examination."
-	/// The user's starting hairstyle
+	///The user's starting hairstyle
 	var/old_hair
 
-/datum/quirk/item_quirk/bald/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	old_hair = human_holder.hairstyle
-	human_holder.hairstyle = "Bald"
-	human_holder.update_hair()
-	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
-	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
+/datum/quirk/bald/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	old_hair = H.hairstyle
+	H.hairstyle = "Bald"
+	H.update_hair()
+	RegisterSignal(H, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
+	RegisterSignal(H, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
 
-/datum/quirk/item_quirk/bald/add_unique()
-	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
+/datum/quirk/bald/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.hairstyle = old_hair
+	H.update_hair()
+	UnregisterSignal(H, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
+	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
 
+/datum/quirk/bald/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/head/wig/natural/W = new(get_turf(H))
 	if (old_hair == "Bald")
-		baldie_wig.hairstyle = pick(GLOB.hairstyles_list - "Bald")
+		W.hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	else
-		baldie_wig.hairstyle = old_hair
-
-	baldie_wig.update_appearance()
-
-	give_item_to_holder(baldie_wig, list(LOCATION_HEAD = ITEM_SLOT_HEAD, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-
-/datum/quirk/item_quirk/bald/remove()
-	. = ..()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.hairstyle = old_hair
-	human_holder.update_hair()
-	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
-	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
+		W.hairstyle = old_hair
+	W.update_appearance()
+	var/list/slots = list (
+		"head" = ITEM_SLOT_HEAD,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
+	)
+	H.equip_in_one_of_slots(W, slots , qdel_on_fail = TRUE)
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
-/datum/quirk/item_quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
+/datum/quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
 	SIGNAL_HANDLER
 
 	if(istype(hat, /obj/item/clothing/head/wig))
@@ -246,32 +258,34 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day") //Our head is covered
 
 ///Applies a bad moodlet for having an uncovered head
-/datum/quirk/item_quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
+/datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
 
-/datum/quirk/item_quirk/tongue_tied
+
+/datum/quirk/tongue_tied
 	name = "Tongue Tied"
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
 	value = 0
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
 
-/datum/quirk/item_quirk/tongue_tied/add_unique()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/organ/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
-	old_tongue.Remove(human_holder)
+//Adds tongue & gloves
+/datum/quirk/tongue_tied/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
+	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
+	var/obj/item/clothing/gloves/radio/gloves = new(get_turf(H))
+	old_tongue.Remove(H)
+	new_tongue.Insert(H)
 	qdel(old_tongue)
+	if(!H.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES, bypass_equip_delay_self = TRUE))
+		H.put_in_hands(gloves)
 
-	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(human_holder))
-	new_tongue.Insert(human_holder)
+/datum/quirk/tongue_tied/post_add()
+	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
 
-	give_item_to_holder(/obj/item/clothing/gloves/radio, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-
-/datum/quirk/item_quirk/tongue_tied/post_add()
-	to_chat(quirk_holder, span_boldannounce("Because you speak with your hands, having them full hinders your ability to communicate!"))
-
-/datum/quirk/item_quirk/photographer
+/datum/quirk/photographer
 	name = "Photographer"
 	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary among your coworkers."
 	value = 0
@@ -280,30 +294,24 @@
 	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
 	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
 
-/datum/quirk/item_quirk/photographer/add_unique()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/storage/photo_album/personal/photo_album = new(get_turf(human_holder))
-	photo_album.persistence_id = "personal_[human_holder.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
-	photo_album.persistence_load()
-	photo_album.name = "[human_holder.real_name]'s photo album"
-
-	give_item_to_holder(photo_album, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-	give_item_to_holder(
-		/obj/item/camera,
-		list(
-			LOCATION_NECK = ITEM_SLOT_NECK,
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS
-		)
+/datum/quirk/photographer/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/storage/photo_album/personal/photo_album = new(get_turf(H))
+	var/list/album_slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
 	)
-
-/datum/quirk/item_quirk/colorist
-	name = "Colorist"
-	desc = "You like carrying around a hair dye spray to quickly apply color patterns to your hair."
-	value = 0
-	medical_record_text = "Patient enjoys dyeing their hair with pretty colors."
-
-/datum/quirk/item_quirk/colorist/add_unique()
-	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	H.equip_in_one_of_slots(photo_album, album_slots , qdel_on_fail = TRUE)
+	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
+	photo_album.persistence_load()
+	photo_album.name = "[H.real_name]'s photo album"
+	var/obj/item/camera/camera = new(get_turf(H))
+	var/list/camera_slots = list (
+		"neck" = ITEM_SLOT_NECK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
+	)
+	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
+	H.regenerate_icons()

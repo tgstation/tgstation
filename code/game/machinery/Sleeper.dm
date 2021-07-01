@@ -11,7 +11,6 @@
 	icon_state = "sleeper"
 	base_icon_state = "sleeper"
 	density = FALSE
-	obj_flags = NO_BUILD
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 
@@ -60,13 +59,13 @@
 	return ..()
 
 /obj/machinery/sleeper/container_resist_act(mob/living/user)
-	visible_message(span_notice("[occupant] emerges from [src]!"),
-		span_notice("You climb out of [src]!"))
+	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
+		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
-/obj/machinery/sleeper/Exited(atom/movable/gone, direction)
-	if (!state_open && gone == occupant)
-		container_resist_act(gone)
+/obj/machinery/sleeper/Exited(atom/movable/user)
+	if (!state_open && user == occupant)
+		container_resist_act(user)
 
 /obj/machinery/sleeper/relaymove(mob/living/user, direction)
 	if (!state_open)
@@ -105,10 +104,10 @@
 	if(..())
 		return
 	if(occupant)
-		to_chat(user, span_warning("[src] is currently occupied!"))
+		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
-		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		return
@@ -130,11 +129,11 @@
 	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
+		visible_message("<span class='notice'>[usr] pries open [src].</span>", "<span class='notice'>You pry open [src].</span>")
 		open_machine()
 
 /obj/machinery/sleeper/ui_state(mob/user)
-	if(!controls_inside)
+	if(controls_inside)
 		return GLOB.notcontained_state
 	return GLOB.default_state
 
@@ -154,7 +153,7 @@
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
+	. += "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>"
 
 /obj/machinery/sleeper/process()
 	..()
@@ -230,11 +229,11 @@
 			if(inject_chem(chem, usr))
 				. = TRUE
 				if(scrambled_chems && prob(5))
-					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
+					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
-	to_chat(user, span_warning("You scramble the sleeper's user interface!"))
+	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))
@@ -269,8 +268,21 @@
 	base_icon_state = "sleeper_s"
 	controls_inside = TRUE
 
-/obj/machinery/sleeper/syndie/fullupgrade
-	circuit = /obj/item/circuitboard/machine/sleeper/fullupgrade
+/obj/machinery/sleeper/syndie/fullupgrade/Initialize()
+	. = ..()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
+	component_parts = list()
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 2)
+	component_parts += new /obj/item/stack/cable_coil(src, 1)
+
+	QDEL_LIST(old_parts)
+	RefreshParts()
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"

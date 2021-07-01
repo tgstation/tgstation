@@ -23,7 +23,7 @@
 		if(isanimal(target))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
-				to_chat(user, span_info("[src] does not work on this sort of creature."))
+				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")
 				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
@@ -39,16 +39,16 @@
 					else
 						H.attack_same = 0
 				loaded = 0
-				user.visible_message(span_notice("[user] injects [M] with [src], reviving it."))
+				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				SSblackbox.record_feedback("tally", "lazarus_injector", 1, M.type)
 				playsound(src,'sound/effects/refill.ogg',50,TRUE)
 				icon_state = "lazarus_empty"
 				return
 			else
-				to_chat(user, span_info("[src] is only effective on the dead."))
+				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
 				return
 		else
-			to_chat(user, span_info("[src] is only effective on lesser beings."))
+			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
 			return
 
 /obj/item/lazarus_injector/emp_act()
@@ -61,6 +61,6 @@
 /obj/item/lazarus_injector/examine(mob/user)
 	. = ..()
 	if(!loaded)
-		. += span_info("[src] is empty.")
+		. += "<span class='info'>[src] is empty.</span>"
 	if(malfunctioning)
-		. += span_info("The display on [src] seems to be flickering.")
+		. += "<span class='info'>The display on [src] seems to be flickering.</span>"

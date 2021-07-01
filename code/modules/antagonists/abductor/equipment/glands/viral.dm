@@ -8,7 +8,7 @@
 	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/viral/activate()
-	to_chat(owner, span_warning("You feel sick."))
+	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
 	owner.ForceContractDisease(A, FALSE, TRUE)

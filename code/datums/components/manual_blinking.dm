@@ -20,12 +20,12 @@
 	if(E)
 		START_PROCESSING(SSdcs, src)
 		last_blink = world.time
-		to_chat(C, span_notice("You suddenly realize you're blinking manually."))
+		to_chat(C, "<span class='notice'>You suddenly realize you're blinking manually.</span>")
 
 /datum/component/manual_blinking/Destroy(force, silent)
 	E = null
 	STOP_PROCESSING(SSdcs, src)
-	to_chat(parent, span_notice("You revert back to automatic blinking."))
+	to_chat(parent, "<span class='notice'>You revert back to automatic blinking.</span>")
 	return ..()
 
 /datum/component/manual_blinking/RegisterWithParent()
@@ -57,13 +57,13 @@
 
 	if(world.time > (last_blink + check_every + grace_period))
 		if(!warn_dying)
-			to_chat(C, span_userdanger("Your eyes begin to wither, you need to blink!"))
+			to_chat(C, "<span class='userdanger'>Your eyes begin to wither, you need to blink!</span>")
 			warn_dying = TRUE
 
 		E.applyOrganDamage(damage_rate)
 	else if(world.time > (last_blink + check_every))
 		if(!warn_grace)
-			to_chat(C, span_danger("You feel a need to blink!"))
+			to_chat(C, "<span class='danger'>You feel a need to blink!</span>")
 			warn_grace = TRUE
 
 /datum/component/manual_blinking/proc/check_added_organ(mob/who_cares, obj/item/organ/O)

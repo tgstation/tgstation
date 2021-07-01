@@ -32,7 +32,7 @@
 	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
+	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
 
 /obj/item/pen/blue
@@ -68,7 +68,7 @@
 			colour = "blue"
 		else
 			colour = "black"
-	to_chat(user, span_notice("\The [src] will now write in [colour]."))
+	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
 /obj/item/pen/fountain
@@ -125,7 +125,7 @@
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
-		to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
+		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
 		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
 /obj/item/pen/attack(mob/living/M, mob/user, params)
@@ -133,8 +133,8 @@
 		return ..()
 	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
-	to_chat(user, span_warning("You stab [M] with the pen."))
-	to_chat(M, span_danger("You feel a tiny prick!"))
+	to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+	to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 	log_combat(user, M, "stabbed", src)
 	return TRUE
 
@@ -150,15 +150,15 @@
 			var/oldname = O.name
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(input == oldname || !input)
-				to_chat(user, span_notice("You changed [O] to... well... [O]."))
+			if(oldname == input || input == "")
+				to_chat(user, "<span class='notice'>You changed [O] to... well... [O].</span>")
 			else
-				O.AddComponent(/datum/component/rename, input, O.desc)
+				O.name = input
 				var/datum/component/label/label = O.GetComponent(/datum/component/label)
 				if(label)
 					label.remove_label()
 					label.apply_label()
-				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
+				to_chat(user, "<span class='notice'>You have successfully renamed \the [oldname] to [O].</span>")
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
@@ -166,26 +166,23 @@
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(input == olddesc || !input)
-				to_chat(user, span_notice("You decide against changing [O]'s description."))
+			if(olddesc == input || input == "")
+				to_chat(user, "<span class='notice'>You decide against changing [O]'s description.</span>")
 			else
-				O.AddComponent(/datum/component/rename, O.name, input)
-				to_chat(user, span_notice("You have successfully changed [O]'s description."))
+				O.desc = input
+				to_chat(user, "<span class='notice'>You have successfully changed [O]'s description.</span>")
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-
-			qdel(O.GetComponent(/datum/component/rename))
-
-			//reapply any label to name
+			O.desc = initial(O.desc)
+			O.name = initial(O.name)
 			var/datum/component/label/label = O.GetComponent(/datum/component/label)
 			if(label)
 				label.remove_label()
 				label.apply_label()
-
-			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
+			to_chat(user, "<span class='notice'>You have successfully reset [O]'s name and description.</span>")
 			O.renamedByPlayer = FALSE
 
 /*
@@ -230,9 +227,9 @@
 /obj/item/pen/edagger/suicide_act(mob/user)
 	. = BRUTELOSS
 	if(on)
-		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
+		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
 	else
-		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
@@ -246,7 +243,7 @@
 		embedding = list(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
-		to_chat(user, span_warning("[src] can now be concealed."))
+		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
 		on = TRUE
 		force = 18
@@ -257,7 +254,7 @@
 		embedding = list(embed_chance = 100) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
-		to_chat(user, span_warning("[src] is now active."))
+		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	updateEmbedding()
 	update_appearance()
 

@@ -20,7 +20,7 @@
 
 /obj/item/computer_hardware/hard_drive/examine(user)
 	. = ..()
-	. += span_notice("It has [max_capacity] GQ of storage capacity.")
+	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
 
 /obj/item/computer_hardware/hard_drive/diagnostics(mob/user)
 	..()
@@ -117,7 +117,7 @@
 	return null
 
 /obj/item/computer_hardware/hard_drive/Destroy()
-	QDEL_LIST(stored_files)
+	stored_files = null
 	return ..()
 
 /obj/item/computer_hardware/hard_drive/Initialize()

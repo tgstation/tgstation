@@ -2,7 +2,6 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_RANDOM_EVENT, .proc/on_pre_random_event)
 
 /datum/game_mode/dynamic/proc/on_pre_random_event(datum/source, datum/round_event_control/round_event_control)
-	SIGNAL_HANDLER
 	if (!round_event_control.dynamic_should_hijack)
 		return
 

@@ -64,10 +64,10 @@
 		return TRUE
 	if(!I.use_tool(src, user, 0, volume=50, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
+	user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
 	obj_integrity += min(10, max_integrity-obj_integrity)
 	if(obj_integrity == max_integrity)
-		to_chat(user, span_notice("It looks to be fully repaired now."))
+		to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 	return TRUE
 
 /obj/vehicle/ridden/atv/obj_break()
@@ -92,7 +92,7 @@
 	return TRUE
 
 /obj/vehicle/ridden/atv/obj_destruction()
-	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
+	explosion(src, -1, 0, 2, 4, flame_range = 3)
 	return ..()
 
 /obj/vehicle/ridden/atv/Destroy()

@@ -79,8 +79,8 @@
 		..()
 
 /mob/living/carbon/human/breathe()
-	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
-		return ..()
+	if(!dna.species.breathe(src))
+		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
@@ -147,12 +147,6 @@
 	if(!apply_change)
 		return dna.species.bodytemp_normal
 	return dna.species.bodytemp_normal + get_body_temp_normal_change()
-
-/mob/living/carbon/human/get_body_temp_heat_damage_limit()
-	return dna.species.bodytemp_heat_damage_limit
-
-/mob/living/carbon/human/get_body_temp_cold_damage_limit()
-	return dna.species.bodytemp_cold_damage_limit
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire(delta_time, times_fired)

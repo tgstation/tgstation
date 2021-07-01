@@ -38,11 +38,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ae" = (
+/obj/machinery/button/door{
+	id = "Interpolship";
+	pixel_y = 26
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
-	},
-/obj/machinery/button/door/directional/north{
-	id = "Interpolship"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
@@ -74,7 +75,6 @@
 /obj/effect/mob_spawn/human/fugitive/spacepol{
 	dir = 1
 	},
-/obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "al" = (
@@ -90,11 +90,23 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
+"gi" = (
+/obj/structure/table,
+/obj/effect/mob_spawn/human/fugitive/spacepol{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
 "hB" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"hJ" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "ku" = (
 /turf/closed/wall/mineral/titanium,
@@ -112,13 +124,6 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
-"Am" = (
-/obj/effect/mob_spawn/human/fugitive/spacepol{
-	dir = 8
-	},
-/obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "An" = (
@@ -185,20 +190,20 @@ ku
 "}
 (6,1,1) = {"
 Pq
-An
+hJ
 ag
 RO
 RO
-An
+hJ
 Pq
 "}
 (7,1,1) = {"
 Pq
-An
+hJ
 ah
 RO
 aj
-An
+hJ
 Pq
 "}
 (8,1,1) = {"
@@ -231,9 +236,9 @@ ku
 (11,1,1) = {"
 Pq
 An
-Am
-ab
 aa
+gi
+ab
 An
 Pq
 "}

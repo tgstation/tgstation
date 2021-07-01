@@ -11,6 +11,7 @@
 	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
+	is_flying_animal = TRUE
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
@@ -56,7 +57,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
@@ -70,15 +70,12 @@
 		small_action.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/Moved()
-	//Safety check
-	if(!loc)
-		return ..()
 	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
 		var/turf/closest = get_turf(nest.parent)
 		for(var/i = 1 to nest_range)
 			closest = get_step(closest, get_dir(closest, src))
 		forceMove(closest) // someone teleported out probably and the megafauna kept chasing them
-		LoseTarget()
+		target = null
 		return
 	return ..()
 
@@ -135,8 +132,8 @@
 	if(!L)
 		return FALSE
 	visible_message(
-		span_danger("[src] devours [L]!"),
-		span_userdanger("You feast on [L], restoring your health!"))
+		"<span class='danger'>[src] devours [L]!</span>",
+		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
@@ -182,15 +179,16 @@
 	name = "Megafauna Attack"
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = ""
+	var/mob/living/simple_animal/hostile/megafauna/M
 	var/chosen_message
 	var/chosen_attack_num = 0
 
 /datum/action/innate/megafauna_attack/Grant(mob/living/L)
-	if(!ismegafauna(L))
-		return FALSE
-	return ..()
+	if(istype(L, /mob/living/simple_animal/hostile/megafauna))
+		M = L
+		return ..()
+	return FALSE
 
 /datum/action/innate/megafauna_attack/Activate()
-	var/mob/living/simple_animal/hostile/megafauna/fauna = owner
-	fauna.chosen_attack = chosen_attack_num
-	to_chat(fauna, chosen_message)
+	M.chosen_attack = chosen_attack_num
+	to_chat(M, chosen_message)

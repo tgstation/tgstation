@@ -29,12 +29,8 @@
 
 /obj/machinery/fat_sucker/Initialize()
 	. = ..()
-	soundloop = new(src,  FALSE)
+	soundloop = new(list(src),  FALSE)
 	update_appearance()
-
-/obj/machinery/fat_sucker/Destroy()
-	QDEL_NULL(soundloop)
-	. = ..()
 
 /obj/machinery/fat_sucker/RefreshParts()
 	..()
@@ -46,13 +42,13 @@
 
 /obj/machinery/fat_sucker/examine(mob/user)
 	. = ..()
-	. += {"[span_notice("Alt-Click to toggle the safety hatch.")]
-				[span_notice("Removing [bite_size] nutritional units per operation.")]
-				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
+	. += {"<span class='notice'>Alt-Click to toggle the safety hatch.</span>
+				<span class='notice'>Removing [bite_size] nutritional units per operation.</span>
+				<span class='notice'>Requires [nutrient_to_meat] nutritional units per meat slab.</span>"}
 
 /obj/machinery/fat_sucker/close_machine(mob/user)
 	if(panel_open)
-		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
+		to_chat(user, "<span class='warning'>You need to close the maintenance hatch first!</span>")
 		return
 	..()
 	playsound(src, 'sound/machines/click.ogg', 50)
@@ -61,7 +57,7 @@
 			occupant.forceMove(drop_location())
 			set_occupant(null)
 			return
-		to_chat(occupant, span_notice("You enter [src]."))
+		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
@@ -74,18 +70,18 @@
 
 /obj/machinery/fat_sucker/container_resist_act(mob/living/user)
 	if(!free_exit || state_open)
-		to_chat(user, span_notice("The emergency release is not responding! You start pushing against the hull!"))
+		to_chat(user, "<span class='notice'>The emergency release is not responding! You start pushing against the hull!</span>")
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
-		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-			span_hear("You hear a metallic creaking from [src]."))
+		user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+			"<span class='hear'>You hear a metallic creaking from [src].</span>")
 		if(do_after(user, breakout_time, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
 			free_exit = TRUE
-			user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-				span_notice("You successfully break out of [src]!"))
+			user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+				"<span class='notice'>You successfully break out of [src]!</span>")
 			open_machine()
 		return
 	open_machine()
@@ -96,19 +92,19 @@
 	else if(!processing || free_exit)
 		open_machine()
 	else
-		to_chat(user, span_warning("The safety hatch has been disabled!"))
+		to_chat(user, "<span class='warning'>The safety hatch has been disabled!</span>")
 
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(user == occupant)
-		to_chat(user, span_warning("You can't reach the controls from inside!"))
+		to_chat(user, "<span class='warning'>You can't reach the controls from inside!</span>")
 		return
 	if(!(obj_flags & EMAGGED) && !allowed(user))
-		to_chat(user, span_warning("You lack the required access."))
+		to_chat(user, "<span class='warning'>You lack the required access.</span>")
 		return
 	free_exit = !free_exit
-	to_chat(user, span_notice("Safety hatch [free_exit ? "unlocked" : "locked"]."))
+	to_chat(user, "<span class='notice'>Safety hatch [free_exit ? "unlocked" : "locked"].</span>")
 
 /obj/machinery/fat_sucker/update_overlays()
 	. = ..()
@@ -196,10 +192,10 @@
 	if(..())
 		return
 	if(occupant)
-		to_chat(user, span_warning("[src] is currently occupied!"))
+		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
-		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_appearance()
@@ -215,5 +211,5 @@
 		return
 	start_at = 100
 	stop_at = 0
-	to_chat(user, span_notice("You remove the access restrictions and lower the automatic ejection threshold!"))
+	to_chat(user, "<span class='notice'>You remove the access restrictions and lower the automatic ejection threshold!</span>")
 	obj_flags |= EMAGGED

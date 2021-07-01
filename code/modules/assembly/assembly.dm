@@ -32,10 +32,6 @@
 	var/datum/wires/connected = null
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
-/obj/item/assembly/Destroy()
-	holder = null
-	return ..()
-
 /obj/item/assembly/get_part_rating()
 	return 1
 
@@ -58,7 +54,7 @@
 
 /obj/item/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		to_chat(user, span_warning("The [name] is unsecured!"))
+		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
 		return FALSE
 	return TRUE
 
@@ -100,9 +96,9 @@
 		if((!A.secured) && (!secured))
 			holder = new/obj/item/assembly_holder(get_turf(src))
 			holder.assemble(src,A,user)
-			to_chat(user, span_notice("You attach and secure \the [A] to \the [src]!"))
+			to_chat(user, "<span class='notice'>You attach and secure \the [A] to \the [src]!</span>")
 		else
-			to_chat(user, span_warning("Both devices must be in attachable mode to be attached together."))
+			to_chat(user, "<span class='warning'>Both devices must be in attachable mode to be attached together.</span>")
 		return
 	..()
 
@@ -110,15 +106,15 @@
 	if(..())
 		return TRUE
 	if(toggle_secure())
-		to_chat(user, span_notice("\The [src] is ready!"))
+		to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 	else
-		to_chat(user, span_notice("\The [src] can now be attached!"))
+		to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
 	add_fingerprint(user)
 	return TRUE
 
 /obj/item/assembly/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]")
+	. += "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>"
 
 /obj/item/assembly/attack_self(mob/user)
 	if(!user)

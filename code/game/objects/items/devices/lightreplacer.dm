@@ -76,23 +76,23 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			to_chat(user, span_warning("[src.name] is full."))
+			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
-			to_chat(user, span_notice("You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining."))
+			to_chat(user, "<span class='notice'>You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining.</span>")
 			return
 		else
-			to_chat(user, span_warning("You need one sheet of glass to replace lights!"))
+			to_chat(user, "<span class='warning'>You need one sheet of glass to replace lights!</span>")
 
 	if(istype(W, /obj/item/shard))
 		if(uses >= max_uses)
-			to_chat(user, span_warning("\The [src] is full."))
+			to_chat(user, "<span class='warning'>\The [src] is full.</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		AddUses(round(increment*0.75))
-		to_chat(user, span_notice("You insert a shard of glass into \the [src]. You have [uses] light\s remaining."))
+		to_chat(user, "<span class='notice'>You insert a shard of glass into \the [src]. You have [uses] light\s remaining.</span>")
 		qdel(W)
 		return
 
@@ -107,7 +107,7 @@
 		else
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			to_chat(user, span_notice("You insert [L] into \the [src]."))
+			to_chat(user, "<span class='notice'>You insert [L] into \the [src].</span>")
 			AddShards(1, user)
 			qdel(L)
 		return
@@ -134,14 +134,14 @@
 					qdel(L)
 
 		if(!found_lightbulbs)
-			to_chat(user, span_warning("\The [S] contains no bulbs."))
+			to_chat(user, "<span class='warning'>\The [S] contains no bulbs.</span>")
 			return
 
 		if(!replaced_something && src.uses == max_uses)
-			to_chat(user, span_warning("\The [src] is full!"))
+			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
 			return
 
-		to_chat(user, span_notice("You fill \the [src] with lights from \the [S]. " + status_string() + ""))
+		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
 /obj/item/lightreplacer/emag_act()
 	if(obj_flags & EMAGGED)
@@ -176,7 +176,7 @@
 		AddUses(new_bulbs)
 	bulb_shards = bulb_shards % shards_required
 	if(new_bulbs != 0)
-		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses."))
+		to_chat(user, "<span class='notice'>\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
 
@@ -192,7 +192,7 @@
 		if(CanUse(U))
 			if(!Use(U))
 				return
-			to_chat(U, span_notice("You replace \the [target.fitting] with \the [src]."))
+			to_chat(U, "<span class='notice'>You replace \the [target.fitting] with \the [src].</span>")
 
 			if(target.status != LIGHT_EMPTY)
 				AddShards(1, U)
@@ -214,10 +214,10 @@
 			return
 
 		else
-			to_chat(U, span_warning("\The [src]'s refill light blinks red."))
+			to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
 			return
 	else
-		to_chat(U, span_warning("There is a working [target.fitting] already inserted!"))
+		to_chat(U, "<span class='warning'>There is a working [target.fitting] already inserted!</span>")
 		return
 
 /obj/item/lightreplacer/proc/Emag()
@@ -252,7 +252,7 @@
 			ReplaceLight(A, U)
 
 	if(!used)
-		to_chat(U, span_warning("\The [src]'s refill light blinks red."))
+		to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
 
 /obj/item/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)

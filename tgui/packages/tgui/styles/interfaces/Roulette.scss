@@ -1,61 +1,61 @@
 @use '../base.scss';
 @use '../colors.scss';
 
-.Roulette__container {
-  display: flex;
+.Roulette {
+  font-family: Palatino;
+}
+
+.Roulette__board {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid white;
+  margin: 0;
+}
+
+.Roulette__board-row {
+  padding: 0;
+  margin: 0;
 }
 
 .Roulette__board-cell {
   display: table-cell;
   padding: 0;
   margin: 0;
-  border: 1px solid colors.$white;
-  vertical-align: bottom;
+  border: 2px solid white;
+  font-family: Palatino;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
 }
 
-.Roulette__board-cell-number {
-  width: 35px;
-}
-
-.Roulette__board-cell-number--colspan-2 {
-  width: 71px;
-}
-
-.Roulette__board-cell-number--colspan-4 {
-  width: 143px;
-}
-
-.Roulette__board-button {
-  display: table-cell !important;
-  border: none !important;
-  width: inherit;
-  height: 40px;
-  padding: 0;
-  margin: 0;
+.Roulette__board-extrabutton {
   text-align: center;
-  vertical-align: middle;
-  color: colors.$white !important;
-}
-
-.Roulette__board-button--rowspan-3 {
-  height: 122px;
-}
-
-.Roulette__board-button-text {
-  text-align: center;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
+  height: 28px;
+  border: none !important;
+  margin: 0 !important;
+  padding-top: 4px !important;
+  color: #FFFFFF !important;
 }
 
 .Roulette__lowertable {
   margin-top: 8px;
+  margin-left: 80px;
+  margin-right: 80px;
   border-collapse: collapse;
-  border: 1px solid colors.$white;
+  border: 2px solid white;
   border-spacing: 0;
 }
 
 .Roulette__lowertable--cell {
-  border: 2px solid colors.$white;
+  border: 2px solid white;
   padding: 0px;
   margin: 0px;
 }
@@ -95,6 +95,6 @@
 .Roulette__lowertable--header {
   width: 1%;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
 }

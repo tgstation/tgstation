@@ -26,7 +26,9 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "ha" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "hv" = (
@@ -63,8 +65,12 @@
 /area/ruin/powered/shuttle)
 "sM" = (
 /obj/structure/chair/comfy/beige,
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "wH" = (
@@ -104,7 +110,9 @@
 /area/ruin/powered/shuttle)
 "ON" = (
 /obj/machinery/hydroponics/soil,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "OU" = (
@@ -140,7 +148,9 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "XI" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Yi" = (

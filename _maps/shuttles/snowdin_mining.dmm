@@ -35,11 +35,13 @@
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator2)
 "g" = (
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator2)
 "i" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/engine,
 /area/shuttle/snowdin/elevator2)
 "j" = (

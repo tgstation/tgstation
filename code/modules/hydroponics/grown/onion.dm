@@ -22,6 +22,7 @@
 	name = "onion"
 	desc = "Nothing to cry over."
 	icon_state = "onion"
+	bite_consumption_mod = 2
 	tastes = list("onions" = 1)
 	wine_power = 30
 

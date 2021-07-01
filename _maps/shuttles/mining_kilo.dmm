@@ -76,7 +76,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "m" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -89,8 +89,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/mining/large)
 "o" = (
-/obj/machinery/light/small/directional/south,
-/obj/item/radio/intercom/directional/south,
+/obj/machinery/light/small,
+/obj/item/radio/intercom{
+	pixel_y = -29
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -107,7 +109,10 @@
 	pixel_y = 18
 	},
 /obj/structure/table,
-/obj/machinery/airalarm/directional/east,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "q" = (
@@ -170,14 +175,19 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/west,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "u" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "v" = (
@@ -194,7 +204,9 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "x" = (
@@ -287,7 +299,12 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "J" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/highcap{
+	dir = 4;
+	locked = 0;
+	name = "Mining Shuttle APC";
+	pixel_x = 24
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -307,7 +324,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},

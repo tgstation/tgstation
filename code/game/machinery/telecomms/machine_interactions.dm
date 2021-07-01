@@ -99,7 +99,7 @@
 		if("id")
 			if(params["value"])
 				if(length(params["value"]) > 32)
-					to_chat(operator, span_warning("Error: Machine ID too long!"))
+					to_chat(operator, "<span class='warning'>Error: Machine ID too long!</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
@@ -109,7 +109,7 @@
 		if("network")
 			if(params["value"])
 				if(length(params["value"]) > 15)
-					to_chat(operator, span_warning("Error: Network name too long!"))
+					to_chat(operator, "<span class='warning'>Error: Network name too long!</span>")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
@@ -123,13 +123,14 @@
 			if(params["value"])
 				tempfreq = text2num(params["value"]) * 10
 		if("freq")
-			if(tempfreq == FREQ_SYNDICATE)
-				to_chat(operator, span_warning("Error: Interference preventing filtering frequency: \"[tempfreq / 10] kHz\""))
+			var/newfreq = tempfreq * 10
+			if(newfreq == FREQ_SYNDICATE)
+				to_chat(operator, "<span class='warning'>Error: Interference preventing filtering frequency: \"[newfreq / 10] GHz\"</span>")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 			else
-				if(!(tempfreq in freq_listening))
-					freq_listening.Add(tempfreq)
-					log_game("[key_name(operator)] added frequency [tempfreq] for [src] at [AREACOORD(src)].")
+				if(!(newfreq in freq_listening) && newfreq < 10000)
+					freq_listening.Add(newfreq)
+					log_game("[key_name(operator)] added frequency [newfreq] for [src] at [AREACOORD(src)].")
 					. = TRUE
 		if("delete")
 			freq_listening.Remove(params["value"])

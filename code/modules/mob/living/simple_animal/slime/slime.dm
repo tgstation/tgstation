@@ -1,4 +1,3 @@
-#define SLIME_CARES_ABOUT(to_check) (to_check && (to_check == Target || to_check == Leader || (to_check in Friends)))
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
@@ -112,9 +111,9 @@
 	for (var/A in actions)
 		var/datum/action/AC = A
 		AC.Remove(src)
-	set_target(null)
-	set_leader(null)
-	clear_friends()
+	Target = null
+	Leader = null
+	Friends = null
 	return ..()
 
 /mob/living/simple_animal/slime/create_reagents(max_vol, flags)
@@ -282,8 +281,8 @@
 			return
 		if(buckled)
 			Feedstop(silent = TRUE)
-			visible_message(span_danger("[M] pulls [src] off!"), \
-				span_danger("You pull [src] off!"))
+			visible_message("<span class='danger'>[M] pulls [src] off!</span>", \
+				"<span class='danger'>You pull [src] off!</span>")
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
@@ -318,26 +317,26 @@
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == user)
 			if(prob(60))
-				user.visible_message(span_warning("[user] attempts to wrestle \the [name] off!"), \
-					span_danger("You attempt to wrestle \the [name] off!"))
+				user.visible_message("<span class='warning'>[user] attempts to wrestle \the [name] off!</span>", \
+					"<span class='danger'>You attempt to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 
 			else
-				user.visible_message(span_warning("[user] manages to wrestle \the [name] off!"), \
-					span_notice("You manage to wrestle \the [name] off!"))
+				user.visible_message("<span class='warning'>[user] manages to wrestle \the [name] off!</span>", \
+					"<span class='notice'>You manage to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 				discipline_slime(user)
 
 		else
 			if(prob(30))
-				buckled.visible_message(span_warning("[user] attempts to wrestle \the [name] off of [buckled]!"), \
-					span_warning("[user] attempts to wrestle \the [name] off of you!"))
+				buckled.visible_message("<span class='warning'>[user] attempts to wrestle \the [name] off of [buckled]!</span>", \
+					"<span class='warning'>[user] attempts to wrestle \the [name] off of you!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 
 			else
-				buckled.visible_message(span_warning("[user] manages to wrestle \the [name] off of [buckled]!"), \
-					span_notice("[user] manage to wrestle \the [name] off of you!"))
+				buckled.visible_message("<span class='warning'>[user] manages to wrestle \the [name] off of [buckled]!</span>", \
+					"<span class='notice'>[user] manage to wrestle \the [name] off of you!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 				discipline_slime(user)
@@ -364,8 +363,11 @@
 				if(S.next_step(user, modifiers))
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
-		add_friendship(user, 1)
-		to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))
+		if (user in Friends)
+			++Friends[user]
+		else
+			Friends[user] = 1
+		to_chat(user, "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>")
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return
@@ -374,7 +376,7 @@
 		if(prob(25))
 			user.do_attack_animation(src)
 			user.changeNext_move(CLICK_CD_MELEE)
-			to_chat(user, span_danger("[W] passes right through [src]!"))
+			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -387,7 +389,7 @@
 	if(istype(W, /obj/item/storage/bag/bio))
 		var/obj/item/storage/P = W
 		if(!effectmod)
-			to_chat(user, span_warning("The slime is not currently being mutated."))
+			to_chat(user, "<span class='warning'>The slime is not currently being mutated.</span>")
 			return
 		var/hasOutput = FALSE //Have we outputted text?
 		var/hasFound = FALSE //Have we found an extract to be added?
@@ -398,23 +400,23 @@
 				applied++
 				hasFound = TRUE
 			if(applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
-				to_chat(user, span_notice("You feed the slime as many of the extracts from the bag as you can, and it mutates!"))
+				to_chat(user, "<span class='notice'>You feed the slime as many of the extracts from the bag as you can, and it mutates!</span>")
 				playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 				spawn_corecross()
 				hasOutput = TRUE
 				break
 		if(!hasOutput)
 			if(!hasFound)
-				to_chat(user, span_warning("There are no extracts in the bag that this slime will accept!"))
+				to_chat(user, "<span class='warning'>There are no extracts in the bag that this slime will accept!</span>")
 			else
-				to_chat(user, span_notice("You feed the slime some extracts from the bag."))
+				to_chat(user, "<span class='notice'>You feed the slime some extracts from the bag.</span>")
 				playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		return
 	..()
 
 /mob/living/simple_animal/slime/proc/spawn_corecross()
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
-	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
+	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	var/crosspath
 	for(var/X in crossbreeds)
@@ -425,24 +427,24 @@
 	if(crosspath)
 		new crosspath(loc)
 	else
-		visible_message(span_warning("The mutated core shudders, and collapses into a puddle, unable to maintain its form."))
+		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
 	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
 	if(!client)
 		if(Target) // Like cats
-			set_target(null)
+			Target = null
 			++Discipline
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if (stat == DEAD)
-		. += span_deadsay("It is limp and unresponsive.")
+		. += "<span class='deadsay'>It is limp and unresponsive.</span>"
 	else
 		if (stat == UNCONSCIOUS || stat == HARD_CRIT) // Slime stasis
-			. += span_deadsay("It appears to be alive but unresponsive.")
+			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
 		if (getBruteLoss())
 			. += "<span class='warning'>"
 			if (getBruteLoss() < 40)
@@ -459,10 +461,10 @@
 				. += "It is glowing gently with moderate levels of electrical activity."
 
 			if(6 to 9)
-				. += span_warning("It is glowing brightly with high levels of electrical activity.")
+				. += "<span class='warning'>It is glowing brightly with high levels of electrical activity.</span>"
 
 			if(10)
-				. += span_warning("<B>It is radiating with massive levels of electrical activity!</B>")
+				. += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>"
 
 	. += "*---------*</span>"
 
@@ -477,7 +479,8 @@
 			if(Discipline == 1)
 				attacked = 0
 
-	set_target(null)
+	if(Target)
+		Target = null
 	if(buckled)
 		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
@@ -507,55 +510,3 @@
 
 /mob/living/simple_animal/slime/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/mob/living/simple_animal/slime/proc/set_target(new_target)
-	var/old_target = Target
-	Target = new_target
-	if(old_target && !SLIME_CARES_ABOUT(old_target))
-		UnregisterSignal(old_target, COMSIG_PARENT_QDELETING)
-	if(Target)
-		RegisterSignal(Target, COMSIG_PARENT_QDELETING, .proc/clear_memories_of, override = TRUE)
-
-/mob/living/simple_animal/slime/proc/set_leader(new_leader)
-	var/old_leader = Leader
-	Leader = new_leader
-	if(old_leader && !SLIME_CARES_ABOUT(old_leader))
-		UnregisterSignal(old_leader, COMSIG_PARENT_QDELETING)
-	if(Leader)
-		RegisterSignal(Leader, COMSIG_PARENT_QDELETING, .proc/clear_memories_of, override = TRUE)
-
-/mob/living/simple_animal/slime/proc/add_friendship(new_friend, amount = 1)
-	if(!Friends[new_friend])
-		Friends[new_friend] = 0
-	Friends[new_friend] += amount
-	if(new_friend)
-		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/clear_memories_of, override = TRUE)
-
-/mob/living/simple_animal/slime/proc/set_friendship(new_friend, amount = 1)
-	Friends[new_friend] = amount
-	if(new_friend)
-		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/clear_memories_of, override = TRUE)
-
-/mob/living/simple_animal/slime/proc/remove_friend(friend)
-	Friends -= friend
-	if(friend && !SLIME_CARES_ABOUT(friend))
-		UnregisterSignal(friend, COMSIG_PARENT_QDELETING)
-
-/mob/living/simple_animal/slime/proc/set_friends(new_buds)
-	clear_friends()
-	for(var/mob/friend as anything in new_buds)
-		set_friendship(friend, new_buds[friend])
-
-/mob/living/simple_animal/slime/proc/clear_friends()
-	for(var/mob/friend as anything in Friends)
-		remove_friend(friend)
-
-/mob/living/simple_animal/slime/proc/clear_memories_of(datum/source)
-	SIGNAL_HANDLER
-	if(source == Target)
-		set_target(null)
-	if(source == Leader)
-		set_leader(null)
-	remove_friend(source)
-
-#undef SLIME_CARES_ABOUT

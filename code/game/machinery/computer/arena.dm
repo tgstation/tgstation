@@ -117,7 +117,7 @@
 		return
 	var/datum/map_template/M = arena_templates[arena_template]
 	if(!M)
-		to_chat(user,span_warning("No such arena"))
+		to_chat(user,"<span class='warning'>No such arena</span>")
 		return
 	clear_arena() //Clear current arena
 	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
@@ -125,7 +125,7 @@
 	var/wh = abs(A.x - B.x) + 1
 	var/hz = abs(A.y - B.y) + 1
 	if(M.width > wh || M.height > hz)
-		to_chat(user,span_warning("Arena template is too big for the current arena!"))
+		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
 		return
 	loading = TRUE
 	var/bd = M.load(get_load_point())
@@ -208,7 +208,7 @@
 	// Could use update_appearance on spawnpoints here to show they're on
 	if(ready_to_spawn)
 		for(var/mob/M in all_contestants())
-			to_chat(M,span_userdanger("Arena you're signed up for is ready!"))
+			to_chat(M,"<span class='userdanger'>Arena you're signed up for is ready!</span>")
 
 /obj/machinery/computer/arena/proc/all_contestants()
 	. = list()
@@ -230,9 +230,9 @@
 /obj/machinery/computer/arena/proc/start_match(mob/user)
 	//TODO: Check if everyone is spawned in, if not ask for confirmation.
 	var/timetext = DisplayTimeText(start_delay)
-	to_chat(user,span_notice("The match will start in [timetext]."))
+	to_chat(user,"<span class='notice'>The match will start in [timetext].</span>")
 	for(var/mob/M in all_contestants())
-		to_chat(M,span_userdanger("The gates will open in [timetext]!"))
+		to_chat(M,"<span class='userdanger'>The gates will open in [timetext]!</span>")
 	start_time = world.time + start_delay
 	addtimer(CALLBACK(src,.proc/begin),start_delay)
 	for(var/team in teams)
@@ -249,7 +249,7 @@
 			var/obj/machinery/arena_spawn/A = get_spawn(team)
 			playsound(A,start_sound, start_sound_volume)
 	for(var/mob/M in all_contestants())
-		to_chat(M,span_userdanger("START!"))
+		to_chat(M,"<span class='userdanger'>START!</span>")
 	//Clean up the countdowns
 	QDEL_LIST(countdowns)
 	start_time = null
@@ -311,7 +311,7 @@
 
 /obj/machinery/computer/arena/proc/load_random_arena(mob/user)
 	if(!length(arena_templates))
-		to_chat(user,span_warning("No arenas present"))
+		to_chat(user,"<span class='warning'>No arenas present</span>")
 		return
 	var/picked = pick(arena_templates)
 	load_arena(picked,user)
@@ -406,7 +406,7 @@
 	if(C.ready_to_spawn)
 		var/list/allowed_keys = C.team_keys[team]
 		if(!(user.ckey in allowed_keys))
-			to_chat(user,span_warning("You're not on the team list."))
+			to_chat(user,"<span class='warning'>You're not on the team list.</span>")
 			return
 		C.spawn_member(src,user.ckey,team)
 

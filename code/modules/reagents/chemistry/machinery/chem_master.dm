@@ -65,7 +65,7 @@
 		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
-	if(severity <= EXPLODE_LIGHT)
+	if(severity >= EXPLODE_LIGHT) // This actually makes the dispenser immune to explosions at least as weak as [EXPLODE_LIGHT]. Don't ask me why the defines are inverted. I don't know.
 		return FALSE
 	return ..()
 
@@ -122,24 +122,24 @@
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE // no afterattack
 		if(panel_open)
-			to_chat(user, span_warning("You can't use the [src.name] while its panel is opened!"))
+			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		var/obj/item/reagent_containers/B = I
 		. = TRUE // no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
 		update_appearance()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
-			to_chat(user, span_warning("A pill bottle is already loaded into [src]!"))
+			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		bottle = I
-		to_chat(user, span_notice("You add [I] into the dispenser slot."))
+		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		updateUsrDialog()
 	else
 		return ..()
@@ -307,9 +307,9 @@
 		var/list/style
 
 		if (item_type == "pill")
-			vol_each_max = min(50, vol_each_max)
+			vol_each_max = min(15, vol_each_max)
 		else if (item_type == "patch")
-			vol_each_max = min(40, vol_each_max)
+			vol_each_max = min(25, vol_each_max)
 		else if (item_type == "bottle")
 			vol_each_max = min(30, vol_each_max)
 		else if (item_type == "condimentPack")

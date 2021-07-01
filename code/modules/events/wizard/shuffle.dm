@@ -82,7 +82,7 @@
 	var/list/mobs  = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(H.stat || !H.mind || IS_WIZARD(H))
+		if(H.stat || !H.mind || iswizard(H))
 			continue //the wizard(s) are spared on this one
 		mobs += H
 

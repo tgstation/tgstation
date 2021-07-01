@@ -47,13 +47,13 @@
  */
 /datum/mafia_role/proc/can_action(datum/mafia_controller/game, datum/mafia_role/visitor, action)
 	if(role_flags & ROLE_ROLEBLOCKED)
-		to_chat(visitor,span_danger("Your [action] was blocked!"))
+		to_chat(visitor,"<span class='danger'>Your [action] was blocked!</span>")
 		return FALSE
 	if(game_status != MAFIA_ALIVE) //They're already dead
-		to_chat(visitor,span_danger("[body.real_name] perished before you could visit!"))
+		to_chat(visitor,"<span class='danger'>[body.real_name] perished before you could visit!</span>")
 		return FALSE
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_VISIT,game,visitor) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
-		to_chat(visitor,span_danger("Your [action] was interrupted!"))
+		to_chat(visitor,"<span class='danger'>Your [action] was interrupted!</span>")
 		return FALSE
 	return TRUE
 
@@ -79,16 +79,16 @@
 
 /datum/mafia_role/proc/greet()
 	SEND_SOUND(body, 'sound/ambience/ambifailure.ogg')
-	to_chat(body,span_danger("You are the [name]."))
-	to_chat(body,span_danger("[desc]"))
+	to_chat(body,"<span class='danger'>You are the [name].</span>")
+	to_chat(body,"<span class='danger'>[desc]</span>")
 	switch(team)
 		if(MAFIA_TEAM_MAFIA)
-			to_chat(body,span_danger("You and your co-conspirators win if you outnumber crewmembers."))
+			to_chat(body,"<span class='danger'>You and your co-conspirators win if you outnumber crewmembers.</span>")
 		if(MAFIA_TEAM_TOWN)
-			to_chat(body,span_danger("You are a crewmember. Find out and lynch the changelings!"))
+			to_chat(body,"<span class='danger'>You are a crewmember. Find out and lynch the changelings!</span>")
 		if(MAFIA_TEAM_SOLO)
-			to_chat(body,span_danger("You are not aligned to town or mafia. Accomplish your own objectives!"))
-	to_chat(body, "<span class='warningplain'><b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b></span>")
+			to_chat(body,"<span class='danger'>You are not aligned to town or mafia. Accomplish your own objectives!</span>")
+	to_chat(body, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b>")
 
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if((role_flags & ROLE_REVEALED))
@@ -138,9 +138,9 @@
 			team_desc = "Nobody"
 			team_span = "comradio"
 			the = FALSE
-	result += span_notice("The [span_bold("[name]")] is aligned with [the ? "the " : ""]<span class='[team_span]'>[team_desc]</span>")
+	result += "<span class='notice'>The <span class='bold'>[name]</span> is aligned with [the ? "the " : ""]<span class='[team_span]'>[team_desc]</span></span>"
 	result += "<span class='bold notice'>\"[desc]\"</span>"
-	result += span_notice("[name] wins when they [win_condition]")
+	result += "<span class='notice'>[name] wins when they [win_condition]</span>"
 	to_chat(clueless, result.Join("</br>"))
 
 /datum/mafia_role/detective
@@ -169,9 +169,9 @@
 
 /datum/mafia_role/detective/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(!target || target.game_status != MAFIA_ALIVE)
-		to_chat(body,span_warning("You can only investigate alive people."))
+		to_chat(body,"<span class='warning'>You can only investigate alive people.</span>")
 		return
-	to_chat(body,span_warning("You will investigate [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will investigate [target.body.real_name] tonight.</span>")
 	current_investigation = target
 
 /datum/mafia_role/detective/proc/investigate(datum/mafia_controller/game)
@@ -185,7 +185,7 @@
 	if(!target.can_action(game, src, "investigation"))
 		return
 	if((target.role_flags & ROLE_UNDETECTABLE))
-		to_chat(body,span_warning("Your investigations reveal that [target.body.real_name] is a true member of the station."))
+		to_chat(body,"<span class='warning'>Your investigations reveal that [target.body.real_name] is a true member of the station.</span>")
 		add_note("N[game.turn] - [target.body.real_name] - Town")
 	else
 		var/team_text
@@ -200,7 +200,7 @@
 			if(MAFIA_TEAM_SOLO)
 				team_text = "Solo"
 				fluff = "a rogue, with their own objectives..."
-		to_chat(body,span_warning("Your investigations reveal that [target.body.real_name] is [fluff]"))
+		to_chat(body,"<span class='warning'>Your investigations reveal that [target.body.real_name] is [fluff]</span>")
 		add_note("N[game.turn] - [target.body.real_name] - [team_text]")
 
 /datum/mafia_role/psychologist
@@ -228,7 +228,7 @@
 
 /datum/mafia_role/psychologist/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
-	to_chat(body,span_warning("You will reveal [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will reveal [target.body.real_name] tonight.</span>")
 	current_target = target
 
 /datum/mafia_role/psychologist/proc/therapy_reveal(datum/mafia_controller/game)
@@ -241,7 +241,7 @@
 	if(!target.can_action(game, src, "role reveal"))
 		return
 	add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
-	to_chat(body,span_warning("You have revealed the true nature of the [current_target]!"))
+	to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
 	target.reveal_role(game, verbose = TRUE)
 	can_use = FALSE
 
@@ -268,7 +268,7 @@
 	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_DEAD && target != src && !(target.role_flags & ROLE_REVEALED)
 
 /datum/mafia_role/chaplain/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
-	to_chat(body,span_warning("You will commune with the spirit of [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will commune with the spirit of [target.body.real_name] tonight.</span>")
 	current_target = target
 
 /datum/mafia_role/chaplain/proc/commune(datum/mafia_controller/game)
@@ -281,7 +281,7 @@
 	if(!target.can_action(game, src, "communion"))
 		return
 	if(target)
-		to_chat(body,span_warning("You invoke spirit of [target.body.real_name] and learn their role was <b>[target.name]<b>."))
+		to_chat(body,"<span class='warning'>You invoke spirit of [target.body.real_name] and learn their role was <b>[target.name]<b>.</span>")
 		add_note("N[game.turn] - [target.body.real_name] - [target.name]")
 
 /datum/mafia_role/md
@@ -311,9 +311,9 @@
 
 /datum/mafia_role/md/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(!target || target.game_status != MAFIA_ALIVE)
-		to_chat(body,span_warning("You can only protect alive people."))
+		to_chat(body,"<span class='warning'>You can only protect alive people.</span>")
 		return
-	to_chat(body,span_warning("You will protect [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will protect [target.body.real_name] tonight.</span>")
 	current_protected = target
 
 /datum/mafia_role/md/proc/protect(datum/mafia_controller/game)
@@ -333,10 +333,10 @@
 	SIGNAL_HANDLER
 
 	if((current_protected.role_flags & ROLE_VULNERABLE))
-		to_chat(body,span_warning("The person you protected could not be saved."))
+		to_chat(body,"<span class='warning'>The person you protected could not be saved.</span>")
 		return
-	to_chat(body,span_warning("The person you protected tonight was attacked!"))
-	to_chat(current_protected.body,span_greentext("You were attacked last night, but someone nursed you back to life!"))
+	to_chat(body,"<span class='warning'>The person you protected tonight was attacked!</span>")
+	to_chat(current_protected.body,"<span class='greentext'>You were attacked last night, but someone nursed you back to life!</span>")
 	return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/md/proc/end_protection(datum/mafia_controller/game)
@@ -374,9 +374,9 @@
 
 /datum/mafia_role/officer/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(!target || target.game_status != MAFIA_ALIVE)
-		to_chat(body,span_warning("You can only defend alive people."))
+		to_chat(body,"<span class='warning'>You can only defend alive people.</span>")
 		return
-	to_chat(body,span_warning("You will defend [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will defend [target.body.real_name] tonight.</span>")
 	current_defended = target
 
 /datum/mafia_role/officer/proc/defend(datum/mafia_controller/game)
@@ -396,12 +396,12 @@
 	SIGNAL_HANDLER
 
 	if((current_defended.role_flags & ROLE_VULNERABLE))
-		to_chat(body,span_warning("The person you defended could not be saved. You could not attack the killer."))
+		to_chat(body,"<span class='warning'>The person you defended could not be saved. You could not attack the killer.</span>")
 		return
-	to_chat(body,span_userdanger("The person you defended tonight was attacked!"))
-	to_chat(current_defended.body,span_userdanger("You were attacked last night, but security fought off the attacker!"))
+	to_chat(body,"<span class='userdanger'>The person you defended tonight was attacked!</span>")
+	to_chat(current_defended.body,"<span class='userdanger'>You were attacked last night, but security fought off the attacker!</span>")
 	if(attacker.kill(game,src,FALSE)) //you attack the attacker
-		to_chat(attacker.body, span_userdanger("You have been ambushed by Security!"))
+		to_chat(attacker.body, "<span class='userdanger'>You have been ambushed by Security!</span>")
 	kill(game,attacker,FALSE) //the attacker attacks you, they were able to attack the target so they can attack you.
 	return MAFIA_PREVENT_KILL
 
@@ -459,17 +459,17 @@
 	. = ..()
 	if(target == current_target)
 		current_target = null
-		to_chat(body,span_warning("You have decided against blocking anyone tonight."))
+		to_chat(body,"<span class='warning'>You have decided against blocking anyone tonight.</span>")
 	else
 		current_target = target
-		to_chat(body,span_warning("You will block [target.body.real_name] tonight."))
+		to_chat(body,"<span class='warning'>You will block [target.body.real_name] tonight.</span>")
 
 /datum/mafia_role/lawyer/proc/release(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
 	. = ..()
 	if(current_target)
-		current_target.role_flags &= ~ROLE_ROLEBLOCKED
+		current_target.role_flags &= ROLE_ROLEBLOCKED
 		current_target = null
 
 /datum/mafia_role/hop
@@ -521,8 +521,8 @@
 
 /datum/mafia_role/hos/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(execute_target == target)
-		to_chat(body,span_warning("You have decided against executing tonight."))
-	to_chat(body,span_warning("You have decided to execute [target.body.real_name] tonight."))
+		to_chat(body,"<span class='warning'>You have decided against executing tonight.</span>")
+	to_chat(body,"<span class='warning'>You have decided to execute [target.body.real_name] tonight.</span>")
 	execute_target = target
 
 /datum/mafia_role/hos/proc/execute(datum/mafia_controller/game)
@@ -535,17 +535,17 @@
 	if(!target.can_action(game, src, "execution")) //roleblocking a warden moment
 		return
 	if(!target.kill(game,src,FALSE))//protection
-		to_chat(body,span_danger("Your attempt at executing [target.body.real_name] was prevented, or [target.body.real_name] is immune!"))
+		to_chat(body,"<span class='danger'>Your attempt at executing [target.body.real_name] was prevented, or [target.body.real_name] is immune!</span>")
 	else
-		to_chat(target.body, span_userdanger("You have been executed by the Head of Security!"))
+		to_chat(target.body, "<span class='userdanger'>You have been executed by the Head of Security!</span>")
 		target.reveal_role(game, verbose = TRUE)
 		if(target.team == MAFIA_TEAM_TOWN)
-			to_chat(body,span_userdanger("You have killed an innocent crewmember. You will die tomorrow night."))
+			to_chat(body,"<span class='userdanger'>You have killed an innocent crewmember. You will die tomorrow night.</span>")
 			RegisterSignal(game,COMSIG_MAFIA_SUNDOWN,.proc/internal_affairs)
 			role_flags |= ROLE_VULNERABLE
 
 /datum/mafia_role/hos/proc/internal_affairs(datum/mafia_controller/game)
-	to_chat(body,span_userdanger("You have been killed by Nanotrasen Internal Affairs!"))
+	to_chat(body,"<span class='userdanger'>You have been killed by Nanotrasen Internal Affairs!</span>")
 	reveal_role(game, verbose = TRUE)
 	kill(game,src,FALSE) //you technically kill yourself but that shouldn't matter
 
@@ -578,22 +578,22 @@
 /datum/mafia_role/warden/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
 	if(!charges)
-		to_chat(body,span_danger("You've already locked down this game!"))
+		to_chat(body,"<span class='danger'>You've already locked down this game!</span>")
 		return
 	if(game.phase == MAFIA_PHASE_NIGHT)
-		to_chat(body,span_danger("You don't have time to lockdown, night has already arrived."))
+		to_chat(body,"<span class='danger'>You don't have time to lockdown, night has already arrived.</span>")
 		return
 	if(protection_status == WARDEN_WILL_LOCKDOWN)
-		to_chat(body,span_danger("You decide to not lockdown tonight."))
+		to_chat(body,"<span class='danger'>You decide to not lockdown tonight.</span>")
 	else
-		to_chat(body,span_danger("You decide to lockdown, killing any visitors."))
+		to_chat(body,"<span class='danger'>You decide to lockdown, killing any visitors.</span>")
 	protection_status = !protection_status
 
 /datum/mafia_role/warden/proc/night_start(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
 	if(protection_status == WARDEN_WILL_LOCKDOWN)
-		to_chat(body,span_danger("Any and all visitors are going to eat buckshot tonight."))
+		to_chat(body,"<span class='danger'>Any and all visitors are going to eat buckshot tonight.</span>")
 		RegisterSignal(src,COMSIG_MAFIA_ON_VISIT,.proc/self_defense)
 
 /datum/mafia_role/warden/proc/night_end(datum/mafia_controller/game)
@@ -602,14 +602,14 @@
 	if(protection_status == WARDEN_WILL_LOCKDOWN)
 		charges--
 		UnregisterSignal(src,COMSIG_MAFIA_ON_KILL)
-		to_chat(body,span_danger("You are no longer protected. You have used up your power."))
+		to_chat(body,"<span class='danger'>You are no longer protected. You have used up your power.</span>")
 		protection_status = WARDEN_NOT_LOCKDOWN
 
 /datum/mafia_role/warden/proc/self_defense(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
-	to_chat(body,span_userdanger("You have shot a visitor!"))
-	to_chat(attacker,span_userdanger("You have visited the warden!"))
+	to_chat(body,"<span class='userdanger'>You have shot a visitor!</span>")
+	to_chat(attacker,"<span class='userdanger'>You have visited the warden!</span>")
 	attacker.kill(game, src, lynch = FALSE)
 	return MAFIA_VISIT_INTERRUPTED
 
@@ -663,7 +663,7 @@
 	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_ALIVE && target != src
 
 /datum/mafia_role/mafia/thoughtfeeder/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
-	to_chat(body,span_warning("You will feast on the memories of [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will feast on the memories of [target.body.real_name] tonight.</span>")
 	current_investigation = target
 
 /datum/mafia_role/mafia/thoughtfeeder/proc/investigate(datum/mafia_controller/game)
@@ -675,10 +675,10 @@
 		add_note("N[game.turn] - [target.body.real_name] - Unable to investigate")
 		return
 	if((target.role_flags & ROLE_UNDETECTABLE))
-		to_chat(body,span_warning("[target.body.real_name]'s memories reveal that they are the Assistant."))
+		to_chat(body,"<span class='warning'>[target.body.real_name]'s memories reveal that they are the Assistant.</span>")
 		add_note("N[game.turn] - [target.body.real_name] - Assistant")
 	else
-		to_chat(body,span_warning("[target.body.real_name]'s memories reveal that they are the [target.name]."))
+		to_chat(body,"<span class='warning'>[target.body.real_name]'s memories reveal that they are the [target.name].</span>")
 		add_note("N[game.turn] - [target.body.real_name] - [target.name]")
 
 ///SOLO ROLES/// they range from anomalous factors to deranged killers that try to win alone.
@@ -714,7 +714,7 @@
 	SIGNAL_HANDLER
 
 	if(game.phase == MAFIA_PHASE_NIGHT && !lynch)
-		to_chat(body,span_userdanger("You were attacked, but they'll have to try harder than that to put you down."))
+		to_chat(body,"<span class='userdanger'>You were attacked, but they'll have to try harder than that to put you down.</span>")
 		return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/traitor/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
@@ -727,7 +727,7 @@
 /datum/mafia_role/traitor/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
 	current_victim = target
-	to_chat(body,span_warning("You will attempt to kill [target.body.real_name] tonight."))
+	to_chat(body,"<span class='warning'>You will attempt to kill [target.body.real_name] tonight.</span>")
 
 /datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/game)
 	SIGNAL_HANDLER
@@ -740,9 +740,9 @@
 		return
 	if(game_status == MAFIA_ALIVE)
 		if(!target.kill(game,src,FALSE))
-			to_chat(body,span_danger("Your attempt at killing [target.body.real_name] was prevented!"))
+			to_chat(body,"<span class='danger'>Your attempt at killing [target.body.real_name] was prevented!</span>")
 		else
-			to_chat(target.body, span_userdanger("You have been killed by a Traitor!"))
+			to_chat(target.body, "<span class='userdanger'>You have been killed by a Traitor!</span>")
 
 /datum/mafia_role/nightmare
 	name = "Nightmare"
@@ -790,13 +790,13 @@
 /datum/mafia_role/nightmare/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
 	if(target == flicker_target)
-		to_chat(body,span_warning("You will do nothing tonight."))
+		to_chat(body,"<span class='warning'>You will do nothing tonight.</span>")
 		flicker_target = null
 	flicker_target = target
 	if(action == "Flicker")
-		to_chat(body,span_warning("You will attempt to flicker [target.body.real_name]'s room tonight."))
+		to_chat(body,"<span class='warning'>You will attempt to flicker [target.body.real_name]'s room tonight.</span>")
 	else
-		to_chat(body,span_danger("You will hunt everyone in a flickering room down tonight."))
+		to_chat(body,"<span class='danger'>You will hunt everyone in a flickering room down tonight.</span>")
 
 /datum/mafia_role/nightmare/proc/flickering_immunity(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
@@ -804,7 +804,7 @@
 		return //no chance man, that's a town lynch
 
 	if(attacker in flickering)
-		to_chat(body,span_userdanger("You were attacked by someone in a flickering room. You have danced in the shadows, evading them."))
+		to_chat(body,"<span class='userdanger'>You were attacked by someone in a flickering room. You have danced in the shadows, evading them.</span>")
 		return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/game)
@@ -818,13 +818,13 @@
 		return
 
 	if(target != src) //flicker instead of hunt
-		to_chat(target.body, span_userdanger("The lights begin to flicker and dim. You're in danger."))
+		to_chat(target.body, "<span class='userdanger'>The lights begin to flicker and dim. You're in danger.</span>")
 		flickering += target
 		return
 	for(var/r in flickering)
 		var/datum/mafia_role/role = r
 		if(role && role.game_status == MAFIA_ALIVE)
-			to_chat(role.body, span_userdanger("A shadowy figure appears out of the darkness!"))
+			to_chat(role.body, "<span class='userdanger'>A shadowy figure appears out of the darkness!</span>")
 			role.kill(game,src,FALSE)
 		flickering -= role
 
@@ -858,22 +858,22 @@
 /datum/mafia_role/fugitive/handle_action(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
 	if(!charges)
-		to_chat(body,span_danger("You're out of supplies and cannot protect yourself anymore."))
+		to_chat(body,"<span class='danger'>You're out of supplies and cannot protect yourself anymore.</span>")
 		return
 	if(game.phase == MAFIA_PHASE_NIGHT)
-		to_chat(body,span_danger("You don't have time to prepare, night has already arrived."))
+		to_chat(body,"<span class='danger'>You don't have time to prepare, night has already arrived.</span>")
 		return
 	if(protection_status == FUGITIVE_WILL_PRESERVE)
-		to_chat(body,span_danger("You decide to not prepare tonight."))
+		to_chat(body,"<span class='danger'>You decide to not prepare tonight.</span>")
 	else
-		to_chat(body,span_danger("You decide to prepare for a horrible night."))
+		to_chat(body,"<span class='danger'>You decide to prepare for a horrible night.</span>")
 	protection_status = !protection_status
 
 /datum/mafia_role/fugitive/proc/night_start(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
 	if(protection_status == FUGITIVE_WILL_PRESERVE)
-		to_chat(body,span_danger("Your preparations are complete. Nothing could kill you tonight!"))
+		to_chat(body,"<span class='danger'>Your preparations are complete. Nothing could kill you tonight!</span>")
 		RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/prevent_death)
 
 /datum/mafia_role/fugitive/proc/night_end(datum/mafia_controller/game)
@@ -882,13 +882,13 @@
 	if(protection_status == FUGITIVE_WILL_PRESERVE)
 		charges--
 		UnregisterSignal(src,COMSIG_MAFIA_ON_KILL)
-		to_chat(body,span_danger("You are no longer protected. You have [charges] use[charges == 1 ? "" : "s"] left of your power."))
+		to_chat(body,"<span class='danger'>You are no longer protected. You have [charges] use[charges == 1 ? "" : "s"] left of your power.</span>")
 		protection_status = FUGITIVE_NOT_PRESERVING
 
 /datum/mafia_role/fugitive/proc/prevent_death(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
-	to_chat(body,span_userdanger("You were attacked! Luckily, you were ready for this!"))
+	to_chat(body,"<span class='userdanger'>You were attacked! Luckily, you were ready for this!</span>")
 	return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/fugitive/proc/survived(datum/mafia_controller/game)
@@ -932,7 +932,7 @@
 	if(!obsession)
 		obsession = pick(all_roles_shuffle) //okay no town just pick anyone here
 	//if you still don't have an obsession you're playing a single player game like i can't help your dumb ass
-	to_chat(body, span_userdanger("Your obsession is [obsession.body.real_name]! Get them lynched to win!"))
+	to_chat(body, "<span class='userdanger'>Your obsession is [obsession.body.real_name]! Get them lynched to win!</span>")
 	add_note("N[game.turn] - I vowed to watch my obsession, [obsession.body.real_name], hang!") //it'll always be N1 but whatever
 	RegisterSignal(obsession,COMSIG_MAFIA_ON_KILL,.proc/check_victory)
 	UnregisterSignal(game,COMSIG_MAFIA_SUNDOWN)
@@ -948,7 +948,7 @@
 		game.award_role(winner_award, src)
 		reveal_role(game, FALSE)
 	else
-		to_chat(body, span_userdanger("You have failed your objective to lynch [obsession.body.real_name]!"))
+		to_chat(body, "<span class='userdanger'>You have failed your objective to lynch [obsession.body.real_name]!</span>")
 
 /datum/mafia_role/clown
 	name = "Clown"

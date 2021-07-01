@@ -266,14 +266,18 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bc" = (
-/obj/structure/mirror/directional/north,
+/obj/structure/mirror{
+	pixel_y = 28
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bd" = (
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "be" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bf" = (
@@ -298,19 +302,21 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bi" = (
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "changlinhut2";
 	name = "changing room lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bj" = (
-/obj/machinery/button/door/directional/west{
+/obj/machinery/button/door{
 	id = "changlinhut1";
 	name = "changing room lock";
 	normaldoorcontrol = 1;
+	pixel_x = -24;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -322,35 +328,38 @@
 /area/awaymission/beach)
 "bl" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "theloveshack1";
 	name = "door lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bm" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "theloveshack2";
 	name = "door lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bn" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "theloveshack3";
 	name = "door lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bo" = (
@@ -513,7 +522,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bM" = (
-/obj/structure/mirror/directional/east,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /obj/effect/turf_decal/sand,
 /obj/structure/sink{
 	pixel_y = 32
@@ -521,7 +532,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bN" = (
-/obj/structure/mirror/directional/west,
+/obj/structure/mirror{
+	pixel_x = -28
+	},
 /obj/effect/turf_decal/sand,
 /obj/structure/sink{
 	pixel_y = 32
@@ -547,45 +560,49 @@
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bR" = (
-/obj/effect/turf_decal/sand,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "toilet1";
 	name = "restroom lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bS" = (
-/obj/effect/turf_decal/sand,
-/obj/machinery/button/door/directional/west{
+/obj/machinery/button/door{
 	id = "toilet2";
 	name = "restroom lock";
 	normaldoorcontrol = 1;
+	pixel_x = -24;
 	specialfunctions = 4
 	},
+/obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bT" = (
 /obj/structure/bed,
-/obj/item/bedsheet/red,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "loveshack";
 	name = "love shack lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/red,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bU" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "theloveshack4";
 	name = "door lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bV" = (
@@ -596,13 +613,14 @@
 /area/awaymission/beach)
 "bW" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "theloveshack5";
 	name = "door lock";
 	normaldoorcontrol = 1;
+	pixel_x = 24;
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bX" = (
@@ -628,7 +646,9 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "ca" = (
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -32
+	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cb" = (
@@ -833,7 +853,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cH" = (
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)

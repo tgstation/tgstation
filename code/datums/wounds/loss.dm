@@ -17,12 +17,10 @@
 		qdel(src)
 		return
 
-	set_victim(dismembered_part.owner)
-	var/self_msg
+	victim = dismembered_part.owner
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
-		occur_text = "is split open, causing [victim.p_their()] internal organs to spill out!"
-		self_msg = "is split open, causing your internal organs to spill out!"
+		occur_text = "is split open, causing [victim.p_their()] internals organs to spill out!"
 	else if(outright)
 		switch(wounding_type)
 			if(WOUND_BLUNT)
@@ -46,7 +44,7 @@
 
 	var/msg = "<span class='bolddanger'>[victim]'s [dismembered_part.name] [occur_text]!</span>"
 
-	victim.visible_message(msg, span_userdanger("Your [dismembered_part.name] [self_msg ? self_msg : occur_text]!"))
+	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [occur_text]!</span>")
 
 	set_limb(dismembered_part)
 	second_wind()

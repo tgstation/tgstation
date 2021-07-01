@@ -18,41 +18,9 @@
 /// the type of wallframe it 'disassembles' into
 	var/wallframe_type = /obj/item/wallframe/defib_mount
 
-/obj/machinery/defibrillator_mount/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/defibrillator_mount/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/directional/west
-	dir = EAST
-	pixel_x = -32
-
 /obj/machinery/defibrillator_mount/loaded/Initialize() //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
-
-/obj/machinery/defibrillator_mount/loaded/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/loaded/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/west
-	dir = EAST
-	pixel_x = -32
 
 /obj/machinery/defibrillator_mount/Destroy()
 	if(defib)
@@ -68,11 +36,11 @@
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	. = ..()
 	if(defib)
-		. += span_notice("There is a defib unit hooked up. Alt-click to remove it.")
+		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.</span>"
 		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
-			. += span_notice("Due to a security situation, its locking clamps can be toggled by swiping any ID.")
+			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
-			. += span_notice("Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.")
+			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
 
 /obj/machinery/defibrillator_mount/update_overlays()
 	. = ..()
@@ -99,30 +67,30 @@
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
 	if(!defib)
-		to_chat(user, span_warning("There's no defibrillator unit loaded!"))
+		to_chat(user, "<span class='warning'>There's no defibrillator unit loaded!</span>")
 		return
 	if(defib.paddles.loc != defib)
-		to_chat(user, span_warning("[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!"))
+		to_chat(user, "<span class='warning'>[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!</span>")
 		return
 	if(!in_range(src, user))
-		to_chat(user, span_warning("[defib]'s paddles overextend and come out of your hands!"))
+		to_chat(user, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
 		return
 	user.put_in_hands(defib.paddles)
 
 /obj/machinery/defibrillator_mount/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/defibrillator))
 		if(defib)
-			to_chat(user, span_warning("There's already a defibrillator in [src]!"))
+			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
 		var/obj/item/defibrillator/D = I
 		if(!D.get_cell())
-			to_chat(user, span_warning("Only defibrilators containing a cell can be hooked up to [src]!"))
+			to_chat(user, "<span class='warning'>Only defibrilators containing a cell can be hooked up to [src]!</span>")
 			return
 		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
-		user.visible_message(span_notice("[user] hooks up [I] to [src]!"), \
-		span_notice("You press [I] into the mount, and it clicks into place."))
+		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
+		"<span class='notice'>You press [I] into the mount, and it clicks into place.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
 		defib = I
@@ -136,31 +104,31 @@
 	if(id)
 		if(check_access(id) || SSsecurity_level.current_level >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
 			if(!defib)
-				to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
+				to_chat(user, "<span class='warning'>You can't engage the clamps on a defibrillator that isn't there.</span>")
 				return
 			clamps_locked = !clamps_locked
-			to_chat(user, span_notice("Clamps [clamps_locked ? "" : "dis"]engaged."))
+			to_chat(user, "<span class='notice'>Clamps [clamps_locked ? "" : "dis"]engaged.</span>")
 			update_appearance()
 		else
-			to_chat(user, span_warning("Insufficient access."))
+			to_chat(user, "<span class='warning'>Insufficient access.</span>")
 		return
 	..()
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
 	..()
 	if(!defib)
-		to_chat(user, span_warning("There isn't any defibrillator to clamp in!"))
+		to_chat(user, "<span class='warning'>There isn't any defibrillator to clamp in!</span>")
 		return TRUE
 	if(!clamps_locked)
-		to_chat(user, span_warning("[src]'s clamps are disengaged!"))
+		to_chat(user, "<span class='warning'>[src]'s clamps are disengaged!</span>")
 		return TRUE
-	user.visible_message(span_notice("[user] presses [multitool] into [src]'s ID slot..."), \
-	span_notice("You begin overriding the clamps on [src]..."))
+	user.visible_message("<span class='notice'>[user] presses [multitool] into [src]'s ID slot...</span>", \
+	"<span class='notice'>You begin overriding the clamps on [src]...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, 100, target = src) || !clamps_locked)
 		return
-	user.visible_message(span_notice("[user] pulses [multitool], and [src]'s clamps slide up."), \
-	span_notice("You override the locking clamps on [src]!"))
+	user.visible_message("<span class='notice'>[user] pulses [multitool], and [src]'s clamps slide up.</span>", \
+	"<span class='notice'>You override the locking clamps on [src]!</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	clamps_locked = FALSE
 	update_appearance()
@@ -172,31 +140,31 @@
 	if(user.combat_mode)
 		return ..()
 	if(defib)
-		to_chat(user, span_warning("The mount can't be deconstructed while a defibrillator unit is loaded!"))
+		to_chat(user, "<span class='warning'>The mount can't be deconstructed while a defibrillator unit is loaded!</span>")
 		..()
 		return TRUE
 	new wallframe_type(get_turf(src))
 	qdel(src)
 	W.play_tool_sound(user)
-	to_chat(user, span_notice("You remove [src] from the wall."))
+	to_chat(user, "<span class='notice'>You remove [src] from the wall.</span>")
 
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!defib)
-		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
+		to_chat(user, "<span class='warning'>It'd be hard to remove a defib unit from a mount that has none.</span>")
 		return
 	if(clamps_locked)
-		to_chat(user, span_warning("You try to tug out [defib], but the mount's clamps are locked tight!"))
+		to_chat(user, "<span class='warning'>You try to tug out [defib], but the mount's clamps are locked tight!</span>")
 		return
 	if(!user.put_in_hands(defib))
-		to_chat(user, span_warning("You need a free hand!"))
-		user.visible_message(span_notice("[user] unhooks [defib] from [src], dropping it on the floor."), \
-		span_notice("You slide out [defib] from [src] and unhook the charging cables, dropping it on the floor."))
+		to_chat(user, "<span class='warning'>You need a free hand!</span>")
+		user.visible_message("<span class='notice'>[user] unhooks [defib] from [src], dropping it on the floor.</span>", \
+		"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables, dropping it on the floor.</span>")
 	else
-		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
-		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
+		user.visible_message("<span class='notice'>[user] unhooks [defib] from [src].</span>", \
+		"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables.</span>")
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	// Make sure processing ends before the defib is nulled
 	end_processing()
@@ -232,7 +200,7 @@
 	if(C.charge < C.maxcharge)
 		use_power(50 * delta_time)
 		C.give(40 * delta_time)
-		defib.update_power()
+		update_appearance()
 
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount

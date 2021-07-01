@@ -12,14 +12,10 @@
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
 	return TRUE
 
@@ -27,15 +23,16 @@
 	. = ..()
 	eat_dir = newdir
 
-/obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/mover, border_dir)
+/obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
+	var/move_dir = get_dir(loc, AM.loc)
+	if(move_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
+/obj/machinery/plumbing/grinder_chemical/Crossed(atom/movable/AM)
+	. = ..()
 	grind(AM)
 
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)

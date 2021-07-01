@@ -20,6 +20,7 @@
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
+	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 20
 
@@ -42,5 +43,6 @@
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
 	trash_type = /obj/item/food/egg
+	bite_consumption_mod = 2
 	foodtypes = MEAT
 	distill_reagent = /datum/reagent/consumable/ethanol/eggnog

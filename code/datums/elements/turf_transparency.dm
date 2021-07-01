@@ -1,4 +1,3 @@
-
 /datum/element/turf_z_transparency
 	var/show_bottom_level = FALSE
 
@@ -20,6 +19,7 @@
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 
+
 	update_multiz(our_turf, TRUE, TRUE)
 
 /datum/element/turf_z_transparency/Detach(datum/source)
@@ -38,7 +38,6 @@
 			return FALSE
 	if(init)
 		our_turf.vis_contents += below_turf
-
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
 		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
@@ -48,20 +47,16 @@
 		our_turf.underlays += plating_underlay
 	return TRUE
 
-/datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/below_turf, dir)
+/datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
 	SIGNAL_HANDLER
-
 	if(dir != DOWN)
 		return
-
 	update_multiz(our_turf)
 
-/datum/element/turf_z_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/below_turf, dir)
+/datum/element/turf_z_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/T, dir)
 	SIGNAL_HANDLER
-
 	if(dir != DOWN)
 		return
-
 	update_multiz(our_turf)
 
 ///Called when there is no real turf below this turf

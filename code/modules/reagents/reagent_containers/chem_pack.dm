@@ -10,12 +10,11 @@
 	resistance_flags = ACID_PROOF
 	var/sealed = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-	possible_transfer_amounts = list()
 
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)
 		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
-			to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
+			to_chat(user, "<span class='warning'>Uh... whoops! You accidentally spill the content of the bag onto yourself.</span>")
 			SplashReagents(user)
 			return
 
@@ -24,14 +23,14 @@
 		reagents.flags = reagent_flags
 		spillable = FALSE
 		sealed = TRUE
-		to_chat(user, span_notice("You seal the bag."))
+		to_chat(user, "<span class='notice'>You seal the bag.</span>")
 
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()
 	if(sealed)
-		. += span_notice("The bag is sealed shut.")
+		. += "<span class='notice'>The bag is sealed shut.</span>"
 	else
-		. += span_notice("Alt-click to seal it.")
+		. += "<span class='notice'>Alt-click to seal it.</span>"
 
 
 /obj/item/reagent_containers/chem_pack/attack_self(mob/user)

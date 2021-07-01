@@ -56,10 +56,6 @@
 	. = ..()
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
@@ -69,13 +65,13 @@
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 	if(locked)
-		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
+		. += "<span class='notice'>The control panel is ID-locked. Swipe a valid ID to unlock it.</span>"
 	else
-		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
+		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
-/obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/auto_scan, AM)
+/obj/machinery/scanner_gate/Crossed(atom/movable/AM)
+	. = ..()
+	auto_scan(AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
 	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))
@@ -95,14 +91,14 @@
 			if(allowed(user))
 				locked = FALSE
 				req_access = list()
-				to_chat(user, span_notice("You unlock [src]."))
+				to_chat(user, "<span class='notice'>You unlock [src].</span>")
 		else if(!(obj_flags & EMAGGED))
-			to_chat(user, span_notice("You lock [src] with [W]."))
+			to_chat(user, "<span class='notice'>You lock [src] with [W].</span>")
 			var/list/access = W.GetAccess()
 			req_access = access
 			locked = TRUE
 		else
-			to_chat(user, span_warning("You try to lock [src] with [W], but nothing happens."))
+			to_chat(user, "<span class='warning'>You try to lock [src] with [W], but nothing happens.</span>")
 	else
 		if(!locked && default_deconstruction_screwdriver(user, "scangate_open", "scangate", W))
 			return
@@ -116,7 +112,7 @@
 	locked = FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You fry the ID checking system."))
+	to_chat(user, "<span class='notice'>You fry the ID checking system.</span>")
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE

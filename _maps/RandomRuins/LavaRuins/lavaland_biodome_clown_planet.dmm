@@ -579,7 +579,10 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/indestructible/white,
 /area/ruin/powered/clownplanet)
 "bl" = (
@@ -807,7 +810,9 @@
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bT" = (
@@ -858,7 +863,9 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -876,7 +883,9 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -893,7 +902,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -911,7 +922,9 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -929,7 +942,10 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/indestructible/white,
 /area/ruin/powered/clownplanet)
 "dG" = (
@@ -937,18 +953,24 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/indestructible/white,
 /area/ruin/powered/clownplanet)
 "dH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/indestructible/white,
 /area/ruin/powered/clownplanet)
 "dI" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -962,7 +984,9 @@
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "dK" = (
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "dL" = (
@@ -970,15 +994,19 @@
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
 /obj/item/coin/bananium,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "dM" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/indestructible/honk,
 /area/ruin/powered/clownplanet)
 "dO" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/indestructible/honk,
 /area/ruin/powered/clownplanet)
 "eE" = (
@@ -994,9 +1022,11 @@
 /turf/open/chasm/lavaland,
 /area/lavaland/surface/outdoors/explored)
 "hY" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "os" = (
 /obj/effect/mapping_helpers/no_lava,
@@ -1004,8 +1034,12 @@
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "pv" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "ye" = (
 /turf/open/lava/smooth,
@@ -1036,7 +1070,9 @@
 	name = "stealth banana peel"
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/lavaland/surface/outdoors/explored)
 "LH" = (
 /obj/machinery/disposal/delivery_chute{
@@ -1049,9 +1085,13 @@
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "MR" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "RW" = (
 /obj/effect/mapping_helpers/no_lava,
@@ -1073,15 +1113,21 @@
 /area/ruin/powered/clownplanet)
 "XO" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/lavaland/surface/outdoors/explored)
 "Yf" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/powered/clownplanet)
 "YI" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/noslip,

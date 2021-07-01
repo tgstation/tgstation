@@ -11,7 +11,9 @@
 "e" = (
 /obj/structure/table/wood/poker,
 /obj/item/gun/ballistic/revolver/russian/soul,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "f" = (
@@ -21,7 +23,9 @@
 "g" = (
 /obj/structure/table/wood/poker,
 /obj/item/coin/mythril,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "h" = (
@@ -68,7 +72,10 @@
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c20,
 /obj/item/stack/spacecash/c50,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "r" = (
@@ -88,17 +95,19 @@
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c100,
 /obj/item/stack/spacecash/c1000,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "v" = (
 /obj/item/coin/gold,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "w" = (
 /obj/item/storage/bag/money,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "J" = (

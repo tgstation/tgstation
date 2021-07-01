@@ -13,8 +13,7 @@
 		ui.open()
 
 /datum/crew_manifest/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
+	if (..())
 		return
 
 /datum/crew_manifest/ui_data(mob/user)

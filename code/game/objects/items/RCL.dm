@@ -51,7 +51,7 @@
 
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("[src] is stuck to your hand!"))
+				to_chat(user, "<span class='warning'>[src] is stuck to your hand!</span>")
 				return
 			else
 				loaded = W //W.loc is src at this point.
@@ -65,12 +65,12 @@
 		else
 			return
 		update_appearance()
-		to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
+		to_chat(user, "<span class='notice'>You add the pipe cleaners to [src]. It now contains [loaded.amount].</span>")
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!loaded)
 			return
 		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
-			to_chat(user, span_warning("You attempt to loosen the securing screws on the side, but it falls apart!"))
+			to_chat(user, "<span class='warning'>You attempt to loosen the securing screws on the side, but it falls apart!</span>")
 			while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 				var/diff = loaded.amount % 30
 				if(diff)
@@ -82,7 +82,7 @@
 			qdel(src)
 			return
 
-		to_chat(user, span_notice("You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires."))
+		to_chat(user, "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>")
 		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 			var/diff = loaded.amount % 30
 			if(diff)
@@ -103,7 +103,7 @@
 /obj/item/rcl/examine(mob/user)
 	. = ..()
 	if(loaded)
-		. += span_info("It contains [loaded.amount]/[max_amount] pipe cleaners.")
+		. += "<span class='info'>It contains [loaded.amount]/[max_amount] pipe cleaners.</span>"
 
 /obj/item/rcl/Destroy()
 	QDEL_NULL(loaded)
@@ -136,7 +136,7 @@
 	update_appearance()
 	if(!loaded || !loaded.amount)
 		if(loud)
-			to_chat(user, span_notice("The last of the pipe cleaners unreel from [src]."))
+			to_chat(user, "<span class='notice'>The last of the pipe cleaners unreel from [src].</span>")
 		if(loaded)
 			QDEL_NULL(loaded)
 			loaded = null
@@ -188,11 +188,11 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		to_chat(user, span_warning("\The [src] is empty!"))
+		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 
 	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
-		to_chat(user, span_warning("[src]'s wires jam!"))
+		to_chat(user, "<span class='warning'>[src]'s wires jam!</span>")
 		active = FALSE
 		return
 	else
@@ -278,7 +278,7 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		to_chat(user, span_warning("\The [src] is empty!"))
+		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 		return
 
 	var/turf/T = get_turf(user)

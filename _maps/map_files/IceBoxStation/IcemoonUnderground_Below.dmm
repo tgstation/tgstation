@@ -10,11 +10,13 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "e" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/iron,
 /area/mine/eva)
 "f" = (
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/mine/eva)
 "g" = (
@@ -36,7 +38,9 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "j" = (
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/mine/eva)
 "k" = (
@@ -84,7 +88,7 @@
 /obj/structure/chair/sofa{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/iron,
 /area/mine/eva)
 "s" = (
@@ -146,7 +150,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "B" = (
@@ -191,7 +197,9 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "I" = (
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/mine/eva)
 "J" = (
@@ -238,7 +246,9 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "W" = (
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/mine/eva)
 "X" = (
@@ -19170,7 +19180,7 @@ x
 y
 n
 C
-t
+q
 y
 b
 b
@@ -19684,7 +19694,7 @@ C
 k
 C
 C
-q
+t
 y
 b
 b

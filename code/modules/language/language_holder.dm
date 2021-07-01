@@ -50,12 +50,10 @@ Key procs
 	/// Currently spoken language
 	var/selected_language
 	/// Tracks the entity that owns the holder.
-	var/atom/owner
+	var/owner
 
 /// Initializes, and copies in the languages from the current atom if available.
-/datum/language_holder/New(atom/_owner)
-	if(_owner && QDELETED(_owner))
-		CRASH("Langauge holder added to a qdeleting thing, what the fuck \ref[_owner]")
+/datum/language_holder/New(_owner)
 	owner = _owner
 	if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -65,7 +63,6 @@ Key procs
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
-	owner = null
 	return ..()
 
 /// Grants the supplied language.

@@ -30,7 +30,7 @@
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
 	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
-		. += span_notice("It is \a [true_name].")
+		. += "<span class='notice'>It is \a [true_name].</span>"
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -60,8 +60,8 @@
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--
-	to_chat(owner, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
-	to_chat(owner, span_mind_control("[command]"))
+	to_chat(owner, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
+	to_chat(owner, "<span class='mind_control'>[command]</span>")
 	active_mind_control = TRUE
 	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	log_game("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
@@ -74,7 +74,7 @@
 /obj/item/organ/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
 		return FALSE
-	to_chat(owner, span_userdanger("You feel the compulsion fade, and you <i>completely forget</i> about your previous orders."))
+	to_chat(owner, "<span class='userdanger'>You feel the compulsion fade, and you <i>completely forget</i> about your previous orders.</span>")
 	owner.clear_alert("mind_control")
 	active_mind_control = FALSE
 	return TRUE

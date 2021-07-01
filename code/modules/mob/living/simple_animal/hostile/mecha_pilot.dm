@@ -69,9 +69,9 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
 		return 0
-	LoseTarget() //Target was our mecha, so null it out
+	target = null //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
-	targets_from = WEAKREF(M)
+	targets_from = M
 	allow_movement_on_non_turfs = TRUE //duh
 	var/do_ranged = 0
 	for(var/equip in mecha.equipment)
@@ -97,14 +97,14 @@
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
-	targets_from = null
+	targets_from = src
 
 	//Find a new mecha
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/vehicle/sealed/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
-			GiveTarget(C)
+			target = C
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
 			break
 	search_objects = search_aggressiveness
@@ -121,7 +121,7 @@
 		return FALSE
 	if(!M.has_charge(required_mecha_charge))
 		return FALSE
-	if(M.get_integrity() < M.max_integrity*0.5)
+	if(M.obj_integrity < M.max_integrity*0.5)
 		return FALSE
 	return TRUE
 
@@ -188,7 +188,7 @@
 				return
 			else
 				if(!CanAttack(M))
-					LoseTarget()
+					target = null
 					return
 
 		return target.attack_animal(src)
@@ -201,7 +201,7 @@
 	if(!mecha)
 		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
 			if(is_valid_mecha(mecha_in_range))
-				GiveTarget(mecha_in_range) //Let's nab it!
+				target = mecha_in_range //Let's nab it!
 				minimum_distance = 1
 				ranged = 0
 				break
@@ -215,7 +215,7 @@
 			return
 
 			//Too Much Damage - Eject
-		if(mecha.get_integrity() < mecha.max_integrity*0.1)
+		if(mecha.obj_integrity < mecha.max_integrity*0.1)
 			exit_mecha(mecha)
 			return
 
@@ -226,7 +226,7 @@
 				action.Trigger()
 
 		//Heavy damage - Defense Power or Retreat
-		if(mecha.get_integrity() < mecha.max_integrity*0.25)
+		if(mecha.obj_integrity < mecha.max_integrity*0.25)
 			if(prob(defense_mode_chance))
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
 					var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]

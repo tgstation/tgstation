@@ -10,14 +10,7 @@ const sortByPlaytime = sortBy(([_, playtime]) => -playtime);
 
 const PlaytimeSection = props => {
   const { playtimes } = props;
-
-  const sortedPlaytimes = sortByPlaytime(Object.entries(playtimes))
-    .filter(entry => entry[1]);
-
-  if (!sortedPlaytimes.length) {
-    return "No recorded playtime hours for this section.";
-  }
-
+  const sortedPlaytimes = sortByPlaytime(Object.entries(playtimes));
   const mostPlayed = sortedPlaytimes[0][1];
   return (
     <Table>
@@ -62,7 +55,6 @@ export const TrackedPlaytime = (props, context) => {
     isAdmin,
     livingTime,
     ghostTime,
-    adminTime,
   } = data;
   return (
     <Window
@@ -82,7 +74,6 @@ export const TrackedPlaytime = (props, context) => {
                 playtimes={{
                   "Ghost": ghostTime,
                   "Living": livingTime,
-                  "Admin": adminTime,
                 }}
               />
             </Section>

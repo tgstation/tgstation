@@ -24,7 +24,7 @@
 	return S
 
 /obj/item/seeds/kudzu/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	plant(user)
 	return (BRUTELOSS)
 
@@ -32,22 +32,22 @@
 	if(isspaceturf(user.loc))
 		return
 	if(!isturf(user.loc))
-		to_chat(user, span_warning("You need more space to plant [src]."))
+		to_chat(user, "<span class='warning'>You need more space to plant [src].</span>")
 		return FALSE
 	if(locate(/obj/structure/spacevine) in user.loc)
-		to_chat(user, span_warning("There is too much kudzu here to plant [src]."))
+		to_chat(user, "<span class='warning'>There is too much kudzu here to plant [src].</span>")
 		return FALSE
-	to_chat(user, span_notice("You plant [src]."))
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)]")
 	investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	new /datum/spacevine_controller(get_turf(user), mutations, potency, production)
 	qdel(src)
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
-	user.visible_message(span_danger("[user] begins throwing seeds on the ground..."))
+	user.visible_message("<span class='danger'>[user] begins throwing seeds on the ground...</span>")
 	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
 		plant(user)
-		to_chat(user, span_notice("You plant the kudzu. You monster."))
+		to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 
 /obj/item/seeds/kudzu/get_unique_analyzer_text()
 	var/kudzu_mutations = ""
@@ -102,6 +102,7 @@
 	name = "kudzu pod"
 	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
 	icon_state = "kudzupod"
+	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	tastes = list("kudzu" = 1)
 	wine_power = 20

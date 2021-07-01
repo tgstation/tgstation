@@ -7,8 +7,10 @@
 import { clamp01 } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from '../components';
-import { KEY_DOWN, KEY_UP, KEY_ENTER, KEY_SPACE } from 'common/keycodes';
 import { Window } from '../layouts';
+
+const ARROW_KEY_UP = 38;
+const ARROW_KEY_DOWN = 40;
 
 let lastScrollTime = 0;
 
@@ -46,9 +48,9 @@ export const ListInput = (props, context) => {
     }
     lastScrollTime = performance.now() + 125;
 
-    if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN) {
+    if (e.keyCode === ARROW_KEY_UP || e.keyCode === ARROW_KEY_DOWN) {
       let direction = 1;
-      if (e.keyCode === KEY_UP) direction = -1;
+      if (e.keyCode === ARROW_KEY_UP) direction = -1;
 
       let index = 0;
       for (index; index < buttons.length; index++) {
@@ -60,11 +62,6 @@ export const ListInput = (props, context) => {
       setSelectedButton(buttons[index]);
       setLastCharCode(null);
       document.getElementById(buttons[index]).focus();
-      return;
-    }
-
-    if (e.keyCode === KEY_SPACE || e.keyCode === KEY_ENTER) {
-      act("choose", { choice: selectedButton });
       return;
     }
 

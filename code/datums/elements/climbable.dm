@@ -22,18 +22,16 @@
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/try_speedrun)
-	ADD_TRAIT(target, TRAIT_CLIMBABLE, src)
 
 /datum/element/climbable/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_MOUSEDROPPED_ONTO, COMSIG_ATOM_BUMPED))
-	REMOVE_TRAIT(target, TRAIT_CLIMBABLE, src)
 	return ..()
 
 /datum/element/climbable/proc/on_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
 	if(can_climb(source, user))
-		examine_texts += span_notice("[source] looks climbable.")
+		examine_texts += "<span class='notice'>[source] looks climbable.</span>"
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
 	return TRUE
@@ -48,15 +46,15 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(climbed_thing)
 		structure_climber.Paralyze(40)
-		structure_climber.visible_message(span_warning("[structure_climber] is knocked off [climbed_thing]."), span_warning("You're knocked off [climbed_thing]!"), span_hear("You hear a cry from [structure_climber], followed by a slam."))
+		structure_climber.visible_message("<span class='warning'>[structure_climber] is knocked off [climbed_thing].</span>", "<span class='warning'>You're knocked off [climbed_thing]!</span>", "<span class='hear'>You hear a cry from [structure_climber], followed by a slam.</span>")
 
 
 /datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user)
 	if(!can_climb(climbed_thing, user))
 		return
 	climbed_thing.add_fingerprint(user)
-	user.visible_message(span_warning("[user] starts climbing onto [climbed_thing]."), \
-								span_notice("You start climbing onto [climbed_thing]..."))
+	user.visible_message("<span class='warning'>[user] starts climbing onto [climbed_thing].</span>", \
+								"<span class='notice'>You start climbing onto [climbed_thing]...</span>")
 	var/adjusted_climb_time = climb_time
 	var/adjusted_climb_stun = climb_stun
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)) //climbing takes twice as long without help from the hands.
@@ -71,20 +69,20 @@
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 		if(do_climb(climbed_thing, user))
-			user.visible_message(span_warning("[user] climbs onto [climbed_thing]."), \
-								span_notice("You climb onto [climbed_thing]."))
+			user.visible_message("<span class='warning'>[user] climbs onto [climbed_thing].</span>", \
+								"<span class='notice'>You climb onto [climbed_thing].</span>")
 			log_combat(user, climbed_thing, "climbed onto")
 			if(adjusted_climb_stun)
 				user.Stun(adjusted_climb_stun)
 		else
-			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
+			to_chat(user, "<span class='warning'>You fail to climb onto [climbed_thing].</span>")
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user)
-	climbed_thing.set_density(FALSE)
+	climbed_thing.density = FALSE
 	. = step(user, get_dir(user,climbed_thing.loc))
-	climbed_thing.set_density(TRUE)
+	climbed_thing.density = TRUE
 
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user)

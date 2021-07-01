@@ -71,7 +71,6 @@
 	new /obj/effect/pod_landingzone(empty_pod_turf, empty_pod)
 
 /datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
-	SIGNAL_HANDLER
 	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
 		if (isliving(sent_mob))
 			var/mob/living/M = sent_mob
@@ -121,7 +120,7 @@
 				target.dna.species.give_important_for_life(target)
 
 			// After pod is sent we start the victim narrative/heal.
-			INVOKE_ASYNC(src, .proc/handleVictimExperience, M)
+			handleVictimExperience(M)
 
 			// This is slightly delayed because of the sleep calls above to handle the narrative.
 			// We don't want to tell the station instantly.
@@ -137,20 +136,17 @@
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
 							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, null, null, "Nanotrasen Asset Protection")
 
-			INVOKE_ASYNC(src, .proc/finish_enter)
+			sleep(30)
 
-/datum/syndicate_contract/proc/finish_enter()
-	sleep(30)
+			// Pay contractor their portion of ransom
+			if (status == CONTRACT_STATUS_COMPLETE)
+				var/obj/item/card/id/C = contract.owner.current?.get_idcard(TRUE)
 
-	// Pay contractor their portion of ransom
-	if (status == CONTRACT_STATUS_COMPLETE)
-		var/obj/item/card/id/C = contract.owner.current?.get_idcard(TRUE)
+				if(C?.registered_account)
+					C.registered_account.adjust_money(ransom * 0.35)
 
-		if(C?.registered_account)
-			C.registered_account.adjust_money(ransom * 0.35)
-
-			C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
-			[C.registered_account.account_balance] cr.", TRUE)
+					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
+					[C.registered_account.account_balance] cr.", TRUE)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(mob/living/M)
@@ -166,17 +162,17 @@
 		M.flash_act()
 		M.add_confusion(10)
 		M.blur_eyes(5)
-		to_chat(M, span_warning("You feel strange..."))
+		to_chat(M, "<span class='warning'>You feel strange...</span>")
 		sleep(60)
-		to_chat(M, span_warning("That pod did something to you..."))
+		to_chat(M, "<span class='warning'>That pod did something to you...</span>")
 		M.Dizzy(35)
 		sleep(65)
-		to_chat(M, span_warning("Your head pounds... It feels like it's going to burst out your skull!"))
+		to_chat(M, "<span class='warning'>Your head pounds... It feels like it's going to burst out your skull!</span>")
 		M.flash_act()
 		M.add_confusion(20)
 		M.blur_eyes(3)
 		sleep(30)
-		to_chat(M, span_warning("Your head pounds..."))
+		to_chat(M, "<span class='warning'>Your head pounds...</span>")
 		sleep(100)
 		M.flash_act()
 		M.Unconscious(200)
@@ -205,7 +201,7 @@
 		return_pod.style = STYLE_SYNDICATE
 
 		do_sparks(8, FALSE, M)
-		M.visible_message(span_notice("[M] vanishes..."))
+		M.visible_message("<span class='notice'>[M] vanishes...</span>")
 
 		for(var/obj/item/W in M)
 			if (ishuman(M))
