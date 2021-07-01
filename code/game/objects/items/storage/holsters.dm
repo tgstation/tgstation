@@ -27,7 +27,7 @@
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
-		/obj/item/food/grown/banana
+		/obj/item/food/grown/banana,
 		))
 
 /obj/item/storage/belt/holster/detective
