@@ -777,6 +777,42 @@ Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
+### Byond Hellspawn 
+
+Put stuff that shouldn’t work but does, or should work but doesn’t here so we don’t forget about it.
+#### \
+
+\ tells the compiler to read the next line as if it was one of our own. As an example:
+
+```dm
+var/heat = conduction_coefficient*delta_temperature* \
+	(heat_capacity*sharer.heat_capacity/(heat_capacity+sharer.heat_capacity))
+```
+
+This is fine and valid dm
+
+You know how comments are meant to not compile?
+
+```dm
+if(passed)
+    LAZYADD(emag_programs, list(info_this))//this is sent to the js thing\
+else
+    LAZYADD(program_cache, list(info_this))
+```
+
+Is actually compiled as
+
+```dm
+if(passed)
+    LAZYADD(emag_programs, list(info_this))//this is sent to the js thingelse
+    LAZYADD(program_cache, list(info_this))
+```
+
+Be mindful of this, it’s easy to miss and can trip you up or cause massive issues.
+#### Icon hell
+
+The ‘transparent’ icon state causes fucked behavior when used on turfs, for reasons unknown and unknowable
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
