@@ -1,0 +1,4 @@
+author: "Sparkezel"
+delete-after: True
+changes: 
+  - balance: "Bats no longer stunlock people. Increased bat damage by 2."
