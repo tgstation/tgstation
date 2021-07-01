@@ -103,7 +103,7 @@
 		corner.active = TRUE
 		corner.update_appearance()
 		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
 /**

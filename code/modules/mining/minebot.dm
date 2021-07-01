@@ -135,14 +135,14 @@
 				to_chat(user, span_info("[src] has been set to attack hostile wildlife."))
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/object)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(istype(object, /obj/projectile/kinetic))
-		var/obj/projectile/kinetic/projectile = object
+	if(istype(mover, /obj/projectile/kinetic))
+		var/obj/projectile/kinetic/projectile = mover
 		if(projectile.kinetic_gun)
 			if (locate(/obj/item/borg/upgrade/modkit/minebot_passthrough) in projectile.kinetic_gun.modkits)
 				return TRUE
-	if(istype(object, /obj/projectile/destabilizer))
+	else if(istype(mover, /obj/projectile/destabilizer))
 		return TRUE
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()

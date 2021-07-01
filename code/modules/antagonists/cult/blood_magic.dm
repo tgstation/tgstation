@@ -606,27 +606,14 @@
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(EMP_HEAVY)
-					var/static/list/constructs = list(
-						"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
-						"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
-						"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
-						)
-					var/construct_class = show_radial_menu(user, src, constructs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+					var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 					if(!check_menu(user))
 						return
 					if(QDELETED(candidate))
 						channeling = FALSE
 						return
 					user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
-					switch(construct_class)
-						if("Juggernaut")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, candidate, user, FALSE, T)
-						if("Wraith")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, FALSE, T)
-						if("Artificer")
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, candidate, user, FALSE, T)
-						else
-							return
+					make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
 					uses--
 					candidate.mmi = null
 					qdel(candidate)

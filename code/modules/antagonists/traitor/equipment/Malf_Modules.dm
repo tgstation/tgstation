@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
-		/obj/machinery/atmospherics/components/unary/tank,
+		/obj/machinery/atmospherics/components/tank,
 		/obj/machinery/atmospherics/components/unary/portables_connector,
 		/obj/machinery/atmospherics/components/unary/passive_vent,
 		/obj/machinery/atmospherics/components/unary/heat_exchanger,

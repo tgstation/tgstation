@@ -51,6 +51,7 @@
 	if(!name)
 		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
+/// Call this proc to handle all the data extraction from the json configuration. Can be forced to load values from disk instead of memory.
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
 		json_config = file(string_json_config)
@@ -66,12 +67,25 @@
 
 	ReadMetadata()
 
+/// Called after every config has refreshed, this proc handles data verification that depends on multiple entwined configurations.
+/datum/greyscale_config/proc/CrossVerify()
+	for(var/icon_state in icon_states)
+		var/list/verification_targets = icon_states[icon_state]
+		verification_targets = verification_targets.Copy()
+		while(length(verification_targets))
+			var/datum/greyscale_layer/layer = verification_targets[length(verification_targets)]
+			verification_targets.len--
+			if(islist(layer))
+				verification_targets += layer
+				continue
+			layer.CrossVerify()
+
 /// Gets the name used for debug purposes
 /datum/greyscale_config/proc/DebugName()
 	var/display_name = name || "MISSING_NAME"
 	return "[display_name] ([icon_file]|[json_config])"
 
-/// Takes the json icon state configuration and puts it into a more processed format
+/// Takes the json icon state configuration and puts it into a more processed format.
 /datum/greyscale_config/proc/ReadIconStateConfiguration(list/data)
 	icon_states = list()
 	for(var/state in data)

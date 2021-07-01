@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/direction
 	display_name = "Get Direction"
+	display_desc = "A component that returns the direction of itself and an entity."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -22,6 +23,10 @@
 
 	/// Maximum range for a valid direction to be returned
 	var/max_range = 7
+
+/obj/item/circuit_component/direction/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/direction/Initialize()
 	. = ..()

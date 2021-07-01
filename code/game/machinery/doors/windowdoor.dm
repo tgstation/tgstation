@@ -111,12 +111,12 @@
 		do_animate("deny")
 	return
 
-/obj/machinery/door/window/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/door/window/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
 
-	if(get_dir(loc, target) == dir)
+	if(border_dir == dir)
 		return FALSE
 
 	if(istype(mover, /obj/structure/window))
@@ -140,6 +140,9 @@
 
 /obj/machinery/door/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
 
 	if((pass_flags_self & leaving.pass_flags) || ((pass_flags_self & LETPASSTHROW) && leaving.throwing))
 		return
@@ -323,6 +326,8 @@
 	return !requiresID() || ..()
 
 /obj/machinery/door/window/proc/ntnet_receive(datum/source, datum/netdata/data)
+	SIGNAL_HANDLER
+
 	// Check if the airlock is powered.
 	if(!hasPower())
 		return
