@@ -60,7 +60,7 @@
 		objectives_left += "heirloom"
 
 	// If they have no coworkers, jealousy will pick someone else on the station. This will never be a free objective.
-	if(obsessionmind.assigned_role.type != /datum/job/captain)
+	if(!is_captain_job(obsessionmind.assigned_role))
 		objectives_left += "jealous"
 
 	for(var/i in 1 to 3)

@@ -362,7 +362,7 @@
 				continue
 			return FALSE
 	for(var/mob/player as anything in GLOB.player_list)
-		if(player.mind.assigned_role.type != /datum/job/chaplain)
+		if(!is_chaplain_job(player.mind.assigned_role))
 			continue
 		if(!player.suiciding && !considered_alive(player))
 			return FALSE
@@ -451,7 +451,7 @@
 
 /datum/antagonist/gang/henchmen/check_gang_objective() // gotta arch dr. venture indirectly
 	for(var/mob/player as anything in GLOB.player_list)
-		if(player.mind.assigned_role.type != /datum/job/research_director)
+		if(!is_research_director_job(player.mind.assigned_role))
 			continue
 		if(!player.suiciding && considered_alive(player))
 			return FALSE
