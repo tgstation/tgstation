@@ -108,19 +108,22 @@
 	width = source.Width()
 
 	var/list/datum/greyscale_layer/all_layers = list()
-	var/list/to_process = list()
 	for(var/state in icon_states)
-		to_process += icon_states[state]
-	while(length(to_process))
-		var/current = to_process[length(to_process)]
-		to_process.len--
-		if(islist(current))
-			to_process += current
-		else
-			all_layers += current
+		var/list/to_process = list(icon_states[state])
+		var/list/state_layers = list()
 
-	if(length(all_layers) > MAX_SANE_LAYERS)
-		stack_trace("[DebugName()] has [length(all_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
+		while(length(to_process))
+			var/current = to_process[length(to_process)]
+			to_process.len--
+			if(islist(current))
+				to_process += current
+			else
+				state_layers += current
+
+		all_layers += state_layers
+
+		if(length(state_layers) > MAX_SANE_LAYERS)
+			stack_trace("[DebugName()] icon state '[state]' has [length(state_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
 
 	var/list/color_groups = list()
 	var/largest_id = 0
