@@ -780,35 +780,6 @@ There is also an undocumented keyword called `static` that has the same behaviou
 ### Byond Hellspawn 
 
 Put stuff that shouldn’t work but does, or should work but doesn’t here so we don’t forget about it.
-#### \
-
-\ tells the compiler to read the next line as if it was one of our own. As an example:
-
-```dm
-var/heat = conduction_coefficient*delta_temperature* \
-	(heat_capacity*sharer.heat_capacity/(heat_capacity+sharer.heat_capacity))
-```
-
-This is fine and valid dm
-
-You know how comments are meant to not compile?
-
-```dm
-if(passed)
-    LAZYADD(emag_programs, list(info_this))//this is sent to the js thing\
-else
-    LAZYADD(program_cache, list(info_this))
-```
-
-Is actually compiled as
-
-```dm
-if(passed)
-    LAZYADD(emag_programs, list(info_this))//this is sent to the js thingelse
-    LAZYADD(program_cache, list(info_this))
-```
-
-Be mindful of this, it’s easy to miss and can trip you up or cause massive issues.
 #### Icon hell
 
 The ‘transparent’ icon state causes fucked behavior when used on turfs, for reasons unknown and unknowable
