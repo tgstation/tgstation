@@ -600,6 +600,8 @@
 	to_chat(user, span_notice("You pull back the tab of \the [src]."))
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
+	preserved_food = FALSE
+	MakeDecompose()
 
 /obj/item/food/canned/attack_self(mob/user)
 	if(!is_drainable())
