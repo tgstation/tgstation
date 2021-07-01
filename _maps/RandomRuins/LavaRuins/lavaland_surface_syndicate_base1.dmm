@@ -4745,10 +4745,6 @@
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
-/obj/machinery/computer/turbine_computer{
-	dir = 1;
-	id = "syndie_lavaland_incineratorturbine"
-	},
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nd" = (
@@ -5575,23 +5571,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"oE" = (
-/obj/machinery/power/compressor{
-	comp_id = "syndie_lavaland_incineratorturbine";
-	dir = 1;
-	luminosity = 2
-	},
-/obj/structure/cable,
-/turf/open/floor/engine/vacuum,
-/area/ruin/unpowered/syndicate_lava_base/engineering)
 "oF" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oG" = (
-/obj/machinery/power/turbine{
-	luminosity = 2
-	},
 /obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -7756,7 +7740,7 @@ nD
 oe
 ot
 oA
-oE
+oG
 oG
 oH
 ab
