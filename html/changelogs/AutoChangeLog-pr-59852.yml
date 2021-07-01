@@ -1,5 +1,0 @@
-author: "KubeRoot"
-delete-after: True
-changes: 
-  - rscadd: "Transit tube dispenser stations are now buildable via RPD"
-  - bugfix: "Transit tube dispenser station sprite errors have been fixed. The sprites themselves have not been changed, but the names and orientation has been corrected."

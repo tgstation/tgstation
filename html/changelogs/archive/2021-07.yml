@@ -1,0 +1,44 @@
+2021-07-01:
+  Arkatos:
+  - bugfix: Fixed a case where a relic war hammer was not able to do kneejerk action.
+  - bugfix: Fixed a case where a radial menu for the null rod reskin variant selection
+      was showing one duplicate option.
+  - qol: Updated radial menu for a null rod reskin variant selection. It will now
+      include a small button for showing additional information about each given null
+      rod variant.
+  KubeRoot:
+  - rscadd: Transit tube dispenser stations are now buildable via RPD
+  - bugfix: Transit tube dispenser station sprite errors have been fixed. The sprites
+      themselves have not been changed, but the names and orientation has been corrected.
+  LemonInTheDark:
+  - server: Hello people who parse performance log files (yes all two of you). Empty
+      entries will no longer cause errors, they will instead be properly represented
+      by a 0
+  Malgover:
+  - imageadd: new riot armor sprites
+  Time-Green:
+  - balance: Debriding surgery efficiency has been multiplied by 8
+  Watermelon914:
+  - expansion: Adds the sound emitter circuit component.
+  Wayland-Smithy:
+  - bugfix: Fixed cyborg locker right click to lock
+  - bugfix: Fixed an infinite loop bug with portal teleports. The cake is a stack
+      overflow.
+  - bugfix: Fixed portals layer so they appear over most other objects.
+  - bugfix: Fixed hand teleporter portals moving in zero gravity.
+  - qol: Portals on dense objects no longer require clicking to enter and can be walked
+      into.
+  - qol: Portals you are standing on may be entered by clicking even with a tool in
+      hand.
+  - code_imp: Removed an unused teleport arg that may cause issues with new portal
+      code.
+  bloons3:
+  - admin: Adds logging for impacted cyborgs during law changes
+  - admin: Adds additional cyborg logging
+  bobbahbrown:
+  - admin: Added other tickets opened by a user to the adminhelp dialogue
+  - server: Added the $reset directive to reset a configuration entry's values to
+      its default
+  tralezab:
+  - bugfix: fixes buying shuttle insurance while the shuttle is docked
+  - expansion: added barticles to bonfires

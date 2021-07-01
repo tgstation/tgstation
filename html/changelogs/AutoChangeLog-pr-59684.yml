@@ -1,5 +1,0 @@
-author: "bloons3"
-delete-after: True
-changes: 
-  - admin: "Adds logging for impacted cyborgs during law changes"
-  - admin: "Adds additional cyborg logging"

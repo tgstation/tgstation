@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - qol: "Updated radial menu for a null rod reskin variant selection. It will now include a small button for showing additional information about each given null rod variant."
