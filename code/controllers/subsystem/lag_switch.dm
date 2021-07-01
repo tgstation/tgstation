@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(lag_switch)
 	var/trigger_pop = INFINITY - 1337
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
+	/// List of measures that toggle automatically
+	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML)
 	/// Timer ID for the automatic veto period
 	var/veto_timer_id
 	/// Cooldown between say verb uses when slowmode is enabled
@@ -28,12 +30,12 @@ SUBSYSTEM_DEF(lag_switch)
 	SIGNAL_HANDLER
 	if(TGS_CLIENT_COUNT < trigger_pop)
 		return
+
 	auto_switch = FALSE
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 	veto_timer_id = addtimer(CALLBACK(src, .proc/set_all_measures, TRUE, TRUE), 20 SECONDS, TIMER_STOPPABLE)
-	message_admins("Lag Switch population trigger activated. Enabling of drastic lag mitigation measures occuring in 20 seconds. (<a href='?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
-	log_admin("Lag Switch population trigger activated. Enabling of drastic lag mitigation measures occuring in 20 seconds.")
-
+	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
+	log_admin("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds.")
 
 /// (En/Dis)able automatic triggering of switches based on client count
 /datum/controller/subsystem/lag_switch/proc/toggle_auto_enable()
@@ -47,6 +49,7 @@ SUBSYSTEM_DEF(lag_switch)
 /datum/controller/subsystem/lag_switch/proc/cancel_auto_enable_in_progress()
 	if(!veto_timer_id)
 		return FALSE
+
 	deltimer(veto_timer_id)
 	veto_timer_id = null
 	return TRUE
@@ -55,6 +58,7 @@ SUBSYSTEM_DEF(lag_switch)
 /datum/controller/subsystem/lag_switch/proc/change_slowmode_cooldown(length)
 	if(!length)
 		return FALSE
+
 	var/length_secs = length SECONDS
 	if(length_secs <= 0)
 		length_secs = 1 // one tick because cooldowns do not like 0
@@ -78,6 +82,8 @@ SUBSYSTEM_DEF(lag_switch)
 		return FALSE
 	if(measures[measure_key] == state)
 		return TRUE
+
+	measures[measure_key] = state
 
 	switch(measure_key)
 		if(DISABLE_DEAD_KEYLOOP)
@@ -103,8 +109,9 @@ SUBSYSTEM_DEF(lag_switch)
 				for(var/client/C as anything in GLOB.clients)
 					COOLDOWN_RESET(C, say_slowmode)
 				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been disabled by an admin."))
+		if(DISABLE_NON_OBSJOBS)
+			world.update_status()
 
-	measures[measure_key] = state
 	return TRUE
 
 /// Helper to loop over all measures for mass changes
@@ -112,10 +119,15 @@ SUBSYSTEM_DEF(lag_switch)
 	if(isnull(state))
 		stack_trace("SSlag_switch.set_all_measures() was called with a null state arg")
 		return FALSE
+
 	if(automatic)
-		message_admins("Automatically enabling drastic lag mitigation measures now.")
-		log_admin("Automatically enabling all Lag Switch measures.")
+		message_admins("Lag Switch enabling automatic measures now.")
+		log_admin("Lag Switch enabling automatic measures now.")
 		veto_timer_id = null
+		for(var/i = 1, i <= auto_measures.len, i++)
+			set_measure(auto_measures[i], state)
+		return TRUE
+
 	for(var/i = 1, i <= measures.len, i++)
 		set_measure(i, state)
 	return TRUE

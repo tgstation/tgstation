@@ -281,7 +281,7 @@ GLOBAL_VAR(restart_counter)
 
 	var/list/features = list()
 
-	if (!GLOB.enter_allowed)
+	if(LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
 
 	var/s = ""

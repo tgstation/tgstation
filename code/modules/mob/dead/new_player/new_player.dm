@@ -181,7 +181,7 @@
 			to_chat(usr, span_danger("The round is either not ready, or has already finished..."))
 			return
 
-		if(!GLOB.enter_allowed)
+		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 			to_chat(usr, span_notice("There is an administrative lock on entering the game!"))
 			return
 
@@ -298,10 +298,6 @@
 		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
-	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-		tgui_alert(usr, "Late join spawning is currently disabled.")
-		return FALSE
-
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows() //In case we get held up
@@ -393,7 +389,7 @@
 /mob/dead/new_player/proc/LateChoices()
 	var/list/dat = list()
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-		dat += "<div class='notice red' style='font-size: 125%'>Only Observers may join. Below is informational only.</div><br>"
+		dat += "<div class='notice red' style='font-size: 125%'>Only Observers may join at this time.</div><br>"
 	dat += "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
