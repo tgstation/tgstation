@@ -9,6 +9,10 @@
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND
 
+	///The icon state that will be switched to during initialization.
+	///Mostly intended for things that have a special map icon.
+	var/post_init_icon_state
+
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
 
@@ -235,6 +239,9 @@
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
+
+	if(post_init_icon_state)
+		icon_state = post_init_icon_state
 
 	if (length(smoothing_groups))
 		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.

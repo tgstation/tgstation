@@ -20,11 +20,30 @@ SUBSYSTEM_DEF(greyscale)
 		var/datum/greyscale_config/config = configurations[greyscale_type]
 		config.Refresh()
 
+	ExportMapPreviews()
+
 	return ..()
 
 /datum/controller/subsystem/greyscale/proc/RefreshConfigsFromFile()
 	for(var/i in configurations)
 		configurations[i].Refresh(TRUE)
+
+/datum/controller/subsystem/greyscale/proc/ExportMapPreviews()
+	var/list/icons = list()
+	for(var/atom/fake as anything in subtypesof(/atom))
+		CHECK_TICK
+		if(!initial(fake.greyscale_config) || !initial(fake.greyscale_colors))
+			continue
+		var/icon/map_icon = GetColoredIconByType(initial(fake.greyscale_config), initial(fake.greyscale_colors))
+		map_icon = icon(map_icon, initial(fake.icon_state))
+		icons["[fake]"] = map_icon
+
+	var/icon/holder = icon('icons/testing/greyscale_error.dmi')
+	for(var/state in icons)
+		CHECK_TICK
+		holder.Insert(icons[state], state)
+
+	fcopy(holder, "icons/map_icons.dmi")
 
 /datum/controller/subsystem/greyscale/proc/GetColoredIconByType(type, list/colors)
 	if(!ispath(type, /datum/greyscale_config))
