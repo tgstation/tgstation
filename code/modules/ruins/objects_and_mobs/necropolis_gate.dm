@@ -50,7 +50,7 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/necropolis_gate/Destroy(force)
 	if(force)
@@ -62,13 +62,16 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
-/obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!(get_dir(loc, target) == dir))
+	if(border_dir != dir)
 		return TRUE
 
 /obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
 
 	if (direction == dir && density)
 		leaving.Bump(src)
@@ -264,7 +267,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/stone_tile/Destroy(force)
 	if(force || fallen)

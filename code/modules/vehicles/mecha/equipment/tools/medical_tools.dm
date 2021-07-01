@@ -442,17 +442,9 @@
 	if(LAZYLEN(syringes) >= max_syringes)
 		to_chat(user, "[icon2html(src, user)][span_warning("[src]'s syringe chamber is full!")]")
 		return FALSE
-	if(get_dist(src,S) >= 2)
-		to_chat(user, "[icon2html(src, user)][span_warning("The syringe is too far away!")]")
+	if(!chassis.Adjacent(S))
+		to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
 		return FALSE
-	for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
-		if(!(D.CanPass(S,src.loc)))
-			to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
-			return FALSE
-	for(var/obj/machinery/door/D in S.loc)//Checks for doors
-		if(!(D.CanPass(S,src.loc)))
-			to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
-			return FALSE
 	S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = user)
 	S.forceMove(src)
 	LAZYADD(syringes,S)

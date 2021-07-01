@@ -1,7 +1,7 @@
 /datum/species/skeleton
 	// 2spooky
 	name = "Spooky Scary Skeleton"
-	id = "skeleton"
+	id = SPECIES_SKELETON
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton

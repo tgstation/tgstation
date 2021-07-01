@@ -310,7 +310,7 @@
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
 		return FALSE
-	if(pulling.anchored || pulling.move_resist > move_force || !pulling.Adjacent(src))
+	if(pulling.anchored || pulling.move_resist > move_force || !pulling.Adjacent(src, src, pulling))
 		stop_pulling()
 		return FALSE
 	if(isliving(pulling))
@@ -390,7 +390,7 @@
 
 	var/list/old_locs
 	if(is_multi_tile_object && isturf(loc))
-		old_locs = locs.Copy()
+		old_locs = locs // locs is a special list, this is effectively the same as .Copy() but with less steps
 		for(var/atom/exiting_loc as anything in old_locs)
 			if(!exiting_loc.Exit(src, direction))
 				return
@@ -445,7 +445,7 @@
 	if(oldarea != newarea)
 		newarea.Entered(src, direction)
 
-	Moved(oldloc, direction)
+	Moved(oldloc, direction, FALSE, old_locs)
 
 ////////////////////////////////////////
 
@@ -547,13 +547,21 @@
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
 
-//Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+
+/**
+ * Called after a successful Move(). By this point, we've already moved.
+ * Arguments:
+ * * old_loc is the location prior to the move. Can be null to indicate nullspace.
+ * * movement_dir is the direction the movement took place. Can be NONE if it was some sort of teleport.
+ * * The forced flag indicates whether this was a forced move, which skips many checks of regular movement.
+ * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
+ **/
+/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
-		newtonian_move(Dir)
+		newtonian_move(movement_dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
 
@@ -561,7 +569,7 @@
 	if(move_stacks > 0)
 		return
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs)
 
 	return TRUE
 
@@ -572,7 +580,7 @@
 	. = TRUE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
-	return CanPass(AM, AM.loc, TRUE)
+	return CanPass(AM, get_dir(src, AM))
 
 ///default byond proc that is deprecated for us in lieu of signals. do not call
 /atom/movable/Crossed(atom/movable/AM, oldloc)
@@ -682,6 +690,7 @@
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
+		var/movement_dir = get_dir(src, destination)
 
 		moving_diagonally = 0
 
@@ -689,18 +698,18 @@
 
 		if(!same_loc)
 			if(oldloc)
-				oldloc.Exited(src, destination)
+				oldloc.Exited(src, movement_dir)
 				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
+					old_area.Exited(src, movement_dir)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
 			var/dest_z = (destturf ? destturf.z : null)
 			if (old_z != dest_z)
 				onTransitZ(old_z, dest_z)
-			destination.Entered(src, oldloc)
+			destination.Entered(src, movement_dir)
 			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
+				destarea.Entered(src, movement_dir)
 
 		. = TRUE
 
@@ -710,9 +719,9 @@
 		loc = null
 		if (oldloc)
 			var/area/old_area = get_area(oldloc)
-			oldloc.Exited(src, null)
+			oldloc.Exited(src, NONE)
 			if(old_area)
-				old_area.Exited(src, null)
+				old_area.Exited(src, NONE)
 
 	Moved(oldloc, NONE, TRUE)
 
@@ -899,13 +908,13 @@
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/CanAllowThrough(atom/movable/mover, turf/target)
+/atom/movable/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover in buckled_mobs)
 		return TRUE
 
 /// Returns true or false to allow src to move through the blocker, mover has final say
-/atom/movable/proc/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+/atom/movable/proc/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
 	return blocker_opinion
@@ -930,7 +939,7 @@
 			return turf
 		else
 			var/atom/movable/AM = A
-			if(!AM.CanPass(src) || AM.density)
+			if(AM.density || !AM.CanPass(src, get_dir(src, AM)))
 				if(AM.anchored)
 					return AM
 				dense_object_backup = AM

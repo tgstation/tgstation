@@ -2936,7 +2936,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ajj" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -12050,6 +12050,9 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/bookcase/random/reference,
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aOy" = (
@@ -29824,10 +29827,6 @@
 /area/hallway/primary/aft)
 "bZX" = (
 /obj/structure/table,
-/obj/item/toy/figure/dsquad{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -55626,7 +55625,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
@@ -74644,7 +74643,7 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "rFl" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/toxins{
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
@@ -88962,6 +88961,10 @@
 	desc = "Often used to flavor food or make people sneeze. Fashionably moved to the left side of the table.";
 	pixel_x = -8;
 	pixel_y = 2
+	},
+/obj/item/toy/figure/prisoner{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
