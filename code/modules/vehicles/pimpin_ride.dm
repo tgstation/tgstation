@@ -4,15 +4,14 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
+	movedelay = 1
 	var/obj/item/storage/bag/trash/trash_bag
 	var/obj/item/janicart_upgrade/installed_upgrade
-	movedelay = 1
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
-
 	if (installed_upgrade)
 		installed_upgrade.install(src)
 
@@ -66,7 +65,9 @@
 	if(trash_bag)
 		. += "cart_garbage"
 	if(installed_upgrade)
-		. += installed_upgrade.overlay
+		var/mutable_appearance/overlay = new(SSgreyscale.GetColoredIconByType(installed_upgrade.overlay_greyscale_config, installed_upgrade.greyscale_colors))
+		overlay.icon_state = "janicart_upgrade"
+		. += overlay
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -87,9 +88,9 @@
 /obj/item/janicart_upgrade
 	name = "base upgrade"
 	desc = "An abstract upgrade for mobile janicarts."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "upgrade"
-	var/overlay
+	icon_state = "janicart_upgrade"
+	greyscale_config = /datum/greyscale_config/janicart_upgrade
+	var/overlay_greyscale_config = /datum/greyscale_config/janicart_upgrade/installed
 
 /obj/item/janicart_upgrade/proc/install(obj/vehicle/ridden/janicart/installee)
 	return FALSE
@@ -100,9 +101,7 @@
 /obj/item/janicart_upgrade/buffer
 	name = "floor buffer upgrade"
 	desc = "An upgrade for mobile janicarts which adds a floor buffer functionality."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "upgrade"
-	overlay = "cart_buffer"
+	greyscale_colors = "#ffffff#6aa3ff#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/buffer/install(obj/vehicle/ridden/janicart/installee)
 	installee._AddElement(list(/datum/element/cleaning))
@@ -113,9 +112,7 @@
 /obj/item/janicart_upgrade/vacuum
 	name = "vacuum upgrade"
 	desc = "An upgrade for mobile janicarts which adds a vacuum functionality."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "upgrade"
-	overlay = "cart_buffer"
+	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)
 	installee._AddComponent(list(/datum/component/vacuum))
