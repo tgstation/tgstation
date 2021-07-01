@@ -110,58 +110,36 @@
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	var/time_d = 0
 	if(active_timers) // Is the timer currently applied to this?
-		switch(examine_type)
-			if(DECOMP_EXAM_NORMAL)// All other types
-				switch(timeleft(timerid)) // Deciseconds used so there's no gaps between examine times.
-					if(3001 to 4500) // 7.5 to 5 Minutes left
-						examine_list += "[parent] looks kinda stale."
-					if(1501 to 3000) // 5 to 2.5 Minutes left
-						examine_list += "[parent] is starting to look pretty gross."
-					if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
-						examine_list += "[parent] looks barely edible."
-			if(DECOMP_EXAM_GROSS) // Gross food
-				switch(timeleft(timerid))
-					if(2101 to 3150) // 5.25 to 3.5 Minutes
-						examine_list += "[parent] looks kinda stale."
-					if(1050 to 2100) // 3.5 to 1.75 Minutes left
-						examine_list += "[parent] is starting to look pretty gross."
-					if(1 to 1051) // 1.75 Minutes to 1 Decisecond left
-						examine_list += "[parent] looks barely edible."
-			if(DECOMP_EXAM_RAW) // Raw food
-				switch(timeleft(timerid))
-					if(1501 to 2250) // 3.75 to 2.5 Minutes left
-						examine_list += "[parent] looks kinda stale."
-					if(751 to 1500) // 2.5 to 1.25 Minutes left
-						examine_list += "[parent] is starting to look pretty gross."
-					if(1 to 750) // 1.25 Minutes to 1 Decisecond left
-						examine_list += "[parent] looks barely edible."
-	else // No timer currently running.
-		switch(examine_type)
-			if(DECOMP_EXAM_NORMAL) // All other types
-				switch(time_remaining)
-					if(3001 to 4500) // 7.5 to 5 Minutes left
-						examine_list += "[parent] looks kinda stale."
-					if(1501 to 3000) // 5 to 2.5 Minutes left
-						examine_list += "[parent] is starting to look pretty gross."
-					if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
-						examine_list += "[parent] looks barely edible."
-			if(DECOMP_EXAM_GROSS) // Gross food
-				switch(time_remaining)
-					if(2101 to 3150) // 5.25 to 3.5 Minutes
-						examine_list += "[parent] looks kinda stale."
-					if(1050 to 2100) // 3.5 to 1.75 Minutes left
-						examine_list += "[parent] is starting to look pretty gross."
-					if(1 to 1051) // 1.75 Minutes to 1 Decisecond left
-						examine_list += "[parent] looks barely edible."
-			if(DECOMP_EXAM_RAW) // Raw food
-				switch(time_remaining)
-					if(1501 to 2250) // 3.75 to 2.5 Minutes left
-						examine_list += "[parent] looks kinda stale."
-					if(751 to 1500) // 2.5 to 1.25 Minutes left
-						examine_list += "[parent] is starting to look pretty gross."
-					if(1 to 750) // 1.25 Minutes to 1 Decisecond left
-						examine_list += "[parent] looks barely edible."
+		time_d = timeleft(timerid)
+	else
+		time_d = time_remaining
+	switch(examine_type)
+		if(DECOMP_EXAM_NORMAL)// All other types
+			switch(time_d) // Deciseconds used so there's no gaps between examine times.
+				if(3001 to 4500) // 7.5 to 5 Minutes left
+					examine_list += "[parent] looks kinda stale."
+				if(1501 to 3000) // 5 to 2.5 Minutes left
+					examine_list += "[parent] is starting to look pretty gross."
+				if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
+					examine_list += "[parent] looks barely edible."
+		if(DECOMP_EXAM_GROSS) // Gross food
+			switch(time_d)
+				if(2101 to 3150) // 5.25 to 3.5 Minutes
+					examine_list += "[parent] looks kinda stale."
+				if(1050 to 2100) // 3.5 to 1.75 Minutes left
+					examine_list += "[parent] is starting to look pretty gross."
+				if(1 to 1051) // 1.75 Minutes to 1 Decisecond left
+					examine_list += "[parent] looks barely edible."
+		if(DECOMP_EXAM_RAW) // Raw food
+			switch(time_d)
+				if(1501 to 2250) // 3.75 to 2.5 Minutes left
+					examine_list += "[parent] looks kinda stale."
+				if(751 to 1500) // 2.5 to 1.25 Minutes left
+					examine_list += "[parent] is starting to look pretty gross."
+				if(1 to 750) // 1.25 Minutes to 1 Decisecond left
+					examine_list += "[parent] looks barely edible."
 
 #undef DECOMPOSITION_TIME
 #undef DECOMPOSITION_TIME_GROSS
