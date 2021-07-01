@@ -692,3 +692,19 @@
 
 	return parts.Join("<br>")
 
+// Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
+/datum/antagonist/changeling/headslug
+	name = "Headslug Changeling"
+	show_in_antagpanel = FALSE
+	give_objectives = FALSE
+
+	geneticpoints = 5
+	total_geneticspoints = 5
+	chem_charges = 10
+	chem_storage = 50
+	total_chem_storage = 50
+
+/datum/antagonist/changeling/headslug/greet()
+	if(you_are_greet)
+		to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You are not quite as powerful as a full changeling, and are not a full antagonist."))
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
