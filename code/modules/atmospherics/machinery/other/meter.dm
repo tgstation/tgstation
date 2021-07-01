@@ -23,7 +23,7 @@
 		"green" = "#00ff00",
 		"cyan" = "#00feff",
 		"blue" = "#0000ff",
-		"purple" = "cc66ff"
+		"purple" = "#cc66ff"
 	)
 
 /obj/machinery/meter/atmos
