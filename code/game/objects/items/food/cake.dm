@@ -482,7 +482,7 @@
 /obj/item/food/cakeslice/pavlovacream
 	name = "Pavlova slice"
 	desc = "A cracked slice of pavlova stacked with berries"
-	icon_state = "pavlovaslice"
+	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = DAIRY | FRUITS | SUGAR
 
@@ -500,6 +500,6 @@
 /obj/item/food/cakeslice/pavlovakorta
 	name = "pumpkin spice cake slice"
 	desc = "A cracked slice of pavlova stacked with berries"
-	icon_state = "pavlovaslice"
+	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = NUTS | FRUITS | SUGAR
