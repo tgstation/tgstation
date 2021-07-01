@@ -51,7 +51,7 @@
 
 /obj/machinery/roulette/Initialize()
 	. = ..()
-	jackpot_loop = new(list(src), FALSE)
+	jackpot_loop = new(src, FALSE)
 	wires = new /datum/wires/roulette(src)
 
 /obj/machinery/roulette/Destroy()
