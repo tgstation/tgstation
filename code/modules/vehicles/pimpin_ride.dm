@@ -26,7 +26,7 @@
 /obj/vehicle/ridden/janicart/examine(mob/user)
 	. = ..()
 	if (installed_upgrade)
-		. += "It has been upgraded with [installed_upgrade]."
+		. += "It has been upgraded with [installed_upgrade], which can be removed with a screwdriver."
 
 /obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))
@@ -41,7 +41,7 @@
 		update_appearance()
 	else if(istype(I, /obj/item/janicart_upgrade))
 		if(installed_upgrade)
-			to_chat(user, span_warning("[src] already has an upgrade installed!"))
+			to_chat(user, span_warning("[src] already has an upgrade installed! Use a screwdriver to remove it."))
 			return
 		var/obj/item/janicart_upgrade/new_upgrade = I
 		new_upgrade.forceMove(src)
