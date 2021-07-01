@@ -72,10 +72,12 @@
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meter0"
+		set_greyscale(colors=list(meter_colors["grey"]))
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter"
+		set_greyscale(colors=list(meter_colors["grey"]))
 		return FALSE
 
 	use_power(5)
@@ -101,7 +103,7 @@
 		icon_state = "meter4"
 
 	var/env_temperature = environment.temperature
-	if (env_temperature == 0) // this also means there is no pressure
+	if(env_pressure == 0 || env_temperature == 0)
 		set_greyscale(colors=list(meter_colors["grey"]))
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_3)
 		set_greyscale(colors=list(meter_colors["blue"]))
