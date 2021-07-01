@@ -14,18 +14,18 @@
 	. = ..()
 	airs[1].volume = initial_volume
 
-/obj/machinery/atmospherics/components/unary/turbine/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/unary/turbine/attackby(obj/item/tool, mob/user, params)
 	if(!connected)
-		if(default_deconstruction_screwdriver(user, "[base_icon]", "[base_icon]", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon]", "[base_icon]", tool))
 			update_appearance()
 			return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, tool))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(tool))
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/turbine/default_change_direction_wrench(mob/user, obj/item/I)
+/obj/machinery/atmospherics/components/unary/turbine/default_change_direction_wrench(mob/user, obj/item/tool)
 	if(!..())
 		return FALSE
 	SetInitDirections()
@@ -161,7 +161,7 @@
 	turbine_parts = null
 	return ..()
 
-/obj/machinery/power/turbine/turbine_controller/attackby(obj/item/I, mob/user, params)
+/obj/machinery/power/turbine/turbine_controller/attackby(obj/item/tool, mob/user, params)
 	. = ..()
 	if(!connected)
 		balloon_alert(user, "Connect all parts first by using a multitool on this terminal")
