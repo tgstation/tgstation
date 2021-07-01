@@ -346,6 +346,7 @@
 /datum/status_effect/antimagic
 	id = "antimagic"
 	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
 	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
 
 /datum/status_effect/antimagic/on_apply()
