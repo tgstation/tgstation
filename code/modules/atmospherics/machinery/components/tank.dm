@@ -112,6 +112,7 @@
 		. += "<span class='notice'>A pipe port can be opened with a [wrench_hint].</span>"
 	else
 		. += "<span class='notice'>The pipe port can be moved or closed with a [wrench_hint].</span>"
+	. += "<span class='notice'>A holographic sticker on it says that its maximum safe pressure is: [siunit_pressure(max_pressure, 0)].</span>"
 
 /obj/machinery/atmospherics/components/tank/set_custom_materials(list/materials, multiplier)
 	. = ..()
@@ -146,6 +147,9 @@
 
 ///////////////////////////////////////////////////////////////////
 // Pipenet stuff
+
+/obj/machinery/atmospherics/components/tank/return_analyzable_air()
+	return air_contents
 
 /obj/machinery/atmospherics/components/tank/returnAirsForReconcilation(datum/pipeline/requester)
 	. = ..()
