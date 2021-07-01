@@ -458,6 +458,7 @@
 
 /datum/chemical_reaction/drink/eggnog
 	results = list(/datum/reagent/consumable/ethanol/eggnog = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 2)
 
 /datum/chemical_reaction/drink/narsour
 	results = list(/datum/reagent/consumable/ethanol/narsour = 1)
