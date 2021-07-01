@@ -44,6 +44,30 @@
 			}; \
 		} \
 	} while (0)
+#define REMOVE_TRAIT_NOT_FROM(target, trait, sources) \
+	do { \
+		var/list/_L = target.status_traits; \
+		var/list/_S; \
+		if (sources && !islist(sources)) { \
+			_S = list(sources); \
+		} else { \
+			_S = sources\
+		}; \
+		if (_L && _L[trait]) { \
+			for (var/_T in _L[trait]) { \
+				if (!(_T in _S)) { \
+					_L[trait] -= _T \
+				} \
+			};\
+			if (!length(_L[trait])) { \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
+			}; \
+			if (!length(_L)) { \
+				target.status_traits = null \
+			}; \
+		} \
+	} while (0)
 #define REMOVE_TRAITS_NOT_IN(target, sources) \
 	do { \
 		var/list/_L = target.status_traits; \
