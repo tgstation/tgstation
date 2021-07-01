@@ -410,8 +410,24 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/path in external_organs)
-			//TODO: use preference
-			var/obj/item/organ/external/new_organ = new path(null, external_organs[path], human.body_type)
+			//Load a persons preferences from DNA if possible
+			var/obj/item/organ/external/type = path
+			var/preference_type = human.dna.features[initial(type.slot)]
+
+			//LEGACY. Temporary until I rework the way styles are stored
+			var/datum/sprite_accessory/accessory
+
+			switch(type)
+				if(/obj/item/organ/external/horns)
+					accessory = GLOB.horns_list[preference_type]
+				if(/obj/item/organ/external/frills)
+					accessory = GLOB.frills_list[preference_type]
+				if(/obj/item/organ/external/antennae)
+					accessory = GLOB.moth_antennae_list[preference_type]
+				if(/obj/item/organ/external/snout)
+					accessory = GLOB.snouts_list[preference_type]
+
+			var/obj/item/organ/external/new_organ = new path(null, accessory && accessory.icon_state != "none" ? accessory.icon_state : external_organs[path], human.body_type)
 
 			new_organ.Insert(human)
 

@@ -588,6 +588,17 @@ generate/load female uniform sprites matching all previously decided variables
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
+
+		//they're kind of a big deal for generating appearances
+		if(LAZYLEN(BP.external_organs))
+			. += "("
+
+			for(var/obj/item/organ/external/organ in BP.external_organs)
+				. += organ.mob_sprite
+
+			. += ")"
+
+
 		if(BP.status == BODYPART_ORGANIC)
 			. += "-organic"
 		else

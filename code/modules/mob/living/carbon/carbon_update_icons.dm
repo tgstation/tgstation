@@ -253,10 +253,6 @@
 		var/obj/item/bodypart/BP = X
 		new_limbs += BP.get_limb_icon()
 
-		var/obj/item/soap/soap = new(get_turf(src))
-		soap.overlays = BP.get_limb_icon()
-		soap.icon_state = null
-
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs
@@ -286,16 +282,6 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
-
-		//they're kind of a big deal for generating appearances
-		if(LAZYLEN(BP.external_organs))
-			. += "("
-
-			for(var/obj/item/organ/external/organ in BP.external_organs)
-				. += organ.mob_sprite
-
-			. += ")"
-
 		if(BP.use_digitigrade)
 			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.animal_origin)
