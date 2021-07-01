@@ -14,6 +14,78 @@
 	circuit = /obj/item/circuitboard/computer/crew
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/crew/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/medical_console_data,
+	))
+
+/obj/item/circuit_component/medical_console_data
+	display_name = "Crew Monitoring Data"
+	display_desc = "Outputs the medical statuses of people on the crew monitoring computer, where it can then be filtered with a Select Query component"
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	/// The records retrieved
+	var/datum/port/output/records
+
+	var/obj/machinery/computer/crew/attached_console
+
+/obj/item/circuit_component/medical_console_data/Initialize()
+	. = ..()
+	records = add_output_port("Security Records", PORT_TYPE_TABLE)
+
+/obj/item/circuit_component/medical_console_data/Destroy()
+	records = null
+	return ..()
+
+
+/obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/crew))
+		attached_console = parent
+
+/obj/item/circuit_component/medical_console_data/unregister_usb_parent(atom/movable/parent)
+	attached_console = null
+	return ..()
+
+/obj/item/circuit_component/medical_console_data/get_ui_notices()
+	. = ..()
+	. += create_table_notices(list(
+		"name",
+		"job",
+		"life_status",
+		"oxydam",
+		"toxdam",
+		"burndam",
+		"brutedam",
+		"location",
+	))
+
+
+/obj/item/circuit_component/medical_console_data/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
+
+	if(!attached_console || !GLOB.crewmonitor)
+		return
+
+	var/list/new_table = list()
+	for(var/list/player_record as anything in GLOB.crewmonitor.update_data(attached_console.z))
+		var/list/entry = list()
+		entry["name"] = player_record["name"]
+		entry["job"] = player_record["assignment"]
+		entry["life_status"] = player_record["life_status"]
+		entry["oxydam"] = player_record["oxydam"]
+		entry["toxdam"] = player_record["toxdam"]
+		entry["burndam"] = player_record["burndam"]
+		entry["brutedam"] = player_record["brutedam"]
+		entry["location"] = player_record["area"]
+
+		new_table += list(entry)
+
+	records.set_output(new_table)
+
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
 

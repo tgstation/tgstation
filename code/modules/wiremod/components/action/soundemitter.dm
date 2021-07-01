@@ -76,6 +76,6 @@
 	if(!sound_to_play)
 		return
 
-	playsound(src, sound_to_play, volume.input_value, FALSE, frequency = frequency.input_value)
+	playsound(src, sound_to_play, volume.input_value, frequency? TRUE : FALSE, frequency = frequency.input_value)
 
 	COOLDOWN_START(src, next_sound, sound_cooldown)
