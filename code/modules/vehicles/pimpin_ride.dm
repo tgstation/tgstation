@@ -1,11 +1,15 @@
-//PIMP-CART
+/**
+ * # Janicart
+ */
 /obj/vehicle/ridden/janicart
 	name = "janicart (pimpin' ride)"
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
 	movedelay = 1
+	/// The attached garbage bag, if present
 	var/obj/item/storage/bag/trash/trash_bag
+	/// The installed upgrade, if present
 	var/obj/item/janicart_upgrade/installed_upgrade
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
@@ -85,16 +89,36 @@
 /obj/vehicle/ridden/janicart/upgraded/vacuum
 	installed_upgrade = new /obj/item/janicart_upgrade/vacuum
 
+/**
+ * # Janicart Upgrade
+ *
+ * Functional upgrades that can be installed into a janicart.
+ *
+ */
 /obj/item/janicart_upgrade
 	name = "base upgrade"
 	desc = "An abstract upgrade for mobile janicarts."
 	icon_state = "janicart_upgrade"
 	greyscale_config = /datum/greyscale_config/janicart_upgrade
+	/// The greyscale config for the on-cart installed upgrade overlay
 	var/overlay_greyscale_config = /datum/greyscale_config/janicart_upgrade/installed
 
+/**
+ * Called when upgrade is installed into a janicart
+ *
+ * Arguments:
+ * * installee - The cart the upgrade is being installed into
+ */
 /obj/item/janicart_upgrade/proc/install(obj/vehicle/ridden/janicart/installee)
 	return FALSE
 
+
+/**
+ * Called when upgrade is uninstalled from a janicart
+ *
+ * Arguments:
+ * * installee - The cart the upgrade is being removed from
+ */
 /obj/item/janicart_upgrade/proc/uninstall(obj/vehicle/ridden/janicart/installee)
 	return FALSE
 
