@@ -68,6 +68,9 @@
 		else if(locate(/obj/structure/table) in food.loc)
 			clean = TRUE
 			break
+		else if(locate(/obj/machinery/conveyor) in food.loc)
+			clean = TRUE
+			break
 		last_loc = last_loc.loc
 	if(!handled || clean || protected)
 		// prevent decomposition
