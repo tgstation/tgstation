@@ -207,10 +207,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
 	tastes = list("peanuts" = 3, "bbq sauce" = 1, "arguments" = 1)
 
-/obj/item/food/peanuts/banappeal
-	name = "\improper Gallery's Ban Appel roast peanuts"
-	desc = "Yearly lobbying is denied not because the roasting apples are toxic, but because they keep evading the ban."
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/cyanide = 1) //uses roasted poison apples
+/obj/item/food/peanuts/ban_appeal
+	name = "\improper Gallery's peanuts Ban Appel mix"
+	desc = "An ill-fated attempt at trail mix, banned in 6 sectors. Yearly lobbying to overturn is denied not because the apples are toxic, but because they keep evading the ban."
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin = 1) //tasty for slime people
 	tastes = list("peanuts" = 3, "apples" = 1, "regret" = 1)
 
 /obj/item/food/peanuts/random
