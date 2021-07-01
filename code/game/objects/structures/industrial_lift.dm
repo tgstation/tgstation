@@ -25,6 +25,8 @@
 	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
 
 /datum/lift_master/proc/remove_lift_platforms(obj/structure/industrial_lift/old_lift_platform)
+	SIGNAL_HANDLER
+
 	if(!(old_lift_platform in lift_platforms))
 		return
 	old_lift_platform.lift_master_datum = null
@@ -166,7 +168,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
 		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 
 	if(!lift_master_datum)
@@ -236,7 +238,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		for(var/mob/M in urange(8, src))
 			shake_camera(M, 2, 3)
 		playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		
+
 	if(going == DOWN)
 		for(var/mob/living/crushed in destination.contents)
 			to_chat(crushed, span_userdanger("You are crushed by [src]!"))
@@ -252,7 +254,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					visible_message("<span class='danger'>[src] smashes through [victimstructure]!</span>")
 					victimstructure.deconstruct(FALSE)
 				else
-					visible_message("<span class='danger'>[src] violently rams [victimstructure] out of the way!</span>") 
+					visible_message("<span class='danger'>[src] violently rams [victimstructure] out of the way!</span>")
 					victimstructure.anchored = FALSE
 					victimstructure.take_damage(rand(20,25))
 					victimstructure.throw_at(throw_target, 200, 4)

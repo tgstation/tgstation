@@ -15,12 +15,15 @@
 		return
 	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
-	if(client?.holder && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN))
+	if(client?.holder && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN || (message_mods[RADIO_EXTENSION] == MODE_PUPPET && mind?.current)))
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
 		if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
 			client.cmd_admin_say(message)
 		else if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
 			client.dsay(message)
+		else if(message_mods[RADIO_EXTENSION] == MODE_PUPPET)
+			if(!mind.current.say(message))
+				to_chat(src, span_warning("Your linked body was unable to speak!"))
 		return
 
 	if(check_emote(message, forced))

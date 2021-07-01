@@ -28,6 +28,11 @@
 	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
 
+/datum/greyscale_config/stationary_canister
+	name = "Stationary Canister"
+	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
+	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary.json'
+
 /datum/greyscale_config/carp
 	name = "Space Carp"
 	icon_file = 'icons/mob/carp.dmi'

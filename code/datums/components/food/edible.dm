@@ -45,20 +45,21 @@ Behavior that's still missing from this component that original food items had t
 	///The type of atom this creates when the object is microwaved.
 	var/atom/microwaved_type
 
-/datum/component/edible/Initialize(list/initial_reagents,
-								food_flags = NONE,
-								foodtypes = NONE,
-								volume = 50,
-								eat_time = 10,
-								list/tastes,
-								list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
-								bite_consumption = 2,
-								microwaved_type,
-								junkiness,
-								datum/callback/after_eat,
-								datum/callback/on_consume,
-								datum/callback/check_liked)
-
+/datum/component/edible/Initialize(
+	list/initial_reagents,
+	food_flags = NONE,
+	foodtypes = NONE,
+	volume = 50,
+	eat_time = 10,
+	list/tastes,
+	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
+	bite_consumption = 2,
+	microwaved_type,
+	junkiness,
+	datum/callback/after_eat,
+	datum/callback/on_consume,
+	datum/callback/check_liked,
+)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -72,7 +73,7 @@ Behavior that's still missing from this component that original food items had t
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, parent, loc_connections)
+	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -111,20 +112,23 @@ Behavior that's still missing from this component that original food items had t
 		else
 			owner.reagents.add_reagent(rid, amount)
 
-/datum/component/edible/InheritComponent(datum/component/C,
+/datum/component/edible/InheritComponent(
+	datum/component/C,
 	i_am_original,
 	list/initial_reagents,
 	food_flags = NONE,
 	foodtypes = NONE,
 	volume = 50,
-	eat_time = 30,
+	eat_time = 10,
 	list/tastes,
 	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 	bite_consumption = 2,
+	microwaved_type,
+	junkiness,
 	datum/callback/after_eat,
-	datum/callback/on_consume
-	)
-
+	datum/callback/on_consume,
+	datum/callback/check_liked,
+)
 	. = ..()
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags

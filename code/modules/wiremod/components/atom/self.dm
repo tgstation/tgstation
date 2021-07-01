@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/self
 	display_name = "Self"
+	display_desc = "A component that returns the current shell."
 
 	/// The shell this component is attached to.
 	var/datum/port/output/output
