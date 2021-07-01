@@ -572,17 +572,12 @@
 
 	return TRUE
 
-/// Performs (lhs | rhs) on two lazylists without inserting accidental nulls. Returns a new list.
-/proc/or_two_lazy_lists(list/lhs, list/rhs)
-	// Is neither list empty?
-	if(LAZYLEN(rhs) && LAZYLEN(lhs))
-		return (lhs | rhs)
-
-	// Is at least one of the lists empty?
-	if(LAZYLEN(lhs))
-		return lhs.Copy()
-	if(LAZYLEN(rhs))
-		return rhs.Copy()
-
-	// Both lists empty.
-	return null
+#define LAZY_LISTS_OR(left_list, right_list)\
+	( length(left_list)\
+		? length(right_list)\
+			? (left_list | right_list)\
+			: left_list.Copy()\
+		: length(right_list)\
+			? right_list.Copy()\
+			: null\
+	)
