@@ -56,7 +56,7 @@
 
 	// if we did indeed suck up something, play a funny noise
 	if (sucked)
-		playsound(parent, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+		playsound(parent, "rustle", 50, TRUE, -5)
 
 /**
  * Handler for when a new trash bag is attached
