@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/speech
 	display_name = "Speech"
+	display_desc = "A component that sends a message. Requires a shell."
 
 	/// The message to send
 	var/datum/port/input/message
@@ -15,6 +16,10 @@
 	var/speech_cooldown = 1 SECONDS
 
 	COOLDOWN_DECLARE(next_speech)
+
+/obj/item/circuit_component/speech/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Speech Cooldown: [DisplayTimeText(speech_cooldown)]", "orange", "stopwatch")
 
 /obj/item/circuit_component/speech/Initialize()
 	. = ..()

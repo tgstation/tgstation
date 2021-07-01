@@ -185,7 +185,10 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_MOVE_VENTCRAWLING" = TRAIT_MOVE_VENTCRAWLING,
 		"TRAIT_MOVE_FLOATING" = TRAIT_MOVE_FLOATING,
 		"TRAIT_MOVE_PHASING" = TRAIT_MOVE_PHASING
-		)
+		),
+	/obj/item/card/id = list(
+		"TRAIT_MAGNETIC_ID_CARD" = TRAIT_MAGNETIC_ID_CARD,
+	)
 	))
 
 /// value -> trait name, generated on use from trait_by_type global

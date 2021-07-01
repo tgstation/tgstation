@@ -451,10 +451,10 @@
 	for(var/obj/item/organ/organ in contents)
 		organ.applyOrganDamage(-repair_rate * organ.maxHealth * delta_time)
 
-/obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
+/obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isorgan(AM))
-		var/obj/item/organ/O = AM
+	if(isorgan(gone))
+		var/obj/item/organ/O = gone
 		O.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------

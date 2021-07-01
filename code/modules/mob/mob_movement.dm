@@ -310,7 +310,7 @@
 				var/mob/M = AM
 				if(M.buckled)
 					continue
-			if(!AM.CanPass(src) || AM.density)
+			if(AM.density || !AM.CanPass(src, get_dir(AM, src)))
 				if(AM.anchored)
 					return AM
 				if(pulling == AM)

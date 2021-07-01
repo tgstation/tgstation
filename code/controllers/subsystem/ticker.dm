@@ -378,16 +378,16 @@ SUBSYSTEM_DEF(ticker)
 		picked_spare_id_candidate = pick(spare_id_candidates)
 
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
-		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
-		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
-			var/player_assigned_role = new_player_human.mind.assigned_role
+		var/mob/living/new_player_living = new_player_mob.new_character
+		if(istype(new_player_living) && new_player_living.mind?.assigned_role)
+			var/player_assigned_role = new_player_living.mind.assigned_role
 			var/player_is_captain = (picked_spare_id_candidate == new_player_mob) || (SSjob.always_promote_captain_job && (player_assigned_role == "Captain"))
 			if(player_is_captain)
 				captainless = FALSE
-			if(player_assigned_role != new_player_human.mind.special_role)
-				SSjob.EquipRank(new_player_mob, player_assigned_role, FALSE, player_is_captain)
-				if(CONFIG_GET(flag/roundstart_traits) && ishuman(new_player_human))
-					SSquirks.AssignQuirks(new_player_human, new_player_mob.client)
+			if(player_assigned_role != new_player_living.mind.special_role)
+				new_player_living = SSjob.EquipRank(new_player_mob, player_assigned_role, FALSE, player_is_captain)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(new_player_living))
+					SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		CHECK_TICK
 
 	if(captainless)
