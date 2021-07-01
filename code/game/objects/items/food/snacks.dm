@@ -210,7 +210,7 @@
 /obj/item/food/peanuts/ban_appeal
 	name = "\improper Gallery's peanuts Ban Appel mix"
 	desc = "An ill-fated attempt at trail mix, banned in 6 sectors. Yearly lobbying to overturn is denied not because the apples are toxic, but because they keep evading the ban."
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin = 1) //tasty for slime people
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/cyanide = 1) //uses dried poison apples
 	tastes = list("peanuts" = 3, "apples" = 1, "regret" = 1)
 
 /obj/item/food/peanuts/random
