@@ -59,7 +59,7 @@
 
 /obj/machinery/atmospherics/components/tank/Initialize()
 	. = ..()
-	for (var/datum/gas_mixture/airs_ports in airs)
+	for (var/datum/gas_mixture/airs_ports as anything in airs)
 		airs_ports.volume = 0 // so that all gas shows up on the analyzer properly, these nodes aren't actually needed for functionality here
 	
 	if(!knob_overlays)
