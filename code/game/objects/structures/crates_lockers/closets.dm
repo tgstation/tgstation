@@ -467,14 +467,13 @@
 	open()
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 
 	if(!opened && secure)
 		togglelock(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
