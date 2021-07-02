@@ -697,6 +697,7 @@
 	name = "Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
+	soft_antag = TRUE
 
 	geneticpoints = 5
 	total_geneticspoints = 5
