@@ -2,7 +2,7 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "meter_base"
+	icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
@@ -14,7 +14,7 @@
 	var/atom/target
 	var/target_layer = PIPING_LAYER_DEFAULT
 	greyscale_config = /datum/greyscale_config/meter
-	greyscale_colors = "#00ff00"
+	greyscale_colors = "#808080"
 	var/static/list/meter_colors = list(
 		"grey" = "#808080",
 		"red" = "#ff0000",
