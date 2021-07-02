@@ -411,7 +411,10 @@
 				value = port.convert_value(port.output_value)
 			else if(isnull(value))
 				value = "null"
-			balloon_alert(usr, "[port.name] value: [value]")
+			var/string_form = copytext("[value]", 1, PORT_MAX_STRING_DISPLAY)
+			if(length(string_form) >= PORT_MAX_STRING_DISPLAY-1)
+				string_form += "..."
+			balloon_alert(usr, "[port.name] value: [string_form]")
 			. = TRUE
 		if("set_display_name")
 			var/new_name = params["display_name"]
