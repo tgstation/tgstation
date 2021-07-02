@@ -1,0 +1,4 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "Killing and reviving polar bears no longer makes them easier to move."
