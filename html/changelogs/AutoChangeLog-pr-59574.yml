@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - rscadd: "Adds a midround ruleset that allows living players to become the blob if they are randomly selected."
