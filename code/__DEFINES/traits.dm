@@ -46,24 +46,24 @@
 	} while (0)
 #define REMOVE_TRAIT_NOT_FROM(target, trait, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
-		var/list/_S; \
+		var/list/_traits_list = target.status_traits; \
+		var/list/_sources_list; \
 		if (sources && !islist(sources)) { \
-			_S = list(sources); \
+			_sources_list = list(sources); \
 		} else { \
-			_S = sources\
+			_sources_list = sources\
 		}; \
-		if (_L && _L[trait]) { \
-			for (var/_T in _L[trait]) { \
-				if (!(_T in _S)) { \
-					_L[trait] -= _T \
+		if (_traits_list && _traits_list[trait]) { \
+			for (var/_trait_source in _traits_list[trait]) { \
+				if (!(_trait_source in _sources_list)) { \
+					_traits_list[trait] -= _trait_source \
 				} \
 			};\
-			if (!length(_L[trait])) { \
-				_L -= trait; \
+			if (!length(_traits_list[trait])) { \
+				_traits_list -= trait; \
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
-			if (!length(_L)) { \
+			if (!length(_traits_list)) { \
 				target.status_traits = null \
 			}; \
 		} \
