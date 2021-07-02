@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - bugfix: "You may no longer circumvent config VAS protections by proxying proc calls."
