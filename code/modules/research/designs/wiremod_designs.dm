@@ -168,6 +168,11 @@
 	id = "comp_combiner"
 	build_path = /obj/item/circuit_component/combiner
 
+/datum/design/component/split
+	name = "Split Component"
+	id = "comp_split"
+	build_path = /obj/item/circuit_component/split
+
 /datum/design/component/pull
 	name = "Pull Component"
 	id = "comp_pull"

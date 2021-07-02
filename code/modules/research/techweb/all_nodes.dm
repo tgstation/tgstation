@@ -224,6 +224,7 @@
 		"comp_speech",
 		"comp_speech",
 		"comp_string_contains",
+		"comp_split",
 		"comp_textcase",
 		"comp_tostring",
 		"comp_typecheck",
