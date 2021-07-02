@@ -260,7 +260,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]<br>"
-				dat += "You have been working for: [ROUND_TIME]"
+				dat += "It has been [ROUND_TIME] since the emergency shuttle was last called."
+				
 
 				dat += "<br><br>"
 
