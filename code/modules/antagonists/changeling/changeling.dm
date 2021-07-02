@@ -705,6 +705,9 @@
 	total_chem_storage = 50
 
 /datum/antagonist/changeling/headslug/greet()
+	var/policy = get_policy(ROLE_HEADSLUG_CHANGELING)
 	if(you_are_greet)
-		to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You are not quite as powerful as a full changeling, and are not a full antagonist."))
+		to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You aren't as strong as a normal changeling, as you are newly born."))
+	if(policy)
+		to_chat(owner, policy)
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
