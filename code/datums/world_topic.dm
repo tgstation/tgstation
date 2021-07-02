@@ -97,7 +97,7 @@
 	if (configured_network && configured_network != input["network"])
 		return
 
-	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
+	minor_announce(html_decode(input["message"]), "Incoming message from [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
 	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
 		CM.override_cooldown()
