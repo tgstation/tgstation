@@ -1,0 +1,4 @@
+author: "aaaa1023"
+delete-after: True
+changes: 
+  - bugfix: "Sink frames are now deconstructable with a wrench."
