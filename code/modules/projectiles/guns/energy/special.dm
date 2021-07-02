@@ -317,7 +317,7 @@
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
-	desc = "A weapon that can only be used to its full potential by the truly robust."
+	desc = "A gun that can alter its target's temperature. Generally considered by most weapons analysts to be almost virtually useless. Imagine dying to this thing."
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/instakill
