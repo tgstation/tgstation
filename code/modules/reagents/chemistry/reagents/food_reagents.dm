@@ -597,7 +597,7 @@
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	description = "It's full of protein."
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -989,6 +989,7 @@
 	name = "Whipped Cream"
 	description = "A white fluffy cream made from whipping cream at intense speed."
 	color = "#efeff0"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "fluffy sweet cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
