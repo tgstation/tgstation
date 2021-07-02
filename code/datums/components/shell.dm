@@ -101,7 +101,7 @@
 		return
 
 	if(attached_circuit?.owner_id && item == attached_circuit.owner_id.resolve())
-		locked = !locked
+		set_locked(!locked)
 		source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
 		return COMPONENT_NO_AFTERATTACK
 
@@ -127,6 +127,12 @@
 
 	logic_board.inserter_mind = WEAKREF(attacker.mind)
 	attach_circuit(logic_board, attacker)
+
+/// Sets whether the shell is locked or not
+/datum/component/shell/proc/set_locked(new_value)
+	locked = new_value
+	attached_circuit?.locked = locked
+
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -201,6 +207,7 @@
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
 	attached_circuit.set_shell(parent)
+	attached_circuit.locked = FALSE
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		var/atom/movable/parent_atom = parent
@@ -224,6 +231,7 @@
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
+	attached_circuit.locked = FALSE
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
