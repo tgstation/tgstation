@@ -7,7 +7,7 @@
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
-#define PORT_TYPE_ANY null
+#define PORT_TYPE_ANY "any"
 
 // Fundamental datatypes
 /// String datatype
@@ -25,8 +25,6 @@
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
-/// Any datatype (USED ONLY FOR DISPLAY, DO NOT USE)
-#define COMP_TYPE_ANY "any"
 
 
 /// The maximum range between a port and an atom

@@ -155,7 +155,7 @@
 	set_output(null)
 
 /**
- * Determines if a datatype is compatible with this port.
+ * Determines if a datatype is compatible with another port of a different type.
  *
  * Arguments:
  * * other_datatype - The datatype to check
