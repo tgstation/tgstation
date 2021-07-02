@@ -114,7 +114,7 @@
 	. = ..()
 	countEggs()
 
-/obj/item/storage/basket/easter/Entered(atom/movable/arrived, direction)
+/obj/item/storage/basket/easter/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	countEggs()
 
