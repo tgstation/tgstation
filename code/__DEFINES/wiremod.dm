@@ -12,7 +12,7 @@
 // Fundamental datatypes
 /// String datatype
 #define PORT_TYPE_STRING "string"
-#define PORT_MAX_STRING_LENGTH 500
+#define PORT_MAX_STRING_LENGTH 5000
 /// Number datatype
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
