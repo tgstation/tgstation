@@ -1,7 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "added missing air alarms on Tramstation in several areas that previously had none"
-  - bugfix: "removed air alarms that was right next to each other in the same room on Tramstation"
-  - bugfix: "Tramstation toxins now has proper firelock safety, no more toxin fires breaking the windows into sci halls"
-  - bugfix: "Tramstation Kitchen Freezer now uses the proper area so the kitchen and freezer air alarms dont control the same vents"

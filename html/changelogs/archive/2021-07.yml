@@ -42,3 +42,37 @@
   tralezab:
   - bugfix: fixes buying shuttle insurance while the shuttle is docked
   - expansion: added barticles to bonfires
+2021-07-02:
+  Cheshify:
+  - bugfix: The flashlight pens are now actually pen-sized
+  Melbert:
+  - bugfix: Glowshrooms created from spread now should behave like things that actually
+      exist again.
+  Nari Harimoto:
+  - bugfix: added missing air alarms on Tramstation in several areas that previously
+      had none
+  - bugfix: removed air alarms that was right next to each other in the same room
+      on Tramstation
+  - bugfix: Tramstation toxins now has proper firelock safety, no more toxin fires
+      breaking the windows into sci halls
+  - bugfix: Tramstation Kitchen Freezer now uses the proper area so the kitchen and
+      freezer air alarms dont control the same vents
+  RandomGamer123:
+  - bugfix: Nuclear operatives' uplink implants now properly only show items they
+      are allowed to buy, preventing them bypassing uplink restrictions.
+  Ryll/Shaps:
+  - bugfix: OOC heart commendations once again properly save and persist between rounds!
+  - bugfix: You can no longer sacrifice pAI shells as a cultist
+  Seris02:
+  - bugfix: changeling legs now copy digitigrade/normal legs
+  Sparkezel:
+  - balance: Bats no longer stunlock people. Increased bat damage by 2.
+  Timberpoes:
+  - bugfix: The detective's scanner should now always properly output the correct
+      data for scans and should no longer print out blank entries erroneously.
+  Wayland-Smithy:
+  - bugfix: Fixed rogue vending machines targeting incorporeal.
+  bobbahbrown:
+  - bugfix: You may no longer circumvent config VAS protections by proxying proc calls.
+  ninjanomnom:
+  - bugfix: Some greyscale icons like the sombrero have had their errors fixed.
