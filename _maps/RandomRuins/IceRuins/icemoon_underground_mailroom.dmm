@@ -391,6 +391,11 @@
 "NN" = (
 /turf/open/floor/carpet/green,
 /area/ruin/powered/mailroom)
+"Pk" = (
+/obj/item/multitool,
+/obj/structure/ice_stasis,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "PD" = (
 /obj/structure/holobox,
 /obj/effect/turf_decal/stripes{
@@ -595,7 +600,7 @@ iV
 iV
 zr
 lI
-iV
+Pk
 lI
 iV
 iV
