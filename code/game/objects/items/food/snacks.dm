@@ -182,6 +182,7 @@
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
+	var/safe_for_consumption = TRUE
 
 /obj/item/food/peanuts/salted
 	name = "\improper Gallery's salt reserves peanuts"
@@ -212,15 +213,26 @@
 	desc = "An ill-fated attempt at trail mix, banned in 6 sectors. Yearly lobbying to overturn is denied not because the apples are toxic, but because they keep evading the ban."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/cyanide = 1) //uses dried poison apples
 	tastes = list("peanuts" = 3, "apples" = 1, "regret" = 1)
+	safe_for_consumption = FALSE
 
 /obj/item/food/peanuts/random
 	name = "\improper Gallery's every-flavour peanuts"
 	desc = "What flavour will you get?"
 	icon_state = "peanuts"
+	safe_for_consumption = FALSE
+
+GLOBAL_LIST(safe_peanut_types) = populate_safe_peanut_types()
+
+/proc/populate_safe_peanut_types()
+	. = list()
+	for(var/obj/item/food/peanuts/peanut_type as anything in subtypesof(/obj/item/food/peanuts))
+		if(!initial(peanut_type.safe_for_consumption))
+			continue
+		. += peanut_type
 
 /obj/item/food/peanuts/random/Initialize()
 	// Generate a sample p
-	var/peanut_type = pick(subtypesof(/obj/item/food/peanuts) - /obj/item/food/peanuts/random - /obj/item/food/peanuts/ban_appeal)
+	var/peanut_type = pick(GLOB.safe_peanut_types)
 	var/obj/item/food/sample = new peanut_type(loc)
 
 	name = sample.name
