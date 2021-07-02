@@ -594,7 +594,7 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "("
 
 			for(var/obj/item/organ/external/organ in BP.external_organs)
-				. += organ.mob_sprite
+				. += organ.mob_icon_state
 
 			. += ")"
 

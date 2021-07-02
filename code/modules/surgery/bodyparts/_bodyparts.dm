@@ -917,7 +917,7 @@
 			continue
 		//Some externals have multiple layers for some reason
 		for(var/e_layer in external_organ.layers)
-			var/mutable_appearance/pain = mutable_appearance(external_organ.icon, external_organ.mob_sprite + mutant_bodyparts_layertext(e_layer), layer = -e_layer, appearance_flags = KEEP_APART)
+			var/mutable_appearance/pain = mutable_appearance(external_organ.mob_icon, external_organ.mob_icon_state + mutant_bodyparts_layertext(e_layer), layer = -e_layer, appearance_flags = KEEP_APART)
 			pain.dir = image_dir
 			limb.overlays += pain
 

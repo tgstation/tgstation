@@ -495,11 +495,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/i in inherent_factions)
 			C.faction -= i
 
-	if(flying_species)
-		fly.Remove(C)
-		QDEL_NULL(fly)
-		if(C.movement_type & FLYING)
-			ToggleFlight(C)
 	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
 		C.dna.species.mutant_bodyparts -= "wings"
 		C.dna.features["wings"] = "None"
@@ -1059,8 +1054,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
-	if(flying_species)
-		HandleFlight(H)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1929,6 +1922,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!CanIgniteMob(H))
 		return TRUE
 	if(H.on_fire)
+		SEND_SIGNAL(H, COMSIG_HUMAN_BURNING)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
 		var/obscured = H.check_obscured_slots(TRUE)
@@ -2001,9 +1995,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	if(flying_species && H.movement_type & FLYING)
-		ToggleFlight(H)
-		flyslip(H)
+	if(H.movement_type & FLYING)
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings)
+			wings.ToggleFlight(H)
+			wings.flyslip(H)
 	. = stunmod * H.physiology.stun_mod * amount
 
 //////////////
@@ -2013,7 +2009,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/space_move(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		return TRUE
-	return FALSE
+
+	var/obj/item/organ/external/wings/moth/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	return wings?.can_float_move()
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
@@ -2125,88 +2123,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		mutant_bodyparts["wings"] = wings_icon
 		H.dna.features["wings"] = wings_icon
 		H.update_body()
-
-/datum/species/proc/HandleFlight(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		if(!CanFly(H))
-			ToggleFlight(H)
-			return FALSE
-		return TRUE
-	else
-		return FALSE
-
-/datum/species/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.body_position == LYING_DOWN)
-		return FALSE
-	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))) //Jumpsuits have tail holes, so it makes sense they have wing holes too
-		to_chat(H, span_warning("Your suit blocks your wings from extending!"))
-		return FALSE
-	var/turf/T = get_turf(H)
-	if(!T)
-		return FALSE
-
-	var/datum/gas_mixture/environment = T.return_air()
-	if(environment && !(environment.return_pressure() > 30))
-		to_chat(H, span_warning("The atmosphere is too thin for you to fly!"))
-		return FALSE
-	else
-		return TRUE
-
-/datum/species/proc/flyslip(mob/living/carbon/human/H)
-	var/obj/buckled_obj
-	if(H.buckled)
-		buckled_obj = H.buckled
-
-	to_chat(H, span_notice("Your wings spazz out and launch you!"))
-
-	playsound(H.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
-
-	for(var/obj/item/I in H.held_items)
-		H.accident(I)
-
-	var/olddir = H.dir
-
-	H.stop_pulling()
-	if(buckled_obj)
-		buckled_obj.unbuckle_mob(H)
-		step(buckled_obj, olddir)
-	else
-		new /datum/forced_movement(H, get_ranged_target_turf(H, olddir, 4), 1, FALSE, CALLBACK(H, /mob/living/carbon/.proc/spin, 1, 1))
-	return TRUE
-
-//UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
-/datum/species/proc/ToggleFlight(mob/living/carbon/human/H)
-	if(!HAS_TRAIT_FROM(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
-		stunmod *= 2
-		speedmod -= 0.35
-		ADD_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		ADD_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_on(H, SPECIES_TRAIT)
-		H.OpenWings()
-	else
-		stunmod *= 0.5
-		speedmod += 0.35
-		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_off(H, SPECIES_TRAIT)
-		H.CloseWings()
-
-/datum/action/innate/flight
-	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "flight"
-
-/datum/action/innate/flight/Activate()
-	var/mob/living/carbon/human/H = owner
-	var/datum/species/S = H.dna.species
-	if(S.CanFly(H))
-		S.ToggleFlight(H)
-		if(!(H.movement_type & FLYING))
-			to_chat(H, span_notice("You settle gently back onto the ground..."))
-		else
-			to_chat(H, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			H.set_resting(FALSE, TRUE)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
