@@ -12,7 +12,8 @@
 /datum/surgery/advanced/wing_reconstruction/can_start(mob/user, mob/living/carbon/target)
 	if(!istype(target))
 		return FALSE
-	return ..() && target.dna.features["moth_wings"] == "Burnt Off" && ismoth(target)
+	var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	return ..() && wings?.burnt
 
 /datum/surgery_step/wing_reconstruction
 	name = "start wing reconstruction"
@@ -35,10 +36,7 @@
 		display_results(user, target, span_notice("You succeed in reconstructing [target]'s wings."),
 			span_notice("[user] successfully reconstructs [target]'s wings!"),
 			span_notice("[user] completes the surgery on [target]'s wings."))
-		if(human_target.dna.features["original_moth_wings"] != null)
-			human_target.dna.features["moth_wings"] = human_target.dna.features["original_moth_wings"]
-		else
-			human_target.dna.features["moth_wings"] = "Plain"
-			human_target.dna.update_uf_block(DNA_MOTH_WINGS_BLOCK)
+		var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		wings?.heal_wings()
 		human_target.update_mutant_bodyparts()
 	return ..()

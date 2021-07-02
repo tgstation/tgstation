@@ -925,11 +925,11 @@
 //number in their sprite name, which causes issues when those numbers change.
 /obj/item/bodypart/proc/mutant_bodyparts_layertext(layer)
 	switch(layer)
-		if(BODY_BEHIND_LAYER)
+		if(EXTERNAL_BEHIND)
 			return "_BEHIND"
-		if(BODY_ADJ_LAYER)
+		if(EXTERNAL_ADJACENT)
 			return "_ADJ"
-		if(BODY_FRONT_LAYER)
+		if(EXTERNAL_FRONT)
 			return "_FRONT"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)

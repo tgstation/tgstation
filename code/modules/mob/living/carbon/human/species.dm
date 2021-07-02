@@ -128,8 +128,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/flying_species = FALSE
 	///The actual flying ability given to flying species
 	var/datum/action/innate/flight/fly
-	///Current wings icon
-	var/wings_icon = "Angel"
 	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wings_icons = list("Angel")
 	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
@@ -410,24 +408,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/path in external_organs)
-			//Load a persons preferences from DNA if possible
+			//Load a persons preferences from DNA
 			var/obj/item/organ/external/type = path
-			var/preference_type = human.dna.features[initial(type.slot)]
+			var/preference_name = human.dna.features[initial(type.preference)]
 
-			//LEGACY. Temporary until I rework the way styles are stored
-			var/datum/sprite_accessory/accessory
-
-			switch(type)
-				if(/obj/item/organ/external/horns)
-					accessory = GLOB.horns_list[preference_type]
-				if(/obj/item/organ/external/frills)
-					accessory = GLOB.frills_list[preference_type]
-				if(/obj/item/organ/external/antennae)
-					accessory = GLOB.moth_antennae_list[preference_type]
-				if(/obj/item/organ/external/snout)
-					accessory = GLOB.snouts_list[preference_type]
-
-			var/obj/item/organ/external/new_organ = new path(null, accessory && accessory.icon_state != "none" ? accessory.icon_state : external_organs[path], human.body_type)
+			var/obj/item/organ/external/new_organ = new path(null, preference_name, human.body_type)
 
 			new_organ.Insert(human)
 
@@ -495,10 +480,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/i in inherent_factions)
 			C.faction -= i
 
-	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
-		C.dna.species.mutant_bodyparts -= "wings"
-		C.dna.features["wings"] = "None"
-		C.update_body()
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
@@ -2097,6 +2078,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(flying_species) //species that already have flying traits should not work with this proc
 		return
 	flying_species = TRUE
+	var/wings_icon
 	if(wings_icons.len > 1)
 		if(!H.client)
 			wings_icon = pick(wings_icons)
@@ -2116,13 +2098,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				wings_icon = pick(wings_icons)
 	else
 		wings_icon = wings_icons[1]
-	if(isnull(fly))
-		fly = new
-		fly.Grant(H)
-	if(H.dna.features["wings"] != wings_icon)
-		mutant_bodyparts["wings"] = wings_icon
-		H.dna.features["wings"] = wings_icon
-		H.update_body()
+
+	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.body_type)
+	wings.Insert(H)
+	handle_mutant_bodyparts(H)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds

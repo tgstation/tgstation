@@ -5,7 +5,8 @@
 	default_color = "00FF00"
 	species_traits = list(LIPS, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
+	mutant_bodyparts = list("moth_markings" = "None")
+	external_organs = list(/obj/item/organ/external/wings/moth = "Plain", /obj/item/organ/external/antennae = "Plain")
 	attack_verb = "slash"
 	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -57,18 +58,3 @@
 	human_mob.dna.features["wings"] = wings
 	human_mob.dna.features["moth_wings"] = wings
 	human_mob.update_body()
-
-/datum/species/moth/spec_fully_heal(mob/living/carbon/human/H)
-	. = ..()
-	if(H.dna.features["original_moth_wings"] != null)
-		H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
-
-	if(H.dna.features["original_moth_wings"] == null && H.dna.features["moth_wings"] == "Burnt Off")
-		H.dna.features["moth_wings"] = "Plain"
-
-	if(H.dna.features["original_moth_antennae"] != null)
-		H.dna.features["moth_antennae"] = H.dna.features["original_moth_antennae"]
-
-	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae"] == "Burnt Off")
-		H.dna.features["moth_antennae"] = "Plain"
-	handle_mutant_bodyparts(H)
