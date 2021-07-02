@@ -213,9 +213,14 @@ GLOBAL_VAR(preferences_species_data)
 	if (isnull(character_preview_view))
 		character_preview_view = create_character_preview_view(user)
 
+	// MOTHBLOCKS TODO: Try to diff these as much as possible, and only send what is needed.
+	// Some of these, like job preferences, can be pretty beefy.
 	data["character_profiles"] = create_character_profiles()
 	data["character_preferences"] = compile_character_preferences(user)
 	data["character_preview_view"] = character_preview_view.assigned_map
+
+	// MOTHBLOCKS TODO: Job bans/yet to be unlocked jobs
+	data["job_preferences"] = job_preferences
 
 	data["active_name"] = read_preference(/datum/preference/name/real_name)
 
@@ -231,6 +236,7 @@ GLOBAL_VAR(preferences_species_data)
 
 	return list(
 		"generated_preference_values" = generated_preference_values,
+		"overflow_role" = SSjob.overflow_role,
 		"species" = GLOB.preferences_species_data,
 	)
 
@@ -259,7 +265,7 @@ GLOBAL_VAR(preferences_species_data)
 
 			var/datum/preference/choiced/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
 			if (!istype(requested_preference))
-				return TRUE
+				return FALSE
 
 			if (isnull(generated_preference_values[requested_preference_key]))
 				generated_preference_values[requested_preference_key] = generate_preference_values(requested_preference)
@@ -272,7 +278,7 @@ GLOBAL_VAR(preferences_species_data)
 
 			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
 			if (isnull(requested_preference))
-				return TRUE
+				return FALSE
 
 			// SAFETY: `write_preference` performs validation checks
 			write_preference(requested_preference, value)
@@ -283,6 +289,20 @@ GLOBAL_VAR(preferences_species_data)
 			character_preview_view.update_body()
 
 			return TRUE
+		if ("set_job_preference")
+			var/job_title = params["job"]
+			var/level = params["level"]
+
+			if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
+				return FALSE
+
+			var/datum/job/job = SSjob.GetJob(job_title)
+
+			// MOTHBLOCKS TODO: FACTION_STATION once Rohesie's PR is megred
+			if (job.faction != "Station")
+				return FALSE
+
+			return set_job_preference_level(job, level)
 
 	return TRUE
 
@@ -392,7 +412,7 @@ GLOBAL_VAR(preferences_species_data)
 
 	return profiles
 
-/datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
+/datum/preferences/proc/set_job_preference_level(datum/job/job, level)
 	if (!job)
 		return FALSE
 
