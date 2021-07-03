@@ -224,6 +224,8 @@
 		"comp_speech",
 		"comp_speech",
 		"comp_string_contains",
+		"comp_tempsensor",
+		"comp_pressuresensor",
 		"comp_textcase",
 		"comp_tostring",
 		"comp_typecheck",
