@@ -260,10 +260,12 @@
 	var/mob/living/carbon/target_collateral_carbon
 	var/obj/structure/table/target_table
 	var/obj/machinery/disposal/bin/target_disposal_bin
+	var/obj/structure/closet/target_storage_container
 	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
 	//Thank you based whoneedsspace
 	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
+	target_storage_container = locate(/obj/structure/closet) in target_shove_turf.contents
 
 	// If we can't shove the target into the carbon (such as if it's an alien), then just pretend nothing was there
 	if (!target_collateral_carbon?.can_be_shoved_into)
@@ -299,7 +301,7 @@
 					if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
 						directional_blocked = TRUE
 						break
-		if((!target_table && !target_collateral_carbon && !target_disposal_bin) || directional_blocked)
+		if((!target_table && !target_collateral_carbon && !target_disposal_bin && !target_storage_container) || directional_blocked)
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 							span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -327,6 +329,26 @@
 							span_userdanger("You're shoved into \the [target_disposal_bin] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name] into \the [target_disposal_bin]!"))
 			log_combat(src, target, "shoved", "into [target_disposal_bin] (disposal bin)")
+		else if(target_storage_container)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			if(target_storage_container.opened)
+				target.forceMove(target_storage_container)
+			if(!(target_storage_container.locked || target_storage_container.welded))
+				target_storage_container.toggle()
+			target_storage_container.update_icon()
+			target.visible_message(span_danger("[name] shoves [target.name] into \the [target_storage_container]!"),
+							span_userdanger("You're shoved into \the [target_storage_container] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name] into \the [target_storage_container]!"))
+			log_combat(src, target, "shoved", "into [target_storage_container] (locker/crate)")
+	else if (target_storage_container && !target.buckled)
+		//We are shoving a target into an available, unobstructed locker.
+		if(!(target_storage_container.locked || target_storage_container.welded))
+			target_storage_container.toggle()
+			target_storage_container.update_icon()
+		target.visible_message(span_danger("[name] shoves [target.name] into \the [target_storage_container]!"),
+				span_userdanger("You're shoved into \the [target_storage_container] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, span_danger("You shove [target.name] into \the [target_storage_container]!"))
+		log_combat(src, target, "shoved", "into [target_storage_container] (locker/crate)")
 	else
 		target.visible_message(span_danger("[name] shoves [target.name]!"),
 						span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
