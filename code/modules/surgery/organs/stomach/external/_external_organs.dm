@@ -4,10 +4,12 @@
 
 	var/mob_icon_state = ""
 	var/mob_icon = 'icons/mob/mutant_bodyparts.dmi'
+	var/original_mob_icon_state = ""
 	var/layers = list()
-	var/gender_specific = FALSE
 
 	var/preference = ""
+	///Sometimes we need to do some extra work on the sprite, so save the sprite datum
+	var/datum/sprite_accessory/sprite_datum
 
 	var/obj/item/bodypart/ownerlimb
 
@@ -29,6 +31,8 @@
 
 	limb.contents.Add(src)
 
+	reciever.update_body_parts()
+
 
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -37,6 +41,7 @@
 		ownerlimb.external_organs.Remove(src)
 		ownerlimb.contents.Remove(src)
 
+	organ_owner.update_body_parts()
 
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	. = ..()
@@ -46,18 +51,32 @@
 
 /obj/item/organ/external/proc/prepare_sprite(base_icon, body_type)
 	if(!base_icon)
-		return
+		base_icon = original_mob_icon_state ? original_mob_icon_state : mob_icon_state
 
 	var/g = (body_type == FEMALE) ? "f" : "m"
 
-	mob_icon_state = (gender_specific ? g : "m") + "_" + preference + "_" + parse_sprite(base_icon)
+	original_mob_icon_state = base_icon
+	base_icon = parse_sprite(base_icon)
+	mob_icon_state = (sprite_datum.gender_specific ? g : "m") + "_" + preference + "_" + base_icon
 
 ///Because all the preferences have names like "Beautiful Sharp Snout" and the actual icons are called "sharpsnout" we need to translate it with a globally generated list
 /obj/item/organ/external/proc/parse_sprite(sprite)
-	return sprite
+	var/list/feature_list = get_global_feature_list()
+	sprite_datum = feature_list[sprite]
+	mob_icon = sprite_datum.icon
+	return sprite_datum.icon_state
+
+///Return a dumb glob list for this specific feature (called from parse_sprite)
+/obj/item/organ/external/proc/get_global_feature_list()
+	return null
 
 /obj/item/organ/external/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
 	return TRUE
+
+/obj/item/organ/external/proc/prepare_overlay(mutable_appearance/pic)
+	if(sprite_datum.center)
+		center_image(pic, sprite_datum.dimension_x, sprite_datum.dimension_y)
+	return pic
 
 /obj/item/organ/external/horns
 	zone = BODY_ZONE_HEAD
@@ -72,10 +91,8 @@
 	if(!(head.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
 
-/obj/item/organ/external/horns/parse_sprite(sprite)
-	var/datum/sprite_accessory/accessory = GLOB.horns_list[sprite]
-	mob_icon = accessory.icon
-	return accessory.icon_state
+/obj/item/organ/external/horns/get_global_feature_list()
+	return GLOB.horns_list
 
 /obj/item/organ/external/frills
 	zone = BODY_ZONE_HEAD
@@ -90,10 +107,8 @@
 	if(!(head.flags_inv & HIDEEARS))
 		return TRUE
 
-/obj/item/organ/external/frills/parse_sprite(sprite)
-	var/datum/sprite_accessory/accessory = GLOB.frills_list[sprite]
-	mob_icon = accessory.icon
-	return accessory.icon_state
+/obj/item/organ/external/frills/get_global_feature_list()
+	return GLOB.frills_list
 
 /obj/item/organ/external/snout
 	zone = BODY_ZONE_HEAD
@@ -108,10 +123,8 @@
 	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(head.flags_inv & HIDESNOUT))
 		return TRUE
 
-/obj/item/organ/external/snout/parse_sprite(sprite)
-	var/datum/sprite_accessory/accessory = GLOB.snouts_list[sprite]
-	mob_icon = accessory.icon
-	return accessory.icon_state
+/obj/item/organ/external/snout/get_global_feature_list()
+	return GLOB.snouts_list
 
 /obj/item/organ/external/antennae
 	zone = BODY_ZONE_HEAD
@@ -120,7 +133,5 @@
 
 	preference = "moth_antennae"
 
-/obj/item/organ/external/antennae/parse_sprite(sprite)
-	var/datum/sprite_accessory/accessory = GLOB.moth_antennae_list[sprite]
-	mob_icon = accessory.icon
-	return accessory.icon_state
+/obj/item/organ/external/antennae/get_global_feature_list()
+	return GLOB.moth_antennae_list

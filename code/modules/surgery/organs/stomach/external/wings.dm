@@ -1,7 +1,7 @@
 /obj/item/organ/external/wings
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
-	layers = list(EXTERNAL_BEHIND, EXTERNAL_FRONT)
+	layers = list(EXTERNAL_BEHIND, EXTERNAL_ADJACENT, EXTERNAL_FRONT)
 
 	mob_icon = 'icons/mob/clothing/wings.dmi'
 
@@ -10,10 +10,16 @@
 /obj/item/organ/external/wings/functional
 	var/datum/action/innate/flight/fly
 
-/obj/item/organ/external/wings/functional/parse_sprite(sprite)
-	var/datum/sprite_accessory/accessory = GLOB.wings_list[sprite]
-	mob_icon = accessory.icon
-	return accessory.icon_state
+	var/wings_open_preference = "wingsopen"
+	var/wings_closed_preference = "wings"
+
+	var/wings_open = FALSE
+
+/obj/item/organ/external/wings/functional/get_global_feature_list()
+	if(wings_open)
+		return GLOB.wings_open_list
+	else
+		return GLOB.wings_list
 
 /obj/item/organ/external/wings/functional/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -87,13 +93,30 @@
 		ADD_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
 		ADD_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_on(H, SPECIES_TRAIT)
-		H.OpenWings()
+		OpenWings()
 	else
 		H.physiology.stun_mod *= 0.5
 		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
 		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_off(H, SPECIES_TRAIT)
-		H.CloseWings()
+		CloseWings()
+
+/obj/item/organ/external/wings/functional/proc/OpenWings()
+	preference = wings_open_preference
+	wings_open = TRUE
+
+	prepare_sprite()
+	owner.update_body_parts()
+
+/obj/item/organ/external/wings/functional/proc/CloseWings()
+	preference = wings_closed_preference
+	wings_open = FALSE
+
+	prepare_sprite()
+	owner.update_body_parts()
+	if(isturf(owner?.loc))
+		var/turf/T = loc
+		T.Entered(src, NONE)
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
@@ -112,16 +135,16 @@
 			to_chat(H, span_notice("You beat your wings and begin to hover gently above the ground..."))
 			H.set_resting(FALSE, TRUE)
 
+///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
 	preference = "moth_wings"
+	layers = list(EXTERNAL_BEHIND, EXTERNAL_FRONT)
 
 	var/burnt = FALSE
 	var/original_sprite
 
-/obj/item/organ/external/wings/moth/parse_sprite(sprite)
-	var/datum/sprite_accessory/accessory = GLOB.moth_wings_list[sprite]
-	mob_icon = accessory.icon
-	return accessory.icon_state
+/obj/item/organ/external/wings/moth/get_global_feature_list()
+	return GLOB.moth_wings_list
 
 /obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()

@@ -123,13 +123,14 @@
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
-		if(H.dna.features["wings"] != "None")
-			if(H.dna.species.mutant_bodyparts["wingsopen"])
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings)
+			if(wings.wings_open)
 				open = TRUE
-				H.CloseWings()
+				wings.CloseWings()
 			else
-				H.OpenWings()
-			addtimer(CALLBACK(H, open ? /mob/living/carbon/human.proc/OpenWings : /mob/living/carbon/human.proc/CloseWings), wing_time)
+				wings.OpenWings()
+			addtimer(CALLBACK(wings, open ? /obj/item/organ/external/wings/functional.proc/OpenWings : /obj/item/organ/external/wings/functional.proc/CloseWings), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"

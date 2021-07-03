@@ -45,9 +45,9 @@
 #define TOTAL_LAYERS 29 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //How much we add to the default layer
-#define EXTERNAL_FRONT 2
-#define EXTERNAL_ADJACENT 1
-#define EXTERNAL_BEHIND -1
+#define EXTERNAL_FRONT .2
+#define EXTERNAL_ADJACENT .1
+#define EXTERNAL_BEHIND -.1
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
