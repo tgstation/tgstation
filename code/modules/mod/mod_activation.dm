@@ -143,14 +143,14 @@
 		active = !active
 		wearer.update_inv_back()
 		if(active)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, 6000)
+			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 			slowdown = theme.slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 			for(var/obj/item/mod/module/module as anything in modules)
 				module.on_equip()
 			START_PROCESSING(SSobj,src)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, 6000)
+			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 			slowdown = theme.slowdown_unactive
 			for(var/obj/item/mod/module/module as anything in modules)
 				module.on_unequip()

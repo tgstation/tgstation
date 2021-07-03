@@ -415,15 +415,15 @@
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
 
-/obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, atom/newloc)
+/obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
 
-	if(newloc == src)
+	if(part.loc == src)
 		return
 	if(part == cell)
 		cell = null
 		return
-	if(newloc == wearer)
+	if(part.loc == wearer)
 		return
 	if(modules.Find(part))
 		var/obj/item/mod/module/module = part
