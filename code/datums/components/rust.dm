@@ -62,7 +62,7 @@
 		var/obj/item/weldingtool/WT = item
 		if(WT.isOn() && WT.use(5))
 			to_chat(user, span_notice("You begin to burn off the rust of [parent_atom]."))
-			if(!do_after(user, 5 SECONDS, parent_atom))
+			if(!do_after(user, 5 SECONDS * item.toolspeed, parent_atom))
 				to_chat(user, span_notice("You change your mind."))
 				return
 			to_chat(user, span_notice("You burn off the rust of [parent_atom]."))
