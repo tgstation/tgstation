@@ -63,7 +63,8 @@
 		START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		to_chat(quirk_holder, gain_text)
+		if(gain_text)
+			to_chat(quirk_holder, gain_text)
 		add_unique()
 
 		if(quirk_holder.client)

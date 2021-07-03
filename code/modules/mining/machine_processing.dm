@@ -48,7 +48,7 @@
 	* target - the atom that just moved onto the `source` turf.
 	* oldLoc - the old location that `target` was at before moving onto `source`.
 */
-/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, direction)
+/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	return

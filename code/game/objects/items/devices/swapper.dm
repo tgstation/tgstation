@@ -104,8 +104,8 @@
 	var/target_B = B.drop_location()
 
 	//TODO: add a sound effect or visual effect
-	if(do_teleport(A, target_B, forceMove = TRUE, channel = TELEPORT_CHANNEL_QUANTUM))
-		do_teleport(B, target_A, forceMove = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+	if(do_teleport(A, target_B, channel = TELEPORT_CHANNEL_QUANTUM))
+		do_teleport(B, target_A, channel = TELEPORT_CHANNEL_QUANTUM)
 		if(ismob(B))
 			var/mob/M = B
 			to_chat(M, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))

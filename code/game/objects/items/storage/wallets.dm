@@ -91,7 +91,7 @@
 	update_appearance(UPDATE_ICON)
 	update_slot_icon()
 
-/obj/item/storage/wallet/Entered(atom/movable/arrived, direction)
+/obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	refreshID(removed = FALSE)
 

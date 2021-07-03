@@ -372,7 +372,7 @@
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
 
-/obj/item/storage/bag/tray/Entered(atom/movable/arrived, direction)
+/obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	update_appearance()
 

@@ -402,6 +402,12 @@
 	if(user.Adjacent(src))
 		return attack_hand(user)
 
+/obj/structure/closet/attack_robot_secondary(mob/user, list/modifiers)
+	if(!user.Adjacent(src))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	if(attack_hand(user))
@@ -467,12 +473,13 @@
 	open()
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 
 	if(!opened && secure)
 		togglelock(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
