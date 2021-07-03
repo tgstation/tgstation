@@ -125,7 +125,8 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	balloon_alert(mod.wearer, "cooling down...")
+	if(cooldown_time > 0.5 SECONDS) //if longer than default cooldown we let a message happen
+		balloon_alert(mod.wearer, "cooling down...")
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE

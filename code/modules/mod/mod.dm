@@ -274,7 +274,7 @@
 			balloon_alert(user, "open the panel first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
-		install(attacking_item, FALSE, user)
+		install(attacking_item, user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
