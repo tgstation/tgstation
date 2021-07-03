@@ -171,6 +171,7 @@
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
+	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	light_range = 2
 	var/holo_cooldown = 0

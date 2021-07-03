@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a case where a relic war hammer was not able to do kneejerk action."
-  - bugfix: "Fixed a case where a radial menu for the null rod reskin variant selection was showing one duplicate option."

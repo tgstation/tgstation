@@ -62,7 +62,7 @@
 	is_open = TRUE
 	update_appearance()
 
-/obj/item/storage/fancy/Entered(atom/movable/arrived, direction)
+/obj/item/storage/fancy/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	is_open = TRUE
 	update_appearance()

@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - qol: "The RAM circuit component now allows you to select the type instead of trying to interpret it, allowing it to be used as a constant value component."
+  - code_imp: "Made the any datatype for circuit components much easier to read in code."

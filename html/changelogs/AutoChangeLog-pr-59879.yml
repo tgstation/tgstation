@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "fixes buying shuttle insurance while the shuttle is docked"

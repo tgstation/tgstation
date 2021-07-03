@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - server: "Hello people who parse performance log files (yes all two of you). Empty entries will no longer cause errors, they will instead be properly represented by a 0"
