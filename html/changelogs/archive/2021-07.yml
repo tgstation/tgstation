@@ -76,3 +76,15 @@
   - bugfix: You may no longer circumvent config VAS protections by proxying proc calls.
   ninjanomnom:
   - bugfix: Some greyscale icons like the sombrero have had their errors fixed.
+2021-07-03:
+  Watermelon914:
+  - rscadd: Adds a midround ruleset that allows living players to become the blob
+      if they are randomly selected.
+  aaaa1023:
+  - bugfix: Sink frames are now deconstructable with a wrench.
+  dragomagol:
+  - spellcheck: updated outdated references to intents in martial arts instructions
+  interestingusernam3:
+  - bugfix: Killing and reviving polar bears no longer makes them easier to move.
+  tralezab:
+  - rscadd: catwalk flooring!
