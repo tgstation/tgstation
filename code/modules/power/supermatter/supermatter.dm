@@ -242,7 +242,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 	if(ispath(psyOverlay))
 		psyOverlay = new psyOverlay()
 	else
@@ -445,6 +445,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 //this is here to eat arguments
 /obj/machinery/power/supermatter_crystal/proc/call_explode()
+	SIGNAL_HANDLER
+
 	explode()
 
 /obj/machinery/power/supermatter_crystal/process_atmos()

@@ -12,7 +12,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
-	max_integrity = 30
+	max_integrity = BLOB_REGULAR_MAX_HP
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
@@ -145,11 +145,11 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T)) //is the target turf impassable
+	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T)) //is anything in the turf impassable
+		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
 			make_blob = FALSE
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
@@ -314,8 +314,13 @@
 	icon_state = "blob"
 	light_range = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
+	var/initial_integrity = BLOB_REGULAR_HP_INIT
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
+
+/obj/structure/blob/normal/Initialize(mapload, owner_overmind)
+	. = ..()
+	update_integrity(initial_integrity)
 
 /obj/structure/blob/normal/scannerreport()
 	if(obj_integrity <= 15)

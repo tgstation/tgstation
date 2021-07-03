@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds crew monitor usb connections"
+  - bugfix: "Fixed the sound emitter's frequency port"

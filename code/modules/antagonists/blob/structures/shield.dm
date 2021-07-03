@@ -4,7 +4,7 @@
 	icon_state = "blob_shield"
 	desc = "A solid wall of slightly twitching tendrils."
 	var/damaged_desc = "A wall of twitching tendrils."
-	max_integrity = 150
+	max_integrity = BLOB_STRONG_MAX_HP
 	health_regen = BLOB_STRONG_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
 	explosion_block = 3

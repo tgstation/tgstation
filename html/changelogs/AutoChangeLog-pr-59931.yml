@@ -1,0 +1,4 @@
+author: "Sheits"
+delete-after: True
+changes: 
+  - bugfix: "Inhand sprites for hydrogen fire axes now face the right way"

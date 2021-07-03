@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	icon = 'icons/turf/floors.dmi'
 	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE// Important for interaction with and visualization of openspace.
 	luminosity = 1
+
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
 	var/intact = 1
@@ -104,8 +105,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	visibilityChanged()
 
-	for(var/atom/movable/AM in src)
-		Entered(AM)
+	for(var/atom/movable/content as anything in src)
+		Entered(content, null)
 
 	var/area/A = loc
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
@@ -163,6 +164,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	vis_contents.Cut()
 
+/// WARNING WARNING
+/// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
+/// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
+/// We do it because moving signals over was needlessly expensive, and bloated a very commonly used bit of code
+/turf/clear_signal_refs()
+	return
+
 /turf/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -192,16 +200,29 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(density)
 		return TRUE
 
-	for(var/content in contents)
+	for(var/atom/movable/movable_content as anything in contents)
 		// We don't want to block ourselves or consider any ignored atoms.
-		if((content == source_atom) || (content in ignore_atoms))
+		if((movable_content == source_atom) || (movable_content in ignore_atoms))
 			continue
-		var/atom/atom_content = content
 		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
 		// it cannot pass through the thing on the turf,  we consider the turf blocked.
-		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)))
-			if(source_atom && atom_content.CanPass(source_atom, src))
+		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
+			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
 				continue
+			return TRUE
+	return FALSE
+
+/**
+ * Checks whether the specified turf is blocked by something dense inside it, but ignores anything with the climbable trait
+ *
+ * Works similar to is_blocked_turf(), but ignores climbables and has less options. Primarily added for jaunting checks
+ */
+/turf/proc/is_blocked_turf_ignore_climbable()
+	if(density)
+		return TRUE
+
+	for(var/atom/movable/atom_content as anything in contents)
+		if(atom_content.density && !(atom_content.flags_1 & ON_BORDER_1) && !HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
 			return TRUE
 	return FALSE
 
@@ -295,7 +316,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/canPassSelf = CanPass(mover, src)
+	var/canPassSelf = CanPass(mover, get_dir(src, mover))
 	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
@@ -322,7 +343,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 
-/turf/open/Entered(atom/movable/arrived, direction)
+/turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	..()
 	//melting
 	if(isobj(arrived) && air && air.temperature > T0C)

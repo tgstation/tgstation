@@ -31,7 +31,7 @@
 	target_turf = target
 	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
 
-/datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, direction)
+/datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	START_PROCESSING(SSobj, src)

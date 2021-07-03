@@ -1,0 +1,4 @@
+author: "Urumasi"
+delete-after: True
+changes: 
+  - bugfix: "The turbine now behaves correctly if the intake is blocked."

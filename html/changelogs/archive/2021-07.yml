@@ -1,0 +1,90 @@
+2021-07-01:
+  Arkatos:
+  - bugfix: Fixed a case where a relic war hammer was not able to do kneejerk action.
+  - bugfix: Fixed a case where a radial menu for the null rod reskin variant selection
+      was showing one duplicate option.
+  - qol: Updated radial menu for a null rod reskin variant selection. It will now
+      include a small button for showing additional information about each given null
+      rod variant.
+  KubeRoot:
+  - rscadd: Transit tube dispenser stations are now buildable via RPD
+  - bugfix: Transit tube dispenser station sprite errors have been fixed. The sprites
+      themselves have not been changed, but the names and orientation has been corrected.
+  LemonInTheDark:
+  - server: Hello people who parse performance log files (yes all two of you). Empty
+      entries will no longer cause errors, they will instead be properly represented
+      by a 0
+  Malgover:
+  - imageadd: new riot armor sprites
+  Time-Green:
+  - balance: Debriding surgery efficiency has been multiplied by 8
+  Watermelon914:
+  - expansion: Adds the sound emitter circuit component.
+  Wayland-Smithy:
+  - bugfix: Fixed cyborg locker right click to lock
+  - bugfix: Fixed an infinite loop bug with portal teleports. The cake is a stack
+      overflow.
+  - bugfix: Fixed portals layer so they appear over most other objects.
+  - bugfix: Fixed hand teleporter portals moving in zero gravity.
+  - qol: Portals on dense objects no longer require clicking to enter and can be walked
+      into.
+  - qol: Portals you are standing on may be entered by clicking even with a tool in
+      hand.
+  - code_imp: Removed an unused teleport arg that may cause issues with new portal
+      code.
+  bloons3:
+  - admin: Adds logging for impacted cyborgs during law changes
+  - admin: Adds additional cyborg logging
+  bobbahbrown:
+  - admin: Added other tickets opened by a user to the adminhelp dialogue
+  - server: Added the $reset directive to reset a configuration entry's values to
+      its default
+  tralezab:
+  - bugfix: fixes buying shuttle insurance while the shuttle is docked
+  - expansion: added barticles to bonfires
+2021-07-02:
+  Cheshify:
+  - bugfix: The flashlight pens are now actually pen-sized
+  Melbert:
+  - bugfix: Glowshrooms created from spread now should behave like things that actually
+      exist again.
+  Nari Harimoto:
+  - bugfix: added missing air alarms on Tramstation in several areas that previously
+      had none
+  - bugfix: removed air alarms that was right next to each other in the same room
+      on Tramstation
+  - bugfix: Tramstation toxins now has proper firelock safety, no more toxin fires
+      breaking the windows into sci halls
+  - bugfix: Tramstation Kitchen Freezer now uses the proper area so the kitchen and
+      freezer air alarms dont control the same vents
+  RandomGamer123:
+  - bugfix: Nuclear operatives' uplink implants now properly only show items they
+      are allowed to buy, preventing them bypassing uplink restrictions.
+  Ryll/Shaps:
+  - bugfix: OOC heart commendations once again properly save and persist between rounds!
+  - bugfix: You can no longer sacrifice pAI shells as a cultist
+  Seris02:
+  - bugfix: changeling legs now copy digitigrade/normal legs
+  Sparkezel:
+  - balance: Bats no longer stunlock people. Increased bat damage by 2.
+  Timberpoes:
+  - bugfix: The detective's scanner should now always properly output the correct
+      data for scans and should no longer print out blank entries erroneously.
+  Wayland-Smithy:
+  - bugfix: Fixed rogue vending machines targeting incorporeal.
+  bobbahbrown:
+  - bugfix: You may no longer circumvent config VAS protections by proxying proc calls.
+  ninjanomnom:
+  - bugfix: Some greyscale icons like the sombrero have had their errors fixed.
+2021-07-03:
+  Watermelon914:
+  - rscadd: Adds a midround ruleset that allows living players to become the blob
+      if they are randomly selected.
+  aaaa1023:
+  - bugfix: Sink frames are now deconstructable with a wrench.
+  dragomagol:
+  - spellcheck: updated outdated references to intents in martial arts instructions
+  interestingusernam3:
+  - bugfix: Killing and reviving polar bears no longer makes them easier to move.
+  tralezab:
+  - rscadd: catwalk flooring!

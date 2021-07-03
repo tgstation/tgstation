@@ -10,7 +10,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
 	var/enable_door_overlay = TRUE
@@ -119,7 +119,7 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
-/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(wall_mounted)
 		return TRUE
@@ -402,6 +402,12 @@
 	if(user.Adjacent(src))
 		return attack_hand(user)
 
+/obj/structure/closet/attack_robot_secondary(mob/user, list/modifiers)
+	if(!user.Adjacent(src))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	if(attack_hand(user))
@@ -466,12 +472,14 @@
 	broken = TRUE //applies to secure lockers only
 	open()
 
-/obj/structure/closet/RightClick(mob/user, modifiers)
+/obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
+
 	if(!opened && secure)
 		togglelock(user)
-	return TRUE
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)

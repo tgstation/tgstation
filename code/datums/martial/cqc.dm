@@ -214,11 +214,11 @@
 	set category = "CQC"
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
-	to_chat(usr, "[span_notice("Slam")]: Grab Harm. Slam opponent into the ground, knocking them down.")
-	to_chat(usr, "[span_notice("CQC Kick")]: Harm Harm. Knocks opponent away. Knocks out stunned or knocked down opponents.")
+	to_chat(usr, "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down.")
+	to_chat(usr, "[span_notice("CQC Kick")]: Punch Punch. Knocks opponent away. Knocks out stunned or knocked down opponents.")
 	to_chat(usr, "[span_notice("Restrain")]: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a chokehold.")
-	to_chat(usr, "[span_notice("Pressure")]: Disarm Grab. Decent stamina damage.")
-	to_chat(usr, "[span_notice("Consecutive CQC")]: Disarm Disarm Harm. Mainly offensive move, huge damage and decent stamina damage.")
+	to_chat(usr, "[span_notice("Pressure")]: Shove Grab. Decent stamina damage.")
+	to_chat(usr, "[span_notice("Consecutive CQC")]: Shove Shove Punch. Mainly offensive move, huge damage and decent stamina damage.")
 
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 

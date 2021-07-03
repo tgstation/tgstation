@@ -101,9 +101,13 @@
 		return
 
 	if(attached_circuit?.owner_id && item == attached_circuit.owner_id.resolve())
-		locked = !locked
+		set_locked(!locked)
 		source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
 		return COMPONENT_NO_AFTERATTACK
+
+	if(attached_circuit && istype(item, /obj/item/circuit_component))
+		attached_circuit.add_component_manually(item, attacker)
+		return
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
@@ -121,7 +125,14 @@
 		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
+	logic_board.inserter_mind = WEAKREF(attacker.mind)
 	attach_circuit(logic_board, attacker)
+
+/// Sets whether the shell is locked or not
+/datum/component/shell/proc/set_locked(new_value)
+	locked = new_value
+	attached_circuit?.locked = locked
+
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -129,6 +140,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -144,6 +157,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -167,10 +182,15 @@
 	SIGNAL_HANDLER
 	remove_circuit()
 
-/datum/component/shell/proc/on_circuit_add_component_manually(datum/source, obj/item/circuit_component/added_comp)
+/datum/component/shell/proc/on_circuit_add_component_manually(atom/source, obj/item/circuit_component/added_comp, mob/living/user)
 	SIGNAL_HANDLER
+	if(locked)
+		source.balloon_alert(user, "it's locked!")
+		return COMPONENT_CANCEL_ADD_COMPONENT
 
-	return COMPONENT_CANCEL_ADD_COMPONENT
+	if(length(attached_circuit.attached_components) - length(unremovable_circuit_components) >= capacity)
+		source.balloon_alert(user, "it's at maximum capacity!")
+		return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.
@@ -187,6 +207,7 @@
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
 	attached_circuit.set_shell(parent)
+	attached_circuit.locked = FALSE
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		var/atom/movable/parent_atom = parent
@@ -210,6 +231,7 @@
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
+	attached_circuit.locked = FALSE
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)

@@ -18,7 +18,7 @@
 	var/static/list/disease_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
 	)
-	AddElement(/datum/element/connect_loc, parent, disease_connections)
+	AddElement(/datum/element/connect_loc_behalf, parent, disease_connections)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
@@ -109,7 +109,7 @@
 		var/obj/item/I = parent
 		I.permeability_coefficient = old_permeability
 
-/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, direction)
+/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(isliving(arrived))

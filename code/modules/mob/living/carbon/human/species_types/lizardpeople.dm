@@ -1,7 +1,7 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Lizardperson"
-	id = "lizard"
+	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
@@ -113,7 +113,7 @@ Lizard subspecies: ASHWALKERS
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "ashlizard"
+	id = SPECIES_LIZARD_ASH
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(
@@ -130,7 +130,7 @@ Lizard subspecies: SILVER SCALED
 */
 /datum/species/lizard/silverscale
 	name = "Silver Scale"
-	id = "silverlizard"
+	id = SPECIES_LIZARD_SILVER
 	limbs_id = "lizard"
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	inherent_traits = list(

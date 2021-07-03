@@ -135,7 +135,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -156,9 +156,9 @@
 	max_integrity = 50
 	density = TRUE
 
-/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/O)
+/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isswarmer(O) || istype(O, /obj/projectile/beam/disabler))
+	if(isswarmer(mover) || istype(mover, /obj/projectile/beam/disabler))
 		return TRUE
 
 /obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects

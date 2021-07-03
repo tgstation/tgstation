@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/delay
 	display_name = "Delay"
+	display_desc = "A component that delays a signal by a specified duration."
 
 	/// Amount to delay by
 	var/datum/port/input/delay_amount
@@ -38,6 +39,6 @@
 	var/delay = delay_amount.input_value
 	if(delay > COMP_DELAY_MIN_VALUE)
 		// Convert delay into deciseconds
-		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.input_value), delay*10, timer_subsystem =SScircuit_component)
+		addtimer(CALLBACK(output, /datum/port/output.proc/set_output, trigger.input_value), delay*10)
 	else
 		output.set_output(trigger.input_value)
