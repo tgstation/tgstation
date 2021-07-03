@@ -1370,3 +1370,9 @@
 #define COMSIG_MERGER_REMOVING "comsig_merger_removing"
 /// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
 #define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
+
+// Vacuum signals
+/// Called on a bag being attached to a vacuum parent
+#define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
+/// Called on a bag being detached from a vacuum parent
+#define COMSIG_VACUUM_BAG_DETACH "comsig_vacuum_bag_detach"

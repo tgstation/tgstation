@@ -588,6 +588,7 @@
 #include "code\datums\components\udder.dm"
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\usb_port.dm"
+#include "code\datums\components\vacuum.dm"
 #include "code\datums\components\wearertargeting.dm"
 #include "code\datums\components\wet_floor.dm"
 #include "code\datums\components\container_item\container_item.dm"
