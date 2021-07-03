@@ -52,6 +52,8 @@
 		origin = pick(members)
 
 /datum/merger/proc/AddMember(atom/thing, connected_dir)
+	if(thing == origin)
+		return
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
 	RegisterSignal(thing, refresh_signals, .proc/QueueRefresh)
 	if(!thing.mergers)
