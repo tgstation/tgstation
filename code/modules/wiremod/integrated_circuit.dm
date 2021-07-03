@@ -29,6 +29,9 @@
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = FALSE
 
+	/// Whether the integrated circuit is locked or not. Handled by the shell.
+	var/locked = FALSE
+
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
@@ -260,6 +263,11 @@
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
 		return shell
+	return ..()
+
+/obj/item/integrated_circuit/can_interact(mob/user)
+	if(locked)
+		return FALSE
 	return ..()
 
 /obj/item/integrated_circuit/ui_state(mob/user)
