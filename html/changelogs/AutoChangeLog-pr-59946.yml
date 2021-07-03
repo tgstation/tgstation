@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - qol: "Examining stationary tanks now tells you their pressure limits."
+  - bugfix: "Analyzing stationary tanks no longer gives you the same thing four times."
