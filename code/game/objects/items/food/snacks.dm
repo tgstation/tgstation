@@ -221,7 +221,7 @@
 	icon_state = "peanuts"
 	safe_for_consumption = FALSE
 
-GLOBAL_LIST(safe_peanut_types) = populate_safe_peanut_types()
+GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /proc/populate_safe_peanut_types()
 	. = list()
