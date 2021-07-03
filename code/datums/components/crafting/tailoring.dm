@@ -50,6 +50,36 @@
 	time = 20
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/hudpreshealth
+	name = "Health HUDGlasses"
+	result = /obj/item/clothing/glasses/hud/health/presglasses
+	time = 20
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
+				  /obj/item/clothing/glasses/regular = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/hudpresdiag
+	name = "Diagnostic HUDGlasses"
+	result = /obj/item/clothing/glasses/hud/diagnostic/presglasses
+	time = 20
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				  /obj/item/clothing/glasses/regular = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/hudpressec
+	name = "Diagnostic HUDGlasses"
+	result = /obj/item/clothing/glasses/hud/security/presglasses
+	time = 20
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
+				  /obj/item/clothing/glasses/regular = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/security/sunglasses

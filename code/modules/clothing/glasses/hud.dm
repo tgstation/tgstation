@@ -68,6 +68,12 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
+/obj/item/clothing/glasses/hud/health/presglasses
+	name = "medical HUDGlasses"
+	desc = "A pair of prescription glasses with a medical HUD"
+	icon_state = "preshudmed"
+	vision_correction = TRUE
+
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
@@ -93,6 +99,12 @@
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
+
+/obj/item/clothing/glasses/hud/diagnostic/presglasses
+	name = "diagnostic HUDGlasses"
+	desc = "A pair of prescription glasses with a diagnostic HUD"
+	icon_state = "preshuddiag"
+	vision_correction = TRUE
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -148,6 +160,12 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/security/presglasses
+	name = "security HUDGlasses"
+	desc = "A pair of prescription glasses with a security HUD"
+	icon_state = "preshudsec"
+	vision_correction = TRUE
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "\improper HUD gar glasses"
