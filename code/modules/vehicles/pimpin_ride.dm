@@ -40,6 +40,7 @@
 			return
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
 		trash_bag = I
+		RegisterSignal(trash_bag, COMSIG_PARENT_QDELETING, .proc/bag_deleted)
 		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
 		update_appearance()
 	else if(istype(I, /obj/item/janicart_upgrade))
@@ -59,7 +60,7 @@
 		to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
 		installed_upgrade = null
 		update_appearance()
-	else if(trash_bag)
+	else if(trash_bag && (!is_key(I) || is_key(inserted_key))) // don't put a key in the trash when we need it
 		trash_bag.attackby(I, user)
 	else
 		return ..()
@@ -74,14 +75,36 @@
 		. += overlay
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(. || !trash_bag)
-		return
-	trash_bag.forceMove(get_turf(user))
-	user.put_in_hands(trash_bag)
+	// right click removes bag without unbuckling when possible
+	. = (LAZYACCESS(modifiers, RIGHT_CLICK) && try_remove_bag(user)) || ..()
+	if (!.)
+		try_remove_bag(user)
+
+
+/**
+ * Called if the attached bag is being qdeleted, ensures appearance is maintained properly
+ */
+/obj/vehicle/ridden/janicart/proc/bag_deleted(datum/source)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/try_remove_bag)
+
+/**
+ * Attempts to remove the attached trash bag, returns true if bag was removed
+ *
+ * Arguments:
+ * * remover - The (optional) mob attempting to remove the bag
+ */
+/obj/vehicle/ridden/janicart/proc/try_remove_bag(mob/remover = null)
+	if (!trash_bag)
+		return FALSE
+	if (remover)
+		trash_bag.forceMove(get_turf(remover))
+		remover.put_in_hands(trash_bag)
+	UnregisterSignal(trash_bag, COMSIG_PARENT_QDELETING)
 	trash_bag = null
 	SEND_SIGNAL(src, COMSIG_VACUUM_BAG_DETACH)
 	update_appearance()
+	return TRUE
 
 /obj/vehicle/ridden/janicart/upgraded
 	installed_upgrade = new /obj/item/janicart_upgrade/buffer
@@ -112,7 +135,6 @@
 /obj/item/janicart_upgrade/proc/install(obj/vehicle/ridden/janicart/installee)
 	return FALSE
 
-
 /**
  * Called when upgrade is uninstalled from a janicart
  *
@@ -139,9 +161,7 @@
 	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)
-	installee._AddComponent(list(/datum/component/vacuum))
-	if (installee.trash_bag)
-		SEND_SIGNAL(installee, COMSIG_VACUUM_BAG_ATTACH, installee.trash_bag)
+	installee._AddComponent(list(/datum/component/vacuum, installee.trash_bag))
 
 /obj/item/janicart_upgrade/vacuum/uninstall(obj/vehicle/ridden/janicart/installee)
 	qdel(installee.GetComponent(/datum/component/vacuum))
