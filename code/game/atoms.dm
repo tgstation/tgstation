@@ -1937,7 +1937,6 @@
  */
 /atom/proc/rust_heretic_act()
 	AddComponent(/datum/component/rust)
-	addtimer(CALLBACK(src, .proc/update_icon), 1) // update next tick
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
