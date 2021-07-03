@@ -79,7 +79,7 @@
 	for(var/datum/sprite_accessory/sprite_datum as anything in sprite_datums)
 		var/g = (body_type == FEMALE) ? "f" : "m"
 		var/finished_icon_state = (sprite_datum.gender_specific ? g : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(_layer)
-		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -_layer, appearance_flags = KEEP_APART)
+		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -_layer)
 		appearance.dir = _dir
 
 		if(sprite_datum.center)
