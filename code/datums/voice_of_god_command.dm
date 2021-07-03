@@ -178,7 +178,6 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /// This command makes carbon listeners throw up like Mr. Creosote.
 /datum/voice_of_god_command/vomit
 	trigger = "vomit|throw\\s*up|sick"
-	cooldown = COOLDOWN_STUN
 
 /datum/voice_of_god_command/vomit/execute(mob/living/target, mob/living/user, power_multiplier = 1, message, iteration = 1)
 	. = ..()
