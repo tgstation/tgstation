@@ -74,6 +74,6 @@
 	if(!sound_to_play)
 		return
 
-	playsound(src, sound_to_play, volume.input_value, FALSE, frequency = frequency.input_value)
+	playsound(src, sound_to_play, volume.input_value, frequency != 0, frequency = frequency.input_value)
 
 	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER, sound_cooldown)
