@@ -19,8 +19,6 @@
 
 	var/list/options_map
 
-	COOLDOWN_DECLARE(next_sound)
-
 /obj/item/circuit_component/soundemitter/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
@@ -69,7 +67,7 @@
 	if(.)
 		return
 
-	if(!COOLDOWN_FINISHED(src, next_sound))
+	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
 	var/sound_to_play = options_map[current_option]
@@ -78,4 +76,4 @@
 
 	playsound(src, sound_to_play, volume.input_value, FALSE, frequency = frequency.input_value)
 
-	COOLDOWN_START(src, next_sound, sound_cooldown)
+	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER, sound_cooldown)
