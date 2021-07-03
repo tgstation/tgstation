@@ -478,7 +478,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
 			if (current_tick_budget > 0 && queue_node_priority > 0)
-				tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
+				//Give the subsystem a percentage of the remaining tick based on the remaning priority
+				tick_precentage = tick_remaining * (queue_node_priority / current_tick_budget)
 			else
 				tick_precentage = tick_remaining
 
