@@ -360,6 +360,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
+	base_icon_state = "switchblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
@@ -378,6 +379,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize()
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, 70, 100)
 	set_extended(extended)
 
@@ -385,13 +387,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	set_extended(!extended)
 
+/obj/item/switchblade/update_icon_state()
+	icon_state = "[base_icon_state][extended ? "_ext" : ""]"
+	return ..()
+
 /obj/item/switchblade/proc/set_extended(new_extended)
 	extended = new_extended
+	update_icon_state()
 	if(extended)
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
-		icon_state = "switchblade_ext"
 		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -400,7 +406,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		force = 3
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
-		icon_state = "switchblade"
 		attack_verb_continuous = list("stubs", "pokes")
 		attack_verb_simple = list("stub", "poke")
 		hitsound = 'sound/weapons/genhit.ogg'
