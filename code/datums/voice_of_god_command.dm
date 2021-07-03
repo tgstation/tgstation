@@ -1,7 +1,7 @@
 #define COOLDOWN_STUN 120 SECONDS
 #define COOLDOWN_DAMAGE 60 SECONDS
 #define COOLDOWN_MEME 30 SECONDS
-#define COOLDOWN_NONE 1 SECONDS
+#define COOLDOWN_NONE 10 SECONDS
 
 /// Used to stop listeners with silly or clown-esque (first) names such as "Honk" or "Flip" from screwing up certain commands.
 GLOBAL_DATUM(all_voice_of_god_triggers, /regex)
