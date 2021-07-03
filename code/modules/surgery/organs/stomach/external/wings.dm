@@ -1,18 +1,22 @@
+///Wing base type. doesn't really do anything
 /obj/item/organ/external/wings
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
 	layers = list(EXTERNAL_BEHIND, EXTERNAL_ADJACENT, EXTERNAL_FRONT)
 
-	mob_icon = 'icons/mob/clothing/wings.dmi'
-
 	preference = "wings"
 
+///The true wings that you can use to fly and shit
 /obj/item/organ/external/wings/functional
+	///The flight action object
 	var/datum/action/innate/flight/fly
 
+	///The preference type for opened wings
 	var/wings_open_preference = "wingsopen"
+	///The preference type for closed wings
 	var/wings_closed_preference = "wings"
 
+	///Are our wings open or closed?
 	var/wings_open = FALSE
 
 /obj/item/organ/external/wings/functional/get_global_feature_list()
@@ -38,6 +42,7 @@
 
 	HandleFlight(owner)
 
+///Mostly as a starter to check if we can still fly
 /obj/item/organ/external/wings/functional/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
@@ -47,6 +52,7 @@
 	else
 		return FALSE
 
+///Check if we can still fly
 /obj/item/organ/external/wings/functional/proc/CanFly(mob/living/carbon/human/H)
 	if(H.stat || H.body_position == LYING_DOWN)
 		return FALSE
@@ -64,6 +70,7 @@
 	else
 		return TRUE
 
+///Slipping but in the air?
 /obj/item/organ/external/wings/functional/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj
 	if(H.buckled)
@@ -86,7 +93,7 @@
 		new /datum/forced_movement(H, get_ranged_target_turf(H, olddir, 4), 1, FALSE, CALLBACK(H, /mob/living/carbon/.proc/spin, 1, 1))
 	return TRUE
 
-//UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
+///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/external/wings/functional/proc/ToggleFlight(mob/living/carbon/human/H)
 	if(!HAS_TRAIT_FROM(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		H.physiology.stun_mod *= 2
@@ -101,23 +108,26 @@
 		passtable_off(H, SPECIES_TRAIT)
 		CloseWings()
 
+///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/OpenWings()
 	preference = wings_open_preference
 	wings_open = TRUE
 
-	prepare_sprite()
+	generate_icon_cache()
 	owner.update_body_parts()
 
+///close our wings
 /obj/item/organ/external/wings/functional/proc/CloseWings()
 	preference = wings_closed_preference
 	wings_open = FALSE
 
-	prepare_sprite()
+	generate_icon_cache()
 	owner.update_body_parts()
 	if(isturf(owner?.loc))
 		var/turf/T = loc
 		T.Entered(src, NONE)
 
+///hud action for starting and stopping flight
 /datum/action/innate/flight
 	name = "Toggle Flight"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
@@ -140,7 +150,9 @@
 	preference = "moth_wings"
 	layers = list(EXTERNAL_BEHIND, EXTERNAL_FRONT)
 
+	///Are we burned?
 	var/burnt = FALSE
+	///Store our old sprite here for if our burned wings are healed
 	var/original_sprite
 
 /obj/item/organ/external/wings/moth/get_global_feature_list()
@@ -158,25 +170,30 @@
 	UnregisterSignal(organ_owner, COMSIG_HUMAN_BURNING)
 	UnregisterSignal(organ_owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
+///Check if we can flutter around
 /obj/item/organ/external/wings/moth/proc/can_float_move()
 	if(!isspaceturf(owner.loc) && !burnt)
 		var/datum/gas_mixture/current = owner.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
 
+///check if our wings can burn off ;_;
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
 		SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "burnt_wings", /datum/mood_event/burnt_wings)
 
 		burn_wings()
-		human.dna.species.handle_mutant_bodyparts(human)
+		human.update_body_parts()
 
+///burn the wings off
 /obj/item/organ/external/wings/moth/proc/burn_wings()
 	burnt = TRUE
-	original_sprite = mob_icon_state
-	prepare_sprite("Burnt Off")
+	var/datum/sprite_accessory/wings = sprite_datums[1]
+	original_sprite = wings.name
+	add_sprite_datum("Burnt Off", TRUE)
 
+///heal our wings back up!!
 /obj/item/organ/external/wings/moth/proc/heal_wings()
 	burnt = FALSE
-	mob_icon_state = original_sprite
+	add_sprite_datum(original_sprite, TRUE)

@@ -105,7 +105,7 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/self_grasp])
 	var/obj/item/self_grasp/grasped_by
 
-	///A list of all the external organs we've got stored
+	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
 
 
@@ -915,22 +915,9 @@
 	for(var/obj/item/organ/external/external_organ in external_organs)
 		if(!dropped && !external_organ.can_draw_on_bodypart(owner))
 			continue
-		//Some externals have multiple layers for some reason
+		//Some externals have multiple layers for background, foreground and between
 		for(var/e_layer in external_organ.layers)
-			var/mutable_appearance/pain = external_organ.prepare_overlay(mutable_appearance(external_organ.mob_icon, external_organ.mob_icon_state + mutant_bodyparts_layertext(e_layer), layer = -e_layer, appearance_flags = KEEP_APART))
-			pain.dir = image_dir
-			limb.overlays += pain
-
-//This exists so sprite accessories can still be per-layer without having to include that layer's
-//number in their sprite name, which causes issues when those numbers change.
-/obj/item/bodypart/proc/mutant_bodyparts_layertext(layer)
-	switch(layer)
-		if(EXTERNAL_BEHIND)
-			return "_BEHIND"
-		if(EXTERNAL_ADJACENT)
-			return "_ADJ"
-		if(EXTERNAL_FRONT)
-			return "_FRONT"
+			external_organ.get_overlays(limb.overlays, image_dir, e_layer, icon_gender)
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
