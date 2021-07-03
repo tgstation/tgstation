@@ -27,13 +27,10 @@
 	if(.)
 		return
 
-	if(!COMPONENT_TRIGGERED_BY(trigger, port))
+	var/turf/location = get_turf(src)
+	if(!location)
+		result.set_output(null)
 		return
-	var/turf/location = parent.shell.loc
-	if(!location)
-		location=parent.loc
-	if(!location)
-		location=loc
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total_moles = environment.total_moles()
 	var/pressure = environment.return_pressure()
