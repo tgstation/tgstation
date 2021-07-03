@@ -4,10 +4,12 @@ import { sendAct, useBackend, useLocalState } from "../../backend";
 import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../components";
 import { Window } from "../../layouts";
 import { CharacterProfile, PreferencesMenuData } from "./data";
+import { JobsPage } from "./JobsPage";
 import { MainPage } from "./MainPage";
 import { SpeciesPage } from "./SpeciesPage";
 
 enum Page {
+  Jobs,
   Main,
   Species,
 }
@@ -37,11 +39,14 @@ const CharacterProfiles = (props: {
 
 export const PreferencesMenu = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
-  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Main);
+  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Jobs);
 
   let page;
 
   switch (currentPage) {
+    case Page.Jobs:
+      page = <JobsPage />;
+      break;
     case Page.Main:
       page = <MainPage />;
       break;
@@ -53,7 +58,7 @@ export const PreferencesMenu = (props, context) => {
   }
 
   return (
-    <Window title="Character Preferences" width={640} height={770}>
+    <Window title="Character Preferences" width={780} height={770} scrollable>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>

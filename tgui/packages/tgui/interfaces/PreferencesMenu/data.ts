@@ -29,6 +29,12 @@ export enum Food {
   Vegetables = "VEGETABLES",
 }
 
+export enum JobPriority {
+  Low = 1,
+  Medium = 2,
+  High = 3,
+}
+
 export type Name = {
   explanation: string;
   value: string;
@@ -69,10 +75,12 @@ export type PreferencesMenuData = {
     };
   };
 
+  job_preferences: Record<string, JobPriority>;
+
   generated_preference_values?: Record<string, Record<string, string>>;
+  overflow_role: string;
   species: Record<string, ServerSpeciesData>;
 
   active_name: string;
-
   name_to_use: string;
 };

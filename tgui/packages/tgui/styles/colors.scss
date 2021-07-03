@@ -22,6 +22,7 @@ $purple: #a333c8 !default;
 $pink: #e03997 !default;
 $brown: #a5673f !default;
 $grey: #767676 !default;
+$light_grey: #aaa !default;
 
 $primary: #4972a1 !default;
 $good: #5baa27 !default;
@@ -58,10 +59,23 @@ $_gen_map: (
   'pink': $pink,
   'brown': $brown,
   'grey': $grey,
+  'light-grey': $light_grey,
   'good': $good,
   'average': $average,
   'bad': $bad,
   'label': $label,
+);
+
+$department_map: (
+  'Command': $yellow,
+  'Security': $red,
+  'Engineering': $orange,
+  'Medical': $teal,
+  'Misc': $white,
+  'Science': $purple,
+  'Supply': $brown,
+  'Service': $green,
+  'Silicon': $pink,
 );
 
 // Foreground color names for which to generate a color map

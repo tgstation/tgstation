@@ -1,19 +1,7 @@
 @use '../colors.scss';
 
-$department_map: (
-  'Command': colors.$yellow,
-  'Security': colors.$red,
-  'Engineering': colors.$orange,
-  'Medical': colors.$teal,
-  'Misc': colors.$white,
-  'Science': colors.$purple,
-  'Supply': colors.$brown,
-  'Service': colors.$green,
-  'Silicon': colors.$pink
-);
-
 .CrewManifest {
-  @each $department-name, $color-value in $department_map {
+  @each $department-name, $color-value in colors.$department_map {
     &--#{$department-name} {
       .Section {
         &__title {

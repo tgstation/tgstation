@@ -1,0 +1,71 @@
+@use 'sass:map';
+@use '../components/Button.scss';
+@use '../colors.scss';
+
+.PreferencesMenu {
+  &__Jobs {
+    $departments_with_extras: map-merge(colors.$department_map, (
+      'Assistant': colors.$grey,
+      'Captain': colors.$blue,
+    ));
+
+    > * {
+      flex: 1;
+    }
+
+    &__departments {
+      @each $department-name, $color-value in $departments_with_extras {
+        &--#{$department-name} {
+          &.head {
+            background: $color-value;
+
+            .job-name {
+              font-weight: bold;
+            }
+          }
+
+          background: colors.fg($color-value);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+          border-left: 2px solid rgba(0, 0, 0, 0.3);
+          border-right: 2px solid rgba(0, 0, 0, 0.3);
+          color: black;
+
+          > * {
+            height: calc(100% + 0.2em);
+            padding-bottom: 0.2em;
+          }
+
+          &:first-child {
+            border-top: 2px solid rgba(0, 0, 0, 0.3);
+          }
+
+          .job-name {
+            text-align: center;
+          }
+
+          .options {
+            background: rgba(0, 0, 0, 0.2);
+            height: 100%;
+          }
+        }
+      }
+
+      &__priority {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+
+        &--off::after {
+          content: "";
+
+          background: rgba(0, 0, 0, 0.2);
+          display: block;
+          height: 80%;
+          left: 50%;
+          position: relative;
+          top: 50%;
+          transform: translateX(-50%) translateY(-50%) rotate(40deg);
+          width: 2px;
+        }
+      }
+    }
+  }
+}

@@ -286,3 +286,22 @@ export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
 export const zipWith = iterateeFn => (...arrays) => {
   return map(values => iterateeFn(...values))(zip(...arrays));
 };
+
+export const binaryInsertWith = <T>(getKey: (value: T) => unknown):
+  ((collection: readonly T[], value: T) => T[]) =>
+{
+  return (collection, value) => {
+    const copy = [...collection];
+    const index = copy.findIndex(currentValue => {
+      return getKey(currentValue) > getKey(value);
+    });
+
+    if (index === -1) {
+      copy.push(value);
+    } else {
+      copy.splice(index, 0, value);
+    }
+
+    return copy;
+  };
+};
