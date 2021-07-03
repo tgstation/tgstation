@@ -299,7 +299,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return FALSE
 	return TRUE
 
-/// List if ["Command"] = CALLBACK(), user will be appeneded to callback arguments on execution
+/// List of ["Command"] = CALLBACK(), user will be appeneded to callback arguments on execution
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
