@@ -9,16 +9,16 @@
 	)
 
 /turf/closed/wall/rust/New()
-	var/atom/T = new /turf/closed/wall(src)
-	T._AddComponent(list(/datum/component/rust))
+	var/atom/wall_new = new /turf/closed/wall(src)
+	wall_new._AddComponent(list(/datum/component/rust))
 
 /turf/closed/wall/r_wall/rust/New()
-	var/atom/T = new /turf/closed/wall/r_wall(src)
-	T._AddComponent(list(/datum/component/rust))
+	var/atom/wall_new = new /turf/closed/wall/r_wall(src)
+	wall_new._AddComponent(list(/datum/component/rust))
 
 /turf/open/floor/plating/rust/New()
-	var/atom/T = new /turf/open/floor/plating(src)
-	T._AddComponent(list(/datum/component/rust))
+	var/atom/wall_new = new /turf/open/floor/plating(src)
+	wall_new._AddComponent(list(/datum/component/rust))
 
 /datum/component/rust/Initialize(...)
 	. = ..()
@@ -30,8 +30,7 @@
 
 	rust_overlay = mutable_appearance(parent_atom.icon, "rust")
 	RegisterSignal(parent_atom, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
-	RegisterSignal(parent_atom, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), .proc/secondary_tool_act)
-	RegisterSignal(parent_atom, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER), .proc/secondary_tool_act)
+	RegisterSignal(parent_atom, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent_atom, COMSIG_PARENT_PREQDELETED, .proc/parent_del)
 	RegisterSignal(parent_atom, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
 
