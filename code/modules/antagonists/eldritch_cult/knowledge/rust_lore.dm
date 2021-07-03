@@ -262,8 +262,8 @@
 	edge_turfs = list()
 	var/list/removal_list = list()
 	var/max_dist = 1
-	for(var/turfie in turfs)
-		if(!istype(turfie,/turf/closed/wall/rust) && !istype(turfie,/turf/closed/wall/r_wall/rust) && !istype(turfie,/turf/open/floor/plating/rust))
+	for(var/atom/turfie as anything in turfs)
+		if(!turfie.GetComponent(/datum/component/rust))
 			removal_list += turfie
 		max_dist = max(max_dist, get_dist(turfie,centre) +1)
 	turfs -= removal_list

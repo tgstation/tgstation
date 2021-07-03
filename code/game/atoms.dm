@@ -1936,7 +1936,8 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	return
+	AddComponent(/datum/component/rust)
+	addtimer(CALLBACK(src, .proc/update_icon), 1) // update next tick
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
