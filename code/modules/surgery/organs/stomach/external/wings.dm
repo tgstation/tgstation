@@ -6,7 +6,10 @@
 
 	preference = "wings"
 
-///The true wings that you can use to fly and shit
+/obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
+	return !( (human.wear_suit?.flags_inv & HIDEJUMPSUIT) && !(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception) ) )
+
+///The true wings that you can use to fly and shit (you cant actually shit with them, but it does wing stuff)
 /obj/item/organ/external/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly

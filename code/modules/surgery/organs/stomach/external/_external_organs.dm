@@ -74,13 +74,14 @@
 	sprite_datums.Add(sprite_datum)
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
-/obj/item/organ/external/proc/get_overlays(list/overlay_list, _dir, _layer, body_type)
+/obj/item/organ/external/proc/get_overlays(list/overlay_list, _dir, _layer, body_type, _color)
 	generate_icon_cache()
 	for(var/datum/sprite_accessory/sprite_datum as anything in sprite_datums)
 		var/g = (body_type == FEMALE) ? "f" : "m"
 		var/finished_icon_state = (sprite_datum.gender_specific ? g : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(_layer)
 		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -_layer)
 		appearance.dir = _dir
+		appearance.color = _color
 
 		if(sprite_datum.center)
 			center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)

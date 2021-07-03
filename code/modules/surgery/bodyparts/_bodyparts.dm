@@ -892,8 +892,9 @@
 		aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 		. += aux
 
+	var/draw_color
 	if(should_draw_greyscale)
-		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
+		draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
 			if(aux_zone)
@@ -917,7 +918,7 @@
 			continue
 		//Some externals have multiple layers for background, foreground and between
 		for(var/e_layer in external_organ.layers)
-			external_organ.get_overlays(limb.overlays, image_dir, e_layer, icon_gender)
+			external_organ.get_overlays(., image_dir, e_layer, icon_gender, "#[draw_color]")
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

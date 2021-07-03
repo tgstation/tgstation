@@ -1947,8 +1947,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.movement_type & FLYING)
 		return TRUE
 
-	var/obj/item/organ/external/wings/moth/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	return wings?.can_float_move()
+	var/maybe_wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(istype(maybe_wings, /obj/item/organ/external/wings/moth))
+		var/obj/item/organ/external/wings/moth/wings = maybe_wings
+		return wings?.can_float_move()
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
