@@ -7,8 +7,7 @@
 	display_name = "Pressure Sensor"
 	display_desc = "Outputs the current pressure of the tile"
 
-	/// Trigger a measurement
-	var/datum/port/input/trigger
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The result from the output
 	var/datum/port/output/result
