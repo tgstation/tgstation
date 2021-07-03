@@ -43,7 +43,7 @@
 	ret |= rust_overlay
 
 /datum/component/rust/proc/parent_del()
-    SIGNAL_HANDLER
+	SIGNAL_HANDLER
 	qdel(src)
 
 /datum/component/rust/Destroy()
