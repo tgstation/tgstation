@@ -7,8 +7,7 @@
 	display_name = "Temperature Sensor"
 	display_desc = "Outputs the current temperature of the tile"
 
-	/// Trigger a measurement
-	var/datum/port/input/trigger
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The result from the output
 	var/datum/port/output/result
