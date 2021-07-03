@@ -39,9 +39,9 @@
 	log_reftracker("Finished searching datums")
 
 	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
-	for(var/client/thing) //clients
-		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
-	log_reftracker("Finished searching clients")
+	//for(var/client/thing) //clients
+	//	DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
+	//log_reftracker("Finished searching clients")
 
 	log_reftracker("Completed search for references to a [type].")
 

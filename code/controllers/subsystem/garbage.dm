@@ -182,17 +182,6 @@ SUBSYSTEM_DEF(garbage)
 
 		switch (level)
 			if (GC_QUEUE_CHECK)
-				#ifdef REFERENCE_TRACKING
-				if(reference_find_on_fail[refID])
-					INVOKE_ASYNC(D, /datum/proc/find_references)
-					ref_searching = TRUE
-				#ifdef GC_FAILURE_HARD_LOOKUP
-				else
-					INVOKE_ASYNC(D, /datum/proc/find_references)
-					ref_searching = TRUE
-				#endif
-				reference_find_on_fail -= refID
-				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
@@ -207,11 +196,15 @@ SUBSYSTEM_DEF(garbage)
 				I.failures++
 
 				if (I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
-					#ifdef REFERENCE_TRACKING
-					if(ref_searching)
-						return //ref searching intentionally cancels all further fires while running so things that hold references don't end up getting deleted, so we want to return here instead of continue
-					#endif
 					continue
+			#ifdef REFERENCE_TRACKING
+			#ifdef GC_FAILURE_HARD_LOOKUP
+				INVOKE_ASYNC(D, /datum/proc/find_references)
+				ref_searching = TRUE
+			#endif
+			#endif
+
+
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
