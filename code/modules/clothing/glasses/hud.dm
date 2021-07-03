@@ -71,7 +71,7 @@
 /obj/item/clothing/glasses/hud/health/presglasses
 	name = "medical HUDGlasses"
 	desc = "A pair of prescription glasses with a medical HUD"
-	icon_state = "preshudmed"
+	icon_state = "preshudhealth"
 	vision_correction = TRUE
 
 /obj/item/clothing/glasses/hud/diagnostic
