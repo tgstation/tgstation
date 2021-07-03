@@ -266,9 +266,9 @@
 	return ..()
 
 /obj/item/integrated_circuit/can_interact(mob/user)
-	. = ..()
 	if(locked)
 		return FALSE
+	return ..()
 
 /obj/item/integrated_circuit/ui_state(mob/user)
 	if(!shell)
