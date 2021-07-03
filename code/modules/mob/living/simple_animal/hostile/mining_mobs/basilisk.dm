@@ -133,7 +133,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/proc/consume_bait()
 	for(var/obj/O in view(1, src))
-		if(istype(O, /obj/item/stack/ore/diamond/diamonds))
+		if(istype(O, /obj/item/stack/ore/diamond))
 			qdel(O)
 			src.visible_message("<span class='notice'>[src] consumes [O], and it disappears! ...At least, you think.</span>")
 		else if(istype(O, /obj/item/pen/survival))
