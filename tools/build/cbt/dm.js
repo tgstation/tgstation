@@ -69,10 +69,10 @@ const dm = async (dmeFile, options = {}) => {
       fs.closeSync(fs.openSync(name, 'r+'));
     }
     catch (err) {
-      if (err?.code === 'ENOENT') {
+      if (err && err.code === 'ENOENT') {
         return;
       }
-      if (err?.code === 'EBUSY') {
+      if (err && err.code === 'EBUSY') {
         Juke.logger.error(`File '${name}' is locked by the DreamDaemon process.`);
         Juke.logger.error(`Stop the currently running server and try again.`);
         throw new Juke.ExitCode(1);
