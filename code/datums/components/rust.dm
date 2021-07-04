@@ -34,9 +34,9 @@
 	SIGNAL_HANDLER
 	examine_text += span_notice("The [source] is very rusty; you could probably <i>burn</i> or <i>scrape</i> it off.")
 
-/datum/component/rust/proc/apply_rust_overlay(atom/parent_atom, list/ret)
+/datum/component/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
-	ret |= rust_overlay
+	overlays |= rust_overlay
 
 /datum/component/rust/proc/parent_del()
 	SIGNAL_HANDLER
@@ -45,10 +45,8 @@
 /datum/component/rust/Destroy()
 	if(parent)
 		var/atom/parent_atom = parent
-		UnregisterSignal(parent_atom, COMSIG_ATOM_UPDATE_OVERLAYS)
-		UnregisterSignal(parent_atom, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER))
-		UnregisterSignal(parent_atom, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER))
-		UnregisterSignal(parent_atom, COMSIG_PARENT_PREQDELETED)
+		UnregisterSignal(parent_atom,\
+			list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), COMSIG_PARENT_PREQDELETED)
 		parent_atom.update_icon(UPDATE_OVERLAYS)
 		rust_overlay = null
 	return ..()
