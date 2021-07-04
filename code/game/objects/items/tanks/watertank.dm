@@ -162,7 +162,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(5, 10)
 	current_range = 5
 
 /obj/item/watertank/janitor/make_noz()
@@ -173,8 +173,8 @@
 
 //Security tank
 /obj/item/watertank/pepperspray
-	name = "ANTI-TIDER-2500"
-	desc = "The ultimate crowd-control weapon; this tool allows the user to quickly and efficiently pacify groups of hostile targets."
+	name = "ANTI-TIDER-2500 suppression backpack"
+	desc = "The ultimate crowd-control device; this tool allows the user to quickly and efficiently pacify groups of hostile targets."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "pepperbackpacksec"
 	inhand_icon_state = "pepperbackpacksec"
@@ -193,7 +193,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(5, 10)
 	current_range = 6
 
 /obj/item/watertank/pepperspray/make_noz()
