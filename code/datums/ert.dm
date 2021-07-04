@@ -45,7 +45,7 @@
 	leader_role = /datum/antagonist/ert/marine
 	roles = list(/datum/antagonist/ert/marine/security, /datum/antagonist/ert/marine/engineer, /datum/antagonist/ert/marine/medic)
 	rename_team = "Marine Squad"
-	polldesc = "an elite Nanotrasen Strike Team"
+	polldesc = "an 'elite' Nanotrasen Strike Team"
 	opendoors = FALSE
 
 /datum/ert/centcom_official
