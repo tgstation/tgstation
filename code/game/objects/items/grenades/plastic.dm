@@ -117,14 +117,16 @@
 	if(!player)
 		CRASH("[src] proc shout_syndicate_crap called without a mob to shout crap from!")
 
+	var/final_message = "FOR NO RAISIN!!"
 	if(player.mind)
 		// Give our list of antag datums a shuffle and pick the first one with a suicide_cry to use as our shout.
 		var/list/shuffled_antag_datums = shuffle(player.mind.antag_datums)
 		for(var/datum/antagonist/found_antag as anything in shuffled_antag_datums)
 			if(found_antag.suicide_cry)
-				player.say(found_antag.suicide_cry, forced="C4 suicide")
-				return
-	player.say("FOR NO RAISIN!!", forced="C4 suicide")
+				final_message = found_antag.suicide_cry
+				break
+
+	player.say(final_message, forced = "C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
