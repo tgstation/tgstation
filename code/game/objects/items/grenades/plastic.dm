@@ -141,6 +141,8 @@
 			message_say = "FOR ME MATEYS!"
 		else if(UM.has_antag_datum(/datum/antagonist/wizard))
 			message_say = "FOR THE FEDERATION!"
+		else if(UM.has_antag_datum(/datum/antagonist/heretic))
+			message_say = "MANSUS SMILES UPON ME!"
 	M.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
