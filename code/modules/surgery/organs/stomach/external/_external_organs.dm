@@ -130,9 +130,7 @@
 	preference = "horns"
 
 /obj/item/organ/external/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
-	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
-
-	if(!(head.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
 
 /obj/item/organ/external/horns/get_global_feature_list()
@@ -147,9 +145,7 @@
 	preference = "frills"
 
 /obj/item/organ/external/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
-	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
-
-	if(!(head.flags_inv & HIDEEARS))
+	if(!(human.head?.flags_inv & HIDEEARS))
 		return TRUE
 
 /obj/item/organ/external/frills/get_global_feature_list()
@@ -164,9 +160,7 @@
 	preference = "snout"
 
 /obj/item/organ/external/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
-	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
-
-	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(head.flags_inv & HIDESNOUT))
+	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
 		return TRUE
 
 /obj/item/organ/external/snout/get_global_feature_list()
@@ -200,6 +194,10 @@
 /obj/item/organ/external/antennae/get_global_feature_list()
 	return GLOB.moth_antennae_list
 
+
+/obj/item/organ/external/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+		return TRUE
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
@@ -216,5 +214,6 @@
 
 ///heal our antennae back up!!
 /obj/item/organ/external/antennae/proc/heal_antennae()
-	burnt = FALSE
-	add_sprite_datum(original_sprite, TRUE)
+	if(burnt)
+		burnt = FALSE
+		add_sprite_datum(original_sprite, TRUE)

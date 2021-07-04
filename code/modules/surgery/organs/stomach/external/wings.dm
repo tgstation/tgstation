@@ -198,5 +198,6 @@
 
 ///heal our wings back up!!
 /obj/item/organ/external/wings/moth/proc/heal_wings()
-	burnt = FALSE
-	add_sprite_datum(original_sprite, TRUE)
+	if(burnt)
+		burnt = FALSE
+		add_sprite_datum(original_sprite, TRUE)
