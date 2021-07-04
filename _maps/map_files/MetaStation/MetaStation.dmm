@@ -18085,10 +18085,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/locker)
-"dEM" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white,
-/area/science/cytology)
 "dER" = (
 /obj/machinery/requests_console/directional/west{
 	department = "Detective";
@@ -28012,7 +28008,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "gYs" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -28399,7 +28395,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "hhM" = (
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral{
@@ -55475,7 +55471,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "qif" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
@@ -57778,7 +57774,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "qXx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
@@ -63091,7 +63087,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "sIe" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -65886,7 +65882,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "tCx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -76803,7 +76799,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/white,
-/area/science/cytology)
+/area/science/xenobiology)
 "xih" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 1
@@ -123833,9 +123829,9 @@ cSy
 cSn
 ukw
 bFT
-mTR
+rUh
 qXt
-dEM
+pud
 ryj
 pJK
 cSn
