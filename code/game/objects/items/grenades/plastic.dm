@@ -143,6 +143,24 @@
 			message_say = "FOR THE FEDERATION!"
 		else if(our_guy.has_antag_datum(/datum/antagonist/heretic))
 			message_say = "MANSUS SMILES UPON ME!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/abductor))
+			message_say = "FOR THE MOTHERSHIP!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/brainwashed))
+			message_say = "FOR-" //Ambiguity is probably best for brainwashed people
+		else if(our_guy.has_antag_datum(/datum/antagonist/obsessed) || our_guy.has_antag_datum(/datum/antagonist/valentine))
+			message_say = "FOR MY LOVE!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/monkey))
+			message_say = "FOR THE CONSORTIUM!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/nightmare))
+			message_say = "FOR THE DARKNESS!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/santa))
+			message_say = "FOR CHRISTMAS!" //The sheer absurdity of this
+		else if(our_guy.has_antag_datum(/datum/antagonist/separatist))
+			message_say = "FOR THE MOTHERLAND!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/survivalist) || our_guy.has_antag_datum(/datum/antagonist/heartbreaker))
+			message_say = "FOR ME!"
+		else if(our_guy.has_antag_datum(/datum/antagonist/wishgranter))
+			message_say = "HAHAHAH-"
 	player.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
