@@ -30,18 +30,22 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	health = 75
 	maxHealth = 75
+	// randomizes hunting intervals, minimum 5 turns
+	var/time_to_hunt = 5
 
 /mob/living/simple_animal/ant/Initialize()
 	. = ..()
+	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	time_to_hunt = rand(5,10)
 
 /mob/living/simple_animal/ant/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7) //They're both insects, might as well make it do SOMETHING
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7) // They're both insects, best to have it at least do something.
 
-/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) //Payback time bitch
+/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the ants have become the predators
 	. = ..()
 	turns_since_scan++
-	if(turns_since_scan > 5)
+	if(turns_since_scan > time_to_hunt)
 		turns_since_scan = 0
 		var/list/target_types = list(/mob/living/simple_animal/hostile/cockroach)
 		for(var/mob/living/simple_animal/hostile/potential_target in view(3, get_turf(src)))

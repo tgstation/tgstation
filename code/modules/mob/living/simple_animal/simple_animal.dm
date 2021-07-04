@@ -697,34 +697,37 @@
 /mob/living/simple_animal/proc/hunt(hunted)
 	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
 		return
-	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
-			if(Adjacent(hunted) && COOLDOWN_FINISHED(src, emote_cooldown))
-				if(isliving(hunted)) // Are we hunting a living mob?
-					var/mob/living/prey = hunted
-					if(inept_hunter) // Kept this in case you want your hunter to run around in a funny way.
-						visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
-						step(prey, pick(GLOB.cardinals))
-						stop_automated_movement = FALSE
-						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-						return
-					if(!prey.stat)
-						manual_emote("chomps [prey]!")
-						prey.death()
-						prey = null
-						stop_automated_movement = FALSE
-						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-						return
-				else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
-					manual_emote("chomps [hunted]!")
-					qdel(hunted)
-					hunted = null
-					stop_automated_movement = FALSE
-					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
-					return
-			else
-				stop_automated_movement = TRUE
-				walk_to(src,hunted,0,3)
-				if(Adjacent(hunted))
-					hunt(hunted) //In case it gets next to the target immediately, skip the scan timer and kill it.
-	stop_automated_movement = FALSE
+	if(!((src.loc) && isturf(src.loc))) // Are we on a proper turf & location?
+		stop_automated_movement = FALSE
+		return
+	if(stat || resting || buckled) // Are we concious, upright, and not buckled?
+		stop_automated_movement = FALSE
+		return
+	if(Adjacent(hunted) && COOLDOWN_FINISHED(src, emote_cooldown))
+		if(isliving(hunted)) // Are we hunting a living mob?
+			var/mob/living/prey = hunted
+			if(inept_hunter) // Kept this in case you want your hunter to run around in a funny way.
+				visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
+				step(prey, pick(GLOB.cardinals))
+				stop_automated_movement = FALSE
+				COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+				return
+			if(!prey.stat)
+				manual_emote("chomps [prey]!")
+				prey.death()
+				prey = null
+				stop_automated_movement = FALSE
+				COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+				return
+		else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
+			manual_emote("chomps [hunted]!")
+			qdel(hunted)
+			hunted = null
+			stop_automated_movement = FALSE
+			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+			return
+	else
+		stop_automated_movement = TRUE
+		walk_to(src,hunted,0,3)
+		if(Adjacent(hunted))
+			hunt(hunted) // In case it gets next to the target immediately, skip the scan timer and kill it.
