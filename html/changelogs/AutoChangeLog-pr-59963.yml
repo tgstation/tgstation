@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Stationary pressure tanks now properly have their base pressure at 20000kPa."
+  - bugfix: "Stationary pressure tanks now do not name themselves as \"plasteel plasteel pressure tank\"."
