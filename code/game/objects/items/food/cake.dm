@@ -470,7 +470,7 @@
 
 /obj/item/food/cake/pavlovacream
 	name = "pavlova"
-	desc = "A sweet berry pavlova."
+	desc = "A sweet berry pavlova. Invented in New Zealand, has become popular with Vox for some reason."
 	icon_state = "pavlova"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
@@ -488,7 +488,7 @@
 
 /obj/item/food/cake/pavlovakorta
 	name = "pavlova"
-	desc = "A sweet berry pavlova."
+	desc = "A sweet berry pavlova. Invented in New Zealand, has become popular with Vox for some reason."
 	icon_state = "pavlova"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
