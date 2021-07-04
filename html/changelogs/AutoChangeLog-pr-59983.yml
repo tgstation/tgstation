@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "hierophant club dash now doesnt work on blocked turfs"
