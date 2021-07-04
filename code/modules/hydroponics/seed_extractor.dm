@@ -76,7 +76,7 @@
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.")
+		. += span_notice("The status display reads: Extracting <b>[1 * seed_multiplier] to [4 * seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.")
 
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/living/user, params)
 
