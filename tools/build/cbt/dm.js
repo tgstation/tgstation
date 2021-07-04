@@ -1,4 +1,4 @@
-const { exec } = require('../juke');
+const Juke = require('../juke');
 const { stat } = require('./fs');
 const { regQuery } = require('./winreg');
 const fs = require('fs');
@@ -15,6 +15,7 @@ let dmPath;
  * @param {{ defines?: string[] }} options
  */
 const dm = async (dmeFile, options = {}) => {
+  // Get path to DM compiler
   if (!dmPath) {
     dmPath = await (async () => {
       // Search in array of paths
@@ -60,8 +61,29 @@ const dm = async (dmeFile, options = {}) => {
       );
     })();
   }
-  const { defines } = options;
+  // Get project basename
   const dmeBaseName = dmeFile.replace(/\.dme$/, '');
+  // Make sure output files are writable
+  const testOutputFile = (name) => {
+    try {
+      fs.closeSync(fs.openSync(name, 'r+'));
+    }
+    catch (err) {
+      if (err?.code === 'ENOENT') {
+        return;
+      }
+      if (err?.code === 'EBUSY') {
+        Juke.logger.error(`File '${name}' is locked by the DreamDaemon process.`);
+        Juke.logger.error(`Stop the server and try again.`);
+        throw new Juke.ExitCode(1);
+      }
+      throw err;
+    }
+  };
+  testOutputFile(`${dmeBaseName}.dmb`);
+  testOutputFile(`${dmeBaseName}.rsc`);
+  // Compile
+  const { defines } = options;
   if (defines && defines.length > 0) {
     const injectedContent = defines
       .map(x => `#define ${x}\n`)
@@ -69,13 +91,13 @@ const dm = async (dmeFile, options = {}) => {
     fs.writeFileSync(`${dmeBaseName}.mdme`, injectedContent)
     const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`)
     fs.appendFileSync(`${dmeBaseName}.mdme`, dmeContent)
-    await exec(dmPath, [`${dmeBaseName}.mdme`]);
+    await Juke.exec(dmPath, [`${dmeBaseName}.mdme`]);
     fs.renameSync(`${dmeBaseName}.mdme.dmb`, `${dmeBaseName}.dmb`)
     fs.renameSync(`${dmeBaseName}.mdme.rsc`, `${dmeBaseName}.rsc`)
     fs.unlinkSync(`${dmeBaseName}.mdme`)
   }
   else {
-    await exec(dmPath, dmeFile);
+    await Juke.exec(dmPath, dmeFile);
   }
 };
 
