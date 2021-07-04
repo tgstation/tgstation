@@ -552,6 +552,7 @@
 	uniform = /obj/item/clothing/under/syndicate/camo
 	mask = /obj/item/clothing/mask/cigarette/robustgold
 	head = /obj/item/clothing/head/helmet/marine
+	l_hand = /obj/item/flashlight/seclite
 
 /datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -574,6 +575,7 @@
 	r_pocket = /obj/item/grenade/smokebomb
 	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine/security
+	l_hand = /obj/item/flashlight/seclite
 
 /datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -602,6 +604,7 @@
 )
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	l_hand = /obj/item/flashlight/seclite
 
 /datum/outfit/centcom/ert/marine/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -631,6 +634,7 @@
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses =  /obj/item/clothing/glasses/night
 	r_pocket = /obj/item/rcd_ammo/large
+	l_hand = /obj/item/flashlight/seclite
 
 /datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
