@@ -47,12 +47,12 @@
 		var/mob/living/simple_animal/hostile/target_hostile = target_animal
 		if(malfunctioning)
 			target_hostile.faction |= list("lazarus", "[REF(user)]")
-			target_hostile.robust_searching = 1
+			target_hostile.robust_searching = TRUE
 			target_hostile.friends += user
-			target_hostile.attack_same = 1
+			target_hostile.attack_same = TRUE
 			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
 		else
-			target_hostile.attack_same = 0
+			target_hostile.attack_same = FALSE
 	loaded = FALSE
 	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)
