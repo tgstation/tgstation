@@ -261,11 +261,10 @@
 	first_point.merge(input_remove)
 	var/first_point_pressure = first_point.return_pressure()
 	var/first_point_temperature = first_point.return_temperature()
-	var/datum/gas_mixture/first_remove = first_point.remove(first_point.total_moles())
+	var/datum/gas_mixture/first_remove = first_point.remove_ratio(1)
 
 	second_point.merge(first_remove)
 	var/second_point_pressure = second_point.return_pressure()
-	var/second_point_temperature = second_point.temperature
 	var/heat_capacity = second_point.heat_capacity()
 
 	var/work_done = 0
@@ -275,7 +274,7 @@
 
 	rpm = (work_done ** 0.6) * 4 * rpm_coefficient
 
-	efficiency = clamp(1 - log(10, max(second_point_temperature, 1e3)) * 0.1 + efficiency_coefficient, 0, 1)
+	efficiency = clamp(1 - log(10, max(first_point_temperature, 1e3)) * 0.1 + efficiency_coefficient, 0, 1)
 
 	generated_power = rpm * efficiency * 10
 
@@ -283,7 +282,7 @@
 
 	second_point.temperature = max((second_point.temperature * heat_capacity - work_done * second_point.total_moles() * 0.05 * heat_transfer_coefficient) / heat_capacity, TCMB)
 
-	var/datum/gas_mixture/second_remove = second_point.remove(second_point.total_moles())
+	var/datum/gas_mixture/second_remove = second_point.remove_ratio(1)
 
 	output.merge(second_remove)
 
