@@ -2746,12 +2746,12 @@
 	if(DT_PROB(2, delta_time))
 		victim.vomit(rand(1, 2), stun = FALSE)
 	ant_damage += 1
-	..()
+	return ..()
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	ant_damage = 0
 	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
-	..()
+	return ..()
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
