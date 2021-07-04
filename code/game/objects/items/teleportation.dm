@@ -248,7 +248,9 @@
 	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 
-	try_move_adjacent(portal1, user.dir)
+	var/turf/check_turf = get_turf(get_step(user, user.dir))
+	if(check_turf.CanPass(user, get_dir(check_turf, user)))
+		portal1.forceMove(check_turf)
 	active_portal_pairs[portal1] = portal2
 
 	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(portal1)] and [AREACOORD(portal2)].", INVESTIGATE_PORTAL)

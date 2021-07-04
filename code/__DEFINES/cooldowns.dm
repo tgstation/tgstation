@@ -42,6 +42,11 @@
 //clown car cooldowns
 #define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
 
+//circuit cooldowns
+
+#define COOLDOWN_CIRCUIT_SOUNDEMITTER "circuit_soundemitter"
+#define COOLDOWN_CIRCUIT_SPEECH "circuit_speech"
+
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"
