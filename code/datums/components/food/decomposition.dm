@@ -38,7 +38,7 @@
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_STORAGE_EXITED), //Object exits a storage object (boxes, etc)
 		.proc/dropped)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine) // Self-explanitory
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 	if(decomp_flags & RAW) // Raw food overrides gross
 		time_remaining = DECOMPOSITION_TIME_RAW
@@ -83,7 +83,7 @@
 
 /datum/component/decomposition/Destroy()
 	if(active_timers)
-		deltimer(timerid) //Just in case
+		deltimer(timerid)
 	return ..()
 
 /datum/component/decomposition/proc/dropped()
