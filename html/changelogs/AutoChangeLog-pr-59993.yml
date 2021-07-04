@@ -1,0 +1,4 @@
+author: "read-0nly"
+delete-after: True
+changes: 
+  - rscadd: "Added temperature and pressure sensors to circuits"
