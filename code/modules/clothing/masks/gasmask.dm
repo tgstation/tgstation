@@ -1,6 +1,6 @@
 /obj/item/clothing/mask/gas
 	name = "gas mask"
-	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
+	desc = "A face-covering mask that can be connected to an air supply. Good for concealing your identity and with a filter slot to help remove those toxins." //More accurate
 	icon_state = "gas_alt"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -24,6 +24,10 @@
 		LAZYADD(gas_filters, filter)
 	has_filter = TRUE
 
+/obj/item/clothing/mask/gas/Destroy()
+	QDEL_LAZYLIST(gas_filters)
+	return..()
+
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
 	if(max_filters > 0)
@@ -40,8 +44,7 @@
 	if(!user.transferItemToLoc(filter, src))
 		return TRUE
 	LAZYADD(gas_filters, filter)
-	if(LAZYLEN(gas_filters) > 0)
-		has_filter = TRUE
+	has_filter = TRUE
 
 ///Check _masks.dm for this one
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
