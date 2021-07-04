@@ -193,7 +193,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(5, 10)
 	current_range = 6
 
 /obj/item/watertank/pepperspray/make_noz()
