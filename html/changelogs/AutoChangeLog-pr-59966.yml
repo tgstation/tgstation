@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "The \"Is This Thing On?\" explosion calibration experiment will now accept explosions with negative devastation or heavy strength because, once again, any explosion will do!"

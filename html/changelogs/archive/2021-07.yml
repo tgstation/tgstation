@@ -88,3 +88,58 @@
   - bugfix: Killing and reviving polar bears no longer makes them easier to move.
   tralezab:
   - rscadd: catwalk flooring!
+2021-07-04:
+  Arkatos:
+  - bugfix: Large cardboard boxes will now show a proper icon when they are open.
+  Ghommie:
+  - bugfix: The "Is This Thing On?" explosion calibration experiment will now accept
+      explosions with negative devastation or heavy strength because, once again,
+      any explosion will do!
+  MMMiracles:
+  - bugfix: Fixed a few errant pipe issues in Tramstation Atmospherics
+  RandomGamer123:
+  - spellcheck: Ion carbine gun parts kits are no longer called "generic gun parts
+      kit".
+  - spellcheck: The "advanced" in advanced energy gun parts kit is no longer misspelled.
+  - qol: Examining stationary tanks now tells you their pressure limits.
+  - bugfix: Analyzing stationary tanks no longer gives you the same thing four times.
+  Sheits:
+  - bugfix: Inhand sprites for hydrogen fire axes now face the right way
+  Urumasi:
+  - bugfix: The turbine now behaves correctly if the intake is blocked.
+  Watermelon914:
+  - bugfix: Fixed carps not properly being tameable.
+  - bugfix: Fixed the tameable component not properly being removed from a mob.
+  - qol: The RAM circuit component now allows you to select the type instead of trying
+      to interpret it, allowing it to be used as a constant value component.
+  - code_imp: Made the any datatype for circuit components much easier to read in
+      code.
+  - expansion: Adds crew monitor usb connections
+  - bugfix: Fixed the sound emitter's frequency port
+  - bugfix: Fixed cooldowns for speech and soundemitter circuit components.
+  - code_imp: Brought the speech component more in line with other components.
+  - bugfix: Limited the maximum string length of a circuit component port to 5K characters
+      to fix exploits that can create strings that duplicate in size each iteration.
+  - bugfix: Fixed being able to insert an infinite amount of components into a shell
+      because of an oversight.
+  - bugfix: Fixed being able to interact the circuit of a locked shell.
+  Wayland-Smithy:
+  - bugfix: Fixed incorporeal movers procing containment field effects.
+  - bugfix: Fixed fully_heal proc curing blindness from quirks and blindfolds.
+  - bugfix: Fixed Create Command Report UI lacking an option derived from command_name().
+  - bugfix: Fixed Cross Server messages containing HTML garbage.
+  YakumoChen:
+  - expansion: Adds a contraband flavor of Gallery's Peanuts to Getmore vendor
+  bobbahbrown:
+  - rscadd: Added a brand new upgrade to janicarts, the vacuum upgrade, which you
+      can procure from RnD. This upgrade vacuums items from under the janicart directly
+      into an attached garbage bag, very handy! You can remove existing upgrades with
+      a screwdriver.
+  - bugfix: Janicarts no longer accidentally put the key into the trash bag when trying
+      to insert a key with a trashbag attached.
+  - rscadd: You can now right-click while riding a janicart to remove the bag without
+      unbuckling yourself, neato!
+  thestubborn:
+  - expansion: Bananas can be holstered
+  tralezab:
+  - expansion: PDAs now include round time.

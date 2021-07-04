@@ -1,6 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - rscadd: "Added a brand new upgrade to janicarts, the vacuum upgrade, which you can procure from RnD. This upgrade vacuums items from under the janicart directly into an attached garbage bag, very handy! You can remove existing upgrades with a screwdriver."
-  - bugfix: "Janicarts no longer accidentally put the key into the trash bag when trying to insert a key with a trashbag attached."
-  - rscadd: "You can now right-click while riding a janicart to remove the bag without unbuckling yourself, neato!"
