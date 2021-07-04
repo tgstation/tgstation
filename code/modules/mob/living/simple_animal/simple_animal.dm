@@ -706,13 +706,13 @@
 	if(Adjacent(hunted) && COOLDOWN_FINISHED(src, emote_cooldown))
 		if(isliving(hunted)) // Are we hunting a living mob?
 			var/mob/living/prey = hunted
-			if(inept_hunter) // Kept this in case you want your hunter to run around in a funny way.
+			if(inept_hunter) // Make your hunter inept to have them unable to catch their prey.
 				visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
 				step(prey, pick(GLOB.cardinals))
 				stop_automated_movement = FALSE
 				COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 				return
-			if(!prey.stat)
+			if(!(prey.stat))
 				manual_emote("chomps [prey]!")
 				prey.death()
 				prey = null
