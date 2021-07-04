@@ -95,6 +95,13 @@
 
 	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
 
+/datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner, mob/user = usr)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	owner.update_sight()
+	to_chat(user, text("<span class='notice'>You can no longer see the heat rising off of your skin...</span>"))
+
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/xray
 	name = "X Ray Vision"
