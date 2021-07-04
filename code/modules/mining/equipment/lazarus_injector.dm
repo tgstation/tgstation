@@ -27,7 +27,7 @@
 
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if((!loaded) || (!(isliving(target) && proximity_flag)))
+	if(!loaded || !(isliving(target) && proximity_flag) )
 		return
 	if(!isanimal(target))
 		to_chat(user, span_info("[src] is only effective on lesser beings."))
