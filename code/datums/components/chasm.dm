@@ -24,7 +24,7 @@
 		/obj/effect/particle_effect/ion_trails,
 		/obj/effect/dummy/phased_mob,
 		/obj/effect/mapping_helpers,
-		/obj/effect/wisp
+		/obj/effect/wisp,
 		))
 
 /datum/component/chasm/Initialize(turf/target)
