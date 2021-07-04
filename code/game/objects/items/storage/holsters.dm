@@ -61,6 +61,19 @@
 		/obj/item/ammo_box/c38 = 2)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/belt/holster/detective/full/ert
+	name = "marine's holster"
+	desc = "Wearing this makes you feel badass, but you suspect it's just a repainted detective's holster from the NT surplus."
+	icon_state = "syndicate_holster"
+	inhand_icon_state = "syndicate_holster"
+	worn_icon_state = "syndicate_holster"
+
+/obj/item/storage/belt/holster/detective/full/ert/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
+		/obj/item/ammo_box/magazine/m45 = 2)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
 	desc = "A hip holster that uses chameleon technology to disguise itself, due to the added chameleon tech, it cannot be mounted onto armor."
