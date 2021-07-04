@@ -29,6 +29,33 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/marine
+	name = "marine combat armor"
+	desc = "A multirole set of armor used by the marines, painted in a tacticool black color with blue markings to indicate you might be important."
+	icon_state = "marine_command"
+	inhand_icon_state = "armor"
+	armor = list(MELEE = 65, BULLET = 50, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 50, RAD = 25, FIRE = 70, ACID = 60, WOUND = 15)
+	can_flashlight = TRUE
+	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/marine/security
+	name = "marine heavy armor"
+	desc = "A heavy set of armor that still allows full mobility, offering higher protection at the cost of having red targets painted on your shoulders."
+	icon_state = "marine_security"
+	armor = list(MELEE = 75, BULLET = 60, LASER = 55, ENERGY = 65, BOMB = 60, BIO = 50, RAD = 25, FIRE = 85, ACID = 65, WOUND = 20)
+
+/obj/item/clothing/suit/armor/vest/marine/engineer
+	name = "marine utility armor"
+	desc = "A light set of armor with a mounted satchel for storing things. You realized too late that pouches are only for looks, and don't actually work. No refunds."
+	icon_state = "marine_engineer"
+	armor = list(MELEE = 45, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 50, BIO = 75, RAD = 80, FIRE = 75, ACID = 70, WOUND = 10)
+
+/obj/item/clothing/suit/armor/vest/marine/medic
+	name = "marine medic armor"
+	desc = "Similar to the utility armor, sacrifices sheer armor plate for higher protection against the environment."
+	icon_state = "marine_security"
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 80, RAD = 40, FIRE = 80, ACID = 80, WOUND = 10)
+
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
 	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."
