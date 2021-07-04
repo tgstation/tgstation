@@ -35,8 +35,6 @@
 	icon_state = "marine_command"
 	inhand_icon_state = "armor"
 	armor = list(MELEE = 65, BULLET = 50, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 50, RAD = 25, FIRE = 70, ACID = 60, WOUND = 15)
-	can_flashlight = TRUE
-	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/marine/security
 	name = "marine heavy armor"

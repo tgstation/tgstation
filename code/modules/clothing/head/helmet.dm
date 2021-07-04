@@ -123,7 +123,7 @@
 	desc = "A multirole helmet, the antenna isn't actually functional, but it looks cool. Has some extra biological protection installed."
 	icon_state = "marine_security"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 80, RAD = 40, FIRE = 80, ACID = 80, WOUND = 10)
-8
+
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
