@@ -30,10 +30,16 @@
 		return COMPONENT_INCOMPATIBLE
 
 	rust_overlay = mutable_appearance(parent_atom.icon, rust_iconstate)
+
+/datum/component/rust/RegisterWithParent()
 	RegisterSignal(parent_atom, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(parent_atom, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent_atom, COMSIG_PARENT_PREQDELETED, .proc/parent_del)
 	RegisterSignal(parent_atom, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
+
+/datum/component/rust/UnregisterFromParent()
+	UnregisterSignal(parent_atom,\
+		list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), COMSIG_PARENT_PREQDELETED)
 
 /datum/component/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -50,8 +56,7 @@
 /datum/component/rust/Destroy()
 	if(parent)
 		var/atom/parent_atom = parent
-		UnregisterSignal(parent_atom,\
-			list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), COMSIG_PARENT_PREQDELETED)
+		UnregisterFromParent()
 		parent_atom.update_icon(UPDATE_OVERLAYS)
 		rust_overlay = null
 	return ..()
