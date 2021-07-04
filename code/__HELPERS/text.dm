@@ -120,20 +120,19 @@
 /// Used to get a properly sanitized input, of max_length
 /// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as text|null
-
+	var/input_text = input(user, message, title, default) as text|null
 	if(no_trim)
-		return copytext(html_encode(name), 1, max_length)
+		return copytext(html_decode(strip_html(input_text)), 1, max_length) //strip encodes so decode to remove stinky html chars
 	else
-		return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+		return trim(html_decode(strip_html(input_text)), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
-	var/name = input(user, message, title, default) as message|null
+	var/input_text = input(user, message, title, default) as message|null
 	if(no_trim)
-		return copytext(html_encode(name), 1, max_length)
+		return copytext(html_decode(strip_html(input_text)), 1, max_length)
 	else
-		return trim(html_encode(name), max_length)
+		return trim(html_decode(strip_html(input_text)), max_length)
 
 #define NO_CHARS_DETECTED 0
 #define SPACES_DETECTED 1
