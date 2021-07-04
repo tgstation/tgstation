@@ -51,7 +51,7 @@
 /obj/item/clothing/suit/armor/vest/marine/medic
 	name = "marine medic armor"
 	desc = "Similar to the utility armor, sacrifices sheer armor plate for higher protection against the environment."
-	icon_state = "marine_security"
+	icon_state = "marine_medic"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 80, RAD = 40, FIRE = 80, ACID = 80, WOUND = 10)
 
 /obj/item/clothing/suit/armor/vest/old

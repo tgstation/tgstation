@@ -121,7 +121,7 @@
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
 	desc = "A multirole helmet, the antenna isn't actually functional, but it looks cool. Has some extra biological protection installed."
-	icon_state = "marine_security"
+	icon_state = "marine_medic"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 80, RAD = 40, FIRE = 80, ACID = 80, WOUND = 10)
 
 /obj/item/clothing/head/helmet/old
