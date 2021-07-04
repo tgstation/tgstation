@@ -1,3 +1,7 @@
+/**
+ * Adding this component to an Atom will have it automatically render an overlay.
+ * The overlay can be specified in new as the first and only parameter; it defaults to "rust" if not included.
+ */
 /datum/component/rust
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Internal variable to store the rust overlay we are using to avoid regenerating it every overlay update call
