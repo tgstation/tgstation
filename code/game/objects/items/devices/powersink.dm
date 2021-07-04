@@ -43,7 +43,7 @@
 
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()
-	density = anchorvalue
+	set_density(anchorvalue)
 
 /obj/item/powersink/proc/set_mode(value)
 	if(value == mode)

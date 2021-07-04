@@ -117,6 +117,14 @@
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
+	clear_signal_refs()
+	//END: ECS SHIT
+
+	return QDEL_HINT_QUEUE
+
+///Only override this if you know what you're doing. You do not know what you're doing
+///This is a threat
+/datum/proc/clear_signal_refs()
 	var/list/lookup = comp_lookup
 	if(lookup)
 		for(var/sig in lookup)
@@ -132,9 +140,6 @@
 
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
-	//END: ECS SHIT
-
-	return QDEL_HINT_QUEUE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()

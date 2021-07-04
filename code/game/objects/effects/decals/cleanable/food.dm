@@ -32,9 +32,9 @@
 	icon_state = "salt_pile"
 	var/safepasses = 3 //how many times can this salt pile be passed before dissipating
 
-/obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/AM, turf/target)
+/obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(is_species(AM, /datum/species/snail))
+	if(is_species(mover, /datum/species/snail))
 		return FALSE
 
 /obj/effect/decal/cleanable/food/salt/Bumped(atom/movable/AM)

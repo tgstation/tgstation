@@ -66,7 +66,7 @@
 /datum/component/construction/unordered/mecha_chassis/spawn_result()
 	var/atom/parent_atom = parent
 	parent_atom.icon = 'icons/mecha/mech_construction.dmi'
-	parent_atom.density = TRUE
+	parent_atom.set_density(TRUE)
 	parent_atom.cut_overlays()
 	..()
 
@@ -350,7 +350,7 @@
 				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures [I]."), span_notice("You secure [I]."))
+				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
 			else
 				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
 		if(13)

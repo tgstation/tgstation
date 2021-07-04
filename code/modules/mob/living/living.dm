@@ -561,7 +561,7 @@
 		layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	ADD_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
-	density = FALSE // We lose density and stop bumping passable dense things.
+	set_density(FALSE) // We lose density and stop bumping passable dense things.
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
@@ -571,7 +571,7 @@
 /mob/living/proc/on_standing_up()
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
-	density = initial(density) // We were prone before, so we become dense and things can bump into us again.
+	set_density(initial(density)) // We were prone before, so we become dense and things can bump into us again.
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
 	body_position_pixel_y_offset = 0
@@ -1086,6 +1086,9 @@
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
+	if(ismovable(loc))
+		var/atom/movable/occupied_space = loc
+		loc_temp = ((1 - occupied_space.contents_thermal_insulation) * loc_temp) + (occupied_space.contents_thermal_insulation * bodytemperature)
 	return loc_temp
 
 /mob/living/cancel_camera()
@@ -1819,6 +1822,10 @@
 /mob/living/proc/set_usable_legs(new_value)
 	if(usable_legs == new_value)
 		return
+	if(new_value < 0) // Sanity check
+		stack_trace("[src] had set_usable_legs() called on them with a negative value!")
+		new_value = 0
+
 	. = usable_legs
 	usable_legs = new_value
 

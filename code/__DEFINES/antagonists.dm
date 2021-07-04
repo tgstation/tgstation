@@ -80,6 +80,16 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define RED_TELECRYSTALS_DEFAULT 20
 /// How many black telecrystals a normal traitor starts with
 #define BLACK_TELECRYSTALS_DEFAULT 0
+/// Forces the blob to place the core where they currently are, ignoring any checks.
+#define BLOB_FORCE_PLACEMENT -1
+/// Normal blob placement, does the regular checks to make sure the blob isn't placing itself in an invalid location
+#define BLOB_NORMAL_PLACEMENT 0
+/// Selects a random location for the blob to be placed.
+#define BLOB_RANDOM_PLACEMENT 1
+
+#define CONSTRUCT_JUGGERNAUT "Juggernaut"
+#define CONSTRUCT_WRAITH "Wraith"
+#define CONSTRUCT_ARTIFICER "Artificer"
 
 /// How many telecrystals mapper/admin only "precharged" uplink implant
 #define RED_TELECRYSTALS_PRELOADED_IMPLANT 10
