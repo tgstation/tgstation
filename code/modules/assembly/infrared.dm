@@ -35,7 +35,7 @@
 
 /obj/item/assembly/infra/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>"
+	. += span_notice("The infrared trigger is [on?"on":"off"].")
 
 /obj/item/assembly/infra/activate()
 	if(!..())
@@ -106,12 +106,12 @@
 				I.icon_state = "[initial(I.icon_state)]_[(assembly_holder.a_left == src) ? "l":"r"]" //Sync the offset of the beam with the position of the sensor.
 			else if(istype(holder, /obj/item/transfer_valve))
 				I.icon_state = "[initial(I.icon_state)]_ttv"
-			I.density = TRUE
+			I.set_density(TRUE)
 			if(!I.Move(_T))
 				qdel(I)
 				switchListener(_T)
 				break
-			I.density = FALSE
+			I.set_density(FALSE)
 			beams += I
 			I.master = src
 			I.setDir(_dir)
@@ -167,15 +167,15 @@
 	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
 	listeningTo = newloc
 
-/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
+/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
-	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
+	if(src == gone || istype(gone, /obj/effect/beam/i_beam))
 		return
-	if (offender && isitem(offender))
-		var/obj/item/I = offender
+	if(isitem(gone))
+		var/obj/item/I = gone
 		if (I.item_flags & ABSTRACT)
 			return
 	INVOKE_ASYNC(src, .proc/refreshBeam)
@@ -229,12 +229,19 @@
 	pass_flags_self = LETPASSTHROW
 	var/obj/item/assembly/infra/master
 
-/obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/beam/i_beam/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
+	SIGNAL_HANDLER
 	if(istype(AM, /obj/effect/beam))
 		return
 	if (isitem(AM))
 		var/obj/item/I = AM
 		if (I.item_flags & ABSTRACT)
 			return
-	master.trigger_beam(AM, get_turf(src))
+	INVOKE_ASYNC(master, /obj/item/assembly/infra.proc/trigger_beam, AM, get_turf(src))

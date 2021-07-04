@@ -1,0 +1,11 @@
+author: "Greniza"
+delete-after: True
+changes: 
+  - rscadd: "Environment protection bags, which protect their occupants from weather, and give protection from temperature and pressure. The rare variants even have the same protection effects as a space suit."
+  - imageadd: "Environment protection bag sprites"
+  - code_imp: "Made weather immunity consistently defines, as opposed to some strings and some defines."
+  - code_imp: "Migrates mob weather immunity to defines rather than strings."
+  - refactor: "Gave atom/movable the ability to be spaceproofed and insulated to protect its contents."
+  - refactor: "Gave /obj/structure/closet the ability to protect its contents from weather."
+  - bugfix: "Using wirecutters on an unlabeled bodybag no longer sends the \"You cut the tag off of the bodybag\" message."
+  - bugfix: "Allows bodybags to be picked up again."

@@ -93,8 +93,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/stunrevolver
-	name = "Tesla Revolver Part Kit"
-	desc = "The kit for a high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
+	name = "Tesla Cannon Part Kit"
+	desc = "The kit for a high-tech cannon that fires internal, reusable bolt cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	id = "stunrevolver"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, /datum/material/silver = 10000)

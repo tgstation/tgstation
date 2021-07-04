@@ -62,6 +62,8 @@
 	return ..()
 
 /datum/wires/airlock/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/machinery/door/airlock/A = holder
 	if(!issilicon(user) && A.isElectrified())
 		var/mob/living/carbon/carbon_user = user

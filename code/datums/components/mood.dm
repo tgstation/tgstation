@@ -22,11 +22,10 @@
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
-
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
-
 	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, .proc/on_slip)
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -48,50 +47,50 @@
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
-	var/msg = "<span class='info'>*---------*\n<EM>My current mental status:</EM></span>\n"
-	msg += "<span class='notice'>My current sanity: </span>" //Long term
+	var/msg = "[span_info("*---------*\n<EM>My current mental status:</EM>")]\n"
+	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
-			msg += "<span class='nicegreen'>My mind feels like a temple!</span>\n"
+			msg += "[span_nicegreen("My mind feels like a temple!")]\n"
 		if(SANITY_NEUTRAL to SANITY_GREAT)
-			msg += "<span class='nicegreen'>I have been feeling great lately!</span>\n"
+			msg += "[span_nicegreen("I have been feeling great lately!")]\n"
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			msg += "<span class='nicegreen'>I have felt quite decent lately.</span>\n"
+			msg += "[span_nicegreen("I have felt quite decent lately.")]\n"
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			msg += "<span class='warning'>I'm feeling a little bit unhinged...</span>\n"
+			msg += "[span_warning("I'm feeling a little bit unhinged...")]\n"
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			msg += "<span class='boldwarning'>I'm freaking out!!</span>\n"
+			msg += "[span_boldwarning("I'm freaking out!!")]\n"
 		if(SANITY_INSANE to SANITY_CRAZY)
-			msg += "<span class='boldwarning'>AHAHAHAHAHAHAHAHAHAH!!</span>\n"
+			msg += "[span_boldwarning("AHAHAHAHAHAHAHAHAHAH!!")]\n"
 
-	msg += "<span class='notice'>My current mood: </span>" //Short term
+	msg += span_notice("My current mood: ") //Short term
 	switch(mood_level)
 		if(1)
-			msg += "<span class='boldwarning'>I wish I was dead!</span>\n"
+			msg += "[span_boldwarning("I wish I was dead!")]\n"
 		if(2)
-			msg += "<span class='boldwarning'>I feel terrible...</span>\n"
+			msg += "[span_boldwarning("I feel terrible...")]\n"
 		if(3)
-			msg += "<span class='boldwarning'>I feel very upset.</span>\n"
+			msg += "[span_boldwarning("I feel very upset.")]\n"
 		if(4)
-			msg += "<span class='boldwarning'>I'm a bit sad.</span>\n"
+			msg += "[span_boldwarning("I'm a bit sad.")]\n"
 		if(5)
-			msg += "<span class='nicegreen'>I'm alright.</span>\n"
+			msg += "[span_nicegreen("I'm alright.")]\n"
 		if(6)
-			msg += "<span class='nicegreen'>I feel pretty okay.</span>\n"
+			msg += "[span_nicegreen("I feel pretty okay.")]\n"
 		if(7)
-			msg += "<span class='nicegreen'>I feel pretty good.</span>\n"
+			msg += "[span_nicegreen("I feel pretty good.")]\n"
 		if(8)
-			msg += "<span class='nicegreen'>I feel amazing!</span>\n"
+			msg += "[span_nicegreen("I feel amazing!")]\n"
 		if(9)
-			msg += "<span class='nicegreen'>I love life!</span>\n"
+			msg += "[span_nicegreen("I love life!")]\n"
 
-	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
+	msg += "[span_notice("Moodlets:")]\n"//All moodlets
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.</span>\n"
+		msg += "[span_nicegreen("I don't have much of a reaction to anything right now.")]\n"
 	to_chat(user, msg)
 
 ///Called after moodevent/s have been added/removed.
@@ -175,6 +174,9 @@
 
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
+	var/mob/living/moody_fellow = parent
+	if(moody_fellow.stat == DEAD)
+		return //updating sanity during death leads to people getting revived and being completely insane for simply being dead for a long time
 	switch(mood_level)
 		if(1)
 			setSanity(sanity-0.3*delta_time, SANITY_INSANE)
@@ -338,7 +340,7 @@
 
 /datum/component/mood/proc/HandleNutrition()
 	var/mob/living/L = parent
-	if(isethereal(L))
+	if(istype(L.getorganslot(ORGAN_SLOT_STOMACH), /obj/item/organ/stomach/ethereal))
 		HandleCharge(L)
 	if(HAS_TRAIT(L, TRAIT_NOHUNGER))
 		return FALSE //no mood events for nutrition
@@ -360,8 +362,9 @@
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
 /datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
-	var/datum/species/ethereal/E = H.dna.species
-	switch(E.get_charge(H))
+	var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+
+	switch(stomach.crystal_charge)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			add_event(null, "charge", /datum/mood_event/decharged)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)

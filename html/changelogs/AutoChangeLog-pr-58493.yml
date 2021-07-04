@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "RPD's scroll mousewheel to change layer should now be snappier and more responsive. It is also no longer flipped."

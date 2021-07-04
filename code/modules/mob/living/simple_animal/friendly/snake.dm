@@ -1,16 +1,5 @@
-/mob/living/simple_animal/hostile/retaliate/poison
-	var/poison_per_bite = 0
-	var/poison_type = /datum/reagent/toxin
 
-/mob/living/simple_animal/hostile/retaliate/poison/AttackingTarget()
-	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents && !poison_per_bite == 0)
-			L.reagents.add_reagent(poison_type, poison_per_bite)
-		return .
-
-/mob/living/simple_animal/hostile/retaliate/poison/snake
+/mob/living/simple_animal/hostile/retaliate/snake
 	name = "snake"
 	desc = "A slithery snake. These legless reptiles are the bane of mice and adventurers alike."
 	icon_state = "snake"
@@ -40,16 +29,20 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
-/mob/living/simple_animal/hostile/retaliate/poison/snake/Initialize()
+/mob/living/simple_animal/hostile/retaliate/snake/Initialize(mapload, special_reagent)
 	. = ..()
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	if(!special_reagent)
+		special_reagent = /datum/reagent/toxin
+	AddElement(/datum/element/venomous, special_reagent, 4)
 
-/mob/living/simple_animal/hostile/retaliate/poison/snake/add_cell_sample()
+/mob/living/simple_animal/hostile/retaliate/snake/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
-	. = oview(vision_range, targets_from) //get list of things in vision range
+/mob/living/simple_animal/hostile/retaliate/snake/ListTargets(atom/the_target)
+	var/atom/target_from = GET_TARGETS_FROM(src)
+	. = oview(vision_range, target_from) //get list of things in vision range
 	var/list/living_mobs = list()
 	var/list/mice = list()
 	for (var/HM in .)
@@ -60,14 +53,23 @@
 			living_mobs += HM
 
 	// if no tasty mice to chase, lets chase any living mob enemies in our vision range
-	if(length(mice) == 0)
-		//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
-		return  living_mobs & enemies
-	return mice
+	if(length(mice))
+		return mice
 
-/mob/living/simple_animal/hostile/retaliate/poison/snake/AttackingTarget()
+	var/list/actual_enemies = list()
+	for(var/datum/weakref/enemy as anything in enemies)
+		var/mob/flesh_and_blood = enemy.resolve()
+		if(!flesh_and_blood)
+			enemies -= enemy
+			continue
+		actual_enemies += flesh_and_blood
+
+	//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
+	return  living_mobs & actual_enemies
+
+/mob/living/simple_animal/hostile/retaliate/snake/AttackingTarget()
 	if(istype(target, /mob/living/simple_animal/mouse))
-		visible_message("<span class='notice'>[name] consumes [target] in a single gulp!</span>", "<span class='notice'>You consume [target] in a single gulp!</span>")
+		visible_message(span_notice("[name] consumes [target] in a single gulp!"), span_notice("You consume [target] in a single gulp!"))
 		QDEL_NULL(target)
 		adjustBruteLoss(-2)
 	else

@@ -9,7 +9,7 @@
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_alert(mob/user, message, title, list/buttons, timeout = 60 SECONDS)
+/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -35,9 +35,9 @@
  * * title - The of the alert modal, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  */
-/proc/tgui_alert_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -90,7 +90,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_modal/proc/wait()
-	while (!choice && !closed)
+	while (!choice && !closed && !QDELETED(src))
 		stoplag(1)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
@@ -124,9 +124,12 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				return
-			choice = params["choice"]
+			set_choice(params["choice"])
 			SStgui.close_uis(src)
 			return TRUE
+
+/datum/tgui_modal/proc/set_choice(choice)
+	src.choice = choice
 
 /**
  * # async tgui_modal
@@ -138,23 +141,17 @@
 	var/datum/callback/callback
 
 /datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout)
-	..(user, title, message, buttons, timeout)
+	..(user, message, title, buttons, timeout)
 	src.callback = callback
 
 /datum/tgui_modal/async/Destroy(force, ...)
 	QDEL_NULL(callback)
 	. = ..()
 
-/datum/tgui_modal/async/ui_close(mob/user)
+/datum/tgui_modal/async/set_choice(choice)
 	. = ..()
-	qdel(src)
-
-/datum/tgui_modal/async/ui_act(action, list/params)
-	. = ..()
-	if (!. || choice == null)
-		return
-	callback.InvokeAsync(choice)
-	qdel(src)
+	if(!isnull(src.choice))
+		callback?.InvokeAsync(src.choice)
 
 /datum/tgui_modal/async/wait()
 	return

@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - qol: "Arrow keys are grabbed by TGUI for keyboard navigation, and won't be moving your character."

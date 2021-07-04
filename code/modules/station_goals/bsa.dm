@@ -45,7 +45,7 @@
 		return
 	var/obj/item/multitool/M = I
 	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
 /obj/machinery/bsa/front
@@ -58,7 +58,7 @@
 		return
 	var/obj/item/multitool/M = I
 	M.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
 /obj/machinery/bsa/middle
@@ -76,13 +76,13 @@
 		if(istype(M.buffer, /obj/machinery/bsa/back))
 			back = M.buffer
 			M.buffer = null
-			to_chat(user, "<span class='notice'>You link [src] with [back].</span>")
+			to_chat(user, span_notice("You link [src] with [back]."))
 		else if(istype(M.buffer, /obj/machinery/bsa/front))
 			front = M.buffer
 			M.buffer = null
-			to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
+			to_chat(user, span_notice("You link [src] with [front]."))
 	else
-		to_chat(user, "<span class='warning'>[I]'s data buffer is empty!</span>")
+		to_chat(user, span_warning("[I]'s data buffer is empty!"))
 	return TRUE
 
 /obj/machinery/bsa/middle/proc/check_completion()
@@ -205,7 +205,7 @@
 	if(!blocker)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
 		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)].")
-		explosion(bullseye, ex_power, ex_power*2, ex_power*4)
+		explosion(bullseye, devastation_range = ex_power, heavy_impact_range = ex_power*2, light_impact_range = ex_power*4)
 	else
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
 		log_game("[key_name(user)] has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].")

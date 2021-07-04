@@ -30,14 +30,14 @@
 	. = ..()
 	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
 		return
-	. += mutable_appearance(icon, "nanite_program_hub_on", layer, plane)
-	. += mutable_appearance(icon, "nanite_program_hub_on", 0, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "nanite_program_hub_on")
+	. += emissive_appearance(icon, "nanite_program_hub_on")
 
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
 		if(user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
+			to_chat(user, span_notice("You insert [N] into [src]."))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			if(disk)
 				eject(user)
@@ -66,7 +66,7 @@
 
 /obj/machinery/nanite_program_hub/AltClick(mob/user)
 	if(disk && user.canUseTopic(src, !issilicon(user)))
-		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
 	return
 

@@ -3,6 +3,7 @@ name: GBP Collection
 on:
   schedule:
   - cron: "20 * * * *"
+  workflow_dispatch:
 jobs:
   gbp_collection:
     runs-on: ubuntu-latest

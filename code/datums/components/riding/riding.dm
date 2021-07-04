@@ -48,7 +48,7 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	handle_specials()
+	handle_specials(riding_mob)
 	riding_mob.updating_glide_size = FALSE
 	ride_check_flags |= buckle_mob_flags
 

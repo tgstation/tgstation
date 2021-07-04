@@ -6,7 +6,6 @@
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"
 	mob_biotypes = MOB_SPIRIT
-	is_flying_animal = TRUE
 	move_to_delay = 5
 	vision_range = 20
 	aggro_vision_range = 20
@@ -31,6 +30,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/Initialize(mapload)
 	. = ..()
 	timerid = QDEL_IN(src, 600)
+	AddElement(/datum/element/simple_flying)
 	playsound(src, 'sound/effects/curse1.ogg', 100, TRUE, -1)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()
@@ -72,7 +72,7 @@
 		return
 
 //if it's not our target, we ignore it
-/mob/living/simple_animal/hostile/asteroid/curseblob/CanAllowThrough(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/asteroid/curseblob/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover == set_target)
 		return FALSE

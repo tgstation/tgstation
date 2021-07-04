@@ -253,10 +253,10 @@
 			record.caller_image = holodiskOriginal.record.caller_image
 			record.entries = holodiskOriginal.record.entries.Copy()
 			record.language = holodiskOriginal.record.language
-			to_chat(user, "<span class='notice'>You copy the record from [holodiskOriginal] to [src] by connecting the ports!</span>")
+			to_chat(user, span_notice("You copy the record from [holodiskOriginal] to [src] by connecting the ports!"))
 			name = holodiskOriginal.name
 		else
-			to_chat(user, "<span class='warning'>[holodiskOriginal] has no record on it!</span>")
+			to_chat(user, span_warning("[holodiskOriginal] has no record on it!"))
 	..()
 
 /obj/item/disk/holodisk/proc/build_record()

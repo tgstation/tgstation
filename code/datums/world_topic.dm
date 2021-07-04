@@ -75,7 +75,7 @@
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-	var/final_composed = "<span class='announce'>PR: [input[keyword]]</span>"
+	var/final_composed = span_announce("PR: [input[keyword]]")
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
@@ -84,7 +84,7 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
-	relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
+	relay_msg_admins(span_adminnotice("<b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b>"))
 
 /datum/world_topic/comms_console
 	keyword = "Comms_Console"
@@ -141,10 +141,8 @@
 /datum/world_topic/status/Run(list/input)
 	. = list()
 	.["version"] = GLOB.game_version
-	.["mode"] = GLOB.master_mode
 	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
 	.["enter"] = GLOB.enter_allowed
-	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
 	.["round_id"] = GLOB.round_id
@@ -164,9 +162,6 @@
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()
-		if(SSticker.HasRoundStarted())
-			.["real_mode"] = SSticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
 
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0

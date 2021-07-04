@@ -46,6 +46,8 @@
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
 #define AWAY_IMPRINTER (1<<9)
+/// For wiremod/integrated circuits. Uses various minerals.
+#define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -62,6 +64,7 @@
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
 #define MC_SENSORS "SENSORS"
+#define MC_SIGNALER "SIGNALER"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
@@ -141,10 +144,6 @@
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
 
-//these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
-#define PLANT_GENE_REMOVABLE (1<<0)
-#define PLANT_GENE_EXTRACTABLE (1<<1)
-
 //mass drivers and related machinery
 #define MASSDRIVER_TOXINS "toxinsdriver"
 #define MASSDRIVER_CHAPEL "chapelgun"
@@ -190,3 +189,11 @@
 #define ORION_GAMER_PAMPHLET -1
 //game begins to have a chance to warn sec and med
 #define ORION_GAMER_REPORT_THRESHOLD 2
+
+// Air alarm [/obj/machinery/airalarm/buildstage]
+/// Air alarm missing circuit
+#define AIRALARM_BUILD_NO_CIRCUIT 0
+/// Air alarm has circuit but is missing wires
+#define AIRALARM_BUILD_NO_WIRES 1
+/// Air alarm has all components but isn't completed
+#define AIRALARM_BUILD_COMPLETE 2

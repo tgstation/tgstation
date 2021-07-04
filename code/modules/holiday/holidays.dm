@@ -1,17 +1,32 @@
 /datum/holiday
+	///Name of the holiday itself. Visible to players.
 	var/name = "If you see this the holiday calendar code is broken"
 
+	///What day of begin_month does the holiday begin on?
 	var/begin_day = 1
+	///What month does the holiday begin on?
 	var/begin_month = 0
-	var/end_day = 0 // Default of 0 means the holiday lasts a single day
+	/// What day of end_month does the holiday end? Default of 0 means the holiday lasts a single.
+	var/end_day = 0
+	/// What month does the holiday end on?
 	var/end_month = 0
-	var/always_celebrate = FALSE // for christmas neverending, or testing.
+	/// for christmas neverending, or testing. Forces a holiday to be celebrated.
+	var/always_celebrate = FALSE
+	/// Held variable to better calculate when certain holidays may fall on, like easter.
 	var/current_year = 0
+	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
 	var/year_offset = 0
-	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
+	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
+	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
+	///If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
+	var/obj/item/drone_hat
+	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
+	var/mail_holiday = FALSE
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
+	if(mail_holiday)
+		SSeconomy.mail_blocked = TRUE
 	return
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday
@@ -61,11 +76,12 @@
 
 /datum/holiday/new_year
 	name = NEW_YEAR
-	begin_day = 30
+	begin_day = 31
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
 	drone_hat = /obj/item/clothing/head/festive
+	mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution", "Auld")
@@ -81,7 +97,7 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 13
+	begin_day = 14
 	end_day = 15
 	begin_month = FEBRUARY
 
@@ -166,12 +182,12 @@
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
-	begin_month = MARCH
-	begin_day = 31
-	end_month = APRIL
+	begin_month = APRIL
+	begin_day = 1
 	end_day = 2
 
 /datum/holiday/april_fools/celebrate()
+	. = ..()
 	SSjob.set_overflow_role("Clown")
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/i in GLOB.new_player_list)
@@ -214,6 +230,7 @@
 	begin_day = 1
 	begin_month = MAY
 	drone_hat = /obj/item/clothing/head/hardhat
+	mail_holiday = TRUE
 
 /datum/holiday/firefighter
 	name = "Firefighter's Day"
@@ -255,14 +272,17 @@
 
 /datum/holiday/usa
 	name = "US Independence Day"
+	timezones = list(TIMEZONE_EDT, TIMEZONE_CDT, TIMEZONE_MDT, TIMEZONE_MST, TIMEZONE_PDT, TIMEZONE_AKDT, TIMEZONE_HDT, TIMEZONE_HST)
 	begin_day = 4
 	begin_month = JULY
+	mail_holiday = TRUE
 
 /datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
 
 /datum/holiday/nz
 	name = "Waitangi Day"
+	timezones = list(TIMEZONE_NZDT, TIMEZONE_CHADT)
 	begin_day = 6
 	begin_month = FEBRUARY
 
@@ -270,11 +290,12 @@
 	return pick("Aotearoa","Kiwi","Fish 'n' Chips","Kākāpō","Southern Cross")
 
 /datum/holiday/nz/greet()
-	var/nz_age = text2num(time2text(world.timeofday, "YYYY")) - 1840 //is this work
-	return "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed!" //thus creating much controversy
+	var/nz_age = text2num(time2text(world.timeofday, "YYYY")) - 1840
+	return "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed!"
 
 /datum/holiday/anz
 	name = "ANZAC Day"
+	timezones = list(TIMEZONE_TKT, TIMEZONE_TOT, TIMEZONE_NZST, TIMEZONE_NFT, TIMEZONE_LHST, TIMEZONE_AEST, TIMEZONE_ACST, TIMEZONE_ACWST, TIMEZONE_AWST, TIMEZONE_CXT, TIMEZONE_CCT, TIMEZONE_CKT, TIMEZONE_NUT)
 	begin_day = 25
 	begin_month = APRIL
 	drone_hat = /obj/item/food/grown/poppy
@@ -289,9 +310,11 @@
 
 /datum/holiday/france
 	name = "Bastille Day"
+	timezones = list(TIMEZONE_CEST)
 	begin_day = 14
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/head/beret
+	mail_holiday = TRUE
 
 /datum/holiday/france/getStationPrefix()
 	return pick("Francais","Fromage", "Zut", "Merde")
@@ -365,7 +388,7 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 28
+	begin_day = 29
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
@@ -461,15 +484,17 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 22
+	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 27
 	drone_hat = /obj/item/clothing/head/santa
+	mail_holiday = TRUE
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
 
 /datum/holiday/xmas/celebrate()
+	. = ..()
 	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
 	GLOB.maintenance_loot += list(
 		list(
@@ -545,6 +570,7 @@
 	return ..()
 
 /datum/holiday/easter/celebrate()
+	. = ..()
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/food/egg/loaded = 15,
@@ -614,3 +640,115 @@
 
 /datum/holiday/hebrew/passover/getStationPrefix()
 	return pick("Matzah", "Moses", "Red Sea")
+
+/datum/holiday/pride_week
+	name = PRIDE_WEEK
+	begin_month = JUNE
+	// Stonewall was June 28th, this captures its week.
+	begin_day = 23
+	end_day = 29
+
+	var/static/list/rainbow_colors = list(
+		COLOR_PRIDE_PURPLE,
+		COLOR_PRIDE_BLUE,
+		COLOR_PRIDE_GREEN,
+		COLOR_PRIDE_YELLOW,
+		COLOR_PRIDE_ORANGE,
+		COLOR_PRIDE_RED,
+	)
+
+/// Given an atom, will return what color it should be to match the pride flag.
+/datum/holiday/pride_week/proc/get_floor_tile_color(atom/atom)
+	var/turf/turf = get_turf(atom)
+	return rainbow_colors[(turf.y % rainbow_colors.len) + 1]
+
+/datum/holiday/remembrance_day
+	name = "Remembrance Day"
+	begin_month = NOVEMBER
+	begin_day = 11
+	drone_hat = /obj/item/food/grown/poppy
+
+/datum/holiday/remembrance_day/getStationPrefix()
+	return pick("Peace", "Armistice", "Poppy")
+
+/datum/holiday/un_day
+	name = "Anniversary of the Foundation of the United Nations"
+	begin_month = OCTOBER
+	begin_day = 24
+
+/datum/holiday/un_day/greet()
+	return "On this day in 1945, the United Nations was founded, laying the foundation for humanity's united government!"
+
+/datum/holiday/un_day/getStationPrefix()
+	return pick("United", "Cooperation", "Humanitarian")
+
+//Gary Gygax's birthday, a fitting day for Wizard's Day
+/datum/holiday/wizards_day
+	name = "Wizard's Day"
+	begin_month = JULY
+	begin_day = 27
+	drone_hat = /obj/item/clothing/head/wizard
+
+/datum/holiday/wizards_day/getStationPrefix()
+	return pick("Dungeon", "Elf", "Magic", "D20", "Edition")
+
+//Species cultural holidays, based on days of significant PRs relating to their species
+//Tiziran Unification Day is celebrated on Sept 1st, the day on which lizards were made a roundstart race
+/datum/holiday/tiziran_unification
+	name = "Tiziran Unification Day"
+	begin_month = SEPTEMBER
+	begin_day = 1
+
+/datum/holiday/tiziran_unification/greet()
+	return "On this day over 400 years ago, Lizardkind first united under a single banner, ready to face the stars as one unified people."
+
+/datum/holiday/tiziran_unification/getStationPrefix()
+	return pick("Tizira", "Lizard", "Imperial")
+
+//The Festival of Atrakor's Might (Tizira's Moon) is celebrated on June 15th, the date on which the lizard visual revamp was merged (#9808)
+/datum/holiday/atrakor_festival
+	name = "Festival of Atrakor's Might"
+	begin_month = JUNE
+	begin_day = 15
+
+/datum/holiday/atrakor_festival/greet()
+	return "On this day, the Lizards traditionally celebrate the Festival of Atrakor's Might, where they honour the moon god with lavishly adorned clothing, large portions of food, and a massive celebration into the night."
+
+/datum/holiday/atrakor_festival/getStationPrefix()
+	return pick("Moon", "Night Sky", "Celebration")
+
+//Draconic Day is celebrated on May 3rd, the date on which the Draconic language was merged (#26780)
+/datum/holiday/draconic_day
+	name = "Draconic Language Day"
+	begin_month = MAY
+	begin_day = 3
+
+/datum/holiday/draconic_day/greet()
+	return "On this day, Lizardkind celebrates their language with literature and other cultural works."
+
+/datum/holiday/draconic_day/getStationPrefix()
+	return pick("Draconic", "Literature", "Reading")
+
+//Fleet Day is celebrated on Jan 19th, the date on which moths were merged (#34498)
+/datum/holiday/fleet_day
+	name = "Fleet Day"
+	begin_month = JANUARY
+	begin_day = 19
+
+/datum/holiday/fleet_day/greet()
+	return "This day commemorates another year of successful survival aboard the Mothic Grand Nomad Fleet. Moths galaxywide are encouraged to eat, drink, and be merry."
+
+/datum/holiday/fleet_day/getStationPrefix()
+	return pick("Moth", "Fleet", "Nomadic")
+
+//The Festival of Holy Lights is celebrated on Nov 28th, the date on which ethereals were merged (#40995)
+/datum/holiday/holy_lights
+	name = "Festival of Holy Lights"
+	begin_month = NOVEMBER
+	begin_day = 28
+
+/datum/holiday/holy_lights/greet()
+	return "The Festival of Holy Lights is the final day of the Ethereal calendar. It is typically a day of prayer followed by celebration to close out the year in style."
+
+/datum/holiday/holy_lights/getStationPrefix()
+	return pick("Ethereal", "Lantern", "Holy")

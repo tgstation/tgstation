@@ -38,20 +38,20 @@
 		return 0
 	if(cause == "action_button" && !popup)
 		popup = TRUE
-		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
+		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
 		popup = FALSE
 		if(response == "No")
 			return 0
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
-	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
+	to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
-		explosion(src,heavy,medium,weak,weak, flame_range = weak)
+		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak)
 		if(imp_in)
 			imp_in.gib(1)
 		qdel(src)
@@ -74,11 +74,11 @@
 		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /obj/item/implant/explosive/proc/timed_explosion()
-	imp_in.visible_message("<span class='warning'>[imp_in] starts beeping ominously!</span>")
+	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
 	if(imp_in && !imp_in.stat)
-		imp_in.visible_message("<span class='warning'>[imp_in] doubles over in pain!</span>")
+		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
 		imp_in.Paralyze(140)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
@@ -86,7 +86,7 @@
 	sleep(delay*0.25)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
-	explosion(src,heavy,medium,weak,weak, flame_range = weak)
+	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak)
 	if(imp_in)
 		imp_in.gib(1)
 	qdel(src)

@@ -104,12 +104,12 @@
 
 /obj/item/clothing/head/hardhat/cakehat/energycake/turn_on(mob/living/user)
 	playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
-	to_chat(user, "<span class='warning'>You turn on \the [src].</span>")
+	to_chat(user, span_warning("You turn on \the [src]."))
 	..()
 
 /obj/item/clothing/head/hardhat/cakehat/energycake/turn_off(mob/living/user)
 	playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
-	to_chat(user, "<span class='warning'>You turn off \the [src].</span>")
+	to_chat(user, span_warning("You turn off \the [src]."))
 	..()
 
 /*
@@ -131,11 +131,11 @@
 	if(earflaps)
 		icon_state = "ushankaup"
 		inhand_icon_state = "ushankaup"
-		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
+		to_chat(user, span_notice("You raise the ear flaps on the ushanka."))
 	else
 		icon_state = "ushankadown"
 		inhand_icon_state = "ushankadown"
-		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
+		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
 
 /*
@@ -165,7 +165,7 @@
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
-/obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/kitty/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		update_icon(ALL, user)
 		user.update_inv_head() //Color might have been changed by update_appearance.
@@ -241,22 +241,29 @@
 	item_flags &= ~EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/update_icon_state()
-	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
-	if(S)
-		icon_state = S.icon_state
+	var/datum/sprite_accessory/hair_style = GLOB.hairstyles_list[hairstyle]
+	if(hair_style)
+		icon_state = hair_style.icon_state
 	return ..()
 
 
-/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
-	. = list()
-	if(!isinhands)
-		var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
-		if(!S)
-			return
-		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
-		M.appearance_flags |= RESET_COLOR
-		M.color = color
-		. += M
+/obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
+	. = ..()
+	if(isinhands)
+		return
+
+	var/datum/sprite_accessory/hair = GLOB.hairstyles_list[hairstyle]
+	if(!hair)
+		return
+
+	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR)
+	hair_overlay.color = color
+	. += hair_overlay
+
+	// So that the wig actually blocks emissives.
+	var/mutable_appearance/hair_blocker = mutable_appearance(hair.icon, hair.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+	hair_blocker.color = GLOB.em_block_color
+	hair_overlay.overlays += hair_blocker
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")
@@ -265,17 +272,36 @@
 		return
 	if(new_style && new_style != hairstyle)
 		hairstyle = new_style
-		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
+		user.visible_message(span_notice("[user] changes \the [src]'s hairstyle to [new_style]."), span_notice("You change \the [src]'s hairstyle to [new_style]."))
 	if(newcolor && newcolor != color) // only update if necessary
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
 /obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
 	. = ..()
-	if (istype(target) && (HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
-		to_chat(user, "<span class='notice'>You adjust the [src] to look just like [target.name]'s [target.hairstyle].</span>")
-		add_atom_colour("#[target.hair_color]", FIXED_COLOUR_PRIORITY)
-		hairstyle = target.hairstyle
+	if(!istype(target))
+		return
+
+	if(target.head)
+		var/obj/item/clothing/head = target.head
+		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
+			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
+			return
+
+	var/selected_hairstyle = null
+	var/selected_hairstyle_color = null
+	if(istype(target.head, /obj/item/clothing/head/wig))
+		var/obj/item/clothing/head/wig/wig = target.head
+		selected_hairstyle = wig.hairstyle
+		selected_hairstyle_color = wig.color
+	else if((HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+		selected_hairstyle = target.hairstyle
+		selected_hairstyle_color = "#[target.hair_color]"
+
+	if(selected_hairstyle)
+		to_chat(user, span_notice("You adjust the [src] to look just like [target.name]'s [selected_hairstyle]."))
+		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
+		hairstyle = selected_hairstyle
 		update_appearance()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
@@ -294,7 +320,7 @@
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	. = ..()
 
-/obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		if (color != "#[user.hair_color]") // only update if necessary
@@ -338,14 +364,14 @@
 	paranoia = new()
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
-	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
+	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
 
 /obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
 	//God Im sorry
 	if(!warped && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(src == C.head)
-			to_chat(C, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>")
+			to_chat(C, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
 			return
 	return ..()
 
@@ -366,13 +392,13 @@
 		return
 	QDEL_NULL(paranoia)
 	if(target.stat < UNCONSCIOUS)
-		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
+		to_chat(target, span_warning("Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare."))
 
 /obj/item/clothing/head/foilhat/attack_hand(mob/user, list/modifiers)
 	if(!warped && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)
-			to_chat(user, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>")
+			to_chat(user, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
 			return
 	return ..()
 

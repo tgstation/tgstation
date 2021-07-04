@@ -26,13 +26,13 @@
 	short_desc = "You are a Maintenance Drone."
 	flavour_text = "Born out of science, your purpose is to maintain Space Station 13. Maintenance Drones can become the backbone of a healthy station."
 	important_info = "You MUST read and follow your laws carefully."
+	assignedrole = "Maintenance Drone"
 
 /obj/effect/mob_spawn/drone/Initialize()
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
-	AddElement(/datum/element/point_of_interest)
 
 /obj/effect/mob_spawn/drone/allow_spawn(mob/user)
 	var/client/user_client = user.client
@@ -41,12 +41,16 @@
 		return ..()
 	var/required_role = CONFIG_GET(string/drone_required_role)
 	var/required_playtime = CONFIG_GET(number/drone_role_playtime) * 60
+	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(user.client, R_ADMIN))
+		return ..()
+	if(user?.client?.prefs.db_flags & DB_FLAG_EXEMPT)
+		return ..()
 	if(required_playtime <= 0)
 		return ..()
 	var/current_playtime = user_client?.calc_exp_type(required_role)
 	if (current_playtime < required_playtime)
 		var/minutes_left = required_playtime - current_playtime
 		var/playtime_left = DisplayTimeText(minutes_left * (1 MINUTES))
-		to_chat(user, "<span class='danger'>You need to play [playtime_left] more as [required_role] to spawn as a Maintenance Drone!</span>")
+		to_chat(user, span_danger("You need to play [playtime_left] more as [required_role] to spawn as a Maintenance Drone!"))
 		return FALSE
 	return ..()
