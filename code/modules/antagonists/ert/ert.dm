@@ -360,7 +360,7 @@
 /datum/antagonist/ert/marine/security
 	name = "Marine Heavy"
 	outfit = /datum/outfit/centcom/ert/marine/security
-	role = "Security Officer"
+	role = "Trooper"
 
 /datum/antagonist/ert/marine/engineer
 	name = "Marine Engineer"
