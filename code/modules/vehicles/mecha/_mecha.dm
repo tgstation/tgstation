@@ -1010,7 +1010,7 @@
 
 	var/mob/living/brain/brain_mob = brain_obj.brainmob
 	if(!user.transferItemToLoc(brain_obj, src))
-		to_chat(user, span_warning("\the [brain_obj] is stuck to your hand, you cannot put it in \the [src]!"))
+		to_chat(user, span_warning("[brain_obj] is stuck to your hand, you cannot put it in [src]!"))
 		return FALSE
 
 	brain_obj.set_mecha(src)
