@@ -156,7 +156,7 @@
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old sprite here for if our burned wings are healed
-	var/original_sprite
+	var/original_sprite = ""
 
 /obj/item/organ/external/wings/moth/get_global_feature_list()
 	return GLOB.moth_wings_list

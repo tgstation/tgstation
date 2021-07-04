@@ -81,7 +81,9 @@
 		var/finished_icon_state = (sprite_datum.gender_specific ? g : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(_layer)
 		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -_layer)
 		appearance.dir = _dir
-		appearance.color = _color
+
+		if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/
+			appearance.color = _color
 
 		if(sprite_datum.center)
 			center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
@@ -178,5 +180,41 @@
 
 	preference = "moth_antennae"
 
+	///Are we burned?
+	var/burnt = FALSE
+	///Store our old sprite here for if our antennae wings are healed
+	var/original_sprite = ""
+
+/obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+	. = ..()
+
+	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_antennae)
+	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_antennae)
+
+/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+
+	UnregisterSignal(organ_owner, COMSIG_HUMAN_BURNING)
+	UnregisterSignal(organ_owner, COMSIG_LIVING_POST_FULLY_HEAL)
+
 /obj/item/organ/external/antennae/get_global_feature_list()
 	return GLOB.moth_antennae_list
+
+///check if our antennae can burn off ;_;
+/obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
+	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
+		to_chat(human, span_danger("Your precious antennae burn to a crisp!"))
+
+		burn_antennae()
+		human.update_body_parts()
+
+/obj/item/organ/external/antennae/proc/burn_antennae()
+	burnt = TRUE
+	var/datum/sprite_accessory/antennae = sprite_datums[1]
+	original_sprite = antennae.name
+	add_sprite_datum("Burnt Off", TRUE)
+
+///heal our antennae back up!!
+/obj/item/organ/external/antennae/proc/heal_antennae()
+	burnt = FALSE
+	add_sprite_datum(original_sprite, TRUE)
