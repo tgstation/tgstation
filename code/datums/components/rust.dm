@@ -14,7 +14,7 @@
 	var/atom/wall_new = new /turf/open/floor/plating(src)
 	wall_new._AddComponent(list(/datum/component/rust))
 
-/datum/component/rust/Initialize(var/rust_iconstate = "rust")
+/datum/component/rust/Initialize(rust_iconstate = "rust")
 	. = ..()
 	if(!isatom(parent))
 		stack_trace("Attempted to intialize a Rust Component for non-Atom [parent]")
