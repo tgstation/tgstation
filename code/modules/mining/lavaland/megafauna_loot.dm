@@ -388,7 +388,7 @@
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
-	var/turf_type = /turf/open/lava/smooth
+	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
 	var/reset_string = "basalt"
@@ -435,6 +435,11 @@
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
 	duration = 50
+
+/turf/open/lava/smooth/weak
+	lava_damage = 5
+	lava_firestacks = 5
+	temperature_damage = 1000
 
 //Blood-Drunk Miner: Cleaving Saw
 

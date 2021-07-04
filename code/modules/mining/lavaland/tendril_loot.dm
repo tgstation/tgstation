@@ -151,6 +151,7 @@
 		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
+		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/check_health)
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -158,10 +159,39 @@
 	icon_state = "memento_mori"
 	if(!active_owner)
 		return
+	UnregisterSignal(active_owner, COMSIG_CARBON_HEALTH_UPDATE)
 	var/mob/living/carbon/human/H = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
 	to_chat(H, span_userdanger("You feel your life rapidly slipping away from you!"))
 	H.dust(TRUE, TRUE)
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
+	SIGNAL_HANDLER
+
+	var/list/guardians = source.hasparasites()
+	if(!length(guardians))
+		return
+	if(source.health <= HEALTH_THRESHOLD_DEAD)
+		for(var/mob/guardian in guardians)
+			if(guardian.loc == src)
+				continue
+			consume_guardian(guardian)
+	else if(source.health > HEALTH_THRESHOLD_CRIT)
+		for(var/mob/guardian in guardians)
+			if(guardian.loc != src)
+				continue
+			regurgitate_guardian(guardian)
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+	new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
+	guardian.locked = TRUE
+	guardian.forceMove(src)
+	to_chat(guardian, span_warning("You have been locked away in your summoner's pendant!"))
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+	guardian.locked = FALSE
+	guardian.Recall(TRUE)
+	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
 
 /datum/action/item_action/hands_free/memento_mori
 	check_flags = NONE
@@ -656,7 +686,7 @@
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
-#define DAMAGE_TO_CHARGE_SCALE 0.75
+#define DAMAGE_TO_CHARGE_SCALE 0.5
 #define CHARGE_DRAINED_PER_SECOND 5
 #define BERSERK_MELEE_ARMOR_ADDED 50
 #define BERSERK_ATTACK_SPEED_MODIFIER 0.25
@@ -705,6 +735,10 @@
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
 		to_chat(owner, span_notice("Berserk mode is fully charged."))
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/IsReflect()
+	if(berserk_active)
+		return TRUE
 
 /// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/berserk_mode(mob/living/carbon/human/user)

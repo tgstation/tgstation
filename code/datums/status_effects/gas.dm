@@ -53,5 +53,5 @@
 	can_melt = FALSE
 
 /datum/status_effect/freon/freeze_cube
-	duration = 2.5 SECONDS
+	duration = 3 SECONDS
 	can_melt = FALSE

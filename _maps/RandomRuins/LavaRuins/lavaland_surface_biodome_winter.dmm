@@ -29,11 +29,11 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ag" = (
-/obj/machinery/light/small/directional/north,
 /obj/structure/displaycase/freezeray,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/snow_biodome)
 "ah" = (
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/circuit,
 /area/ruin/powered/snow_biodome)
 "ai" = (
@@ -76,7 +76,9 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/powered/snow_biodome)
 "as" = (
-/obj/machinery/door/airlock/vault,
+/obj/machinery/door/poddoor{
+	id = "winter_biodome"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/ruin/powered/snow_biodome)
 "at" = (
@@ -98,7 +100,17 @@
 /area/ruin/powered/snow_biodome)
 "ax" = (
 /obj/structure/table/wood,
-/obj/item/food/canned/beans,
+/obj/item/food/canned/beans{
+	pixel_y = 6
+	},
+/obj/machinery/button/door{
+	desc = "Who the hell hid behind a can of beans?";
+	id = "winter_biodome";
+	name = "secret button"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "ay" = (
@@ -253,12 +265,23 @@
 /mob/living/simple_animal/hostile/skeleton/eskimo,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
+"hr" = (
+/mob/living/simple_animal/hostile/skeleton/eskimo,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/snow_biodome)
 "hA" = (
 /obj/machinery/light/built/directional/north,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
+/area/ruin/powered/snow_biodome)
+"og" = (
+/obj/structure/stairs/south,
+/turf/open/floor/iron/dark/textured,
 /area/ruin/powered/snow_biodome)
 "pr" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -287,6 +310,10 @@
 /area/ruin/powered/snow_biodome)
 "vN" = (
 /turf/open/floor/plating/snowed/smoothed,
+/area/ruin/powered/snow_biodome)
+"wN" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/circuit,
 /area/ruin/powered/snow_biodome)
 "xU" = (
 /obj/item/storage/toolbox/mechanical,
@@ -421,6 +448,12 @@
 "Wg" = (
 /turf/closed/wall/r_wall,
 /area/ruin/powered/snow_biodome)
+"Zx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/snow_biodome)
 
 (1,1,1) = {"
 aa
@@ -442,8 +475,8 @@ Wg
 Wg
 Wg
 Wg
-Wg
-Wg
+aa
+aa
 aa
 aa
 aa
@@ -846,7 +879,7 @@ aq
 aq
 aq
 aE
-at
+aH
 at
 aq
 aq
@@ -875,10 +908,10 @@ Wg
 ah
 Wg
 Wg
-aH
+hr
 at
 at
-aH
+at
 aM
 aM
 aO
@@ -905,9 +938,9 @@ Qa
 (16,1,1) = {"
 Wg
 ag
-ah
+og
 as
-at
+Zx
 at
 at
 at
@@ -936,7 +969,7 @@ Qa
 "}
 (17,1,1) = {"
 Wg
-ah
+wN
 Wg
 Wg
 ax

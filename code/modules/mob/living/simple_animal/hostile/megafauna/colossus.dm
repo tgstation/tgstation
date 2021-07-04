@@ -298,12 +298,13 @@
 	flags_1 = HEAR_1
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
-
 	var/activation_damage_type = null
 	/// Cooldown on this crystal
 	var/cooldown_add = 3 SECONDS
 	/// Time needed to use this crystal
 	var/use_time = 0
+	/// If we are being used
+	var/active = FALSE
 	var/list/affected_targets = list()
 	var/activation_sound = 'sound/effects/break_stone.ogg'
 	COOLDOWN_DECLARE(cooldown_timer)
@@ -351,20 +352,24 @@
 		return FALSE
 	if(method != activation_method)
 		return FALSE
+	if(!active)
+		return FALSE
 	if(use_time)
 		charge_animation()
 	COOLDOWN_START(src, cooldown_timer, cooldown_add)
-	for(var/mob/living/carbon/viewer in viewers(3, src))
-		viewer.flash_act(visual = TRUE)
 	playsound(user, activation_sound, 100, TRUE)
 	return TRUE
 
 /obj/machinery/anomalous_crystal/proc/charge_animation()
-	set_anchored(TRUE)
 	icon_state = "anomaly_crystal_charging"
+	active = TRUE
+	set_anchored(TRUE)
 	balloon_alert_to_viewers("charging...")
+	playsound(src, 'sound/magic/disable_tech.ogg', 50, TRUE)
 	sleep(use_time)
 	icon_state = initial(icon_state)
+	active = FALSE
+	set_anchored(FALSE)
 	return TRUE
 
 /obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
@@ -382,7 +387,7 @@
 	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
-	if(..() && ishuman(user) && !(user in affected_targets))
+	if(..() && ishuman(user) && !(user in affected_targets) && (user in viewers(src)))
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
@@ -395,7 +400,7 @@
 	observer_desc = "This crystal warps the area around it to a theme."
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 20 SECONDS
-	use_time = 10 SECONDS
+	use_time = 5 SECONDS
 	var/terrain_theme = "winter"
 	var/NewTerrainFloors
 	var/NewTerrainWalls
@@ -519,6 +524,7 @@
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
 	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/effects/ghost2.ogg'
+	use_time = 5 SECONDS
 	var/ready_to_deploy = FALSE
 
 /obj/machinery/anomalous_crystal/helpers/ActivationReaction(mob/user, method)
@@ -614,7 +620,7 @@
 	observer_desc = "This crystal \"refreshes\" items that it affects, rendering them as new."
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 5 SECONDS
-	use_time = 5 SECONDS
+	use_time = 3 SECONDS
 	activation_sound = 'sound/magic/timeparadox2.ogg'
 	var/static/list/banned_items_typecache = typecacheof(list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/projectile, /obj/item/spellbook))
 
@@ -636,6 +642,7 @@
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
 	activation_method = ACTIVATE_TOUCH
+	use_time = 1 SECONDS
 
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
 	if(..())
