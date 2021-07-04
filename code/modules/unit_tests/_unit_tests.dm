@@ -93,7 +93,6 @@
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
-#include "uplink_costs.dm"
 #include "wizard.dm"
 
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
