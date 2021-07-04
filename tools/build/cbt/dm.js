@@ -74,7 +74,7 @@ const dm = async (dmeFile, options = {}) => {
       }
       if (err?.code === 'EBUSY') {
         Juke.logger.error(`File '${name}' is locked by the DreamDaemon process.`);
-        Juke.logger.error(`Stop the server and try again.`);
+        Juke.logger.error(`Stop the currently running server and try again.`);
         throw new Juke.ExitCode(1);
       }
       throw err;
