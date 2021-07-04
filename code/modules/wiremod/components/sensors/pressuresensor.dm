@@ -14,11 +14,9 @@
 
 /obj/item/circuit_component/pressuresensor/Initialize()
 	. = ..()
-	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL)
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/tempsensor/Destroy()
-	trigger = null
 	result = null
 	return ..()
 
@@ -26,14 +24,17 @@
 	. = ..()
 	if(.)
 		return
-
+	//Get current turf
 	var/turf/location = get_turf(src)
 	if(!location)
 		result.set_output(null)
 		return
+	//Get environment info
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total_moles = environment.total_moles()
 	var/pressure = environment.return_pressure()
 	if(total_moles)
-		//environment.assert_gases(arglist(GLOB.hardcoded_gases))
+		//If there's atmos, return pressure
 		result.set_output(round(pressure,1))
+	else
+		result.set_output(0)
