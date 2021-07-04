@@ -156,6 +156,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_intern
 	random_names = FALSE
 	role = "Intern"
+	suicide_cry = "FOR MY INTERNSHIP!!"
 
 /datum/antagonist/ert/intern/leader
 	name = "CentCom Head Intern"
@@ -242,6 +243,7 @@
 	name = "Space Police Responder"
 	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
+	suicide_cry = "FOR THE SPACE POLICE!!"
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
