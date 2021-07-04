@@ -178,7 +178,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "pepperbackpacksec"
 	inhand_icon_state = "pepperbackpacksec"
-	custom_price = PAYCHECK_HARD * 2
+	custom_price = PAYCHECK_MEDIUM * 2
 
 /obj/item/watertank/pepperspray/Initialize()
 	. = ..()
