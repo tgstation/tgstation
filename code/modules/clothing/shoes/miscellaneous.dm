@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
-	greyscale_colors = "#ffffff"
+	greyscale_colors = "#ffffff#ffffff"
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
@@ -43,12 +43,18 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/shoes/sandal/marisa
+/obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	icon_state = "black"
+	worn_icon_state = "marisa"
+	greyscale_colors = "#545454#ffffff"
+	greyscale_config = /datum/greyscale_config/sneakers_marisa
+	greyscale_config_worn = null
+	strip_delay = 5
+	equip_delay_other = 50
+	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
@@ -98,7 +104,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
+	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -119,13 +125,13 @@
 	if(!isliving(user))
 		return
 	if(user.get_active_held_item() != src)
-		to_chat(user, "<span class='warning'>You must hold the [src] in your hand to do this!</span>")
+		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
 		return
 	if (!enabled_waddle)
-		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
+		to_chat(user, span_notice("You switch off the waddle dampeners!"))
 		enabled_waddle = TRUE
 	else
-		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
+		to_chat(user, span_notice("You switch on the waddle dampeners!"))
 		enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/jester
@@ -261,17 +267,17 @@
 		return
 
 	if(recharging_time > world.time)
-		to_chat(user, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
+		to_chat(user, span_warning("The boot's internal propulsion needs to recharge still!"))
 		return
 
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
 	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
 		playsound(src, 'sound/effects/stealthoff.ogg', 50, TRUE, TRUE)
-		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+		user.visible_message(span_warning("[usr] dashes forward into the air!"))
 		recharging_time = world.time + recharging_rate
 	else
-		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
+		to_chat(user, span_warning("Something prevents you from dashing forward!"))
 
 /obj/item/clothing/shoes/bhop/rocket
 	name = "rocket boots"
@@ -305,13 +311,13 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/item/clothing/shoes/sneakers/wheelys
+/obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
 	worn_icon_state = "wheelys"
 	greyscale_colors = "#545454#ffffff"
+	icon_state = "sneakers"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
-	greyscale_config_worn = null
 	inhand_icon_state = "wheelys"
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
@@ -323,17 +329,17 @@
 	///The vehicle associated with the shoes
 	var/obj/vehicle/ridden/scooter/skateboard/wheelys/wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys
 
-/obj/item/clothing/shoes/sneakers/wheelys/Initialize()
+/obj/item/clothing/shoes/wheelys/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	wheels = new wheels(null)
 	wheels.link_shoes(src)
 
-/obj/item/clothing/shoes/sneakers/wheelys/ui_action_click(mob/user, action)
+/obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/sneakers/wheelys))
-		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
+		to_chat(user, span_warning("You must be wearing the wheely-heels to use them!"))
 		return
 	if(!(wheels.is_occupant(user)))
 		wheelToggle = FALSE
@@ -345,13 +351,13 @@
 	wheels.buckle_mob(user)
 	wheelToggle = TRUE
 
-/obj/item/clothing/shoes/sneakers/wheelys/dropped(mob/user)
+/obj/item/clothing/shoes/wheelys/dropped(mob/user)
 	if(wheelToggle)
 		wheels.unbuckle_mob(user)
 		wheelToggle = FALSE
 	..()
 
-/obj/item/clothing/shoes/sneakers/wheelys/proc/toggle_wheels(status)
+/obj/item/clothing/shoes/wheelys/proc/toggle_wheels(status)
 	if (status)
 		worn_icon_state = "[initial(worn_icon_state)]-on"
 	else
@@ -359,11 +365,11 @@
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
 	update_appearance()
 
-/obj/item/clothing/shoes/sneakers/wheelys/Destroy()
+/obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(wheels)
 	. = ..()
 
-/obj/item/clothing/shoes/sneakers/wheelys/rollerskates
+/obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
@@ -375,7 +381,7 @@
 	custom_premium_price = PAYCHECK_EASY * 5
 	custom_price = PAYCHECK_EASY * 5
 
-/obj/item/clothing/shoes/sneakers/wheelys/skishoes
+/obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
@@ -441,33 +447,46 @@
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
 	if(prob(2))
-		var/mob/living/simple_animal/hostile/retaliate/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/poison/snake(src)
+		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
-			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
+			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
+			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
 				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 		occupants.Cut()
+
+/obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+
+/obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+
+/obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
+	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
+	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
 	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(occupants.len >= max_occupants)
-		to_chat(user, "<span class='warning'>[src] are full!</span>")
+		to_chat(user, span_warning("[src] are full!"))
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
-		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
+		to_chat(user, span_notice("[target] slithers into [src]."))
 
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
 	if(!do_after(user, 10, target = user))
@@ -599,7 +618,7 @@
 	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) // they're fired from boots after all
 	shot.preparePixelProjectile(target, wearer)
 	if(!shot.suppressed)
-		wearer.visible_message("<span class='danger'>[wearer]'s [name] fires \a [shot]!</span>", "", blind_message = "<span class='hear'>You hear a gunshot!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		wearer.visible_message(span_danger("[wearer]'s [name] fires \a [shot]!"), "", blind_message = span_hear("You hear a gunshot!"), vision_distance=COMBAT_MESSAGE_RANGE)
 	shot.fire()
 
 /obj/item/clothing/shoes/gunboots/disabler

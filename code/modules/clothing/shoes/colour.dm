@@ -1,18 +1,13 @@
 /obj/item/clothing/shoes/sneakers
 	dying_key = DYE_REGISTRY_SNEAKERS
 	icon_state = "sneakers"
+	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
-	var/datum/greyscale_config/greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-
-/obj/item/clothing/shoes/sneakers/Initialize()
-	. = ..()
-	if(greyscale_config_worn && greyscale_colors)
-		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
+	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
 
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	greyscale_colors = "#545454#ffffff"
 	custom_price = PAYCHECK_ASSISTANT
 
 	cold_protection = FEET
@@ -28,7 +23,7 @@
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
 	greyscale_colors = "#16a9eb#ffffff"
-	permeability_coefficient = 0.01	
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/shoes/sneakers/green
 	name = "green shoes"
@@ -56,8 +51,12 @@
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
+
 	greyscale_colors = null
 	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
@@ -87,7 +86,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && chained == 1)
-			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
+			to_chat(user, span_warning("You need help taking these off!"))
 			return FALSE
 	return ..()
 
@@ -96,6 +95,6 @@
 	if(ishuman(m))
 		var/mob/living/carbon/human/c = m
 		if(c.shoes == src && chained == 1)
-			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
+			to_chat(c, span_warning("You need help taking these off!"))
 			return
 	return ..()

@@ -15,11 +15,6 @@
 /mob/camera/experience_pressure_difference()
 	return
 
-/mob/camera/forceMove(atom/destination)
-	var/oldloc = loc
-	loc = destination
-	Moved(oldloc, NONE, TRUE)
-
 /mob/camera/canUseStorage()
 	return FALSE
 

@@ -41,12 +41,15 @@
 	var/pre_attack_hit
 
 /datum/unit_test/attack_chain/proc/attack_hit()
+	SIGNAL_HANDLER
 	attack_hit = TRUE
 
 /datum/unit_test/attack_chain/proc/post_attack_hit()
+	SIGNAL_HANDLER
 	post_attack_hit = TRUE
 
 /datum/unit_test/attack_chain/proc/pre_attack_hit()
+	SIGNAL_HANDLER
 	pre_attack_hit = TRUE
 
 /datum/unit_test/attack_chain/Run()

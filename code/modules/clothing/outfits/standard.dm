@@ -73,7 +73,7 @@
 	suit = null
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/stack/tile/iron = 6,
+		/obj/item/stack/tile/iron/base = 6,
 )
 	head = null
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
@@ -345,7 +345,7 @@
 
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
-	shoes = /obj/item/clothing/shoes/sandal/marisa
+	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"

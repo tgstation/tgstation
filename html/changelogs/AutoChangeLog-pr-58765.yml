@@ -1,4 +1,0 @@
-author: "unit0016"
-delete-after: True
-changes: 
-  - refactor: "Cargo Shuttle consoles now rely a lot more on variables instead of hardcoding."

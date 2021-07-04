@@ -1,5 +1,0 @@
-author: "LemonInTheDark, duncathan"
-delete-after: True
-changes: 
-  - refactor: "Gas reactions should be cheaper in the standard case"
-  - refactor: "Moves canisters, pipelines, and tanks to event based processing, if you see something fail to \"update\" when it really should let me know yeah?"

@@ -1,6 +1,6 @@
 /datum/outfit/prisoner
 	name = "Prison Escapee"
-	uniform = /obj/item/clothing/under/color/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	r_pocket = /obj/item/kitchen/knife/shiv
 
@@ -26,29 +26,28 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
-/datum/outfit/waldo/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
 	if(visualsOnly)
 		return
-	H.fully_replace_character_name(null,"Waldo")
-	H.eye_color = "000"
-	H.gender = MALE
-	H.skin_tone = "caucasian3"
-	H.hairstyle = "Business Hair 3"
-	H.facial_hairstyle = "Shaved"
-	H.hair_color = "000"
-	H.facial_hair_color = H.hair_color
-	H.update_body()
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+	equipped_on.fully_replace_character_name(null,"Waldo")
+	equipped_on.eye_color = "000"
+	equipped_on.gender = MALE
+	equipped_on.skin_tone = "caucasian3"
+	equipped_on.hairstyle = "Business Hair 3"
+	equipped_on.facial_hairstyle = "Shaved"
+	equipped_on.hair_color = "000"
+	equipped_on.facial_hair_color = equipped_on.hair_color
+	equipped_on.update_body()
+	if(equipped_on.mind)
+		equipped_on.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	var/list/no_drops = list()
-	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_HEAD)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_EYES)
-	for(var/i in no_drops)
-		var/obj/item/I = i
-		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_HEAD)
+	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_EYES)
+	for(var/obj/item/trait_needed as anything in no_drops)
+		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
 
 /datum/outfit/synthetic
 	name = "Factory Error Synth"
@@ -95,7 +94,7 @@
 
 /datum/outfit/bountyarmor
 	name = "Bounty Hunter - Armored"
-	uniform = /obj/item/clothing/under/color/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
 	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
@@ -120,7 +119,7 @@
 
 /datum/outfit/bountyhook
 	name = "Bounty Hunter - Hook"
-	uniform = /obj/item/clothing/under/color/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
 	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/scarecrow_hat
 	gloves = /obj/item/clothing/gloves/botanic_leather
@@ -146,7 +145,7 @@
 
 /datum/outfit/bountysynth
 	name = "Bounty Hunter - Synth"
-	uniform = /obj/item/clothing/under/color/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
 	back = /obj/item/storage/backpack
 	suit = /obj/item/clothing/suit/armor/riot
 	shoes = /obj/item/clothing/shoes/jackboots

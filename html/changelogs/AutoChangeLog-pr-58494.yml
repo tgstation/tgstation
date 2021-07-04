@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "The hotkey for dumping borg apparatus is now moved to Alt+Click instead of the nonfunctional Alt+Z. Right click for beaker apparatus spills reagent, just like with regular beakers. Z and self attack keeps the old interaction, it changes transfer volume."

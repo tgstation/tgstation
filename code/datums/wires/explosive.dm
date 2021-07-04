@@ -22,9 +22,23 @@
 	var/fingerprint
 
 /datum/wires/explosive/chem_grenade/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/grenade/chem_grenade/G = holder
 	if(G.stage == GRENADE_WIRED)
 		return TRUE
+
+/datum/wires/explosive/chem_grenade/on_pulse(index)
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(grenade.stage != GRENADE_READY)
+		return
+	. = ..()
+
+/datum/wires/explosive/chem_grenade/on_cut(index, mend)
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(grenade.stage != GRENADE_READY)
+		return
+	. = ..()
 
 /datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)
 	if(istype(S,/obj/item/assembly/timer))
@@ -65,9 +79,6 @@
 /datum/wires/explosive/c4 // Also includes X4
 	holder_type = /obj/item/grenade/c4
 
-/datum/wires/explosive/c4/interactable(mob/user) // No need to unscrew wire panels on plastic explosives
-	return TRUE
-
 /datum/wires/explosive/c4/explode()
 	var/obj/item/grenade/c4/P = holder
 	P.detonate()
@@ -83,6 +94,8 @@
 	..()
 
 /datum/wires/explosive/pizza/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/pizzabox/P = holder
 	if(P.open && P.bomb)
 		return TRUE
