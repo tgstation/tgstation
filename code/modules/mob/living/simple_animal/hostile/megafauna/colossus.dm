@@ -352,7 +352,7 @@
 		return FALSE
 	if(method != activation_method)
 		return FALSE
-	if(!active)
+	if(active)
 		return FALSE
 	if(use_time)
 		charge_animation()
