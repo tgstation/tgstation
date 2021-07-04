@@ -119,6 +119,7 @@
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
+	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 	random_color = FALSE
@@ -136,6 +137,7 @@
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
 	health_doll_icon = "megacarp"
+	ai_controller = null
 	maxHealth = 20
 	health = 20
 	pixel_x = -16
@@ -187,6 +189,7 @@
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
 	gender = FEMALE
 	speak_emote = list("squeaks")
+	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	faction = list("neutral")
 	health = 200
@@ -208,6 +211,7 @@
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 	speak_emote = list("squeaks")
+	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
