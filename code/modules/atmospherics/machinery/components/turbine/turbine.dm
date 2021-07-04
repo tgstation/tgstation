@@ -264,15 +264,19 @@
 	var/datum/gas_mixture/first_remove = first_point.remove_ratio(1)
 
 	second_point.merge(first_remove)
-	var/second_point_pressure = second_point.return_pressure()
+	var/second_point_temperature = second_point.temperature
 	var/heat_capacity = second_point.heat_capacity()
+	var/expansion_work = first_point.total_moles() * R_IDEAL_GAS_EQUATION * first_point_temperature * log(first_point.volume / second_point.volume)
+	second_point_temperature = max((second_point_temperature * heat_capacity - expansion_work * second_point.total_moles() * 0.05 * heat_transfer_coefficient) / heat_capacity, TCMB)
+
+	var/second_point_pressure = second_point.return_pressure()
 
 	var/work_done = 0
 	var/delta_pressure = - (second_point_pressure - first_point_pressure)
 	if(first_point_temperature > 300 || delta_pressure > 500)
-		work_done = efficiency * second_point.total_moles() * R_IDEAL_GAS_EQUATION * first_point_temperature * log((first_point_pressure / second_point_pressure)) - rpm
+		work_done = efficiency * second_point.total_moles() * R_IDEAL_GAS_EQUATION * second_point_temperature * log((first_point_pressure / second_point_pressure)) - rpm
 
-	rpm = (work_done ** 0.6) * 4 * rpm_coefficient
+	rpm = (work_done ** 0.6) * 8 * rpm_coefficient
 
 	efficiency = clamp(1 - log(10, max(first_point_temperature, 1e3)) * 0.1 + efficiency_coefficient, 0, 1)
 
