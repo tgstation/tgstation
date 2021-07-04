@@ -1,0 +1,8 @@
+author: "coiax, Timberpoes"
+delete-after: True
+changes: 
+  - expansion: "Adds the new Wallets! station trait. Makes everyone start with wallets with
+their ID card inside, along with their starting budget. Might also include a little
+surprise."
+  - expansion: "Wallets that spawn inside dorm wardrobes also have little surprises in them."
+  - expansion: "Wallets can now hold pills."

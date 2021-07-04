@@ -69076,11 +69076,6 @@
 /turf/open/floor/iron,
 /area/commons/toilet/restrooms)
 "mPh" = (
-/obj/machinery/camera{
-	c_tag = "Science - Firing Range";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
@@ -105191,6 +105186,12 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Research Division - Circuits";
+	dir = 4;
+	name = "science camera";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/misc_lab)

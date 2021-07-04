@@ -1,0 +1,4 @@
+author: "KIBORG04"
+delete-after: True
+changes: 
+  - bugfix: "Mafia psychologist couldn't reveal role"
