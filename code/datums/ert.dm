@@ -22,11 +22,8 @@
 		polldesc = "a Code [code] Nanotrasen Emergency Response Team"
 
 /datum/ert/blue
-	leader_role = /datum/antagonist/ert/marine
-	roles = list(/datum/antagonist/ert/marine/security, /datum/antagonist/ert/marine/engineer, /datum/antagonist/ert/marine/medic)
-	rename_team = "Marine Squad"
-	polldesc = "an elite Nanotrasen Strike Team"
 	opendoors = FALSE
+	code = "Blue"
 
 /datum/ert/amber
 	code = "Amber"
