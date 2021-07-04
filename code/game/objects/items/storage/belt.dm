@@ -487,7 +487,7 @@
 /obj/item/storage/belt/military/assault/full/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
-		/obj/item/ammo_box/magazine/wt550m9 = 1)
+		/obj/item/ammo_box/magazine/wt550m9 = 4)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/grenade
