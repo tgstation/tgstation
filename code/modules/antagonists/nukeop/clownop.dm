@@ -4,6 +4,7 @@
 	roundend_category = "clown operatives"
 	antagpanel_category = "ClownOp"
 	nukeop_outfit = /datum/outfit/syndicate/clownop
+	suicide_cry = "HAPPY BIRTHDAY!!"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.assigned_role = "Clown Operative"

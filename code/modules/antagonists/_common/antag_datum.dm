@@ -37,7 +37,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_hud_name
 	/// If set to true, the antag will not be added to the living antag list.
 	var/soft_antag = FALSE
-
+	/// The battlecry this antagonist shouts when suiciding with C4/X4.
+	var/suicide_cry = ""
 	//Antag panel properties
 	///This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/show_in_antagpanel = TRUE
