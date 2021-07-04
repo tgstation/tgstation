@@ -597,7 +597,7 @@
 	head = /obj/item/clothing/head/helmet/marine/medic
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
-		/obj/item/storage/firstaid/regular = 1
+		/obj/item/storage/firstaid/regular = 1,
 		/obj/item/storage/firstaid/advanced = 1
 )
 	belt = /obj/item/storage/belt/medical/paramedic

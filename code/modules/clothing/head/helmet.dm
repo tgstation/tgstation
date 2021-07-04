@@ -102,7 +102,7 @@
 	desc = "A multirole helmet painted in a tactical black, the added binoculars aren't functional, but they make you feel operator as fuck."
 	icon_state = "marine_command"
 	inhand_icon_state = "helmetalt"
-	armor = list(MELEE = 65, BULLET = 50, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 50, RAD = 25, FIRE = 70, ACID = 60, WOUND = 15)
+	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 40, ACID = 50, WOUND = 20)
 	can_flashlight = TRUE
 	dog_fashion = null
 
@@ -110,19 +110,19 @@
 	name = "marine heavy helmet"
 	desc = "A multirole helmet, painted black and with an added ballistic screen for extra protection from dangers to the face."
 	icon_state = "marine_security"
-	armor = list(MELEE = 75, BULLET = 60, LASER = 55, ENERGY = 65, BOMB = 60, BIO = 50, RAD = 25, FIRE = 85, ACID = 65, WOUND = 20)
+	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 50, ACID = 50, WOUND = 20)
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
 	desc = "A multirole helmet, sacrificing some armor protection for more environmental protection."
 	icon_state = "marine_engineer"
-	armor = list(MELEE = 45, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 50, BIO = 75, RAD = 80, FIRE = 75, ACID = 70, WOUND = 10)
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, RAD = 30, FIRE = 70, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
 	desc = "A multirole helmet, the antenna isn't actually functional, but it looks cool. Has some extra biological protection installed."
 	icon_state = "marine_medic"
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 80, RAD = 40, FIRE = 80, ACID = 80, WOUND = 10)
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, RAD = 10, FIRE = 50, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
