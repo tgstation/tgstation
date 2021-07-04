@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - imagedel: "removes the weird light from the upgraded mining hardsuit helmet sprite"
