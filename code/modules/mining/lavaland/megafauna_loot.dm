@@ -437,9 +437,9 @@
 	duration = 50
 
 /turf/open/lava/smooth/weak
-	lava_damage = 5
-	lava_firestacks = 5
-	temperature_damage = 1000
+	lava_damage = 10
+	lava_firestacks = 10
+	temperature_damage = 2500
 
 //Blood-Drunk Miner: Cleaving Saw
 
