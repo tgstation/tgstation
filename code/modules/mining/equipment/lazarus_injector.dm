@@ -33,29 +33,29 @@
 		to_chat(user, span_info("[src] is only effective on lesser beings."))
 		return
 
-	var/mob/living/simple_animal/M = target
-	if(M.sentience_type != revive_type)
+	var/mob/living/simple_animal/target_animal = target
+	if(target_animal.sentience_type != revive_type)
 		to_chat(user, span_info("[src] does not work on this sort of creature."))
 		return
-	if(M.stat != DEAD)
+	if(target_animal.stat != DEAD)
 		to_chat(user, span_info("[src] is only effective on the dead."))
 		return
 
-	M.faction = list("neutral")
-	M.revive(full_heal = TRUE, admin_revive = TRUE)
+	target_animal.faction = list("neutral")
+	target_animal.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/H = M
+		var/mob/living/simple_animal/hostile/target_hostile = target_animal
 		if(malfunctioning)
-			H.faction |= list("lazarus", "[REF(user)]")
-			H.robust_searching = 1
-			H.friends += user
-			H.attack_same = 1
+			target_hostile.faction |= list("lazarus", "[REF(user)]")
+			target_hostile.robust_searching = 1
+			target_hostile.friends += user
+			target_hostile.attack_same = 1
 			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
 		else
-			H.attack_same = 0
+			target_hostile.attack_same = 0
 	loaded = FALSE
-	user.visible_message(span_notice("[user] injects [M] with [src], reviving it."))
-	SSblackbox.record_feedback("tally", "lazarus_injector", 1, M.type)
+	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
+	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)
 	icon_state = "lazarus_empty"
 
