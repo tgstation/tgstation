@@ -133,7 +133,7 @@
 		qdel(src)
 
 	var/atom/curloc = master.loc
-	for(var/atom/movable/movable_orbiter in orbiter_list)
+	for(var/atom/movable/movable_orbiter as anything in orbiter_list)
 		if(QDELETED(movable_orbiter) || movable_orbiter.loc == newturf)
 			continue
 		movable_orbiter.abstract_move(newturf)
