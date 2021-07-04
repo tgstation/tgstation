@@ -300,10 +300,13 @@
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
 	var/activation_damage_type = null
-	var/last_use_timer = 0
-	var/cooldown_add = 30
+	/// Cooldown on this crystal
+	var/cooldown_add = 3 SECONDS
+	/// Time needed to use this crystal
+	var/use_time = 0
 	var/list/affected_targets = list()
 	var/activation_sound = 'sound/effects/break_stone.ogg'
+	COOLDOWN_DECLARE(cooldown_timer)
 
 /obj/machinery/anomalous_crystal/Initialize(mapload)
 	. = ..()
@@ -342,14 +345,26 @@
 	ActivationReaction(P.firer, P.flag, P.damage_type)
 
 /obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
-	if(world.time < last_use_timer)
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
 	if(activation_damage_type && activation_damage_type != damtype)
 		return FALSE
 	if(method != activation_method)
 		return FALSE
-	last_use_timer = (world.time + cooldown_add)
+	if(use_time)
+		charge_animation()
+	COOLDOWN_START(src, cooldown_timer, cooldown_add)
+	for(var/mob/living/carbon/viewer in viewers(3, src))
+		viewer.flash_act(visual = TRUE)
 	playsound(user, activation_sound, 100, TRUE)
+	return TRUE
+
+/obj/machinery/anomalous_crystal/proc/charge_animation()
+	set_anchored(TRUE)
+	icon_state = "anomaly_crystal_charging"
+	balloon_alert_to_viewers("charging...")
+	sleep(use_time)
+	icon_state = initial(icon_state)
 	return TRUE
 
 /obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
@@ -364,6 +379,7 @@
 	observer_desc = "This crystal strips and equips its targets as clowns."
 	possible_methods = list(ACTIVATE_MOB_BUMP, ACTIVATE_SPEECH)
 	activation_sound = 'sound/items/bikehorn.ogg'
+	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
 	if(..() && ishuman(user) && !(user in affected_targets))
@@ -378,7 +394,8 @@
 /obj/machinery/anomalous_crystal/theme_warp //Warps the area you're in to look like a new one
 	observer_desc = "This crystal warps the area around it to a theme."
 	activation_method = ACTIVATE_TOUCH
-	cooldown_add = 200
+	cooldown_add = 20 SECONDS
+	use_time = 10 SECONDS
 	var/terrain_theme = "winter"
 	var/NewTerrainFloors
 	var/NewTerrainWalls
@@ -399,7 +416,7 @@
 			NewFlora = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
 			florachance = 1
 		if("winter") //Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
-			NewTerrainFloors = /turf/open/floor/grass/snow/safe
+			NewTerrainFloors = /turf/open/floor/grass/snow/actually_safe
 			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/glass
@@ -448,7 +465,7 @@
 /obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
 	observer_desc = "This crystal generates a projectile when activated."
 	activation_method = ACTIVATE_TOUCH
-	cooldown_add = 50
+	cooldown_add = 5 SECONDS
 	var/obj/projectile/generated_projectile = /obj/projectile/beam/emitter
 
 /obj/machinery/anomalous_crystal/emitter/Initialize()
@@ -596,7 +613,8 @@
 /obj/machinery/anomalous_crystal/refresher //Deletes and recreates a copy of the item, "refreshing" it.
 	observer_desc = "This crystal \"refreshes\" items that it affects, rendering them as new."
 	activation_method = ACTIVATE_TOUCH
-	cooldown_add = 50
+	cooldown_add = 5 SECONDS
+	use_time = 5 SECONDS
 	activation_sound = 'sound/magic/timeparadox2.ogg'
 	var/static/list/banned_items_typecache = typecacheof(list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/projectile, /obj/item/spellbook))
 
