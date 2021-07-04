@@ -9,7 +9,7 @@
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT)
+	if(slot == ITEM_SLOT_BELT || ITEM_SLOT_SUITSTORE)
 		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
@@ -63,7 +63,7 @@
 
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
-	desc = "A hip holster that uses chameleon technology to disguise itself, it can hold handguns and their ammo."
+	desc = "A hip holster that uses chameleon technology to disguise itself, due to the added chameleon tech, it cannot be mounted onto armor."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
