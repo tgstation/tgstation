@@ -194,7 +194,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5,10)
-	current_range = 5
+	current_range = 6
 
 /obj/item/watertank/security/make_noz()
 	return new /obj/item/reagent_containers/spray/mister/security(src)
