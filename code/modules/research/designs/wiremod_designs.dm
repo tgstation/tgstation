@@ -213,6 +213,16 @@
 	id = "comp_select_query"
 	build_path = /obj/item/circuit_component/select
 
+/datum/design/component/tempsensor
+	name = "Temperature Sensor"
+	id = "comp_tempsensor"
+	build_path = /obj/item/circuit_component/tempsensor
+
+/datum/design/component/pressuresensor
+	name = "Pressure Sensor"
+	id = "comp_pressuresensor"
+	build_path = /obj/item/circuit_component/pressuresensor
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
