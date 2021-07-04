@@ -10215,6 +10215,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "bBZ" = (
@@ -87916,7 +87919,7 @@
 /area/commons/fitness/recreation)
 "rAw" = (
 /obj/machinery/airalarm/directional/west,
-/turf/closed/wall,
+/turf/open/floor/iron/grimy,
 /area/service/bar)
 "rAA" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -88499,12 +88502,6 @@
 "rJO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 9
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -147995,7 +147992,7 @@ aXI
 qya
 oxd
 wcz
-rAw
+aXI
 aXI
 aXI
 ncV
@@ -148252,7 +148249,7 @@ aXI
 ioR
 xEX
 eXr
-gUH
+rAw
 jgR
 aXI
 kAj
