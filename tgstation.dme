@@ -3594,6 +3594,7 @@
 #include "code\modules\wiremod\components\list\index.dm"
 #include "code\modules\wiremod\components\list\index_table.dm"
 #include "code\modules\wiremod\components\list\select.dm"
+#include "code\modules\wiremod\components\list\split.dm"
 #include "code\modules\wiremod\components\math\arithmetic.dm"
 #include "code\modules\wiremod\components\math\comparison.dm"
 #include "code\modules\wiremod\components\math\length.dm"
