@@ -1,5 +1,6 @@
 /datum/component/rust
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/// Internal variable to store the rust overlay we are using to avoid regenerating it every overlay update call
 	var/mutable_appearance/rust_overlay
 
 /turf/closed/wall/rust/New()
@@ -51,6 +52,7 @@
 		rust_overlay = null
 	return ..()
 
+/// We call this from secondary_tool_act because we sleep with do_after
 /datum/component/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
@@ -69,6 +71,7 @@
 			qdel(src)
 			return
 
+/// Because do_after sleeps we register the signal here and defer via an async call
 /datum/component/rust/proc/secondary_tool_act(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/handle_tool_use, source, user, item)
