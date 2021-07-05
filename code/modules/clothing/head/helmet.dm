@@ -114,19 +114,19 @@
 
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
-	desc = "A multirole helmet, painted black and with an added ballistic screen for extra protection from dangers to the face."
+	desc = "A heavier armored marine helmet, painted black and with an added ballistic screen for extra protection from dangers to the face."
 	icon_state = "marine_security"
 	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 50, ACID = 50, WOUND = 20)
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
-	desc = "A multirole helmet, sacrificing some armor protection for more environmental protection."
+	desc = "A helmet with a pair of military grade welding goggles, sacrificing some armor protection for more environmental protection."
 	icon_state = "marine_engineer"
 	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, RAD = 30, FIRE = 70, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
-	desc = "A multirole helmet, the antenna isn't actually functional, but it looks cool. Has some extra biological protection installed."
+	desc = "A multirole helmet with an attached antenna, which looks cool despite being useless. Has some extra biological protection installed."
 	icon_state = "marine_medic"
 	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, RAD = 10, FIRE = 50, ACID = 70, WOUND = 10)
 
