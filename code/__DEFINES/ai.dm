@@ -92,15 +92,14 @@
 
 
 ///Carp AI controller blackboard keys
-#define BB_CARP_ORDER_MODE "BB_DOG_ORDER_MODE"
+#define BB_CARP_ORDER_MODE "BB_CARP_ORDER_MODE"
 #define BB_CARP_FRIEND "BB_CARP_FRIEND"
-#define BB_CARP_FOLLOW_TARGET "BB_CARP_FOLLOW_TARGET"
-#define BB_CARP_ATTACK_TARGET "BB_CARP_ATTACK_TARGET"
+#define BB_FOLLOW_TARGET "BB_FOLLOW_TARGET"
+#define BB_ATTACK_TARGET "BB_ATTACK_TARGET"
+#define BB_VISION_RANGE "BB_VISION_RANGE"
 
 /// Basically, what is our vision/hearing range.
 #define AI_CARP_VISION_RANGE 10
-/// What are the odds someone feeding us will become our tamer?
-#define AI_CARP_FEED_TAME_PROB 15
 /// After either being given a verbal order or a pointing order, ignore further of each for this duration
 #define AI_CARP_COMMAND_COOLDOWN 2 SECONDS
 

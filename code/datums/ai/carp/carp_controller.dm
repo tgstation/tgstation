@@ -2,8 +2,9 @@
 	blackboard = list(
 		BB_CARP_ORDER_MODE = null,
 		BB_CARP_FRIEND = null,
-		BB_CARP_FOLLOW_TARGET = null,
-		BB_CARP_ATTACK_TARGET = null,
+		BB_FOLLOW_TARGET = null,
+		BB_ATTACK_TARGET = null,
+		BB_VISION_RANGE = AI_CARP_VISION_RANGE,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 
@@ -202,7 +203,7 @@
 	else
 		return
 
-	if(!can_see(pawn, speaker, length=AI_CARP_VISION_RANGE))
+	if(!can_see(pawn, speaker, length=blackboard[BB_VISION_RANGE]))
 		return
 	set_command_mode(speaker, command)
 
@@ -221,12 +222,12 @@
 			pawn.visible_message(span_notice("[pawn] gnashes at [commander]'s command, and [pawn.p_they()] follow[pawn.p_s()] slightly in anticipation."))
 			CancelActions()
 			blackboard[BB_CARP_ORDER_MODE] = CARP_COMMAND_FOLLOW
-			blackboard[BB_CARP_FOLLOW_TARGET] = WEAKREF(commander)
+			blackboard[BB_FOLLOW_TARGET] = WEAKREF(commander)
 			current_movement_target = commander
 			var/mob/living/living_pawn = pawn
 			if(living_pawn.buckled)
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/carp_follow)
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/follow)
 		// attack: harass whoever the commander points to
 		if(COMMAND_ATTACK)
 			pawn.visible_message(span_danger("[pawn] gnashes at [commander]'s command, and [pawn.p_they()] growl[pawn.p_s()] intensely.")) // imagine getting intimidated by a corgi
@@ -245,15 +246,16 @@
 		return
 	if(blackboard[BB_CARP_FRIEND] == WEAKREF(pointed_movable) || pointed_movable == pawn || !istype(pointed_movable) || blackboard[BB_CARP_ORDER_MODE] == CARP_COMMAND_NONE) // busy or no command
 		return
-	if(!can_see(pawn, pointing_friend, length=AI_CARP_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_CARP_VISION_RANGE))
+	if(!can_see(pawn, pointing_friend, length=blackboard[BB_VISION_RANGE]) || !can_see(pawn, pointed_movable, length=blackboard[BB_VISION_RANGE]))
 		return
 
+	CancelActions()
 	COOLDOWN_START(src, command_cooldown, AI_CARP_COMMAND_COOLDOWN)
 
 	if(blackboard[BB_CARP_ORDER_MODE] == CARP_COMMAND_ATTACK)
 		pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and gnashes intensely!"))
 		current_movement_target = pointed_movable
-		blackboard[BB_CARP_ATTACK_TARGET] = WEAKREF(pointed_movable)
+		blackboard[BB_ATTACK_TARGET] = WEAKREF(pointed_movable)
 		if(living_pawn.buckled)
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/carp_attack)
+		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/attack)
