@@ -220,11 +220,11 @@
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
-	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant. Ctrl-Click to activate seed extraction."
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant. Right Click to activate seed extraction."
 	icon_state = "portaseeder"
 
-/obj/item/storage/bag/plants/portaseeder/CtrlClick()
-	if(usr.incapacitated())
+/obj/item/storage/bag/plants/portaseeder/attack_hand_secondary(mob/user, list/modifiers)
+	if(user.incapacitated())
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
