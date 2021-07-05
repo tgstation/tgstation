@@ -297,7 +297,7 @@
 		if(amount == maxamount)
 			hardsuit_type = "mining_goliath_full"
 	icon_state = "hardsuit[on]-[hardsuit_type]"
-	light_color = LIGHT_COLOR_FLARE
+	set_light_color(LIGHT_COLOR_FLARE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.head == src)
