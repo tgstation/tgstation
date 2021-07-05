@@ -100,7 +100,7 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 	owner.update_sight()
-	to_chat(user, text("<span class='notice'>You can no longer see the heat rising off of your skin...</span>"))
+	to_chat(user, span_notice("You can no longer see the heat rising off of your skin..."))
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/xray
