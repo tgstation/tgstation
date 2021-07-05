@@ -89,12 +89,14 @@
 	return TRUE
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
-	if (location && !isobserver(teleatom))
-		if (sound)
-			playsound(location, sound, 60, TRUE)
-		if (effect)
-			effect.attach(location)
-			effect.start()
+	if(!location)
+		return
+
+	if(sound)
+		playsound(location, sound, 60, TRUE)
+	if(effect)
+		effect.attach(location)
+		effect.start()
 
 // Safe location finder
 /proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = TRUE)
