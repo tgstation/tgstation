@@ -252,7 +252,6 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		new_limbs += BP.get_limb_icon()
-
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs

@@ -1,5 +1,5 @@
 /**
-* System for drawihg organs with overlays. Used as a replacement for the datumized species features, so that you can tear our a moths wings and stick it on a lizard
+* System for drawing organs with overlays. These overlays are drawn directly on the bodypart, attached to a person or not
 * Works in tandem with the /datum/sprite_accessory datum to generate sprites
 * Unlike normal organs, we're actually inside a persons limbs at all times
 */
@@ -25,13 +25,13 @@
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
 */
-/obj/item/organ/external/Initialize(mapload, _mob_sprite)
+/obj/item/organ/external/Initialize(mapload, mob_sprite)
 	. = ..()
 
-	if(_mob_sprite)
-		add_sprite_datum(_mob_sprite)
+	if(mob_sprite)
+		add_sprite_datum(mob_sprite)
 
-	generate_icon_cache()
+	cache_key = generate_icon_cache()
 
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = reciever.get_bodypart(zone)
@@ -54,6 +54,7 @@
 	if(ownerlimb)
 		ownerlimb.external_organs.Remove(src)
 		ownerlimb.contents.Remove(src)
+		ownerlimb = null
 
 	organ_owner.update_body_parts()
 
@@ -74,16 +75,16 @@
 	sprite_datums.Add(sprite_datum)
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
-/obj/item/organ/external/proc/get_overlays(list/overlay_list, _dir, _layer, body_type, _color)
+/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, body_type, image_color)
 	generate_icon_cache()
 	for(var/datum/sprite_accessory/sprite_datum as anything in sprite_datums)
-		var/g = (body_type == FEMALE) ? "f" : "m"
-		var/finished_icon_state = (sprite_datum.gender_specific ? g : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(_layer)
-		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -_layer)
-		appearance.dir = _dir
+		var/gender = (body_type == FEMALE) ? "f" : "m"
+		var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
+		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
+		appearance.dir = image_dir
 
 		if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/
-			appearance.color = _color
+			appearance.color = image_color
 
 		if(sprite_datum.center)
 			center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
@@ -92,9 +93,9 @@
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
 /obj/item/organ/external/proc/generate_icon_cache()
-	cache_key = ""
+	. = ""
 	for(var/datum/sprite_accessory/sprite as anything in sprite_datums)
-		cache_key += sprite.icon_state + "_" + preference
+		. += "[sprite.icon_state]_[preference]"
 
 /**This exists so sprite accessories can still be per-layer without having to include that layer's
 *  number in their sprite name, which causes issues when those numbers change.
@@ -132,6 +133,7 @@
 /obj/item/organ/external/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
+	return FALSE
 
 /obj/item/organ/external/horns/get_global_feature_list()
 	return GLOB.horns_list
@@ -162,6 +164,7 @@
 /obj/item/organ/external/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
 		return TRUE
+	return FALSE
 
 /obj/item/organ/external/snout/get_global_feature_list()
 	return GLOB.snouts_list
@@ -188,16 +191,16 @@
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 
-	UnregisterSignal(organ_owner, COMSIG_HUMAN_BURNING)
-	UnregisterSignal(organ_owner, COMSIG_LIVING_POST_FULLY_HEAL)
+	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 /obj/item/organ/external/antennae/get_global_feature_list()
 	return GLOB.moth_antennae_list
 
-
 /obj/item/organ/external/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
+	return FALSE
+
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
