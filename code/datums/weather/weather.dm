@@ -192,11 +192,11 @@
 /datum/weather/proc/can_weather_act(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
 
-	if(!(mob_turf.z in impacted_z_levels))
-		if(mob_turf)
-			return
+	if(mob_turf && !(mob_turf.z in impacted_z_levels))
+		return
 
-		if(!(mob_to_check.loc.z in impacted_z_levels)) // in this case, get_turf(mob_to_check) =/= mob_to_check.loc, so we have to proceed with checking the location's type
+	if(!(mob_turf) && mob_to_check.loc)
+		if(!(mob_to_check.loc.z in impacted_z_levels)) // in this case, get_turf(mob_to_check) is null (and therefore mob_to_check is in a non-turf), so we have to proceed with checking the location's type
 			return
 
 		if(istype(mob_to_check.loc, /obj/structure/closet))
