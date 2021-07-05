@@ -152,9 +152,9 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings && findtext(select_message_type(user,intentional), "open"))
-			wings.OpenWings()
+			wings.open_wings()
 		else
-			wings.CloseWings()
+			wings.close_wings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
 	. = ..()

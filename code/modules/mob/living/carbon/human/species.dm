@@ -408,9 +408,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
-			var/preference_name = human.dna.features[initial(type.preference)]
+			var/preference_name = human.dna.features[initial(organ_path.preference)]
 
-			var/obj/item/organ/external/new_organ = new path(null, preference_name, human.body_type)
+			var/obj/item/organ/external/new_organ = new organ_path(null, preference_name, human.body_type)
 
 			new_organ.Insert(human)
 
@@ -1934,22 +1934,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.movement_type & FLYING)
 		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
-			wings.ToggleFlight(H)
-			wings.flyslip(H)
+			wings.toggle_flight(H)
+			wings.fly_slip(H)
 	. = stunmod * H.physiology.stun_mod * amount
-
-//////////////
-//Space Move//
-//////////////
-
-/datum/species/proc/space_move(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		return TRUE
-
-	var/maybe_wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(istype(maybe_wings, /obj/item/organ/external/wings/moth))
-		var/obj/item/organ/external/wings/moth/wings = maybe_wings
-		return wings?.can_float_move()
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)

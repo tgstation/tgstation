@@ -3,25 +3,26 @@
 * Works in tandem with the /datum/sprite_accessory datum to generate sprites
 * Unlike normal organs, we're actually inside a persons limbs at all times
 */
-
 /obj/item/organ/external
 	name = "external organ"
 	desc = "An external organ that is too external."
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
-	var/layers = list()
+	var/layers
+	///Convert the bitflag define into the actual layer define
+	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 
 	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_firemoth_mothwings'. 'mothwings' would then be preference
 	var/preference = ""
-	///Sprite datums we use to draw on the bodypart
-	var/list/sprite_datums = list()
+	///Sprite datum we use to draw on the bodypart
+	var/datum/sprite_accessory/sprite_datum
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 
 	///Reference to the limb we're inside of
 	var/obj/item/bodypart/ownerlimb
 
-/**_mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
+/**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
 */
@@ -29,7 +30,7 @@
 	. = ..()
 
 	if(mob_sprite)
-		add_sprite_datum(mob_sprite)
+		set_sprite(mob_sprite)
 
 	cache_key = generate_icon_cache()
 
@@ -64,50 +65,53 @@
 	bodypart.external_organs.Add(src)
 	bodypart.contents.Add(src)
 
-///Use a sprite NAME (Beautiful Moth Butt Wings) and find the appropriate sprite_accessory datum
-/obj/item/organ/external/proc/add_sprite_datum(base_icon, clear_all=FALSE)
-	if(clear_all)
-		sprite_datums.Cut()
-	var/sprite_datum = get_sprite_datum(base_icon)
-	if(!sprite_datum)
-		CRASH("[type] could not find a sprite accessory datum with the display name '[base_icon]")
-
-	sprite_datums.Add(sprite_datum)
-
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
 /obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, body_type, image_color)
-	generate_icon_cache()
-	for(var/datum/sprite_accessory/sprite_datum as anything in sprite_datums)
-		var/gender = (body_type == FEMALE) ? "f" : "m"
-		var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
-		var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
-		appearance.dir = image_dir
+	if(!sprite_datum)
+		return
 
-		if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/
-			appearance.color = image_color
+	var/gender = (body_type == FEMALE) ? "f" : "m"
+	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
+	appearance.dir = image_dir
 
-		if(sprite_datum.center)
-			center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/
+		appearance.color = image_color
 
-		overlay_list += appearance
+	if(sprite_datum.center)
+		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	overlay_list += appearance
+
+/obj/item/organ/external/proc/set_sprite(sprite_name)
+	sprite_datum = get_sprite_datum(sprite_name)
+	cache_key = generate_icon_cache()
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
 /obj/item/organ/external/proc/generate_icon_cache()
-	. = ""
-	for(var/datum/sprite_accessory/sprite as anything in sprite_datums)
-		. += "[sprite.icon_state]_[preference]"
+	return "[sprite_datum.icon_state]_[preference]"
 
 /**This exists so sprite accessories can still be per-layer without having to include that layer's
 *  number in their sprite name, which causes issues when those numbers change.
 */
 /obj/item/organ/external/proc/mutant_bodyparts_layertext(layer)
 	switch(layer)
-		if(EXTERNAL_BEHIND)
+		if(EXTERNAL_BEHIND_LAYER)
 			return "_BEHIND"
-		if(EXTERNAL_ADJACENT)
+		if(EXTERNAL_ADJACENT_LAYER)
 			return "_ADJ"
-		if(EXTERNAL_FRONT)
+		if(EXTERNAL_FRONT_LAYER)
 			return "_FRONT"
+
+///Converts a bitflag to the right layer. I'd love to make this a static index list, but byond made an attempt on my life when i did
+/obj/item/organ/external/proc/bitflag_to_layer(layer)
+	switch(layer)
+		if(EXTERNAL_BEHIND)
+			return EXTERNAL_BEHIND_LAYER
+		if(EXTERNAL_ADJACENT)
+			return EXTERNAL_ADJACENT_LAYER
+		if(EXTERNAL_FRONT)
+			return EXTERNAL_FRONT_LAYER
 
 ///Because all the preferences have names like "Beautiful Sharp Snout" we need to get the sprite datum with the actual important info
 /obj/item/organ/external/proc/get_sprite_datum(sprite)
@@ -126,7 +130,7 @@
 /obj/item/organ/external/horns
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
-	layers = list(EXTERNAL_ADJACENT)
+	layers = EXTERNAL_ADJACENT
 
 	preference = "horns"
 
@@ -142,7 +146,7 @@
 /obj/item/organ/external/frills
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_FRILLS
-	layers = list(EXTERNAL_ADJACENT)
+	layers = EXTERNAL_ADJACENT
 
 	preference = "frills"
 
@@ -157,7 +161,7 @@
 /obj/item/organ/external/snout
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
-	layers = list(EXTERNAL_ADJACENT)
+	layers = EXTERNAL_ADJACENT
 
 	preference = "snout"
 
@@ -173,7 +177,7 @@
 /obj/item/organ/external/antennae
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
-	layers = list(EXTERNAL_FRONT, EXTERNAL_BEHIND)
+	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 
 	preference = "moth_antennae"
 
@@ -211,12 +215,11 @@
 
 /obj/item/organ/external/antennae/proc/burn_antennae()
 	burnt = TRUE
-	var/datum/sprite_accessory/antennae = sprite_datums[1]
-	original_sprite = antennae.name
-	add_sprite_datum("Burnt Off", TRUE)
+	original_sprite = sprite_datum.name
+	set_sprite("Burnt Off")
 
 ///heal our antennae back up!!
 /obj/item/organ/external/antennae/proc/heal_antennae()
 	if(burnt)
 		burnt = FALSE
-		add_sprite_datum(original_sprite, TRUE)
+		set_sprite(original_sprite)

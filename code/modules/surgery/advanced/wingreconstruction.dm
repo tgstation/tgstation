@@ -38,5 +38,9 @@
 			span_notice("[user] completes the surgery on [target]'s wings."))
 		var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		wings?.heal_wings()
+
+		var/obj/item/organ/external/antennae/antennae = target.getorganslot(ORGAN_SLOT_EXTERNAL_ANTENNAE) //i mean we might aswell heal their antennae too
+		antennae?.heal_antennae()
+
 		human_target.update_body_parts()
 	return ..()

@@ -917,8 +917,9 @@
 		if(!dropped && !external_organ.can_draw_on_bodypart(owner))
 			continue
 		//Some externals have multiple layers for background, foreground and between
-		for(var/e_layer in external_organ.layers)
-			external_organ.get_overlays(., image_dir, e_layer, icon_gender, "#[draw_color]")
+		for(var/external_layer in external_organ.all_layers)
+			if(external_organ.layers & external_layer)
+				external_organ.get_overlays(., image_dir, external_organ.bitflag_to_layer(external_layer), icon_gender, "#[draw_color]")
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

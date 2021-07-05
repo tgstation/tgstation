@@ -127,10 +127,10 @@
 		if(wings)
 			if(wings.wings_open)
 				open = TRUE
-				wings.CloseWings()
+				wings.close_wings()
 			else
-				wings.OpenWings()
-			addtimer(CALLBACK(wings, open ? /obj/item/organ/external/wings/functional.proc/OpenWings : /obj/item/organ/external/wings/functional.proc/CloseWings), wing_time)
+				wings.open_wings()
+			addtimer(CALLBACK(wings, open ? /obj/item/organ/external/wings/functional.proc/open_wings : /obj/item/organ/external/wings/functional.proc/close_wings), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"

@@ -2,13 +2,13 @@
 /obj/item/organ/external/wings
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
-	layers = list(EXTERNAL_BEHIND, EXTERNAL_ADJACENT, EXTERNAL_FRONT)
+	layers = EXTERNAL_BEHIND | EXTERNAL_ADJACENT | EXTERNAL_FRONT
 
 	preference = "wings"
 
 /obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.wear_suit?.flags_inv & HIDEJUMPSUIT))
-		if( !(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception) ) )
+		if( !(human.wear_suit?.species_exception && is_type_in_list(src, human.wear_suit.species_exception) ) )
 			return TRUE
 	return FALSE
 
@@ -46,14 +46,14 @@
 /obj/item/organ/external/wings/functional/on_life(delta_time, times_fired)
 	. = ..()
 
-	HandleFlight(owner)
+	handle_flight(owner)
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
 	if(human.movement_type & ~FLYING)
 		return FALSE
 	if(!can_fly(human))
-		ToggleFlight(human)
+		toggle_flight(human)
 		return FALSE
 	return TRUE
 
@@ -120,7 +120,7 @@
 	preference = wings_open_preference
 	wings_open = TRUE
 
-	generate_icon_cache()
+	cache_key = generate_icon_cache() //we've changed preference to open, so we only need to update the key and ask for an update to change our sprite
 	owner.update_body_parts()
 
 ///close our wings
@@ -128,7 +128,7 @@
 	preference = wings_closed_preference
 	wings_open = FALSE
 
-	generate_icon_cache()
+	cache_key = generate_icon_cache()
 	owner.update_body_parts()
 	if(isturf(owner?.loc))
 		var/turf/location = loc
@@ -145,7 +145,7 @@
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/external/wings/functional/wings = human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(wings && wings.can_fly(human))
-		wings.ToggleFlight(human)
+		wings.toggle_flight(human)
 		if(!(human.movement_type & FLYING))
 			to_chat(human, span_notice("You settle gently back onto the ground..."))
 		else
@@ -155,7 +155,7 @@
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
 	preference = "moth_wings"
-	layers = list(EXTERNAL_BEHIND, EXTERNAL_FRONT)
+	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 
 	///Are we burned?
 	var/burnt = FALSE
@@ -170,18 +170,25 @@
 
 	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_wings)
 	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_wings)
+	RegisterSignal(reciever, COMSIG_MOVABLE_PRE_MOVE, .proc/update_float_move)
 
 /obj/item/organ/external/wings/moth/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
+	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
+	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
 
 ///Check if we can flutter around
-/obj/item/organ/external/wings/moth/proc/can_float_move()
+/obj/item/organ/external/wings/moth/proc/update_float_move()
+	SIGNAL_HANDLER
+
 	if(!isspaceturf(owner.loc) && !burnt)
 		var/datum/gas_mixture/current = owner.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
-			return TRUE
+			ADD_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
+			return
+
+	REMOVE_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
 
 ///check if our wings can burn off ;_;
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
@@ -197,9 +204,9 @@
 ///burn the wings off
 /obj/item/organ/external/wings/moth/proc/burn_wings()
 	burnt = TRUE
-	var/datum/sprite_accessory/wings = sprite_datums[1]
-	original_sprite = wings.name
-	add_sprite_datum("Burnt Off", TRUE)
+
+	original_sprite = sprite_datum.name
+	set_sprite("Burnt Off")
 
 ///heal our wings back up!!
 /obj/item/organ/external/wings/moth/proc/heal_wings()
@@ -207,4 +214,4 @@
 
 	if(burnt)
 		burnt = FALSE
-		add_sprite_datum(original_sprite, TRUE)
+		set_sprite(original_sprite)
