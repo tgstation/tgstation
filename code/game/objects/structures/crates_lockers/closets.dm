@@ -169,10 +169,12 @@
 
 /obj/structure/closet/proc/take_contents()
 	var/atom/L = drop_location()
+	if(!L)
+		return
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
 			break
-	for(var/i in reverseRange(L?.GetAllContents()))
+	for(var/i in reverseRange(L.GetAllContents()))
 		var/atom/movable/thing = i
 		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
