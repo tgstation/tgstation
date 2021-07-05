@@ -350,28 +350,28 @@
 	if(!istype(user))
 		return
 
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/consumer = user
 	var/random = rand(1,4)
 
 	switch(random)
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
-			H.eye_color = "fee5a3"
-			H.set_species(/datum/species/lizard)
+			consumer.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			consumer.eye_color = "fee5a3"
+			consumer.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
-			H.set_species(/datum/species/skeleton)
+			consumer.set_species(/datum/species/skeleton)
 		if(3)
 			to_chat(user, span_danger("Power courses through you! You can now shift your form at will."))
 			if(user.mind)
-				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
-				user.mind.AddSpell(D)
+				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/dragon_shapeshift = new
+				user.mind.AddSpell(dragon_shapeshift)
 		if(4)
 			to_chat(user, span_danger("You feel like you could walk straight through lava now."))
-			LAZYOR(H.weather_immunities, "lava")
+			LAZYOR(consumer.weather_immunities, WEATHER_LAVA)
 
-	playsound(user.loc,'sound/items/drink.ogg', 30, TRUE)
+	playsound(user,'sound/items/drink.ogg', 30, TRUE)
 	qdel(src)
 
 /obj/item/lava_staff
