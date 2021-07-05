@@ -423,7 +423,11 @@ GLOBAL_VAR(preferences_species_data)
 				job_preferences[j] = JP_MEDIUM
 				//technically break here
 
-	job_preferences[job.title] = level
+	if (isnull(job_preferences[job.title]))
+		job_preferences[job.title] = level
+	else
+		job_preferences -= job.title
+
 	return TRUE
 
 /datum/preferences/proc/GetQuirkBalance()

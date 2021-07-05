@@ -66,18 +66,6 @@ $_gen_map: (
   'label': $label,
 );
 
-$department_map: (
-  'Command': $yellow,
-  'Security': $red,
-  'Engineering': $orange,
-  'Medical': $teal,
-  'Misc': $white,
-  'Science': $purple,
-  'Supply': $brown,
-  'Service': $green,
-  'Silicon': $pink,
-);
-
 // Foreground color names for which to generate a color map
 $fg-map-keys: map.keys($_gen_map) !default;
 // Background color names for which to generate a color map

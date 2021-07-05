@@ -1,9 +1,9 @@
 import { binaryInsertWith } from "common/collections";
 import { classes } from "common/react";
 import { useBackend } from "../../backend";
-import { Box, Button, Stack, Tooltip } from "../../components";
+import { Box, Button, Icon, Stack, Tooltip } from "../../components";
 import { logger } from "../../logging";
-import { PreferencesMenuData } from "./data";
+import { createSetPreference, JobPriority, PreferencesMenuData } from "./data";
 import { Job } from "./jobs/base";
 import * as Departments from "./jobs/departments";
 
@@ -51,6 +51,7 @@ const PriorityButton = (props: {
   color: string,
   modifier?: string,
   enabled: boolean,
+  onClick: () => void,
 }) => {
   const className = `PreferencesMenu__Jobs__departments__priority`;
 
@@ -63,6 +64,7 @@ const PriorityButton = (props: {
         ])}
         color={props.enabled ? props.color : "white"}
         circular
+        onClick={props.onClick}
         tooltip={props.name}
         tooltipPosition="bottom"
         height={PRIORITY_BUTTON_SIZE}
@@ -72,56 +74,130 @@ const PriorityButton = (props: {
   );
 };
 
+type CreateSetPriority = (priority: JobPriority) => () => void;
+
+const createSetPriorityCache: Record<string, CreateSetPriority> = {};
+
+const createCreateSetPriorityFromName
+  = (context, jobName: string): CreateSetPriority => {
+    if (createSetPriorityCache[jobName] !== undefined) {
+      return createSetPriorityCache[jobName];
+    }
+
+    const perPriorityCache = [];
+
+    const createSetPriority = (priority: JobPriority) => {
+      if (perPriorityCache[priority] !== undefined) {
+        return perPriorityCache[priority];
+      }
+
+      const setPriority = () => {
+        const { act } = useBackend<PreferencesMenuData>(context);
+
+        act("set_job_preference", {
+          job: jobName,
+          level: priority,
+        });
+      };
+
+      perPriorityCache[priority] = setPriority;
+      return setPriority;
+    };
+
+    createSetPriorityCache[jobName] = createSetPriority;
+
+    return createSetPriority;
+  };
+
 const JobRow = (props: {
   className?: string,
   job: Job,
-}) => {
-  // const priority = Math.floor((Math.random() * 4) % 4);
-  const priority = 1;
+}, context) => {
+  const { data } = useBackend<PreferencesMenuData>(context);
+  const { job } = props;
+
+  const isOverflow = data.overflow_role === job.name;
+  const priority = data.job_preferences[job.name];
+
+  const createSetPriority = createCreateSetPriorityFromName(context, job.name);
 
   return (
     <Stack.Item className={props.className} height="100%" style={{
       "margin-top": 0,
     }}>
       <Stack fill align="center">
-        <Stack.Item width="60%" className="job-name">
-          <Stack fill>
-            <Stack.Item>
-              <Tooltip
-                content={props.job.description}
-                position="bottom" />
-            </Stack.Item>
+        <Tooltip
+          content={job.description}
+          position="bottom-start"
+        >
+          <Stack.Item className="job-name" width="60%" style={{
+            "padding-left": "0.3em",
+          }}>
 
-            <Stack.Item grow>{props.job.name}</Stack.Item>
-          </Stack>
-        </Stack.Item>
+            {props.job.name}
+          </Stack.Item>
+        </Tooltip>
 
         <Stack.Item grow className="options">
-          <Stack fill align="center" justify="center">
-            <PriorityButton
-              name="Off"
-              modifier="off"
-              color="light-grey"
-              enabled={priority === 0}
-            />
+          <Stack
+            style={{
+              "align-items": "center",
+              "height": "100%",
+              "justify-content": !isOverflow && "center",
+              "padding-left": "0.3em",
+            }}
+          >
+            {
+              isOverflow && (
+                <>
+                  <PriorityButton
+                    name="Off"
+                    modifier="off"
+                    color="light-grey"
+                    enabled={!priority}
+                    onClick={createSetPriority(null)}
+                  />
 
-            <PriorityButton
-              name="Low"
-              color="green"
-              enabled={priority === 1}
-            />
+                  <PriorityButton
+                    name="On"
+                    color="green"
+                    enabled={!!priority}
+                    onClick={createSetPriority(JobPriority.High)}
+                  />
+                </>
+              ) || (
+                <>
+                  <PriorityButton
+                    name="Off"
+                    modifier="off"
+                    color="light-grey"
+                    enabled={!priority}
+                    onClick={createSetPriority(null)}
+                  />
 
-            <PriorityButton
-              name="Medium"
-              color="yellow"
-              enabled={priority === 2}
-            />
+                  <PriorityButton
+                    name="Low"
+                    color="red"
+                    enabled={priority === JobPriority.Low}
+                    onClick={createSetPriority(JobPriority.Low)}
+                  />
 
-            <PriorityButton
-              name="High"
-              color="red"
-              enabled={priority === 3}
-            />
+                  <PriorityButton
+                    name="Medium"
+                    color="yellow"
+                    enabled={priority === JobPriority.Medium}
+                    onClick={createSetPriority(JobPriority.Medium)}
+                  />
+
+                  <PriorityButton
+                    name="High"
+                    color="green"
+                    enabled={priority === JobPriority.High}
+                    onClick={createSetPriority(JobPriority.High)}
+                  />
+                </>
+              )
+            }
           </Stack>
         </Stack.Item>
       </Stack>
@@ -159,6 +235,7 @@ export const Department = (props: {
 // *Please* find a better way to do this, this is RIDICULOUS.
 // All I want is for a gap to pretend to be an empty space.
 // But in order for everything to align, I also need to add the 0.2em padding.
+// But also, we can't be aligned with names that break into multiple lines!
 export const Gap = (props: {
   amount: number,
 }) => {
