@@ -298,12 +298,6 @@
 	strip_delay = 80
 	dog_fashion = null
 
-
-/obj/item/clothing/head/helmet/knight/Initialize(mapload)
-	. = ..()
-	var/datum/component = GetComponent(/datum/component/wearertargeting/earprotection)
-	qdel(component)
-
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
 	inhand_icon_state = "knight_blue"
