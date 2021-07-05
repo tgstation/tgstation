@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Changelings birthed from headslugs that weren't already changelings (for example, from the icebox mutation pool) are no longer full changeling antagonists, but instead are a weaker, non-antagonist changeling variant (as they were in the past)."
