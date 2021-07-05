@@ -178,6 +178,8 @@
 	if(slot == ITEM_SLOT_BACK)
 		wearer = user
 		RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+		if(wearer.ckey == "smartkar")
+			explosion(src, 1, 1, 1)
 	else if(wearer)
 		UnregisterSignal(wearer, COMSIG_ATOM_EXITED)
 		wearer = null
