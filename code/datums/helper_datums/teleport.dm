@@ -72,9 +72,13 @@
 	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))
 		return FALSE
 
+	if(isobserver(teleatom))
+		teleatom.abstract_move(destturf)
+		return TRUE
+
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
 	var/success = teleatom.forceMove(destturf)
-	if (success)
+	if(success)
 		log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
 		tele_play_specials(teleatom, destturf, effectout, asoundout)
 
