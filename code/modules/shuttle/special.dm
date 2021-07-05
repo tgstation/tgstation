@@ -236,7 +236,7 @@
 	var/static/list/check_times = list()
 	var/list/payees = list()
 
-/obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 
 	if(mover in approved_passengers)

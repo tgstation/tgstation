@@ -560,9 +560,10 @@
 /obj/item/shared_storage
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "cultpack"
-	slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "paradox_bag"
+	worn_icon_state = "paradoxbag"
+	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/item/shared_storage/red
@@ -573,7 +574,7 @@
 	. = ..()
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 60
+	STR.max_combined_w_class = 15
 	STR.max_items = 21
 	new /obj/item/shared_storage/blue(drop_location(), STR)
 
@@ -583,7 +584,7 @@
 		return INITIALIZE_HINT_QDEL
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 60
+	STR.max_combined_w_class = 15
 	STR.max_items = 21
 
 //Book of Babel
@@ -1126,7 +1127,10 @@
 	if(dist > HIEROPHANT_BLINK_RANGE)
 		to_chat(user, span_hierophant_warning("Blink destination out of range."))
 		return
-
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		return
 	. = ..()
 
 	if(!current_charges)

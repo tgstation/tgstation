@@ -66,11 +66,10 @@
 		to_chat(user, span_notice("You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor."))
 	return TRUE
 
-/obj/structure/railing/CanPass(atom/movable/mover, turf/target)
+/obj/structure/railing/CanPass(atom/movable/mover, border_dir)
 	. = ..()
-	if(get_dir(loc, target) & dir)
-		var/checking = FLYING | FLOATING
-		return . || mover.throwing || mover.movement_type & checking
+	if(border_dir & dir)
+		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
 	return TRUE
 
 /obj/structure/railing/corner/CanPass()
@@ -86,6 +85,9 @@
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
 
 	if(!(direction & dir))
 		return

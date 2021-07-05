@@ -1,12 +1,23 @@
-import { Parameter } from './parameter';
-declare type BuildFn = (...args: any) => unknown;
+import { Parameter, ParameterType } from './parameter';
+export declare type ExecutionContext = {
+    /** Get parameter value. */
+    get: <T extends ParameterType>(parameter: Parameter<T>) => (T extends Array<unknown> ? T : T | null);
+};
+declare type BooleanLike = boolean | null | undefined;
+declare type WithExecutionContext<R> = (context: ExecutionContext) => R | Promise<R>;
+declare type WithOptionalExecutionContext<R> = R | WithExecutionContext<R>;
+declare type DependsOn = WithOptionalExecutionContext<(Target | BooleanLike)[]>;
+declare type ExecutesFn = WithExecutionContext<unknown>;
+declare type OnlyWhenFn = WithExecutionContext<BooleanLike>;
+export declare type FileIo = WithOptionalExecutionContext<(string | BooleanLike)[]>;
 export declare type Target = {
     name: string;
-    dependsOn: Target[];
-    executes: BuildFn[];
-    inputs: string[];
-    outputs: string[];
+    dependsOn: DependsOn;
+    executes?: ExecutesFn;
+    inputs: FileIo;
+    outputs: FileIo;
     parameters: Parameter[];
+    onlyWhen?: OnlyWhenFn;
 };
 declare type TargetConfig = {
     /**
@@ -17,7 +28,7 @@ declare type TargetConfig = {
      * Dependencies for this target. They will be ran before executing this
      * target, and may run in parallel.
      */
-    dependsOn?: Target[];
+    dependsOn?: DependsOn;
     /**
      * Function that is delegated to the execution engine for building this
      * target. It is normally an async function, which accepts a single
@@ -29,22 +40,27 @@ declare type TargetConfig = {
      *   console.log(get(Parameter));
      * },
      */
-    executes?: BuildFn | BuildFn[];
+    executes?: ExecutesFn;
     /**
      * Files that are consumed by this target.
      */
-    inputs?: string[];
+    inputs?: FileIo;
     /**
      * Files that are produced by this target. Additionally, they are also
      * touched every time target finishes executing in order to stop
      * this target from re-running.
      */
-    outputs?: string[];
+    outputs?: FileIo;
     /**
      * Parameters that are local to this task. Can be retrieved via `get`
      * in the executor function.
      */
     parameters?: Parameter[];
+    /**
+     * Target will run only when this function returns true. It accepts a
+     * single argument - execution context.
+     */
+    onlyWhen?: OnlyWhenFn;
 };
 export declare const createTarget: (target: TargetConfig) => Target;
 export {};
