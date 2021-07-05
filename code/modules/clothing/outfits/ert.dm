@@ -598,7 +598,7 @@
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/firstaid/regular = 1,
-		/obj/item/storage/firstaid/advanced = 1
+		/obj/item/storage/firstaid/advanced = 1,
 )
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
@@ -626,7 +626,7 @@
 		/obj/item/construction/rcd/loaded/upgraded = 1,
 		/obj/item/pipe_dispenser = 1,
 		/obj/item/storage/box/lethalshot = 1,
-		/obj/item/grenade/c4 = 3
+		/obj/item/grenade/c4 = 3,
 )
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses =  /obj/item/clothing/glasses/night
