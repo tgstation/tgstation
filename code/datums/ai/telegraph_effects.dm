@@ -7,3 +7,8 @@
 
 /obj/effect/temp_visual/telegraphing/vending_machine_tilt
 	duration = 1 SECONDS
+
+/obj/effect/temp_visual/telegraphing/thunderbolt
+	icon_state = "target_circle"
+	duration = 3.6 SECONDS
+	base_pixel_y = -8

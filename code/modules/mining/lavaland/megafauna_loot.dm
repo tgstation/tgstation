@@ -21,6 +21,10 @@
 	if(dist > HIEROPHANT_BLINK_RANGE)
 		to_chat(user, span_hierophant_warning("Blink destination out of range."))
 		return
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		return
 	. = ..()
 	if(!current_charges)
 		var/obj/item/hierophant_club/club = src.target
@@ -377,14 +381,14 @@
 /obj/item/lava_staff
 	name = "staff of lava"
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
-	icon_state = "staffofstorms"
+	icon_state = "lavastaff"
 	inhand_icon_state = "staffofstorms"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
-	force = 25
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 18
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
@@ -392,9 +396,9 @@
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
 	var/reset_string = "basalt"
-	var/create_cooldown = 100
-	var/create_delay = 30
-	var/reset_cooldown = 50
+	var/create_cooldown = 10 SECONDS
+	var/create_delay = 3 SECONDS
+	var/reset_cooldown = 5 SECONDS
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
@@ -539,66 +543,87 @@
 
 //Legion: Staff of Storms
 
-/obj/item/staff/storm
+/obj/item/storm_staff
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	inhand_icon_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 25
+	force = 20
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	wound_bonus = -40
+	wound_bonus = -30
 	bare_wound_bonus = 20
-	var/storm_type = /datum/weather/ash_storm
-	var/storm_nextuse = 0
-	var/staff_cooldown = 20 SECONDS // The minimum time between uses.
-	var/storm_telegraph_duration = 10 SECONDS
-	var/storm_duration = 10 SECONDS
-	var/static/list/excluded_areas = list()
+	var/max_thunder_charges = 3
+	var/thunder_charges = 3
+	var/thunder_charge_time = 15 SECONDS
+	var/static/list/excluded_areas = list(/area/space)
 
-/obj/item/staff/storm/attack_self(mob/user)
-	if(storm_nextuse > world.time)
-		to_chat(user, span_warning("The staff is still recharging!"))
-		return
+/obj/item/storm_staff/examine(mob/user)
+	. = ..()
+	. += span_notice("It has [thunder_charges] charges remaining.")
+	. += span_notice("Use it in hand to dispel storms.")
+	. += span_notice("Use it on targets to summon thunderbolts from the sky.")
+	. += span_notice("The thunderbolts are boosted if in an area with weather effects.")
 
+/obj/item/storm_staff/attack_self(mob/user)
 	var/area/user_area = get_area(user)
 	var/turf/user_turf = get_turf(user)
-	if(!user_area || !user_turf || (user_area.type in excluded_areas))
+	if(!user_area || !user_turf || (is_type_in_list(user_area, excluded_areas)))
 		to_chat(user, span_warning("Something is preventing you from using the staff here."))
 		return
-	var/datum/weather/A
-	for(var/V in SSweather.processing)
-		var/datum/weather/W = V
-		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
-			A = W
+	var/datum/weather/affected_weather
+	for(var/datum/weather/weather as anything in SSweather.processing)
+		if((user_turf.z in weather.impacted_z_levels) && ispath(user_area.type, weather.area_type))
+			affected_weather = weather
 			break
-
-	if(A)
-		if(A.stage != END_STAGE)
-			if(A.stage == WIND_DOWN_STAGE)
-				to_chat(user, span_warning("The storm is already ending! It would be a waste to use the staff now."))
-				return
-			user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
-			span_notice("You hold [src] skyward, dispelling the storm!"))
-			playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
-			A.wind_down()
-			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
-			return
-	else
-		A = new storm_type(list(user_turf.z))
-		A.name = "staff storm"
-		log_game("[user] ([key_name(user)]) has summoned [A] at [AREACOORD(user_turf)]")
-		if (is_special_character(user))
-			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [ADMIN_LOOKUPFLW(user)], a non-antagonist")
-		A.area_type = user_area.type
-		A.telegraph_duration = storm_telegraph_duration
-		A.end_duration = storm_duration
-
-	user.visible_message(span_warning("[user] holds [src] skywards as red lightning crackles into the sky!"), \
-	span_notice("You hold [src] skyward, calling down a terrible storm!"))
+	if(!affected_weather)
+		return
+	if(affected_weather.stage == END_STAGE)
+		balloon_alert(user, "already ended!")
+		return
+	if(affected_weather.stage == WIND_DOWN_STAGE)
+		balloon_alert(user, "already ending!")
+		return
+	balloon_alert(user, "you hold the staff up...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
+	span_notice("You hold [src] skyward, dispelling the storm!"))
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
-	A.telegraph()
-	storm_nextuse = world.time + staff_cooldown
+	var/old_color = user.color
+	user.color = rgb(300,200,0)
+	animate(user, color = old_color, time = 1 SECONDS)
+	affected_weather.wind_down()
+	log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
+
+/obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!thunder_charges)
+		balloon_alert(user, "needs to charge!")
+	var/turf/target_turf = get_turf(target)
+	var/area/target_area = get_area(target)
+	if(!target_turf || !target_area || (is_type_in_list(target_area, excluded_areas)))
+		balloon_alert(user, "can't bolt here!")
+		return
+	var/power_boosted = FALSE
+	for(var/datum/weather/weather as anything in SSweather.processing)
+		if((target_turf.z in weather.impacted_z_levels) && ispath(target_area.type, weather.area_type))
+			power_boosted = TRUE
+			break
+	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
+	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 3 SECONDS)
+	thunder_charges--
+	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
+
+/obj/item/storm_staff/proc/recharge(mob/user)
+	thunder_charges = min(thunder_charges+1, max_thunder_charges)
+	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+
+/obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
+	balloon_alert_to_viewers("trolled!")
