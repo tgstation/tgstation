@@ -562,6 +562,7 @@
 	var/thunder_charges = 3
 	var/thunder_charge_time = 15 SECONDS
 	var/static/list/excluded_areas = list(/area/space)
+	var/list/targetted_turfs = list()
 
 /obj/item/storm_staff/examine(mob/user)
 	. = ..()
@@ -597,8 +598,10 @@
 	span_notice("You hold [src] skyward, dispelling the storm!"))
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	var/old_color = user.color
-	user.color = rgb(300,200,0)
-	animate(user, color = old_color, time = 1 SECONDS)
+	var/old_transform = user.transform
+	user.color = rgb(400,300,0)
+	user.transform.Scale(1.3)
+	animate(user, color = old_color, transform = old_transform, time = 1 SECONDS)
 	affected_weather.wind_down()
 	log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
 
@@ -606,18 +609,27 @@
 	. = ..()
 	if(!thunder_charges)
 		balloon_alert(user, "needs to charge!")
+		return
 	var/turf/target_turf = get_turf(target)
 	var/area/target_area = get_area(target)
 	if(!target_turf || !target_area || (is_type_in_list(target_area, excluded_areas)))
 		balloon_alert(user, "can't bolt here!")
 		return
+	if(target_turf in targetted_turfs)
+		balloon_alert(user, "already targetted!")
+		return
 	var/power_boosted = FALSE
 	for(var/datum/weather/weather as anything in SSweather.processing)
+		if(weather.stage != MAIN_STAGE)
+			continue
 		if((target_turf.z in weather.impacted_z_levels) && ispath(target_area.type, weather.area_type))
 			power_boosted = TRUE
 			break
+	playsound(src, 'sound/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	targetted_turfs += target
+	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
-	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 3 SECONDS)
+	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
 
@@ -626,4 +638,22 @@
 	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
-	balloon_alert_to_viewers("trolled!")
+	targetted_turfs -= target
+	new /obj/effect/temp_visual/thunderbolt(target)
+	var/list/affected_turfs = list(target)
+	if(boosted)
+		for(var/direction in GLOB.alldirs)
+			var/turf_to_add = get_step(target, direction)
+			if(!turf_to_add)
+				continue
+			affected_turfs += turf_to_add
+	for(var/turf/turf as anything in affected_turfs)
+		new /obj/effect/temp_visual/electricity(turf)
+		for(var/mob/living/hit_mob in turf)
+			to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
+			hit_mob.electrocute_act(15 * (isanimal(hit_mob) ? 3 : 1) * (turf == target ? 2 : 1)* (boosted ? 2 : 1), src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+		for(var/obj/hit_thing in turf)
+			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
+	playsound(target, 'sound/magic/lightningbolt.ogg', 100, TRUE)
+	target.visible_message(span_danger("A thunderbolt strikes [target]!"))
+	explosion(target, light_impact_range = (boosted ? 1 : 0), flame_range = (boosted ? 2 : 1), silent = TRUE)
