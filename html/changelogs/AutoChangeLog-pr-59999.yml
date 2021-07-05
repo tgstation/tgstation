@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Buckling to a vehicle will no longer wait until you move to set your position on the vehicle properly."
