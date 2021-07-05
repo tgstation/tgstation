@@ -1,4 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "the autolathe shockwire is properly defined again, autolathes may now potentially shock you when hacking"

@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Borgs can now click on adjacent portals (with no module slot active) to use them like humans."
