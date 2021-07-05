@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to insert an infinite amount of components into a shell because of an oversight."
-  - bugfix: "Fixed being able to interact the circuit of a locked shell."

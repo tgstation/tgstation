@@ -612,3 +612,7 @@
 	stank.gases[/datum/gas/miasma][MOLES] = (stinky_seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
+
+/// Plant doesn't get annoyed by pests in their tray.
+/datum/plant_gene/trait/carnivory
+	name = "Obligate Carnivory"

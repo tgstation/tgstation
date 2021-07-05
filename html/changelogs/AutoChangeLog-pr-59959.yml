@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Limited the maximum string length of a circuit component port to 5K characters to fix exploits that can create strings that duplicate in size each iteration."
