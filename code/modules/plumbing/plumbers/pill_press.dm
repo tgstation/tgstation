@@ -5,9 +5,9 @@
 	icon_state = "pill_press"
 
 	///maximum size of a pill
-	var/max_pill_volume = 50
+	var/max_pill_volume = 15
 	///maximum size of a patch
-	var/max_patch_volume = 40
+	var/max_patch_volume = 25
 	///maximum size of a bottle
 	var/max_bottle_volume = 30
 	///current operating product (pills or patches)
@@ -15,7 +15,7 @@
 	///the minimum size a pill or patch can be
 	var/min_volume = 5
 	///the maximum size a pill or patch can be
-	var/max_volume = 50
+	var/max_volume = 25
 	///selected size of the product
 	var/current_volume = 10
 	///prefix for the product name
