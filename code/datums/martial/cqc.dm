@@ -35,7 +35,8 @@
 		return Pressure(A,D)
 	if(findtext(streak,CONSECUTIVE_COMBO))
 		streak = ""
-	return Consecutive(A,D)
+		return Consecutive(A,D)
+	return FALSE
 
 /datum/martial_art/cqc/proc/Slam(mob/living/A, mob/living/D)
 	if(!can_use(A))
