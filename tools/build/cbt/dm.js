@@ -99,7 +99,7 @@ const dm = async (dmeFile, options = {}) => {
     fs.unlinkSync(`${dmeBaseName}.mdme`);
   }
   else {
-    await Juke.exec(dmPath, dmeFile);
+    await Juke.exec(dmPath, [dmeFile]);
   }
 };
 
