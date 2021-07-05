@@ -335,7 +335,7 @@
 		/obj/item/storage/box/survival/engineer = 1,
 )
 	belt = /obj/item/storage/belt/champion
-	glasses = /obj/item/clothing/glasses/godeye
+	glasses = /obj/item/clothing/glasses/trickblindfold
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	l_pocket = /obj/item/food/grown/banana

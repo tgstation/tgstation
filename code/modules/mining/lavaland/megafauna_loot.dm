@@ -61,6 +61,7 @@
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/vortex_recall)
 	/// Linked teleport beacon for the group teleport functionality.
 	var/obj/effect/hierophant/beacon
@@ -273,6 +274,7 @@
 	hitsound = 'sound/effects/ghost2.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
@@ -391,6 +393,8 @@
 	force = 18
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	attack_verb_continuous = list("sears", "clubs", "burn")
+	attack_verb_simple = list("sear", "club", "burn")
 	hitsound = 'sound/weapons/sear.ogg'
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
@@ -471,6 +475,7 @@
 	sharpness = SHARP_EDGED
 	faction_bonus_force = 30
 	nemesis_factions = list("mining", "boss")
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/transform_cooldown
 	var/swiping = FALSE
 	var/bleed_stacks_per_hit = 3
@@ -555,14 +560,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 20
 	damtype = BURN
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/weapons/taserhit.ogg'
 	wound_bonus = -30
 	bare_wound_bonus = 20
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/max_thunder_charges = 3
 	var/thunder_charges = 3
 	var/thunder_charge_time = 15 SECONDS
 	var/static/list/excluded_areas = list(/area/space)
-	var/list/targetted_turfs = list()
+	var/list/targeted_turfs = list()
 
 /obj/item/storm_staff/examine(mob/user)
 	. = ..()
@@ -598,9 +604,9 @@
 	span_notice("You hold [src] skyward, dispelling the storm!"))
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	var/old_color = user.color
+	user.color = list(340/255, 240/255, 0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	var/old_transform = user.transform
-	user.color = rgb(400,300,0)
-	user.transform.Scale(1.3)
+	user.transform *= 1.2
 	animate(user, color = old_color, transform = old_transform, time = 1 SECONDS)
 	affected_weather.wind_down()
 	log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
@@ -615,8 +621,8 @@
 	if(!target_turf || !target_area || (is_type_in_list(target_area, excluded_areas)))
 		balloon_alert(user, "can't bolt here!")
 		return
-	if(target_turf in targetted_turfs)
-		balloon_alert(user, "already targetted!")
+	if(target_turf in targeted_turfs)
+		balloon_alert(user, "already targeted!")
 		return
 	var/power_boosted = FALSE
 	for(var/datum/weather/weather as anything in SSweather.processing)
@@ -626,19 +632,20 @@
 			power_boosted = TRUE
 			break
 	playsound(src, 'sound/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
-	targetted_turfs += target
+	targeted_turfs += target_turf
 	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
 	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
+	log_game("[key_name(user)] fired the staff of storms at [AREACOORD(target_turf)].")
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges+1, max_thunder_charges)
 	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
-	targetted_turfs -= target
+	targeted_turfs -= target
 	new /obj/effect/temp_visual/thunderbolt(target)
 	var/list/affected_turfs = list(target)
 	if(boosted)

@@ -183,15 +183,17 @@
 			regurgitate_guardian(guardian)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/simple_animal/hostile/guardian/guardian)
-	new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
+	new /obj/effect/temp_visual/guardian/phase/out(get_turf(guardian))
 	guardian.locked = TRUE
 	guardian.forceMove(src)
-	to_chat(guardian, span_warning("You have been locked away in your summoner's pendant!"))
+	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
+	guardian.playsound_local(get_turf(guardian), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.Recall(TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
+	guardian.playsound_local(get_turf(guardian), 'sound/magic/repulse.ogg', 50, TRUE)
 
 /datum/action/item_action/hands_free/memento_mori
 	check_flags = NONE
@@ -537,7 +539,7 @@
 	desc = "An ancient tome written in countless tongues."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book1"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/book_of_babel/attack_self(mob/user)
 	if(!user.can_read(src))
@@ -772,3 +774,59 @@
 #undef CHARGE_DRAINED_PER_SECOND
 #undef BERSERK_MELEE_ARMOR_ADDED
 #undef BERSERK_ATTACK_SPEED_MODIFIER
+
+/obj/item/clothing/glasses/godeye
+	name = "eye of god"
+	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."
+	icon_state = "godeye"
+	inhand_icon_state = "godeye"
+	vision_flags = SEE_TURFS
+	darkness_view = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	custom_materials = null
+	var/double = FALSE
+
+/obj/item/clothing/glasses/godeye/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+		pain(user)
+
+/obj/item/clothing/glasses/godeye/dropped(mob/user)
+	. = ..()
+	// Behead someone, their "glasses" drop on the floor
+	// and thus, the god eye should no longer be sticky
+	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+
+/obj/item/clothing/glasses/godeye/attackby(obj/item/attacked_by as obj, mob/user as mob, params)
+	if(istype(attacked_by, /obj/item/clothing/glasses/godeye) && attacked_by != src && attacked_by.loc == user)
+		if(!double)
+			var/obj/item/clothing/glasses/godeye/double/T = /obj/item/clothing/glasses/godeye/double
+			icon_state = initial(T.icon_state)
+			inhand_icon_state = initial(T.inhand_icon_state)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.update_inv_glasses()
+				// Apply pain now, so message is still for solo eye bore
+				if(C.glasses == src)
+					pain(C)
+			name = initial(T.name)
+			desc = initial(T.desc)
+			double = TRUE
+		else
+			to_chat(user, span_notice("[attacked_by] winks at you and vanishes into the abyss, you feel really unlucky."))
+		qdel(attacked_by)
+	..()
+
+/obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
+	to_chat(victim, span_userdanger("You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull."))
+	victim.emote("scream")
+	victim.flash_act()
+
+/obj/item/clothing/glasses/godeye/double
+	name = "eyes of god"
+	desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes."
+	icon_state = "doublegodeye"
+	inhand_icon_state = "doublegodeye"
+	double = TRUE

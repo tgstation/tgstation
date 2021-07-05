@@ -522,7 +522,7 @@
 	qdel(src)
 
 /obj/effect/temp_visual/electricity
-	icon_state = "electricity"
+	icon_state = "electricity3"
 	duration = 0.5 SECONDS
 
 /obj/effect/temp_visual/thunderbolt
