@@ -488,7 +488,7 @@
 	generate_items_inside(list(
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
-	),src)
+	), src)
 
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
