@@ -91,25 +91,26 @@
 #define BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE "BB_customer_said_cant_find_seat_line"
 
 
-///Carp AI controller blackboard keys
-#define BB_CARP_ORDER_MODE "BB_CARP_ORDER_MODE"
-#define BB_CARP_FRIEND "BB_CARP_FRIEND"
+///Hostile AI controller blackboard keys
+#define BB_HOSTILE_ORDER_MODE "BB_HOSTILE_ORDER_MODE"
+#define BB_HOSTILE_FRIEND "BB_HOSTILE_FRIEND"
+#define BB_HOSTILE_ATTACK_WORD "BB_HOSTILE_ATTACK_WORD"
 #define BB_FOLLOW_TARGET "BB_FOLLOW_TARGET"
 #define BB_ATTACK_TARGET "BB_ATTACK_TARGET"
 #define BB_VISION_RANGE "BB_VISION_RANGE"
 
 /// Basically, what is our vision/hearing range.
-#define AI_CARP_VISION_RANGE 10
+#define BB_HOSTILE_VISION_RANGE 10
 /// After either being given a verbal order or a pointing order, ignore further of each for this duration
-#define AI_CARP_COMMAND_COOLDOWN 2 SECONDS
+#define AI_HOSTILE_COMMAND_COOLDOWN 2 SECONDS
 
-// carp command modes (what pointing at something/someone does depending on the last order the carp heard)
+// hostile command modes (what pointing at something/someone does depending on the last order the carp heard)
 /// Don't do anything (will still react to stuff around them though)
-#define CARP_COMMAND_NONE 0
+#define HOSTILE_COMMAND_NONE 0
 /// Will attack a target.
-#define CARP_COMMAND_ATTACK 1
+#define HOSTILE_COMMAND_ATTACK 1
 /// Will follow a target.
-#define CARP_COMMAND_FOLLOW 2
+#define HOSTILE_COMMAND_FOLLOW 2
 
 ///Dog AI controller blackboard keys
 

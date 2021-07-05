@@ -10,7 +10,7 @@
 	icon_gib = "carp_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	movement_type = FLYING
-	ai_controller = /datum/ai_controller/carp
+	ai_controller = /datum/ai_controller/hostile_friend
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2)
@@ -75,6 +75,22 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
+	if(ai_controller)
+		ai_controller.blackboard[BB_HOSTILE_ATTACK_WORD] = pick(speak_emote)
+		make_tameable()
+
+/mob/living/simple_animal/hostile/carp/proc/make_tameable()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+
+/mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
+	can_buckle = TRUE
+	buckle_lying = 0
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
+	if(ai_controller)
+		var/datum/ai_controller/hostile_friend/ai_current_controller = ai_controller
+		ai_current_controller.befriend(tamer)
+		can_have_ai = FALSE
+		toggle_ai(AI_OFF)
 
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
