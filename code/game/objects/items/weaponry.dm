@@ -380,7 +380,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/butchering, 70, 100)
+	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
 	set_extended(extended)
 
 /obj/item/switchblade/attack_self(mob/user)
