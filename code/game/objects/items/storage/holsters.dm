@@ -69,9 +69,10 @@
 	worn_icon_state = "syndicate_holster"
 
 /obj/item/storage/belt/holster/detective/full/ert/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
-		/obj/item/ammo_box/magazine/m45 = 2)
+		/obj/item/ammo_box/magazine/m45 = 2
+	)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/holster/chameleon

@@ -106,6 +106,12 @@
 	can_flashlight = TRUE
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/marine/Initialize()
+	set_attached_light(new /obj/item/flashlight/seclite)
+	update_helmlight()
+	update_appearance()
+	. = ..()
+
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
 	desc = "A multirole helmet, painted black and with an added ballistic screen for extra protection from dangers to the face."

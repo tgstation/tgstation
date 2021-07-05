@@ -552,16 +552,15 @@
 	uniform = /obj/item/clothing/under/syndicate/camo
 	mask = /obj/item/clothing/mask/cigarette/robustgold
 	head = /obj/item/clothing/head/helmet/marine
-	l_hand = /obj/item/flashlight/seclite
 
-/datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/Equipper, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/captain
-	R.recalculateChannels()
+	var/obj/item/radio/Headset = Equipper.ears
+	Headset.keyslot = new /obj/item/encryptionkey/heads/captain
+	Headset.recalculateChannels()
 
 /datum/outfit/centcom/ert/marine/security
 	name = "Marine Heavy"
@@ -575,17 +574,16 @@
 	r_pocket = /obj/item/grenade/smokebomb
 	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine/security
-	l_hand = /obj/item/flashlight/seclite
 
-/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/Equipper, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/hos
-	R.recalculateChannels()
+	var/obj/item/radio/Headset = Equipper.ears
+	Headset.keyslot = new /obj/item/encryptionkey/heads/hos
+	Headset.recalculateChannels()
 
 /datum/outfit/centcom/ert/marine/medic
 	name = "Marine Medic"
@@ -604,17 +602,16 @@
 )
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
-	l_hand = /obj/item/flashlight/seclite
 
-/datum/outfit/centcom/ert/marine/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/ert/marine/medic/post_equip(mob/living/carbon/human/Equipper, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/cmo
-	R.recalculateChannels()
+	var/obj/item/radio/Headset = Equipper.ears
+	Headset.keyslot = new /obj/item/encryptionkey/heads/cmo
+	Headset.recalculateChannels()
 
 /datum/outfit/centcom/ert/marine/engineer
 	name = "Marine Engineer"
@@ -634,14 +631,13 @@
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses =  /obj/item/clothing/glasses/night
 	r_pocket = /obj/item/rcd_ammo/large
-	l_hand = /obj/item/flashlight/seclite
 
-/datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/Equipper, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
 
-	var/obj/item/radio/R = H.ears
-	R.keyslot = new /obj/item/encryptionkey/heads/ce
-	R.recalculateChannels()
+	var/obj/item/radio/Headset = Equipper.ears
+	Headset.keyslot = new /obj/item/encryptionkey/heads/ce
+	Headset.recalculateChannels()
