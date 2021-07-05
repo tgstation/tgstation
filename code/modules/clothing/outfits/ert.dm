@@ -549,7 +549,7 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	l_pocket = /obj/item/kitchen/knife/combat
 	r_pocket = /obj/item/lighter
-	uniform = /obj/item/clothing/under/syndicate/camo
+	uniform = /obj/item/clothing/under/syndicate/combat
 	mask = /obj/item/clothing/mask/cigarette/robustgold
 	head = /obj/item/clothing/head/helmet/marine
 
@@ -567,9 +567,6 @@
 
 	id = /obj/item/card/id/advanced/centcom/ert/security
 	suit = /obj/item/clothing/suit/armor/vest/marine/security
-	suit_store = /obj/item/gun/ballistic/automatic/wt550
-	back = /obj/item/shield/riot
-	belt = /obj/item/storage/belt/military/assault/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/grenade/smokebomb
 	mask = /obj/item/clothing/mask/gas/sechailer
@@ -600,6 +597,7 @@
 		/obj/item/storage/firstaid/regular = 1,
 		/obj/item/storage/firstaid/advanced = 1,
 )
+	uniform = /obj/item/clothing/under/syndicate/camo
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 
@@ -628,6 +626,7 @@
 		/obj/item/storage/box/lethalshot = 1,
 		/obj/item/grenade/c4 = 3,
 )
+	uniform = /obj/item/clothing/under/syndicate/camo
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses =  /obj/item/clothing/glasses/night
 	r_pocket = /obj/item/rcd_ammo/large
