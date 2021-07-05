@@ -406,9 +406,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
-		for(var/path in external_organs)
+		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
-			var/obj/item/organ/external/type = path
 			var/preference_name = human.dna.features[initial(type.preference)]
 
 			var/obj/item/organ/external/new_organ = new path(null, preference_name, human.body_type)
