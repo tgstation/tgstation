@@ -67757,7 +67757,7 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Pharmacy";
-	req_access_txt = "69"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
