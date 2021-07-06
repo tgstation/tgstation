@@ -19,6 +19,9 @@
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 
+	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	var/dna_block
+
 	///Reference to the limb we're inside of
 	var/obj/item/bodypart/ownerlimb
 
@@ -126,6 +129,15 @@
 /obj/item/organ/external/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
 	return TRUE
 
+///Update our features after something changed our appearance
+/obj/item/organ/external/proc/mutate_feature(features, mob/living/carbon/human/human)
+	if(!dna_block || !get_global_feature_list())
+		return
+
+	var/list/feature_list = get_global_feature_list()
+
+	set_sprite(feature_list[deconstruct_block(getblock(features, dna_block), feature_list.len)])
+
 ///The horns of a lizard!
 /obj/item/organ/external/horns
 	zone = BODY_ZONE_HEAD
@@ -133,6 +145,8 @@
 	layers = EXTERNAL_ADJACENT
 
 	preference = "horns"
+
+	dna_block = DNA_HORNS_BLOCK
 
 /obj/item/organ/external/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
@@ -150,6 +164,8 @@
 
 	preference = "frills"
 
+	dna_block = DNA_FRILLS_BLOCK
+
 /obj/item/organ/external/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEEARS))
 		return TRUE
@@ -164,6 +180,8 @@
 	layers = EXTERNAL_ADJACENT
 
 	preference = "snout"
+
+	dna_block = DNA_SNOUT_BLOCK
 
 /obj/item/organ/external/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
@@ -180,6 +198,8 @@
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 
 	preference = "moth_antennae"
+
+	dna_block = DNA_MOTH_ANTENNAE_BLOCK
 
 	///Are we burned?
 	var/burnt = FALSE
@@ -204,6 +224,13 @@
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
 	return FALSE
+
+///For moth antennae and wings we make an exception. If their features are burnt, we only update our original sprite
+/obj/item/organ/external/antennae/set_sprite(sprite)
+	if(!burnt)
+		return ..() //no one listens to the return value, I just need to call the parent proc and end the code
+
+	original_sprite = sprite
 
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)

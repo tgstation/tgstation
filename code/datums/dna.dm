@@ -534,6 +534,9 @@
 	if(dna.features["tail_monkey"])
 		dna.features["tail_monkey"] = GLOB.tails_list_monkey[deconstruct_block(getblock(features, DNA_MONKEY_TAIL_BLOCK), GLOB.tails_list_monkey.len)]
 
+	for(var/obj/item/organ/external/external_organ in internal_organs)
+		external_organ.mutate_feature(features, src)
+
 	if(icon_update)
 		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
 		update_hair()

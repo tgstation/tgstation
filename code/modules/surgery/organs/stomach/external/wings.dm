@@ -157,6 +157,8 @@
 	preference = "moth_wings"
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
 
+	dna_block = DNA_MOTH_WINGS_BLOCK
+
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old sprite here for if our burned wings are healed
@@ -177,6 +179,13 @@
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
+
+///For moth antennae and wings we make an exception. If their features are burnt, we only update our original sprite
+/obj/item/organ/external/wings/moth/set_sprite(sprite)
+	if(!burnt)
+		return ..() //no one listens to the return value, I just need to call the parent proc and end the code
+
+	original_sprite = sprite
 
 ///Check if we can flutter around
 /obj/item/organ/external/wings/moth/proc/update_float_move()
