@@ -275,6 +275,9 @@
 #define TRINARY 3
 #define QUATERNARY 4
 
+///Volume of a pipe
+#define PIPE_VOLUME 70
+
 //TANKS
 /// temperature in kelvins at which a tank will start to melt
 #define TANK_MELT_TEMPERATURE 1000000
