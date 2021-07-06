@@ -8404,6 +8404,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/machinery/firealarm/directional/north,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "bwN" = (
@@ -9878,7 +9879,6 @@
 "bQn" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "bQF" = (
@@ -11704,7 +11704,6 @@
 /area/medical/pharmacy)
 "cjT" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "cjU" = (
@@ -12195,7 +12194,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
@@ -12855,6 +12853,12 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/office)
 "cuh" = (
@@ -20687,7 +20691,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
 	},
@@ -23290,6 +23293,12 @@
 "foe" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/office)
 "foq" = (
@@ -47567,7 +47576,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "chem_lockdown";
 	name = "chemistry lockdown control";
-	req_access_txt = "5;69"
+	req_access_txt = "69"
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
@@ -49841,13 +49850,12 @@
 /area/medical/break_room)
 "ooX" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/door/airlock/research/glass{
 	name = "Pharmacy";
-	req_access_txt = "69"
+	req_access_txt = "5; 69"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -50118,7 +50126,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -61868,6 +61875,18 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"smK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/medical/office)
 "smQ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
@@ -76714,7 +76733,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -103267,7 +103285,7 @@ gDS
 bYV
 pAP
 foe
-cex
+smK
 cex
 cfN
 ifK
