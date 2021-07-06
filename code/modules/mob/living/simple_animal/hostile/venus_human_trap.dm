@@ -100,7 +100,7 @@
  *
  */
 /mob/living/simple_animal/hostile/venus_human_trap
-	name = "venus human trap (123)"
+	name = "venus human trap"
 	desc = "Now you know how the fly feels."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "venus_human_trap"
@@ -136,11 +136,10 @@
 	var/vine_grab_distance = 5
 	/// Whether or not this plant is ghost possessable
 	var/playable_plant = TRUE
-	var/static/regex/name_regex = new("venus human trap \\(\\d+\\)")
 
 /mob/living/simple_animal/hostile/venus_human_trap/Initialize(mapload)
 	.=..()
-	update_name()
+	unique_name = TRUE
 
 /mob/living/simple_animal/hostile/venus_human_trap/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -156,12 +155,6 @@
 		var/mob/living/L = target
 		if(L.stat != DEAD)
 			adjustHealth(-maxHealth * 0.1)
-
-/mob/living/simple_animal/hostile/venus_human_trap/update_name()
-	if(name_regex.Find(name))
-		number = rand(1, 1000)
-		name = "venus human trap ([number])"
-	return ..()
 
 /mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)
 	for(var/datum/beam/B in vines)
