@@ -1,0 +1,6 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "meta medbay sec posts air vents are now actually connected, trimmed a line of cable that led nowhere from pharmacy"
+  - bugfix: "meta pharmacy now has medic access again, but no access anywhere for chem factory except for chemist"
+  - bugfix: "an intercom in meta-med delivery shared the same wall as an APC, moved the intercom to the top left of the room"
