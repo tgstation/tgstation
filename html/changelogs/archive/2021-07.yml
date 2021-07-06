@@ -88,3 +88,126 @@
   - bugfix: Killing and reviving polar bears no longer makes them easier to move.
   tralezab:
   - rscadd: catwalk flooring!
+2021-07-04:
+  Arkatos:
+  - bugfix: Large cardboard boxes will now show a proper icon when they are open.
+  Ghommie:
+  - bugfix: The "Is This Thing On?" explosion calibration experiment will now accept
+      explosions with negative devastation or heavy strength because, once again,
+      any explosion will do!
+  MMMiracles:
+  - bugfix: Fixed a few errant pipe issues in Tramstation Atmospherics
+  RandomGamer123:
+  - spellcheck: Ion carbine gun parts kits are no longer called "generic gun parts
+      kit".
+  - spellcheck: The "advanced" in advanced energy gun parts kit is no longer misspelled.
+  - qol: Examining stationary tanks now tells you their pressure limits.
+  - bugfix: Analyzing stationary tanks no longer gives you the same thing four times.
+  Sheits:
+  - bugfix: Inhand sprites for hydrogen fire axes now face the right way
+  Urumasi:
+  - bugfix: The turbine now behaves correctly if the intake is blocked.
+  Watermelon914:
+  - bugfix: Fixed carps not properly being tameable.
+  - bugfix: Fixed the tameable component not properly being removed from a mob.
+  - qol: The RAM circuit component now allows you to select the type instead of trying
+      to interpret it, allowing it to be used as a constant value component.
+  - code_imp: Made the any datatype for circuit components much easier to read in
+      code.
+  - expansion: Adds crew monitor usb connections
+  - bugfix: Fixed the sound emitter's frequency port
+  - bugfix: Fixed cooldowns for speech and soundemitter circuit components.
+  - code_imp: Brought the speech component more in line with other components.
+  - bugfix: Limited the maximum string length of a circuit component port to 5K characters
+      to fix exploits that can create strings that duplicate in size each iteration.
+  - bugfix: Fixed being able to insert an infinite amount of components into a shell
+      because of an oversight.
+  - bugfix: Fixed being able to interact the circuit of a locked shell.
+  Wayland-Smithy:
+  - bugfix: Fixed incorporeal movers procing containment field effects.
+  - bugfix: Fixed fully_heal proc curing blindness from quirks and blindfolds.
+  - bugfix: Fixed Create Command Report UI lacking an option derived from command_name().
+  - bugfix: Fixed Cross Server messages containing HTML garbage.
+  YakumoChen:
+  - expansion: Adds a contraband flavor of Gallery's Peanuts to Getmore vendor
+  bobbahbrown:
+  - rscadd: Added a brand new upgrade to janicarts, the vacuum upgrade, which you
+      can procure from RnD. This upgrade vacuums items from under the janicart directly
+      into an attached garbage bag, very handy! You can remove existing upgrades with
+      a screwdriver.
+  - bugfix: Janicarts no longer accidentally put the key into the trash bag when trying
+      to insert a key with a trashbag attached.
+  - rscadd: You can now right-click while riding a janicart to remove the bag without
+      unbuckling yourself, neato!
+  thestubborn:
+  - expansion: Bananas can be holstered
+  tralezab:
+  - expansion: PDAs now include round time.
+2021-07-05:
+  Fikou:
+  - qol: The Nightmare's light eater can now break rocks.
+  - imagedel: removes the weird light from the upgraded mining hardsuit helmet sprite
+  - qol: commission plaques will no longer hide items you dropped below them
+  - balance: hierophant club dash now doesnt work on blocked turfs
+  Greniza:
+  - rscadd: Environment protection bags, which protect their occupants from weather,
+      and give protection from temperature and pressure. The rare variants even have
+      the same protection effects as a space suit.
+  - imageadd: Environment protection bag sprites
+  - code_imp: Made weather immunity consistently defines, as opposed to some strings
+      and some defines.
+  - code_imp: Migrates mob weather immunity to defines rather than strings.
+  - refactor: Gave atom/movable the ability to be spaceproofed and insulated to protect
+      its contents.
+  - refactor: Gave /obj/structure/closet the ability to protect its contents from
+      weather.
+  - bugfix: Using wirecutters on an unlabeled bodybag no longer sends the "You cut
+      the tag off of the bodybag" message.
+  - bugfix: Allows bodybags to be picked up again.
+  KIBORG04:
+  - bugfix: Mafia psychologist couldn't reveal role
+  Nari Harimoto:
+  - bugfix: the autolathe shockwire is properly defined again, autolathes may now
+      potentially shock you when hacking
+  Paxilmaniac:
+  - balance: nuke op and detective holsters can now be placed in armor best suit storage
+  - bugfix: the single missing pipe in library maintenance isn't missing anymore
+  RandomGamer123:
+  - bugfix: Stationary pressure tanks now properly have their base pressure at 20000kPa.
+  - bugfix: Stationary pressure tanks now do not name themselves as "plasteel plasteel
+      pressure tank".
+  TheSmallBlue:
+  - expansion: Added the "Split" circuitry component.
+  Wayland-Smithy:
+  - bugfix: Borgs can now click on adjacent portals (with no module slot active) to
+      use them like humans.
+  coiax, Timberpoes:
+  - expansion: Adds the new Wallets! station trait. Makes everyone start with wallets
+      with their ID card inside, along with their starting budget. Might also include
+      a little surprise.
+  - expansion: Wallets that spawn inside dorm wardrobes also have little surprises
+      in them.
+  - expansion: Wallets can now hold pills.
+  read-0nly:
+  - rscadd: Added temperature and pressure sensors to circuits
+  spessbro:
+  - bugfix: carnivory trait shows up on the plant analyzer
+  tralezab:
+  - balance: mmis can no longer possess savannah ivanovs
+2021-07-06:
+  Fikou:
+  - bugfix: switchblade can now be used to butcher and slice necks
+  - bugfix: fixes voice of god not giving you large text
+  - bugfix: wisps no longer fall in chasms
+  Melbert:
+  - bugfix: Changelings birthed from headslugs that weren't already changelings (for
+      example, from the icebox mutation pool) are no longer full changeling antagonists,
+      but instead are a weaker, non-antagonist changeling variant (as they were in
+      the past).
+  MeyHaZah:
+  - imageadd: Concussive Gauntlets Resprite
+  Wayland-Smithy:
+  - bugfix: Fixed the cursed spring water double teleport polymorph machine.
+  bobbahbrown:
+  - bugfix: Buckling to a vehicle will no longer wait until you move to set your position
+      on the vehicle properly.

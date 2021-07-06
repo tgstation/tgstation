@@ -1121,7 +1121,10 @@
 	if(dist > HIEROPHANT_BLINK_RANGE)
 		to_chat(user, span_hierophant_warning("Blink destination out of range."))
 		return
-
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		return
 	. = ..()
 
 	if(!current_charges)
