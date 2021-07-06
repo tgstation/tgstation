@@ -1,4 +1,4 @@
-/client/proc/dsay(msg as text)
+/client/proc/dsay(msg as text, sanitize = TRUE)
 	set category = "Admin.Game"
 	set name = "Dsay"
 	set hidden = TRUE
@@ -11,13 +11,13 @@
 		to_chat(src, span_danger("You cannot send DSAY messages (muted)."), confidential = TRUE)
 		return
 
-	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
+	if(handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
-
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(sanitize)
+		msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	mob.log_talk(msg, LOG_DSAY)
 
-	if (!msg)
+	if(!msg)
 		return
 	var/rank_name = holder.rank
 	var/admin_name = key
@@ -26,7 +26,7 @@
 		admin_name = pick(strings("admin_nicknames.json", "names", "config"))
 	var/rendered = "<span class='game deadsay'>[span_prefix("DEAD:")] [span_name("[rank_name]([admin_name])")] says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
 
-	for (var/mob/M in GLOB.player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))
 			continue
 		if (M.stat == DEAD || (M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above

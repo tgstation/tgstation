@@ -10,7 +10,8 @@
 	return message
 
 /mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 	var/list/message_mods = list()
@@ -19,9 +20,9 @@
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
 		switch(message_mods[RADIO_EXTENSION])
 			if(MODE_ADMIN)
-				client.cmd_admin_say(message)
+				client.cmd_admin_say(message, FALSE)
 			if(MODE_DEADMIN)
-				client.dsay(message)
+				client.dsay(message, FALSE)
 			if(MODE_PUPPET)
 				if(!mind.current.say(message, sanitize = FALSE))
 					to_chat(src, span_warning("Your linked body was unable to speak!"))
