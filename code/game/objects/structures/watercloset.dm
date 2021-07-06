@@ -215,7 +215,7 @@
 			to_chat(user, span_warning("[I] is too large for the drain enclosure."))
 			return
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
+			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
 		hiddenitem = I
 		to_chat(user, span_notice("You place [I] into the drain enclosure."))
@@ -487,6 +487,22 @@
 		qdel(src)
 		return
 	return ..()
+
+/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	tool.play_tool_sound(src)
+	deconstruct()
+	return TRUE
+
+/obj/structure/sinkframe/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	return ..()
+
+/obj/structure/sinkframe/proc/drop_materials()
+	for(var/datum/material/material as anything in custom_materials)
+		new material.sheet_type(loc, FLOOR(custom_materials[material] / MINERAL_MATERIAL_AMOUNT, 1))
+	return
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source

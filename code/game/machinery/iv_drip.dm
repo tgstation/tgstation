@@ -179,6 +179,10 @@
 		toggle_mode()
 
 /obj/machinery/iv_drip/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(dripfeed)
 		dripfeed = FALSE
 		to_chat(usr, span_notice("You loosen the valve to speed up the [src]."))

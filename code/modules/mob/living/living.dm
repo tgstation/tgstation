@@ -1086,6 +1086,9 @@
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
+	if(ismovable(loc))
+		var/atom/movable/occupied_space = loc
+		loc_temp = ((1 - occupied_space.contents_thermal_insulation) * loc_temp) + (occupied_space.contents_thermal_insulation * bodytemperature)
 	return loc_temp
 
 /mob/living/cancel_camera()
@@ -1819,6 +1822,10 @@
 /mob/living/proc/set_usable_legs(new_value)
 	if(usable_legs == new_value)
 		return
+	if(new_value < 0) // Sanity check
+		stack_trace("[src] had set_usable_legs() called on them with a negative value!")
+		new_value = 0
+
 	. = usable_legs
 	usable_legs = new_value
 

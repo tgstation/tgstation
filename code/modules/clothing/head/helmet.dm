@@ -158,7 +158,7 @@
 
 /obj/item/clothing/head/helmet/justice/Initialize()
 	. = ..()
-	weewooloop = new(list(src), FALSE, FALSE)
+	weewooloop = new(src, FALSE, FALSE)
 
 /obj/item/clothing/head/helmet/justice/Destroy()
 	QDEL_NULL(weewooloop)
@@ -297,12 +297,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-
-
-/obj/item/clothing/head/helmet/knight/Initialize(mapload)
-	. = ..()
-	var/datum/component = GetComponent(/datum/component/wearertargeting/earprotection)
-	qdel(component)
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"

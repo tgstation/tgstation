@@ -64,6 +64,10 @@
 
 	if(chest_covered && head_covered)
 		return ONE_ATMOSPHERE
+	if(ismovable(loc))
+		/// If we're in a space with 0.5 content pressure protection, it averages the values, for example.
+		var/atom/movable/occupied_space = loc
+		return (occupied_space.contents_pressure_protection * ONE_ATMOSPHERE + (1 - occupied_space.contents_pressure_protection) * pressure)
 	return pressure
 
 
@@ -79,8 +83,8 @@
 		..()
 
 /mob/living/carbon/human/breathe()
-	if(!dna.species.breathe(src))
-		..()
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
+		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 

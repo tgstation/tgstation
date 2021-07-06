@@ -21,10 +21,10 @@
 		mob_try_enter(M)
 	return ..()
 
-/obj/vehicle/sealed/Exited(atom/movable/AM, atom/newLoc)
+/obj/vehicle/sealed/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(ismob(AM))
-		remove_occupant(AM)
+	if(ismob(gone))
+		remove_occupant(gone)
 
 // so that we can check the access of the vehicle's occupants. Ridden vehicles do this in the riding component, but these don't have that
 /obj/vehicle/sealed/Bump(atom/A)

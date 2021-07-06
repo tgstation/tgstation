@@ -255,7 +255,7 @@
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
 
-			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
+			var/message = trim(params["message"], MAX_MESSAGE_LEN)
 			if (!message)
 				return
 

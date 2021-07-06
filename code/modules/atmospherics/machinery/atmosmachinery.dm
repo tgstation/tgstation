@@ -135,13 +135,16 @@
 	var/list/node_connects = list()
 	node_connects.len = device_type
 
+	var/init_directions = GetInitDirections()
 	for(var/i in 1 to device_type)
-		for(var/D in GLOB.cardinals)
-			if(D & GetInitDirections())
-				if(D in node_connects)
-					continue
-				node_connects[i] = D
-				break
+		for(var/direction in GLOB.cardinals)
+			if(!(direction & init_directions))
+				continue
+			if(direction in node_connects)
+				continue
+			node_connects[i] = direction
+			break
+
 	return node_connects
 
 /**
@@ -471,9 +474,9 @@
 		A.addMember(src)
 	SSair.add_to_rebuild_queue(src)
 
-/obj/machinery/atmospherics/Entered(atom/movable/AM)
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
+/obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /mob/living))
+		var/mob/living/L = arrived
 		L.ventcrawl_layer = piping_layer
 	return ..()
 

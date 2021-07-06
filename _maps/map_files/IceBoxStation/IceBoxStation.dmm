@@ -1274,11 +1274,11 @@
 /area/security/prison)
 "afD" = (
 /obj/structure/table,
-/obj/item/electropack,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/electropack,
 /turf/open/floor/iron,
 /area/security/prison)
 "afF" = (
@@ -2805,7 +2805,7 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "alF" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alG" = (
@@ -11736,6 +11736,10 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high/plus,
+/obj/machinery/ecto_sniffer{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "bpX" = (
@@ -14017,7 +14021,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/tank/toxins,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bCq" = (
@@ -17341,7 +17345,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -19058,7 +19062,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cui" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuj" = (
@@ -27605,7 +27609,7 @@
 /turf/open/floor/iron,
 /area/commons/cryopods)
 "gSR" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/aft)
@@ -30979,8 +30983,6 @@
 /area/hallway/secondary/exit)
 "iVY" = (
 /obj/structure/table,
-/obj/item/assembly/signaler,
-/obj/item/clothing/suit/straight_jacket,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -30991,6 +30993,8 @@
 	network = list("ss13","prison")
 	},
 /obj/machinery/light/directional/south,
+/obj/item/assembly/signaler,
+/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/iron,
 /area/security/prison)
 "iWe" = (
@@ -40986,7 +40990,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay)
 "oCz" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
