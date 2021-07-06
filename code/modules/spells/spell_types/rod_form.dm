@@ -26,7 +26,7 @@
 		W.start_turf = start
 		M.forceMove(W)
 		M.notransform = TRUE
-		M.status_flags |= GODMODE
+		ADD_TRAIT(M, TRAIT_GODMODE, MAGIC_TRAIT)
 
 //Wizard Version of the Immovable Rod
 
@@ -44,7 +44,7 @@
 
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)
-		wizard.status_flags &= ~GODMODE
+		REMOVE_TRAIT(wizard, TRAIT_GODMODE, MAGIC_TRAIT)
 		wizard.notransform = FALSE
 		wizard.forceMove(get_turf(src))
 	return ..()

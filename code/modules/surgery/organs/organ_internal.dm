@@ -87,7 +87,7 @@
 		organ_owner.internal_organs -= src
 		if(organ_owner.internal_organs_slot[slot] == src)
 			organ_owner.internal_organs_slot.Remove(slot)
-		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+		if((organ_flags & ORGAN_VITAL) && !special && !(HAS_TRAIT(organ_owner, TRAIT_GODMODE)))
 			organ_owner.death()
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)

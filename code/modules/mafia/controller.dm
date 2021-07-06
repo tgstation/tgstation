@@ -573,7 +573,7 @@
 		ADD_TRAIT(H, TRAIT_NOFIRE, MAFIA_TRAIT)
 		ADD_TRAIT(H, TRAIT_NOBREATH, MAFIA_TRAIT)
 		H.equipOutfit(player_outfit)
-		H.status_flags |= GODMODE
+		ADD_TRAIT(H, TRAIT_GODMODE, MAFIA_TRAIT)
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)

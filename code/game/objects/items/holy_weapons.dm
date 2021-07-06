@@ -551,7 +551,7 @@
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.ckey = C.ckey
 		S.fully_replace_character_name(null, "The spirit of [name]")
-		S.status_flags |= GODMODE
+		ADD_TRAIT(S, TRAIT_GODMODE, SOULSTONE_TRAIT)
 		S.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
 		S.update_atom_languages()
 		grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue

@@ -768,7 +768,7 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 		var/mob/living/L = arrived
 		L.notransform = 1
 		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags |= GODMODE
+		ADD_TRAIT(L, TRAIT_GODMODE, STASIS_MUTE)
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
 		holder_animal.mind.AddSpell(P)
@@ -778,7 +778,7 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags &= ~GODMODE
+		REMOVE_TRAIT(L, TRAIT_GODMODE, STASIS_MUTE)
 		L.notransform = 0
 		if(holder_animal)
 			holder_animal.mind.transfer_to(L)

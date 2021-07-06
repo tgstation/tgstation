@@ -133,7 +133,7 @@
 	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
-	status_flags |= GODMODE
+	ADD_TRAIT(src, TRAIT_GODMODE, MAGIC_TRAIT)
 	timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/Life()
@@ -196,7 +196,7 @@
 
 /mob/living/simple_animal/hostile/clown_insane/Initialize()
 	. = ..()
-	status_flags |= GODMODE //Slightly easier to maintain.
+	ADD_TRAIT(src, TRAIT_GODMODE, MAGIC_TRAIT)
 
 /mob/living/simple_animal/hostile/clown_insane/Destroy()
 	timer = null

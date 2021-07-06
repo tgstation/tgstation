@@ -32,7 +32,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user, list/modifiers)
 	if(ishuman(user))
-		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_GODMODE) || !can_be_held)
 			..()
 			return
 		if(user.get_active_held_item())

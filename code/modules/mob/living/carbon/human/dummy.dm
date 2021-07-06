@@ -1,11 +1,15 @@
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
+	status_flags = CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/dummy/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_GODMODE, ROUNDSTART_TRAIT)
 
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE

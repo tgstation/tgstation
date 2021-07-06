@@ -627,7 +627,7 @@
 
 
 /mob/living/proc/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	set_health(maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss())
 	staminaloss = getStaminaLoss()
@@ -684,7 +684,7 @@
 					continue
 				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
 
-		adjustOxyLoss(-20, TRUE)
+		adjustOxyLoss(-20, TRUE, TRUE)
 		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
 		updatehealth()
 		grab_ghost()
@@ -730,9 +730,9 @@
 //admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
 /mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
-	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0)
-	setCloneLoss(0, 0)
+	setToxLoss(0, 0, forced = TRUE) //zero as second argument not automatically call updatehealth().
+	setOxyLoss(0, 0, forced = TRUE)
+	setCloneLoss(0, 0, forced = TRUE)
 	remove_CC()
 	set_disgust(0)
 	losebreath = 0
@@ -746,7 +746,7 @@
 	cure_blind()
 	cure_husk()
 	hallucination = 0
-	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
+	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	extinguish_mob()
 	fire_stacks = 0
 	set_confusion(0)

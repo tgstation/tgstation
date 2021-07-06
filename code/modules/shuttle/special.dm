@@ -181,9 +181,9 @@
 	SIGNAL_HANDLER
 
 	if(istype(get_area(loc), /area/shuttle/escape))
-		status_flags |= GODMODE
+		ADD_TRAIT(src, TRAIT_GODMODE, ADMIN_TRAIT)
 	else
-		status_flags &= ~GODMODE
+		REMOVE_TRAIT(src, TRAIT_GODMODE, ADMIN_TRAIT)
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone

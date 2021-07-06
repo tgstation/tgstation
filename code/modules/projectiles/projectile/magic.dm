@@ -161,7 +161,7 @@
 		M = shapeshift.stored
 		shapeshift.restore()
 
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+	if(!istype(M) || M.stat == DEAD || M.notransform || HAS_TRAIT(M, TRAIT_GODMODE))
 		return
 
 	M.notransform = TRUE

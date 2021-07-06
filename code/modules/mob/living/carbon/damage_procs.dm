@@ -63,7 +63,7 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (HAS_TRAIT(src, TRAIT_GODMODE)))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
@@ -72,7 +72,7 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (HAS_TRAIT(src, TRAIT_GODMODE)))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
@@ -100,7 +100,7 @@
 		. += round(BP.stamina_dam * BP.stam_damage_coeff, DAMAGE_PRECISION)
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (HAS_TRAIT(src, TRAIT_GODMODE)))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
@@ -125,7 +125,7 @@
  */
 /mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
 	var/obj/item/organ/O = getorganslot(slot)
-	if(O && !(status_flags & GODMODE))
+	if(O && !(HAS_TRAIT(src, TRAIT_GODMODE)))
 		O.applyOrganDamage(amount, maximum)
 
 /**
@@ -138,7 +138,7 @@
  */
 /mob/living/carbon/setOrganLoss(slot, amount)
 	var/obj/item/organ/O = getorganslot(slot)
-	if(O && !(status_flags & GODMODE))
+	if(O && !(HAS_TRAIT(src, TRAIT_GODMODE)))
 		O.setOrganDamage(amount)
 
 /**
@@ -220,7 +220,7 @@
 		update_damage_overlays()
 
 ///Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE, forced = FALSE)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina, required_status)
 
 	var/update = NONE
@@ -246,7 +246,7 @@
 
 /// damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return //godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)

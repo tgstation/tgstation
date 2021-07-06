@@ -149,14 +149,17 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	M.status_flags ^= GODMODE
-	to_chat(usr, span_adminnotice("Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
+	if(HAS_TRAIT(M, TRAIT_GODMODE))
+		REMOVE_TRAIT(M, TRAIT_GODMODE, ADMIN_TRAIT)
+	else
+		ADD_TRAIT(M, TRAIT_GODMODE, ADMIN_TRAIT)
+	to_chat(usr, span_adminnotice("Toggled [(HAS_TRAIT(M, TRAIT_GODMODE)) ? "ON" : "OFF"]"), confidential = TRUE)
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]"
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(HAS_TRAIT(M, TRAIT_GODMODE)) ? "On" : "Off"]")
+	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(M)]'s nodamage to [(HAS_TRAIT(M, TRAIT_GODMODE)) ? "On" : "Off"]"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[(HAS_TRAIT(M, TRAIT_GODMODE)) ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
