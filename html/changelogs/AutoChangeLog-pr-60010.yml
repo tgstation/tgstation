@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "Deltastation bar's atmos alarm now correctly placed, and nudged a pipe nearby to no longer have a redundant loop"
