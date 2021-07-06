@@ -320,3 +320,14 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
+
+/mob/living/simple_animal/hostile/viscerator/emp_act(severity)
+	. = ..()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	switch(severity)
+		if(EMP_LIGHT)
+			sparks.set_up(rand(1, 5), FALSE, src)
+		if(EMP_HEAVY)
+			sparks.set_up(rand(5, 7), FALSE, src)
+	sparks.attach(src)
+	sparks.start()
