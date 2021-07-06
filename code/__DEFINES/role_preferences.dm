@@ -42,7 +42,8 @@
 #define ROLE_FAMILIES "Familes Antagonists"
 #define ROLE_SYNDICATE_CYBERSUN "Cybersun Space Syndicate" //Ghost role syndi from Forgottenship ruin
 #define ROLE_SYNDICATE_CYBERSUN_CAPTAIN "Cybersun Space Syndicate Captain" //Forgottenship captain syndie
-#define ROLE_FREE_GOLEM "Free Golem" 
+#define ROLE_FREE_GOLEM "Free Golem"
+#define ROLE_HEADSLUG_CHANGELING "Headslug Changeling"
 
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's

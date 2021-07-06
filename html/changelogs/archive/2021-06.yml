@@ -681,3 +681,12 @@
   - balance: Jaunting spells of all types (except for Nightmare) no longer allow for
       the user to end up inside a wall or most other dense objects. Instead, you will
       be moved to a valid spot on the path you took, or returned to your start location.
+2021-06-30:
+  Fikou:
+  - bugfix: fixes singularity beacons
+  Watermelon914:
+  - expansion: Adds several list circuit components to manipulate lists.
+  - expansion: Adds the table datatype that can have queries performed on it with
+      components.
+  - expansion: Adds USB connections for the arrest console.
+  - bugfix: Fixed race conditions happening with circuits.

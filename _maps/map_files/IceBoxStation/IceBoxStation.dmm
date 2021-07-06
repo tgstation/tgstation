@@ -1274,11 +1274,11 @@
 /area/security/prison)
 "afD" = (
 /obj/structure/table,
-/obj/item/electropack,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/electropack,
 /turf/open/floor/iron,
 /area/security/prison)
 "afF" = (
@@ -30983,8 +30983,6 @@
 /area/hallway/secondary/exit)
 "iVY" = (
 /obj/structure/table,
-/obj/item/assembly/signaler,
-/obj/item/clothing/suit/straight_jacket,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -30995,6 +30993,8 @@
 	network = list("ss13","prison")
 	},
 /obj/machinery/light/directional/south,
+/obj/item/assembly/signaler,
+/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/iron,
 /area/security/prison)
 "iWe" = (

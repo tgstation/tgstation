@@ -19,7 +19,7 @@
 
 /obj/machinery/power/port_gen/Initialize()
 	. = ..()
-	soundloop = new(list(src), active)
+	soundloop = new(src, active)
 
 /obj/machinery/power/port_gen/Destroy()
 	QDEL_NULL(soundloop)
