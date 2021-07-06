@@ -26,6 +26,7 @@
 	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
 	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
 	RegisterSignal(new_pawn, COMSIG_RIDDEN_DRIVER_MOVE, .proc/on_ridden_driver_move)
+	RegisterSignal(new_pawn, COMSIG_MOVABLE_PREBUCKLE, .proc/on_prebuckle)
 	return ..() //Run parent at end
 
 /datum/ai_controller/hostile_friend/UnpossessPawn(destroy)
@@ -37,6 +38,12 @@
 		COMSIG_PARENT_QDELETING
 	))
 	return ..() //Run parent at end
+
+/datum/ai_controller/hostile_friend/proc/on_prebuckle(mob/source, mob/living/buckler, force, buckle_mob_flags)
+	if(force)
+		return
+	if(WEAKREF(buckler) != blackboard[BB_HOSTILE_FRIEND])
+		return COMPONENT_BLOCK_BUCKLE
 
 /datum/ai_controller/hostile_friend/able_to_run()
 	var/mob/living/living_pawn = pawn

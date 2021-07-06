@@ -67,7 +67,7 @@
 		"silver" = "#fdfbf3"
 	)
 
-/mob/living/simple_animal/hostile/carp/Initialize(mapload)
+/mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
 	if(random_color)
 		set_greyscale(new_config=/datum/greyscale_config/carp)
@@ -77,7 +77,10 @@
 	add_cell_sample()
 	if(ai_controller)
 		ai_controller.blackboard[BB_HOSTILE_ATTACK_WORD] = pick(speak_emote)
-		make_tameable()
+		if(tamer)
+			tamed(tamer)
+		else
+			make_tameable()
 
 /mob/living/simple_animal/hostile/carp/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
