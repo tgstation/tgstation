@@ -56,8 +56,8 @@
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	user.visible_message(span_notice("[user] starts engraving a message into [T]..."), span_notice("You start engraving a message into [T]..."), span_hear("You hear a chipping sound."))
-	if(do_after(user, tool_speed, target = T))
-		if(can_use() && !locate(/obj/structure/chisel_message) in T)
+	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
+		if(!locate(/obj/structure/chisel_message) in T)
 			user.visible_message(span_notice("[user] leaves a message for future spacemen!"), span_notice("You engrave a message into [T]!"), span_hear("You hear a chipping sound."))
 			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 			var/obj/structure/chisel_message/M = new(T)
@@ -65,7 +65,7 @@
 			remove_use()
 
 /obj/item/soapstone/proc/can_use()
-	return remaining_uses == -1 || remaining_uses >= 0
+	return remaining_uses == -1 || remaining_uses > 0
 
 /obj/item/soapstone/proc/remove_use()
 	if(remaining_uses <= 0)
