@@ -3286,6 +3286,7 @@
 #include "code\modules\ruins\lavaland_ruin_code.dm"
 #include "code\modules\ruins\icemoonruin_code\hotsprings.dm"
 #include "code\modules\ruins\icemoonruin_code\library.dm"
+#include "code\modules\ruins\icemoonruin_code\mailroom.dm"
 #include "code\modules\ruins\icemoonruin_code\wrath.dm"
 #include "code\modules\ruins\lavalandruin_code\biodome_clown_planet.dm"
 #include "code\modules\ruins\lavalandruin_code\elephantgraveyard.dm"
