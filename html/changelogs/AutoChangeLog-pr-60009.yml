@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - qol: "Meta-station Xenobio slime computer camera can now move up and down between the left most cells, as well as drop slimes in the work area between the consoles"
