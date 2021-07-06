@@ -503,3 +503,4 @@
 	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = NUTS | FRUIT | SUGAR
+	
