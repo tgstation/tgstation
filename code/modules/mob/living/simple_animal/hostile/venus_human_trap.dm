@@ -136,10 +136,10 @@
 	var/vine_grab_distance = 5
 	/// Whether or not this plant is ghost possessable
 	var/playable_plant = TRUE
+	unique_name = TRUE
 
 /mob/living/simple_animal/hostile/venus_human_trap/Initialize(mapload)
 	.=..()
-	unique_name = TRUE
 
 /mob/living/simple_animal/hostile/venus_human_trap/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
