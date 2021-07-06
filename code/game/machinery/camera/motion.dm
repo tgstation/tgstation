@@ -52,20 +52,16 @@
 		cancelAlarm()
 
 /obj/machinery/camera/proc/cancelAlarm()
-	if (detectTime == -1)
-		for (var/i in GLOB.silicon_mobs)
-			var/mob/living/silicon/aiPlayer = i
-			if (status)
-				aiPlayer.cancelAlarm("Motion", get_area(src), src)
+	if (detectTime == -1 && status)
+		alert_manager.clear_alert(ALERT_MOTION)
 	detectTime = 0
 	return TRUE
 
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime)
 		return FALSE
-	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
-		if (status)
-			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
+	if(status)
+		if(alert_manager.send_alert(ALERT_MOTION, src, src))
 			visible_message(span_warning("A red light flashes on the [src]!"))
 	detectTime = -1
 	return TRUE
