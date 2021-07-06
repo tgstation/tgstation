@@ -194,3 +194,20 @@
   - bugfix: carnivory trait shows up on the plant analyzer
   tralezab:
   - balance: mmis can no longer possess savannah ivanovs
+2021-07-06:
+  Fikou:
+  - bugfix: switchblade can now be used to butcher and slice necks
+  - bugfix: fixes voice of god not giving you large text
+  - bugfix: wisps no longer fall in chasms
+  Melbert:
+  - bugfix: Changelings birthed from headslugs that weren't already changelings (for
+      example, from the icebox mutation pool) are no longer full changeling antagonists,
+      but instead are a weaker, non-antagonist changeling variant (as they were in
+      the past).
+  MeyHaZah:
+  - imageadd: Concussive Gauntlets Resprite
+  Wayland-Smithy:
+  - bugfix: Fixed the cursed spring water double teleport polymorph machine.
+  bobbahbrown:
+  - bugfix: Buckling to a vehicle will no longer wait until you move to set your position
+      on the vehicle properly.
