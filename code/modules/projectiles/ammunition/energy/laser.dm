@@ -1,11 +1,11 @@
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 50
+	e_cost = 83
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = 66
+	e_cost = 100
 	select_name = "maim"
 
 /obj/item/ammo_casing/energy/laser/hellfire/antique
@@ -13,7 +13,7 @@
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
-	e_cost = 35
+	e_cost = 62.5
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/old
