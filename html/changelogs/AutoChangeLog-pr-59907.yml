@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - expansion: "A new ruin has surfaced on icebox. Signal pings indicated that may have been a post office, once."
+  - bugfix: "Hologrids once again cannot be picked up, as is intended."
