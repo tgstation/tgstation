@@ -197,7 +197,7 @@
 		return
 
 	/// If we're on a proper z-level
-	if(!(mob_turf.z in impacted_z_levels)) ,
+	if(!(mob_turf.z in impacted_z_levels))
 		return
 
 	/// If we're not in a closet which provides protection
