@@ -7,6 +7,9 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
+	///Unremovable is until the features are completely finished
+	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
+
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
 	var/layers
 	///Convert the bitflag define into the actual layer define
