@@ -46,3 +46,9 @@
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
 	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, alpha, color, null, FALSE, null)
+
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
