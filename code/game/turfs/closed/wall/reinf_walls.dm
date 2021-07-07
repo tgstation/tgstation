@@ -230,7 +230,7 @@
 /turf/closed/wall/r_wall/rust_heretic_act()
 	if(prob(50))
 		return
-	if(HAS_TRAIT(src, TRAIT_ATOM_RUSTY))
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
 		return
 	return ..()
