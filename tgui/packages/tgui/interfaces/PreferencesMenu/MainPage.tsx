@@ -15,6 +15,9 @@ const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 // MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
 const KEYS_TO_NAMES = {
   backpack: "backpack",
+  jumpsuit_style: "jumpsuit style",
+  socks: "socks",
+  undershirt: "undershirt",
   underwear: "underwear",
 };
 

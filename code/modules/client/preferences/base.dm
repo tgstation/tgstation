@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Return value can be in the form of:
 /// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
 /// - An assoc list of raw values to atoms/icons.
-// MOTHBLOCKS TODO: Let preferences be text-only.
 /datum/preference/choiced/proc/get_choices()
 	// Override `init_values()` instead.
 	SHOULD_NOT_OVERRIDE(TRUE)

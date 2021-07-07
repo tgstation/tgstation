@@ -14,18 +14,6 @@
 			possible_values[name] = icon('icons/mob/landmarks.dmi', "x")
 	return possible_values
 
-/// Underwear preference
-/datum/preference/choiced/underwear
-	savefile_key = "underwear"
-	category = PREFERENCE_CATEGORY_CLOTHING
-	should_generate_icons = TRUE
-
-/datum/preference/choiced/underwear/init_possible_values()
-	return possible_values_for_sprite_accessory_list(GLOB.underwear_list)
-
-/datum/preference/choiced/underwear/apply(mob/living/carbon/human/target, value)
-	target.underwear = value
-
 /// Backpack preference
 /datum/preference/choiced/backpack
 	savefile_key = "backpack"
@@ -52,5 +40,58 @@
 
 /datum/preference/choiced/backpack/apply(mob/living/carbon/human/target, value)
 	target.backpack = value
+
+/// Jumpsuit preference
+/datum/preference/choiced/jumpsuit
+	savefile_key = "jumpsuit_style"
+	category = PREFERENCE_CATEGORY_CLOTHING
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/jumpsuit/init_possible_values()
+	var/list/values = list()
+
+	values[PREF_SUIT] = /obj/item/clothing/under/color/grey
+	values[PREF_SKIRT] = /obj/item/clothing/under/color/jumpskirt/grey
+
+	return values
+
+/datum/preference/choiced/jumpsuit/apply(mob/living/carbon/human/target, value)
+	target.jumpsuit_style = value
+
+/// Socks preference
+/datum/preference/choiced/socks
+	savefile_key = "socks"
+	category = PREFERENCE_CATEGORY_CLOTHING
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/socks/init_possible_values()
+	return possible_values_for_sprite_accessory_list(GLOB.socks_list)
+
+/datum/preference/choiced/socks/apply(mob/living/carbon/human/target, value)
+	target.socks = value
+
+/// Undershirt preference
+/datum/preference/choiced/undershirt
+	savefile_key = "undershirt"
+	category = PREFERENCE_CATEGORY_CLOTHING
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/undershirt/init_possible_values()
+	return possible_values_for_sprite_accessory_list(GLOB.undershirt_list)
+
+/datum/preference/choiced/undershirt/apply(mob/living/carbon/human/target, value)
+	target.undershirt = value
+
+/// Underwear preference
+/datum/preference/choiced/underwear
+	savefile_key = "underwear"
+	category = PREFERENCE_CATEGORY_CLOTHING
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/underwear/init_possible_values()
+	return possible_values_for_sprite_accessory_list(GLOB.underwear_list)
+
+/datum/preference/choiced/underwear/apply(mob/living/carbon/human/target, value)
+	target.underwear = value
 
 #undef PREFERENCE_CATEGORY_CLOTHING

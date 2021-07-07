@@ -3,6 +3,8 @@
 	name = "preferences"
 
 /datum/asset/spritesheet/preferences/register()
+	var/list/to_insert = list()
+
 	for (var/preference_key in GLOB.preference_entries_by_key)
 		var/datum/preference/choiced/preference = GLOB.preference_entries_by_key[preference_key]
 		if (!istype(preference))
@@ -20,7 +22,6 @@
 
 			if (ispath(create_icon_of, /atom))
 				var/atom/atom_icon_source = create_icon_of
-				// icon = icon(initial(atom_icon_source.icon), initial(atom_icon_source.icon_state))
 				icon = initial(atom_icon_source.icon)
 				icon_state = initial(atom_icon_source.icon_state)
 			else if (isicon(create_icon_of))
@@ -29,7 +30,12 @@
 				// MOTHBLOCKS TODO: Unit test this
 				CRASH("[create_icon_of] is an invalid preference value (from [preference_key]:[preference_value]).")
 
-			Insert(preference.get_spritesheet_key(preference_value), icon, icon_state)
+			// Insert(preference.get_spritesheet_key(preference_value), icon, icon_state)
+			to_insert[preference.get_spritesheet_key(preference_value)] = list(icon, icon_state)
+
+	for (var/spritesheet_key in to_insert)
+		var/list/inserting = to_insert[spritesheet_key]
+		Insert(spritesheet_key, inserting[1], inserting[2])
 
 	return ..()
 

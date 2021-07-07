@@ -72,7 +72,6 @@ GLOBAL_VAR(preferences_species_data)
 	var/underwear_color = "000" //underwear color
 	var/undershirt = "Nude" //undershirt type
 	var/socks = "Nude" //socks type
-	var/jumpsuit_style = PREF_SUIT //suit/skirt
 	var/hairstyle = "Bald" //Hair type
 	var/hair_color = "000" //Hair color
 	var/facial_hairstyle = "Shaved" //Face hair type
@@ -499,10 +498,7 @@ GLOBAL_VAR(preferences_species_data)
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
 	character.underwear_color = underwear_color
-	character.undershirt = undershirt
 	character.socks = socks
-
-	character.jumpsuit_style = jumpsuit_style
 
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
