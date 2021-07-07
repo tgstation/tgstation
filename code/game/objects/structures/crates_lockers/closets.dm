@@ -51,6 +51,7 @@
 	. = ..()
 	update_appearance()
 	PopulateContents()
+	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/locker_carbon)
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -530,5 +531,18 @@
 
 /obj/structure/closet/return_temperature()
 	return
+
+/obj/structure/closet/proc/locker_carbon(mob/living/carbon/shover, mob/living/carbon/target)
+	SIGNAL_HANDLER
+	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	if(opened)
+		target.forceMove(src)
+	if(!(locked || welded))
+		toggle()
+	update_icon()
+	target.visible_message(span_danger("[name] shoves [target.name] into \the [src]!"),
+		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
+	log_combat(src, target, "shoved", "into [src] (locker/crate)")
 
 #undef LOCKER_FULL

@@ -42,6 +42,7 @@
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_appearance()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_rummage)
+	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/trash_carbon)
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
@@ -527,3 +528,11 @@
 
 	INVOKE_ASYNC(src, /obj/machinery/disposal/.proc/rat_rummage, king)
 
+/obj/machinery/disposal/proc/trash_carbon(mob/living/carbon/shover, mob/living/carbon/target)
+	SIGNAL_HANDLER
+	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.forceMove(src)
+	target.visible_message(span_danger("[shoved.name] shoves [target.name] into \the [src]!"),
+		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into \the [target_disposal_bin]!"))
+	log_combat(src, target, "shoved", "into [src] (disposal bin)")

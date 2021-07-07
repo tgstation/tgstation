@@ -9,6 +9,7 @@
 
 	GLOB.carbon_list += src
 	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
+	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, ./proc/disarm_collision)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -1275,5 +1276,9 @@
 
 
 /mob/living/carbon/proc/attach_rot(mapload)
+	SIGNAL_HANDLER
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+
+/mob/living/carbon/proc/disarm_collision()
 	SIGNAL_HANDLER
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
