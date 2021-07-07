@@ -40,6 +40,7 @@
 	quality = POSITIVE
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
+	text_lose_indication = "<span class='notice'>You can no longer see the heat rising off of your skin...</span>"
 	time_coeff = 2
 	instability = 25
 	synchronizer_coeff = 1
@@ -100,7 +101,6 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 	owner.update_sight()
-	to_chat(user, text("<span class='notice'>You can no longer see the heat rising off of your skin...</span>"))
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/xray
