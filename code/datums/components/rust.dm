@@ -76,7 +76,7 @@
 			user.balloon_alert(user, "scraping off rust...")
 			if(!do_after(user, 2 SECONDS * item.toolspeed, parent))
 				return
-			to_chat(user, span_notice("You scrape the rust off of [parent]."))
+			user.balloon_alert(user, "scraped off rust")
 			qdel(src)
 			return
 
