@@ -230,10 +230,10 @@
 /turf/closed/wall/r_wall/rust_heretic_act()
 	if(prob(50))
 		return
-	if(GetComponent(/datum/component/rust))
+	if(HAS_TRAIT(src, RUSTY_TRAIT))
 		ScrapeAway()
-	else
-			return ..()
+		return
+	return ..()
 
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"
