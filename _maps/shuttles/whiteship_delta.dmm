@@ -984,7 +984,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 1
 	},
 /turf/open/floor/plating,

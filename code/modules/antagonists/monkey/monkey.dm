@@ -9,6 +9,7 @@
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
 	show_to_ghosts = TRUE
+	suicide_cry = "EEK OOP!!"
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 

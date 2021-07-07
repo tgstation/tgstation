@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "properly updates the light color of the mining hardsuit helmet"

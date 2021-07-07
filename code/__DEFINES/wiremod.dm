@@ -1,5 +1,3 @@
-#define PORT_INPUT_RECEIVE_DELAY 0.2 SECONDS
-
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
 
@@ -9,24 +7,25 @@
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
-#define PORT_TYPE_ANY null
+#define PORT_TYPE_ANY "any"
 
 // Fundamental datatypes
 /// String datatype
 #define PORT_TYPE_STRING "string"
-#define PORT_MAX_STRING_LENGTH 500
+#define PORT_MAX_STRING_LENGTH 5000
+#define PORT_MAX_STRING_DISPLAY 100
 /// Number datatype
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
 /// List datatype
 #define PORT_TYPE_LIST "list"
+/// Table datatype. Derivative of list, contains other lists with matching columns.
+#define PORT_TYPE_TABLE "table"
 
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
-/// Any datatype (USED ONLY FOR DISPLAY, DO NOT USE)
-#define COMP_TYPE_ANY "any"
 
 
 /// The maximum range between a port and an atom
@@ -84,6 +83,29 @@
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
 
+// Radio component
+#define COMP_RADIO_PUBLIC "public"
+#define COMP_RADIO_PRIVATE "private"
+
+// Sound component
+#define COMP_SOUND_BUZZ "Buzz"
+#define COMP_SOUND_BUZZ_TWO "Buzz Twice"
+#define COMP_SOUND_CHIME "Chime"
+#define COMP_SOUND_HONK "Honk"
+#define COMP_SOUND_PING "Ping"
+#define COMP_SOUND_SAD "Sad Trombone"
+#define COMP_SOUND_WARN "Warn"
+#define COMP_SOUND_SLOWCLAP "Slow Clap"
+
+// Security Arrest Console
+#define COMP_STATE_ARREST "*Arrest*"
+#define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_PAROL "Paroled"
+#define COMP_STATE_DISCHARGED "Discharged"
+#define COMP_STATE_NONE "None"
+
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -94,6 +116,9 @@
 
 /// Whether or not the shell has a USB port.
 #define SHELL_FLAG_USB_PORT (1<<2)
+
+/// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
+#define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10

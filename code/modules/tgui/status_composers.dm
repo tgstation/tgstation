@@ -102,3 +102,11 @@
 	return (living_user.body_position == LYING_DOWN && living_user.stat == CONSCIOUS) \
 		? UI_INTERACTIVE \
 		: UI_UPDATE
+
+/// Return UI_INTERACTIVE if the user is strictly adjacent to the target atom, whether they can see it or not.
+/// Return UI_CLOSE otherwise.
+/proc/ui_status_user_strictly_adjacent(mob/user, atom/target)
+	if(get_dist(target, user) > 1)
+		return UI_CLOSE
+
+	return UI_INTERACTIVE

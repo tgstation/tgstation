@@ -168,15 +168,60 @@
 	id = "comp_combiner"
 	build_path = /obj/item/circuit_component/combiner
 
+/datum/design/component/split
+	name = "Split Component"
+	id = "comp_split"
+	build_path = /obj/item/circuit_component/split
+
 /datum/design/component/pull
 	name = "Pull Component"
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
 
+/datum/design/component/soundemitter
+	name = "Sound Emitter Component"
+	id = "comp_soundemitter"
+	build_path = /obj/item/circuit_component/soundemitter
+
+/datum/design/component/mmi
+	name = "MMI Component"
+	id = "comp_mmi"
+	build_path = /obj/item/circuit_component/mmi
+
 /datum/design/component/multiplexer
 	name = "Multiplexer Component"
 	id = "comp_multiplexer"
 	build_path = /obj/item/circuit_component/multiplexer
+
+/datum/design/component/get_column
+	name = "Get Column Component"
+	id = "comp_get_column"
+	build_path = /obj/item/circuit_component/get_column
+
+/datum/design/component/index_table
+	name = "Index Table Component"
+	id = "comp_index_table"
+	build_path = /obj/item/circuit_component/index_table
+
+/datum/design/component/concat_list
+	name = "Concatenate List Component"
+	id = "comp_concat_list"
+	build_path = /obj/item/circuit_component/concat_list
+
+/datum/design/component/select_query
+	name = "Select Query Component"
+	id = "comp_select_query"
+	build_path = /obj/item/circuit_component/select
+
+/datum/design/component/tempsensor
+	name = "Temperature Sensor"
+	id = "comp_tempsensor"
+	build_path = /obj/item/circuit_component/tempsensor
+
+/datum/design/component/pressuresensor
+	name = "Pressure Sensor"
+	id = "comp_pressuresensor"
+	build_path = /obj/item/circuit_component/pressuresensor
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -237,5 +282,17 @@
 		/datum/material/gold = 1500,
 	)
 	build_path = /obj/item/shell/server
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/airlock_shell
+	name = "Airlock Shell"
+	desc = "A door shell that cannot be moved around when assembled."
+	id = "door_shell"
+	materials = list(
+		/datum/material/glass = 5000,
+		/datum/material/iron = 15000,
+	)
+	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")

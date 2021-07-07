@@ -272,13 +272,15 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!(get_dir(loc, target) == dir)) //Make sure looking at appropriate border
+	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+	if(leaving == src)
+		return // Let's not block ourselves.
 
 	if(direction == dir && density)
 		leaving.Bump(src)

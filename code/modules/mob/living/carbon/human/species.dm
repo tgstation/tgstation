@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			GLOB.roundstart_races += S.id
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "human"
+		GLOB.roundstart_races += SPECIES_HUMAN
 
 /**
  * Checks if a species is eligible to be picked at roundstart.
@@ -1214,97 +1214,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	outfit_important_for_life= new()
 	outfit_important_for_life.equip(human_to_equip)
 
-////////
-//LIFE//
-////////
-/datum/species/proc/handle_digestion(mob/living/carbon/human/H, delta_time, times_fired)
-	if(HAS_TRAIT(H, TRAIT_NOHUNGER))
-		return //hunger is for BABIES
-
-	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(HAS_TRAIT_FROM(H, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(H.overeatduration < (200 SECONDS))
-			to_chat(H, span_notice("You feel fit again!"))
-			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
-			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
-	else
-		if(H.overeatduration >= (200 SECONDS))
-			to_chat(H, span_danger("You suddenly feel blubbery!"))
-			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
-			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
-
-	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
-		// THEY HUNGER
-		var/hunger_rate = HUNGER_FACTOR
-		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-		if(mood && mood.sanity > SANITY_DISTURBED)
-			hunger_rate *= max(1 - 0.002 * mood.sanity, 0.5) //0.85 to 0.75
-		// Whether we cap off our satiety or move it towards 0
-		if(H.satiety > MAX_SATIETY)
-			H.satiety = MAX_SATIETY
-		else if(H.satiety > 0)
-			H.satiety--
-		else if(H.satiety < -MAX_SATIETY)
-			H.satiety = -MAX_SATIETY
-		else if(H.satiety < 0)
-			H.satiety++
-			if(DT_PROB(round(-H.satiety/77), delta_time))
-				H.Jitter(5)
-			hunger_rate = 3 * HUNGER_FACTOR
-		hunger_rate *= H.physiology.hunger_mod
-		H.adjust_nutrition(-hunger_rate * delta_time)
-
-	if(H.nutrition > NUTRITION_LEVEL_FULL)
-		if(H.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
-			H.overeatduration = min(H.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
-	else
-		if(H.overeatduration > 0)
-			H.overeatduration = max(H.overeatduration - (2 SECONDS * delta_time), 0) //doubled the unfat rate
-
-	//metabolism change
-	if(H.nutrition > NUTRITION_LEVEL_FAT)
-		H.metabolism_efficiency = 1
-	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-		if(H.metabolism_efficiency != 1.25 && !HAS_TRAIT(H, TRAIT_NOHUNGER))
-			to_chat(H, span_notice("You feel vigorous."))
-			H.metabolism_efficiency = 1.25
-	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		if(H.metabolism_efficiency != 0.8)
-			to_chat(H, span_notice("You feel sluggish."))
-		H.metabolism_efficiency = 0.8
-	else
-		if(H.metabolism_efficiency == 1.25)
-			to_chat(H, span_notice("You no longer feel vigorous."))
-		H.metabolism_efficiency = 1
-
-	//Hunger slowdown for if mood isn't enabled
-	if(CONFIG_GET(flag/disable_human_mood))
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-			if(hungry >= 70)
-				H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
-			else if(isethereal(H))
-				var/datum/species/ethereal/E = H.dna.species
-				if(E.get_charge(H) <= ETHEREAL_CHARGE_NORMAL)
-					H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - E.get_charge(H) / 100)))
-			else
-				H.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
-
-	switch(H.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /atom/movable/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			H.clear_alert("nutrition")
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /atom/movable/screen/alert/hungry)
-		if(0 to NUTRITION_LEVEL_STARVING)
-			H.throw_alert("nutrition", /atom/movable/screen/alert/starving)
-
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return FALSE
 
@@ -1678,14 +1587,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
 	return 0
-
-/////////////
-//BREATHING//
-/////////////
-
-/datum/species/proc/breathe(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		return TRUE
 
 //////////////////////////
 // ENVIRONMENT HANDLERS //

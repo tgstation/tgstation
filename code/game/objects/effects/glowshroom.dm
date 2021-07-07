@@ -175,7 +175,7 @@
 		if(shroom_count >= place_count)
 			continue
 
-		var/obj/structure/glowshroom/child = new type(new_loc, newseed = myseed.Copy())
+		var/obj/structure/glowshroom/child = new type(new_loc, myseed.Copy())
 		child.generation = generation + 1
 
 /obj/structure/glowshroom/proc/calc_dir(turf/location = loc)

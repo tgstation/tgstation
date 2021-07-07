@@ -28,6 +28,7 @@
 	name = "Commission Plaque"
 	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 03/11/2556\n'Dedicated to the Pioneers'"
 	icon_state = "commission_nt"
+	layer = BELOW_OPEN_DOOR_LAYER
 
 //Current stations
 

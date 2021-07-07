@@ -21,6 +21,7 @@
 	var/can_trigger = TRUE
 	var/trigger_delay = 10
 	var/protected = FALSE
+	var/undertile_pressureplate = TRUE
 
 /obj/item/pressure_plate/Initialize()
 	. = ..()
@@ -30,7 +31,8 @@
 		sigdev.code = roundstart_signaller_code
 		sigdev.frequency = roundstart_signaller_freq
 
-	AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
+	if(undertile_pressureplate)
+		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
 	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/ToggleActive)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -82,5 +84,7 @@
 
 ///Called from COMSIG_OBJ_HIDE to toggle the active part, because yeah im not making a special exception on the element to support it
 /obj/item/pressure_plate/proc/ToggleActive(datum/source, covered)
+	SIGNAL_HANDLER
+
 	active = covered
 

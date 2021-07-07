@@ -63,6 +63,9 @@
 /obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
+	if(leaving == src)
+		return // Let's not block ourselves.
+
 	if(!isobserver(leaving) && isTerminator() && direction == dir)
 		INVOKE_ASYNC(src, .proc/stair_ascend, leaving)
 		leaving.Bump(src)

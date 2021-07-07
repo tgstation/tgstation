@@ -44,6 +44,12 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	/// Protection against weather that being inside of it provides.
+	var/list/weather_protection = null
+	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
+	contents_pressure_protection = 0
+	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
+	contents_thermal_insulation = 0
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component is dragging this, preventing opening
@@ -119,7 +125,7 @@
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
-/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(wall_mounted)
 		return TRUE
@@ -402,6 +408,12 @@
 	if(user.Adjacent(src))
 		return attack_hand(user)
 
+/obj/structure/closet/attack_robot_secondary(mob/user, list/modifiers)
+	if(!user.Adjacent(src))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	if(attack_hand(user))
@@ -466,12 +478,14 @@
 	broken = TRUE //applies to secure lockers only
 	open()
 
-/obj/structure/closet/RightClick(mob/user, modifiers)
+/obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
+
 	if(!opened && secure)
 		togglelock(user)
-	return TRUE
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
