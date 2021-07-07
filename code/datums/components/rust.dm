@@ -34,12 +34,12 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/parent_del)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
-	ADD_TRAIT(parent, RUSTY_TRAIT, src)
+	ADD_TRAIT(parent, TRAIT_RUSTY, src)
 
 /datum/component/rust/UnregisterFromParent()
 	UnregisterSignal(parent,\
 		list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), COMSIG_PARENT_PREQDELETED)
-	REMOVE_TRAIT(parent, RUSTY_TRAIT, src)
+	REMOVE_TRAIT(parent, TRAIT_RUSTY, src)
 	var/atom/parent_atom = parent
 	parent_atom.update_icon(UPDATE_OVERLAYS)
 
