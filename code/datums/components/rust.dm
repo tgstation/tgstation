@@ -9,15 +9,15 @@
 
 /turf/closed/wall/rust/New()
 	var/atom/wall_new = new /turf/closed/wall(src)
-	wall_new._AddComponent(list(/datum/component/rust))
+	wall_new.AddComponent(/datum/component/rust)
 
 /turf/closed/wall/r_wall/rust/New()
 	var/atom/wall_new = new /turf/closed/wall/r_wall(src)
-	wall_new._AddComponent(list(/datum/component/rust))
+	wall_new.AddComponent(/datum/component/rust)
 
 /turf/open/floor/plating/rust/New()
 	var/atom/wall_new = new /turf/open/floor/plating(src)
-	wall_new._AddComponent(list(/datum/component/rust))
+	wall_new.AddComponent(/datum/component/rust)
 
 /datum/component/rust/Initialize(rust_iconstate = "rust")
 	. = ..()
