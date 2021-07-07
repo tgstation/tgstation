@@ -151,9 +151,9 @@
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",
+		"wirebrush",
 		"wirecutters",
 		"wrench",
-		"wirebrush",
 	)
 
 /datum/techweb_node/basic_medical
