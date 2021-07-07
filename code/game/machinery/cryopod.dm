@@ -270,13 +270,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 		mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
 
-	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(TRUE))
-		if(world.time < 15 MINUTES) // before the 15 minute mark
-			mob_occupant.ghostize(FALSE) // Players despawned too early may not re-enter the game
-		else
-			mob_occupant.ghostize(TRUE)
-
 	handle_objectives()
 	QDEL_NULL(occupant)
 	open_machine()
