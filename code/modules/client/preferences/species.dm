@@ -16,7 +16,7 @@
 /datum/preference/choiced/species/init_possible_values()
 	var/list/values = list()
 
-	for (var/species_id in GLOB.roundstart_races)
+	for (var/species_id in get_selectable_species())
 		values += GLOB.species_list[species_id]
 
 	return values

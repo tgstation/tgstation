@@ -215,6 +215,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	wings_icons = string_list(wings_icons)
 	..()
 
+/// Gets a list of all species available to choose in roundstart.
+/proc/get_selectable_species()
+	if (!GLOB.roundstart_races.len)
+		GLOB.roundstart_races = generate_selectable_species()
+
+	return GLOB.roundstart_races
+
 /**
  * Generates species available to choose in character setup at roundstart
  *
@@ -222,13 +229,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * If there are no available roundstart species, defaults to human.
  */
 /proc/generate_selectable_species()
+	var/list/selectable_species = list()
+
 	for(var/I in subtypesof(/datum/species))
 		var/datum/species/S = new I
 		if(S.check_roundstart_eligible())
-			GLOB.roundstart_races += S.id
+			selectable_species += S.id
 			qdel(S)
-	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += SPECIES_HUMAN
+
+	if(!selectable_species.len)
+		selectable_species += SPECIES_HUMAN
+
+	return selectable_species
 
 /**
  * Checks if a species is eligible to be picked at roundstart.

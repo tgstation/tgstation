@@ -306,7 +306,7 @@ GLOBAL_VAR(preferences_species_data)
 	return TRUE
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
-	character_preview_view = new(null, src)
+	character_preview_view = new(null, src, user.client)
 	character_preview_view.update_body()
 	user.client?.register_map_obj(character_preview_view)
 
@@ -348,6 +348,10 @@ GLOBAL_VAR(preferences_species_data)
 
 	return preferences
 
+// This is necessary because you can open the set preferences menu before
+// the atoms SS is done loading.
+INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
+
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/character_preview_view
 	name = "character_preview"
@@ -361,18 +365,38 @@ GLOBAL_VAR(preferences_species_data)
 	/// The preferences this refers to
 	var/datum/preferences/preferences
 
-/atom/movable/screen/character_preview_view/Initialize(mapload, datum/preferences/preferences)
+	var/list/plane_masters = list()
+
+	/// The client that is watching this view
+	var/client/client
+
+/atom/movable/screen/character_preview_view/Initialize(mapload, datum/preferences/preferences, client/client)
 	. = ..()
 
 	assigned_map = "character_preview_[REF(src)]"
 	set_position(1, 1)
 
+	src.client = client
 	src.preferences = preferences
+
+	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/plane_master/plane_master = new plane_master_type
+		plane_master.screen_loc = "[assigned_map]:CENTER"
+		client?.screen |= plane_master
+
+		plane_masters += plane_master
 
 /atom/movable/screen/character_preview_view/Destroy()
 	. = ..()
 
 	QDEL_NULL(body)
+
+	for (var/plane_master in plane_masters)
+		client?.screen -= plane_master
+		qdel(plane_master)
+
+	client = null
+	plane_masters = null
 	preferences = null
 
 /// Updates the currently displayed body
@@ -568,7 +592,7 @@ GLOBAL_VAR(preferences_species_data)
 	var/list/food_flags = FOOD_FLAGS
 	var/list/species_data = list()
 
-	for (var/species_id in GLOB.roundstart_races)
+	for (var/species_id in get_selectable_species())
 		var/datum/species/species = GLOB.species_list[species_id]
 
 		var/list/diet = list()
