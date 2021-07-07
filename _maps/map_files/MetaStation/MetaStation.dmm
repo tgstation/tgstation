@@ -76049,7 +76049,7 @@
 /area/science/xenobiology)
 "wUA" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
 "wUJ" = (
