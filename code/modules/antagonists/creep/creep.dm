@@ -8,6 +8,7 @@
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
+	suicide_cry = "FOR MY LOVE!!"
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)

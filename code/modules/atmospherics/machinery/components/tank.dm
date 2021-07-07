@@ -10,7 +10,7 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-	custom_materials = list(/datum/material/alloy/plasteel=4000, /datum/material/iron=20000)
+	custom_materials = list(/datum/material/iron=20000) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
 	material_flags = MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -112,6 +112,7 @@
 		. += "<span class='notice'>A pipe port can be opened with a [wrench_hint].</span>"
 	else
 		. += "<span class='notice'>The pipe port can be moved or closed with a [wrench_hint].</span>"
+	. += "<span class='notice'>A holographic sticker on it says that its maximum safe pressure is: [siunit_pressure(max_pressure, 0)].</span>"
 
 /obj/machinery/atmospherics/components/tank/set_custom_materials(list/materials, multiplier)
 	. = ..()
@@ -146,6 +147,9 @@
 
 ///////////////////////////////////////////////////////////////////
 // Pipenet stuff
+
+/obj/machinery/atmospherics/components/tank/return_analyzable_air()
+	return air_contents
 
 /obj/machinery/atmospherics/components/tank/returnAirsForReconcilation(datum/pipeline/requester)
 	. = ..()
@@ -538,7 +542,6 @@
 		return
 	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
 	var/list/new_custom_materials = list()
-	new_custom_materials[/datum/material/alloy/plasteel] = 4000
 	new_custom_materials[material_end_product] = 20000
 	new_tank.set_custom_materials(new_custom_materials)
 	to_chat(user, "<span class='notice'>[new_tank] has been sealed and is ready to accept gases.</span>")

@@ -56715,7 +56715,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining/common,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
@@ -87100,6 +87099,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "wZx" = (
