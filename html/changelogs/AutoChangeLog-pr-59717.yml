@@ -1,0 +1,5 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - code_imp: "Introduces the Lag Switch subsystem for when a smoother experience is worth trading a few bells and whistles for. Performance enhancement measures can be togged by admins with the Show Lag Switches admin verb or enabled automatically at a pop amount set via config."
+  - config: "Added a new config var: number/auto_lag_switch_pop"
