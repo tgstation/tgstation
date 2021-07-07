@@ -96,7 +96,7 @@
 
 	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
 
-/datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner, mob/user = usr)
+/datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
