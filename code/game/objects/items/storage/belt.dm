@@ -484,6 +484,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/military/assault/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
+		/obj/item/ammo_box/magazine/wt550m9 = 4,
+	), src)
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."

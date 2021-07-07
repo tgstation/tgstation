@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "The detective's scanner should now always properly output the correct data for scans and should no longer print out blank entries erroneously."

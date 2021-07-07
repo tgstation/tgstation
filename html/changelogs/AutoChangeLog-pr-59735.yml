@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Nuclear operatives' uplink implants now properly only show items they are allowed to buy, preventing them bypassing uplink restrictions."

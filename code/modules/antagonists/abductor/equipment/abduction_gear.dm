@@ -396,6 +396,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
+	automatic_charge_overlays = FALSE
 	fire_delay = 30
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
