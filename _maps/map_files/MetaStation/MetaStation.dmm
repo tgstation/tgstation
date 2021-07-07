@@ -13122,10 +13122,6 @@
 	pixel_y = 2
 	},
 /obj/item/clothing/gloves/color/latex/nitrile,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 5;
-	pixel_y = -7
-	},
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "cwB" = (
@@ -19869,10 +19865,6 @@
 /obj/item/stack/medical/bone_gel{
 	pixel_x = -5;
 	pixel_y = -9
-	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 9;
-	pixel_y = -5
 	},
 /turf/open/floor/iron/white,
 /area/medical/surgery)
@@ -40311,7 +40303,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/medical/glass{
+/obj/machinery/door/airlock/research/glass{
 	name = "Chemistry Lab";
 	req_access_txt = "33"
 	},
@@ -49887,7 +49879,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/door/airlock/medical/glass{
+/obj/machinery/door/airlock/research/glass{
 	name = "Pharmacy";
 	req_access_txt = "69"
 	},
