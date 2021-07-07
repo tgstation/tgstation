@@ -189,6 +189,7 @@ GLOBAL_VAR(preferences_species_data)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
+	// MOTHBLOCKS TODO: ShowChoices
 	CRASH("NYI: ShowChoices")
 
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
@@ -211,6 +212,10 @@ GLOBAL_VAR(preferences_species_data)
 
 	if (isnull(character_preview_view))
 		character_preview_view = create_character_preview_view(user)
+	else if (character_preview_view.client != parent)
+		// The client re-logged, and doing this when they log back in doesn't seem to properly
+		// carry emissives.
+		character_preview_view.register_to_client(parent)
 
 	// MOTHBLOCKS TODO: Try to diff these as much as possible, and only send what is needed.
 	// Some of these, like job preferences, can be pretty beefy.
@@ -308,17 +313,9 @@ GLOBAL_VAR(preferences_species_data)
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src, user.client)
 	character_preview_view.update_body()
-	user.client?.register_map_obj(character_preview_view)
-
-	// Re-register if they reconnect
-	RegisterSignal(user, COMSIG_MOB_CLIENT_LOGIN, .proc/register_character_preview)
+	character_preview_view.register_to_client(user.client)
 
 	return character_preview_view
-
-/datum/preferences/proc/register_character_preview(datum/source, client/client)
-	SIGNAL_HANDLER
-
-	client?.register_map_obj(character_preview_view)
 
 /datum/preferences/proc/generate_preference_values(datum/preference/choiced/preference)
 	var/list/values
@@ -376,15 +373,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	assigned_map = "character_preview_[REF(src)]"
 	set_position(1, 1)
 
-	src.client = client
 	src.preferences = preferences
-
-	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/plane_master/plane_master = new plane_master_type
-		plane_master.screen_loc = "[assigned_map]:CENTER"
-		client?.screen |= plane_master
-
-		plane_masters += plane_master
 
 /atom/movable/screen/character_preview_view/Destroy()
 	. = ..()
@@ -412,6 +401,24 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	// Without this, it doesn't show up in the menu
 	body.appearance_flags &= ~KEEP_TOGETHER
+
+/// Registers the relevant map objects to a client
+/atom/movable/screen/character_preview_view/proc/register_to_client(client/client)
+	QDEL_LIST(plane_masters)
+
+	src.client = client
+
+	if (!client)
+		return
+
+	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/plane_master/plane_master = new plane_master_type
+		plane_master.screen_loc = "[assigned_map]:CENTER"
+		client?.screen |= plane_master
+
+		plane_masters += plane_master
+
+	client?.register_map_obj(src)
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
