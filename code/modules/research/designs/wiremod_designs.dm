@@ -193,6 +193,11 @@
 	id = "comp_multiplexer"
 	build_path = /obj/item/circuit_component/multiplexer
 
+/datum/design/component/flag
+	name = "Flag Component"
+	id = "comp_flag"
+	build_path = /obj/item/circuit_component/flag
+
 /datum/design/component/get_column
 	name = "Get Column Component"
 	id = "comp_get_column"
