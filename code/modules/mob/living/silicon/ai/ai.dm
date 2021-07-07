@@ -37,7 +37,6 @@
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon //Default is assigned when AI is created.
 	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
@@ -101,6 +100,8 @@
 	var/cam_prev
 
 	var/datum/robot_control/robot_control
+	///Alert listener datum, handes caring about alert events and such
+	var/datum/alert_listener/listener
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -173,6 +174,9 @@
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
+	listener = new(list(ALERT_ATMOS, ALERT_FIRE, ALERT_POWER, ALERT_CAMERA, ALERT_BURGLAR, ALERT_MOTION), list(z))
+	RegisterSignal(listener, COMSIG_ALERT_TRIGGERED, .proc/alert_triggered)
+	RegisterSignal(listener, COMSIG_ALERT_CLEARED, .proc/alert_cleared)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -204,6 +208,7 @@
 	QDEL_NULL(doomsday_device)
 	QDEL_NULL(robot_control)
 	QDEL_NULL(aiMulti)
+	QDEL_NULL(listener)
 	malfhack = null
 	current = null
 	Bot = null
@@ -286,12 +291,13 @@
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=[REF(src)];mach_close=aialerts'>Close</A><BR><BR>"
-	for (var/cat in alarms)
-		dat += text("<B>[]</B><BR>\n", cat)
-		var/list/L = alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
+	var/list/alarms = listener.alarms
+	for (var/alarm_type in alarms)
+		dat += text("<B>[]</B><BR>\n", alarm_type)
+		var/list/alerts = alarms[alarm_type]
+		if (length(alerts))
+			for (var/alarm in alerts)
+				var/list/alm = alerts[alarm]
 				var/area/A = alm[1]
 				var/C = alm[2]
 				var/list/sources = alm[3]
@@ -522,77 +528,31 @@
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
 
-/mob/living/silicon/ai/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[3]
-			if (!(source in sources))
-				sources += source
-			return TRUE
+/mob/living/silicon/ai/proc/alert_triggered(datum/source, alert_type, area/source_area)
+	var/list/cameras = source_area.cameras
+	var/home_name = source_area.name
 
-	var/obj/machinery/camera/cam = null
-	var/list/our_cams = null
-	if(cameras && islist(cameras))
-		our_cams = cameras
-		if (our_cams.len == 1)
-			cam = our_cams[1]
-	else if(cameras && istype(cameras, /obj/machinery/camera))
-		cam = cameras
-	our_sort[home.name] = list(home, (cam ? cam : cameras), list(source))
-
-	if (cameras)
-		if (cam?.can_use())
-			queueAlarm("--- [class] alarm detected in [home.name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", class)
-		else if (our_cams?.len)
-			var/foo = 0
-			var/dat2 = ""
-			for (var/obj/machinery/camera/I in our_cams)
-				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (!foo) ? "" : " | ", I.c_tag) //I'm not fixing this shit...
-				foo = 1
-			queueAlarm(text ("--- [] alarm detected in []! ([])", class, home.name, dat2), class)
+	if (length(cameras))
+		var/obj/machinery/camera/cam = cameras[1]
+		if (cam.can_use())
+			queueAlarm("--- [alert_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alert_type)
 		else
-			queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, home.name), class)
+			var/first_run = FALSE
+			var/dat2 = ""
+			for (var/obj/machinery/camera/camera as anything in cameras)
+				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[]</A>", (!first_run) ? "" : " | ", camera.c_tag) //I'm not fixing this shit...
+				first_run = TRUE
+			queueAlarm(text ("--- [] alarm detected in []! ([])", alert_type, home_name, dat2), alert_type)
 	else
-		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, home.name), class)
+		queueAlarm(text("--- [] alarm detected in []! (No Camera)", alert_type, home_name), alert_type)
 	if (viewalerts)
 		ai_alerts()
 	return 1
 
-/mob/living/silicon/ai/freeCamera(area/home, obj/machinery/camera/cam)
-	for(var/class in alarms)
-		var/our_area = alarms[class][home.name]
-		if(!our_area)
-			continue
-		var/cams = our_area[2] //Get the cameras
-		if(!cams)
-			continue
-		if(islist(cams))
-			cams -= cam
-			if(length(cams) == 1)
-				our_area[2] = cams[1]
-		else
-			our_area[2] = null
-
-/mob/living/silicon/ai/cancelAlarm(class, area/A, obj/origin)
-	var/list/L = alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
-				cleared = 1
-				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-		if (viewalerts) ai_alerts()
-	return !cleared
+/mob/living/silicon/ai/proc/alert_cleared(datum/source, alert_type, area/source_area)
+	queueAlarm("--- [alert_type] alarm in [source_area.name] has been cleared.", alert_type, 0)
+	if(viewalerts)
+		ai_alerts()
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead

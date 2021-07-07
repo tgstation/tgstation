@@ -71,6 +71,12 @@
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
 
+	listener = new(list(ALERT_ATMOS, ALERT_FIRE, ALERT_POWER, ALERT_CAMERA, ALERT_BURGLAR, ALERT_MOTION), list(z))
+	RegisterSignal(listener, COMSIG_ALERT_TRIGGERED, .proc/alert_triggered)
+	RegisterSignal(listener, COMSIG_ALERT_CLEARED, .proc/alert_cleared)
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alert_listener/proc/prevent_alert_changes)
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alert_listener/proc/allow_alert_changes)
+
 /mob/living/silicon/robot/model/syndicate/Initialize()
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
@@ -120,6 +126,7 @@
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
 	QDEL_NULL(spark_system)
+	QDEL_NULL(listener)
 	cell = null
 	return ..()
 
@@ -189,9 +196,10 @@
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
-	for (var/cat in alarms)
-		dat += text("<B>[cat]</B><BR>\n")
-		var/list/L = alarms[cat]
+	var/list/alarms = listener.alarms
+	for (var/alert_type in alarms)
+		dat += text("<B>[alert_type]</B><BR>\n")
+		var/list/L = alarms[alert_type]
 		if (L.len)
 			for (var/alarm in L)
 				var/list/alm = L[alarm]
@@ -248,63 +256,11 @@
 	if(connected_ai)
 		. += "Master AI: [connected_ai.name]"
 
+/mob/living/silicon/robot/proc/alert_triggered(datum/source, alert_type, area/source_area)
+	queueAlarm(text("--- [alert_type] alarm detected in [source_area.name]!"), alert_type)
 
-/mob/living/silicon/robot/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	if(stat == DEAD)
-		return TRUE
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[3]
-			if (!(source in sources))
-				sources += source
-			return TRUE
-
-	var/obj/machinery/camera/cam = null
-	var/list/our_cams = null
-	if(cameras && islist(cameras))
-		our_cams = cameras
-		if (our_cams.len == 1)
-			cam = our_cams[1]
-	else if(cameras && istype(cameras, /obj/machinery/camera))
-		cam = cameras
-	our_sort[home.name] = list(home, (cam ? cam : cameras), list(source))
-	queueAlarm(text("--- [class] alarm detected in [home.name]!"), class)
-	return TRUE
-
-/mob/living/silicon/robot/freeCamera(area/home, obj/machinery/camera/cam)
-	for(var/class in alarms)
-		var/our_area = alarms[class][home.name]
-		if(!our_area)
-			continue
-		var/cams = our_area[2] //Get the cameras
-		if(!cams)
-			continue
-		if(islist(cams))
-			cams -= cam
-			if(length(cams) == 1)
-				our_area[2] = cams[1]
-		else
-			our_area[2] = null
-
-/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
-	var/list/L = alarms[class]
-	var/cleared = FALSE
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (srcs.len == 0)
-				cleared = TRUE
-				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
-	return !cleared
+/mob/living/silicon/robot/proc/alert_cleared(datum/source, alert_type, area/source_area)
+	queueAlarm("--- [alert_type] alarm in [source_area.name] has been cleared.", alert_type, 0)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
 	if (A == modularInterface)

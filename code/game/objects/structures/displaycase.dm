@@ -20,6 +20,8 @@
 	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
 	var/trophy_message = ""
 	var/glass_fix = TRUE
+	///Represents a signel source of breaken screaming
+	var/datum/alert_handler/alert_manager
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
@@ -32,6 +34,7 @@
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_appearance()
+	alert_manager = new(src)
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
 	. = ..()
@@ -49,6 +52,7 @@
 /obj/structure/displaycase/Destroy()
 	QDEL_NULL(electronics)
 	QDEL_NULL(showpiece)
+	QDEL_NULL(alert_manager)
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
@@ -98,6 +102,10 @@
 		return
 	var/area/alarmed = get_area(src)
 	alarmed.burglaralert(src)
+
+	alert_manager.send_alert(ALERT_BURGLAR)
+	addtimer(CALLBACK(alert_manager, /datum/alert_handler/proc/clear_alert, ALERT_BURGLAR), 600)
+
 	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
 /obj/structure/displaycase/update_overlays()
