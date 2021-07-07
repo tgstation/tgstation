@@ -263,7 +263,7 @@
 	var/list/removal_list = list()
 	var/max_dist = 1
 	for(var/atom/turfie as anything in turfs)
-		if(!turfie.GetComponent(/datum/component/rust))
+		if(!HAS_TRAIT(turfie, RUSTY_TRAIT))
 			removal_list += turfie
 		max_dist = max(max_dist, get_dist(turfie,centre) +1)
 	turfs -= removal_list

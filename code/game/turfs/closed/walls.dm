@@ -309,7 +309,7 @@
 	add_overlay(dent_decals)
 
 /turf/closed/wall/rust_heretic_act()
-	if(GetComponent(/datum/component/rust))
+	if(HAS_TRAIT(src, RUSTY_TRAIT))
 		ScrapeAway()
 		return
 	if(prob(70))
