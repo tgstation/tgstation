@@ -22,11 +22,9 @@
 /datum/component/rust/Initialize(rust_iconstate = "rust")
 	. = ..()
 	if(!isatom(parent))
-		stack_trace("Attempted to intialize a Rust Component for non-Atom [parent]")
 		return COMPONENT_INCOMPATIBLE
 	var/atom/parent_atom = parent
 	if(!(rust_iconstate in icon_states(parent_atom.icon)))
-		stack_trace("Attempted to intialize a Rust Component for [parent] with invalid rust iconstate '[rust_iconstate]'")
 		return COMPONENT_INCOMPATIBLE
 
 	rust_overlay = mutable_appearance(parent_atom.icon, rust_iconstate)
