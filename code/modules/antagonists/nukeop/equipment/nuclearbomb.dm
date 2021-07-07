@@ -474,7 +474,7 @@ GLOBAL_VAR(station_nuke_source)
 		SSticker.roundend_check_paused = FALSE
 		return
 
-	GLOB.enter_allowed = FALSE
+	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)

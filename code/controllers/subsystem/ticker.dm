@@ -43,7 +43,6 @@ SUBSYSTEM_DEF(ticker)
 
 	var/news_report
 
-	var/late_join_disabled
 
 	var/roundend_check_paused = FALSE
 
