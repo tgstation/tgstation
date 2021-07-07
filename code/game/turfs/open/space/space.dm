@@ -158,7 +158,7 @@
 		else
 			to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
 
-/turf/open/space/Entered(atom/movable/arrived, direction)
+/turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(!arrived || src != arrived.loc)
 		return

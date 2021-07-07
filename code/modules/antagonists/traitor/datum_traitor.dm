@@ -24,6 +24,7 @@
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
+	suicide_cry = "FOR THE SYNDICATE!!"
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE

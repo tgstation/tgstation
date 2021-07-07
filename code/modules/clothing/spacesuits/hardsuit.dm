@@ -27,7 +27,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
 	. = ..()
-	soundloop = new(list(), FALSE, TRUE)
+	soundloop = new(src, FALSE, TRUE)
 	soundloop.volume = 5
 	START_PROCESSING(SSobj, src)
 
@@ -297,6 +297,7 @@
 		if(amount == maxamount)
 			hardsuit_type = "mining_goliath_full"
 	icon_state = "hardsuit[on]-[hardsuit_type]"
+	set_light_color(LIGHT_COLOR_FLARE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.head == src)

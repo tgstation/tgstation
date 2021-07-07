@@ -474,7 +474,7 @@
 		A.addMember(src)
 	SSair.add_to_rebuild_queue(src)
 
-/obj/machinery/atmospherics/Entered(atom/movable/arrived, direction)
+/obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /mob/living))
 		var/mob/living/L = arrived
 		L.ventcrawl_layer = piping_layer
