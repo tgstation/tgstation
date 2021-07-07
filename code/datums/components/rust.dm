@@ -66,7 +66,7 @@
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
 			if(item.use(5))
-				user.balloon_alert(user, "You start burning off the rust on [parent]...")
+				user.balloon_alert(user, "burning off rust...")
 				if(!do_after(user, 5 SECONDS * item.toolspeed, parent))
 					return
 				to_chat(user, span_notice("You burn off the rust of [parent]."))
