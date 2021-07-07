@@ -133,6 +133,24 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/proc/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	return
 
+/// This command knocks the listeners down.
+/datum/voice_of_god_command/paralyze
+	trigger = "drop|fall|trip|knockdown|stop|wait|stand\\s*still|hold\\s*on|halt"
+	cooldown = COOLDOWN_STUN
+
+/datum/voice_of_god_command/paralyze/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+	for(var/mob/living/target as anything in listeners)
+		target.Knockdown(4 SECONDS * power_multiplier)
+
+/// This command makes carbon listeners throw up like Mr. Creosote.
+/datum/voice_of_god_command/vomit
+	trigger = "vomit|throw\\s*up|sick"
+	cooldown = COOLDOWN_STUN
+
+/datum/voice_of_god_command/vomit/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+	for(var/mob/living/carbon/target in listeners)
+		target.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
+
 /// This command silences the listeners. Thrice as effective is the user is a mime or curator.
 /datum/voice_of_god_command/silence
 	trigger = "shut\\s*up|silence|be\\s*silent|ssh|quiet|hush"
