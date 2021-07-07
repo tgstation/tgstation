@@ -23,6 +23,7 @@ const KEYS_TO_NAMES = {
 
 const CharacterControls = (props: {
   handleRotate: () => void,
+  handleOpenSpecies: () => void,
   gender: Gender,
   setGender: (gender: Gender) => void,
 }) => {
@@ -33,6 +34,14 @@ const CharacterControls = (props: {
           onClick={props.handleRotate}
           fontSize="16px"
           icon="undo"
+        />
+      </Stack.Item>
+
+      <Stack.Item>
+        <Button
+          onClick={props.handleOpenSpecies}
+          fontSize="16px"
+          icon="paw"
         />
       </Stack.Item>
 
@@ -220,7 +229,9 @@ const NameInput = (props: {
   );
 };
 
-export const MainPage = (props, context) => {
+export const MainPage = (props: {
+  openSpecies: () => void,
+}, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState(context, "currentClothingMenu", null);
 
@@ -237,6 +248,7 @@ export const MainPage = (props, context) => {
           <Stack.Item>
             <CharacterControls
               gender={data.character_preferences.misc.gender}
+              handleOpenSpecies={props.openSpecies}
               handleRotate={() => {
                 act("rotate");
               }}

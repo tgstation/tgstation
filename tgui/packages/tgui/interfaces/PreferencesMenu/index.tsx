@@ -48,7 +48,7 @@ export const PreferencesMenu = (props, context) => {
       page = <JobsPage />;
       break;
     case Page.Main:
-      page = <MainPage />;
+      page = <MainPage openSpecies={() => setCurrentPage(Page.Species)} />;
       break;
     case Page.Species:
       page = <SpeciesPage />;
