@@ -83,12 +83,7 @@
 	if(user.pulling)
 		AM = user.pulling
 		AM.forceMove(T)
-
-	if(isobserver(user))
-		user.abstract_move(T)
-	else
-		user.forceMove(T)
-
+	user.forceMove(T)
 	if(AM)
 		user.start_pulling(AM)
 
