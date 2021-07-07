@@ -34,10 +34,14 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/parent_del)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
+	ADD_TRAIT(parent, RUSTY_TRAIT, src)
 
 /datum/component/rust/UnregisterFromParent()
 	UnregisterSignal(parent,\
 		list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), COMSIG_PARENT_PREQDELETED)
+	REMOVE_TRAIT(parent, RUSTY_TRAIT, src)
+	var/atom/parent_atom = parent
+	parent_atom.update_icon(UPDATE_OVERLAYS)
 
 /datum/component/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -52,11 +56,7 @@
 	qdel(src)
 
 /datum/component/rust/Destroy()
-	if(parent)
-		var/atom/parent_atom = parent
-		UnregisterFromParent()
-		parent_atom.update_icon(UPDATE_OVERLAYS)
-		rust_overlay = null
+	rust_overlay = null
 	return ..()
 
 /// We call this from secondary_tool_act because we sleep with do_after
