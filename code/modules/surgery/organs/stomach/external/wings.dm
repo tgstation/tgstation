@@ -12,7 +12,9 @@
 	if(human.wear_suit.flags_inv & HIDEJUMPSUIT)
 		if(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
 			return TRUE
-	return FALSE
+		else
+			return FALSE
+	return TRUE
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them, but it does wing stuff)
 /obj/item/organ/external/wings/functional
