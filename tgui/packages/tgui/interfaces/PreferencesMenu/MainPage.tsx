@@ -4,6 +4,7 @@ import { Box, Button, ByondUi, FitText, Flex, Icon, Input, Popper, Stack } from 
 import { createSetPreference, PreferencesMenuData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
+import { Component, createRef } from "inferno";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -21,6 +22,58 @@ const KEYS_TO_NAMES = {
   underwear: "underwear",
 };
 
+// MOTHBLOCKS TODO: Move outside this class
+class Autofocus extends Component {
+  ref = createRef<HTMLDivElement>();
+
+  componentDidMount() {
+    if (this.ref.current) {
+      this.ref.current.focus();
+    }
+  }
+
+  render() {
+    return (
+      <div ref={this.ref} tabIndex={-1}>
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
+// MOTHBLOCKS TODO: Move outside this class
+class TrackOutsideClicks extends Component<{
+  onOutsideClick: () => void,
+}> {
+  ref = createRef<HTMLDivElement>();
+
+  constructor() {
+    super();
+
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+
+    document.addEventListener("click", this.handleOutsideClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleOutsideClick);
+  }
+
+  handleOutsideClick(event: MouseEvent) {
+    if (this.ref.current && !this.ref.current.contains(event.target)) {
+      this.props.onOutsideClick();
+    }
+  }
+
+  render() {
+    return (
+      <div ref={this.ref}>
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
 const CharacterControls = (props: {
   handleRotate: () => void,
   handleOpenSpecies: () => void,
@@ -34,6 +87,8 @@ const CharacterControls = (props: {
           onClick={props.handleRotate}
           fontSize="16px"
           icon="undo"
+          tooltip="Rotate"
+          tooltipPosition="top"
         />
       </Stack.Item>
 
@@ -79,34 +134,36 @@ const ClothingSelection = (props: {
         </Stack.Item>
 
         <Stack.Item overflowY="scroll">
-          <Flex wrap>
-            {Object.entries(props.catalog).map(([name, image], index) => {
-              return (
-                <Flex.Item
-                  key={index}
-                  basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
-                  style={{
-                    padding: "5px",
-                  }}
-                >
-                  <Button
-                    onClick={() => {
-                      props.onSelect(name);
-                    }}
-                    selected={name === props.selected}
-                    tooltip={name}
-                    tooltipPosition="right"
+          <Autofocus>
+            <Flex wrap>
+              {Object.entries(props.catalog).map(([name, image], index) => {
+                return (
+                  <Flex.Item
+                    key={index}
+                    basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
                     style={{
-                      height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                      width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                      padding: "5px",
                     }}
                   >
-                    <Box className={classes(["preferences32x32", image, "centered-image"])} />
-                  </Button>
-                </Flex.Item>
-              );
-            })}
-          </Flex>
+                    <Button
+                      onClick={() => {
+                        props.onSelect(name);
+                      }}
+                      selected={name === props.selected}
+                      tooltip={name}
+                      tooltipPosition="right"
+                      style={{
+                        height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                      }}
+                    >
+                      <Box className={classes(["preferences32x32", image, "centered-image"])} />
+                    </Button>
+                  </Flex.Item>
+                );
+              })}
+            </Flex>
+          </Autofocus>
         </Stack.Item>
       </Stack>
     </Box>
@@ -287,20 +344,23 @@ export const MainPage = (props: {
                 <Stack.Item key={clothingKey}>
                   <Popper options={{
                     placement: "bottom-start",
-                  }} popperContent={
-                    (currentClothingMenu === clothingKey
-                  && data.generated_preference_values
-                  && data.generated_preference_values[clothingKey])
-                && <ClothingSelection
-                  name={KEYS_TO_NAMES[clothingKey]
-                    || `NO NAME FOR ${clothingKey}`}
-                  catalog={
-                    data.generated_preference_values[clothingKey]
-                  }
-                  selected={clothing.value}
-                  onSelect={createSetPreference(act, clothingKey)}
-                />
-                  }>
+                  }} popperContent={(currentClothingMenu === clothingKey
+                    && data.generated_preference_values
+                    && data.generated_preference_values[clothingKey]) && (
+                    <TrackOutsideClicks onOutsideClick={() => {
+                      setCurrentClothingMenu(null);
+                    }}>
+                      <ClothingSelection
+                        name={KEYS_TO_NAMES[clothingKey]
+                          || `NO NAME FOR ${clothingKey}`}
+                        catalog={
+                          data.generated_preference_values[clothingKey]
+                        }
+                        selected={clothing.value}
+                        onSelect={createSetPreference(act, clothingKey)}
+                      />
+                    </TrackOutsideClicks>
+                  )}>
                     <Button onClick={() => {
                       setCurrentClothingMenu(
                         currentClothingMenu === clothingKey
