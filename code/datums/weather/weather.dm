@@ -192,30 +192,24 @@
 /datum/weather/proc/can_weather_act(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
 
-	/// If we aren't in nullspace
 	if(!mob_turf)
 		return
 
-	/// If we're on a proper z-level
 	if(!(mob_turf.z in impacted_z_levels))
 		return
 
-	/// If we're not in a closet which provides protection
 	if(istype(mob_to_check.loc, /obj/structure/closet))
 		var/obj/structure/closet/current_locker = mob_to_check.loc
 		if(current_locker.weather_protection)
 			if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
 				return
 
-	/// If we ourselves aren't immune to the weather
 	if((immunity_type in mob_to_check.weather_immunities) || (WEATHER_ALL in mob_to_check.weather_immunities))
 		return
 
-	/// If we're in an area impacted by the weather
 	if(!(get_area(mob_to_check) in impacted_areas))
 		return
 
-	/// Then we get hit by the weather.
 	return TRUE
 
 /**
