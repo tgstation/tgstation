@@ -280,8 +280,9 @@
 	},
 /area/ruin/powered/snow_biodome)
 "og" = (
-/obj/structure/stairs/south,
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron/stairs{
+	dir = 1
+	},
 /area/ruin/powered/snow_biodome)
 "pr" = (
 /obj/effect/turf_decal/siding/wood/corner{
