@@ -56,35 +56,32 @@
 		COMSIG_STORAGE_EXITED,
 		COMSIG_PARENT_EXAMINE))
 
-/datum/component/decomposition/proc/handle_movement() // Assuming it is guaranteed to be food
-	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
-	var/atom/last_loc = food.loc
-
-	var/clean = FALSE // Used to check if it's on a clean surface
-	while(last_loc && !isarea(last_loc))
-		if(!(istype(food.loc, /turf/open)))
-			clean = TRUE
-			break
-		else if(locate(/obj/structure/table) in food.loc)
-			clean = TRUE
-			break
-		else if(locate(/obj/machinery/conveyor) in food.loc)
-			clean = TRUE
-			break
-		last_loc = last_loc.loc
-	if(!handled || clean || protected)
-		// prevent decomposition
-		if(active_timers)
-			time_remaining = timeleft(timerid)
-			deltimer(timerid)
+/datum/component/decomposition/proc/handle_movement()
+	if(!handled) // Has someone touched this previously?
 		return
-	// do decomposition
-	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE) //Was told to use this instead of processing I guess
+	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
+
+	if(!(istype(food.loc, /turf/open))) // Is this currently in an open turf?
+		remove_timer() // If not, remove any active timers and return
+		return
+	if(locate(/obj/structure/table) in get_turf(food)) // Is this currently over a table?
+		remove_timer()
+		return
+	if(locate(/obj/machinery/conveyor) in get_turf(food)) // Makes sure no decals spawn on disposals conveyors
+		remove_timer()
+		return
+	// If all other checks fail, then begin decomposition.
+	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
 
 /datum/component/decomposition/Destroy()
 	if(active_timers)
 		deltimer(timerid)
 	return ..()
+
+/datum/component/decomposition/proc/remove_timer()
+	if(active_timers) // Makes sure there's an active timer to delete.
+		time_remaining = timeleft(timerid)
+		deltimer(timerid)
 
 /datum/component/decomposition/proc/dropped()
 	SIGNAL_HANDLER
