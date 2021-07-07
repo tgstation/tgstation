@@ -126,7 +126,6 @@
 	var/datum/game_mode/dynamic/dynamic = SSticker.mode
 
 	var/list/export = list()
-	export["Roundstart"] = export_dynamic_json_of(dynamic.roundstart_rules)
 	export["Midround"] = export_dynamic_json_of(dynamic.midround_rules)
 	export["Latejoin"] = export_dynamic_json_of(dynamic.latejoin_rules)
 
