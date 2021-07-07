@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "the examine text on the Seed Extractor now accurately displays the amount of seeds you may potentially get"

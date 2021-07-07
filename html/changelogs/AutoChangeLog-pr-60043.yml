@@ -1,0 +1,5 @@
+author: "Greniza"
+delete-after: True
+changes: 
+  - bugfix: "runtime errors from weather"
+  - bugfix: "Environmental Protection Bags protect from ash storms"
