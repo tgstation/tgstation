@@ -107,9 +107,9 @@
 	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
-		message_admins("The ruleset [name] received no applications.")
-		log_game("DYNAMIC: The ruleset [name] received no applications.")
+		mode.dynamic_log("The ruleset [name] received no applications.")
 		mode.executed_rules -= src
+		attempt_replacement()
 		return
 
 	message_admins("[candidates.len] players volunteered for the ruleset [name].")
@@ -161,6 +161,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/antagonist/new_role)
 	return
 
+/// Fired when there are no valid candidates. Will spawn a sleeper agent or latejoin traitor.
+/datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
+	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
+
+	// Otherwise, it has a chance to fail. We don't want that, since this is already pretty unlikely.
+	sleeper_agent.has_failure_chance = FALSE
+
+	mode.configure_ruleset(sleeper_agent)
+
+	if (!mode.picking_specific_rule(sleeper_agent))
+		return
+
+	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+
 //////////////////////////////////////////////
 //                                          //
 //           SYNDICATE TRAITORS             //
@@ -179,6 +193,10 @@
 	requirements = list(50,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
 
+	/// Whether or not this instance of sleeper agent should be randomly acceptable.
+	/// If TRUE, then this has a threat level% chance to succeed.
+	var/has_failure_chance = TRUE
+
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = GLOB.alive_player_list.len
 	var/antag_count = GLOB.current_living_antags.len
@@ -190,7 +208,7 @@
 		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
 		return FALSE
 
-	if (!prob(mode.threat_level))
+	if (has_failure_chance && !prob(mode.threat_level))
 		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
 		return FALSE
 
@@ -426,7 +444,7 @@
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 4
+	weight = 2
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
@@ -434,6 +452,41 @@
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
 	var/body = applicant.become_overmind()
 	return body
+
+/// Infects a random player, making them explode into a blob.
+/datum/dynamic_ruleset/midround/blob_infection
+	name = "Blob Infection"
+	antag_datum = /datum/antagonist/blob
+	antag_flag = ROLE_BLOB
+	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 2
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/blob_infection/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/player as anything in candidates)
+		var/turf/player_turf = get_turf(player)
+		if(!player_turf || !is_station_level(player_turf.z))
+			candidates -= player
+			continue
+
+		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
+			candidates -= player
+
+/datum/dynamic_ruleset/midround/blob_infection/execute()
+	if(!candidates || !candidates.len)
+		return FALSE
+	var/mob/living/carbon/human/blob_antag = pick_n_take(candidates)
+	assigned += blob_antag.mind
+	blob_antag.mind.special_role = antag_flag
+	return ..()
 
 //////////////////////////////////////////////
 //                                          //
@@ -476,6 +529,7 @@
 	var/obj/vent = pick_n_take(vents)
 	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 	new_xeno.key = applicant.key
+	new_xeno.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(new_xeno)] was spawned as an alien by the midround ruleset.")
 	return new_xeno

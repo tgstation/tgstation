@@ -82,9 +82,9 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
-		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
+		to_chat(user, span_notice("You already activated the machine."))
 		return
-	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
+	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
 	update_appearance()
 	linked_interface.active = TRUE
@@ -103,7 +103,7 @@
 		corner.active = TRUE
 		corner.update_appearance()
 		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
 /**

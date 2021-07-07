@@ -18,6 +18,16 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/usb_cable
+	name = "USB Cable"
+	desc = "A cable that allows certain shells to connect to nearby computers and machines."
+	id = "usb_cable"
+	build_path = /obj/item/usb_cable
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Core")
+	// Yes, it would make sense to make them take plastic, but then less people would make them, and I think they're cool
+	materials = list(/datum/material/iron = 2500)
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/component
 	name = "Component ( NULL ENTRY )"
@@ -27,161 +37,191 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 	category = list("Circuitry", "Components")
 
+/datum/design/component/New()
+	. = ..()
+	if(build_path)
+		var/obj/item/circuit_component/component_path = build_path
+		desc = initial(component_path.display_desc)
+
 /datum/design/component/arithmetic
 	name = "Arithmetic Component"
-	desc = "General arithmetic component with add/subtract/multiplication/division capabilities."
 	id = "comp_arithmetic"
 	build_path = /obj/item/circuit_component/arithmetic
 
 /datum/design/component/clock
 	name = "Clock Component"
-	desc = "A component that repeatedly fires."
 	id = "comp_clock"
 	build_path = /obj/item/circuit_component/clock
 
 /datum/design/component/comparison
 	name = "Comparison Component"
-	desc = "A component that compares two objects."
 	id = "comp_comparison"
 	build_path = /obj/item/circuit_component/compare/comparison
 
 /datum/design/component/logic
 	name = "Logic Component"
-	desc = "A component with 'and' and 'or' capabilities."
 	id = "comp_logic"
 	build_path = /obj/item/circuit_component/compare/logic
 
 /datum/design/component/delay
 	name = "Delay Component"
-	desc = "A component that delays a signal by a specified duration."
 	id = "comp_delay"
 	build_path = /obj/item/circuit_component/delay
 
 /datum/design/component/index
 	name = "Index Component"
-	desc = "A component that returns the value of a list at a given index."
 	id = "comp_index"
 	build_path = /obj/item/circuit_component/index
 
 /datum/design/component/length
 	name = "Length Component"
-	desc = "A component that returns the length of its input."
 	id = "comp_length"
 	build_path = /obj/item/circuit_component/length
 
 /datum/design/component/light
 	name = "Light Component"
-	desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
 	id = "comp_light"
 	build_path = /obj/item/circuit_component/light
 
 /datum/design/component/not
 	name = "Not Component"
-	desc = "A component that inverts its input."
 	id = "comp_not"
 	build_path = /obj/item/circuit_component/not
 
 /datum/design/component/ram
 	name = "RAM Component"
-	desc = "A component that retains a variable."
 	id = "comp_ram"
 	build_path = /obj/item/circuit_component/ram
 
 /datum/design/component/random
 	name = "Random Component"
-	desc = "A component that returns random values."
 	id = "comp_random"
 	build_path = /obj/item/circuit_component/random
 
 /datum/design/component/species
 	name = "Get Species Component"
-	desc = "A component that returns the species of its input."
 	id = "comp_species"
 	build_path = /obj/item/circuit_component/species
 
 /datum/design/component/speech
 	name = "Speech Component"
-	desc = "A component that sends a message. Requires a shell."
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
 
 /datum/design/component/tostring
 	name = "To String Component"
-	desc = "A component that converts its input to text."
 	id = "comp_tostring"
 	build_path = /obj/item/circuit_component/tostring
 
 /datum/design/component/typecheck
 	name = "Typecheck Component"
-	desc = "A component that checks the type of its input."
 	id = "comp_typecheck"
 	build_path = /obj/item/circuit_component/compare/typecheck
 
 /datum/design/component/concat
 	name = "Concatenation Component"
-	desc = "A component that combines strings."
 	id = "comp_concat"
 	build_path = /obj/item/circuit_component/concat
 
 /datum/design/component/textcase
 	name = "Textcase Component"
-	desc = "A component that makes its input uppercase or lowercase."
 	id = "comp_textcase"
 	build_path = /obj/item/circuit_component/textcase
 
 /datum/design/component/hear
 	name = "Voice Activator Component"
-	desc = "A component that listens for messages. Requires a shell."
 	id = "comp_hear"
 	build_path = /obj/item/circuit_component/hear
 
 /datum/design/component/contains
 	name = "String Contains Component"
-	desc = "Checks if a string contains a word/letter"
 	id = "comp_string_contains"
 	build_path = /obj/item/circuit_component/compare/contains
 
 /datum/design/component/self
 	name = "Self Component"
-	desc = "A component that returns the current shell."
 	id = "comp_self"
 	build_path = /obj/item/circuit_component/self
 
 /datum/design/component/radio
 	name = "Radio Component"
-	desc = "A component that can listen and send frequencies."
 	id = "comp_radio"
 	build_path = /obj/item/circuit_component/radio
 
 /datum/design/component/gps
 	name = "GPS Component"
-	desc = "A component that returns the xyz co-ordinates of itself."
 	id = "comp_gps"
 	build_path = /obj/item/circuit_component/gps
 
 /datum/design/component/direction
 	name = "Direction Component"
-	desc = "A component that returns the direction of itself and an entity."
 	id = "comp_direction"
 	build_path = /obj/item/circuit_component/direction
 
 /datum/design/component/health
 	name = "Health Component"
-	desc = "A component that returns the health of an organism."
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
 /datum/design/component/combiner
 	name = "Combiner Component"
-	desc = "A component that combines multiple inputs to provide 1 output."
 	id = "comp_combiner"
 	build_path = /obj/item/circuit_component/combiner
 
+/datum/design/component/split
+	name = "Split Component"
+	id = "comp_split"
+	build_path = /obj/item/circuit_component/split
+
 /datum/design/component/pull
 	name = "Pull Component"
-	desc = "A component that can force the shell to pull entities. Only works for drone shells."
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
+
+/datum/design/component/soundemitter
+	name = "Sound Emitter Component"
+	id = "comp_soundemitter"
+	build_path = /obj/item/circuit_component/soundemitter
+
+/datum/design/component/mmi
+	name = "MMI Component"
+	id = "comp_mmi"
+	build_path = /obj/item/circuit_component/mmi
+
+/datum/design/component/multiplexer
+	name = "Multiplexer Component"
+	id = "comp_multiplexer"
+	build_path = /obj/item/circuit_component/multiplexer
+
+/datum/design/component/get_column
+	name = "Get Column Component"
+	id = "comp_get_column"
+	build_path = /obj/item/circuit_component/get_column
+
+/datum/design/component/index_table
+	name = "Index Table Component"
+	id = "comp_index_table"
+	build_path = /obj/item/circuit_component/index_table
+
+/datum/design/component/concat_list
+	name = "Concatenate List Component"
+	id = "comp_concat_list"
+	build_path = /obj/item/circuit_component/concat_list
+
+/datum/design/component/select_query
+	name = "Select Query Component"
+	id = "comp_select_query"
+	build_path = /obj/item/circuit_component/select
+
+/datum/design/component/tempsensor
+	name = "Temperature Sensor"
+	id = "comp_tempsensor"
+	build_path = /obj/item/circuit_component/tempsensor
+
+/datum/design/component/pressuresensor
+	name = "Pressure Sensor"
+	id = "comp_pressuresensor"
+	build_path = /obj/item/circuit_component/pressuresensor
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -203,7 +243,7 @@
 
 /datum/design/bot_shell
 	name = "Bot Shell"
-	desc = "An immobile shell that can store more components."
+	desc = "An immobile shell that can store more components. Has a USB port to be able to connect to computers and machines."
 	id = "bot_shell"
 	build_path = /obj/item/shell/bot
 	build_type = PROTOLATHE | COMPONENT_PRINTER
@@ -242,5 +282,17 @@
 		/datum/material/gold = 1500,
 	)
 	build_path = /obj/item/shell/server
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/airlock_shell
+	name = "Airlock Shell"
+	desc = "A door shell that cannot be moved around when assembled."
+	id = "door_shell"
+	materials = list(
+		/datum/material/glass = 5000,
+		/datum/material/iron = 15000,
+	)
+	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")

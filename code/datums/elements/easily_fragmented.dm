@@ -28,5 +28,5 @@
 	var/obj/item/item = source
 
 	if(prob(break_chance))
-		user.visible_message("<span class='danger'>[user]'s [item.name] snap[item.p_s()] into tiny pieces in [user.p_their()] hand.</span>")
+		user.visible_message(span_danger("[user]'s [item.name] snap[item.p_s()] into tiny pieces in [user.p_their()] hand."))
 		item.deconstruct(disassembled = FALSE)

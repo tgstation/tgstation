@@ -169,10 +169,10 @@
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/glass/C = I
 	if(C.reagents.total_volume >= C.volume)
-		to_chat(user, "<span class='danger'>[C] is full.</span>")
+		to_chat(user, span_danger("[C] is full."))
 		return
 	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
-	user.visible_message("<span class='notice'>[user] scoops some plasma from the [src] with \the [C].</span>", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
+	user.visible_message(span_notice("[user] scoops some plasma from the [src] with \the [C]."), span_notice("You scoop out some plasma from the [src] using \the [C]."))
 
 /turf/open/lava/plasma/burn_stuff(AM)
 	. = 0
@@ -194,7 +194,7 @@
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue //YOU'RE FLYING OVER IT
-			if("snow" in L.weather_immunities)
+			if(WEATHER_SNOW in L.weather_immunities)
 				continue
 
 			var/buckle_check = L.buckled
@@ -205,7 +205,7 @@
 
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
-				if("snow" in live.weather_immunities)
+				if(WEATHER_SNOW in live.weather_immunities)
 					continue
 
 			L.adjustFireLoss(2)
@@ -222,7 +222,7 @@
 
 					for(var/BP in PP.bodyparts)
 						var/obj/item/bodypart/NN = BP
-						if(NN.status == BODYPART_ORGANIC && NN.species_id != "plasmaman") //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+						if(NN.status == BODYPART_ORGANIC && NN.species_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 							plasma_parts += NN
 						if(NN.status == BODYPART_ROBOTIC)
 							robo_parts += NN
@@ -235,13 +235,13 @@
 							PP.emote("scream")
 							ADD_TRAIT(NB, TRAIT_PLASMABURNT, src)
 							PP.update_body_parts()
-							PP.visible_message("<span class='warning'>[L] screams in pain as [L.p_their()] [NB] melts down to the bone!</span>", \
-											  "<span class='userdanger'>You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!</span>")
+							PP.visible_message(span_warning("[L] screams in pain as [L.p_their()] [NB] melts down to the bone!"), \
+											  span_userdanger("You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
 						if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
 							PP.IgniteMob()
 							PP.set_species(/datum/species/plasmaman)
-							PP.visible_message("<span class='warning'>[L] bursts into a brilliant purple flame as [L.p_their()] entire body is that of a skeleton!</span>", \
-											  "<span class='userdanger'>Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!</span>")
+							PP.visible_message(span_warning("[L] bursts into a brilliant purple flame as [L.p_their()] entire body is that of a skeleton!"), \
+											  span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
@@ -583,7 +583,7 @@
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
-	faction = ROLE_SYNDICATE
+	faction = list(ROLE_SYNDICATE)
 	outfit = /datum/outfit/snowsyndie
 	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
 	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
