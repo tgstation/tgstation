@@ -273,7 +273,8 @@
 	name = "Wirebrush"
 	desc = "A tool to remove rust from walls."
 	id = "wirebrush"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	category = list("initial", "Tools")
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
 	build_path = /obj/item/wirebrush
 	category = list("Equipment")
