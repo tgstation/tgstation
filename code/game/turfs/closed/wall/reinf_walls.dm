@@ -232,7 +232,8 @@
 		return
 	if(GetComponent(/datum/component/rust))
 		ScrapeAway()
-	else return ..()
+	else
+			return ..()
 
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"
