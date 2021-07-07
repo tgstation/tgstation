@@ -45,7 +45,7 @@
 
 /datum/component/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_notice("The [source] is very rusty; you could probably <i>burn</i> or <i>scrape</i> it off.")
+	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off.")
 
 /datum/component/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
@@ -64,17 +64,17 @@
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
 			if(item.use(5))
-				user.balloon_alert(user, "You start burning off the rust on [parent]...")
+				user.balloon_alert(user, "burning off rust...")
 				if(!do_after(user, 5 SECONDS * item.toolspeed, parent))
 					return
-				to_chat(user, span_notice("You burn off the rust of [parent]."))
+				user.balloon_alert(user, "burned off rust")
 				qdel(src)
 				return
 		if(TOOL_RUSTSCRAPER)
-			user.balloon_alert(user, "You start scraping off the rust on [parent]...")
+			user.balloon_alert(user, "scraping off rust...")
 			if(!do_after(user, 2 SECONDS * item.toolspeed, parent))
 				return
-			to_chat(user, span_notice("You scrape the rust off of [parent]."))
+			user.balloon_alert(user, "scraped off rust")
 			qdel(src)
 			return
 
