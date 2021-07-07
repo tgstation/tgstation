@@ -1,3 +1,7 @@
+/**
+ * The wirebrush is a tool whose sole purpose is to remove rust from anything that is rusty.
+ * Because of the inherent nature of hard countering rust heretics it does it very slowly.
+ */
 /obj/item/wirebrush
 	name = "wirebrush"
 	desc = "A tool that is used to scrub the rust thoroughly off walls. Not for hair!"
@@ -6,6 +10,10 @@
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 1
 
+/**
+ * An advanced form of the wirebrush that trades the safety of the user for instant rust removal.
+ * If the person using this is unlucky they are going to die painfully.
+ */
 /obj/item/wirebrush/advanced
 	name = "advanced wirebrush"
 	desc = "An advanced wirebrush; uses radiation to almost instantly liquify rust."
