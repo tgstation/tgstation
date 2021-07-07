@@ -63,7 +63,7 @@
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs to prevent them from being affected by the weather
-	var/immunity_type = "storm"
+	var/immunity_type = WEATHER_STORM
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -189,14 +189,28 @@
  * Returns TRUE if the living mob can be affected by the weather
  *
  */
-/datum/weather/proc/can_weather_act(mob/living/act_on)
-	var/turf/mob_turf = get_turf(act_on)
-	if(mob_turf && !(mob_turf.z in impacted_z_levels))
+/datum/weather/proc/can_weather_act(mob/living/mob_to_check)
+	var/turf/mob_turf = get_turf(mob_to_check)
+
+	if(!(mob_turf.z in impacted_z_levels))
+		if(mob_turf)
+			return
+
+		if(!(mob_to_check.loc.z in impacted_z_levels)) // in this case, get_turf(mob_to_check) =/= mob_to_check.loc, so we have to proceed with checking the location's type
+			return
+
+		if(istype(mob_to_check.loc, /obj/structure/closet))
+			var/obj/structure/closet/current_locker = mob_to_check.loc
+			if(current_locker.weather_protection)
+				if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
+					return
+
+	if((immunity_type in mob_to_check.weather_immunities) || (WEATHER_ALL in mob_to_check.weather_immunities))
 		return
-	if(immunity_type in act_on.weather_immunities)
+
+	if(!(get_area(mob_to_check) in impacted_areas))
 		return
-	if(!(get_area(act_on) in impacted_areas))
-		return
+
 	return TRUE
 
 /**
