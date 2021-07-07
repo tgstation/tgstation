@@ -27,7 +27,7 @@
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
-	UnregisterSignal(target, list(COMSIG_TURF_MULTIZ_NEW, COMSIG_TURF_MULTIZ_DEL))
+	UnregisterSignal(our_turf, list(COMSIG_TURF_MULTIZ_NEW, COMSIG_TURF_MULTIZ_DEL))
 	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 
 ///Updates the viscontents or underlays below this tile.
