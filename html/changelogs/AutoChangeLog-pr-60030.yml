@@ -1,4 +1,0 @@
-author: "EuSouAFazer"
-delete-after: True
-changes: 
-  - bugfix: "Inaccessible medkit in Kilostation dorms is now reachable"
