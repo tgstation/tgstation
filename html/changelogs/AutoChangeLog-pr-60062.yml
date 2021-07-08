@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - qol: "Orbiters now transfer to changeling headslugs at birth."
