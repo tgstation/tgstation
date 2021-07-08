@@ -100,6 +100,7 @@
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+	GLOB.cameranet.removeCamera(src)
 	GLOB.cameranet.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
