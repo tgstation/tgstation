@@ -274,7 +274,7 @@
 
 	switch(action)
 		if("build")
-			cannon = WEAKREF(deploy())
+			cannon_ref = WEAKREF(deploy())
 			. = TRUE
 		if("fire")
 			fire(usr)
