@@ -2,7 +2,7 @@ import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
 import { Window } from '../layouts';
-import { Button, Input, Section, Stack, Tabs, Box } from '../components';
+import { Box, Button, Input, Section, Stack, Tabs } from '../components';
 
 const CATEGORY_ALL = "All";
 
