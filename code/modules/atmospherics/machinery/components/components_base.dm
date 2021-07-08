@@ -98,7 +98,7 @@
 /obj/machinery/atmospherics/components/nullifyNode(i)
 	if(parents[i])
 		nullifyPipenet(parents[i])
-	QDEL_NULL(airs[i])
+	airs[i] = null
 	return ..()
 
 /obj/machinery/atmospherics/components/on_construction()
