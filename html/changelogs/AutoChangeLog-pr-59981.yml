@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - refactor: "A majority of species features have been turned into organs. Soon you will be able to combine a moth and a lizard into one über being"
+  - bugfix: "Dropped limbs will now display horns, frills etc instead of just naked and ugly"
+  - bugfix: "Swapping limbs will now transfer those limbs features, so putting a lizard head onto a human will actually mean they get a snout and horns and everything instead of just being an awkward colored human head"
