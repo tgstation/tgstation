@@ -203,7 +203,7 @@ GLOBAL_VAR(preferences_species_data)
 		ui.open()
 
 /datum/preferences/ui_state(mob/user)
-	// TODO: This probably means a hacker is able to edit other people's preferences.
+	// MOTHBLOCKS TODO: This probably means a hacker is able to edit other people's preferences.
 	// `ui_status` needs to properly filter this.
 	return GLOB.always_state
 
@@ -497,6 +497,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		if(can_be_random_hardcore())
 			hardcore_random_setup(character, antagonist, is_latejoiner)
 
+	character.dna.features = features.Copy()
+
 	// MOTHBLOCKS TODO: Put this on name/real_name/apply
 	// if(roundstart_checks)
 	// 	if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/choiced/species) == /datum/species/human))
@@ -531,7 +533,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	character.underwear_color = underwear_color
 	character.socks = socks
 
-	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 
 	// MOTHBLOCKS TODO: What is all this for? If it doesn't include moth wings, then what is it?

@@ -16,6 +16,7 @@ const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 // MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
 const KEYS_TO_NAMES = {
   backpack: "backpack",
+  feature_moth_wings: "moth wings",
   jumpsuit_style: "jumpsuit style",
   socks: "socks",
   undershirt: "undershirt",
@@ -341,7 +342,10 @@ export const MainPage = (props: {
           fill
           width={`${CLOTHING_CELL_SIZE}px`}
         >
-          {Object.entries(data.character_preferences.clothing)
+          {[
+            ...Object.entries(data.character_preferences.clothing),
+            ...Object.entries(data.character_preferences.features),
+          ]
             .map(([clothingKey, clothing]) => {
               // MOTHBLOCKS TODO: Better nude icons, rather than X
               return (

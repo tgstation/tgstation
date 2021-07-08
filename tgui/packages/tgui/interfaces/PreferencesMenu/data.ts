@@ -67,6 +67,8 @@ export type PreferencesMenuData = {
 
   character_preferences: {
     clothing: Record<string, AssetWithIcon>;
+    features: Record<string, AssetWithIcon>;
+
     names: Record<string, Name>;
 
     misc: {

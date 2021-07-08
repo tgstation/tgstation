@@ -2007,6 +2007,7 @@
 #include "code\modules\client\preferences\assets.dm"
 #include "code\modules\client\preferences\base.dm"
 #include "code\modules\client\preferences\clothing.dm"
+#include "code\modules\client\preferences\features.dm"
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\names.dm"
 #include "code\modules\client\preferences\species.dm"
