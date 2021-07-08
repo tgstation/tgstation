@@ -27,9 +27,9 @@ class Autofocus extends Component {
   ref = createRef<HTMLDivElement>();
 
   componentDidMount() {
-    if (this.ref.current) {
-      this.ref.current.focus();
-    }
+    setTimeout(() => {
+      this.ref.current?.focus();
+    }, 1);
   }
 
   render() {
