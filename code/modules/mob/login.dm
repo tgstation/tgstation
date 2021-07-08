@@ -78,7 +78,8 @@
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
-		client.change_view(getScreenSize(client.prefs.widescreenpref))
+		else
+			client.change_view(getScreenSize(client.prefs.widescreenpref))
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
