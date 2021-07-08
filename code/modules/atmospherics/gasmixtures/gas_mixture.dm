@@ -38,6 +38,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		src.volume = volume
 	reaction_results = new
 
+/datum/gas_mixture/Destroy(force)
+	stack_trace("Who the hell is trying to qdelete a fucking gas mixture I'm coming for you")
+	return ..()
+
 //listmos procs
 //use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
 
