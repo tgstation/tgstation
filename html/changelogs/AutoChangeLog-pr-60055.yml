@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - qol: "Observers can now interact with the engraved messages from any distance. Rate them!"
+  - bugfix: "Fixed a case where you could make more engraved messages than your soapstone had uses by queing them fast enough."
