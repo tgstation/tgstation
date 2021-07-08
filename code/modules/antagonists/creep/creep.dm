@@ -8,6 +8,7 @@
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
+	suicide_cry = "FOR MY LOVE!!"
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
@@ -27,7 +28,7 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/policy = get_policy(ROLE_OBSESSED)
 	if(policy)
-		to_chat(policy)
+		to_chat(owner, policy)
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()

@@ -284,11 +284,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!C)
 		return
 
+	if(ispAI(sacrificial))
+		for(var/M in invokers)
+			to_chat(M, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
+		log_game("Offer rune failed - tried sacrificing pAI")
+		return FALSE
 
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
-			to_chat(M, "<span class='cult italic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
+			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	if(sacrificial.mind)
@@ -310,7 +315,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, span_cultlarge("\"I accept this sacrifice.\""))
 			else
 				to_chat(M, span_cultlarge("\"I accept this meager sacrifice.\""))
-
+	
+	if(iscyborg(sacrificial))
+		var/construct_class = show_radial_menu(first_invoker, sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
+		if(QDELETED(sacrificial))
+			return FALSE
+		make_new_construct_from_class(construct_class, THEME_CULT, sacrificial, first_invoker, TRUE, get_turf(src))
+		var/mob/living/silicon/robot/sacriborg = sacrificial
+		sacriborg.mmi = null
+		qdel(sacrificial)
+		return TRUE
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
 	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
@@ -318,12 +332,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		stone.invisibility = 0
 
 	if(sacrificial)
-		if(iscyborg(sacrificial))
-			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, TRUE)
-			sacrificial.dust() //To prevent the MMI from remaining
-		else
-			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
-			sacrificial.gib()
+		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
+		sacrificial.gib()
 	return TRUE
 
 
@@ -417,7 +427,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		if(!A.anchored)
 			movedsomething = TRUE
-			if(do_teleport(A, target, forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+			if(do_teleport(A, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
 	if(movedsomething)
 		..()

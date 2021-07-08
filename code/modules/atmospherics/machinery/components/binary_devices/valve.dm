@@ -14,6 +14,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
+	custom_reconcilation = TRUE
 	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()
 	var/valve_type = MANUAL_VALVE
 	///Bool to stop interactions while the opening/closing animation is going
@@ -46,6 +47,15 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 		vent_movement &= ~VENTCRAWL_ALLOWED
 
+
+// This is what handles the actual functionality of combining 2 pipenets when the valve is open
+// Basically when a pipenet updates it will consider both sides to be the same for the purpose of the gas update
+/obj/machinery/atmospherics/components/binary/valve/returnPipenetsForReconcilation(datum/pipeline/requester)
+	. = ..()
+	if(!on)
+		return
+	. += parents[1]
+	. += parents[2]
 
 /obj/machinery/atmospherics/components/binary/valve/interact(mob/user)
 	add_fingerprint(usr)

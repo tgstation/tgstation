@@ -117,6 +117,8 @@
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/mmi_moved)
 
 /obj/item/circuit_component/mmi/proc/mmi_moved(atom/movable/mmi)
+	SIGNAL_HANDLER
+
 	if(mmi.loc != src)
 		remove_current_brain()
 

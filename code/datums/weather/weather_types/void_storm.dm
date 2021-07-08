@@ -17,7 +17,7 @@
 	protect_indoors = FALSE
 	target_trait = ZTRAIT_VOIDSTORM
 
-	immunity_type = "void"
+	immunity_type = WEATHER_VOID
 
 	barometer_predictable = FALSE
 	perpetual = TRUE

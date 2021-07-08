@@ -40,6 +40,13 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+/// a weather event of some kind occured
+#define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
+#define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
+#define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
+#define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
 
 /// signals from globally accessible objects
 
@@ -134,9 +141,9 @@
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
-///from base of atom/Entered(): (atom/movable/arrived, direction)
+///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERED "atom_entered"
-/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, direction)
+/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERING "atom_entering"
 ///from base of atom/Exit(): (/atom/movable/leaving, direction)
 #define COMSIG_ATOM_EXIT "atom_exit"
@@ -369,7 +376,7 @@
 
 ///from base of area/proc/power_change(): ()
 #define COMSIG_AREA_POWER_CHANGE "area_power_change"
-///from base of area/Entered(): (atom/movable/arrived, direction)
+///from base of area/Entered(): (atom/movable/arrived, area/old_area)
 #define COMSIG_AREA_ENTERED "area_entered"
 ///from base of area/Exited(): (atom/movable/gone, direction)
 #define COMSIG_AREA_EXITED "area_exited"
@@ -700,7 +707,7 @@
 #define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
-///from base of [/obj/proc/update_integrity]: ()
+///from base of [/obj/proc/update_integrity]: (old_value, new_value)
 #define COMSIG_OBJ_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
@@ -1249,6 +1256,8 @@
 	#define COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN (1<<0)
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
+/// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
+#define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
@@ -1355,3 +1364,17 @@
 
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
+
+// Merger datum signals
+/// Called on the object being added to a merger group: (datum/merger/new_merger)
+#define COMSIG_MERGER_ADDING "comsig_merger_adding"
+/// Called on the object being removed from a merger group: (datum/merger/old_merger)
+#define COMSIG_MERGER_REMOVING "comsig_merger_removing"
+/// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
+#define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
+
+// Vacuum signals
+/// Called on a bag being attached to a vacuum parent
+#define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
+/// Called on a bag being detached from a vacuum parent
+#define COMSIG_VACUUM_BAG_DETACH "comsig_vacuum_bag_detach"

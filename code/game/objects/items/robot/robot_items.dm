@@ -801,6 +801,8 @@
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
 /obj/item/borg/apparatus/proc/safedecon()
+	SIGNAL_HANDLER
+
 	if(stored)
 		stored.forceMove(get_turf(src))
 		stored = null

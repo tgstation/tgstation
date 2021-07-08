@@ -230,4 +230,6 @@
  * * datum/beam/vine - The vine to be removed from the list.
  */
 /mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine)
+	SIGNAL_HANDLER
+
 	vines -= vine
