@@ -48,7 +48,7 @@
 	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, alpha, color, null, FALSE, null)
 
 	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
-	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
-	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
-	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
-	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 1, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 2, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 3, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 4, color, null, FALSE, null)
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, 5, color, null, FALSE, null)
