@@ -60,6 +60,10 @@ class TrackOutsideClicks extends Component<{
   }
 
   handleOutsideClick(event: MouseEvent) {
+    if (!(event.target instanceof Node)) {
+      return;
+    }
+
     if (this.ref.current && !this.ref.current.contains(event.target)) {
       this.props.onOutsideClick();
     }
