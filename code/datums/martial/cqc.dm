@@ -49,7 +49,7 @@
 		D.apply_damage(10, BRUTE)
 		D.Paralyze(120)
 		log_combat(A, D, "slammed (CQC)")
-		. = TRUE
+		return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/A, mob/living/D)
 	if(!can_use(A))
@@ -99,7 +99,7 @@
 		D.Stun(100)
 		restraining = TRUE
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
-		. = TRUE
+		return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/A, mob/living/D)
 	if(!can_use(A))
@@ -115,7 +115,7 @@
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
 		D.apply_damage(25, A.get_attack_type())
-		. = TRUE
+		return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
 	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
