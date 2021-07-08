@@ -500,6 +500,7 @@
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.spring_trap(null, hit_atom)
 		qdel(src)
+		return
 	. = ..()
 
 /**
