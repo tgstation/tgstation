@@ -302,7 +302,7 @@
 		return
 	robot.modularInterface?.interact(robot)
 
-/atom/movable/screen/robot/modPCDestroy()
+/atom/movable/screen/robot/modPC/Destroy()
 	robot.interfaceButton = null
 	robot = null
 	return ..()
