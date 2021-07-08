@@ -23,7 +23,7 @@
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/camera_bug/bug = null
-	var/obj/structure/camera_assembly/assembly = null
+	var/datum/weakref/assembly_ref = null
 	var/area/myarea = null
 
 	//OTHER
@@ -58,6 +58,7 @@
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
+	var/obj/structure/camera_assembly/assembly
 	if(CA)
 		assembly = CA
 		if(assembly.xray_module)
@@ -75,6 +76,7 @@
 	else
 		assembly = new(src)
 		assembly.state = 4 //STATE_FINISHED
+	assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -110,7 +112,7 @@
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(alert_manager)
-	QDEL_NULL(assembly)
+	QDEL_NULL(assembly_ref)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
@@ -210,6 +212,10 @@
 	. = ..()
 	if(!panel_open)
 		return
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+	if(!assembly)
+		assembly_ref = null
+		return
 	var/list/droppable_parts = list()
 	if(assembly.xray_module)
 		droppable_parts += assembly.xray_module
@@ -273,6 +279,9 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
+		var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+		if(!assembly)
+			assembly_ref = null
 		if(I.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
 				if(!user.temporarilyRemoveItemFromInventory(I))
@@ -370,12 +379,13 @@
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
+			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 			if(!assembly)
 				assembly = new()
 			assembly.forceMove(drop_location())
 			assembly.state = 1
 			assembly.setDir(dir)
-			assembly = null
+			assembly_ref = null
 		else
 			var/obj/item/I = new /obj/item/wallframe/camera (loc)
 			I.update_integrity(I.max_integrity * 0.5)
