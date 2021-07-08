@@ -217,7 +217,7 @@
 		our_guy.Knockdown(10)
 		our_guy.visible_message(span_danger("[our_guy] trips on [our_guy.p_their()] knotted shoelaces and falls! What a klutz!"), span_userdanger("You trip on your knotted shoelaces and fall over!"))
 		SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
-		our_alert = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/knotted))
+		our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/knotted))
 
 	else if(tied ==  SHOES_UNTIED)
 		var/wiser = TRUE // did we stumble and realize our laces are undone?
@@ -249,7 +249,7 @@
 				wiser = FALSE
 		if(wiser)
 			SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "untied", /datum/mood_event/untied) // well we realized they're untied now!
-			our_alert = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied))
+			our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied))
 
 
 /obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user, list/modifiers)
