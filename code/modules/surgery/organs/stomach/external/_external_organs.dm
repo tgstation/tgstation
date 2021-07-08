@@ -170,8 +170,10 @@
 	dna_block = DNA_FRILLS_BLOCK
 
 /obj/item/organ/external/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.head?.flags_inv & HIDEEARS))
+	if(human.head?.flags_inv & ~HIDEEARS)
 		return TRUE
+	return FALSE
+
 
 /obj/item/organ/external/frills/get_global_feature_list()
 	return GLOB.frills_list
@@ -237,6 +239,8 @@
 
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
+	SIGNAL_HANDLER
+
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious antennae burn to a crisp!"))
 
@@ -250,6 +254,8 @@
 
 ///heal our antennae back up!!
 /obj/item/organ/external/antennae/proc/heal_antennae()
+	SIGNAL_HANDLER
+
 	if(burnt)
 		burnt = FALSE
 		set_sprite(original_sprite)
