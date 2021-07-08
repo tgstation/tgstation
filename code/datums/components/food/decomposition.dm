@@ -67,6 +67,9 @@
 	if(locate(/obj/structure/table) in get_turf(food)) // Is this currently over a table?
 		remove_timer()
 		return
+	if(locate(/obj/structure/rack) in get_turf(food)) // Is it on a rack?
+		remove_timer()
+		return
 	if(locate(/obj/machinery/conveyor) in get_turf(food)) // Makes sure no decals spawn on disposals conveyors
 		remove_timer()
 		return
@@ -74,8 +77,7 @@
 	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
 
 /datum/component/decomposition/Destroy()
-	if(active_timers)
-		deltimer(timerid)
+	remove_timer()
 	return ..()
 
 /datum/component/decomposition/proc/remove_timer()
@@ -90,9 +92,7 @@
 
 /datum/component/decomposition/proc/picked_up()
 	SIGNAL_HANDLER
-	if(active_timers)
-		time_remaining = timeleft(timerid)
-		deltimer(timerid)
+	remove_timer()
 	protected = TRUE
 	if(!handled)
 		handled = TRUE
