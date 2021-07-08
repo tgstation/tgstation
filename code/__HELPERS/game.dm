@@ -242,35 +242,6 @@
 			SEND_SIGNAL(atom_to_check, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list += atom_to_check.contents
 
-/// Returns a list of mob exclusive hearers in view(R) from source (ignoring luminosity).
-/proc/get_mob_hearers_in_view(R, atom/source)
-
-	var/turf/center_turf = get_turf(source)
-	. = list()
-	if(!center_turf)
-		return
-	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += center_turf.contents // We can shave off one iteration by assuming turfs cannot hear
-	else
-		var/lum = center_turf.luminosity
-		center_turf.luminosity = 6 // This is the maximum luminosity
-		var/target = source.loc == center_turf ? source : center_turf //this is reasonably faster if true, and very slightly slower if false
-		for(var/atom/movable/movable in view(R, target))
-			if(movable.flags_1 & HEAR_1) //dont add the movables returned by view() to processing_list to reduce recursive iterations, just check them
-				. += movable
-				SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-			processing_list += movable.contents
-		center_turf.luminosity = lum
-
-	var/i = 0
-	while(i < length(processing_list)) // recursive_hear_check inlined here, the large majority of the work is in this part for big contents trees
-		var/atom/atom_to_check = processing_list[++i]
-		if(atom_to_check.flags_1 & HEAR_1)
-			. += atom_to_check
-			SEND_SIGNAL(atom_to_check, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-		processing_list += atom_to_check.contents
-
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
