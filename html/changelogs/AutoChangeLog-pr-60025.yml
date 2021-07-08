@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "Removing the Thermal Vision mutation will now remove the active vision as well"
