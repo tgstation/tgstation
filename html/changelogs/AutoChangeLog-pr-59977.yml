@@ -1,6 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes: 
-  - code_imp: "Rust is now a component"
-  - refactor: "refactor almost all of the rust heretic atom procs"
-  - rscadd: "Wirebrush for advanced rust removal"

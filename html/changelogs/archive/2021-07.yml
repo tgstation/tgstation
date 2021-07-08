@@ -243,3 +243,33 @@
   unit0016 / Melbert:
   - expansion: Many more antagonists now shout special phrases when suiciding with
       C4/X4, including Heretics, Centcom Interns, Obsessed, Clown Ops, and Santa Clause.
+2021-07-08:
+  AnCopper:
+  - rscadd: Added a name to clown.txt
+  Fikou:
+  - bugfix: properly updates the light color of the mining hardsuit helmet
+  Greniza:
+  - bugfix: runtime errors from weather
+  - bugfix: Environmental Protection Bags protect from ash storms
+  Iamgoofball:
+  - balance: Removes stuns from Voice of God.
+  InsaneRed:
+  - rscadd: Chaplains who worship the machine gods can now trade in 2000 favor to
+      receive a random cybernetic implant
+  Nari Harimoto:
+  - bugfix: the examine text on the Seed Extractor now accurately displays the amount
+      of seeds you may potentially get
+  Spookuni:
+  - balance: Nanotrasen has released experimental new laser lenses for laser rifles,
+      energy guns, and illegal hellfire modkits, increasing the number of shots they
+      can fire from full charge by roughly 20%.
+  Wayland-Smithy:
+  - code_imp: Introduces the Lag Switch subsystem for when a smoother experience is
+      worth trading a few bells and whistles for. Performance enhancement measures
+      can be togged by admins with the Show Lag Switches admin verb or enabled automatically
+      at a pop amount set via config.
+  - config: 'Added a new config var: number/auto_lag_switch_pop'
+  ZephyrTFA:
+  - code_imp: Rust is now a component
+  - refactor: refactor almost all of the rust heretic atom procs
+  - rscadd: Wirebrush for advanced rust removal
