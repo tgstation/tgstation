@@ -57,7 +57,8 @@
 		set_mats_per_unit(mats_per_unit, 1)
 	else if(LAZYLEN(custom_materials))
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
-
+	if(QDELETED(src))
+		CRASH("[src.type] was somehow qdel'd? what?")
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
