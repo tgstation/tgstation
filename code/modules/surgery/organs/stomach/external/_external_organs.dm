@@ -170,7 +170,7 @@
 	dna_block = DNA_FRILLS_BLOCK
 
 /obj/item/organ/external/frills/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.head?.flags_inv & ~HIDEEARS)
+	if(!(human.head?.flags_inv & HIDEEARS))
 		return TRUE
 	return FALSE
 
