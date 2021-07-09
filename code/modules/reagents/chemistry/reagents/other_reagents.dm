@@ -2069,6 +2069,7 @@
 
 /datum/reagent/colorful_reagent/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, color_callback) //Prevents harddels during roundstart
+	color_callback = null //Fly free little callback
 	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
