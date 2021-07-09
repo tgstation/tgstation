@@ -241,6 +241,7 @@
 	circuit = /obj/item/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
+	icon_keyboard = ""
 
 	var/datum/weakref/cannon_ref
 	var/notice

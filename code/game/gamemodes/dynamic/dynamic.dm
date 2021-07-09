@@ -362,6 +362,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	setup_shown_threat()
 	setup_rulesets()
 
+	//We do this here instead of with the midround rulesets and such because these rules can hang refs
+	//To new_player and such, and we want the datums to just free when the roundstart work is done
+	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
+
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
