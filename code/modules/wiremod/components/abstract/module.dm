@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/module
 	display_name = "Module"
-	display_desc = "A component that has other components within it, acting like a function."
+	display_desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
 
 	var/obj/item/integrated_circuit/module/internal_circuit
 
@@ -24,6 +24,14 @@
 	. = ..()
 	if(. == src)
 		return attached_module
+
+/obj/item/integrated_circuit/module/set_display_name(new_name)
+	. = ..()
+	attached_module.display_name = new_name
+
+/obj/item/integrated_circuit/module/Destroy()
+	attached_module = null
+	return ..()
 
 /obj/item/circuit_component/module_input
 	display_name = "Input"
