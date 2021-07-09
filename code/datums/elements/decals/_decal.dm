@@ -137,14 +137,6 @@
 	SIGNAL_HANDLER
 
 	overlay_list += pic
-	var/true_alpha = pic.alpha
-	pic.alpha = 1
-	overlay_list += pic
-	overlay_list += pic
-	overlay_list += pic
-	overlay_list += pic
-	overlay_list += pic
-	pic.alpha = true_alpha
 
 /datum/element/decal/proc/clean_react(datum/source, clean_types)
 	SIGNAL_HANDLER
