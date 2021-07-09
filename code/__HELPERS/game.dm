@@ -213,21 +213,21 @@
 
 	return
 
-/// Returns a list of hearers in view(R) from source (ignoring luminosity).
-/proc/get_hearers_in_view(R, atom/source)
+/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity).
+/proc/get_hearers_in_view(view_radius, atom/source)
 
 	var/turf/center_turf = get_turf(source)
 	. = list()
 	if(!center_turf)
 		return
 	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
+	if (view_radius == 0) // if the range is zero, we know exactly where to look for, we can skip view
 		processing_list += center_turf.contents // We can shave off one iteration by assuming turfs cannot hear
 	else
 		var/lum = center_turf.luminosity
 		center_turf.luminosity = 6 // This is the maximum luminosity
 		var/target = source.loc == center_turf ? source : center_turf //this is reasonably faster if true, and very slightly slower if false
-		for(var/atom/movable/movable in view(R, target))
+		for(var/atom/movable/movable in view(view_radius, target))
 			if(movable.flags_1 & HEAR_1) //dont add the movables returned by view() to processing_list to reduce recursive iterations, just check them
 				. += movable
 				SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
