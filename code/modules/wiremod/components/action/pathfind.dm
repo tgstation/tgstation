@@ -8,23 +8,23 @@
 	display_desc = "Calculates a path, returns a list of entities. Each entity is the next step in the path. Can be used with the direction component to move."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	var/datum/port/input/target_X
-	var/datum/port/input/target_Y
+	var/datum/port/input/input_X
+	var/datum/port/input/input_Y
 
 	var/datum/port/output/output
 	var/datum/port/output/on_fail
 
 /obj/item/circuit_component/pathfind/Initialize()
 	. = ..()
-	target_X = add_input_port("X", PORT_TYPE_NUMBER, FALSE)
-	target_Y = add_input_port("Y", PORT_TYPE_NUMBER, FALSE)
+	input_X = add_input_port("X", PORT_TYPE_NUMBER, FALSE)
+	input_Y = add_input_port("Y", PORT_TYPE_NUMBER, FALSE)
 
 	output = add_output_port("Output", PORT_TYPE_LIST)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/pathfind/Destroy()
-	target_X = null
-	target_Y = null
+	input_X = null
+	input_Y = null
 	output = null
 	on_fail = null
 	return ..()
@@ -34,9 +34,11 @@
 	if(.)
 		return
 
+	var/target_X = input_X.input_value
 	if(isnull(target_X))
 		return
 
+	var/target_Y = input_Y.input_value
 	if(isnull(target_Y))
 		return
 
