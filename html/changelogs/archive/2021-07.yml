@@ -273,3 +273,32 @@
   - code_imp: Rust is now a component
   - refactor: refactor almost all of the rust heretic atom procs
   - rscadd: Wirebrush for advanced rust removal
+2021-07-09:
+  Arkatos:
+  - qol: Observers can now interact with the engraved messages from any distance.
+      Rate them!
+  - bugfix: Fixed a case where you could make more engraved messages than your soapstone
+      had uses by queing them fast enough.
+  Ghilker:
+  - bugfix: fix issue with the thermomachine rotation when pulled/pushed
+  Nari Harimoto:
+  - bugfix: Removing the Thermal Vision mutation will now remove the active vision
+      as well
+  PositiveEntropy, Kryson, maxymax13:
+  - imageadd: The Security TV, Smartfridge, and Booze-o-Mat now have new updated sprites!
+  Time-Green:
+  - refactor: "A majority of species features have been turned into organs. Soon you\
+      \ will be able to combine a moth and a lizard into one \xFCber being"
+  - bugfix: Dropped limbs will now display horns, frills etc instead of just naked
+      and ugly
+  - bugfix: Swapping limbs will now transfer those limbs features, so putting a lizard
+      head onto a human will actually mean they get a snout and horns and everything
+      instead of just being an awkward colored human head
+  Watermelon914:
+  - bugfix: Fixed the component printer's layout being broken.
+  Wayland-Smithy:
+  - qol: Orbiters now transfer to changeling headslugs at birth.
+  YakumoChen:
+  - expansion: You can now wear the suffering of others on your head with just a sheet
+      of human skin!
+  - imageadd: Human skin hats, touched up by Krysonism
