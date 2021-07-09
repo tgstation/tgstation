@@ -5,7 +5,7 @@
 	var/climb_time = (2 SECONDS)
 	///Stun duration for when you get onto the object
 	var/climb_stun = (2 SECONDS)
-	///For objects on the border of two tiles so they can be vaulted over both ways.
+	///For objects on the border of two or more tiles and that can be vaulted over from both sides.
 	var/on_border = FALSE
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
@@ -38,7 +38,7 @@
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
 	var/dir_step = get_dir(user,source.loc)
-	//To jump over a railing you have to be standing next to it, not behind.
+	//To jump over a railing you have to be standing next to it, not far behind it.
 	if(on_border && user.loc != source.loc && (dir_step & source.dir) == source.dir)
 		return FALSE
 	return TRUE
