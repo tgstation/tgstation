@@ -273,7 +273,7 @@
 
 /// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE, forced = FALSE)
-	adjustBruteLoss(-brute, FALSE, forced = forced) //zero as argument for no instant health update
+	adjustBruteLoss(-brute, FALSE, forced = forced)
 	adjustFireLoss(-burn, FALSE, forced = forced)
 	adjustStaminaLoss(-stamina, FALSE, forced = forced)
 	if(updating_health)

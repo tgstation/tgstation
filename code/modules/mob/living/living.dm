@@ -684,8 +684,8 @@
 					continue
 				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
 
-		adjustOxyLoss(-20, TRUE, TRUE)
-		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
+		adjustOxyLoss(-20, updating_health = TRUE, forced = TRUE)
+		adjustToxLoss(-20, updating_health = TRUE, forced = TRUE) //slime friendly
 		updatehealth()
 		grab_ghost()
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
@@ -730,9 +730,9 @@
 //admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
 /mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
-	setToxLoss(0, 0, forced = TRUE) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0, forced = TRUE)
-	setCloneLoss(0, 0, forced = TRUE)
+	setToxLoss(0, updating_health = FALSE, forced = TRUE) //zero as second argument not automatically call updatehealth().
+	setOxyLoss(0, updating_health = FALSE, forced = TRUE)
+	setCloneLoss(0, updating_health = FALSE, forced = TRUE)
 	remove_CC()
 	set_disgust(0)
 	losebreath = 0
