@@ -35,12 +35,8 @@
 
 /mob/living/simple_animal/ant/Initialize()
 	. = ..()
-	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	time_to_hunt = rand(5,10)
-
-/mob/living/simple_animal/ant/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7) // They're both insects, best to have it at least do something.
 
 /mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the ants have become the predators
 	. = ..()
