@@ -1,0 +1,4 @@
+author: "read-0nly"
+delete-after: True
+changes: 
+  - qol: "adds random number to carp spawned from space dragon rifts"
