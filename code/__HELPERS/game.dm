@@ -213,7 +213,7 @@
 
 	return
 
-/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity).
+/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). recursively checks contents for hearers
 /proc/get_hearers_in_view(view_radius, atom/source)
 
 	var/turf/center_turf = get_turf(source)
