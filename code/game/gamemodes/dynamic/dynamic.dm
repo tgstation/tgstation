@@ -372,7 +372,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			roundstart_pop_ready++
 			candidates.Add(player)
 
-	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 	log_game("DYNAMIC: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
 		log_game("DYNAMIC: [candidates.len] candidates.")
