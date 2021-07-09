@@ -2519,7 +2519,7 @@
 	},
 /obj/machinery/door/window/westleft{
 	dir = 1;
-	name = "'Monkey Pen";
+	name = "Monkey Pen";
 	req_access_txt = "9"
 	},
 /turf/open/floor/grass,
