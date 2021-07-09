@@ -352,7 +352,7 @@
 		else
 			to_chat(user, span_notice("Camera bugged."))
 			bug = I
-			bug.bugged_cameras[src.c_tag] = src
+			bug.bugged_cameras[src.c_tag] = WEAKREF(src)
 		return
 
 	return ..()
