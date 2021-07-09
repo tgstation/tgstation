@@ -435,9 +435,9 @@
 			var/new_name = params["display_name"]
 
 			if(new_name)
-				display_name = strip_html(params["display_name"], label_max_length)
+				set_display_name(strip_html(params["display_name"], label_max_length))
 			else
-				display_name = ""
+				set_display_name("")
 
 			if(shell)
 				if(display_name != "")
@@ -464,6 +464,10 @@
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 #undef WITHIN_RANGE
+
+/// Sets the display name that appears on the shell.
+/obj/item/integrated_circuit/proc/set_display_name(new_name)
+	display_name = new_name
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.
