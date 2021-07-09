@@ -651,3 +651,33 @@
       gas storage structures.
   - balance: Stationary tanks share behavior with canisters and can over-pressurize
       and explode in the same fashion.
+2021-06-29:
+  Arokha:
+  - bugfix: async modal message/title swapped
+  - bugfix: async modal not firing callbacks
+  RandomGamer123 and IndieanaJones:
+  - qol: Offering a cyborg on a cult rune now allows the cultist to transform the
+      cyborg into a construct of their choosing.
+  - bugfix: Offering a cyborg on a cult offer rune no longer creates an empty soulstone
+      and round removes the cyborg.
+  Ryll/Shaps:
+  - balance: Knives (such as the kitchen knife, hunting knife, combat knife, etc...)
+      are generally more effective at causing slashing wounds now. The butcher's cleaver
+      in particular is now equal to a circular saw in terms of wounding.
+  - balance: Scalpels are an eensy bit less effective at wounding enemies wearing
+      armor, though they are still very effective at causing bleeding.
+  Sheits:
+  - balance: Reduces the maximum weight paradox bags can hold
+  - imageadd: Adds paradox bag icon and belt sprites
+  Timberpoes:
+  - bugfix: Fixed issue which made cooked steaks inedible. You should now be able
+      to eat griddled steaks again.
+  - bugfix: Obsessed antags will now recieve a chat message stating the antag's policy
+      flavour text, if any such policy exists in config.
+  cacogen:
+  - balance: Cannabis has more believable effects
+  zxaber:
+  - bugfix: RD consoles now have hardware supporting ID changes by default.
+  - balance: Jaunting spells of all types (except for Nightmare) no longer allow for
+      the user to end up inside a wall or most other dense objects. Instead, you will
+      be moved to a valid spot on the path you took, or returned to your start location.
