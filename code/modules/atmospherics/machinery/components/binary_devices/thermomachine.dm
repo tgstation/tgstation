@@ -34,6 +34,7 @@
 	var/icon_state_off = "thermo"
 	var/icon_state_on = "thermo_1"
 	var/icon_state_open = "thermo-o"
+	set_dir_on_move = FALSE
 
 	var/min_temperature = T20C //actual temperature will be defined by RefreshParts() and by the cooling var
 	var/max_temperature = T20C //actual temperature will be defined by RefreshParts() and by the cooling var

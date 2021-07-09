@@ -39,7 +39,7 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -55,10 +55,10 @@
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 	return ..()
 
-/obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 
-	if(get_dir(loc, target) == dir)
+	if(border_dir == dir)
 		return
 
 	if(istype(mover, /obj/structure/window))
@@ -76,6 +76,9 @@
 
 /obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
 
 	if (leaving.pass_flags & pass_flags_self)
 		return

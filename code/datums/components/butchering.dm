@@ -146,9 +146,9 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, parent, loc_connections)
+	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
 
-/datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(!isliving(arrived))

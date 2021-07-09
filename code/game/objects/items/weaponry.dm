@@ -360,6 +360,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
+	base_icon_state = "switchblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
@@ -378,19 +379,25 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize()
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
 	set_extended(extended)
 
 /obj/item/switchblade/attack_self(mob/user)
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	set_extended(!extended)
 
+/obj/item/switchblade/update_icon_state()
+	icon_state = "[base_icon_state][extended ? "_ext" : ""]"
+	return ..()
+
 /obj/item/switchblade/proc/set_extended(new_extended)
 	extended = new_extended
+	update_icon_state()
 	if(extended)
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
-		icon_state = "switchblade_ext"
 		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -399,7 +406,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		force = 3
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
-		icon_state = "switchblade"
 		attack_verb_continuous = list("stubs", "pokes")
 		attack_verb_simple = list("stub", "poke")
 		hitsound = 'sound/weapons/genhit.ogg'
@@ -643,7 +649,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 10
+	force = 12
 	wound_bonus = -10
 	throwforce = 12
 	attack_verb_continuous = list("beats", "smacks")
@@ -660,6 +666,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		desc = "You've got red on you."
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
+
+	AddElement(/datum/element/kneecapping)
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
@@ -695,7 +703,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	else if(!target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target.throw_at(throw_target, rand(1, 2), whack_speed, user) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"

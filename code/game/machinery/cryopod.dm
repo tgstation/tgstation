@@ -259,11 +259,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/mob_content in mob_occupant)
-		var/obj/item/item_content = mob_content
+	for(var/obj/item/item_content as anything in mob_occupant)
 		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
 			continue
 

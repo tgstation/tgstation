@@ -83,7 +83,7 @@
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
 	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
-	var/list/custom_materials
+	var/list/datum/material/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
@@ -132,6 +132,9 @@
 	var/greyscale_config
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
+
+	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
+	var/list/datum/merger/mergers
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
@@ -315,19 +318,19 @@
 	P.set_angle(new_angle_s)
 	return TRUE
 
-///Can the mover object pass this atom, while heading for the target turf
-/atom/proc/CanPass(atom/movable/mover, turf/target)
+/// Whether the mover object can avoid being blocked by this atom, while arriving from (or leaving through) the border_dir.
+/atom/proc/CanPass(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
 	if(mover.movement_type & PHASING)
 		return TRUE
-	. = CanAllowThrough(mover, target)
+	. = CanAllowThrough(mover, border_dir)
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
 	if(!mover.generic_canpass)
-		return mover.CanPassThrough(src, target, .)
+		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
 /// Returns true or false to allow the mover to move through src
-/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+/atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)
 	if(mover.pass_flags & pass_flags_self)
@@ -748,6 +751,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
+		return
+	update_atom_colour()
+	QUEUE_SMOOTH(src)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
@@ -1312,9 +1319,9 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
  */
-/atom/Entered(atom/movable/arrived, direction)
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, direction)
-	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, direction)
+/atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
+	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, old_loc, old_locs)
 
 /**
  * An atom is attempting to exit this atom's contents
@@ -1929,7 +1936,7 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	return
+	AddComponent(/datum/component/rust)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -2046,7 +2053,19 @@
 	// Statusbar
 	status_bar_set_text(usr, name)
 	// Screentips
-	if(!usr?.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
-		usr.hud_used.screentip_text.maptext = ""
-	else
-		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+	if(usr?.hud_used)
+		if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+			usr.hud_used.screentip_text.maptext = ""
+		else
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+
+/// Gets a merger datum representing the connected blob of objects in the allowed_types argument
+/atom/proc/GetMergeGroup(id, list/allowed_types)
+	RETURN_TYPE(/datum/merger)
+	var/datum/merger/candidate
+	if(mergers)
+		candidate = mergers[id]
+	if(!candidate)
+		new /datum/merger(id, allowed_types, src)
+		candidate = mergers[id]
+	return candidate

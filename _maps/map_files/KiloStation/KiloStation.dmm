@@ -2936,7 +2936,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ajj" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -55625,7 +55625,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
@@ -56715,7 +56715,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining/common,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
@@ -74643,7 +74642,7 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "rFl" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/toxins{
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
@@ -87100,6 +87099,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "wZx" = (

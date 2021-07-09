@@ -1,4 +1,9 @@
-#define MIDNIGHT_ROLLOVER 864000 //number of deciseconds in a day
+///number of deciseconds in a day
+#define MIDNIGHT_ROLLOVER 864000
+
+///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
+#define ROUND_TIME ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round(world.time - SSticker.round_start_time/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
+
 
 #define JANUARY 1
 #define FEBRUARY 2
@@ -48,9 +53,15 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 #define TICKS *world.tick_lag
 
+#define MILLISECONDS * 0.01
+
 #define DS2TICKS(DS) ((DS)/world.tick_lag)
 
 #define TICKS2DS(T) ((T) TICKS)
+
+#define MS2DS(T) ((T) MILLISECONDS)
+
+#define DS2MS(T) ((T) * 100)
 
 /*Timezones*/
 

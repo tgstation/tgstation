@@ -85,7 +85,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, parent, loc_connections)
+	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
 
@@ -130,7 +130,7 @@
 	return COMPONENT_CANCEL_BLOB_ACT
 
 /// Triggered when something enters the component's parent.
-/datum/component/singularity/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/datum/component/singularity/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 	consume(source, arrived)
 

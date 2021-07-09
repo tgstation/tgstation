@@ -8,6 +8,7 @@
 	roundend_category = "cultists"
 	antagpanel_category = "Cult"
 	antag_moodlet = /datum/mood_event/cult
+	suicide_cry = "FOR NAR'SIE!!"
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
@@ -134,7 +135,7 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(H, CULT_EYES, CULT_TRAIT)
+		REMOVE_TRAIT(H, TRAIT_CULT_EYES, CULT_TRAIT)
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
 
@@ -274,7 +275,7 @@
 		var/mob/living/carbon/human/H = cultist
 		H.eye_color = "f00"
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		ADD_TRAIT(H, CULT_EYES, CULT_TRAIT)
+		ADD_TRAIT(H, TRAIT_CULT_EYES, CULT_TRAIT)
 		H.update_body()
 
 /datum/team/cult/proc/ascend(cultist)

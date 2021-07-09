@@ -40,6 +40,13 @@
 	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+/// a weather event of some kind occured
+#define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
+#define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
+#define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
+#define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
 
 /// signals from globally accessible objects
 
@@ -87,6 +94,10 @@
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
 ///from base of atom/attackby(): (/obj/item, /mob/living, params)
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
+/// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, params)
+#define COMSIG_PARENT_ATTACKBY_SECONDARY "atom_attackby_secondary"
+/// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
+#define COMSIG_ATOM_ATTACK_HAND_SECONDARY "atom_attack_hand_secondary"
 ///Return this in response if you don't want afterattack to be called
 	#define COMPONENT_NO_AFTERATTACK (1<<0)
 ///from base of atom/attack_hulk(): (/mob/living/carbon/human)
@@ -130,9 +141,9 @@
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
-///from base of atom/Entered(): (atom/movable/arrived, direction)
+///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERED "atom_entered"
-/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, direction)
+/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERING "atom_entering"
 ///from base of atom/Exit(): (/atom/movable/leaving, direction)
 #define COMSIG_ATOM_EXIT "atom_exit"
@@ -340,9 +351,6 @@
 #define COMSIG_EXIT_AREA "exit_area"
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
-///from base of atom/RightClick(): (/mob)
-#define COMSIG_CLICK_RIGHT "right_click"
-	#define COMPONENT_CANCEL_CLICK_RIGHT (1<<0)
 ///from base of atom/ShiftClick(): (/mob)
 #define COMSIG_CLICK_SHIFT "shift_click"
 	#define COMPONENT_ALLOW_EXAMINATE (1<<0) //Allows the user to examinate regardless of client.eye.
@@ -368,7 +376,7 @@
 
 ///from base of area/proc/power_change(): ()
 #define COMSIG_AREA_POWER_CHANGE "area_power_change"
-///from base of area/Entered(): (atom/movable/arrived, direction)
+///from base of area/Entered(): (atom/movable/arrived, area/old_area)
 #define COMSIG_AREA_ENTERED "area_entered"
 ///from base of area/Exited(): (atom/movable/gone, direction)
 #define COMSIG_AREA_EXITED "area_exited"
@@ -699,7 +707,7 @@
 #define COMSIG_OBJ_TAKE_DAMAGE "obj_take_damage"
 	/// Return bitflags for the above signal which prevents the object taking any damage.
 	#define COMPONENT_NO_TAKE_DAMAGE (1<<0)
-///from base of [/obj/proc/update_integrity]: ()
+///from base of [/obj/proc/update_integrity]: (old_value, new_value)
 #define COMSIG_OBJ_INTEGRITY_CHANGED "obj_integrity_changed"
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
@@ -761,13 +769,19 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
+// /obj/machinery/atmospherics/components/binary/valve signals
+
+/// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
+#define COMSIG_VALVE_SET_OPEN "valve_toggled"
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
 //from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
-
+///from /obj/machinery/door/airlock/set_bolt():
+#define COMSIG_AIRLOCK_SET_BOLT "airlock_set_bolt"
 // /obj/item signals
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
@@ -973,6 +987,8 @@
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
+///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
+#define COMSIG_HUMAN_BURNING "human_burning"
 
 // /datum/species signals
 
@@ -1223,7 +1239,7 @@
 	#define COMPONENT_SKIP_ATTACK (1<<1)
 ///from base of atom/attack_ghost(): (mob/dead/observer/ghost)
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
-///from base of atom/attack_hand(): (mob/user)
+///from base of atom/attack_hand(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
 ///from base of atom/attack_paw(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
@@ -1237,6 +1253,13 @@
 #define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
+/// From base of [/obj/item/proc/pre_attack_secondary()]: (atom/target, mob/user, params)
+#define COMSIG_ITEM_PRE_ATTACK_SECONDARY "item_pre_attack_secondary"
+	#define COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN (1<<0)
+	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
+	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
+/// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
+#define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
@@ -1270,6 +1293,9 @@
 
 ///from /obj/item/assembly/proc/pulsed()
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
+
+///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
+#define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
 /// Exoprobe adventure finished: (result) result is ADVENTURE_RESULT_??? values
 #define COMSIG_ADVENTURE_FINISHED "adventure_done"
@@ -1340,3 +1366,17 @@
 
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
+
+// Merger datum signals
+/// Called on the object being added to a merger group: (datum/merger/new_merger)
+#define COMSIG_MERGER_ADDING "comsig_merger_adding"
+/// Called on the object being removed from a merger group: (datum/merger/old_merger)
+#define COMSIG_MERGER_REMOVING "comsig_merger_removing"
+/// Called on the merger after finishing a refresh: (list/leaving_members, list/joining_members)
+#define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
+
+// Vacuum signals
+/// Called on a bag being attached to a vacuum parent
+#define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
+/// Called on a bag being detached from a vacuum parent
+#define COMSIG_VACUUM_BAG_DETACH "comsig_vacuum_bag_detach"

@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Admin
 	MODE_KEY_ADMIN = MODE_ADMIN,
 	MODE_KEY_DEADMIN = MODE_DEADMIN,
+	MODE_KEY_PUPPET = MODE_PUPPET,
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
@@ -146,6 +147,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(DEAD)
 			say_dead(original_message)
 			return
+
+	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
+		if(!COOLDOWN_FINISHED(client, say_slowmode))
+			to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+			return
+		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
 	if(!can_speak_basic(original_message, ignore_spam, forced))
 		return
@@ -344,7 +351,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-		if(M.client && !M.client.prefs.chat_on_map)
+		if(M.client && (!M.client.prefs.chat_on_map || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA

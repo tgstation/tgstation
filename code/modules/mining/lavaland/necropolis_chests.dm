@@ -560,9 +560,10 @@
 /obj/item/shared_storage
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "cultpack"
-	slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "paradox_bag"
+	worn_icon_state = "paradoxbag"
+	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/item/shared_storage/red
@@ -573,7 +574,7 @@
 	. = ..()
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 60
+	STR.max_combined_w_class = 15
 	STR.max_items = 21
 	new /obj/item/shared_storage/blue(drop_location(), STR)
 
@@ -583,7 +584,7 @@
 		return INITIALIZE_HINT_QDEL
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 60
+	STR.max_combined_w_class = 15
 	STR.max_items = 21
 
 //Book of Babel
@@ -629,18 +630,12 @@
 	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		var/holycheck = ishumanbasic(exposed_carbon)
-		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || (ismoth(exposed_carbon) && exposed_carbon.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
+		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || ismoth(exposed_carbon))) // implying xenohumans are holy //as with all things,
 			if((methods & INGEST) && show_message)
 				to_chat(exposed_carbon, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 			return
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
-			if(!exposed_carbon.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
-				exposed_carbon.dna.features["original_moth_wings"] = exposed_carbon.dna.features["moth_wings"]
-			exposed_carbon.dna.features["moth_wings"] = "None"
-			if(!exposed_carbon.dna.features["original_moth_antennae"]) //Stores their antennae type as well
-				exposed_carbon.dna.features["original_moth_antennae"] = exposed_carbon.dna.features["moth_antennae"]
-			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as wings burst out!"))
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
@@ -1126,7 +1121,10 @@
 	if(dist > HIEROPHANT_BLINK_RANGE)
 		to_chat(user, span_hierophant_warning("Blink destination out of range."))
 		return
-
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		return
 	. = ..()
 
 	if(!current_charges)

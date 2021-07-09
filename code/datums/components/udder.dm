@@ -144,6 +144,8 @@
 
 ///signal called on parent attacking an atom
 /obj/item/udder/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
+	SIGNAL_HANDLER
+
 	if(is_type_in_typecache(target, gutlunch.wanted_objects)) //we eats
 		generate()
 		gutlunch.visible_message(span_notice("[src] slurps up [target]."))

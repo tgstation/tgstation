@@ -44,6 +44,30 @@
 			}; \
 		} \
 	} while (0)
+#define REMOVE_TRAIT_NOT_FROM(target, trait, sources) \
+	do { \
+		var/list/_traits_list = target.status_traits; \
+		var/list/_sources_list; \
+		if (sources && !islist(sources)) { \
+			_sources_list = list(sources); \
+		} else { \
+			_sources_list = sources\
+		}; \
+		if (_traits_list && _traits_list[trait]) { \
+			for (var/_trait_source in _traits_list[trait]) { \
+				if (!(_trait_source in _sources_list)) { \
+					_traits_list[trait] -= _trait_source \
+				} \
+			};\
+			if (!length(_traits_list[trait])) { \
+				_traits_list -= trait; \
+				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
+			}; \
+			if (!length(_traits_list)) { \
+				target.status_traits = null \
+			}; \
+		} \
+	} while (0)
 #define REMOVE_TRAITS_NOT_IN(target, sources) \
 	do { \
 		var/list/_L = target.status_traits; \
@@ -294,13 +318,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Addictions don't tick down, basically they're permanently addicted
 #define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
 /// Special examine if eyes are visible
-#define CULT_EYES "cult_eyes"
+#define TRAIT_CULT_EYES "cult_eyes"
+/// Special examine if eyes are visible
+#define TRAIT_BLOODSHOT_EYES "bloodshot_eyes"
 /// This mob should never close UI even if it doesn't have a client
 #define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
+/// This mob overrides certian SSlag_switch measures with this special trait
+#define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
+///When people are floating from zero-grav or something, we can move around freely!
+#define TRAIT_FREE_FLOAT_MOVEMENT "free_float_movement"
 
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
@@ -377,6 +407,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
+
+/// Climbable trait, given and taken by the climbable element when added or removed. Exists to be easily checked via HAS_TRAIT().
+#define TRAIT_CLIMBABLE "trait_climbable"
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
@@ -461,6 +494,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
 #define TRAIT_FIREDOOR_STOP "firedoor_stop"
 
+/// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
+#define TRAIT_COMPONENT_MMI "component_mmi"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -534,13 +570,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HIGHLANDER_TRAIT "highlander"
 
 ///generic atom traits
+/// Trait from [/datum/component/rust]. Its rusty and should be applying a special overlay to denote this.
+#define TRAIT_RUSTY "rust_trait"
 #define DO_NOT_SPLASH "do_not_splash"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
-#define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
@@ -603,8 +640,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SOULSTONE_TRAIT "soulstone"
 /// Trait applied to slimes by low temperature
 #define SLIME_COLD "slime-cold"
-/// Trait applied to bots by being tipped over
-#define BOT_TIPPED_OVER "bot-tipped-over"
+/// Trait applied to mobs by being tipped over
+#define TIPPED_OVER "tipped-over"
 /// Trait applied to PAIs by being folded
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.

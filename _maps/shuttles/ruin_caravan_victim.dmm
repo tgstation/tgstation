@@ -486,7 +486,7 @@
 /area/shuttle/caravan/freighter1)
 "zd" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,

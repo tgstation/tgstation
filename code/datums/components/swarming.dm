@@ -14,8 +14,7 @@
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
-
-	AddElement(/datum/element/connect_loc, parent, swarming_loc_connections)
+	AddElement(/datum/element/connect_loc_behalf, parent, swarming_loc_connections)
 
 /datum/component/swarming/Destroy()
 	for(var/other in swarm_members)
@@ -26,7 +25,7 @@
 	swarm_members = null
 	return ..()
 
-/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, direction)
+/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	var/datum/component/swarming/other_swarm = arrived.GetComponent(/datum/component/swarming)

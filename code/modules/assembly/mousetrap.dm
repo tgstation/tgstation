@@ -19,7 +19,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()
@@ -47,11 +47,11 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	AddElement(/datum/element/connect_loc, holder, holder_connections)
+	AddElement(/datum/element/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
+	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

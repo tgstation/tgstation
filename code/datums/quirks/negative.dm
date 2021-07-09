@@ -308,7 +308,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	if(human_holder.dna?.species.id in list("shadow", "nightmare"))
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
 		return
 
 	var/turf/holder_turf = get_turf(quirk_holder)
