@@ -344,7 +344,11 @@ export const MainPage = (props: {
         >
           {[
             ...Object.entries(data.character_preferences.clothing),
-            ...Object.entries(data.character_preferences.features),
+            ...Object.entries(data.character_preferences.features)
+              .filter(([featureName]) => {
+                return data.species[data.character_preferences.misc.species]
+                  .features.indexOf(featureName.split("feature_")[1]) !== -1;
+              }),
           ]
             .map(([clothingKey, clothing]) => {
               // MOTHBLOCKS TODO: Better nude icons, rather than X

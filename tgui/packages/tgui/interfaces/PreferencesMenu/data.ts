@@ -46,6 +46,8 @@ export type ServerSpeciesData = {
   use_skintones: BooleanLike;
   sexes: BooleanLike;
 
+  features: string[];
+
   liked_food: Food[];
   disliked_food: Food[];
   toxic_food: Food[];

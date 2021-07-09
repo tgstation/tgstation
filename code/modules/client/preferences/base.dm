@@ -227,3 +227,33 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 			// This means it didn't have an icon state
 			possible_values[name] = icon('icons/mob/landmarks.dmi', "x")
 	return possible_values
+
+/// Takes an assoc list of names to /datum/sprite_accessory and returns a value
+/// fit for `/datum/preference/init_possible_values()`
+/// Different from `possible_values_for_sprite_accessory_list` in that it takes a list of layers
+/// such as BEHIND, FRONT, and ADJ.
+/// It also takes a "body part name", such as body_markings, moth_wings, etc
+/// They are expected to be in order from lowest to top.
+/proc/possible_values_for_sprite_accessory_list_for_body_part(
+	list/datum/sprite_accessory/sprite_accessories,
+	body_part,
+	list/layers,
+)
+	var/list/possible_values = list()
+
+	for (var/name in sprite_accessories)
+		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
+
+		var/icon/final_icon
+
+		for (var/layer in layers)
+			var/icon/icon = icon(sprite_accessory.icon, "m_[body_part]_[sprite_accessory.icon_state]_[layer]")
+
+			if (isnull(final_icon))
+				final_icon = icon
+			else
+				final_icon.Blend(icon, ICON_OVERLAY)
+
+		possible_values[name] = final_icon
+
+	return possible_values

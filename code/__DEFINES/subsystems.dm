@@ -118,6 +118,7 @@
 #define INIT_ORDER_ACHIEVEMENTS 77
 #define INIT_ORDER_RESEARCH 75
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
+#define INIT_ORDER_ASSETS 73
 #define INIT_ORDER_EVENTS 70
 #define INIT_ORDER_IDACCESS 66
 #define INIT_ORDER_JOBS 65
@@ -141,7 +142,6 @@
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
 #define INIT_ORDER_PERSISTENCE -2 //before assets because some assets take data from SSPersistence
-#define INIT_ORDER_ASSETS -4
 #define INIT_ORDER_ICON_SMOOTHING -5
 #define INIT_ORDER_OVERLAY -6
 #define INIT_ORDER_XKEYSCORE -10
