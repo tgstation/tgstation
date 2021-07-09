@@ -101,4 +101,11 @@
 /datum/preference/choiced/moth_wings/apply(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value
 
+/datum/preference/color/hair_color
+	savefile_key = "hair_color"
+	category = PREFERENCE_CATEGORY_FEATURES
+
+/datum/preference/color/hair_color/apply(mob/living/carbon/human/target, value)
+	target.hair_color = value
+
 #undef PREFERENCE_CATEGORY_FEATURES

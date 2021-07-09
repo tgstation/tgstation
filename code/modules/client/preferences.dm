@@ -73,7 +73,6 @@ GLOBAL_VAR(preferences_species_data)
 	var/undershirt = "Nude" //undershirt type
 	var/socks = "Nude" //socks type
 	var/hairstyle = "Bald" //Hair type
-	var/hair_color = "000" //Hair color
 	var/facial_hairstyle = "Shaved" //Face hair type
 	var/facial_hair_color = "000" //Facial hair color
 	var/skin_tone = "caucasian1" //Skin color
@@ -525,7 +524,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		if(!initial(organ_eyes.eye_color))
 			organ_eyes.eye_color = eye_color
 		organ_eyes.old_eye_color = eye_color
-	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
@@ -617,6 +615,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 		for (var/body_part in species.mutant_bodyparts)
 			features += body_part
+
+		for (var/trait in species.species_traits)
+			switch (trait)
+				if (EYECOLOR)
+					features += "eye_color"
+				if (FACEHAIR)
+					features += "facial_hair"
+				if (HAIR)
+					features += "hair"
 
 		species_data[species_id] = list(
 			"name" = species.name,

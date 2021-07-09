@@ -215,6 +215,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return ..()
 
+/// A preference that represents an RGB color of something.
+/datum/preference/color
+	abstract_type = /datum/preference/color
+
+/datum/preference/color/deserialize(input)
+	return sanitize_hexcolor(input)
+
+/datum/preference/color/create_default_value()
+	return "000"
+
+/datum/preference/color/is_valid(value)
+	return findtext(value, GLOB.is_color)
+
 /// Takes an assoc list of names to /datum/sprite_accessory and returns a value
 /// fit for `/datum/preference/init_possible_values()`
 /proc/possible_values_for_sprite_accessory_list(list/datum/sprite_accessory/sprite_accessories)
