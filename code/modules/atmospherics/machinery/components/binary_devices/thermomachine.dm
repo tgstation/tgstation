@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	icon_state = "thermo"
+	icon_state = "thermo_base"
 
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
@@ -473,7 +473,7 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on
 	on = TRUE
-	icon_state = "thermo_1"
+	icon_state = "thermo_base_1"
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize()
 	. = ..()
@@ -482,7 +482,7 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
-	icon_state = "thermo_1"
+	icon_state = "thermo_base_1"
 	cooling = TRUE
 	greyscale_config = /datum/greyscale_config/thermomachine
 	greyscale_colors = "#00feff"
@@ -496,6 +496,6 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/heater/on
 	on = TRUE
-	icon_state = "thermo_1"
+	icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_SAFE_TEMPERATURE
