@@ -223,6 +223,11 @@
 	id = "comp_pressuresensor"
 	build_path = /obj/item/circuit_component/pressuresensor
 
+	/datum/design/component/pathfind
+	name = "Pathfinder"
+	id = "comp_pathfind"
+	build_path = /obj/item/circuit_component/pathfind
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."

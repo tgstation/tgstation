@@ -667,6 +667,7 @@
 	design_ids = list(
 		"comp_pull",
 		"drone_shell",
+		"comp_pathfind",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
