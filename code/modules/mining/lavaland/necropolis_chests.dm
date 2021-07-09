@@ -630,18 +630,12 @@
 	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		var/holycheck = ishumanbasic(exposed_carbon)
-		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || (ismoth(exposed_carbon) && exposed_carbon.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
+		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || ismoth(exposed_carbon))) // implying xenohumans are holy //as with all things,
 			if((methods & INGEST) && show_message)
 				to_chat(exposed_carbon, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 			return
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
-			if(!exposed_carbon.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
-				exposed_carbon.dna.features["original_moth_wings"] = exposed_carbon.dna.features["moth_wings"]
-			exposed_carbon.dna.features["moth_wings"] = "None"
-			if(!exposed_carbon.dna.features["original_moth_antennae"]) //Stores their antennae type as well
-				exposed_carbon.dna.features["original_moth_antennae"] = exposed_carbon.dna.features["moth_antennae"]
-			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as wings burst out!"))
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)

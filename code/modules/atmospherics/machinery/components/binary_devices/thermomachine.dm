@@ -19,6 +19,8 @@
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
+	set_dir_on_move = FALSE
+
 	var/icon_state_off = "freezer"
 	var/icon_state_on = "freezer_1"
 	var/icon_state_open = "freezer-o"
