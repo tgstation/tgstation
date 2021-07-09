@@ -119,6 +119,7 @@
 /obj/item/integrated_circuit/proc/set_shell(atom/movable/new_shell)
 	remove_current_shell()
 	set_on(TRUE)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_SHELL, new_shell)
 	shell = new_shell
 	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
@@ -126,8 +127,6 @@
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
 		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
-	if(display_name != "")
-		shell.name = "[initial(shell.name)] ([display_name])"
 
 /**
  * Unregisters the current shell attached to this circuit.
