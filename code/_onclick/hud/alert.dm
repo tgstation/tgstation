@@ -656,18 +656,18 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	if(!target)
 		return
-	var/mob/dead/observer/dead_owner = owner
-	if(!istype(dead_owner))
+	var/mob/dead/observer/ghost_owner = owner
+	if(!istype(ghost_owner))
 		return
 	switch(action)
 		if(NOTIFY_ATTACK)
-			target.attack_ghost(dead_owner)
+			target.attack_ghost(ghost_owner)
 		if(NOTIFY_JUMP)
 			var/turf/target_turf = get_turf(target)
 			if(target_turf && isturf(target_turf))
-				dead_owner.forceMove(target_turf)
+				ghost_owner.abstract_move(target_turf)
 		if(NOTIFY_ORBIT)
-			dead_owner.ManualFollow(target)
+			ghost_owner.ManualFollow(target)
 
 //OBJECT-BASED
 
