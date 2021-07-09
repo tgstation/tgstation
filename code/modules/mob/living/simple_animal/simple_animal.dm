@@ -697,7 +697,7 @@
 /mob/living/simple_animal/proc/hunt(hunted)
 	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
 		return
-	if(!((src.loc) && isturf(src.loc))) // Are we on a proper turf & location?
+	if(!isturf(src.loc)) // Are we on a proper turf & location?
 		stop_automated_movement = FALSE
 		return
 	if(stat || resting || buckled) // Are we concious, upright, and not buckled?
