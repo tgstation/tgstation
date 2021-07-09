@@ -196,7 +196,8 @@
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.
  */
 /datum/component/shell/proc/attach_circuit(obj/item/integrated_circuit/circuitboard, mob/living/user)
-	if(!user.transferItemToLoc(circuitboard, parent))
+	var/atom/movable/parent_atom = parent
+	if(!user.transferItemToLoc(circuitboard, parent_atom))
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
@@ -206,11 +207,12 @@
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
-	attached_circuit.set_shell(parent)
+	attached_circuit.set_shell(parent_atom)
+	if(attached_circuit.display_name != "")
+		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
 	attached_circuit.locked = FALSE
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		var/atom/movable/parent_atom = parent
 		on_unfasten(parent_atom, parent_atom.anchored)
 
 /**
