@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/pathfind
 	display_name = "Pathfinder"
-	display_desc = "Calcualtes a path, returns a list of entities. Each entity is the next step in the path. Can be used with the direction component to move."
+	display_desc = "Calculates a path, returns a list of entities. Each entity is the next step in the path. Can be used with the direction component to move."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/target_X

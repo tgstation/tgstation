@@ -665,9 +665,9 @@
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
 	design_ids = list(
+		"comp_pathfind",
 		"comp_pull",
 		"drone_shell",
-		"comp_pathfind",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
