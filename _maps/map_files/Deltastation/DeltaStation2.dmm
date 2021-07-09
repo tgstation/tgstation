@@ -37759,6 +37759,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "enj" = (
@@ -38776,6 +38777,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "eDl" = (
@@ -63688,6 +63690,10 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"lsy" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/security/checkpoint/medical)
 "lsG" = (
 /turf/open/floor/iron,
 /area/security/prison)
@@ -65614,8 +65620,8 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "lUX" = (
@@ -83545,7 +83551,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/defibrillator_mount/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "qwx" = (
@@ -158090,11 +158096,11 @@ cPC
 cRd
 cRc
 cUG
-cUG
+lsy
 cUG
 ryr
 cRc
-cUG
+lsy
 cUG
 dfD
 dhm

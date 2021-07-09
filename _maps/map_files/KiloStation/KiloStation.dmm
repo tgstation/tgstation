@@ -12530,6 +12530,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aPH" = (
@@ -42000,8 +42001,7 @@
 	id = "cmoprivacy";
 	name = "Office Privacy Shutters"
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/command/heads_quarters/cmo)
 "dyi" = (
 /obj/effect/landmark/start/bartender,
@@ -109215,7 +109215,7 @@ avB
 aWm
 eqk
 eWO
-eWO
+dxK
 eWO
 dxK
 eWO
