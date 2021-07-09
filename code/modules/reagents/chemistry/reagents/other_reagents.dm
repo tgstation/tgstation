@@ -2068,14 +2068,11 @@
 	return ..()
 
 /datum/reagent/colorful_reagent/Destroy()
-	stack_trace("huh? Has color callback [!!color_callback]")
-	//if(color_callback)
-	//	LAZYREMOVE(SSticker.round_start_events, color_callback)
-	color_callback = null
+	LAZYREMOVE(SSticker.round_end_events, color_callback) //Prevents harddels during roundstart
 	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
-	color_callback = FALSE
+	color_callback = null
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
