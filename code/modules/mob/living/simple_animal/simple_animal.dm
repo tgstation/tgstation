@@ -697,7 +697,7 @@
 /mob/living/simple_animal/proc/hunt(hunted)
 	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
 		return
-	if(!isturf(src.loc)) // Are we on a proper turf & location?
+	if(!isturf(src.loc)) // Are we on a proper turf?
 		stop_automated_movement = FALSE
 		return
 	if(stat || resting || buckled) // Are we concious, upright, and not buckled?
@@ -726,8 +726,7 @@
 			stop_automated_movement = FALSE
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
-	else
-		stop_automated_movement = TRUE
-		walk_to(src,hunted,0,3)
-		if(Adjacent(hunted))
-			hunt(hunted) // In case it gets next to the target immediately, skip the scan timer and kill it.
+	stop_automated_movement = TRUE
+	walk_to(src,hunted,0,3)
+	if(Adjacent(hunted))
+		hunt(hunted) // In case it gets next to the target immediately, skip the scan timer and kill it.
