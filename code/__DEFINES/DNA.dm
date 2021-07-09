@@ -174,6 +174,16 @@
 #define ORGAN_SLOT_VOICE "vocal_cords"
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
 
+/// Organ slot external
+#define ORGAN_SLOT_EXTERNAL_TAIL "tail"
+#define ORGAN_SLOT_EXTERNAL_SPINES "spines"
+#define ORGAN_SLOT_EXTERNAL_SNOUT "snout"
+#define ORGAN_SLOT_EXTERNAL_FRILLS "frills"
+#define ORGAN_SLOT_EXTERNAL_HORNS "horns"
+#define ORGAN_SLOT_EXTERNAL_WINGS "wings"
+#define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
+#define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
+
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
 #define ORGAN_SLOT_XENO_EGGSAC "eggsac"

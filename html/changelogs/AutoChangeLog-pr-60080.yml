@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "AI intellicards can no longer be teleported out of intellicard slots on consoles using telekinesis or silicon access range"
