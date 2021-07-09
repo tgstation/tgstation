@@ -57,6 +57,7 @@
 		for(var/obj/effect/decal/cleanable/ants/potential_target in view(3, get_turf(src)))
 			if(potential_target.type in target_types)
 				hunt(potential_target)
+				return
 
 
 /obj/projectile/glockroachbullet
