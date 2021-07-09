@@ -41997,10 +41997,6 @@
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "dxK" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "cmoprivacy";
-	name = "Office Privacy Shutters"
-	},
 /turf/closed/wall,
 /area/command/heads_quarters/cmo)
 "dyi" = (
