@@ -6,7 +6,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
-/obj/item/grenade/flashbang/prime(mob/living/lanced_by)
+/obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
@@ -20,9 +20,9 @@
 	qdel(src)
 
 /obj/item/grenade/flashbang/proc/bang(turf/T , mob/living/M)
-	if(M.stat == DEAD)	//They're dead!
+	if(M.stat == DEAD) //They're dead!
 		return
-	M.show_message("<span class='warning'>BANG</span>", MSG_AUDIBLE)
+	M.show_message(span_warning("BANG"), MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash
@@ -31,7 +31,7 @@
 		M.Knockdown(max(200/max(1,distance), 60))
 
 //Bang
-	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
+	if(!distance || loc == M || loc == M.loc) //Stop allahu akbarring rooms with this.
 		M.Paralyze(20)
 		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
@@ -50,20 +50,20 @@
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 5
-	custom_premium_price = 700 // mostly gotten through cargo, but throw in one for the sec vendor ;)
+	custom_premium_price = PAYCHECK_HARD * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
 
 /obj/item/grenade/stingbang/mega
 	name = "mega stingbang"
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
 	shrapnel_radius = 12
 
-/obj/item/grenade/stingbang/prime(mob/living/lanced_by)
+/obj/item/grenade/stingbang/detonate(mob/living/lanced_by)
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		var/obj/item/bodypart/B = C.get_holding_bodypart_of_item(src)
 		if(B)
 			forceMove(get_turf(C))
-			C.visible_message("<b><span class='danger'>[src] goes off in [C]'s hand, blowing [C.p_their()] [B.name] to bloody shreds!</span></b>", "<span class='userdanger'>[src] goes off in your hand, blowing your [B.name] to bloody shreds!</span>")
+			C.visible_message("<b>[span_danger("[src] goes off in [C]'s hand, blowing [C.p_their()] [B.name] to bloody shreds!")]</b>", span_userdanger("[src] goes off in your hand, blowing your [B.name] to bloody shreds!"))
 			B.dismember()
 
 	. = ..()
@@ -80,9 +80,9 @@
 	qdel(src)
 
 /obj/item/grenade/stingbang/proc/pop(turf/T , mob/living/M)
-	if(M.stat == DEAD)	//They're dead!
+	if(M.stat == DEAD) //They're dead!
 		return
-	M.show_message("<span class='warning'>POP</span>", MSG_AUDIBLE)
+	M.show_message(span_warning("POP"), MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
 //Flash
 	if(M.flash_act(affect_silicon = 1))
@@ -95,7 +95,7 @@
 		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
 		if(M.apply_damages(10, 10))
-			to_chat(M, "<span class='userdanger'>The blast from \the [src] bruises and burns you!</span>")
+			to_chat(M, span_userdanger("The blast from \the [src] bruises and burns you!"))
 
 	// only checking if they're on top of the tile, cause being one tile over will be its own punishment
 
@@ -118,7 +118,7 @@
 		rots++
 		user.changeNext_move(CLICK_CD_RAPID)
 
-/obj/item/grenade/primer/prime(mob/living/lanced_by)
+/obj/item/grenade/primer/detonate(mob/living/lanced_by)
 	shrapnel_radius = round(rots / rots_per_mag)
 	. = ..()
 	qdel(src)

@@ -31,11 +31,11 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/powered/shuttle/medium_1)
 "j" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "k" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "l" = (
 /obj/structure/table,
@@ -50,7 +50,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "m" = (
 /obj/machinery/sleeper,
@@ -64,14 +64,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "n" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
 "o" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
 "p" = (
 /obj/effect/turf_decal/tile/blue{
@@ -84,7 +84,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "q" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -97,7 +97,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "r" = (
 /obj/structure/table/reinforced,
@@ -111,7 +111,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "s" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -119,7 +119,7 @@
 /area/ruin/powered/shuttle/medium_1)
 "t" = (
 /obj/machinery/power/smes/magical,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
 "u" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -139,7 +139,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{

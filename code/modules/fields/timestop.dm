@@ -18,7 +18,7 @@
 	var/check_anti_magic = FALSE
 	var/check_holy = FALSE
 
-/obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE)	//Immune atoms assoc list atom = TRUE
+/obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
 	. = ..()
 	if(!isnull(time))
 		duration = time
@@ -36,7 +36,7 @@
 		INVOKE_ASYNC(src, .proc/timestop)
 
 /obj/effect/timestop/Destroy()
-	qdel(chronofield)
+	QDEL_NULL(chronofield)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
 	return ..()
 

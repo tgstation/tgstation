@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(frost_miner_prisms)
+
 /*
 
 Difficulty: Extremely Hard
@@ -18,18 +20,19 @@ Difficulty: Extremely Hard
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
-	weather_immunities = list("snow")
+	weather_immunities = list(WEATHER_SNOW)
 	speak_emote = list("roars")
 	armour_penetration = 100
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	aggro_vision_range = 18 // large vision range so combat doesn't abruptly end when someone runs a bit away
+	vision_range = 18 // large vision range so combat doesn't abruptly end when someone runs a bit away
 	rapid_melee = 4
 	speed = 20
 	move_to_delay = 20
+	gps_name = "Bloodchilling Signal"
 	ranged = TRUE
-	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman)
-	loot = list(/obj/effect/decal/remains/plasma)
+	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman, /obj/item/ice_energy_crystal)
+	loot = list(/obj/effect/decal/remains/plasma, /obj/item/ice_energy_crystal)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -51,6 +54,8 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
 	. = ..()
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
 	AddComponent(/datum/component/knockback, 7, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 50)
 
@@ -70,14 +75,14 @@ Difficulty: Extremely Hard
 
 /datum/action/innate/megafauna_attack/ice_shotgun
 	name = "Fire Ice Shotgun"
-	icon_icon = 'icons/obj/guns/projectile.dmi'
+	icon_icon = 'icons/obj/guns/ballistic.dmi'
 	button_icon_state = "shotgun"
 	chosen_message = "<span class='colossus'>You are now firing shotgun ice blasts.</span>"
 	chosen_attack_num = 3
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
-	projectile_speed_multiplier = 1 - enraged * 0.25
+	projectile_speed_multiplier = 1 - enraged * 0.5
 	SetRecoveryTime(100, 100)
 
 	if(client)
@@ -129,7 +134,7 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	speed = 4
+	speed = 3
 	damage_type = BRUTE
 
 /obj/projectile/ice_blast
@@ -137,7 +142,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	speed = 4
+	speed = 3
 	damage_type = BRUTE
 
 /obj/projectile/ice_blast/on_hit(atom/target, blocked = FALSE)
@@ -146,8 +151,8 @@ Difficulty: Extremely Hard
 		target.ex_act(EXPLODE_HEAVY)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
-	adjustBruteLoss(30 * severity - 120)
-	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
+	adjustBruteLoss(-30 * severity)
+	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
 	if(enraging)
@@ -252,11 +257,13 @@ Difficulty: Extremely Hard
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)
 	SLEEP_CHECK_DEATH(8, src)
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	setMovetype(movement_type | FLYING)
+	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
 	enraging = FALSE
 	adjustHealth(-maxHealth)
 
@@ -265,6 +272,8 @@ Difficulty: Extremely Hard
 		return
 	var/turf/T = get_turf(src)
 	var/loot = rand(1, 3)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(COLOR_GRAY, 1)
 	switch(loot)
 		if(1)
 			new /obj/item/resurrection_crystal(T)
@@ -282,28 +291,29 @@ Difficulty: Extremely Hard
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)
 	if(!iscarbon(user))
-		to_chat(user, "<span class='notice'>A dark presence stops you from absorbing the crystal.</span>")
+		to_chat(user, span_notice("A dark presence stops you from absorbing the crystal."))
 		return
 	forceMove(user)
-	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
-	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
+	to_chat(user, span_notice("You feel a bit safer... but a demonic presence lurks in the back of your head..."))
+	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
+	SIGNAL_HANDLER
 	if(gibbed)
-		to_chat(user, "<span class='notice'>This power cannot be used if your entire mortal body is disintegrated...</span>")
+		to_chat(user, span_notice("This power cannot be used if your entire mortal body is disintegrated..."))
 		return
-	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a fresh body!</span>")
+	user.visible_message(span_notice("You see [user]'s soul dragged out of their body!"), span_notice("You feel your soul dragged away to a fresh body!"))
 	var/typepath = user.type
 	var/mob/living/carbon/clone = new typepath(user.loc)
 	clone.real_name = user.real_name
-	user.dna.transfer_identity(clone)
+	INVOKE_ASYNC(user.dna, /datum/dna.proc/transfer_identity, clone)
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_safe_turf()
 	user.forceMove(T)
 	user.revive(full_heal = TRUE, admin_revive = TRUE)
-	user.set_species(/datum/species/shadow)
-	to_chat(user, "<span class='notice'>You blink and find yourself in [get_area_name(T)]... feeling a bit darker.</span>")
+	INVOKE_ASYNC(user, /mob/living/carbon.proc/set_species, /datum/species/shadow)
+	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
 	clone.dust()
 	qdel(src)
 
@@ -312,23 +322,34 @@ Difficulty: Extremely Hard
 	desc = "A pair of winter boots contractually made by a devil, they cannot be taken off once put on."
 	actions_types = list(/datum/action/item_action/toggle)
 	var/on = FALSE
-	var/change_turf = /turf/open/floor/plating/ice/icemoon
+	var/change_turf = /turf/open/floor/plating/ice/icemoon/no_planet_atmos
 	var/duration = 6 SECONDS
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
+	. = ..()
+	// Could have been blown off in an explosion from the previous owner
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on
-	to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] [src].</span>")
+	to_chat(user, span_notice("You [on ? "activate" : "deactivate"] [src]."))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
+	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
 
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/step_action()
-	. = ..()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/proc/on_step()
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(loc)
 	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
 		return
@@ -365,13 +386,18 @@ Difficulty: Extremely Hard
 
 /datum/status_effect/ice_block_talisman
 	id = "ice_block_talisman"
-	duration = 40
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
+	duration = 4 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /atom/movable/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
 
-/obj/screen/alert/status_effect/ice_block_talisman
+/datum/status_effect/ice_block_talisman/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/atom/movable/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move!"
 	icon_state = "frozen"
@@ -379,7 +405,7 @@ Difficulty: Extremely Hard
 /datum/status_effect/ice_block_talisman/on_apply()
 	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/owner_moved)
 	if(!owner.stat)
-		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
+		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	var/icon/size_check = icon(owner.icon, owner.icon_state)
 	cube.Scale(size_check.Width(), size_check.Height())
@@ -388,10 +414,42 @@ Difficulty: Extremely Hard
 
 /// Blocks movement from the status effect owner
 /datum/status_effect/ice_block_talisman/proc/owner_moved()
+	SIGNAL_HANDLER
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /datum/status_effect/ice_block_talisman/on_remove()
 	if(!owner.stat)
-		to_chat(owner, "<span class='notice'>The cube melts!</span>")
+		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
 	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+
+/obj/item/ice_energy_crystal
+	name = "ice energy crystal"
+	desc = "Remnants of the demonic frost miners ice energy."
+	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon_state = "ice_crystal"
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 0
+
+/obj/structure/frost_miner_prism
+	name = "frost miner light prism"
+	desc = "A magical crystal enhanced by a demonic presence."
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "lightprism"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/structure/frost_miner_prism/Initialize(mapload)
+	. = ..()
+	GLOB.frost_miner_prisms |= src
+	set_prism_light(LIGHT_COLOR_BLUE, 5)
+
+/obj/structure/frost_miner_prism/Destroy()
+	GLOB.frost_miner_prisms -= src
+	return ..()
+
+/obj/structure/frost_miner_prism/proc/set_prism_light(new_color, new_range)
+	color = new_color
+	set_light_color(new_color)
+	set_light(new_range)

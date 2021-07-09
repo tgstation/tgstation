@@ -55,7 +55,7 @@
 /obj/item/seeds/reishi,
 /obj/item/seeds/plump,
 /obj/item/seeds/plump,
-/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/obj/item/food/grown/mushroom/glowshroom,
 /obj/item/seeds/tower,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
@@ -110,9 +110,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "z" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/tubes,
 /turf/open/floor/plating,
 /area/ruin/powered)

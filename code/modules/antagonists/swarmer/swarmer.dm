@@ -11,6 +11,7 @@
 /datum/antagonist/swarmer
 	name = "Swarmer"
 	job_rank = ROLE_ALIEN
+	show_to_ghosts = TRUE
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
 	var/datum/team/swarmer/swarmer_team

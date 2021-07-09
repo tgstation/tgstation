@@ -7,7 +7,6 @@
 	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
@@ -23,11 +22,11 @@
 	attack_verb_continuous = "slimes"
 	attack_verb_simple = "slime"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
-
+	footstep_type = FOOTSTEP_MOB_SLIME
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
 	var/ooze_nutrition_loss = -0.15
@@ -37,7 +36,7 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -49,13 +48,15 @@
 		return ..()
 	eat_atom(attacked_target)
 
-/mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life()
+/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 
 	if(!mind && stat != DEAD)//no mind no change
@@ -66,7 +67,7 @@
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
 		var/datum/reagent/reagent = i
-		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM)
+		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * delta_time)
 		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = reagent
 			nutrition_change += consumption_amount * consumable.nutriment_factor
@@ -74,7 +75,7 @@
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
-		adjustBruteLoss(0.5)
+		adjustBruteLoss(0.25 * delta_time)
 
 ///Returns whether or not the supplied movable atom is edible.
 /mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/potential_food)
@@ -92,14 +93,14 @@
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/eaten_atom)
 	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume, transfered_by = src)
-	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(eaten_atom)
 
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
 	if(hud_used) //clientless oozes
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>"
+		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>")
 
 
 ///* Gelatinious Ooze code below *\\\\
@@ -174,7 +175,7 @@
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
 	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
-	to_chat(ooze, "<span class='notice'>You start feel a lot quicker.</span>")
+	to_chat(ooze, span_notice("You start feel a lot quicker."))
 	active = TRUE
 	ooze.adjust_ooze_nutrition(-10)
 
@@ -187,7 +188,7 @@
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
-	to_chat(ooze, "<span class='notice'>You start slowing down again.</span>")
+	to_chat(ooze, span_notice("You start slowing down again."))
 	deltimer(timerid)
 	active = FALSE
 	StartCooldown()
@@ -207,10 +208,11 @@
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_owner_death)
 	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 
 /datum/action/consume/proc/handle_mob_deletion()
+	SIGNAL_HANDLER
 	stop_consuming() //Shit out the vored mob before u go go
 
 ///Try to consume the pulled mob
@@ -220,18 +222,18 @@
 		return
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	if(!isliving(ooze.pulling))
-		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
+		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
 	if(vored_mob)
-		to_chat(src, "<span class='warning'>You are already consuming another creature!</span>")
+		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
-	owner.visible_message("<span class='warning>[ooze] starts attempting to devour [target]!</span>", "<span class='notice'>You start attempting to devour [target].</span>")
+	owner.visible_message("<span class='warning>[ooze] starts attempting to devour [target]!</span>", span_notice("You start attempting to devour [target]."))
 	if(!do_after(ooze, 15, target = ooze.pulling))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
-		to_chat(src, "<span class='warning'>This creature isn't to my tastes!</span>")
+		to_chat(src, span_warning("This creature isn't to my tastes!"))
 		return FALSE
 	start_consuming(eat_target)
 
@@ -241,7 +243,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message("<span class='warning>[src] devours [target]!</span>", "<span class='notice'>You devour [target].</span>")
+	owner.visible_message("<span class='warning>[src] devours [target]!</span>", span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
 
 ///Stop consuming the mob; dump them on the floor
@@ -249,7 +251,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-	owner.visible_message("<span class='warning>[owner] pukes out [vored_mob]!</span>", "<span class='notice'>You puke out [vored_mob].</span>")
+	owner.visible_message("<span class='warning>[owner] pukes out [vored_mob]!</span>", span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_PARENT_PREQDELETED)
 	vored_mob = null
 
@@ -337,13 +339,13 @@
 /obj/effect/proc_holder/globules/fire(mob/living/carbon/user)
 	var/message
 	if(current_cooldown > world.time)
-		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
+		to_chat(user, span_notice("This ability is still on cooldown."))
 		return
 	if(active)
-		message = "<span class='notice'>You stop preparing your mending globules.</span>"
+		message = span_notice("You stop preparing your mending globules.")
 		remove_ranged_ability(message)
 	else
-		message = "<span class='notice'>You prepare to launch a mending globule. <B>Left-click to fire at a target!</B></span>"
+		message = span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>")
 		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/globules/InterceptClickOn(mob/living/caller, params, atom/target)
@@ -357,13 +359,14 @@
 	var/mob/living/simple_animal/hostile/ooze/ooze = ranged_ability_user
 
 	if(ooze.ooze_nutrition < 5)
-		to_chat(ooze, "<span class='warning'>You need at least 5 nutrition to launch a mending globule.</span>")
+		to_chat(ooze, span_warning("You need at least 5 nutrition to launch a mending globule."))
 		remove_ranged_ability()
 		return
 
-	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
+	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", span_notice("You launch a mending globule."))
+	var/modifiers = params2list(params)
 	var/obj/projectile/globule/globule = new (ooze.loc)
-	globule.preparePixelProjectile(target, ooze, params)
+	globule.preparePixelProjectile(target, ooze, modifiers)
 	globule.def_zone = ooze.zone_selected
 	globule.fire()
 	ooze.adjust_ooze_nutrition(-5)
@@ -436,9 +439,9 @@
 		return
 	var/mob/living/simple_animal/hostile/ooze/grapes/ooze = owner
 	if(!iscarbon(ooze.pulling))
-		to_chat(src, "<span class='warning'>You need to be pulling an intelligent enough creature to assist it with a cocoon!</span>")
+		to_chat(src, span_warning("You need to be pulling an intelligent enough creature to assist it with a cocoon!"))
 		return FALSE
-	owner.visible_message("<span class='nicegreen>[ooze] starts attempting to put [target] into a gel cocoon!</span>", "<span class='notice'>You start attempting to put [target] into a gel cocoon.</span>")
+	owner.visible_message("<span class='nicegreen>[ooze] starts attempting to put [target] into a gel cocoon!</span>", span_notice("You start attempting to put [target] into a gel cocoon."))
 	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
 		return FALSE
 
@@ -457,7 +460,7 @@
 /datum/action/cooldown/gel_cocoon/proc/put_in_cocoon(mob/living/carbon/target)
 	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(target))
 	cocoon.insert_target(target)
-	owner.visible_message("<span class='nicegreen>[owner] has put [target] into a gel cocoon!</span>", "<span class='notice'>You put [target] into a gel cocoon.</span>")
+	owner.visible_message("<span class='nicegreen>[owner] has put [target] into a gel cocoon!</span>", span_notice("You put [target] into a gel cocoon."))
 	StartCooldown()
 
 /obj/structure/gel_cocoon
@@ -475,8 +478,8 @@
 
 /obj/structure/gel_cocoon/container_resist_act(mob/living/user)
 	. = ..()
-	user.visible_message("<span class='notice'>You see [user] breaking out of [src]!</span>", \
-		"<span class='notice'>You start tearing the soft tissue of the gel cocoon</span>")
+	user.visible_message(span_notice("You see [user] breaking out of [src]!"), \
+		span_notice("You start tearing the soft tissue of the gel cocoon"))
 	if(!do_after(user, 1.5 SECONDS, target = src))
 		return FALSE
 	dump_inhabitant()
@@ -492,7 +495,7 @@
 	inhabitant.forceMove(get_turf(src))
 	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
 	inhabitant.Paralyze(10)
-	inhabitant.visible_message("<span class='warning>[inhabitant] falls out of [src]!</span>", "<span class='notice'>You fall out of [src].</span>")
+	inhabitant.visible_message("<span class='warning>[inhabitant] falls out of [src]!</span>", span_notice("You fall out of [src]."))
 	if(destroy_after)
 		qdel(src)
 

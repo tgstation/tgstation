@@ -1,0 +1,120 @@
+2014-03-03:
+  ChuckTheSheep:
+  - rscadd: Round-end report now shows what items were bought with a traitor's or
+      nuke-op's uplink and how many TCs they used.
+  Drovidi Corv:
+  - bugfix: Facehuggers no longer die to zero-force weapons or projectiles like lasertag
+      beams.
+  Incoming5643:
+  - tweak: Improved blob spores to zombify people adjacent to their tile.
+  - bugfix: If a hand-teleporter is activated while you're stuck inside a wall, you'll
+      automatically go through it.
+  Miauw:
+  - tweak: Decreased the lethality of Mutagen in small doses.
+  TZK13:
+  - rscadd: Added Incendiary Shotgun Shells made at a hacked autolathe; Xenos be wary.
+2014-03-05:
+  Various Coders:
+  - rscadd: Ling rounds are LINGIER, with more lings at a given population.
+  - rscadd: Many simple animals can ventcrawl, including bats. All ventcrawlers must
+      alt-click to ventcrawl.
+  - rscadd: An automatic tool to store and replace machine parts has been added to
+      R&amp;D.;
+  - rscadd: Most stuns have been reduced in from 10+ to 5 ticks in duration.
+  - rscadd: Shoes no longer speed you up.
+  - rscadd: Added fancy suits, which can be orderd from cargo.
+  - rscadd: Added sombrerors and ponches.
+  - rscadd: Cuff application time reduced 25%.
+  - rscadd: Fire will cause fuel tanks to explode.
+  - rscadd: Mutagen has been reduced in lethality. Notably, 15 units are not guaranteed
+      to crit the recipient.
+2014-03-10:
+  Giacom:
+  - rscadd: Added two new plasma-level disease symptoms, both are very !FUN! and mess
+      with your genetics.
+  - tweak: Virologists now only need to use a single unit of virus food, mutagen or
+      plasma to generate symptoms. You can take a single unit by using a dropper,
+      if you change its unit transfer amount in the object tab..
+  - tweak: Changed the map to make it harder to escape from the Labor Camp. Please
+      continue using it.
+  Miauw:
+  - rscadd: Added changeling space suits. These allow changelings to survive in space,
+      internals are not needed. They do not provide any sort of armor and slow your
+      chemical regeneration.
+2014-03-12:
+  Yota:
+  - bugfix: Cameras finally capture the direction you are facing.
+2014-03-14:
+  Ikarrus and Nienhaus:
+  - imageadd: Nanotrasen Corporate announced a revised dress codes primarily affecting
+      senior station officers. A new uniform for Heads of Personnel will be shipped
+      out to all NT Research stations.
+2014-03-15:
+  Steelpoint/Validsalad:
+  - tweak: After a review with CentCom, all Security Officers will now begin their
+      shifts with a Stun Baton in their backpack. To avoid inflating costs however
+      all Stun Batons have been removed from Security lockers except from the brig.
+  - imageadd: After decades of usage CentCom has replaced the Security Uniform, Armor,
+      Belt and Helmet with a newer, more modern design.
+2014-03-17:
+  Giacom:
+  - tweak: Machines that had their programming overriden by a Malf AI will no longer
+      attack loyal cyborgs; they will still attack cyborgs that aren't loyal, to the
+      Malf AI that hacked them, though.
+  - tweak: You only require a single unit of blood to mutate viruses now, instead
+      of 5.
+2014-03-18:
+  Ikarrus:
+  - rscadd: NT R&amp;D; releases AI Patch version 2553.03.18, allowing all Nanotrasen
+      AIs to override the access restrictions on any airlock in case of emergency.
+      Nanotrasen airlocks have been outfitted with new amber warning lights that will
+      flash while the override is active. Should maintenance teams need to restore
+      an airlock's restrictions without using the AI, pulsing the airlock's ID Scanner
+      wire will reset the override.
+2014-03-22:
+  Giacom:
+  - rscadd: Gravity is no longer beamed from CentCom! Instead, there is a new gravity
+      generator stored near Engineering that will provide all the gravity for the
+      station and the z level. Please remember that it gives off a lot of radiation
+      when charging or discharging, so wear protection.
+  MrPerson:
+  - rscadd: Added a new, somewhat experimental system to delete things. This is basically
+      a port from /vg/, so big thanks to N3X15.
+  - rscadd: As a result, bombs and the singularity should be much less laggy.
+  - experiment: There may be issues with "phantom objects" or other problems with
+      stuff that's suppoed to be deleted or objects interacting with deleted objects.
+      Please report any issues right away!
+2014-03-25:
+  Ikarrus:
+  - tweak: "A security review committee has approved an update to all Nanotrasen airlocks\
+      \ to better resist cryptographic attacks by the enemy.\n\t\t\t<br/><br/>*New\
+      \ internal wiring will be able to withstand attacks, and panel wires will no\
+      \ longer be left unusable after an attack.\n\t\t\t<br/>*Welding tools will now\
+      \ be able to cut through welded doors that have been damaged.\n\t\t\t<br/>*Damaged\
+      \ electronics are now removable and replaceable following standard procedure.\n\
+      \t\t\t<br/>*Airlocks will not be able to operate autonomously until the electronics\
+      \ are replaced.<br/><br/><br/><br/><br/>"
+  - imageadd: Hair sprites have been given a visual lift. For best results, set your
+      hair color to be slightly lighter than how you want it to look. For dark hair,
+      do not use a color darker than 80% black.
+2014-03-28:
+  Aranclanos:
+  - tweak: Workaround with the click cooldowns. They should feel faster. If you think
+      that anything needs a click cooldown (like grilles, mobs, etc.), report it to
+      me.
+  - experiment: Here's the fun part, this is a test for the community and players,
+      I hope I won't be forced to revert this and hear "this is why we can't have
+      nice things". Again, if anything needs a cooldown, report it to me. Have fun
+      with your fast clicks spessmans.
+2014-03-31:
+  Ikarrus:
+  - rscadd: Fabricator blueprints for cyborg parts have been updated to allow the
+      debugging of cyborg units prior to boot. To access the debug functions, assemble
+      a cyborg following standard procedure. Before inserting the MMI, use a multitool
+      on the cyborg body. Note that this update also moves designation data into the
+      system files, so pens can no longer be used to name cyborgs.
+  MrPerson:
+  - rscadd: Toggling the "Play admin midis" preference will pause any playing songs.
+      Turning midis back on will resume the current song where it was.
+  - rscadd: If there's a song playing while you have midis off and you then turn midis
+      on, the current song will begin playing for you.

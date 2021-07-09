@@ -8,7 +8,7 @@
 
 @use '../colors.scss' with (
   $primary: #ffffff,
-  $bg-lightness: -25%,
+  $bg-lightness: 25%,
   $fg-lightness: -10%,
   // Commenting out color maps will adjust all colors based on the lightness
   // settings above, but will add extra 10KB to the theme.
@@ -33,7 +33,6 @@ $font-size: 24px;
   @include meta.load-css('../components/Tabs.scss');
   @include meta.load-css('../components/Section.scss', $with: (
     'background-color': rgba(0, 0, 0, 0.1),
-    'shadow-color': rgba(0, 0, 0, 0.2),
   ));
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': #E8E4C9,

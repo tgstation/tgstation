@@ -17,13 +17,13 @@
 /turf/closed/wall/mineral/cult/devastate_wall()
 	new sheet_type(get_turf(src), sheet_amount)
 
-/turf/closed/wall/mineral/cult/Exited(atom/movable/AM, atom/newloc)
+/turf/closed/wall/mineral/cult/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(istype(AM, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
-		var/mob/living/simple_animal/hostile/construct/harvester/H = AM
+	if(istype(gone, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
+		var/mob/living/simple_animal/hostile/construct/harvester/H = gone
 		var/atom/movable/stored_pulling = H.pulling
 		if(stored_pulling)
-			stored_pulling.setDir(get_dir(stored_pulling.loc, newloc))
+			stored_pulling.setDir(direction)
 			stored_pulling.forceMove(src)
 			H.start_pulling(stored_pulling, supress_message = TRUE)
 
@@ -39,8 +39,28 @@
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
 /turf/closed/wall/vault
+	name = "strange wall"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
+	base_icon_state = "rockvault"
+	smoothing_flags = NONE
+	canSmoothWith = null
+	smoothing_groups = null
+	rcd_memory = null
+
+/turf/closed/wall/vault/rock
+	name = "rocky wall"
+	desc = "You feel a strange nostalgia from looking at this..."
+
+/turf/closed/wall/vault/alien
+	name = "alien wall"
+	icon_state = "alienvault"
+	base_icon_state = "alienvault"
+
+/turf/closed/wall/vault/sandstone
+	name = "sandstone wall"
+	icon_state = "sandstonevault"
+	base_icon_state = "sandstonevault"
 
 /turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
@@ -49,6 +69,7 @@
 	desc = "A wall covered in a thick sheet of ice."
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
+	rcd_memory = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE
@@ -62,9 +83,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
 
-/turf/closed/wall/rust/rust_heretic_act()
-	ScrapeAway()
-
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
@@ -74,11 +92,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
 
-/turf/closed/wall/r_wall/rust/rust_heretic_act()
-	if(prob(50))
-		return
-	ScrapeAway()
-
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"
 	desc = "A huge chunk of bronze, decorated like gears and cogs."
@@ -86,6 +99,6 @@
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	sheet_type = /obj/item/stack/tile/bronze
+	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze

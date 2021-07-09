@@ -135,7 +135,7 @@
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged) //drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
 				if(prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
@@ -146,11 +146,11 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/nurse)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/hunter)
 
 				var/turf/T = pick_n_take(empty_shuttle_turfs)
 
@@ -220,7 +220,7 @@
 				shuttle_spawns.Add(/obj/structure/closet/crate/hydroponics)
 
 				for(var/i in 1 to 8)
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/bees/toxin)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bee/toxin)
 
 				for(var/i in 1 to 5)
 					var/decal = pick(/obj/effect/decal/cleanable/blood, /obj/effect/decal/cleanable/insectguts)
@@ -263,7 +263,7 @@
 	set_anchored(TRUE)
 	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb
 	activate()
-	update_icon()
+	update_appearance()
 
 /obj/item/paper/fluff/cargo/bomb
 	name = "hastly scribbled note"

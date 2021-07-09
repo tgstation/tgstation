@@ -12,6 +12,7 @@
 
 /datum/disease/advance/sentient_disease/Destroy()
 	. = ..()
+	overmind = null
 	GLOB.sentient_disease_instances -= src
 
 /datum/disease/advance/sentient_disease/remove_disease()
@@ -51,7 +52,7 @@
 	if(cures.len)
 		return
 	var/list/not_used = advance_cures.Copy()
-	not_used.Cut(1, 6)	// Removes the first five tiers of cures.
+	not_used.Cut(1, 6) // Removes the first five tiers of cures.
 	cures = list(pick(pick_n_take(not_used)), pick(pick_n_take(not_used)))
 
 	// Get the cure name from the cure_id

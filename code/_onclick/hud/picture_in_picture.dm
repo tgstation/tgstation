@@ -1,4 +1,4 @@
-/obj/screen/movable/pic_in_pic
+/atom/movable/screen/movable/pic_in_pic
 	name = "Picture-in-picture"
 	screen_loc = "CENTER"
 	plane = FLOOR_PLANE
@@ -7,17 +7,17 @@
 	var/height = 0
 	var/list/shown_to = list()
 	var/list/viewing_turfs = list()
-	var/obj/screen/component_button/button_x
-	var/obj/screen/component_button/button_expand
-	var/obj/screen/component_button/button_shrink
+	var/atom/movable/screen/component_button/button_x
+	var/atom/movable/screen/component_button/button_expand
+	var/atom/movable/screen/component_button/button_shrink
 
 	var/mutable_appearance/standard_background
 
-/obj/screen/movable/pic_in_pic/Initialize()
+/atom/movable/screen/movable/pic_in_pic/Initialize()
 	. = ..()
 	make_backgrounds()
 
-/obj/screen/movable/pic_in_pic/Destroy()
+/atom/movable/screen/movable/pic_in_pic/Destroy()
 	for(var/C in shown_to)
 		unshow_to(C)
 	QDEL_NULL(button_x)
@@ -25,7 +25,7 @@
 	QDEL_NULL(button_expand)
 	return ..()
 
-/obj/screen/movable/pic_in_pic/component_click(obj/screen/component_button/component, params)
+/atom/movable/screen/movable/pic_in_pic/component_click(atom/movable/screen/component_button/component, params)
 	if(component == button_x)
 		qdel(src)
 	else if(component == button_expand)
@@ -33,13 +33,13 @@
 	else if(component == button_shrink)
 		set_view_size(width-1, height-1)
 
-/obj/screen/movable/pic_in_pic/proc/make_backgrounds()
+/atom/movable/screen/movable/pic_in_pic/proc/make_backgrounds()
 	standard_background = new /mutable_appearance()
 	standard_background.icon = 'icons/misc/pic_in_pic.dmi'
 	standard_background.icon_state = "background"
 	standard_background.layer = SPACE_LAYER
 
-/obj/screen/movable/pic_in_pic/proc/add_buttons()
+/atom/movable/screen/movable/pic_in_pic/proc/add_buttons()
 	var/static/mutable_appearance/move_tab
 	if(!move_tab)
 		move_tab = new /mutable_appearance()
@@ -54,7 +54,7 @@
 	add_overlay(move_tab)
 
 	if(!button_x)
-		button_x = new /obj/screen/component_button(null, src)
+		button_x = new /atom/movable/screen/component_button(null, src)
 		var/mutable_appearance/MA = new /mutable_appearance()
 		MA.name = "close"
 		MA.icon = 'icons/misc/pic_in_pic.dmi'
@@ -67,7 +67,7 @@
 	vis_contents += button_x
 
 	if(!button_expand)
-		button_expand = new /obj/screen/component_button(null, src)
+		button_expand = new /atom/movable/screen/component_button(null, src)
 		var/mutable_appearance/MA = new /mutable_appearance()
 		MA.name = "expand"
 		MA.icon = 'icons/misc/pic_in_pic.dmi'
@@ -80,7 +80,7 @@
 	vis_contents += button_expand
 
 	if(!button_shrink)
-		button_shrink = new /obj/screen/component_button(null, src)
+		button_shrink = new /atom/movable/screen/component_button(null, src)
 		var/mutable_appearance/MA = new /mutable_appearance()
 		MA.name = "shrink"
 		MA.icon = 'icons/misc/pic_in_pic.dmi'
@@ -92,7 +92,7 @@
 	button_shrink.transform = M
 	vis_contents += button_shrink
 
-/obj/screen/movable/pic_in_pic/proc/add_background()
+/atom/movable/screen/movable/pic_in_pic/proc/add_background()
 	if((width > 0) && (height > 0))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
@@ -102,7 +102,7 @@
 
 // maximum number of dimensions is 10
 
-/obj/screen/movable/pic_in_pic/proc/set_view_size(width, height, do_refresh = TRUE)
+/atom/movable/screen/movable/pic_in_pic/proc/set_view_size(width, height, do_refresh = TRUE)
 	width = clamp(width, 0, 10)
 	height = clamp(height, 0, 10)
 	src.width = width
@@ -116,19 +116,19 @@
 	if(do_refresh)
 		refresh_view()
 
-/obj/screen/movable/pic_in_pic/proc/set_view_center(atom/target, do_refresh = TRUE)
+/atom/movable/screen/movable/pic_in_pic/proc/set_view_center(atom/target, do_refresh = TRUE)
 	center = target
 	if(do_refresh)
 		refresh_view()
 
-/obj/screen/movable/pic_in_pic/proc/refresh_view()
+/atom/movable/screen/movable/pic_in_pic/proc/refresh_view()
 	vis_contents -= viewing_turfs
 	if(!width || !height)
 		return
 	viewing_turfs = get_visible_turfs()
 	vis_contents += viewing_turfs
 
-/obj/screen/movable/pic_in_pic/proc/get_visible_turfs()
+/atom/movable/screen/movable/pic_in_pic/proc/get_visible_turfs()
 	var/turf/T = get_turf(center)
 	if(!T)
 		return list()
@@ -136,12 +136,12 @@
 	var/turf/upperright = locate(min(world.maxx, lowerleft.x + width - 1), min(world.maxy, lowerleft.y + height - 1), lowerleft.z)
 	return block(lowerleft, upperright)
 
-/obj/screen/movable/pic_in_pic/proc/show_to(client/C)
+/atom/movable/screen/movable/pic_in_pic/proc/show_to(client/C)
 	if(C)
 		shown_to[C] = 1
 		C.screen += src
 
-/obj/screen/movable/pic_in_pic/proc/unshow_to(client/C)
+/atom/movable/screen/movable/pic_in_pic/proc/unshow_to(client/C)
 	if(C)
 		shown_to -= C
 		C.screen -= src

@@ -1,0 +1,4 @@
+author: "ProtivogaSpriter"
+delete-after: True
+changes: 
+  - imageadd: "Replaced old Mjolnir sprites with new Mjolnir sprites."

@@ -1,6 +1,6 @@
 /obj/item/melee/baton
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with."
+	desc = "A stun baton for incapacitating people with. Left click to stun, right click to harm."
 
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
@@ -43,21 +43,24 @@
 
 /obj/item/melee/baton/suicide_act(mob/user)
 	if(cell?.charge && turned_on)
-		user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
 		. = (FIRELOSS)
 		attack(user,user)
 	else
-		user.visible_message("<span class='suicide'>[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
 		. = (OXYLOSS)
 
 /obj/item/melee/baton/Initialize()
 	. = ..()
+	// Adding an extra break for the sake of presentation
+	if(stamina_loss_amt != 0)
+		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[round(100 / stamina_loss_amt, 0.1)] hit\s!")]"
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	update_icon()
+	update_appearance()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
 
 
@@ -84,13 +87,13 @@
 	if(A == cell)
 		cell = null
 		turned_on = FALSE
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(turned_on && prob(throw_stun_chance) && iscarbon(hit_atom))
+	if(turned_on && prob(throw_stun_chance) && isliving(hit_atom) && !iscyborg(hit_atom))
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
@@ -104,39 +107,41 @@
 		if(turned_on && cell.charge < cell_hit_cost)
 			//we're below minimum, turn off
 			turned_on = FALSE
-			update_icon()
+			update_appearance()
 			playsound(src, activate_sound, 75, TRUE, -1)
 
 
 /obj/item/melee/baton/update_icon_state()
 	if(turned_on)
 		icon_state = "[initial(icon_state)]_active"
-	else if(!cell)
+		return ..()
+	if(!cell)
 		icon_state = "[initial(icon_state)]_nocell"
-	else
-		icon_state = "[initial(icon_state)]"
+		return ..()
+	icon_state = "[initial(icon_state)]"
+	return ..()
 
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
+		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
 	else
-		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
+		. += span_warning("\The [src] does not have a power source installed.")
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
 		if(cell)
-			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
+			to_chat(user, span_warning("[src] already has a cell!"))
 		else
 			if(C.maxcharge < cell_hit_cost)
-				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
+				to_chat(user, span_notice("[src] requires a higher capacity cell."))
 				return
 			if(!user.transferItemToLoc(W, src))
 				return
 			cell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
-			update_icon()
+			to_chat(user, span_notice("You install a cell in [src]."))
+			update_appearance()
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		tryremovecell(user)
@@ -145,41 +150,41 @@
 
 /obj/item/melee/baton/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
-		cell.update_icon()
+		cell.update_appearance()
 		cell.forceMove(get_turf(src))
 		cell = null
-		to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+		to_chat(user, span_notice("You remove the cell from [src]."))
 		turned_on = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	toggle_on(user)
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
-	if(cell && cell.charge > cell_hit_cost)
+	if(cell && cell.charge >= cell_hit_cost)
 		turned_on = !turned_on
-		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
+		to_chat(user, span_notice("[src] is now [turned_on ? "on" : "off"]."))
 		playsound(src, activate_sound, 75, TRUE, -1)
 	else
 		turned_on = FALSE
 		if(!cell)
-			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
+			to_chat(user, span_warning("[src] does not have a power source!"))
 		else
-			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
-	update_icon()
+			to_chat(user, span_warning("[src] is out of charge."))
+	update_appearance()
 	add_fingerprint(user)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/carbon/human/user)
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		playsound(src, stun_sound, 75, TRUE, -1)
-		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
-							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+		user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self with [src]!"), \
+							span_userdanger("You accidentally hit yourself with [src]!"))
 		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
 		return TRUE
 	return FALSE
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
 
@@ -193,29 +198,31 @@
 		if(check_martial_counter(L, user))
 			return
 
-	if(user.a_intent != INTENT_HARM)
-		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				if(baton_effect(M, user))
-					user.do_attack_animation(M)
-					return
-			else
-				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
-		else
-			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
-	else
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
 				baton_effect(M, user)
 		..()
-
+		return
+	else if(turned_on)
+		if(attack_cooldown_check <= world.time)
+			if(baton_effect(M, user))
+				user.do_attack_animation(M)
+				return
+		else
+			to_chat(user, span_danger("The baton is still charging!"))
+			return
+	else
+		M.visible_message(span_warning("[user] prods [M] with [src]. Luckily it was off."), \
+					span_warning("[user] prods you with [src]. Luckily it was off."))
+		return
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
 		return FALSE
 	if(HAS_TRAIT_FROM(L, TRAIT_IWASBATONED, user)) //no doublebaton abuse anon!
-		to_chat(user, "<span class='danger'>[L] manages to avoid the attack!</span>")
+		to_chat(user, span_danger("[L] manages to avoid the attack!"))
 		return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -237,16 +244,16 @@
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] stuns [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] stuns you with [src]!</span>")
+		L.visible_message(span_danger("[user] stuns [L] with [src]!"), \
+								span_userdanger("[user] stuns you with [src]!"))
 		log_combat(user, L, "stunned")
 
 	playsound(src, stun_sound, 50, TRUE, -1)
 
 	attack_cooldown_check = world.time + attack_cooldown
 
-	ADD_TRAIT(L, TRAIT_IWASBATONED, user)
-	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, user), attack_cooldown)
+	ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), attack_cooldown)
 
 	return 1
 
@@ -254,7 +261,7 @@
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
-		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
+		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
 	if(trait_check)
 		target.Knockdown(stun_time * 0.1)
@@ -277,7 +284,7 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton."
+	desc = "An improvised stun baton. Left click to stun, right click to harm."
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -324,27 +331,19 @@
 	if(turned_on)
 		if(ishuman(thrower))
 			var/mob/living/carbon/human/H = thrower
-			H.throw_mode_off() //so they can catch it on the return.
+			H.throw_mode_off(THROW_MODE_TOGGLE) //so they can catch it on the return.
 	return ..()
 
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(turned_on)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(ishuman(hit_atom) && !caught && prob(throw_stun_chance))//if they are a carbon and they didn't catch it
+		if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 			baton_effect(hit_atom)
-		if(thrownby && !caught)
-			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)
+		var/mob/thrown_by = thrownby?.resolve()
+		if(thrown_by && !caught)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
-
-
-/obj/item/melee/baton/boomerang/update_icon_state()
-	if(turned_on)
-		icon_state = "[initial(icon_state)]_active"
-	else if(!cell)
-		icon_state = "[initial(icon_state)]_nocell"
-	else
-		icon_state = "[initial(icon_state)]"
 
 /obj/item/melee/baton/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high

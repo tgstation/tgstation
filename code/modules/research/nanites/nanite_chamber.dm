@@ -4,14 +4,15 @@
 	circuit = /obj/item/circuitboard/machine/nanite_chamber
 	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
+	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	idle_power_usage = 50
 	active_power_usage = 300
 
-	var/obj/machinery/computer/nanite_chamber_control/console
 	var/locked = FALSE
 	var/breakout_time = 1200
 	var/scan_level
@@ -32,13 +33,13 @@
 /obj/machinery/nanite_chamber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Scanning module has been upgraded to level <b>[scan_level]</b>.</span>"
+		. += span_notice("The status display reads: Scanning module has been upgraded to level <b>[scan_level]</b>.")
 
 /obj/machinery/nanite_chamber/proc/set_busy(status, message, working_icon)
 	busy = status
 	busy_message = message
 	busy_icon_state = working_icon
-	update_icon()
+	update_appearance()
 
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
 	if(!occupant)
@@ -107,31 +108,33 @@
 /obj/machinery/nanite_chamber/update_icon_state()
 	//running and someone in there
 	if(occupant)
-		if(busy)
-			icon_state = busy_icon_state
-		else
-			icon_state = initial(icon_state) + "_occupied"
-	else
-		//running
-		icon_state = initial(icon_state) + (state_open ? "_open" : "")
+		icon_state = busy ? busy_icon_state : "[base_icon_state]_occupied"
+		return ..()
+	//running
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
+	return ..()
 
 /obj/machinery/nanite_chamber/update_overlays()
 	. = ..()
 
 	if((machine_stat & MAINT) || panel_open)
 		. += "maint"
+		return
 
-	else if(!(machine_stat & (NOPOWER|BROKEN)))
-		if(busy || locked)
-			. += "red"
-			if(locked)
-				. += "bolted"
-		else
-			. += "green"
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+
+	if(busy || locked)
+		. += "red"
+		if(locked)
+			. += "bolted"
+		return
+
+	. += "green"
 
 /obj/machinery/nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)
-		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+		to_chat(user, span_notice("Close the maintenance panel first."))
 		return
 
 	if(state_open)
@@ -139,7 +142,7 @@
 		return
 
 	else if(locked)
-		to_chat(user, "<span class='notice'>The bolts are locked down, securing the door shut.</span>")
+		to_chat(user, span_notice("The bolts are locked down, securing the door shut."))
 		return
 
 	open_machine()
@@ -152,15 +155,15 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='hear'>You hear a metallic creaking from [src].</span>")
+	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
+		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || busy)
 			return
 		locked = FALSE
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
 /obj/machinery/nanite_chamber/close_machine(mob/living/carbon/user)
@@ -182,13 +185,13 @@
 	if(user.stat || locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	open_machine()
 
 /obj/machinery/nanite_chamber/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
-		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
 	if(default_pry_open(I))

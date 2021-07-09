@@ -29,6 +29,34 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/marine
+	name = "marine combat armor"
+	desc = "A multirole set of armor used by the marines, painted in a tacticool black color with blue markings to indicate you might be important."
+	icon_state = "marine_command"
+	inhand_icon_state = "armor"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	armor = list(MELEE = 40, BULLET = 50, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 20, RAD = 0, FIRE = 40, ACID = 50, WOUND = 20)
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/armor/vest/marine/security
+	name = "marine heavy armor"
+	desc = "A heavy set of armor that still allows full mobility, offering higher protection at the cost of having red targets painted on your shoulders."
+	icon_state = "marine_security"
+	armor = list(MELEE = 45, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 50, ACID = 50, WOUND = 20)
+
+/obj/item/clothing/suit/armor/vest/marine/engineer
+	name = "marine utility armor"
+	desc = "A light set of armor with a mounted satchel for storing things. You realized too late that pouches are only for looks, and don't actually work. No refunds."
+	icon_state = "marine_engineer"
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, RAD = 30, FIRE = 70, ACID = 70, WOUND = 10)
+
+/obj/item/clothing/suit/armor/vest/marine/medic
+	name = "marine medic armor"
+	desc = "Light armor with needlessly large arm and leg plates, they provide no extra protection, but you feel safer."
+	icon_state = "marine_medic"
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, RAD = 10, FIRE = 50, ACID = 70, WOUND = 10)
+
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
 	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."
@@ -41,7 +69,13 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = PAYCHECK_HARD
+
+/obj/item/clothing/suit/armor/vest/cuirass
+	name = "cuirass"
+	desc = "A lighter plate armor used to still keep out those pesky arrows, while retaining the ability to move."
+	icon_state = "cuirass"
+	inhand_icon_state = "armor"
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -228,10 +262,25 @@
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit"
-	desc = "Pukish armor."	//classy.
+	desc = "Pukish armor." //classy.
 	icon_state = "tdgreen"
 	inhand_icon_state = "tdgreen"
 
+/obj/item/clothing/suit/armor/tdome/holosuit
+	name = "thunderdome suit"
+	armor = list(MELEE = 10, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	cold_protection = null
+	heat_protection = null
+
+/obj/item/clothing/suit/armor/tdome/holosuit/red
+	desc = "Reddish armor."
+	icon_state = "tdred"
+	inhand_icon_state = "tdred"
+
+/obj/item/clothing/suit/armor/tdome/holosuit/green
+	desc = "Pukish armor."
+	icon_state = "tdgreen"
+	inhand_icon_state = "tdgreen"
 
 /obj/item/clothing/suit/armor/riot/knight
 	name = "plate armour"
@@ -289,12 +338,20 @@
 	armor = list(MELEE = 25, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 50, RAD = 20, FIRE = -10, ACID = 50, WOUND = 10)
 
 /obj/item/clothing/suit/armor/elder_atmosian
-	name = "Elder Atmosian Armor"
+	name = "\improper Elder Atmosian Armor"
 	desc = "A superb armor made with the toughest and rarest materials available to man."
-	icon_state = "knight_grey"
-	inhand_icon_state = "knight_greyscale"
+	icon_state = "h2armor"
+	inhand_icon_state = "h2armor"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+/obj/item/clothing/suit/armor/vest/centcom_formal
+	name = "\improper CentCom Formal Coat"
+	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
+	icon_state = "centcom_formal"
+	inhand_icon_state = "centcom"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)

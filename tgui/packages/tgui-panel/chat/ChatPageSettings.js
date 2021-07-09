@@ -5,7 +5,7 @@
  */
 
 import { useDispatch, useSelector } from 'common/redux';
-import { Button, Collapsible, Divider, Flex, Input, Section } from 'tgui/components';
+import { Button, Collapsible, Divider, Input, Section, Stack } from 'tgui/components';
 import { removeChatPage, toggleAcceptedType, updateChatPage } from './actions';
 import { MESSAGE_TYPES } from './constants';
 import { selectCurrentChatPage } from './selectors';
@@ -14,9 +14,9 @@ export const ChatPageSettings = (props, context) => {
   const page = useSelector(context, selectCurrentChatPage);
   const dispatch = useDispatch(context);
   return (
-    <Section fill>
-      <Flex mx={-0.5} align="center">
-        <Flex.Item mx={0.5} grow={1}>
+    <Section>
+      <Stack align="center">
+        <Stack.Item grow={1}>
           <Input
             fluid
             value={page.name}
@@ -24,8 +24,8 @@ export const ChatPageSettings = (props, context) => {
               pageId: page.id,
               name: value,
             }))} />
-        </Flex.Item>
-        <Flex.Item mx={0.5}>
+        </Stack.Item>
+        <Stack.Item>
           <Button
             icon="times"
             color="red"
@@ -34,8 +34,8 @@ export const ChatPageSettings = (props, context) => {
             }))}>
             Remove
           </Button>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
       <Divider />
       <Section title="Messages to display" level={2}>
         {MESSAGE_TYPES

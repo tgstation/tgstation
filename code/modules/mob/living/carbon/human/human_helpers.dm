@@ -47,12 +47,12 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face		//Likewise for hats
+		return if_no_face //Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name ) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -74,57 +74,22 @@
 		if(card_slot?.stored_card)
 			. = card_slot.stored_card.registered_name
 	if(!.)
-		. = if_no_id	//to prevent null-names making the mob unclickable
+		. = if_no_id //to prevent null-names making the mob unclickable
 	return
 
-//Gets ID card from a human. If hand_first is false the one in the id slot is prioritized, otherwise inventory slots go first.
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
-	//Check hands
-	var/obj/item/card/id/id_card
-	var/obj/item/held_item
-	held_item = get_active_held_item()
-	if(held_item) //Check active hand
-		id_card = held_item.GetID()
-	if(!id_card) //If there is no id, check the other hand
-		held_item = get_inactive_held_item()
-		if(held_item)
-			id_card = held_item.GetID()
-
-	if(id_card)
-		if(hand_first)
-			return id_card
-		else
-			. = id_card
-
-	//Check inventory slots
-	if(wear_id)
-		id_card = wear_id.GetID()
-		if(id_card)
-			return id_card
-	else if(belt)
-		id_card = belt.GetID()
-		if(id_card)
-			return id_card
-
-/mob/living/carbon/human/get_id_in_hand()
-	var/obj/item/held_item = get_active_held_item()
-	if(!held_item)
+	. = ..()
+	if(. && hand_first)
 		return
-	return held_item.GetID()
+	//Check inventory slots
+	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/IsAdvancedToolUser()
-	if(HAS_TRAIT(src, TRAIT_MONKEYLIKE))
-		return FALSE
-	return TRUE//Humans can use guns and such
-
-/mob/living/carbon/human/reagent_check(datum/reagent/R)
-	return dna.species.handle_chemicals(R,src)
+/mob/living/carbon/human/reagent_check(datum/reagent/R, delta_time, times_fired)
+	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 
 
 /mob/living/carbon/human/can_track(mob/living/user)
-	if(wear_id && istype(wear_id.GetID(), /obj/item/card/id/syndicate))
-		return 0
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/hat = head
 		if(hat.blockTracking)
@@ -136,22 +101,11 @@
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
-			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
+			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
-		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
+		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
-
-/mob/living/carbon/human/proc/get_bank_account()
-	RETURN_TYPE(/datum/bank_account)
-	var/datum/bank_account/account
-	var/obj/item/card/id/I = get_idcard()
-
-	if(I?.registered_account)
-		account = I.registered_account
-		return account
-
-	return FALSE
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
@@ -264,3 +218,23 @@
 
 /mob/living/carbon/human/get_biological_state()
 	return dna.species.get_biological_state()
+
+///Returns death message for mob examine text
+/mob/living/carbon/human/proc/generate_death_examine_text()
+	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
+	var/t_He = p_they(TRUE)
+	var/t_his = p_their()
+	var/t_is = p_are()
+	//This checks to see if the body is revivable
+	if(key || !getorgan(/obj/item/organ/brain) || ghost?.can_reenter_corpse)
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
+	else
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
+
+///copies over clothing preferences like underwear to another human
+/mob/living/carbon/human/proc/copy_clothing_prefs(mob/living/carbon/human/destination)
+	destination.underwear = underwear
+	destination.underwear_color = underwear_color
+	destination.undershirt = undershirt
+	destination.socks = socks
+	destination.jumpsuit_style = jumpsuit_style

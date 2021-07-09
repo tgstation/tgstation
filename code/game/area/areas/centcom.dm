@@ -1,13 +1,17 @@
 
 // CENTCOM
 
+// Side note, be sure to change the network_root_id of any areas that are not a part of centcom
+// and just using the z space as safe harbor.  It shouldn't matter much as centcom z is isolated
+// from everything anyway
+
 /area/centcom
 	name = "CentCom"
 	icon_state = "centcom"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
@@ -47,7 +51,7 @@
 	var/loading_id = ""
 
 /area/centcom/supplypod/loading/Initialize()
-	. = ..() 
+	. = ..()
 	if(!loading_id)
 		CRASH("[type] created without a loading_id")
 	if(GLOB.supplypod_loading_bays[loading_id])
@@ -119,17 +123,19 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
+	network_root_id = "MAGIC_NET"
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = FALSE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	network_root_id = "ALIENS"
 
 //Syndicates
 /area/syndicate_mothership
@@ -137,19 +143,21 @@
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
-	ambientsounds = HIGHSEC
+	ambience_index = AMBIENCE_DANGER
+	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	icon_state = "syndie-control"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
-
+	network_root_id = SYNDICATE_NETWORK_ROOT
 //CAPTURE THE FLAG
 
 /area/ctf

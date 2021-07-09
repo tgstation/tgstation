@@ -9,7 +9,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = 75
+	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
@@ -23,6 +23,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+	clothing_traits = list(TRAIT_PLANT_SAFE)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
 /obj/item/clothing/gloves/combat
@@ -85,6 +86,14 @@
 	icon_state = "blackplasma"
 	inhand_icon_state = "blackplasma"
 
+/obj/item/clothing/gloves/color/plasmaman/plasmanitrile
+	name = "nitrile envirogloves"
+	desc = "Pricy nitrile gloves made for plasmamen."
+	icon_state = "nitrile"
+	inhand_icon_state = "nitrilegloves"
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	transfer_prints = FALSE
+
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"
 	icon_state = "whiteplasma"
@@ -115,14 +124,13 @@
 	name = "atmos envirogloves"
 	icon_state = "atmosplasma"
 	inhand_icon_state = "atmosplasma"
-	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"
 	icon_state = "explorerplasma"
 	inhand_icon_state = "explorerplasma"
 
-/obj/item/clothing/gloves/color/botanic_leather/plasmaman
+/obj/item/clothing/gloves/botanic_leather/plasmaman
 	name = "botany envirogloves"
 	desc = "Covers up those scandalous boney hands."
 	icon_state = "botanyplasma"
@@ -162,11 +170,7 @@
 	name = "chief engineer's envirogloves"
 	icon_state = "ceplasma"
 	inhand_icon_state = "ceplasma"
-
-/obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
-	name = "chief medical officer's envirogloves"
-	icon_state = "cmoplasma"
-	inhand_icon_state = "cmoplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/research_director
 	name = "research director's envirogloves"

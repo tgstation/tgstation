@@ -2,9 +2,9 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
-	var/lootcount = 1		//how many items will be spawned
-	var/lootdoubles = TRUE	//if the same item can be spawned twice
-	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	var/lootcount = 1 //how many items will be spawned
+	var/lootdoubles = TRUE //if the same item can be spawned twice
+	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
@@ -139,7 +139,7 @@
 				/obj/effect/spawner/lootdrop/botanical_waste = 8,
 				/obj/effect/spawner/lootdrop/cigbutt = 8,
 				/obj/item/reagent_containers/syringe = 5,
-				/obj/item/reagent_containers/food/snacks/deadmouse = 2,
+				/obj/item/food/deadmouse = 2,
 				/obj/item/light/tube/broken = 3,
 				/obj/item/light/tube/broken = 1,
 				/obj/item/trash/candle = 1)
@@ -169,7 +169,7 @@
 	name = "botanical waste spawner"
 	loot = list(/obj/item/grown/bananapeel = 60,
 				/obj/item/grown/corncob = 30,
-				/obj/item/reagent_containers/food/snacks/grown/bungopit = 10)
+				/obj/item/food/grown/bungopit = 10)
 
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"
@@ -202,9 +202,8 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
+			/obj/item/food/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
-			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
 			/obj/item/trash/raisins = 1,
 			/obj/item/trash/sosjerky = 1,
@@ -245,6 +244,13 @@
 
 /obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FILLED_MAINT))
+		lootcount = FLOOR(lootcount * 1.5, 1)
+
+	else if(HAS_TRAIT(SSstation, STATION_TRAIT_EMPTY_MAINT))
+		lootcount = FLOOR(lootcount * 0.5, 1)
+
 	. = ..()
 
 /obj/effect/spawner/lootdrop/maintenance/two
@@ -498,8 +504,7 @@
 	name = "secure command circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/crew,
-				/obj/item/circuitboard/computer/communications,
-				/obj/item/circuitboard/computer/card
+				/obj/item/circuitboard/computer/communications
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/rnd_secure
@@ -610,6 +615,34 @@
 		/obj/item/crowbar/red/caravan = 1
 	)
 
+/// Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
+/obj/effect/spawner/lootdrop/space/fancytool/engineonly
+	loot = list(
+		/obj/item/wrench/caravan = 1,
+		/obj/item/wirecutters/caravan = 1,
+		/obj/item/screwdriver/caravan = 1,
+		/obj/item/crowbar/red/caravan = 1
+	)
+
+/// Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
+/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly
+	loot = list(
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/cautery/advanced = 1
+	)
+
+/// Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
+/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly
+	loot = list(
+		/obj/item/scalpel/alien = 1,
+		/obj/item/hemostat/alien = 1,
+		/obj/item/retractor/alien = 1,
+		/obj/item/circular_saw/alien = 1,
+		/obj/item/surgicaldrill/alien = 1,
+		/obj/item/cautery/alien = 1
+	)
+
 /// Space loot spawner. A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
 /obj/effect/spawner/lootdrop/space/rareseed
 	lootcount = 5
@@ -673,4 +706,142 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robust = 2,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1
+	)
+
+/obj/effect/spawner/lootdrop/decorative_material
+	lootcount = 1
+	loot = list(
+		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
+		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
+		/obj/item/stack/sheet/bronze/thirty = 20,
+		/obj/item/stack/tile/noslip{amount = 20} = 10,
+		/obj/item/stack/sheet/plastic{amount = 30} = 10,
+		/obj/item/stack/tile/pod{amount = 20} = 4,
+		/obj/item/stack/tile/pod/light{amount = 20} = 3,
+		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
+	)
+
+/obj/effect/spawner/lootdrop/maintenance_carpet
+	lootcount = 1
+	loot = list(
+		/obj/item/stack/tile/carpet{amount = 30} = 35,
+		/obj/item/stack/tile/carpet/black{amount = 30} = 20,
+		/obj/item/stack/tile/carpet/donk/thirty = 15,
+		/obj/item/stack/tile/carpet/stellar/thirty = 15,
+		/obj/item/stack/tile/carpet/executive/thirty = 15,
+	)
+
+/obj/effect/spawner/lootdrop/decorations_spawner
+	lootcount = 1
+	loot = list(
+	/obj/effect/spawner/lootdrop/maintenance_carpet = 25,
+	/obj/effect/spawner/lootdrop/decorative_material = 25,
+	/obj/item/sign = 10,
+	/obj/item/flashlight/lamp/green = 10,
+	/obj/item/plaque = 5,
+	/obj/item/flashlight/lantern/jade = 5,
+	/obj/item/phone = 5,
+	/obj/item/flashlight/lamp/bananalamp = 3
+	)
+
+/obj/effect/spawner/lootdrop/wallet_loot
+	lootcount = 1
+	loot = list(
+		list(
+			// Same weights as contraband loot cigarettes (with no packs)
+			/obj/item/clothing/mask/cigarette/space_cigarette = 4,
+			/obj/item/clothing/mask/cigarette/robust = 2,
+			/obj/item/clothing/mask/cigarette/carp = 3,
+			/obj/item/clothing/mask/cigarette/uplift = 2,
+			/obj/item/clothing/mask/cigarette/dromedary = 3,
+			/obj/item/clothing/mask/cigarette/robustgold = 1,
+			/obj/item/clothing/mask/cigarette/rollie/cannabis = 4,
+		) = 1,
+		list(
+			/obj/item/flashlight/pen = 90,
+			/obj/item/flashlight/pen/paramedic = 10,
+		) = 1,
+		list( // The same seeds in the Supply "Seeds Crate"
+			/obj/item/seeds/chili = 1,
+			/obj/item/seeds/cotton = 1,
+			/obj/item/seeds/berry = 1,
+			/obj/item/seeds/corn = 1,
+			/obj/item/seeds/eggplant = 1,
+			/obj/item/seeds/tomato = 1,
+			/obj/item/seeds/soya = 1,
+			/obj/item/seeds/wheat = 1,
+			/obj/item/seeds/wheat/rice = 1,
+			/obj/item/seeds/carrot = 1,
+			/obj/item/seeds/sunflower = 1,
+			/obj/item/seeds/rose = 1,
+			/obj/item/seeds/chanter = 1,
+			/obj/item/seeds/potato = 1,
+			/obj/item/seeds/sugarcane = 1,
+		) = 1,
+		list(
+			/obj/item/stack/medical/suture = 1,
+			/obj/item/stack/medical/mesh = 1,
+			/obj/item/stack/medical/gauze = 1,
+		) = 1,
+		list(
+			/obj/item/toy/crayon/red = 1,
+			/obj/item/toy/crayon/orange = 1,
+			/obj/item/toy/crayon/yellow = 1,
+			/obj/item/toy/crayon/green = 1,
+			/obj/item/toy/crayon/blue = 1,
+			/obj/item/toy/crayon/purple = 1,
+			/obj/item/toy/crayon/black = 1,
+			/obj/item/toy/crayon/rainbow = 1,
+		) = 1,
+		list(
+			/obj/item/coin/iron = 1,
+			/obj/item/coin/silver = 1,
+			/obj/item/coin/diamond = 1,
+			/obj/item/coin/plasma = 1,
+			/obj/item/coin/uranium = 1,
+			/obj/item/coin/titanium = 1,
+			/obj/item/coin/bananium = 1,
+			/obj/item/coin/adamantine = 1,
+			/obj/item/coin/mythril = 1,
+			/obj/item/coin/plastic = 1,
+			/obj/item/coin/runite = 1,
+			/obj/item/coin/twoheaded = 1,
+			/obj/item/coin/antagtoken = 1,
+		) = 1,
+		list(
+			/obj/item/dice/d4 = 1,
+			/obj/item/dice/d6 = 1,
+			/obj/item/dice/d8 = 1,
+			/obj/item/dice/d10 = 1,
+			/obj/item/dice/d12 = 1,
+			/obj/item/dice/d20 = 1,
+		) = 1,
+		list(
+			/obj/item/disk/data = 99,
+			/obj/item/disk/nuclear/fake/obvious = 1,
+		) = 1,
+		/obj/item/implanter = 1,
+		list(
+			/obj/item/lighter = 25,
+			/obj/item/lighter/greyscale = 75,
+		) = 1,
+		/obj/item/lipstick/random = 1,
+		/obj/item/match = 1,
+		/obj/item/paper/pamphlet/gateway = 1,
+		list(
+			/obj/item/pen = 1,
+			/obj/item/pen/blue = 1,
+			/obj/item/pen/red = 1,
+			/obj/item/pen/fourcolor = 1,
+			/obj/item/pen/fountain = 1,
+		) = 1,
+		// random photos would go here. IF I HAD ONE. :'(
+		/obj/item/reagent_containers/dropper = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/pill/maintenance = 1,
+		/obj/item/screwdriver = 1,
+		list(
+			/obj/item/stamp = 50,
+			/obj/item/stamp/denied = 50,
+		) = 1,
 	)

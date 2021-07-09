@@ -6,18 +6,19 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor_map"
+	base_icon_state = "conveyor"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
-	var/operable = 1	// true if can operate (no broken segments in this belt run)
-	var/forwards		// this is the default (forward) direction, set by the map dir
-	var/backwards		// hopefully self-explanatory
-	var/movedir			// the actual direction to move stuff in
-	var/id = ""			// the control ID	- must match controller ID
-	var/verted = 1		// Inverts the direction the conveyor belt moves.
+	var/operating = 0 // 1 if running forward, -1 if backwards, 0 if off
+	var/operable = 1 // true if can operate (no broken segments in this belt run)
+	var/forwards // this is the default (forward) direction, set by the map dir
+	var/backwards // hopefully self-explanatory
+	var/movedir // the actual direction to move stuff in
+	var/id = "" // the control ID - must match controller ID
+	var/verted = 1 // Inverts the direction the conveyor belt moves.
 	var/conveying = FALSE
 
 /obj/machinery/conveyor/centcom_auto
@@ -45,7 +46,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(.)
 		operating = TRUE
-		update_icon()
+		update_appearance()
 
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, newdir, newid)
@@ -111,15 +112,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update()
 
 /obj/machinery/conveyor/update_icon_state()
-	if(machine_stat & BROKEN)
-		icon_state = "conveyor-broken"
-	else
-		icon_state = "conveyor[operating * verted]"
+	icon_state = "[base_icon_state][(machine_stat & BROKEN) ? "-broken" : (operating * verted)]"
+	return ..()
 
 /obj/machinery/conveyor/proc/update()
 	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
 		operating = FALSE
-		update_icon()
+		update_appearance()
 		return FALSE
 	return TRUE
 
@@ -137,7 +136,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	//get the first 30 items in contents
 	var/turf/locturf = loc
-	var/list/items = locturf.contents - src - locturf.lighting_object
+	var/list/items = locturf.contents - src
 	if(!LAZYLEN(items))//Dont do anything at all if theres nothing there but the conveyor
 		return
 	var/list/affecting
@@ -151,7 +150,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/am in affecting)
-		if(!ismovable(am))	//This is like a third faster than for(var/atom/movable in affecting)
+		if(!ismovable(am)) //This is like a third faster than for(var/atom/movable in affecting)
 			continue
 		var/atom/movable/movable_thing = am
 		//Give this a chance to yield if the server is busy
@@ -169,15 +168,15 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
-		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
+		user.visible_message(span_notice("[user] struggles to pry up \the [src] with \the [I]."), \
+		span_notice("You struggle to pry up \the [src] with \the [I]."))
 		if(I.use_tool(src, user, 40, volume=40))
 			if(!(machine_stat & BROKEN))
-				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
+				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
 				transfer_fingerprints_to(C)
-			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
+			to_chat(user, span_notice("You remove the conveyor belt."))
 			qdel(src)
 
 	else if(I.tool_behaviour == TOOL_WRENCH)
@@ -185,21 +184,21 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
-			to_chat(user, "<span class='notice'>You rotate [src].</span>")
+			to_chat(user, span_notice("You rotate [src]."))
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!(machine_stat & BROKEN))
 			verted = verted * -1
 			update_move_direction()
-			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
+			to_chat(user, span_notice("You reverse [src]'s direction."))
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()
 
 // attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user)
+/obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -246,20 +245,21 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	base_icon_state = "switch"
 	processing_flags = START_PROCESSING_MANUALLY
 
-	var/position = 0			// 0 off, -1 reverse, 1 forward
-	var/last_pos = -1			// last direction setting
-	var/oneway = FALSE			// if the switch only operates the conveyor belts in a single direction.
-	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
+	var/position = 0 // 0 off, -1 reverse, 1 forward
+	var/last_pos = -1 // last direction setting
+	var/oneway = FALSE // if the switch only operates the conveyor belts in a single direction.
+	var/invert_icon = FALSE // If the level points the opposite direction when it's turned on.
 
-	var/id = "" 				// must match conveyor IDs to control them
+	var/id = "" // must match conveyor IDs to control them
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()
 	if (newid)
 		id = newid
-	update_icon()
+	update_appearance()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	wires = new /datum/wires/conveyor(src)
 
@@ -280,25 +280,21 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // update the icon depending on the position
 
 /obj/machinery/conveyor_switch/update_icon_state()
-	if(position<0)
-		if(invert_icon)
-			icon_state = "switch-fwd"
-		else
-			icon_state = "switch-rev"
-	else if(position>0)
-		if(invert_icon)
-			icon_state = "switch-rev"
-		else
-			icon_state = "switch-fwd"
-	else
-		icon_state = "switch-off"
+	if(position < 0)
+		icon_state = "[base_icon_state]-[invert_icon ? "fwd" : "rev"]"
+		return ..()
+	if(position > 0)
+		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
+		return ..()
+	icon_state = "[base_icon_state]-off"
+	return ..()
 
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
-		C.update_icon()
+		C.update_appearance()
 		if(C.operating)
 			C.begin_processing()
 		else
@@ -310,7 +306,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
 		S.invert_icon = invert_icon
 		S.position = position
-		S.update_icon()
+		S.update_appearance()
 		CHECK_TICK
 
 /// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
@@ -333,7 +329,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/interact(mob/user)
 	add_fingerprint(user)
 	update_position()
-	update_icon()
+	update_appearance()
 	update_linked_conveyors()
 	update_linked_switches()
 
@@ -348,27 +344,27 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 	C.id = id
 	transfer_fingerprints_to(C)
-	to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
+	to_chat(user, span_notice("You detach the conveyor switch."))
 	qdel(src)
 	return TRUE
 
 /obj/machinery/conveyor_switch/screwdriver_act(mob/user, obj/item/I)
 	I.play_tool_sound(src, 50)
 	oneway = !oneway
-	to_chat(user, "<span class='notice'>You set conveyor switch to [oneway ? "one way" : "default"] configuration.</span>")
+	to_chat(user, span_notice("You set conveyor switch to [oneway ? "one way" : "default"] configuration."))
 	return TRUE
 
 /obj/machinery/conveyor_switch/wrench_act(mob/user, obj/item/I)
 	I.play_tool_sound(src, 50)
 	invert_icon = !invert_icon
-	update_icon()
-	to_chat(user, "<span class='notice'>You set conveyor switch to [invert_icon ? "inverted": "normal"] position.</span>")
+	update_appearance()
+	to_chat(user, span_notice("You set conveyor switch to [invert_icon ? "inverted": "normal"] position."))
 	return TRUE
 
 /obj/machinery/conveyor_switch/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with <b>screwdriver</b>.</span>"
-	. += "<span class='notice'>[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with <b>wrench</b>.</span>"
+	. += span_notice("[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with <b>screwdriver</b>.")
+	. += span_notice("[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with <b>wrench</b>.")
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
@@ -395,7 +391,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/stack/conveyor/C in view())
 		C.id = id
-	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
+	to_chat(user, span_notice("You have linked all nearby conveyor belt assemblies to this switch."))
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -421,10 +417,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	max_amount = 30
 	singular_name = "conveyor belt"
 	w_class = WEIGHT_CLASS_BULKY
+	merge_type = /obj/item/stack/conveyor
 	///id for linking
 	var/id = ""
 
-/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, _id)
+/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1, _id)
 	. = ..()
 	id = _id
 
@@ -434,7 +431,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
+		to_chat(user, span_warning("You cannot place a conveyor belt under yourself!"))
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)
@@ -443,7 +440,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/conveyor_switch_construct))
-		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
+		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 

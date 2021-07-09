@@ -16,16 +16,18 @@
 	var/listening = FALSE
 	var/recorded = "" //the activation message
 	var/mode = INCLUSIVE_MODE
-	var/static/list/modes = list("inclusive",
-								 "exclusive",
-								 "recognizer",
-								 "voice sensor")
+	var/static/list/modes = list(
+		"inclusive",
+		"exclusive",
+		"recognizer",
+		"voice sensor",
+	)
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>"
+	. += span_notice("Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.")
 
 /obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -91,7 +93,7 @@
 	..()
 	mode %= modes.len
 	mode++
-	to_chat(user, "<span class='notice'>You set [src] into [modes[mode]] mode.</span>")
+	to_chat(user, span_notice("You set [src] into [modes[mode]] mode."))
 	listening = FALSE
 	recorded = ""
 	return TRUE

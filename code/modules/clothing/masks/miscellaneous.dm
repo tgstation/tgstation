@@ -3,16 +3,37 @@
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	inhand_icon_state = "blindfold"
+	clothing_flags = BLOCKS_SPEECH
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
 
-/obj/item/clothing/mask/muzzle/attack_paw(mob/user)
+/obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.wear_mask)
-			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
+		var/mob/living/carbon/carbon_user = user
+		if(src == carbon_user.wear_mask)
+			to_chat(user, span_warning("You need help taking this off!"))
+			return
+	..()
+
+/obj/item/clothing/mask/breathmuzzle
+	name = "surgery mask"
+	desc = "To silence those pesky patients before putting them under."
+	icon_state = "breathmuzzle"
+	inhand_icon_state = "breathmuzzle"
+	body_parts_covered = NONE
+	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
+	gas_transfer_coefficient = 0.1
+	permeability_coefficient = 0.01
+	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+
+/obj/item/clothing/mask/breathmuzzle/attack_paw(mob/user, list/modifiers)
+	// The breathmuzzle is similar enough to a regular muzzle that similar rules would apply to both.
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(src == carbon_user.wear_mask)
+			to_chat(user, span_warning("You need help taking this off!"))
 			return
 	..()
 
@@ -22,9 +43,9 @@
 	icon_state = "sterile"
 	inhand_icon_state = "sterile"
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH
-	visor_flags_inv = HIDEFACE
+	visor_flags_inv = HIDEFACE|HIDESNOUT
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
@@ -38,6 +59,7 @@
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
+	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEFACE
 	species_exception = list(/datum/species/golem)
 
@@ -69,6 +91,7 @@
 	name = "joy mask"
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
 	icon_state = "joy"
+	flags_inv = HIDESNOUT
 
 
 /obj/item/clothing/mask/bandana
@@ -76,8 +99,8 @@
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
-	flags_inv = HIDEFACE|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
@@ -92,25 +115,26 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
-			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
+			to_chat(user, span_warning("You can't tie [src] while wearing it!"))
 			return
 	if(slot_flags & ITEM_SLOT_HEAD)
-		to_chat(user, "<span class='warning'>You must undo [src] before you can tie it into a neckerchief!</span>")
+		to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
 	else
 		if(user.is_holding(src))
 			var/obj/item/clothing/neck/neckerchief/nk = new(src)
 			nk.name = "[name] neckerchief"
 			nk.desc = "[desc] It's tied up like a neckerchief."
 			nk.icon_state = icon_state
+			nk.item_flags = item_flags
 			nk.worn_icon = 'icons/misc/hidden.dmi' //hide underlying neckerchief object while it applies its own mutable appearance
 			nk.sourceBandanaType = src.type
 			var/currentHandIndex = user.get_held_index_of_item(src)
 			user.transferItemToLoc(src, null)
 			user.put_in_hand(nk, currentHandIndex)
-			user.visible_message("<span class='notice'>You tie [src] up like a neckerchief.</span>", "<span class='notice'>[user] ties [src] up like a neckerchief.</span>")
+			user.visible_message(span_notice("You tie [src] up like a neckerchief."), span_notice("[user] ties [src] up like a neckerchief."))
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You must be holding [src] in order to tie it!</span>")
+			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
@@ -152,21 +176,21 @@
 	desc = "Ancient bandages."
 	icon_state = "mummy_mask"
 	inhand_icon_state = "mummy_mask"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/scarecrow
 	name = "sack mask"
 	desc = "A burlap sack with eyeholes."
 	icon_state = "scarecrow_sack"
 	inhand_icon_state = "scarecrow_sack"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/gondola
 	name = "gondola mask"
 	desc = "Genuine gondola fur."
 	icon_state = "gondola"
 	inhand_icon_state = "gondola"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	modifies_speech = TRUE
 

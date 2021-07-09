@@ -2,11 +2,11 @@
 #define TALL 7/5
 
 /**
-  # squish.dm
-  *
-  * It's an element that squishes things. After the duration passes, it reverses the transformation it squished with, taking into account if they are a different orientation than they started (read: rotationally-fluid)
-  *
-  * Normal squishes apply vertically, as if the target is being squished from above, but you can set reverse to TRUE if you want to squish them from the sides, like if they pancake into a wall from the East or West
+ * squish.dm
+ *
+ * It's an element that squishes things. After the duration passes, it reverses the transformation it squished with, taking into account if they are a different orientation than they started (read: rotationally-fluid)
+ *
+ * Normal squishes apply vertically, as if the target is being squished from above, but you can set reverse to TRUE if you want to squish them from the sides, like if they pancake into a wall from the East or West
 */
 /datum/element/squish
 	element_flags = ELEMENT_DETACH

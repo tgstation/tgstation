@@ -3,6 +3,10 @@
 /obj/item/flashlight/lantern,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
+"bW" = (
+/obj/item/reagent_containers/glass/bucket/wooden,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle)
 "cI" = (
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
@@ -22,9 +26,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "ha" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "hv" = (
@@ -54,19 +56,15 @@
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "sC" = (
-/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "sM" = (
 /obj/structure/chair/comfy/beige,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "wH" = (
@@ -101,14 +99,12 @@
 /obj/item/seeds/tower,
 /obj/item/seeds/reishi,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/obj/item/food/grown/mushroom/glowshroom,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "ON" = (
 /obj/machinery/hydroponics/soil,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "OU" = (
@@ -144,9 +140,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "XI" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Yi" = (
@@ -324,7 +318,7 @@ YN
 ei
 bz
 gr
-cI
+bW
 cI
 cI
 cI

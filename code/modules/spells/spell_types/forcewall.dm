@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall
 	name = "Forcewall"
 	desc = "Create a magical barrier that only you can pass through."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "TARCOL MINTI ZHERI"
@@ -30,11 +30,11 @@
 	. = ..()
 	wizard = summoner
 
-/obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover == wizard)
 		return TRUE
-	if(ismob(mover))
+	if(isliving(mover))
 		var/mob/M = mover
 		if(M.anti_magic_check(chargecost = 0))
 			return TRUE

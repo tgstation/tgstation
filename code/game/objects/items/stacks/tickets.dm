@@ -6,12 +6,14 @@
 	inhand_icon_state = "tickets"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 30
+	merge_type = /obj/item/stack/arcadeticket
 
-/obj/item/stack/arcadeticket/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/arcadeticket/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/arcadeticket/update_icon_state()
+	. = ..()
 	var/amount = get_amount()
 	switch(amount)
 		if(12 to INFINITY)

@@ -9,7 +9,7 @@
 
 //Heals the things that the other regenerative abilities don't.
 /datum/action/changeling/panacea/sting_action(mob/user)
-	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")
+	to_chat(user, span_notice("We cleanse impurities from our form."))
 	..()
 	var/list/bad_organs = list(
 		user.getorgan(/obj/item/organ/body_egg),
@@ -23,7 +23,7 @@
 		O.Remove(user)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.vomit(0, toxic = TRUE)
+			C.vomit(0)
 		O.forceMove(get_turf(user))
 
 	user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)

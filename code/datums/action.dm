@@ -9,7 +9,7 @@
 	var/obj/target = null
 	var/check_flags = NONE
 	var/processing = FALSE
-	var/obj/screen/movable/action_button/button = null
+	var/atom/movable/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
 	var/transparent_when_unavailable = TRUE
 
@@ -37,8 +37,7 @@
 	if(owner)
 		Remove(owner)
 	target = null
-	qdel(button)
-	button = null
+	QDEL_NULL(button)
 	return ..()
 
 /datum/action/proc/Grant(mob/M)
@@ -48,6 +47,7 @@
 				return
 			Remove(owner)
 		owner = M
+		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
 
 		//button id generation
 		var/counter = 0
@@ -73,13 +73,19 @@
 	else
 		Remove(owner)
 
+/datum/action/proc/owner_deleted(datum/source)
+	SIGNAL_HANDLER
+	Remove(owner)
+
 /datum/action/proc/Remove(mob/M)
 	if(M)
 		if(M.client)
 			M.client.screen -= button
 		LAZYREMOVE(M.actions, src)
 		M.update_action_buttons()
-	owner = null
+	if(owner)
+		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+		owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
 	button.id = null
@@ -133,7 +139,7 @@
 			button.color = rgb(255,255,255,255)
 			return TRUE
 
-/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
+/datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
@@ -141,7 +147,6 @@
 
 /datum/action/proc/OnUpdatedIcon()
 	SIGNAL_HANDLER
-
 	UpdateButtonIcon()
 
 //Presets for item actions
@@ -172,7 +177,7 @@
 		I.ui_action_click(owner, src)
 	return TRUE
 
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
@@ -304,16 +309,35 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
-	var/turf/current_location = get_turf(target)
-	var/area/current_area = current_location.loc
+	var/area/current_area = get_area(target)
 	if(current_area.area_flags & NOTELEPORT)
-		to_chat(target, "[src] fizzles uselessly.")
+		to_chat(owner, span_notice("[target] fizzles uselessly."))
 		return
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
 			return FALSE
 	return ..()
+
+/datum/action/item_action/berserk_mode
+	name = "Berserk"
+	desc = "Increase your movement and melee speed while also increasing your melee armor for a short amount of time."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "berserk_mode"
+	background_icon_state = "bg_demon"
+
+/datum/action/item_action/berserk_mode/Trigger()
+	if(istype(target, /obj/item/clothing/head/helmet/space/hardsuit/berserker))
+		var/obj/item/clothing/head/helmet/space/hardsuit/berserker/berzerk = target
+		if(berzerk.berserk_active)
+			to_chat(owner, span_warning("You are already berserk!"))
+			return
+		if(berzerk.berserk_charge < 100)
+			to_chat(owner, span_warning("You don't have a full charge."))
+			return
+		berzerk.berserk_mode(owner)
+		return
+	..()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
@@ -410,7 +434,7 @@
 			owner.research_scanner++
 		else
 			owner.research_scanner--
-		to_chat(owner, "<span class='notice'>[target] research scanner has been [active ? "activated" : "deactivated"].</span>")
+		to_chat(owner, span_notice("[target] research scanner has been [active ? "activated" : "deactivated"]."))
 		return 1
 
 /datum/action/item_action/toggle_research_scanner/Remove(mob/M)
@@ -462,7 +486,7 @@
 	background_icon_state = "bg_demon"
 
 /datum/action/item_action/cult_dagger/Grant(mob/M)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		..()
 		button.screen_loc = "6:157,4:-2"
 		button.moved = "6:157,4:-2"
@@ -482,13 +506,13 @@
 		I.attack_self(owner)
 		return
 	if(!isliving(owner))
-		to_chat(owner, "<span class='warning'>You lack the necessary living force for this action.</span>")
+		to_chat(owner, span_warning("You lack the necessary living force for this action."))
 		return
 	var/mob/living/living_owner = owner
 	if (living_owner.usable_hands <= 0)
-		to_chat(living_owner, "<span class='warning'>You dont have any usable hands!</span>")
+		to_chat(living_owner, span_warning("You dont have any usable hands!"))
 	else
-		to_chat(living_owner, "<span class='warning'>Your hands are full!</span>")
+		to_chat(living_owner, span_warning("Your hands are full!"))
 
 
 ///MGS BOX!
@@ -515,7 +539,7 @@
 		return
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
-		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
+		to_chat(owner, span_warning("You need more space to activate this implant!"))
 		return
 	if(!COOLDOWN_FINISHED(src, box_cooldown))
 		return
@@ -704,6 +728,10 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
 
+/datum/action/item_action/bhop/brocket
+	name = "Activate Rocket Boots"
+	desc = "Activates the boot's rocket propulsion system, allowing the user to hurl themselves great distances."
+
 /datum/action/language_menu
 	name = "Language Menu"
 	desc = "Open the language menu to review your languages, their keys, and select your default language."
@@ -763,10 +791,6 @@
 /datum/action/small_sprite/megafauna/legion
 	small_icon_state = "mega_legion"
 
-/datum/action/small_sprite/megafauna/spacedragon
-	small_icon = 'icons/mob/carp.dmi'
-	small_icon_state = "carp"
-
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
@@ -786,7 +810,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "storage_gather_switch"
 
-/datum/action/item_action/storage_gather_mode/ApplyIcon(obj/screen/movable/action_button/current_button)
+/datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
 	. = ..()
 	var/old_layer = target.layer
 	var/old_plane = target.plane

@@ -21,7 +21,6 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	density = FALSE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -34,13 +33,15 @@
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
-	if(!body_color)
-		body_color = pick( list("brown","gray","white") )
-	icon_state = "mouse_[body_color]"
-	icon_living = "mouse_[body_color]"
-	icon_dead = "mouse_[body_color]_dead"
+	AddElement(/datum/element/animal_variety, "mouse", pick("brown","gray","white"), FALSE)
+	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	add_cell_sample()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/mouse/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
@@ -54,7 +55,7 @@
 	if(!ckey)
 		..(1)
 		if(!gibbed)
-			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
+			var/obj/item/food/deadmouse/M = new(loc)
 			M.icon_state = icon_dead
 			M.name = name
 			if(toast)
@@ -68,21 +69,21 @@
 /mob/living/simple_animal/mouse/revive(full_heal = FALSE, admin_revive = FALSE)
 	var/cap = CONFIG_GET(number/ratcap)
 	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
-		visible_message("<span class='warning'>[src] twitched but does not continue moving due to the overwhelming rodent population on the station!</span>")
+		visible_message(span_warning("[src] twitched but does not continue moving due to the overwhelming rodent population on the station!"))
 		return FALSE
 	. = ..()
 	if(.)
 		SSmobs.cheeserats += src
 
-/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
-	if( ishuman(AM) )
+/mob/living/simple_animal/mouse/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
+	if(ishuman(AM))
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
-	if(istype(AM, /obj/item/reagent_containers/food/snacks/royalcheese))
+			to_chat(M, span_notice("[icon2html(src, M)] Squeak!"))
+	if(istype(AM, /obj/item/food/cheese/royal))
 		evolve()
 		qdel(AM)
-	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
@@ -90,55 +91,60 @@
 		if(istype(F) && !F.intact)
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))
-				if(C.avail())
-					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
-					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
-					C.deconstruct()
-					death(toast=1)
+				var/powered = C.avail()
+				if(powered && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+					visible_message(span_warning("[src] chews through the [C]. It's toast!"))
+					death(toast = TRUE)
 				else
-					C.deconstruct()
-					visible_message("<span class='warning'>[src] chews through the [C].</span>")
-	for(var/obj/item/reagent_containers/food/snacks/cheesewedge/cheese in range(1, src))
+					visible_message(span_warning("[src] chews through the [C]."))
+
+				C.deconstruct()
+				if(powered)
+					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
+
+	for(var/obj/item/food/cheese/cheese in range(1, src))
 		if(prob(10))
 			be_fruitful()
 			qdel(cheese)
 			return
-	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
+	for(var/obj/item/food/cheese/royal/bigcheese in range(1, src))
 		qdel(bigcheese)
 		evolve()
 		return
 
-/mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	. = ..()
-	if(istype(A, /obj/item/reagent_containers/food/snacks/cheesewedge) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
 		if(health == maxHealth)
-			to_chat(src,"<span class='warning'>You don't need to eat or heal.</span>")
+			to_chat(src,span_warning("You don't need to eat or heal."))
 			return
-		to_chat(src,"<span class='green'>You nibble some cheese, restoring your health.</span>")
+		to_chat(src,span_green("You nibble some cheese, restoring your health."))
 		adjustHealth(-(maxHealth-health))
 		qdel(A)
 		return
 	return ..()
 
 /**
-  *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
-  */
+ *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
+ */
 /mob/living/simple_animal/mouse/proc/be_fruitful()
 	var/cap = CONFIG_GET(number/ratcap)
 	if(LAZYLEN(SSmobs.cheeserats) >= cap)
-		visible_message("<span class='warning'>[src] carefully eats the cheese, hiding it from the [cap] mice on the station!</span>")
+		visible_message(span_warning("[src] carefully eats the cheese, hiding it from the [cap] mice on the station!"))
 		return
 	var/mob/living/newmouse = new /mob/living/simple_animal/mouse(loc)
 	SSmobs.cheeserats += newmouse
-	visible_message("<span class='notice'>[src] nibbles through the cheese, attracting another mouse!</span>")
+	visible_message(span_notice("[src] nibbles through the cheese, attracting another mouse!"))
 
 /**
-  *Spawns a new regal rat, says some good jazz, and if sentient, transfers the relivant mind.
-  */
+ *Spawns a new regal rat, says some good jazz, and if sentient, transfers the relivant mind.
+ */
 /mob/living/simple_animal/mouse/proc/evolve()
 	var/mob/living/simple_animal/hostile/regalrat/regalrat = new /mob/living/simple_animal/hostile/regalrat/controlled(loc)
-	visible_message("<span class='warning'>[src] devours the cheese! He morphs into something... greater!</span>")
-	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
+	visible_message(span_warning("[src] devours the cheese! He morphs into something... greater!"))
+	INVOKE_ASYNC(regalrat, /atom/movable/proc/say, "RISE, MY SUBJECTS! SCREEEEEEE!")
 	if(mind)
 		mind.transfer_to(regalrat)
 	qdel(src)
@@ -176,52 +182,57 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
-	pet_bonus = TRUE
-	pet_bonus_emote = "squeaks happily!"
 
-/obj/item/reagent_containers/food/snacks/deadmouse
+/mob/living/simple_animal/mouse/brown/tom/Initialize()
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "squeaks happily!")
+	// Tom fears no cable.
+	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
+
+/obj/item/food/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
-	bitesize = 3
-	eatverb = "devour"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtype = GROSS | MEAT | RAW
+	bite_consumption = 3
+	eatverbs = list("devour")
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
-/obj/item/reagent_containers/food/snacks/deadmouse/Initialize()
+/obj/item/food/deadmouse/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
-/obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
+/obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
-		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
+		. += span_warning("It's dripping with fuel and smells terrible.")
 
-/obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
-	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
+/obj/item/food/deadmouse/attackby(obj/item/I, mob/living/user, params)
+	if(I.get_sharpness() && user.combat_mode)
 		if(isturf(loc))
 			new /obj/item/food/meat/slab/mouse(loc)
-			to_chat(user, "<span class='notice'>You butcher [src].</span>")
+			to_chat(user, span_notice("You butcher [src]."))
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You need to put [src] on a surface to butcher it!</span>")
+			to_chat(user, span_warning("You need to put [src] on a surface to butcher it!"))
 	else
 		return ..()
 
-/obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
+/obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
 	if(proximity_flag && reagents && target.is_open_container())
 		// is_open_container will not return truthy if target.reagents doesn't exist
 		var/datum/reagents/target_reagents = target.reagents
 		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
-			to_chat(user, "<span class='notice'>You dip [src] into [target].</span>")
+			to_chat(user, span_notice("You dip [src] into [target]."))
 			reagents.trans_to(target, reagents.total_volume)
 		else
-			to_chat(user, "<span class='warning'>That's a terrible idea.</span>")
+			to_chat(user, span_warning("That's a terrible idea."))
 	else
 		return ..()
 
-/obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
+/obj/item/food/deadmouse/on_grind()
+	. = ..()
 	reagents.clear_reagents()

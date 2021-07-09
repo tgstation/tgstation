@@ -28,6 +28,7 @@
 	attack_verb_simple = "bite into"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	aggro_vision_range = 9
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -56,24 +57,25 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
+		var/atom/target_from = GET_TARGETS_FROM(src)
+		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(140)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
 	if(lava_drinker && !warmed_up && istype(target, /turf/open/lava))
-		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
+		visible_message(span_warning("[src] begins to drink from [target]..."))
 		if(do_after(src, 70, target = target))
-			visible_message("<span class='warning'>[src] begins to fire up!</span>")
+			visible_message(span_warning("[src] begins to fire up!"))
 			fully_heal()
 			icon_state = "Basilisk_alert"
 			set_varspeed(0)
@@ -82,7 +84,7 @@
 			addtimer(CALLBACK(src, .proc/cool_down), 3000)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
-	visible_message("<span class='warning'>[src] appears to be cooling down...</span>")
+	visible_message(span_warning("[src] appears to be cooling down..."))
 	if(stat != DEAD)
 		icon_state = "Basilisk"
 	set_varspeed(3)
@@ -100,16 +102,17 @@
 	icon_dead = "watcher_dead"
 	health_doll_icon = "watcher"
 	pixel_x = -10
+	base_pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_verb_continuous = "impales"
 	attack_verb_simple = "impale"
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = null // doesn't bite unlike the parent type.
 	stat_attack = HARD_CRIT
-	movement_type = FLYING
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	gold_core_spawnable = NO_SPAWN
@@ -119,7 +122,11 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize()
+	. = ..()
+	AddElement(/datum/element/simple_flying)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()
@@ -134,13 +141,13 @@
 		distanced = get_dist(loc,diamonds.loc)
 		if(distanced <= 1 && diamonds)
 			qdel(diamonds)
-			src.visible_message("<span class='notice'>[src] consumes [diamonds], and it disappears! ...At least, you think.</span>")
+			src.visible_message(span_notice("[src] consumes [diamonds], and it disappears! ...At least, you think."))
 	if(bait)
 		var/distanceb = 0
 		distanceb = get_dist(loc,bait.loc)
 		if(distanceb <= 1 && bait)
 			qdel(bait)
-			src.visible_message("<span class='notice'>[src] examines [bait] closer, and telekinetically shatters the pen.</span>")
+			src.visible_message(span_notice("[src] examines [bait] closer, and telekinetically shatters the pen."))
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()

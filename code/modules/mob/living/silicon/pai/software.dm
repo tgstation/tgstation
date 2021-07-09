@@ -1,6 +1,6 @@
 // TODO:
-//	- Potentially roll HUDs and Records into one
-//	- Shock collar/lock system for prisoner pAIs?
+// - Potentially roll HUDs and Records into one
+// - Shock collar/lock system for prisoner pAIs?
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
@@ -22,6 +22,7 @@
 															"security HUD" = 20,
 															"loudness booster" = 20,
 															"newscaster" = 20,
+															"internal gps" = 35,
 															"door jack" = 25,
 															"encryption keys" = 25,
 															"universal translator" = 35
@@ -35,12 +36,12 @@
 
 	if(temp)
 		left_part = temp
-	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
+	else if(stat == DEAD) // Show some flavor text if the pAI is dead
 		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
-		switch(screen)							// Determine which interface to show here
+		switch(screen) // Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
@@ -75,7 +76,7 @@
 				left_part = softwareHostScan()
 
 
-	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
+	//usr << browse_rsc('windowbak.png') // This has been moved to the mob's Login() proc
 
 
 												// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
@@ -148,7 +149,7 @@
 				radio.attack_self(src)
 
 			if("image") // Set pAI card display face
-				var/newImage = input("Select your new display image.", "Display Image", "Happy") in sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses"))
+				var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
 				switch(newImage)
 					if(null)
 						card.emotion_icon = "null"
@@ -156,7 +157,7 @@
 						card.emotion_icon = "extremely-happy"
 					else
 						card.emotion_icon = "[lowertext(newImage)]"
-				card.update_icon()
+				card.update_appearance()
 
 			if("news")
 				newscaster.ui_interact(src)
@@ -187,7 +188,7 @@
 					if(iscarbon(card.loc))
 						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 					else
-						to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
+						to_chat(src, span_warning("You are not being carried by anyone!"))
 						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
 			if("pdamessage")
@@ -198,7 +199,7 @@
 						aiPDA.silent = !aiPDA.silent
 					else if(href_list["target"])
 						if(silent)
-							return alert("Communications circuits remain uninitialized.")
+							return tgui_alert(usr,"Communications circuits remain uninitialized.")
 						var/target = locate(href_list["target"]) in GLOB.PDAs
 						aiPDA.create_message(src, target)
 
@@ -251,9 +252,10 @@
 			if("encryptionkeys")
 				if(href_list["toggle"])
 					encryptmod = TRUE
+					radio.subspace_transmission = TRUE
 
 			if("translator")
-				if(href_list["toggle"])	//This is permanent.
+				if(href_list["toggle"]) //This is permanent.
 					grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 
 			if("doorjack")
@@ -271,10 +273,10 @@
 						var/mob/living/L = card.loc
 						if(L.put_in_hands(hacking_cable))
 							transfered_to_mob = TRUE
-							L.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of.</span>", "<span class='hear'>You hear the soft click of something light and manage to catch hold of [hacking_cable].</span>")
+							L.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
 					if(!transfered_to_mob)
 						hacking_cable.forceMove(drop_location())
-						hacking_cable.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor.</span>", "<span class='hear'>You hear the soft click of something light and hard falling to the ground.</span>")
+						hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
 
 
@@ -282,11 +284,16 @@
 				if(subscreen == 1) // Open Instrument
 					internal_instrument.interact(src)
 
+			if("internalgps")
+				if(!internal_gps)
+					internal_gps = new(src)
+				internal_gps.attack_self(src)
+
 		paiInterface()
 
 // MENUS
 
-/mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
+/mob/living/silicon/pai/proc/softwareMenu() // Populate the right menu
 	var/dat = ""
 
 	dat += "<A href='byond://?src=[REF(src)];software=refresh'>Refresh</A><br>"
@@ -314,6 +321,9 @@
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
 		if(s == "loudness booster")
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
+		if(s == "internal gps")
+			dat += "<a href='byond://?src=[REF(src)];software=internalgps;sub=0'>Internal GPS</a> <br>"
+
 	dat += "<br>"
 
 	// Advanced
@@ -374,13 +384,13 @@
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
-			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
-			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
-			 only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
-			 <b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
-			 simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
-			 prime directive to the best of your ability.</b></p><br><br>-
-			"}
+		comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
+		rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
+		only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
+		<b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
+		simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
+		prime directive to the best of your ability.</b></p><br><br>-
+		"}
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
@@ -388,9 +398,9 @@
 		return
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		M.visible_message("<span class='notice'>[M] presses [M.p_their()] thumb against [P].</span>",\
-						"<span class='notice'>You press your thumb against [P].</span>",\
-						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
+		M.visible_message(span_notice("[M] presses [M.p_their()] thumb against [P]."),\
+						span_notice("You press your thumb against [P]."),\
+						span_notice("[P] makes a sharp clicking sound as it extracts DNA material from [M]."))
 		if(!M.has_dna())
 			to_chat(P, "<b>No DNA detected</b>")
 			return
@@ -400,7 +410,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "<span class='warning'>[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.</span>")
+		to_chat(P, span_warning("[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly."))
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -490,7 +500,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
-				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
+				When enabled, this device will permanently be able to speak and understand all known forms of communication.<br><br>
 				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 

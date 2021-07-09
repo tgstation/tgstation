@@ -3,13 +3,15 @@
 /obj/projectile/bullet/honker
 	name = "banana"
 	damage = 0
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING
+	projectile_piercing = ALL
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
 	embedding = null
+	shrapnel_type = null
 
 /obj/projectile/bullet/honker/Initialize()
 	. = ..()

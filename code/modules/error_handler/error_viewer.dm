@@ -118,11 +118,11 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 		var/const/viewtext = "\[view]" // Nesting these in other brackets went poorly
 		//log_debug("Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b> [error_entry.make_link(viewtext)]")
 		var/err_msg_delay
-		if(config)
+		if(config?.loaded)
 			err_msg_delay = CONFIG_GET(number/error_msg_delay)
 		else
 			var/datum/config_entry/CE = /datum/config_entry/number/error_msg_delay
-			err_msg_delay = initial(CE.config_entry_value)
+			err_msg_delay = initial(CE.default)
 		error_source.next_message_at = world.time + err_msg_delay
 
 /datum/error_viewer/error_source

@@ -23,40 +23,51 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Admin
 	MODE_KEY_ADMIN = MODE_ADMIN,
 	MODE_KEY_DEADMIN = MODE_DEADMIN,
+	MODE_KEY_PUPPET = MODE_PUPPET,
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
-	MODE_KEY_VOCALCORDS = MODE_VOCALCORDS,		// vocal cords, used by Voice of God
 
 
 	//kinda localization -- rastaf0
-	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	//same keys as above, but on russian keyboard layout.
 	// Location
-	"ê" = MODE_R_HAND,
-	"ä" = MODE_L_HAND,
-	"ø" = MODE_INTERCOM,
+	"к" = MODE_R_HAND,
+	"л" = MODE_L_HAND,
+	"ш" = MODE_INTERCOM,
 
 	// Department
-	"ð" = MODE_DEPARTMENT,
-	"ñ" = RADIO_CHANNEL_COMMAND,
-	"ò" = RADIO_CHANNEL_SCIENCE,
-	"ü" = RADIO_CHANNEL_MEDICAL,
-	"ó" = RADIO_CHANNEL_ENGINEERING,
-	"û" = RADIO_CHANNEL_SECURITY,
-	"ã" = RADIO_CHANNEL_SUPPLY,
-	"ì" = RADIO_CHANNEL_SERVICE,
+	"р" = MODE_DEPARTMENT,
+	"с" = RADIO_CHANNEL_COMMAND,
+	"т" = RADIO_CHANNEL_SCIENCE,
+	"ь" = RADIO_CHANNEL_MEDICAL,
+	"у" = RADIO_CHANNEL_ENGINEERING,
+	"ы" = RADIO_CHANNEL_SECURITY,
+	"г" = RADIO_CHANNEL_SUPPLY,
+	"м" = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"å" = RADIO_CHANNEL_SYNDICATE,
-	"í" = RADIO_CHANNEL_CENTCOM,
+	"е" = RADIO_CHANNEL_SYNDICATE,
+	"н" = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
-	"ç" = MODE_ADMIN,
-	"â" = MODE_ADMIN,
+	"з" = MODE_ADMIN,
+	"в" = MODE_KEY_DEADMIN,
 
 	// Misc
-	"ù" = RADIO_CHANNEL_AI_PRIVATE,
-	"÷" = MODE_VOCALCORDS
+	"щ" = RADIO_CHANNEL_AI_PRIVATE
+))
+
+/**
+ * Whitelist of saymodes or radio extensions that can be spoken through even if not fully conscious.
+ * Associated values are their maximum allowed mob stats.
+ */
+GLOBAL_LIST_INIT(message_modes_stat_limits, list(
+	MODE_INTERCOM = HARD_CRIT,
+	MODE_ALIEN = HARD_CRIT,
+	MODE_BINARY = HARD_CRIT, //extra stat check on human/binarycheck()
+	MODE_MONKEY = HARD_CRIT,
+	MODE_MAFIA = HARD_CRIT
 ))
 
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
@@ -94,7 +105,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(ic_blocked)
 		//The filter warning message shows the sanitized message though.
-		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
+		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span>"))
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 	var/list/message_mods = list()
@@ -117,18 +128,31 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(stat != DEAD && check_emote(original_message, forced))
 		return
 
+	// Checks if the saymode or channel extension can be used even if not totally conscious.
+	var/say_radio_or_mode = saymode || message_mods[RADIO_EXTENSION]
+	if(say_radio_or_mode)
+		var/mob_stat_limit = GLOB.message_modes_stat_limits[say_radio_or_mode]
+		if(stat > (isnull(mob_stat_limit) ? CONSCIOUS : mob_stat_limit))
+			saymode = null
+			message_mods -= RADIO_EXTENSION
+
 	switch(stat)
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 		if(UNCONSCIOUS)
-			if(!(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
-				return
+			return
 		if(HARD_CRIT)
-			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(!message_mods[WHISPER_MODE])
 				return
 		if(DEAD)
 			say_dead(original_message)
 			return
+
+	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
+		if(!COOLDOWN_FINISHED(client, say_slowmode))
+			to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+			return
+		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
 	if(!can_speak_basic(original_message, ignore_spam, forced))
 		return
@@ -139,11 +163,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		language = get_selected_language()
 	var/mob/living/carbon/human/H = src
 	if(!can_speak_vocal(message))
-		if (HAS_TRAIT(src, TRAIT_SIGN_LANG) && H.mind.miming)
-			to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
-			return
+		if(H.mind?.miming)
+			if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+				to_chat(src, span_warning("You stop yourself from signing in favor of the artform of mimery!"))
+				return
+			else
+				to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
+				return
 		else
-			to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
+			to_chat(src, span_warning("You find yourself unable to speak!"))
 			return
 
 	var/message_range = 7
@@ -249,10 +277,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
+			deaf_message = "[span_name("[speaker]")] [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
 			deaf_type = 1
 	else
-		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
+		deaf_message = span_notice("You can't hear yourself!")
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
 	// Create map text prior to modifying message for goonchat
@@ -292,8 +320,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
 			var/mob/M = _M
-			if(QDELETED(M))	//Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
-				continue	//Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			if(QDELETED(M)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
+				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 			if(M.stat != DEAD) //not dead, not important
 				continue
 			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
@@ -323,7 +351,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-		if(M.client && !M.client.prefs.chat_on_map)
+		if(M.client && (!M.client.prefs.chat_on_map || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -339,7 +367,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/proc/can_speak_basic(message, ignore_spam = FALSE, forced = FALSE) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
+			to_chat(src, span_danger("You cannot speak in IC (muted)."))
 			return FALSE
 		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,MUTE_IC))
 			return FALSE
@@ -407,9 +435,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			for (var/obj/item/radio/intercom/I in view(MODE_RANGE_INTERCOM, null))
 				I.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
-
-		if(MODE_BINARY)
-			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 
 	return 0
 

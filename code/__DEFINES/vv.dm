@@ -1,6 +1,7 @@
 #define VV_NUM "Number"
 #define VV_TEXT "Text"
 #define VV_MESSAGE "Mutiline Text"
+#define VV_COLOR "Color"
 #define VV_ICON "Icon"
 #define VV_ATOM_REFERENCE "Atom Reference"
 #define VV_DATUM_REFERENCE "Datum Reference"
@@ -30,14 +31,14 @@
 #define VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD 150
 
 //#define IS_VALID_ASSOC_KEY(V) (istext(V) || ispath(V) || isdatum(V) || islist(V))
-#define IS_VALID_ASSOC_KEY(V) (!isnum(V))		//hhmmm..
+#define IS_VALID_ASSOC_KEY(V) (!isnum(V)) //hhmmm..
 
 //General helpers
 #define VV_HREF_TARGET_INTERNAL(target, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
 #define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
 #define VV_HREF_TARGET(target, href_key, text) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)]'>[text]</a>"
 #define VV_HREF_TARGETREF(targetref, href_key, text) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)]'>[text]</a>"
-#define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>"		//for stuff like basic varedits, one variable
+#define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>" //for stuff like basic varedits, one variable
 #define VV_HREF_TARGETREF_1V(targetref, href_key, text, varname) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>"
 
 #define GET_VV_TARGET locate(href_list[VV_HK_TARGET])
@@ -51,7 +52,7 @@
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
-#define VV_HK_VARNAME "targetvar"		//name or index of var for 1 variable targetting hrefs.
+#define VV_HK_VARNAME "targetvar" //name or index of var for 1 variable targetting hrefs.
 
 // vv_do_list() keys
 #define VV_HK_LIST_ADD "listadd"
@@ -75,20 +76,29 @@
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
-#define VV_HK_VIEW_REFERENCES "viewreferences"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
+#define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_RADIATE "radiate"
+#define VV_HK_EDIT_FILTERS "edit_filters"
+#define VV_HK_ADD_AI "add_ai"
+
+// /atom/movable
+#define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
 
 // /obj
 #define VV_HK_OSAY "osay"
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
+
+// /obj/item
+#define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
 
 // /mob
 #define VV_HK_GIB "gib"
@@ -103,6 +113,7 @@
 #define VV_HK_DIRECT_CONTROL "direct_control"
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
+#define VV_HK_SDQL_SPELL "sdql_spell"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"
@@ -129,3 +140,24 @@
 
 // paintings
 #define VV_HK_REMOVE_PAINTING "remove_painting"
+
+//outfits
+#define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
+
+// /obj/effect/proc_holder/spell
+/// Require casting_clothes to cast spell.
+#define VV_HK_SPELL_SET_ROBELESS "spell_set_robeless"
+/// Require cult armor to cast spell.
+#define VV_HK_SPELL_SET_CULT "spell_set_cult"
+/// Require the mob to be ishuman() to cast spell.
+#define VV_HK_SPELL_SET_HUMANONLY "spell_set_humanonly"
+/// Require mob to not be a brain or pAI to cast spell.
+#define VV_HK_SPELL_SET_NONABSTRACT "spell_set_nonabstract"
+/// Spell can now be cast without casting_clothes.
+#define VV_HK_SPELL_UNSET_ROBELESS "spell_unset_robeless"
+/// Spell can now be cast without cult armour.
+#define VV_HK_SPELL_UNSET_CULT "spell_unset_cult"
+/// Any /mob can cast this spell.
+#define VV_HK_SPELL_UNSET_HUMANONLY "spell_unset_humanonly"
+/// Abstract mobs such as brains or pAIs can cast this spell.
+#define VV_HK_SPELL_UNSET_NONABSTRACT "spell_unset_nonabstract"

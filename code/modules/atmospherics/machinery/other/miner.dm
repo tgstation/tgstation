@@ -1,7 +1,7 @@
 
 #define GASMINER_POWER_NONE 0
 #define GASMINER_POWER_STATIC 1
-#define GASMINER_POWER_MOLES 2	//Scaled from here on down.
+#define GASMINER_POWER_MOLES 2 //Scaled from here on down.
 #define GASMINER_POWER_KPA 3
 #define GASMINER_POWER_FULLSCALE 4
 
@@ -22,7 +22,7 @@
 	var/active = TRUE
 	var/power_draw = 0
 	var/power_draw_static = 2000
-	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
+	var/power_draw_dynamic_mol_coeff = 5 //DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
@@ -31,7 +31,7 @@
 
 /obj/machinery/atmospherics/miner/Initialize()
 	. = ..()
-	set_active(active)				//Force overlay update.
+	set_active(active) //Force overlay update.
 
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	. = ..()
@@ -43,25 +43,25 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	if(!isopenturf(T))
-		broken_message = "<span class='boldnotice'>VENT BLOCKED</span>"
+		broken_message = span_boldnotice("VENT BLOCKED")
 		set_broken(TRUE)
 		return FALSE
 	var/turf/open/OT = T
 	if(OT.planetary_atmos)
-		broken_message = "<span class='boldwarning'>DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT</span>"
+		broken_message = span_boldwarning("DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT")
 		set_broken(TRUE)
 		return FALSE
 	if(isspaceturf(T))
-		broken_message = "<span class='boldnotice'>AIR VENTING TO SPACE</span>"
+		broken_message = span_boldnotice("AIR VENTING TO SPACE")
 		set_broken(TRUE)
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
 	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
-		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
+		broken_message = span_boldwarning("EXTERNAL PRESSURE OVER THRESHOLD")
 		set_broken(TRUE)
 		return FALSE
 	if(G.total_moles() > max_ext_mol)
-		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER THRESHOLD</span>"
+		broken_message = span_boldwarning("EXTERNAL AIR CONCENTRATION OVER THRESHOLD")
 		set_broken(TRUE)
 		return FALSE
 	if(broken)
@@ -72,12 +72,12 @@
 /obj/machinery/atmospherics/miner/proc/set_active(setting)
 	if(active != setting)
 		active = setting
-		update_icon()
+		update_appearance()
 
 /obj/machinery/atmospherics/miner/proc/set_broken(setting)
 	if(broken != setting)
 		broken = setting
-		update_icon()
+		update_appearance()
 
 /obj/machinery/atmospherics/miner/proc/update_power()
 	if(!active)
@@ -113,7 +113,9 @@
 	. = ..()
 	if(broken)
 		. += "broken"
-	else if(active)
+		return
+
+	if(active)
 		var/mutable_appearance/on_overlay = mutable_appearance(icon, "on")
 		on_overlay.color = overlay_color
 		. += on_overlay
@@ -136,7 +138,6 @@
 	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
-	O.air_update_turf(TRUE)
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)
@@ -237,3 +238,13 @@
 	name = "\improper Zauker Gas Miner"
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/zauker
+
+/obj/machinery/atmospherics/miner/helium
+	name = "\improper Helium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/helium
+
+/obj/machinery/atmospherics/miner/antinoblium
+	name = "\improper Antinoblium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/antinoblium

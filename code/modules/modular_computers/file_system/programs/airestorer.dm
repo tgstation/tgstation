@@ -1,6 +1,7 @@
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
 	filedesc = "NT FRK"
+	category = PROGRAM_CATEGORY_ROBO
 	program_icon_state = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
@@ -55,7 +56,7 @@
 
 /datum/computer_file/program/aidiag/process_tick()
 	. = ..()
-	if(!restoring)	//Put the check here so we don't check for an ai all the time
+	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
 	var/obj/item/aicard/cardhold = get_ai(2)
 
@@ -64,7 +65,7 @@
 
 	var/mob/living/silicon/ai/A = get_ai()
 	if(!A || !cardhold)
-		restoring = FALSE	// If the AI was removed, stop the restoration sequence.
+		restoring = FALSE // If the AI was removed, stop the restoration sequence.
 		if(ai_slot)
 			ai_slot.locked = FALSE
 		return
@@ -83,7 +84,7 @@
 
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
-		cardhold.update_icon()
+		cardhold.update_appearance()
 
 	// Finished restoring
 	if(A.health >= 100)

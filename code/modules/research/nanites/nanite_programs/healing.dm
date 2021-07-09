@@ -2,7 +2,7 @@
 
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
-	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. Does not consume nanites if the host is unharmed."
+	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. Will not consume nanites while the host is unharmed."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -31,7 +31,7 @@
 
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
-	desc = "The nanites adjust the host's internal temperature to an ideal level."
+	desc = "The nanites adjust the host's internal temperature to an ideal level. Will not consume nanites while the host is at a normal body temperature."
 	use_rate = 3.5
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
@@ -41,16 +41,22 @@
 	return ..()
 
 /datum/nanite_program/temperature/active_effect()
-	if(host_mob.bodytemperature > host_mob.get_body_temp_normal(apply_change=FALSE))
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, host_mob.get_body_temp_normal(apply_change=FALSE))
-	else if(host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, host_mob.get_body_temp_normal(apply_change=FALSE))
+	var/target_temp = host_mob.get_body_temp_normal(apply_change=FALSE)
+	if(host_mob.bodytemperature > target_temp)
+		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
+	else if(host_mob.bodytemperature < (target_temp + 1))
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
 	desc = "The nanites purge toxins and chemicals from the host's bloodstream. Consumes nanites even if it has no effect."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging/check_conditions()
+	. = ..()
+	if(!. || !host_mob.reagents)
+		return FALSE // No trying to purge simple mobs
 
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
@@ -59,7 +65,7 @@
 
 /datum/nanite_program/brain_heal
 	name = "Neural Regeneration"
-	desc = "The nanites fix neural connections in the host's brain, reversing brain damage and minor traumas."
+	desc = "The nanites fix neural connections in the host's brain, reversing brain damage and minor traumas. Will not consume nanites while it would not have an effect."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
@@ -80,7 +86,7 @@
 
 /datum/nanite_program/blood_restoring
 	name = "Blood Regeneration"
-	desc = "The nanites stimulate and boost blood cell production in the host."
+	desc = "The nanites stimulate and boost blood cell production in the host. Will not consume nanites while the host has a safe blood level."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating)
 
@@ -100,7 +106,7 @@
 
 /datum/nanite_program/repairing
 	name = "Mechanical Repair"
-	desc = "The nanites fix damage in the host's mechanical limbs."
+	desc = "The nanites fix damage in the host's mechanical limbs. Will not consume nanites while the host's mechanical limbs are undamaged, or while the host has no mechanical limbs."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -140,6 +146,11 @@
 			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. Consumes nanites even if it has no effect."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging_advanced/check_conditions()
+	. = ..()
+	if(!. || !host_mob.reagents)
+		return FALSE
 
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)

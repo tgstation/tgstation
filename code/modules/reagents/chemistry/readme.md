@@ -14,9 +14,6 @@ Structure: ///////////////////          //////////////////////////
 		   							         reagents (datums)	    	Reagents. I.e. Water , cryoxadone or mercury.
 ```
 
-# Random important notes:
-An objects on_reagent_change will be called every time the objects reagents change. Useful if you want to update the objects icon etc.
-
 # About the Holder:
 The holder (reagents datum) is the datum that holds a list of all reagents currently in the object.It also has all the procs needed to manipulate reagents
 ```

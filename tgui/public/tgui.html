@@ -17,9 +17,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   window.__windowId__ = null;
 }
 
-// BYOND API object
-window.Byond = (function () {
-  var Byond = {};
+(function () {
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
   var assign = function (target) {
@@ -33,6 +31,11 @@ window.Byond = (function () {
     }
     return target;
   };
+
+  // BYOND API object
+  // ------------------------------------------------------
+
+  var Byond = window.Byond = {};
   // Trident engine version
   var tridentVersion = (function () {
     var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
@@ -41,8 +44,9 @@ window.Byond = (function () {
       ? parseInt(majorVersion, 10)
       : null;
   })();
+
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = tridentVersion !== null
+  var isByond = (tridentVersion !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
     && location.pathname.indexOf('/tmp') === 0
     && location.search !== '?external';
@@ -95,6 +99,13 @@ window.Byond = (function () {
         }
       }
     }
+
+    // If we're a Chromium client, just use the fancy method
+    if (window.cef_to_byond) {
+      cef_to_byond('byond://' + url);
+      return;
+    }
+
     // Perform a standard call via location.href
     if (url.length < 2048) {
       location.href = 'byond://' + url;
@@ -170,7 +181,135 @@ window.Byond = (function () {
     }
   };
 
-  return Byond;
+
+  // Asset loaders
+  // ------------------------------------------------------
+
+  var RETRY_ATTEMPTS = 5;
+  var RETRY_WAIT_INITIAL = 500;
+  var RETRY_WAIT_INCREMENT = 500;
+
+  var loadedAssetByUrl = {};
+
+  var isStyleSheetLoaded = function (node, url) {
+    // Method #1 (works on IE10+)
+    var styleSheet = node.sheet;
+    if (styleSheet) {
+      return styleSheet.rules.length > 0;
+    }
+    // Method #2
+    var styleSheets = document.styleSheets;
+    var len = styleSheets.length;
+    for (var i = 0; i < len; i++) {
+      var styleSheet = styleSheets[i];
+      if (styleSheet.href.indexOf(url) !== -1) {
+        return styleSheet.rules.length > 0;
+      }
+    }
+    // All methods failed
+    return false;
+  };
+
+  var injectNode = function (node) {
+    if (!document.body) {
+      setTimeout(function () {
+        injectNode(node);
+      });
+      return;
+    }
+    var refs = document.body.childNodes;
+    var ref = refs[refs.length - 1];
+    ref.parentNode.insertBefore(node, ref.nextSibling);
+  };
+
+  var loadAsset = function (options) {
+    var url = options.url;
+    var type = options.type;
+    var sync = options.sync;
+    var attempt = options.attempt || 0;
+    if (loadedAssetByUrl[url]) {
+      return;
+    }
+    loadedAssetByUrl[url] = options;
+    // Generic retry function
+    var retry = function () {
+      if (attempt >= RETRY_ATTEMPTS) {
+        var errorMessage = "Error: Failed to load the asset "
+          + "'" + url + "' after several attempts.";
+        if (type === 'css') {
+          errorMessage += + "\nStylesheet was either not found, "
+            + "or you're trying to load an empty stylesheet "
+            + "that has no CSS rules in it.";
+        }
+        throw new Error(errorMessage);
+      }
+      setTimeout(function () {
+        loadedAssetByUrl[url] = null;
+        options.attempt += 1;
+        loadAsset(options);
+      }, RETRY_WAIT_INITIAL + attempt * RETRY_WAIT_INCREMENT);
+    };
+    // JS specific code
+    if (type === 'js') {
+      var node = document.createElement('script');
+      node.type = 'text/javascript';
+      // IE8: Prefer non-https protocols
+      node.src = Byond.IS_LTE_IE9
+        ? url.replace('https://', 'http://')
+        : url;
+      if (sync) {
+        node.defer = true;
+      }
+      else {
+        node.async = true;
+      }
+      node.onerror = function () {
+        node.onerror = null;
+        node.parentNode.removeChild(node);
+        node = null;
+        retry();
+      };
+      injectNode(node);
+      return;
+    }
+    // CSS specific code
+    if (type === 'css') {
+      var node = document.createElement('link');
+      node.type = 'text/css';
+      node.rel = 'stylesheet';
+      // IE8: Prefer non-https protocols
+      node.href = Byond.IS_LTE_IE9
+        ? url.replace('https://', 'http://')
+        : url;
+      // Temporarily set media to something inapplicable
+      // to ensure it'll fetch without blocking render
+      if (!sync) {
+        node.media = 'only x';
+      }
+      node.onload = function () {
+        node.onload = null;
+        if (isStyleSheetLoaded(node, url)) {
+          // Render the stylesheet
+          node.media = 'all';
+          return;
+        }
+        // Try again
+        node.parentNode.removeChild(node);
+        node = null;
+        retry();
+      };
+      injectNode(node);
+      return;
+    }
+  };
+
+  Byond.loadJs = function (url, sync) {
+    loadAsset({ url: url, sync: sync, type: 'js' });
+  };
+
+  Byond.loadCss = function (url, sync) {
+    loadAsset({ url: url, sync: sync, type: 'css' });
+  };
 })();
 
 // Global error handling
@@ -190,13 +329,15 @@ window.onerror = function (msg, url, line, col, error) {
   var errorRoot = document.getElementById('FatalError');
   var errorStack = document.getElementById('FatalError__stack');
   if (errorRoot) {
-    errorRoot.className = 'FatalError';
-    if (errorStack.textContent) {
-      errorStack.textContent += '\n\n' + stack;
+    errorRoot.className = 'FatalError FatalError--visible';
+    if (window.onerror.__stack__) {
+      window.onerror.__stack__ += '\n\n' + stack;
     }
     else {
-      errorStack.textContent = stack;
+      window.onerror.__stack__ = stack;
     }
+    var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
+    errorStack[textProp] = window.onerror.__stack__;
   }
   // Set window geometry
   var setFatalErrorGeometry = function () {
@@ -224,8 +365,17 @@ window.onerror = function (msg, url, line, col, error) {
   return true;
 };
 
-// Catch unhandled rejections
-window.onunhandledrejection = window.onerror;
+// Catch unhandled promise rejections
+window.onunhandledrejection = function (e) {
+  var msg = 'UnhandledRejection';
+  if (e.reason) {
+    msg += ': ' + (e.reason.message || e.reason.description || e.reason);
+    if (e.reason.stack) {
+      e.reason.stack = 'UnhandledRejection: ' + e.reason.stack;
+    }
+  }
+  window.onerror(msg, null, null, null, e.reason);
+};
 
 // Helper for augmenting stack traces on fatal errors
 window.__augmentStack__ = function (stack, error) {
@@ -261,16 +411,124 @@ if (!Function.prototype.bind) (function () {
     };
   };
 })();
+
+if (!Array.prototype['forEach']) {
+  Array.prototype.forEach = function (callback, thisArg) {
+    if (this == null) {
+      throw new TypeError('Array.prototype.forEach called on null or undefined');
+    }
+    var T, k;
+    var O = Object(this);
+    var len = O.length >>> 0;
+    if (typeof callback !== "function") {
+      throw new TypeError(callback + ' is not a function');
+    }
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+    k = 0;
+    while (k < len) {
+      var kValue;
+      if (k in O) {
+        kValue = O[k];
+        callback.call(T, kValue, k, O);
+      }
+      k++;
+    }
+  };
+}
 </script>
 
-<!-- Styles -->
-<!-- tgui:styles -->
+<style>
+.FatalError {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px;
+  font-size: 12px;
+  font-family: Consolas, monospace;
+  color: #ffffff;
+  background-color: #0000dd;
+  z-index: 1000;
+  overflow: hidden;
+  text-align: center;
+}
 
-<!-- Scripts -->
-<!-- tgui:scripts -->
+.FatalError--visible {
+  display: block !important;
+}
 
+.FatalError__logo {
+  display: inline-block;
+  text-align: left;
+  font-size: 10px;
+  line-height: 12px;
+  position: relative;
+  margin: 16px;
+  top: 0;
+  left: 0;
+  animation:
+    FatalError__rainbow 2s linear infinite alternate,
+    FatalError__shadow 4s linear infinite alternate,
+    FatalError__tfmX 3s infinite alternate,
+    FatalError__tfmY 4s infinite alternate;
+  white-space: pre;
+}
+
+.FatalError__header {
+  margin-top: 12px;
+}
+
+.FatalError__stack {
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.FatalError__footer {
+  margin-bottom: 24px;
+}
+
+@keyframes FatalError__rainbow {
+  0% { color: #ff0; }
+  50% { color: #0ff; }
+  100% { color: #f0f; }
+}
+
+@keyframes FatalError__shadow {
+  0% {
+    left: -2px;
+    text-shadow: 4px 0 #f0f;
+  }
+  50% {
+    left: 0px;
+    text-shadow: 0px 0 #0ff;
+  }
+  100% {
+    left: 2px;
+    text-shadow: -4px 0 #ff0;
+  }
+}
+
+@keyframes FatalError__tfmX {
+  0% { left: 15px; }
+  100% { left: -15px; }
+}
+
+@keyframes FatalError__tfmY {
+  100% { top: -15px; }
+}
+</style>
 </head>
 <body>
+
+<!-- Inline assets -->
+<!-- tgui:assets -->
 
 <!-- Inline HTML -->
 <!-- tgui:html -->
@@ -279,40 +537,26 @@ if (!Function.prototype.bind) (function () {
 <div id="react-root"></div>
 
 <!-- Fatal error container -->
-<div id="FatalError" style="display: none">
+<div id="FatalError" class="FatalError">
 <div class="FatalError__logo">
-          _____            _____                  _______                  _____
-         /\    \          /\    \                /::\    \                /\    \
-        /::\____\        /::\    \              /::::\    \              /::\    \
-       /::::|   |        \:::\    \            /::::::\    \            /::::\    \
-      /:::::|   |         \:::\    \          /::::::::\    \          /::::::\    \
-     /::::::|   |          \:::\    \        /:::/~~\:::\    \        /:::/\:::\    \
-    /:::/|::|   |           \:::\    \      /:::/    \:::\    \      /:::/__\:::\    \
-   /:::/ |::|   |           /::::\    \    /:::/    / \:::\    \     \:::\   \:::\    \
-  /:::/  |::|   | _____    /::::::\    \  /:::/____/   \:::\____\  ___\:::\   \:::\    \
- /:::/   |::|   |/\    \  /:::/\:::\    \|:::|    |     |:::|    |/\   \:::\   \:::\    \
-/:: /    |::|   /::\____\/:::/  \:::\____\:::|____|     |:::|    /::\   \:::\   \:::\____\
-\::/    /|::|  /:::/    /:::/    \::/    /\:::\    \   /:::/    /\:::\   \:::\   \::/    /
- \/____/ |::| /:::/    /:::/    / \/____/  \:::\    \ /:::/    /  \:::\   \:::\   \/____/
-         |::|/:::/    /:::/    /            \:::\    /:::/    /    \:::\   \:::\    \
-         |::::::/    /:::/    /              \:::\__/:::/    /      \:::\   \:::\____\
-         |:::::/    /\::/    /                \::::::::/    /        \:::\  /:::/    /
-         |::::/    /  \/____/                  \::::::/    /          \:::\/:::/    /
-         /:::/    /                             \::::/    /            \::::::/    /
-        /:::/    /                               \::/____/              \::::/    /
-        \::/    /                                                        \::/    /
-         \/____/                                                          \/____/
+ooooo      ooo     .     .oooooo.    .oooooo..o
+`888b.     `8'   .o8    d8P'  `Y8b  d8P'    `Y8
+ 8 `88b.    8  .o888oo 888      888 Y88bo.
+ 8   `88b.  8    888   888      888  `"Y8888o.
+ 8     `88b.8    888   888      888      `"Y88b
+ 8       `888    888 . `88b    d88' oo     .d8P
+o8o        `8    "888"  `Y8bood8P'  8""88888P'
 </div>
 <marquee class="FatalError__header">
 A fatal exception has occurred at 002B:C562F1B7 in TGUI.
 The current application will be terminated.
-Please remain calm. Get to the nearest NTNet workstation
-and send the copy of the following stack trace to:
-www.github.com/tgstation/tgstation. Thank you for your cooperation.
+Send the copy of the following stack trace to an authorized
+Nanotrasen incident handler at https://github.com/tgstation/tgstation.
+Thank you for your cooperation.
 </marquee>
 <div id="FatalError__stack" class="FatalError__stack"></div>
 <div class="FatalError__footer">
-Nanotrasen (c) 2525-2559
+Nanotrasen (c) 2525-2561
 </div>
 </div>
 

@@ -2,6 +2,7 @@
 	desc = "Autonomous Power Loader Unit MK-I. Designed primarily around heavy lifting, the Ripley can be outfitted with utility equipment to fill a number of roles."
 	name = "\improper APLU MK-I \"Ripley\""
 	icon_state = "ripley"
+	base_icon_state = "ripley"
 	silicon_icon_state = "ripley-empty"
 	movedelay = 1.5 //Move speed, lower is faster.
 	/// How fast the mech is in low pressure
@@ -25,6 +26,9 @@
 	var/list/cargo
 	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
+	/// Custom Ripley step and turning sounds (from TGMC)
+	stepsound = 'sound/mecha/powerloader_step.ogg'
+	turnsound = 'sound/mecha/powerloader_turn2.ogg'
 
 /obj/vehicle/sealed/mecha/working/ripley/Move()
 	. = ..()
@@ -44,8 +48,6 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize()
 	. = ..()
-	//Add ore box to cargo, here because the clarke has a unremovable box
-	LAZYADD(cargo, box)
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
 
@@ -60,6 +62,7 @@
 	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection and armor."
 	name = "\improper APLU MK-II \"Ripley\""
 	icon_state = "ripleymkii"
+	base_icon_state = "ripleymkii"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
 	movedelay = 4
@@ -83,6 +86,7 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
+	base_icon_state = "deathripley"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 3 //step_in while in normal pressure conditions
 	movedelay = 4
@@ -113,7 +117,10 @@
 /obj/vehicle/sealed/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
-	obj_integrity = 75 //Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
+	. = ..()
+	take_damage(125) // Low starting health
 
 /obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
 	. = ..()
@@ -137,8 +144,27 @@
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new
 	scanner.attach(src)
 
-/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/O)
-	if(O in cargo)
+/obj/vehicle/sealed/mecha/working/ripley/cargo
+	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
+	name = "\improper APLU \"Big Bess\""
+	icon_state = "hauler"
+	base_icon_state = "hauler"
+	max_equip = 2
+	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
+
+/obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize()
+	. = ..()
+	if(cell)
+		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
+
+	//Attach hydraulic clamp ONLY
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
+	HC.attach(src)
+
+	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/leaving, direction)
+	if(leaving in cargo)
 		return FALSE
 	return ..()
 
@@ -147,7 +173,7 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/cargoobj = locate(href_list["drop_from_cargo"]) in cargo
 		if(cargoobj)
-			to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>You unload [cargoobj].</span>")
+			to_chat(occupants, "[icon2html(src, occupants)][span_notice("You unload [cargoobj].")]")
 			cargoobj.forceMove(drop_location())
 			LAZYREMOVE(cargo, cargoobj)
 			if(cargoobj == box)
@@ -158,7 +184,7 @@
 /obj/vehicle/sealed/mecha/working/ripley/contents_explosion(severity, target)
 	for(var/i in cargo)
 		var/obj/cargoobj = i
-		if(prob(30/severity))
+		if(prob(10 * severity))
 			LAZYREMOVE(cargo, cargoobj)
 			cargoobj.forceMove(drop_location())
 	return ..()
@@ -175,22 +201,22 @@
 	return output
 
 /obj/vehicle/sealed/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>")
+	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
 	if(do_after(user, 300, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
-		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
+		to_chat(user, span_notice("You successfully pushed [O] out of [src]!"))
 		O.forceMove(drop_location())
 		LAZYREMOVE(cargo, O)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
+			to_chat(user, span_warning("You fail to push [O] out of [src]!"))
 
 /**
-  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
-  *
-  * Checks for Lavaland pressure, if that works out the mech's speed is equal to fast_pressure_step_in and the cooldown for the mecha drill is halved. If not it uses slow_pressure_step_in and drill cooldown is normal.
-  */
+ * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
+ *
+ * Checks for Lavaland pressure, if that works out the mech's speed is equal to fast_pressure_step_in and the cooldown for the mecha drill is halved. If not it uses slow_pressure_step_in and drill cooldown is normal.
+ */
 /obj/vehicle/sealed/mecha/working/ripley/proc/update_pressure()
 	var/turf/T = get_turf(loc)
 

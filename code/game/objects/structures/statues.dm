@@ -9,26 +9,27 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
 	material_flags = MATERIAL_AFFECT_STATISTICS
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
-	var/art_type = /datum/component/art
+	var/art_type = /datum/element/art
 	/// Abstract root type
 	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	AddComponent(art_type, impressiveness)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75))
+	AddElement(art_type, impressiveness)
+	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
 
 /obj/structure/statue/proc/can_be_rotated(mob/user)
 	if(!anchored)
 		return TRUE
-	to_chat(user, "<span class='warning'>It's bolted to the floor, you'll need to unwrench it first.</span>")
+	to_chat(user, span_warning("It's bolted to the floor, you'll need to unwrench it first."))
 
 /obj/structure/statue/proc/can_user_rotate(mob/user)
-	return isliving(user) && user.canUseTopic(src, BE_CLOSE, no_dexterity = ismonkey(user))
+	return user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user))
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -39,11 +40,11 @@
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
 
-			user.visible_message("<span class='notice'>[user] is slicing apart the [name].</span>", \
-								"<span class='notice'>You are slicing apart the [name]...</span>")
+			user.visible_message(span_notice("[user] is slicing apart the [name]."), \
+								span_notice("You are slicing apart the [name]..."))
 			if(W.use_tool(src, user, 40, volume=50))
-				user.visible_message("<span class='notice'>[user] slices apart the [name].</span>", \
-									"<span class='notice'>You slice apart the [name]!</span>")
+				user.visible_message(span_notice("[user] slices apart the [name]."), \
+									span_notice("You slice apart the [name]!"))
 				deconstruct(TRUE)
 			return
 	return ..()
@@ -52,7 +53,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(mat)
+			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
 			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
 				new custom_material.sheet_type(drop_location(),amount)
@@ -91,10 +92,9 @@
 	name = "statue of a scientist"
 	icon_state = "sci"
 
-/obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
+/obj/structure/statue/plasma/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
 	var/burn = FALSE
@@ -120,12 +120,18 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/statue/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	PlasmaBurn(exposed_temperature)
+
+/obj/structure/statue/plasma/proc/PlasmaBurn(temperature)
 	if(QDELETED(src))
 		return
 	if(custom_materials[/datum/material/plasma])
 		var/plasma_amount = round(custom_materials[/datum/material/plasma]/MINERAL_MATERIAL_AMOUNT)
-		atmos_spawn_air("plasma=[plasma_amount*10];TEMP=[exposed_temperature]")
+		atmos_spawn_air("plasma=[plasma_amount*10];TEMP=[temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
@@ -257,9 +263,9 @@
 	icon_state = "snowman"
 
 /obj/structure/statue/snow/snowlegion
-    name = "snowlegion"
-    desc = "Looks like that weird kid with the tiger plushie has been round here again."
-    icon_state = "snowlegion"
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon_state = "snowlegion"
 
 ///////////////////////////////bronze///////////////////////////////////
 
@@ -271,13 +277,13 @@
 	name = "\improper Karl Marx bust"
 	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
 	icon_state = "marx"
-	art_type = /datum/component/art/rev
+	art_type = /datum/element/art/rev
 
 ///////////Elder Atmosian///////////////////////////////////////////
 
 /obj/structure/statue/elder_atmosian
 	name = "Elder Atmosian"
-	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will"
+	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
 	icon_state = "eng"
 	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
@@ -286,7 +292,7 @@
 
 /obj/item/chisel
 	name = "chisel"
-	desc = "breaking and making art since 4000 BC. This one uses advanced technology to allow creation of lifelike moving statues."
+	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "chisel"
 	inhand_icon_state = "screwdriver_nuke"
@@ -306,8 +312,9 @@
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
-	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
+	tool_behaviour = TOOL_RUSTSCRAPER
+	toolspeed = 3 // You're gonna have a bad time
 
 	/// Block we're currently carving in
 	var/obj/structure/carving_block/prepared_block
@@ -316,16 +323,20 @@
 	/// Currently sculpting
 	var/sculpting = FALSE
 
+/obj/item/chisel/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
+
 /obj/item/chisel/Destroy()
 	prepared_block = null
 	tracked_user = null
 	return ..()
 
 /*
- Hit the block to start
- Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
- Hit block again to start sculpting.
- Moving interrupts
+Hit the block to start
+Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
+Hit block again to start sculpting.
+Moving interrupts
 */
 /obj/item/chisel/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
@@ -350,7 +361,7 @@
 		prepared_block.set_target(target,user)
 
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
-	to_chat(user,"<span class='notice'>You start sculpting [prepared_block].</span>",type=MESSAGE_TYPE_INFO)
+	to_chat(user,span_notice("You start sculpting [prepared_block]."),type=MESSAGE_TYPE_INFO)
 	sculpting = TRUE
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
@@ -370,14 +381,14 @@
 	total_progress_bar.end_progress()
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
-		to_chat(user,"<span class='notice'>The statue is finished!</span>",type=MESSAGE_TYPE_INFO)
+		to_chat(user,span_notice("The statue is finished!"),type=MESSAGE_TYPE_INFO)
 	break_sculpting()
 
 /obj/item/chisel/proc/set_block(obj/structure/carving_block/B,mob/living/user)
 	prepared_block = B
 	tracked_user = user
 	RegisterSignal(tracked_user,COMSIG_MOVABLE_MOVED,.proc/break_sculpting)
-	to_chat(user,"<span class='notice'>You prepare to work on [B].</span>",type=MESSAGE_TYPE_INFO)
+	to_chat(user,span_notice("You prepare to work on [B]."),type=MESSAGE_TYPE_INFO)
 
 /obj/item/chisel/dropped(mob/user, silent)
 	. = ..()
@@ -404,7 +415,7 @@
 		var/image/chosen_looks = choices[choice]
 		prepared_block.current_target = chosen_looks.appearance
 		var/obj/structure/statue/S = choice
-		to_chat(user,"<span class='notice'>You decide to sculpt [prepared_block] into [initial(S.name)].</span>",type=MESSAGE_TYPE_INFO)
+		to_chat(user,span_notice("You decide to sculpt [prepared_block] into [initial(S.name)]."),type=MESSAGE_TYPE_INFO)
 
 
 /obj/structure/carving_block
@@ -426,8 +437,6 @@
 	var/completion = 0
 	/// Greyscaled target with cutout filter
 	var/mutable_appearance/target_appearance_with_filters
-	/// Cutout filter for main block sprite
-	var/partial_uncover_filter
 	/// HSV color filters parameters
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
@@ -446,7 +455,7 @@
 	else
 		current_target = target.appearance
 	var/mutable_appearance/ma = current_target
-	to_chat(user,"<span class='notice'>You decide to sculpt [src] into [ma.name].</span>",type=MESSAGE_TYPE_INFO)
+	to_chat(user,span_notice("You decide to sculpt [src] into [ma.name]."),type=MESSAGE_TYPE_INFO)
 
 /obj/structure/carving_block/proc/reset_target()
 	current_target = null
@@ -455,10 +464,11 @@
 
 /obj/structure/carving_block/update_overlays()
 	. = ..()
-	if(target_appearance_with_filters)
-		//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
-		var/mutable_appearance/clone = new(target_appearance_with_filters)
-		. += clone
+	if(!target_appearance_with_filters)
+		return
+	//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
+	var/mutable_appearance/clone = new(target_appearance_with_filters)
+	. += clone
 
 /obj/structure/carving_block/proc/is_viable_target(atom/movable/target)
 	//Only things on turfs
@@ -489,23 +499,23 @@
 		return
 	if(!target_appearance_with_filters)
 		target_appearance_with_filters = new(current_target)
-		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER
+		// KEEP_APART in case carving block gets KEEP_TOGETHER from somewhere like material texture filters.
+		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER | KEEP_APART
+		//Doesn't use filter helpers because MAs aren't atoms
 		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
 	switch(value)
 		if(0)
 			//delete uncovered and reset filters
-			filters -= partial_uncover_filter
+			remove_filter("partial_uncover")
 			target_appearance_with_filters = null
 		else
 			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
-			if(partial_uncover_filter)
-				filters -= partial_uncover_filter
-			partial_uncover_filter = filter(type="alpha",icon=white,y=-mask_offset)
-			filters += partial_uncover_filter
+			remove_filter("partial_uncover")
+			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
-	update_icon()
+	update_appearance()
 
 
 /// Returns a list of preset statues carvable from this block depending on the custom materials
@@ -517,7 +527,7 @@
 		var/list/carving_cost = statue_costs[statue_path]
 		var/enough_materials = TRUE
 		for(var/required_material in carving_cost)
-			if(!custom_materials[required_material] || custom_materials[required_material] < carving_cost[required_material])
+			if(!has_material_type(required_material, TRUE, carving_cost[required_material]))
 				enough_materials = FALSE
 				break
 		if(enough_materials)
@@ -547,13 +557,16 @@
 	return ..()
 
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
+	if(content_ma)
+		QDEL_NULL(content_ma)
 	content_ma = new
 	content_ma.appearance = model_appearance
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
+	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
-	update_icon()
+	update_appearance()
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()

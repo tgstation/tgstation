@@ -5,7 +5,7 @@
 	icon_state = "seed-corn"
 	species = "corn"
 	plantname = "Corn Stalks"
-	product = /obj/item/reagent_containers/food/snacks/grown/corn
+	product = /obj/item/food/grown/corn
 	maturation = 8
 	potency = 20
 	instability = 50 //Corn used to be wheatgrass, before being cultivated for generations.
@@ -16,16 +16,15 @@
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/corn
+/obj/item/food/grown/corn
 	seed = /obj/item/seeds/corn
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	cooked_type = /obj/item/reagent_containers/food/snacks/popcorn
-	filling_color = "#FFFF00"
-	trash = /obj/item/grown/corncob
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	microwaved_type = /obj/item/food/popcorn
+	trash_type = /obj/item/grown/corncob
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
@@ -43,7 +42,7 @@
 
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
 	if(W.get_sharpness())
-		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
+		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 	else
@@ -78,7 +77,7 @@
 
 /obj/item/grown/snapcorn/attack_self(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>You pick a snap pop from the cob.</span>")
+	to_chat(user, span_notice("You pick a snap pop from the cob."))
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
 	if(ishuman(user))
 		user.put_in_hands(S)

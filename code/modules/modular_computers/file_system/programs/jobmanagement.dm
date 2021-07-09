@@ -1,6 +1,10 @@
+/// The time since the last job opening was created
+GLOBAL_VAR_INIT(time_last_changed_position, 0)
+
 /datum/computer_file/program/job_management
 	filename = "plexagoncore"
 	filedesc = "Plexagon HR Core"
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and changing job slot avalibility."
 	transfer_access = ACCESS_HEADS
@@ -70,6 +74,7 @@
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions++
 			opened_positions[edit_job_target]++
+			log_game("[key_name(usr)] opened a [j.title] job position, for a total of [j.total_positions] open job slots.")
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_close_job")
@@ -82,6 +87,7 @@
 				GLOB.time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
+			log_game("[key_name(usr)] closed a [j.title] job position, leaving [j.total_positions] open job slots.")
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_priority")

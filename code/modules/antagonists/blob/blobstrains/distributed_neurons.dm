@@ -1,10 +1,10 @@
 //kills unconscious targets and turns them into blob zombies, produces fragile spores when killed.  Spore produced by factories are sentient.
 /datum/blobstrain/reagent/distributed_neurons
 	name = "Distributed Neurons"
-	description = "will do very low toxin damage and turns unconscious targets into blob zombies."
+	description = "will do medium-low toxin damage and turns unconscious targets into blob zombies."
 	effectdesc = "will also produce fragile spores when killed.  Spores produced by factories are sentient."
-	shortdesc = "will do very low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
-	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans."
+	shortdesc = "will do medium-low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
+	analyzerdescdamage = "Does medium-low toxin damage and kills unconscious humans."
 	analyzerdesceffect = "Produces spores when killed.  Spores produced by factories are sentient."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
@@ -12,8 +12,8 @@
 	reagent = /datum/reagent/blob/distributed_neurons
 
 /datum/blobstrain/reagent/distributed_neurons/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage <= 20 && B.obj_integrity - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
-		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
+	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage <= 20 && B.get_integrity() - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
+		B.visible_message(span_warning("<b>A spore floats free of the blob!</b>"))
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
 		BS.update_icons()
@@ -38,4 +38,4 @@
 			overmind.blob_mobs.Add(spore)
 			spore.Zombify(exposed_mob)
 			overmind.add_points(-5)
-			to_chat(overmind, "<span class='notice'>Spent 5 resources for the zombification of [exposed_mob].</span>")
+			to_chat(overmind, span_notice("Spent 5 resources for the zombification of [exposed_mob]."))

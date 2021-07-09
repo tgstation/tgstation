@@ -1,5 +1,4 @@
 import { toArray } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
@@ -9,8 +8,7 @@ export const Cargo = (props, context) => {
   return (
     <Window
       width={780}
-      height={750}
-      resizable>
+      height={750}>
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -75,6 +73,7 @@ export const CargoContent = (props, context) => {
 const CargoStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    grocery,
     away,
     docked,
     loan,
@@ -100,7 +99,10 @@ const CargoStatus = (props, context) => {
         <LabeledList.Item label="Shuttle">
           {docked && !requestonly && can_send &&(
             <Button
+              color={grocery && "orange" || "green"}
               content={location}
+              tooltip={grocery && "The chef is waiting on their grocery supplies." || ""}
+              tooltipPosition="right"
               onClick={() => act('send')} />
           ) || location}
         </LabeledList.Item>
@@ -145,14 +147,14 @@ export const CargoCatalog = (props, context) => {
     <Section
       title="Catalog"
       buttons={!express && (
-        <Fragment>
+        <>
           <CargoCartButtons />
           <Button.Checkbox
             ml={2}
             content="Buy Privately"
             checked={self_paid}
             onClick={() => act('toggleprivate')} />
-        </Fragment>
+        </>
       )}>
       <Flex>
         <Flex.Item ml={-1} mr={1}>
@@ -298,7 +300,7 @@ const CargoCartButtons = (props, context) => {
     return null;
   }
   return (
-    <Fragment>
+    <>
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
         {cart.length === 1 && '1 item'}
@@ -311,7 +313,7 @@ const CargoCartButtons = (props, context) => {
         color="transparent"
         content="Clear"
         onClick={() => act('clear')} />
-    </Fragment>
+    </>
   );
 };
 

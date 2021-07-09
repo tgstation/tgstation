@@ -1,9 +1,9 @@
 /**
-  * Datum which holds details of a running poll loaded from the database and supplementary info.
-  *
-  * Used to minimize the need for querying this data every time it's needed.
-  *
-  */
+ * Datum which holds details of a running poll loaded from the database and supplementary info.
+ *
+ * Used to minimize the need for querying this data every time it's needed.
+ *
+ */
 /datum/poll_question
 	///Reference list of the options for this poll, not used by text response polls.
 	var/list/options = list()
@@ -41,11 +41,11 @@
 	var/future_poll
 
 /**
-  * Datum which holds details of a poll option loaded from the database.
-  *
-  * Used to minimize the need for querying this data every time it's needed.
-  *
-  */
+ * Datum which holds details of a poll option loaded from the database.
+ *
+ * Used to minimize the need for querying this data every time it's needed.
+ *
+ */
 /datum/poll_option
 	///Reference to the poll this option belongs to
 	var/datum/poll_question/parent_poll
@@ -67,9 +67,9 @@
 	var/default_percentage_calc
 
 /**
-  * Shows a list of all current and future polls and buttons to edit or delete them or create a new poll.
-  *
-  */
+ * Shows a list of all current and future polls and buttons to edit or delete them or create a new poll.
+ *
+ */
 /datum/admins/proc/poll_list_panel()
 	var/list/output = list("Current and future polls<br>Note when editing polls or their options changes are not saved until you press Submit Poll.<br><a href='?_src_=holder;[HrefToken()];newpoll=1'>New Poll</a><a href='?_src_=holder;[HrefToken()];reloadpolls=1'>Reload Polls</a><hr>")
 	for(var/p in GLOB.polls)
@@ -91,9 +91,9 @@
 	panel.open()
 
 /**
-  * Show the options for creating a poll or editing its parameters along with its linked options.
-  *
-  */
+ * Show the options for creating a poll or editing its parameters along with its linked options.
+ *
+ */
 /datum/admins/proc/poll_management_panel(datum/poll_question/poll)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>Poll type
@@ -235,17 +235,17 @@
 	panel.open()
 
 /**
-  * Processes topic data from poll management panel.
-  *
-  * Reads through returned form data and assigns data to the poll datum, creating a new one if required, before passing it to be saved.
-  * Also does some simple error checking to ensure the poll will be valid before creation.
-  *
-  */
+ * Processes topic data from poll management panel.
+ *
+ * Reads through returned form data and assigns data to the poll datum, creating a new one if required, before passing it to be saved.
+ * Also does some simple error checking to ensure the poll will be valid before creation.
+ *
+ */
 /datum/admins/proc/poll_parse_href(list/href_list, datum/poll_question/poll)
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/list/error_state = list()
 	var/new_poll = FALSE
@@ -309,9 +309,9 @@
 		error_state += "This poll type requires at least one option."
 	if(error_state.len)
 		if(poll.edit_ready)
-			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
+			to_chat(usr, span_danger("Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]"), confidential = TRUE)
 		else
-			to_chat(usr, "<span class='danger'>Poll not [new_poll ? "initialized" : "submitted"] because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
+			to_chat(usr, span_danger("Poll not [new_poll ? "initialized" : "submitted"] because the following errors were present:\n[error_state.Join("\n")]"), confidential = TRUE)
 			if(new_poll)
 				qdel(poll)
 		return
@@ -344,17 +344,17 @@
 	return ..()
 
 /**
-  * Sets a poll and its associated data as deleted in the database.
-  *
-  * Calls the procedure set_poll_deleted to set the deleted column to 1 for each row in the poll_ tables matching the poll id used.
-  * Then deletes each option datum and finally the poll itself.
-  *
-  */
+ * Sets a poll and its associated data as deleted in the database.
+ *
+ * Calls the procedure set_poll_deleted to set the deleted column to 1 for each row in the poll_ tables matching the poll id used.
+ * Then deletes each option datum and finally the poll itself.
+ *
+ */
 /datum/poll_question/proc/delete_poll()
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/datum/db_query/query_delete_poll = SSdbcore.NewQuery(
 		"CALL set_poll_deleted(:poll_id)",
@@ -371,19 +371,19 @@
 	qdel(src)
 
 /**
-  * Inserts or updates a poll question to the database.
-  *
-  * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
-  * The start and end datetimes and poll id for new polls is then retrieved for the poll datum.
-  * Arguments:
-  * * clear_votes - When true will call clear_poll_votes() to delete all votes matching this poll id.
-  *
-  */
+ * Inserts or updates a poll question to the database.
+ *
+ * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
+ * The start and end datetimes and poll id for new polls is then retrieved for the poll datum.
+ * Arguments:
+ * * clear_votes - When true will call clear_poll_votes() to delete all votes matching this poll id.
+ *
+ */
 /datum/poll_question/proc/save_poll_data(clear_votes)
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/new_poll = !poll_id
 	if(poll_type != POLLTYPE_MULTI)
@@ -437,30 +437,30 @@
 	message_admins("[kna] [msg]")
 
 /**
-  * Saves all options of a poll to the database.
-  *
-  * Saves all the created options for a poll when it's submitted to the DB for the first time and associated an id with the options.
-  * Insertion and id querying for each option is done separately to ensure data integrity; this is less performant, but not significantly.
-  * Using MassInsert() would mean having to query a list of rows by poll_id or matching by fields afterwards, which doesn't guarantee accuracy.
-  *
-  */
+ * Saves all options of a poll to the database.
+ *
+ * Saves all the created options for a poll when it's submitted to the DB for the first time and associated an id with the options.
+ * Insertion and id querying for each option is done separately to ensure data integrity; this is less performant, but not significantly.
+ * Using MassInsert() would mean having to query a list of rows by poll_id or matching by fields afterwards, which doesn't guarantee accuracy.
+ *
+ */
 /datum/poll_question/proc/save_all_options()
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	for(var/o in options)
 		var/datum/poll_option/option = o
 		option.save_option()
 
 /**
-  * Deletes all votes or text replies for this poll, depending on its type.
-  *
-  */
+ * Deletes all votes or text replies for this poll, depending on its type.
+ *
+ */
 /datum/poll_question/proc/clear_poll_votes()
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/table = "poll_vote"
 	if(poll_type == POLLTYPE_TEXT)
@@ -474,15 +474,15 @@
 		return
 	qdel(query_clear_poll_votes)
 	poll_votes = 0
-	to_chat(usr, "<span class='danger'>Poll [poll_type == POLLTYPE_TEXT ? "responses" : "votes"] cleared.</span>", confidential = TRUE)
+	to_chat(usr, span_danger("Poll [poll_type == POLLTYPE_TEXT ? "responses" : "votes"] cleared."), confidential = TRUE)
 
 /**
-  * Show the options for creating a poll option or editing its parameters.
-  *
-  */
+ * Show the options for creating a poll option or editing its parameters.
+ *
+ */
 /datum/admins/proc/poll_option_panel(datum/poll_question/poll, datum/poll_option/option)
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
-	output += {"<input type='hidden' name='src' value='[REF(src)]'>	Option for poll [poll.question]
+	output += {"<input type='hidden' name='src' value='[REF(src)]'> Option for poll [poll.question]
 	<br>
 	<textarea class='textbox' name='optiontext'>[option?.text]</textarea>
 	<br>
@@ -493,7 +493,7 @@
 		Maximum Value
 		<input type='text' name='maxval' size='3' value='[option?.max_val]'>
 		<div class='row'>
-  			<div class='column left'>
+			<div class='column left'>
 				<label class='inputlabel checkbox'>Minimum description
 				<input type='checkbox' id='descmincheck' name='descmincheck' value='1'[option?.desc_min ? " checked": ""]>
 				<div class='inputbox'></div></label>
@@ -533,17 +533,17 @@
 	panel.open()
 
 /**
-  * Processes topic data from poll option panel.
-  *
-  * Reads through returned form data and assigns data to the option datum, creating a new one if required, before passing it to be saved.
-  * Also does some simple error checking to ensure the option will be valid before creation.
-  *
-  */
+ * Processes topic data from poll option panel.
+ *
+ * Reads through returned form data and assigns data to the option datum, creating a new one if required, before passing it to be saved.
+ * Also does some simple error checking to ensure the option will be valid before creation.
+ *
+ */
 /datum/admins/proc/poll_option_parse_href(list/href_list, datum/poll_question/poll, datum/poll_option/option)
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/list/error_state = list()
 	var/new_option = FALSE
@@ -601,10 +601,10 @@
 			option.desc_max = null
 	if(error_state.len)
 		if(new_option)
-			to_chat(usr, "<span class='danger'>Option not added because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
+			to_chat(usr, span_danger("Option not added because the following errors were present:\n[error_state.Join("\n")]"), confidential = TRUE)
 			qdel(option)
 		else
-			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
+			to_chat(usr, span_danger("Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]"), confidential = TRUE)
 		return
 	if(new_option)
 		poll.options += option
@@ -631,17 +631,17 @@
 	return ..()
 
 /**
-  * Inserts or updates a poll option to the database.
-  *
-  * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
-  * The list of columns and values is built dynamically to avoid excess data being sent when not a rating type poll.
-  *
-  */
+ * Inserts or updates a poll option to the database.
+ *
+ * Uses INSERT ON DUPLICATE KEY UPDATE to handle both inserting and updating at once.
+ * The list of columns and values is built dynamically to avoid excess data being sent when not a rating type poll.
+ *
+ */
 /datum/poll_option/proc/save_option()
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 
 	var/list/values = list("text" = text, "default_percentage_calc" = default_percentage_calc, "pollid" = parent_poll.poll_id, "id" = option_id)
@@ -668,16 +668,16 @@
 	qdel(query_update_poll_option)
 
 /**
-  * Sets a poll option and its votes as deleted in the database then deletes its datum.
-  *
-  */
+ * Sets a poll option and its votes as deleted in the database then deletes its datum.
+ *
+ */
 /datum/poll_option/proc/delete_option()
 	if(!check_rights(R_POLL))
 		return
 	. = parent_poll
 	if(option_id)
 		if(!SSdbcore.Connect())
-			to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+			to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 			return
 		var/datum/db_query/query_delete_poll_option = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("poll_option")] AS o INNER JOIN [format_table_name("poll_vote")] AS v ON o.id = v.optionid SET o.deleted = 1, v.deleted = 1 WHERE o.id = :option_id",
@@ -690,12 +690,12 @@
 	qdel(src)
 
 /**
-  * Loads all current and future server polls and their options to store both as datums.
-  *
-  */
+ * Loads all current and future server polls and their options to store both as datums.
+ *
+ */
 /proc/load_poll_data()
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/datum/db_query/query_load_polls = SSdbcore.NewQuery("SELECT id, polltype, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, dontshow, allow_revoting, IF(polltype='TEXT',(SELECT COUNT(ckey) FROM [format_table_name("poll_textreply")] AS t WHERE t.pollid = q.id AND deleted = 0), (SELECT COUNT(DISTINCT ckey) FROM [format_table_name("poll_vote")] AS v WHERE v.pollid = q.id AND deleted = 0)), IFNULL((SELECT byond_key FROM [format_table_name("player")] AS p WHERE p.ckey = q.createdby_ckey), createdby_ckey), IF(starttime > NOW(), 1, 0) FROM [format_table_name("poll_question")] AS q WHERE NOW() < endtime AND deleted = 0")
 	if(!query_load_polls.Execute())

@@ -26,7 +26,7 @@
 */
 
 //INDEXES
-#define COOLDOWN_BORG_SELF_REPAIR	"borg_self_repair"
+#define COOLDOWN_BORG_SELF_REPAIR "borg_self_repair"
 #define COOLDOWN_EXPRESSPOD_CONSOLE "expresspod_console"
 
 //Mecha cooldowns
@@ -35,6 +35,17 @@
 #define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
+
+//car cooldowns
+#define COOLDOWN_CAR_HONK "car_honk"
+
+//clown car cooldowns
+#define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
+
+//circuit cooldowns
+
+#define COOLDOWN_CIRCUIT_SOUNDEMITTER "circuit_soundemitter"
+#define COOLDOWN_CIRCUIT_SPEECH "circuit_speech"
 
 //TIMER COOLDOWN MACROS
 
@@ -68,7 +79,7 @@
 
 #define COOLDOWN_DECLARE(cd_index) var/##cd_index = 0
 
-#define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + cd_time)
+#define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + (cd_time))
 
 //Returns true if the cooldown has run its course, false otherwise
 #define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index < world.time)

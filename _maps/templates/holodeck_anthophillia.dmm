@@ -1,0 +1,130 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/holodeck_effect/mobspawner/bee,
+/turf/open/floor/holofloor/asteroid,
+/area/template_noop)
+"v" = (
+/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/beekeeper_suit,
+/turf/open/floor/holofloor/asteroid,
+/area/template_noop)
+"U" = (
+/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/item/clothing/head/beekeeper_head,
+/turf/open/floor/holofloor/asteroid,
+/area/template_noop)
+"W" = (
+/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/item/melee/flyswatter,
+/turf/open/floor/holofloor/asteroid,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+U
+v
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+W
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

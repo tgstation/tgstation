@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-import frontend
-import dmm
+from . import frontend, dmm
 
 if __name__ == '__main__':
     settings = frontend.read_settings()

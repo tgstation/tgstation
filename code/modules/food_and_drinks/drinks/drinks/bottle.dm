@@ -8,8 +8,9 @@
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottle"
+	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
-	custom_price = 65
+	custom_price = PAYCHECK_EASY * 1.1
 	amount_per_transfer_from_this = 10
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
@@ -23,16 +24,12 @@
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = 1.3 SECONDS
 
-/obj/item/reagent_containers/food/drinks/bottle/update_overlays()
-	. = ..()
-	. += "[initial(icon_state)]shine"
-
 /obj/item/reagent_containers/food/drinks/bottle/small
 	name = "small glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottlesmall"
 	volume = 50
-	custom_price = 55
+	custom_price = PAYCHECK_EASY * 0.9
 
 /obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -63,18 +60,19 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
+/obj/item/reagent_containers/food/drinks/bottle/attack_secondary(atom/target, mob/living/user, params)
 
 	if(!target)
-		return
-
-	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
-		return
+		to_chat(user, span_warning("You don't want to harm [target]!"))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
+	if(!isliving(target) || !isGlass)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+	var/mob/living/living_target = target
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
@@ -98,39 +96,38 @@
 
 	else
 		//Only humans can have armor, right?
-		armor_block = target.run_armor_check(affecting, MELEE)
+		armor_block = living_target.run_armor_check(affecting, MELEE)
 		if(affecting == BODY_ZONE_HEAD)
 			armor_duration = bottle_knockdown_duration + force
-
 	//Apply the damage!
 	armor_block = min(90,armor_block)
-	target.apply_damage(force, BRUTE, affecting, armor_block)
+	living_target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
+			living_target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
 
 	//Display an attack message.
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] hits [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] hits you [head_attack_message] with a bottle of [src.name]!</span>")
+		target.visible_message(span_danger("[user] hits [target][head_attack_message] with a bottle of [src.name]!"), \
+				span_userdanger("[user] hits you [head_attack_message] with a bottle of [src.name]!"))
 	else
-		target.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>You hit yourself with a bottle of [src.name][head_attack_message]!</span>")
+		target.visible_message(span_danger("[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!"), \
+				span_userdanger("You hit yourself with a bottle of [src.name][head_attack_message]!"))
 
 	//Attack logs
 	log_combat(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
-	SplashReagents(target)
+	SplashReagents(target, override_spillable = TRUE)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
 
-	return
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
@@ -219,6 +216,7 @@
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
+	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater
 	name = "flask of holy water"
@@ -351,6 +349,12 @@
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/hcider = 50)
 
+/obj/item/reagent_containers/food/drinks/bottle/amaretto
+	name = "Luini Amaretto"
+	desc = "A gentle and syrup like drink, tastes of almonds and apricots"
+	icon_state = "disaronno"
+	list_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 100)
+
 /obj/item/reagent_containers/food/drinks/bottle/grappa
 	name = "Phillipes well-aged Grappa"
 	desc = "Bottle of Grappa."
@@ -385,7 +389,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "orangejuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -398,7 +402,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "cream"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -411,7 +415,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "tomatojuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -424,7 +428,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "limejuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -437,7 +441,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
 	name = "pineapple juice"
 	desc = "Extremely tart, yellow juice."
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "pineapplejuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -450,7 +454,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "mentholbox"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -461,7 +465,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
@@ -471,7 +475,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
 	desc = "Kicks like a horse, tastes like an apple!"
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
@@ -480,7 +484,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
-	custom_premium_price = 250
 	icon_state = "champagne_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
@@ -494,7 +497,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/trappist
 	name = "Mont de Requin Trappistes Bleu"
 	desc = "Brewed in space-Belgium. Fancy!"
-	custom_premium_price = 170
 	icon_state = "trappistbottle"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
@@ -511,15 +513,23 @@
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha
+	name = "Solzara Brewing Company Mushi Kombucha"
+	desc = "Best drunk over ice to savour the mushroomy flavour."
+	icon_state = "shroomy_bottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
+	isGlass = FALSE
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
-	var/list/accelerants = list(	/datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
+	var/list/accelerants = list( /datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
 	..()
@@ -549,7 +559,7 @@
 		active = TRUE
 		log_bomber(user, "has primed a", src, "for detonation")
 
-		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
+		to_chat(user, span_info("You light [src] on fire."))
 		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		if(!isGlass)
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
@@ -562,18 +572,20 @@
 		for(var/i in 1 to 2)
 			if(istype(target, /obj/item/storage))
 				target = target.loc
-		SplashReagents(target)
+		SplashReagents(target, override_spillable = TRUE)
 		target.fire_act()
 	qdel(src)
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
 	if(active)
 		if(!isGlass)
-			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")
+			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
-		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
+		to_chat(user, span_info("You snuff out the flame on [src]."))
 		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
-		active = 0
+		active = FALSE
+		return
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno
 	name = "pruno mix"
@@ -583,7 +595,7 @@
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment
 	var/fermentation_time_remaining /// for partial fermentation
-	var/fermentation_timer 	/// store the timer id of fermentation
+	var/fermentation_timer /// store the timer id of fermentation
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
 	. = ..()
@@ -597,6 +609,7 @@
 // TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
+	SIGNAL_HANDLER
 	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
 		if(fermentation_timer)
 			fermentation_time_remaining = timeleft(fermentation_timer)
@@ -624,12 +637,12 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
-		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
+		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
 
 /obj/item/reagent_containers/food/drinks/colocup/lean
 	name = "lean"
 	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
 	icon_state = "lean"
-	list_reagents = list(/datum/reagent/consumable/lean = 50)
+	list_reagents = list(/datum/reagent/consumable/lean = 20)
 	random_sprite = FALSE

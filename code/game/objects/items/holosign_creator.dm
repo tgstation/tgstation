@@ -18,6 +18,12 @@
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
+/obj/item/holosign_creator/examine(mob/user)
+	. = ..()
+	if(!signs)
+		return
+	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
+
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!proximity_flag)
@@ -27,16 +33,16 @@
 	var/turf/target_turf = get_turf(target)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 	if(target_holosign)
-		to_chat(user, "<span class='notice'>You use [src] to deactivate [target_holosign].</span>")
+		to_chat(user, span_notice("You use [src] to deactivate [target_holosign]."))
 		qdel(target_holosign)
 		return
 	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
 		return
 	if(holocreator_busy)
-		to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
+		to_chat(user, span_notice("[src] is busy creating a hologram."))
 		return
 	if(LAZYLEN(signs) >= max_signs)
-		to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+		to_chat(user, span_notice("[src] is projecting at max capacity!"))
 		return
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
@@ -50,7 +56,7 @@
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return
 	target_holosign = new holosign_type(get_turf(target), src)
-	to_chat(user, "<span class='notice'>You create \a [target_holosign] with [src].</span>")
+	to_chat(user, span_notice("You create \a [target_holosign] with [src]."))
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -59,7 +65,14 @@
 	if(LAZYLEN(signs))
 		for(var/H in signs)
 			qdel(H)
-		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+		to_chat(user, span_notice("You clear all active holograms."))
+
+/obj/item/holosign_creator/Destroy()
+	. = ..()
+	if(LAZYLEN(signs))
+		for(var/H in signs)
+			qdel(H)
+
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
@@ -90,7 +103,7 @@
 	icon_state = "signmaker_atmos"
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
-	max_signs = 3
+	max_signs = 6
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"
@@ -113,7 +126,7 @@
 		var/mob/living/silicon/robot/R = user
 
 		if(shock)
-			to_chat(user, "<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>")
+			to_chat(user, span_notice("You clear all active holograms, and reset your projector to normal."))
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
 			for(var/sign in signs)
@@ -121,7 +134,7 @@
 			shock = 0
 			return
 		if(R.emagged&&!shock)
-			to_chat(user, "<span class='warning'>You clear all active holograms, and overload your energy projector!</span>")
+			to_chat(user, span_warning("You clear all active holograms, and overload your energy projector!"))
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
 			for(var/sign in signs)
@@ -130,4 +143,4 @@
 			return
 	for(var/sign in signs)
 		qdel(sign)
-	to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+	to_chat(user, span_notice("You clear all active holograms."))

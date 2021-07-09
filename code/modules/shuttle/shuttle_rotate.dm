@@ -56,7 +56,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /mob/dead/observer/shuttleRotate(rotation, params)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /************************************Structure rotate procs************************************/
 

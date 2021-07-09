@@ -1,6 +1,6 @@
 /obj/item/forbidden_book
 	name = "Codex Cicatrix"
-	desc = "Book describing the secrets of the veil."
+	desc = "This book describes the secrets of the veil between worlds."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
 	worn_icon_state = "book"
@@ -40,7 +40,7 @@
 ///Gives you a charge and destroys a corresponding influence
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
-	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
+	to_chat(user, span_danger("You start drawing power from influence..."))
 	if(do_after(user, 10 SECONDS, RS))
 		qdel(RS)
 		charge += 1
@@ -48,12 +48,12 @@
 ///Draws a rune on a selected turf
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
 
-	for(var/turf/T in range(1,target))
+	for(var/turf/T as anything in RANGE_TURFS(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
-			to_chat(user, "<span class='warning'>The terrain doesn't support runes!</span>")
+			to_chat(user, span_warning("The terrain doesn't support runes!"))
 			return
 	var/A = get_turf(target)
-	to_chat(user, "<span class='danger'>You start drawing a rune...</span>")
+	to_chat(user, span_danger("You start drawing a rune..."))
 
 	if(do_after(user,30 SECONDS,A))
 
@@ -62,7 +62,7 @@
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
 
-	to_chat(user, "<span class='danger'>You start removing a rune...</span>")
+	to_chat(user, span_danger("You start removing a rune..."))
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
 
@@ -131,10 +131,11 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(params["cost"])
+					log_codex_ciatrix("[key_name(last_user)] gained knowledge of [EK]")
+					charge -= initial(EK.cost)
 					return TRUE
 
-	update_icon() // Not applicable to all objects.
+	update_appearance() // Not applicable to all objects.
 
 /obj/item/forbidden_book/ui_close(mob/user)
 	flick("book_closing",src)
@@ -143,3 +144,6 @@
 
 /obj/item/forbidden_book/debug
 	charge = 100
+
+/obj/item/forbidden_book/ritual
+	charge = 0

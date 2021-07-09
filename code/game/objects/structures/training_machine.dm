@@ -7,11 +7,11 @@
 #define MAX_ATTACK_DELAY 15
 
 /**
-  * Machine that runs around wildly so people can practice clickin on things
-  *
-  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess, 
-  * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
-  */
+ * Machine that runs around wildly so people can practice clickin on things
+ *
+ * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
+ * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
+ */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
@@ -49,7 +49,7 @@
  */
 /obj/structure/training_machine/obj_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
-	explosion(src, 0,0,1, flame_range = 2)
+	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
 
 /obj/structure/training_machine/ui_state(mob/user)
@@ -74,7 +74,7 @@
 	return data
 
 /**
- * Control the attached variables. 
+ * Control the attached variables.
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
@@ -83,7 +83,7 @@
 	if(.)
 		return
 	if (moving && obj_flags & EMAGGED)
-		visible_message("<span class='warning'>The [src]'s control panel fizzles slightly.</span>")
+		visible_message(span_warning("The [src]'s control panel fizzles slightly."))
 		return
 	switch(action)
 		if("toggle")
@@ -98,7 +98,7 @@
 			move_speed = clamp(range_input, MIN_SPEED, MAX_SPEED)
 			. = TRUE
 
-/obj/structure/training_machine/attack_hand(mob/user)
+/obj/structure/training_machine/attack_hand(mob/user, list/modifiers)
 	ui_interact(user)
 
 /**
@@ -107,16 +107,16 @@
  * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
-/obj/structure/training_machine/attackby(obj/item/target, mob/user)
-	if (user.a_intent != INTENT_HELP)
+/obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
+	if (user.combat_mode)
 		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
 	if (obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
+		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
 		return
 	attach_item(target)
-	to_chat(user, "<span class='notice'>You attach \the [attached_item] to the training device.</span>")
+	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
 	playsound(src, "rustle", 50, TRUE)
 
 /**
@@ -142,6 +142,7 @@
  * Cleans up behavior for when the attached item is deleted or removed.
  */
 /obj/structure/training_machine/proc/on_attached_delete()
+	SIGNAL_HANDLER
 	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 	vis_contents -= attached_item
 	attached_item = null
@@ -174,17 +175,22 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, FLOOR_OKAY))
+		return
+	if(has_buckled_mobs())
+		user_unbuckle_mob(buckled_mobs[1], user)
+		return
 	if (!attached_item)
 		return
 	if (obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
+		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
 		return
-	to_chat(user, "<span class='notice'>You remove \the [attached_item] from the training device.</span>")
+	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
 	playsound(src, "rustle", 50, TRUE)
 
 /**
- * Toggle the machine's movement 
+ * Toggle the machine's movement
  */
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
@@ -221,8 +227,8 @@
 /**
  * Main movement method for the machine
  *
- * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started. 
- * Will only move if the move_cooldown cooldown macro is finished. 
+ * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started.
+ * Will only move if the move_cooldown cooldown macro is finished.
  * If it can't find a place to go, it will stop moving.
  */
 /obj/structure/training_machine/process()
@@ -287,9 +293,9 @@
  */
 /obj/structure/training_machine/proc/handle_density()
 	if(length(buckled_mobs) || attached_item)
-		density = TRUE
+		set_density(TRUE)
 	else
-		density = FALSE
+		set_density(FALSE)
 
 /obj/structure/training_machine/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	. = ..()
@@ -314,27 +320,31 @@
 	obj_flags |= EMAGGED
 	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
 	attach_item(new /obj/item/storage/toolbox/syndicate(src))
-	to_chat(user, "<span class='warning'>You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top.</span>")
+	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	add_overlay("evil_trainer")
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
+	var/has_buckled_mob = has_buckled_mobs()
+	if(has_buckled_mob)
+		. += span_notice("<b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b>")
 	if (obj_flags & EMAGGED)
-		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
-	else if (attached_item) //Can't removed the syndicate toolbox!
-		. += "<span class='notice'><b>Alt-Click to remove \the [attached_item]</b></span>"
-	. += "<span class='notice'><b>Click to open control interface.</b></span>"
+		. += span_warning("It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...")
+	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
+		. += span_notice("<b>Alt-Click to remove \the [attached_item]</b>")
+	. += span_notice("<b>Click to open control interface.</b>")
 
 /**
-  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
-  *
-  * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
-  */
+ * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
+ *
+ * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
+ */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
-	icon_state = "his_grace_ascended"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
@@ -349,9 +359,9 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/user, proximity)
+/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if (!proximity || target == user || user.a_intent == INTENT_HELP)
+	if (!proximity || target == user || !user.combat_mode)
 		return
 	if (check_hit(target))
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -386,19 +396,19 @@
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You push the 'Lap' button on the toolbox's display.</span>")
+	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()
 	if(!in_range(src, user) && !isobserver(user))
-		. += "<span class='notice'>You can see a display on the back. You'll need to get closer to read it, though.</span>"
+		. += span_notice("You can see a display on the back. You'll need to get closer to read it, though.")
 		return
-	. += "<span class='notice'>A display on the back reads:</span>"
-	. += "<span class='notice'>Total Hits: <b>[total_hits]</b></span>"
+	. += span_notice("A display on the back reads:")
+	. += span_notice("Total Hits: <b>[total_hits]</b>")
 	if (lap_hits != total_hits)
-		. += "<span class='notice'>Current Lap: <b>[lap_hits]</b></span>"
-	. += "<span class='notice'><b>Alt-Click to 'Lap' the hit counter.</b></span>"
+		. += span_notice("Current Lap: <b>[lap_hits]</b>")
+	. += span_notice("<b>Alt-Click to 'Lap' the hit counter.</b>")
 
 #undef MIN_RANGE
 #undef MIN_SPEED

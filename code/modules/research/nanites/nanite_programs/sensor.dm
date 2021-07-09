@@ -235,7 +235,7 @@
 
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
-	desc = "Sends a signal when the nanites hear a determined word or sentence."
+	desc = "The nanites receive a signal when they detect a specific, preprogrammed word or phrase being said."
 
 /datum/nanite_program/sensor/voice/register_extra_settings()
 	. = ..()
@@ -247,9 +247,10 @@
 	RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 
 /datum/nanite_program/sensor/voice/on_mob_remove()
-	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
+	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR)
 
 /datum/nanite_program/sensor/voice/proc/on_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
 	var/datum/nanite_extra_setting/sentence = extra_settings[NES_SENTENCE]
 	var/datum/nanite_extra_setting/inclusive = extra_settings[NES_INCLUSIVE_MODE]
 	if(!sentence.get_value())
@@ -263,20 +264,20 @@
 
 /datum/nanite_program/sensor/species
 	name = "Species Sensor"
-	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
+	desc = "When triggered, the nanites scan the host to determine their species and receive a signal depending on the conditions set in the settings."
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 5
 
 	var/list/static/allowed_species = list(
-    	"Human" = /datum/species/human,
-    	"Lizard" = /datum/species/lizard,
+		"Human" = /datum/species/human,
+		"Lizard" = /datum/species/lizard,
 		"Moth" = /datum/species/moth,
 		"Ethereal" = /datum/species/ethereal,
 		"Pod" = /datum/species/pod,
 		"Fly" = /datum/species/fly,
 		"Felinid" = /datum/species/human/felinid,
-		"Jelly" = /datum/species/jelly
+		"Jelly" = /datum/species/jelly,
 	)
 
 /datum/nanite_program/sensor/species/register_extra_settings()
@@ -296,7 +297,7 @@
 	if(species)
 		if(is_species(host_mob, species))
 			species_match = TRUE
-	else	//this is the check for the "Other" option
+	else //this is the check for the "Other" option
 		species_match = TRUE
 		for(var/name in allowed_species)
 			var/species_other = allowed_species[name]

@@ -15,36 +15,38 @@
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
 	splint_factor = 0.8
-
+	merge_type = /obj/item/stack/sticky_tape
 	var/list/conferred_embed = EMBED_HARMLESS
-	var/overwrite_existing = FALSE
 
-/obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
+/obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user, proximity)
+	if(!proximity)
+		return
+
 	if(!istype(I))
 		return
 
 	if(I.embedding && I.embedding == conferred_embed)
-		to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
+		to_chat(user, span_warning("[I] is already coated in [src]!"))
 		return
 
-	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
+	user.visible_message(span_notice("[user] begins wrapping [I] with [src]."), span_notice("You begin wrapping [I] with [src]."))
 
 	if(do_after(user, 30, target=I))
 		use(1)
 		if(istype(I, /obj/item/clothing/gloves/fingerless))
 			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
-			to_chat(user, "<span class='notice'>You turn [I] into [O] with [src].</span>")
+			to_chat(user, span_notice("You turn [I] into [O] with [src]."))
 			QDEL_NULL(I)
 			user.put_in_hands(O)
 			return
 
 		if(I.embedding && I.embedding == conferred_embed)
-			to_chat(user, "<span class='warning'>[I] is already coated in [src]!</span>")
+			to_chat(user, span_warning("[I] is already coated in [src]!"))
 			return
 
 		I.embedding = conferred_embed
 		I.updateEmbedding()
-		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
+		to_chat(user, span_notice("You finish wrapping [I] with [src]."))
 		I.name = "[prefix] [I.name]"
 
 		if(istype(I, /obj/item/grenade))
@@ -59,6 +61,7 @@
 	prefix = "super sticky"
 	conferred_embed = EMBED_HARMLESS_SUPERIOR
 	splint_factor = 0.6
+	merge_type = /obj/item/stack/sticky_tape/super
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
@@ -67,6 +70,7 @@
 	icon_state = "tape_evil"
 	prefix = "pointy"
 	conferred_embed = EMBED_POINTY
+	merge_type = /obj/item/stack/sticky_tape/pointy
 
 /obj/item/stack/sticky_tape/pointy/super
 	name = "super pointy tape"
@@ -75,6 +79,7 @@
 	icon_state = "tape_spikes"
 	prefix = "super pointy"
 	conferred_embed = EMBED_POINTY_SUPERIOR
+	merge_type = /obj/item/stack/sticky_tape/pointy/super
 
 /obj/item/stack/sticky_tape/surgical
 	name = "surgical tape"
@@ -84,4 +89,5 @@
 	prefix = "surgical"
 	conferred_embed = list("embed_chance" = 30, "pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
 	splint_factor = 0.4
-	custom_price = 500
+	custom_price = PAYCHECK_MEDIUM
+	merge_type = /obj/item/stack/sticky_tape/surgical

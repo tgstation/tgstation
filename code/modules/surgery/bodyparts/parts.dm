@@ -10,10 +10,11 @@
 	px_y = 0
 	stam_damage_coeff = 1
 	max_stamina_damage = 120
-	var/obj/item/cavity_item
+	grind_results = null
 	wound_resistance = 10
+	var/obj/item/cavity_item
 
-/obj/item/bodypart/chest/can_dismember(obj/item/I)
+/obj/item/bodypart/chest/can_dismember(obj/item/item)
 	if(owner.stat < HARD_CRIT || !get_organs())
 		return FALSE
 	return ..()
@@ -74,7 +75,6 @@
 	. = ..()
 	if(. == FALSE)
 		return
-	var/mob/living/carbon/owner = null
 	if(owner)
 		if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
 			ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
@@ -117,15 +117,15 @@
 		if(bodypart_disabled)
 			owner.set_usable_hands(owner.usable_hands - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, "<span class='userdanger'>Your lose control of your [name]!</span>")
+				to_chat(owner, span_userdanger("Your lose control of your [name]!"))
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(!bodypart_disabled)
 		owner.set_usable_hands(owner.usable_hands + 1)
 
 	if(owner.hud_used)
-		var/obj/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_icon()
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_appearance()
 
 
 /obj/item/bodypart/l_arm/monkey
@@ -170,7 +170,6 @@
 	. = ..()
 	if(. == FALSE)
 		return
-	var/mob/living/carbon/owner = null
 	if(owner)
 		if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
 			ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
@@ -213,15 +212,15 @@
 		if(bodypart_disabled)
 			owner.set_usable_hands(owner.usable_hands - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, "<span class='userdanger'>Your lose control of your [name]!</span>")
+				to_chat(owner, span_userdanger("Your lose control of your [name]!"))
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(!bodypart_disabled)
 		owner.set_usable_hands(owner.usable_hands + 1)
 
 	if(owner.hud_used)
-		var/obj/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_icon()
+		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_appearance()
 
 
 /obj/item/bodypart/r_arm/monkey
@@ -305,7 +304,7 @@
 		if(bodypart_disabled)
 			owner.set_usable_legs(owner.usable_legs - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, "<span class='userdanger'>Your lose control of your [name]!</span>")
+				to_chat(owner, span_userdanger("Your lose control of your [name]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
@@ -396,7 +395,7 @@
 		if(bodypart_disabled)
 			owner.set_usable_legs(owner.usable_legs - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, "<span class='userdanger'>Your lose control of your [name]!</span>")
+				to_chat(owner, span_userdanger("Your lose control of your [name]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 

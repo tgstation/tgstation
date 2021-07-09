@@ -16,10 +16,10 @@
 
 	// Stuff needed to render the map
 	var/map_name
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	/// All the plane masters that need to be applied.
 	var/list/cam_plane_masters
-	var/obj/screen/background/cam_background
+	var/atom/movable/screen/background/cam_background
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
 
@@ -40,8 +40,8 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -209,7 +209,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -252,6 +252,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -262,6 +263,7 @@
 	icon_state = initial(icon_state)
 	if(machine_stat & BROKEN)
 		icon_state += "b"
+	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
@@ -274,6 +276,22 @@
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/computer/security/telescreen/entertainment/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
@@ -360,5 +378,10 @@
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+/obj/machinery/computer/security/telescreen/bar
+	name = "bar monitor"
+	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
+	network = list("bar")
 
 #undef DEFAULT_MAP_SIZE

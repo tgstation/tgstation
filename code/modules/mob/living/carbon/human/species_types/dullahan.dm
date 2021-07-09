@@ -1,10 +1,16 @@
 /datum/species/dullahan
 	name = "Dullahan"
-	id = "dullahan"
+	id = SPECIES_DULLAHAN
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_NOHUNGER,
+		TRAIT_NOBREATH,
+	)
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
@@ -48,7 +54,7 @@
 	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
 	..()
 
-/datum/species/dullahan/spec_life(mob/living/carbon/human/H)
+/datum/species/dullahan/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(QDELETED(myhead))
 		myhead = null
 		H.gib()
@@ -134,20 +140,24 @@
 		qdel(src)
 
 /obj/item/dullahan_relay/proc/examinate_check(atom/source, mob/user)
+	SIGNAL_HANDLER
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
 //Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
+	SIGNAL_HANDLER
 	if(!QDELETED(owner))
 		hearers += owner
 
 //Stops dullahans from gibbing when regenerating limbs
 /obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_zones)
+	SIGNAL_HANDLER
 	excluded_zones |= BODY_ZONE_HEAD
 
 //Retrieving the owner's head for better ahealing.
 /obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+	SIGNAL_HANDLER
 	if(admin_revive)
 		var/obj/item/bodypart/head/H = loc
 		var/turf/T = get_turf(owner)

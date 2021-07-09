@@ -8,7 +8,7 @@
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
@@ -26,8 +26,8 @@
 	var/cooldowntimehorn = 10
 	var/mob/living/carbon/target
 	var/oldtarget_name
-	var/target_lastloc = FALSE	//Loc of target when arrested.
-	var/last_found = FALSE	//There's a delay
+	var/target_lastloc = FALSE //Loc of target when arrested.
+	var/last_found = FALSE //There's a delay
 	var/threatlevel = FALSE
 	var/declare_arrests = FALSE // speak, you shall not, unless to Honk
 	var/idcheck = TRUE
@@ -39,18 +39,24 @@
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	auto_patrol = TRUE
-	var/datum/job/clown/J = new/datum/job/clown
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/clown_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/clown]
+	access_card.add_access(clown_trim.access + clown_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE
 
 /mob/living/simple_animal/bot/honkbot/proc/sensor_blink()
 	icon_state = "honkbot-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_icon), 5, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 0.5 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 //honkbots react with sounds.
 /mob/living/simple_animal/bot/honkbot/proc/react_ping()
@@ -67,7 +73,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = FALSE
+	set_anchored(FALSE)
 	walk_to(src,0)
 	last_found = world.time
 	limiting_spam = FALSE
@@ -94,7 +100,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		dat += text({"<BR> Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return	dat
+	return dat
 
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
 	var/final = NONE
@@ -112,9 +118,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = H
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "harm")
-		retaliate(H)
+/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(user.combat_mode)
+		retaliate(user)
 		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	return ..()
 
@@ -129,19 +135,21 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'>You short out [src]'s sound control system. It gives out an evil laugh!!</span>"
+			user << span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!")
 			oldtarget_name = user.name
-		audible_message("<span class='danger'>[src] gives out an evil laugh!</span>")
+		audible_message(span_danger("[src] gives out an evil laugh!"))
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
-		update_icon()
+		update_appearance()
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/projectile/Proj)
 	if((istype(Proj,/obj/projectile/beam)) || (istype(Proj,/obj/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
 		retaliate(Proj.firer)
 	return ..()
 
-/mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!on)
+		return
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
@@ -159,8 +167,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM
-		if(I.throwforce < health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
-			var/mob/living/carbon/human/H = I.thrownby
+		var/mob/thrown_by = I.thrownby?.resolve()
+		if(I.throwforce < health && thrown_by && (istype(thrown_by, /mob/living/carbon/human)))
+			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 	..()
 
@@ -176,7 +185,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			playsound(src, "honkbot_e", 50, FALSE)
 			limiting_spam = TRUE // prevent spam
 			icon_state = "honkbot-e"
-			addtimer(CALLBACK(src, /atom/.proc/update_icon), 30, TIMER_OVERRIDE|TIMER_UNIQUE)
+			addtimer(CALLBACK(src, /atom/.proc/update_appearance), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
@@ -212,8 +221,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			log_combat(src,C,"honked")
 
-			C.visible_message("<span class='danger'>[src] honks [C]!</span>",\
-					"<span class='userdanger'>[src] honks you!</span>")
+			C.visible_message(span_danger("[src] honks [C]!"),\
+					span_userdanger("[src] honks you!"))
 		else
 			C.stuttering = 20
 			C.Paralyze(80)
@@ -226,7 +235,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 	switch(mode)
 
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 
 			walk_to(src,0)
 			look_for_perp()
@@ -241,7 +250,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				back_to_idle()
 				return
 
-			if(target)		// make sure target exists
+			if(target) // make sure target exists
 				if(Adjacent(target) && isturf(target.loc))
 
 					if(threatlevel <= 4)
@@ -254,7 +263,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 							target_lastloc = target.loc
 					return
 
-				else	// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))
@@ -276,7 +285,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_idle()
-	anchored = FALSE
+	set_anchored(FALSE)
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -284,13 +293,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	INVOKE_ASYNC(src, .proc/handle_automated_action) //responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/back_to_hunt()
-	anchored = FALSE
+	set_anchored(FALSE)
 	frustration = 0
 	mode = BOT_HUNT
 	INVOKE_ASYNC(src, .proc/handle_automated_action) // responds quickly
 
 /mob/living/simple_animal/bot/honkbot/proc/look_for_perp()
-	anchored = FALSE
+	set_anchored(FALSE)
 	for (var/mob/living/carbon/C in view(7,src))
 		if((C.stat) || (C.handcuffed))
 			continue
@@ -325,7 +334,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 /mob/living/simple_animal/bot/honkbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
+	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))
@@ -340,13 +349,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	..()
 	if(!isalien(target))
 		target = user
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/Crossed(atom/movable/AM)
+/mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(ismob(AM) && (on)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
@@ -362,10 +372,9 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.Paralyze(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 			if(!client)
-				speak("Honk!")
+				INVOKE_ASYNC(src, /mob/living/simple_animal/bot/proc/speak, "Honk!")
 			sensor_blink()
 			return
-	..()
 
 /obj/machinery/bot_core/honkbot
 	req_one_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)

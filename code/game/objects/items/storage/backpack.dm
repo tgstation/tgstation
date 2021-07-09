@@ -1,8 +1,8 @@
 /* Backpacks
  * Contains:
- *		Backpack
- *		Backpack Types
- *		Satchel Types
+ * Backpack
+ * Backpack Types
+ * Satchel Types
  */
 
 /*
@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK	//ERROOOOO
+	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
 
@@ -67,7 +67,7 @@
 	STR.max_combined_w_class = 35
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
@@ -92,7 +92,7 @@
 	STR.max_combined_w_class = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit...</span>")
+	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
 	return (OXYLOSS)
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
@@ -330,7 +330,7 @@
 	qdel(C)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
-	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/stack/tile/iron/base(src)
 	new /obj/item/crowbar(src)
 
 	..()
@@ -350,6 +350,22 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 30
 
+/obj/item/storage/backpack/duffelbag/cursed
+	name = "living duffel bag"
+	desc = "A cursed clown duffel bag that hungers for food of any kind.\n A warning label suggests that it eats food inside. If that food happens to be a horribly ruined, burned mess the chef scrapped out of the microwave, then it might have negative effects on the bag..."
+	icon_state = "duffel-curse"
+	inhand_icon_state = "duffel-curse"
+	slowdown = 2
+	item_flags = DROPDEL
+	max_integrity = 100
+	///counts time passed since it ate food
+	var/hunger = 0
+
+/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+	. = ..()
+	var/add_dropdel = TRUE //clarified boolean
+	AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
 	desc = "A large duffel bag for holding extra captainly goods."
@@ -365,6 +381,44 @@
 /obj/item/storage/backpack/duffelbag/med/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+
+/obj/item/storage/backpack/duffelbag/explorer
+	name = "explorator's duffel bag"
+	desc = "A large duffel bag for holding extra exotic treasures."
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/obj/item/storage/backpack/duffelbag/hydroponics
+	name = "hydroponic's duffel bag"
+	desc = "A large duffel bag for holding extra gardening tools."
+	icon_state = "duffel-hydroponics"
+	inhand_icon_state = "duffel-hydroponics"
+
+/obj/item/storage/backpack/duffelbag/chemistry
+	name = "chemistry duffel bag"
+	desc = "A large duffel bag for holding extra chemical substances."
+	icon_state = "duffel-chemistry"
+	inhand_icon_state = "duffel-chemistry"
+
+/obj/item/storage/backpack/duffelbag/genetics
+	name = "geneticist's duffel bag"
+	desc = "A large duffel bag for holding extra genetic mutations."
+	icon_state = "duffel-genetics"
+	inhand_icon_state = "duffel-genetics"
+
+/obj/item/storage/backpack/duffelbag/toxins
+	name = "scientist's duffel bag"
+	desc = "A large duffel bag for holding extra scientific components."
+	icon_state = "duffel-toxins"
+	inhand_icon_state = "duffel-toxins"
+
+/obj/item/storage/backpack/duffelbag/virology
+	name = "virologist's duffel bag"
+	desc = "A large duffel bag for holding extra viral bottles."
+	icon_state = "duffel-virology"
+	inhand_icon_state = "duffel-virology"
+
+
 
 /obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
@@ -432,7 +486,7 @@
 
 /obj/item/storage/backpack/duffelbag/clown/cream_pie/PopulateContents()
 	for(var/i in 1 to 10)
-		new /obj/item/reagent_containers/food/snacks/pie/cream(src)
+		new /obj/item/food/pie/cream(src)
 
 /obj/item/storage/backpack/fireproof
 	resistance_flags = FIRE_PROOF
@@ -489,6 +543,7 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/blood_filter(src)
+	new /obj/item/stack/medical/bone_gel(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"

@@ -2,7 +2,6 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vecLength, vecSubtract } from 'common/vector';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
@@ -40,8 +39,7 @@ export const Gps = (props, context) => {
     <Window
       title="Global Positioning System"
       width={470}
-      height={700}
-      resizable>
+      height={700}>
       <Window.Content scrollable>
         <Section
           title="Control"
@@ -76,7 +74,7 @@ export const Gps = (props, context) => {
           </LabeledList>
         </Section>
         {!!power && (
-          <Fragment>
+          <>
             <Section title="Current Location">
               <Box fontSize="18px">
                 {currentArea} ({currentCoords})
@@ -121,7 +119,7 @@ export const Gps = (props, context) => {
                 ))}
               </Table>
             </Section>
-          </Fragment>
+          </>
         )}
       </Window.Content>
     </Window>

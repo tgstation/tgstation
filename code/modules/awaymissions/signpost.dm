@@ -16,7 +16,7 @@
 	. = ..()
 	if(.)
 		return
-	if(alert(question,name,"Yes","No") == "Yes" && Adjacent(user))
+	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
 		var/turf/T = find_safe_turf(zlevels=zlevels)
 
 		if(T)
@@ -26,14 +26,14 @@
 			user.forceMove(T)
 			if(AM)
 				user.start_pulling(AM)
-			to_chat(user, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
+			to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]."))
 		else
 			to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 
 /obj/structure/signpost/attackby(obj/item/W, mob/user, params)
 	return interact(user)
 
-/obj/structure/signpost/attack_paw(mob/user)
+/obj/structure/signpost/attack_paw(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_hulk(mob/user)
@@ -49,7 +49,7 @@
 /obj/structure/signpost/attack_slime(mob/user)
 	return interact(user)
 
-/obj/structure/signpost/attack_animal(mob/user)
+/obj/structure/signpost/attack_animal(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/salvation

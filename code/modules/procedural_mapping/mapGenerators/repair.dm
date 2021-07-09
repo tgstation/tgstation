@@ -1,5 +1,5 @@
 /datum/map_generator_module/bottom_layer/repair_floor_plasteel
-	spawnableTurfs = list(/turf/open/floor/plasteel = 100)
+	spawnableTurfs = list(/turf/open/floor/iron = 100)
 	var/ignore_wall = FALSE
 	allowAtomsOnSpace = TRUE
 
@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(reloading_map, FALSE)
 	if(!loader)
 		loader = new
 	if(cleanload)
-		..()			//Trigger mass deletion.
+		..() //Trigger mass deletion.
 	modules |= loader
 	syncModules()
 	loader.generate()

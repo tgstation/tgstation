@@ -207,6 +207,9 @@
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	if((SEND_SIGNAL(user, COMSIG_TRY_WIRES_INTERACT, holder) & COMPONENT_CANT_INTERACT_WIRES))
+		return FALSE
 	return TRUE
 
 /datum/wires/proc/get_status()
@@ -229,13 +232,13 @@
 			return
 
 /**
-  * Checks whether wire assignments should be revealed.
-  *
-  * Returns TRUE if the wires should be revealed, FALSE otherwise.
-  * Currently checks for admin ghost AI, abductor multitool and blueprints.
-  * Arguments:
-  * * user - The mob to check when deciding whether to reveal wires.
-  */
+ * Checks whether wire assignments should be revealed.
+ *
+ * Returns TRUE if the wires should be revealed, FALSE otherwise.
+ * Currently checks for admin ghost AI, abductor multitool and blueprints.
+ * Arguments:
+ * * user - The mob to check when deciding whether to reveal wires.
+ */
 /datum/wires/proc/can_reveal_wires(mob/user)
 	// Admin ghost can see a purpose of each wire.
 	if(isAdminGhostAI(user))
@@ -252,13 +255,13 @@
 	return FALSE
 
 /**
-  * Whether the given wire should always be revealed.
-  *
-  * Intended to be overridden. Allows for forcing a wire's assignmenmt to always be revealed
-  * in the hacking interface.
-  * Arguments:
-  * * color - Color string of the wire to check.
-  */
+ * Whether the given wire should always be revealed.
+ *
+ * Intended to be overridden. Allows for forcing a wire's assignmenmt to always be revealed
+ * in the hacking interface.
+ * Arguments:
+ * * color - Color string of the wire to check.
+ */
 /datum/wires/proc/always_reveal_wire(color)
 	return FALSE
 
@@ -312,7 +315,7 @@
 				cut_color(target_wire)
 				. = TRUE
 			else
-				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
+				to_chat(L, span_warning("You need wirecutters!"))
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || isAdminGhostAI(usr))
@@ -321,7 +324,7 @@
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
-				to_chat(L, "<span class='warning'>You need a multitool!</span>")
+				to_chat(L, span_warning("You need a multitool!"))
 		if("attach")
 			if(is_attached(target_wire))
 				I = detach_assembly(target_wire)
@@ -339,6 +342,6 @@
 							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
+						to_chat(L, span_warning("You need an attachable assembly!"))
 
 #undef MAXIMUM_EMP_WIRES

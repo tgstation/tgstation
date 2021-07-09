@@ -4,6 +4,8 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
+	icon_screen = "nanite_cloud_controller_screen"
+	icon_keyboard = null
 
 	var/obj/item/disk/nanite_program/disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
@@ -19,7 +21,7 @@
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
 		if (user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
+			to_chat(user, span_notice("You insert [N] into [src]."))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			if(disk)
 				eject(user)
@@ -29,7 +31,7 @@
 
 /obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)
 	if(disk && user.canUseTopic(src, !issilicon(user)))
-		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
 	return
 
@@ -48,7 +50,7 @@
 
 /obj/machinery/computer/nanite_cloud_controller/proc/generate_backup(cloud_id, mob/user)
 	if(SSnanites.get_cloud_backup(cloud_id, TRUE))
-		to_chat(user, "<span class='warning'>Cloud ID already registered.</span>")
+		to_chat(user, span_warning("Cloud ID already registered."))
 		return
 
 	var/datum/nanite_cloud_backup/backup = new(src)
@@ -143,6 +145,7 @@
 				cloud_program["rules"] = rules
 				if(LAZYLEN(rules))
 					cloud_program["has_rules"] = TRUE
+				cloud_program["all_rules_required"] = P.all_rules_required
 
 				var/list/extra_settings = P.get_extra_settings_frontend()
 				cloud_program["extra_settings"] = extra_settings
@@ -232,6 +235,15 @@
 
 				investigate_log("[key_name(usr)] removed rule [rule.display()] from program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
+		if("toggle_rule_logic")
+			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
+			if(backup)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+				var/datum/component/nanites/nanites = backup.nanites
+				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
+				P.all_rules_required = !P.all_rules_required
+				investigate_log("[key_name(usr)] edited rule logic for program [P.name] into [P.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
+				. = TRUE
 
 /datum/nanite_cloud_backup
 	var/cloud_id = 0

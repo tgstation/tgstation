@@ -179,3 +179,11 @@
 	desc = "A warning sign which reads 'ESCAPE PODS'."
 	icon_state = "pods"
 	is_editable = TRUE
+
+/obj/structure/sign/warning/radshelter
+	name = "\improper RADSTORM SHELTER sign"
+	sign_change_name = "Location - Radstorm Shelter"
+	desc = "A warning sign which reads 'RADSTORM SHELTER'."
+	icon_state = "radshelter"
+	is_editable = TRUE
+

@@ -14,7 +14,8 @@
 	short_desc = "You are a sentient ecosystem, an example of the mastery over life that your creators possessed."
 	flavour_text = "Your masters, benevolent as they were, created uncounted seed vaults and spread them across \
 	the universe to every planet they could chart. You are in one such seed vault. \
-	Your goal is to cultivate and spread life wherever it will go while waiting for contact from your creators. \
+	Your goal is to protect the vault you are assigned to, cultivate the seeds passed onto you, \
+	and eventually bring life to this desolate planet while waiting for contact from your creators. \
 	Estimated time of last contact: Deployment, 5000 millennia ago."
 	assignedrole = "Lifebringer"
 
@@ -68,7 +69,7 @@
 	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
 	yolk.update_body()
 	yolk.gib()
-	qdel(egg)
+	QDEL_NULL(egg)
 	return ..()
 
 
@@ -92,10 +93,15 @@
 	var/datum/team/ashwalkers/team
 	var/obj/structure/ash_walker_eggshell/eggshell
 
+
+/obj/effect/mob_spawn/human/ash_walker/Destroy()
+	eggshell = null
+	return ..()
+
 /obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
 	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
 		return TRUE
-	to_chat(user, "<span class='warning'><b>You have exhausted your usefulness to the Necropolis</b>.</span>")
+	to_chat(user, span_warning("<b>You have exhausted your usefulness to the Necropolis</b>."))
 	return FALSE
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
@@ -109,9 +115,10 @@
 		H.underwear = "Nude"
 		H.update_body()
 		ADD_TRAIT(H, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
+		H.remove_language(/datum/language/common)
 	team.players_spawned += (new_spawn.key)
 	eggshell.egg = null
-	qdel(eggshell)
+	QDEL_NULL(eggshell)
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload, datum/team/ashwalkers/ashteam)
 	. = ..()
@@ -151,15 +158,17 @@
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(null,"Wish Granter's Victim ([rand(1,999)])")
 	var/wish = rand(1,4)
+	var/message = ""
 	switch(wish)
 		if(1)
-			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
+			message = "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
 		if(2)
-			to_chat(new_spawn, "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>")
+			message = "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
 		if(3)
-			to_chat(new_spawn, "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>")
+			message = "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
 		if(4)
-			to_chat(new_spawn, "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>")
+			message = "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
+	to_chat(new_spawn, "<span class='infoplain'>[message]</span>")
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
@@ -178,9 +187,7 @@
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	short_desc = "You are a Free Golem. Your family worships The Liberator."
-	flavour_text = "In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
-	golems, so that no golem may ever be forced to serve again."
+	flavour_text = "In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration: \"Yeah go do whatever.\"" 
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	if(species) //spawners list uses object name to register so this goes before ..()
@@ -200,6 +207,9 @@
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
+		var/policy = get_policy(ROLE_FREE_GOLEM)
+		if (policy)
+			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 	else
 		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
@@ -224,19 +234,19 @@
 	else
 		new_spawn.mind.assigned_role = "Free Golem"
 
-/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+/obj/effect/mob_spawn/human/golem/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(isgolem(user) && can_transfer)
 		var/mob/living/carbon/human/H = user
-		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		var/transfer_choice = tgui_alert(usr, "Transfer your soul to [src]? (Warning, your old body will die!)",,list("Yes","No"))
 		if(transfer_choice != "Yes")
 			return
 		if(QDELETED(src) || uses <= 0)
 			return
 		log_game("[key_name(H)] golem-swapped into [src]")
-		H.visible_message("<span class='notice'>A faint light leaves [H], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		H.visible_message(span_notice("A faint light leaves [H], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavour = FALSE
 		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)
 		H.transfer_trait_datums(newgolem)
@@ -422,7 +432,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/syndicate_empty
-	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
+	assignedrole = "Space Syndicate" //I know this is really dumb, but Syndicate operative is nuke ops
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
@@ -432,7 +442,8 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon
+	id_trim = /datum/id_trim/chameleon/operative
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -474,7 +485,6 @@
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_info = "As the captain, this whole operation falls on your shoulders. You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough."
 	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
-	id_access_list = list(150,151)
 
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
@@ -486,6 +496,7 @@
 	head = /obj/item/clothing/head/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	id_trim = /datum/id_trim/battlecruiser/captain
 
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec
@@ -565,6 +576,8 @@
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
+///Pirates
+
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."
@@ -572,7 +585,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE
@@ -582,27 +594,81 @@
 	short_desc = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
 	assignedrole = "Space Pirate"
-	var/rank = "Mate"
+	///Rank of the pirate on the ship, it's used in generating pirate names!
+	var/rank = "Deserter"
+	///Whether or not it will spawn a fluff structure upon opening.
+	var/spawn_oldpod = TRUE
 
 /obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
-	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
+	new_spawn.fully_replace_character_name(new_spawn.real_name, generate_pirate_name(new_spawn.gender))
 	new_spawn.mind.add_antag_datum(/datum/antagonist/pirate)
 
-/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name()
+/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name(spawn_gender)
 	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
 	var/endings = strings(PIRATE_NAMES_FILE, "endings")
 	return "[rank] [pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/human/pirate/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	if(spawn_oldpod)
+		new /obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate/captain
-	rank = "Captain"
+	rank = "Renegade Leader"
 	outfit = /datum/outfit/pirate/space/captain
 
 /obj/effect/mob_spawn/human/pirate/gunner
+	rank = "Rogue"
+
+/obj/effect/mob_spawn/human/pirate/skeleton
+	name = "pirate remains"
+	desc = "Some unanimated bones. They feel like they could spring to life any moment!"
+	random = TRUE
+	density = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	spawn_oldpod = FALSE
+	mob_name = "a space pirate"
+	mob_species = /datum/species/skeleton
+	outfit = /datum/outfit/pirate
+	rank = "Mate"
+
+/obj/effect/mob_spawn/human/pirate/skeleton/captain
+	rank = "Captain"
+	outfit = /datum/outfit/pirate/captain
+
+/obj/effect/mob_spawn/human/pirate/skeleton/gunner
 	rank = "Gunner"
+
+/obj/effect/mob_spawn/human/pirate/silverscale
+	name = "elegant sleeper"
+	desc = "Cozy. You get the feeling you aren't supposed to be here, though..."
+	random = TRUE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_name = "a space pirate"
+	mob_species = /datum/species/lizard/silverscale
+	outfit = /datum/outfit/pirate/silverscale
+	rank = "High-born"
+
+/obj/effect/mob_spawn/human/pirate/silverscale/generate_pirate_name(spawn_gender)
+	var/first_name
+	switch(gender)
+		if(MALE)
+			first_name = pick(GLOB.lizard_names_male)
+		if(FEMALE)
+			first_name = pick(GLOB.lizard_names_female)
+		else
+			first_name = pick(GLOB.lizard_names_male + GLOB.lizard_names_female)
+
+	return "[rank] [first_name]-Silverscale"
+
+/obj/effect/mob_spawn/human/pirate/silverscale/captain
+	rank = "Old-guard"
+	outfit = /datum/outfit/pirate/silverscale/captain
+
+/obj/effect/mob_spawn/human/pirate/silverscale/gunner
+	rank = "Top-drawer"
 
 //Forgotten syndicate ship
 
@@ -626,7 +692,7 @@
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/policy = get_policy(assignedrole)
 	if(policy)
-		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
+		to_chat(new_spawn, span_bold("[policy]"))
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
@@ -655,7 +721,7 @@
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
-	id = /obj/item/card/id/syndicate_command/crew_id
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
 
 /datum/outfit/syndicatespace/syndicaptain
@@ -669,7 +735,7 @@
 	back = /obj/item/storage/backpack
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
-	id = /obj/item/card/id/syndicate_command/captain_id
+	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	implants = list(/obj/item/implant/weapons_auth)
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)
 
@@ -690,7 +756,7 @@
 	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
 	mob_gender = "female"
 	name = "lifeguard sleeper"
-	id_job = "Lifeguard"
+	outfit = /datum/outfit/beachbum/lifeguard
 	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/beachbum
@@ -699,13 +765,16 @@
 	r_pocket = /obj/item/storage/wallet/random
 	l_pocket = /obj/item/food/pizzaslice/dank
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
 	if(visualsOnly)
 		return
 	H.dna.add_mutation(STONER)
+
+/datum/outfit/beachbum/lifeguard
+	id_trim = /datum/id_trim/lifeguard
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -717,7 +786,6 @@
 	short_desc = "You are a space bartender!"
 	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
 	assignedrole = "Space Bartender"
-	id_job = "Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -726,14 +794,15 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/space_bartender
 
 /datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	var/obj/item/card/id/id_card = H.wear_id
 	if(H.age < AGE_MINOR)
 		id_card.registered_age = AGE_MINOR
-		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
+		to_chat(H, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
 
 /obj/effect/mob_spawn/human/skeleton/alive
 	death = FALSE
@@ -775,11 +844,11 @@
 	outfit = /datum/outfit/spacebartender
 	assignedrole = "Space Bar Patron"
 
-/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
-	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)", null, "Yes", "No")
+/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user, list/modifiers)
+	var/despawn = tgui_alert(usr, "Return to cryosleep? (Warning, Your mob will be deleted!)", null, list("Yes", "No"))
 	if(despawn == "No" || !loc || !Adjacent(user))
 		return
-	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
+	user.visible_message(span_notice("[user.name] climbs back into cryosleep..."))
 	qdel(user)
 
 /datum/outfit/cryobartender
@@ -797,7 +866,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	faction = "nanotrasenprivate"
+	faction = list("nanotrasenprivate")
 	short_desc = "You are a Nanotrasen Private Security Officer!"
 
 /obj/effect/mob_spawn/human/commander/alive
@@ -829,7 +898,7 @@
 
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/mouse
+	mob_type = /mob/living/simple_animal/mouse
 	death = FALSE
 	roundstart = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -837,7 +906,7 @@
 
 /obj/effect/mob_spawn/cow
 	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/cow
+	mob_type = /mob/living/simple_animal/cow
 	death = FALSE
 	roundstart = FALSE
 	mob_gender = FEMALE

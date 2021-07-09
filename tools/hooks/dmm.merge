@@ -1,0 +1,2 @@
+#!/bin/sh
+exec tools/bootstrap/python -m mapmerge2.merge_driver "$@"

@@ -20,19 +20,27 @@
 	stop_automated_movement = 1
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
+	///In the case 'melee_damage_upper' is somehow raised above 0
+	attack_verb_continuous = "snips"
+	attack_verb_simple = "snip"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 
-/mob/living/simple_animal/crab/Life()
+/mob/living/simple_animal/crab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	//CRAB movement
 	if(!ckey && !stat)
-		if(isturf(loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(loc) && !resting && !buckled) //This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				var/east_vs_west = pick(4,8)
+				var/east_vs_west = pick(4, 8)
 				if(Process_Spacemove(east_vs_west))
 					Move(get_step(src,east_vs_west), east_vs_west)
 					turns_since_move = 0
