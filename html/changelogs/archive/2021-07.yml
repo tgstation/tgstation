@@ -302,3 +302,29 @@
   - expansion: You can now wear the suffering of others on your head with just a sheet
       of human skin!
   - imageadd: Human skin hats, touched up by Krysonism
+2021-07-10:
+  Nari Harimoto:
+  - bugfix: AI intellicards can no longer be teleported out of intellicard slots on
+      consoles using telekinesis or silicon access range
+  Paxilmaniac:
+  - bugfix: two floor decals that were on a wall in delta xenobio are no longer
+  ProtivogaSpriter:
+  - imageadd: Replaced old Mjolnir sprites with new Mjolnir sprites.
+  Time-Green:
+  - bugfix: fixes a plumbing harddel
+  Watermelon914:
+  - bugfix: Fixed CQC sometimes not registering attacks and grabs properly.
+  Wayland-Smithy:
+  - bugfix: Fixed and improved wabbajack polymorph logging.
+  - bugfix: Silicons can now toggle emitter locks with secondary attack.
+  - bugfix: Fixed Tram ghost magnet and other cases of observer forceMove.
+  - code_imp: Renamed some observer code vars for better readability. Portals check
+      types less.
+  - bugfix: Fixed all clients being forced to Fit Viewport regardless of their Auto
+      Fit Viewport preference being set to manual.
+  Zytolg:
+  - qol: There's some eye candy in the Abandoned Medbay that now suggests that it
+      was at some point a medbay.
+  - balance: Downgrades the Chem Dispenser and Heater to their Ghetto Counterparts
+  read-0nly:
+  - qol: adds random number to carp spawned from space dragon rifts
