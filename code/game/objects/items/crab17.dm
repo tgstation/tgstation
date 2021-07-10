@@ -69,14 +69,11 @@
 		if(!card.registered_account.being_dumped)
 			to_chat(user, span_warning("It appears that your funds are safe from draining!"))
 			return
-		if(do_after(user, 40, target = src))
-			if(!card.registered_account.being_dumped)
-				return
-			to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
-			card.registered_account.being_dumped = FALSE
-			if(check_if_finished())
-				qdel(src)
-				return
+		to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
+		card.registered_account.being_dumped = FALSE
+		if(check_if_finished())
+			qdel(src)
+			return
 	else
 		return ..()
 
