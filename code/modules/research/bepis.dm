@@ -20,20 +20,35 @@
 	active_power_usage = 1500
 	circuit = /obj/item/circuitboard/machine/bepis
 
+	///How much cash the UI and machine are depositing at a time.
 	var/banking_amount = 100
-	var/banked_cash = 0 //stored player cash
-	var/datum/bank_account/account //payer's account.
-	var/account_name //name of the payer's account.
+	///How much stored player cash exists within the machine.
+	var/banked_cash = 0
+	///Payer's bank account.
+	var/datum/bank_account/account
+	///Name on the payer's bank account.
+	var/account_name
+	///When the BEPIS fails to hand out any reward, the ERROR cause will be a randomly picked string displayed on the UI.
 	var/error_cause = null
-	//Vars related to probability and chance of success for testing
+
+	//Vars related to probability and chance of success for testing, using gaussian normal distribution.
+	///How much cash you will need to obtain a Major Tech Disk reward.
 	var/major_threshold = MAJOR_THRESHOLD
+	///How much cash you will need to obtain a minor invention reward.
 	var/minor_threshold = MINOR_THRESHOLD
-	var/std = STANDARD_DEVIATION //That's Standard Deviation, what did you think it was?
+	///The standard deviation of the BEPIS's gaussian normal distribution.
+	var/std = STANDARD_DEVIATION
+
 	//Stock part variables
+	///Multiplier that lowers how much the BEPIS' power costs are. Maximum of 1, upgraded to a minimum of 0.7. See RefreshParts.
 	var/power_saver = 1
+	///Variability on the money you actively spend on the BEPIS, with higher inaccuracy making the most change, good and bad to spent cash.
 	var/inaccuracy_percentage = 1.5
+	///How much "cash" is added to your inserted cash efforts for free. Based on manipulator stock part level.
 	var/positive_cash_offset = 0
+	///How much "cost" is removed from both the minor and major threshold costs. Based on laser stock part level.
 	var/negative_cash_offset = 0
+	///List of objects that constitute your minor rewards. All rewards are unique or rare outside of the BEPIS.
 	var/minor_rewards = list(
 		//To add a new minor reward, add it here.
 		/obj/item/stack/circuit_stack/full,
@@ -41,7 +56,6 @@
 		/obj/item/circuitboard/machine/sleeper/party,
 		/obj/item/toy/sprayoncan,
 	)
-	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
@@ -50,7 +64,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 	if(!is_operational)
-		to_chat(user, "<span class='notice'>[src] can't accept money when it's not functioning.</span>")
+		to_chat(user, span_notice("[src] can't accept money when it's not functioning."))
 		return
 	if(istype(O, /obj/item/holochip) || istype(O, /obj/item/stack/spacecash))
 		var/deposit_value = O.get_item_credit_value()
@@ -88,6 +102,115 @@
 		S += ((Scan.rating - 1) * 0.25)
 	inaccuracy_percentage = (1.5 - S)
 
+/obj/machinery/rnd/bepis/update_icon_state()
+	if(panel_open == TRUE)
+		icon_state = "[base_icon_state]_open"
+		return ..()
+	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
+		icon_state = "[base_icon_state]_active_loaded"
+		return ..()
+	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
+		icon_state = "[base_icon_state]_loaded"
+		return ..()
+	if(use_power == ACTIVE_POWER_USE && is_operational)
+		icon_state = "[base_icon_state]_active"
+		return ..()
+	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
+		icon_state = base_icon_state
+		return ..()
+	return ..()
+
+/obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Bepis", name)
+		ui.open()
+	RefreshParts()
+	if(isliving(user))
+		var/mob/living/customer = user
+		account = customer.get_bank_account()
+
+/obj/machinery/rnd/bepis/ui_data(mob/user)
+	var/list/data = list()
+	var/powered = FALSE
+	var/zvalue = ((banking_amount + banked_cash) - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
+	var/std_success = 0
+	var/prob_success = 0
+	//Admittedly this is messy, but not nearly as messy as the alternative, which is jury-rigging an entire Z-table into the code, or making an adaptive z-table.
+	var/z = abs(zvalue)
+	if(z > 0 && z <= 0.5)
+		std_success = 19.1
+	else if(z > 0.5 && z <= 1.0)
+		std_success = 34.1
+	else if(z > 1.0 && z <= 1.5)
+		std_success = 43.3
+	else if(z > 1.5 && z <= 2.0)
+		std_success = 47.7
+	else if(z > 2.0 && z <= 2.5)
+		std_success = 49.4
+	else
+		std_success = 50
+	if(zvalue > 0)
+		prob_success = 50 + std_success
+	else if(zvalue == 0)
+		prob_success = 50
+	else
+		prob_success = 50 - std_success
+
+	if(use_power == ACTIVE_POWER_USE)
+		powered = TRUE
+	data["account_owner"] = account_name
+	data["amount"] = banking_amount
+	data["stored_cash"] = account?.account_balance
+	data["mean_value"] = (major_threshold - positive_cash_offset - negative_cash_offset)
+	data["error_name"] = error_cause
+	data["power_saver"] = power_saver
+	data["accuracy_percentage"] = inaccuracy_percentage * 100
+	data["positive_cash_offset"] = positive_cash_offset
+	data["negative_cash_offset"] = negative_cash_offset
+	data["manual_power"] = powered ? FALSE : TRUE
+	data["silicon_check"] = issilicon(user)
+	data["success_estimate"] = prob_success
+	return data
+
+/obj/machinery/rnd/bepis/ui_act(action,params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("begin_experiment")
+			if(use_power == IDLE_POWER_USE)
+				return
+			depositcash()
+			if(banked_cash == 0)
+				say("Please select funds to deposit to begin testing.")
+				return
+			calcsuccess()
+			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
+			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
+			update_appearance()
+		if("amount")
+			var/input = text2num(params["amount"])
+			if(input)
+				banking_amount = input
+		if("toggle_power")
+			if(use_power == ACTIVE_POWER_USE)
+				use_power = IDLE_POWER_USE
+			else
+				use_power = ACTIVE_POWER_USE
+			update_appearance()
+		if("account_reset")
+			if(use_power == IDLE_POWER_USE)
+				return
+			account_name = ""
+			account = null
+			say("Account settings reset.")
+	. = TRUE
+
+/**
+ * Proc that handles the user's account to deposit credits for the BEPIS.
+ * Handles success and fail cases for transferring credits, then logs the transaction and uses small amounts of power.
+ **/
 /obj/machinery/rnd/bepis/proc/depositcash()
 	var/deposit_value = 0
 	deposit_value = banking_amount
@@ -107,21 +230,13 @@
 	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value
 	use_power(1000 * power_saver)
-	say("Cash deposit successful. There is [banked_cash] in the chamber.")
-	update_appearance()
 	return
 
-/obj/machinery/rnd/bepis/proc/withdrawcash()
-	var/withdraw_value = 0
-	withdraw_value = banking_amount
-	if(withdraw_value > banked_cash)
-		say("Cannot withdraw more than stored funds. Aborting.")
-	else
-		banked_cash -= withdraw_value
-		new /obj/item/holochip(src.loc, withdraw_value)
-		say("Withdrawing [withdraw_value] credits from the chamber.")
-	update_appearance()
-	return
+/**
+ * Proc used to determine the experiment math and results all in one.
+ * Uses banked_cash and stock part levels to determine minor, major, and real gauss values for the BEPIS to hold.
+ * If by the end real is larger than major, You get a tech disk. If all the disks are earned or you at least beat minor, you get a minor reward.
+ **/
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
 	var/turf/dropturf = null
@@ -165,112 +280,3 @@
 	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
 	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
 	return
-
-/obj/machinery/rnd/bepis/update_icon_state()
-	if(panel_open == TRUE)
-		icon_state = "[base_icon_state]_open"
-		return ..()
-	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
-		icon_state = "[base_icon_state]_active_loaded"
-		return ..()
-	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
-		icon_state = "[base_icon_state]_loaded"
-		return ..()
-	if(use_power == ACTIVE_POWER_USE && is_operational)
-		icon_state = "[base_icon_state]_active"
-		return ..()
-	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
-		icon_state = base_icon_state
-		return ..()
-	return ..()
-
-/obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Bepis", name)
-		ui.open()
-	RefreshParts()
-
-/obj/machinery/rnd/bepis/ui_data(mob/user)
-	var/list/data = list()
-	var/powered = FALSE
-	var/zvalue = (banked_cash - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
-	var/std_success = 0
-	var/prob_success = 0
-	//Admittedly this is messy, but not nearly as messy as the alternative, which is jury-rigging an entire Z-table into the code, or making an adaptive z-table.
-	var/z = abs(zvalue)
-	if(z > 0 && z <= 0.5)
-		std_success = 19.1
-	else if(z > 0.5 && z <= 1.0)
-		std_success = 34.1
-	else if(z > 1.0 && z <= 1.5)
-		std_success = 43.3
-	else if(z > 1.5 && z <= 2.0)
-		std_success = 47.7
-	else if(z > 2.0 && z <= 2.5)
-		std_success = 49.4
-	else
-		std_success = 50
-	if(zvalue > 0)
-		prob_success = 50 + std_success
-	else if(zvalue == 0)
-		prob_success = 50
-	else
-		prob_success = 50 - std_success
-
-	if(use_power == ACTIVE_POWER_USE)
-		powered = TRUE
-	data["account_owner"] = account_name
-	data["amount"] = banking_amount
-	data["stored_cash"] = banked_cash
-	data["mean_value"] = (major_threshold - positive_cash_offset - negative_cash_offset)
-	data["error_name"] = error_cause
-	data["power_saver"] = power_saver
-	data["accuracy_percentage"] = inaccuracy_percentage * 100
-	data["positive_cash_offset"] = positive_cash_offset
-	data["negative_cash_offset"] = negative_cash_offset
-	data["manual_power"] = powered ? FALSE : TRUE
-	data["silicon_check"] = issilicon(user)
-	data["success_estimate"] = prob_success
-	return data
-
-/obj/machinery/rnd/bepis/ui_act(action,params)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("deposit_cash")
-			if(use_power == IDLE_POWER_USE)
-				return
-			depositcash()
-		if("withdraw_cash")
-			if(use_power == IDLE_POWER_USE)
-				return
-			withdrawcash()
-		if("begin_experiment")
-			if(use_power == IDLE_POWER_USE)
-				return
-			if(banked_cash == 0)
-				say("Please deposit funds to begin testing.")
-				return
-			calcsuccess()
-			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
-			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
-			update_appearance()
-		if("amount")
-			var/input = text2num(params["amount"])
-			if(input)
-				banking_amount = input
-		if("toggle_power")
-			if(use_power == ACTIVE_POWER_USE)
-				use_power = IDLE_POWER_USE
-			else
-				use_power = ACTIVE_POWER_USE
-			update_appearance()
-		if("account_reset")
-			if(use_power == IDLE_POWER_USE)
-				return
-			account_name = ""
-			account = null
-			say("Account settings reset.")
-	. = TRUE

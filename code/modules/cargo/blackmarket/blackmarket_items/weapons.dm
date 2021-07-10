@@ -34,6 +34,26 @@
 	stock_max = 3
 	availability_prob = 60
 
+/datum/blackmarket_item/weapon/chainsaw
+	name = "Chainsaw"
+	desc = "A lumberjack's best friend, perfect for cutting trees or limbs efficiently."
+	item = /obj/item/chainsaw
+
+	price_min = 350
+	price_max = 600
+	stock_max = 1
+	availability_prob = 35
+
+/datum/blackmarket_item/weapon/switchblade
+	name = "Switchblade"
+	desc = "Tunnel Snakes rule!"
+	item = /obj/item/switchblade
+
+	price_min = 250
+	price_max = 350
+	stock_max = 3
+	availability_prob = 45
+
 /datum/blackmarket_item/weapon/emp_grenade
 	name = "EMP Grenade"
 	desc = "Use this grenade for SHOCKING results!"

@@ -28,7 +28,7 @@
 		atom/replacement,
 		fill_type,
 		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
-		max_ingredients = INFINITY,
+		max_ingredients = MAX_ATOM_OVERLAYS - 2,
 		list/obj/item/initial_ingredients = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -111,18 +111,18 @@
 
 	// only accept valid ingredients
 	if (!valid_ingredient || HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
-		to_chat(attacker, "<span class='warning'>[ingredient] doesn't belong on [parent]!</span>")
+		to_chat(attacker, span_warning("[ingredient] doesn't belong on [parent]!"))
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
-		to_chat(attacker, "<span class='warning'>[parent] is too full for any more ingredients!</span>")
+		to_chat(attacker, span_warning("[parent] is too full for any more ingredients!"))
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/atom_parent = parent
 	if(!attacker.transferItemToLoc(ingredient, atom_parent))
 		return
 	if (replacement)
-		var/atom/replacement_parent = new replacement(atom_parent.loc)
+		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
 		ingredient.forceMove(replacement_parent)
 		replacement = null
 		RemoveComponent()

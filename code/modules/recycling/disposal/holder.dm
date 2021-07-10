@@ -41,21 +41,15 @@
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
 	for(var/A in D)
-		var/atom/movable/AM = A
-		if(AM == src)
+		var/atom/movable/atom_in_transit = A
+		if(atom_in_transit == src)
 			continue
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
-		AM.forceMove(src)
-		if(istype(AM, /obj/structure/big_delivery) && !hasmob)
-			var/obj/structure/big_delivery/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
-			var/obj/item/small_delivery/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /mob/living/silicon/robot))
-			var/obj/item/dest_tagger/borg/tagger = locate() in AM
-			if (tagger)
-				src.destinationTag = tagger.currTag
+		SEND_SIGNAL(atom_in_transit, COMSIG_MOVABLE_DISPOSING, src, D, hasmob)
+		atom_in_transit.forceMove(src)
+		if(iscyborg(atom_in_transit))
+			var/obj/item/dest_tagger/borg/tagger = locate() in atom_in_transit
+			if(tagger)
+				destinationTag = tagger.currTag
 
 
 // start the movement process
@@ -90,6 +84,9 @@
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
+	//Moved to nullspace gang
+	if(!loc)
+		return
 	if(!pipes_typecache[loc.type])
 		var/turf/T = get_turf(loc)
 		if(T)
@@ -138,10 +135,9 @@
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(turf/T)
 	T.assume_air(gas)
-	T.air_update_turf(FALSE, FALSE)
 
 /obj/structure/disposalholder/AllowDrop()
 	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
-	return
+	return FALSE

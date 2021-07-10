@@ -13,6 +13,8 @@
 	var/list/datum/pipeline/parents
 	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
+	///Handles whether the custom reconcilation handling should be used
+	var/custom_reconcilation = FALSE
 
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
@@ -21,6 +23,8 @@
 	..()
 
 	for(var/i in 1 to device_type)
+		if(airs[i])
+			continue
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		airs[i] = A
@@ -43,6 +47,7 @@
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	SIGNAL_HANDLER
 	showpipe = !covered
 	update_appearance()
 
@@ -51,6 +56,7 @@
 
 	underlays.Cut()
 
+	color = null
 	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
@@ -58,34 +64,27 @@
 
 	var/connected = 0 //Direction bitset
 
+	var/underlay_pipe_layer = shift_underlay_only ? piping_layer : 3
+
 	for(var/i in 1 to device_type) //adds intact pieces
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
-		underlays += img
-		connected |= img.dir
+		var/node_dir = get_dir(src, node)
+		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]")
+		pipe_appearance.color = node.pipe_color
+		underlays += pipe_appearance
+		connected |= node_dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			underlays += get_pipe_underlay("pipe_exposed", direction)
+			var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "exposed_[direction]_[underlay_pipe_layer]")
+			pipe_appearance.color = pipe_color
+			underlays += pipe_appearance
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
 	return ..()
-
-/**
- * Called by update_icon() when showpipe is TRUE, set the image for the underlay pipe
- * Arguments:
- * * -state: icon_state of the selected pipe
- * * -dir: direction of the pipe
- * * -color: color of the pipe
- */
-/obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
-	if(color)
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : 3)
-	else
-		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : 3)
 
 // Pipenet stuff; housekeeping
 
@@ -96,16 +95,17 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/on_construction()
-	..()
+	. = ..()
 	update_parents()
 
-/obj/machinery/atmospherics/components/build_network()
+/obj/machinery/atmospherics/components/get_rebuild_targets()
+	var/list/to_return = list()
 	for(var/i in 1 to device_type)
 		if(parents[i])
 			continue
 		parents[i] = new /datum/pipeline()
-		var/datum/pipeline/P = parents[i]
-		P.build_pipeline(src)
+		to_return += parents[i]
+	return to_return
 
 /**
  * Called by nullifyNode(), used to remove the pipeline the component is attached to
@@ -121,8 +121,8 @@
 			reference.other_airs -= airs[i] // Disconnects from the pipeline side
 			parents[i] = null // Disconnects from the machinery side.
 
-	reference.other_atmosmch -= src 
-	
+	reference.other_atmosmch -= src
+
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline
 	 *  is projected to have no member and cause GC problems.
@@ -182,7 +182,6 @@
 			continue
 		to_release.merge(air.remove(shared_loss))
 	T.assume_air(to_release)
-	air_update_turf(FALSE, FALSE)
 
 // Helpers
 
@@ -191,6 +190,8 @@
  * This way gases won't get stuck
  */
 /obj/machinery/atmospherics/components/proc/update_parents()
+	if(!SSair.initialized)
+		return
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
@@ -204,15 +205,32 @@
 	for(var/i in 1 to device_type)
 		. += returnPipenet(nodes[i])
 
+/// When this machine is in a pipenet that is reconciling airs, this proc can add pipelines to the calculation.
+/// Can be either a list of pipenets or a single pipenet.
+/obj/machinery/atmospherics/components/proc/returnPipenetsForReconcilation(datum/pipeline/requester)
+	return list()
+
+/// When this machine is in a pipenet that is reconciling airs, this proc can add airs to the calculation.
+/// Can be either a list of airs or a single air mix.
+/obj/machinery/atmospherics/components/proc/returnAirsForReconcilation(datum/pipeline/requester)
+	return list()
+
 // UI Stuff
 
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
-	to_chat(user, "<span class='danger'>Access denied.</span>")
+	to_chat(user, span_danger("Access denied."))
 	return UI_CLOSE
 
 // Tool acts
 
 /obj/machinery/atmospherics/components/return_analyzable_air()
 	return airs
+
+/obj/machinery/atmospherics/components/paint(paint_color)
+	if(paintable)
+		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		pipe_color = paint_color
+		update_node_icon()
+	return paintable

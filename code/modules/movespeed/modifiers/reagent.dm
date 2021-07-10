@@ -22,6 +22,9 @@
 /datum/movespeed_modifier/reagent/nitryl
 	multiplicative_slowdown = -0.65
 
+/datum/movespeed_modifier/reagent/cannabis
+	multiplicative_slowdown = 0.4
+
 /datum/movespeed_modifier/reagent/freon
 	multiplicative_slowdown = 1.6
 
@@ -33,3 +36,6 @@
 
 /datum/movespeed_modifier/reagent/nuka_cola
 	multiplicative_slowdown = -0.35
+
+/datum/movespeed_modifier/reagent/nooartrium
+	multiplicative_slowdown = 2

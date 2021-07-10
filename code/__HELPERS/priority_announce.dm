@@ -3,8 +3,10 @@
 		return
 
 	var/announcement
-	if(!istype(sound, /sound))
-		sound = SSstation.announcer.event_sounds[sound] || SSstation.announcer.get_rand_alert_sound()
+	if(!sound)
+		sound = SSstation.announcer.get_rand_alert_sound()
+	else if(SSstation.announcer.event_sounds[sound])
+		sound = SSstation.announcer.event_sounds[sound]
 
 	if(type == "Priority")
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
@@ -32,7 +34,7 @@
 	if(SSstation.announcer.custom_alert_message && !has_important_message)
 		announcement +=  SSstation.announcer.custom_alert_message
 	else
-		announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
+		announcement += "<br>[span_alert("[html_encode(text)]")]<br>"
 	announcement += "<br>"
 
 	var/s = sound(sound)
@@ -41,6 +43,38 @@
 			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				SEND_SOUND(M, s)
+
+/**
+ * Summon the crew for an emergency meeting
+ *
+ * Teleports the crew to a specified area, and tells everyone (via an announcement) who called the meeting. Should only be used during april fools!
+ * Arguments:
+ * * user - Mob who called the meeting
+ * * button_zone - Area where the meeting was called and where everyone will get teleported to
+ */
+/proc/call_emergency_meeting(mob/living/user, area/button_zone)
+	var/meeting_sound = sound('sound/misc/emergency_meeting.ogg')
+	var/announcement
+	announcement += "<h1 class='alert'>Captain Alert</h1>"
+	announcement += "<br>[span_alert("[user] has called an Emergency Meeting!")]<br><br>"
+
+	for(var/mob/mob_to_teleport in GLOB.player_list) //gotta make sure the whole crew's here!
+		if(isnewplayer(mob_to_teleport) || iscameramob(mob_to_teleport))
+			continue
+		to_chat(mob_to_teleport, announcement)
+		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
+		mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
+		addtimer(CALLBACK(mob_to_teleport, /mob/.proc/clear_fullscreen, "emergency_meeting"), 3 SECONDS)
+
+		if (is_station_level(mob_to_teleport.z)) //teleport the mob to the crew meeting
+			var/turf/target
+			var/list/turf_list = get_area_turfs(button_zone)
+			while (!target && turf_list.len)
+				target = pick_n_take(turf_list)
+				if (isclosedturf(target))
+					target = null
+					continue
+				mob_to_teleport.forceMove(target)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
@@ -65,7 +99,7 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && M.can_hear())
-			to_chat(M, "<span class='minorannounce'><font color = red>[title]</font color><BR>[message]</span><BR>")
+			to_chat(M, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
 					SEND_SOUND(M, sound('sound/misc/notice1.ogg'))

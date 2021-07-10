@@ -905,8 +905,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "dX" = (
-/obj/effect/mob_spawn/human/engineer/rig{
-	id_job = "Gunner";
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	mob_name = "Andrew Thorn";
 	name = "Andrew Thorn"
 	},
@@ -1069,8 +1068,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "eH" = (
-/obj/effect/mob_spawn/human/engineer/rig{
-	id_job = "Gunner";
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	mob_name = "Peter West";
 	name = "Peter West"
 	},
@@ -1189,8 +1187,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fa" = (
-/obj/effect/mob_spawn/human/engineer/rig{
-	id_job = "Gunner";
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	mob_name = "Eric Abnett";
 	name = "Eric Abnett"
 	},
@@ -1657,10 +1654,9 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gr" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/east{
 	id = "spacebattlestorage";
-	name = "Secure Storage";
-	pixel_x = 24
+	name = "Secure Storage"
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -1776,8 +1772,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "gO" = (
-/obj/effect/mob_spawn/human/engineer/rig{
-	id_job = "Gunner";
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	name = "Jeremy Tailor"
 	},
 /obj/effect/decal/cleanable/blood,
@@ -1879,8 +1874,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hh" = (
-/obj/effect/mob_spawn/human/engineer/rig{
-	id_job = "Gunner";
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	mob_name = "Dan Hedricks";
 	name = "Dan Hedricks"
 	},
@@ -2027,8 +2021,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hL" = (
-/obj/effect/mob_spawn/human/engineer{
-	id_job = "Gunner";
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	mob_name = "William Gannon";
 	name = "William Gannon"
 	},
@@ -2353,7 +2346,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jm" = (
-/turf/open/floor/iron/rockvault/alien,
+/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jn" = (
 /obj/machinery/door/airlock/plasma,
@@ -2361,7 +2354,7 @@
 /area/awaymission/spacebattle/secret)
 "jo" = (
 /obj/item/clothing/suit/space/hardsuit/wizard,
-/turf/open/floor/iron/rockvault/alien,
+/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
 /obj/vehicle/sealed/mecha/combat/gygax,

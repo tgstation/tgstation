@@ -1,0 +1,77 @@
+2013-12-01:
+  cookingboy3:
+  - rscadd: Added three new buttons to the sandbox panel.
+  - tweak: Removed canister menu, replaced it with buttons.
+  - tweak: Players can no longer spawn "dangerous" canisters in sandbox, such as Plasma,
+      N20, CO2, and Nitrogen.
+2013-12-02:
+  Giacom:
+  - rscadd: 'A less annoying virology system! From now on, you can only get low level
+      virus symptoms from virus food, medium level virus symptoms from unstable mutagen
+      and high level virus symptoms from liquid plasma. You can find a list of symptoms,
+      and which chemicals are required to get them, here: http://wiki.ss13.eu/index.php/Infections#Symptoms_Table'
+  - tweak: The virologist starts with a bottle of plasma in his smart fridge.
+  - tweak: Made it so you cannot accidentally click in the gaps between chem masters.
+2013-12-05:
+  Razharas:
+  - tweak: Reworked how ling stings are done, now when you click a sting in the changeling
+      tab it becomes current active sting, the icon of that sting appears under the
+      chem counter, alt+clicking anyone will sting them with current sting, clicking
+      the icon of the sting will unset it.
+  - tweak: Monkeys have ling chem counter and active sting icons in their UI.
+  - tweak: Going monkey -&gt; human will try to equip the human with everything on
+      the ground below it.
+2013-12-08:
+  Rolan7:
+  - tweak: Leather gloves can be used to removes lights.
+  - rscadd: Plant, ore, and trash bags have a new option to pick up all items of single
+      type
+  - tweak: Creating astroturf now works like sandstone, converting all the grass at
+      once.
+  - tweak: Uranium and radium can be used instead of mutagen.  10 can mutate species,
+      5 or 2 mutate traits.  Highly toxic.
+  - experiment: Plants require a little light to live.  Mushroom require even less
+      (2 units vs 4) and take less damage.
+2013-12-09:
+  Giacom:
+  - imageadd: New colourful ghost sprites for BYOND members. Sprites by anonus.
+2013-12-14:
+  Incoming:
+  - rscadd: Magic Mania! Powerful new magical tools and skills for wizard and crew
+      alike!
+  - rscadd: Beware the new Summon Magic spell, which will grant the crew access to
+      magical tools and spells and cause some to misuse it!
+  - rscadd: 'One Time Spellbooks that can be spawned during summon magic that can
+      teach a low level magic skill to <i>anyone</i>! Beware the effects of reading
+      pre-owned books, the magical rights management is potent!
+
+      '
+  - rscadd: Magical Wands that can be spawned during Summon Magic! They come in a
+      variety of effects that mimic both classical wizard spells and all new ones.
+      They come precharged but lack the means to refill them once their magical energy
+      is depleted... Fire efficently!
+  - rscadd: Be aware of the new Charge spell, which can take normally useless spent
+      wands and give them new life! This mysterious effect has been found to wear
+      down the overall magical potency of wands over time however. Beyond wands the
+      clever magical user can find ways to use this spell on other things that may
+      benefit from a magical charge...
+  - rscadd: The Staff of Resurrection, which holds intense healing magics able to
+      defeat death itself! Look out for this invaluable magical tool during castings
+      of Summon Magic.
+  - rscadd: Be on the lookout for a new apprentice! This noble mage is a different
+      beast from most wizards, trained in the arts of defending and healing. Too bad
+      he still works for the wizard!
+2013-12-18:
+  Jordie0608:
+  - tweak: Replaced the digital valves in atmospherics with pumps.
+2013-12-21:
+  RobRichards, Validsalad:
+  - rscadd: Added new sprites for the sec-hailer, SWAT gear and riot armour.
+2013-12-27:
+  Miauw:
+  - tweak: Monkeys now have a resist button on their HUD.
+2013-12-31:
+  Fleure:
+  - bugfix: Paper no longer appears with words on it when blank input written or photocopied
+  - bugfix: Vending machine speaker toggle button now works
+  - bugfix: Building arcade machines works again

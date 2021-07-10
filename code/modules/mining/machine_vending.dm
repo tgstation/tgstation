@@ -139,20 +139,20 @@
 				var/mob/living/L = usr
 				I = L.get_idcard(TRUE)
 			if(!istype(I))
-				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+				to_chat(usr, span_alert("Error: An ID is required!"))
 				flick(icon_deny, src)
 				return
 			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
 			if(!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
+				to_chat(usr, span_alert("Error: Invalid choice!"))
 				flick(icon_deny, src)
 				return
 			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
+				to_chat(usr, span_alert("Error: Insufficient points for [prize.equipment_name] on [I]!"))
 				flick(icon_deny, src)
 				return
 			I.mining_points -= prize.cost
-			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+			to_chat(usr, span_notice("[src] clanks to life briefly before vending [prize.equipment_name]!"))
 			new prize.equipment_path(loc)
 			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 			. = TRUE
@@ -200,7 +200,7 @@
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
-	if(prob(50 / severity) && severity < 3)
+	if(severity > EXPLODE_LIGHT && prob(17 * severity))
 		qdel(src)
 
 /****************Golem Point Vendor**************************/
@@ -212,7 +212,7 @@
 /obj/machinery/mineral/equipment_vendor/golem/Initialize()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
-		new /datum/data/mining_equipment("Extra Id", /obj/item/card/id/mining, 250),
+		new /datum/data/mining_equipment("Extra Id", /obj/item/card/id/advanced/mining, 250),
 		new /datum/data/mining_equipment("Science Goggles", /obj/item/clothing/glasses/science, 250),
 		new /datum/data/mining_equipment("Monkey Cube", /obj/item/food/monkeycube, 300),
 		new /datum/data/mining_equipment("Toolbelt", /obj/item/storage/belt/utility, 350),
@@ -247,33 +247,15 @@
 		if(points)
 			var/obj/item/card/id/C = I
 			C.mining_points += points
-			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
+			to_chat(user, span_info("You transfer [points] points to [C]."))
 			points = 0
 		else
-			to_chat(user, "<span class='alert'>There's no points left on [src].</span>")
+			to_chat(user, span_alert("There's no points left on [src]."))
 	..()
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	..()
-	to_chat(user, "<span class='alert'>There's [points] point\s on the card.</span>")
-
-///Conscript kit
-/obj/item/card/mining_access_card
-	name = "mining access card"
-	desc = "A small card, that when used on any ID, will add mining access."
-	icon_state = "data_1"
-
-/obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
-	. = ..()
-	if(istype(AM, /obj/item/card/id) && proximity)
-		var/obj/item/card/id/I = AM
-		I.access |= ACCESS_MINING
-		I.access |= ACCESS_MINING_STATION
-		I.access |= ACCESS_MECH_MINING
-		I.access |= ACCESS_MINERAL_STOREROOM
-		I.access |= ACCESS_CARGO
-		to_chat(user, "<span class='notice'>You upgrade [I] with mining access.</span>")
-		qdel(src)
+	to_chat(user, span_alert("There's [points] point\s on the card."))
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
@@ -288,7 +270,7 @@
 	new /obj/item/clothing/suit/hooded/explorer(src)
 	new /obj/item/encryptionkey/headset_mining(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/card/mining_access_card(src)
+	new /obj/item/card/id/advanced/mining(src)
 	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/kitchen/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)

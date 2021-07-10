@@ -142,7 +142,7 @@
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)
 
-	for(var/turf/T in range(radius, centerturf))
+	for(var/turf/T as anything in RANGE_TURFS(radius, centerturf))
 		var/dx = T.x - centerturf.x
 		var/dy = T.y - centerturf.y
 		if(dx*dx + dy*dy <= rsq)
@@ -213,38 +213,40 @@
 
 	return
 
-/proc/get_hearers_in_view(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
-	var/turf/T = get_turf(source)
+/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). recursively checks contents for hearers
+/proc/get_hearers_in_view(view_radius, atom/source)
+
+	var/turf/center_turf = get_turf(source)
 	. = list()
-	if(!T)
+	if(!center_turf)
 		return
 	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
-		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		for(var/mob/M in view(R, T))
-			processing_list += M
-		for(var/obj/O in view(R, T))
-			processing_list += O
-		T.luminosity = lum
+	if (view_radius == 0) // if the range is zero, we know exactly where to look for, we can skip view
+		processing_list += center_turf.contents // We can shave off one iteration by assuming turfs cannot hear
+	else
+		var/lum = center_turf.luminosity
+		center_turf.luminosity = 6 // This is the maximum luminosity
+		var/target = source.loc == center_turf ? source : center_turf //this is reasonably faster if true, and very slightly slower if false
+		for(var/atom/movable/movable in view(view_radius, target))
+			if(movable.flags_1 & HEAR_1) //dont add the movables returned by view() to processing_list to reduce recursive iterations, just check them
+				. += movable
+				SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
+			processing_list += movable.contents
+		center_turf.luminosity = lum
 
 	var/i = 0
-	while(i < length(processing_list)) // recursive_hear_check inlined here
-		var/atom/A = processing_list[++i]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-		processing_list += A.contents
+	while(i < length(processing_list)) // recursive_hear_check inlined here, the large majority of the work is in this part for big contents trees
+		var/atom/atom_to_check = processing_list[++i]
+		if(atom_to_check.flags_1 & HEAR_1)
+			. += atom_to_check
+			SEND_SIGNAL(atom_to_check, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
+		processing_list += atom_to_check.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/R in radios)
-		if(R)
-			. |= get_hearers_in_view(R.canhear_range, R)
+		. |= get_hearers_in_view(R.canhear_range, R)
 
 #define SIGNV(X) ((X<0)?-1:1)
 
@@ -313,7 +315,7 @@
 			var/mob/living/carbon/human/H
 			if(ishuman(M.current))
 				H = M.current
-			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != SPECIES_ZOMBIE)
 		else if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
@@ -342,6 +344,10 @@
 	O.maptext_width = maptext_width
 	O.screen_loc = screen_loc
 	return O
+
+/// Removes an image from a client's `.images`. Useful as a callback.
+/proc/remove_image_from_client(image/image, client/remove_from)
+	remove_from?.images -= image
 
 /proc/remove_images_from_clients(image/I, list/show_to)
 	for(var/client/C in show_to)
@@ -390,27 +396,27 @@
 	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
 	switch(tgui_alert(M, Question, "A limited-time offer!", answers, timeout=poll_time))
 		if("Yes")
-			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
+			to_chat(M, span_notice("Choice registered: Yes."))
 			if(time_passed + poll_time <= world.time)
-				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
+				to_chat(M, span_danger("Sorry, you answered too late to be considered!"))
 				SEND_SOUND(M, 'sound/machines/buzz-sigh.ogg')
 				candidates -= M
 			else
 				candidates += M
 		if("No")
-			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			to_chat(M, span_danger("Choice registered: No."))
 			candidates -= M
 		if("Never for this round")
 			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
 				GLOB.poll_ignore[ignore_category] = list()
 			GLOB.poll_ignore[ignore_category] += M.ckey
-			to_chat(M, "<span class='danger'>Choice registered: Never for this round.</span>")
+			to_chat(M, span_danger("Choice registered: Never for this round."))
 			candidates -= M
 		else
 			candidates -= M
 
-/proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
+/proc/pollGhostCandidates(Question, jobbanType, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return candidates
@@ -418,9 +424,9 @@
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
 
-	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
+	return pollCandidates(Question, jobbanType, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
-/proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
+/proc/pollCandidates(Question, jobbanType, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
@@ -432,8 +438,9 @@
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
 				continue
-		if(gametypeCheck)
-			if(!gametypeCheck.age_check(M.client))
+
+			var/required_time = GLOB.special_roles[be_special_flag] || 0
+			if (M.client && M.client.get_remaining_days(required_time) > 0)
 				continue
 		if(jobbanType)
 			if(is_banned_from(M.ckey, list(jobbanType, ROLE_SYNDICATE)) || QDELETED(M))
@@ -451,14 +458,14 @@
 
 	return result
 
-/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
-	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+/proc/pollCandidatesForMob(Question, jobbanType, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
+	var/list/L = pollGhostCandidates(Question, jobbanType, be_special_flag, poll_time, ignore_category)
 	if(!M || QDELETED(M) || !M.loc)
 		return list()
 	return L
 
-/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
-	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+/proc/pollCandidatesForMobs(Question, jobbanType, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+	var/list/L = pollGhostCandidates(Question, jobbanType, be_special_flag, poll_time, ignore_category)
 	var/i=1
 	for(var/v in mobs)
 		var/atom/A = v
@@ -514,7 +521,9 @@
 		return
 	var/area/A = get_area(character)
 	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[A.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
-	if((!GLOB.announcement_systems.len) || (!character.mind))
+	if(!character.mind)
+		return
+	if(!GLOB.announcement_systems.len)
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
 		return

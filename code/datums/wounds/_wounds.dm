@@ -73,8 +73,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// The status effect we're linked to
-	var/datum/status_effect/linked_status_effect
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
@@ -82,7 +80,7 @@
 
 	/// What kind of scars this wound will create description wise once healed
 	var/scar_keyword = "generic"
-	/// If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner
+	/// If we've already tried scarring while removing (remove_wound can be called twice in a del chain, let's be nice to our code yeah?) TODO: make this cleaner
 	var/already_scarred = FALSE
 	/// If we forced this wound through badmin smite, we won't count it towards the round totals
 	var/from_smite
@@ -93,8 +91,7 @@
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
-	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
-		remove_wound()
+	remove_wound()
 	set_limb(null)
 	victim = null
 	return ..()
@@ -128,13 +125,13 @@
 			qdel(src)
 			return
 
-	victim = L.owner
+	set_victim(L.owner)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
 	if(status_effect_type)
-		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
+		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
 	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
 		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
@@ -147,20 +144,36 @@
 		return
 
 	if(!(silent || demoted))
-		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
+		var/msg = span_danger("[victim]'s [limb.name] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
 		if(severity != WOUND_SEVERITY_MODERATE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
-		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>", vision_distance = vis_dist)
+		victim.visible_message(msg, span_userdanger("Your [limb.name] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
 	if(!demoted)
 		wound_injury(old_wound)
 		second_wind()
+
+/datum/wound/proc/null_victim()
+	SIGNAL_HANDLER
+	set_victim(null)
+
+/datum/wound/proc/set_victim(new_victim)
+	if(victim)
+		UnregisterSignal(victim, COMSIG_PARENT_QDELETING)
+	remove_wound_from_victim()
+	victim = new_victim
+	if(victim)
+		RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
+
+/datum/wound/proc/source_died()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
@@ -170,14 +183,18 @@
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
-	if(victim)
-		LAZYREMOVE(victim.all_wounds, src)
-		if(!victim.all_wounds)
-			victim.clear_alert("wound")
-		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
+	remove_wound_from_victim()
 	if(limb && !ignore_limb)
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
+
+/datum/wound/proc/remove_wound_from_victim()
+	if(!victim)
+		return
+	LAZYREMOVE(victim.all_wounds, src)
+	if(!victim.all_wounds)
+		victim.clear_alert("wound")
+	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
@@ -206,7 +223,10 @@
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
+	if(limb)
+		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
 	limb = new_value
+	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, .proc/source_died)
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
 		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
@@ -289,7 +309,7 @@
 
 	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
-		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		to_chat(user, span_warning("You're already interacting with [victim]!"))
 		return TRUE
 
 	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies

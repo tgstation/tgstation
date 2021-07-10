@@ -4,7 +4,7 @@
 
 /obj/effect/buildmode_line/New(client/C, atom/atom_a, atom/atom_b, linename)
 	name = linename
-	loc = get_turf(atom_a)
+	abstract_move(get_turf(atom_a))
 	I = image('icons/misc/mark.dmi', src, "line", 19.0)
 	var/x_offset = ((atom_b.x * 32) + atom_b.pixel_x) - ((atom_a.x * 32) + atom_a.pixel_x)
 	var/y_offset = ((atom_b.y * 32) + atom_b.pixel_y) - ((atom_a.y * 32) + atom_a.pixel_y)

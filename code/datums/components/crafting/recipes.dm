@@ -22,6 +22,8 @@
 	var/additional_req_text
 	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
 	var/list/machinery
+	///Should only one object exist on the same turf?
+	var/one_per_turf = FALSE
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
@@ -136,6 +138,7 @@
 	result = /obj/item/tailclub
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/sheet/iron = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -145,6 +148,7 @@
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/cable_coil = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -305,10 +309,10 @@
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
-/datum/crafting_recipe/teslarevolver
-	name = "Tesla Revolver"
+/datum/crafting_recipe/teslacannon
+	name = "Tesla Cannon"
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/gun/energy/tesla_revolver
+	result = /obj/item/gun/energy/tesla_cannon
 	reqs = list(/obj/item/assembly/signaler/anomaly/flux = 1,
 				/obj/item/stack/cable_coil = 5,
 				/obj/item/weaponcrafting/gunkit/tesla = 1)
@@ -419,7 +423,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/iron = 4,
 				/obj/item/stack/package_wrap = 8,
-				/obj/item/pipe = 2)
+				/obj/item/pipe/quaternary = 2)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -835,6 +839,13 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/godslayer
+	name = "Godslayer Armour"
+	result = /obj/item/clothing/suit/hooded/cloak/godslayer
+	time = 60
+	reqs = list(/obj/item/ice_energy_crystal = 1, /obj/item/wendigo_skull = 1, /obj/item/clockwork_alloy = 1)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/firebrand
 	name = "Firebrand"
 	result = /obj/item/match/firebrand
@@ -990,7 +1001,7 @@
 	if(!aicard.AI)
 		return TRUE
 
-	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	to_chat(user, span_boldwarning("You can't craft an intelliTater with an AI in the card!"))
 	return FALSE
 
 /datum/crafting_recipe/aispook
@@ -1010,14 +1021,6 @@
 	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
-
-/datum/crafting_recipe/multiduct
-	name = "Multi-layer duct"
-	result = /obj/machinery/duct/multilayered
-	time = 5
-	reqs = list(/obj/item/stack/ducts = 5)
-	category = CAT_MISC
-	tool_behaviors = list(TOOL_WELDER)
 
 /datum/crafting_recipe/rib
 	name = "Collosal Rib"
@@ -1129,10 +1132,19 @@
 	name = "Elder Atmosian Statue"
 	result = /obj/structure/statue/elder_atmosian
 	time = 6 SECONDS
-	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
-				/obj/item/grenade/gas_crystal/healium_crystal = 1,
-				/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1,
-				/obj/item/grenade/gas_crystal/zauker_crystal = 1
+	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 20,
+				/obj/item/stack/sheet/mineral/zaukerite = 15,
+				/obj/item/stack/sheet/iron = 30,
+				)
+	category = CAT_MISC
+
+/datum/crafting_recipe/bluespace_vendor_mount
+	name = "Bluespace Vendor Wall Mount"
+	result = /obj/item/wallframe/bluespace_vendor_mount
+	time = 6 SECONDS
+	reqs = list(/obj/item/stack/sheet/iron = 15,
+				/obj/item/stack/sheet/glass = 10,
+				/obj/item/stack/cable_coil = 10,
 				)
 	category = CAT_MISC
 
@@ -1146,6 +1158,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 15 SECONDS
 	category = CAT_MISC
+	one_per_turf = TRUE
 
 /datum/crafting_recipe/blast_doors
 	name = "Blast Door"
@@ -1157,6 +1170,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
 	category = CAT_MISC
+	one_per_turf = TRUE
 
 /datum/crafting_recipe/aquarium
 	name = "Aquarium"
@@ -1274,6 +1288,17 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
+
+/**
+ * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
+ */
+/datum/crafting_recipe/clown_scanner_upgrade
+	name = "Bananium HONK-spect scanner"
+	result = /obj/item/inspector/clown/bananium
+	reqs = list(/obj/item/inspector/clown = 1, /obj/item/stack/sticky_tape = 3, /obj/item/stack/sheet/mineral/bananium = 5) //the chainsaw of prank tools
+	tool_paths = list(/obj/item/bikehorn)
+	time = 40 SECONDS
+	category = CAT_MISC
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

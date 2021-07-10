@@ -58,6 +58,10 @@
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
 
+// Stationary gas tanks
+#define TANK_FRAME 0
+#define TANK_PLATING_UNSECURED 1
+
 //other construction-related things
 
 //windows affected by Nar'Sie turn this color.
@@ -84,8 +88,10 @@
 #define CAT_BURGER "Burgers"
 #define CAT_CAKE "Cakes"
 #define CAT_EGG "Egg-Based Food"
+#define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
 #define CAT_MISCFOOD "Misc. Food"
+#define CAT_MEXICAN "Mexican Food"
 #define CAT_PASTRY "Pastries"
 #define CAT_PIE "Pies"
 #define CAT_PIZZA "Pizzas"
@@ -117,3 +123,12 @@
 #define RCD_WINDOW_DIRECTIONAL "directional"
 #define RCD_WINDOW_NORMAL "glass"
 #define RCD_WINDOW_REINFORCED "reinforced glass"
+
+#define RCD_MEMORY_WALL 1
+#define RCD_MEMORY_WINDOWGRILLE 2
+
+// How much faster to use the RCD when on a tile with memory
+#define RCD_MEMORY_SPEED_BUFF 5
+
+/// How much less resources the RCD uses when reconstructing
+#define RCD_MEMORY_COST_BUFF 8

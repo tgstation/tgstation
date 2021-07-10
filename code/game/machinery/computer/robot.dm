@@ -82,25 +82,28 @@
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(can_control(usr, R) && !..())
 					var/turf/T = get_turf(R)
-					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R, R.client)] at [ADMIN_VERBOSEJMP(T)]!</span>")
-					log_game("\<span class='notice'>[key_name(usr)] detonated [key_name(R)]!</span>")
+					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R, R.client)] at [ADMIN_VERBOSEJMP(T)]!"))
+					log_game("[key_name(usr)] detonated [key_name(R)]!")
+					log_combat(usr, R, "detonated cyborg")
+
 					if(R.connected_ai)
-						to_chat(R.connected_ai, "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>")
+						to_chat(R.connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [R.name]")]<br>")
 					R.self_destruct()
 			else
-				to_chat(usr, "<span class='danger'>Access Denied.</span>")
+				to_chat(usr, span_danger("Access Denied."))
 		if("stopbot")
 			if(allowed(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(can_control(usr, R) && !..())
-					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!</span>")
+					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
 					log_game("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
+					log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
 					R.SetLockdown(!R.lockcharge)
-					to_chat(R, "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>")
+					to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
 					if(R.connected_ai)
-						to_chat(R.connected_ai, "[!R.lockcharge ? "<span class='notice'>NOTICE - Cyborg lockdown lifted" : "<span class='alert'>ALERT - Cyborg lockdown detected"]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a></span><br>")
+						to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 			else
-				to_chat(usr, "<span class='danger'>Access Denied.</span>")
+				to_chat(usr, span_danger("Access Denied."))
 		if("magbot")
 			var/mob/living/silicon/S = usr
 			if((istype(S) && S.hack_software) || isAdminGhostAI(usr))
@@ -114,7 +117,7 @@
 			if(allowed(usr))
 				var/mob/living/simple_animal/drone/D = locate(params["ref"]) in GLOB.mob_list
 				if(D.hacked)
-					to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
+					to_chat(usr, span_danger("ERROR: [D] is not responding to external commands."))
 				else
 					var/turf/T = get_turf(D)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)] at [ADMIN_VERBOSEJMP(T)]!")
@@ -122,5 +125,5 @@
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(3, TRUE, D)
 					s.start()
-					D.visible_message("<span class='danger'>\the [D] self-destructs!</span>")
+					D.visible_message(span_danger("\the [D] self-destructs!"))
 					D.gib()

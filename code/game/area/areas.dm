@@ -13,7 +13,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -59,7 +59,7 @@
 
 	var/ambience_index = AMBIENCE_GENERIC
 	var/list/ambientsounds
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
 	var/list/cameras
@@ -322,6 +322,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		firedoors_last_closed_on = world.time
 		for(var/FD in firedoors)
 			var/obj/machinery/door/firedoor/D = FD
+			if (D.being_held_open)
+				continue
 			var/cont = !D.welded
 			if(cont && opening) //don't open if adjacent area is on fire
 				for(var/I in D.affecting_areas)
@@ -373,7 +375,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
  */
 /area/proc/firereset(obj/source)
-	if (fire)
+	var/should_reset_alarms = fire
+	if(source)
+		if(istype(source, /obj/machinery/firealarm))
+			var/obj/machinery/firealarm/alarm = source
+			if(alarm.triggered)
+				alarm.triggered = FALSE
+				triggered_firealarms -= 1
+		if(triggered_firealarms > 0)
+			should_reset_alarms = FALSE
+		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
+
+	if (should_reset_alarms) // if there's a source, make sure there's no fire alarms left
 		unset_fire_alarm_effects()
 		ModifyFiredoors(TRUE)
 		for(var/item in firealarms)
@@ -393,6 +406,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			var/datum/computer_file/program/alarm_monitor/p = item
 			p.cancelAlarm("Fire", src, source)
 	STOP_PROCESSING(SSobj, src)
+
+///Get rid of any dangling camera refs
+/area/proc/clear_camera(obj/machinery/camera/cam)
+	LAZYREMOVE(cameras, cam)
+	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+		aiPlayer.freeCamera(src, cam)
+	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
+		comp.freeCamera(src, cam)
+	for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
+		drone_on.freeCamera(src, cam)
+	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
+		monitor.freeCamera(src, cam)
 
 /**
  * If 100 ticks has elapsed, toggle all the firedoors closed again
@@ -571,15 +596,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * If the area has ambience, then it plays some ambience music to the ambience channel
  */
-/area/Entered(atom/movable/M)
+/area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
-	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
+	for(var/atom/movable/recipient as anything in arrived.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
-	if(!isliving(M))
+	if(!isliving(arrived))
 		return
 
-	var/mob/living/L = M
+	var/mob/living/L = arrived
 	if(!L.ckey)
 		return
 
@@ -603,9 +628,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
  */
-/area/Exited(atom/movable/M)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
-	for(var/atom/movable/recipient as anything in M.area_sensitive_contents)
+/area/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	for(var/atom/movable/recipient as anything in gone.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 

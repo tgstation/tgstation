@@ -28,8 +28,9 @@
 #define TGUI_WINDOW_INDEX(window_id) text2num(copytext(window_id, 13))
 
 /// Creates a message packet for sending via output()
+// This is {"type":type,"payload":payload}, but pre-encoded. This is much faster
+// than doing it the normal way.
+// To ensure this is correct, this is unit tested in tgui_create_message.
 #define TGUI_CREATE_MESSAGE(type, payload) ( \
-	url_encode(json_encode(list( \
-		"type" = type, \
-		"payload" = payload, \
-	))))
+	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
+)

@@ -11,13 +11,13 @@
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
 	if(id)
-		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
 	if(change_id)
 		id = clamp(round(change_id, 1), 1, 100)
-		to_chat(user, "<span class='notice'>You change the ID to [id].</span>")
+		to_chat(user, span_notice("You change the ID to [id]."))
 
 /obj/item/assembly/control/activate()
 	var/openclose
@@ -38,7 +38,7 @@
 /obj/item/assembly/control/curtain/examine(mob/user)
 	. = ..()
 	if(id)
-		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/curtain/activate()
 	var/openclose
@@ -214,3 +214,51 @@
 	lift.lift_master_datum.set_controls(UNLOCKED)
 
 #undef FLOOR_TRAVEL_TIME
+
+/obj/item/assembly/control/tram
+	name = "tram call button"
+	desc = "A small device used to bring trams to you."
+	///for finding the landmark initially - should be the exact same as the landmark's destination id.
+	var/initial_id
+	///this is our destination's landmark, so we only have to find it the first time.
+	var/datum/weakref/to_where
+
+/obj/item/assembly/control/tram/Initialize()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/assembly/control/tram/LateInitialize()
+	. = ..()
+	//find where the tram needs to go to (our destination). only needs to happen the first time
+	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks)
+		if(our_destination.destination_id == initial_id)
+			to_where = WEAKREF(our_destination)
+			break
+
+/obj/item/assembly/control/tram/Destroy()
+	to_where = null
+	return ..()
+
+/obj/item/assembly/control/tram/activate()
+	if(cooldown)
+		return
+	cooldown = TRUE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+	var/obj/structure/industrial_lift/tram/tram_part = GLOB.central_tram
+	if(!tram_part)
+		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
+		return
+	if(tram_part.travelling) //in use
+		say("The tram is already travelling to [tram_part.from_where].")
+		return
+	if(!to_where)
+		return
+	var/obj/effect/landmark/tram/current_location = to_where.resolve()
+	if(!current_location)
+		return
+	if(tram_part.from_where == current_location) //already here
+		say("The tram is already here. Please board the tram and select a destination.")
+		return
+
+	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
+	tram_part.tram_travel(current_location)

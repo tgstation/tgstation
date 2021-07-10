@@ -6,6 +6,7 @@
 	icon_living = "piratemelee"
 	icon_dead = "pirate_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help_continuous = "pushes"
@@ -40,6 +41,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
 	footstep_type = FOOTSTEP_MOB_SHOE

@@ -4,9 +4,11 @@
 	job_rank = ROLE_NINJA
 	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "space_ninja"
+	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
+	suicide_cry = "FOR THE SPIDER CLAN!!"
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment

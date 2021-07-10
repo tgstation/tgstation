@@ -86,6 +86,10 @@
 		client.screen -= alert
 	qdel(alert)
 
+// Proc to check for an alert
+/mob/proc/has_alert(category)
+	return !isnull(alerts[category])
+
 /atom/movable/screen/alert
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
@@ -103,6 +107,7 @@
 
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
+	. = ..()
 	if(!QDELETED(src))
 		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
@@ -242,7 +247,7 @@ or something covering your eyes."
 	. = ..()
 	if(!.)
 		return
-	to_chat(owner, "<span class='mind_control'>[command]</span>")
+	to_chat(owner, span_mind_control("[command]"))
 
 /atom/movable/screen/alert/drunk
 	name = "Drunk"
@@ -321,13 +326,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range)
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER
 
 	if (!giver.CanReach(taker))
-		to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
+		to_chat(owner, span_warning("You moved out of range of [giver]!"))
 		owner.clear_alert("[giver]")
 
 /atom/movable/screen/alert/give/Click(location, control, params)
@@ -548,30 +553,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/nocell
 	name = "Missing Power Cell"
 	desc = "Unit has no power cell. No modules available until a power cell is reinstalled. Robotics may provide assistance."
-	icon_state = "nocell"
+	icon_state = "no_cell"
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
 Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "emptycell"
+	icon_state = "empty_cell"
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "lowcell"
+	icon_state = "low_cell"
 
 //Ethereal
 
-/atom/movable/screen/alert/etherealcharge
+/atom/movable/screen/alert/lowcell/ethereal
 	name = "Low Blood Charge"
-	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
-	icon_state = "etherealcharge"
+	desc = "Your charge is running low, find a source of energy! Use a recharging station, eat some Ethereal-friendly food, or syphon some power from lights, a power cell, or an APC (done by right clicking on combat mode)."
+
+/atom/movable/screen/alert/emptycell/ethereal
+	name = "No Blood Charge"
+	desc = "You are out of juice, find a source of energy! Use a recharging station, eat some Ethereal-friendly food, or syphon some power from lights, a power cell, or an APC (done by right clicking on combat mode)."
 
 /atom/movable/screen/alert/ethereal_overcharge
 	name = "Blood Overcharge"
-	desc = "Your blood's electric charge is becoming dangerously high, find an outlet for your energy. Use Grab Intent on an APC to channel your energy into it."
-	icon_state = "ethereal_overcharge"
+	desc = "Your charge is running dangerously high, find an outlet for your energy! Right click an APC while not in combat mode."
+	icon_state = "cell_overcharge"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked
@@ -648,18 +656,18 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	if(!target)
 		return
-	var/mob/dead/observer/dead_owner = owner
-	if(!istype(dead_owner))
+	var/mob/dead/observer/ghost_owner = owner
+	if(!istype(ghost_owner))
 		return
 	switch(action)
 		if(NOTIFY_ATTACK)
-			target.attack_ghost(dead_owner)
+			target.attack_ghost(ghost_owner)
 		if(NOTIFY_JUMP)
 			var/turf/target_turf = get_turf(target)
 			if(target_turf && isturf(target_turf))
-				dead_owner.forceMove(target_turf)
+				ghost_owner.abstract_move(target_turf)
 		if(NOTIFY_ORBIT)
-			dead_owner.ManualFollow(target)
+			ghost_owner.ManualFollow(target)
 
 //OBJECT-BASED
 
@@ -771,7 +779,7 @@ so as to remain in compliance with the most up-to-date laws."
 		return FALSE
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
 		return FALSE
 	if(master && click_master)
 		return usr.client.Click(master, location, control, params)

@@ -12,6 +12,9 @@
 	var/assoc_controlled_planes = list()
 	for(var/i in controlled_planes)
 		var/atom/movable/screen/plane_master/instance = owner_hud.plane_masters["[i]"]
+		if(!instance) //If we looked for a hud that isn't instanced, just keep going
+			stack_trace("[i] isn't a valid plane master layer for [owner_hud.type], are you sure it exists in the first place?")
+			continue
 		assoc_controlled_planes["[i]"] = instance
 	controlled_planes = assoc_controlled_planes
 
@@ -74,6 +77,18 @@
 
 /atom/movable/plane_master_controller/game
 	name = PLANE_MASTERS_GAME
-	controlled_planes = list(FLOOR_PLANE, GAME_PLANE, LIGHTING_PLANE, EMISSIVE_PLANE, EMISSIVE_UNBLOCKABLE_PLANE)
+	controlled_planes = list(
+		FLOOR_PLANE,
+		OVER_TILE_PLANE,
+		WALL_PLANE,
+		GAME_PLANE,
+		UNDER_FRILL_PLANE,
+		FRILL_PLANE,
+		AREA_PLANE,
+		MASSIVE_OBJ_PLANE,
+		GHOST_PLANE,
+		POINT_PLANE,
+		LIGHTING_PLANE,
+	)
 
 

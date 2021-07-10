@@ -21,7 +21,7 @@
 	if(prob(1))
 		new/obj/effect/particle_effect/smoke(get_turf(src))
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
-		visible_message("<span class='warning'>Oh, ye gods! [src] is ruined! But what if...?</span>")
+		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
 		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
 		"And you call these steamed hams despite the fact that they are obviously microwaved?",
@@ -34,22 +34,17 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
 	foodtypes = MEAT | GRAIN | GROSS
-	var/subjectname = ""
-	var/subjectjob = null
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
-	var/obj/item/food/meat/M = locate(/obj/item/food/meat/steak/plain/human) in contents
-	if(M)
-		subjectname = M.subjectname
-		subjectjob = M.subjectjob
-		if(subjectname)
-			name = "[subjectname] burger"
-		else if(subjectjob)
-			name = "[subjectjob] burger"
-		qdel(M)
-
+	var/obj/item/food/patty/human/human_patty = locate(/obj/item/food/patty/human) in contents
+	if(LAZYLEN(human_patty.custom_materials))
+		for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
+			if(mob_meat_material.subjectname)
+				name = "[mob_meat_material.subjectname] burger"
+			else if(mob_meat_material.subjectjob)
+				name = "[mob_meat_material.subjectjob] burger"
 
 /obj/item/food/burger/corgi
 	name = "corgi burger"
@@ -90,7 +85,7 @@
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/nanomachines = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/cyborg_mutation_nanomachines = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_EXOTIC
@@ -100,7 +95,7 @@
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
 	max_volume = 120
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/nanomachines = 80, /datum/reagent/consumable/nutriment/vitamin = 15)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/cyborg_mutation_nanomachines = 80, /datum/reagent/consumable/nutriment/vitamin = 15)
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 	foodtypes = GRAIN | TOXIC
 
@@ -343,7 +338,7 @@
 	name = "empowered burger"
 	desc = "It's shockingly good, if you live off of electricity that is."
 	icon_state = "empoweredburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/liquidelectricity = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/liquidelectricity/enriched = 5)
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_CHEAP

@@ -157,7 +157,7 @@
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 		if(!L.len)
-			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
+			to_chat(user, span_alert("No active connected stations located."))
 			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in sortList(L)
 		var/obj/machinery/teleport/station/target_station = L[desc]

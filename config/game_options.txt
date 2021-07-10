@@ -223,18 +223,6 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
-## Comment this out to disable the antagonist reputation system. This system rewards players who participate in the game instead of greytiding by giving them slightly higher odds to
-## roll antagonist in subsequent rounds until they get it.
-##
-## For details See the comments for /datum/game_mode/proc/antag_pick in code/game/gamemodes/game_mode.dm
-# USE_ANTAG_REP
-
-## The maximum amount of antagonist reputation tickets a player can bank (not use at once)
-ANTAG_REP_MAXIMUM 200
-
-## The default amount of tickets all users use while rolling
-DEFAULT_ANTAG_TICKETS 100
-
 ## The maximum amount of extra tickets a user may use from their ticket bank in addition to the default tickets
 MAX_TICKETS_PER_ROLL 100
 
@@ -312,7 +300,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
@@ -563,3 +551,15 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
+
+## Which role is required of playtime to be eligible for Maintenance Drones
+## See code/__DEFINES/preferences.dm for available options, use the string portion without quotes
+#DRONE_REQUIRED_ROLE Silicon
+
+## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
+#DRONE_ROLE_PLAYTIME 14
+
+## Uncomment to enable SDQL spells
+## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
+## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
+#SDQL_SPELLS

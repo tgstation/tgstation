@@ -5,10 +5,10 @@
 
 	methods = INJECT
 
-/datum/component/plumbing/iv_drip/Initialize()
+/datum/component/plumbing/iv_drip/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
 	. = ..()
-	
-	recipient_reagents_holder = null
+
+	set_recipient_reagents_holder(null)
 
 /datum/component/plumbing/iv_drip/RegisterWithParent()
 	. = ..()
@@ -25,10 +25,10 @@
 	SIGNAL_HANDLER
 
 	if(attachee?.reagents)
-		recipient_reagents_holder = attachee.reagents
+		set_recipient_reagents_holder(attachee.reagents)
 
 ///IV has been detached, so clear the holder
 /datum/component/plumbing/iv_drip/proc/clear_attached(datum/source)
 	SIGNAL_HANDLER
 
-	recipient_reagents_holder = null
+	set_recipient_reagents_holder(null)

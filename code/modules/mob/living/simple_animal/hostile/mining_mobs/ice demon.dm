@@ -15,7 +15,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"
-	ranged_cooldown_time = 3 SECONDS
+	ranged_cooldown_time = 1.5 SECONDS
 	minimum_distance = 3
 	retreat_distance = 3
 	maxHealth = 150
@@ -26,6 +26,7 @@
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	vision_range = 9
 	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -37,11 +38,14 @@
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = HARD_CRIT
-	is_flying_animal = TRUE
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Distance the demon will teleport from the target
 	var/teleport_distance = 3
+
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Initialize()
+	. = ..()
+	AddElement(/datum/element/simple_flying)
 
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"

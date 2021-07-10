@@ -98,6 +98,10 @@
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
 
+	if(ismovable(loc))
+		var/atom/movable/occupied_space = loc
+		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
+
 	if(temp_delta < 0) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
 			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * delta_time, temp_delta))
@@ -150,9 +154,17 @@
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
+/*
+ * this updates some effects: mostly old stuff such as drunkness, druggy, stuttering, etc.
+ * that should be converted to status effect datums one day.
+ */
 /mob/living/proc/handle_status_effects(delta_time, times_fired)
-	return
+	if(stuttering)
+		stuttering = max(stuttering - (0.5 * delta_time), 0)
+	if(slurring)
+		slurring = max(slurring - (0.5 * delta_time),0)
+	if(cultslurring)
+		cultslurring = max(cultslurring - (0.5 * delta_time), 0)
 
 /mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes

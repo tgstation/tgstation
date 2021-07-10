@@ -12,7 +12,7 @@
 		for(var/turf/check in get_affected_turfs(central_turf,1))
 			var/area/new_area = get_area(check)
 			valid = FALSE // set to false before we check
-			if(check.flags_1 & NO_RUINS_1)
+			if(check.turf_flags & NO_RUINS)
 				break
 			for(var/type in allowed_areas)
 				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
@@ -39,7 +39,7 @@
 		loaded++
 
 		for(var/turf/T in get_affected_turfs(central_turf, 1))
-			T.flags_1 |= NO_RUINS_1
+			T.turf_flags |= NO_RUINS
 
 		new /obj/effect/landmark/ruin(central_turf, src)
 		return central_turf
@@ -52,7 +52,7 @@
 	load(placement)
 	loaded++
 	for(var/turf/T in get_affected_turfs(placement))
-		T.flags_1 |= NO_RUINS_1
+		T.turf_flags |= NO_RUINS
 	var/turf/center = locate(placement.x + round(width/2),placement.y + round(height/2),placement.z)
 	new /obj/effect/landmark/ruin(center, src)
 	return center

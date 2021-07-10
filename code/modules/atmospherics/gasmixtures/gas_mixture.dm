@@ -3,18 +3,7 @@ What are the archived variables for?
 Calculations are done using the archived variables with the results merged into the regular variables.
 This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY 0.0003
-#define MINIMUM_MOLE_COUNT 0.01
-#define MOLAR_ACCURACY  1E-7
-/**
- *I feel the need to document what happens here. Basically this is used
- *catch most rounding errors, however its previous value made it so that
- *once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
- *counts would get rounded away. Thus, we lowered it a few orders of magnitude
- *Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
- *So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
- *and any attempts to fix it just killed atmos. I leave this to a greater man then I
- */
+
 #define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
@@ -36,9 +25,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
+	/// The fire key contains information that might determine the volume of hotspots.
 	var/list/reaction_results
-	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
-	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	/// Used for analyzer feedback - not initialized until its used
+	var/list/analyzer_results
+	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	var/gc_share = FALSE
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -132,6 +124,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/return_volume()
 	return max(0, volume)
 
+/// Gets the gas visuals for everything in this mixture
+/datum/gas_mixture/proc/return_visuals()
+	var/list/output
+	GAS_OVERLAYS(gases, output)
+	return output
+
 /// Calculate thermal energy in joules
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
@@ -177,13 +175,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
+	var/ratio = amount / sum
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
+		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
@@ -251,7 +250,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
-
+	garbage_collect()
+	other.garbage_collect()
 
 ///Creates new, identical gas mixture
 ///Returns: duplicate gas mixture
@@ -441,52 +441,58 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-///Performs various reactions such as combustion or fusion (LOL)
+///Performs various reactions such as combustion and fabrication
 ///Returns: 1 if any reaction took place; 0 otherwise
 /datum/gas_mixture/proc/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
 		return
-	var/list/reactions = list()
-	for(var/G in SSair.gas_reactions)
-		var/datum/gas_reaction/reaction = G
-		if(cached_gases[reaction.major_gas])
-			reactions += G
+
+	var/list/pre_formation = list()
+	var/list/mid_formation = list()
+	var/list/post_formation = list()
+	var/list/fires = list()
+	var/list/gas_reactions = SSair.gas_reactions
+	for(var/gas_id in cached_gases)
+		var/list/reaction_set = gas_reactions[gas_id]
+		if(!reaction_set)
+			continue
+		pre_formation += reaction_set[1]
+		mid_formation += reaction_set[2]
+		post_formation += reaction_set[3]
+		fires += reaction_set[4]
+
+	var/list/reactions = pre_formation + mid_formation + post_formation + fires
 
 	if(!length(reactions))
 		return
 
+	//Fuck you
+	if(cached_gases[/datum/gas/hypernoblium] && cached_gases[/datum/gas/hypernoblium][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
+		return STOP_REACTIONS
+
 	reaction_results = new
-	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be careful
+	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
-	var/ener = THERMAL_ENERGY(src)
-
 	reaction_loop:
-		for(var/r in reactions)
-			var/datum/gas_reaction/reaction = r
+		for(var/datum/gas_reaction/reaction as anything in reactions)
 
-			var/list/min_reqs = reaction.min_requirements
-			if( (min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
-				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
-				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
-			)
+			var/list/reqs = reaction.requirements
+			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
 				continue
 
-			for(var/id in min_reqs)
-				if (id == "TEMP" || id == "ENER" || id == "MAX_TEMP")
+			for(var/id in reqs)
+				if (id == "MIN_TEMP" || id == "MAX_TEMP")
 					continue
-				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
+				if(!cached_gases[id] || cached_gases[id][MOLES] < reqs[id])
 					continue reaction_loop
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
-
 			. |= reaction.react(src, holder)
 
-			if (. & STOP_REACTIONS)
-				break
 
-	if(.) //If we changed the mix to any degree, or if we stopped reacting
+	if(.) //If we changed the mix to any degree
 		garbage_collect()
 
 ///Takes the amount of the gas you want to PP as an argument
@@ -511,7 +517,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 **/
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
-/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null)
 	var/output_starting_pressure = output_air.return_pressure()
 
 	if((target_pressure - output_starting_pressure) < 0.01)
@@ -524,13 +530,17 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
+		if(specific_gas)
+			var/datum/gas_mixture/removed = remove_specific(specific_gas, transfer_moles)
+			output_air.merge(removed)
+			return TRUE
 		var/datum/gas_mixture/removed = remove(transfer_moles)
 		output_air.merge(removed)
 		return TRUE
 	return FALSE
 
 /// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
-/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
 
@@ -547,7 +557,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = remove(transfer_moles)
+		var/datum/gas_mixture/removed = remove(transfer_moles * rate)
 		output_air.merge(removed)
 
 		return TRUE

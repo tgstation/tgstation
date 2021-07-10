@@ -40,8 +40,8 @@
 
 	if(istype(I,/obj/item/forbidden_book))
 		playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
-		anchored = !anchored
-		to_chat(user,"<span class='notice'>You [anchored == FALSE ? "unanchor" : "anchor"] the crucible</span>")
+		set_anchored(!anchored)
+		to_chat(user,span_notice("You [anchored == FALSE ? "unanchor" : "anchor"] the crucible"))
 		return
 
 	if(istype(I,/obj/item/bodypart) || istype(I,/obj/item/organ))
@@ -51,10 +51,10 @@
 			return
 
 		if(current_mass >= max_mass)
-			to_chat(user,"<span class='notice'> Crucible is already full!</span>")
+			to_chat(user,span_notice(" Crucible is already full!"))
 			return
 		playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
-		to_chat(user,"<span class='notice'>Crucible devours [I.name] and fills itself with a little bit of liquid!</span>")
+		to_chat(user,span_notice("Crucible devours [I.name] and fills itself with a little bit of liquid!"))
 		current_mass++
 		qdel(I)
 		update_icon_state()
@@ -69,11 +69,11 @@
 		return
 
 	if(in_use)
-		to_chat(user,"<span class='notice'>Crucible is already in use!</span>")
+		to_chat(user,span_notice("Crucible is already in use!"))
 		return
 
 	if(current_mass < max_mass)
-		to_chat(user,"<span class='notice'>Crucible isn't full! Bring it more organs or bodyparts!</span>")
+		to_chat(user,span_notice("Crucible isn't full! Bring it more organs or bodyparts!"))
 		return
 
 	in_use = TRUE
@@ -93,7 +93,7 @@
 	if(HAS_TRAIT(user,TRAIT_NODISMEMBER))
 		return
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
-	to_chat(user,"<span class='danger'>Crucible grabs your arm and devours it whole!</span>")
+	to_chat(user,span_danger("Crucible grabs your arm and devours it whole!"))
 	var/obj/item/bodypart/arm = user.get_active_hand()
 	arm.dismember()
 	qdel(arm)
@@ -109,14 +109,14 @@
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
 	icon = 'icons/obj/eldritch.dmi'
 	charges = 1
-	/// Weakref containing the owner of the trap
-	var/datum/weakref/owner
+	/// Reference to trap owner mob
+	var/mob/owner
 
-/obj/structure/trap/eldritch/Crossed(atom/movable/AM)
+/obj/structure/trap/eldritch/on_entered(datum/source, atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
 	var/mob/living/living_mob = AM
-	if(living_mob == owner?.resolve() || IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+	if(living_mob == owner || IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
 		return
 	return ..()
 
@@ -126,8 +126,14 @@
 		qdel(src)
 
 ///Proc that sets the owner
-/obj/structure/trap/eldritch/proc/set_owner(mob/owner)
-	src.owner = WEAKREF(owner)
+/obj/structure/trap/eldritch/proc/set_owner(mob/new_owner)
+	owner = new_owner
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/unset_owner)
+
+///Unsets the owner in case of deletion
+/obj/structure/trap/eldritch/proc/unset_owner()
+	SIGNAL_HANDLER
+	owner = null
 
 /obj/structure/trap/eldritch/alert
 	name = "alert carving"

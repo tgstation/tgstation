@@ -63,12 +63,14 @@
 		return FALSE
 	air.merge(giver)
 	update_visuals()
+	air_update_turf(FALSE, FALSE)
 	return TRUE
 
 /turf/open/remove_air(amount)
 	var/datum/gas_mixture/ours = return_air()
 	var/datum/gas_mixture/removed = ours.remove(amount)
 	update_visuals()
+	air_update_turf(FALSE, FALSE)
 	return removed
 
 /turf/open/proc/copy_air_with_tile(turf/open/T)
@@ -125,7 +127,7 @@
 
 /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature)
-	check_atmos_process(null, air, exposed_temperature) //Manually do this to avoid needing to use elements, don't want 200 second atom init times
+	check_atmos_process(src, air, exposed_temperature) //Manually do this to avoid needing to use elements, don't want 200 second atom init times
 
 /turf/proc/archive()
 	temperature_archived = temperature
@@ -139,10 +141,7 @@
 
 
 /turf/open/proc/update_visuals()
-
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
-	var/list/new_overlay_types = list()
-	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
 
 	if(!air) // 2019-05-14: was not able to get this path to fire in testing. Consider removing/looking at callers -Naksu
 		if (atmos_overlay_types)
@@ -153,14 +152,8 @@
 
 	var/list/gases = air.gases
 
-	for(var/id in gases)
-		if (nonoverlaying_gases[id])
-			continue
-		var/gas = gases[id]
-		var/gas_meta = gas[GAS_META]
-		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			new_overlay_types += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+	var/list/new_overlay_types
+	GAS_OVERLAYS(gases, new_overlay_types)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -331,43 +324,6 @@
 	significant_share_ticker = cached_ticker //Save our changes
 	temperature_expose(our_air, our_air.temperature)
 
-////////////////////Excited Group Cleanup///////////////////////
-
-///For dealing with reforming excited groups, this prevents clog in process_cell
-/turf/open/proc/cleanup_group(fire_count, breakdown, dismantle)
-	current_cycle = fire_count + 0.5 //It works, I know it's dumb but it works
-
-	//cache for sanic speed
-	var/list/adjacent_turfs = atmos_adjacent_turfs
-	var/datum/excited_group/our_excited_group = excited_group
-
-	for(var/t in adjacent_turfs)
-		var/turf/open/enemy_tile = t
-
-		if(current_cycle <= enemy_tile.current_cycle)
-			continue
-
-		//cache for sanic speed
-		var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
-		//If we are both in an excited group, and they aren't the same, merge.
-		//Otherwise make/take one to join and get to it
-		if(our_excited_group && enemy_excited_group)
-			if(our_excited_group != enemy_excited_group)
-				//combine groups (this also handles updating the excited_group var of all involved turfs)
-				our_excited_group.merge_groups(enemy_excited_group)
-				our_excited_group = excited_group //update our cache
-		else
-			var/datum/excited_group/EG = our_excited_group || enemy_excited_group || new
-			if(!our_excited_group)
-				EG.add_turf(src)
-			if(!enemy_excited_group && enemy_tile.flags_1 & EXCITED_CLEANUP_1)
-				EG.add_turf(enemy_tile)
-			our_excited_group = excited_group
-	if(our_excited_group)
-		our_excited_group.breakdown_cooldown = breakdown //Update with the old data
-		our_excited_group.dismantle_cooldown = dismantle
-	flags_1 &= ~EXCITED_CLEANUP_1
-
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
@@ -521,16 +477,12 @@
 	garbage_collect()
 
 //Breaks down the excited group, this doesn't sleep the turfs mind, just removes them from the group
-/datum/excited_group/proc/garbage_collect(will_cleanup = FALSE)
+/datum/excited_group/proc/garbage_collect()
 	if(display_id) //If we ever did make those changes
 		hide_turfs()
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
-		if(will_cleanup)
-			T.flags_1 |= EXCITED_CLEANUP_1
-	if(will_cleanup)
-		SSair.add_to_cleanup(src)
 	turf_list.Cut()
 	SSair.excited_groups -= src
 	if(SSair.currentpart == SSAIR_EXCITEDGROUPS)

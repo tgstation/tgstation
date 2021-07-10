@@ -68,4 +68,4 @@
 	return
 
 /obj/machinery/door/password/ex_act(severity, target)
-	return
+	return FALSE

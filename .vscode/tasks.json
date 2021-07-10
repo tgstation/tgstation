@@ -7,14 +7,21 @@
 			"windows": {
 				"command": ".\\tools\\build\\build.bat"
 			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
 			"problemMatcher": [
 				"$dreammaker",
+				"$tsc",
 				"$eslint-stylish"
 			],
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
+			"dependsOn": "dm: reparse",
 			"label": "Build All"
 		},
 		{
@@ -33,10 +40,16 @@
 				"command": ".\\tgui\\bin\\tgui.bat"
 			},
 			"problemMatcher": [
+				"$tsc",
 				"$eslint-stylish"
 			],
 			"group": "build",
 			"label": "tgui: build"
+		},
+		{
+			"command": "${command:dreammaker.reparse}",
+			"group": "build",
+			"label": "dm: reparse"
 		}
 	]
 }

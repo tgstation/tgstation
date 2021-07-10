@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/breath/medical(src)
+		new /obj/item/clothing/mask/breathmuzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -42,7 +42,6 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
-	new /obj/item/storage/box/skillchips/quick(src)
 	return
 
 /obj/structure/closet/secure_closet/psychology
@@ -96,7 +95,6 @@
 	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
-	new /obj/item/storage/box/skillchips/quicker(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 
 /obj/structure/closet/secure_closet/animal

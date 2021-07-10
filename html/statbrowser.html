@@ -12,17 +12,27 @@
 		font-size: 12px !important;
 		margin: 0 !important;
 		padding: 0 !important;
+		overflow-x: hidden;
+		overflow-y: scroll;
 	}
 
 	body.dark {
 		background-color: #131313;
-		color: #abc6ec;
+		color: #b2c4dd;
+		scrollbar-base-color: #1c1c1c;
+		scrollbar-face-color: #3b3b3b;
+		scrollbar-3dlight-color: #252525;
+		scrollbar-highlight-color: #252525;
+		scrollbar-track-color: #1c1c1c;
+		scrollbar-arrow-color: #929292;
+		scrollbar-shadow-color: #3b3b3b;
 	}
 
 	#menu {
 		background-color: #F0F0F0;
 		position: fixed;
 		width: 100%;
+		z-index: 100;
 	}
 
 	.dark #menu {
@@ -39,7 +49,7 @@
 	}
 
 	.dark a {
-		color: #abc6ec;
+		color: #b2c4dd;
 	}
 
 	a:hover, .dark a:hover {
@@ -81,73 +91,115 @@
 
 	.button {
 		background-color: #dfdfdf;
-		border-color: #cecece;
-		border-width: 1px;
-		border-style: solid;
+		border: 1px solid #cecece;
+		border-bottom-width: 2px;
 		color: rgba(0, 0, 0, 0.7);
-		padding: 6px 4px;
+		padding: 6px 4px 4px;
 		text-align: center;
 		text-decoration: none;
 		font-size: 12px;
 		margin: 0;
 		cursor: pointer;
-		transition-duration: 0.25s;
+		transition-duration: 100ms;
 		order: 3;
 		min-width: 40px;
 	}
 
 	.dark button {
-		background-color: #444444;
+		background-color: #222222;
 		border-color: #343434;
-		color: rgba(255, 255, 255, 0.7);
+		color: rgba(255, 255, 255, 0.5);
 	}
 
 	.button:hover {
 		background-color: #ececec;
+		transition-duration: 0;
 	}
 
 	.dark button:hover {
-		background-color:  #4d4d4d;
+		background-color:  #2e2e2e;
 	}
 
 	.button:active, .button.active {
 		background-color: #ffffff;
 		color: black;
-		border-top: 1px solid #cecece;
-		border-left: 1px solid #cecece;
-		border-right: 1px solid #cecece;
-		border-bottom: 1px solid #ffffff;
+		border-top-color: #cecece;
+		border-left-color: #cecece;
+		border-right-color: #cecece;
+		border-bottom-color: #ffffff;
 	}
 
 	.dark .button:active, .dark .button.active {
-		background-color: #131313;
+		background-color: #444444;
 		color: white;
-		border-top: 1px solid #343434;
-		border-left: 1px solid #343434;
-		border-right: 1px solid #343434;
-		border-bottom: 1px solid #131313;
+		border-top-color: #343434;
+		border-left-color: #343434;
+		border-right-color: #343434;
+		border-bottom-color: #ffffff;
 	}
 
 	.grid-container {
-		display: inline-flex;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		align-items: flex-start;
-		min-width: 0;
-		min-height: 0;
-		white-space: pre-wrap;
+		margin: -2px;
+		margin-right: -15px;
 	}
 
 	.grid-item {
-		color: black;
-		width: 150px;
-		font-size: 11px;
-		line-height: 24px;
-		text-align: left;
-		min-width: 0;
-		min-height: 0;
-		white-space: pre-wrap;
-		padding-right: 12px; /* A little more than two spaces, to look good in IE8 where flex-justify does nothing */
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		box-sizing: border-box;
+		overflow: visible;
+		padding: 3px 2px;
+		text-decoration: none;
+	}
+
+	@media only screen and (min-width: 300px) {
+		.grid-item {
+			width: 50%;
+		}
+	}
+
+	@media only screen and (min-width: 430px) {
+		.grid-item {
+			width: 33%;
+		}
+	}
+
+	@media only screen and (min-width: 560px) {
+		.grid-item {
+			width: 25%;
+		}
+	}
+
+	@media only screen and (min-width: 770px) {
+		.grid-item {
+			width: 20%;
+		}
+	}
+
+	.grid-item:hover {
+		z-index: 1;
+	}
+
+	.grid-item:hover .grid-item-text {
+		width: auto;
+		text-decoration: underline;
+	}
+
+	.grid-item-text {
+		display: inline-block;
+		width: 100%;
+		background-color: #ffffff;
+		margin: 0 -6px;
+		padding: 0 6px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		pointer-events: none;
+	}
+
+	.dark .grid-item-text {
+		background-color: #131313;
 	}
 
 	.link {
@@ -247,53 +299,6 @@ if (!String.prototype.trim) {
   }, 0, 'test');
 }())
 
-// Browser passthrough code ---------------------------------------------------
-if (window.location) {
-	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
-	document[addEventListenerKey]("keydown", function(e) {
-		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
-			return;
-		if(e.defaultPrevented)
-			return; // do e.preventDefault() to prevent this behavior.
-		if(e.which) {
-			if(!anti_spam[e.which]) {
-				anti_spam[e.which] = true;
-				var key = String.fromCharCode(e.which);
-				var x = event.x || event.clientX;
-				var y = event.y || event.clientY;
-				if(x || y ) // if either of these exist this is happening after a click
-					return;
-				window.location.href = "byond://winset?command=keyDown " + e.key;
-			}
-		}
-	});
-	document[addEventListenerKey]("keyup", function(e) {
-		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
-			return;
-		if(e.defaultPrevented)
-			return;
-		if(e.which) {
-			anti_spam[e.which] = false;
-			var key = String.fromCharCode(e.which);
-			var x = event.x || event.clientX;
-			var y = event.y || event.clientY;
-			if( x || y ) // if either of these exist this is happening after a click
-				return;
-
-			window.location.href = "byond://winset?command=keyUp " + e.key;
-		}
-	});
-}
-/* document.addEventListener("mousedown", function(e){
- var shiftPressed=0;
- var evt = e?e:window.event;
- shiftPressed=evt.shiftKey;
-  if (shiftPressed) {
-   return false;
-  }
- return true;
-}); */
-
 // Status panel implementation ------------------------------------------------
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
@@ -311,14 +316,73 @@ var turfcontents = [];
 var turfname = "";
 var imageRetryDelay = 500;
 var imageRetryLimit = 50;
-var menu = document.querySelector('#menu');
-var under_menu = document.querySelector('#under_menu');
-var statcontentdiv = document.querySelector('#statcontent');
+var menu = document.getElementById('menu');
+var under_menu = document.getElementById('under_menu');
+var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
+var split_admin_tabs = false;
+
+var connected = false;
+var commandQueue = [];
+
+// Any BYOND verb call must go through this, as if a verb is sent during reconnect then
+// it will cause the reconnect to fail.
+// This function will either call immediately, or queue until
+// BYOND confirms we are connected.
+function send_byond_command(command) {
+	var href = "byond://winset?command=" + command;
+
+	if (connected) {
+		window.location.href = href;
+	} else {
+		commandQueue.push(href);
+	}
+}
+
+// Any BYOND commands that could result in the client's focus changing go through this
+// to ensure that when we relinquish our focus, we don't do it after the result of
+// a command has already taken focus for itself.
+function run_after_focus(callback) {
+	setTimeout(callback, 0);
+}
+
+function connected_to_server() {
+	if (connected) {
+		return;
+	}
+
+	connected = true;
+
+	for (var index = 0; index < commandQueue.length; index++) {
+		// This is just setting it a lot, is this not going to cancel?
+		window.location.href = commandQueue[index];
+	}
+
+	commandQueue = [];
+}
+
+function update_split_admin_tabs(status) {
+	status = (status == true);
+
+	if (split_admin_tabs !== status) {
+		if (split_admin_tabs === true) {
+			removeStatusTab("Events");
+			removeStatusTab("Fun");
+			removeStatusTab("Game");
+		}
+		update_verbs();
+	}
+	split_admin_tabs = status;
+}
 
 function createStatusTab(name) {
-	if (name.indexOf(".") != -1)
-		name = name.split(".")[0];
+	if (name.indexOf(".") != -1) {
+		var splitName = name.split(".");
+		if (split_admin_tabs && splitName[0] === "Admin")
+			name = splitName[1];
+		else
+			name = splitName[0];
+	}
 	if(document.getElementById(name) || name.trim() == "")
 		return;
 	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
@@ -391,6 +455,7 @@ function checkStatusTab() {
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
 			menu.removeChild(menu.children[i]);
 }
+
 function remove_verb(v) {
 	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
 	for(var i = verbs.length - 1; i >= 0; i--){
@@ -408,7 +473,14 @@ function check_verbs() {
 }
 
 function verbs_cat_check(cat) {
-	var tabCat = cat.indexOf(".") != -1 ? cat.split(".")[0] : cat;
+	var tabCat = cat;
+	if (cat.indexOf(".") != -1) {
+		var splitName = cat.split(".");
+		if (split_admin_tabs && splitName[0] === "Admin")
+			tabCat = splitName[1];
+		else
+			tabCat = splitName[0];
+	}
 	var verbs_in_cat = 0;
 	var verbcat = "";
 	if(!verb_tabs.includes(tabCat)){
@@ -417,7 +489,14 @@ function verbs_cat_check(cat) {
 	}
 	for(var v = 0; v < verbs.length; v++){
 		var part = verbs[v];
-		verbcat = part[0].indexOf(".") != -1 ? part[0].split(".")[0] : part[0];
+		verbcat = part[0];
+		if (verbcat.indexOf(".") != -1) {
+			var splitName = verbcat.split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				verbcat = splitName[1];
+			else
+				verbcat = splitName[0];
+		}
 		if(verbcat != tabCat || verbcat.trim() == ""){
 			continue;
 		}
@@ -446,6 +525,11 @@ function wipe_verbs() {
 	checkStatusTab(); // remove all empty verb tabs
 }
 
+function update_verbs() {
+	wipe_verbs();
+	send_byond_command("Update-Verbs");
+}
+
 function add_verb_list(v) {
 	var to_add = JSON.parse(v); // list of a list with category and verb inside it
 	to_add.sort(); // sort what we're adding
@@ -453,7 +537,14 @@ function add_verb_list(v) {
 		var part = to_add[i];
 		if(!part[0])
 			continue;
-		var category = part[0].indexOf(".") == -1 ? part[0] : part[0].split(".")[0];
+		var category = part[0];
+		if (category.indexOf(".") != -1) {
+			var splitName = category.split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				category = splitName[1];
+			else
+				category = splitName[0];
+		}
 		if(findVerbindex(part[1], verbs))
 			continue;
 		if(verb_tabs.includes(category)){
@@ -483,6 +574,7 @@ function remove_verb_list(v) {
 // passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
 // example (IC, Say)
 function init_verbs(c, v) {
+	connected_to_server();
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
 	verb_tabs = JSON.parse(c);
@@ -515,12 +607,12 @@ function SendTabsToByond(){
 }
 
 function SendTabToByond(tab) {
-	window.location.href = "byond://winset?command=Send-Tabs " + tab;
+	send_byond_command("Send-Tabs " + tab);
 }
 
 //Byond can't have this tab anymore since we're removing it
 function TakeTabFromByond(tab) {
-	window.location.href = "byond://winset?command=Remove-Tabs " + tab;
+	send_byond_command("Remove-Tabs " + tab);
 }
 
 function update(global_data, ping_entry, other_entries) {
@@ -624,7 +716,6 @@ function tab_change(tab) {
 		draw_debug();
 	} else if(tab == "Tickets") {
 		draw_tickets();
-	} else if(tab == "Interviews") {
 		draw_interviews();
 	} else if(tab == "SDQL2") {
 		draw_sdql2();
@@ -637,8 +728,9 @@ function tab_change(tab) {
 }
 
 function set_byond_tab(tab){
-	window.location.href = "byond://winset?command=Set-Tab " + tab;
+	send_byond_command("Set-Tab " + tab);
 }
+
 function draw_debug() {
 	statcontentdiv[textContentKey] = "";
 	var wipeverbstabs = document.createElement("div");
@@ -647,12 +739,26 @@ function draw_debug() {
 	link[textContentKey] = "Wipe All Verbs";
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
+	var wipeUpdateVerbsTabs = document.createElement("div");
+	var updateLink = document.createElement("a");
+	updateLink.onclick = function() {update_verbs()};
+	updateLink[textContentKey] = "Wipe and Update All Verbs";
+	wipeUpdateVerbsTabs.appendChild(updateLink);
+	document.getElementById("statcontent").appendChild(wipeUpdateVerbsTabs);
 	var text = document.createElement("div");
 	text[textContentKey] = "Verb Tabs:";
 	document.getElementById("statcontent").appendChild(text);
 	var table1 = document.createElement("table");
 	for(var i=0; i < verb_tabs.length ; i++) {
 		var part = verb_tabs[i];
+		// Hide subgroups except admin subgroups if they are split
+		if (verb_tabs[i].lastIndexOf(".") != -1) {
+			var splitName = verb_tabs[i].split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				part = splitName[1];
+			else
+				continue;
+		}
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
 		td1[textContentKey] = part;
@@ -714,7 +820,7 @@ function draw_status() {
 	}
 	if(verb_tabs.length == 0 || !verbs)
 	{
-		window.location.href = "byond://winset?command=Fix-Stat-Panel";
+		send_byond_command("Fix-Stat-Panel");
 	}
 }
 
@@ -752,11 +858,7 @@ function update_tickets(T){
 }
 function update_interviews(I){
 	interviewManager = JSON.parse(I);
-	if(!verb_tabs.includes("Interviews")) {
-		verb_tabs.push("Interviews");
-		addPermanentTab("Interviews");
-	}
-	if(current_tab == "Interviews")
+	if(current_tab == "Tickets")
 		draw_interviews();
 }
 function update_sdql2(S) {
@@ -792,9 +894,6 @@ function remove_tickets() {
 function remove_interviews() {
 	if(tickets) {
 		tickets = [];
-		removePermanentTab("Interviews");
-		if(current_tab == "Interviews")
-			tab_change("Status");
 	}
 	checkStatusTab();
 }
@@ -812,7 +911,6 @@ function add_admin_tabs(ht) {
 	href_token = ht;
 	addPermanentTab("MC");
 	addPermanentTab("Tickets");
-	addPermanentTab("Interviews");
 }
 function create_listedturf(TN) {
 	remove_listedturf(); // remove the last one if we had one
@@ -871,7 +969,17 @@ function draw_listedturf() {
 			// rather than every onmousedown getting the "part" of the last entry.
 			return function(e) {
 				e.preventDefault();
-				clickcatcher = "?src=" + part[1] + ";statpanel_item_click=1";
+				clickcatcher = "?src=" + part[1];
+				switch(e.button){
+					case 1:
+						clickcatcher += ";statpanel_item_click=middle"
+						break;
+					case 2:
+						clickcatcher += ";statpanel_item_click=right"
+						break;
+					default:
+						clickcatcher += ";statpanel_item_click=left"
+				}
 				if(e.shiftKey){
 					clickcatcher += ";statpanel_item_shiftclick=1";
 				}
@@ -908,7 +1016,7 @@ function draw_sdql2(){
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[2] + ";statpanel_item_click=1";
+			a.href = "?src=" + part[2] + ";statpanel_item_click=left";
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
@@ -934,12 +1042,12 @@ function draw_tickets() {
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
+			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket" ;
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else if(part[3]){
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
+			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
@@ -953,13 +1061,15 @@ function draw_tickets() {
 }
 
 function draw_interviews() {
-	statcontentdiv[textContentKey] = "";
 	var body = document.createElement("div");
+	var header = document.createElement("h3");
+	header[textContentKey] = "Interviews";
+	body.appendChild(header);
 	var manDiv = document.createElement("div");
 	manDiv.className = "interview_panel_controls"
 	var manLink = document.createElement("a");
 	manLink[textContentKey] = "Open Interview Manager Panel";
-	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=1";
+	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
 	manDiv.appendChild(manLink);
 	body.appendChild(manDiv);
 
@@ -991,7 +1101,7 @@ function draw_interviews() {
 		var td = document.createElement("td");
 		var a = document.createElement("a");
 		a[textContentKey] = part["status"];
-		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=1";
+		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
 		td.appendChild(a);
 		tr.appendChild(td);
 		table.appendChild(tr);
@@ -1011,7 +1121,7 @@ function draw_spells(cat) {
 		var td2 = document.createElement("td");
 		if(part[3]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
+			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
 			a[textContentKey] = part[2];
 			td2.appendChild(a);
 		} else {
@@ -1024,16 +1134,34 @@ function draw_spells(cat) {
 	document.getElementById("statcontent").appendChild(table);
 }
 
+function make_verb_onclick(command) {
+	return function() {
+		run_after_focus(function() {
+			send_byond_command(command);
+		});
+	};
+}
+
 function draw_verbs(cat){
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("div");
 	var additions = {}; // additional sub-categories to be rendered
 	table.className = "grid-container";
 	sortVerbs();
+	if (split_admin_tabs && cat.lastIndexOf(".") != -1) {
+		var splitName = cat.split(".");
+		if (splitName[0] === "Admin")
+			cat = splitName[1];
+	}
 	verbs.reverse(); // sort verbs backwards before we draw
 	for (var i = 0; i < verbs.length; ++i) {
 		var part = verbs[i];
 		var name = part[0];
+		if (split_admin_tabs && name.lastIndexOf(".") != -1) {
+			var splitName = name.split(".");
+			if (splitName[0] === "Admin")
+				name = splitName[1];
+		}
 		var command = part[1];
 
 		if (command && name.lastIndexOf(cat, 0) != -1 && (name.length == cat.length || name.charAt(cat.length) == ".")) {
@@ -1045,9 +1173,13 @@ function draw_verbs(cat){
 			}
 
 			var a = document.createElement("a");
-			a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
-			a[textContentKey] = command;
+			a.href = "#"
+			a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
 			a.className = "grid-item";
+			var t = document.createElement("span");
+			t[textContentKey] = command;
+			t.className = "grid-item-text";
+			a.appendChild(t);
 			(subCat ? additions[subCat] : table).appendChild(a);
 		}
 	}
@@ -1093,9 +1225,14 @@ function set_style_sheet(sheet) {
 	head.appendChild(sheetElement);
 }
 
-document[addEventListenerKey]("click", function(e) {
-	window.location.href = "byond://winset?map.focus=true";
-});
+function restoreFocus() {
+	run_after_focus(function() {
+		window.location.href = "byond://winset?map.focus=true";
+	});
+}
+
+document[addEventListenerKey]("mouseup", restoreFocus);
+document[addEventListenerKey]("keyup", restoreFocus);
 
 if(!current_tab) {
 	addPermanentTab("Status");
@@ -1104,7 +1241,7 @@ if(!current_tab) {
 
 window.onload = function() {
 	NotifyByondOnload();
-	};
+};
 
 function NotifyByondOnload() {
 	window.location.href = "byond://winset?command=Panel-Ready";

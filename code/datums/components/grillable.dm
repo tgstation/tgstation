@@ -70,6 +70,9 @@
 	var/atom/original_object = parent
 	var/atom/grilled_result = new cook_result(original_object.loc)
 
+	if(original_object.custom_materials)
+		grilled_result.set_custom_materials(original_object.custom_materials, 1)
+
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 
@@ -81,16 +84,19 @@
 ///Ran when an object almost finishes grilling
 /datum/component/grillable/proc/OnExamine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+
 	if(!current_cook_time) //Not grilled yet
+		if(positive_result)
+			examine_list += span_notice("[parent] can be <b>grilled</b> into \a [initial(cook_result.name)].")
 		return
 
 	if(positive_result)
 		if(current_cook_time <= required_cook_time * 0.75)
-			examine_list += "<span class='notice'>[parent] probably needs to be cooked a bit longer!</span>"
+			examine_list += span_notice("[parent] probably needs to be cooked a bit longer!")
 		else if(current_cook_time <= required_cook_time)
-			examine_list += "<span class='notice'>[parent] seems to be almost finished cooking!</span>"
+			examine_list += span_notice("[parent] seems to be almost finished cooking!")
 	else
-		examine_list += "<span class='danger'>[parent] should probably not be cooked for much longer!</span>"
+		examine_list += span_danger("[parent] should probably not be cooked for much longer!")
 
 ///Ran when an object moves from the grill
 /datum/component/grillable/proc/OnMoved(atom/A, atom/OldLoc, Dir, Forced)

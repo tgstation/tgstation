@@ -29,6 +29,7 @@
 					CAT_BURGER,
 					CAT_CAKE,
 					CAT_EGG,
+					CAT_LIZARD,
 					CAT_ICE,
 					CAT_MEAT,
 					CAT_MISCFOOD,
@@ -195,6 +196,10 @@
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
+			if(R.one_per_turf)
+				for(var/content in get_turf(a))
+					if(istype(content, R.result))
+						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
 			if(ismob(a) && !do_after(a, R.time, target = a))
 				return "."
@@ -438,10 +443,10 @@
 					user.put_in_hands(result)
 				else
 					result.forceMove(user.drop_location())
-				to_chat(user, "<span class='notice'>[TR.name] constructed.</span>")
+				to_chat(user, span_notice("[TR.name] constructed."))
 				TR.on_craft_completion(user, result)
 			else
-				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
+				to_chat(user, span_warning("Construction failed[result]"))
 			busy = FALSE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only

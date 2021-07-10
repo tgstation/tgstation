@@ -4,6 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 20
+	dynamic_should_hijack = TRUE
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
@@ -24,7 +25,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, null, ROLE_SPACE_DRAGON)
+	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

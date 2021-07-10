@@ -8,10 +8,10 @@
 	var/flames = -1
 
 /datum/buildmode_mode/boom/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Mouse Button on obj  = Kaboom</span>")
-	to_chat(c, "<span class='notice'>NOTE: Using the \"Config/Launch Supplypod\" verb allows you to do this in an IC way (i.e., making a cruise missile come down from the sky and explode wherever you click!)</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c, span_notice("***********************************************************"))
+	to_chat(c, span_notice("Mouse Button on obj  = Kaboom"))
+	to_chat(c, span_notice("NOTE: Using the \"Config/Launch Supplypod\" verb allows you to do this in an IC way (i.e., making a cruise missile come down from the sky and explode wherever you click!)"))
+	to_chat(c, span_notice("***********************************************************"))
 
 /datum/buildmode_mode/boom/change_settings(client/c)
 	devastation = input(c, "Range of total devastation. -1 to none", text("Input")) as num|null
@@ -34,5 +34,5 @@
 	var/list/modifiers = params2list(params)
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		explosion(object, devastation, heavy, light, flash, FALSE, TRUE, flames)
+		explosion(object, devastation, heavy, light, flames, flash, adminlog = FALSE, ignorecap = TRUE)
 		log_admin("Build Mode: [key_name(c)] caused an explosion(dev=[devastation], hvy=[heavy], lgt=[light], flash=[flash], flames=[flames]) at [AREACOORD(object)]")

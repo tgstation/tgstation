@@ -11,6 +11,8 @@
 	var/static/list/shortcuts = list(
 		"meth" = /datum/reagent/drug/methamphetamine
 	)
+	///The purity of the created reagent in % (purity uses 0-1 values)
+	var/purity = 100
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -39,17 +41,30 @@
 					return
 				else if(!beaker.reagents && !QDELETED(beaker))
 					beaker.create_reagents(beaker.volume)
-				beaker.reagents.add_reagent(input_reagent, amount)
+				beaker.reagents.add_reagent(input_reagent, amount, added_purity = (purity/100))
 		if("makecup")
 			if(beaker)
 				return
 			beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(src)
-			visible_message("<span class='notice'>[src] dispenses a bluespace beaker.</span>")
+			visible_message(span_notice("[src] dispenses a bluespace beaker."))
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)
 				amount = input
+		if("purity")
+			var/input = text2num(params["amount"])
+			if(input)
+				purity = input
 	update_appearance()
+
+/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
+	QDEL_NULL(beaker)
+	return ..()
+
+/obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
+	. = ..()
+	.["purity"] = purity
+	return .
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE

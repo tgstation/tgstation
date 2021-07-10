@@ -14,10 +14,82 @@
 	circuit = /obj/item/circuitboard/computer/crew
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/crew/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/medical_console_data,
+	))
+
+/obj/item/circuit_component/medical_console_data
+	display_name = "Crew Monitoring Data"
+	display_desc = "Outputs the medical statuses of people on the crew monitoring computer, where it can then be filtered with a Select Query component."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	/// The records retrieved
+	var/datum/port/output/records
+
+	var/obj/machinery/computer/crew/attached_console
+
+/obj/item/circuit_component/medical_console_data/Initialize()
+	. = ..()
+	records = add_output_port("Crew Monitoring Data", PORT_TYPE_TABLE)
+
+/obj/item/circuit_component/medical_console_data/Destroy()
+	records = null
+	return ..()
+
+
+/obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/crew))
+		attached_console = parent
+
+/obj/item/circuit_component/medical_console_data/unregister_usb_parent(atom/movable/parent)
+	attached_console = null
+	return ..()
+
+/obj/item/circuit_component/medical_console_data/get_ui_notices()
+	. = ..()
+	. += create_table_notices(list(
+		"name",
+		"job",
+		"life_status",
+		"suffocation",
+		"toxin",
+		"burn",
+		"brute",
+		"location",
+	))
+
+
+/obj/item/circuit_component/medical_console_data/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
+
+	if(!attached_console || !GLOB.crewmonitor)
+		return
+
+	var/list/new_table = list()
+	for(var/list/player_record as anything in GLOB.crewmonitor.update_data(attached_console.z))
+		var/list/entry = list()
+		entry["name"] = player_record["name"]
+		entry["job"] = player_record["assignment"]
+		entry["life_status"] = player_record["life_status"]
+		entry["suffocation"] = player_record["oxydam"]
+		entry["toxin"] = player_record["toxdam"]
+		entry["burn"] = player_record["burndam"]
+		entry["brute"] = player_record["brutedam"]
+		entry["location"] = player_record["area"]
+
+		new_table += list(entry)
+
+	records.set_output(new_table)
+
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/crew/interact(mob/user)
+/obj/machinery/computer/crew/ui_interact(mob/user)
 	GLOB.crewmonitor.show(user,src)
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
@@ -38,7 +110,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		"Head of Security" = 10,
 		"Warden" = 11,
 		"Security Officer" = 12,
-		"Detective" = 13,
+		"Security Officer (Medical)" = 13,
+		"Security Officer (Engineering)" = 14,
+		"Security Officer (Science)" = 15,
+		"Security Officer (Cargo)" = 16,
+		"Detective" = 17,
 		// 20-29: Medbay
 		"Chief Medical Officer" = 20,
 		"Chemist" = 21,

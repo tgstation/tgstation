@@ -23,6 +23,7 @@
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	speed = 0
@@ -81,6 +82,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	status_flags = 0
 	var/projectile_deflect_chance = 0
 
@@ -132,7 +134,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/projectile/Proj)
 	if(prob(projectile_deflect_chance))
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+		visible_message(span_danger("[src] blocks [Proj] with its shield!"))
 		return BULLET_ACT_BLOCK
 	return ..()
 
@@ -302,11 +304,11 @@
 	attack_verb_continuous = "cuts"
 	attack_verb_simple = "cut"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(ROLE_SYNDICATE)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
-	is_flying_animal = TRUE
 	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
@@ -316,4 +318,5 @@
 
 /mob/living/simple_animal/hostile/viscerator/Initialize()
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)

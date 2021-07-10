@@ -24,7 +24,6 @@
 	desc = "Nutritious!"
 	icon_state = "berrypile"
 	gender = PLURAL
-	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
@@ -47,6 +46,7 @@
 	name = "bunch of poison-berries"
 	desc = "Taste so good, you might die!"
 	icon_state = "poisonberrypile"
+	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
 	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
 	tastes = list("poison-berry" = 1)
@@ -72,6 +72,7 @@
 	name = "bunch of death-berries"
 	desc = "Taste so good, you will die!"
 	icon_state = "deathberrypile"
+	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
@@ -97,6 +98,7 @@
 	seed = /obj/item/seeds/berry/glow
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
+	bite_consumption_mod = 3
 	icon_state = "glowberrypile"
 	foodtypes = FRUIT
 	tastes = list("glow-berry" = 1)
@@ -146,7 +148,7 @@
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/food/grown/bluecherries
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07, /datum/reagent/oxygen = 0.07)
 	rarity = 10
 
 /obj/item/food/grown/bluecherries
@@ -234,5 +236,6 @@
 	seed = /obj/item/seeds/grape/green
 	name = "bunch of green grapes"
 	icon_state = "greengrapes"
+	bite_consumption_mod = 3
 	tastes = list("green grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/cognac

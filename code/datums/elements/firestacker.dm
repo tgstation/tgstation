@@ -20,7 +20,7 @@
 		RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/item_attack, override = TRUE)
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/item_attack_self, override = TRUE)
 
-/datum/element/firestacker/Detach(datum/source, force)
+/datum/element/firestacker/Detach(datum/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_SELF))
 

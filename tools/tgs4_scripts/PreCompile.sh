@@ -18,9 +18,11 @@ has_git="$(command -v git)"
 has_cargo="$(command -v ~/.cargo/bin/cargo)"
 has_sudo="$(command -v sudo)"
 has_grep="$(command -v grep)"
+has_youtubedl="$(command -v youtube-dl)"
+has_pip3="$(command -v pip3)"
 set -e
 
-# install cargo if needful
+# install cargo if needed
 if ! [ -x "$has_cargo" ]; then
 	echo "Installing rust..."
 	curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -44,9 +46,8 @@ if ! ( [ -x "$has_git" ] && [ -x "$has_grep" ] && [ -f "/usr/lib/i386-linux-gnu/
 fi
 dpkg --add-architecture i386
 apt-get update
-#apt-get upgrade -y
-apt-get install -y lib32z1 pkg-config libssl-dev:i386 libssl-dev
-#update rust-g
+apt-get install -y lib32z1 pkg-config libssl-dev:i386 libssl-dev libssl1.1:i386
+# update rust-g
 if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."
 	git clone https://github.com/tgstation/rust-g
@@ -65,8 +66,23 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
+# install or update youtube-dl when not present, or if it is present with pip3,
+# which we assume was used to install it
+if ! [ -x "$has_youtubedl" ]; then
+	echo "Installing youtube-dl with pip3..."
+	if ! [ -x "$has_sudo" ]; then
+		apt-get install -y python3 python3-pip
+	else
+		sudo apt-get install -y python3 python3-pip
+	fi
+	pip3 install youtube-dl
+elif [ -x "$has_pip3" ]; then
+	echo "Ensuring youtube-dl is up-to-date with pip3..."
+	pip3 install youtube-dl -U
+fi
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
 chmod +x tools/bootstrap/node  # Workaround for https://github.com/tgstation/tgstation-server/issues/1167
-env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 CBT_BUILD_MODE="TGS" tools/bootstrap/node tools/build/build.js

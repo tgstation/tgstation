@@ -1,4 +1,0 @@
-author: "mozi_h"
-delete-after: True
-changes: 
-  - bugfix: "Sheets of carbon will no longer be infinite or invisible when copying."

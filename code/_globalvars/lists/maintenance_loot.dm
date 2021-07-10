@@ -23,7 +23,6 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/chips = 1,
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/sosjerky = 1,
-		/obj/item/trash/plate = 1,
 		/obj/item/trash/pistachios = 1,
 
 		/obj/item/poster/random_contraband = 1,
@@ -339,7 +338,6 @@ GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when s
 			/obj/item/trash/candy,
 			/obj/item/trash/chips,
 			/obj/item/trash/pistachios,
-			/obj/item/trash/plate,
 			/obj/item/trash/popcorn,
 			/obj/item/trash/raisins,
 			/obj/item/trash/sosjerky,

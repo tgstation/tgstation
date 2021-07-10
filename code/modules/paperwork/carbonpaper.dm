@@ -17,9 +17,15 @@
 		icon_state = "[icon_state]_words"
 	return ..()
 
+/obj/item/paper/carbon/examine()
+	. = ..()
+	if(copied || iscopy)
+		return
+	. += span_notice("Right-click to tear off the carbon-copy (you must use both hands).")
+
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
 	if(copied || iscopy)
-		to_chat(user, "<span class='notice'>There are no more carbon copies attached to this paper!</span>")
+		to_chat(user, span_notice("There are no more carbon copies attached to this paper!"))
 	else
 		var/obj/item/paper/carbon/C = src
 		var/copycontents = C.info
@@ -31,15 +37,18 @@
 			Copy.info += copycontents
 			Copy.info += "</font>"
 			Copy.name = "Copy - [C.name]"
-		to_chat(user, "<span class='notice'>You tear off the carbon-copy!</span>")
+		to_chat(user, span_notice("You tear off the carbon-copy!"))
 		C.copied = TRUE
 		Copy.iscopy = TRUE
 		Copy.update_icon_state()
 		C.update_icon_state()
 		user.put_in_hands(Copy)
 
-/obj/item/paper/carbon/attack_hand(mob/living/user, list/modifiers)
+/obj/item/paper/carbon/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(loc == user && user.is_holding(src))
 		removecopy(user)
-		return
-	return ..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

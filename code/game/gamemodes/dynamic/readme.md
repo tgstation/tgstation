@@ -168,3 +168,17 @@ The "Dynamic" key has the following configurable values:
 - `threat_curve_width` - A number between 0.5 and 4. Higher value will favour extreme rounds and lower value rounds closer to the average.
 - `roundstart_split_curve_centre` - A number between -5 and +5. Equivalent to threat_curve_centre, but for the budget split. A negative value will weigh towards midround rulesets, and a positive value will weight towards roundstart ones.
 - `roundstart_split_curve_width` - A number between 0.5 and 4. Equivalent to threat_curve_width, but for the budget split. Higher value will favour more variance in splits and lower value rounds closer to the average.
+- `random_event_hijack_minimum` - The minimum amount of time for antag random events to be hijacked. (See [Random Event Hijacking](#random-event-hijacking))
+- `random_event_hijack_maximum` - The maximum amount of time for antag random events to be hijacked. (See [Random Event Hijacking](#random-event-hijacking))
+- `hijacked_random_event_injection_chance` - The amount of injection chance to give to Dynamic when a random event is hijacked. (See [Random Event Hijacking](#random-event-hijacking))
+
+## Random Event "Hijacking"
+Random events have the potential to be hijacked by Dynamic to keep the pace of midround injections, while also allowing greenshifts to contain some antagonists.
+
+`/datum/round_event_control/dynamic_should_hijack` is a variable to random events to allow Dynamic to hijack them, and defaults to FALSE. This is set to TRUE for random events that spawn antagonists.
+
+In `/datum/game_mode/dynamic/on_pre_random_event` (in `dynamic_hijacking.dm`), Dynamic hooks to random events. If the `dynamic_should_hijack` variable is TRUE, the following sequence of events occurs:
+
+![Flow chart to describe the chain of events for Dynamic 2021 to take](https://user-images.githubusercontent.com/35135081/109071468-9cab7e00-76a8-11eb-8f9f-2b920c602ef4.png)
+
+`n` is a random value between `random_event_hijack_minimum` and `random_event_hijack_maximum`. Injection chance, should it need to be raised, is increased by `hijacked_random_event_injection_chance`.

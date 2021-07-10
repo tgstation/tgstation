@@ -17,11 +17,11 @@
 		return
 	var/msg
 	if(!can_cast(user))
-		msg = "<span class='warning'>You can no longer cast [name]!</span>"
+		msg = span_warning("You can no longer cast [name]!")
 		remove_ranged_ability(msg)
 		return
 	if(active)
-		msg = "<span class='notice'>[deactive_msg]</span>"
+		msg = span_notice("[deactive_msg]")
 		if(charge_type == "recharge")
 			var/refund_percent = current_amount/projectile_amount
 			charge_counter = charge_max * refund_percent
@@ -29,7 +29,7 @@
 		remove_ranged_ability(msg)
 		on_deactivation(user)
 	else
-		msg = "<span class='notice'>[active_msg] <B>Left-click to shoot it at a target!</B></span>"
+		msg = span_notice("[active_msg] <B>Left-click to shoot it at a target!</B>")
 		current_amount = projectile_amount
 		add_ranged_ability(user, msg, TRUE)
 		on_activation(user)
@@ -93,7 +93,7 @@
 /obj/effect/proc_holder/spell/aimed/lightningbolt
 	name = "Lightning Bolt"
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "P'WAH, UNLIM'TED P'WAH"
@@ -111,7 +111,7 @@
 /obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"
 	desc = "This spell fires an explosive fireball at a target."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 60
 	clothes_req = FALSE
 	invocation = "ONI SOMA"
@@ -134,7 +134,7 @@
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 50
 	clothes_req = FALSE
 	invocation = "Sigi'lu M'Fan 'Tasia"

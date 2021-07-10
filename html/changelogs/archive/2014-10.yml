@@ -1,0 +1,200 @@
+2014-10-01:
+  Cheridan:
+  - rscadd: Experienced smugglers have joined the Syndicate, adding their bag of tricks
+      to its arsenal. These tricky pouches can even fit under floor plating!
+  Ikarrus:
+  - wip: Adds Gang War, a new game mode still in alpha development.
+  Incoming5643:
+  - tweak: After a public relations nightmare in which a horde of 30 assistants violently
+      dismembered a sole commander the revolution has begin tactically reducing their
+      initial presence in stations with weak command structures. Should stations add
+      to their command staff during the shift additional support will be provided.
+  - tweak: Too many instances of crying CMOs hiding in the lockers of supposedly secured
+      revoulutionary stations has lead to a crackdown on revolutionary policy. You
+      must kill or maroon the entire command staff, reguardless of when they reached
+      the station.
+  - rscadd: Intense study into the underlying structure of the universe has revealed
+      that everything fits into a massive SPACECUBE. This deep and profound understanding
+      has led to a revolution in cross surface movement, and spacemen can look forward
+      to a new era of predictable and safe space-fairing.
+  Jordie0608:
+  - tweak: Grille damage update, humans now deal less unarmed damage to grilles while
+      projectiles and items deal more.
+  - tweak: Replaced all AI turrets with porta-turrets that work on LoS instead of
+      area and can be individually configured
+  Miauw:
+  - bugfix: Voice changer masks work again.
+  - tweak: You can now turn voice changer masks on/off by activating them in your
+      hand. They start off.
+  - experiment: The amount of TC has been increased to 20, but the price of all items
+      has been doubled as well
+  - experiment: With this, the prices of stealthy items has been slightly decreased
+      and the prices of offensive items slightly increased (+/- 1 TC)
+  RemieRichards, JJRcop:
+  - rscadd: New research in the area of robotics has been published on Maintenance
+      Drones, little robots capable of repairing and improving the station. Unfortunately,
+      all of the research was lost in a catastrophic server fire, but we know they
+      can be made, so it's up to <b><i>you</i></b> to re-discover them! Make us proud!
+  phil235:
+  - experiment: Changed all clone damage descriptions to use the term cellular damage
+      to avoid confusion with genetics mutations.
+2014-10-05:
+  Ikarrus:
+  - bugfix: Character Save Files will now remember Species.
+  Miauw:
+  - soundadd: Added 5 new maintenance ambience tracks, made by Cuboos.
+  Nobalm:
+  - rscadd: Added examine descriptions to twenty eight objects.
+  Paprika:
+  - experiment: Due to some payroll cuts affecting lower-rank crewmembers on Space
+      Station 13, we fear that uprisings and mutinies might be approaching. To help
+      defend themselves, all heads of staff have been given telescopic batons to subdue
+      attackers should they be assaulted during their shifts.
+  - bugfix: Toolbelts can now hold pocket fire extinguishers. Atmos technicians spawn
+      with them.
+  - rscadd: Remember those magboots we had our undercover agents steal? Well we've
+      finally reverse engineered them. Not only that, but we gave them a killer paintjob.
+      They will be available in the uplinks of boarding parties we send out to Nanoscum
+      stations.
+  - rscadd: Listen up, Marauders! The Syndicate has recently cut back funding into
+      boarding parties. What this means is no more hi-tech fancy energy guns. We've
+      had to roll back to using cheaper, mass-produced automatic shotguns. But in
+      retrospect, could this possibly be a downgrade?
+2014-10-08:
+  Cheridan:
+  - tweak: Flash mechanics changed. Instead of a knockdown effect, it will cause a
+      stumbling effect. This includes area-flashing. The five-use-per-minute limit
+      has been removed. "Synthetic" flashes made in the protolathe are now normal
+      flashes.
+  Paprika:
+  - rscadd: Added a unique shield to the Head of Security's locker. It can be concealed
+      for storage and activated like an energy shield, but functions like a riot shield.
+      It can also be made at the protolathe.
+  - rscadd: 'Marauders: Due to your extremely great performance as of late, we''ve
+      added a new equipment room on Mother Base. A lot of your equipment has been
+      moved to this room, as well as some new equipment added onto the Mothership.
+      Take some extra time to familiarize yourself with the placement of your equipment.'
+  - rscadd: Oh, and you guys have a space carp now too.
+  Paprka:
+  - rscadd: Added jumpsuit adjusting. Adjust your jumpsuit to wear it more casually
+      by rolling it down or roll up those sleeves of that hard-worn suit!
+  - rscadd: Added a grey alternative to the detective's suit and trenchcoat. Now you
+      can be a noir private investigator!
+  Tkdrg:
+  - rscadd: Space Station 13 has been deployed with transit tube dispensers. Central
+      Command encourages the engineering department to repair and improve the station
+      using this equipment.
+2014-10-09:
+  Paprika:
+  - rscadd: Added inaprovaline MediPens (autoinjectors) that replace inaprovaline
+      syringes in medkits. Like the syringes, these can be used to stabilize patients
+      in critical condition, but require no medical knowledge to use.
+  - experiment: Reverted the mining scanner to a manual scanner.
+  - bugfix: Buffed the rate of the automatic scanner
+  - rscadd: Added automatic scanner to equipment locker. It is also available by redeeming
+      your voucher.
+  - bugfix: Reduced the size of the mining jetpack, it now fits in backpacks. The
+      capacity of the jetpack has been reduced as well, however.
+  - experiment: Removed resonator from the mining voucher redemption. Replaced it
+      with a mining drill.
+2014-10-19:
+  Donkie:
+  - rscadd: Major atmos update. Featuring pretty colors.
+  - rscadd: 4-Way pipes added.
+  - rscadd: Flip-able trinary devices (mixer &amp; filter).
+  - rscadd: Pipe-painter added.
+  - tweak: Most pipe icons have been tweaked with shading and such, making it look
+      more uniform.
+  JJRcop:
+  - rscadd: We have managed to re-discover drones! We improved the formula, and have
+      discovered some cool stuff.
+  - rscadd: After some fiddling with audio recognition, drones can now understand
+      human speech!
+  - rscadd: One of our engineers found some screws that were loose on some of our
+      tests, screwing them in made the drone work as if it had just come out of robotics.
+  - tweak: We had to sacrifice some of our NT brand EMP protection for the speech
+      recognition, so drones can get damaged if subjected to heavy EMP radiation.
+  - bugfix: We figured out why drones couldn't remove objects from people, that has
+      been fixed.
+  - bugfix: The standby light wasn't wired correctly.
+  - rscdel: Unfortunately one of our assistants tasked with transporting the only
+      copy of the data dropped the flash drive in hot water because he wanted to see
+      what "drone tea" tasted like. You'll have to discover them again.
+  Lo6a4evskiy:
+  - rscadd: Station's crayons have been upgraded to the version 2.0 of ColourOS. Don't
+      worry, they are still edible!
+  - tweak: Many items now have different stripping delays. Heavier and more armored
+      pieces of clothing are generally more difficult to take off someone else, while
+      smaller items can be very easy to snatch. Pockets always take 4 seconds to search.
+  MrPerson:
+  - rscadd: Implants are activated via action buttons on the top-left corner of your
+      screen instead of emotes.
+  Paprika:
+  - rscadd: Added zipties for security and nuke operatives. These have a slightly
+      shorter 'breakout time' as normal cuffs but they are destroyed upon removal.
+      Beepsky and sec borgs now use these by default.
+  - bugfix: Changed the medical HUD in the tactical medkit to a night vision HUD so
+      syndicate medics don't stumble around in the dark. Can be purchased through
+      nuke op uplinks.
+  - rscadd: Added a second roboticist roundstart job slot.
+  - rscadd: Added a third cargo tech job slot.
+  Paprka:
+  - rscadd: Added undershirts as a companion piece to jumpsuit adjusting. Beat the
+      heat with a comfortable tank top, or warm up with an extra layer tshirt!
+  - rscadd: Added a holographic sign projector to replace the old wet floor signs
+      to encourage janitors to warn crewmembers about wet floors.
+  optimumtact:
+  - rscadd: Medical supplies crate now comes with a boxy full of bodybags
+2014-10-27:
+  Jordie0608:
+  - rscadd: Adds a new riot shotgun that spawns in the armory with a 6 round beanbag
+      magazine.
+  Paprika:
+  - experiment: Allowed constructs to assist in activating most runes. This includes
+      conversion runes, but does NOT include sacrifice runes.
+  Patchouli Knowledge:
+  - rscadd: In light of the recent achievements of the Robotics department, new and
+      upgraded exosuit schematics were delivered to SS13 exosuit fabricators as a
+      reward from CentComm.
+  - rscadd: The countless hours of research, experimentation, and reverse-engineering
+      of wrecks from the mining asteroid have paid off - the Research team has rediscovered
+      the process of building Phazon exosuits. The parts and circuits have been made
+      available in the exofabs and circuit printers.
+  - rscadd: The APLU Ripley exosuit has been refitted with asteroid mining purposes
+      in mind. Its armour plating will provide extra protection against the brute
+      attacks of asteroid alien lifeforms, and protect from gibtonite explosions.
+      The leg servos were upgraded to provide faster movement.
+  - rscadd: There are rumours of some creative shaft miners discovering a way of augmenting
+      APLU Ripley armour with trophy hides from goliath-type asteroid lifeforms...
+  - tweak: Durand construction routines now require a phasic scanner module and a
+      super capacitor to match Nanotrasen industry standards.
+  - tweak: The exosuit fire extinguisher now boasts a larger watertank, and carries
+      a whole 1000u of water from the old 200u tank.
+  - tweak: The exosuit plasma converter's efficiency has been vastly improved upon,
+      and its fuel consumption has been cut to nearly half of old values.
+  - bugfix: The exosuit sleeper interiors have been refitted to allow the occupants
+      more freedom of movement, and the occupants may now eject at will.
+  - bugfix: The armour plating on all exosuits was fitted with reactive deflection
+      systems specifically designed to stop the rapid slashes from xenomorph threats.
+  - bugfix: The Firefighter Ripley chassis were moved from the Exosuit Equipment section
+      to the APLU Ripley section of exofab menus.
+  - spellcheck: Fixed some minor errors in the exosuit construction message syntax.
+  phil235:
+  - rscadd: Closets and its children can no longer contain a near infinite amount
+      of mobs. Large mobs (juggernaut, alien emperess, etc) don't fit, small mobs
+      (mouse, parrot, etc) still fit in the same amounts, human-sized mob (humanoid,
+      slime, etc) fit but maximum two per body bag and three for all the other closets.
+      Adding bluespace body bag to R&amp;D, it can hold even large mobs and in large
+      amounts.
+  - experiment: girders and displaced girders now have a chance to let projectiles
+      pass through them.
+2014-10-30:
+  MrPerson:
+  - rscadd: Everything now drifts in space, not just mobs.
+  - rscadd: Mechs are just as maneuverable in space as you are.
+  - tweak: Being weightless now slows movement down by a lot rather than speeding
+      it up. Having your hands full will make movement even slower.
+  - rscdel: Removed spaceslipping (You slipped! x1000)
+  - bugfix: Jetpacking after being thrown out a mass driver will cancel out your momentum.
+  - bugfix: Shooting a gun causes you to drift the other direction like spraying a
+      fire extinguisher.

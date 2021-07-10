@@ -39,6 +39,11 @@
 	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent
 
+/mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
+	. = ..()
+	if(attack_reagent)
+		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -50,13 +55,6 @@
 		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)
 		new banana_type(pick(adjacent))
 		banana_time = world.time + rand(30,60)
-
-/mob/living/simple_animal/hostile/retaliate/clown/AttackingTarget()
-	. = ..()
-	if(attack_reagent && . && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(attack_reagent, rand(1,5))
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
@@ -311,8 +309,6 @@
 	attack_verb_simple = "slam"
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
 	deathsound = 'sound/misc/sadtrombone.ogg'
-	food_type = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips)
-	tame_chance = 30
 	///This is the list of items we are ready to regurgitate,
 	var/list/prank_pouch = list()
 	///This ability lets you fire a single random item from your pouch.
@@ -323,6 +319,8 @@
 	my_regurgitate = new
 	AddAbility(my_regurgitate)
 	add_cell_sample()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
+
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -350,7 +348,7 @@
 
 	if(IS_EDIBLE(potential_food))
 		if(prank_pouch.len >= 8)
-			to_chat(src, "<span class='warning'>Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now.</span>")
+			to_chat(src, span_warning("Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now."))
 			return FALSE
 		return TRUE
 
@@ -361,7 +359,7 @@
 								/obj/item/food/grown/tomato,
 								/obj/item/food/meatclown)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
@@ -376,8 +374,7 @@
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/tamed()
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
@@ -385,9 +382,9 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/AM, atom/newLoc)
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/gone, direction)
 	. = ..()
-	prank_pouch -= AM
+	prank_pouch -= gone
 
 ///This ability will let you fire one random item from your pouch,
 /obj/effect/proc_holder/regurgitate
@@ -408,10 +405,10 @@
 /obj/effect/proc_holder/regurgitate/fire(mob/living/carbon/user)
 	if(active)
 		user.icon_state = initial(user.icon_state)
-		remove_ranged_ability("<span class='notice'>Your throat muscles relax.</span>")
+		remove_ranged_ability(span_notice("Your throat muscles relax."))
 	else
 		user.icon_state = "glutton_tongue"
-		add_ranged_ability(user, "<span class='notice'>Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B></span>", TRUE)
+		add_ranged_ability(user, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"), TRUE)
 
 /obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
@@ -427,7 +424,7 @@
 	if(!pouch_owner.prank_pouch.len)
 		//active = FALSE
 		pouch_owner.icon_state = "glutton"
-		remove_ranged_ability("<span class='notice'>Your prank pouch is empty,.</span>")
+		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
 		return
 
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)

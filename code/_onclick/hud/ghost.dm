@@ -1,16 +1,17 @@
 /atom/movable/screen/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
 
-/atom/movable/screen/ghost/MouseEntered()
+/atom/movable/screen/ghost/MouseEntered(location, control, params)
+	. = ..()
 	flick(icon_state + "_anim", src)
 
-/atom/movable/screen/ghost/jumptomob
-	name = "Jump to mob"
-	icon_state = "jumptomob"
+/atom/movable/screen/ghost/spawners_menu
+	name = "Spawners menu"
+	icon_state = "spawners"
 
-/atom/movable/screen/ghost/jumptomob/Click()
-	var/mob/dead/observer/G = usr
-	G.jumptomob()
+/atom/movable/screen/ghost/spawners_menu/Click()
+	var/mob/dead/observer/observer = usr
+	observer.open_spawners_menu()
 
 /atom/movable/screen/ghost/orbit
 	name = "Orbit"
@@ -56,8 +57,8 @@
 	..()
 	var/atom/movable/screen/using
 
-	using = new /atom/movable/screen/ghost/jumptomob()
-	using.screen_loc = ui_ghost_jumptomob
+	using = new /atom/movable/screen/ghost/spawners_menu()
+	using.screen_loc = ui_ghost_spawners_menu
 	using.hud = src
 	static_inventory += using
 
@@ -87,6 +88,7 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/language_menu
+	using.screen_loc = 	ui_ghost_language_menu
 	using.icon = ui_style
 	using.hud = src
 	static_inventory += using

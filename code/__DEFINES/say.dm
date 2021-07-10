@@ -39,6 +39,9 @@
 #define MODE_DEADMIN "deadmin"
 #define MODE_KEY_DEADMIN "d"
 
+#define MODE_PUPPET "puppet"
+#define MODE_KEY_PUPPET "j"
+
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
@@ -92,9 +95,7 @@
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)
 
-#define INVOCATION_SHOUT "shout"
-#define INVOCATION_EMOTE "emote"
-#define INVOCATION_WHISPER "whisper"
+
 
 //Used in visible_message_flags, audible_message_flags and runechat_flags
 #define EMOTE_MESSAGE (1<<0)

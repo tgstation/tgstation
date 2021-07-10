@@ -137,3 +137,8 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 #define GHOSTROLE_SILICONS (1<<3)
 //ie mafia, ctf
 #define GHOSTROLE_MINIGAME (1<<4)
+
+//smite defines
+
+#define LIGHTNING_BOLT_DAMAGE 75
+#define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
