@@ -39,6 +39,8 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
+	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_ANIMAL, .proc/on_attack_animal)
+	RegisterSignal(new_pawn, COMSIG_MOB_ATTACK_ALIEN, .proc/on_attack_alien)
 	RegisterSignal(new_pawn, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 	RegisterSignal(new_pawn, COMSIG_ATOM_HITBY, .proc/on_hitby)
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, .proc/on_startpulling)
@@ -286,8 +288,17 @@ have ways of interacting with a specific mob and control it.
 	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(L)
 
-
 /datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/L)
+	SIGNAL_HANDLER
+	if(prob(MONKEY_RETALIATE_PROB))
+		retaliate(L)
+
+/datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/L)
+	SIGNAL_HANDLER
+	if(L.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
+		retaliate(L)
+
+/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/L)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(L)

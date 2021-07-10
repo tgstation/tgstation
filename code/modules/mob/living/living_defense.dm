@@ -217,6 +217,7 @@
 		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	..()
 	user.face_atom(src)
 	if(user.melee_damage_upper == 0)
 		if(user != src)
@@ -306,6 +307,7 @@
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
