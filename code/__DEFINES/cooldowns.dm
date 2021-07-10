@@ -46,7 +46,8 @@
 
 #define COOLDOWN_CIRCUIT_SOUNDEMITTER "circuit_soundemitter"
 #define COOLDOWN_CIRCUIT_SPEECH "circuit_speech"
-#define COOLDOWN_CIRCUIT_PATHFIND "circuit_pathfind"
+#define COOLDOWN_CIRCUIT_PATHFIND_SAME "circuit_pathfind_same"
+#define COOLDOWN_CIRCUIT_PATHFIND_DIF "circuit_pathfind_different"
 
 //TIMER COOLDOWN MACROS
 
