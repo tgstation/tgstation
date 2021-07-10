@@ -102,7 +102,7 @@
 	else if(dispense)
 		cuffs = new type()
 
-	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
+	INVOKE_ASYNC(target, /mob/living/carbon.proc/equip_to_slot, cuffs, ITEM_SLOT_HANDCUFFED)
 
 	if(trashtype && !dispense)
 		qdel(src)
