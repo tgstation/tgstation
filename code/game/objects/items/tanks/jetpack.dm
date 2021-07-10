@@ -54,7 +54,7 @@
 	else
 		turn_off(user)
 		to_chat(user, span_notice("You turn the jetpack off."))
-		update_action_buttons()
+	update_action_buttons()
 
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
