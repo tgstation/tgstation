@@ -280,7 +280,7 @@
 	if(first_point_temperature > 300 || delta_pressure > 500)
 		work_done = efficiency * second_point.total_moles() * R_IDEAL_GAS_EQUATION * second_point_temperature * log((first_point_pressure / second_point_pressure)) - rpm
 
-	rpm = (work_done ** 0.6) * 8 * rpm_coefficient
+	rpm = (work_done ** 0.6) * 2 * rpm_coefficient
 
 	efficiency = clamp(1 - log(10, max(first_point_temperature, 1e3)) * 0.1 + efficiency_coefficient, 0, 1)
 
