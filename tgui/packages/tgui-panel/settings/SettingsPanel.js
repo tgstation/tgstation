@@ -158,6 +158,8 @@ export const SettingsGeneral = (props, context) => {
           }))} />
         <Button.Checkbox
           checked={matchWord}
+          tooltipPosition="bottom-start"
+          tooltip="Not compatible with punctuation."
           onClick={() => dispatch(updateSettings({
             matchWord: !matchWord,
           }))}>

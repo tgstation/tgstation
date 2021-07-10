@@ -179,7 +179,7 @@ class ChatRenderer {
     const lines = String(text)
       .split(',')
       // eslint-disable-next-line no-useless-escape
-      .map(str => str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
+      .map(str => str.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
       .filter(str => (
         // Must be longer than one character
         str && str.length > 1
