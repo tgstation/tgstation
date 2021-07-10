@@ -60,7 +60,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	SIGNAL_HANDLER
 	if(inserted_component.reagents && length(inserted_component.reagents.reagent_list))
 		inserted_component.reagents.clear_reagents()
-		to_chat(usr, span_notice("\The [src] churns as \the [inserted_component] has its reagents emptied into bluespace."))
+		to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
 
 	if(!istype(inserted_component, /obj/item/stock_parts/cell))
 		return
