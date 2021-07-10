@@ -41,10 +41,6 @@
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/ridden/wheelchair/setDir(newdir)
-	. = ..()
-	update_appearance()
-
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
 	to_chat(user, span_notice("You begin to detach the wheels..."))
@@ -58,7 +54,7 @@
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		. += image(icon = icon, icon_state = overlay_icon, layer = FLY_LAYER, dir = dir)
+		. += mutable_appearance(icon, overlay_icon, FLY_LAYER)
 
 
 ///used for simple rotation component checks
