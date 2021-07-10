@@ -118,6 +118,7 @@ export const chatMiddleware = store => {
       chatRenderer.setHighlight(
         settings.highlightText,
         settings.highlightColor,
+        settings.matchWord,
         settings.matchCase);
       return;
     }

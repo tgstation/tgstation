@@ -56,6 +56,7 @@ export const SettingsGeneral = (props, context) => {
     lineHeight,
     highlightText,
     highlightColor,
+    matchWord,
     matchCase,
   } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
@@ -147,12 +148,20 @@ export const SettingsGeneral = (props, context) => {
               onInput={(e, value) => dispatch(updateSettings({
                 highlightColor: value,
               }))} />
+            Match:
+            <Button.Checkbox
+              checked={matchWord}
+              onClick={() => dispatch(updateSettings({
+                matchWord: !matchWord,
+              }))}>
+              Word
+            </Button.Checkbox>
             <Button.Checkbox
               checked={matchCase}
               onClick={() => dispatch(updateSettings({
                 matchCase: !matchCase,
               }))}>
-              Match case
+              Case
             </Button.Checkbox>
           </Flex.Item>
         </Flex>

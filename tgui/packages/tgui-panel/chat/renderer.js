@@ -170,7 +170,7 @@ class ChatRenderer {
     }
   }
 
-  setHighlight(text, color, matchCase) {
+  setHighlight(text, color, matchWord, matchCase) {
     if (!text || !color) {
       this.highlightRegex = null;
       this.highlightColor = null;
@@ -190,7 +190,9 @@ class ChatRenderer {
       this.highlightColor = null;
       return;
     }
-    this.highlightRegex = new RegExp('(' + lines.join('|') + ')', `g${matchCase ? '' : 'i'}`);
+    const pattern = `${(matchWord ? '\\b' : '')}(${lines.join('|')})${(matchWord ? '\\b' : '')}`;
+    const flags = 'g' + (matchCase ? '' : 'i');
+    this.highlightRegex = new RegExp(pattern, flags);
     this.highlightColor = color;
   }
 
