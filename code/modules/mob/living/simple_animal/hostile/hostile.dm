@@ -647,7 +647,7 @@
 					blocked = TRUE
 			if(!blocked)
 				/// even in death they can be dangerous. This should clarify it.
-				var/dead_hogboar_msg = stat == DEAD ? "In the throes of death " : ""
+				var/dead_hogboar_msg = stat == DEAD ? "In the throes of death, " : ""
 				L.visible_message(span_danger("[dead_hogboar_msg][src] charges on [L]!"), span_userdanger("[dead_hogboar_msg][src] charges into you!"))
 				L.Knockdown(knockdown_time)
 			else
