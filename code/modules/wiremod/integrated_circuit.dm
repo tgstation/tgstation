@@ -29,11 +29,17 @@
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = FALSE
 
+	/// Whether the integrated circuit is locked or not. Handled by the shell.
+	var/locked = FALSE
+
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
 	/// The current examined component. Used in IntegratedCircuit UI
 	var/datum/weakref/examined_component
+
+	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
+	var/datum/weakref/inserter_mind
 
 	/// X position of the examined_component
 	var/examined_rel_x = 0
@@ -259,6 +265,11 @@
 		return shell
 	return ..()
 
+/obj/item/integrated_circuit/can_interact(mob/user)
+	if(locked)
+		return FALSE
+	return ..()
+
 /obj/item/integrated_circuit/ui_state(mob/user)
 	if(!shell)
 		return GLOB.hands_state
@@ -294,7 +305,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(input_port.datatype && !output_port.compatible_datatype(input_port.datatype))
+			if(input_port.datatype != PORT_TYPE_ANY && !output_port.compatible_datatype(input_port.datatype))
 				return
 
 			input_port.register_output_port(output_port)
@@ -386,10 +397,9 @@
 				if(PORT_TYPE_NUMBER)
 					port.set_input(text2num(user_input))
 				if(PORT_TYPE_ANY)
-					var/any_type = copytext(user_input, 1, PORT_MAX_STRING_LENGTH)
-					port.set_input(text2num(any_type) || any_type)
+					port.set_input(text2num(user_input) || user_input)
 				if(PORT_TYPE_STRING)
-					port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
+					port.set_input(user_input)
 				if(PORT_TYPE_SIGNAL)
 					balloon_alert(usr, "triggered [port.name]")
 					port.set_input(COMPONENT_SIGNAL)
@@ -409,7 +419,10 @@
 				value = port.convert_value(port.output_value)
 			else if(isnull(value))
 				value = "null"
-			balloon_alert(usr, "[port.name] value: [value]")
+			var/string_form = copytext("[value]", 1, PORT_MAX_STRING_DISPLAY)
+			if(length(string_form) >= PORT_MAX_STRING_DISPLAY-1)
+				string_form += "..."
+			balloon_alert(usr, "[port.name] value: [string_form]")
 			. = TRUE
 		if("set_display_name")
 			var/new_name = params["display_name"]
@@ -444,3 +457,23 @@
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 #undef WITHIN_RANGE
+
+/**
+ * Returns the creator of the integrated circuit. Used in admin messages and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator_admin()
+	return get_creator(include_link = TRUE)
+
+/**
+ * Returns the creator of the integrated circuit. Used in admin logs and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator(include_link = FALSE)
+	var/datum/mind/inserter
+	if(inserter_mind)
+		inserter = inserter_mind.resolve()
+
+	var/obj/item/card/id/id_card
+	if(owner_id)
+		id_card = owner_id.resolve()
+
+	return "(Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"

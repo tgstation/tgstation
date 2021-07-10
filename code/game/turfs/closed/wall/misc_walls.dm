@@ -83,9 +83,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
 
-/turf/closed/wall/rust/rust_heretic_act()
-	ScrapeAway()
-
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
@@ -94,11 +91,6 @@
 	base_icon_state = "rusty_reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
-
-/turf/closed/wall/r_wall/rust/rust_heretic_act()
-	if(prob(50))
-		return
-	ScrapeAway()
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"

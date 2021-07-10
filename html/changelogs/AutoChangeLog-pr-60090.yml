@@ -1,0 +1,4 @@
+author: "KubeRoot"
+delete-after: True
+changes: 
+  - bugfix: "Flash implant now displays its message instead of runtiming when used on cooldown"

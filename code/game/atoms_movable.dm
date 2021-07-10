@@ -75,6 +75,11 @@
 	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
 	var/set_dir_on_move = TRUE
 
+	/// The degree of thermal insulation that mobs in list/contents have from the external environment, between 0 and 1
+	var/contents_thermal_insulation = 0
+	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
+	var/contents_pressure_protection = 0
+
 
 /atom/movable/Initialize(mapload)
 	. = ..()
@@ -434,11 +439,11 @@
 
 	if(new_locs) // Same here, only if multi-tile.
 		for(var/atom/entered_loc as anything in (new_locs - old_locs))
-			entered_loc.Entered(src, direction)
+			entered_loc.Entered(src, oldloc, old_locs)
 	else
-		newloc.Entered(src, direction)
+		newloc.Entered(src, oldloc, old_locs)
 	if(oldarea != newarea)
-		newarea.Entered(src, direction)
+		newarea.Entered(src, oldarea)
 
 	Moved(oldloc, direction, FALSE, old_locs)
 
@@ -634,7 +639,7 @@
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYREMOVE(location.area_sensitive_contents, gone.area_sensitive_contents)
 
-/atom/movable/Entered(atom/movable/arrived, direction)
+/atom/movable/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(arrived.area_sensitive_contents)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -685,6 +690,7 @@
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
+		var/movement_dir = get_dir(src, destination)
 
 		moving_diagonally = 0
 
@@ -692,9 +698,9 @@
 
 		if(!same_loc)
 			if(oldloc)
-				oldloc.Exited(src, destination)
+				oldloc.Exited(src, movement_dir)
 				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
+					old_area.Exited(src, movement_dir)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -703,7 +709,7 @@
 				onTransitZ(old_z, dest_z)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
+				destarea.Entered(src, old_area)
 
 		. = TRUE
 
@@ -713,9 +719,9 @@
 		loc = null
 		if (oldloc)
 			var/area/old_area = get_area(oldloc)
-			oldloc.Exited(src, null)
+			oldloc.Exited(src, NONE)
 			if(old_area)
-				old_area.Exited(src, null)
+				old_area.Exited(src, NONE)
 
 	Moved(oldloc, NONE, TRUE)
 

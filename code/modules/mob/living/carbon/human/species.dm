@@ -78,6 +78,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,\
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,\
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest)
+
+	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
+	var/list/external_organs = list()
+
 	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speedmod = 0
 	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
@@ -123,8 +127,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/flying_species = FALSE
 	///The actual flying ability given to flying species
 	var/datum/action/innate/flight/fly
-	///Current wings icon
-	var/wings_icon = "Angel"
 	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wings_icons = list("Angel")
 	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
@@ -187,6 +189,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
 	///Forces an item into this species' hands. Only an honorary mutantthing because this is not an organ and not loaded in the same way, you've been warned to do your research.
 	var/obj/item/mutanthands
+
+
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -400,6 +404,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
 
+	if(ishuman(C))
+		var/mob/living/carbon/human/human = C
+		for(var/obj/item/organ/external/organ_path as anything in external_organs)
+			//Load a persons preferences from DNA
+			var/preference_name = human.dna.features[initial(organ_path.preference)]
+
+			var/obj/item/organ/external/new_organ = new organ_path(null, preference_name, human.body_type)
+
+			new_organ.Insert(human)
+
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
@@ -445,6 +459,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+	for(var/obj/item/organ/external/organ in C.internal_organs)
+		if(organ.type in external_organs)
+			organ.Remove(C)
+			qdel(organ)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
@@ -460,15 +478,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/i in inherent_factions)
 			C.faction -= i
 
-	if(flying_species)
-		fly.Remove(C)
-		QDEL_NULL(fly)
-		if(C.movement_type & FLYING)
-			toggle_flight(C)
-	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
-		C.dna.species.mutant_bodyparts -= "wings"
-		C.dna.features["wings"] = "None"
-		C.update_body()
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
@@ -816,7 +825,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_monkey"
 
-
 	if(mutant_bodyparts["waggingtail_human"])
 		if(source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_human"
@@ -833,35 +841,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if (mutant_bodyparts["tail"])
 			bodyparts_to_add -= "waggingspines"
 
-	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
-		if((source.wear_mask && (source.wear_mask.flags_inv & HIDESNOUT)) || (source.head && (source.head.flags_inv & HIDESNOUT)) || !noggin || noggin.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "snout"
-
-	if(mutant_bodyparts["frills"])
-		if(!source.dna.features["frills"] || source.dna.features["frills"] == "None" || source.head && (source.head.flags_inv & HIDEEARS) || !noggin || noggin.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "frills"
-
-	if(mutant_bodyparts["horns"])
-		if(!source.dna.features["horns"] || source.dna.features["horns"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || noggin.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "horns"
-
 	if(mutant_bodyparts["ears"])
 		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || noggin.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "ears"
-
-	if(mutant_bodyparts["wings"])
-		if(!source.dna.features["wings"] || source.dna.features["wings"] == "None" || (source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT) && (!source.wear_suit.species_exception || !is_type_in_list(src, source.wear_suit.species_exception))))
-			bodyparts_to_add -= "wings"
-
-	if(mutant_bodyparts["wings_open"])
-		if(source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT) && (!source.wear_suit.species_exception || !is_type_in_list(src, source.wear_suit.species_exception)))
-			bodyparts_to_add -= "wings_open"
-		else if (mutant_bodyparts["wings"])
-			bodyparts_to_add -= "wings_open"
-
-	if(mutant_bodyparts["moth_antennae"])
-		if(!source.dna.features["moth_antennae"] || source.dna.features["moth_antennae"] == "None" || !noggin)
-			bodyparts_to_add -= "moth_antennae"
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
@@ -909,26 +891,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					accessory = GLOB.spines_list[source.dna.features["spines"]]
 				if("waggingspines")
 					accessory = GLOB.animated_spines_list[source.dna.features["spines"]]
-				if("snout")
-					accessory = GLOB.snouts_list[source.dna.features["snout"]]
-				if("frills")
-					accessory = GLOB.frills_list[source.dna.features["frills"]]
-				if("horns")
-					accessory = GLOB.horns_list[source.dna.features["horns"]]
 				if("ears")
 					accessory = GLOB.ears_list[source.dna.features["ears"]]
 				if("body_markings")
 					accessory = GLOB.body_markings_list[source.dna.features["body_markings"]]
-				if("wings")
-					accessory = GLOB.wings_list[source.dna.features["wings"]]
-				if("wingsopen")
-					accessory = GLOB.wings_open_list[source.dna.features["wings"]]
 				if("legs")
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
-				if("moth_wings")
-					accessory = GLOB.moth_wings_list[source.dna.features["moth_wings"]]
-				if("moth_antennae")
-					accessory = GLOB.moth_antennae_list[source.dna.features["moth_antennae"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
 				if("tail_monkey")
@@ -999,7 +967,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	source.apply_overlay(BODY_ADJ_LAYER)
 	source.apply_overlay(BODY_FRONT_LAYER)
 
-
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.
 /datum/species/proc/mutant_bodyparts_layertext(layer)
@@ -1031,8 +998,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
-	if(flying_species)
-		handle_flight(H)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1588,14 +1553,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// called before a projectile hit
 	return 0
 
-/////////////
-//BREATHING//
-/////////////
-
-/datum/species/proc/breathe(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		return TRUE
-
 //////////////////////////
 // ENVIRONMENT HANDLERS //
 //////////////////////////
@@ -1901,6 +1858,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!CanIgniteMob(H))
 		return TRUE
 	if(H.on_fire)
+		SEND_SIGNAL(H, COMSIG_HUMAN_BURNING)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
 		var/obscured = H.check_obscured_slots(TRUE)
@@ -1973,19 +1931,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	if(flying_species && H.movement_type & FLYING)
-		toggle_flight(H)
-		flyslip(H)
-	. = stunmod * H.physiology.stun_mod * amount
-
-//////////////
-//Space Move//
-//////////////
-
-/datum/species/proc/space_move(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
-		return TRUE
-	return FALSE
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings)
+			wings.toggle_flight(H)
+			wings.fly_slip(H)
+	. = stunmod * H.physiology.stun_mod * amount
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
@@ -2071,16 +2022,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(flying_species) //species that already have flying traits should not work with this proc
 		return
 	flying_species = TRUE
-	if(flying_mob.dna.species.has_innate_wings)
-		to_chat(flying_mob, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
-		if(!flying_mob.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
-			flying_mob.dna.features["original_moth_wings"] = flying_mob.dna.features["moth_wings"]
-		flying_mob.dna.features["moth_wings"] = "None"
-		if(!flying_mob.dna.features["original_moth_antennae"]) //Stores their antennae type as well
-			flying_mob.dna.features["original_moth_antennae"] = flying_mob.dna.features["moth_antennae"]
-		flying_mob.dna.features["moth_antennae"] = "Regal"
-	else
-		to_chat(flying_mob, span_userdanger("A terrible pain travels down your back as wings burst out!"))
+	var/wings_icon
 	if(wings_icons.len > 1)
 		if(!flying_mob.client)
 			wings_icon = pick(wings_icons)
@@ -2100,95 +2042,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				wings_icon = pick(wings_icons)
 	else
 		wings_icon = wings_icons[1]
-	if(isnull(fly))
-		fly = new
-		fly.Grant(flying_mob)
-	if(flying_mob.dna.features["wings"] != wings_icon)
-		mutant_bodyparts["wings"] = wings_icon
-		flying_mob.dna.features["wings"] = wings_icon
-		flying_mob.update_body()
 
-/datum/species/proc/handle_flight(mob/living/carbon/human/flying_mob)
-	if(flying_mob.movement_type & FLYING)
-		if(!can_fly(flying_mob))
-			toggle_flight(flying_mob)
-			return FALSE
-		return TRUE
-	else
-		return FALSE
-
-/datum/species/proc/can_fly(mob/living/carbon/human/flying_mob)
-	if(flying_mob.stat || flying_mob.body_position == LYING_DOWN)
-		return FALSE
-	if(flying_mob.wear_suit && ((flying_mob.wear_suit.flags_inv & HIDEJUMPSUIT) && (!flying_mob.wear_suit.species_exception || !is_type_in_list(src, flying_mob.wear_suit.species_exception)))) //Jumpsuits have tail holes, so it makes sense they have wing holes too
-		to_chat(flying_mob, span_warning("Your suit blocks your wings from extending!"))
-		return FALSE
-	var/turf/T = get_turf(flying_mob)
-	if(!T)
-		return FALSE
-
-	var/datum/gas_mixture/environment = T.return_air()
-	if(environment && !(environment.return_pressure() > 30))
-		to_chat(flying_mob, span_warning("The atmosphere is too thin for you to fly!"))
-		return FALSE
-	else
-		return TRUE
-
-/datum/species/proc/flyslip(mob/living/carbon/human/flying_mob)
-	var/obj/buckled_obj
-	if(flying_mob.buckled)
-		buckled_obj = flying_mob.buckled
-
-	to_chat(flying_mob, span_notice("Your wings spazz out and launch you!"))
-
-	playsound(flying_mob.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
-
-	for(var/obj/item/I in flying_mob.held_items)
-		flying_mob.accident(I)
-
-	var/olddir = flying_mob.dir
-
-	flying_mob.stop_pulling()
-	if(buckled_obj)
-		buckled_obj.unbuckle_mob(flying_mob)
-		step(buckled_obj, olddir)
-	else
-		new /datum/forced_movement(flying_mob, get_ranged_target_turf(flying_mob, olddir, 4), 1, FALSE, CALLBACK(flying_mob, /mob/living/carbon/.proc/spin, 1, 1))
-	return TRUE
-
-//UNSAFE PROC, should only be called through the Activate or other sources that check for can_fly
-/datum/species/proc/toggle_flight(mob/living/carbon/human/flying_mob)
-	if(!HAS_TRAIT_FROM(flying_mob, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
-		stunmod *= 2
-		speedmod -= 0.35
-		ADD_TRAIT(flying_mob, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		ADD_TRAIT(flying_mob, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_on(flying_mob, SPECIES_TRAIT)
-		flying_mob.OpenWings()
-	else
-		stunmod *= 0.5
-		speedmod += 0.35
-		REMOVE_TRAIT(flying_mob, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		REMOVE_TRAIT(flying_mob, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_off(flying_mob, SPECIES_TRAIT)
-		flying_mob.CloseWings()
-
-/datum/action/innate/flight
-	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "flight"
-
-/datum/action/innate/flight/Activate()
-	var/mob/living/carbon/human/flying_mob = owner
-	var/datum/species/S = flying_mob.dna.species
-	if(S.can_fly(flying_mob))
-		S.toggle_flight(flying_mob)
-		if(!(flying_mob.movement_type & FLYING))
-			to_chat(flying_mob, span_notice("You settle gently back onto the ground..."))
-		else
-			to_chat(flying_mob, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			flying_mob.set_resting(FALSE, TRUE)
+	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.body_type)
+	wings.Insert(H)
+	handle_mutant_bodyparts(H)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
