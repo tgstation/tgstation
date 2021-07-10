@@ -155,9 +155,16 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 
+
+/obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
+	. = ..()
+	if(isnull(.))
+		return
+	update_icon(UPDATE_OVERLAYS)
+
+
 /obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
 	. = ..()
-	cut_overlays()
 	if(light_on)
 		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
 
