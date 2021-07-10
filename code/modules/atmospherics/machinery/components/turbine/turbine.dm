@@ -246,7 +246,11 @@
 	if(!inlet.airs[1].gases)
 		return
 
-	var/datum/gas_mixture/input_remove = inlet.airs[1].remove_ratio(input_ratio * 0.01)
+	var/inlet_pressure = inlet.airs[1].return_pressure()
+	var/outlet_pressure = outlet.airs[1].return_pressure()
+	var/pressure_ratio = inlet_pressure / (inlet_pressure + outlet_pressure)
+
+	var/datum/gas_mixture/input_remove = inlet.airs[1].remove_ratio(input_ratio * 0.01 * pressure_ratio)
 	var/datum/gas_mixture/output = outlet.airs[1]
 
 	if(!input_remove.heat_capacity())
