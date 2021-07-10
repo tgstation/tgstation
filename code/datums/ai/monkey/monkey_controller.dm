@@ -69,7 +69,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/on_sentience_lost()
 	..()
-	AddElement(/datum/element/connect_loc_behalf, new_pawn, loc_connections)
+	AddElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/able_to_run()
 	. = ..()
