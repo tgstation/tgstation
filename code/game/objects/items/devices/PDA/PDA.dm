@@ -920,7 +920,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else if(light_range)
 		set_light_on(TRUE)
 	update_appearance()
-	update_action_buttons()
+	update_action_buttons(force = TRUE)
 
 /// Special light eater handling
 /obj/item/pda/proc/on_light_eater(obj/item/pda/source, datum/light_eater)
