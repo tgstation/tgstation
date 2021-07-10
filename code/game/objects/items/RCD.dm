@@ -270,6 +270,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	return getHologramIcon(grille_icon)
 
+/obj/item/construction/rcd/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/openspace_item_click_handler)
+
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
 		to_chat(user, span_warning("[src] lets out a low buzz."))

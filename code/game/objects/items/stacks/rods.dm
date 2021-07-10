@@ -39,6 +39,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	update_appearance()
+	AddElement(/datum/element/openspace_item_click_handler)
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
