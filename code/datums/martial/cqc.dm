@@ -23,23 +23,19 @@
 		return FALSE
 	if(findtext(streak,SLAM_COMBO))
 		streak = ""
-		Slam(A,D)
-		return TRUE
+		return Slam(A,D)
 	if(findtext(streak,KICK_COMBO))
 		streak = ""
-		Kick(A,D)
-		return TRUE
+		return Kick(A,D)
 	if(findtext(streak,RESTRAIN_COMBO))
 		streak = ""
-		Restrain(A,D)
-		return TRUE
+		return Restrain(A,D)
 	if(findtext(streak,PRESSURE_COMBO))
 		streak = ""
-		Pressure(A,D)
-		return TRUE
+		return Pressure(A,D)
 	if(findtext(streak,CONSECUTIVE_COMBO))
 		streak = ""
-		Consecutive(A,D)
+		return Consecutive(A,D)
 	return FALSE
 
 /datum/martial_art/cqc/proc/Slam(mob/living/A, mob/living/D)
@@ -53,7 +49,7 @@
 		D.apply_damage(10, BRUTE)
 		D.Paralyze(120)
 		log_combat(A, D, "slammed (CQC)")
-	return TRUE
+		return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/A, mob/living/D)
 	if(!can_use(A))
@@ -67,6 +63,7 @@
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, A.get_attack_type())
 		log_combat(A, D, "kicked (CQC)")
+		. = TRUE
 	if(D.IsParalyzed() && !D.stat)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
 		D.visible_message(span_danger("[A] kicks [D]'s head, knocking [D.p_them()] out!"), \
@@ -75,7 +72,7 @@
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
 		D.SetSleeping(300)
 		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
-	return TRUE
+		. = TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/A, mob/living/D)
 	if(!can_use(A))
@@ -102,7 +99,7 @@
 		D.Stun(100)
 		restraining = TRUE
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
-	return TRUE
+		return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/A, mob/living/D)
 	if(!can_use(A))
@@ -118,7 +115,7 @@
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
 		D.apply_damage(25, A.get_attack_type())
-	return TRUE
+		return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
 	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
@@ -214,11 +211,11 @@
 	set category = "CQC"
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
-	to_chat(usr, "[span_notice("Slam")]: Grab Harm. Slam opponent into the ground, knocking them down.")
-	to_chat(usr, "[span_notice("CQC Kick")]: Harm Harm. Knocks opponent away. Knocks out stunned or knocked down opponents.")
+	to_chat(usr, "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down.")
+	to_chat(usr, "[span_notice("CQC Kick")]: Punch Punch. Knocks opponent away. Knocks out stunned or knocked down opponents.")
 	to_chat(usr, "[span_notice("Restrain")]: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a chokehold.")
-	to_chat(usr, "[span_notice("Pressure")]: Disarm Grab. Decent stamina damage.")
-	to_chat(usr, "[span_notice("Consecutive CQC")]: Disarm Disarm Harm. Mainly offensive move, huge damage and decent stamina damage.")
+	to_chat(usr, "[span_notice("Pressure")]: Shove Grab. Decent stamina damage.")
+	to_chat(usr, "[span_notice("Consecutive CQC")]: Shove Shove Punch. Mainly offensive move, huge damage and decent stamina damage.")
 
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 

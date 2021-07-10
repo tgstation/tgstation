@@ -1,0 +1,5 @@
+author: "@Azarak"
+delete-after: True
+changes: 
+  - bugfix: "pipes sprite fix"
+  - refactor: "pipe sprites now uses bitmasks"

@@ -45,20 +45,21 @@ Behavior that's still missing from this component that original food items had t
 	///The type of atom this creates when the object is microwaved.
 	var/atom/microwaved_type
 
-/datum/component/edible/Initialize(list/initial_reagents,
-								food_flags = NONE,
-								foodtypes = NONE,
-								volume = 50,
-								eat_time = 10,
-								list/tastes,
-								list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
-								bite_consumption = 2,
-								microwaved_type,
-								junkiness,
-								datum/callback/after_eat,
-								datum/callback/on_consume,
-								datum/callback/check_liked)
-
+/datum/component/edible/Initialize(
+	list/initial_reagents,
+	food_flags = NONE,
+	foodtypes = NONE,
+	volume = 50,
+	eat_time = 10,
+	list/tastes,
+	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
+	bite_consumption = 2,
+	microwaved_type,
+	junkiness,
+	datum/callback/after_eat,
+	datum/callback/on_consume,
+	datum/callback/check_liked,
+)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -111,20 +112,23 @@ Behavior that's still missing from this component that original food items had t
 		else
 			owner.reagents.add_reagent(rid, amount)
 
-/datum/component/edible/InheritComponent(datum/component/C,
+/datum/component/edible/InheritComponent(
+	datum/component/C,
 	i_am_original,
 	list/initial_reagents,
 	food_flags = NONE,
 	foodtypes = NONE,
 	volume = 50,
-	eat_time = 30,
+	eat_time = 10,
 	list/tastes,
 	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 	bite_consumption = 2,
+	microwaved_type,
+	junkiness,
 	datum/callback/after_eat,
-	datum/callback/on_consume
-	)
-
+	datum/callback/on_consume,
+	datum/callback/check_liked,
+)
 	. = ..()
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
@@ -435,7 +439,7 @@ Behavior that's still missing from this component that original food items had t
 
 
 ///Ability to feed food to puppers
-/datum/component/edible/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/datum/component/edible/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, arrived, bitecount)
 
