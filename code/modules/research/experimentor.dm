@@ -35,7 +35,7 @@
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
-	var/banned_typecache // items that won't be produced
+	//var/banned_typecache // items that won't be produced
 
 /obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -46,7 +46,7 @@
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	// Don't need to keep this typecache around, only used in this proc once.
-	var/list/banned_typecache = typecacheof(list(
+	var/static/list/banned_typecache = typecacheof(list(
 		/obj/item/stock_parts/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))

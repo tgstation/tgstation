@@ -126,29 +126,27 @@
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
-		if(!typecache[A.type])
-			. += A
+	for(var/atom/atom as anything in atoms)
+		if(!typecache[atom.type])
+			. += atom
 
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
-		if(typecache_include[A.type] && !typecache_exclude[A.type])
-			. += A
+	for(var/atom/atom as anything in atoms)
+		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
+			. += atom
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		var/list/types = list()
+		var/list/types
+		var/list/L = list()
 		if(only_root_path)
-			types = list(path)
+			L[path] = TRUE
 		else
 			types = ignore_root_path ? subtypesof(path) : typesof(path)
-		var/list/L = list()
-		for(var/T in types)
-			L[T] = TRUE
+			for(var/T in types)
+				L[T] = TRUE
 		return L
 	else if(islist(path))
 		var/list/pathlist = path
@@ -158,13 +156,123 @@
 				for(var/T in subtypesof(P))
 					L[T] = TRUE
 		else
-			for(var/P in pathlist)
-				if(only_root_path)
-					L[P] = TRUE
-				else
-					for(var/T in typesof(P))
-						L[T] = TRUE
+			if(only_root_path)
+				for(var/current_path in pathlist)
+					L[current_path] = TRUE
+			else
+				for(var/current_path in pathlist)
+					for(var/subpath in typesof(current_path))
+						L[subpath] = TRUE
 		return L
+
+#define fake_typesof(...) (typesof(...))
+
+/proc/typecacheof_fast(path, ignore_root_path, only_root_path = FALSE)
+	var/static/typesof_path = /proc/typesof
+	if(ispath(path))
+		var/list/types
+		var/list/L = list()
+		if(only_root_path)
+			L[path] = TRUE
+		else
+			types = ignore_root_path ? subtypesof(path) : typesof(path)
+			for(var/T in types)
+				L[T] = TRUE
+		return L
+	else if(islist(path))
+		var/list/pathlist = path
+		var/list/L = list()
+		if(ignore_root_path)
+			var/list/output_paths = call(typesof_path)(arglist(pathlist))
+			for(var/T in output_paths - pathlist)
+				L[T] = TRUE
+		else
+			if(only_root_path)
+				for(var/current_path in pathlist)
+					L[current_path] = TRUE
+			else
+				var/list/output_paths = call(typesof_path)(arglist(pathlist))
+				for(var/subpath in output_paths)
+					L[subpath] = TRUE
+		return L
+
+
+
+
+/atom/proc/typecache_test(seconds = 10)
+	var/iterations = 0
+	var/duration = seconds SECONDS
+	var/static/list/typecaches_large_list = list(/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/food/sashimi, /obj/item/food/chawanmushi,
+		/obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
+		/obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
+		/obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
+		)
+	var/static/list/typecaches_small_list = list(/datum)
+
+	var/end_time = world.timeofday + duration
+	while(world.timeofday < end_time)
+		typecacheof(typecaches_large_list)
+		iterations++
+
+	message_admins("typecacheof() with a very large input typecache list was able to complete [iterations] iterations in [seconds] seconds!")
+
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		typecacheof_fast(typecaches_large_list)
+		iterations++
+
+	message_admins("typecacheof_fast() with a very large input typecache list was able to complete [iterations] iterations in [seconds] seconds!")
+
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		typecacheof(typecaches_small_list)
+		iterations++
+
+	message_admins("typecacheof() with an input list consisting of only list(/datum) was able to complete [iterations] iterations in [seconds] seconds!")
+
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		typecacheof_fast(typecaches_small_list)
+		iterations++
+
+	message_admins("typecacheof_fast() with an input list consisting of only list(/datum) was able to complete [iterations] iterations in [seconds] seconds!")
+
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		typecacheof(/datum)
+		iterations++
+
+	message_admins("typecacheof() with only /datum as an input was able to complete [iterations] iterations in [seconds] seconds!")
+
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	while(world.timeofday < end_time)
+		typecacheof_fast(/datum)
+		iterations++
+
+	message_admins("typecacheof_fast() with only /datum as an input was able to complete [iterations] iterations in [seconds] seconds!")
+
+	iterations = 0
+	end_time = world.timeofday + duration
+
+	var/list/old_typecache_output = typecacheof(typecaches_large_list)
+	var/list/new_typecache_output = typecacheof(typecaches_large_list)
+
+	if(length(old_typecache_output) != length(new_typecache_output))
+		message_admins("the old and new ones dont match up in length! old is [length(old_typecache_output)], new is [length(new_typecache_output)]")
+	else
+		message_admins("both of them give the same length list! length is [length(new_typecache_output)]")
+
+
 
 //Removes any null entries from the list
 //Returns TRUE if the list had nulls, FALSE otherwise
