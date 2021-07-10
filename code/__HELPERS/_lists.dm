@@ -136,34 +136,35 @@
 		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
 			. += atom
 
-//Like typesof() or subtypesof(), but returns a typecache instead of a list
+///Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
 		var/list/types
-		var/list/L = list()
+		var/list/output = list()
 		if(only_root_path)
-			L[path] = TRUE
+			output[path] = TRUE
 		else
 			types = ignore_root_path ? subtypesof(path) : typesof(path)
 			for(var/T in types)
-				L[T] = TRUE
-		return L
+				output[T] = TRUE
+		return output
 	else if(islist(path))
 		var/list/pathlist = path
-		var/list/L = list()
+		var/list/output = list()
 		if(ignore_root_path)
-			for(var/P in pathlist)
-				for(var/T in subtypesof(P))
-					L[T] = TRUE
+			for(var/current_path in pathlist)
+				for(var/subtype in subtypesof(current_path))
+					output[subtype] = TRUE
+			return output
+
+		if(only_root_path)
+			for(var/current_path in pathlist)
+				output[current_path] = TRUE
 		else
-			if(only_root_path)
-				for(var/current_path in pathlist)
-					L[current_path] = TRUE
-			else
-				for(var/current_path in pathlist)
-					for(var/subpath in typesof(current_path))
-						L[subpath] = TRUE
-		return L
+			for(var/current_path in pathlist)
+				for(var/subpath in typesof(current_path))
+					output[subpath] = TRUE
+		return output
 
 #define fake_typesof(...) (typesof(...))
 
