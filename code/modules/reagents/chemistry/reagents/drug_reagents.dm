@@ -467,6 +467,7 @@
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
 	reagent_state = LIQUID
 	color = "#9015a9"
+	ph = 5
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 15)
@@ -494,13 +495,15 @@
 		animate(color = col_filter_red, time = 3 SECONDS)
 		animate(color = col_filter_mid, time = 3 SECONDS)
 
+	L.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
+
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.remove_filter("blastoff_filter")
-
+	M.sound_environment_override = NONE
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -530,6 +533,7 @@
 	reagent_state = SOLID
 	color = "#638b9b"
 	overdose_threshold = 25
+	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
 
@@ -566,6 +570,7 @@
 		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
 		invisible_man.update_body()
 		invisible_man.remove_from_all_data_huds()
+		invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -574,6 +579,7 @@
 		REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
 		to_chat(M, span_notice("As you sober up, opacity once again returns to your body meats."))
 	M.update_body()
+	M.sound_environment_override = NONE
 
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -588,8 +594,9 @@
 /datum/reagent/drug/kroncaine
 	name = "kroncaine"
 	description = "A highly illegal stimulant from the edges of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
-	reagent_state = LIQUID
+	reagent_state = SOLID
 	color = "#FAFAFA"
+	ph = 8
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	addiction_types = list(/datum/addiction/stimulants = 20)
@@ -598,9 +605,11 @@
 	..()
 	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
 	L.adjustStaminaLoss(-4 * volume, 0)
+	L.sound_environment_override = SOUND_ENVIRONMENT_HANGAR
 
 /datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
 	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+	L.sound_environment_override = NONE
 	. = ..()
 
 /datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -625,19 +634,19 @@ TODO:
 saturnx implementation
 	make saturx make you unknown
 	Make saturnx fade you out instead of instantly dissapearing you?
-	make saturnx colour matrix fade back to normal saturation rather than going from 0 -> orginal saturation in one tick
+	make saturnx colour matrix linger longer in the desaturated region.
 	add blur(angular?) filter or staic wave filter
 
 blastoff implementation
-	fix flipping.
 	maybe make superflips and spin use signals so flips from other sources count?
 	add animated ripple filter?
 
 mushroom_hallucinogen implementation
 	add an animated wave filter.
 
+move kroncaine stam gain to react_mob
+add adrenal crisis disease
 make sure the design doc and code aligns.
-make saturnx, mushroom_hallucinogen and blastoff use the drugged soundscape thing?
 
 Testing
 */
