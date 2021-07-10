@@ -576,7 +576,7 @@
 
 /obj/item/gun/proc/update_gunlight()
 	update_appearance()
-	update_item_action_buttons()
+	update_action_buttons()
 
 /obj/item/gun/pickup(mob/user)
 	..()

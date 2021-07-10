@@ -74,7 +74,7 @@
 
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()
-	update_item_action_buttons()
+	update_action_buttons()
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"

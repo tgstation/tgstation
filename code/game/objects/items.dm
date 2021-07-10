@@ -1181,10 +1181,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /**
  * Updates all action buttons associated with this item
  */
-/obj/item/proc/update_item_action_buttons(status_only = FALSE, force = FALSE)
-	for(var/current_action in actions)
-		var/datum/action/action = current_action
-		action.UpdateButtonIcon(status_only, force)
+/obj/item/proc/update_action_buttons()
+	for(var/datum/action/current_action as anything in actions)
+		current_action.UpdateButtonIcon()
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)

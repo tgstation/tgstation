@@ -73,7 +73,7 @@
 			H.update_sight()
 
 	update_appearance()
-	update_item_action_buttons()
+	update_action_buttons()
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	toggle_mode(user, TRUE)

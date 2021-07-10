@@ -132,7 +132,7 @@
 	else
 		set_light_on(FALSE)
 
-	update_item_action_buttons()
+	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"

@@ -597,4 +597,4 @@
 	if(attached_light)
 		update_appearance()
 
-	update_item_action_buttons()
+	update_action_buttons()
