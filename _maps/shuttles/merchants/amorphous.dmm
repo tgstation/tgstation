@@ -38,14 +38,14 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/merchant)
 "bm" = (
-/obj/docking_port/mobile/emergency{
+/obj/machinery/door/airlock/hatch,
+/obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 8;
-	height = 9;
-	name = "Mini emergency shuttle";
-	width = 21
+	height = 12;
+	name = "silicon shuttle";
+	width = 8
 	},
-/obj/machinery/door/airlock/hatch,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/merchant)
 "bG" = (

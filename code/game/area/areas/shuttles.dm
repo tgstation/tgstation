@@ -56,6 +56,7 @@
 	area_flags = NOTELEPORT
 
 /area/shuttle/merchant/offlimits
+	icon_state = "shuttlered"
 
 ////////////////////////////Pirate Shuttle////////////////////////////
 

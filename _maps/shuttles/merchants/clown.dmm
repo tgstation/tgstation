@@ -1,0 +1,205 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/bouquet/poppy,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"ah" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/bouquet/sunflower,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"al" = (
+/obj/machinery/door/airlock/bananium,
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 8;
+	height = 8;
+	name = "clown shuttle";
+	width = 6
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/merchant)
+"an" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"av" = (
+/obj/structure/statue/bananium/clown,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"bS" = (
+/mob/living/simple_animal/hostile/retaliate/trader/clown,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"uG" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/merchant)
+"wG" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"Hy" = (
+/obj/structure/chair/pew/left,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"Lg" = (
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/merchant)
+"RY" = (
+/turf/template_noop,
+/area/template_noop)
+"Tt" = (
+/turf/open/floor/carpet,
+/area/shuttle/merchant)
+"Ze" = (
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+"Zi" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/merchant)
+"Zs" = (
+/obj/structure/chair/pew/right,
+/turf/open/floor/carpet/green,
+/area/shuttle/merchant)
+
+(1,1,1) = {"
+RY
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+"}
+(2,1,1) = {"
+Zi
+uG
+Tt
+wG
+Ze
+Hy
+Ze
+Hy
+Ze
+Hy
+Ze
+Hy
+Ze
+Ze
+Ze
+Ze
+Lg
+"}
+(3,1,1) = {"
+Zi
+uG
+Tt
+wG
+Ze
+Zs
+Ze
+Zs
+Ze
+Zs
+Ze
+Zs
+Ze
+an
+Ze
+Ze
+Lg
+"}
+(4,1,1) = {"
+Zi
+uG
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+Tt
+an
+bS
+av
+Lg
+"}
+(5,1,1) = {"
+Zi
+uG
+Tt
+ad
+Ze
+Hy
+Ze
+Hy
+Ze
+Hy
+Ze
+Hy
+Ze
+an
+Ze
+Ze
+Lg
+"}
+(6,1,1) = {"
+Zi
+uG
+Tt
+ah
+Ze
+Zs
+Ze
+Zs
+Ze
+Zs
+Ze
+Zs
+Ze
+Ze
+Ze
+Ze
+Lg
+"}
+(7,1,1) = {"
+RY
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+al
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+Lg
+"}

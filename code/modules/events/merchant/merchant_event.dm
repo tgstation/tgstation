@@ -96,17 +96,11 @@
 
 	if(!emergency_called_timer)
 		return
-	var/remaining_time = timeleft(emergency_called_timer)
 
-	emergency.timeLeft(1)
+	var/remaining_time = SSshuttle.emergency.timeLeft(1)
 
-	SSshuttle.emergencyCallTime
-	if()
-
-SEC_LEVEL_GREEN
-SEC_LEVEL_BLUE
-SEC_LEVEL_RED
-SEC_LEVEL_DELTA
+	deltimer(emergency_called_timer)
+	emergency_called_timer = addtimer(CALLBACK(src, .proc/fly_away), remaining_time / 2)
 
 /obj/docking_port/mobile/merchant/proc/fly_away()
 	priority_announce(visiting_merchant.message_leaving, sender_override = visiting_merchant)

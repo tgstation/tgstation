@@ -63,6 +63,7 @@
 	var/area/offlimits = GLOB.areas_by_type[/area/shuttle/merchant/offlimits]
 	if(offlimits)
 		RegisterSignal(offlimits, COMSIG_AREA_ENTERED, .proc/offlimits_enter_reaction)
+		RegisterSignal(offlimits, COMSIG_AREA_EXITED, .proc/offlimits_exit_reaction)
 
 /mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
 	if(user == target)
@@ -99,6 +100,21 @@
 /mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_enter_reaction(datum/source, mob/living/arriving, direction)
 	SIGNAL_HANDLER
 	if(!istype(arriving))
+		return FALSE
+	return TRUE
+
+/**
+ * Reacts to a mob leaving the offlimits area
+ *
+ * Grabs a signal and reacts to the offlimits area being entered by a mob
+ * Arguments:
+ * * source - the area
+ * * leaving - the mob leaving
+ * * direction - direction left from
+ */
+/mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_exit_reaction(datum/source, mob/living/leaving, direction)
+	SIGNAL_HANDLER
+	if(!istype(leaving))
 		return FALSE
 	return TRUE
 
@@ -335,6 +351,7 @@
 /mob/living/simple_animal/hostile/retaliate/trader/amorphous/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, name)
+	//add rare shop items
 	if(prob(20))
 		products[/obj/item/food/burger/roburger] = 750
 
@@ -358,18 +375,21 @@
 /mob/living/simple_animal/hostile/retaliate/trader/amorphous/AttackingTarget(atom/attacked_target)
 	OpenFire(attacked_target)
 
-///base subtype of the pirates that handles lines they all have.
+///base prototype of the pirates that handles lines they all have.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate
 	name = "Pirate"
 	desc = "A space pirate looking to flip some mysteriously procured wares for a quick buck."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "pirate"
-	loot = list(/obj/effect/gibspawner/human)
+	loot = list(/obj/effect/mob_spawn/human/corpse/pirate)
 	faction = list("pirate")
-	itemrejectphrase = "I'm not interested. Maybe another of my crew is, but not me."
 	itemsellcancelphrase = "Fine, keep it. But you should know i'm the only one here who will take it."
 	buyphrase = "Heh, here you go. No refunds!"
 	nocashphrase = "Hey, this isn't a giveaway! Earn some credits or don't come back."
+	///Phrase said when entering an off limits area
+	var/offlimitsphrase = "Hey, get out of here! Off limits!"
+	///Phrase said when leaving an off limits area
+	var/exitofflimitsphrase = "That's right, stay on YOUR side of the counter."
 	lore = list(
 		"A pirate's life for me... er, no, I'm not a pirate. Who's asking?",
 		"We need some damn cryopods on this ship. You know how boring it gets when the FTL is long distance?",
@@ -385,68 +405,109 @@
 	if(!.)
 		return
 	if(!faction_check_mob(arriving))
-		enemies |= WEAKREF(arriving)
+		INVOKE_ASYNC(src, .proc/aggro_intruder, arriving)
 
-/*
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/offlimits_exit_reaction(datum/source, mob/living/leaving)
+	. = ..()
+	if(!.)
+		return
+	if(!faction_check_mob(leaving))
+		INVOKE_ASYNC(src, .proc/deaggro_intruder, leaving)
+
+///small helper proc that does the part of the area enter signal that sleeps
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/aggro_intruder(mob/living/intruder)
+	say(offlimitsphrase)
+	enemies += WEAKREF(intruder)
+
+///small helper proc that does the part of the area exit signal that sleeps
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/deaggro_intruder(mob/living/intruder)
+	say(exitofflimitsphrase)
+	enemies |= WEAKREF(intruder)
 
 ///this trader is used in the merchant event.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities
-	name = "Oddities Pirate"
+	name = "Pirate Curio Collector"
 	desc = "A space pirate looking to buy and sell miscellaneous curios."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "pirate"
-	///Associated list of items the NPC sells with how much they cost.
+	//This merchant sells weird shit.
 	products = list(
 		/obj/item/flashlight/lantern/jade = 200,
 		/obj/item/seeds/random = 350,
 		/obj/item/pda/clear = 400,
 		/obj/item/reagent_containers/food/drinks/bottle/holywater = 500,
-		/obj/item/storage/backpack/satchel/flat/empty = 800,
+		/obj/item/lfline = 1500,
+		/obj/item/clothing/shoes/bhop/rocket = 1000,
 	)
-	///Associated list of items able to be sold to the NPC with the money given for them.
-	wanted_items = list(/obj/item/ectoplasm = 100)
+	//This merchant wants rare maintenance loot
+	wanted_items = list(
+		/obj/item/throwing_star = 400,
+		/obj/item/storage/box/hug = 500,
+		/obj/item/flashlight/flashdark = 600,
+		/obj/item/assembly/flash/memorizer = 600,
+		/obj/item/book/granter/crafting_recipe/pipegun_prime = 800,
+		/obj/item/shadowcloak = 1000
+	)
+	itemrejectphrase = "I'm only looking for curios. You should try digging through maintenance, or maybe from that lava planet nearby?"
 	itemsellacceptphrase = "Cool stuff. I just like collecting them."
 	interestedphrase = "Hey, that's an interesting oddity you have there."
 
-
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities/Initialize(mapload)
 	. = ..()
-	var/area/spawn_area = get_area(src)
-	RegisterSignal(spawn_area, proc)
+	//add rare shop items
+	if(prob(20))
+		products[/obj/item/clothing/mask/gas/space_ninja] = 750
+	if(prob(10))
+		products[/obj/item/clothing/suit/space/hardsuit/combatmedic] = 1400
 
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/quartermaster
+	name = "Pirate Quartermaster"
+	desc = "A space pirate looking to buy and sell pirate gear. It's an aesthetic!"
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "pirate"
+	//This merchant sells pirate gear.
+	products = list(
+		/obj/item/clothing/glasses/eyepatch = 40,
+		/obj/item/clothing/under/costume/pirate = 60,
+		/obj/item/clothing/suit/pirate = 100,
+		/obj/item/clothing/head/helmet/space/pirate/bandana = 150,
+		/obj/item/clothing/head/helmet/space/pirate = 250,
+		/obj/item/clothing/suit/space/pirate = 250,
+	)
+	//This merchant wants pirate gear they do not sell (yeah, we're talking the cutlass basically)
+	wanted_items = list(
+		/obj/item/melee/transforming/energy/sword/pirate = 2000,
+	)
+	itemrejectphrase = "I'd buy some pirate weapons, if ye had em. But not that."
+	itemsellacceptphrase = "Now you'll look the part!"
+	interestedphrase = "Some wonderful pirate gear there... I would like to take it off your hands!"
 
-/mob/living/simple_animal/hostile/retaliate/trader
+/mob/living/simple_animal/hostile/retaliate/trader/clown
 	name = "Clown Merchant"
 	desc = "Honk! Clown have wares, if you have coin."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "faceless"
-	maxHealth = 200
-	health = 200
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	attack_verb_continuous = "punches"
-	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
-	del_on_death = TRUE
-	loot = list(/obj/effect/mob_spawn/human/corpse)
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 2.5
-	casingtype = /obj/item/ammo_casing/shotgun/buckshot
-	wander = FALSE
-	ranged = TRUE
-	combat_mode = TRUE
-	move_resist = MOVE_FORCE_STRONG
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
-	speed = 0
-	stat_attack = HARD_CRIT
-	sell_sound = 'sound/effects/cashregister.ogg'
-	products = list(/obj/item/food/burger/ghost = 200)
-	wanted_items = list(/obj/item/ectoplasm = 100)
-	itemrejectphrase = "Honk! Sad to say but none of this junk is from my homeland."
+	icon = 'icons/mob/clown_mobs.dmi'
+	icon_state = "clown"
+	icon_living = "clown"
+	icon_dead = "clown_dead"
+	icon_gib = "clown_gib"
+	attack_sound = 'sound/items/bikehorn.ogg'
+	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
+	//This merchant sells "clown fan club gear".
+	products = list(
+		/obj/item/clothing/under/color/rainbow = 50,
+		/obj/item/clothing/under/color/jumpskirt/rainbow = 50,
+		/obj/item/bedsheet/clown = 75,
+		/obj/item/clothing/mask/gas/clown_hat = 100,
+		/obj/item/reagent_containers/spray/waterflower = 150,
+	)
+	//This merchant seeks the staff of the honkmother.
+	wanted_items = list(
+		/obj/item/gun/magic/staff/honk = 5000,
+	)
+	itemrejectphrase = "The only thing I would buy is the staff of the honkmother. I must return it to my people!"
 	itemsellcancelphrase = "You insult me, a thousand curses upon your shoelaces!"
 	itemsellacceptphrase = "Honk! I'd use the pie of acceptance, but I forgot to bring one."
-	interestedphrase = "Honk, Something from my people! I'd be glad to buy it or I can just tie your shoelaces and take it if you don't give it!"
+	interestedphrase = "I-IS THAT IT? THE STAFF OF THE HONKMOTHER? PLEASE, LET ME TAKE IT BACK TO MY PEOPLE! I WILL MAKE YOU RICH!!"
 	buyphrase = "Thanks honk, with this I'm one step closer to my own car!"
 	nocashphrase = "What a honking joke! Just go steal something of value like those assistants do!"
 	lore = list(
@@ -458,4 +519,9 @@
 		"I knew a monthperson once, until their timely demise."
 	)
 
-*/
+/mob/living/simple_animal/hostile/retaliate/trader/clown/Initialize(mapload)
+	. = ..()
+	//add rare shop items
+	if(prob(10))
+		products.Remove(/obj/item/reagent_containers/spray/waterflower)
+		products[/obj/item/reagent_containers/spray/waterflower/lube] = 500

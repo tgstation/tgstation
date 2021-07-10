@@ -2629,19 +2629,6 @@
 					)
 	crate_name = "training toolbox crate"
 
-/datum/supply_pack/misc/blackmarket_telepad
-	name = "Black Market LTSRBT"
-	desc = "Need a faster and better way of transporting your illegal goods from and to the station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
-	cost = CARGO_CRATE_VALUE * 20
-	contraband = TRUE
-	contains = list(
-		/obj/item/circuitboard/machine/ltsrbt,
-		/obj/item/stack/ore/bluespace_crystal/artificial,
-		/obj/item/stack/ore/bluespace_crystal/artificial,
-		/obj/item/stock_parts/subspace/ansible
-	)
-	crate_name = "crate"
-
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 /datum/supply_pack/misc/syndicate
 	name = "Assorted Syndicate Gear"

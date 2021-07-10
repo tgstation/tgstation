@@ -1,44 +1,30 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Pirate Shuttle Airlock"
-	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "ac" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "ad" = (
 /turf/closed/wall/rust,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "ae" = (
 /obj/item/chair,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "af" = (
-/mob/living/simple_animal/hostile/retaliate/trader,
 /obj/effect/turf_decal/stripes/white/line,
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/quartermaster,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "ag" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"ah" = (
-/obj/structure/closet/crate,
-/obj/structure/fluff{
-	density = 1;
-	desc = "Ha ha ha, you fool!";
-	icon = 'icons/obj/stack_objects.dmi';
-	icon_state = "sheet-silver_2";
-	name = "fool's silver"
-	},
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "ai" = (
 /obj/structure/closet/crate,
 /obj/structure/fluff{
@@ -55,83 +41,80 @@
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "aj" = (
-/obj/docking_port/mobile/emergency{
-	height = 15;
-	name = "Mother Russia Bleeds"
-	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Pirate Shuttle Airlock"
 	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"ak" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Pirate Shuttle Airlock"
+/obj/docking_port/mobile{
+	dir = 4;
+	dwidth = 5;
+	height = 8;
+	name = "pirate scrapheap shuttle";
+	width = 14
 	},
-/turf/closed/wall/r_wall/rust,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant)
 "al" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
 /obj/item/stack/sheet/iron/ten,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "am" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/closet/crate/bin,
 /obj/item/paper/crumpled,
 /obj/item/reagent_containers/food/drinks/mug/tea,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "an" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
 /obj/effect/gibspawner/robot,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "ao" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "ap" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
 /obj/structure/table_frame,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "aq" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
 /obj/item/stack/sheet/iron/ten,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "ar" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Pirate Shuttle Airlock"
 	},
-/turf/closed/wall/rust,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant)
 "at" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "au" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "ax" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "aD" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -142,43 +125,51 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "aQ" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "aV" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "aY" = (
 /obj/machinery/computer{
 	desc = "A computer that somehow commands this scrap heap of a shuttle.";
 	name = "Old Computer"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "aZ" = (
 /obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "ba" = (
+/obj/structure/closet/crate,
+/obj/structure/fluff{
+	density = 1;
+	desc = "Ha ha ha, you fool!";
+	icon = 'icons/obj/stack_objects.dmi';
+	icon_state = "sheet-silver_2";
+	name = "fool's silver"
+	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bf" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bg" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bi" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -186,7 +177,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bj" = (
 /obj/structure/closet/crate,
 /obj/structure/fluff{
@@ -198,53 +189,53 @@
 	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bk" = (
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bm" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bn" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bt" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bw" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bx" = (
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "by" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bB" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bK" = (
 /turf/closed/wall,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bL" = (
 /turf/template_noop,
 /area/template_noop)
@@ -255,64 +246,115 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
+/obj/effect/mob_spawn/human/corpse/pirate,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant/offlimits)
 "bO" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/closet/crate,
 /obj/item/storage/belt/utility,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bP" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
 /obj/structure/table_frame,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bQ" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/shuttle/merchant)
 "bR" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
+"nA" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant)
+"tx" = (
+/obj/effect/turf_decal/stripes/white/line,
+/mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/merchant/offlimits)
 "wq" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
 /obj/structure/mecha_wreckage/durand,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/merchant)
+"Cp" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant/offlimits)
+"Cu" = (
+/turf/open/floor/plating,
+/area/shuttle/merchant)
+"QA" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant)
+"RI" = (
+/turf/closed/wall/rust,
+/area/shuttle/merchant)
+"Sy" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/merchant)
+"VA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/human/corpse/pirate,
+/turf/open/floor/pod/dark,
+/area/shuttle/merchant/offlimits)
+"Wa" = (
+/turf/closed/wall,
+/area/shuttle/merchant)
+"XN" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "OFF LIMITS"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant)
+"Yy" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/merchant)
 
 (1,1,1) = {"
 bL
 bK
 ad
 ad
-bK
+Wa
 aj
-ad
-ac
-ac
-ac
-ad
+RI
 aa
-bK
-ad
+aa
+aa
+RI
+ar
+Wa
+RI
 "}
 (2,1,1) = {"
 aQ
 aD
 bi
 bk
-ad
+RI
 ax
 bO
 am
-ba
+QA
 bx
 ao
 ax
@@ -322,7 +364,7 @@ au
 (3,1,1) = {"
 bL
 ad
-ba
+Cp
 bj
 bm
 ax
@@ -341,7 +383,7 @@ aD
 bi
 af
 bn
-bg
+Sy
 ax
 ax
 ax
@@ -357,62 +399,62 @@ bN
 bt
 ag
 bm
-bg
+Sy
 bx
 bR
-ba
+QA
 bR
 by
 ax
-ad
-ad
+RI
+RI
 "}
 (6,1,1) = {"
 ac
 ba
 bg
 bk
-bK
-bg
-ad
-ac
-ac
-ac
-ad
-ax
-ad
+Wa
+Cu
+RI
+aa
+aa
+aa
+RI
+Cu
+RI
 bL
 "}
 (7,1,1) = {"
 ac
 aY
 bf
-ah
-bm
-bg
-ac
+bk
+RI
+Cu
+aa
 bL
 bQ
 bL
-ac
-ax
-ac
+aa
+Cu
+aa
 bL
 "}
 (8,1,1) = {"
 ac
 aY
 bf
-af
-bn
-bg
-ac
+bk
+XN
+Cu
+aa
 bQ
 bQ
 bQ
-ac
-ax
-ac
+aa
+Cu
+aa
 bL
 "}
 (9,1,1) = {"
@@ -420,31 +462,31 @@ ac
 aZ
 ae
 bk
-bm
-bg
-ac
+Wa
+Cu
+aa
 bL
 bQ
 bL
-ac
-ax
-ac
+aa
+Cu
+aa
 bL
 "}
 (10,1,1) = {"
 ac
-ba
+Cp
 bg
 bk
-ad
-bg
-ad
-ac
-ac
-ac
-ad
-ax
-bK
+RI
+Cu
+RI
+aa
+aa
+aa
+RI
+Cu
+Wa
 bL
 "}
 (11,1,1) = {"
@@ -456,18 +498,18 @@ bm
 ax
 al
 an
-bw
+Yy
 bB
 ap
 ax
-bK
-ad
+Wa
+RI
 "}
 (12,1,1) = {"
 aQ
 aD
 bi
-af
+tx
 bn
 ax
 ax
@@ -482,11 +524,11 @@ au
 (13,1,1) = {"
 bL
 ad
-ba
+Cp
 bk
 bm
-bg
-bg
+Sy
+Sy
 ax
 ax
 ax
@@ -498,13 +540,13 @@ au
 (14,1,1) = {"
 aV
 aD
-bi
+VA
 bk
-bK
-bg
+Wa
+Sy
 bP
-bt
-bt
+nA
+nA
 wq
 aq
 ax
@@ -516,14 +558,14 @@ bL
 bK
 bK
 ad
-ad
-ak
-ad
-ac
-ac
-aa
-bK
+RI
 ar
-bK
-ad
+RI
+aa
+aa
+aa
+Wa
+ar
+Wa
+RI
 "}
