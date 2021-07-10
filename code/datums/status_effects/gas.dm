@@ -52,23 +52,6 @@
 	duration = 8
 	can_melt = FALSE
 
-/datum/status_effect/floaty
-	id = "floaty"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 5 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/floaty
-
-/atom/movable/screen/alert/status_effect/floaty
-	name = "Floaty"
-	desc = "You're floating in the air!"
-
-/datum/status_effect/floaty/on_apply()
-	owner.AddElement(/datum/element/forced_gravity, 0)
-	return TRUE
-
-/datum/status_effect/floaty/on_remove()
-	owner._RemoveElement(/datum/element/forced_gravity, 0)
-
 /datum/status_effect/gas_fog
 	id = "gas_fog"
 	status_type = STATUS_EFFECT_REFRESH
