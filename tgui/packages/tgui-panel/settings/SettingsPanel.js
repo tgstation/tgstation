@@ -148,21 +148,6 @@ export const SettingsGeneral = (props, context) => {
               onInput={(e, value) => dispatch(updateSettings({
                 highlightColor: value,
               }))} />
-            Match:
-            <Button.Checkbox
-              checked={matchWord}
-              onClick={() => dispatch(updateSettings({
-                matchWord: !matchWord,
-              }))}>
-              Word
-            </Button.Checkbox>
-            <Button.Checkbox
-              checked={matchCase}
-              onClick={() => dispatch(updateSettings({
-                matchCase: !matchCase,
-              }))}>
-              Case
-            </Button.Checkbox>
           </Flex.Item>
         </Flex>
         <TextArea
@@ -171,6 +156,20 @@ export const SettingsGeneral = (props, context) => {
           onChange={(e, value) => dispatch(updateSettings({
             highlightText: value,
           }))} />
+        <Button.Checkbox
+          checked={matchWord}
+          onClick={() => dispatch(updateSettings({
+            matchWord: !matchWord,
+          }))}>
+          Match word
+        </Button.Checkbox>
+        <Button.Checkbox
+          checked={matchCase}
+          onClick={() => dispatch(updateSettings({
+            matchCase: !matchCase,
+          }))}>
+          Match case
+        </Button.Checkbox>
       </Box>
       <Divider />
       <Box>
