@@ -60,8 +60,15 @@
 		return
 	if(weapon.item_flags & NOBLUDGEON)
 		return
-	if(!honorbound.combat_mode && ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
-		return
+	if(!honorbound.combat_mode)
+		if((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))
+			return
+		var/mob/living/living_target = clickingon
+		for(var/datum/surgery/S in living_target.surgeries)
+			if(living_target.body_position == LYING_DOWN || !S.lying_required || !iscarbon(living_target))
+				if(S.next_step_check(honorbound))
+					return
+
 	var/mob/living/clickedmob = clickingon
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)

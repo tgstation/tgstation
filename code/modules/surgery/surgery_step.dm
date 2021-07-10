@@ -11,39 +11,12 @@
 	var/silicons_obey_prob = FALSE
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
-	var/success = FALSE
-	if(accept_hand)
-		if(!tool)
-			success = TRUE
-		if(iscyborg(user))
-			success = TRUE
-
-	if(accept_any_item)
-		if(tool && tool_check(user, tool))
-			success = TRUE
-
-	else if(tool)
-		for(var/key in implements)
-			var/match = FALSE
-
-			if(ispath(key) && istype(tool, key))
-				match = TRUE
-			else if(tool.tool_behaviour == key)
-				match = TRUE
-
-			if(match)
-				implement_type = key
-				if(tool_check(user, tool))
-					success = TRUE
-					break
-
-	if(success)
-		if(target_zone == surgery.location)
-			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
-				initiate(user, target, target_zone, tool, surgery, try_to_fail)
-			else
-				to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))
-			return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
+	if(can_operate(user, target, tool, surgery) && target_zone == surgery.location)
+		if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
+			initiate(user, target, target_zone, tool, surgery, try_to_fail)
+		else
+			to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))
+		return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
 
 	if(repeatable)
 		var/datum/surgery_step/next_step = surgery.get_surgery_next_step()
@@ -55,6 +28,25 @@
 				surgery.status--
 
 	return FALSE
+
+/datum/surgery_step/proc/can_operate(mob/user, mob/living/target, obj/item/tool)
+	if(accept_hand)
+		if(!tool)
+			return TRUE
+		if(iscyborg(user))
+			return TRUE
+	if(accept_any_item)
+		if(tool && tool_check(user, tool))
+			return TRUE
+	if(!tool)
+		return FALSE
+	for(var/key in implements)
+		if((ispath(key) && !istype(tool, key)) || tool.tool_behaviour != key)
+			continue
+		implement_type = key
+		if(tool_check(user, tool))
+			return TRUE
+
 
 #define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 

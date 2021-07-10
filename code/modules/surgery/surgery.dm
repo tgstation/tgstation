@@ -108,6 +108,22 @@
 			return TRUE
 	return FALSE
 
+/// Used for stuff such as honorbound checks.
+/datum/surgery/proc/next_step_check(mob/user)
+	if(location != user.zone_selected)
+		return FALSE
+	if(step_in_progress)
+		return TRUE
+	var/datum/surgery_step/step = get_surgery_step()
+	if(!step)
+		return FALSE
+	var/obj/item/tool = user.get_active_held_item()
+	if(step.can_operate(user, target, tool))
+		return TRUE
+	if(tool && tool.item_flags & SURGICAL_TOOL) //Won't whack the target.
+		return TRUE
+
+
 /datum/surgery/proc/get_surgery_step()
 	var/step_type = steps[status]
 	return new step_type
