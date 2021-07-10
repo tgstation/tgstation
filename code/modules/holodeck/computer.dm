@@ -255,6 +255,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product) || islist(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
+				RegisterSignal(holo_effect_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
 			continue
 
 		if(isobj(holo_atom))
