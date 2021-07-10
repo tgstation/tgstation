@@ -136,13 +136,6 @@ export const SettingsGeneral = (props, context) => {
         <Flex mb={1} color="label" align="baseline">
           <Flex.Item grow={1}>
             Highlight text (comma separated):
-            <Button.Checkbox
-              checked={matchCase}
-              onClick={() => dispatch(updateSettings({
-                matchCase: !matchCase,
-              }))}>
-              Match Case
-            </Button.Checkbox>
           </Flex.Item>
           <Flex.Item shrink={0}>
             <ColorBox mr={1} color={highlightColor} />
@@ -154,6 +147,13 @@ export const SettingsGeneral = (props, context) => {
               onInput={(e, value) => dispatch(updateSettings({
                 highlightColor: value,
               }))} />
+            <Button.Checkbox
+              checked={matchCase}
+              onClick={() => dispatch(updateSettings({
+                matchCase: !matchCase,
+              }))}>
+              Match case
+            </Button.Checkbox>
           </Flex.Item>
         </Flex>
         <TextArea
