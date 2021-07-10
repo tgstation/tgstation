@@ -39,7 +39,6 @@
 	faction = list("carp")
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
-	unique_name = TRUE
 	/// If the carp uses random coloring
 	var/random_color = TRUE
 	/// The chance for a rare color variant
@@ -154,7 +153,6 @@
 	base_pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 	random_color = FALSE
-	unique_name = FALSE
 
 	obj_damage = 80
 	melee_damage_lower = 20
@@ -211,7 +209,6 @@
 	icon_state = "magicarp"
 	maxHealth = 200
 	random_color = FALSE
-	unique_name = FALSE
 
 /mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
 	. = ..()
@@ -229,7 +226,6 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
-	unique_name = FALSE
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
