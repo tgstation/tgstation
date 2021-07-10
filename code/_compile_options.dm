@@ -73,10 +73,6 @@
 #define TESTING
 #endif
 
-#define REFERENCE_TRACKING
-#define REFERENCE_TRACKING_LOG
-#define GC_FAILURE_HARD_LOOKUP
-
 #if defined(UNIT_TESTS)
 //Hard del testing defines
 #define REFERENCE_TRACKING
