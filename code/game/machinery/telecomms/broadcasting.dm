@@ -186,7 +186,7 @@
 	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
+		hearer.Hear(rendered, virt.source, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
