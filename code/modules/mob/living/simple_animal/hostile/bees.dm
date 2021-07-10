@@ -87,6 +87,8 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	if((flags_1 & HOLOGRAM_1))
+		return ..()
 	var/obj/item/trash/bee/bee_to_eat = new(loc)
 	bee_to_eat.pixel_x = pixel_x
 	bee_to_eat.pixel_y = pixel_y
@@ -95,7 +97,7 @@
 		bee_to_eat.reagents.add_reagent(beegent.type, 5)
 	bee_to_eat.update_appearance()
 	beegent = null
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/bee/examine(mob/user)
