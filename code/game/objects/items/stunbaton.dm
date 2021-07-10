@@ -213,6 +213,10 @@
 		else
 			to_chat(user, span_danger("The baton is still charging!"))
 			return
+	else if(user.combat_mode && !turned_on)
+		..()
+		user.do_attack_animation(M)
+		return
 	else
 		M.visible_message(span_warning("[user] prods [M] with [src]. Luckily it was off."), \
 					span_warning("[user] prods you with [src]. Luckily it was off."))
