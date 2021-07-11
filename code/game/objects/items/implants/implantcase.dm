@@ -39,9 +39,7 @@
 			name = "implant case"
 	else if(istype(I, /obj/item/implanter))
 		var/obj/item/implanter/implanter_used = I
-		if(implanter_used.imp)
-			if(imp)
-				return
+		if(implanter_used.imp && !imp)
 			//implanter to case implant transfer
 			implanter_used.imp.forceMove(src)
 			imp = implanter_used.imp
@@ -49,9 +47,7 @@
 			update_appearance()
 			reagents = imp.reagents
 			implanter_used.update_appearance()
-		else if(imp)
-			if(implanter_used.imp)
-				return
+		else if(!implanter_used.imp && imp)
 			//implant case to implanter implant transfer
 			imp.forceMove(implanter_used)
 			implanter_used.imp = imp
