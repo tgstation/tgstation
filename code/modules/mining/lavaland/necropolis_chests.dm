@@ -636,12 +636,6 @@
 			return
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
-			if(!exposed_carbon.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
-				exposed_carbon.dna.features["original_moth_wings"] = exposed_carbon.dna.features["moth_wings"]
-			exposed_carbon.dna.features["moth_wings"] = "None"
-			if(!exposed_carbon.dna.features["original_moth_antennae"]) //Stores their antennae type as well
-				exposed_carbon.dna.features["original_moth_antennae"] = exposed_carbon.dna.features["moth_antennae"]
-			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as wings burst out!"))
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)

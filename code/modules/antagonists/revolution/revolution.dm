@@ -11,6 +11,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
+	suicide_cry = "VIVA LA REVOLUTION!!"
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
 	var/deconversion_reason

@@ -194,3 +194,164 @@
   - bugfix: carnivory trait shows up on the plant analyzer
   tralezab:
   - balance: mmis can no longer possess savannah ivanovs
+2021-07-06:
+  Fikou:
+  - bugfix: switchblade can now be used to butcher and slice necks
+  - bugfix: fixes voice of god not giving you large text
+  - bugfix: wisps no longer fall in chasms
+  Melbert:
+  - bugfix: Changelings birthed from headslugs that weren't already changelings (for
+      example, from the icebox mutation pool) are no longer full changeling antagonists,
+      but instead are a weaker, non-antagonist changeling variant (as they were in
+      the past).
+  MeyHaZah:
+  - imageadd: Concussive Gauntlets Resprite
+  Wayland-Smithy:
+  - bugfix: Fixed the cursed spring water double teleport polymorph machine.
+  bobbahbrown:
+  - bugfix: Buckling to a vehicle will no longer wait until you move to set your position
+      on the vehicle properly.
+2021-07-07:
+  ArcaneMusic:
+  - expansion: A new ruin has surfaced on icebox. Signal pings indicated that may
+      have been a post office, once.
+  - bugfix: Hologrids once again cannot be picked up, as is intended.
+  EuSouAFazer:
+  - bugfix: Inaccessible medkit in Kilostation dorms is now reachable
+  InsaneRed:
+  - qol: Cleaned up waste and distro pipes near sms on most maps so they dont automatically
+      link up to sm cooling pipeline
+  Nari Harimoto:
+  - bugfix: meta medbay sec posts air vents are now actually connected, trimmed a
+      line of cable that led nowhere from pharmacy
+  - bugfix: meta pharmacy now has medic access again, but no access anywhere for chem
+      factory except for chemist
+  - bugfix: an intercom in meta-med delivery shared the same wall as an APC, moved
+      the intercom to the top left of the room
+  - qol: Meta-station Xenobio slime computer camera can now move up and down between
+      the left most cells, as well as drop slimes in the work area between the consoles
+  - bugfix: Deltastation bar's atmos alarm now correctly placed, and nudged a pipe
+      nearby to no longer have a redundant loop
+  - bugfix: tram pharmacy now has medic access for when skeleton access is lifted
+  Paxilmaniac:
+  - rscadd: New ERT type, marines, for whatever you might want them for.
+  - rscadd: Tacticool armor from tgmc to compliment.
+  Wayland-Smithy:
+  - bugfix: Fixed unplaced blob overmind spawning in places it can not move.
+  spessbro:
+  - qol: made portaseeder use ctrl-click instead of a verb
+  unit0016 / Melbert:
+  - expansion: Many more antagonists now shout special phrases when suiciding with
+      C4/X4, including Heretics, Centcom Interns, Obsessed, Clown Ops, and Santa Clause.
+2021-07-08:
+  AnCopper:
+  - rscadd: Added a name to clown.txt
+  Fikou:
+  - bugfix: properly updates the light color of the mining hardsuit helmet
+  Greniza:
+  - bugfix: runtime errors from weather
+  - bugfix: Environmental Protection Bags protect from ash storms
+  Iamgoofball:
+  - balance: Removes stuns from Voice of God.
+  InsaneRed:
+  - rscadd: Chaplains who worship the machine gods can now trade in 2000 favor to
+      receive a random cybernetic implant
+  Nari Harimoto:
+  - bugfix: the examine text on the Seed Extractor now accurately displays the amount
+      of seeds you may potentially get
+  Spookuni:
+  - balance: Nanotrasen has released experimental new laser lenses for laser rifles,
+      energy guns, and illegal hellfire modkits, increasing the number of shots they
+      can fire from full charge by roughly 20%.
+  Wayland-Smithy:
+  - code_imp: Introduces the Lag Switch subsystem for when a smoother experience is
+      worth trading a few bells and whistles for. Performance enhancement measures
+      can be togged by admins with the Show Lag Switches admin verb or enabled automatically
+      at a pop amount set via config.
+  - config: 'Added a new config var: number/auto_lag_switch_pop'
+  ZephyrTFA:
+  - code_imp: Rust is now a component
+  - refactor: refactor almost all of the rust heretic atom procs
+  - rscadd: Wirebrush for advanced rust removal
+2021-07-09:
+  Arkatos:
+  - qol: Observers can now interact with the engraved messages from any distance.
+      Rate them!
+  - bugfix: Fixed a case where you could make more engraved messages than your soapstone
+      had uses by queing them fast enough.
+  Ghilker:
+  - bugfix: fix issue with the thermomachine rotation when pulled/pushed
+  Nari Harimoto:
+  - bugfix: Removing the Thermal Vision mutation will now remove the active vision
+      as well
+  PositiveEntropy, Kryson, maxymax13:
+  - imageadd: The Security TV, Smartfridge, and Booze-o-Mat now have new updated sprites!
+  Time-Green:
+  - refactor: "A majority of species features have been turned into organs. Soon you\
+      \ will be able to combine a moth and a lizard into one \xFCber being"
+  - bugfix: Dropped limbs will now display horns, frills etc instead of just naked
+      and ugly
+  - bugfix: Swapping limbs will now transfer those limbs features, so putting a lizard
+      head onto a human will actually mean they get a snout and horns and everything
+      instead of just being an awkward colored human head
+  Watermelon914:
+  - bugfix: Fixed the component printer's layout being broken.
+  Wayland-Smithy:
+  - qol: Orbiters now transfer to changeling headslugs at birth.
+  YakumoChen:
+  - expansion: You can now wear the suffering of others on your head with just a sheet
+      of human skin!
+  - imageadd: Human skin hats, touched up by Krysonism
+2021-07-10:
+  Nari Harimoto:
+  - bugfix: AI intellicards can no longer be teleported out of intellicard slots on
+      consoles using telekinesis or silicon access range
+  Paxilmaniac:
+  - bugfix: two floor decals that were on a wall in delta xenobio are no longer
+  ProtivogaSpriter:
+  - imageadd: Replaced old Mjolnir sprites with new Mjolnir sprites.
+  Time-Green:
+  - bugfix: fixes a plumbing harddel
+  Watermelon914:
+  - bugfix: Fixed CQC sometimes not registering attacks and grabs properly.
+  Wayland-Smithy:
+  - bugfix: Fixed and improved wabbajack polymorph logging.
+  - bugfix: Silicons can now toggle emitter locks with secondary attack.
+  - bugfix: Fixed Tram ghost magnet and other cases of observer forceMove.
+  - code_imp: Renamed some observer code vars for better readability. Portals check
+      types less.
+  - bugfix: Fixed all clients being forced to Fit Viewport regardless of their Auto
+      Fit Viewport preference being set to manual.
+  Zytolg:
+  - qol: There's some eye candy in the Abandoned Medbay that now suggests that it
+      was at some point a medbay.
+  - balance: Downgrades the Chem Dispenser and Heater to their Ghetto Counterparts
+  read-0nly:
+  - qol: adds random number to carp spawned from space dragon rifts
+2021-07-11:
+  '@Azarak':
+  - bugfix: pipes sprite fix
+  - refactor: pipe sprites now uses bitmasks
+  KubeRoot:
+  - bugfix: Flash implant now displays its message instead of runtiming when used
+      on cooldown
+  Mothblocks:
+  - bugfix: Fixed moth wings not showing up when you have a suit on.
+  Nari Harimoto:
+  - qol: Stunbatons will now harm-baton on left-click if you are in combat mode and
+      the baton is off
+  Paxilmaniac:
+  - bugfix: energy guns now have the correct icon, and no longer look like nanotrasen
+      brand super soakers
+  - bugfix: the set of duplicate icons for energy guns that caused the guns to look
+      different in map editors is no longer
+  Timberpoes:
+  - balance: The Bluespace RPED can no longer teleport chems in reagent containers,
+      instead emptying any reagents from containers inserted into it.
+  Wayland-Smithy:
+  - bugfix: 'Fixed some station name html encoding for plaintext handlers like: Station
+      Charter announcements, the World Name (SS13 window title), and in Cross Server
+      Messages both custom and news about the crews ultimate fate.'
+  carshalash:
+  - expansion: Splits eggs into two reagents. Introduces Pavlova, THE great Oceanic
+      dessert. Whipped cream is also added.
