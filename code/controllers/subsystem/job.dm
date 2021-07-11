@@ -447,7 +447,7 @@ SUBSYSTEM_DEF(job)
 		var/spawning_handled = FALSE
 		var/obj/S = null
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && job.random_spawns_possible)
-			SendToLateJoin(living_mob, TRUE, FALSE)
+			SendToLateJoin(living_mob, buckle = TRUE, search_empty_chair = FALSE)
 			spawning_handled = TRUE
 		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS) && job.random_spawns_possible)
 			DropLandAtRandomHallwayPoint(living_mob)
