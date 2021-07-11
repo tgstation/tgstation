@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - balance: "The Bluespace RPED can no longer teleport chems in reagent containers, instead emptying any reagents from containers inserted into it."

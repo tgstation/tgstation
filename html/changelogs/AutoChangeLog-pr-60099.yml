@@ -1,5 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - bugfix: "energy guns now have the correct icon, and no longer look like nanotrasen brand super soakers"
-  - bugfix: "the set of duplicate icons for energy guns that caused the guns to look different in map editors is no longer"
