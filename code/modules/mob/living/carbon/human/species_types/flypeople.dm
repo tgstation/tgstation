@@ -2,7 +2,7 @@
 	name = "Flyperson"
 	id = SPECIES_FLY
 	say_mod = "buzzes"
-	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
+	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE, TRAIT_CAN_USE_FLIGHTPOTION)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	mutanteyes = /obj/item/organ/eyes/fly

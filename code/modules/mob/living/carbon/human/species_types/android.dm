@@ -2,7 +2,7 @@
 	name = "Android"
 	id = SPECIES_ANDROID
 	say_mod = "states"
-	species_traits = list(NOBLOOD)
+	species_traits = list(NOBLOOD, TRAIT_CAN_USE_FLIGHTPOTION)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
