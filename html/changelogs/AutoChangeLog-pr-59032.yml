@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "Syndicate hardsuit helmet sprites will now properly update when combat mode is activated."
