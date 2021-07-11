@@ -569,7 +569,11 @@
 /obj/item/organ/lungs/ashwalker
 	name = "blackened frilled lungs" // blackened from necropolis exposure
 	desc = "Exposure to the necropolis has mutated these lungs to breathe the air of the lava-covered moon below."
-	color = "#964b00" // TODO get proper sprite instead of BROWN
+	icon_state = "lungs-ashwalker"
+
+// Normal oxygen is 21 kPa partial pressure, but SS13 humans can tolerate down
+// to 16 kPa. So it follows that ashwalkers, as humanoids, follow the same rules.
+#define GAS_TOLERANCE 5
 
 /obj/item/organ/lungs/ashwalker/Initialize()
 	. = ..()
@@ -596,17 +600,14 @@
 	var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 	var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
 
-	// Normal oxygen is 21 kPa partial pressure, but SS13 humans can tolerate down
-	// to 16 kPa. So it follows that ashwalkers, as humanoids, follow the same rules.
-	var/TOLERANCE = 5
-	safe_oxygen_min = max(0, oxygen_pp - TOLERANCE)
-	safe_nitro_min = max(0, nitrogen_pp - TOLERANCE)
-	safe_toxins_min = max(0, plasma_pp - TOLERANCE)
+	safe_oxygen_min = max(0, oxygen_pp - GAS_TOLERANCE)
+	safe_nitro_min = max(0, nitrogen_pp - GAS_TOLERANCE)
+	safe_toxins_min = max(0, plasma_pp - GAS_TOLERANCE)
 
 	// CO2 is always a waste gas, so none is required, but ashwalkers
-	// tolerate the base amount plus 10 (humans tolerate only 10 pp)
+	// tolerate the base amount plus tolerance*2 (humans tolerate only 10 pp)
 
-	safe_co2_max = carbon_dioxide_pp + TOLERANCE * 2
+	safe_co2_max = carbon_dioxide_pp + GAS_TOLERANCE * 2
 
 	// The lung tolerance against BZ is also increased the amount of BZ in the base air
 	BZ_trip_balls_min += bz_pp
@@ -615,3 +616,5 @@
 	// Lungs adapted to a high miasma atmosphere do not process it, and breathe it back out
 	if(miasma_pp)
 		suffers_miasma = FALSE
+
+#undef GAS_TOLERANCE
