@@ -70,6 +70,7 @@
 	if(imp)
 		reagents = imp.reagents
 
+
 ///An implant case that spawns with a tracking implant, as well as an appropriate name and description.
 /obj/item/implantcase/tracking
 	name = "implant case - 'Tracking'"
