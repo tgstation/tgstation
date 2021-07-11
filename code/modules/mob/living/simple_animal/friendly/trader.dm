@@ -17,6 +17,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_PUNCH
 	del_on_death = TRUE
 	loot = list(/obj/effect/mob_spawn/human/corpse)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
@@ -32,7 +33,6 @@
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	check_friendly_fire = TRUE
-	attack_same = TRUE
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT|INTERACT_ATOM_IGNORE_ADJACENCY
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
@@ -405,14 +405,13 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/trader/amorphous/AttackingTarget(atom/attacked_target)
-	OpenFire(attacked_target)
+	OpenFire(target)
 
 ///base prototype of the pirates that handles lines they all have.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate
 	name = "Pirate"
 	desc = "A space pirate looking to flip some mysteriously procured wares for a quick buck."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "pirate"
+	icon_state = "piratemerchant"
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate)
 	faction = list("pirate")
 	itemsellcancelphrase = "Fine, keep it. But you should know i'm the only one here who will take it."
@@ -460,8 +459,6 @@
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities
 	name = "Pirate Curio Collector"
 	desc = "A space pirate looking to buy and sell miscellaneous curios."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "pirate"
 	//This merchant sells weird shit.
 	products = list(
 		/obj/item/flashlight/lantern/jade = 200,
@@ -500,8 +497,6 @@
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/quartermaster
 	name = "Pirate Quartermaster"
 	desc = "A space pirate looking to buy and sell pirate gear. It's an aesthetic!"
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "pirate"
 	//This merchant sells pirate gear.
 	products = list(
 		/obj/item/clothing/glasses/eyepatch = 40,
@@ -527,6 +522,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
+	faction = list("clown")
 	attack_sound = 'sound/items/bikehorn.ogg'
 	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
 	//This merchant sells "clown fan club gear".
