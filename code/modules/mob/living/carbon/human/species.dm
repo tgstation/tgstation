@@ -2043,9 +2043,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		wings_icon = wings_icons[1]
 
-	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.body_type)
-	wings.Insert(H)
-	handle_mutant_bodyparts(H)
+	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, flying_mob.body_type)
+	wings.Insert(flying_mob)
+	handle_mutant_bodyparts(flying_mob)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
