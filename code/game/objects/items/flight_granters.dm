@@ -23,8 +23,7 @@
 	if(!iscarbon(exposed_mob) || exposed_mob.stat == DEAD)
 		return
 	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/holycheck = ishumanbasic(exposed_carbon)
-	if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || (ismoth(exposed_carbon) && exposed_carbon.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
+	if(reac_volume < 5 || !(ishumanbasic(exposed_carbon) || islizard(exposed_carbon) || ismoth(exposed_carbon))) // implying xenohumans are holy //as with all things,
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_carbon, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
@@ -32,7 +31,7 @@
 		to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 	else
 		to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as wings burst out!"))
-	exposed_carbon.dna.species.grant_flight(exposed_carbon)
+	exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
 	if(holycheck)
 		to_chat(exposed_carbon, span_notice("You feel blessed!"))
 		ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SPECIES_TRAIT)

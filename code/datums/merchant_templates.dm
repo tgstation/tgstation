@@ -11,6 +11,6 @@
 	suffix = "friendly_pirates"
 	name = "merchant ship (Friendly Pirates)"
 
-/datum/map_template/shuttle/merchant/friendly_pirates
+/datum/map_template/shuttle/merchant/clown
 	suffix = "clown"
 	name = "merchant ship (Clown)"

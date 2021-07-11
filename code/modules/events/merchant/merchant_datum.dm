@@ -47,3 +47,12 @@
 /datum/merchant/friendly_pirates/New()
 	. = ..()
 	name = pick(strings(PIRATE_NAMES_FILE, "rogue_names"))
+
+/datum/merchant/clown
+	name = "Honkadacious Interstellar"
+	map_template_path = /datum/map_template/shuttle/merchant/clown
+	message_greet = "HONK! LETS TRADE! HONK! Pay me %VISITCOST credits to show me you mean business!"
+	message_docking = "Honk honk, thanks honk. I'll be docking at escape now!"
+	message_leaving = "I'm off to clown planet. Good luck, stationeers!"
+	message_too_poor = "The honkmother does not do charities, stupeed! Good thing we have a buyin for docking..."
+	message_too_late = "Honk honk, I don't wanna waste the fuel if you're about to leave. Honkadacious out!"
