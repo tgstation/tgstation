@@ -1,5 +1,8 @@
 /// Updates the combat mode vignette depending on the mob's current combat mode state
 /mob/living/proc/update_combat_mode_vignette()
+	if (!client?.prefs?.toggle_combat_mode_vignette)
+		return
+
 	if (isnull(combat_mode_vignette_corners))
 		if (!combat_mode)
 			return

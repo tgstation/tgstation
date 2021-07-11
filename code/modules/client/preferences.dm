@@ -115,6 +115,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Do we show item hover outlines?
 	var/itemoutline_pref = TRUE
 
+	/// Show the combat mode vignette?
+	var/toggle_combat_mode_vignette = TRUE
+
 	var/ambientocclusion = TRUE
 	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
@@ -718,6 +721,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<b>Play End of Round Sounds:</b> <a href='?_src_=prefs;preference=endofround_sounds'>[(toggles & SOUND_ENDOFROUND) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<b>Play Combat Mode Sounds:</b> <a href='?_src_=prefs;preference=combat_mode_sound'>[(toggles & SOUND_COMBATMODE) ? "Enabled":"Disabled"]</a><br>"
+			dat += "<b>Toggle Combat Mode Vignette:</b> <a href='?_src_=prefs;preference=toggle_combat_mode_vignette'>[toggle_combat_mode_vignette ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>See Pull Requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Enabled":"Disabled"]</a><br>"
 			dat += "<br>"
 
@@ -1746,6 +1750,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+
+				if("toggle_combat_mode_vignette")
+					toggle_combat_mode_vignette = !toggle_combat_mode_vignette
+					if (isliving(user))
+						var/mob/living/living_user = user
+
+						if (toggle_combat_mode_vignette)
+							living_user.update_combat_mode_vignette()
+						else
+							user.client?.screen -= living_user.combat_mode_vignette_corners
+							QDEL_LIST(living_user.combat_mode_vignette_corners)
+							living_user.combat_mode_vignette_corners = null
 
 				if("endofround_sounds")
 					toggles ^= SOUND_ENDOFROUND
