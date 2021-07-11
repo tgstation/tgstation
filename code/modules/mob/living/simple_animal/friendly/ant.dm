@@ -38,7 +38,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	time_to_hunt = rand(5,10)
 
-/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the ants have become the predators
+/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the ants have become the predators.
 	. = ..()
 	turns_since_scan++
 	if(turns_since_scan > time_to_hunt)
