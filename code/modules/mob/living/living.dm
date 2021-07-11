@@ -35,6 +35,9 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
+	client?.screen -= combat_mode_vignette_corners
+	QDEL_LIST(combat_mode_vignette_corners)
+
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LAZYLIST(diseases)

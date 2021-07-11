@@ -77,6 +77,7 @@
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
+	update_combat_mode_vignette()
 	if(silent || !(client?.prefs.toggles & SOUND_COMBATMODE))
 		return
 	if(combat_mode)

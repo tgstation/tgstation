@@ -9,6 +9,7 @@
 
 	update_damage_hud()
 	update_health_hud()
+	update_combat_mode_vignette()
 
 	var/turf/T = get_turf(src)
 	if (isturf(T))

@@ -165,6 +165,7 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+#define COMBAT_MODE_VIGNETTE_LAYER 7
 
 
 //-------------------- HUD ---------------------

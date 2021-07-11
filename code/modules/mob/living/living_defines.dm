@@ -170,3 +170,6 @@
 	var/body_position_pixel_x_offset = 0
 	///The x amount a mob's sprite should be offset due to the current position they're in
 	var/body_position_pixel_y_offset = 0
+
+	/// List of corners for the combat mode vignette
+	var/list/combat_mode_vignette_corners
