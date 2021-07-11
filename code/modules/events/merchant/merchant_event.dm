@@ -49,17 +49,24 @@
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
-	var/turf/T = locate(x,y,z)
-	if(!T)
-		CRASH("merchant event found no turf to load in")
+	var/turf/shuttle_spawning_turf = locate(x,y,z)
+	if(!shuttle_spawning_turf)
+		CRASH("Merchant shuttle found no turf to load in!")
 
-	if(!ship.load(T))
-		CRASH("Loading merchant ship failed!")
+	if(!ship.load(shuttle_spawning_turf))
+		CRASH("Merchant shuttle failed to load!")
 
-	for(var/obj/docking_port/mobile/merchant/port in ship.get_affected_turfs(T))
-		port.visiting_merchant = visiting_merchant
-		port.dock_id("emergency_home")
-		break
+	var/obj/docking_port/mobile/merchant/port
+	//we can cheat and only search open turfs for the docking port
+	for(var/turf/open/loaded_turf in ship.get_affected_turfs(shuttle_spawning_turf))
+		port = locate(/obj/docking_port/mobile/merchant) in loaded_turf
+		if(port)
+			break
+	if(!port)
+		CRASH("Merchant shuttle's docking port could not be found! Please double check the docking port type is /merchant in the map file")
+
+	port.visiting_merchant = visiting_merchant
+	port.dock_id("emergency_home")
 
 /obj/docking_port/mobile/merchant
 	name = "merchant shuttle"

@@ -33,7 +33,7 @@
 	robust_searching = TRUE
 	check_friendly_fire = TRUE
 	attack_same = TRUE
-	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT|INTERACT_ATOM_IGNORE_ADJACENCY
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///Associated list of items the NPC sells with how much they cost.
@@ -64,6 +64,13 @@
 	if(offlimits)
 		RegisterSignal(offlimits, COMSIG_AREA_ENTERED, .proc/offlimits_enter_reaction)
 		RegisterSignal(offlimits, COMSIG_AREA_EXITED, .proc/offlimits_exit_reaction)
+
+/mob/living/simple_animal/hostile/retaliate/trader/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(table_check(user))
+		return TRUE
 
 /mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
 	if(user == target)
@@ -133,7 +140,15 @@
 		return FALSE
 	if(user.Adjacent(src))
 		return TRUE
-	//one last check to see if there is a table between the trader and the user
+	return table_check(user)
+
+/**
+ * Small helper that returns TRUE if there is a single table between the trader and the interacting mob
+ *
+ * Arguments:
+ * * user - The mob trying to interact
+ */
+/mob/living/simple_animal/hostile/retaliate/trader/proc/table_check(mob/user)
 	var/dir_to_trader = get_dir(user, src)
 	var/turf/first_step = get_turf(user)
 	var/turf/second_step = get_step(first_step, dir_to_trader)

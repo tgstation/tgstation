@@ -22,8 +22,8 @@
  */
 /obj/item/lfline
 	name = "LFLINE pack"
-	desc = "You wear this on your back, let it plug into your organs... and you're invincible! Allegedly."
-	icon_state = "backpack"
+	desc = "You wear this on your back, let it... hook... into your organs... and you're invincible! Allegedly."
+	icon_state = "lfline"
 	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
@@ -31,3 +31,17 @@
 	slot_flags = ITEM_SLOT_BACK
 	resistance_flags = NONE
 	max_integrity = 150
+	equip_delay_self = 3 SECONDS
+	equip_delay_other = 4 SECONDS
+
+/obj/item/lfline/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_BACK)
+		return
+	user.balloon_alert(user, "LFLINE sinks hooks into you")
+	ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
+
+/obj/item/lfline/dropped(mob/user)
+	..()
+	user.balloon_alert(user, "LFLINE releases its hooks")
+	REMOVE_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)

@@ -74,7 +74,7 @@
 	return FALSE
 
 /atom/proc/can_interact(mob/user)
-	if(!user.can_interact_with(src))
+	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_ADJACENCY) && !user.can_interact_with(src))
 		return FALSE
 	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
