@@ -25,7 +25,7 @@
 		TRAIT_FAKEDEATH,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOCLONELOSS,
-		TRAIT_CAN_USE_FLIGHT_POTION
+		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
