@@ -324,7 +324,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This mob should never close UI even if it doesn't have a client
 #define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
 /// Lets the mob use flight potions
-#define TRAIT_CAN_USE_FLIGHTPOTION "can_use_flightpotion"
+#define TRAIT_CAN_USE_FLIGHT_POTION "can_use_flight_potion"
 /// This mob overrides certian SSlag_switch measures with this special trait
 #define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
 

@@ -5,7 +5,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES, TRAIT_CAN_USE_FLIGHTPOTION)
+	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
@@ -25,6 +25,7 @@
 		TRAIT_FAKEDEATH,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOCLONELOSS,
+		TRAIT_CAN_USE_FLIGHT_POTION
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
