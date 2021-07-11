@@ -29,9 +29,7 @@
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
 		var/new_name = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_held_item() != I)
-			return
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if((user.get_active_held_item() != I) || !user.canUseTopic(src, BE_CLOSE))
 			return
 		if(new_name)
 			name = "implant case - '[new_name]'"
