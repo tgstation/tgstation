@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Railings integrity has been lowered from 300 (default for structures) to 75 (grilles integrity times 1.5) and their armor changed to match that of grilles."
