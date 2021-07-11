@@ -30,7 +30,7 @@
 	'disable' setting in an attempt to bypass the ammo issues."
 
 /obj/item/paper/fluff/ruins/oldstation/protosing
-	name = "Singularity Generator"
+	name = "Supermatter Crystal Generator"
 	info = "<b>*Supermatter Crystal Shard*</b><br><br>Modern power generation typically comes in two forms, a Fusion Generator or a Fission Generator. Fusion provides the best space to power \
 	\ntratio, and is typically seen on military or high security ships and stations, however Fission reactors require the usage of expensive, and rare, materials in its construction. \
 	Fission generators are massive and bulky, and require a large reserve of uranium to power, however they are extremely cheap to operate and oft need little maintenance once \
