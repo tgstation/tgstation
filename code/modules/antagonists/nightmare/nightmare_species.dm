@@ -3,7 +3,7 @@
  */
 /datum/species/shadow/nightmare
 	name = "Nightmare"
-	id = "nightmare"
+	id = SPECIES_NIGHTMARE
 	limbs_id = "shadow"
 	burnmod = 1.5
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
@@ -41,7 +41,7 @@
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
+			H.visible_message(span_danger("[H] dances in the shadows, evading [P]!"))
 			playsound(T, "bullet_miss", 75, TRUE)
 			return BULLET_ACT_FORCE_PIERCE
 	return ..()

@@ -40,6 +40,7 @@
 	quality = POSITIVE
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
+	text_lose_indication = "<span class='notice'>You can no longer see the heat rising off of your skin...</span>"
 	time_coeff = 2
 	instability = 25
 	synchronizer_coeff = 1
@@ -94,6 +95,12 @@
 		return
 
 	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
+
+/datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	owner.update_sight()
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/xray
@@ -153,7 +160,7 @@
 
 	if(!source.combat_mode)
 		return
-	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
+	to_chat(source, span_warning("You shoot with your laser eyes!"))
 	source.changeNext_move(CLICK_CD_RANGE)
 	source.newtonian_move(get_dir(target, source))
 	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)

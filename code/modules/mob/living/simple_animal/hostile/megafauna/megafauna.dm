@@ -10,7 +10,7 @@
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(WEATHER_LAVA,WEATHER_ASH)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
@@ -135,8 +135,8 @@
 	if(!L)
 		return FALSE
 	visible_message(
-		"<span class='danger'>[src] devours [L]!</span>",
-		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+		span_danger("[src] devours [L]!"),
+		span_userdanger("You feast on [L], restoring your health!"))
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()

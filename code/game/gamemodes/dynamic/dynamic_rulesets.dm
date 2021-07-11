@@ -218,15 +218,16 @@
 				continue
 
 		// If this ruleset has exclusive_roles set, we want to only consider players who have those
-		// job prefs enabled. Otherwise, continue as before.
+		// job prefs enabled and are eligible to play that job. Otherwise, continue as before.
 		if(length(exclusive_roles))
 			var/exclusive_candidate = FALSE
 			for(var/role in exclusive_roles)
-				if(role in candidate_client.prefs.job_preferences)
+				if((role in candidate_client.prefs.job_preferences) && !is_banned_from(candidate_player.ckey, role) && !job_is_xp_locked(candidate_player.ckey, role))
 					exclusive_candidate = TRUE
 					break
 
-			// If they didn't have any of the required job prefs enabled, they're not eligible for this antag type.
+			// If they didn't have any of the required job prefs enabled or were banned from all enabled prefs,
+			// they're not eligible for this antag type.
 			if(!exclusive_candidate)
 				candidates.Remove(candidate_player)
 

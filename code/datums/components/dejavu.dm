@@ -56,7 +56,7 @@
 
 	else if(isobj(parent))
 		var/obj/O = parent
-		integrity = O.obj_integrity
+		integrity = O.get_integrity()
 		rewind_type = .proc/rewind_obj
 
 	addtimer(CALLBACK(src, rewind_type), rewind_interval)
@@ -73,7 +73,7 @@
 	if(starting_turf)
 		var/area/destination_area = starting_turf.loc
 		if(destination_area.area_flags & NOTELEPORT)
-			to_chat(parent, "<span class='warning'>For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force.</span>")
+			to_chat(parent, span_warning("For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force."))
 		else
 			var/atom/movable/master = parent
 			master.forceMove(starting_turf)
@@ -107,5 +107,5 @@
 
 /datum/component/dejavu/proc/rewind_obj()
 	var/obj/master = parent
-	master.obj_integrity = integrity
+	master.update_integrity(integrity)
 	rewind()

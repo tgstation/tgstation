@@ -50,26 +50,26 @@
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
 		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
 			helbent = TRUE
-		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
+		to_chat(M, span_hierophant("Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?"))
 		var/timeisticking = world.time
 		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
 		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it
 		if(!RPSchoice)
-			to_chat(M, "<span class='hierophant'>You decide to not press your luck, but the spirits remain... hopefully they'll go away soon.</span>")
+			to_chat(M, span_hierophant("You decide to not press your luck, but the spirits remain... hopefully they'll go away soon."))
 			reaping = FALSE
 			return
 		var/grim = pick(RockPaperScissors)
 		if(grim == RPSchoice) //You Tied!
-			to_chat(M, "<span class='hierophant'>You tie, and the malevolent spirits disappear... for now.</span>")
+			to_chat(M, span_hierophant("You tie, and the malevolent spirits disappear... for now."))
 			reaping = FALSE
 		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
-			to_chat(M, "<span class='hierophant'>You lose, and the malevolent spirits smirk eerily as they surround your body.</span>")
+			to_chat(M, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
 			M.dust()
 			return
 		else //VICTORY ROYALE
-			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
+			to_chat(M, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
 			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
 			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			holder.del_reagent(type)
@@ -137,7 +137,7 @@
 	if(M.getStaminaLoss() >= 80)
 		M.drowsyness += 1 * REM * delta_time
 	if(M.getStaminaLoss() >= 100)
-		to_chat(M,"<span class='warning'>You feel more tired than you usually do, perhaps if you rest your eyes for a bit...</span>")
+		to_chat(M,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		M.adjustStaminaLoss(-100, TRUE)
 		M.Sleeping(10 SECONDS)
 	..()
@@ -485,7 +485,7 @@
 		iter_wound.on_synthflesh(reac_volume)
 	carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity)))) //0.5 - 0.75
 	if(show_message)
-		to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
 		carbies.cure_husk(BURN)
@@ -539,11 +539,11 @@
 		H.Dizzy(rand(0, 2) * REM * delta_time)
 
 		if(DT_PROB(18, delta_time))
-			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
+			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))
 
 	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
-		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
+		to_chat(H,span_danger("You feel something rupturing inside your chest!"))
 		H.emote("scream")
 		H.set_heartattack(TRUE)
 		volume = 0

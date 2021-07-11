@@ -135,6 +135,9 @@
 #define STATUS_EFFECT_SURRENDER /datum/status_effect/grouped/surrender // gives an alert to quickly surrender
 
 #define STATUS_EFFECT_EIGEN /datum/status_effect/eigenstasium
+
+#define STATUS_EFFECT_STONED /datum/status_effect/stoned
+
 /////////////
 //  SLIME  //
 /////////////

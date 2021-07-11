@@ -19,10 +19,10 @@
 		return FALSE
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
 	if(!M)
-		to_chat(user, "<span class='warning'>Cannot locate shuttle!</span>")
+		to_chat(user, span_warning("Cannot locate shuttle!"))
 		return FALSE
 	var/obj/docking_port/stationary/S = M.get_docked()
 	if(S?.name == "laborcamp_away")
-		to_chat(user, "<span class='warning'>Shuttle is already at the outpost!</span>")
+		to_chat(user, span_warning("Shuttle is already at the outpost!"))
 		return FALSE
 	return TRUE

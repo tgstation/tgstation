@@ -206,7 +206,7 @@
 		screenmob.client.screen += module_store_icon //"store" icon
 
 		if(!R.model.modules)
-			to_chat(usr, "<span class='warning'>Selected model has no modules to select!</span>")
+			to_chat(usr, span_warning("Selected model has no modules to select!"))
 			return
 
 		if(!R.robot_modules_background)

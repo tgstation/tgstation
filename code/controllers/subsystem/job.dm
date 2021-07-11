@@ -56,7 +56,6 @@ SUBSYSTEM_DEF(job)
 	var/always_promote_captain_job = TRUE
 
 /datum/controller/subsystem/job/Initialize(timeofday)
-	SSmapping.HACK_LoadMapConfig()
 	setup_job_lists()
 	if(!occupations.len)
 		SetupOccupations()
@@ -86,7 +85,7 @@ SUBSYSTEM_DEF(job)
 	occupations = list()
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!all_jobs.len)
-		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
+		to_chat(world, span_boldannounce("Error setting up jobs, no job datums found"))
 		return FALSE
 
 	for(var/J in all_jobs)
@@ -218,7 +217,6 @@ SUBSYSTEM_DEF(job)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
-			SSpersistence.antag_rep_change[player.ckey] = 0
 	SetupOccupations()
 	unassigned = list()
 	return
@@ -279,16 +277,11 @@ SUBSYSTEM_DEF(job)
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
-/datum/controller/subsystem/job/proc/DivideOccupations(list/required_jobs)
+/datum/controller/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO")
 
-	//Holder for Triumvirate is stored in the SSticker, this just processes it
-	if(SSticker.triai)
-		for(var/datum/job/ai/A in occupations)
-			A.spawn_positions = 3
-		for(var/obj/effect/landmark/start/ai/secondary/S in GLOB.start_landmarks_list)
-			S.latejoin_active = TRUE
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)
@@ -299,8 +292,6 @@ SUBSYSTEM_DEF(job)
 	initial_players_to_assign = unassigned.len
 
 	JobDebug("DO, Len: [unassigned.len]")
-	if(unassigned.len == 0)
-		return validate_required_jobs(required_jobs)
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -410,25 +401,7 @@ SUBSYSTEM_DEF(job)
 			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 
-	return validate_required_jobs(required_jobs)
-
-/datum/controller/subsystem/job/proc/validate_required_jobs(list/required_jobs)
-	if(!required_jobs.len)
-		return TRUE
-	for(var/required_group in required_jobs)
-		var/group_ok = TRUE
-		for(var/rank in required_group)
-			var/datum/job/J = GetJob(rank)
-			if(!J)
-				SSticker.mode.setup_error = "Invalid job [rank] in gamemode required jobs."
-				return FALSE
-			if(J.current_positions < required_group[rank])
-				group_ok = FALSE
-				break
-		if(group_ok)
-			return TRUE
-	SSticker.mode.setup_error = "Required jobs not present."
-	return FALSE
+	return TRUE
 
 //We couldn't find a job from prefs for this guy.
 /datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
@@ -511,15 +484,13 @@ SUBSYSTEM_DEF(job)
 
 	to_chat(M, "<span class='infoplain'><b>You are the [rank].</b></span>")
 	if(job)
-		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client, is_captain)//silicons override this proc to return a mob
+		var/new_mob = job.equip(living_mob, null, null, joined_late, null, M.client, is_captain)//silicons override this proc to return a mob
 		if(ismob(new_mob))
 			living_mob = new_mob
 			if(!joined_late)
 				newplayer.new_character = living_mob
 			else
 				M = living_mob
-
-		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
 		if(M.client.holder)
 			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
@@ -532,7 +503,7 @@ SUBSYSTEM_DEF(job)
 		if(job.req_admin_notify)
 			to_chat(M, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
+			to_chat(M, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
 
 	var/related_policy = get_policy(rank)
 	if(related_policy)
@@ -732,9 +703,12 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
 	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
 
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-	living_mob.forceMove(toLaunch)
-	new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
+	if(!spawn_turf)
+		SendToLateJoin(living_mob)
+	else
+		var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+		living_mob.forceMove(toLaunch)
+		new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
 ///////////////////////////////////
 //Keeps track of all living heads//
@@ -834,9 +808,9 @@ SUBSYSTEM_DEF(job)
 	var/where = new_captain.equip_in_one_of_slots(paper, slots, FALSE) || "at your feet"
 
 	if(acting_captain)
-		to_chat(new_captain, "<span class='notice'>Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where].</span>")
+		to_chat(new_captain, span_notice("Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where]."))
 	else
-		to_chat(new_captain, "<span class='notice'>You can find the code to obtain your spare ID from the secure safe on the Bridge [where].</span>")
+		to_chat(new_captain, span_notice("You can find the code to obtain your spare ID from the secure safe on the Bridge [where]."))
 
 	// Force-give their ID card bridge access.
 	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)

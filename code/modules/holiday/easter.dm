@@ -110,11 +110,11 @@
 	add_overlay("basket-grass")
 	add_overlay("basket-egg[min(contents.len, 5)]")
 
-/obj/item/storage/basket/easter/Exited()
+/obj/item/storage/basket/easter/Exited(atom/movable/gone, direction)
 	. = ..()
 	countEggs()
 
-/obj/item/storage/basket/easter/Entered()
+/obj/item/storage/basket/easter/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	countEggs()
 
@@ -158,44 +158,33 @@
 	icon_state = "egg-[eggcolor]"
 
 /obj/item/food/egg/proc/dispensePrize(turf/where)
-	var/won = pick(/obj/item/clothing/head/bunnyhead,
-	/obj/item/clothing/suit/bunnysuit,
-	/obj/item/storage/backpack/satchel/bunnysatchel,
-	/obj/item/food/grown/carrot,
-	/obj/item/toy/balloon,
-	/obj/item/toy/gun,
-	/obj/item/toy/sword,
-	/obj/item/toy/talking/ai,
-	/obj/item/toy/talking/owl,
-	/obj/item/toy/talking/griffin,
-	/obj/item/toy/minimeteor,
-	/obj/item/toy/clockwork_watch,
-	/obj/item/toy/toy_xeno,
-	/obj/item/toy/foamblade,
-	/obj/item/toy/prize/ripley,
-	/obj/item/toy/prize/fireripley,
-	/obj/item/toy/prize/deathripley,
-	/obj/item/toy/prize/gygax,
-	/obj/item/toy/prize/durand,
-	/obj/item/toy/prize/marauder,
-	/obj/item/toy/prize/seraph,
-	/obj/item/toy/prize/mauler,
-	/obj/item/toy/prize/odysseus,
-	/obj/item/toy/prize/phazon,
-	/obj/item/toy/prize/reticence,
-	/obj/item/toy/prize/honk,
-	/obj/item/toy/prize/clarke,
-	/obj/item/toy/plush/carpplushie,
-	/obj/item/toy/redbutton,
-	/obj/item/toy/windup_toolbox,
-	/obj/item/clothing/head/collectable/rabbitears)
+	var/prize_list = list(/obj/item/clothing/head/bunnyhead,
+		/obj/item/clothing/suit/bunnysuit,
+		/obj/item/storage/backpack/satchel/bunnysatchel,
+		/obj/item/food/grown/carrot,
+		/obj/item/toy/balloon,
+		/obj/item/toy/gun,
+		/obj/item/toy/sword,
+		/obj/item/toy/talking/ai,
+		/obj/item/toy/talking/owl,
+		/obj/item/toy/talking/griffin,
+		/obj/item/toy/minimeteor,
+		/obj/item/toy/clockwork_watch,
+		/obj/item/toy/toy_xeno,
+		/obj/item/toy/foamblade,
+		/obj/item/toy/plush/carpplushie,
+		/obj/item/toy/redbutton,
+		/obj/item/toy/windup_toolbox,
+		/obj/item/clothing/head/collectable/rabbitears
+		) + subtypesof(/obj/item/toy/mecha)
+	var/won = pick(prize_list)
 	new won(where)
 	new/obj/item/food/chocolateegg(where)
 
 /obj/item/food/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
-		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")
+		to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)

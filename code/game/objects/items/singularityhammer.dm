@@ -112,10 +112,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/mjollnir/update_icon_state()
@@ -128,9 +132,9 @@
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
-	target.visible_message("<span class='danger'>[target.name] is shocked by [src]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
-		"<span class='hear'>You hear a heavy electrical crack!</span>")
+	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
+		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
+		span_hear("You hear a heavy electrical crack!"))
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 	return
