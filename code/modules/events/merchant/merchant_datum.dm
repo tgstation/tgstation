@@ -38,7 +38,7 @@
 /datum/merchant/friendly_pirates
 	name = "Friendly Pirates"
 	map_template_path = /datum/map_template/shuttle/merchant/friendly_pirates
-	message_greet = "Hey! We've secured ourselves some rare curios your station may be interested in. For %VISITCOST credits, we'll dock and open shop."
+	message_greet = "Hey! We've secured ourselves some cargo your station may be interested in. For %VISITCOST credits, we'll dock and open shop."
 	message_docking = "Alright, we're docking now at your escape wing. No enquiries on where we got this stuff, please."
 	message_leaving = "Thanks for taking those off our hands, we're heading off."
 	message_too_poor = "Trying to scam us?! You're lucky we're a bit light on arms at the moment, else we'd be blowing your garbage dump of a station to smithereens."
@@ -54,5 +54,9 @@
 	message_greet = "HONK! LETS TRADE! HONK! Pay me %VISITCOST credits to show me you mean business!"
 	message_docking = "Honk honk, thanks honk. I'll be docking at escape now!"
 	message_leaving = "I'm off to clown planet. Good luck, stationeers!"
-	message_too_poor = "The honkmother does not do charities, stupeed! Good thing we have a buyin for docking..."
+	message_too_poor = "The honkmother does not do charities, stupeed! Good thing we have a buy-in for docking..."
 	message_too_late = "Honk honk, I don't wanna waste the fuel if you're about to leave. Honkadacious out!"
+
+/datum/merchant/clown/New()
+	. = ..()
+	name = pick(strings(PIRATE_NAMES_FILE, "clown_names"))

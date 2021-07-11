@@ -54,6 +54,7 @@
 /area/shuttle/merchant
 	name = "Merchant Shuttle"
 	area_flags = NOTELEPORT
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/merchant/offlimits
 	icon_state = "shuttlered"

@@ -39,7 +39,7 @@
 /area/shuttle/merchant)
 "bm" = (
 /obj/machinery/door/airlock/hatch,
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/merchant{
 	dir = 8;
 	dwidth = 8;
 	height = 12;

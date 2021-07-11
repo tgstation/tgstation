@@ -46,7 +46,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Pirate Shuttle Airlock"
 	},
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/merchant{
 	dir = 4;
 	dwidth = 5;
 	height = 8;

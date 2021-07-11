@@ -11,7 +11,7 @@
 /area/shuttle/merchant)
 "al" = (
 /obj/machinery/door/airlock/bananium,
-/obj/docking_port/mobile{
+/obj/docking_port/mobile/merchant{
 	dir = 8;
 	dwidth = 8;
 	height = 8;
