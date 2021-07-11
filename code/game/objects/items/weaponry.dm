@@ -663,7 +663,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(prob(1))
 		name = "cricket bat"
-		desc = "You've got red on you."
+		desc = "You gotta know what a crumpet is to understand cricket."
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
 
