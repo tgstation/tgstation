@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "you can no longer get infinite chems from holodeck bees"

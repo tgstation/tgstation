@@ -328,3 +328,30 @@
   - balance: Downgrades the Chem Dispenser and Heater to their Ghetto Counterparts
   read-0nly:
   - qol: adds random number to carp spawned from space dragon rifts
+2021-07-11:
+  '@Azarak':
+  - bugfix: pipes sprite fix
+  - refactor: pipe sprites now uses bitmasks
+  KubeRoot:
+  - bugfix: Flash implant now displays its message instead of runtiming when used
+      on cooldown
+  Mothblocks:
+  - bugfix: Fixed moth wings not showing up when you have a suit on.
+  Nari Harimoto:
+  - qol: Stunbatons will now harm-baton on left-click if you are in combat mode and
+      the baton is off
+  Paxilmaniac:
+  - bugfix: energy guns now have the correct icon, and no longer look like nanotrasen
+      brand super soakers
+  - bugfix: the set of duplicate icons for energy guns that caused the guns to look
+      different in map editors is no longer
+  Timberpoes:
+  - balance: The Bluespace RPED can no longer teleport chems in reagent containers,
+      instead emptying any reagents from containers inserted into it.
+  Wayland-Smithy:
+  - bugfix: 'Fixed some station name html encoding for plaintext handlers like: Station
+      Charter announcements, the World Name (SS13 window title), and in Cross Server
+      Messages both custom and news about the crews ultimate fate.'
+  carshalash:
+  - expansion: Splits eggs into two reagents. Introduces Pavlova, THE great Oceanic
+      dessert. Whipped cream is also added.
