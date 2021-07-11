@@ -53,7 +53,7 @@
 
 /area/shuttle/merchant
 	name = "Merchant Shuttle"
-	area_flags = NOTELEPORT
+	area_flags = NOTELEPORT | UNIQUE_AREA | NO_ALERTS
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/merchant/offlimits
@@ -161,17 +161,17 @@
 
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
-	area_flags = NOTELEPORT
+	area_flags = NO_ALERTS | NOTELEPORT
 
 /area/shuttle/escape/simulation
 	name = "Medieval Reality Simulation Dome"
 	icon_state = "shuttlectf"
-	area_flags = NOTELEPORT
+	area_flags = NO_ALERTS | NOTELEPORT
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/escape/arena
 	name = "The Arena"
-	area_flags = NOTELEPORT
+	area_flags = NO_ALERTS | NOTELEPORT
 
 /area/shuttle/escape/meteor
 	name = "\proper a meteor with engines strapped to it"
