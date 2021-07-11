@@ -104,6 +104,15 @@
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, target, user, silent, force)
 	return TRUE
 
+/**
+ * Remove implant from mob.
+ *
+ * This removes the effects of the implant and moves it out of the mob and into nullspace.
+ * Arguments:
+ * * mob/living/source - What the implant is being removed from
+ * * silent - unused here
+ * * special - unused here
+ */
 /obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
 	moveToNullspace()
 	imp_in = null
@@ -122,7 +131,9 @@
 	if(imp_in)
 		removed(imp_in)
 	return ..()
-
+/**
+ * Gets implant specifications for the implant pad
+ */
 /obj/item/implant/proc/get_data()
 	return "No information available"
 
