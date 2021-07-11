@@ -17,6 +17,7 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_PUNCH
 	del_on_death = TRUE
 	loot = list(/obj/effect/mob_spawn/human/corpse)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
@@ -32,7 +33,6 @@
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	check_friendly_fire = TRUE
-	attack_same = TRUE
 	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT|INTERACT_ATOM_IGNORE_ADJACENCY
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
@@ -60,21 +60,19 @@
 
 /mob/living/simple_animal/hostile/retaliate/trader/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_CLICK, .proc/click_react)
 	var/area/offlimits = GLOB.areas_by_type[/area/shuttle/merchant/offlimits]
 	if(offlimits)
 		RegisterSignal(offlimits, COMSIG_AREA_ENTERED, .proc/offlimits_enter_reaction)
 		RegisterSignal(offlimits, COMSIG_AREA_EXITED, .proc/offlimits_exit_reaction)
 
-/mob/living/simple_animal/hostile/retaliate/trader/can_interact(mob/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(table_check(user))
-		return TRUE
+/mob/living/simple_animal/hostile/retaliate/trader/attack_paw(mob/living/carbon/human/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
-	if(user == target)
+	if(user == target || (user in enemies))
 		return FALSE
+	face_atom(user)
 	var/list/npc_options = list()
 	if(products.len)
 		npc_options["Buy"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
@@ -84,7 +82,7 @@
 		npc_options["Sell"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
 	if(!npc_options.len)
 		return FALSE
-	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user))
 	switch(npc_result)
 		if("Buy")
 			buy_item(user)
@@ -94,6 +92,23 @@
 			deep_lore()
 	face_atom(user)
 	return TRUE
+
+/**
+ * Reacts to a mob clicking on the trader
+ *
+ * Grabs a signal and reacts to being clicked by a mob
+ * Arguments:
+ * * source - trader
+ * * user - clicking mob
+ */
+/mob/living/simple_animal/hostile/retaliate/trader/proc/click_react(atom/source, loc, control, params, mob/user)
+	SIGNAL_HANDLER
+
+	if(!ishuman(user) || user.get_active_held_item() || user.incapacitated())
+		return
+	if(!table_check(user))
+		return
+	INVOKE_ASYNC(src, /atom.proc/interact, user)
 
 /**
  * Reacts to a mob arriving to the offlimits area
@@ -149,12 +164,14 @@
  * * user - The mob trying to interact
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/table_check(mob/user)
-	var/dir_to_trader = get_dir(user, src)
+	var/user_dir_to_trader = get_dir(user, src)
 	var/turf/first_step = get_turf(user)
-	var/turf/second_step = get_step(first_step, dir_to_trader)
-	if(!(locate(/obj/structure/table) in second_step))
+	var/turf/second_step = get_step(first_step, user_dir_to_trader)
+	var/obj/table = locate(/obj/structure/table) in second_step
+	if(!table)
 		return FALSE
-	var/turf/third_step = get_step(second_step, dir_to_trader)
+	var/table_dir_to_trader = get_dir(table, src)
+	var/turf/third_step = get_step(second_step, table_dir_to_trader)
 	if(!(locate(src) in third_step))
 		return FALSE
 	return TRUE
@@ -191,7 +208,7 @@
 		display_names["[initial(thing.name)]"] = thing
 		var/image/item_image = image(icon = initial(thing.icon), icon_state = initial(thing.icon_state))
 		items += list("[initial(thing.name)]" = item_image)
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user))
 	if(!pick)
 		return
 	var/path_reference = display_names[pick]
@@ -214,7 +231,7 @@
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
 	)
-	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user))
 	if(npc_result != "Yes")
 		return
 	face_atom(user)
@@ -255,7 +272,7 @@
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
 	)
-	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user))
 	face_atom(user)
 	if(npc_result != "Yes")
 		say(itemsellcancelphrase)
@@ -388,14 +405,13 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/trader/amorphous/AttackingTarget(atom/attacked_target)
-	OpenFire(attacked_target)
+	OpenFire(target)
 
 ///base prototype of the pirates that handles lines they all have.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate
 	name = "Pirate"
 	desc = "A space pirate looking to flip some mysteriously procured wares for a quick buck."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "pirate"
+	icon_state = "piratemerchant"
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate)
 	faction = list("pirate")
 	itemsellcancelphrase = "Fine, keep it. But you should know i'm the only one here who will take it."
@@ -432,36 +448,37 @@
 ///small helper proc that does the part of the area enter signal that sleeps
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/aggro_intruder(mob/living/intruder)
 	say(offlimitsphrase)
-	enemies += WEAKREF(intruder)
+	enemies |= WEAKREF(intruder)
 
 ///small helper proc that does the part of the area exit signal that sleeps
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/deaggro_intruder(mob/living/intruder)
 	say(exitofflimitsphrase)
-	enemies |= WEAKREF(intruder)
+	enemies &= ~WEAKREF(intruder)
 
 ///this trader is used in the merchant event.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities
 	name = "Pirate Curio Collector"
 	desc = "A space pirate looking to buy and sell miscellaneous curios."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "pirate"
 	//This merchant sells weird shit.
 	products = list(
 		/obj/item/flashlight/lantern/jade = 200,
 		/obj/item/seeds/random = 350,
 		/obj/item/pda/clear = 400,
 		/obj/item/reagent_containers/food/drinks/bottle/holywater = 500,
-		/obj/item/lfline = 1500,
 		/obj/item/clothing/shoes/bhop/rocket = 1000,
+		/obj/item/lfline = 1500,
 	)
 	//This merchant wants rare maintenance loot
 	wanted_items = list(
 		/obj/item/throwing_star = 400,
+		/obj/item/pen/survival = 500,
 		/obj/item/storage/box/hug = 500,
 		/obj/item/flashlight/flashdark = 600,
 		/obj/item/assembly/flash/memorizer = 600,
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 800,
-		/obj/item/shadowcloak = 1000
+		/obj/item/paint/anycolor = 1000,
+		/obj/item/shadowcloak = 15000,
+		/obj/item/clothing/suit/armor/reactive/table = 15000,
 	)
 	itemrejectphrase = "I'm only looking for curios. You should try digging through maintenance, or maybe from that lava planet nearby?"
 	itemsellacceptphrase = "Cool stuff. I just like collecting them."
@@ -474,12 +491,12 @@
 		products[/obj/item/clothing/mask/gas/space_ninja] = 750
 	if(prob(10))
 		products[/obj/item/clothing/suit/space/hardsuit/combatmedic] = 1400
+	if(prob(10))
+		products[/obj/item/sord] = 2500
 
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/quartermaster
 	name = "Pirate Quartermaster"
 	desc = "A space pirate looking to buy and sell pirate gear. It's an aesthetic!"
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "pirate"
 	//This merchant sells pirate gear.
 	products = list(
 		/obj/item/clothing/glasses/eyepatch = 40,
@@ -505,6 +522,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
+	faction = list("clown")
 	attack_sound = 'sound/items/bikehorn.ogg'
 	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
 	//This merchant sells "clown fan club gear".

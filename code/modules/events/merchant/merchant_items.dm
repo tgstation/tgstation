@@ -18,7 +18,7 @@
 /**
  * ## LFLINE pack!
  *
- * Only sold by the special robot trader, LFLINE bulks you down but gives you the momento mori effect
+ * Only sold by the special robot trader, LFLINE bulks you down but gives you the memento mori effect
  */
 /obj/item/lfline
 	name = "LFLINE pack"
