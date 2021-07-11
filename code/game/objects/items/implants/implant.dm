@@ -59,9 +59,13 @@
 	LAZYINITLIST(target.implants)
 	if(!force && !can_be_implanted_in(target))
 		return FALSE
+
 	for(var/X in target.implants)
 		var/obj/item/implant/other_implant = X
 		var/flags = SEND_SIGNAL(other_implant, COMSIG_IMPLANT_OTHER, args, src)
+		if(flags & COMPONENT_STOP_IMPLANTING)
+			UNSETEMPTY(target.implants)
+			return FALSE
 		if(flags & COMPONENT_DELETE_NEW_IMPLANT)
 			UNSETEMPTY(target.implants)
 			qdel(src)
@@ -69,13 +73,8 @@
 		if(flags & COMPONENT_DELETE_OLD_IMPLANT)
 			qdel(other_implant)
 			continue
-		if(flags & COMPONENT_STOP_IMPLANTING)
-			UNSETEMPTY(target.implants)
-			return FALSE
 
-		if(!istype(other_implant, type))
-			continue
-		if(allow_multiple)
+		if(!istype(other_implant, type) || allow_multiple)
 			continue
 
 		if(other_implant.uses < initial(other_implant.uses)*2)
