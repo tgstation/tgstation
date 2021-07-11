@@ -9,7 +9,7 @@ export const Holopad = (props, context) => {
   } = data;
   return (
     <Window
-      width={440}
+      width={480}
       height={245}>
       {!!calling && (
         <Modal
@@ -96,6 +96,13 @@ const HolopadContent = (props, context) => {
                   onClick={() => act(call.connected
                     ? 'disconnectcall'
                     : 'connectcall', { holopad: call.ref })} />
+                {!call.connected && (
+                  <Button
+                    icon="phone-slash"
+                    content="Reject"
+                    color="bad"
+                    onClick={() => act('disconnectcall', { holopad: call.ref })} />
+                )}
               </LabeledList.Item>
             );
           }))}

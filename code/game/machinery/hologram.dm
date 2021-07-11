@@ -242,6 +242,11 @@ Possible to do for anyone motivated enough:
 
 	switch(action)
 		if("AIrequest")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/ai_user = usr
+				ai_user.eyeobj.setLoc(get_turf(src))
+				to_chat(usr, span_info("AIs can not request AI presence. Jumping instead."))
+				return
 			if(last_request + 200 < world.time)
 				last_request = world.time
 				to_chat(usr, span_info("You requested an AI's presence."))
@@ -334,7 +339,6 @@ Possible to do for anyone motivated enough:
 		var/datum/holocall/HC = I
 		HC.Disconnect(src)
 
-//do not allow AIs to answer calls or people will use it to meta the AI sattelite
 /obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
@@ -349,6 +353,11 @@ Possible to do for anyone motivated enough:
 		activate_holo(user)
 	else//If there is a hologram, remove it.
 		clear_holo(user)
+
+/obj/machinery/holopad/attack_ai_secondary(mob/user, list/modifiers)
+	if(_try_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))
