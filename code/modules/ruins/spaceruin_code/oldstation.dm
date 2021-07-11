@@ -29,6 +29,9 @@
 	will form the backbone of our Energy weapon catalogue.<br><br>The K14 is expected to undergo revision to fix the ammo issues, the K15 is expected to replace the 'stun' setting with a \
 	'disable' setting in an attempt to bypass the ammo issues."
 
+/**
+ * Supermatter crystal fluff paper used in Charlie station ruin
+ */
 /obj/item/paper/fluff/ruins/oldstation/protosing
 	name = "Supermatter Crystal Generator"
 	info = "<b>*Supermatter Crystal Shard*</b><br><br>Modern power generation typically comes in two forms, a Fusion Generator or a Fission Generator. Fusion provides the best space to power \
