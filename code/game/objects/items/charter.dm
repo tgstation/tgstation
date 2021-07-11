@@ -83,7 +83,7 @@
 
 /obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)
-	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
+	minor_announce("[ureal_name] has designated your station as [html_decode(station_name())]", "Captain's Charter") //decode station_name to avoid minor_announce double encode
 	log_game("[ukey] has renamed the station as [station_name()].")
 
 	name = "station charter for [station_name()]"
@@ -112,7 +112,7 @@
 
 /obj/item/station_charter/banner/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)
-	minor_announce("[ureal_name] has designated the [name_type] as [station_name()]", "Captain's Banner", 0)
+	minor_announce("[ureal_name] has designated the [name_type] as [html_decode(station_name())]", "Captain's Banner") //decode station_name to avoid minor_announce double encode
 	log_game("[ukey] has renamed the [name_type] as [station_name()].")
 	name = "banner of [station_name()]"
 	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
@@ -148,7 +148,7 @@
 
 /obj/item/station_charter/revolution/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)
-	minor_announce("Head Revolutionary [ureal_name] has declared the station's new name as [station_name()]!", "Revolution Banner", 0)
+	minor_announce("Head Revolutionary [ureal_name] has declared the station's new name as [html_decode(station_name())]!", "Revolution Banner") //decode station_name to avoid minor_announce double encode
 	log_game("[ukey] has renamed the station as [station_name()].")
 	name = "banner of [station_name()]"
 	desc = "A banner symbolizing a bloody victory over treacherous tyrants. The revolutionary leader [uname] has named the station [station_name()] to make clear that this station shall never be shackled by oppressors again."

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Hostile critters such as lobstrosities and giant tarantulas won't throw themselves at you after dying while charging their attack."
