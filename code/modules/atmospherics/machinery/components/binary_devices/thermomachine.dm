@@ -93,19 +93,21 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
 	if(target_temperature <= BODYTEMP_COLD_WARNING_3)
-		set_greyscale(colors=list(thermo_colors["purple"]))
+		greyscale_colors = list(thermo_colors["purple"])
 	else if(target_temperature <= BODYTEMP_COLD_WARNING_2)
-		set_greyscale(colors=list(thermo_colors["blue"]))
+		greyscale_colors = list(thermo_colors["blue"])
 	else if(target_temperature <= BODYTEMP_COLD_WARNING_1)
-		set_greyscale(colors=list(thermo_colors["cyan"]))
+		greyscale_colors = list(thermo_colors["cyan"])
 	else if(target_temperature <= BODYTEMP_HEAT_WARNING_1)
-		set_greyscale(colors=list(thermo_colors["green"]))
+		greyscale_colors = list(thermo_colors["green"])
 	else if(target_temperature <= BODYTEMP_HEAT_WARNING_2)
-		set_greyscale(colors=list(thermo_colors["yellow"]))
+		greyscale_colors = list(thermo_colors["yellow"])
 	else if(target_temperature <= BODYTEMP_HEAT_WARNING_3)
-		set_greyscale(colors=list(thermo_colors["orange"]))
+		greyscale_colors = list(thermo_colors["orange"])
 	else
-		set_greyscale(colors=list(thermo_colors["red"]))
+		greyscale_colors = list(thermo_colors["red"])
+
+	set_greyscale(colors=greyscale_colors)
 
 	if(panel_open)
 		icon_state = icon_state_open

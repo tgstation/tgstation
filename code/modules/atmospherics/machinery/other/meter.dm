@@ -72,12 +72,14 @@
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meter0"
-		set_greyscale(colors=list(meter_colors["grey"]))
+		greyscale_colors = list(meter_colors["grey"])
+		set_greyscale(colors=greyscale_colors)
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter"
-		set_greyscale(colors=list(meter_colors["grey"]))
+		greyscale_colors = list(meter_colors["grey"])
+		set_greyscale(colors=greyscale_colors)
 		return FALSE
 
 	use_power(5)
@@ -104,21 +106,23 @@
 
 	var/env_temperature = environment.temperature
 	if(env_pressure == 0 || env_temperature == 0)
-		set_greyscale(colors=list(meter_colors["grey"]))
+		greyscale_colors = list(meter_colors["grey"])
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_3)
-		set_greyscale(colors=list(meter_colors["purple"]))
+		greyscale_colors = list(meter_colors["purple"])
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_2)
-		set_greyscale(colors=list(meter_colors["blue"]))
+		greyscale_colors = list(meter_colors["blue"])
 	else if(env_temperature <= BODYTEMP_COLD_WARNING_1)
-		set_greyscale(colors=list(meter_colors["cyan"]))
+		greyscale_colors = list(meter_colors["cyan"])
 	else if(env_temperature <= BODYTEMP_HEAT_WARNING_1)
-		set_greyscale(colors=list(meter_colors["green"]))
+		greyscale_colors = list(meter_colors["green"])
 	else if(env_temperature <= BODYTEMP_HEAT_WARNING_2)
-		set_greyscale(colors=list(meter_colors["yellow"]))
+		greyscale_colors = list(meter_colors["yellow"])
 	else if(env_temperature <= BODYTEMP_HEAT_WARNING_3)
-		set_greyscale(colors=list(meter_colors["orange"]))
+		greyscale_colors = list(meter_colors["orange"])
 	else
-		set_greyscale(colors=list(meter_colors["red"]))
+		greyscale_colors = list(meter_colors["red"])
+
+	set_greyscale(colors=greyscale_colors)
 
 	if(frequency)
 		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
