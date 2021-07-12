@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes inhand holder jank separating pAIs holoforms from their shells in some occasions."
