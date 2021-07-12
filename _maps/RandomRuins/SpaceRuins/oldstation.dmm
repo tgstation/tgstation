@@ -6823,7 +6823,7 @@
 "KG" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/oldstation/protosing,
+/obj/item/paper/fluff/ruins/oldstation/protosupermatter,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "KO" = (

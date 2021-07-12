@@ -32,7 +32,7 @@
 /**
  * Supermatter crystal fluff paper used in Charlie station ruin
  */
-/obj/item/paper/fluff/ruins/oldstation/protosing
+/obj/item/paper/fluff/ruins/oldstation/protosupermatter
 	name = "Supermatter Crystal Generator"
 	info = "<b>*Supermatter Crystal Shard*</b><br><br>Modern power generation typically comes in two forms, a Fusion Generator or a Fission Generator. Fusion provides the best space to power \
 	\ntratio, and is typically seen on military or high security ships and stations, however Fission reactors require the usage of expensive, and rare, materials in its construction. \
