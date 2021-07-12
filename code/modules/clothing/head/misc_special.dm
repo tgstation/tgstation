@@ -170,7 +170,6 @@
 
 /obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(isinhands)
 	. = ..()
-	var/static/on_overlay
 	if(!isinhands)
 		. += emissive_appearance(worn_icon, "carved_pumpkin-emissive", alpha = src.alpha, appearance_flags = KEEP_APART)
 
