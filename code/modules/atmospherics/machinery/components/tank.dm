@@ -218,6 +218,8 @@
 		leaver.update_appearance()
 
 	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
+		if(joiner == src)
+			continue
 		var/datum/gas_mixture/joiner_share = joiner.air_contents
 		if(joiner_share)
 			air_contents.merge(joiner_share)
