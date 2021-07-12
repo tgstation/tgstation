@@ -593,7 +593,7 @@
 
 /datum/reagent/drug/kroncaine
 	name = "kroncaine"
-	description = "A highly illegal stimulant from the edges of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
+	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"
 	ph = 8
@@ -604,13 +604,20 @@
 /datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
-	L.adjustStaminaLoss(-4 * volume, 0)
 	L.sound_environment_override = SOUND_ENVIRONMENT_HANGAR
 
 /datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
 	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
 	L.sound_environment_override = NONE
 	. = ..()
+
+/datum/reagent/drug/kroncaine/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	if(!iscarbon(A))
+		return
+	var/mob/living/carbon/druggo = A
+	druggo.adjustStaminaLoss(-4 * trans_volume, 0)
+	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
 /datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -633,7 +640,6 @@ TODO:
 
 saturnx implementation
 	make saturx make you unknown
-	Make saturnx fade you out instead of instantly dissapearing you?
 	make saturnx colour matrix linger longer in the desaturated region.
 	add blur(angular?) filter or staic wave filter
 
@@ -644,7 +650,6 @@ blastoff implementation
 mushroom_hallucinogen implementation
 	add an animated wave filter.
 
-move kroncaine stam gain to react_mob
 add adrenal crisis disease
 make sure the design doc and code aligns.
 
