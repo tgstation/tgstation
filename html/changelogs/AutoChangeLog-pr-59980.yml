@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Watchers no longer search 9 tiles away for stuff then throw the result away if it's more than 1 tile away"
