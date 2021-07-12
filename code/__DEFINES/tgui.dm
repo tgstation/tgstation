@@ -32,7 +32,7 @@
 // than doing it the normal way.
 // To ensure this is correct, this is unit tested in tgui_create_message.
 #define TGUI_CREATE_MESSAGE(type, payload) ( \
-	tgui_create_message_url_preencoded_append(type, tgui_create_message_url_encode(tgui_create_message_json_encode(payload))]) \
+	tgui_create_message_url_preencoded_append(type, tgui_create_message_url_encode(tgui_create_message_json_encode(payload))) \
 )
 /proc/tgui_create_message_json_encode(payload)
 	return json_encode(payload)
