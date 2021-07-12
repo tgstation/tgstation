@@ -35,7 +35,6 @@
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
-	//var/banned_typecache // items that won't be produced
 
 /obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
