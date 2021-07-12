@@ -9,7 +9,7 @@ export const Holopad = (props, context) => {
   } = data;
   return (
     <Window
-      width={480}
+      width={440}
       height={245}>
       {!!calling && (
         <Modal
@@ -96,16 +96,18 @@ const HolopadContent = (props, context) => {
                   onClick={() => act(call.connected
                     ? 'disconnectcall'
                     : 'connectcall', { holopad: call.ref })} />
-                {!call.connected && (
-                  <Button
-                    icon="phone-slash"
-                    content="Reject"
-                    color="bad"
-                    onClick={() => act('disconnectcall', { holopad: call.ref })} />
-                )}
               </LabeledList.Item>
             );
           }))}
+          {holo_calls.filter(call => !call.connected).length > 0 && (
+            <LabeledList.Item key="reject">
+              <Button
+                icon="phone-slash"
+                content="Reject incoming call(s)"
+                color="bad"
+                onClick={() => act('rejectall')} />
+            </LabeledList.Item>
+          )}
         </LabeledList>
       </Section>
       <Section

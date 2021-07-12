@@ -290,6 +290,12 @@ Possible to do for anyone motivated enough:
 			if(!QDELETED(call_to_disconnect))
 				call_to_disconnect.Disconnect(src)
 				return TRUE
+		if("rejectall")
+			for(var/datum/holocall/call_to_reject as anything in holo_calls)
+				if(call_to_reject.connected_holopad == src) // do not kill the current connection
+					continue
+				call_to_reject.Disconnect(src)
+			return TRUE
 		if("disk_eject")
 			if(disk && !replay_mode)
 				disk.forceMove(drop_location())
