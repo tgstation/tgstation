@@ -42,6 +42,10 @@
 	ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
 
 /obj/item/lfline/dropped(mob/user)
+	var/make_alert = FALSE
+	if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
+		make_alert = TRUE
 	..()
-	user.balloon_alert(user, "LFLINE releases its hooks")
+	if(make_alert)
+		user.balloon_alert(user, "LFLINE releases its hooks")
 	REMOVE_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
