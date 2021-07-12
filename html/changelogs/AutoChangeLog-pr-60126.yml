@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Deletes a duplicate chat feedback on [mob/carbon/proc/swap_hand()]"
