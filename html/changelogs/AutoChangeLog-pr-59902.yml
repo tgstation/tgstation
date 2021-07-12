@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Glowshrooms created from spread now should behave like things that actually exist again."
