@@ -833,10 +833,16 @@
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if (iscarbon(speaker))
-		var/mob/living/carbon/S = speaker
-		if(S.job)
-			jobpart = "[S.job]"
+	if (isliving(speaker))
+		var/mob/living/living_speaker = speaker
+		if(living_speaker.job)
+			jobpart = "[living_speaker.job]"
+	if (istype(speaker, /obj/effect/overlay/holo_pad_hologram))
+		var/obj/effect/overlay/holo_pad_hologram/holo = speaker
+		if(holo.Impersonation?.job)
+			jobpart = "[holo.Impersonation.job]"
+		else if(usr.job) // not great, but AI holograms have no other usable ref
+			jobpart = "[usr.job]"
 
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 
