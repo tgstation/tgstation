@@ -195,6 +195,10 @@
 	if(. && !anchored)
 		step(src, get_dir(user, src))
 
+/obj/machinery/power/emitter/attack_ai_secondary(mob/user, list/modifiers)
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/power/emitter/process(delta_time)
 	if(machine_stat & (BROKEN))
 		return
@@ -326,20 +330,23 @@
 	default_deconstruction_screwdriver(user, "emitter_open", "emitter", item)
 	return TRUE
 
+/// Attempt to toggle the controls lock of the emitter
+/obj/machinery/power/emitter/proc/togglelock(mob/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("The lock seems to be broken!"))
+		return
+	if(!allowed(user))
+		to_chat(user, span_danger("Access denied."))
+		return
+	if(!active)
+		to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
+		return
+	locked = !locked
+	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
 /obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
 	if(item.GetID())
-		if(obj_flags & EMAGGED)
-			to_chat(user, span_warning("The lock seems to be broken!"))
-			return
-		if(!allowed(user))
-			to_chat(user, span_danger("Access denied."))
-			return
-		if(!active)
-			to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
-			return
-		locked = !locked
-		to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+		togglelock(user)
 		return
 
 	if(is_wire_tool(item) && panel_open)

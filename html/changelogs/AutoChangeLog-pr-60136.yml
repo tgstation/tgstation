@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Cannon balls should no longer destroy \"indestructible\" walls."

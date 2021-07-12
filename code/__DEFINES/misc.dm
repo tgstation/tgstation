@@ -50,11 +50,6 @@
 #define EXTERNAL_BEHIND (1 << 3)
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 
-//The layer external organs draw. These are drawn on the limbs, so the layers are relative to the limb theyre being drawn on
-#define EXTERNAL_FRONT_LAYER 2
-#define EXTERNAL_ADJACENT_LAYER 1
-#define EXTERNAL_BEHIND_LAYER -1
-
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"

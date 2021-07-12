@@ -302,3 +302,109 @@
   - expansion: You can now wear the suffering of others on your head with just a sheet
       of human skin!
   - imageadd: Human skin hats, touched up by Krysonism
+2021-07-10:
+  Nari Harimoto:
+  - bugfix: AI intellicards can no longer be teleported out of intellicard slots on
+      consoles using telekinesis or silicon access range
+  Paxilmaniac:
+  - bugfix: two floor decals that were on a wall in delta xenobio are no longer
+  ProtivogaSpriter:
+  - imageadd: Replaced old Mjolnir sprites with new Mjolnir sprites.
+  Time-Green:
+  - bugfix: fixes a plumbing harddel
+  Watermelon914:
+  - bugfix: Fixed CQC sometimes not registering attacks and grabs properly.
+  Wayland-Smithy:
+  - bugfix: Fixed and improved wabbajack polymorph logging.
+  - bugfix: Silicons can now toggle emitter locks with secondary attack.
+  - bugfix: Fixed Tram ghost magnet and other cases of observer forceMove.
+  - code_imp: Renamed some observer code vars for better readability. Portals check
+      types less.
+  - bugfix: Fixed all clients being forced to Fit Viewport regardless of their Auto
+      Fit Viewport preference being set to manual.
+  Zytolg:
+  - qol: There's some eye candy in the Abandoned Medbay that now suggests that it
+      was at some point a medbay.
+  - balance: Downgrades the Chem Dispenser and Heater to their Ghetto Counterparts
+  read-0nly:
+  - qol: adds random number to carp spawned from space dragon rifts
+2021-07-11:
+  '@Azarak':
+  - bugfix: pipes sprite fix
+  - refactor: pipe sprites now uses bitmasks
+  KubeRoot:
+  - bugfix: Flash implant now displays its message instead of runtiming when used
+      on cooldown
+  Mothblocks:
+  - bugfix: Fixed moth wings not showing up when you have a suit on.
+  Nari Harimoto:
+  - qol: Stunbatons will now harm-baton on left-click if you are in combat mode and
+      the baton is off
+  Paxilmaniac:
+  - bugfix: energy guns now have the correct icon, and no longer look like nanotrasen
+      brand super soakers
+  - bugfix: the set of duplicate icons for energy guns that caused the guns to look
+      different in map editors is no longer
+  Timberpoes:
+  - balance: The Bluespace RPED can no longer teleport chems in reagent containers,
+      instead emptying any reagents from containers inserted into it.
+  Wayland-Smithy:
+  - bugfix: 'Fixed some station name html encoding for plaintext handlers like: Station
+      Charter announcements, the World Name (SS13 window title), and in Cross Server
+      Messages both custom and news about the crews ultimate fate.'
+  carshalash:
+  - expansion: Splits eggs into two reagents. Introduces Pavlova, THE great Oceanic
+      dessert. Whipped cream is also added.
+2021-07-12:
+  Ghommie:
+  - balance: Railings integrity has been lowered from 300 (default for structures)
+      to 75 (grilles integrity times 1.5) and their armor changed to match that of
+      grilles.
+  - bugfix: Hostile critters such as lobstrosities and giant tarantulas won't throw
+      themselves at you after dying while charging their attack.
+  - bugfix: Fixes the mech mounted teleporter.
+  - bugfix: Fixes intrinsically paralytic mobs being cured from their paralysis just
+      because they got a brand new (prosthetic) limb.
+  Kylerace:
+  - bugfix: you can no longer get infinite chems from holodeck bees
+  Mokiros:
+  - spellcheck: Circuit board for All-In-One Grinder is now named appropriately
+  Paxilmaniac:
+  - bugfix: marine ert engineers spawn with welding goggles instead of nvgs so they
+      can actually weld
+  - bugfix: the metastation genetics monkey pen no longer has a ' in front of its
+      name
+  SpaceDragon00:
+  - bugfix: Secure safes no longer show up as weapons (I'm labelling this as a fix
+      because I don't know any scenarios where you'd even be able to use a secure
+      safe as an item, so its force value seemed unnecessary)
+  - bugfix: PKAs and their derivatives (Ebows) now properly give info after the first
+      shot
+  - bugfix: Energy guns with no charge now properly give their info
+  - bugfix: Energy guns that do stamina damage and regular damage now display a line
+      in consideration of both the stamina and regular damage
+  - bugfix: Conditional plurals in weapon description code have been fixed
+  - code_imp: Added a proc to initialize a list of object subtypes keyed to their
+      object paths
+  - code_imp: Turned Hits_To_Crit into a define
+  - code_imp: Improved the clarity of some comments, along with adding some where
+      they were previously missing
+  - qol: A gun's weapon notes now gives you the notes of its magazine, which gives
+      you the notes of its ammo, making it so you don't need to take out ammo to see
+      its damage.
+  Time-Green:
+  - bugfix: glasses arent horribly embedded in lizard snouts anymore
+  Watermelon914:
+  - bugfix: Fixed admins getting spammy logs from arrest console circuits.
+  coiax:
+  - balance: Ashwalkers now have lungs adapted for the atmosphere of Indecipheres,
+      and now breathe. However, if the Indecipheres atmosphere has miasma, they are
+      immune to it.
+  dragomagol:
+  - bugfix: The Tram whiteship now has a chance to spawn!
+  itseasytosee:
+  - bugfix: Syndicate hardsuit helmet sprites will now properly update when combat
+      mode is activated.
+  tf-4:
+  - bugfix: When someone ties a neckerchief near you, it no longer tells you you did
+      it.
