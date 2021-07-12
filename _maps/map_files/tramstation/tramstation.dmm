@@ -35814,8 +35814,17 @@
 	name = "Head of Personnel's Requests Console"
 	},
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase,
-/obj/item/assembly/flash/handheld,
+/obj/item/storage/secure/briefcase{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/storage/box/silver_ids{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/assembly/flash/handheld{
+	pixel_x = -8
+	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "jKR" = (
