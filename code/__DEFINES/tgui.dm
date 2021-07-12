@@ -32,5 +32,5 @@
 // than doing it the normal way.
 // To ensure this is correct, this is unit tested in tgui_create_message.
 #define TGUI_CREATE_MESSAGE(type, payload) ( \
-	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
+	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[rustg_url_encode(json_encode(payload))]%7d" \
 )
