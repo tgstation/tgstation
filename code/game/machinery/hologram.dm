@@ -445,8 +445,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
-		if(HC.connected_holopad == src && speaker != HC.hologram)
-			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		if(HC.connected_holopad == src)
+			if(speaker == HC.hologram && HC.user.client?.prefs.chat_on_map)
+				HC.user.create_chat_message(speaker, message_language, raw_message, spans)
+			else
+				HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message)
