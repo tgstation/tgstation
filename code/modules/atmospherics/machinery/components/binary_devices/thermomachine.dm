@@ -126,8 +126,6 @@
 	if(skipping_work && on)
 		thermo_overlay.icon_state = "blinking"
 		. += new /mutable_appearance(thermo_overlay)
-		//var/mutable_appearance/skipping = mutable_appearance(thermo_overlay, "blinking")
-		//. += skipping
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
