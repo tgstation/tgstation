@@ -252,6 +252,7 @@
 		return
 	if(time <= 0)
 		return
+	end_orbit()
 	revealed = TRUE
 	invisibility = 0
 	incorporeal_move = FALSE
@@ -268,6 +269,7 @@
 		return
 	if(time <= 0)
 		return
+	end_orbit()
 	notransform = TRUE
 	if(!unstun_time)
 		to_chat(src, span_revendanger("You cannot move!"))
@@ -345,6 +347,46 @@
 	alpha=255
 	stasis = FALSE
 
+/mob/living/simple_animal/revenant/orbit(atom/target)
+	setDir(2)//reset dir so the right directional sprites show up
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, "revenant_orbit")
+	return ..()
+
+/mob/living/simple_animal/revenant/Moved(atom/OldLoc)
+	if(!orbiting) // only needed when orbiting
+		return ..()
+	if(incorporeal_move_check(src))
+		return ..()
+
+	end_orbit()
+	abstract_move(OldLoc) // back back back it up, gross but maybe someday there'll be a jaunt orbit component
+
+/mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
+	REMOVE_TRAIT(src, TRAIT_NO_FLOATING_ANIM, "revenant_orbit")
+	return ..()
+
+/// Ends the revenants orbit if it has one
+/mob/living/simple_animal/revenant/proc/end_orbit()
+	if(!orbiting)
+		return
+	orbiting?.end_orbit(src)
+
+/// Incorporeal move check: blocked by holy-watered tiles and salt piles.
+/mob/living/simple_animal/revenant/proc/incorporeal_move_check(atom/destination)
+	var/turf/open/floor/stepTurf = get_turf(destination)
+	if(stepTurf)
+		for(var/obj/effect/decal/cleanable/food/salt/S in stepTurf)
+			to_chat(src, span_warning("[S] bars your passage!"))
+			reveal(20)
+			stun(20)
+			return
+		if(stepTurf.turf_flags & NOJAUNT)
+			to_chat(src, span_warning("Some strange aura is blocking the way."))
+			return
+		if (locate(/obj/effect/blessing, stepTurf))
+			to_chat(src, span_warning("Holy energies block your path!"))
+			return
+	return TRUE
 
 //reforming
 /obj/item/ectoplasm/revenant
