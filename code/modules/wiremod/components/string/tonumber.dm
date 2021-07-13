@@ -33,9 +33,6 @@
 
 	var/input_value = input_port.input_value
 
-	if(isnull(input_value))
-		return
-
 	var/output_value = text2num(input_value)
 
 	output.set_output(output_value)
