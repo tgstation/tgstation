@@ -1,6 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - qol: "Chat Highlighting now works with more symbols and can be case sensitive and/or match whole words only."
-  - bugfix: "Fixed Chat Highlighting only working for the first comma separated entry."
-  - bugfix: "Your own messages sent over a radio and dchat now properly avoid_highlighting."

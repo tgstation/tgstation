@@ -408,3 +408,49 @@
   tf-4:
   - bugfix: When someone ties a neckerchief near you, it no longer tells you you did
       it.
+2021-07-13:
+  Ghommie:
+  - bugfix: latejoin arrivals are less likely to spawn on top of each other now.
+  - bugfix: Cannon balls should no longer destroy "indestructible" walls.
+  - bugfix: Fixes being able to simultaneously perform an attack and a tackle as a
+      xeno or monkey with right click and combat mode on.
+  - bugfix: Venus human traps and swarmers' names are now numbered.
+  - bugfix: Deletes a duplicate chat feedback on [mob/carbon/proc/swap_hand()]
+  - bugfix: Fixed ai monkeys appearing as catatonic on examine()
+  - bugfix: Monkeys and dogs no longer yoink items they can't reach.
+  - bugfix: Fixed morph speed being slower while undisguised and some old code related
+      to it.
+  - bugfix: fixed the blackout station trait affecting unrelated areas like CentCom
+      quarters.
+  - qol: Stops (blob and otherwise) mobs from falling through blob tiles on open space.
+  - bugfix: fixes the equipment menu lacking from the honker mech html UI because
+      of bad copypasta.
+  - bugfix: restraints now use equip_to_slot() instead of snowflake code when applied,
+      thus fixing issues such as cuffs not falling off when hit by a shrink ray.
+  - bugfix: Fixes inhand holder jank separating pAIs holoforms from their shells in
+      some occasions.
+  InsaneRed:
+  - bugfix: fixed metastation's xenobiology's disposal piping and adds it its own
+      cooling loop for freezers
+  Krysonism:
+  - expansion: You can now carve blumpkins.
+  - imageadd: The pumpkin, blumpkin and their carved varieties have new sprites.
+  Nari Harimoto:
+  - bugfix: anti-magic now prevents you slipping from the magic flying incorporeal
+      bananas fired by the honks staff
+  Putnam3145:
+  - bugfix: Watchers no longer search 9 tiles away for stuff then throw the result
+      away if it's more than 1 tile away
+  RandomGamer123:
+  - bugfix: Fixes lone stationary tanks having 5000L instead of 2500L volume.
+  - bugfix: Roundstart stationary air tanks now have the proper 21:79 oxygen:nitrogen
+      gas mix that is used throughout the station.
+  Time-Green:
+  - bugfix: fix some moth and lizard preferences missing
+  - bugfix: apparently mothwings were supposed to go above spacesuits, oops
+  Wayland-Smithy:
+  - qol: Chat Highlighting now works with more symbols and can be case sensitive and/or
+      match whole words only.
+  - bugfix: Fixed Chat Highlighting only working for the first comma separated entry.
+  - bugfix: Your own messages sent over a radio and dchat now properly avoid_highlighting.
+  - bugfix: Fixed admin observer special radio keys double sanitizing input.
