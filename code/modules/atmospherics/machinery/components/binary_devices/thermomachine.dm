@@ -31,9 +31,6 @@
 		"purple" = "#cc66ff"
 	)
 
-	var/icon_state_off = "thermo"
-	var/icon_state_on = "thermo_1"
-	var/icon_state_open = "thermo-o"
 	set_dir_on_move = FALSE
 
 	var/min_temperature = T20C //actual temperature will be defined by RefreshParts() and by the cooling var
@@ -110,12 +107,15 @@
 	set_greyscale(colors=greyscale_colors)
 
 	if(panel_open)
-		icon_state = icon_state_open
+		icon_state = "thermo-open"
 		return ..()
 	if(on && is_operational)
-		icon_state = icon_state_on
+		if(skipping_work)
+			icon_state = "thermo_1_blinking"
+		else
+			icon_state = "thermo_1"
 		return ..()
-	icon_state = icon_state_off
+	icon_state = "thermo_0"
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_overlays()
@@ -125,9 +125,6 @@
 	var/mutable_appearance/thermo_overlay = new(initial(icon))
 	. += getpipeimage(thermo_overlay, "pipe", dir, COLOR_LIME, piping_layer)
 	. += getpipeimage(thermo_overlay, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer)
-	if(skipping_work && on)
-		thermo_overlay.icon_state = "blinking"
-		. += new /mutable_appearance(thermo_overlay)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
@@ -255,7 +252,7 @@
 		if(!anchored)
 			to_chat(user, span_notice("Anchor [src] first!"))
 			return
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, item))
+		if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", item))
 			change_pipe_connection(panel_open)
 			return
 	if(default_change_direction_wrench(user, item))
@@ -484,7 +481,6 @@
 	name = "Cold room temperature control unit"
 	icon_state = "thermo_base_1"
 	cooling = TRUE
-	greyscale_config = /datum/greyscale_config/thermomachine
 	greyscale_colors = "#00feff"
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize()
