@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - qol: "Icebox atmospherics now has a small project room with some resources."
+  - bugfix: "Packages sent through disposals to Virology on Icebox won't end up at Xenobio anymore."
