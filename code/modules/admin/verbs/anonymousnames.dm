@@ -115,7 +115,8 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 		if(issilicon(player))
 			player.apply_pref_name("[isAI(player) ? "ai" : "cyborg"]", player.client)
 		else
-			player.client.prefs.copy_to(player, antagonist = (LAZYLEN(player.mind.antag_datums) > 0), is_latejoiner = FALSE)
+			player.client.prefs.sanitize_chosen_prefs() // Just in case they changed unlawfully.
+			player.client.prefs.apply_prefs_to(player) // This is not sound logic, as the prefs may have changed since then.
 			player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
 
 /**

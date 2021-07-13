@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(job)
 	var/initial_players_to_assign = 0 //used for checking against population caps
 
 	var/list/prioritized_jobs = list()
-	var/list/latejoin_trackers = list() //Don't read this list, use GetLateJoinTurfs() instead
+	var/list/latejoin_trackers = list()
 
 	var/overflow_role = /datum/job/assistant
 
@@ -55,8 +55,7 @@ SUBSYSTEM_DEF(job)
 	var/safe_code_timer_id
 	/// The loc to which the emergency safe code has been requested for delivery.
 	var/turf/safe_code_request_loc
-	/// If TRUE, the "Captain" job will always be given the code to the spare ID safe and always have a "Captain on deck!" announcement.
-	var/always_promote_captain_job = TRUE
+
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	setup_job_lists()
@@ -434,94 +433,49 @@ SUBSYSTEM_DEF(job)
 		message_admins(message)
 		RejectPlayer(player)
 
+
 //Gives the player the stuff he should have with his rank
-/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE, is_captain = FALSE)
-	var/mob/dead/new_player/newplayer
-	var/mob/living/living_mob
-	if(!joined_late)
-		newplayer = M
-		living_mob = newplayer.new_character
-	else
-		living_mob = M
+/datum/controller/subsystem/job/proc/EquipRank(mob/living/equipping, datum/job/job, client/player_client)
+	equipping.job = job.title
 
-	var/datum/job/job = GetJob(rank)
+	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
-	living_mob.job = rank
+	equipping.mind?.set_assigned_role(job)
 
-	SEND_SIGNAL(living_mob, COMSIG_JOB_RECEIVED, living_mob.job)
+	if(player_client)
+		to_chat(player_client, "<span class='infoplain'><b>You are the [job.title].</b></span>")
 
-	//If we joined at roundstart we should be positioned at our workstation
-	if(!joined_late)
-		var/spawning_handled = FALSE
-		var/obj/S = null
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && job.random_spawns_possible)
-			SendToLateJoin(living_mob, buckle = TRUE, search_empty_chair = FALSE)
-			spawning_handled = TRUE
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS) && job.random_spawns_possible)
-			DropLandAtRandomHallwayPoint(living_mob)
-			spawning_handled = TRUE
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER) && job.random_spawns_possible)
-			for(var/obj/effect/landmark/start/hangover/hangover_spawn in GLOB.start_landmarks_list)
-				S = hangover_spawn
-				if(locate(/mob/living) in hangover_spawn.loc) //so we can revert to spawning them on top of eachother if something goes wrong
-					continue
-				hangover_spawn.used = TRUE
-				break
-		else if(length(GLOB.jobspawn_overrides[rank]))
-			S = pick(GLOB.jobspawn_overrides[rank])
+	equipping.on_job_equipping(job)
+
+	job.announce_job(equipping)
+
+	if(player_client?.holder)
+		if(CONFIG_GET(flag/auto_deadmin_players) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
+			player_client.holder.auto_deadmin()
 		else
-			for(var/_sloc in GLOB.start_landmarks_list)
-				var/obj/effect/landmark/start/sloc = _sloc
-				if(sloc.name != rank)
-					continue
-				S = sloc
-				if(locate(/mob/living) in sloc.loc) //so we can revert to spawning them on top of eachother if something goes wrong
-					continue
-				sloc.used = TRUE
-				break
-		if(S)
-			S.JoinPlayerHere(living_mob, FALSE)
-		if(!S && !spawning_handled) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-			log_world("Couldn't find a round start spawn point for [rank]")
-			if(!SendToLateJoin(living_mob))
-				living_mob.move_to_error_room()
+			handle_auto_deadmin_roles(player_client, job.title)
 
+	if(player_client)
+		to_chat(player_client, "<span class='infoplain'><b>As the [job.title] you answer directly to [job.supervisors]. Special circumstances may change this.</b></span>")
 
-	living_mob.mind?.set_assigned_role(job)
+	job.radio_help_message(equipping)
 
-	to_chat(M, "<span class='infoplain'><b>You are the [rank].</b></span>")
-	if(job)
-		var/new_mob = job.equip(living_mob, null, null, joined_late, null, M.client, is_captain)//silicons override this proc to return a mob
-		if(ismob(new_mob))
-			living_mob = new_mob
-			if(!joined_late)
-				newplayer.new_character = living_mob
-			else
-				M = living_mob
-
-		if(M.client.holder)
-			if(CONFIG_GET(flag/auto_deadmin_players) || (M.client.prefs?.toggles & DEADMIN_ALWAYS))
-				M.client.holder.auto_deadmin()
-			else
-				handle_auto_deadmin_roles(M.client, rank)
-
-		to_chat(M, "<span class='infoplain'><b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b></span>")
-		job.radio_help_message(M)
+	if(player_client)
 		if(job.req_admin_notify)
-			to_chat(M, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
+			to_chat(player_client, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
 		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(M, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
+			to_chat(player_client, span_notice("<B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B>"))
 
-	var/related_policy = get_policy(rank)
-	if(related_policy)
-		to_chat(M,related_policy)
-	if(ishuman(living_mob))
-		var/mob/living/carbon/human/wageslave = living_mob
-		living_mob.add_memory("Your account ID is [wageslave.account_id].")
-	if(job && living_mob)
-		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, living_mob might not.
+		var/related_policy = get_policy(job.title)
+		if(related_policy)
+			to_chat(player_client, related_policy)
 
-	return living_mob
+	if(ishuman(equipping))
+		var/mob/living/carbon/human/wageslave = equipping
+		wageslave.add_memory("Your account ID is [wageslave.account_id].")
+
+	job.after_spawn(equipping, player_client)
+
 
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
@@ -659,7 +613,7 @@ SUBSYSTEM_DEF(job)
 		return
 	..()
 
-/datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE, search_empty_chair = TRUE)
+/datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
 	if(M.mind && !is_unassigned_job(M.mind.assigned_role) && length(GLOB.jobspawn_overrides[M.mind.assigned_role.title])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role.title])
@@ -671,49 +625,39 @@ SUBSYSTEM_DEF(job)
 		destination.JoinPlayerHere(M, buckle)
 		return TRUE
 
+	destination = get_last_resort_spawn_points()
+	destination.JoinPlayerHere(M, buckle)
+
+
+/datum/controller/subsystem/job/proc/get_last_resort_spawn_points()
 	//bad mojo
-	var/area/shuttle/arrival/spawnarea = GLOB.areas_by_type[/area/shuttle/arrival]
-	if(spawnarea)
-		if(search_empty_chair) // search carefully for an unoccupied chair for the character can buckle to.
-			var/list/chairs = list()
-			for(var/obj/structure/chair/chair in spawnarea)
-				chairs += chair
-			while(chairs.len)
-				var/obj/structure/chair/chosen_chair = pick_n_take(chairs)
-				if(!chosen_chair.has_buckled_mobs())
-					chosen_chair.JoinPlayerHere(M, buckle)
-					return TRUE
-		//we either couldn't find a free chair or couldn't be bothered to.
-		var/obj/structure/chair/chair = locate() in spawnarea
-		if(chair)
-			chair.JoinPlayerHere(M, buckle)
-			return TRUE
+	var/area/shuttle/arrival/arrivals_area = GLOB.areas_by_type[/area/shuttle/arrival]
+	if(arrivals_area)
+		//first check if we can find a chair
+		var/obj/structure/chair/shuttle_chair = locate() in arrivals_area
+		if(shuttle_chair)
+			return shuttle_chair
 
 		//last hurrah
-		var/list/avail = list()
-		for(var/turf/T in spawnarea)
-			if(!T.is_blocked_turf(TRUE))
-				avail += T
-		if(avail.len)
-			destination = pick(avail)
-			destination.JoinPlayerHere(M, FALSE)
-			return TRUE
+		var/list/turf/available_turfs = list()
+		for(var/turf/arrivals_turf in arrivals_area)
+			if(!arrivals_turf.is_blocked_turf(TRUE))
+				available_turfs += arrivals_turf
+		if(length(available_turfs))
+			return pick(available_turfs)
 
 	//pick an open spot on arrivals and dump em
 	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
-	if(arrivals_turfs.len)
-		for(var/turf/T in arrivals_turfs)
-			if(!T.is_blocked_turf(TRUE))
-				T.JoinPlayerHere(M, FALSE)
-				return TRUE
+	if(length(arrivals_turfs))
+		for(var/turf/arrivals_turf in arrivals_turfs)
+			if(!arrivals_turf.is_blocked_turf(TRUE))
+				return arrivals_turf
 		//last chance, pick ANY spot on arrivals and dump em
-		destination = arrivals_turfs[1]
-		destination.JoinPlayerHere(M, FALSE)
-		return TRUE
-	else
-		var/msg = "Unable to send mob [M] to late join!"
-		message_admins(msg)
-		CRASH(msg)
+		return pick(arrivals_turfs)
+
+	stack_trace("Unable to find last resort spawn point.")
+	return GET_ERROR_ROOM
+
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)

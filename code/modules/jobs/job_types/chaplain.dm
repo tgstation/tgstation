@@ -31,9 +31,11 @@
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
 
-/datum/job/chaplain/after_spawn(mob/living/H, mob/M)
+/datum/job/chaplain/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-
+	if(!ishuman(spawned))
+		return
+	var/mob/living/carbon/human/H = spawned
 	var/obj/item/storage/book/bible/booze/B = new
 
 	if(GLOB.religion)
@@ -58,18 +60,18 @@
 		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	var/new_religion = DEFAULT_RELIGION
-	if(M.client && M.client.prefs.custom_names["religion"])
-		new_religion = M.client.prefs.custom_names["religion"]
+	if(player_client?.prefs.custom_names["religion"])
+		new_religion = player_client.prefs.custom_names["religion"]
 
 	var/new_deity = DEFAULT_DEITY
-	if(M.client && M.client.prefs.custom_names["deity"])
-		new_deity = M.client.prefs.custom_names["deity"]
+	if(player_client?.prefs.custom_names["deity"])
+		new_deity = player_client.prefs.custom_names["deity"]
 
 	B.deity_name = new_deity
 
 	var/new_bible = DEFAULT_BIBLE
-	if(M.client && M.client.prefs.custom_names["bible"])
-		new_bible = M.client.prefs.custom_names["bible"]
+	if(player_client?.prefs.custom_names["bible"])
+		new_bible = player_client.prefs.custom_names["bible"]
 
 	switch(lowertext(new_religion))
 		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")

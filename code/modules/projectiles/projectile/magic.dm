@@ -260,7 +260,7 @@
 			new_mob = new path(M.loc)
 
 		if("humanoid")
-			new_mob = new /mob/living/carbon/human(M.loc)
+			var/mob/living/carbon/human/new_human = new (M.loc)
 
 			if(prob(50))
 				var/list/chooseable_races = list()
@@ -269,17 +269,16 @@
 					if(initial(S.changesource_flags) & WABBAJACK)
 						chooseable_races += speciestype
 
-				if(chooseable_races.len)
-					new_mob.set_species(pick(chooseable_races))
+				if(length(chooseable_races))
+					new_human.set_species(pick(chooseable_races))
 
-			var/datum/preferences/A = new() //Randomize appearance for the human
-			A.copy_to(new_mob, icon_updates=0)
-
-			var/mob/living/carbon/human/H = new_mob
-			H.update_body()
-			H.update_hair()
-			H.update_body_parts()
-			H.dna.update_dna_identity()
+			 // Randomize everything but the species, which was already handled above.
+			new_human.randomize_human_appearance(~RANDOMIZE_SPECIES)
+			new_human.update_body()
+			new_human.update_hair()
+			new_human.update_body_parts()
+			new_human.dna.update_dna_identity()
+			new_mob = new_human
 
 	if(!new_mob)
 		return

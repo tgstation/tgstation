@@ -31,8 +31,12 @@
 	voice_of_god_silence_power = 3
 
 
-/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.apply_pref_name("mime", M.client)
+/datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	if(!ishuman(spawned))
+		return
+	spawned.apply_pref_name("mime", player_client)
+
 
 /datum/outfit/job/mime
 	name = "Mime"

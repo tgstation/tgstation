@@ -46,17 +46,26 @@
 
 /datum/station_trait/hangover/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, .proc/on_job_after_spawn)
 
-/datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/spawned_mob, joined_late)
+
+/datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(joined_late)
+	if(!prob(35))
 		return
-	if(prob(35))
-		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cone))
-		hat = new hat(spawned_mob)
-		spawned_mob.equip_to_slot(hat, ITEM_SLOT_HEAD)
+	var/obj/item/hat = pick(
+		/obj/item/clothing/head/sombrero,
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/mask/balaclava,
+		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/cardborg,
+		/obj/item/clothing/head/pirate,
+		/obj/item/clothing/head/cone,
+		)
+	hat = new hat(spawned_mob)
+	spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_HEAD)
+
 
 /datum/station_trait/blackout
 	name = "Blackout"

@@ -66,7 +66,7 @@
 #define JOB_EQUIP_RANK (1<<2)
 /// Whether the job is considered a regular crew member of the station. Equipment such as AI and cyborgs not included.
 #define JOB_CREW_MEMBER (1<<3)
-/// Whether this join can be joined through the new_player menu.
+/// Whether this job can be joined through the new_player menu.
 #define JOB_NEW_PLAYER_JOINABLE (1<<4)
 
 #define FACTION_NONE "None"

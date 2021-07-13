@@ -298,7 +298,6 @@
 		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
-	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
@@ -307,38 +306,42 @@
 
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
 			SSshuttle.arrivals.RequireUndocked(src)
-		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 
-	SSjob.AssignRole(src, SSjob.GetJob(rank), TRUE)
-
-	var/mob/living/character = create_character(TRUE) //creates the human and transfers vars and mind
-
-	var/is_captain = FALSE
-	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
-	if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank] && !is_banned_from(ckey, list("Captain")))
-		is_captain = TRUE
-	// If we already have a captain, are they a "Captain" rank and are we allowing multiple of them to be assigned?
-	else if(SSjob.always_promote_captain_job && (rank == "Captain"))
-		is_captain = TRUE
-
-	var/equip = SSjob.EquipRank(character, rank, TRUE, is_captain)
-	if(isliving(equip)) //Borgs get borged in the equip, so we need to make sure we handle the new mob.
-		character = equip
-
 	var/datum/job/job = SSjob.GetJob(rank)
 
-	if(job && (job.job_flags & JOB_NEW_PLAYER_JOINABLE) && !job.override_latejoin_spawn(character))
-		SSjob.SendToLateJoin(character)
-		if(!arrivals_docked)
-			var/atom/movable/screen/splash/Spl = new(character.client, TRUE)
-			Spl.Fade(TRUE)
-			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+	SSjob.AssignRole(src, job, TRUE)
 
-		character.update_parallax_teleport()
+	mind.late_joiner = TRUE
+	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
+	if(!destination)
+		CRASH("Failed to find a latejoin spawn point.")
+	var/mob/living/character = create_character(destination)
+	if(!character)
+		CRASH("Failed to create a character for latejoin.")
+	transfer_character()
+
+	SSjob.EquipRank(character, job, character.client)
+
+	#define IS_NOT_CAPTAIN 0
+	#define IS_ACTING_CAPTAIN 1
+	#define IS_FULL_CAPTAIN 2
+	var/is_captain = IS_NOT_CAPTAIN
+	// If we already have a captain, are they a "Captain" rank and are we allowing multiple of them to be assigned?
+	if(is_captain_job(job))
+		is_captain = IS_FULL_CAPTAIN
+	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
+	else if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank] && !is_banned_from(ckey, list("Captain")))
+		is_captain = IS_ACTING_CAPTAIN
+	if(is_captain != IS_NOT_CAPTAIN)
+		minor_announce(job.get_captaincy_announcement(character))
+		SSjob.promote_to_captain(character, is_captain == IS_ACTING_CAPTAIN)
+	#undef IS_NOT_CAPTAIN
+	#undef IS_ACTING_CAPTAIN
+	#undef IS_FULL_CAPTAIN
 
 	SSticker.minds += character.mind
 	character.client.init_verbs() // init verbs for the late join
@@ -434,54 +437,37 @@
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
 
-/mob/dead/new_player/proc/create_character(transfer_after)
-	spawning = 1
+
+/// Creates, assigns and returns the new_character to spawn as. Assumes a valid mind.assigned_role exists.
+/mob/dead/new_player/proc/create_character(atom/destination)
+	spawning = TRUE
 	close_spawn_windows()
 
-	var/mob/living/carbon/human/H = new(loc)
-
-	var/frn = CONFIG_GET(flag/force_random_names)
-	if(!frn)
-		frn = is_banned_from(ckey, "Appearance")
-		if(QDELETED(src))
-			return
-	if(frn)
-		client.prefs.random_character()
-		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-
-	var/is_antag
-	if(mind in GLOB.pre_setup_antags)
-		is_antag = TRUE
-
-	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
-
-	if(GLOB.current_anonymous_theme)//overrides random name because it achieves the same effect and is an admin enabled event tool
-		randomize_human(H)
-		H.fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(H))
-
-	H.dna.update_dna_identity()
-	if(mind)
-		if(transfer_after)
-			mind.late_joiner = TRUE
-		mind.active = FALSE //we wish to transfer the key manually
+	mind.active = FALSE //we wish to transfer the key manually
+	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
+	if(QDELETED(src) || !client)
+		return // Disconnected while checking for the appearance ban.
+	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
 		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(H) //won't transfer key since the mind is not active
-		mind.set_original_character(H)
-
-	H.name = real_name
+		mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
+		mind.set_original_character(spawning_mob)
 	client.init_verbs()
-	. = H
+	. = spawning_mob
 	new_character = .
-	if(transfer_after)
-		transfer_character()
+
 
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
-	if(.)
-		new_character.key = key //Manually transfer the key to log them in,
-		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-		new_character = null
-		qdel(src)
+	if(!.)
+		return
+	new_character.key = key //Manually transfer the key to log them in,
+	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	var/area/joined_area = get_area(new_character.loc)
+	if(joined_area)
+		joined_area.on_joining_game(new_character)
+	new_character = null
+	qdel(src)
+
 
 /mob/dead/new_player/proc/ViewManifest()
 	if(!client)

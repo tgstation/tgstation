@@ -329,7 +329,11 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
-			player.create_character(FALSE)
+			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
+			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
+				player.new_player_panel()
+				continue
+			player.create_character(destination)
 		else
 			player.new_player_panel()
 		CHECK_TICK
@@ -389,13 +393,17 @@ SUBSYSTEM_DEF(ticker)
 			CHECK_TICK
 			continue
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
-		var/player_is_captain = (picked_spare_id_candidate == new_player_mob) || (SSjob.always_promote_captain_job && is_captain_job(player_assigned_role))
-		if(player_is_captain)
-			captainless = FALSE
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
-			new_player_living = SSjob.EquipRank(new_player_mob, player_assigned_role.title, FALSE, player_is_captain)
+			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
 			if(CONFIG_GET(flag/roundstart_traits) && ishuman(new_player_living))
+				if(new_player_mob.client.prefs.should_be_random_hardcore())
+					new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
 				SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
+		if(picked_spare_id_candidate == new_player_mob)
+			captainless = FALSE
+			var/acting_captain = !is_captain_job(player_assigned_role)
+			SSjob.promote_to_captain(new_player_living, acting_captain)
+			OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, player_assigned_role.get_captaincy_announcement(new_player_living)))
 		CHECK_TICK
 
 	if(captainless)
@@ -404,6 +412,7 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
 			CHECK_TICK
+
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
 	list/new_players,

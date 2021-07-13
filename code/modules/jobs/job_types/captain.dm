@@ -37,10 +37,9 @@
 	voice_of_god_power = 1.4 //Command staff has authority
 
 
-/datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
-	..()
-	if(announce_captaincy)
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
+/datum/job/captain/get_captaincy_announcement(mob/living/captain)
+	return "Captain [captain.real_name] on deck!"
+
 
 /datum/outfit/job/captain
 	name = "Captain"

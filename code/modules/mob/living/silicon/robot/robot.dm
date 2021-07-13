@@ -63,7 +63,7 @@
 		mmi.brainmob.container = mmi
 		mmi.update_appearance()
 
-	INVOKE_ASYNC(src, .proc/updatename)
+	setup_default_name()
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
@@ -163,26 +163,39 @@
 
 	model.transform_to(model_list[input_model])
 
-/mob/living/silicon/robot/proc/updatename(client/C)
+
+/// Used to setup the a basic and (somewhat) unique name for the robot.
+/mob/living/silicon/robot/proc/setup_default_name()
+	var/new_name
+	if(GLOB.current_anonymous_theme) //only robotic renames will allow for anything other than the anonymous one
+		new_name = GLOB.current_anonymous_theme.anonymous_ai_name(FALSE)
+	else if(custom_name)
+		new_name = custom_name
+	else
+		new_name = get_standard_name()
+	if(new_name != real_name)
+		fully_replace_character_name(real_name, new_name)
+
+
+/// Updates the borg name taking the client preferences into account.
+/mob/living/silicon/robot/proc/updatename(client/pref_source)
 	if(shell)
 		return
-	if(!C)
-		C = client
+	if(!pref_source)
+		pref_source = client
 	var/changed_name = ""
-	if(custom_name)
-		changed_name = custom_name
 	if(GLOB.current_anonymous_theme) //only robotic renames will allow for anything other than the anonymous one
 		changed_name = GLOB.current_anonymous_theme.anonymous_ai_name(FALSE)
-	if(!changed_name && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		apply_pref_name("cyborg", C)
+	else if(custom_name)
+		changed_name = custom_name
+	else if(pref_source && pref_source.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
+		apply_pref_name("cyborg", pref_source)
 		return //built in camera handled in proc
-	if(!changed_name)
+	else
 		changed_name = get_standard_name()
 
-	real_name = changed_name
-	name = real_name
-	if(!QDELETED(builtInCamera))
-		builtInCamera.c_tag = real_name //update the camera name too
+	fully_replace_character_name(real_name, changed_name)
+
 
 /mob/living/silicon/robot/proc/get_standard_name()
 	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
@@ -670,13 +683,16 @@
 		. = TRUE
 		toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
 
+
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
-	..()
-	if(oldname != real_name)
-		notify_ai(RENAME, oldname, newname)
+	. = ..()
+	if(!.)
+		return
+	notify_ai(RENAME, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	custom_name = newname
+
 
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)

@@ -480,7 +480,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 			//Spawn the body
 			var/mob/living/carbon/human/cop = new(spawnloc)
-			chosen_candidate.client.prefs.copy_to(cop)
+			chosen_candidate.client.prefs.safe_transfer_prefs_to(cop, is_antag = TRUE)
 			cop.key = chosen_candidate.key
 
 			//Give antag datum

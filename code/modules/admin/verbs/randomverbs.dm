@@ -294,9 +294,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.age = record_found.fields["age"]
 		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], null, record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
-		var/datum/preferences/A = new()
-		A.copy_to(new_character)
-		A.real_name = G_found.real_name
+		new_character.randomize_human_appearance()
 		new_character.dna.update_dna_identity()
 
 	new_character.name = new_character.real_name
@@ -323,9 +321,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Now for special roles and equipment.
 	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
 	if(traitordatum)
-		SSjob.EquipRank(new_character, new_character.mind.assigned_role.title, TRUE)
+		SSjob.EquipRank(new_character, new_character.mind.assigned_role, new_character.client)
 		traitordatum.equip()
-
 
 	switch(new_character.mind.special_role)
 		if(ROLE_WIZARD)
@@ -352,7 +349,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if(/datum/job/ai)
 					new_character = new_character.AIize()
 				else
-					SSjob.EquipRank(new_character, new_character.mind.assigned_role.title, TRUE)//Or we simply equip them.
+					if(!traitordatum) // Already equipped there.
+						SSjob.EquipRank(new_character, new_character.mind.assigned_role, new_character.client)//Or we simply equip them.
 
 	//Announces the character on all the systems, based on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
