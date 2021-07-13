@@ -25,10 +25,13 @@
 	var/same_path_cooldown = 5 SECONDS
 	var/different_path_cooldown = 30 SECONDS
 
+	var/max_range = 60
+
 /obj/item/circuit_component/pathfind/get_ui_notices()
 	. = ..()
 	// Not necessary to show the same path cooldown, since it doesn't change much for the player
 	. += create_ui_notice("Pathfinding Cooldown: [DisplayTimeText(different_path_cooldown)]", "orange", "stopwatch")
+	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/pathfind/Initialize()
 	. = ..()
@@ -91,7 +94,7 @@
 
 		// Check if the current turf is the same as the current turf we're supposed to be in. If so, then we set the next step as the next turf on the list
 		if(current_turf == next_turf)
-			path.Remove(path[1])
+			popleft(path)
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 
@@ -110,14 +113,14 @@
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 
 		old_dest = destination
-		path = get_path_to(src, destination, 60, id=path_id)
+		path = get_path_to(src, destination, max_range, id=path_id)
 		if(length(path) == 0 || !path)// Check if we can even path there
 			failed.set_output(COMPONENT_SIGNAL)
 			reason_failed.set_output("Can't go there!")
 			return
 		else
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF, different_path_cooldown)
-			path.Remove(path[1]) // The first step is literally where we are right now, so we dont need it
+			popleft(path) // The first step is literally where we are right now, so we dont need it
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
