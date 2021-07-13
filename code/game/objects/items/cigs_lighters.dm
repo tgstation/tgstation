@@ -929,7 +929,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// The amount of time between emagged or super drags.
 	var/dragtime = 8 SECONDS
 	/// A cooldown to prevent spamming smoke clouds nonstop when emagged or on super mode.
-	COOLDOWN_DECLARE(drag_cooldown)
+	COOLDOWN_DECLARE(super_drag_cooldown)
 	/// Whether the resevoir is open and we can add reagents.
 	var/screw = FALSE
 	/// Whether the vape has been overloaded to spread smoke.
