@@ -141,8 +141,8 @@
  *
  */
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
-	if(magazine) // Make sure you have a magazine, thats where the warning is!
-		return "\nBe especially careful around this device, as it can be loaded with [span_warning("[magazine.caliber]")] rounds, which you can inspect for more information."
+	if(magazine) // Make sure you have a magazine, to get the notes from
+		return "\n[magazine.add_notes_box()]"
 	else
 		return "\nThe warning attached to the magazine is missing..."
 

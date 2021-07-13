@@ -126,45 +126,45 @@
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
-		if(!typecache[A.type])
-			. += A
+	for(var/atom/atom as anything in atoms)
+		if(!typecache[atom.type])
+			. += atom
 
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/A = thing
-		if(typecache_include[A.type] && !typecache_exclude[A.type])
-			. += A
+	for(var/atom/atom as anything in atoms)
+		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
+			. += atom
 
-//Like typesof() or subtypesof(), but returns a typecache instead of a list
+///Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		var/list/types = list()
+		var/list/types
+		var/list/output = list()
 		if(only_root_path)
-			types = list(path)
+			output[path] = TRUE
 		else
 			types = ignore_root_path ? subtypesof(path) : typesof(path)
-		var/list/L = list()
-		for(var/T in types)
-			L[T] = TRUE
-		return L
+			for(var/T in types)
+				output[T] = TRUE
+		return output
 	else if(islist(path))
 		var/list/pathlist = path
-		var/list/L = list()
+		var/list/output = list()
 		if(ignore_root_path)
-			for(var/P in pathlist)
-				for(var/T in subtypesof(P))
-					L[T] = TRUE
+			for(var/current_path in pathlist)
+				for(var/subtype in subtypesof(current_path))
+					output[subtype] = TRUE
+			return output
+
+		if(only_root_path)
+			for(var/current_path in pathlist)
+				output[current_path] = TRUE
 		else
-			for(var/P in pathlist)
-				if(only_root_path)
-					L[P] = TRUE
-				else
-					for(var/T in typesof(P))
-						L[T] = TRUE
-		return L
+			for(var/current_path in pathlist)
+				for(var/subpath in typesof(current_path))
+					output[subpath] = TRUE
+		return output
 
 //Removes any null entries from the list
 //Returns TRUE if the list had nulls, FALSE otherwise

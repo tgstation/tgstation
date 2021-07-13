@@ -241,10 +241,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		qdel(X)
 	return ..()
 
-/*
- * Adds the weapon_description element, which shows the warning label for especially dangerous objects.
- * Made to be overridden by item subtypes that require specific notes outside of the scope of offensive_notes
- */
+/// Adds the weapon_description element, which shows the 'warning label' for especially dangerous objects. Override this for item types with special notes.
 /obj/item/proc/add_weapon_description()
 	AddElement(/datum/element/weapon_description)
 

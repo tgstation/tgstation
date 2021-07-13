@@ -39,61 +39,24 @@
 						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 
-/obj/vehicle/sealed/mecha/combat/honker/get_stats_html(mob/user)
-	return {"<html>
-						<head>
-						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-						<title>[src.name] data</title>
-						<style>
-						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
-						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
-						a {padding:2px 5px;;color:#0f0;}
-						.wr {margin-bottom: 5px;}
-						.header {cursor:pointer;}
-						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
-						.links a {margin-bottom: 2px;padding-top:3px;}
-						.visible {display: block;}
-						.hidden {display: none;}
-						</style>
-						<script language='javascript' type='text/javascript'>
-						[js_byjax]
-						[js_dropdowns]
-						function SSticker() {
-						    setInterval(function(){
-						        window.location='byond://?src=[REF(src)]&update_content=1';
-						        document.body.style.color = get_rand_color_string();
-						      document.body.style.background = get_rand_color_string();
-						    }, 1000);
-						}
+/obj/vehicle/sealed/mecha/combat/honker/get_ssticker_function()
+	. = {"
+		function SSticker() {
+		    setInterval(function(){
+		        window.location='byond://?src=[REF(src)]&update_content=1';
+		        document.body.style.color = get_rand_color_string();
+		      document.body.style.background = get_rand_color_string();
+		    }, 1000);
+		}
 
-						function get_rand_color_string() {
-						    var color = new Array;
-						    for(var i=0;i<3;i++){
-						        color.push(Math.floor(Math.random()*255));
-						    }
-						    return "rgb("+color.toString()+")";
-						}
-
-						window.onload = function() {
-							dropdowns();
-							SSticker();
-						}
-						</script>
-						</head>
-						<body>
-						<div id='content'>
-						[src.get_stats_part(user)]
-						</div>
-						<div id='eq_list'>
-						[src.get_equipment_list()]
-						</div>
-						<hr>
-						<div id='commands'>
-						[src.get_commands()]
-						</div>
-						</body>
-						</html>
-					"}
+		function get_rand_color_string() {
+		    var color = new Array;
+		    for(var i=0;i<3;i++){
+		        color.push(Math.floor(Math.random()*255));
+		    }
+		    return "rgb("+color.toString()+")";
+		}
+	"}
 
 /obj/vehicle/sealed/mecha/combat/honker/get_commands()
 	var/output = {"<div class='wr'>
@@ -127,6 +90,18 @@
 		output += "<div id='[REF(MT)]'>[MT.get_equip_info()]</div>"
 	output += "</div>"
 	return output
+
+/obj/vehicle/sealed/mecha/combat/honker/get_equipment_menu() //outputs mecha html equipment menu
+	. = {"
+	<div class='wr'>
+	<div class='header'>Honk-ON-Systems</div>
+	<div class='links'>"}
+	for(var/e in equipment)
+		var/obj/item/mecha_parts/mecha_equipment/equipment = e
+		. += "[equipment.name] [equipment.detachable ? "<a href='?src=[REF(equipment)];detach=1'>Detach</a><br>" : "\[Non-removable\]<br>"]"
+	. += {"<b>Available HONK slots:</b> [max_equip-LAZYLEN(equipment)]
+	</div>
+	</div>"}
 
 /obj/vehicle/sealed/mecha/combat/honker/play_stepsound()
 	if(squeak)

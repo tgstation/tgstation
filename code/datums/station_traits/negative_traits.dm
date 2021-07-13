@@ -67,10 +67,9 @@
 
 /datum/station_trait/blackout/on_round_start()
 	. = ..()
-	for(var/a in GLOB.apcs_list)
-		var/obj/machinery/power/apc/current_apc = a
-		if(prob(60))
-			current_apc.overload_lighting()
+	for(var/obj/machinery/power/apc/apc as anything in GLOB.apcs_list)
+		if(is_station_level(apc.z) && prob(60))
+			apc.overload_lighting()
 
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"

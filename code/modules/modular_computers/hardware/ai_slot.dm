@@ -52,7 +52,7 @@
 	if(stored_card)
 		to_chat(user, span_notice("You remove [stored_card] from [src]."))
 		locked = FALSE
-		if(user)
+		if(Adjacent(user))
 			user.put_in_hands(stored_card)
 		else
 			stored_card.forceMove(drop_location())

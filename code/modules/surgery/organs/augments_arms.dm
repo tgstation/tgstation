@@ -262,7 +262,7 @@
 	. = ..()
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
-		if(!istype(/obj/item/assembly/flash/armimplant, potential_flash))
+		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
 		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
@@ -290,7 +290,7 @@
 	. = ..()
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
-		if(!istype(/obj/item/assembly/flash/armimplant, potential_flash))
+		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
 		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
