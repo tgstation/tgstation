@@ -246,7 +246,7 @@
 			continue
 		// Anyone in crit, automatically reap
 		var/mob/living/living_participant = i
-		if(HAS_TRAIT(living_participant, TRAIT_CRITICAL_CONDITION) || living_participant.stat == DEAD)
+		if(HAS_TRAIT(living_participant, TRAIT_CRITICAL_CONDITION) || living_participant.stat == DEAD || !living_participant.client) // If they're critted, dead or no longer in their body, dust them
 			ctf_dust_old(living_participant)
 		else
 			// The changes that you've been hit with no shield but not
@@ -338,7 +338,7 @@
 
 	var/client/new_team_member = user.client
 	team_members |= new_team_member.ckey
-	to_chat(user, "<span class='warning'>You are now a member of [src.team].</span>")
+	to_chat(user, "<span class='warning'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
 	spawn_team_member(new_team_member)
 
 
