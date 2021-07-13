@@ -64,8 +64,7 @@
 		. = inactive_core.loc
 		qdel(inactive_core)
 		return
-	if(!.)
-		return ..()
+	return ..()
 
 
 /datum/job/ai/special_check_latejoin(client/C)
