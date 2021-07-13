@@ -17,7 +17,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	mask = /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
 
-/datum/outfit/Wally
+/datum/outfit/wally
 	name = "Wally"
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/striped_sweater
