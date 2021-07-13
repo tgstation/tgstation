@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "fixes the equipment menu lacking from the honker mech html UI because of bad copypasta."

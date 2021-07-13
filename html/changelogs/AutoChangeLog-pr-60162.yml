@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "restraints now use equip_to_slot() instead of snowflake code when applied, thus fixing issues such as cuffs not falling off when hit by a shrink ray."

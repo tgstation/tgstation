@@ -453,20 +453,20 @@
 		arena_reset = TRUE
 
 /obj/machinery/capture_the_flag/proc/reset_the_arena()
-	var/area/A = get_area(src)
-	var/list/ctf_object_typecache = typecacheof(list(
+	var/area/ctf_area = get_area(src)
+	var/static/list/ctf_object_typecache = typecacheof(list(
 				/obj/machinery,
 				/obj/effect/ctf,
 				/obj/item/ctf
 			))
-	for(var/atm in A)
-		if (isturf(A) || ismob(A) || isarea(A))
+	for(var/atom/movable/area_movable in ctf_area)
+		if (ismob(area_movable))
 			continue
-		if(isstructure(atm))
-			var/obj/structure/S = atm
-			S.repair_damage(S.max_integrity - S.get_integrity())
-		else if(!is_type_in_typecache(atm, ctf_object_typecache))
-			qdel(atm)
+		if(isstructure(area_movable))
+			var/obj/structure/ctf_structure = area_movable
+			ctf_structure.repair_damage(ctf_structure.max_integrity - ctf_structure.get_integrity())
+		else if(!is_type_in_typecache(area_movable, ctf_object_typecache))
+			qdel(area_movable)
 
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()

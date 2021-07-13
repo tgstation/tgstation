@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Fixes lone stationary tanks having 5000L instead of 2500L volume."
