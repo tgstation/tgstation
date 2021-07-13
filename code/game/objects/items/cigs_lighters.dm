@@ -1031,12 +1031,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	var/mob/living/carbon/vaper = loc
 	if(!iscarbon(vaper) || src != vaper.wear_mask)
-		reagents.remove_any(REAGENTS_METABOLISM * delta_time)
+		reagents.remove_any(REAGENTS_METABOLISM * delta_time * 0.5)
 		return
 
 	if(reagents.get_reagent_amount(/datum/reagent/fuel))
 		//HOT STUFF
-		vaper.adjust_fire_stacks(2 * delta_time)
+		vaper.adjust_fire_stacks(2 * delta_time * 0.5)
 		vaper.IgniteMob()
 
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
@@ -1045,8 +1045,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start()
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM * delta_time, methods = INGEST, ignore_stomach = TRUE))
-		reagents.remove_any(REAGENTS_METABOLISM * delta_time)
+	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM * delta_time * 0.5, methods = INGEST, ignore_stomach = TRUE))
+		reagents.remove_any(REAGENTS_METABOLISM * delta_time * 0.5)
 
 /obj/item/clothing/mask/vape/process(delta_time)
 	var/mob/living/M = loc
