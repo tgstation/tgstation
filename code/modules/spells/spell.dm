@@ -14,11 +14,11 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
-	var/mob/living/owner
+	var/datum/weakref/owner
 
 /obj/effect/proc_holder/Initialize(mapload, mob/living/new_owner)
 	. = ..()
-	owner = new_owner
+	owner = WEAKREF(new_owner)
 	if(has_action)
 		action = new base_action(src)
 
