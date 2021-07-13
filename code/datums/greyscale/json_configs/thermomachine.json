@@ -1,5 +1,5 @@
 {
-	"thermo": [
+	"thermo_0": [
 		{
 			"type": "icon_state",
 			"icon_state": "temp_meter",
@@ -25,7 +25,25 @@
 			"blend_mode": "overlay"
 		}
 	],
-	"thermo-o": [
+	"thermo_1_blinking": [
+		{
+			"type": "icon_state",
+			"icon_state": "temp_meter_1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "blinking",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "thermo_base_1",
+			"blend_mode": "overlay"
+		}
+	],
+	"thermo-open": [
 		{
 			"type": "icon_state",
 			"icon_state": "temp_meter-o",
