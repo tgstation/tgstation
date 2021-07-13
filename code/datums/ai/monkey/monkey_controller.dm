@@ -283,25 +283,25 @@ have ways of interacting with a specific mob and control it.
 	if(I.force && I.damtype != STAMINA)
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
-		retaliate(L)
+		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
-		retaliate(L)
+		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(L.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
+	if(user.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
 		retaliate(L)
 
-/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
-		retaliate(L)
+		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER
