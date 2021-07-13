@@ -131,20 +131,6 @@
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE
 
-/obj/item/clothing/head/beret/vintage
-	name = "vintage beret"
-	desc = "A well-worn beret."
-	icon_state = "beret"
-	dog_fashion = null
-	greyscale_colors = "#972A2A"
-
-/obj/item/clothing/head/beret/archaic
-	name = "archaic beret"
-	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a Nanotrasen station."
-	icon_state = "beret"
-	dog_fashion = null
-	greyscale_colors = "#772020"
-
 
 //Security
 
