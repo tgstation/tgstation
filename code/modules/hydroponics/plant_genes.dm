@@ -939,6 +939,3 @@
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
 
-/// Plant doesn't get annoyed by pests in their tray.
-/datum/plant_gene/trait/plant_type/carnivory
-	name = "Obligate Carnivory"

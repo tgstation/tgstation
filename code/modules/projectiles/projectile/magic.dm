@@ -288,7 +288,7 @@
 	for(var/obj/item/W in contents)
 		new_mob.equip_to_appropriate_slot(W)
 
-	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
+	M.log_message("became [new_mob.name]([new_mob.type])", LOG_ATTACK, color="orange")
 
 	new_mob.set_combat_mode(TRUE)
 

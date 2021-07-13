@@ -35,7 +35,7 @@
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5
 	/// How much infestation is removed per step (positive number)
-	var/infestation_removed = 0.5
+	var/infestation_removed = 4
 
 /// To give the surgeon a heads up how much work they have ahead of them
 /datum/surgery_step/debride/proc/get_progress(mob/user, mob/living/carbon/target, datum/wound/burn/burn_wound)

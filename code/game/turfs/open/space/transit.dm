@@ -26,7 +26,7 @@
 /turf/open/space/transit/east
 	dir = EAST
 
-/turf/open/space/transit/Entered(atom/movable/arrived, direction)
+/turf/open/space/transit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(!locate(/obj/structure/lattice) in src)
 		throw_atom(arrived)

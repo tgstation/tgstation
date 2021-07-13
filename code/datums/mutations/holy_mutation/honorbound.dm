@@ -143,7 +143,7 @@
 /datum/mutation/human/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
-	var/guilty_projectiles = typecacheof(list(
+	var/static/list/guilty_projectiles = typecacheof(list(
 		/obj/projectile/beam,
 		/obj/projectile/bullet,
 		/obj/projectile/magic,

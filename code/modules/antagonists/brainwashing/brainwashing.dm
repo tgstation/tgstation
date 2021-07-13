@@ -32,6 +32,7 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
+	suicide_cry = "FOR... SOMEONE!!"
 
 /datum/antagonist/brainwashed/greet()
 	to_chat(owner, span_warning("Your mind reels as it begins focusing on a single purpose..."))
