@@ -136,7 +136,7 @@
 				<h2>Basic ingredients preparation:</h2>
 
 				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
-				15u egg yolk + 15u flour + 5u sugar for cake batter.<br>
+				6u egg yolk + 12 egg white + 15u flour + 5u sugar for cake batter.<br>
 				Doughs can be transformed by using a knife and rolling pin.<br>
 				All doughs can be microwaved.<br>
 				<b>Bowl:</b> Add water to it for soup preparation.<br>

@@ -25297,15 +25297,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/locker)
-"dgq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/science/xenobiology)
 "dgr" = (
 /obj/structure/table/wood,
 /obj/item/newspaper{
@@ -37759,6 +37750,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "enj" = (
@@ -38776,6 +38768,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "eDl" = (
@@ -63688,6 +63681,10 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"lsy" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/security/checkpoint/medical)
 "lsG" = (
 /turf/open/floor/iron,
 /area/security/prison)
@@ -65614,8 +65611,8 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "lUX" = (
@@ -83545,7 +83542,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/defibrillator_mount/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "qwx" = (
@@ -140621,7 +140618,7 @@ cMY
 cMY
 cMY
 dfb
-dgq
+dfb
 cMY
 djx
 eCM
@@ -158090,11 +158087,11 @@ cPC
 cRd
 cRc
 cUG
-cUG
+lsy
 cUG
 ryr
 cRc
-cUG
+lsy
 cUG
 dfD
 dhm
