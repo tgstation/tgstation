@@ -390,7 +390,7 @@
 	icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
 	return ..()
 
-/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
+/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
 	if(can_use())
 		GLOB.cameranet.addCamera(src)

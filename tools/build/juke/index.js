@@ -6173,17 +6173,13 @@ exports.parseArgs = parseArgs;
 
 
 exports.__esModule = true;
-exports.exec = exports.ExitCode = void 0;
-
-var _chalk = _interopRequireDefault(__webpack_require__(/*! chalk */ "./.yarn/cache/chalk-npm-4.1.1-f1ce6bae57-445c12db7a.zip/node_modules/chalk/source/index.js"));
+exports.exec = exports.ExitError = void 0;
 
 var _child_process = __webpack_require__(/*! child_process */ "child_process");
 
 var _path = __webpack_require__(/*! path */ "path");
 
 var _fs = __webpack_require__(/*! ./fs */ "./src/fs.ts");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const children = new Set();
 
@@ -6242,25 +6238,18 @@ const exceptionHandler = err => {
 process.on('unhandledRejection', exceptionHandler);
 process.on('uncaughtException', exceptionHandler);
 
-class ExitCode extends Error {
-  constructor(code, signal) {
-    super('Process exited with code: ' + code);
+class ExitError extends Error {
+  constructor(...args) {
+    super(...args);
     this.code = null;
     this.signal = null;
-    this.code = code;
-    this.signal = signal != null ? signal : null;
   }
 
 }
 
-exports.ExitCode = ExitCode;
+exports.ExitError = ExitError;
 
 const exec = (executable, args = [], options = {}) => {
-  const {
-    silent = false,
-    throw: canThrow = true,
-    ...spawnOptions
-  } = options;
   return new Promise((resolve, reject) => {
     // If executable exists relative to the current directory,
     // use that executable, otherwise spawn should fall back to
@@ -6269,50 +6258,27 @@ const exec = (executable, args = [], options = {}) => {
       executable = (0, _path.resolve)(executable);
     }
 
-    if (process.env.JUKE_DEBUG) {
-      console.log(_chalk.default.grey('$', executable, ...args));
-    }
-
-    const child = (0, _child_process.spawn)(executable, args, spawnOptions);
+    const child = (0, _child_process.spawn)(executable, args, options);
     children.add(child);
-    let stdout = '';
-    let stderr = '';
-    let combined = '';
-    child.stdout.on('data', data => {
-      if (!silent) {
-        process.stdout.write(data);
-      }
-
-      stdout += data;
-      combined += data;
+    child.stdout.pipe(process.stdout, {
+      end: false
     });
-    child.stderr.on('data', data => {
-      if (!silent) {
-        process.stderr.write(data);
-      }
-
-      stderr += data;
-      combined += data;
+    child.stderr.pipe(process.stderr, {
+      end: false
     });
+    child.stdin.end();
     child.on('error', err => reject(err));
     child.on('exit', (code, signal) => {
       children.delete(child);
 
-      if (code !== 0 && canThrow) {
-        const error = new ExitCode(code);
+      if (code !== 0) {
+        const error = new ExitError('Process exited with code: ' + code);
         error.code = code;
         error.signal = signal;
         reject(error);
-        return;
+      } else {
+        resolve();
       }
-
-      resolve({
-        code,
-        signal,
-        stdout,
-        stderr,
-        combined
-      });
     });
   });
 };
@@ -6537,7 +6503,7 @@ exports.Parameter = exports.createParameter = void 0;
 
 var _stringcase = __webpack_require__(/*! stringcase */ "./.yarn/cache/stringcase-npm-4.3.1-2f1c329337-c81a3a4ab4.zip/node_modules/stringcase/lib/index.js");
 
-const createParameter = config => new Parameter(config.name, config.type, config.alias);
+const createParameter = options => new Parameter(options.name, options.type, options.alias);
 
 exports.createParameter = createParameter;
 
@@ -6897,7 +6863,7 @@ class Worker {
 
         const timeStr = _chalk.default.magenta(time);
 
-        if (err instanceof _exec.ExitCode) {
+        if (err instanceof _exec.ExitError) {
           const codeStr = _chalk.default.red(err.code);
 
           _logger.logger.error(`Target '${nameStr}' failed in ${timeStr}, exit code: ${codeStr}`);
@@ -7055,7 +7021,7 @@ module.exports = require("util");;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -7069,17 +7035,17 @@ module.exports = require("util");;
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
@@ -7089,7 +7055,7 @@ module.exports = require("util");;
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -7101,18 +7067,21 @@ var exports = __webpack_exports__;
 
 
 exports.__esModule = true;
-exports.resolveGlob = exports.sleep = exports.createParameter = exports.createTarget = exports.setup = exports.glob = exports.chalk = void 0;
+exports.resolveGlob = exports.sleep = exports.createParameter = exports.createTarget = exports.setup = void 0;
 
-var _chalk2 = _interopRequireDefault(__webpack_require__(/*! chalk */ "./.yarn/cache/chalk-npm-4.1.1-f1ce6bae57-445c12db7a.zip/node_modules/chalk/source/index.js"));
+var _chalk = _interopRequireDefault(__webpack_require__(/*! chalk */ "./.yarn/cache/chalk-npm-4.1.1-f1ce6bae57-445c12db7a.zip/node_modules/chalk/source/index.js"));
+
+exports.chalk = _chalk.default;
 
 var _fs = _interopRequireDefault(__webpack_require__(/*! fs */ "fs"));
 
-var _glob2 = __webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js");
+var _glob = _interopRequireDefault(__webpack_require__(/*! glob */ "./.yarn/cache/glob-npm-7.1.7-5698ad9c48-352f74f082.zip/node_modules/glob/glob.js"));
+
+exports.glob = _glob.default;
 
 var _exec = __webpack_require__(/*! ./exec */ "./src/exec.ts");
 
 exports.exec = _exec.exec;
-exports.ExitCode = _exec.ExitCode;
 
 var _logger = __webpack_require__(/*! ./logger */ "./src/logger.ts");
 
@@ -7126,10 +7095,6 @@ var _target = __webpack_require__(/*! ./target */ "./src/target.ts");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const chalk = _chalk2.default;
-exports.chalk = chalk;
-const glob = _glob2.glob;
-exports.glob = glob;
 const autoParameters = [];
 const autoTargets = [];
 /**
@@ -7184,10 +7149,11 @@ const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 exports.sleep = sleep;
 
 const resolveGlob = globPath => {
-  const unsafePaths = glob.sync(globPath, {
+  const unsafePaths = _glob.default.sync(globPath, {
     strict: false,
     silent: true
   });
+
   const safePaths = [];
 
   for (let path of unsafePaths) {

@@ -19,7 +19,6 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
-	suicide_cry = "FOR NANOTRASEN!!"
 
 /datum/antagonist/ert/on_gain()
 	if(random_names)
@@ -156,7 +155,6 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_intern
 	random_names = FALSE
 	role = "Intern"
-	suicide_cry = "FOR MY INTERNSHIP!!"
 
 /datum/antagonist/ert/intern/leader
 	name = "CentCom Head Intern"
@@ -243,7 +241,6 @@
 	name = "Space Police Responder"
 	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
-	suicide_cry = "FOR THE SPACE POLICE!!"
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
@@ -354,23 +351,3 @@
 /datum/antagonist/ert/families/beatcop/military/New()
 	. = ..()
 	name_source = GLOB.commando_names
-
-/datum/antagonist/ert/marine
-	name = "Marine Commander"
-	outfit = /datum/outfit/centcom/ert/marine
-	role = "Commander"
-
-/datum/antagonist/ert/marine/security
-	name = "Marine Heavy"
-	outfit = /datum/outfit/centcom/ert/marine/security
-	role = "Trooper"
-
-/datum/antagonist/ert/marine/engineer
-	name = "Marine Engineer"
-	outfit = /datum/outfit/centcom/ert/marine/engineer
-	role = "Engineer"
-
-/datum/antagonist/ert/marine/medic
-	name = "Marine Medic"
-	outfit = /datum/outfit/centcom/ert/marine/medic
-	role = "Medical Officer"

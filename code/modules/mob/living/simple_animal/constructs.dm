@@ -66,8 +66,7 @@
 		var/pos = 2+spellnum*31
 		our_rune.button.screen_loc = "6:[pos],4:-2"
 		our_rune.button.moved = "6:[pos],4:-2"
-	if(icon_state)
-		add_overlay("glow_[icon_state]_[theme]")
+	add_overlay("glow_[icon_state]_[theme]")
 
 /mob/living/simple_animal/hostile/construct/Destroy()
 	QDEL_NULL(our_rune)

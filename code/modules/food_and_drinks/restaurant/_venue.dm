@@ -1,12 +1,7 @@
-#define VENUE_RESTAURANT "Restaurant Venue"
-#define VENUE_BAR "Bar Venue"
-
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in
 	var/name = "unnamed venue"
-	///What kind of Venue are we
-	var/venue_type = VENUE_RESTAURANT
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types

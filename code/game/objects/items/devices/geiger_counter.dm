@@ -32,7 +32,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-	soundloop = new(src, FALSE)
+	soundloop = new(list(src), FALSE)
 
 /obj/item/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)

@@ -20,7 +20,7 @@
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	overlay_plane = FLOOR_PLANE
-	immunity_type = WEATHER_LAVA
+	immunity_type = "lava"
 
 
 /datum/weather/floor_is_lava/weather_act(mob/living/L)

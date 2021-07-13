@@ -4,7 +4,6 @@
 	roundend_category = "space pirates"
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
-	suicide_cry = "FOR ME MATEYS!!"
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()

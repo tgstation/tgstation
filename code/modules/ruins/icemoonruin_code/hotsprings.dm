@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 	planetary_atmos = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-/turf/open/water/cursed_spring/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/turf/open/water/cursed_spring/Entered(atom/movable/arrived, direction)
 	. = ..()
 	if(!isliving(arrived))
 		return

@@ -14,7 +14,7 @@
 
 //Only need to use one camera
 
-/area/ai_monitored/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/area/ai_monitored/Entered(atom/movable/arrived, direction)
 	. = ..()
 	if (ismob(arrived) && motioncameras.len)
 		for(var/X in motioncameras)
@@ -22,7 +22,7 @@
 			cam.newTarget(arrived)
 			return
 
-/area/ai_monitored/Exited(atom/movable/gone, atom/old_loc, list/atom/old_locs)
+/area/ai_monitored/Exited(atom/movable/gone, direction)
 	..()
 	if (ismob(gone) && motioncameras.len)
 		for(var/X in motioncameras)

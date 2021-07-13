@@ -8,7 +8,7 @@
 
 /obj/effect/oneway/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	return . && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
+	return . && border_dir == dir
 
 
 /obj/effect/wind

@@ -60,4 +60,4 @@
 		evil_but_now_not_evil.friends = tamer
 		evil_but_now_not_evil.faction = tamer.faction.Copy()
 
-	qdel(src)
+	RemoveComponent()

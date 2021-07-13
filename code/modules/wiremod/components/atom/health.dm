@@ -27,7 +27,11 @@
 
 /obj/item/circuit_component/health/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+	. += list(list(
+		"icon" = "info",
+		"content" = "Maximum Range: [max_range] tiles",
+		"color" = "orange",
+	))
 
 /obj/item/circuit_component/health/Initialize()
 	. = ..()

@@ -19,7 +19,7 @@
 	protect_indoors = TRUE
 	target_trait = ZTRAIT_SNOWSTORM
 
-	immunity_type = WEATHER_SNOW
+	immunity_type = "snow"
 
 	barometer_predictable = TRUE
 

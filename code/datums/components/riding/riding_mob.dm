@@ -68,12 +68,6 @@
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
 
-/datum/component/riding/creature/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
-	// Ensure that the /mob/post_buckle_mob(mob/living/M) does not mess us up with layers
-	// If we do not do this override we'll be stuck with the above proc (+ 0.1)-ing our rider's layer incorrectly
-	rider.layer = initial(rider.layer)
-	return ..()
-
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/living_parent, mob/living/former_rider, force = FALSE)
 	if(istype(living_parent) && istype(former_rider))
 		living_parent.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")

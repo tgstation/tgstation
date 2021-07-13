@@ -3,7 +3,6 @@
 /datum/venue/restaurant
 	name = "restaurant"
 	req_access = ACCESS_KITCHEN
-	venue_type = VENUE_RESTAURANT
 	min_time_between_visitor = 80 SECONDS
 	max_time_between_visitor = 100 SECONDS
 	customer_types = list(
@@ -75,7 +74,6 @@
 /datum/venue/bar
 	name = "bar"
 	req_access = ACCESS_BAR
-	venue_type = VENUE_BAR
 	min_time_between_visitor = 40 SECONDS
 	max_time_between_visitor = 60 SECONDS
 	customer_types = list(
@@ -91,7 +89,7 @@
 	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[venue_type])
+	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])
 
 	var/glass_visual
 

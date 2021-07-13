@@ -73,7 +73,6 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
-	make_tameable()
 
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()

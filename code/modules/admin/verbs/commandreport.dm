@@ -49,13 +49,10 @@
 	/// The sound that's going to accompany our message.
 	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
 	/// A static list of preset names that can be chosen.
-	var/list/preset_names = list(CENTCOM_PRESET, SYNDICATE_PRESET, WIZARD_PRESET, CUSTOM_PRESET)
+	var/static/list/preset_names = list(CENTCOM_PRESET, SYNDICATE_PRESET, WIZARD_PRESET, CUSTOM_PRESET)
 
 /datum/command_report_menu/New(mob/user)
 	ui_user = user
-	if(command_name() != CENTCOM_PRESET)
-		command_name = command_name()
-		preset_names.Insert(1, command_name())
 
 /datum/command_report_menu/ui_state(mob/user)
 	return GLOB.admin_state

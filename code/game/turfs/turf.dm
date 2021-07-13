@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	visibilityChanged()
 
 	for(var/atom/movable/content as anything in src)
-		Entered(content, null)
+		Entered(content, NONE)
 
 	var/area/A = loc
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
@@ -343,7 +343,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 
-/turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/turf/open/Entered(atom/movable/arrived, direction)
 	..()
 	//melting
 	if(isobj(arrived) && air && air.temperature > T0C)

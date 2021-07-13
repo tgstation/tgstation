@@ -10215,9 +10215,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 9
-	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "bBZ" = (
@@ -39290,6 +39287,9 @@
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
 "eKA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 6
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -44619,6 +44619,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "glz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -53566,6 +53567,9 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "iJo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -59249,20 +59253,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
-"knr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/engineering/supermatter/room)
 "knt" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/decal/cleanable/dirt,
@@ -69086,6 +69076,11 @@
 /turf/open/floor/iron,
 /area/commons/toilet/restrooms)
 "mPh" = (
+/obj/machinery/camera{
+	c_tag = "Science - Firing Range";
+	name = "science camera";
+	network = list("ss13","rd")
+	},
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
@@ -87921,7 +87916,7 @@
 /area/commons/fitness/recreation)
 "rAw" = (
 /obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/grimy,
+/turf/closed/wall,
 /area/service/bar)
 "rAA" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -88504,6 +88499,12 @@
 "rJO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 9
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -97668,6 +97669,9 @@
 /area/hallway/primary/central/aft)
 "uao" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -98385,6 +98389,7 @@
 /area/cargo/storage)
 "ulh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -105186,12 +105191,6 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Research Division - Circuits";
-	dir = 4;
-	name = "science camera";
-	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
@@ -133139,7 +133138,7 @@ fWC
 otP
 vNO
 vzm
-knr
+rNb
 idx
 qzf
 tKt
@@ -147996,7 +147995,7 @@ aXI
 qya
 oxd
 wcz
-aXI
+rAw
 aXI
 aXI
 ncV
@@ -148253,7 +148252,7 @@ aXI
 ioR
 xEX
 eXr
-rAw
+gUH
 jgR
 aXI
 kAj

@@ -117,14 +117,12 @@
 	trigger_delay = 10
 	protected = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	undertile_pressureplate = FALSE
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
 /obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
-	if(undertile_pressureplate)
-		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = FALSE) //we remove use_anchor here, so it ALWAYS stays anchored
+	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()

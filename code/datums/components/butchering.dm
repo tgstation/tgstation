@@ -148,7 +148,7 @@
 	)
 	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
 
-/datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
 	if(!isliving(arrived))

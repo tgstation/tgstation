@@ -24,7 +24,11 @@
 
 /obj/item/circuit_component/light/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Maximum Brightness: [max_power]", "orange", "lightbulb")
+	. += list(list(
+		"icon" = "lightbulb",
+		"content" = "Maximum Brightness: [max_power]",
+		"color" = "orange"
+	))
 
 /obj/item/circuit_component/light/Initialize()
 	. = ..()

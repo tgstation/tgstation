@@ -21,7 +21,7 @@
 	protect_indoors = TRUE
 	target_trait = ZTRAIT_ACIDRAIN
 
-	immunity_type = WEATHER_ACID // temp
+	immunity_type = ACID // temp
 
 	barometer_predictable = TRUE
 

@@ -21,7 +21,6 @@
 	var/can_trigger = TRUE
 	var/trigger_delay = 10
 	var/protected = FALSE
-	var/undertile_pressureplate = TRUE
 
 /obj/item/pressure_plate/Initialize()
 	. = ..()
@@ -31,8 +30,7 @@
 		sigdev.code = roundstart_signaller_code
 		sigdev.frequency = roundstart_signaller_freq
 
-	if(undertile_pressureplate)
-		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
+	AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
 	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/ToggleActive)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

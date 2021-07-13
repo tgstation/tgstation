@@ -310,7 +310,7 @@ have ways of interacting with a specific mob and control it.
 			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 
-/datum/ai_controller/monkey/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/ai_controller/monkey/proc/on_entered(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
 	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(arrived))

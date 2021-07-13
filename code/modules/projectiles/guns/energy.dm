@@ -14,8 +14,6 @@
 	var/charge_sections = 4
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
-	var/single_shot_type_overlay = TRUE //If this gun has a "this is loaded with X" overlay alongside chargebars and such
-	var/display_empty = TRUE //Should we give an overlay to empty guns?
 	var/selfcharge = 0
 	var/charge_timer = 0
 	var/charge_delay = 8
@@ -197,12 +195,11 @@
 	var/overlay_icon_state = "[icon_state]_charge"
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-		if(single_shot_type_overlay)
-			. += "[icon_state]_[shot.select_name]"
 		overlay_icon_state += "_[shot.select_name]"
+		. += "[icon_state]_[shot.select_name]"
 
 	var/ratio = get_charge_ratio()
-	if(ratio == 0 && display_empty)
+	if(ratio == 0)
 		. += "[icon_state]_empty"
 		return
 	if(shaded_charge)

@@ -7,7 +7,7 @@
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
-	suicide_cry = "FOR THE COMPANY!!"
+
 	var/special_role = "internal affairs agent"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE

@@ -47,7 +47,7 @@
  * source - the source of the signal
  * AM - the atom/movable that is being slipped.
  */
-/datum/component/slippery/proc/Slip(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/slippery/proc/Slip(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 	if(!isliving(arrived))
 		return
@@ -106,7 +106,7 @@
  * source - the source of the signal
  * AM - the atom/movable that slipped on us.
  */
-/datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
 	if(holder.body_position == LYING_DOWN && !holder.buckled)

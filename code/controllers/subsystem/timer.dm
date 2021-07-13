@@ -632,9 +632,7 @@ SUBSYSTEM_DEF(timer)
 	timer_subsystem = timer_subsystem || SStimer
 	//id is string
 	var/datum/timedevent/timer = timer_subsystem.timer_id_dict[id]
-	if(!timer || timer.spent)
-		return null
-	return timer.timeToRun - (timer.flags & TIMER_CLIENT_TIME ? REALTIMEOFDAY : world.time)
+	return (timer && !timer.spent) ? timer.timeToRun - world.time : null
 
 #undef BUCKET_LEN
 #undef BUCKET_POS

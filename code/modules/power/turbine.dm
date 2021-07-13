@@ -127,17 +127,14 @@
 		return
 	cut_overlays()
 
-	if(istype(inturf, /turf/open))
-		rpm = 0.9 * rpm + 0.1 * rpmtarget
-		var/datum/gas_mixture/environment = inturf.return_air()
+	rpm = 0.9* rpm + 0.1 * rpmtarget
+	var/datum/gas_mixture/environment = inturf.return_air()
 
-		// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
+	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
 
-		var/transfer_moles = environment.total_moles()/10
-		var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
-		gas_contained.merge(removed)
-	else
-		rpm = 0.9 * rpm // rpmtarget is basically 0, the intake is completely blocked with no airflow
+	var/transfer_moles = environment.total_moles()/10
+	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
+	gas_contained.merge(removed)
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 

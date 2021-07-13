@@ -1,7 +1,7 @@
 #define COOLDOWN_STUN 120 SECONDS
 #define COOLDOWN_DAMAGE 60 SECONDS
 #define COOLDOWN_MEME 30 SECONDS
-#define COOLDOWN_NONE 10 SECONDS
+#define COOLDOWN_NONE 1 SECONDS
 
 /// Used to stop listeners with silly or clown-esque (first) names such as "Honk" or "Flip" from screwing up certain commands.
 GLOBAL_DATUM(all_voice_of_god_triggers, /regex)
@@ -33,8 +33,11 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
 	var/log_message = uppertext(message)
 	var/is_cultie = IS_CULTIST(user)
-	if(LAZYLEN(span_list) && is_cultie)
-		span_list = list("narsiesmall")
+	if(LAZYLEN(span_list))
+		if(is_cultie)
+			span_list = list("narsiesmall")
+		else
+			span_list = list()
 
 	if(!user.say(message, spans = span_list, sanitize = FALSE))
 		return

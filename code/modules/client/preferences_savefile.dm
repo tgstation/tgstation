@@ -209,7 +209,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["pda_style"], pda_style)
 	READ_FILE(S["pda_color"], pda_color)
 
-	// OOC commendations
+	// Custom hotkeys
+	READ_FILE(S["key_bindings"], key_bindings)
+	check_keybindings()
+	// hearted
 	READ_FILE(S["hearted_until"], hearted_until)
 	if(hearted_until > world.realtime)
 		hearted = TRUE
@@ -222,10 +225,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(ispath(path)) //whatever typepath fails this check probably doesn't exist anymore
 			parsed_favs += path
 	favorite_outfits = uniqueList(parsed_favs)
-
-	// Custom hotkeys
-	READ_FILE(S["key_bindings"], key_bindings)
-	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)

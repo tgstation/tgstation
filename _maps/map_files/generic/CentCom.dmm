@@ -8370,22 +8370,9 @@
 /area/centcom/ferry)
 "Ak" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -7
-	},
+/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
-	},
-/obj/item/bodybag/environmental/nanotrasen{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/bodybag/environmental/nanotrasen{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/bodybag/environmental/nanotrasen{
-	pixel_x = 7
 	},
 /turf/open/floor/iron,
 /area/centcom/ferry)

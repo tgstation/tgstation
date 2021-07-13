@@ -36,7 +36,7 @@
 	. = ..()
 	wires = new /datum/wires/microwave(src)
 	create_reagents(100)
-	soundloop = new(src, FALSE)
+	soundloop = new(list(src), FALSE)
 
 /obj/machinery/microwave/Destroy()
 	eject()

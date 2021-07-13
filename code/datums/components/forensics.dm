@@ -7,10 +7,10 @@
 	var/list/fibers //assoc print = print
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original) //Use of | and |= being different here is INTENTIONAL.
-	fingerprints = LAZY_LISTS_OR(fingerprints, F.fingerprints)
-	hiddenprints = LAZY_LISTS_OR(hiddenprints, F.hiddenprints)
-	blood_DNA = LAZY_LISTS_OR(blood_DNA, F.blood_DNA)
-	fibers = LAZY_LISTS_OR(fibers, F.fibers)
+	fingerprints = fingerprints | F.fingerprints
+	hiddenprints = hiddenprints | F.hiddenprints
+	blood_DNA = blood_DNA | F.blood_DNA
+	fibers = fibers | F.fibers
 	check_blood()
 	return ..()
 

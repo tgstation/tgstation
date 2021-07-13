@@ -7,7 +7,6 @@
 	prevent_roundtype_conversion = FALSE
 	antag_hud_type = ANTAG_HUD_FUGITIVE
 	antag_hud_name = "fugitive"
-	suicide_cry = "FOR FREEDOM!!"
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"

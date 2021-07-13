@@ -38,7 +38,7 @@
 	D.apply_damage(20, A.get_attack_type(), affecting)
 	return
 
-///Crashing Wave Kick: Punch Shove combo, throws people seven tiles backwards
+///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/A, mob/living/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	D.visible_message(span_warning("[A] kicks [D] square in the chest, sending them flying!"), \
@@ -142,9 +142,9 @@
 	set category = "Sleeping Carp"
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
-	[span_notice("Gnashing Teeth")]: Punch Punch. Deal additional damage every second (consecutive) punch!\n\
-	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
-	[span_notice("Keelhaul")]: Punch Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.\n\
+	[span_notice("Gnashing Teeth")]: Harm Harm. Deal additional damage every second (consecutive) punch!\n\
+	[span_notice("Crashing Wave Kick")]: Harm Disarm. Launch your opponent away from you with incredible force!\n\
+	[span_notice("Keelhaul")]: Harm Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.\n\
 	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them!\
 	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons.\
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and appropriate medical supplies when possible for use during downtime.\

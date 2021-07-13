@@ -72,7 +72,6 @@
 	name = "Separatists"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
-	suicide_cry = "FOR THE MOTHERLAND!!"
 	var/datum/team/nation/nation
 
 /datum/antagonist/separatist/on_gain()

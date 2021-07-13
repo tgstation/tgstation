@@ -8,7 +8,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	see_in_dark = 8
 	bubble_icon = "machine"
-	weather_immunities = list(WEATHER_ASH)
+	weather_immunities = list("ash")
 	mob_biotypes = MOB_ROBOTIC
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT

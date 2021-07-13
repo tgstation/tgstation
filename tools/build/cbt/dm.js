@@ -1,4 +1,4 @@
-const Juke = require('../juke');
+const { exec } = require('../juke');
 const { stat } = require('./fs');
 const { regQuery } = require('./winreg');
 const fs = require('fs');
@@ -15,7 +15,6 @@ let dmPath;
  * @param {{ defines?: string[] }} options
  */
 const dm = async (dmeFile, options = {}) => {
-  // Get path to DM compiler
   if (!dmPath) {
     dmPath = await (async () => {
       // Search in array of paths
@@ -61,45 +60,22 @@ const dm = async (dmeFile, options = {}) => {
       );
     })();
   }
-  // Get project basename
-  const dmeBaseName = dmeFile.replace(/\.dme$/, '');
-  // Make sure output files are writable
-  const testOutputFile = (name) => {
-    try {
-      fs.closeSync(fs.openSync(name, 'r+'));
-    }
-    catch (err) {
-      if (err && err.code === 'ENOENT') {
-        return;
-      }
-      if (err && err.code === 'EBUSY') {
-        Juke.logger.error(`File '${name}' is locked by the DreamDaemon process.`);
-        Juke.logger.error(`Stop the currently running server and try again.`);
-        throw new Juke.ExitCode(1);
-      }
-      throw err;
-    }
-  };
-  testOutputFile(`${dmeBaseName}.dmb`);
-  testOutputFile(`${dmeBaseName}.rsc`);
-  // Compile
   const { defines } = options;
+  const dmeBaseName = dmeFile.replace(/\.dme$/, '');
   if (defines && defines.length > 0) {
     const injectedContent = defines
       .map(x => `#define ${x}\n`)
       .join('');
-    fs.writeFileSync(`${dmeBaseName}.mdme`, injectedContent);
-    const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`);
-    fs.appendFileSync(`${dmeBaseName}.mdme`, dmeContent);
-    await Juke.exec(dmPath, [`${dmeBaseName}.mdme`]);
-    fs.writeFileSync(`${dmeBaseName}.dmb`, fs.readFileSync(`${dmeBaseName}.mdme.dmb`));
-    fs.writeFileSync(`${dmeBaseName}.rsc`, fs.readFileSync(`${dmeBaseName}.mdme.rsc`));
-    fs.unlinkSync(`${dmeBaseName}.mdme.dmb`);
-    fs.unlinkSync(`${dmeBaseName}.mdme.rsc`);
-    fs.unlinkSync(`${dmeBaseName}.mdme`);
+    fs.writeFileSync(`${dmeBaseName}.mdme`, injectedContent)
+    const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`)
+    fs.appendFileSync(`${dmeBaseName}.mdme`, dmeContent)
+    await exec(dmPath, [`${dmeBaseName}.mdme`]);
+    fs.renameSync(`${dmeBaseName}.mdme.dmb`, `${dmeBaseName}.dmb`)
+    fs.renameSync(`${dmeBaseName}.mdme.rsc`, `${dmeBaseName}.rsc`)
+    fs.unlinkSync(`${dmeBaseName}.mdme`)
   }
   else {
-    await Juke.exec(dmPath, [dmeFile]);
+    await exec(dmPath, dmeFile);
   }
 };
 

@@ -42,7 +42,7 @@
 	COOLDOWN_DECLARE(west_delay)
 
 	/// Delay between each movement
-	var/move_delay = 0.2 SECONDS
+	var/move_delay = PORT_INPUT_RECEIVE_DELAY
 
 /obj/item/circuit_component/bot_circuit/Initialize()
 	. = ..()

@@ -17,7 +17,3 @@
 	base_icon_state = "block"
 	smoothing_flags = NONE
 	canSmoothWith = null
-
-/area/ruin/powered/mailroom
-	name = "Abandoned Post Office"
-	icon_state = "dk_yellow"

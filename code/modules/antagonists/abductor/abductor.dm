@@ -10,7 +10,6 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
-	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit

@@ -194,7 +194,7 @@
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue //YOU'RE FLYING OVER IT
-			if(WEATHER_SNOW in L.weather_immunities)
+			if("snow" in L.weather_immunities)
 				continue
 
 			var/buckle_check = L.buckled
@@ -205,7 +205,7 @@
 
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
-				if(WEATHER_SNOW in live.weather_immunities)
+				if("snow" in live.weather_immunities)
 					continue
 
 			L.adjustFireLoss(2)

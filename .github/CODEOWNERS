@@ -53,6 +53,7 @@
 /code/controllers/subsystem/timer.dm @MrStonedOne
 /code/controllers/configuration/entries @MrStonedOne
 /config/ @MrStonedOne
+/tools/build/ @MrStonedOne
 
 # ninjanomnom
 
@@ -83,7 +84,6 @@
 /icons/ @Twaticus @ShizCalev @Krysonism
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /_maps/ @EOBGames @ShizCalev @Maurukas
-/tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne
 

@@ -36,7 +36,7 @@
 /turf/open/lava/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/turf/open/lava/Entered(atom/movable/arrived, direction)
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
@@ -156,7 +156,7 @@
 					continue
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
-				if(WEATHER_LAVA in live.weather_immunities)
+				if("lava" in live.weather_immunities)
 					continue
 
 			if(iscarbon(L))
@@ -167,7 +167,7 @@
 				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
 					return
 
-			if(WEATHER_LAVA in L.weather_immunities)
+			if("lava" in L.weather_immunities)
 				continue
 
 			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)

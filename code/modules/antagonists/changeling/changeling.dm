@@ -11,7 +11,6 @@
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
-	suicide_cry = "FOR THE HIVE!!"
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/competitive_objectives = FALSE //Should we assign objectives in competition with other lings?
@@ -517,7 +516,6 @@
 	user.socks = chosen_prof.socks
 
 	chosen_dna.transfer_identity(user, 1)
-	user.Digitigrade_Leg_Swap(!(DIGITIGRADE in chosen_dna.species.species_traits))
 	user.updateappearance(mutcolor_update=1)
 	user.update_body()
 	user.domutcheck()
@@ -694,23 +692,3 @@
 
 	return parts.Join("<br>")
 
-// Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
-/datum/antagonist/changeling/headslug
-	name = "Headslug Changeling"
-	show_in_antagpanel = FALSE
-	give_objectives = FALSE
-	soft_antag = TRUE
-
-	geneticpoints = 5
-	total_geneticspoints = 5
-	chem_charges = 10
-	chem_storage = 50
-	total_chem_storage = 50
-
-/datum/antagonist/changeling/headslug/greet()
-	var/policy = get_policy(ROLE_HEADSLUG_CHANGELING)
-	if(you_are_greet)
-		to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! You aren't as strong as a normal changeling, as you are newly born."))
-	if(policy)
-		to_chat(owner, policy)
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)

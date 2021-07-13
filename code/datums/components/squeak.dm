@@ -87,7 +87,7 @@
 	else
 		steps++
 
-/datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/arrived, direction)
 	SIGNAL_HANDLER
 
 	if(isitem(arrived))

@@ -15,7 +15,11 @@
 
 /obj/item/circuit_component/clock/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Clock Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
+	. += list(list(
+		"icon" = "clock",
+		"content" = "Clock Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]",
+		"color" = "orange",
+	))
 
 /obj/item/circuit_component/clock/Initialize()
 	. = ..()

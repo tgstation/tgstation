@@ -240,8 +240,8 @@
 	current_target = null
 	if(!target.can_action(game, src, "role reveal"))
 		return
-	add_note("N[game.turn] - [target.body.real_name] - Revealed true identity")
-	to_chat(body,span_warning("You have revealed the true nature of the [target]!"))
+	add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
+	to_chat(body,span_warning("You have revealed the true nature of the [current_target]!"))
 	target.reveal_role(game, verbose = TRUE)
 	can_use = FALSE
 

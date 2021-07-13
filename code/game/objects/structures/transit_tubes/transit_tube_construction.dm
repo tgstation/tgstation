@@ -84,14 +84,13 @@
 //all the dispenser stations
 
 /obj/structure/c_transit_tube/station/dispenser
-	icon_state = "open_dispenser0"
+	icon_state = "closed_dispenser0"
 	name = "unattached dispenser station"
 	build_type = /obj/structure/transit_tube/station/dispenser
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser/flipped
-	base_icon = "open_dispenser"
 
 /obj/structure/c_transit_tube/station/dispenser/flipped
-	icon_state = "open_dispenser1"
+	icon_state = "closed_station1"
 	flipped = TRUE
 	build_type = /obj/structure/transit_tube/station/dispenser/flipped
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser
@@ -100,13 +99,13 @@
 
 /obj/structure/c_transit_tube/station/dispenser/reverse
 	name = "unattached terminus dispenser station"
-	icon_state = "open_terminusdispenser0"
+	icon_state = "closed_terminus0"
 	build_type = /obj/structure/transit_tube/station/dispenser/reverse
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser/reverse/flipped
-	base_icon = "open_terminusdispenser"
+	base_icon = "closed_terminus"
 
 /obj/structure/c_transit_tube/station/dispenser/reverse/flipped
-	icon_state = "open_terminusdispenser1"
+	icon_state = "closed_terminus1"
 	flipped = TRUE
 	build_type = /obj/structure/transit_tube/station/dispenser/reverse/flipped
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser/reverse

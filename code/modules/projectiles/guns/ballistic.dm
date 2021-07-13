@@ -50,7 +50,7 @@
 	///Compatible magazines with the gun
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	///Whether the sprite has a visible magazine or not
-	var/mag_display = TRUE
+	var/mag_display = FALSE
 	///Whether the sprite has a visible ammo display or not
 	var/mag_display_ammo = FALSE
 	///Whether the sprite has a visible indicator for being empty or not.
@@ -181,7 +181,7 @@
 		. += "[icon_state]_toy"
 
 
-	if(!magazine || internal_magazine || !mag_display)
+	if(!magazine || internal_magazine)
 		return
 
 	if(special_mags)

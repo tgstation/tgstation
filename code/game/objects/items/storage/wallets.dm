@@ -36,7 +36,6 @@
 		/obj/item/photo,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/pill,
 		/obj/item/screwdriver,
 		/obj/item/stamp),
 		list(/obj/item/screwdriver/power))
@@ -92,7 +91,7 @@
 	update_appearance(UPDATE_ICON)
 	update_slot_icon()
 
-/obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/item/storage/wallet/Entered(atom/movable/arrived, direction)
 	. = ..()
 	refreshID(removed = FALSE)
 
@@ -101,7 +100,6 @@
 	cached_flat_icon = null
 	if(!front_id)
 		return
-	COMPILE_OVERLAYS(front_id)
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
 	. += mutable_appearance(icon, "wallet_overlay")
@@ -157,12 +155,8 @@
 		return ..()
 
 /obj/item/storage/wallet/random
-	icon_state = "random_wallet" // for mapping purposes
-
-/obj/item/storage/wallet/random/Initialize()
-	. = ..()
-	icon_state = "wallet"
+	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	new /obj/item/holochip(src, rand(5, 30))
-	new /obj/effect/spawner/lootdrop/wallet_loot(src)
+	new /obj/item/holochip(src, rand(5,30))
+	icon_state = "wallet"

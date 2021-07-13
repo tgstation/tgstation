@@ -59,14 +59,6 @@
 	pull_force = PULL_FORCE_DEFAULT
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal = FALSE, admin_revive = FALSE)
-	. = ..()
-	if(!.)
-		return
-	move_force = initial(move_force)
-	move_resist = initial(move_resist)
-	pull_force = initial(pull_force)
-
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."

@@ -48,7 +48,7 @@
 		//Because the leaping sprite is bigger than the normal one
 		body_position_pixel_x_offset = -32
 		body_position_pixel_y_offset = -32
-		LAZYADD(weather_immunities, WEATHER_LAVA)
+		LAZYADD(weather_immunities,"lava")
 		update_icons()
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
@@ -56,7 +56,7 @@
 	leaping = FALSE
 	body_position_pixel_x_offset = 0
 	body_position_pixel_y_offset = 0
-	LAZYREMOVE(weather_immunities, WEATHER_LAVA)
+	LAZYREMOVE(weather_immunities, "lava")
 	update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

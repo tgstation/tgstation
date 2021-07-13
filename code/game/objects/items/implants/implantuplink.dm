@@ -6,12 +6,10 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/starting_tc = 0
-	/// The uplink flags of the implant uplink inside, only checked during initialisation so modifying it after initialisation will do nothing
-	var/uplink_flag = UPLINK_TRAITORS
 
-/obj/item/implant/uplink/Initialize(mapload, owner, uplink_flag)
+/obj/item/implant/uplink/Initialize(mapload, _owner)
 	. = ..()
-	AddComponent(/datum/component/uplink, _owner = owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = uplink_flag, starting_tc = starting_tc)
+	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
 	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
 
 /**
@@ -29,10 +27,6 @@
 /obj/item/implanter/uplink
 	name = "implanter (uplink)"
 	imp_type = /obj/item/implant/uplink
-
-/obj/item/implanter/uplink/Initialize(mapload, uplink_flag = UPLINK_TRAITORS)
-	imp = new imp_type(src, null, uplink_flag)
-	. = ..()
 
 /obj/item/implanter/uplink/precharged
 	name = "implanter (precharged uplink)"

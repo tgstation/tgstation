@@ -48,6 +48,7 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
+
 	if(_owner)
 		owner = _owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -252,13 +253,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/user = arguments[2]
-	owner = user.key
-	if(owner && !purchase_log)
-		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
-		if(GLOB.uplink_purchase_logs_by_key[owner])
-			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
-		else
-			purchase_log = new(owner, src)
+	owner = "[user.key]"
 
 /datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	SIGNAL_HANDLER
