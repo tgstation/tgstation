@@ -172,7 +172,9 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
-	if(in_range(user, src) || isobserver(user))
+	if(in_range(user, src) && isAI(user))
+		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection.")
+	else if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
@@ -254,7 +256,7 @@ Possible to do for anyone motivated enough:
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
 						continue
-					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>."))
+					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];projecttoholopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
 				to_chat(usr, span_info("A request for AI presence was already sent recently."))
@@ -345,24 +347,20 @@ Possible to do for anyone motivated enough:
 		var/datum/holocall/HC = I
 		HC.Disconnect(src)
 
-/obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
+/obj/machinery/holopad/attack_ai_secondary(mob/living/silicon/ai/user)
 	if (!istype(user))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if (!on_network)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
-		user.eyeobj.setLoc(get_turf(src))
-	else if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
+	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
 		activate_holo(user)
 	else//If there is a hologram, remove it.
+		user.eyeobj.loc = user.lastloc
+		user.lastloc = null
 		clear_holo(user)
-
-/obj/machinery/holopad/attack_ai_secondary(mob/user, list/modifiers)
-	if(_try_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/holopad/process()
@@ -403,14 +401,16 @@ Possible to do for anyone motivated enough:
 	if(!istype(AI))
 		AI = null
 
-	if(is_operational && (!AI || AI.eyeobj.loc == loc))//If the projector has power and client eye is on it
-		if (AI && istype(AI.current, /obj/machinery/holopad))
+	if(is_operational)//If the projector has power
+		if(AI && istype(AI.current, /obj/machinery/holopad))
 			to_chat(user, "[span_danger("ERROR:")] \black Image feed in progress.")
 			return
 
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
+			AI.lastloc = AI.eyeobj.loc
+			AI.eyeobj.loc = src.loc
 		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state

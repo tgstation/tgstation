@@ -101,6 +101,8 @@
 	var/cam_prev
 
 	var/datum/robot_control/robot_control
+	///remember AI's last location
+	var/lastloc
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -425,9 +427,15 @@
 	if(href_list["jumptoholopad"])
 		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"]) in GLOB.machines
 		if(H)
-			H.attack_ai(src) //may as well recycle
+			src.eyeobj.setLoc(H)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
+	if(href_list["projecttoholopad"])
+		var/obj/machinery/holopad/H = locate(href_list["projecttoholopad"]) in GLOB.machines
+		if(H)
+			H.attack_ai_secondary(src) //may as well recycle
+		else
+			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
 		var/string = href_list["track"]
 		trackable_mobs()
