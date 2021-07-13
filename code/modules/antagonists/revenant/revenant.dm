@@ -252,7 +252,6 @@
 		return
 	if(time <= 0)
 		return
-	end_orbit()
 	revealed = TRUE
 	invisibility = 0
 	incorporeal_move = FALSE
@@ -263,13 +262,13 @@
 		to_chat(src, span_revenwarning("You have been revealed!"))
 		unreveal_time = unreveal_time + time
 	update_spooky_icon()
+	orbiting?.end_orbit(src)
 
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
 		return
 	if(time <= 0)
 		return
-	end_orbit()
 	notransform = TRUE
 	if(!unstun_time)
 		to_chat(src, span_revendanger("You cannot move!"))
@@ -278,6 +277,7 @@
 		to_chat(src, span_revenwarning("You cannot move!"))
 		unstun_time = unstun_time + time
 	update_spooky_icon()
+	orbiting?.end_orbit(src)
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
@@ -349,7 +349,6 @@
 
 /mob/living/simple_animal/revenant/orbit(atom/target)
 	setDir(2)//reset dir so the right directional sprites show up
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, "revenant_orbit")
 	return ..()
 
 /mob/living/simple_animal/revenant/Moved(atom/OldLoc)
@@ -358,18 +357,13 @@
 	if(incorporeal_move_check(src))
 		return ..()
 
-	end_orbit()
+	orbiting?.end_orbit(src)
 	abstract_move(OldLoc) // back back back it up, gross but maybe someday there'll be a jaunt orbit component
 
 /mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
-	REMOVE_TRAIT(src, TRAIT_NO_FLOATING_ANIM, "revenant_orbit")
+	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	return ..()
-
-/// Ends the revenants orbit if it has one
-/mob/living/simple_animal/revenant/proc/end_orbit()
-	if(!orbiting)
-		return
-	orbiting?.end_orbit(src)
 
 /// Incorporeal move check: blocked by holy-watered tiles and salt piles.
 /mob/living/simple_animal/revenant/proc/incorporeal_move_check(atom/destination)
@@ -383,7 +377,7 @@
 		if(stepTurf.turf_flags & NOJAUNT)
 			to_chat(src, span_warning("Some strange aura is blocking the way."))
 			return
-		if (locate(/obj/effect/blessing, stepTurf))
+		if(locate(/obj/effect/blessing, stepTurf))
 			to_chat(src, span_warning("Holy energies block your path!"))
 			return
 	return TRUE
