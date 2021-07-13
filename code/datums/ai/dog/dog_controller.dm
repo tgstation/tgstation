@@ -13,7 +13,6 @@
 
 	COOLDOWN_DECLARE(heel_cooldown)
 	COOLDOWN_DECLARE(command_cooldown)
-	COOLDOWN_DECLARE(reset_ignore_cooldown)
 
 
 /datum/ai_controller/dog/process(delta_time)

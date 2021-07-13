@@ -1,10 +1,14 @@
+/datum/ai_planning_subtree/dog
+	COOLDOWN_DECLARE(heel_cooldown)
+	COOLDOWN_DECLARE(reset_ignore_cooldown)
+
 /datum/ai_planning_subtree/dog/SelectBehaviors(datum/ai_controller/dog/controller, delta_time)
 	var/mob/living/living_pawn = controller.pawn
 
 	// occasionally reset our ignore list
 	if(COOLDOWN_FINISHED(src, reset_ignore_cooldown) && length(controller.blackboard[BB_FETCH_IGNORE_LIST]))
 		COOLDOWN_START(src, reset_ignore_cooldown, AI_FETCH_IGNORE_DURATION)
-		blackboard[BB_FETCH_IGNORE_LIST] = list()
+		controller.blackboard[BB_FETCH_IGNORE_LIST] = list()
 
 	// if we were just ordered to heel, chill out for a bit
 	if(!COOLDOWN_FINISHED(src, heel_cooldown))
@@ -27,7 +31,7 @@
 	// if we're carrying something and we have a destination to deliver it, do that
 	if(controller.blackboard[BB_SIMPLE_CARRY_ITEM] && controller.blackboard[BB_FETCH_DELIVER_TO])
 		var/atom/return_target = controller.blackboard[BB_FETCH_DELIVER_TO]
-		if(!can_see(pawn, return_target, length=AI_DOG_VISION_RANGE))
+		if(!can_see(controller.pawn, return_target, length=AI_DOG_VISION_RANGE))
 			// if the return target isn't in sight, we'll just forget about it and carry the thing around
 			controller.blackboard[BB_FETCH_DELIVER_TO] = null
 			return
