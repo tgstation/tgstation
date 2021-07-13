@@ -17,4 +17,4 @@
 		return
 	client.status_bar_prev_text = text
 	winset(client, "mapwindow.status_bar",
-		"text=[url_encode(text)]&is-visible=[!!text]")
+		"text=[rustg_url_encode(text)]&is-visible=[!!text]")
