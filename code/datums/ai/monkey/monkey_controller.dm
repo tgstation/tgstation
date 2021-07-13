@@ -296,7 +296,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 	if(user.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
-		retaliate(L)
+		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user)
 	SIGNAL_HANDLER
