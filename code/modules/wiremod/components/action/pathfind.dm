@@ -14,21 +14,20 @@
 
 	var/datum/port/output/output
 	var/datum/port/output/finished
-	var/datum/port/output/no_path
-	var/datum/port/output/cooldown
-	var/datum/port/output/bad_id
+	var/datum/port/output/failed
+	var/datum/port/output/reason_failed
 
 	var/list/path
 	var/turf/old_dest
 	var/turf/next_turf
 
-	/// Cooldown to limit how frequently we can path to the same location.
+	// Cooldown to limit how frequently we can path to the same location.
 	var/same_path_cooldown = 5 SECONDS
 	var/different_path_cooldown = 30 SECONDS
 
 /obj/item/circuit_component/pathfind/get_ui_notices()
 	. = ..()
-	/// Not necessary to show the same path cooldown, since it doesn't change much for the player
+	// Not necessary to show the same path cooldown, since it doesn't change much for the player
 	. += create_ui_notice("Pathfinding Cooldown: [DisplayTimeText(different_path_cooldown)]", "orange", "stopwatch")
 
 /obj/item/circuit_component/pathfind/Initialize()
@@ -39,9 +38,8 @@
 
 	output = add_output_port("Next step", PORT_TYPE_ATOM)
 	finished = add_output_port("Arrived to destination", PORT_TYPE_SIGNAL)
-	no_path = add_output_port("Failed: Can't pathfind there", PORT_TYPE_SIGNAL)
-	cooldown = add_output_port("Failed: Cooldown active", PORT_TYPE_SIGNAL)
-	bad_id = add_output_port("Failed: ID not valid", PORT_TYPE_SIGNAL)
+	failed = add_output_port("Failed", PORT_TYPE_SIGNAL)
+	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/pathfind/Destroy()
 	input_X = null
@@ -50,8 +48,8 @@
 
 	output = null
 	finished = null
-	no_path = null
-	bad_id = null
+	failed = null
+	reason_failed = null
 
 	path = null
 	old_dest = null
@@ -74,50 +72,53 @@
 	var/atom/path_id = id_card.input_value
 	if(path_id && !istype(path_id, /obj/item/card/id))
 		path_id = null
-		bad_id.set_output(COMPONENT_SIGNAL)
-		return
+		failed.set_output(COMPONENT_SIGNAL)
+		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")
 
-	/// Get both the current turf and the destination's turf
+	// Get both the current turf and the destination's turf
 	var/turf/current_turf = get_turf(src)
 	var/turf/destination = locate(target_X, target_Y, current_turf?.z)
 
-	/// If we're going to the same place and the cooldown hasn't subsided, we're probably on the same path as before
+	// We're already here! No need to do anything.
+	if(current_turf == destination)
+		finished.set_output(COMPONENT_SIGNAL)
+		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
+		next_turf = null
+		return
+
+	// If we're going to the same place and the cooldown hasn't subsided, we're probably on the same path as before
 	if (destination == old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME))
 
-		/// Check if the current turf is the same as the current turf we're supposed to be in. If so, then we set the next step as the next turf on the list
+		// Check if the current turf is the same as the current turf we're supposed to be in. If so, then we set the next step as the next turf on the list
 		if(current_turf == next_turf)
 			path.Remove(path[1])
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 
-			/// Restart the cooldown since we don't need a new path ( TIMER_COOLDOWN_START might restart the timer by itself and i dont need to call TIMER_COOLDOWN_END, but better safe than sorry )
+			// Restart the cooldown since we don't need a new path ( TIMER_COOLDOWN_START might restart the timer by itself and i dont need to call TIMER_COOLDOWN_END, but better safe than sorry )
 			TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
 
 
-	else /// Either we're not going to the same place or the cooldown is over. Either way, we need a new path
+	else // Either we're not going to the same place or the cooldown is over. Either way, we need a new path
 
 		if(destination != old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
-			cooldown.set_output(COMPONENT_SIGNAL)
+			failed.set_output(COMPONENT_SIGNAL)
+			reason_failed.set_output("Cooldown still active!")
 			return
 
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 
 		old_dest = destination
 		path = get_path_to(src, destination, 60, id=path_id)
-		if(length(path) == 0 || !path)/// Check if we can even path there
-			no_path.set_output(COMPONENT_SIGNAL)
+		if(length(path) == 0 || !path)// Check if we can even path there
+			failed.set_output(COMPONENT_SIGNAL)
+			reason_failed.set_output("Can't go there!")
 			return
 		else
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF, different_path_cooldown)
-			path.Remove(path[1]) /// The first step is literally where we are right now, so we dont need it
+			path.Remove(path[1]) // The first step is literally where we are right now, so we dont need it
 			next_turf = get_turf(path[1])
 			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
 
-	current_turf = get_turf(src)
-	if(current_turf == destination)
-		finished.set_output(COMPONENT_SIGNAL)
-		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
-		next_turf = null
-		return
