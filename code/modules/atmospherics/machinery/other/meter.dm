@@ -14,17 +14,7 @@
 	var/atom/target
 	var/target_layer = PIPING_LAYER_DEFAULT
 	greyscale_config = /datum/greyscale_config/meter
-	greyscale_colors = "#808080"
-	var/static/list/meter_colors = list(
-		"grey" = "#808080",
-		"red" = "#ff0000",
-		"orange" = "#ff7f00",
-		"yellow" = "#feff00",
-		"green" = "#00ff00",
-		"cyan" = "#00feff",
-		"blue" = "#0000ff",
-		"purple" = "#cc66ff"
-	)
+	greyscale_colors = COLOR_GRAY
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
@@ -72,13 +62,13 @@
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meter0"
-		greyscale_colors = list(meter_colors["grey"])
+		greyscale_colors = COLOR_GRAY
 		set_greyscale(colors=greyscale_colors)
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter"
-		greyscale_colors = list(meter_colors["grey"])
+		greyscale_colors = COLOR_GRAY
 		set_greyscale(colors=greyscale_colors)
 		return FALSE
 
@@ -106,22 +96,23 @@
 
 	var/env_temperature = environment.temperature
 	if(env_pressure == 0 || env_temperature == 0)
-		greyscale_colors = list(meter_colors["grey"])
-	else if(env_temperature <= BODYTEMP_COLD_WARNING_3)
-		greyscale_colors = list(meter_colors["purple"])
-	else if(env_temperature <= BODYTEMP_COLD_WARNING_2)
-		greyscale_colors = list(meter_colors["blue"])
-	else if(env_temperature <= BODYTEMP_COLD_WARNING_1)
-		greyscale_colors = list(meter_colors["cyan"])
-	else if(env_temperature <= BODYTEMP_HEAT_WARNING_1)
-		greyscale_colors = list(meter_colors["green"])
-	else if(env_temperature <= BODYTEMP_HEAT_WARNING_2)
-		greyscale_colors = list(meter_colors["yellow"])
-	else if(env_temperature <= BODYTEMP_HEAT_WARNING_3)
-		greyscale_colors = list(meter_colors["orange"])
+		greyscale_colors = COLOR_GRAY
 	else
-		greyscale_colors = list(meter_colors["red"])
-
+		switch(env_temperature)
+			if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+				greyscale_colors = COLOR_RED
+			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+				greyscale_colors = COLOR_ORANGE
+			if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+				greyscale_colors = COLOR_YELLOW
+			if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+				greyscale_colors = COLOR_VIBRANT_LIME
+			if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+				greyscale_colors = COLOR_CYAN
+			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+				greyscale_colors = COLOR_BLUE
+			else
+				greyscale_colors = COLOR_VIOLET
 	set_greyscale(colors=greyscale_colors)
 
 	if(frequency)

@@ -20,16 +20,7 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	greyscale_config = /datum/greyscale_config/thermomachine
-	greyscale_colors = "#00ff00"
-	var/static/list/thermo_colors = list(
-		"red" = "#ff0000",
-		"orange" = "#ff7f00",
-		"yellow" = "#feff00",
-		"green" = "#00ff00",
-		"cyan" = "#00feff",
-		"blue" = "#0000ff",
-		"purple" = "#cc66ff"
-	)
+	greyscale_colors = COLOR_VIBRANT_LIME
 
 	set_dir_on_move = FALSE
 
@@ -89,20 +80,21 @@
 
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
-	if(target_temperature <= BODYTEMP_COLD_WARNING_3)
-		greyscale_colors = list(thermo_colors["purple"])
-	else if(target_temperature <= BODYTEMP_COLD_WARNING_2)
-		greyscale_colors = list(thermo_colors["blue"])
-	else if(target_temperature <= BODYTEMP_COLD_WARNING_1)
-		greyscale_colors = list(thermo_colors["cyan"])
-	else if(target_temperature <= BODYTEMP_HEAT_WARNING_1)
-		greyscale_colors = list(thermo_colors["green"])
-	else if(target_temperature <= BODYTEMP_HEAT_WARNING_2)
-		greyscale_colors = list(thermo_colors["yellow"])
-	else if(target_temperature <= BODYTEMP_HEAT_WARNING_3)
-		greyscale_colors = list(thermo_colors["orange"])
-	else
-		greyscale_colors = list(thermo_colors["red"])
+	switch(target_temperature)
+		if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+			greyscale_colors = COLOR_RED
+		if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+			greyscale_colors = COLOR_ORANGE
+		if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+			greyscale_colors = COLOR_YELLOW
+		if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+			greyscale_colors = COLOR_VIBRANT_LIME
+		if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+			greyscale_colors = COLOR_CYAN
+		if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+			greyscale_colors = COLOR_BLUE
+		else
+			greyscale_colors = COLOR_VIOLET
 
 	set_greyscale(colors=greyscale_colors)
 
@@ -480,8 +472,8 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
 	icon_state = "thermo_base_1"
+	greyscale_colors = COLOR_CYAN
 	cooling = TRUE
-	greyscale_colors = "#00feff"
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize()
 	. = ..()
