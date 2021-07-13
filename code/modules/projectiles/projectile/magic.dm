@@ -272,7 +272,7 @@
 				if(length(chooseable_races))
 					new_human.set_species(pick(chooseable_races))
 
-			 // Randomize everything but the species, which was already handled above.
+			// Randomize everything but the species, which was already handled above.
 			new_human.randomize_human_appearance(~RANDOMIZE_SPECIES)
 			new_human.update_body()
 			new_human.update_hair()
