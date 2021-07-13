@@ -149,6 +149,8 @@
 
 /datum/action/cooldown/domain/Trigger()
 	. = ..()
+	if(!.)
+		return
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
 	switch (rand(1,10))
