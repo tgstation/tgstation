@@ -85,6 +85,7 @@
 	// We're already here! No need to do anything.
 	if(current_turf == destination)
 		finished.set_output(COMPONENT_SIGNAL)
+		old_dest = null
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 		next_turf = null
 		return
@@ -115,6 +116,7 @@
 		old_dest = destination
 		path = get_path_to(src, destination, max_range, id=path_id)
 		if(length(path) == 0 || !path)// Check if we can even path there
+			next_turf = null
 			failed.set_output(COMPONENT_SIGNAL)
 			reason_failed.set_output("Can't go there!")
 			return
