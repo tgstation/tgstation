@@ -42187,6 +42187,9 @@
 "mhs" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_y = 26
+	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "mhz" = (
@@ -57803,9 +57806,6 @@
 /area/cargo/storage)
 "sqn" = (
 /obj/machinery/meter,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_x = -24
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
