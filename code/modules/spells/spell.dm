@@ -16,9 +16,9 @@
 	var/base_action = /datum/action/spell_action
 	var/mob/living/owner
 
-/obj/effect/proc_holder/Initialize(mob/living/owner)
+/obj/effect/proc_holder/Initialize(mapload, mob/living/new_owner)
 	. = ..()
-	src.owner = owner
+	owner = new_owner
 	if(has_action)
 		action = new base_action(src)
 

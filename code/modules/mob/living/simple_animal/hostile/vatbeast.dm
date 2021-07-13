@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize()
 	. = ..()
-	tentacle_slap = new(src)
+	tentacle_slap = new(src, src)
 	AddAbility(tentacle_slap)
 	add_cell_sample()
 	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
