@@ -348,7 +348,7 @@
 	stasis = FALSE
 
 /mob/living/simple_animal/revenant/orbit(atom/target)
-	setDir(2)//reset dir so the right directional sprites show up
+	setDir(SOUTH)//reset dir so the right directional sprites show up
 	return ..()
 
 /mob/living/simple_animal/revenant/Moved(atom/OldLoc)
