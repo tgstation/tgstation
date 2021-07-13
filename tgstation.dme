@@ -3612,6 +3612,7 @@
 #include "code\modules\wiremod\components\sensors\tempsensor.dm"
 #include "code\modules\wiremod\components\string\concat.dm"
 #include "code\modules\wiremod\components\string\contains.dm"
+#include "code\modules\wiremod\components\string\stringtonumber.dm"
 #include "code\modules\wiremod\components\string\textcase.dm"
 #include "code\modules\wiremod\components\string\tostring.dm"
 #include "code\modules\wiremod\components\utility\clock.dm"

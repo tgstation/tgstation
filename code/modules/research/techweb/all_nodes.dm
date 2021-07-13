@@ -226,6 +226,7 @@
 		"comp_speech",
 		"comp_speech",
 		"comp_split",
+		"comp_stringtonumber",
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
