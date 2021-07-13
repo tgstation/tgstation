@@ -38,6 +38,7 @@
 	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
 	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_HANDS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)

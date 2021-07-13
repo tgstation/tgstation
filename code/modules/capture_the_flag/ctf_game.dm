@@ -454,7 +454,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click)</a> to go to the [team] team's controller!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
+	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
