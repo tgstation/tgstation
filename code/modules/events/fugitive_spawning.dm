@@ -23,7 +23,7 @@
 	var/list/candidates = get_candidates(ROLE_TRAITOR, ROLE_TRAITOR)
 	if(candidates.len >= 1) //solo refugees
 		if(prob(30))
-			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering
+			possible_backstories.Add("wally") //less common as it comes with magicks and is kind of immershun shattering
 		else //For accurate deadchat feedback
 			minimum_required = 4
 	if(candidates.len >= 4)//group refugees
@@ -37,7 +37,7 @@
 	switch(backstory)
 		if("synth")
 			leader = pick_n_take(candidates)
-		if("waldo")
+		if("wally")
 			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
 	var/list/members = list()
 	var/list/spawned_mobs = list()
@@ -76,8 +76,8 @@
 			S.equipOutfit(/datum/outfit/prisoner)
 		if("cultist")
 			S.equipOutfit(/datum/outfit/yalp_cultist)
-		if("waldo")
-			S.equipOutfit(/datum/outfit/waldo)
+		if("wally")
+			S.equipOutfit(/datum/outfit/wally)
 		if("synth")
 			S.equipOutfit(/datum/outfit/synthetic)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")

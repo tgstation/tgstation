@@ -77,10 +77,10 @@
 	icon_state = "beaniedurathread"
 	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, RAD = 0, FIRE = 30, ACID = 5)
 
-/obj/item/clothing/head/beanie/waldo
+/obj/item/clothing/head/beanie/wally
 	name = "red striped bobble hat"
 	desc = "If you're going on a worldwide hike, you'll need some cold protection."
-	icon_state = "waldo_hat"
+	icon_state = "wally_hat"
 
 /obj/item/clothing/head/beanie/rasta
 	name = "rastacap"

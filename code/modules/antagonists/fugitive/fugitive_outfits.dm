@@ -17,19 +17,19 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	mask = /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
 
-/datum/outfit/waldo
-	name = "Waldo"
+/datum/outfit/Wally
+	name = "Wally"
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/striped_sweater
-	head = /obj/item/clothing/head/beanie/waldo
+	head = /obj/item/clothing/head/beanie/wally
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
-/datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
+/datum/outfit/Wally/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
 	if(visualsOnly)
 		return
-	equipped_on.fully_replace_character_name(null,"Waldo")
+	equipped_on.fully_replace_character_name(null,"Wally")
 	equipped_on.eye_color = "000"
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
