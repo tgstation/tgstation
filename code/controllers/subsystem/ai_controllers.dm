@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(ai_controllers)
 
 	///List of all ai_subtree singletons
 	var/list/ai_subtrees = list()
-	///List of all ai controllers currently runn ing
+	///List of all ai controllers currently running
 	var/list/active_ai_controllers = list()
 
 /datum/controller/subsystem/ai_controllers/Initialize(timeofday)
@@ -26,5 +26,5 @@ SUBSYSTEM_DEF(ai_controllers)
 	for(var/datum/ai_controller/ai_controller as anything in active_ai_controllers)
 		if(!ai_controller.current_behaviors?.len)
 			ai_controller.SelectBehaviors(wait * 0.1)
-			if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan; current_behaviors isn't a LAZYLIST
+			if(!ai_controller.current_behaviors?.len) //Still no plan
 				COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)

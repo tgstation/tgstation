@@ -14,7 +14,7 @@
 
 ///Cooldown on planning if planning failed last time
 
-#define AI_FAILED_PLANNING_COOLDOWN 1.5
+#define AI_FAILED_PLANNING_COOLDOWN 1.5 SECONDS
 
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)

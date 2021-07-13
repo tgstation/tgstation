@@ -164,7 +164,7 @@ multiple modular subtrees with behaviors
 
 	current_behaviors = list()
 
-	for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
+	for(var/datum/ai_planning_subtree/subtree in planning_subtrees)
 		subtree.SelectBehaviors(src, delta_time)
 
 ///This proc handles changing ai status, and starts/stops processing if required.
