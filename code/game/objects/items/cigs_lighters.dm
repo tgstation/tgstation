@@ -926,9 +926,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
-	/// The amount of time between drags.
+	/// The amount of time between emagged or super drags.
 	var/dragtime = 8 SECONDS
-	/// A cooldown to prevent huffing the vape all at once.
+	/// A cooldown to prevent spamming smoke clouds nonstop when emagged or on super mode.
 	COOLDOWN_DECLARE(drag_cooldown)
 	/// Whether the resevoir is open and we can add reagents.
 	var/screw = FALSE
@@ -1025,28 +1025,28 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/mask/vape/proc/handle_reagents()
+/obj/item/clothing/mask/vape/proc/handle_reagents(delta_time)
 	if(!reagents.total_volume)
 		return
 
 	var/mob/living/carbon/vaper = loc
 	if(!iscarbon(vaper) || src != vaper.wear_mask)
-		reagents.remove_any(REAGENTS_METABOLISM)
+		reagents.remove_any(REAGENTS_METABOLISM * delta_time)
 		return
 
 	if(reagents.get_reagent_amount(/datum/reagent/fuel))
 		//HOT STUFF
-		vaper.adjust_fire_stacks(2)
+		vaper.adjust_fire_stacks(2 * delta_time)
 		vaper.IgniteMob()
 
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0) //this is an explosion that destroys the vape, so it should NOT be affected by delta_time
 		e.start()
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
-		reagents.remove_any(REAGENTS_METABOLISM)
+	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM * delta_time, methods = INGEST, ignore_stomach = TRUE))
+		reagents.remove_any(REAGENTS_METABOLISM * delta_time)
 
 /obj/item/clothing/mask/vape/process(delta_time)
 	var/mob/living/M = loc
@@ -1061,11 +1061,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			//it's reusable so it won't unequip when empty
 		return
 
-	if(!COOLDOWN_FINISHED(src, drag_cooldown))
+	handle_reagents(delta_time)
+
+	if(!COOLDOWN_FINISHED(src, super_drag_cooldown))
 		return
 
 	//Time to start puffing those fat vapes, yo.
-	COOLDOWN_START(src, drag_cooldown, dragtime)
+	COOLDOWN_START(src, super_drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
 		s.set_up(reagents, 4, 24, loc)
@@ -1084,5 +1086,3 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
 		s.set_up(reagents, 1, 24, loc)
 		s.start()
-
-	handle_reagents()
