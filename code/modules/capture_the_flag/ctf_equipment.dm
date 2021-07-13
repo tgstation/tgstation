@@ -55,7 +55,7 @@
 
 
 /obj/projectile/beam/ctf/rifle
-	damage = 30
+	damage = 45
 	light_color = LIGHT_COLOR_BLUE
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
@@ -113,7 +113,7 @@
 	projectile_type = /obj/projectile/beam/ctf/marksman
 
 /obj/projectile/beam/ctf/marksman
-	damage = 45
+	damage = 30
 	hitscan = TRUE
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
