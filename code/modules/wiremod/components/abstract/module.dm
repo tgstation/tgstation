@@ -142,8 +142,7 @@
 		add_and_link_output_port(port_data["name"], port_data["type"])
 
 	if(component_data["integrated_circuit"])
-		var/list/errors = list()
-		internal_circuit.load_circuit_data(component_data["integrated_circuit"], errors)
+		internal_circuit.load_circuit_data(component_data["integrated_circuit"])
 
 /obj/item/circuit_component/module/proc/add_and_link_input_port(name, type)
 	var/datum/port/new_port = add_input_port(name, type)

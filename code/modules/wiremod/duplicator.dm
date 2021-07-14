@@ -26,7 +26,9 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		if(!ispath(type, /obj/item/circuit_component))
 			LOG_ERROR(errors, "Invalid path for circuit component, expected [/obj/item/circuit_component], got [type]")
 			continue
-		identifiers_to_circuit[identifier] = load_component(type)
+		var/obj/item/circuit_component/component = load_component(type)
+		identifiers_to_circuit[identifier] = component
+		component.load_data_from_list(component_data)
 
 	var/list/external_objects = general_data["external_objects"]
 	for(var/identifier in external_objects)
@@ -47,8 +49,6 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	for(var/identifier in identifiers_to_circuit)
 		var/obj/item/circuit_component/component = identifiers_to_circuit[identifier]
 		var/list/component_data = circuit_data[identifier]
-
-		component.load_data_from_list(component_data)
 
 		var/list/connections = component_data["connections"]
 		for(var/port_name in connections)
@@ -165,10 +165,14 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	component_data["rel_x"] = rel_x
 	component_data["rel_y"] = rel_y
 
+	component_data["option"] = current_option
+
 /// Loads data from a list
 /obj/item/circuit_component/proc/load_data_from_list(list/component_data)
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
+
+	set_option(component_data["option"])
 
 /client/proc/load_circuit()
 	set name = "Load Circuit"
