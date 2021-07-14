@@ -117,7 +117,7 @@ const CharacterControls = (props: {
   );
 };
 
-const ClothingSelection = (props: {
+const ChoicedSelection = (props: {
   name: string,
   catalog: Record<string, string>,
   selected: string,
@@ -473,7 +473,7 @@ export const MainPage = (props: {
                     <TrackOutsideClicks onOutsideClick={() => {
                       setCurrentClothingMenu(null);
                     }}>
-                      <ClothingSelection
+                      <ChoicedSelection
                         name={KEYS_TO_NAMES[clothingKey]
                           || `NO NAME FOR ${clothingKey}`}
                         catalog={
