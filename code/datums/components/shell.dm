@@ -102,7 +102,7 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		inducer.attack_obj(attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, /obj/item.proc/attack_obj, attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
