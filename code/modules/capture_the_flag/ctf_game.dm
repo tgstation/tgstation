@@ -43,10 +43,6 @@
 		reset.flag = src
 	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
 
-/obj/item/ctf/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
-
 /obj/item/ctf/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
 		return PROCESS_KILL

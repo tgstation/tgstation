@@ -40,6 +40,8 @@
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle
 	desc = "This looks like it could really hurt in melee."
 	force = 50
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = null
 
 /obj/item/gun/ballistic/automatic/laser/ctf/Initialize()
 	. = ..()
@@ -67,8 +69,7 @@
 	icon_state = "ctfshotgun"
 	inhand_icon_state = "shotgun_combat"
 	worn_icon_state = "gun"
-	weapon_weight = WEAPON_MEDIUM
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	empty_indicator = TRUE
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
@@ -153,6 +154,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
+	slot_flags = null
 	charge_sections = 5
 	ammo_x_offset = 2
 	shaded_charge = FALSE
@@ -195,6 +197,7 @@
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
+	allowed = null
 	slowdown = 0
 	max_charges = 150
 	recharge_amount = 30
