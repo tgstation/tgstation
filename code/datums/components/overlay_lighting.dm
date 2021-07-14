@@ -434,6 +434,9 @@
 			final_distance = i
 			break
 		scanning = next_turf
+	var/found_mask = locate(visible_mask) in current_holder.underlays
+	current_holder.underlays -= visible_mask
+
 	var/translate_x = -((range - 1) * 32)
 	var/translate_y = translate_x
 	switch(current_direction)
@@ -445,18 +448,14 @@
 			translate_x += 32*final_distance
 		if(WEST)
 			translate_x += -32*final_distance
-	if((directional_offset_x == translate_x) && (directional_offset_y == translate_y))
-		return
-	directional_offset_x = translate_x
-	directional_offset_y = translate_y
-	var/matrix/transform = matrix()
-	transform.Translate(translate_x, translate_y)
-	visible_mask.transform = transform
-	if(!(locate(visible_mask) in current_holder.underlays))
-		return
-	current_holder.underlays.Cut() //yes we *MUST* use cut because either |= or -= spuriously fail here for some reason
-	current_holder.underlays += visible_mask // i know I too love byond
-	current_holder.underlays += cone
+	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
+		directional_offset_x = translate_x
+		directional_offset_y = translate_y
+		var/matrix/transform = matrix()
+		transform.Translate(translate_x, translate_y)
+		visible_mask.transform = transform
+	if(found_mask)
+		current_holder.underlays += visible_mask
 
 ///Called when current_holder changes loc.
 /datum/component/overlay_lighting/proc/on_holder_dir_change(atom/movable/source, olddir, newdir)
