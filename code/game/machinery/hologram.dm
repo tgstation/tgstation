@@ -349,9 +349,9 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/attack_ai_secondary(mob/living/silicon/ai/user)
 	if (!istype(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if (!on_network)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
@@ -361,7 +361,7 @@ Possible to do for anyone motivated enough:
 		user.eyeobj.loc = user.lastloc
 		user.lastloc = null
 		clear_holo(user)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))
