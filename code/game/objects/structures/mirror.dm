@@ -1,4 +1,6 @@
-//wip wip wup
+/**
+ * Mirrors, a wall mounted structure for changing your hair style. Plus giving people bad luck.
+ */
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -119,7 +121,7 @@
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(I.use_tool(src, user, 10, volume=50))
 		to_chat(user, span_notice("You repair [src]."))
-		broken = 0
+		broken = FALSE
 		icon_state = initial(icon_state)
 		desc = initial(desc)
 
@@ -133,31 +135,33 @@
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 
 
+/**
+ * Magical mirrors, which let you change your name, gender, race and also your hair still. Vary in power.
+ */
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/choosable_races = list()
+	var/list/choosable_races
 
-/obj/structure/mirror/magic/New()
-	if(!choosable_races.len)
-		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = speciestype
-			if(initial(S.changesource_flags) & MIRROR_MAGIC)
-				choosable_races += initial(S.id)
-		choosable_races = sortList(choosable_races)
-	..()
+/obj/structure/mirror/magic/Initialize()
+	. = ..()
+	choosable_races = list()
+	setup_choosable_races()
 
-/obj/structure/mirror/magic/lesser/New()
-	choosable_races = GLOB.roundstart_races.Copy()
-	..()
-
-/obj/structure/mirror/magic/badmin/New()
+/**
+ * Determines what races a user of this magic mirror have access to.
+ *
+ * By default, uses the MIRROR_MAGIC flag on /datum/species, but
+ * subtypes can override this without calling parent to specify more
+ * or less restrictions.
+ */
+/obj/structure/mirror/magic/proc/setup_choosable_races()
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_BADMIN)
+		if(initial(S.changesource_flags) & MIRROR_MAGIC)
 			choosable_races += initial(S.id)
-	..()
+	choosable_races = sortList(choosable_races)
 
 /obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -281,7 +285,30 @@
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				H.update_body()
 	if(choice)
-		curse(user)
+		after_use(user)
 
-/obj/structure/mirror/magic/proc/curse(mob/living/user)
+/**
+ * Called after a given user has used the magic mirror in some manner.
+ *
+ * Subclasses use this generally to do horrible things to the user for
+ * daring to be vain.
+ */
+/obj/structure/mirror/magic/proc/after_use(mob/living/user)
 	return
+
+/obj/structure/mirror/magic/lesser
+	desc = "Turn and face the strange, yet familiar face."
+
+/obj/structure/mirror/magic/lesser/setup_choosable_races()
+	choosable_races = sortList(GLOB.roundstart_races)
+
+/obj/structure/mirror/magic/badmin
+	desc = "Turn and face, for you have power without grace."
+
+/obj/structure/mirror/magic/badmin/setup_choosable_races()
+	for(var/speciestype in subtypesof(/datum/species))
+		var/datum/species/S = speciestype
+		if(initial(S.changesource_flags) & MIRROR_BADMIN)
+			choosable_races += initial(S.id)
+
+	choosable_races = sortList(choosable_races)

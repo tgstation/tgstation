@@ -109,16 +109,15 @@
 /obj/structure/mirror/magic/pride //Pride's mirror: Used in the Pride ruin.
 	name = "pride's mirror"
 	desc = "Pride cometh before the..."
-	icon_state = "magic_mirror"
 
-/obj/structure/mirror/magic/pride/New()
+/obj/structure/mirror/magic/pride/setup_choosable_races()
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = speciestype
 		if(initial(S.changesource_flags) & MIRROR_PRIDE)
 			choosable_races += initial(S.id)
-	..()
+	choosable_races = sortList(choosable_races)
 
-/obj/structure/mirror/magic/pride/curse(mob/user)
+/obj/structure/mirror/magic/pride/after_use(mob/user)
 	user.visible_message(span_danger("<B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B>"), \
 	span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"))
 
