@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	ai_subtrees = list()
 	for(var/subtree_type in subtypesof(/datum/ai_planning_subtree))
 		var/datum/ai_planning_subtree/subtree = new subtree_type
-		ai_subtrees += subtree
+		ai_subtrees[subtree_type] = subtree
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	for(var/datum/ai_controller/ai_controller as anything in active_ai_controllers)

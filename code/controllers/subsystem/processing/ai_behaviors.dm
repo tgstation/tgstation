@@ -15,6 +15,6 @@ PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 
 /datum/controller/subsystem/processing/ai_behaviors/proc/SetupAIBehaviors()
 	ai_behaviors = list()
-	for(var/i in subtypesof(/datum/ai_behavior))
-		var/datum/ai_behavior/ai_behavior = new i
-		ai_behaviors[i] = ai_behavior
+	for(var/behavior_type in subtypesof(/datum/ai_behavior))
+		var/datum/ai_behavior/ai_behavior = new behavior_type
+		ai_behaviors[behavior_type] = ai_behavior
