@@ -31,9 +31,4 @@
 	if(.)
 		return
 
-	var/input_value = input_port.input_value
-
-	var/output_value = text2num(input_value)
-
-	output.set_output(output_value)
-
+	output.set_output(text2num(input_port.input_value))
