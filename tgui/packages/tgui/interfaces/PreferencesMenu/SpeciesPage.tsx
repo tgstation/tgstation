@@ -279,13 +279,15 @@ export const SpeciesPage = (props, context) => {
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item width="70%">
-                <Section title={currentSpecies.name} buttons={(
-                  <Diet
+                <Section title={currentSpecies.name} buttons={
+                  // Species with no hunger don't have diets
+                  currentSpecies.liked_food
+                  && (<Diet
                     likedFood={currentSpecies.liked_food}
                     dislikedFood={currentSpecies.disliked_food}
                     toxicFood={currentSpecies.toxic_food}
-                  />
-                )}>
+                  />)
+                }>
                   <Section title="Description">
                     {currentSpecies.description}
                   </Section>

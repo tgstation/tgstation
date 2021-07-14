@@ -1,5 +1,8 @@
-// These will be shown in the sidebar, but at the bottom.
+// These will be shown in the character sidebar, but at the bottom.
 #define PREFERENCE_CATEGORY_FEATURES "features"
+
+// These will show in the list to the right of the character preview.
+#define PREFERENCE_CATEGORY_SECONDARY_FEATURES "secondary_features"
 
 /datum/preference/choiced/moth_antennae
 	savefile_key = "feature_moth_antennae"
@@ -41,10 +44,12 @@
 		BODY_ZONE_CHEST,
 		BODY_ZONE_L_ARM,
 		BODY_ZONE_R_ARM,
+		// MOTHBLOCKS TODO: Don't need the legs, who cares
 		BODY_ZONE_L_LEG,
 		BODY_ZONE_R_LEG,
 	)
 
+	// MOTHBLOCKS TODO: Hands aren't necessary
 	var/list/body_parts = body_parts_with_markings + list(
 		BODY_ZONE_PRECISE_L_HAND,
 		BODY_ZONE_PRECISE_R_HAND,
@@ -101,11 +106,32 @@
 /datum/preference/choiced/moth_wings/apply(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value
 
+/datum/preference/color/eye_color
+	savefile_key = "eye_color"
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+
+/datum/preference/color/eye_color/apply(mob/living/carbon/human/target, value)
+	target.eye_color = value
+
+	var/obj/item/organ/eyes/eyes_organ = target.getorgan(/obj/item/organ/eyes)
+	if (istype(eyes_organ))
+		if (!initial(eyes_organ.eye_color))
+			eyes_organ.eye_color = value
+		eyes_organ.old_eye_color = value
+
+/datum/preference/color/facial_hair_color
+	savefile_key = "facial_hair_color"
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+
+/datum/preference/color/facial_hair_color/apply(mob/living/carbon/human/target, value)
+	target.facial_hair_color = value
+
 /datum/preference/color/hair_color
 	savefile_key = "hair_color"
-	category = PREFERENCE_CATEGORY_FEATURES
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/color/hair_color/apply(mob/living/carbon/human/target, value)
 	target.hair_color = value
 
 #undef PREFERENCE_CATEGORY_FEATURES
+#undef PREFERENCE_CATEGORY_SECONDARY_FEATURES

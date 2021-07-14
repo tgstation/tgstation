@@ -1,10 +1,12 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Box, Button, ByondUi, FitText, Flex, Icon, Input, Popper, Stack } from "../../components";
+import { Box, Button, ByondUi, FitText, Flex, Icon, Input, NumberInput, Popper, Stack } from "../../components";
 import { createSetPreference, PreferencesMenuData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
+import features from "./preferences/features";
+import { Feature, ValueType } from "./preferences/features/base";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -14,6 +16,7 @@ const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 // MOTHBLOCKS TODO: Put this in the datum, or perhaps derive it?
+// Actually, just put these all in the feature files.
 const KEYS_TO_NAMES = {
   backpack: "backpack",
   feature_moth_wings: "moth wings",
@@ -293,11 +296,119 @@ const NameInput = (props: {
   );
 };
 
+const FeatureValue = (props: {
+  feature: Feature,
+  featureId: string,
+  value: unknown,
+
+  act: typeof sendAct,
+}, context) => {
+  const feature = props.feature;
+  const valueType = feature.valueType;
+
+  const [predictedValue, setPredictedValue] = useLocalState(
+    context,
+    `${props.featureId}_predictedValue`,
+    props.value,
+  );
+
+  switch (feature.valueType) {
+    case ValueType.Color:
+      return (
+        <Button onClick={() => {
+          props.act("set_color_preference", {
+            preference: props.featureId,
+          });
+        }}>
+          <Stack align="center" fill>
+            <Stack.Item>
+              <Box style={{
+                background: `#${props.value}`,
+                border: "2px solid white",
+                "box-sizing": "content-box",
+                height: "11px",
+                width: "11px",
+              }} />
+            </Stack.Item>
+
+            <Stack.Item>
+              Change
+            </Stack.Item>
+          </Stack>
+        </Button>
+      );
+    case ValueType.Number:
+      return (<NumberInput
+        onChange={(e, value) => {
+          setPredictedValue(value);
+          createSetPreference(props.act, props.featureId)(value);
+        }}
+        minValue={feature.minimum}
+        maxValue={feature.maximum}
+        value={predictedValue}
+      />);
+  }
+};
+
+const PreferenceList = (props: {
+  act: typeof sendAct,
+  preferences: Record<string, unknown>,
+}) => {
+  /* MOTHBLOCKS TODO: Overflow */
+  /* MOTHBLOCKS TODO: Sort it */
+  return (
+    <Stack.Item basis="30%" grow style={{
+      background: "rgba(0, 0, 0, 0.5)",
+      padding: "4px",
+    }}>
+      <Stack vertical fill>
+        { Object.entries(props.preferences).map(([featureId, value]) => {
+          const feature = features[featureId];
+
+          if (feature === undefined) {
+            return (
+              <Stack.Item key={featureId}>
+                <b>Feature {featureId} is not recognized.</b>
+              </Stack.Item>
+            );
+          }
+
+          return (
+            <Stack.Item key={featureId}>
+              <Stack fill>
+                <Stack.Item grow>
+                  <b>{feature.name}</b>
+                </Stack.Item>
+
+                <Stack.Item>
+                  <FeatureValue
+                    act={props.act}
+                    feature={feature}
+                    featureId={featureId}
+                    value={value}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          );
+        })}
+      </Stack>
+    </Stack.Item>
+  );
+};
+
 export const MainPage = (props: {
   openSpecies: () => void,
 }, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState(context, "currentClothingMenu", null);
+
+  const currentSpeciesData = data.species[
+    data
+      .character_preferences
+      .misc
+      .species
+  ];
 
   const requestPreferenceData = (key: string) => {
     act("request_values", {
@@ -346,8 +457,8 @@ export const MainPage = (props: {
             ...Object.entries(data.character_preferences.clothing),
             ...Object.entries(data.character_preferences.features)
               .filter(([featureName]) => {
-                return data.species[data.character_preferences.misc.species]
-                  .features.indexOf(featureName.split("feature_")[1]) !== -1;
+                return currentSpeciesData.features
+                  .indexOf(featureName.split("feature_")[1]) !== -1;
               }),
           ]
             .map(([clothingKey, clothing]) => {
@@ -398,6 +509,22 @@ export const MainPage = (props: {
             })}
         </Stack>
       </Stack.Item>
+
+      <PreferenceList
+        act={act}
+        preferences={
+          Object.fromEntries(
+            Object.entries(data.character_preferences.secondary_features)
+              .filter(([feature]) => {
+                return currentSpeciesData.features.indexOf(feature) !== -1;
+              }))
+        }
+      />
+
+      <PreferenceList
+        act={act}
+        preferences={data.character_preferences.non_contextual}
+      />
     </Stack>
   );
 };

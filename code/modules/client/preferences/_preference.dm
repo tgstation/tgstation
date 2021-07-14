@@ -1,3 +1,6 @@
+/// Preferences that will be put into the 3rd list, and are not contextual.
+#define PREFERENCE_CATEGORY_NON_CONTEXTUAL "non_contextual"
+
 /// An assoc list list of types to instantiated `/datum/preference` instances
 GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 
@@ -78,6 +81,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/proc/write(savefile/savefile, value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	value = transform_value(value)
+
 	if (!is_valid(value))
 		return FALSE
 
@@ -119,6 +124,11 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	// MOTHBLOCKS TODO: Unit test this
 	CRASH("`is_valid()` was not implemented for [type]!")
+
+/// Transforms a value before writing it. Cannot assume the data is valid.
+/// This is useful for things such as text -> number conversions.
+/datum/preference/proc/transform_value(value)
+	return value
 
 /// Returns data to be sent to users in the menu
 /datum/preference/proc/compile_ui_data(mob/user, value)

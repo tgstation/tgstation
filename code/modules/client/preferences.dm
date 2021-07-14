@@ -68,15 +68,12 @@ GLOBAL_VAR(preferences_species_data)
 	//character preferences
 	var/slot_randomized //keeps track of round-to-round randomization of the character slot, prevents overwriting
 	var/gender = MALE //gender of character (well duh)
-	var/age = 30 //age of character
 	var/underwear_color = "000" //underwear color
 	var/undershirt = "Nude" //undershirt type
 	var/socks = "Nude" //socks type
 	var/hairstyle = "Bald" //Hair type
 	var/facial_hairstyle = "Shaved" //Face hair type
-	var/facial_hair_color = "000" //Facial hair color
 	var/skin_tone = "caucasian1" //Skin color
-	var/eye_color = "000" //Eye color
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	/// MOTHBLOCKS TODO: Remove and make this a part of random_character's arguments
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
@@ -292,6 +289,28 @@ GLOBAL_VAR(preferences_species_data)
 			character_preview_view.update_body()
 
 			return TRUE
+		if ("set_color_preference")
+			var/requested_preference_key = params["preference"]
+
+			var/datum/preference/color/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
+			if (!istype(requested_preference))
+				return FALSE
+
+			// Yielding
+			var/new_color = input(
+				usr,
+				"Select new color",
+				null,
+				read_preference(requested_preference.type) || COLOR_WHITE,
+			) as color | null
+
+			if (new_color)
+				write_preference(requested_preference, new_color)
+				character_preview_view.update_body()
+
+				return TRUE
+			else
+				return FALSE
 		if ("set_job_preference")
 			var/job_title = params["job"]
 			var/level = params["level"]
@@ -512,19 +531,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		preference.apply(character, read_preference(preference_type))
 
-	character.age = age
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
 	else
 		character.body_type = body_type
 
-	character.eye_color = eye_color
-	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
-	if(organ_eyes)
-		if(!initial(organ_eyes.eye_color))
-			organ_eyes.eye_color = eye_color
-		organ_eyes.old_eye_color = eye_color
-	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
@@ -622,9 +633,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 					features += "eye_color"
 				if (FACEHAIR)
 					features += "facial_hair"
+					features += "facial_hair_color"
 				if (HAIR)
 					features += "hair"
+					features += "hair_color"
 
+		// MOTHBLOCKS TODO: Move this to ts/json files and unit test consistency.
 		species_data[species_id] = list(
 			"name" = species.name,
 
