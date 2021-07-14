@@ -361,6 +361,8 @@
 		LAZYADD(new_limb_owner.all_scars, scar)
 
 	update_bodypart_damage_state()
+	if(can_be_disabled)
+		update_disabled()
 
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()

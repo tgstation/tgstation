@@ -262,6 +262,7 @@
 		to_chat(src, span_revenwarning("You have been revealed!"))
 		unreveal_time = unreveal_time + time
 	update_spooky_icon()
+	orbiting?.end_orbit(src)
 
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
@@ -276,6 +277,7 @@
 		to_chat(src, span_revenwarning("You cannot move!"))
 		unstun_time = unstun_time + time
 	update_spooky_icon()
+	orbiting?.end_orbit(src)
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
@@ -345,6 +347,43 @@
 	alpha=255
 	stasis = FALSE
 
+/mob/living/simple_animal/revenant/orbit(atom/target)
+	setDir(SOUTH) // reset dir so the right directional sprites show up
+	return ..()
+
+/mob/living/simple_animal/revenant/Moved(atom/OldLoc)
+	if(!orbiting) // only needed when orbiting
+		return ..()
+	if(incorporeal_move_check(src))
+		return ..()
+
+	// back back back it up, the orbitee went somewhere revenant cannot
+	orbiting?.end_orbit(src)
+	abstract_move(OldLoc) // gross but maybe orbit component will be able to check pre move in the future
+
+/mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
+	// reset the simple_flying animation
+	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	return ..()
+
+/// Incorporeal move check: blocked by holy-watered tiles and salt piles.
+/mob/living/simple_animal/revenant/proc/incorporeal_move_check(atom/destination)
+	var/turf/open/floor/stepTurf = get_turf(destination)
+	if(stepTurf)
+		var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
+		if(salt)
+			to_chat(src, span_warning("[salt] bars your passage!"))
+			reveal(20)
+			stun(20)
+			return
+		if(stepTurf.turf_flags & NOJAUNT)
+			to_chat(src, span_warning("Some strange aura is blocking the way."))
+			return
+		if(locate(/obj/effect/blessing) in stepTurf)
+			to_chat(src, span_warning("Holy energies block your path!"))
+			return
+	return TRUE
 
 //reforming
 /obj/item/ectoplasm/revenant

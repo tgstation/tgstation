@@ -23,8 +23,9 @@
 		hit_object.take_damage(80, BRUTE, BULLET, FALSE)
 	else if(isclosedturf(target))
 		damage -= max(damage - 30, 10) //lose extra momentum from busting through a wall
-		var/turf/closed/hit_turf = target
-		hit_turf.ScrapeAway()
+		if(!isindestructiblewall(target))
+			var/turf/closed/hit_turf = target
+			hit_turf.ScrapeAway()
 	return ..()
 
 /obj/projectile/bullet/cannonball/explosive

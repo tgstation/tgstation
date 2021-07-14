@@ -127,7 +127,7 @@ const DefaultTarget = Juke.createTarget({
  * Does not clean them up, as this is intended for TGS which
  * clones new copies anyway.
  */
- const prependDefines = (...defines) => {
+const prependDefines = (...defines) => {
   const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
   const textToWrite = defines.map(define => `#define ${define}\n`);
   fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
