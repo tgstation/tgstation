@@ -785,48 +785,73 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
-	var/double = FALSE
+	var/obj/effect/proc_holder/scan/scan
 
-/obj/item/clothing/glasses/godeye/equipped(mob/user, slot)
+/obj/item/clothing/glasses/godeye/Initialize()
+	. = ..()
+	scan = new(src)
+
+/obj/item/clothing/glasses/godeye/equipped(mob/living/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 		pain(user)
+		user.AddAbility(scan)
 
-/obj/item/clothing/glasses/godeye/dropped(mob/user)
+/obj/item/clothing/glasses/godeye/dropped(mob/living/user)
 	. = ..()
 	// Behead someone, their "glasses" drop on the floor
 	// and thus, the god eye should no longer be sticky
 	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-
-/obj/item/clothing/glasses/godeye/attackby(obj/item/attacked_by as obj, mob/user as mob, params)
-	if(istype(attacked_by, /obj/item/clothing/glasses/godeye) && attacked_by != src && attacked_by.loc == user)
-		if(!double)
-			var/obj/item/clothing/glasses/godeye/double/T = /obj/item/clothing/glasses/godeye/double
-			icon_state = initial(T.icon_state)
-			inhand_icon_state = initial(T.inhand_icon_state)
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.update_inv_glasses()
-				// Apply pain now, so message is still for solo eye bore
-				if(C.glasses == src)
-					pain(C)
-			name = initial(T.name)
-			desc = initial(T.desc)
-			double = TRUE
-		else
-			to_chat(user, span_notice("[attacked_by] winks at you and vanishes into the abyss, you feel really unlucky."))
-		qdel(attacked_by)
-	..()
+	user.RemoveAbility(scan)
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
-	to_chat(victim, span_userdanger("You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull."))
+	to_chat(victim, span_userdanger("You experience blinding pain, as [src] burrows into your skull."))
 	victim.emote("scream")
 	victim.flash_act()
 
-/obj/item/clothing/glasses/godeye/double
-	name = "eyes of god"
-	desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes."
-	icon_state = "doublegodeye"
-	inhand_icon_state = "doublegodeye"
-	double = TRUE
+/obj/effect/proc_holder/scan
+	name = "Scan"
+	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
+	action_background_icon_state = "bg_clock"
+	action_icon = 'icons/mob/actions/actions_items.dmi'
+	action_icon_state = "scan"
+
+/obj/effect/proc_holder/scan/on_lose(mob/living/user)
+	remove_ranged_ability()
+
+/obj/effect/proc_holder/scan/Click(location, control, params)
+	. = ..()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/user = usr
+	fire(user)
+
+/obj/effect/proc_holder/scan/fire(mob/living/carbon/user)
+	if(active)
+		remove_ranged_ability(span_notice("Your eye relaxes."))
+	else
+		add_ranged_ability(user, span_notice("Your eye starts spinning fast. <B>Left-click a creature to scan it!</B>"), TRUE)
+
+/obj/effect/proc_holder/scan/InterceptClickOn(mob/living/caller, params, atom/target)
+	. = ..()
+
+	if(.)
+		return
+
+	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton) || ranged_ability_user.stat)
+		remove_ranged_ability()
+		return
+
+	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = ranged_ability_user
+	if(!pouch_owner.prank_pouch.len)
+		//active = FALSE
+		pouch_owner.icon_state = "glutton"
+		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
+		return
+
+	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)
+	projected_morsel.forceMove(pouch_owner.loc)
+	projected_morsel.throw_at(target, 8, 2, pouch_owner)
+	flick("glutton_mouth", pouch_owner)
+	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
