@@ -190,7 +190,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "*---------*\nThis is a [span_name("[scanned_object.name]")].\n"
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -212,7 +212,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
-	var/returned_message = "*---------*\nThis is a [span_name("[scanned_object.name]")].\n"
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
