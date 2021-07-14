@@ -13,7 +13,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Install SpacemanDMM
         run: bash tools/ci/install_spaceman_dmm.sh dmdoc
       - name: Generate documentation
