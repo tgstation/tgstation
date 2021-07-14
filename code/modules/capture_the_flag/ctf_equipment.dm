@@ -142,7 +142,10 @@
 
 
 /obj/projectile/beam/ctf/deagle
+	icon_state = "bullet"
 	damage = 60
+	light_color = COLOR_WHITE
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
 // INSTAKILL RIFLE
 
