@@ -348,7 +348,7 @@
 	stasis = FALSE
 
 /mob/living/simple_animal/revenant/orbit(atom/target)
-	setDir(SOUTH)//reset dir so the right directional sprites show up
+	setDir(SOUTH) // reset dir so the right directional sprites show up
 	return ..()
 
 /mob/living/simple_animal/revenant/Moved(atom/OldLoc)
@@ -357,10 +357,12 @@
 	if(incorporeal_move_check(src))
 		return ..()
 
+	// back back back it up, the orbitee went somewhere revenant cannot
 	orbiting?.end_orbit(src)
-	abstract_move(OldLoc) // back back back it up, gross but maybe someday there'll be a jaunt orbit component
+	abstract_move(OldLoc) // gross but maybe orbit component will be able to check pre move in the future
 
 /mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
+	// reset the simple_flying animation
 	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	return ..()
