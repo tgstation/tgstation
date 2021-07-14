@@ -97,17 +97,28 @@
 /datum/component/shell/proc/on_attack_by(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
 	if(istype(item, /obj/item/stock_parts/cell))
-		source.balloon_alert(attacker, "can't pull cell in directly!")
+		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
 
-	if(attached_circuit?.owner_id && item == attached_circuit.owner_id.resolve())
-		set_locked(!locked)
-		source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+	if(istype(item, /obj/item/inducer))
+		var/obj/item/inducer/inducer = item
+		inducer.attack_obj(attached_circuit)
 		return COMPONENT_NO_AFTERATTACK
 
-	if(attached_circuit && istype(item, /obj/item/circuit_component))
-		attached_circuit.add_component_manually(item, attacker)
-		return
+	if(attached_circuit)
+		if(attached_circuit.owner_id && item == attached_circuit.owner_id.resolve())
+			set_locked(!locked)
+			source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+			return COMPONENT_NO_AFTERATTACK
+
+		if(!attached_circuit.owner_id && istype(item, /obj/item/card/id))
+			balloon_alert(user, "owner id set for [I]")
+			owner_id = WEAKREF(I)
+			return COMPONENT_NO_AFTERATTACK
+
+		if(istype(item, /obj/item/circuit_component))
+			attached_circuit.add_component_manually(item, attacker)
+			return
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
