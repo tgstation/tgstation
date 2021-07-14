@@ -306,9 +306,8 @@
 	desc = "Turn and face, for you have power without grace."
 
 /obj/structure/mirror/magic/badmin/setup_choosable_races()
-	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_BADMIN)
-			choosable_races += initial(S.id)
+	for(var/datum/species/speciestype as anything in subtypesof(/datum/species))
+		if(initial(speciestype.changesource_flags) & MIRROR_BADMIN)
+			choosable_races += initial(speciestype.id)
 
 	choosable_races = sortList(choosable_races)
