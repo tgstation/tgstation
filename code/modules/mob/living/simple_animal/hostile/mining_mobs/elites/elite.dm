@@ -23,6 +23,7 @@
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
 	var/obj/loot_drop = null
+	var/times_won = 0
 
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
@@ -125,7 +126,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	density = FALSE
 	var/activity = TUMOR_INACTIVE
 	var/boosted = FALSE
-	var/times_won = 0
 	var/mob/living/carbon/human/activator = null
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
 	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
@@ -232,7 +232,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/fighters_check()
 	if(activator != null && activator.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(activator))
 		onEliteWon()
-	if(mychild != null && mychild.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(mychild))
+	else if(mychild != null && mychild.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(mychild))
 		onEliteLoss()
 
 /obj/structure/elite_tumor/proc/arena_trap()
@@ -266,8 +266,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		activator = null
 		qdel(src)
 		return
+	if(mychild && istype(mychild)) //because we just checked for !boosted, we don't need to check for boosted here
+		mychild.maxHealth = mychild.maxHealth * 0.5
+		mychild.health = mychild.maxHealth
 	var/lootpick = rand(1, 2)
-	if(lootpick == 1 && mychild.loot_drop != null)
+	if(lootpick == 1 && mychild && istype(mychild) && mychild.loot_drop != null)
 		new mychild.loot_drop(lootbox)
 	else
 		new /obj/item/tumor_shard(lootbox)
@@ -278,20 +281,22 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/onEliteWon()
 	activity = TUMOR_PASSIVE
 	activator = null
+	if(!mychild || !istype(mychild))
+		return
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(boosted)
-		times_won++
-		mychild.maxHealth = mychild.maxHealth * 0.4
+		mychild.times_won++
+		mychild.maxHealth = mychild.maxHealth * 0.5
 		mychild.health = mychild.maxHealth
 	if(times_won == 1)
 		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
-		to_chat(mychild, span_boldwarning("As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide."))
-		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
-		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station.  You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
+		to_chat(mychild, span_boldwarning("As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel that you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide."))
+		to_chat(mychild, "<b>Your maximum health total has been halved, but you can now heal by standing on your tumor. \nBear in mind that if anyone interacts with your tumor, you'll be resummoned here to carry out another fight with a temporarily restored maximum health total.\nAlso, be wary of your fellow Lavaland inhabitants, as they likely won't be happy to see you!</b>")
+		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
 
 /obj/item/tumor_shard
 	name = "tumor shard"
-	desc = "A strange, sharp, crystal shard from an odd tumor on Lavaland.  Stabbing the corpse of a lavaland elite with this will revive them, assuming their soul still lingers.  Revived lavaland elites only have half their max health, but are completely loyal to their reviver."
+	desc = "A strange, sharp, crystal shard from an odd tumor on Lavaland. Stabbing the corpse of a lavaland elite with this will revive them and make them completely loyal to you, assuming their soul still lingers. Note that the tumor ritual only doubles the maximum health of empowered elites for the duration of the ritual, so a revived elite might not be as durable as you remember it being."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "crevice_shard"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -313,11 +318,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		E.revive(full_heal = TRUE, admin_revive = TRUE)
 		user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
 		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
-		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
-		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
-		E.maxHealth = E.maxHealth * 0.4
-		E.health = E.maxHealth
-		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
+		if(!E.can_talk)
+			to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt. Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
+		else
+			to_chat(E, "<span class='userdanger'>You have been revived by [user] and owe them a great debt. Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
+		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected to not intentionally sabotage their faction unless commanded to!</span>")
+		E.desc = "[E.desc] This one appears appears unusually calm and friendly."
 		E.sentience_type = SENTIENCE_ORGANIC
 		qdel(src)
 	else
