@@ -2063,7 +2063,7 @@
 	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
-	color_callback = CALLBACK(src,.proc/UpdateColor)
+	color_callback = CALLBACK(src, .proc/UpdateColor)
 	SSticker.OnRoundstart(color_callback)
 	return ..()
 
