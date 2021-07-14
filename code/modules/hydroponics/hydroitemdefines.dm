@@ -137,7 +137,7 @@
 /obj/item/plant_analyzer/proc/scan_tray_stats(obj/machinery/hydroponics/scanned_tray)
 	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
 		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
@@ -165,7 +165,7 @@
 /obj/item/plant_analyzer/proc/scan_tray_chems(obj/machinery/hydroponics/scanned_tray)
 	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")"] ***\n"
 		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
 		returned_message += scan_plant_chems(scanned_tray.myseed)
 	else
