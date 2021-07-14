@@ -2322,7 +2322,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/human/metabolizer, delta_time, times_fired)
-	if(DT_PROB(10, delta_time) && istype(metabolizer))
+	if(DT_PROB(50, delta_time) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
 			metabolizer.facial_hair_color = "ccc"
@@ -2333,6 +2333,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(metabolizer.gender == MALE)
 					metabolizer.facial_hairstyle = "Beard (Very Long)"
 					metabolizer.update_hair()
+
+				metabolizer.age += 1 //ages you twice as fast once you become >100 years old so that this last effect won't take 30+ minutes to reach
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))
