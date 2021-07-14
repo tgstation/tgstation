@@ -369,15 +369,16 @@
 /mob/living/simple_animal/revenant/proc/incorporeal_move_check(atom/destination)
 	var/turf/open/floor/stepTurf = get_turf(destination)
 	if(stepTurf)
-		for(var/obj/effect/decal/cleanable/food/salt/S in stepTurf)
-			to_chat(src, span_warning("[S] bars your passage!"))
+		var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
+		if(salt)
+			to_chat(src, span_warning("[salt] bars your passage!"))
 			reveal(20)
 			stun(20)
 			return
 		if(stepTurf.turf_flags & NOJAUNT)
 			to_chat(src, span_warning("Some strange aura is blocking the way."))
 			return
-		if(locate(/obj/effect/blessing, stepTurf))
+		if(locate(/obj/effect/blessing) in stepTurf)
 			to_chat(src, span_warning("Holy energies block your path!"))
 			return
 	return TRUE
