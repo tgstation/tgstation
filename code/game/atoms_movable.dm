@@ -40,6 +40,7 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/area_sensitive_contents // A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
+	var/list/important_recursive_contents //a nested list of contents by channel that need to be easily accessed without searching through nested contents
 
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
@@ -140,7 +141,7 @@
 
 	//We add ourselves to this list, best to clear it out
 	//DO it after moveToNullspace so memes can be had
-	LAZYCLEARLIST(area_sensitive_contents)
+	LAZYCLEARLIST(important_recursive_contents)
 
 	vis_contents.Cut()
 
@@ -639,23 +640,183 @@
 
 /atom/movable/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone.area_sensitive_contents)
+	/*if(gone.area_sensitive_contents)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-			LAZYREMOVE(location.area_sensitive_contents, gone.area_sensitive_contents)
+			LAZYREMOVE(location.area_sensitive_contents, gone.area_sensitive_contents)*/
+	if(gone.important_recursive_contents)
+#ifdef RECURSIVE_CONTENTS_CHANNEL_THREE //this channel doesnt exist yet, if this exists then we know that channels 1-3 exist (more like assume)
+		switch(length(gone.important_recursive_contents))
+			if(3) //we know all of the channels are present
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, gone.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+					LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, gone.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+					LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_THREE, gone.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_THREE])
+				return
+			if(2)
+				var/list/assoc_key_one = gone.important_recursive_contents[1]
+				var/list/assoc_key_two = gone.important_recursive_contents[2]
+
+				var/list/assoc_list_one = gone.important_recursive_contents[assoc_key_one]
+				var/list/assoc_list_two = gone.important_recursive_contents[assoc_key_two]
+
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYREMOVEASSOC(location.important_recursive_contents, assoc_key_one, assoc_list_one)
+					LAZYREMOVEASSOC(location.important_recursive_contents, assoc_key_two, assoc_list_two)
+				return
+			if(1)
+				var/list/assoc_key = gone.important_recursive_contents[1]
+				var/list/assoc_list = gone.important_recursive_contents[assoc_key]
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYREMOVEASSOC(location.important_recursive_contents, assoc_key, assoc_list)
+		return
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_TWO //if this exists then we know that only channels 1-2 exist
+		switch(length(gone.important_recursive_contents))
+			if(2) //we know all of the channels are present
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, gone.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+					LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, gone.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+				return
+			if(1)
+				var/list/assoc_key = gone.important_recursive_contents[1]
+				var/list/assoc_list = gone.important_recursive_contents[assoc_key]
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYREMOVEASSOC(location.important_recursive_contents, assoc_key, assoc_list)
+		return
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_ONE //if this exists then we know that only channel one exists
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, gone.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+#endif
 
 /atom/movable/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(arrived.area_sensitive_contents)
+
+	//versus:
+
+	if(arrived.important_recursive_contents)
+#ifdef RECURSIVE_CONTENTS_CHANNEL_THREE //this channel doesnt exist yet, if this exists then we know that channels 1-3 exist (more like assume)
+		switch(length(arrived.important_recursive_contents))
+			if(3) //we know all of the channels are present
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+					LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+					LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_THREE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_THREE])
+				return
+			if(2)
+				var/list/assoc_key_one = arrived.important_recursive_contents[1]
+				var/list/assoc_key_two = arrived.important_recursive_contents[2]
+
+				var/list/assoc_list_one = arrived.important_recursive_contents[assoc_key_one]
+				var/list/assoc_list_two = arrived.important_recursive_contents[assoc_key_two]
+
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYORASSOCLIST(location.important_recursive_contents, assoc_key_one, assoc_list_one)
+					LAZYORASSOCLIST(location.important_recursive_contents, assoc_key_two, assoc_list_two)
+				return
+			if(1)
+				var/list/assoc_key = arrived.important_recursive_contents[1]
+				var/list/assoc_list = arrived.important_recursive_contents[assoc_key]
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYORASSOCLIST(location.important_recursive_contents, assoc_key, assoc_list)
+		return
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_TWO //if this exists then we know that only channels 1-2 exist
+		switch(length(arrived.important_recursive_contents))
+			if(2) //we know all of the channels are present
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+					LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+				return
+			if(1)
+				var/list/assoc_key = arrived.important_recursive_contents[1]
+				var/list/assoc_list = arrived.important_recursive_contents[assoc_key]
+				for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+					LAZYORASSOCLIST(location.important_recursive_contents, assoc_key, assoc_list)
+		return
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_ONE //if this exists then we know that only channel one exists
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+#endif
+
+/*if(arrived.area_sensitive_contents)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			//We can't make the assumption that objects won't become area sensitive in the process of entering us
-			LAZYOR(location.area_sensitive_contents, arrived.area_sensitive_contents)
+			LAZYOR(location.area_sensitive_contents, arrived.area_sensitive_contents)*/
+
+	/*if(arrived.important_recursive_contents) //with a loop for every key in arrived's important_recursive_contents
+		for(var/channel in arrived.important_recursive_contents)
+			for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+				LAZYORASSOCLIST(location.important_recursive_contents, channel, arrived.important_recursive_contents[channel])
+
+	//versus:
+
+	if(arrived.important_recursive_contents) //with the second for loop unrolled
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+#ifdef RECURSIVE_CONTENTS_CHANNEL_ONE
+			if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_TWO
+			if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_THREE //this channel doesnt exist yet
+			if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_THREE])
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_THREE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_THREE])
+#endif
+
+	//versus:
+
+	if(arrived.important_recursive_contents)
+#ifdef RECURSIVE_CONTENTS_CHANNEL_THREE //this channel doesnt exist yet, if this exists then we know that channels 1-3 exist (more like assume)
+		var/number_of_channels = length(arrived.important_recursive_contents)
+		var/list/nested_locs = get_nested_locs(src) + src
+		if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+			for(var/atom/movable/location as anything in nested_locs)
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+			number_of_channels--
+		if(number_of_channels && arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+			for(var/atom/movable/location as anything in nested_locs)
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+			number_of_channels--
+		if(number_of_channels && arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_THREE])
+			for(var/atom/movable/location as anything in nested_locs)
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_THREE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_THREE])
+	return
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_TWO //if this exists then we know that channels 1-2 exist
+		var/number_of_channels = length(arrived.important_recursive_contents)
+		var/list/nested_locs = get_nested_locs(src) + src
+		if(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+			for(var/atom/movable/location as anything in nested_locs)
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+			number_of_channels--
+		if(number_of_channels && arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+			for(var/atom/movable/location as anything in nested_locs)
+				LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_TWO, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_TWO])
+	return
+#endif
+#ifdef RECURSIVE_CONTENTS_CHANNEL_ONE //if this exists then we know that only channel one exists
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYORASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_CHANNEL_ONE, arrived.important_recursive_contents[RECURSIVE_CONTENTS_CHANNEL_ONE])
+#endif */
+
+/atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
+	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE), .proc/on_hearing_sensitive_trait_loss)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADDASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
+	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
+
 
 /// See traits.dm. Use this in place of ADD_TRAIT.
 /atom/movable/proc/become_area_sensitive(trait_source = TRAIT_GENERIC)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-			LAZYADD(location.area_sensitive_contents, src)
+			LAZYADDASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
 
 /atom/movable/proc/on_area_sensitive_trait_loss()
@@ -663,7 +824,14 @@
 
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-		LAZYREMOVE(location.area_sensitive_contents, src)
+		LAZYREMOVE(location.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE], src)
+
+/atom/movable/proc/on_hearing_sensitive_trait_loss()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE))
+	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+		LAZYREMOVE(location.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE], src)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)

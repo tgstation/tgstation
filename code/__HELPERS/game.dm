@@ -162,20 +162,6 @@
 			turfs += T
 	return turfs
 
-
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-//Sped this up again for real this time
-/proc/recursive_hear_check(O)
-	var/list/processing_list = list(O)
-	. = list()
-	var/i = 0
-	while(i < length(processing_list))
-		var/atom/A = processing_list[++i]
-		if(A.flags_1 & HEAR_1)
-			. += A
-		processing_list += A.contents
-
 /** recursive_organ_check
  * inputs: O (object to start with)
  * outputs:
@@ -212,6 +198,8 @@
 		processed_list[A] = A
 
 	return
+/// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
+/proc/get_hearers_in_view(radius, atom/source)
 
 /// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). recursively checks contents for hearers
 /proc/get_hearers_in_view(view_radius, atom/source)

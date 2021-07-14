@@ -30,7 +30,8 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	H.flags_1 &= ~HEAR_1
+	//H.flags_1 &= ~HEAR_1
+	REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, INNATE_TRAIT)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.drop_limb()
@@ -44,7 +45,8 @@
 	H.set_safe_hunger_level()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
-	H.flags_1 |= HEAR_1
+	//H.flags_1 |= HEAR_1
+	H.become_hearing_sensitive()
 	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
@@ -121,7 +123,7 @@
 /obj/item/dullahan_relay
 	name = "dullahan relay"
 	var/mob/living/owner
-	flags_1 = HEAR_1
+	//flags_1 = HEAR_1
 
 /obj/item/dullahan_relay/Initialize(mapload, mob/living/carbon/human/new_owner)
 	. = ..()
@@ -133,6 +135,7 @@
 	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
+	become_hearing_sensitive()
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
