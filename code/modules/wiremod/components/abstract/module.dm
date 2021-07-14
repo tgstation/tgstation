@@ -18,7 +18,7 @@
 	var/port_limit = 10
 
 /obj/item/integrated_circuit/module
-	var/obj/item/circuit_component/attached_module
+	var/obj/item/circuit_component/module/attached_module
 
 /obj/item/integrated_circuit/module/ui_host(mob/user)
 	. = ..()
@@ -28,6 +28,18 @@
 /obj/item/integrated_circuit/module/set_display_name(new_name)
 	. = ..()
 	attached_module.display_name = new_name
+
+/obj/item/integrated_circuit/module/load_component(type)
+	if(!attached_module)
+		return ..()
+
+	if(ispath(type, /obj/item/circuit_component/module_input))
+		return attached_module.input_component
+
+	if(ispath(type, /obj/item/circuit_component/module_output))
+		return attached_module.output_component
+
+	return ..()
 
 /obj/item/integrated_circuit/module/Destroy()
 	attached_module = null
@@ -88,7 +100,7 @@
 	input_component = new(internal_circuit)
 	input_component.attached_module = src
 	internal_circuit.add_component(input_component)
-	input_component.rel_x = 400
+	input_component.rel_x = 0
 	input_component.rel_y = 200
 
 	output_component = new(internal_circuit)
@@ -96,6 +108,50 @@
 	internal_circuit.add_component(output_component)
 	output_component.rel_x = 400
 	output_component.rel_y = 200
+
+/obj/item/circuit_component/module/save_data_to_list(list/component_data)
+	. = ..()
+	component_data["integrated_circuit"] = internal_circuit.convert_to_json()
+
+	var/list/input_data = list()
+	for(var/datum/port/input/input_port as anything in input_ports)
+		input_data += list(list(
+			"name" = input_port.name,
+			"type" = input_port.datatype,
+		))
+
+	var/list/output_data = list()
+	for(var/datum/port/output/output_port as anything in output_ports)
+		output_data += list(list(
+			"name" = output_port.name,
+			"type" = output_port.datatype,
+		))
+
+	component_data["input_ports"] = input_data
+	component_data["output_ports"] = output_data
+
+/obj/item/circuit_component/module/load_data_from_list(list/component_data)
+	. = ..()
+
+	var/list/input_ports = component_data["input_ports"]
+	for(var/list/port_data as anything in input_ports)
+		add_and_link_input_port(port_data["name"], port_data["type"])
+
+	var/list/output_ports = component_data["output_ports"]
+	for(var/list/port_data as anything in output_ports)
+		add_and_link_output_port(port_data["name"], port_data["type"])
+
+	if(component_data["integrated_circuit"])
+		var/list/errors = list()
+		internal_circuit.load_circuit_data(component_data["integrated_circuit"], errors)
+
+/obj/item/circuit_component/module/proc/add_and_link_input_port(name, type)
+	var/datum/port/new_port = add_input_port(name, type)
+	linked_ports[new_port] = input_component.add_output_port(name, type)
+
+/obj/item/circuit_component/module/proc/add_and_link_output_port(name, type)
+	var/datum/port/new_port = output_component.add_input_port(name, type)
+	linked_ports[new_port] = add_output_port(name, type)
 
 /obj/item/circuit_component/module/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
@@ -177,8 +233,7 @@
 		if("add_input_port")
 			if(length(input_ports) > port_limit)
 				return
-			var/datum/port/new_port = add_input_port("Input Port", PORT_TYPE_ANY)
-			linked_ports[new_port] = input_component.add_output_port("Input Port", PORT_TYPE_ANY)
+			add_and_link_input_port("Input Port", PORT_TYPE_ANY)
 			. = TRUE
 		if("remove_input_port")
 			var/port_id = text2num(params["port_id"])
@@ -192,8 +247,7 @@
 		if("add_output_port")
 			if(length(output_ports) > port_limit)
 				return
-			var/datum/port/new_port = output_component.add_input_port("Output Port", PORT_TYPE_ANY)
-			linked_ports[new_port] = add_output_port("Output Port", PORT_TYPE_ANY)
+			add_and_link_output_port("Output Port", PORT_TYPE_ANY)
 			. = TRUE
 		if("remove_output_port")
 			var/port_id = text2num(params["port_id"])

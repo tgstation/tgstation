@@ -23,10 +23,7 @@
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
-	src.unremovable_circuit_components = unremovable_circuit_components
-
-	for(var/obj/item/circuit_component/circuit_component as anything in unremovable_circuit_components)
-		circuit_component.removable = FALSE
+	set_unremovable_circuit_components(unremovable_circuit_components)
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
@@ -39,6 +36,35 @@
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
+	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
+
+/datum/component/shell/proc/set_unremovable_circuit_components(list/components)
+	if(unremovable_circuit_components)
+		QDEL_LIST(unremovable_circuit_components)
+
+	unremovable_circuit_components = components
+
+	for(var/obj/item/circuit_component/circuit_component as anything in unremovable_circuit_components)
+		circuit_component.removable = FALSE
+		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+
+/datum/component/shell/proc/save_component(datum/source, list/objects)
+	SIGNAL_HANDLER
+	objects += parent
+
+/datum/component/shell/proc/on_load(datum/source, obj/item/integrated_circuit/circuit, list/components)
+	SIGNAL_HANDLER
+	var/list/components_in_list = list()
+	for(var/obj/item/circuit_component/component as anything in components)
+		components_in_list += component.type
+
+	for(var/obj/item/circuit_component/component as anything in unremovable_circuit_components)
+		if(component.type in components_in_list)
+			continue
+		var/new_type = component.type
+		components += new new_type()
+	set_unremovable_circuit_components(components)
+	attach_circuit(circuit)
 
 
 /datum/component/shell/UnregisterFromParent()
@@ -51,6 +77,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
+		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -170,9 +197,9 @@
 /**
  * Checks for when the circuitboard moves. If it moves, removes it from the component.
  */
-/datum/component/shell/proc/on_circuit_moved(obj/item/integrated_circuit/circuit, atom/new_loc)
+/datum/component/shell/proc/on_circuit_moved(obj/item/integrated_circuit/circuit, atom/old_loc)
 	SIGNAL_HANDLER
-	if(new_loc != parent)
+	if(circuit.loc != parent)
 		remove_circuit()
 
 /**
@@ -197,7 +224,7 @@
  */
 /datum/component/shell/proc/attach_circuit(obj/item/integrated_circuit/circuitboard, mob/living/user)
 	var/atom/movable/parent_atom = parent
-	if(!user.transferItemToLoc(circuitboard, parent_atom))
+	if(user && !user.transferItemToLoc(circuitboard, parent_atom))
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
@@ -214,6 +241,9 @@
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		on_unfasten(parent_atom, parent_atom.anchored)
+
+	if(circuitboard.loc != parent_atom)
+		circuitboard.forceMove(parent_atom)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.

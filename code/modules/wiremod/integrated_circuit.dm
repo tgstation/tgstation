@@ -267,6 +267,8 @@
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
 
+	.["is_admin"] = check_rights_for(user.client, R_ADMIN)
+
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
 		return shell
@@ -456,6 +458,15 @@
 			. = TRUE
 		if("remove_examined_component")
 			examined_component = null
+			. = TRUE
+		if("save_circuit")
+			var/client/saver = usr.client
+			if(!check_rights_for(saver, R_ADMIN))
+				return
+			var/temp_file = file("data/CircuitDownloadTempFile")
+			fdel(temp_file)
+			WRITE_FILE(temp_file, convert_to_json())
+			DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
 			. = TRUE
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)

@@ -6,6 +6,7 @@ import { CSS_COLORS } from '../../constants';
 import { classes, shallowDiffers } from '../../../common/react';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
+import { logger } from '../../logging';
 
 const NULL_REF = "[0x0]";
 const ABSOLUTE_Y_OFFSET = -32;
@@ -205,6 +206,7 @@ export class IntegratedCircuit extends Component {
       examined_notices,
       examined_rel_x,
       examined_rel_y,
+      is_admin,
     } = data;
     const { locations } = this.state;
 
@@ -213,12 +215,34 @@ export class IntegratedCircuit extends Component {
         width={600}
         height={600}
         buttons={(
-          <Input
-            fluid
-            placeholder="Circuit Name"
-            value={display_name}
-            onChange={(e, value) => act("set_display_name", { display_name: value })}
-          />
+          <Box
+            width="160px"
+            position="absolute"
+            top="5px"
+            height="22px"
+          >
+            <Stack>
+              <Stack.Item grow>
+                <Input
+                  fluid
+                  placeholder="Circuit Name"
+                  value={display_name}
+                  onChange={(e, value) => act("set_display_name", { display_name: value })}
+                />
+              </Stack.Item>
+              {!!is_admin && (
+                <Stack.Item>
+                  <Button
+                    position="absolute"
+                    top={0}
+                    color="transparent"
+                    onClick={() => act("save_circuit")}
+                    icon="save"
+                  />
+                </Stack.Item>
+              )}
+            </Stack>
+          </Box>
         )}
       >
         <Window.Content
