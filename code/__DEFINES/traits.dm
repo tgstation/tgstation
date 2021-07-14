@@ -510,6 +510,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define EYE_DAMAGE "eye_damage"
 #define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"
+#define OLD_AGE "old_age"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"

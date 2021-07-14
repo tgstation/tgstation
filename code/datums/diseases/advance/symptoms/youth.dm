@@ -57,3 +57,4 @@ BONUS
 				if(H.age > 21)
 					H.age = 21
 					to_chat(H, span_notice("You feel like you can take on the world!"))
+	M.cure_nearsighted(OLD_AGE) //there's an argument for this falling under the domain of sensory restoration, but if we put it there as well, then we'd probably have to put it in oculine and basically anything that clears nearsightedness other than natural eye regeneration
