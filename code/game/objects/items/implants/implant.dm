@@ -12,7 +12,7 @@
 	var/mob/living/imp_in = null
 	///implant color, used for visuals
 	var/implant_color = "b"
-	///if false, upon implantation of a duplicate implant, an attempt to combine the new implant's uses with the old one's uses will be made, deleting the new implant if succesful or stopping the implantation if not
+	///if false, upon implantation of a duplicate implant, an attempt to combine the new implant's uses with the old one's uses will be made, deleting the new implant if successful or stopping the implantation if not
 	var/allow_multiple = FALSE
 	///uses
 	var/uses = -1
