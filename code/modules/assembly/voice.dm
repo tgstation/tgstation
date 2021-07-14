@@ -8,7 +8,6 @@
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
-	//flags_1 = HEAR_1
 	attachable = TRUE
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -27,7 +26,7 @@
 
 /obj/item/assembly/voice/Initialize()
 	. = ..()
-	become_hearing_sensitive()
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()

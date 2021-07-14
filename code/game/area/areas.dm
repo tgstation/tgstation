@@ -588,7 +588,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
 			power_usage[chan] += amount
 
-
 /**
  * Call back when an atom enters an area
  *
@@ -598,7 +597,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
-	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
 	if(!isliving(arrived))
 		return
 

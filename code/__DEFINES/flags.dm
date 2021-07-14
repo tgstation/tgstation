@@ -18,8 +18,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
 
-/// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HEAR_1 (1<<0)
 /// Is this object currently processing in the atmos object list?
 #define ATMOS_IS_PROCESSING_1 (1<<1)
 /// conducts electricity (metal etc.)
