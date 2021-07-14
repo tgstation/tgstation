@@ -1948,6 +1948,8 @@
 #include "code\modules\capture_the_flag\ctf_equipment.dm"
 #include "code\modules\capture_the_flag\ctf_game.dm"
 #include "code\modules\capture_the_flag\ctf_map_loading.dm"
+#include "code\modules\capture_the_flag\medieval_sim\medisim_classes.dm"
+#include "code\modules\capture_the_flag\medieval_sim\medisim_game.dm"
 #include "code\modules\cargo\bounty.dm"
 #include "code\modules\cargo\centcom_podlauncher.dm"
 #include "code\modules\cargo\coupon.dm"

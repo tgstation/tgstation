@@ -22,32 +22,42 @@
 	var/icon = 'icons/hud/radial_ctf.dmi'
 	///Icon state for this class
 	var/icon_state = "ctf_rifleman"
+	///Do they get a headset?
+	var/has_radio = TRUE
+	///Do they get an ID?
+	var/has_card = TRUE
+	///Which slots to apply TRAIT_NODROP to the items in
+	var/list/nodrop_slots = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_EARS)
 
 /datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
-	var/obj/item/card/id/W = H.wear_id
-	no_drops += W
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
 
-	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
+	if(has_card)
+		var/obj/item/card/id/W = H.wear_id
+		no_drops += W
+		W.registered_name = H.real_name
+		W.update_label()
+		W.update_icon()
+
+	// Make clothing in the specified slots NODROP
+	for(var/slot in nodrop_slots)
+		no_drops += H.get_item_by_slot(slot)
+	// Make items in the hands NODROP
 	for(var/obj/item/I in H.held_items)
 		no_drops += I
+	listclearnulls(no_drops) // For any slots we didn't have filled
+	// Apply TRAIT_NODROP to everything
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(team_radio_freq)
-	R.freqlock = TRUE
-	R.independent = TRUE
+	if(has_radio)
+		var/obj/item/radio/R = H.ears
+		R.set_frequency(team_radio_freq)
+		R.freqlock = TRUE
+		R.independent = TRUE
 	H.dna.species.stunmod = 0
 
 /datum/outfit/ctf/instagib
