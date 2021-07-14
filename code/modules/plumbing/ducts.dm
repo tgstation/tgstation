@@ -168,7 +168,7 @@ All the important duct code:
 	update_appearance()
 	if(ispath(drop_on_wrench))
 		new drop_on_wrench(drop_location())
-	if(!QDELING(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
