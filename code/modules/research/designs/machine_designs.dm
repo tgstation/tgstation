@@ -780,3 +780,11 @@
 	build_path = /obj/item/circuitboard/machine/component_printer
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/component_printer
+	name = "Machine Design (Module Duplicator)"
+	desc = "The circuit board for a module duplicator"
+	id = "module_duplicator"
+	build_path = /obj/item/circuitboard/machine/module_duplicator
+	category = list("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
