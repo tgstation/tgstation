@@ -80464,9 +80464,9 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/research/explosive_compressor,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron/dark,
 /area/science/test_area)
 "uij" = (
@@ -83682,37 +83682,17 @@
 /area/maintenance/disposal/incinerator)
 "vAo" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/assembly/signaler{
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another. Slightly scooted.";
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/assembly/signaler{
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another. Slightly scooted.";
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/assembly/signaler{
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another. Slightly scooted.";
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/iron/showroomfloor,
 /area/science/test_area)
 "vAx" = (

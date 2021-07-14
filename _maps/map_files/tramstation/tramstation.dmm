@@ -43216,6 +43216,8 @@
 /obj/machinery/light/directional/south,
 /obj/item/controller,
 /obj/item/compact_remote,
+/obj/item/integrated_circuit/loaded/hello_world,
+/obj/item/integrated_circuit/loaded/speech_relay,
 /obj/item/compact_remote,
 /turf/open/floor/iron,
 /area/science/misc_lab)
@@ -48416,9 +48418,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
-/obj/structure/rack,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/integrated_circuit/loaded/hello_world,
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron,
 /area/science/misc_lab)
 "oIj" = (

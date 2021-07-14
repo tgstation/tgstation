@@ -136,7 +136,7 @@
 /// Module duplicator, allows you to save and recreate module components.
 /obj/machinery/module_duplicator
 	name = "module duplicator"
-	desc = "Allows you to duplicate module components so that you don't have to recreate them."
+	desc = "Allows you to duplicate module components so that you don't have to recreate them. Scan a module component over this machine to add it as an entry."
 	icon = 'icons/obj/wiremod_fab.dmi'
 	icon_state = "fab-idle"
 	circuit = /obj/item/circuitboard/machine/module_duplicator

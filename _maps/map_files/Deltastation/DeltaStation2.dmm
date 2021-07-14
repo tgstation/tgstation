@@ -7829,6 +7829,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "bhH" = (

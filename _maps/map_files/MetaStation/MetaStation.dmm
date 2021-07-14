@@ -64110,6 +64110,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "sWb" = (
