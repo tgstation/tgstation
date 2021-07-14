@@ -16,7 +16,7 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/SpacemanDMM
+          path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Install Tools
         run: |
@@ -51,7 +51,7 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/BYOND
+          path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Compile All Maps
         run: |
@@ -77,7 +77,7 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/BYOND
+          path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Setup database
         run: |
