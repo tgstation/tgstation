@@ -866,7 +866,7 @@
 
 /obj/item/storage/box/hug/plushes
 	name = "tactical cuddle kit"
-	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell\
+	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell \
 	for Medical Officers who just take the box for themselves."
 
 	/// the plushies that aren't of things trying to kill you
