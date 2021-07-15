@@ -196,6 +196,7 @@
 
 	if(!parent.admin_only)
 		if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has set the admin_only variable to TRUE!")
 			return TRUE
 
 		var/obj/item/stock_parts/cell/cell = parent.get_cell()

@@ -30,8 +30,12 @@
 	var/datum/port/output/alt
 	var/datum/port/output/right
 
+	/// The entity output
+	var/datum/port/output/entity
+
 /obj/item/circuit_component/controller/Initialize()
 	. = ..()
+	entity = add_output_port("User", PORT_TYPE_ATOM)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 	alt = add_output_port("Alternate Signal", PORT_TYPE_SIGNAL)
 	right = add_output_port("Extra Signal", PORT_TYPE_SIGNAL)
@@ -40,6 +44,7 @@
 	signal = null
 	alt = null
 	right = null
+	entity = null
 	return ..()
 
 /obj/item/circuit_component/controller/register_shell(atom/movable/shell)
@@ -63,6 +68,7 @@
 		return
 	source.balloon_alert(user, "clicked primary button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
 
 /**
@@ -74,6 +80,7 @@
 		return
 	source.balloon_alert(user, "clicked alternate button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	alt.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
@@ -82,4 +89,5 @@
 		return
 	source.balloon_alert(user, "clicked extra button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	entity.set_output(user)
 	right.set_output(COMPONENT_SIGNAL)
