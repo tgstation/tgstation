@@ -173,7 +173,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
 	if(isAI(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls.")
+		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
 	else if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
@@ -358,8 +358,9 @@ Possible to do for anyone motivated enough:
 	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
 		activate_holo(user)
 	else//If there is a hologram, remove it, and jump to your last location.
-		user.eyeobj.loc = user.lastloc
-		user.lastloc = null
+		if(user.lastloc)//only jump to your last location if your lastloc is set, which only sets if you projected from a request message.
+			user.eyeobj.loc = user.lastloc
+			user.lastloc = null
 		clear_holo(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -421,8 +422,7 @@ Possible to do for anyone motivated enough:
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
-			AI.lastloc = AI.eyeobj.loc
-			AI.eyeobj.loc = src.loc
+			AI.eyeobj.loc = src.loc //ensure the AI camera moves to the holopad
 		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state
