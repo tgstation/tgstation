@@ -527,8 +527,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		var/obj/machinery/atmospherics/node = nodes[1]
 		if(node)
 			node.disconnect(src)
-			nodes[1] = null
-		nullifyPipenet(parents[1])
+			nodes[1] = null // This is not strictly necessary, disconnect() already nullifies this node.
+		if(parents[1])
+			nullifyPipenet(parents[1])
 		atmosinit()
 		node = nodes[1]
 		if(node)
