@@ -663,9 +663,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(prob(1))
 		name = "cricket bat"
-		desc = "You gotta know what a crumpet is to understand cricket."
 		icon_state = "baseball_bat_brit"
 		inhand_icon_state = "baseball_bat_brit"
+		if(prob(50))
+			desc = "You've got red on you."
+		else
+			desc = "You gotta know what a crumpet is to understand cricket."
 
 	AddElement(/datum/element/kneecapping)
 
