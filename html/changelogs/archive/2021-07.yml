@@ -454,3 +454,40 @@
   - bugfix: Fixed Chat Highlighting only working for the first comma separated entry.
   - bugfix: Your own messages sent over a radio and dchat now properly avoid_highlighting.
   - bugfix: Fixed admin observer special radio keys double sanitizing input.
+2021-07-14:
+  Ghommie:
+  - bugfix: Fixed the rat king's abilities being usable while dead.
+  - bugfix: Fixed the rat king's Domain ability being usable on cooldown.
+  - admin: Adds a safety check to the "Release Obj" admin proc
+  - bugfix: fixed the charge moodlet lingering after a ethereal stomach removal.
+  Guestify:
+  - qol: replaced a couple of windows with walls in kilo and delta medbay, added a
+      couple of defib holders that can be easily accessed
+  RandomGamer123:
+  - qol: Icebox atmospherics now has a small project room with some resources.
+  - bugfix: Packages sent through disposals to Virology on Icebox won't end up at
+      Xenobio anymore.
+  Watermelon914:
+  - balance: Removes the refresher crystal from lavaland loot.
+  Wayland-Smithy:
+  - qol: Holopad incoming calls can now be rejected.
+  - qol: AI secondary attack now opens Holopad UIs.
+  - bugfix: Fixed connected Holopad callers not seeing their own runechat text.
+  - bugfix: Fixed AI hologram transmit runechat text.
+  - bugfix: Fixed the AI radio help message giving false info about the generic department
+      key.
+2021-07-15:
+  Wayland-Smithy:
+  - qol: Revenants can orbit adjacent people and things with Right Click, unless they
+      are stunned, revealed, blocked by salt etc..
+  - code_imp: Improved Jaunt Move checks a little bit.
+  Y0SH1M4S73R:
+  - spellcheck: The notification that ghosts receive when someone raises a spectral
+      blade no longer contains an incorrect usage of the word "the"
+  ZephyrTFA:
+  - bugfix: Resolves my sanity as truncate now returns a valid value when it does
+      nothing
+  carshalash:
+  - bugfix: Eggs now work when cracked into glasses
+  tralezab:
+  - balance: space dragons are rarer
