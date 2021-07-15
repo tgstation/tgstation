@@ -57,6 +57,7 @@
 	desc = "Protect your maiden, and capture theirs!"
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "plushie_nuke"
+	force = 0
 	game_area = /area/shuttle/escape
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 
@@ -65,6 +66,7 @@
 	desc = "Protect your maiden, and capture theirs!"
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "plushie_slime"
+	force = 0
 	game_area = /area/shuttle/escape
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 
