@@ -98,11 +98,11 @@
 	var/display_icon_override
 
 	var/list/cam_hotkeys = new/list(9)
-	var/cam_prev
+	var/atom/cam_prev
 
 	var/datum/robot_control/robot_control
 	///remember AI's last location
-	var/lastloc
+	var/atom/lastloc
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -181,7 +181,7 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
-				src.cameraFollow = null //stop following something, we want to jump away.
+				cameraFollow = null //stop following something, we want to jump away.
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -192,7 +192,7 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
-				src.cameraFollow = null //stop following something, we want to jump away.
+				cameraFollow = null //stop following something, we want to jump away.
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -426,18 +426,18 @@
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
-	if(href_list["jumptoholopad"])
-		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"]) in GLOB.machines
-		if(H)
-			src.cam_prev = src.eyeobj.loc
-			src.eyeobj.setLoc(H)
+	if(href_list["jump_to_holopad"])
+		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
+		if(Holopad)
+			cam_prev = get_turf(eyeobj)
+			src.eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
-	if(href_list["projecttoholopad"])
-		var/obj/machinery/holopad/H = locate(href_list["projecttoholopad"]) in GLOB.machines
-		if(H)
-			src.lastloc = src.eyeobj.loc
-			H.attack_ai_secondary(src) //may as well recycle
+	if(href_list["project_to_holopad"])
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in GLOB.machines
+		if(Holopad)
+			lastloc = get_turf(eyeobj)
+			Holopad.attack_ai_secondary(src) //may as well recycle
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
@@ -455,7 +455,7 @@
 		if(name == string)
 			target += src
 		if(target.len)
-			src.cam_prev = src.eyeobj.loc
+			cam_prev = get_turf(eyeobj)
 			ai_actual_track(pick(target))
 		else
 			to_chat(src, "Target is not on or near any active cameras on the station.")

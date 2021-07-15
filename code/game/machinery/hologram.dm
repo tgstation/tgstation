@@ -256,7 +256,7 @@ Possible to do for anyone motivated enough:
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
 						continue
-					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];projecttoholopad=[REF(src)]'>Project Hologram?</a>"))
+					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
 				to_chat(usr, span_info("A request for AI presence was already sent recently."))
@@ -359,7 +359,7 @@ Possible to do for anyone motivated enough:
 		activate_holo(user)
 	else//If there is a hologram, remove it, and jump to your last location.
 		if(user.lastloc)//only jump to your last location if your lastloc is set, which only sets if you projected from a request message.
-			user.eyeobj.loc = user.lastloc
+			SetLoc(user.eyeobj) = user.lastloc
 			user.lastloc = null
 		clear_holo(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -422,7 +422,7 @@ Possible to do for anyone motivated enough:
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
-			AI.eyeobj.loc = src.loc //ensure the AI camera moves to the holopad
+			SetLoc(AI.eyeobj) = get_turf(src) //ensure the AI camera moves to the holopad
 		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state
