@@ -92,7 +92,7 @@
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/hostile_friend/proc/unfriend()
 	var/datum/weakref/friend_ref = blackboard[BB_HOSTILE_FRIEND]
-	var/mob/living/old_friend = friend_ref.resolve()
+	var/mob/living/old_friend = friend_ref?.resolve()
 	if(old_friend)
 		UnregisterSignal(old_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 	blackboard[BB_HOSTILE_FRIEND] = null
