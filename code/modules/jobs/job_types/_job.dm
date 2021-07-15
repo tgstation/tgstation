@@ -335,7 +335,6 @@
 		return pick(GLOB.jobspawn_overrides[title])
 	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
 	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-		log_world("Couldn't find a round start spawn point for [title]")
 		return get_latejoin_spawn_point()
 	return spawn_point
 
@@ -369,7 +368,7 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
 
 
-// TO DO: This needs to receive the place to spawn in, because AIs don't work, else.
+/// Spawns the mob to be played as, taking into account preferences and the desired spawn point.
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)
 	var/mob/living/spawn_instance
 	if(ispath(spawn_type, /mob/living/silicon/ai))
@@ -385,12 +384,12 @@
 	return spawn_instance
 
 
-/// Applies the preference options to the spawning mob, taking the job into account.
+/// Applies the preference options to the spawning mob, taking the job into account. Assumes the client has the proper mind.
 /mob/living/proc/apply_prefs_job(client/player_client, datum/job/job)
 
 
 /mob/living/carbon/human/apply_prefs_job(client/player_client, datum/job/job)
-	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore() || is_banned_from(player_client.ckey, "Appearance")
+	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 	if(fully_randomize)

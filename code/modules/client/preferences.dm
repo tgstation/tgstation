@@ -1955,12 +1955,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
-/datum/preferences/proc/should_be_random_hardcore()
+/datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
 	if(!randomise[RANDOM_HARDCORE])
 		return FALSE
-	if(parent.mob.mind.assigned_role.departments & DEPARTMENT_COMMAND) //No command staff
+	if(job.departments & DEPARTMENT_COMMAND) //No command staff
 		return FALSE
-	for(var/datum/antagonist/antag as anything in parent.mob.mind.antag_datums)
+	for(var/datum/antagonist/antag as anything in mind.antag_datums)
 		if(antag.get_team()) //No team antags
 			return FALSE
 	return TRUE
