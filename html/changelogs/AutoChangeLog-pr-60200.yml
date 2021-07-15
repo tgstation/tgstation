@@ -1,5 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - qol: "Revenants can orbit adjacent people and things with Right Click, unless they are stunned, revealed, blocked by salt etc.."
-  - code_imp: "Improved Jaunt Move checks a little bit."

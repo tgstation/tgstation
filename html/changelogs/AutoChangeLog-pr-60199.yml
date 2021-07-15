@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes: 
-  - bugfix: "Resolves my sanity as truncate now returns a valid value when it does nothing"
