@@ -172,8 +172,8 @@
 	return TOXLOSS
 
 /obj/item/melee/classic_baton
-	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
+	name = "police knife"
+	desc = "A wooden truncheon with a pointy bit on the end for stabbing criminal scum. Left click to harm, right click to also harm."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
@@ -181,23 +181,23 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	force = 12 //9 hit crit
+	force = 20 //its very sharp
 	w_class = WEIGHT_CLASS_NORMAL
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
 	/// Default wait time until can stun again.
-	var/cooldown = (4 SECONDS)
+	var/cooldown = (0 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
-	var/knockdown_time = (1.5 SECONDS)
+	var/knockdown_time = (0 SECONDS)
 	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
-	var/stun_time_cyborg = (5 SECONDS)
+	var/stun_time_cyborg = (0 SECONDS)
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 55
+	var/stamina_damage = 0 //stamina crit is for pussies
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// "On" sound, played when switching between able to stun or not.
-	var/on_sound 
+	var/on_sound
 	/// The path of the default sound to play when we stun something.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// Do we animate the "hit" when stunning something?
@@ -228,8 +228,8 @@
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
-	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
-	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
+	.["local_on"] = "<span class ='warning'>You extend the knife.</span>"
+	.["local_off"] = "<span class ='notice'>You collapse the knife.</span>"
 
 	return .
 
@@ -292,7 +292,7 @@
 
 		user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 
-		log_combat(user, target, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
+		log_combat(user, target, "accidentally attacked [user.p_them()]self due to their clumsiness", src)
 		if(stun_animation)
 			user.do_attack_animation(user)
 		return
@@ -331,14 +331,12 @@
 
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
-		target.Knockdown(knockdown_time)
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
 		additional_effects_non_cyborg(target, user)
 
 		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 
 	target.visible_message(desc["visible"], desc["local"])
-	log_combat(user, target, "stun attacked", src)
+	log_combat(user, target, "attacked", src)
 	if(stun_animation)
 		user.do_attack_animation(target)
 
@@ -358,8 +356,8 @@
 	custom_price = PAYCHECK_HARD * 4.5
 
 /obj/item/melee/classic_baton/telescopic
-	name = "telescopic baton"
-	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
+	name = "telescopic knife"
+	desc = "These things are probably illegal in Space Germany."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "telebaton_0"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -376,10 +374,10 @@
 	on_icon_state = "telebaton_1"
 	off_icon_state = "telebaton_0"
 	on_inhand_icon_state = "nullrod"
-	force_on = 10
+	force_on = 20
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
-	bare_wound_bonus = 5
+	bare_wound_bonus = 15 //its very pointy
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -409,8 +407,8 @@
 		inhand_icon_state = on_inhand_icon_state
 		w_class = weight_class_on
 		force = force_on
-		attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
-		attack_verb_simple = list("smack", "strike", "crack", "beat")
+		attack_verb_continuous = list("stabs", "shanks")
+		attack_verb_simple = list("stab", "shank")
 	else
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
@@ -425,8 +423,8 @@
 	add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
-	name = "contractor baton"
-	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
+	name = "contractor knife"
+	desc = "A compact, specialised knife assigned to Syndicate contractors. Applies very deadly stabs to targets."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "contractor_baton_0"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -437,8 +435,8 @@
 	item_flags = NONE
 	force = 5
 
-	cooldown = 25
-	stamina_damage = 85
+	cooldown = 1
+	stamina_damage = 0
 	affect_cyborg = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
@@ -446,7 +444,7 @@
 	on_icon_state = "contractor_baton_1"
 	off_icon_state = "contractor_baton_0"
 	on_inhand_icon_state = "contractor_baton"
-	force_on = 16
+	force_on = 30
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
 
@@ -454,8 +452,8 @@
 	return span_danger("The baton is still charging!")
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
-	target.stuttering += 20
+	target.Jitter(0)
+	target.stuttering += 0
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"

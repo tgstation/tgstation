@@ -1,6 +1,6 @@
 /obj/item/melee/baton
-	name = "stun baton"
-	desc = "A stun baton for incapacitating people with. Left click to stun, right click to harm."
+	name = "electro-knife"
+	desc = "A battery-powered knife for stabbing criminals, with a one-shot short-duration stun if the battery is charged. Left click to stun, right click to harm."
 
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
@@ -8,16 +8,16 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 
-	force = 10
-	attack_verb_continuous = list("beats")
-	attack_verb_simple = list("beat")
+	force = 20 //die criminal scum
+	attack_verb_continuous = list("stabs")
+	attack_verb_simple = list("stab")
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 
-	throwforce = 7
-	var/throw_stun_chance = 35
+	throwforce = 12
+	var/throw_stun_chance = 0
 
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
@@ -27,16 +27,14 @@
 	var/turned_on = FALSE
 	var/activate_sound = "sparks"
 
-	var/attack_cooldown_check = 0 SECONDS
-	var/attack_cooldown = 2.5 SECONDS
 	var/stun_sound = 'sound/weapons/egloves.ogg'
 
-	var/confusion_amt = 10
-	var/stamina_loss_amt = 60
+	var/confusion_amt = 0
+	var/stamina_loss_amt = 0 //we dont need stamina damage where we're going
 	var/apply_stun_delay = 2 SECONDS
-	var/stun_time = 5 SECONDS
+	var/stun_time = 1 SECONDS
 
-	var/convertible = TRUE //if it can be converted with a conversion kit
+	var/convertible = FALSE //real men use knives
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -101,14 +99,10 @@
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(cell)
-		//Note this value returned is significant, as it will determine
-		//if a stun is applied or not
-		. = cell.use(chrgdeductamt)
-		if(turned_on && cell.charge < cell_hit_cost)
-			//we're below minimum, turn off
-			turned_on = FALSE
-			update_appearance()
-			playsound(src, activate_sound, 75, TRUE, -1)
+		. = cell.charge = 0 //no upgrading allowed
+		turned_on = FALSE
+		update_appearance()
+		playsound(src, activate_sound, 75, TRUE, -1)
 
 
 /obj/item/melee/baton/update_icon_state()
@@ -124,7 +118,7 @@
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
+		. += span_notice("\The [src] contains a power cell.") //the whole charge is used so the amount left is unimportant
 	else
 		. += span_warning("\The [src] does not have a power source installed.")
 
@@ -161,7 +155,7 @@
 	toggle_on(user)
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
-	if(cell && cell.charge >= cell_hit_cost)
+	if(cell && cell.charge >= 0)
 		turned_on = !turned_on
 		to_chat(user, span_notice("[src] is now [turned_on ? "on" : "off"]."))
 		playsound(src, activate_sound, 75, TRUE, -1)
@@ -179,7 +173,7 @@
 		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self with [src]!"), \
 							span_userdanger("You accidentally hit yourself with [src]!"))
-		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
+		user.Knockdown(stun_time) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
 		return TRUE
 	return FALSE
@@ -201,17 +195,15 @@
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				baton_effect(M, user)
+			baton_effect(M, user)
 		..()
 		return
 	else if(turned_on)
-		if(attack_cooldown_check <= world.time)
-			if(baton_effect(M, user))
-				user.do_attack_animation(M)
-				return
+		if(baton_effect(M, user))
+			user.do_attack_animation(M)
+			return
 		else
-			to_chat(user, span_danger("The baton is still charging!"))
+			to_chat(user, span_danger("The knife is still charging!"))
 			return
 	else if(user.combat_mode && !turned_on)
 		..()
@@ -253,10 +245,8 @@
 
 	playsound(src, stun_sound, 50, TRUE, -1)
 
-	attack_cooldown_check = world.time + attack_cooldown
-
 	ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT)
-	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), attack_cooldown)
+	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), 0)
 
 	return 1
 
@@ -287,7 +277,7 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton. Left click to stun, right click to harm."
+	desc = "An improvised baton with enough juice for one stun. Left click to stun, right click to harm."
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
@@ -296,7 +286,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stun_time = 5 SECONDS
+	stun_time = 1 SECONDS
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
@@ -318,15 +308,15 @@
 
 /obj/item/melee/baton/boomerang
 	name = "\improper OZtek Boomerang"
-	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
+	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at killing criminals. Just be careful to catch it when thrown!"
 	throw_speed = 1
 	icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
 	force = 5
-	throwforce = 5
+	throwforce = 30 //crikey
 	throw_range = 5
 	cell_hit_cost = 2000
-	throw_stun_chance = 99  //Have you prayed today?
+	throw_stun_chance = 0 //>ranged stuns
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
