@@ -1,0 +1,7 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - spellcheck: "The grammar of the box and organ box suicides has been slightly improved."
+  - rscadd: "Attempting to performing an organ box suicide while you're immune to cold now makes you perform a box suicide with it instead."
+  - bugfix: "Successfully performing the non-cold immune variant of the organ box suicide now causes you to die of burn damage, not brute damage."
+  - rscadd: "A special suicide has been added to space helmets. It has a special variant for if you attempt it in a cold environment (while not immune to cold)."
