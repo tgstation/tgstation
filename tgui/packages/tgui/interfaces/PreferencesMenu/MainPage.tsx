@@ -378,39 +378,6 @@ const PreferenceList = (props: {
       background: "rgba(0, 0, 0, 0.5)",
       padding: "4px",
     }}>
-      {/* <Stack vertical fill>
-        { Object.entries(props.preferences).map(([featureId, value]) => {
-          const feature = features[featureId];
-
-          if (feature === undefined) {
-            return (
-              <Stack.Item key={featureId}>
-                <b>Feature {featureId} is not recognized.</b>
-              </Stack.Item>
-            );
-          }
-
-          return (
-            <Stack.Item key={featureId}>
-              <Stack fill>
-                <Stack.Item grow>
-                  <b>{feature.name}</b>
-                </Stack.Item>
-
-                <Stack.Item>
-                  <FeatureValue
-                    act={props.act}
-                    feature={feature}
-                    featureId={featureId}
-                    value={value}
-                  />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-          );
-        })}
-      </Stack> */}
-
       <LabeledList>
         { Object.entries(props.preferences).map(([featureId, value]) => {
           const feature = features[featureId];
@@ -424,22 +391,14 @@ const PreferenceList = (props: {
           }
 
           return (
-            <Stack.Item key={featureId}>
-              <Stack fill>
-                <Stack.Item grow>
-                  <b>{feature.name}</b>
-                </Stack.Item>
-
-                <Stack.Item>
-                  <FeatureValue
-                    act={props.act}
-                    feature={feature}
-                    featureId={featureId}
-                    value={value}
-                  />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
+            <LabeledList.Item key={featureId} label={feature.name}>
+              <FeatureValue
+                act={props.act}
+                feature={feature}
+                featureId={featureId}
+                value={value}
+              />
+            </LabeledList.Item>
           );
         })}
       </LabeledList>
