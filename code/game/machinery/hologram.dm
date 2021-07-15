@@ -357,11 +357,23 @@ Possible to do for anyone motivated enough:
 	This may change in the future but for now will suffice.*/
 	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
 		activate_holo(user)
-	else//If there is a hologram, remove it.
+	else//If there is a hologram, remove it, and jump to your last location.
 		user.eyeobj.loc = user.lastloc
 		user.lastloc = null
 		clear_holo(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/holopad/AICtrlClick(mob/living/silicon/ai/user)
+	if (!istype(user))
+		return
+	if (!on_network)
+		return
+	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, then this button does nothing.
+		return
+	else//If there is a hologram, remove it, but dont jump to your last location.
+		user.lastloc = null
+		clear_holo(user)
+	return
 
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))
