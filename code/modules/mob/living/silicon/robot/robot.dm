@@ -49,21 +49,20 @@
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
 		make_shell()
-
-	//MMI stuff. Held togheter by magic. ~Miauw
-	else if(!mmi || !mmi.brainmob)
-		mmi = new (src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
-		mmi.brain.organ_flags |= ORGAN_FROZEN
-		mmi.brain.name = "[real_name]'s brain"
-		mmi.name = "[initial(mmi.name)]: [real_name]"
-		mmi.set_brainmob(new /mob/living/brain(mmi))
-		mmi.brainmob.name = src.real_name
-		mmi.brainmob.real_name = src.real_name
-		mmi.brainmob.container = mmi
-		mmi.update_appearance()
-
-	setup_default_name()
+	else
+		setup_default_name()
+		//MMI stuff. Held togheter by magic. ~Miauw
+		if(!mmi || !mmi.brainmob)
+			mmi = new (src)
+			mmi.brain = new /obj/item/organ/brain(mmi)
+			mmi.brain.organ_flags |= ORGAN_FROZEN
+			mmi.brain.name = "[real_name]'s brain"
+			mmi.name = "[initial(mmi.name)]: [real_name]"
+			mmi.set_brainmob(new /mob/living/brain(mmi))
+			mmi.brainmob.name = src.real_name
+			mmi.brainmob.real_name = src.real_name
+			mmi.brainmob.container = mmi
+			mmi.update_appearance()
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
