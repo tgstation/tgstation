@@ -119,7 +119,6 @@ GLOBAL_VAR(preferences_species_data)
 	var/pixel_size = 0
 	///What scaling method should we use? Distort means nearest neighbor
 	var/scaling_method = SCALING_METHOD_DISTORT
-	var/uplink_spawn_loc = UPLINK_PDA
 	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
 	var/playtime_reward_cloak = FALSE
 

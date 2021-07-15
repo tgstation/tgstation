@@ -1,6 +1,6 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../../backend";
-import { Box, Button, ByondUi, FitText, Flex, Icon, Input, NumberInput, Popper, Stack } from "../../components";
+import { Box, Button, ByondUi, Dropdown, FitText, Flex, Icon, Input, LabeledList, NumberInput, Popper, Stack } from "../../components";
 import { createSetPreference, PreferencesMenuData } from "./data";
 import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
@@ -304,7 +304,6 @@ const FeatureValue = (props: {
   act: typeof sendAct,
 }, context) => {
   const feature = props.feature;
-  const valueType = feature.valueType;
 
   const [predictedValue, setPredictedValue] = useLocalState(
     context,
@@ -312,7 +311,26 @@ const FeatureValue = (props: {
     props.value,
   );
 
+  const changeValue = (newValue: string) => {
+    setPredictedValue(newValue);
+    createSetPreference(props.act, props.featureId)(newValue);
+  };
+
   switch (feature.valueType) {
+    case ValueType.Choiced:
+      // MOTHBLOCKS TODO: Sort
+      return (<Dropdown
+        selected={predictedValue}
+        displayText={feature.choices[predictedValue as string]}
+        onSelected={changeValue}
+        width="120px"
+        options={Object.entries(feature.choices).map(([dataValue, label]) => {
+          return {
+            displayText: label,
+            value: dataValue,
+          };
+        })}
+      />);
     case ValueType.Color:
       return (
         <Button onClick={() => {
@@ -340,8 +358,7 @@ const FeatureValue = (props: {
     case ValueType.Number:
       return (<NumberInput
         onChange={(e, value) => {
-          setPredictedValue(value);
-          createSetPreference(props.act, props.featureId)(value);
+          changeValue(value);
         }}
         minValue={feature.minimum}
         maxValue={feature.maximum}
@@ -361,7 +378,7 @@ const PreferenceList = (props: {
       background: "rgba(0, 0, 0, 0.5)",
       padding: "4px",
     }}>
-      <Stack vertical fill>
+      {/* <Stack vertical fill>
         { Object.entries(props.preferences).map(([featureId, value]) => {
           const feature = features[featureId];
 
@@ -392,7 +409,40 @@ const PreferenceList = (props: {
             </Stack.Item>
           );
         })}
-      </Stack>
+      </Stack> */}
+
+      <LabeledList>
+        { Object.entries(props.preferences).map(([featureId, value]) => {
+          const feature = features[featureId];
+
+          if (feature === undefined) {
+            return (
+              <Stack.Item key={featureId}>
+                <b>Feature {featureId} is not recognized.</b>
+              </Stack.Item>
+            );
+          }
+
+          return (
+            <Stack.Item key={featureId}>
+              <Stack fill>
+                <Stack.Item grow>
+                  <b>{feature.name}</b>
+                </Stack.Item>
+
+                <Stack.Item>
+                  <FeatureValue
+                    act={props.act}
+                    feature={feature}
+                    featureId={featureId}
+                    value={value}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          );
+        })}
+      </LabeledList>
     </Stack.Item>
   );
 };

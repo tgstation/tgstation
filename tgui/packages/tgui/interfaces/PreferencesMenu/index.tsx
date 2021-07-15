@@ -58,7 +58,7 @@ export const PreferencesMenu = (props, context) => {
   }
 
   return (
-    <Window title="Character Preferences" width={780} height={770} scrollable>
+    <Window title="Character Preferences" width={920} height={770} scrollable>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
