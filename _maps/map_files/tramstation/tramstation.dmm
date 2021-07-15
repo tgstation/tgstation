@@ -42588,6 +42588,9 @@
 /obj/structure/chair/sofa/right{
 	dir = 8
 	},
+/obj/item/toy/plush/moth{
+	name = "Moffgomery Mofferson"
+	},
 /turf/open/floor/carpet/blue,
 /area/medical/psychology)
 "mnj" = (
