@@ -430,7 +430,7 @@
 		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
 		if(Holopad)
 			cam_prev = get_turf(eyeobj)
-			src.eyeobj.setLoc(Holopad)
+			eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
