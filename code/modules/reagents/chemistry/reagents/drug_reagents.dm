@@ -587,7 +587,7 @@
 
 /datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
-	if(prob(8))
+	if(DT_PROB(7.5, delta_time))
 		M.emote("giggle")
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
@@ -626,12 +626,18 @@
 	M.Jitter(2 * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+	if(volume < 10)
+		return
+	for(var/possible_purger as anything in M.reagents.reagent_list)
+		if(istype(possible_purger, /datum/reagent/medicine/c2/multiver) || istype(possible_purger, /datum/reagent/medicine/haloperidol))
+			M.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
+			break
 
 /datum/reagent/drug/kroncaine/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time)
 	M.Jitter(10 * REM * delta_time)
-	if(prob(15))
+	if(DT_PROB(10, delta_time))
 		to_chat(M, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
 
 /*
@@ -639,7 +645,6 @@
 TODO:
 
 saturnx implementation
-	make saturx make you unknown
 	make saturnx colour matrix linger longer in the desaturated region.
 	add blur(angular?) filter or staic wave filter
 
@@ -650,7 +655,6 @@ blastoff implementation
 mushroom_hallucinogen implementation
 	add an animated wave filter.
 
-add adrenal crisis disease
 make sure the design doc and code aligns.
 
 Testing
