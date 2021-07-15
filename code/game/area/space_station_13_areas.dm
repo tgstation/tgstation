@@ -848,6 +848,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/atmos/upper
 	name = "Upper Atmospherics"
 
+/area/engineering/atmos/project
+	name = "Atmospherics Project Room"
+
+
 /area/engineering/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"

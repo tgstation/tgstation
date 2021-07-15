@@ -7,6 +7,9 @@
 	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickNoInteract(src, A)
 		return
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		ranged_secondary_attack(A, modifiers)
+		return
 
 	if(ishuman(A))
 		if(A in drained_mobs)
@@ -14,6 +17,13 @@
 		else if(in_range(src, A))
 			Harvest(A)
 
+/mob/living/simple_animal/revenant/ranged_secondary_attack(atom/target, modifiers)
+	if(revealed || notransform || inhibited || !Adjacent(target) || !incorporeal_move_check(target))
+		return
+	var/icon/I = icon(target.icon,target.icon_state,target.dir)
+	var/orbitsize = (I.Width()+I.Height())*0.5
+	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+	orbit(target, orbitsize)
 
 //Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)

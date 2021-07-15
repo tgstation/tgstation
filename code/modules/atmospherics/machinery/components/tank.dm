@@ -10,7 +10,7 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-	custom_materials = list(/datum/material/alloy/plasteel=4000, /datum/material/iron=20000)
+	custom_materials = list(/datum/material/iron=20000) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
 	material_flags = MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -218,6 +218,8 @@
 		leaver.update_appearance()
 
 	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
+		if(joiner == src)
+			continue
 		var/datum/gas_mixture/joiner_share = joiner.air_contents
 		if(joiner_share)
 			air_contents.merge(joiner_share)
@@ -345,8 +347,8 @@
 
 /obj/machinery/atmospherics/components/tank/air/Initialize()
 	. = ..()
-	FillToPressure(/datum/gas/oxygen, safety_margin=0.1)
-	FillToPressure(/datum/gas/nitrogen, safety_margin=0.5)
+	FillToPressure(/datum/gas/oxygen, safety_margin=(O2STANDARD * 0.5))
+	FillToPressure(/datum/gas/nitrogen, safety_margin=(N2STANDARD * 0.5))
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
@@ -542,7 +544,6 @@
 		return
 	var/obj/machinery/atmospherics/components/tank/new_tank = new(build_location)
 	var/list/new_custom_materials = list()
-	new_custom_materials[/datum/material/alloy/plasteel] = 4000
 	new_custom_materials[material_end_product] = 20000
 	new_tank.set_custom_materials(new_custom_materials)
 	to_chat(user, "<span class='notice'>[new_tank] has been sealed and is ready to accept gases.</span>")

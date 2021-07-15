@@ -244,6 +244,7 @@
 				visible_message(span_danger("[user] tackles [src] down!"), \
 								span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
 				to_chat(user, span_danger("You tackle [src] down!"))
+		return TRUE
 
 	if(!user.combat_mode)
 		..() //shaking
@@ -287,6 +288,7 @@
 			visible_message(span_danger("[user] tackles [src] down!"), \
 							span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
 			to_chat(user, span_danger("You tackle [src] down!"))
+		return TRUE
 
 	if(user.combat_mode)
 		if (w_uniform)

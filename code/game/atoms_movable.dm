@@ -3,7 +3,7 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 
-	///how many times a this movable was moved since Moved() was last called
+	///how many times a this movable had movement procs called on it since Moved() was last called
 	var/move_stacks = 0
 	var/last_move = null
 	var/last_move_time = 0
@@ -74,6 +74,11 @@
 
 	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
 	var/set_dir_on_move = TRUE
+
+	/// The degree of thermal insulation that mobs in list/contents have from the external environment, between 0 and 1
+	var/contents_thermal_insulation = 0
+	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
+	var/contents_pressure_protection = 0
 
 
 /atom/movable/Initialize(mapload)
@@ -363,6 +368,7 @@
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
+	move_stacks++
 	loc = new_loc
 	Moved(old_loc)
 
@@ -561,8 +567,11 @@
 		update_parallax_contents()
 
 	move_stacks--
-	if(move_stacks > 0)
+	if(move_stacks > 0) //we want only the first Moved() call in the stack to send this signal, all the other ones have an incorrect old_loc
 		return
+	if(move_stacks < 0)
+		stack_trace("move_stacks is negative in Moved()!")
+		move_stacks = 0 //setting it to 0 so that we dont get every movable with negative move_stacks runtiming on every movement
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs)
 
