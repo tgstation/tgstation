@@ -418,39 +418,15 @@
 				if(PORT_TYPE_SIGNAL)
 					balloon_alert(usr, "triggered [port.name]")
 					port.set_input(COMPONENT_SIGNAL)
+				if(PORT_TYPE_LIST)
+					var/client/user = usr.client
+					if(!check_rights_for(user, R_ADMIN))
+						return
 
-			if(port.datatype != PORT_TYPE_LIST)
-				return TRUE
+					if(!port.input_value)
+						port.input_value = list()
 
-			if(!port.input_value)
-				port.input_value = list()
-
-			var/list/input_list = port.input_value
-
-			if(params["set_index"])
-				var/number = text2num(params["index"])
-
-				if(!number)
-					input_list[params["index"]] = params["value"]
-				else if(WITHIN_RANGE(number, input_list))
-					input_list[number] = params["value"]
-
-			if(params["add_entry"])
-				var/key = params["key"]
-				var/value = params["value"]
-				if(!value)
-					input_list += key
-				else
-					input_list[key] = value
-
-			if(params["remove_entry"])
-				var/number = text2num(params["index"])
-
-				if(!number)
-					input_list -= params["index"]
-				else if(WITHIN_RANGE(number, input_list))
-					input_list.Remove(input_list[number])
-
+					user.debug_variables(port.input_value)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])

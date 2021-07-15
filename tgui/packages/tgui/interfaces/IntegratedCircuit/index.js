@@ -92,6 +92,17 @@ const FUNDAMENTAL_DATA_TYPES = {
       />
     );
   },
+  "list": (props, context) => {
+    const { name, setValue, color } = props;
+    return (
+      <Button
+        content={name}
+        color="transparent"
+        compact
+        onClick={() => setValue(null)}
+      />
+    );
+  },
   "signal": (props, context) => {
     const { name, setValue } = props;
     return (
