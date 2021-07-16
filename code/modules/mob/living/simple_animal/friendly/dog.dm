@@ -327,7 +327,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 			to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
 			return
 		if (nofur)
-			to_chat(user, span_warning("You can't shave this corgi, [p_they()] doesn't have a fur coat!"))
+			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
 			return
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [O]."), span_notice("You start to shave [src] using \the [O]..."))
 		if(do_after(user, 50, target = src))
