@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a case where a PDA's action button icon did not properly update upon light toggle."
