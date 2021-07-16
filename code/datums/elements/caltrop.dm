@@ -43,7 +43,7 @@
 	else
 		RegisterSignal(get_turf(target), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-/datum/element/caltrop/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/datum/element/caltrop/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(!prob(probability))

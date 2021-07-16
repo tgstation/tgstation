@@ -7,7 +7,7 @@
 /area/icemoon/surface/outdoors/unexplored)
 "c" = (
 /turf/open/water/cursed_spring,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/noteleport)
 "d" = (
 /obj/item/paper/crumpled{
 	info = "When one falls into this hot spring, they shall forever be turned into..."

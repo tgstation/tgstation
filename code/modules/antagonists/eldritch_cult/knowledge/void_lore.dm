@@ -191,7 +191,7 @@
 	waltzing.client?.give_award(/datum/award/achievement/misc/void_ascension, waltzing)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [waltzing.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 
-	sound_loop = new(list(user),TRUE,TRUE)
+	sound_loop = new(user, TRUE, TRUE)
 	return ..()
 
 /datum/eldritch_knowledge/final/void_final/on_death()

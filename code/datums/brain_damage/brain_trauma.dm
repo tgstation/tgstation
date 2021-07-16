@@ -34,7 +34,8 @@
 
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
-	to_chat(owner, gain_text)
+	if(gain_text)
+		to_chat(owner, gain_text)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
