@@ -122,6 +122,7 @@
 #include "code\__DEFINES\robots.dm"
 #include "code\__DEFINES\role_preferences.dm"
 #include "code\__DEFINES\rust_g.dm"
+#include "code\__DEFINES\rust_g_overrides.dm"
 #include "code\__DEFINES\say.dm"
 #include "code\__DEFINES\shuttles.dm"
 #include "code\__DEFINES\sight.dm"
