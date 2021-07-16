@@ -20,7 +20,7 @@
 	var/datum/port/output/oxy
 	/// Health
 	var/datum/port/output/health
-	power_usage_per_input = 100
+	power_usage_per_input = 20
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/max_range = 5
