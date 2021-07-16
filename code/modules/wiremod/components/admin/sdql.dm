@@ -11,8 +11,6 @@
 	/// SDQL Operation to invoke
 	var/datum/port/input/sdql_operation
 
-	var/client/interactor
-
 	var/datum/port/output/results
 
 
