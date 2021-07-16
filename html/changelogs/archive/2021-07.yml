@@ -491,3 +491,19 @@
   - bugfix: Eggs now work when cracked into glasses
   tralezab:
   - balance: space dragons are rarer
+2021-07-16:
+  ATHATH:
+  - spellcheck: The grammar of the box and organ box suicides has been slightly improved.
+  - rscadd: Attempting to performing an organ box suicide while you're immune to cold
+      now makes you perform a box suicide with it instead.
+  - bugfix: Successfully performing the non-cold immune variant of the organ box suicide
+      now causes you to die of burn damage, not brute damage.
+  - rscadd: A special suicide has been added to space helmets. It has a special variant
+      for if you attempt it in a cold environment (while not immune to cold).
+  Mordent:
+  - bugfix: Hover effect on tgui Tabs made less visually laggy.
+  Watermelon914:
+  - rscadd: Added a more complex AI to carps that allow you to tell them to attack
+      people or to follow you. These carps can be tamed with raw meat, which'll then
+      give you control over them if you succeed in taming them. A carp will only be
+      tamed to 1 person.

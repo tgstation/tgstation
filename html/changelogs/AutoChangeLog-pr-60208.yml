@@ -1,4 +1,0 @@
-author: "Mordent"
-delete-after: True
-changes: 
-  - bugfix: "Hover effect on tgui Tabs made less visually laggy."

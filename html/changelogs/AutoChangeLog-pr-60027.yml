@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - rscadd: "Added a more complex AI to carps that allow you to tell them to attack people or to follow you. These carps can be tamed with raw meat, which'll then give you control over them if you succeed in taming them. A carp will only be tamed to 1 person."
