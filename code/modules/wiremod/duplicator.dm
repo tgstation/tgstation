@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	set name = "Load Circuit"
 	set category = "Admin.Fun"
 
-	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
+	if(!check_rights(R_VAREDIT))
 		return
 
 	var/list/errors = list()

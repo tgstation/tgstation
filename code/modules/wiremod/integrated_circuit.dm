@@ -270,7 +270,7 @@
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
 
-	.["is_admin"] = check_rights_for(user.client, R_ADMIN)
+	.["is_admin"] = check_rights_for(user.client, R_VAREDIT)
 
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
@@ -286,13 +286,13 @@
 	. = ..()
 	// Extra protection because ui_state will not close the UI if they already have the ui open,
 	// as ui_state is only set during
-	if(admin_only && !check_rights_for(user.client, R_ADMIN))
-		return UI_CLOSE
+	if(admin_only)
+		if(!check_rights_for(user.client, R_VAREDIT))
+			return UI_CLOSE
+		else
+			return UI_INTERACTIVE
 
 /obj/item/integrated_circuit/ui_state(mob/user)
-	if(admin_only)
-		return GLOB.admin_state
-
 	if(!shell)
 		return GLOB.hands_state
 	return GLOB.physical_obscured_state
@@ -474,7 +474,7 @@
 			. = TRUE
 		if("save_circuit")
 			var/client/saver = usr.client
-			if(!check_rights_for(saver, R_ADMIN))
+			if(!check_rights_for(saver, R_VAREDIT))
 				return
 			var/temp_file = file("data/CircuitDownloadTempFile")
 			fdel(temp_file)
