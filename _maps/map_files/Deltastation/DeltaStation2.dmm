@@ -13177,7 +13177,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "bSl" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
@@ -37750,6 +37750,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "enj" = (
@@ -38767,6 +38768,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "eDl" = (
@@ -45358,7 +45360,7 @@
 /obj/structure/displaycase/forsale/kitchen,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "guW" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
@@ -53578,10 +53580,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1;
-	name = "External to Filter"
-	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "iJD" = (
@@ -53670,7 +53669,7 @@
 "iKP" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/service/bar)
+/area/service/bar/atrium)
 "iKS" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/candle_box{
@@ -56105,7 +56104,7 @@
 	},
 /obj/item/lighter,
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "jvy" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall,
@@ -63682,6 +63681,10 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"lsy" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/security/checkpoint/medical)
 "lsG" = (
 /turf/open/floor/iron,
 /area/security/prison)
@@ -65608,8 +65611,8 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "lUX" = (
@@ -74396,10 +74399,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/machinery/flasher{
-	id = "hopflash";
-	pixel_y = 28
 	},
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central/fore)
@@ -83543,7 +83542,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/defibrillator_mount/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "qwx" = (
@@ -98454,7 +98453,7 @@
 	req_one_access_txt = "25;28"
 	},
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "ume" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
@@ -107174,7 +107173,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "wEL" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -112612,7 +112611,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "yhU" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder{
@@ -149532,7 +149531,7 @@ wPK
 rBV
 ffo
 gvd
-aXI
+ncV
 hFM
 wtr
 unM
@@ -149789,7 +149788,7 @@ ffo
 ffo
 ffo
 bvm
-aXI
+ncV
 vWE
 xXQ
 hXi
@@ -150046,7 +150045,7 @@ ouP
 jiM
 ffo
 gvd
-aXI
+ncV
 wrg
 euO
 vsR
@@ -150303,7 +150302,7 @@ ffo
 ffo
 ffo
 bvm
-aXI
+ncV
 kUs
 iJD
 mvD
@@ -150560,7 +150559,7 @@ uGU
 szL
 ffo
 wNq
-aXI
+ncV
 ude
 euO
 unM
@@ -150817,7 +150816,7 @@ ffo
 ffo
 ffo
 bvm
-aXI
+ncV
 dZu
 jNP
 krF
@@ -151074,7 +151073,7 @@ tlv
 fMD
 ffo
 lCh
-aXI
+ncV
 mvi
 qMY
 snN
@@ -151331,10 +151330,10 @@ ffo
 ffo
 ffo
 fPb
-aXI
-aXI
-aXI
-aXI
+ncV
+ncV
+ncV
+ncV
 iKP
 ncV
 ncV
@@ -158088,11 +158087,11 @@ cPC
 cRd
 cRc
 cUG
-cUG
+lsy
 cUG
 ryr
 cRc
-cUG
+lsy
 cUG
 dfD
 dhm
