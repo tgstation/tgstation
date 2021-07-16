@@ -358,10 +358,10 @@ Possible to do for anyone motivated enough:
 	if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
 		activate_holo(user)
 	else//If there is a hologram, remove it, and jump to your last location.
-		if(user.lastloc)//only jump to your last location if your lastloc is set, which only sets if you projected from a request message.
-			SetLoc(user.eyeobj) = user.lastloc
-			user.lastloc = null
 		clear_holo(user)
+		if(user.lastloc)//only jump to your last location if your lastloc is set, which only sets if you projected from a request message.
+			user.eyeobj.setLoc(user.lastloc)
+			user.lastloc = null
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/holopad/AICtrlClick(mob/living/silicon/ai/user)
@@ -422,7 +422,7 @@ Possible to do for anyone motivated enough:
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
-			SetLoc(AI.eyeobj) = get_turf(src) //ensure the AI camera moves to the holopad
+			AI.eyeobj.setLoc(get_turf(src)) //ensure the AI camera moves to the holopad
 		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state
