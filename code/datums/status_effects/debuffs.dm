@@ -984,7 +984,7 @@
 	if(isnum(amount_left))
 		to_chat(new_owner, "<span class='userdanger'>You're covered in ants!</span>")
 		ants_remaining += amount_left
-		RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
+		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
 
 /datum/status_effect/ants/refresh(effect, amount_left)
