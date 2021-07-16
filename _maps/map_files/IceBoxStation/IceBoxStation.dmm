@@ -14385,6 +14385,11 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
+"bEy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "bEC" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing)
@@ -95568,7 +95573,7 @@ kwD
 bzr
 ocR
 bCf
-cjr
+bEy
 bxo
 boP
 boP
