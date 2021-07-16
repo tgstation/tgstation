@@ -23,36 +23,36 @@
 	icon_state = "implantcase-[imp ? imp.implant_color : 0]"
 	return ..()
 
-/obj/item/implantcase/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/pen))
+/obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, params)
+	if(istype(used_item, /obj/item/pen))
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
 		var/new_name = stripped_input(user, "What would you like the label to be?", name, null)
-		if((user.get_active_held_item() != I) || !user.canUseTopic(src, BE_CLOSE))
+		if((user.get_active_held_item() != used_item) || !user.canUseTopic(src, BE_CLOSE))
 			return
 		if(new_name)
 			name = "implant case - '[new_name]'"
 		else
 			name = "implant case"
-	else if(istype(I, /obj/item/implanter))
-		var/obj/item/implanter/implanter_used = I
-		if(implanter_used.imp && !imp)
+	else if(istype(used_item, /obj/item/implanter))
+		var/obj/item/implanter/used_implanter = used_item
+		if(used_implanter.imp && !imp)
 			//implanter to case implant transfer
-			implanter_used.imp.forceMove(src)
-			imp = implanter_used.imp
-			implanter_used.imp = null
+			used_implanter.imp.forceMove(src)
+			imp = used_implanter.imp
+			used_implanter.imp = null
 			update_appearance()
 			reagents = imp.reagents
-			implanter_used.update_appearance()
-		else if(!implanter_used.imp && imp)
+			used_implanter.update_appearance()
+		else if(!used_implanter.imp && imp)
 			//implant case to implanter implant transfer
-			imp.forceMove(implanter_used)
-			implanter_used.imp = imp
+			imp.forceMove(used_implanter)
+			used_implanter.imp = imp
 			imp = null
 			reagents = null
 			update_appearance()
-			implanter_used.update_appearance()
+			used_implanter.update_appearance()
 	else
 		return ..()
 
