@@ -51,7 +51,7 @@
 		make_shell()
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
-		if(!mmi || !mmi.brainmob)
+		if(!mmi?.brainmob)
 			mmi = new (src)
 			mmi.brain = new /obj/item/organ/brain(mmi)
 			mmi.brain.organ_flags |= ORGAN_FROZEN
