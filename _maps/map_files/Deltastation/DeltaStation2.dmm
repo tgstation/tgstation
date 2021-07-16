@@ -53580,7 +53580,10 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1;
+	name = "External to Filter"
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "iJD" = (
@@ -74399,6 +74402,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "hopflash";
+	pixel_y = 28
 	},
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central/fore)
@@ -149531,7 +149538,7 @@ wPK
 rBV
 ffo
 gvd
-ncV
+aXI
 hFM
 wtr
 unM
@@ -149788,7 +149795,7 @@ ffo
 ffo
 ffo
 bvm
-ncV
+aXI
 vWE
 xXQ
 hXi
@@ -150045,7 +150052,7 @@ ouP
 jiM
 ffo
 gvd
-ncV
+aXI
 wrg
 euO
 vsR
@@ -150302,7 +150309,7 @@ ffo
 ffo
 ffo
 bvm
-ncV
+aXI
 kUs
 iJD
 mvD
@@ -150559,7 +150566,7 @@ uGU
 szL
 ffo
 wNq
-ncV
+aXI
 ude
 euO
 unM
@@ -150816,7 +150823,7 @@ ffo
 ffo
 ffo
 bvm
-ncV
+aXI
 dZu
 jNP
 krF
@@ -151073,7 +151080,7 @@ tlv
 fMD
 ffo
 lCh
-ncV
+aXI
 mvi
 qMY
 snN
@@ -151330,10 +151337,10 @@ ffo
 ffo
 ffo
 fPb
-ncV
-ncV
-ncV
-ncV
+aXI
+aXI
+aXI
+aXI
 iKP
 ncV
 ncV
