@@ -257,4 +257,20 @@
 	if(cell)
 		cell.emp_act(severity)
 
+/obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
+	var/datum/gas_mixture/environment = user.loc.return_air()
+	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
+		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return BRUTELOSS
+	user.say("You want proof? I'll give you proof! Here's proof of what'll happen to you if you stay here with your stuff!", forced = "space helmet suicide")
+	user.visible_message(span_suicide("[user] is removing [user.p_their()] helmet to make a point! Yo, holy shit, [user.p_they()] dead!")) //the use of p_they() instead of p_their() here is intentional
+	user.adjust_bodytemperature(-300)
+	user.apply_status_effect(/datum/status_effect/freon)
+	if(!ishuman(user))
+		return FIRELOSS
+	var/mob/living/carbon/human/humanafterall = user
+	var/datum/disease/advance/cold/pun = new //in the show, arnold survives his stunt, but catches a cold because of it
+	humanafterall.ForceContractDisease(pun, FALSE, TRUE) //this'll show up on health analyzers and the like
+	return FIRELOSS
+
 #undef THERMAL_REGULATOR_COST
