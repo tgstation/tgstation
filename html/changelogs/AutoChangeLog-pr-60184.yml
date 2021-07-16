@@ -1,0 +1,5 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - qol: "Holopad call Holograms now move in sync with their receiver pad."
+  - bugfix: "Fixed a Holodisk replay Hologram bug, and Hologram Rays not updating when the pad is moved."
