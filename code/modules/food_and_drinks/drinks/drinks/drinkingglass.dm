@@ -122,10 +122,11 @@
 		var/obj/item/food/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>[src] is full.</span>")
+				to_chat(user, span_notice("[src] is full."))
 			else
-				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 5)
+				to_chat(user, span_notice("You break [E] in [src]."))
+				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 2)
+				reagents.add_reagent(/datum/reagent/consumable/eggwhite, 4)
 				qdel(E)
 			return
 	else

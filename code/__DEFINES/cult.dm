@@ -28,6 +28,6 @@
 #define SOULS_TO_REVIVE 3
 #define BLOODCULT_EYE "f00"
 //soulstone & construct themes
+#define THEME_CULT "cult" 
 #define THEME_WIZARD "wizard"
-#define THEME_CULT "cult"
 #define THEME_HOLY "holy"

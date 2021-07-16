@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Ethereal players cannot erroneously revive during mafia games."

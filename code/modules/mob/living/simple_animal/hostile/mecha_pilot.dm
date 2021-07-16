@@ -71,7 +71,7 @@
 		return 0
 	LoseTarget() //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
-	set_targets_from(M)
+	targets_from = WEAKREF(M)
 	allow_movement_on_non_turfs = TRUE //duh
 	var/do_ranged = 0
 	for(var/equip in mecha.equipment)
@@ -97,7 +97,7 @@
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
-	set_targets_from(src)
+	targets_from = null
 
 	//Find a new mecha
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)

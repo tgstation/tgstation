@@ -8,7 +8,6 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
@@ -99,6 +98,14 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/pre_attack_secondary(atom/target, mob/living/user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, params)
+
+	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /**
@@ -127,6 +134,14 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby_secondary(obj/item/weapon, mob/user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY_SECONDARY, weapon, user, params)
+
+	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/I, mob/living/user, params)
@@ -168,7 +183,7 @@
 		return
 
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
 
 	if(!force)
@@ -190,6 +205,14 @@
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SECONDARY, victim, user, params)
+
+	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
@@ -213,8 +236,8 @@
 			no_damage = FALSE
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-		user.visible_message("<span class='danger'>[user] hits [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", \
-			"<span class='danger'>You hit [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(span_danger("[user] hits [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!"), \
+			span_danger("You hit [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!"), null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)
@@ -288,7 +311,7 @@
 		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [I]!"
 	if(user == src)
 		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [I]"
-	visible_message("<span class='danger'>[attack_message_spectator]</span>",\
-		"<span class='userdanger'>[attack_message_victim]</span>", null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, "<span class='danger'>[attack_message_attacker]</span>")
+	visible_message(span_danger("[attack_message_spectator]"),\
+		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("[attack_message_attacker]"))
 	return 1

@@ -59,7 +59,7 @@
 			var/obj/vehicle/sealed/mecha/M = MT.chassis
 			if(trim(message) && M)
 				to_chat(M.occupants, message)
-				to_chat(usr, "<span class='notice'>Message sent.</span>")
+				to_chat(usr, span_notice("Message sent."))
 				. = TRUE
 		if("shock")
 			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])

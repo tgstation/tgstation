@@ -38,16 +38,21 @@
 
 /obj/item/circuit_component/money_dispenser
 	display_name = "Money Dispenser"
+	display_desc = "Used to dispense money from the money bot. Money is taken from the internal storage of money."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The amount of money to dispense
 	var/datum/port/input/dispense_amount
+
+	/// Outputs a signal when it fails to output any money.
+	var/datum/port/output/on_fail
 
 	var/obj/structure/money_bot/attached_bot
 
 /obj/item/circuit_component/money_dispenser/Initialize()
 	. = ..()
 	dispense_amount = add_input_port("Amount", PORT_TYPE_NUMBER)
+	on_fail = add_output_port("On Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_dispenser/register_shell(atom/movable/shell)
 	. = ..()
@@ -67,6 +72,10 @@
 		return
 
 	var/to_dispense = clamp(dispense_amount.input_value, 0, attached_bot.stored_money)
+	if(!to_dispense)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	attached_bot.add_money(-to_dispense)
 	new /obj/item/holochip(drop_location(), to_dispense)
 
@@ -78,6 +87,7 @@
 /obj/item/circuit_component/money_bot
 	display_name = "Money Bot"
 	var/obj/structure/money_bot/attached_bot
+	display_desc = "Used to receive input signals when money is inserted into the money bot shell and also keep track of the total money in the shell."
 
 	/// Total money in the shell
 	var/datum/port/output/total_money

@@ -3,8 +3,8 @@
 	name = "Clown Operative"
 	roundend_category = "clown operatives"
 	antagpanel_category = "ClownOp"
-	outfit = /datum/outfit/syndicate/clownop
-	plasmaman_outfit = /datum/outfit/plasmaman/syndicate/clownop
+	nukeop_outfit = /datum/outfit/syndicate/clownop
+	suicide_cry = "HAPPY BIRTHDAY!!"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.assigned_role = "Clown Operative"
@@ -40,9 +40,9 @@
 	name = "Clown Operative Leader"
 	roundend_category = "clown operatives"
 	antagpanel_category = "ClownOp"
-	outfit = /datum/outfit/syndicate/clownop/leader
-	plasmaman_outfit = /datum/outfit/plasmaman/syndicate/clownop/leader
+	nukeop_outfit = /datum/outfit/syndicate/clownop/leader
 	challengeitem = /obj/item/nuclear_challenge/clownops
+	suicide_cry = "HAPPY BIRTHDAY!!"
 
 /datum/antagonist/nukeop/leader/clownop/apply_innate_effects(mob/living/mob_override)
 	. = ..()
