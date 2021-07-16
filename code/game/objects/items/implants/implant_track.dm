@@ -3,9 +3,9 @@
 	desc = "Track with this."
 	activated = FALSE
 	///for how many deciseconds after user death will the implant work?
-	var/lifespan_postmortem = 6000
+	var/lifespan_postmortem = 6000 
 	///will people implanted with this act as teleporter beacons?
-	var/allow_teleport = TRUE
+	var/allow_teleport = TRUE 
 	///The id of the timer that's qdeleting us
 	var/timerid
 
@@ -41,17 +41,14 @@
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
 				<b>Life:</b> 10 minutes after death of host.<BR>
-				<b>Important Notes:</b>"}
-	if(allow_teleport)
-		dat += " Implant also works as a teleporter beacon."
-	dat += {"<BR>
-			<HR>
-			<b>Implant Details:</b> <BR>
-			<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
-			<b>Special Features:</b><BR>
-			<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-			a malfunction occurs thereby securing safety of subject. The implant will melt and
-			disintegrate into bio-safe elements.<BR>
-			<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-			circuitry. As a result neurotoxins can cause massive damage."}
+				<b>Important Notes:</b> Implant also works as a teleporter beacon.<BR>
+				<HR>
+				<b>Implant Details:</b> <BR>
+				<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
+				<b>Special Features:</b><BR>
+				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
+				a malfunction occurs thereby securing safety of subject. The implant will melt and
+				disintegrate into bio-safe elements.<BR>
+				<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
+				circuitry. As a result neurotoxins can cause massive damage."}
 	return dat
