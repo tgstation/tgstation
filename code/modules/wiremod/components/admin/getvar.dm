@@ -38,6 +38,11 @@
 	var/atom/object = entity.input_value
 	var/var_name = variable_name.input_value
 	if(!var_name || !object)
+		output_value.set_output(null)
 		return
 
-	output_value.set_output(object.vv_get_var(var_name))
+	if(!object.can_vv_get(var_name) || !(var_name in object.vars))
+		output_value.set_output(null)
+		return
+
+	output_value.set_output(object.vars[var_name])

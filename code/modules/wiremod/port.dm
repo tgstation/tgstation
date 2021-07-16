@@ -251,7 +251,7 @@
 		RegisterSignal(input_value, COMSIG_PARENT_QDELETING, .proc/null_output)
 
 	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
-	if(trigger && send_update)
+	if(connected_component && trigger && send_update)
 		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.

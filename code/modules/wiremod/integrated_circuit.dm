@@ -282,6 +282,13 @@
 		return FALSE
 	return ..()
 
+/obj/item/integrated_circuit/ui_status(mob/user)
+	. = ..()
+	// Extra protection because ui_state will not close the UI if they already have the ui open,
+	// as ui_state is only set during
+	if(admin_only && !check_rights_for(user.client, R_ADMIN))
+		return UI_CLOSE
+
 /obj/item/integrated_circuit/ui_state(mob/user)
 	if(admin_only)
 		return GLOB.admin_state
@@ -418,15 +425,6 @@
 				if(PORT_TYPE_SIGNAL)
 					balloon_alert(usr, "triggered [port.name]")
 					port.set_input(COMPONENT_SIGNAL)
-				if(PORT_TYPE_LIST)
-					var/client/user = usr.client
-					if(!check_rights_for(user, R_ADMIN))
-						return
-
-					if(!port.input_value)
-						port.input_value = list()
-
-					user.debug_variables(port.input_value)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])
@@ -513,4 +511,4 @@
 	if(owner_id)
 		id_card = owner_id.resolve()
 
-	return "(Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
+	return "[src] (Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
