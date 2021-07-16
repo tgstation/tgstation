@@ -31,11 +31,12 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/camera_bug/New()
-	..()
+/obj/item/camera_bug/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/camera_bug/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]

@@ -3,9 +3,9 @@
 	desc = "Track with this."
 	activated = FALSE
 	///for how many deciseconds after user death will the implant work?
-	var/lifespan_postmortem = 6000 
+	var/lifespan_postmortem = 6000
 	///will people implanted with this act as teleporter beacons?
-	var/allow_teleport = TRUE 
+	var/allow_teleport = TRUE
 	///The id of the timer that's qdeleting us
 	var/timerid
 
@@ -23,13 +23,13 @@
 	deltimer(timerid)
 	return ..()
 
-/obj/item/implant/tracking/New()
-	..()
+/obj/item/implant/tracking/Initialize()
+	. = ..()
 	GLOB.tracked_implants += src
 
 /obj/item/implant/tracking/Destroy()
-	. = ..()
 	GLOB.tracked_implants -= src
+	return ..()
 
 /obj/item/implanter/tracking
 	imp_type = /obj/item/implant/tracking
