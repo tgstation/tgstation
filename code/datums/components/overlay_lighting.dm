@@ -328,6 +328,8 @@
 	range = clamp(CEILING(new_range, 0.5), 1, 6)
 	var/pixel_bounds = ((range - 1) * 64) + 32
 	lumcount_range = CEILING(range, 1)
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays -= visible_mask
 	visible_mask.icon = light_overlays["[pixel_bounds]"]
 	if(pixel_bounds == 32)
 		visible_mask.transform = null
@@ -336,6 +338,8 @@
 	var/matrix/transform = new
 	transform.Translate(-offset, -offset)
 	visible_mask.transform = transform
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += visible_mask
 	if(directional)
 		cast_range = clamp(round(new_range * 0.5), 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
@@ -348,18 +352,36 @@
 	var/new_power = source.light_power
 	set_lum_power(new_power >= 0 ? 0.5 : -0.5)
 	set_alpha = min(230, (abs(new_power) * 120) + 30)
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays -= visible_mask
 	visible_mask.alpha = set_alpha
-	if(directional)
-		cone.alpha = min(200, (abs(new_power) * 90)+20)
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += visible_mask
+	if(!directional)
+		return
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays -= cone
+	cone.alpha = min(200, (abs(new_power) * 90)+20)
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += cone
 
 
 ///Changes the light's color, pretty straightforward.
 /datum/component/overlay_lighting/proc/set_color(atom/source, old_color)
 	SIGNAL_HANDLER
 	var/new_color = source.light_color
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays -= visible_mask
 	visible_mask.color = new_color
-	if(directional)
-		cone.color = new_color
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += visible_mask
+	if(!directional)
+		return
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays -= cone
+	cone.color = new_color
+	if(overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += cone
 
 
 ///Toggles the light on and off.
@@ -429,33 +451,33 @@
 	if(final_distance > SHORT_CAST && !(ALL_CARDINALS & current_direction))
 		final_distance -= 1
 	var/turf/scanning = get_turf(current_holder)
-	for(var/i=1 to final_distance)
+	for(var/i in 1 to final_distance)
 		var/turf/next_turf = get_step(scanning, current_direction)
 		if(isnull(next_turf) || IS_OPAQUE_TURF(next_turf))
 			final_distance = i
 			break
 		scanning = next_turf
-	var/found_mask = locate(visible_mask) in current_holder.underlays
+
 	current_holder.underlays -= visible_mask
 
 	var/translate_x = -((range - 1) * 32)
 	var/translate_y = translate_x
 	switch(current_direction)
 		if(NORTH)
-			translate_y += 32*final_distance
+			translate_y += 32 * final_distance
 		if(SOUTH)
-			translate_y += -32*final_distance
+			translate_y += -32 * final_distance
 		if(EAST)
-			translate_x += 32*final_distance
+			translate_x += 32 * final_distance
 		if(WEST)
-			translate_x += -32*final_distance
+			translate_x += -32 * final_distance
 	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
 		directional_offset_x = translate_x
 		directional_offset_y = translate_y
 		var/matrix/transform = matrix()
 		transform.Translate(translate_x, translate_y)
 		visible_mask.transform = transform
-	if(found_mask)
+	if(overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 
 ///Called when current_holder changes loc.
