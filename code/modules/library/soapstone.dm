@@ -65,7 +65,7 @@
 			remove_use()
 
 /obj/item/soapstone/proc/can_use()
-	return remaining_uses == -1 || remaining_uses >= 0
+	return remaining_uses == -1 || remaining_uses > 0
 
 /obj/item/soapstone/proc/remove_use()
 	if(remaining_uses <= 0)
@@ -205,10 +205,15 @@ but only permanently removed with the curator's soapstone.
 	if(persists)
 		SSpersistence.SaveChiselMessage(src)
 	SSpersistence.chisel_messages -= src
-	. = ..()
+	return ..()
 
 /obj/structure/chisel_message/interact()
 	return
+
+/obj/structure/chisel_message/ui_status(mob/user)
+	if(isobserver(user)) // ignore proximity restrictions if we're an observer
+		return UI_INTERACTIVE
+	return ..()
 
 /obj/structure/chisel_message/ui_state(mob/user)
 	return GLOB.always_state
@@ -234,6 +239,10 @@ but only permanently removed with the curator's soapstone.
 		data["admin_mode"] = TRUE
 		data["creator_key"] = creator_key
 		data["creator_name"] = creator_name
+	else
+		data["admin_mode"] = FALSE
+		data["creator_key"] = null
+		data["creator_name"] = null
 
 	return data
 

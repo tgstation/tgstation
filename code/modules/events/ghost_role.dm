@@ -25,7 +25,7 @@
 			if(control && control.occurrences > 0) //Don't refund if it hasn't
 				control.occurrences--
 			return
-		var/waittime = 300 * (2^retry)
+		var/waittime = 300 * (2**retry)
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting [waittime/10]s and then retrying.")
 		addtimer(CALLBACK(src, .proc/try_spawning, 0, ++retry), waittime)

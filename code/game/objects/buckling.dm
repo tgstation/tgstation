@@ -83,8 +83,9 @@
  * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
  * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
  * buckle_mob_flags- Used for riding cyborgs and humans if we need to reserve an arm or two on either the rider or the ridden mob.
+ * ignore_self - If set to TRUE, this will not do a check to see if the user can move into the turf of the mob and will just automatically mount them.
  */
-/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
+/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE, ignore_self = FALSE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
 
@@ -105,11 +106,9 @@
 			var/mob/living/L = M.pulledby
 			L.reset_pull_offsets(M, TRUE)
 
-	if (CanPass(M, get_dir(loc, M)))
-		M.Move(loc)
-	else
-		if (!check_loc && M.loc != loc)
-			M.forceMove(loc)
+	var/can_move = FALSE
+	if (ignore_self || CanPass(M, get_dir(loc, M)))
+		can_move = TRUE
 
 	if(anchored)
 		ADD_TRAIT(M, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
@@ -120,6 +119,12 @@
 	buckled_mobs |= M
 	M.throw_alert("buckled", /atom/movable/screen/alert/buckled)
 	M.set_glide_size(glide_size)
+
+	if(can_move)
+		M.Move(loc)
+	else if (!check_loc && M.loc != loc)
+		M.forceMove(loc)
+
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
@@ -158,6 +163,10 @@
 	if(!length(buckled_mobs))
 		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
+
+	var/turf/location = buckled_mob.loc
+	if(istype(location) && !buckled_mob.zfalling)
+		location.zFall(buckled_mob)
 
 	post_unbuckle_mob(.)
 
