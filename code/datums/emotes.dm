@@ -125,6 +125,8 @@
 	else
 		user.visible_message(msg, blind_message = "<span class='emote'>You hear how <b>[user]</b> [msg]</span>", visible_message_flags = EMOTE_MESSAGE)
 
+	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
+
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
  *

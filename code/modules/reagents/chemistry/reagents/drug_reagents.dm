@@ -471,15 +471,18 @@
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 15)
-	///This is multiplied by the amount of units to get the chance to flip per second
-	var/flip_chance_per_unit = 1
 	///How many flips have we done so far?
 	var/flip_count = 0
+	///How many spin have we done so far?
+	var/spin_count = 0
 	///How many flips for a super flip?
 	var/super_flip_requirement = 3
 
 /datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/L)
 	. = ..()
+
+	RegisterSignal(L, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
+	RegisterSignal(L, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
@@ -500,6 +503,9 @@
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 
+	UnregisterSignal(M, COMSIG_MOB_EMOTED("flip"))
+	UnregisterSignal(M, COMSIG_MOB_EMOTED("spin"))
+
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.remove_filter("blastoff_filter")
@@ -510,22 +516,50 @@
 
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.4 * REM * delta_time)
 
-	if(!DT_PROB(flip_chance_per_unit * volume, delta_time))
-		return
-
-	flip_count++
-	if(flip_count >= super_flip_requirement) //Do a super flip
-		flip_count = 0
-		var/atom/throw_target = get_edge_target_turf(M, M.dir)
-		M.visible_message("<span class='userdanger'>[M] does an extravagant flip!</span>")
-		M.throw_at(throw_target, range = rand(2,3), speed = 4, gentle = !overdosed)
-		if(overdosed)
-			M.AdjustKnockdown(1 SECONDS)
-	else
+	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		M.emote("flip")
 
-	if(overdosed)
-		M.adjust_disgust(1 * REM * delta_time)
+/datum/reagent/drug/blastoff/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.4 * REM * delta_time)
+
+	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
+		M.emote("spin")
+
+///This proc listens to the flip signal and throws the mob every third flip
+/datum/reagent/drug/blastoff/proc/on_flip()
+	SIGNAL_HANDLER
+
+	if(!iscarbon(holder.my_atom))
+		return
+	var/mob/living/carbon/dancer = holder.my_atom
+
+	flip_count++
+	if(flip_count >= BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE) //Do a super flip
+		flip_count = 0
+		var/atom/throw_target = get_edge_target_turf(dancer, dancer.dir)
+		dancer.visible_message("<span class='userdanger'>[dancer] does an extravagant flip!</span>")
+		dancer.throw_at(throw_target, range = 3, speed = 1, gentle = !overdosed)
+
+/datum/reagent/drug/blastoff/proc/on_spin()
+	SIGNAL_HANDLER
+
+	if(!iscarbon(holder.my_atom))
+		return
+	var/mob/living/carbon/dancer = holder.my_atom
+
+	spin_count++
+	if(spin_count >= BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE) //Do a super flip
+		spin_count = 0
+		dancer.visible_message("<span class='userdanger'>[dancer] spins around violently!</span>")
+		if(dancer.disgust < 40)
+			dancer.adjust_disgust(10)
+		if(!dancer.pulledby)
+			return
+		var/dancer_turf = get_turf(dancer)
+		var/atom/movable/dance_partner = dancer.pulledby
+		var/throwtarget = get_edge_target_turf(dancer_turf, get_dir(dancer_turf, get_step_away(dance_partner, dancer_turf)))
+		dance_partner.throw_at(target = throwtarget, range = 2, speed = 1)
 
 /datum/reagent/drug/saturnx
 	name = "SaturnX"

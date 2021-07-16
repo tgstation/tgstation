@@ -65,7 +65,6 @@
 	. = ..()
 	if(.)
 		user.SpinAnimation(7,1)
-		SEND_SIGNAL(user, COMSIG_MOB_FLIPPED)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	. = ..()
@@ -100,7 +99,6 @@
 	. = ..()
 	if(.)
 		user.spin(20, 1)
-		SEND_SIGNAL(user, COMSIG_MOB_SPUN)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)
 	. = ..()
