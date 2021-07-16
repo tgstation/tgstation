@@ -11,7 +11,8 @@
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
-	var/nukeop_outfit = /datum/outfit/syndicate
+	var/datum/outfit = /datum/outfit/syndicate
+	var/datum/outfit/plasmaman_outfit = /datum/outfit/plasmaman/syndicate
 
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
@@ -26,11 +27,11 @@
 	if(!ishuman(owner.current))
 		return
 	var/mob/living/carbon/human/H = owner.current
-	
-	if(isplasmaman(H))
-		nukeop_outfit = text2path("[nukeop_outfit]/plasmaman")
 
-	H.equipOutfit(nukeop_outfit)
+	if(isplasmaman(H))
+		outfit = plasmaman_outfit
+
+	H.equipOutfit(outfit)
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
@@ -153,6 +154,7 @@
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
+	plasmaman_outfit = /datum/outfit/plasmaman/syndicate/leader
 	always_new_team = TRUE
 	var/title
 	var/challengeitem = /obj/item/nuclear_challenge
@@ -226,7 +228,8 @@
 	name = "Lone Operative"
 	always_new_team = TRUE
 	send_to_spawnpoint = FALSE //Handled by event
-	nukeop_outfit = /datum/outfit/syndicate/full
+	outfit = /datum/outfit/syndicate/full
+	plasmaman_outfit = /datum/outfit/plasmaman/syndicate/full
 
 /datum/antagonist/nukeop/lone/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
@@ -245,7 +248,8 @@
 /datum/antagonist/nukeop/reinforcement
 	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
-	nukeop_outfit = /datum/outfit/syndicate/no_crystals
+	outfit = /datum/outfit/syndicate/no_crystals
+	plasmaman_outfit = /datum/outfit/plasmaman/syndicate/no_crystals
 
 /datum/team/nuclear
 	var/syndicate_name
