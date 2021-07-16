@@ -405,6 +405,14 @@
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
 				if(!istype(marker))
+					var/client/user = usr.client
+					if(!check_rights_for(user, R_VAREDIT))
+						return TRUE
+					var/atom/marked_atom = user.holder.marked_datum
+					if(!marked_atom)
+						return TRUE
+					port.set_input(marked_atom)
+					balloon_alert(usr, "updated [port.name]'s value to marked object.")
 					return TRUE
 				if(!marker.marked_atom)
 					port.set_input(null)
