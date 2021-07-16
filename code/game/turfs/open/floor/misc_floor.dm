@@ -204,8 +204,9 @@
 	desc = "Corrupted steel."
 	icon_state = "plating_rust"
 
-/turf/open/floor/plating/rust/plasma
-	initial_gas_mix = "plasma=104;TEMP=293.15"
+/turf/open/floor/plating/plasma/rust/New()
+	var/atom/floor_new = new /turf/open/floor/plating/plasma(src)
+	floor_new.AddComponent(/datum/component/rust)
 
 /turf/open/floor/stone
 	name = "stone brick floor"

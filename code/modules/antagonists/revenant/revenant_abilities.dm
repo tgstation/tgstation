@@ -262,12 +262,12 @@
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(TRUE)
-	if(T.type == /turf/closed/wall && prob(15))
+	if(T.type == /turf/closed/wall && prob(15) && !HAS_TRAIT(T, TRAIT_RUSTY))
 		new /obj/effect/temp_visual/revenant(T)
-		T.ChangeTurf(/turf/closed/wall/rust)
-	if(T.type == /turf/closed/wall/r_wall && prob(10))
+		T.AddComponent(/datum/component/rust)
+	if(T.type == /turf/closed/wall/r_wall && prob(10) && !HAS_TRAIT(T, TRAIT_RUSTY))
 		new /obj/effect/temp_visual/revenant(T)
-		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
+		T.AddComponent(/datum/component/rust)
 	for(var/obj/effect/decal/cleanable/food/salt/salt in T)
 		new /obj/effect/temp_visual/revenant(T)
 		qdel(salt)
