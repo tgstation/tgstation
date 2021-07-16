@@ -50,7 +50,6 @@
 	if(shell)
 		make_shell()
 	else
-		setup_default_name()
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi || !mmi.brainmob)
 			mmi = new (src)
@@ -63,6 +62,7 @@
 			mmi.brainmob.real_name = src.real_name
 			mmi.brainmob.container = mmi
 			mmi.update_appearance()
+		setup_default_name()
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
