@@ -353,6 +353,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
+/// Trait applied to [/datum/mind] to stop someone from using the cursed hot springs to polymorph more than once.
+#define TRAIT_HOT_SPRING_CURSED "hot_spring_cursed"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
