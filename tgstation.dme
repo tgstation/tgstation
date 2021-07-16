@@ -3595,7 +3595,6 @@
 #include "code\modules\wiremod\components\action\speech.dm"
 #include "code\modules\wiremod\components\atom\direction.dm"
 #include "code\modules\wiremod\components\atom\gps.dm"
-#include "code\modules\wiremod\components\atom\health.dm"
 #include "code\modules\wiremod\components\atom\hear.dm"
 #include "code\modules\wiremod\components\atom\self.dm"
 #include "code\modules\wiremod\components\atom\species.dm"
