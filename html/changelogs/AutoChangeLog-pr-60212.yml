@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - bugfix: "Fixed HTML encoding of automatic evac news alerts emergency_reason."

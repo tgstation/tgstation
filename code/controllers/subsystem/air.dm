@@ -509,7 +509,7 @@ SUBSYSTEM_DEF(air)
 			CHECK_TICK
 
 		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats - starting_ats] other turfs) with atmos differences at round start."
-		to_chat(world, "<span class='boldannounce'>[msg]</span>")
+		to_chat(world, span_boldannounce("[msg]"))
 		warning(msg)
 
 /turf/open/proc/resolve_active_graph()

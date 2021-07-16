@@ -29,8 +29,27 @@
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = FALSE
 
+	/// Whether the integrated circuit is locked or not. Handled by the shell.
+	var/locked = FALSE
+
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
+
+	/// The current examined component. Used in IntegratedCircuit UI
+	var/datum/weakref/examined_component
+
+	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
+	var/datum/weakref/inserter_mind
+
+	/// X position of the examined_component
+	var/examined_rel_x = 0
+
+	/// Y position of the examined component
+	var/examined_rel_y = 0
+
+/obj/item/integrated_circuit/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
@@ -40,21 +59,24 @@
 	for(var/obj/item/circuit_component/to_delete in attached_components)
 		remove_component(to_delete)
 		qdel(to_delete)
+	attached_components.Cut()
 	shell = null
+	examined_component = null
+	owner_id = null
 	QDEL_NULL(cell)
 	return ..()
 
 /obj/item/integrated_circuit/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
+		. += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
-		. += "<span class='notice'>There is no power cell installed.</span>"
+		. += span_notice("There is no power cell installed.")
 
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/circuit_component))
-		add_component(I, user)
+		add_component_manually(I, user)
 		return
 
 	if(istype(I, /obj/item/stock_parts/cell))
@@ -65,7 +87,7 @@
 			return
 		cell = I
 		I.add_fingerprint(user)
-		user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 		return
 
 	if(istype(I, /obj/item/card/id))
@@ -77,7 +99,7 @@
 		if(!cell)
 			return
 		I.play_tool_sound(src)
-		user.visible_message("<span class='notice'>[user] unscrews the power cell from [src].</span>", "<span class='notice'>You unscrew the power cell from [src].</span>")
+		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
 		cell.forceMove(drop_location())
 		cell = null
 		return
@@ -116,6 +138,7 @@
 	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
 	shell = null
 	on = FALSE
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SHELL_REMOVED)
 
 /**
  * Adds a component to the circuitboard
@@ -127,6 +150,9 @@
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
+		return
+
+	if(!to_add.add_to(src))
 		return
 
 	var/success = FALSE
@@ -148,6 +174,15 @@
 	if(shell)
 		to_add.register_shell(shell)
 
+/**
+ * Adds a component to the circuitboard through a manual action.
+ */
+/obj/item/integrated_circuit/proc/add_component_manually(obj/item/circuit_component/to_add, mob/living/user)
+	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
+		return
+
+	add_component(to_add, user)
+
 /obj/item/integrated_circuit/proc/component_move_handler(obj/item/circuit_component/source)
 	SIGNAL_HANDLER
 	if(source.loc != src)
@@ -166,7 +201,9 @@
 	attached_components -= to_remove
 	to_remove.disconnect()
 	to_remove.parent = null
+	SEND_SIGNAL(to_remove, COMSIG_CIRCUIT_COMPONENT_REMOVED, src)
 	SStgui.update_uis(src)
+	to_remove.removed_from(src)
 
 /obj/item/integrated_circuit/get_cell()
 	return cell
@@ -213,9 +250,24 @@
 
 	.["display_name"] = display_name
 
+	var/obj/item/circuit_component/examined
+	if(examined_component)
+		examined = examined_component.resolve()
+
+	.["examined_name"] = examined?.display_name
+	.["examined_desc"] = examined?.display_desc
+	.["examined_notices"] = examined?.get_ui_notices()
+	.["examined_rel_x"] = examined_rel_x
+	.["examined_rel_y"] = examined_rel_y
+
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
 		return shell
+	return ..()
+
+/obj/item/integrated_circuit/can_interact(mob/user)
+	if(locked)
+		return FALSE
 	return ..()
 
 /obj/item/integrated_circuit/ui_state(mob/user)
@@ -253,7 +305,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(input_port.datatype && !output_port.compatible_datatype(input_port.datatype))
+			if(input_port.datatype != PORT_TYPE_ANY && !output_port.compatible_datatype(input_port.datatype))
 				return
 
 			input_port.register_output_port(output_port)
@@ -288,7 +340,8 @@
 				return
 			component.disconnect()
 			remove_component(component)
-			usr.put_in_hands(component)
+			if(component.loc == src)
+				usr.put_in_hands(component)
 			. = TRUE
 		if("set_component_coordinates")
 			var/component_id = text2num(params["component_id"])
@@ -344,10 +397,12 @@
 				if(PORT_TYPE_NUMBER)
 					port.set_input(text2num(user_input))
 				if(PORT_TYPE_ANY)
-					var/any_type = copytext(user_input, 1, PORT_MAX_STRING_LENGTH)
-					port.set_input(text2num(any_type) || any_type)
+					port.set_input(text2num(user_input) || user_input)
 				if(PORT_TYPE_STRING)
-					port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
+					port.set_input(user_input)
+				if(PORT_TYPE_SIGNAL)
+					balloon_alert(usr, "triggered [port.name]")
+					port.set_input(COMPONENT_SIGNAL)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])
@@ -364,7 +419,10 @@
 				value = port.convert_value(port.output_value)
 			else if(isnull(value))
 				value = "null"
-			balloon_alert(usr, "[port.name] value: [value]")
+			var/string_form = copytext("[value]", 1, PORT_MAX_STRING_DISPLAY)
+			if(length(string_form) >= PORT_MAX_STRING_DISPLAY-1)
+				string_form += "..."
+			balloon_alert(usr, "[port.name] value: [string_form]")
 			. = TRUE
 		if("set_display_name")
 			var/new_name = params["display_name"]
@@ -381,5 +439,41 @@
 					shell.name = initial(shell.name)
 
 			. = TRUE
+		if("set_examined_component")
+			var/component_id = text2num(params["component_id"])
+			if(!WITHIN_RANGE(component_id, attached_components))
+				return
+			examined_component = WEAKREF(attached_components[component_id])
+			examined_rel_x = text2num(params["x"])
+			examined_rel_y = text2num(params["y"])
+			. = TRUE
+		if("remove_examined_component")
+			examined_component = null
+			. = TRUE
+
+/obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
+	SIGNAL_HANDLER
+	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
+	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 #undef WITHIN_RANGE
+
+/**
+ * Returns the creator of the integrated circuit. Used in admin messages and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator_admin()
+	return get_creator(include_link = TRUE)
+
+/**
+ * Returns the creator of the integrated circuit. Used in admin logs and other related things.
+ */
+/obj/item/integrated_circuit/proc/get_creator(include_link = FALSE)
+	var/datum/mind/inserter
+	if(inserter_mind)
+		inserter = inserter_mind.resolve()
+
+	var/obj/item/card/id/id_card
+	if(owner_id)
+		id_card = owner_id.resolve()
+
+	return "(Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"

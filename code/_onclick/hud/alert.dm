@@ -247,7 +247,7 @@ or something covering your eyes."
 	. = ..()
 	if(!.)
 		return
-	to_chat(owner, "<span class='mind_control'>[command]</span>")
+	to_chat(owner, span_mind_control("[command]"))
 
 /atom/movable/screen/alert/drunk
 	name = "Drunk"
@@ -332,7 +332,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	SIGNAL_HANDLER
 
 	if (!giver.CanReach(taker))
-		to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
+		to_chat(owner, span_warning("You moved out of range of [giver]!"))
 		owner.clear_alert("[giver]")
 
 /atom/movable/screen/alert/give/Click(location, control, params)
@@ -656,18 +656,18 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	if(!target)
 		return
-	var/mob/dead/observer/dead_owner = owner
-	if(!istype(dead_owner))
+	var/mob/dead/observer/ghost_owner = owner
+	if(!istype(ghost_owner))
 		return
 	switch(action)
 		if(NOTIFY_ATTACK)
-			target.attack_ghost(dead_owner)
+			target.attack_ghost(ghost_owner)
 		if(NOTIFY_JUMP)
 			var/turf/target_turf = get_turf(target)
 			if(target_turf && isturf(target_turf))
-				dead_owner.forceMove(target_turf)
+				ghost_owner.abstract_move(target_turf)
 		if(NOTIFY_ORBIT)
-			dead_owner.ManualFollow(target)
+			ghost_owner.ManualFollow(target)
 
 //OBJECT-BASED
 
@@ -779,7 +779,7 @@ so as to remain in compliance with the most up-to-date laws."
 		return FALSE
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
 		return FALSE
 	if(master && click_master)
 		return usr.client.Click(master, location, control, params)

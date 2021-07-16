@@ -21,9 +21,9 @@
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
 	if(price)
-		to_chat(user, "<span class='notice'>Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""].</span>")
+		to_chat(user, span_notice("Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""]."))
 	else
-		to_chat(user, "<span class='warning'>Scanned [O], no export value.</span>")
+		to_chat(user, span_warning("Scanned [O], no export value."))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user
@@ -31,10 +31,10 @@
 			var/obj/item/bounty_cube/cube = O
 
 			if(!istype(get_area(cube), /area/shuttle/supply))
-				to_chat(user, "<span class='warning'>Shuttle placement not detected. Handling tip not registered.</span>")
+				to_chat(user, span_warning("Shuttle placement not detected. Handling tip not registered."))
 
 			else if(cube.bounty_handler_account)
-				to_chat(user, "<span class='warning'>Bank account for handling tip already registered!</span>")
+				to_chat(user, span_warning("Bank account for handling tip already registered!"))
 
 			else if(scan_human.get_bank_account() && cube.GetComponent(/datum/component/pricetag))
 				var/datum/component/pricetag/pricetag = cube.GetComponent(/datum/component/pricetag)
@@ -48,4 +48,4 @@
 					cube.bounty_holder_account.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")
 
 			else
-				to_chat(user, "<span class='warning'>Bank account not detected. Handling tip not registered.</span>")
+				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))

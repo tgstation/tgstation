@@ -186,7 +186,7 @@
 	dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|[drones] living drones|</font></b>"
 	dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 	if(other_players)
-		dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
+		dat += "<BR>[span_userdanger("[other_players] players in invalid state or the statistics code is bugged!")]"
 	dat += "<br><br>"
 
 	dat += build_antag_listing()

@@ -31,11 +31,12 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/camera_bug/New()
-	..()
+/obj/item/camera_bug/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/camera_bug/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -66,7 +67,7 @@
 	var/turf/T_user = get_turf(user.loc)
 	var/turf/T_current = get_turf(current)
 	if(T_user.z != T_current.z || !current.can_use())
-		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
+		to_chat(user, span_danger("[src] has lost the signal."))
 		current = null
 		user.unset_machine()
 		return FALSE
@@ -245,7 +246,7 @@
 			if(!same_z_level(C))
 				return
 			if(!C.can_use())
-				to_chat(usr, "<span class='warning'>Something's wrong with that camera! You can't get a feed.</span>")
+				to_chat(usr, span_warning("Something's wrong with that camera! You can't get a feed."))
 				return
 			current = C
 			spawn(6)
@@ -302,7 +303,7 @@
 	var/turf/T_cam = get_turf(C)
 	var/turf/T_bug = get_turf(loc)
 	if(!T_bug || T_cam.z != T_bug.z)
-		to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
+		to_chat(usr, span_warning("You can't get a signal!"))
 		return FALSE
 	return TRUE
 

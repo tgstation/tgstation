@@ -69,7 +69,7 @@
 	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
 	yolk.update_body()
 	yolk.gib()
-	qdel(egg)
+	QDEL_NULL(egg)
 	return ..()
 
 
@@ -93,10 +93,15 @@
 	var/datum/team/ashwalkers/team
 	var/obj/structure/ash_walker_eggshell/eggshell
 
+
+/obj/effect/mob_spawn/human/ash_walker/Destroy()
+	eggshell = null
+	return ..()
+
 /obj/effect/mob_spawn/human/ash_walker/allow_spawn(mob/user)
 	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
 		return TRUE
-	to_chat(user, "<span class='warning'><b>You have exhausted your usefulness to the Necropolis</b>.</span>")
+	to_chat(user, span_warning("<b>You have exhausted your usefulness to the Necropolis</b>."))
 	return FALSE
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
@@ -113,7 +118,7 @@
 		H.remove_language(/datum/language/common)
 	team.players_spawned += (new_spawn.key)
 	eggshell.egg = null
-	qdel(eggshell)
+	QDEL_NULL(eggshell)
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload, datum/team/ashwalkers/ashteam)
 	. = ..()
@@ -182,9 +187,7 @@
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	short_desc = "You are a Free Golem. Your family worships The Liberator."
-	flavour_text = "In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
-	golems, so that no golem may ever be forced to serve again."
+	flavour_text = "In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration: \"Yeah go do whatever.\"" 
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	if(species) //spawners list uses object name to register so this goes before ..()
@@ -204,6 +207,9 @@
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
+		var/policy = get_policy(ROLE_FREE_GOLEM)
+		if (policy)
+			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 	else
 		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
@@ -240,7 +246,7 @@
 		if(QDELETED(src) || uses <= 0)
 			return
 		log_game("[key_name(H)] golem-swapped into [src]")
-		H.visible_message("<span class='notice'>A faint light leaves [H], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		H.visible_message(span_notice("A faint light leaves [H], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavour = FALSE
 		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)
 		H.transfer_trait_datums(newgolem)
@@ -686,7 +692,7 @@
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/policy = get_policy(assignedrole)
 	if(policy)
-		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
+		to_chat(new_spawn, span_bold("[policy]"))
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
@@ -796,7 +802,7 @@
 	var/obj/item/card/id/id_card = H.wear_id
 	if(H.age < AGE_MINOR)
 		id_card.registered_age = AGE_MINOR
-		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
+		to_chat(H, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
 
 /obj/effect/mob_spawn/human/skeleton/alive
 	death = FALSE
@@ -842,7 +848,7 @@
 	var/despawn = tgui_alert(usr, "Return to cryosleep? (Warning, Your mob will be deleted!)", null, list("Yes", "No"))
 	if(despawn == "No" || !loc || !Adjacent(user))
 		return
-	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
+	user.visible_message(span_notice("[user.name] climbs back into cryosleep..."))
 	qdel(user)
 
 /datum/outfit/cryobartender
@@ -860,7 +866,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	faction = "nanotrasenprivate"
+	faction = list("nanotrasenprivate")
 	short_desc = "You are a Nanotrasen Private Security Officer!"
 
 /obj/effect/mob_spawn/human/commander/alive
