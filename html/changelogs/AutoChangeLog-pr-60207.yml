@@ -1,0 +1,5 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "A rogue decal has been purged from Deltastation"
+  - bugfix: "The toxins airlocks on Delta, Tram, Meta and Kilo can now be opened from inside the airlock"
