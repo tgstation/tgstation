@@ -158,7 +158,7 @@
 
 	if(isturf(I.loc) && !ignore_anim)
 		I.do_pickup_animation(src)
-	if(get_item_for_held_index(hand_index) != null)
+	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 	I.forceMove(src)
 	held_items[hand_index] = I
