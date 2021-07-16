@@ -20,7 +20,7 @@
 	var/atom/wall_new = new /turf/open/floor/plating(src)
 	wall_new.AddComponent(/datum/component/rust)
 
-/datum/component/rust/Initialize(iconstate = "rust", icon = null) // Maybe swap these args?
+/datum/component/rust/Initialize(iconstate = "rust", icon) // Maybe swap these args?
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
