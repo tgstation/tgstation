@@ -10,11 +10,11 @@
 	var/activated = TRUE
 	///the mob that's implanted with this
 	var/mob/living/imp_in = null
-	///implant color, used for visuals
+	///implant color, used for selecting either the "b" version or the "r" version of the implant case sprite when the implant is in a case.
 	var/implant_color = "b"
 	///if false, upon implantation of a duplicate implant, an attempt to combine the new implant's uses with the old one's uses will be made, deleting the new implant if succesful or stopping the implantation if not
 	var/allow_multiple = FALSE
-	///uses
+	///how many times this can do something, only relevant for implants with limited uses
 	var/uses = -1
 	item_flags = DROPDEL
 
