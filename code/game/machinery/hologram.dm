@@ -107,6 +107,27 @@ Possible to do for anyone motivated enough:
 			new_disk.forceMove(src)
 			disk = new_disk
 
+/obj/machinery/holopad/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(!loc)
+		return
+	// move any relevant holograms, basically non-AI, and rays with the pad
+	if(replay_holo)
+		replay_holo.abstract_move(loc)
+	for(var/i in holorays)
+		var/obj/effect/overlay/holoray/ray = holorays[i]
+		ray.abstract_move(loc)
+	var/list/non_call_masters = masters?.Copy()
+	for(var/datum/holocall/holocall as anything in holo_calls)
+		if(!holocall.user || !LAZYACCESS(masters, holocall.user))
+			continue
+		non_call_masters -= holocall.user
+		// moving the eye moves the holo which updates the ray too
+		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - OldLoc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - OldLoc.y), 1, world.maxy), z))
+	for(var/mob/living/holo_master as anything in non_call_masters)
+		var/obj/effect/holo = masters[holo_master]
+		update_holoray(holo_master, holo.loc)
+
 /obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
 		return
