@@ -139,9 +139,12 @@
  * * type - The datatype it handles
  * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null)
+/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null, index = null)
 	var/datum/port/input/input_port = new(src, name, type, trigger, default)
-	input_ports += input_port
+	if(index)
+		input_ports.Insert(index, input_port)
+	else
+		input_ports += input_port
 	if(parent)
 		SStgui.update_uis(parent)
 	return input_port
