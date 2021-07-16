@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - qol: "Admin Supplypod Presets can now also be loaded by double clicking their label."
