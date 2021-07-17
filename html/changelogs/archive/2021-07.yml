@@ -507,3 +507,49 @@
       people or to follow you. These carps can be tamed with raw meat, which'll then
       give you control over them if you succeed in taming them. A carp will only be
       tamed to 1 person.
+2021-07-17:
+  Fikou:
+  - bugfix: grav anomalies will no longer permanently make you unclickable
+  - rscdel: deletes a door from deltastation mining shuttle
+  JohnFulpWillard:
+  - bugfix: You can now put people in coffins again after fireman carrying them.
+  Kylerace:
+  - bugfix: slippery things, among others will no longer stop working forever after
+      throwing them into hyperspace
+  Nari Harimoto:
+  - qol: AI now opens the holopad with left click, and projects a hologram with right
+      click. AI's right clicking the holopad will immediately project, no more double
+      clicking
+  - rscadd: AI's right clicking any holopad while projected via the "Project Hologram?"
+      button when presence is requested, will cancel the projection and put their
+      camera back to where they started (moving far away from the pad will not do
+      this, nor would ctrl-clicking the pad)
+  - rscadd: when an AI's presence is requested to a holopad they get a chat message
+      that has two options, jump to the location, works as it does currently, and
+      "Project Hologram" which will immediately project a hologram there, right clicking
+      the pad will move you back to where you were
+  - rscadd: Ctrl+leftclicking on the holopad will end the holopad call directly without
+      jumping you back to your last location (it does nothing if you are not already
+      a hologram)
+  - qol: AI's can now examine a holopad to see the AI specific controls for the pads
+      (need to shift+right click and examine from the menu, cant shift-click examine,
+      issue with how the AI itself functions.)
+  - qol: when you jump to someone from their name in chat, or a location from chat
+      such as when presence is requested, you can hit "~" or "0" to jump back
+  - qol: when you jump back to your previous location with the "Jump Back" key or
+      to a saved location with "1-9" it stops all following, so you can jump back
+      or jump to a location and you wont jump back to the person you tracked
+  Wallem:
+  - bugfix: Lets people wash the ant debuff off of themselves, as intended.
+  - rscadd: Due to a leak in Nanotrasen Brand Ant Farms during shipping, a large influx
+      of space-ants have been inadvertently dumped onto every Nanotrasen station.
+      Don't go leaving food around too long, and please be sure to watch your step,
+      we're pretty sure they bite...
+  - imageadd: New giant ant sprite by Doshmobile
+  Wayland-Smithy:
+  - bugfix: Fixed HTML encoding of automatic evac news alerts emergency_reason.
+  aaaa1023:
+  - spellcheck: adds a missing space in the description of the ERT Medical Officer's
+      plushie box.
+  coiax:
+  - bugfix: Ethereal players cannot erroneously revive during mafia games.
