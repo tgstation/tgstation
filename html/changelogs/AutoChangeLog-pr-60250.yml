@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - bugfix: "Lets people wash the ant debuff off of themselves, as intended."
