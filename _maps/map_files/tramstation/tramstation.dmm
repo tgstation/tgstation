@@ -15402,6 +15402,15 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"bNf" = (
+/obj/structure/chair/sofa/right{
+	dir = 8
+	},
+/obj/item/toy/plush/moth{
+	name = "Moffgomery Mofferson"
+	},
+/turf/open/floor/carpet/blue,
+/area/medical/psychology)
 "bNm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/structure/lattice/catwalk,
@@ -16511,6 +16520,19 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
+"cjs" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/obj/structure/rack,
+/obj/machinery/light/directional/south,
+/obj/item/controller,
+/obj/item/compact_remote,
+/obj/item/integrated_circuit/loaded/hello_world,
+/obj/item/integrated_circuit/loaded/speech_relay,
+/obj/item/compact_remote,
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "cjP" = (
 /obj/structure/mirror/directional/north,
 /obj/structure/sink{
@@ -22836,6 +22858,13 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/engine_smes)
+"eIn" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/machinery/module_duplicator,
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "eIq" = (
 /turf/closed/wall/r_wall,
 /area/command/heads_quarters/cmo)
@@ -24811,6 +24840,14 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
+"fzn" = (
+/obj/machinery/meter,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/turf/open/floor/iron/white,
+/area/science/mixing)
 "fzC" = (
 /obj/machinery/door/window/southleft{
 	name = "Maximum Security Test Chamber";
@@ -42184,11 +42221,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/medical/surgery)
-"mhs" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/turf/open/floor/engine,
-/area/science/mixing/chamber)
 "mhz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -42584,12 +42616,6 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
-"mna" = (
-/obj/structure/chair/sofa/right{
-	dir = 8
-	},
-/turf/open/floor/carpet/blue,
-/area/medical/psychology)
 "mnj" = (
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
@@ -43208,19 +43234,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
-"mzy" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
-/obj/structure/rack,
-/obj/machinery/light/directional/south,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/integrated_circuit/loaded/hello_world,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/compact_remote,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "mzF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -48414,13 +48427,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
-"oHX" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
-/obj/machinery/module_duplicator,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "oIj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -57801,17 +57807,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"sqn" = (
-/obj/machinery/meter,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/white,
-/area/science/mixing)
 "sqo" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
@@ -63116,6 +63111,14 @@
 /obj/structure/railing,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
+"uoo" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_y = 26
+	},
+/turf/open/floor/engine,
+/area/science/mixing/chamber)
 "uoJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -119039,7 +119042,7 @@ vgg
 swZ
 neU
 gIF
-mhs
+uoo
 usG
 mSi
 vml
@@ -119295,7 +119298,7 @@ pwI
 iEP
 kJX
 uaJ
-sqn
+fzn
 jXs
 rbt
 mSi
@@ -119566,7 +119569,7 @@ xVI
 omI
 kgw
 nAo
-oHX
+eIn
 der
 mkm
 czI
@@ -119823,7 +119826,7 @@ pft
 ixB
 utS
 vVw
-mzy
+cjs
 der
 der
 der
@@ -174545,7 +174548,7 @@ irj
 irj
 eVQ
 lTf
-mna
+bNf
 uOF
 atk
 afn

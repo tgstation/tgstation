@@ -212,8 +212,8 @@
 	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
+		underlays -= mob_underlay
 		mob_underlay.icon_state = "frame[RPpos]"
-		underlays = list() //hack: BYOND refuses to update the underlay to match the icon_state otherwise
 		underlays += mob_underlay
 
 /obj/structure/chrono_field/process(delta_time)

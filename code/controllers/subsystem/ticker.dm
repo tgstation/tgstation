@@ -550,7 +550,7 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
 			if(emergency_reason)
-				news_message = "[decoded_station_name] has been evacuated after transmitting the following distress beacon:\n\n[emergency_reason]"
+				news_message = "[decoded_station_name] has been evacuated after transmitting the following distress beacon:\n\n[html_decode(emergency_reason)]"
 			else
 				news_message = "The crew of [decoded_station_name] has been evacuated amid unconfirmed reports of enemy activity."
 		if(BLOB_WIN)

@@ -26857,14 +26857,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space/nearstation)
-"gAo" = (
-/obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_y = -26
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/science/mixing)
 "gAu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -32209,6 +32201,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
+"ivo" = (
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_x = -22
+	},
+/turf/open/floor/engine,
+/area/science/mixing/chamber)
 "ivs" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/virology/glass{
@@ -42071,6 +42071,14 @@
 "lSa" = (
 /turf/open/floor/engine/plasma,
 /area/engineering/atmos)
+"lSh" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/obj/machinery/module_duplicator,
+/turf/open/floor/iron/white,
+/area/science/misc_lab)
 "lSP" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -55522,11 +55530,6 @@
 	dir = 8
 	},
 /area/service/chapel/main)
-"qhS" = (
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/engine,
-/area/science/mixing/chamber)
 "qhU" = (
 /obj/item/retractor,
 /obj/item/hemostat{
@@ -64105,14 +64108,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
-"sVU" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/obj/machinery/module_duplicator,
-/turf/open/floor/iron/white,
-/area/science/misc_lab)
 "sWb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 6
@@ -65867,6 +65862,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"tzd" = (
+/obj/machinery/atmospherics/components/binary/valve,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/science/mixing)
 "tzM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -111889,7 +111889,7 @@ hSZ
 jmX
 aWD
 uox
-gAo
+tzd
 dsd
 pOT
 dsd
@@ -112147,7 +112147,7 @@ jmX
 dbG
 tUz
 wZN
-qhS
+ivo
 nSp
 mBC
 xHV
@@ -113927,7 +113927,7 @@ yjC
 lGi
 eAF
 xAx
-sVU
+lSh
 nhL
 oLk
 kYe
