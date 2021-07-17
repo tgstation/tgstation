@@ -34,7 +34,6 @@ Possible to do for anyone motivated enough:
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
-	flags_1 = HEAR_1
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
@@ -79,6 +78,10 @@ Possible to do for anyone motivated enough:
 	var/secure = FALSE
 	/// If we are currently calling another holopad
 	var/calling = FALSE
+
+/obj/machinery/holopad/Initialize()
+	. = ..()
+	become_hearing_sensitive()
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"
