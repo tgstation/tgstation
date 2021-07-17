@@ -126,7 +126,7 @@
 /datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	. = ..()
 
-	if(!isobj(target) && !ismob(target))
+	if(!ismovable(target))
 		return
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
