@@ -863,6 +863,7 @@
 /datum/dynamic_ruleset/midround/pirates/execute()
 	//A lot of pirate code is baked into the event directly, so let's just make a copy of the event and opt to run it.
 	var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
+	pirate_event.dynamic_should_hijack = FALSE
 	pirate_event.runEvent()
 	return ..()
 
