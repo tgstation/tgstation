@@ -108,7 +108,7 @@
 		y_offset = clamp(y, -range, range)
 	update_indicator()
 
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending, inserter = null)
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, circuit_inserter_info = null)
 
 	var/turf/dest = get_turf(src)
 
@@ -146,8 +146,8 @@
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	if(!isnull(inserter))
-		log_msg += ": [inserter] triggered a teleport"
+	if(!isnull(circuit_inserter_info))
+		log_msg += ": [circuit_inserter_info] triggered a teleport"
 	else
 		log_msg += ": [key_name(user)] triggered a teleport "
 
