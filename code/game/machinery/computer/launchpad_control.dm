@@ -109,10 +109,10 @@
 	the_pad.set_offset(x_dest, y_dest)
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
-		the_pad.doteleport(null, TRUE, inserter = parent.get_creator())
+		the_pad.doteleport(null, TRUE, circuit_inserter_info = parent.get_creator())
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
-		the_pad.doteleport(null, FALSE, inserter = parent.get_creator())
+		the_pad.doteleport(null, FALSE, circuit_inserter_info = parent.get_creator())
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
 	to_chat(user, span_warning("You are too primitive to use this computer!"))
