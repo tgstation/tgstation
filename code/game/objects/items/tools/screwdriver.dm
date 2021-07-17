@@ -108,11 +108,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
-		balloon_alert(user, ("[src] will now work as a wrench."))
+		balloon_alert(user, "attached bolt bit")
 		icon_state = "drill_bolt"
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		balloon_alert(user, ("[src] will now work as a screwdriver."))
+		balloon_alert(user, "attached screw bit")
 		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg
