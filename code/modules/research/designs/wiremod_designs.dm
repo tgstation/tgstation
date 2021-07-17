@@ -213,6 +213,11 @@
 	id = "comp_select_query"
 	build_path = /obj/item/circuit_component/select
 
+/datum/design/component/pathfind
+	name = "Pathfinder"
+	id = "comp_pathfind"
+	build_path = /obj/item/circuit_component/pathfind
+
 /datum/design/component/tempsensor
 	name = "Temperature Sensor Component"
 	id = "comp_tempsensor"
