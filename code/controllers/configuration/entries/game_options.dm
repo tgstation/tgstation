@@ -251,6 +251,8 @@
 
 /datum/config_entry/flag/near_death_experience //If carbons can hear ghosts when unconscious and very close to death
 
+/datum/config_entry/flag/disable_ghost_unlock_antag_hud
+
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg
 

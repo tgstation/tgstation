@@ -311,6 +311,9 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
 NEAR_DEATH_EXPERIENCE
 
+## Uncomment to disable the "Unlock Antag HUD" ghost verb
+#DISABLE_GHOST_UNLOCK_ANTAG_HUD
+
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI

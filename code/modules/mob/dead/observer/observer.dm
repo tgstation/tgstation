@@ -771,12 +771,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Unlock Antag HUD"
 	if(!client)
 		return
+	if(CONFIG_GET(flag/disable_ghost_unlock_antag_hud))
+		to_chat(src, span_warning("Unlocking the Antag HUD is currently disabled."))
+		return
 	if(antag_sight_unlocked)
 		to_chat(src, span_warning("Antag HUD already unlocked."))
 		return
 
-	var/response = tgui_alert(src, "Are you sure you want to reveal antagonist info? You will become unrevivable if you have a body, and disqualified from all ghost role offers and spawners for this round.", "Confirm Antag HUD Unlock", list("I am sure", "No - Cancel"))
-	if(response != "I am sure")
+	var/response = tgui_alert(src, "Are you sure you want to reveal antagonist info? You will become unrevivable if you have a body, and disqualified from all ghost role offers and spawners for this round.", "Confirm Antag HUD Unlock", list("Yes - I am sure", "No - Cancel"))
+	if(response != "Yes - I am sure")
 		return
 
 	antag_sight_unlocked = TRUE
@@ -791,8 +794,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		for(var/datum/atom_hud/antag/antag_hud in GLOB.huds)
 			antag_hud.add_hud_to(src)
 
-	to_chat(src, span_notice("Antag HUD enabled. You can no longer participate in the current round."))
-	log_game("[key_name(src)] has Unlocked their ghost Antag HUD Sight electing to sit out the rest of the round.")
+	to_chat(src, span_notice("Antag HUD unlocked."))
+	log_game("[key_name(src)] has Unlocked their ghost Antag HUD sight.")
 
 /mob/dead/observer/verb/toggle_health_scan()
 	set name = "Toggle Health Scan"
