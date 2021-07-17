@@ -25,7 +25,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/parent_atom = parent
-	icon = icon ? icon : parent_atom.icon // If an icon is supplied use that, if it doesnt use the parent atoms icon
+	icon = icon || parent_atom.icon
 	if(!(iconstate in icon_states(icon)))
 		return COMPONENT_INCOMPATIBLE
 	rust_overlay = mutable_appearance(icon, iconstate)
