@@ -42,7 +42,7 @@
 	var/radial_based = FALSE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/attack_ghost(mob/user)
+/obj/effect/mob_spawn/attack_ghost(mob/dead/observer/user)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	if(!radial_based)
@@ -51,6 +51,9 @@
 			return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
+		return
+	if(user.antag_sight_unlocked)
+		to_chat(user, span_warning("You cannot spawn after unlocking the Antag HUD."))
 		return
 	if(!uses)
 		to_chat(user, span_warning("This spawner is out of charges!"))

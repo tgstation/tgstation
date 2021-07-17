@@ -662,12 +662,15 @@
  * Gives them prompt to control a carp, and if our circumstances still allow if when they hit yes, spawn them in as a carp.
  * Also add them to the list of carps in Space Dragon's antgonist datum, so they'll be displayed as having assisted him on round end.
  * Arguments:
- * * mob/user - The ghost which will take control of the carp.
+ * * mob/dead/observer/user - The ghost which will take control of the carp.
  */
-/obj/structure/carp_rift/proc/summon_carp(mob/user)
+/obj/structure/carp_rift/proc/summon_carp(mob/dead/observer/user)
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
 	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
+	if(user.antag_sight_unlocked)
+		to_chat(user, span_warning("You cannot spawn after unlocking the Antag HUD."))
+		return FALSE
 	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
