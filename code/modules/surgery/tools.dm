@@ -84,7 +84,7 @@
 		icon_state = "surgicaldrill_a"
 	else
 		tool_behaviour = TOOL_CAUTERY
-		balloon_alert(user, "mending mode.")
+		balloon_alert(user, "lenses set to mend")
 		icon_state = "cautery_a"
 
 /obj/item/cautery/advanced/examine()
