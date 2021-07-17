@@ -214,12 +214,12 @@
 	build_path = /obj/item/circuit_component/select
 
 /datum/design/component/tempsensor
-	name = "Temperature Sensor"
+	name = "Temperature Sensor Component"
 	id = "comp_tempsensor"
 	build_path = /obj/item/circuit_component/tempsensor
 
 /datum/design/component/pressuresensor
-	name = "Pressure Sensor"
+	name = "Pressure Sensor Component"
 	id = "comp_pressuresensor"
 	build_path = /obj/item/circuit_component/pressuresensor
 
@@ -227,6 +227,12 @@
 	name = "Pathfinder"
 	id = "comp_pathfind"
 	build_path = /obj/item/circuit_component/pathfind
+
+/datum/design/component/module
+	name = "Module Component"
+	id = "comp_module"
+	build_path = /obj/item/circuit_component/module
+
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
