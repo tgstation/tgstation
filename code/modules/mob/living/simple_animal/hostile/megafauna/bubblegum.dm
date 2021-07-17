@@ -61,7 +61,7 @@ Difficulty: Hard
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
 	var/enrage_till = 0
-	var/enrage_time = 70
+	var/enrage_time = 7 SECONDS
 	var/revving_charge = FALSE
 	gps_name = "Bloody Signal"
 	achievement_type = /datum/award/achievement/boss/bubblegum_kill
@@ -104,6 +104,13 @@ Difficulty: Hard
 	button_icon_state = "floor1"
 	chosen_message = "<span class='colossus'>You are now warping to blood around your clicked position.</span>"
 	chosen_attack_num = 4
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates)
+	. = ..()
+	if(isnum(cooldown_updates["set_enrage"]))
+		enrage_till = world.time + cooldown_updates["set_enrage"]
+	if(isnum(cooldown_updates["add_enrage"]))
+		enrage_till += cooldown_updates["add_enrage"]
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	if(charging)
@@ -342,7 +349,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
 	if(!BUBBLEGUM_CAN_ENRAGE)
 		return FALSE
-	enrage_till = world.time + enrage_time
+	update_cooldowns(list("set_enrage" = enrage_time))
 	update_approach()
 	change_move_delay(3.75)
 	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)

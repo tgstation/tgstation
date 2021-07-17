@@ -53,7 +53,8 @@ Difficulty: Medium
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
-	var/dash_cooldown = 1.5 SECONDS
+	var/dash_cooldown = 0
+	var/dash_cooldown_time = 1.5 SECONDS
 	var/guidance = FALSE
 	var/transform_stop_attack = FALSE // stops the blood drunk miner from attacking after transforming his weapon until the next attack chain
 	deathmessage = "falls to the ground, decaying into glowing particles."
@@ -88,6 +89,17 @@ Difficulty: Medium
 	button_icon_state = "cleaving_saw"
 	chosen_message = "<span class='colossus'>You are now transforming your weapon.</span>"
 	chosen_attack_num = 3
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/update_cooldowns(list/cooldown_updates)
+	. = ..()
+	if(isnum(cooldown_updates["set_dash"]))
+		dash_cooldown = world.time + cooldown_updates["set_dash"]
+	if(isnum(cooldown_updates["add_dash"]))
+		dash_cooldown += cooldown_updates["add_dash"]
+	if(isnum(cooldown_updates["set_transform"]))
+		time_until_next_transform = world.time + cooldown_updates["set_transform"]
+	if(isnum(cooldown_updates["add_transform"]))
+		time_until_next_transform += cooldown_updates["add_transform"]
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	if(client)
@@ -226,7 +238,7 @@ Difficulty: Medium
 				accessable_turfs -= t
 	if(!LAZYLEN(accessable_turfs))
 		return
-	dash_cooldown = world.time + initial(dash_cooldown)
+	update_cooldowns(list("set_dash" = dash_cooldown_time))
 	target_turf = pick(accessable_turfs)
 	var/turf/step_back_turf = get_step(target_turf, get_cardinal_dir(target_turf, own_turf))
 	var/turf/step_forward_turf = get_step(own_turf, get_cardinal_dir(own_turf, target_turf))
@@ -257,7 +269,7 @@ Difficulty: Medium
 		transform_stop_attack = TRUE
 		icon_state = "miner[miner_saw.active ? "_transformed":""]"
 		icon_living = "miner[miner_saw.active ? "_transformed":""]"
-		time_until_next_transform = world.time + rand(50, 100)
+		update_cooldowns(list("set_transform" = rand(5 SECONDS, 10 SECONDS)))
 
 /obj/effect/temp_visual/dir_setting/miner_death
 	icon_state = "miner_death"

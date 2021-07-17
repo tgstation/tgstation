@@ -75,9 +75,11 @@ Difficulty: Hard
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
 	var/chaser_speed = 3 //how fast chasers are currently
-	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
-	var/major_attack_cooldown = 60 //base cooldown for major attacks
-	var/arena_cooldown = 200 //base cooldown/cooldown var for creating an arena
+	var/major_attack_cooldown = 6 SECONDS //base cooldown for major attacks
+	var/chaser_cooldown_time = 10.1 SECONDS //base cooldown for spawning chasers
+	var/chaser_cooldown = 0
+	var/arena_cooldown_time = 20 SECONDS //base cooldown for making arenas
+	var/arena_cooldown = 0
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our beacon
@@ -120,6 +122,17 @@ Difficulty: Hard
 	button_icon_state = "hierophant_club_ready_beacon"
 	chosen_message = "<span class='colossus'>You are now repeatedly blinking at your target.</span>"
 	chosen_attack_num = 4
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/update_cooldowns(list/cooldown_updates)
+	. = ..()
+	if(isnum(cooldown_updates["set_chaser"]))
+		chaser_cooldown = world.time + cooldown_updates["set_chaser"]
+	if(isnum(cooldown_updates["add_chaser"]))
+		chaser_cooldown += cooldown_updates["add_chaser"]
+	if(isnum(cooldown_updates["set_arena"]))
+		arena_cooldown = world.time + cooldown_updates["set_arena"]
+	if(isnum(cooldown_updates["add_arena"]))
+		arena_cooldown += cooldown_updates["add_arena"]
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	if(blinking)
@@ -182,7 +195,7 @@ Difficulty: Hard
 
 	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
-		chaser_cooldown = world.time + initial(chaser_cooldown)
+		update_cooldowns(list("set_chaser" = chaser_cooldown_time))
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
 			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
@@ -264,7 +277,7 @@ Difficulty: Hard
 		C.moving = 3
 		C.moving_dir = pick_n_take(cardinal_copy)
 		SLEEP_CHECK_DEATH(8 + target_slowness)
-	chaser_cooldown = world.time + initial(chaser_cooldown)
+	update_cooldowns(list("set_chaser" = chaser_cooldown_time))
 	animate(src, color = oldcolor, time = 8)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 	SLEEP_CHECK_DEATH(8)
@@ -301,7 +314,7 @@ Difficulty: Hard
 		return
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
-	arena_cooldown = world.time + initial(arena_cooldown)
+	update_cooldowns(list("set_arena" = arena_cooldown_time))
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
