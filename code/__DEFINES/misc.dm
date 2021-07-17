@@ -555,3 +555,5 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 /// Emoji icon set
 #define EMOJI_SET 'icons/emoji.dmi'
+
+#define getFlatIcon(args...) (prob(50) ? getFlatIconOld(args) : getFlatIconNew(args))
