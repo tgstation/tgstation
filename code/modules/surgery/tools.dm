@@ -265,7 +265,7 @@
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
-		balloon_alert(user, "energy increased")
+		balloon_alert(user, "enabled bone-cutting mode")
 		set_light_range(2)
 		force += 1 //we don't want to ruin sharpened stuff
 		icon_state = "saw_a"
