@@ -80,7 +80,7 @@
 	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CAUTERY)
 		tool_behaviour = TOOL_DRILL
-		balloon_alert(user, "drilling mode.")
+		balloon_alert(user, "lenses set to drill")
 		icon_state = "surgicaldrill_a"
 	else
 		tool_behaviour = TOOL_CAUTERY
