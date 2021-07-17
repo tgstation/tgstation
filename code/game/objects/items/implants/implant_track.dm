@@ -41,12 +41,10 @@
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
 				<b>Life:</b> 10 minutes after death of host.<BR>
-				<b>Important Notes:</b> Implant "}
+				<b>Important Notes:</b>"}
 	if(allow_teleport)
-		dat += "also works"
-	else
-		dat += "does not work"
-	dat += {" as a teleporter beacon.<BR>
+		dat += " Implant also works as a teleporter beacon."
+	dat += {"<BR>
 			<HR>
 			<b>Implant Details:</b> <BR>
 			<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
