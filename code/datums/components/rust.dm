@@ -1,7 +1,6 @@
 /**
  * Adding this component to an Atom will have it automatically render an overlay.
- * The overlay can be specified in new as the first parameter; it defaults to "rust" if null.
- * The iconfile to grab the overlay from can be specified by the second paramter; it defaults to the parent atom's icon if null.
+ * The overlay can be specified in new as the first paramter; if not set it defaults to rust_overlay's rust_default
  */
 /datum/component/rust
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -20,25 +19,21 @@
 	var/atom/wall_new = new /turf/open/floor/plating(src)
 	wall_new.AddComponent(/datum/component/rust)
 
-/datum/component/rust/Initialize(iconstate = "rust", icon) // Maybe swap these args?
+/datum/component/rust/Initialize(mutable_appearance/overlay)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	rust_overlay = overlay || mutable_appearance('icons/effects/rust_overlay.dmi', "rust_default")
+	// Unfortunately registering with parent sometimes doesn't cause an overlay update
+	ADD_TRAIT(parent, TRAIT_RUSTY, src)
 	var/atom/parent_atom = parent
-	icon = icon || parent_atom.icon
-	if(!(iconstate in icon_states(icon)))
-		return COMPONENT_INCOMPATIBLE
-	rust_overlay = mutable_appearance(icon, iconstate)
+	parent_atom.update_icon(UPDATE_OVERLAYS)
 
 /datum/component/rust/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(parent, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/parent_del)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
-	ADD_TRAIT(parent, TRAIT_RUSTY, src)
-	// Unfortunately registering with parent sometimes doesn't cause an overlay update
-	var/atom/parent_atom = parent
-	parent_atom.update_icon(UPDATE_OVERLAYS)
 
 /datum/component/rust/UnregisterFromParent()
 	UnregisterSignal(parent,\
