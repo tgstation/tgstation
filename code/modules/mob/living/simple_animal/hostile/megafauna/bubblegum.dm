@@ -111,7 +111,7 @@ Difficulty: Hard
 
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
-	ranged_cooldown = world.time + 50
+	update_cooldowns(list("add_ranged" = 5 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -140,18 +140,18 @@ Difficulty: Hard
 	charge(delay = 6)
 	charge(delay = 4)
 	charge(delay = 2)
-	SetRecoveryTime(15)
+	update_cooldowns(list("set_melee" = 1.5 SECONDS, "set_ranged" = 1.5 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge()
 	if(!BUBBLEGUM_SMASH || prob(33))
 		hallucination_charge_around(times = 6, delay = 8)
-		SetRecoveryTime(10)
+		update_cooldowns(list("set_melee" = 1 SECONDS, "set_ranged" = 1 SECONDS))
 	else
 		hallucination_charge_around(times = 4, delay = 9)
 		hallucination_charge_around(times = 4, delay = 8)
 		hallucination_charge_around(times = 4, delay = 7)
 		triple_charge()
-		SetRecoveryTime(20)
+		update_cooldowns(list("set_melee" = 2 SECONDS, "set_ranged" = 2 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
 	for(var/i = 1 to 5)
@@ -160,7 +160,7 @@ Difficulty: Hard
 			charge(delay = 6)
 		else
 			SLEEP_CHECK_DEATH(6)
-	SetRecoveryTime(20)
+	update_cooldowns(list("set_melee" = 2 SECONDS, "set_ranged" = 2 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(atom/chargeat = target, delay = 3, chargepast = 2)
 	if(!chargeat)
@@ -428,7 +428,7 @@ Difficulty: Hard
 	if(!charging)
 		. = ..()
 		if(.)
-			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
+			update_cooldowns(list("add_melee" = 2 SECONDS)) // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
 	if(BUBBLEGUM_IS_ENRAGED)

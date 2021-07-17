@@ -281,8 +281,6 @@
 //ED209's ignore monkeys
 #define JUDGE_IGNOREMONKEYS (1<<4)
 
-#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
-
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
 
 // Offsets defines

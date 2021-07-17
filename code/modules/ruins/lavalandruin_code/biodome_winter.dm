@@ -47,10 +47,4 @@
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom
 		walk(hit_mob, 0) //stops them mid pathing even if they're stunimmune
-		hit_mob.apply_status_effect(/datum/status_effect/freon/freeze_cube)
-		hit_mob.adjust_bodytemperature(-100)
-		if(isanimal(hit_mob))
-			var/mob/living/simple_animal/hit_simplemob = hit_mob
-			var/ai_status = hit_simplemob.AIStatus
-			hit_simplemob.toggle_ai(AI_OFF)
-			addtimer(CALLBACK(hit_simplemob, /mob/living/simple_animal.proc/toggle_ai, ai_status), 3 SECONDS)
+		hit_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 3 SECONDS)

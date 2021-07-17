@@ -835,21 +835,17 @@
 
 /obj/effect/proc_holder/scan/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
-
 	if(.)
 		return
-
-	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton) || ranged_ability_user.stat)
+	if(ranged_ability_user.stat)
 		remove_ranged_ability()
 		return
-
 	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = ranged_ability_user
 	if(!pouch_owner.prank_pouch.len)
 		//active = FALSE
 		pouch_owner.icon_state = "glutton"
 		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
 		return
-
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)
 	projected_morsel.forceMove(pouch_owner.loc)
 	projected_morsel.throw_at(target, 8, 2, pouch_owner)

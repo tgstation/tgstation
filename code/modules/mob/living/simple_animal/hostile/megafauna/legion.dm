@@ -38,7 +38,7 @@
 	del_on_death = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 2 SECONDS
 	gps_name = "Echoing Signal"
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(charging)
 		return
-	ranged_cooldown = world.time + ranged_cooldown_time
+	update_cooldowns(list("add_ranged" = ranged_cooldown_time))
 
 	if(client)
 		switch(chosen_attack)
