@@ -19,10 +19,7 @@
 
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/lootdrop/proc/spawn_loot(lootcount_override)
-	var/lootcount = src.lootcount
-
-	if(!isnull(lootcount_override))
-		lootcount = lootcount_override
+	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
 
 	if(loot?.len)
 		var/loot_spawned = 0
@@ -293,8 +290,10 @@
 
 	return effective_lootcount
 
-/obj/effect/spawner/lootdrop/maintenance/spawn_loot()
-	. = ..(get_effective_lootcount())
+/obj/effect/spawner/lootdrop/maintenance/spawn_loot(lootcount_override)
+	if(isnull(lootcount_override))
+		lootcount_override = get_effective_lootcount()
+	. = ..()
 
 	// In addition, closets that are closed will have the maintenance loot inserted inside.
 	for(var/obj/structure/closet/closet in get_turf(src))
