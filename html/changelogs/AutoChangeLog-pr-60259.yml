@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - balance: "Space Dragon has received some nerfs to make fighting it and its carps fairer to the crew."
+  - bugfix: "Fixed a bug where carp rifts without an owner could spawn infinite carp."
