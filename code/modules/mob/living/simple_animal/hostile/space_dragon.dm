@@ -671,12 +671,11 @@
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
 	var/is_listed = FALSE
-	for(var/ckey in ckey_list)
-		if(user.ckey == ckey)
-			if(carp_stored == 1)
-				to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
-				return FALSE
-			is_listed = TRUE
+	if (user.ckey in ckey_list)
+		if(carp_stored == 1)
+			to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
+			return FALSE
+		is_listed = TRUE
 	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
 	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
