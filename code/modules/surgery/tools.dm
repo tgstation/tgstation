@@ -271,7 +271,7 @@
 		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		balloon_alert(user, "energy decreased")
+		balloon_alert(user, "disabled bone-cutting mode")
 		set_light_range(1)
 		force -= 1
 		icon_state = "scalpel_a"
