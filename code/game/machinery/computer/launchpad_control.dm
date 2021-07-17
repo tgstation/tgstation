@@ -99,30 +99,20 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
+	var/checks = attached_console.teleport_checks(the_pad)
+
+	if(!isnull(checks))
+		why_fail.set_output(checks)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	the_pad.set_offset(x_dest, y_dest)
-
-	if(QDELETED(the_pad))
-		why_fail.set_output("ERROR: Launchpad not responding. Check launchpad integrity.")
-		on_fail.set_output(COMPONENT_SIGNAL)
-		return
-
-	if(!the_pad.isAvailable())
-		why_fail.set_output("ERROR: Launchpad not operative. Make sure the launchpad is ready and powered.")
-		on_fail.set_output(COMPONENT_SIGNAL)
-		return
-
-	if(the_pad.teleporting)
-		why_fail.set_output("ERROR: Launchpad busy.")
-		on_fail.set_output(COMPONENT_SIGNAL)
-		return
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, inserter = parent.get_creator())
-		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
 		the_pad.doteleport(null, FALSE, inserter = parent.get_creator())
-		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
 	to_chat(user, span_warning("You are too primitive to use this computer!"))
@@ -149,14 +139,21 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/computer/launchpad/proc/teleport(mob/user, obj/machinery/launchpad/pad, sending)
+
+//here dumdum V V
+
+/obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
+	var/output = null
 	if(QDELETED(pad))
-		to_chat(user, span_warning("ERROR: Launchpad not responding. Check launchpad integrity."))
-		return
+		output = "ERROR: Launchpad not responding. Check launchpad integrity."
 	if(!pad.isAvailable())
-		to_chat(user, span_warning("ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."))
-		return
-	pad.doteleport(user, sending)
+		output = "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
+	if(pad.teleporting)
+		output = "ERROR: Launchpad busy."
+	var/turf/pad_turf = get_turf(pad)
+	if(pad_turf && is_centcom_level(pad_turf.z))
+		output = "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
+	return output
 
 /obj/machinery/computer/launchpad/proc/get_pad(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -203,6 +200,7 @@
 	if(.)
 		return
 	var/obj/machinery/launchpad/current_pad = launchpads[selected_id]
+	var/checks
 	switch(action)
 		if("select_pad")
 			selected_id = text2num(params["id"])
@@ -232,10 +230,19 @@
 				selected_id = null
 			. = TRUE
 		if("launch")
-			teleport(usr, current_pad, TRUE)
+			checks = teleport_checks(current_pad)
+			if(isnull(checks))
+				current_pad.doteleport(usr, TRUE)
+			else
+				to_chat(usr, span_warning(checks))
 			. = TRUE
 
 		if("pull")
-			teleport(usr, current_pad, FALSE)
+			checks = teleport_checks(current_pad)
+			if(isnull(checks))
+				current_pad.doteleport(usr, FALSE)
+			else
+				to_chat(usr, span_warning(checks))
+
 			. = TRUE
 	. = TRUE

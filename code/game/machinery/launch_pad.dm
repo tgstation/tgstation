@@ -109,15 +109,8 @@
 	update_indicator()
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending, inserter = null)
-	if(teleporting)
-		to_chat(user, span_warning("ERROR: Launchpad busy."))
-		return
 
 	var/turf/dest = get_turf(src)
-
-	if(dest && is_centcom_level(dest.z))
-		to_chat(user, span_warning("ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."))
-		return
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
