@@ -80,11 +80,11 @@
 	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CAUTERY)
 		tool_behaviour = TOOL_DRILL
-		to_chat(user, span_notice("You dilate the lenses of [src], it is now in drilling mode."))
+		balloon_alert(user, span_notice("[src] is now in drilling mode."))
 		icon_state = "surgicaldrill_a"
 	else
 		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, span_notice("You focus the lenses of [src], it is now in mending mode."))
+		balloon_alert(user, span_notice("[src] is now in mending mode."))
 		icon_state = "cautery_a"
 
 /obj/item/cautery/advanced/examine()
@@ -265,13 +265,13 @@
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
-		to_chat(user, span_notice("You increase the power of [src], now it can cut bones."))
+		balloon_alert(user, ("[src] can now cut bones."))
 		set_light_range(2)
 		force += 1 //we don't want to ruin sharpened stuff
 		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		to_chat(user, span_notice("You lower the power of [src], it can no longer cut bones."))
+		balloon_alert(user, ("[src] can no longer cut bones."))
 		set_light_range(1)
 		force -= 1
 		icon_state = "scalpel_a"
@@ -291,11 +291,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_RETRACTOR)
 		tool_behaviour = TOOL_HEMOSTAT
-		to_chat(user, span_notice("You configure the gears of [src], they are now in hemostat mode."))
+		balloon_alert(user, ("[src] are in hemostat mode."))
 		icon_state = "hemostat_a"
 	else
 		tool_behaviour = TOOL_RETRACTOR
-		to_chat(user, span_notice("You configure the gears of [src], they are now in retractor mode."))
+		balloon_alert(user,	("[src] are now in retractor mode."))
 		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine()
