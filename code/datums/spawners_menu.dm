@@ -73,6 +73,9 @@
 				return TRUE
 		if("spawn")
 			if(mob_spawner)
+				if(owner.antag_sight_unlocked)
+					to_chat(owner, span_warning("Ghost Spawners cannot be used after unlocking the Antag HUD."))
+					return
 				if(mob_spawner.radial_based)
 					owner.ManualFollow(mob_spawner)
 					ui.close()

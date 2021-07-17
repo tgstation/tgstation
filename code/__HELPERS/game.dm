@@ -393,8 +393,10 @@
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return candidates
 
-	for(var/mob/dead/observer/G in GLOB.player_list)
-		candidates += G
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(ghost.antag_sight_unlocked) // ghosts with antag HUDs unlocked are disqualified
+			continue
+		candidates += ghost
 
 	return pollCandidates(Question, jobbanType, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 

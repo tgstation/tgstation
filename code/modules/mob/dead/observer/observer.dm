@@ -23,6 +23,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_on = FALSE
 	shift_to_open_context_menu = FALSE
 	var/can_reenter_corpse
+	/// If this ghost has elected to sit out for the rest of the round in exchange for antag HUD and orbit POIs including the stealthy antags
+	var/antag_sight_unlocked = FALSE
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -738,11 +740,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.add_hud_to(src)
+	if(antag_sight_unlocked)
+		for(var/datum/atom_hud/antag/antag_hud in GLOB.huds)
+			antag_hud.add_hud_to(src)
 
 /mob/dead/observer/proc/remove_data_huds()
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.remove_hud_from(src)
+	if(antag_sight_unlocked)
+		for(var/datum/atom_hud/antag/antag_hud in GLOB.huds)
+			antag_hud.remove_hud_from(src)
 
 /mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"
@@ -757,6 +765,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		to_chat(src, span_notice("Data HUDs enabled."))
 		data_huds_on = 1
+
+/mob/dead/observer/verb/unlock_antag_sight()
+	set category = "Ghost"
+	set name = "Unlock Antag HUD"
+	if(!client)
+		return
+	if(antag_sight_unlocked)
+		to_chat(src, span_warning("Antag HUD already unlocked."))
+		return
+
+	var/response = tgui_alert(src, "Are you sure you want to reveal antagonist info? You will become unrevivable if you have a body, and disqualified from all ghost role offers and spawners for this round.", "Confirm Antag HUD Unlock", list("I am sure", "No - Cancel"))
+	if(response != "I am sure")
+		return
+
+	antag_sight_unlocked = TRUE
+
+	if(can_reenter_corpse) // force DNR, copy pasta of that verb
+		can_reenter_corpse = FALSE
+		var/mob/living/carbon/current = mind.current
+		current.med_hud_set_status()
+		mind = null
+
+	if(data_huds_on) // add the huds right away if already on
+		for(var/datum/atom_hud/antag/antag_hud in GLOB.huds)
+			antag_hud.add_hud_to(src)
+
+	to_chat(src, span_notice("Antag HUD enabled. You can no longer participate in the current round."))
+	log_game("[key_name(src)] has Unlocked their ghost Antag HUD Sight electing to sit out the rest of the round.")
 
 /mob/dead/observer/verb/toggle_health_scan()
 	set name = "Toggle Health Scan"
