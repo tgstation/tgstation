@@ -276,7 +276,7 @@
 
 /obj/effect/spawner/lootdrop/maintenance/Destroy()
 	GLOB.maintenance_loot_spawners -= src
-	. = ..()
+	return ..()
 
 /obj/effect/spawner/lootdrop/maintenance/proc/hide()
 	invisibility = INVISIBILITY_OBSERVER
