@@ -74,8 +74,8 @@
 		return
 
 	if(!attached_console || length(attached_console.launchpads) == 0)
-		on_fail.set_output(COMPONENT_SIGNAL)
 		why_fail.set_output("No launchpads connected!")
+		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
 	var/current_launchpad = launchpad_id.input_value
@@ -95,18 +95,33 @@
 		return
 
 	if(x_dest > the_pad.range || y_dest > the_pad.range)
-		on_fail.set_output(COMPONENT_SIGNAL)
 		why_fail.set_output("Cannot go that far! Current maximum reach: [the_pad.range]")
+		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
 	the_pad.set_offset(x_dest, y_dest)
 
+	if(QDELETED(the_pad))
+		why_fail.set_output("ERROR: Launchpad not responding. Check launchpad integrity.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	if(!the_pad.isAvailable())
+		why_fail.set_output("ERROR: Launchpad not operative. Make sure the launchpad is ready and powered.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	if(the_pad.teleporting)
+		why_fail.set_output("ERROR: Launchpad busy.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
-		attached_console.teleport(usr, the_pad, TRUE)
+		the_pad.doteleport(null, TRUE, inserter = parent.get_creator())
 		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
-		attached_console.teleport(usr, the_pad, FALSE)
+		the_pad.doteleport(null, FALSE, inserter = parent.get_creator())
 		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)

@@ -108,7 +108,7 @@
 		y_offset = clamp(y, -range, range)
 	update_indicator()
 
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending)
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, inserter = null)
 	if(teleporting)
 		to_chat(user, span_warning("ERROR: Launchpad busy."))
 		return
@@ -153,7 +153,10 @@
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	log_msg += ": [key_name(user)] has teleported "
+	if(!isnull(inserter))
+		log_msg += ": [inserter] triggered a teleport"
+	else
+		log_msg += ": [key_name(user)] triggered a teleport "
 
 	if(sending)
 		source = dest
