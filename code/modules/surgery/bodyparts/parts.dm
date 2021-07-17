@@ -33,6 +33,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_chest"
 	animal_origin = MONKEY_BODYPART
+	part_origin = MONKEY_BODY
 	wound_resistance = -10
 
 /obj/item/bodypart/chest/alien
@@ -41,6 +42,7 @@
 	dismemberable = 0
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
+	part_origin = ALIEN_BODY
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/animal_parts.dmi'
@@ -227,6 +229,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_arm"
 	animal_origin = MONKEY_BODYPART
+	part_origin = MONKEY_BODY
 	wound_resistance = -10
 	px_x = 5
 	px_y = -3
@@ -240,6 +243,8 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
+	part_origin = ALIEN_BODY
+
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -317,6 +322,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
 	animal_origin = MONKEY_BODYPART
+	part_origin = MONKEY_BODY
 	wound_resistance = -10
 	px_y = 4
 
@@ -329,6 +335,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
+	part_origin = ALIEN_BODY
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
@@ -408,6 +415,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_leg"
 	animal_origin = MONKEY_BODYPART
+	part_origin = MONKEY_BODY
 	wound_resistance = -10
 	px_y = 4
 
@@ -420,3 +428,4 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
+	part_origin = ALIEN_BODY
