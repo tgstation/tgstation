@@ -19,6 +19,8 @@
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
+	set_dir_on_move = FALSE
+
 	var/icon_state_off = "freezer"
 	var/icon_state_on = "freezer_1"
 	var/icon_state_open = "freezer-o"
@@ -98,8 +100,13 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_overlays()
 	. = ..()
-	. += getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer)
-	. += getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer)
+	//Doesn't check if the pipes are intact
+	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	pipe_appearance1.color = COLOR_LIME
+	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[turn(dir, 180)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	pipe_appearance2.color = COLOR_MOSTLY_PURE_RED
+	. += pipe_appearance1
+	. += pipe_appearance2
 	if(skipping_work && on)
 		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
 		. += skipping

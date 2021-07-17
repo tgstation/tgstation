@@ -941,14 +941,7 @@
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
-	if(target.loc != loc)
-		var/old_density = density
-		density = FALSE // Hacky and doesn't use set_density()
-		step_towards(target, loc)
-		density = old_density // Avoid changing density directly in normal circumstances, without the setter.
-
-	if(target.loc == loc)
-		return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
+	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))

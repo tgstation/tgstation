@@ -162,20 +162,6 @@
 			turfs += T
 	return turfs
 
-
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-//Sped this up again for real this time
-/proc/recursive_hear_check(O)
-	var/list/processing_list = list(O)
-	. = list()
-	var/i = 0
-	while(i < length(processing_list))
-		var/atom/A = processing_list[++i]
-		if(A.flags_1 & HEAR_1)
-			. += A
-		processing_list += A.contents
-
 /** recursive_organ_check
  * inputs: O (object to start with)
  * outputs:
@@ -213,38 +199,26 @@
 
 	return
 
-/proc/get_hearers_in_view(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
-	var/turf/T = get_turf(source)
+/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). uses important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+/proc/get_hearers_in_view(view_radius, atom/source)
+	var/turf/center_turf = get_turf(source)
 	. = list()
-	if(!T)
+	if(!center_turf)
 		return
-	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
-		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		for(var/mob/M in view(R, T))
-			processing_list += M
-		for(var/obj/O in view(R, T))
-			processing_list += O
-		T.luminosity = lum
-
-	var/i = 0
-	while(i < length(processing_list)) // recursive_hear_check inlined here
-		var/atom/A = processing_list[++i]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-		processing_list += A.contents
+	var/lum = center_turf.luminosity
+	center_turf.luminosity = 6 // This is the maximum luminosity
+	for(var/atom/movable/movable in view(view_radius, center_turf))
+		var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+		if(recursive_contents)
+			. += recursive_contents
+			SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, .)
+	center_turf.luminosity = lum
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/R in radios)
-		if(R)
-			. |= get_hearers_in_view(R.canhear_range, R)
+		. |= get_hearers_in_view(R.canhear_range, R)
 
 #define SIGNV(X) ((X<0)?-1:1)
 

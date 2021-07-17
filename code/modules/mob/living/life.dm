@@ -186,6 +186,8 @@
 	if(gravity > STANDARD_GRAVITY)
 		gravity_animate()
 		handle_high_gravity(gravity, delta_time, times_fired)
+	else if(get_filter("gravity"))
+		remove_filter("gravity")
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))

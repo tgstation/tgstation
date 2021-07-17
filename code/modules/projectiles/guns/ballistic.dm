@@ -50,7 +50,7 @@
 	///Compatible magazines with the gun
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	///Whether the sprite has a visible magazine or not
-	var/mag_display = FALSE
+	var/mag_display = TRUE
 	///Whether the sprite has a visible ammo display or not
 	var/mag_display_ammo = FALSE
 	///Whether the sprite has a visible indicator for being empty or not.
@@ -141,8 +141,8 @@
  *
  */
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
-	if(magazine) // Make sure you have a magazine, thats where the warning is!
-		return "\nBe especially careful around this device, as it can be loaded with [span_warning("[magazine.caliber]")] rounds, which you can inspect for more information."
+	if(magazine) // Make sure you have a magazine, to get the notes from
+		return "\n[magazine.add_notes_box()]"
 	else
 		return "\nThe warning attached to the magazine is missing..."
 
@@ -181,7 +181,7 @@
 		. += "[icon_state]_toy"
 
 
-	if(!magazine || internal_magazine)
+	if(!magazine || internal_magazine || !mag_display)
 		return
 
 	if(special_mags)
