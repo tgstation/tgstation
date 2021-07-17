@@ -143,17 +143,16 @@
 //here dumdum V V
 
 /obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
-	var/output = null
 	if(QDELETED(pad))
-		output = "ERROR: Launchpad not responding. Check launchpad integrity."
+		return "ERROR: Launchpad not responding. Check launchpad integrity."
 	if(!pad.isAvailable())
-		output = "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
+		return "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
 	if(pad.teleporting)
-		output = "ERROR: Launchpad busy."
+		return "ERROR: Launchpad busy."
 	var/turf/pad_turf = get_turf(pad)
 	if(pad_turf && is_centcom_level(pad_turf.z))
-		output = "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
-	return output
+		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
+	return null
 
 /obj/machinery/computer/launchpad/proc/get_pad(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -200,7 +199,6 @@
 	if(.)
 		return
 	var/obj/machinery/launchpad/current_pad = launchpads[selected_id]
-	var/checks
 	switch(action)
 		if("select_pad")
 			selected_id = text2num(params["id"])
@@ -230,7 +228,7 @@
 				selected_id = null
 			. = TRUE
 		if("launch")
-			checks = teleport_checks(current_pad)
+			var/checks = teleport_checks(current_pad)
 			if(isnull(checks))
 				current_pad.doteleport(usr, TRUE)
 			else
@@ -238,7 +236,7 @@
 			. = TRUE
 
 		if("pull")
-			checks = teleport_checks(current_pad)
+			var/checks = teleport_checks(current_pad)
 			if(isnull(checks))
 				current_pad.doteleport(usr, FALSE)
 			else
