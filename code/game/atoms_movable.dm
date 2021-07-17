@@ -39,7 +39,11 @@
 	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
-	///a nested list of contents by channel that need to be easily accessed without searching through nested contents manually at runtime. do NOT add channels to this for little reason as it adds considerable memory usage
+	/**
+	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))
+	 * each channel has a specific purpose and is meant to replace potentially expensive nested contents iteration
+	 * do NOT add channels to this for little reason as it can add considerable memory usage.
+	 */
 	var/list/important_recursive_contents
 
 	/**
@@ -640,7 +644,8 @@
 
 /atom/movable/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone.important_recursive_contents) //with a loop for every key in arrived's important_recursive_contents
+
+	if(LAZYLEN(gone.important_recursive_contents))
 		var/list/nested_locs = get_nested_locs(src) + src
 		for(var/channel in gone.important_recursive_contents)
 			for(var/atom/movable/location as anything in nested_locs)
@@ -649,7 +654,7 @@
 /atom/movable/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 
-	if(arrived.important_recursive_contents) //with a loop for every key in arrived's important_recursive_contents
+	if(LAZYLEN(arrived.important_recursive_contents))
 		var/list/nested_locs = get_nested_locs(src) + src
 		for(var/channel in arrived.important_recursive_contents)
 			for(var/atom/movable/location as anything in nested_locs)
@@ -660,7 +665,7 @@
 	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE), .proc/on_hearing_sensitive_trait_loss)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-			LAZYADDASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
+			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 
 
@@ -669,7 +674,7 @@
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-			LAZYADDASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
+			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
 
 /atom/movable/proc/on_area_sensitive_trait_loss()

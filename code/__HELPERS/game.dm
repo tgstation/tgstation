@@ -208,8 +208,9 @@
 	var/lum = center_turf.luminosity
 	center_turf.luminosity = 6 // This is the maximum luminosity
 	for(var/atom/movable/movable in view(view_radius, center_turf))
-		if(movable.important_recursive_contents && movable.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]) //dont add the movables returned by view() to processing_list to reduce recursive iterations, just check them
-			. += movable.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+		var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+		if(recursive_contents)
+			. += recursive_contents
 			SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, .)
 	center_turf.luminosity = lum
 
