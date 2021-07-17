@@ -514,14 +514,15 @@
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
 
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.4 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
+	M.AdjustKnockdown(-20)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		M.emote("flip")
 
 /datum/reagent/drug/blastoff/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.4 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		M.emote("spin")
@@ -538,8 +539,9 @@
 	if(flip_count >= BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE) //Do a super flip
 		flip_count = 0
 		var/atom/throw_target = get_edge_target_turf(dancer, dancer.dir)
+		dancer.SpinAnimation(12,3)
 		dancer.visible_message("<span class='userdanger'>[dancer] does an extravagant flip!</span>")
-		dancer.throw_at(throw_target, range = 3, speed = 1, gentle = !overdosed)
+		dancer.throw_at(throw_target, range = 4, speed = 1, force = overdosed ? 3 : 1)
 
 /datum/reagent/drug/blastoff/proc/on_spin()
 	SIGNAL_HANDLER
@@ -552,6 +554,7 @@
 	if(spin_count >= BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE) //Do a super flip
 		spin_count = 0
 		dancer.visible_message("<span class='userdanger'>[dancer] spins around violently!</span>")
+		dancer.spin(30, 2)
 		if(dancer.disgust < 40)
 			dancer.adjust_disgust(10)
 		if(!dancer.pulledby)
@@ -603,6 +606,7 @@
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
 		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
 		invisible_man.update_body()
+		invisible_man.update_hair()
 		invisible_man.remove_from_all_data_huds()
 		invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
@@ -681,10 +685,11 @@ TODO:
 saturnx implementation
 	make saturnx colour matrix linger longer in the desaturated region.
 	add blur(angular?) filter or staic wave filter
+	fix the hair not becoming invisible first time the drug is take bug. (manually call update_hair?)
 
 blastoff implementation
-	maybe make superflips and spin use signals so flips from other sources count?
 	add animated ripple filter?
+	fix blast off ampoule sprite not updating when opened.
 
 mushroom_hallucinogen implementation
 	add an animated wave filter.
