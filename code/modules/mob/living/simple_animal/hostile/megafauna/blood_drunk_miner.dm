@@ -92,14 +92,14 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/update_cooldowns(list/cooldown_updates)
 	. = ..()
-	if(isnum(cooldown_updates["set_dash"]))
-		dash_cooldown = world.time + cooldown_updates["set_dash"]
-	if(isnum(cooldown_updates["add_dash"]))
-		dash_cooldown += cooldown_updates["add_dash"]
-	if(isnum(cooldown_updates["set_transform"]))
-		time_until_next_transform = world.time + cooldown_updates["set_transform"]
-	if(isnum(cooldown_updates["add_transform"]))
-		time_until_next_transform += cooldown_updates["add_transform"]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_DASH]))
+		dash_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_DASH]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_DASH]))
+		dash_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_DASH]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_TRANSFORM]))
+		time_until_next_transform = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_TRANSFORM]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_TRANSFORM]))
+		time_until_next_transform += cooldown_updates[COOLDOWN_UPDATE_ADD_TRANSFORM]
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	if(client)
@@ -200,7 +200,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/shoot_ka()
 	if(ranged_cooldown <= world.time && get_dist(src, target) <= MINER_DASH_RANGE && !Adjacent(target))
-		update_cooldowns(list("add_ranged" = ranged_cooldown_time))
+		update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = ranged_cooldown_time))
 		visible_message(span_danger("[src] fires the proto-kinetic accelerator!"))
 		face_atom(target)
 		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
@@ -238,7 +238,7 @@ Difficulty: Medium
 				accessable_turfs -= t
 	if(!LAZYLEN(accessable_turfs))
 		return
-	update_cooldowns(list("set_dash" = dash_cooldown_time))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_DASH = dash_cooldown_time))
 	target_turf = pick(accessable_turfs)
 	var/turf/step_back_turf = get_step(target_turf, get_cardinal_dir(target_turf, own_turf))
 	var/turf/step_forward_turf = get_step(own_turf, get_cardinal_dir(own_turf, target_turf))
@@ -269,7 +269,7 @@ Difficulty: Medium
 		transform_stop_attack = TRUE
 		icon_state = "miner[miner_saw.active ? "_transformed":""]"
 		icon_living = "miner[miner_saw.active ? "_transformed":""]"
-		update_cooldowns(list("set_transform" = rand(5 SECONDS, 10 SECONDS)))
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_TRANSFORM = rand(5 SECONDS, 10 SECONDS)))
 
 /obj/effect/temp_visual/dir_setting/miner_death
 	icon_state = "miner_death"

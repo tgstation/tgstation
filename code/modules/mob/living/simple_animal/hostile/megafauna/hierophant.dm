@@ -125,14 +125,14 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/update_cooldowns(list/cooldown_updates)
 	. = ..()
-	if(isnum(cooldown_updates["set_chaser"]))
-		chaser_cooldown = world.time + cooldown_updates["set_chaser"]
-	if(isnum(cooldown_updates["add_chaser"]))
-		chaser_cooldown += cooldown_updates["add_chaser"]
-	if(isnum(cooldown_updates["set_arena"]))
-		arena_cooldown = world.time + cooldown_updates["set_arena"]
-	if(isnum(cooldown_updates["add_arena"]))
-		arena_cooldown += cooldown_updates["add_arena"]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_CHASER]))
+		chaser_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_CHASER]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER]))
+		chaser_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_ARENA]))
+		arena_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ARENA]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA]))
+		arena_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA]
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	if(blinking)
@@ -143,7 +143,7 @@ Difficulty: Hard
 	var/cross_counter = 1 + round(anger_modifier * 0.12)
 
 	arena_trap(target)
-	update_cooldowns(list("add_ranged" = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75))) //scale cooldown lower with high anger.
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75))) //scale cooldown lower with high anger.
 
 	var/target_slowness = 0
 	var/mob/living/L
@@ -195,7 +195,7 @@ Difficulty: Hard
 
 	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
-		update_cooldowns(list("set_chaser" = chaser_cooldown_time))
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
 			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
@@ -215,7 +215,7 @@ Difficulty: Hard
 		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink_spam(blink_counter, target_slowness, cross_counter)
-	update_cooldowns(list("add_ranged" = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
 	if(health < maxHealth * 0.5 && blink_counter > 1)
 		visible_message(span_hierophant("\"Mx ampp rsx iwgeti.\""))
 		var/oldcolor = color
@@ -237,7 +237,7 @@ Difficulty: Hard
 		blink(target)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cross_blast_spam(blink_counter, target_slowness, cross_counter)
-	update_cooldowns(list("add_ranged" = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
 	visible_message(span_hierophant("\"Piezi mx rsalivi xs vyr.\""))
 	blinking = TRUE
 	var/oldcolor = color
@@ -257,7 +257,7 @@ Difficulty: Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/chaser_swarm(blink_counter, target_slowness, cross_counter)
-	update_cooldowns(list("add_ranged" = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
 	visible_message(span_hierophant("\"Mx gerrsx lmhi.\""))
 	blinking = TRUE
 	var/oldcolor = color
@@ -277,7 +277,7 @@ Difficulty: Hard
 		C.moving = 3
 		C.moving_dir = pick_n_take(cardinal_copy)
 		SLEEP_CHECK_DEATH(8 + target_slowness)
-	update_cooldowns(list("set_chaser" = chaser_cooldown_time))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 	animate(src, color = oldcolor, time = 8)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 	SLEEP_CHECK_DEATH(8)
@@ -314,7 +314,7 @@ Difficulty: Hard
 		return
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
-	update_cooldowns(list("set_arena" = arena_cooldown_time))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_ARENA = arena_cooldown_time))
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
@@ -464,7 +464,7 @@ Difficulty: Hard
 			if(L.stat != DEAD)
 				if(ranged_cooldown <= world.time)
 					calculate_rage()
-					update_cooldowns(list("add_ranged" = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75)))
+					update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75)))
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 				else
 					burst_range = 3

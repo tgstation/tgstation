@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(charging)
 		return
-	update_cooldowns(list("add_ranged" = ranged_cooldown_time))
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = ranged_cooldown_time))
 
 	if(client)
 		switch(chosen_attack)

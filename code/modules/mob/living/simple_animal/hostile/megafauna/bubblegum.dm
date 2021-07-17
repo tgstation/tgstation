@@ -107,10 +107,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates)
 	. = ..()
-	if(isnum(cooldown_updates["set_enrage"]))
-		enrage_till = world.time + cooldown_updates["set_enrage"]
-	if(isnum(cooldown_updates["add_enrage"]))
-		enrage_till += cooldown_updates["add_enrage"]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE]))
+		enrage_till = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]))
+		enrage_till += cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	if(charging)
@@ -118,7 +118,7 @@ Difficulty: Hard
 
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
-	update_cooldowns(list("add_ranged" = 5 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = 5 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -147,18 +147,18 @@ Difficulty: Hard
 	charge(delay = 6)
 	charge(delay = 4)
 	charge(delay = 2)
-	update_cooldowns(list("set_melee" = 1.5 SECONDS, "set_ranged" = 1.5 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1.5 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge()
 	if(!BUBBLEGUM_SMASH || prob(33))
 		hallucination_charge_around(times = 6, delay = 8)
-		update_cooldowns(list("set_melee" = 1 SECONDS, "set_ranged" = 1 SECONDS))
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1 SECONDS))
 	else
 		hallucination_charge_around(times = 4, delay = 9)
 		hallucination_charge_around(times = 4, delay = 8)
 		hallucination_charge_around(times = 4, delay = 7)
 		triple_charge()
-		update_cooldowns(list("set_melee" = 2 SECONDS, "set_ranged" = 2 SECONDS))
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 2 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
 	for(var/i = 1 to 5)
@@ -167,7 +167,7 @@ Difficulty: Hard
 			charge(delay = 6)
 		else
 			SLEEP_CHECK_DEATH(6)
-	update_cooldowns(list("set_melee" = 2 SECONDS, "set_ranged" = 2 SECONDS))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 2 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(atom/chargeat = target, delay = 3, chargepast = 2)
 	if(!chargeat)
@@ -349,7 +349,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
 	if(!BUBBLEGUM_CAN_ENRAGE)
 		return FALSE
-	update_cooldowns(list("set_enrage" = enrage_time))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_ENRAGE = enrage_time))
 	update_approach()
 	change_move_delay(3.75)
 	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
@@ -435,7 +435,7 @@ Difficulty: Hard
 	if(!charging)
 		. = ..()
 		if(.)
-			update_cooldowns(list("add_melee" = 2 SECONDS)) // can only attack melee once every 2 seconds but rapid_melee gives higher priority
+			update_cooldowns(list(COOLDOWN_UPDATE_ADD_MELEE = 2 SECONDS)) // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
 	if(BUBBLEGUM_IS_ENRAGED)

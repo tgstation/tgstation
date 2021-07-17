@@ -155,14 +155,14 @@
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds, list to allow using named
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates)
-	if(isnum(cooldown_updates["set_melee"]))
-		recovery_time = world.time + cooldown_updates["set_melee"]
-	if(isnum(cooldown_updates["add_melee"]))
-		recovery_time += cooldown_updates["add_melee"]
-	if(isnum(cooldown_updates["set_ranged"]))
-		ranged_cooldown = world.time + cooldown_updates["set_ranged"]
-	if(isnum(cooldown_updates["add_ranged"]))
-		ranged_cooldown += cooldown_updates["add_ranged"]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_MELEE]))
+		recovery_time = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_MELEE]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_MELEE]))
+		recovery_time += cooldown_updates[COOLDOWN_UPDATE_ADD_MELEE]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_RANGED]))
+		ranged_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_RANGED]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_RANGED]))
+		ranged_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_RANGED]
 
 /// Grants medals and achievements to surrounding players
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())

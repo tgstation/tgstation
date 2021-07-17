@@ -80,26 +80,26 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(.)
 		var/createtype = GetUncappedAISwarmerType()
 		if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
-			update_cooldowns(list("set_spawn" = swarmer_spawn_cooldown_amt))
+			update_cooldowns(list(COOLDOWN_UPDATE_SET_SPAWN = swarmer_spawn_cooldown_amt))
 			new createtype(loc)
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && world.time > call_help_cooldown)
-		update_cooldowns(list("set_help" = call_help_cooldown_amt))
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_HELP = call_help_cooldown_amt))
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/update_cooldowns(list/cooldown_updates)
 	. = ..()
-	if(isnum(cooldown_updates["set_spawn"]))
-		swarmer_spawn_cooldown = world.time + cooldown_updates["set_spawn"]
-	if(isnum(cooldown_updates["add_spawn"]))
-		swarmer_spawn_cooldown += cooldown_updates["add_spawn"]
-	if(isnum(cooldown_updates["set_help"]))
-		call_help_cooldown = world.time + cooldown_updates["set_help"]
-	if(isnum(cooldown_updates["add_help"]))
-		call_help_cooldown += cooldown_updates["add_help"]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN]))
+		swarmer_spawn_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN]))
+		swarmer_spawn_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_HELP]))
+		call_help_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_HELP]
+	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_HELP]))
+		call_help_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_HELP]
 
 //SWARMER AI
 //AI versions of the swarmer mini-antag
