@@ -26857,14 +26857,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space/nearstation)
-"gAo" = (
-/obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_y = -26
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/science/mixing)
 "gAu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -37540,6 +37532,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"kqr" = (
+/obj/machinery/atmospherics/components/binary/valve,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/science/mixing)
 "kqv" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin3";
@@ -46511,6 +46508,14 @@
 	luminosity = 2
 	},
 /area/ai_monitored/command/nuke_storage)
+"nmO" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/obj/machinery/module_duplicator,
+/turf/open/floor/iron/white,
+/area/science/misc_lab)
 "nnb" = (
 /obj/machinery/autolathe,
 /obj/machinery/camera{
@@ -55522,11 +55527,6 @@
 	dir = 8
 	},
 /area/service/chapel/main)
-"qhS" = (
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/engine,
-/area/science/mixing/chamber)
 "qhU" = (
 /obj/item/retractor,
 /obj/item/hemostat{
@@ -59562,6 +59562,14 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/engineering/break_room)
+"rxI" = (
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_x = -22
+	},
+/turf/open/floor/engine,
+/area/science/mixing/chamber)
 "rxM" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -64105,14 +64113,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
-"sVU" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/obj/machinery/module_duplicator,
-/turf/open/floor/iron/white,
-/area/science/misc_lab)
 "sWb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 6
@@ -111889,7 +111889,7 @@ hSZ
 jmX
 aWD
 uox
-gAo
+kqr
 dsd
 pOT
 dsd
@@ -112147,7 +112147,7 @@ jmX
 dbG
 tUz
 wZN
-qhS
+rxI
 nSp
 mBC
 xHV
@@ -113927,7 +113927,7 @@ yjC
 lGi
 eAF
 xAx
-sVU
+nmO
 nhL
 oLk
 kYe

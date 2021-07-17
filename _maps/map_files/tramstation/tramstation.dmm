@@ -22271,6 +22271,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"ewo" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/obj/structure/rack,
+/obj/machinery/light/directional/south,
+/obj/item/controller,
+/obj/item/compact_remote,
+/obj/item/integrated_circuit/loaded/hello_world,
+/obj/item/integrated_circuit/loaded/speech_relay,
+/obj/item/compact_remote,
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "ewq" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -34436,6 +34449,15 @@
 /obj/item/chair/stool,
 /turf/open/floor/plating,
 /area/maintenance/central)
+"jjh" = (
+/obj/structure/chair/sofa/right{
+	dir = 8
+	},
+/obj/item/toy/plush/moth{
+	name = "Moffgomery Mofferson"
+	},
+/turf/open/floor/carpet/blue,
+/area/medical/psychology)
 "jjE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -35348,6 +35370,14 @@
 /obj/machinery/navbeacon/wayfinding/court,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
+"jCu" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_y = 26
+	},
+/turf/open/floor/engine,
+/area/science/mixing/chamber)
 "jCB" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -36534,6 +36564,14 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
+"kaa" = (
+/obj/machinery/meter,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/turf/open/floor/iron/white,
+/area/science/mixing)
 "kae" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -42184,11 +42222,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/medical/surgery)
-"mhs" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/turf/open/floor/engine,
-/area/science/mixing/chamber)
 "mhz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -42584,12 +42617,6 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
-"mna" = (
-/obj/structure/chair/sofa/right{
-	dir = 8
-	},
-/turf/open/floor/carpet/blue,
-/area/medical/psychology)
 "mnj" = (
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
@@ -43208,19 +43235,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
-"mzy" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
-/obj/structure/rack,
-/obj/machinery/light/directional/south,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/integrated_circuit/loaded/hello_world,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/compact_remote,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "mzF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -46994,6 +47008,13 @@
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
+"ogN" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/machinery/module_duplicator,
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "ohd" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Access";
@@ -48414,13 +48435,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
-"oHX" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
-/obj/machinery/module_duplicator,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "oIj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -57801,17 +57815,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"sqn" = (
-/obj/machinery/meter,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/white,
-/area/science/mixing)
 "sqo" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
@@ -119039,7 +119042,7 @@ vgg
 swZ
 neU
 gIF
-mhs
+jCu
 usG
 mSi
 vml
@@ -119295,7 +119298,7 @@ pwI
 iEP
 kJX
 uaJ
-sqn
+kaa
 jXs
 rbt
 mSi
@@ -119566,7 +119569,7 @@ xVI
 omI
 kgw
 nAo
-oHX
+ogN
 der
 mkm
 czI
@@ -119823,7 +119826,7 @@ pft
 ixB
 utS
 vVw
-mzy
+ewo
 der
 der
 der
@@ -174545,7 +174548,7 @@ irj
 irj
 eVQ
 lTf
-mna
+jjh
 uOF
 atk
 afn

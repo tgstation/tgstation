@@ -248,8 +248,9 @@
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf)
-				for(var/obj/effect/decal/cleanable/food/salt/S in stepTurf)
-					to_chat(L, span_warning("[S] bars your passage!"))
+				var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
+				if(salt)
+					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						R.reveal(20)
@@ -258,7 +259,7 @@
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))
 					return
-				if (locate(/obj/effect/blessing, stepTurf))
+				if(locate(/obj/effect/blessing) in stepTurf)
 					to_chat(L, span_warning("Holy energies block your path!"))
 					return
 
@@ -515,6 +516,11 @@
 	if(zMove(DOWN, TRUE, ventcrawling_mob))
 		to_chat(src, span_notice("You move down."))
 
+/mob/can_zFall(turf/source, levels, turf/target, direction)
+	if(buckled)
+		return buckled.can_zFall(source, levels, target, direction)
+	return ..()
+
 ///Move a mob between z levels, if it's valid to move z's on this turf
 /mob/proc/zMove(dir, feedback = FALSE, ventcrawling = FALSE)
 	if(dir != UP && dir != DOWN)
@@ -533,7 +539,7 @@
 			to_chat(src, span_warning("You couldn't move there!"))
 		return FALSE
 	if(!ventcrawling) //let this be handled in atmosmachinery.dm
-		forceMove(target)
+		return Move(target)
 	else
 		var/obj/machinery/atmospherics/pipe = loc
 		pipe.relaymove(src, dir)
