@@ -20,7 +20,7 @@
 		/turf/closed,
 		/turf/open/space,
 		/turf/open/lava,
-		/turf/open/chasm
+		/turf/open/chasm,
 	))
 	route = PATH_RUST
 
