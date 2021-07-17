@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "NanoTrasen has pushed a fix for nonexistent ghost ears, allowing them to theoretically hear nearby sounds again if they existed, which they don't."

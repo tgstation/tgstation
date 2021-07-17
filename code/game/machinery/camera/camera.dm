@@ -113,7 +113,7 @@
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
-	. += ..()
+	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
 		. += "It has electromagnetic interference shielding installed."
 	else

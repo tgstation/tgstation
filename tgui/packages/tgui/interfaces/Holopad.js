@@ -99,6 +99,15 @@ const HolopadContent = (props, context) => {
               </LabeledList.Item>
             );
           }))}
+          {holo_calls.filter(call => !call.connected).length > 0 && (
+            <LabeledList.Item key="reject">
+              <Button
+                icon="phone-slash"
+                content="Reject incoming call(s)"
+                color="bad"
+                onClick={() => act('rejectall')} />
+            </LabeledList.Item>
+          )}
         </LabeledList>
       </Section>
       <Section

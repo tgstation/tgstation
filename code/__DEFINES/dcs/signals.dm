@@ -1346,6 +1346,15 @@
 /// Sent to [/obj/item/circuit_component] when it is removed from a circuit. (/obj/item/integrated_circuit)
 #define COMSIG_CIRCUIT_COMPONENT_REMOVED "circuit_component_removed"
 
+/// Called when the integrated circuit's cell is set.
+#define COMSIG_CIRCUIT_SET_CELL "circuit_set_cell"
+
+/// Called when the integrated circuit is turned on or off.
+#define COMSIG_CIRCUIT_SET_ON "circuit_set_on"
+
+/// Called when the integrated circuit's shell is set.
+#define COMSIG_CIRCUIT_SET_SHELL "circuit_set_shell"
+
 /// Sent to an atom when a [/obj/item/usb_cable] attempts to connect to something. (/obj/item/usb_cable/usb_cable, /mob/user)
 #define COMSIG_ATOM_USB_CABLE_TRY_ATTACH "usb_cable_try_attach"
 	/// Attaches the USB cable to the atom. If the USB cables moves away, it will disconnect.

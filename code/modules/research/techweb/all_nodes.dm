@@ -213,6 +213,7 @@
 		"comp_light",
 		"comp_logic",
 		"comp_mmi",
+		"comp_module",
 		"comp_multiplexer",
 		"comp_not",
 		"comp_pressuresensor",
