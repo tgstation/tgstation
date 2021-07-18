@@ -3082,6 +3082,7 @@
 #include "code\modules\projectiles\guns\misc\bow.dm"
 #include "code\modules\projectiles\guns\misc\chem_gun.dm"
 #include "code\modules\projectiles\guns\misc\grenade_launcher.dm"
+#include "code\modules\projectiles\guns\misc\meat_hook.dm"
 #include "code\modules\projectiles\guns\misc\medbeam.dm"
 #include "code\modules\projectiles\guns\misc\syringe_gun.dm"
 #include "code\modules\projectiles\projectile\beams.dm"

@@ -348,82 +348,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-//Meat Hook
-/obj/item/gun/magic/hook
-	name = "meat hook"
-	desc = "Mid or feed."
-	ammo_type = /obj/item/ammo_casing/magic/hook
-	icon_state = "hook"
-	inhand_icon_state = "hook"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	fire_sound = 'sound/weapons/batonextend.ogg'
-	max_charges = 1
-	item_flags = NEEDS_PERMIT | NOBLUDGEON
-	sharpness = SHARP_POINTY
-	force = 18
-
-/obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, span_warning("[src] isn't ready to fire yet!"))
-
-/obj/item/ammo_casing/magic/hook
-	name = "hook"
-	desc = "A hook."
-	projectile_type = /obj/projectile/hook
-	caliber = CALIBER_HOOK
-	icon_state = "hook"
-	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
-
-/obj/projectile/hook
-	name = "hook"
-	icon_state = "hook"
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	pass_flags = PASSTABLE
-	damage = 20
-	stamina = 20
-	armour_penetration = 60
-	damage_type = BRUTE
-	hitsound = 'sound/effects/splat.ogg'
-	var/chain
-	var/knockdown_time = (0.5 SECONDS)
-
-/obj/projectile/hook/fire(setAngle)
-	if(firer)
-		chain = firer.Beam(src, icon_state = "chain")
-	..()
-	//TODO: root the firer until the chain returns
-
-/obj/projectile/hook/on_hit(atom/target)
-	. = ..()
-	if(ismovable(target))
-		var/atom/movable/A = target
-		if(A.anchored)
-			return
-		A.visible_message(span_danger("[A] is snagged by [firer]'s hook!"))
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
-		if (isliving(target))
-			var/mob/living/fresh_meat = target
-			fresh_meat.Knockdown(knockdown_time)
-			return
-		//TODO: keep the chain beamed to A
-		//TODO: needs a callback to delete the chain
-
-/obj/projectile/hook/Destroy()
-	qdel(chain)
-	return ..()
-
-//just a nerfed version of the real thing for the bounty hunters.
-/obj/item/gun/magic/hook/bounty
-	name = "hook"
-	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
-
-/obj/item/ammo_casing/magic/hook/bounty
-	projectile_type = /obj/projectile/hook/bounty
-
-/obj/projectile/hook/bounty
-	damage = 0
-	stamina = 40
-
 //Immortality Talisman
 /obj/item/immortality_talisman
 	name = "\improper Immortality Talisman"
@@ -872,7 +796,7 @@
 	desc = "Contact may or may not be close."
 
 /obj/item/organ/cyberimp/arm/katana
-	name = "dark mass"
+	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
@@ -884,13 +808,16 @@
 
 /obj/item/organ/cyberimp/arm/katana/attack_self(mob/user, modifiers)
 	. = ..()
-	to_chat(user, span_danger("The mass goes up your arm and goes inside it!"))
+	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 	var/index = user.get_held_index_of_item(src)
 	zone = (index == LEFT_HANDS ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	SetSlotFromZone()
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
+
+/obj/item/organ/cyberimp/arm/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
+	return
 
 /obj/item/organ/cyberimp/arm/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
@@ -900,7 +827,10 @@
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
 		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
-		part?.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+		if(part)
+			part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	katana.drew_blood = FALSE
+	katana.wash(CLEAN_TYPE_BLOOD)
 	return ..()
 
 #define LEFT_SLASH "Left Slash"
@@ -926,6 +856,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
 	var/drew_blood = FALSE
+	var/timerid
 	var/list/input_list = list()
 	var/list/combo_strings = list()
 	var/static/list/combo_list = list(
@@ -936,7 +867,8 @@
 	. = ..()
 	for(var/combo in combo_list)
 		var/step_string = ""
-		var/list/combo_steps = combo_list[COMBO_STEPS]
+		var/list/combo_specifics = combo_list[combo]
+		var/list/combo_steps = combo_specifics[COMBO_STEPS]
 		for(var/combo_step in combo_steps)
 			step_string += combo_step
 			if(combo_step == combo_steps[length(combo_steps)])
@@ -956,38 +888,55 @@
 /obj/item/cursed_katana/dropped(mob/user)
 	. = ..()
 	input_list.Cut()
-	drew_blood = FALSE
+	if(timerid)
+		deltimer(timerid)
 	if(isturf(loc))
 		qdel(src)
+
+/obj/item/cursed_katana/attack_self(mob/user)
+	. = ..()
+	if(timerid)
+		deltimer(timerid)
+	reset_inputs(user)
 
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
 	if(target.stat == DEAD)
 		return ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		balloon_alert(user, "you don't want to harm!")
 		return
 	var/list/modifiers = params2list(click_parameters)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		input_list += RIGHT_SLASH
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		input_list += LEFT_SLASH
+	if(user != target)
+		drew_blood = TRUE
+	if(ishostile(target))
+		user.changeNext_move(CLICK_CD_RAPID)
 	if(check_input(target, user))
 		input_list.Cut()
+		if(timerid)
+			deltimer(timerid)
 		return TRUE
 	else
-		drew_blood = TRUE
+		timerid = addtimer(CALLBACK(src, .proc/reset_inputs, user), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 		return ..()
 
 /obj/item/cursed_katana/proc/check_input(mob/living/target, mob/user)
-	for(var/list/combo as anything in combo_list)
-		var/list/steps = combo[COMBO_STEPS]
-		if(compare_list(input_list,steps))
-			INVOKE_ASYNC(src, combo[COMBO_PROC], target, user)
+	for(var/combo in combo_list)
+		var/list/combo_specifics = combo_list[combo]
+		if(compare_list(input_list,combo_specifics[COMBO_STEPS]))
+			INVOKE_ASYNC(src, combo_specifics[COMBO_PROC], target, user)
 			return TRUE
 	return FALSE
 
+/obj/item/cursed_katana/proc/reset_inputs(mob/user)
+	input_list.Cut()
+	balloon_alert(user, "you return to guard stance")
+
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
-	to_chat(user, "you strike homie!")
+	balloon_alert(user, "YOU STRUCK!!!! WIN!!!")
 	return
 
 #undef LEFT_SLASH
