@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - qol: "You can now load equipment outright by double clicking the corresponding equipment button in the Select Equipment UI."

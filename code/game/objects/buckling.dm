@@ -217,7 +217,7 @@
 		return FALSE
 
 	// Check if the target to buckle isn't INSIDE OF A WALL
-	if(!isopenturf(loc))
+	if(!isopenturf(loc) || !isopenturf(target.loc))
 		return FALSE
 
 	// Check if this atom can have things buckled to it.
@@ -225,7 +225,7 @@
 		return FALSE
 
 	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
-	if(check_loc && target.loc != loc)
+	if(check_loc && !target.Adjacent(src))
 		return FALSE
 
 	// Make sure the target isn't already buckled to something.

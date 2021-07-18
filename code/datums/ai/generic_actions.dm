@@ -232,7 +232,7 @@
 
 	var/datum/weakref/follow_ref = controller.blackboard[BB_FOLLOW_TARGET]
 	var/atom/movable/follow_target = follow_ref?.resolve()
-	if(!follow_target || !can_see(living_pawn, follow_target, length=controller.blackboard[BB_VISION_RANGE]))
+	if(!follow_target || get_dist(living_pawn, follow_target) > controller.blackboard[BB_VISION_RANGE])
 		finish_action(controller, FALSE)
 		return
 
