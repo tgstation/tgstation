@@ -6,9 +6,16 @@
 ///threshold for the memory being a sad one :^(
 #define MEMORY_SAD_THRESHOLD 7
 
+
 //These defines are for what notable event happened
 ///a memory of completing a surgery.
 #define MEMORY_SUCCESSFUL_SURGERY "surgery"
+///a memory of getting borged
+#define MEMORY_BORGED "borged"
+///a memory of pulling off either a high five or a high ten
+#define MEMORY_HIGH_FIVE "highfive"
+///a memory of priming a bomb
+#define MEMORY_BOMB_PRIMED "bomb"
 
 //These defines are for what the story is for, they should be defined as what part of the json file they interact with
 ///wall engraving stories

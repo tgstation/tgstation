@@ -2,6 +2,8 @@
 ///all of those things are supposed to be taken vaguely (engravings crossround and should not include names, dreams and succs are memory goop)
 ///and as such the generated text of the memory is vague. also, no references held so hard delling isn't an issue, thank god
 /datum/memory
+	///name of the memory the user sees
+	var/name
 	///job of the person performing the event
 	var/performer
 	///the action done to the target, see memory.dm in _DEFINES
@@ -9,14 +11,18 @@
 	///whatever the action was done to, if it's a person it's their job name!
 	var/target
 
+	///extra information used in the memories to more accurately describe what happened
+	var/list/extra_info
 	///mood of the person performing the event when they did it. changes the description.
 	var/mood
 
-/datum/memory/New(performer, action, target, mood)
+/datum/memory/New(name, performer, action, target, extra_info, mood)
 	. = ..()
+	src.name = name
 	src.performer = performer
 	src.action = action
 	src.target = target
+	src.extra_info = extra_info
 	src.mood = mood
 
 /datum/memory/proc/generate_story(story_type, story_flags)
@@ -72,13 +78,16 @@
 	var/list/story_starts = strings(MEMORY_FILE, action + "_starts")
 
 	var/list/story_moods
-	switch(mood)
-		if(MOOD_LEVEL_HAPPY4 to MOOD_LEVEL_HAPPY2)
-			story_moods = strings(MEMORY_FILE, "happy")
-		if(MOOD_LEVEL_HAPPY2-1 to MOOD_LEVEL_SAD2+1)
-			story_moods = strings(MEMORY_FILE, "neutral")
-		if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD4)
-			story_moods = strings(MEMORY_FILE, "sad")
+	if(mood != MOODLESS_MEMORY)
+		switch(mood)
+			if(MOOD_LEVEL_HAPPY4 to MOOD_LEVEL_HAPPY2)
+				story_moods = strings(MEMORY_FILE, "happy")
+			if(MOOD_LEVEL_HAPPY2-1 to MOOD_LEVEL_SAD2+1)
+				story_moods = strings(MEMORY_FILE, "neutral")
+			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD4)
+				story_moods = strings(MEMORY_FILE, "sad")
+
+	//storybuilding
 
 	story_pieces.Add(pick(forewords), pick(story_starts))
 	if(prob(25))
@@ -87,18 +96,26 @@
 		if(random in styles)
 			randoms -= styles
 		tone_down_the_randomness = TRUE
-	story_pieces.Add(pick(story_moods))
+	if(LAZYLEN(story_moods))
+		story_pieces.Add(pick(story_moods))
 	if(prob(tone_down_the_randomness ? 30 : 70))
 		story_pieces.Add(pick(randoms))
 
-	if(story_flags & STORY_FLAG_DATED)
-		story_pieces.Add("This took place in [GLOB.year_integer+540].")
+	//replacements
+
+	var/info_count = 0
 
 	for(var/line in story_pieces)
-		line = replacetext(line, "%PERFORMER", performer)
+		line = replacetext(line, "%PERFORMER", "\improper[performer]")
 		line = replacetext(line, "%TARGET", target)
 		line = replacetext(line, "%MOOD", pick(story_moods))
 		var/mob/living/something = pick(something_pool)
 		line = replacetext(line, "%SOMETHING", initial(something.name))
+		for(var/info in extra_info)
+			info_count++
+			line = replacetext(line, "%INFO[info_count]", extra_info[info_count])
+	//after replacement section for performance
+	if(story_flags & STORY_FLAG_DATED)
+		story_pieces.Add("This took place in [GLOB.year_integer+540].")
 
 	return story_pieces.Join(" ")

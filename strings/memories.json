@@ -45,20 +45,51 @@
 		"The engraving has a minimalist style."
 	],
 	"changeling_absorb_foreword":[
-		"A distant memory swims by you, it is of",
+		"You unravel a story about",
 		"A story of the past reveals itself, speaking of",
 		"Deeply tangled in their mind is a memory of",
 		"Your mental spines begin unravelling a story of"
 	],
 	"surgery_starts":[
-		"%PERFORMER carefully using a scalpel on %TARGET.",
+		"%PERFORMER carefully performing %INFO1 on %TARGET.",
 		"%PERFORMER using a bone saw on %TARGET.",
 		"%TARGET being operated on by %PERFORMER."
 	],
 	"surgery_moods":[
 		"%PERFORMER %MOOD as a blood splatter lands on %PERFORMER's face.",
-		"%PERFORMER %MOOD as the surgery continues.",
+		"%PERFORMER %MOOD as the %INFO1 continues.",
 		"%PERFORMER %MOOD as they pick apart %TARGET.",
-		"%PERFORMER %MOOD as they tear into %TARGET."
+		"%PERFORMER %MOOD as they tear into %TARGET.",
+		"%PERFORMER %MOOD after finishing %INFO1."
+	],
+	"bomb_starts":[
+		"%PERFORMER slapping down a %TARGET.",
+		"%PERFORMER presses an ominous button, and %TARGET begins beeping.",
+		"%TARGET is armed by %PERFORMER."
+	],
+	"bomb_moods":[
+		"%PERFORMER %MOOD as the bomb begins to tick.",
+		"%PERFORMER %MOOD with the bomb winding down.",
+		"beep... beep... %PERFORMER %MOOD.",
+		"%PERFORMER %MOOD and begins to walk away from the bomb."
+	],
+	"highfive_starts":[
+		"%PERFORMER and %TARGET are having a legendary %INFO1.",
+		"%PERFORMER is giving %TARGET a %INFO1.",
+		"%TARGET and %PERFORMER are high fiving each other."
+	],
+	"highfive_moods":[
+		"Wow! %PERFORMER %MOOD!",
+		"What a %INFO1! %PERFORMER %MOOD.",
+		"%PERFORMER %MOOD as the %INFO1 connects.",
+		"%PERFORMER %MOOD at all the compatriotism going on."
+	],
+	"borged_starts":[
+		"%PERFORMER and %TARGET are having a legendary %INFO1.",
+		"%PERFORMER is giving %TARGET a %INFO1.",
+		"%TARGET and %PERFORMER have completed a friendly %INFO1."
+	],
+	"borged_moods":[
+		"There shouldn't be any; you're a brain at this point!"
 	]
 }

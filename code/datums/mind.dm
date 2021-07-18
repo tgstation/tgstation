@@ -252,8 +252,8 @@
 	last_death = world.time
 
 ///new memory proc
-/datum/mind/proc/add_memory(memory_type, atom/target)
-	var/story_mood = MOOD_LEVEL_NEUTRAL
+/datum/mind/proc/add_memory(name, memory_type, atom/target, extra_info)
+	var/story_mood = MOODLESS_MEMORY
 	var/datum/component/mood/mood_component = current.GetComponent(/datum/component/mood)
 	if(mood_component)
 		story_mood = mood_component.mood_level
@@ -262,7 +262,7 @@
 	if(replaced_memory)
 		qdel(replaced_memory)
 
-	memories[memory_type] = new /datum/memory(build_story_mob(current), memory_type, build_target(target), story_mood)
+	memories[memory_type] = new /datum/memory(name, build_story_mob(current), memory_type, build_target(target), extra_info, story_mood)
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)
@@ -297,7 +297,7 @@
 	memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
-	memory = null
+	QDEL_LIST(memories)
 
 // Datum antag mind procs
 /datum/mind/proc/add_antag_datum(datum_type_or_instance, team)
