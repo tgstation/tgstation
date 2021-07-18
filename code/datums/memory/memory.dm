@@ -22,18 +22,63 @@
 /datum/memory/proc/generate_story(story_type, story_flags)
 	var/list/story_pieces = list()
 
-	//story type dependent strings (engraving art)
+	//entirely independent vars (not related to the action or story type)
+
+	var/list/something_pool = list(
+		/mob/living/simple_animal/hostile/carp,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/mushroom,
+		/mob/living/simple_animal/hostile/statue,
+		/mob/living/simple_animal/hostile/retaliate/bat,
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/mob/living/simple_animal/hostile/killertomato,
+		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/simple_animal/hostile/giant_spider/hunter,
+		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+		/mob/living/simple_animal/hostile/carp/ranged,
+		/mob/living/simple_animal/hostile/carp/ranged/chaos,
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+		/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+		/mob/living/simple_animal/hostile/headcrab,
+		/mob/living/simple_animal/hostile/morph,
+		/mob/living/simple_animal/hostile/stickman,
+		/mob/living/simple_animal/hostile/stickman/dog,
+		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+		/mob/living/simple_animal/hostile/gorilla,
+		/mob/living/simple_animal/parrot,
+		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/simple_animal/pet/cat,
+		/mob/living/simple_animal/mouse,
+		/mob/living/simple_animal/chicken,
+		/mob/living/simple_animal/cow,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/simple_animal/pet/fox,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/pet/cat/cak,
+		/mob/living/simple_animal/chick
+	)
+
+	var/tone_down_the_randomness = FALSE
+
+	//story type dependent vars (engraving art)
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
 	var/list/somethings = strings(MEMORY_FILE, story_type + "_somethings")
 	var/list/styles = strings(MEMORY_FILE, story_type + "_styles")
-
 	var/list/randoms = somethings + styles
 
-	//story action strings (surgery)
+	//story action vars (surgery)
 	var/list/story_starts = strings(MEMORY_FILE, action + "_starts")
-	var/list/story_moods = strings(MEMORY_FILE, action + "_moods")
 
-	var/tone_down_the_randomness = FALSE
+	var/list/story_moods
+	switch(mood)
+		if(MOOD_LEVEL_HAPPY4 to MOOD_LEVEL_HAPPY2)
+			story_moods = strings(MEMORY_FILE, "happy")
+		if(MOOD_LEVEL_HAPPY2-1 to MOOD_LEVEL_SAD2+1)
+			story_moods = strings(MEMORY_FILE, "neutral")
+		if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD4)
+			story_moods = strings(MEMORY_FILE, "sad")
 
 	story_pieces.Add(pick(forewords), pick(story_starts))
 	if(prob(25))
@@ -48,5 +93,12 @@
 
 	if(story_flags & STORY_FLAG_DATED)
 		story_pieces.Add("This took place in [GLOB.year_integer+540].")
+
+	for(var/line in story_pieces)
+		line = replacetext(line, "%PERFORMER", performer)
+		line = replacetext(line, "%TARGET", target)
+		line = replacetext(line, "%MOOD", pick(story_moods))
+		var/mob/living/something = pick(something_pool)
+		line = replacetext(line, "%SOMETHING", initial(something.name))
 
 	return story_pieces.Join(" ")
