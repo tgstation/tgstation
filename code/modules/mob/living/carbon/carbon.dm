@@ -9,7 +9,7 @@
 
 	GLOB.carbon_list += src
 	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, ./proc/disarm_collision)
+	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/disarm_collision)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -1279,6 +1279,12 @@
 	SIGNAL_HANDLER
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-/mob/living/carbon/proc/disarm_collision()
+/mob/living/carbon/proc/disarm_collision(mob/living/carbon/shover, mob/living/carbon/target, mob/living/carbon/collateral)
 	SIGNAL_HANDLER
-	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN) ///This one leaves me very confused. Head empty.
+	if(!collateral.is_shove_knockdown_blocked())
+		collateral.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+	target.visible_message(span_danger("[shover] shoves [target.name] into [collateral.name]!"),
+		span_userdanger("You're shoved into [collateral.name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into [collateral.name]!"))
+	log_combat(src, target, "shoved", "into [collateral.name]")
