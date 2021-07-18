@@ -30,7 +30,6 @@ map kilostation
 endmap
 
 map icebox
-	default
 	minplayers 25
 	votable
 endmap
