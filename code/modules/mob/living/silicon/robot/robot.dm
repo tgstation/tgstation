@@ -64,7 +64,6 @@
 			mmi.update_appearance()
 		setup_default_name()
 
-	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
 	diag_hud_set_borgcell()
