@@ -300,6 +300,8 @@
 			O.updatename(brainmob.client)
 			brainmob.mind.transfer_to(O)
 			brainmob.mind.add_memory("got borged", MEMORY_BORGED, user)
+      playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+
 			if(O.mind && O.mind.special_role)
 				to_chat(O, span_userdanger("You have been robotized!"))
 				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to simultaneously perform an attack and a tackle as a xeno or monkey with right click and combat mode on."

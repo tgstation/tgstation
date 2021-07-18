@@ -46,9 +46,7 @@
 
 	set_light_on(on)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
@@ -384,11 +382,9 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 	icon_state = "hardsuit[on]-[hardsuit_type]"
 	user.update_inv_head()
+	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
@@ -708,8 +704,7 @@
 /obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!..() || !ishuman(M))
 		return FALSE
-	var/mob/living/carbon/human/H = M
-	if(H.mind.assigned_role == "Clown")
+	if(is_clown_job(M.mind.assigned_role))
 		return TRUE
 	else
 		return FALSE

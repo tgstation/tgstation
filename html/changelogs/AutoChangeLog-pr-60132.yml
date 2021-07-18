@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - qol: "Stops (blob and otherwise) mobs from falling through blob tiles on open space."

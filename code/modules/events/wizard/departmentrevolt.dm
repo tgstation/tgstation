@@ -89,19 +89,16 @@
 		department_target = pick(independent_departments)
 	nation.generate_nation_objectives(dangerous, department_target)
 
-	for(var/i in GLOB.human_list)
-		var/mob/living/carbon/human/possible_separatist = i
+	for(var/mob/living/carbon/human/possible_separatist as anything in GLOB.human_list)
 		if(!possible_separatist.mind)
 			continue
 		var/datum/mind/separatist_mind = possible_separatist.mind
-		if(!separatist_mind.assigned_role)
+		if(!(separatist_mind.assigned_role.title in jobs_to_revolt))
 			continue
-		for(var/job in jobs_to_revolt)
-			if(separatist_mind.assigned_role == job)
-				citizens += possible_separatist
-				separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
-				nation.add_member(separatist_mind)
-				possible_separatist.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
+		citizens += possible_separatist
+		separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
+		nation.add_member(separatist_mind)
+		possible_separatist.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
 
 	if(citizens.len)
 		var/jobs_english_list = english_list(jobs_to_revolt)
