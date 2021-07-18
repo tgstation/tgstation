@@ -108,7 +108,10 @@
 		y_offset = clamp(y, -range, range)
 	update_indicator()
 
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending, circuit_inserter_info = null)
+/// Performs the teleport.
+/// sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
+/// alternate_log_name - An alternative name to use in logs, if `user` is not present..
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, alternate_log_name = null)
 
 	var/turf/dest = get_turf(src)
 
@@ -146,10 +149,7 @@
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	if(!isnull(circuit_inserter_info))
-		log_msg += ": [circuit_inserter_info] triggered a teleport"
-	else
-		log_msg += ": [key_name(user)] triggered a teleport "
+	log_msg += ": [alternate_log_name || key_name(user)] triggered a teleport "
 
 	if(sending)
 		source = dest
