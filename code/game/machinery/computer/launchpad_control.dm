@@ -139,9 +139,6 @@
 		return FALSE
 	return TRUE
 
-
-//here dumdum V V
-
 /obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
 		return "ERROR: Launchpad not responding. Check launchpad integrity."
