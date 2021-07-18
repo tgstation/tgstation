@@ -10,3 +10,5 @@ GLOBAL_LIST_INIT(typecache_living, typecacheof(/mob/living))
 GLOBAL_LIST_INIT(typecache_stack, typecacheof(/obj/item/stack))
 
 GLOBAL_LIST_INIT(typecache_machine_or_structure, typecacheof(list(/obj/machinery, /obj/structure)))
+
+GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(/obj/structure/table,/obj/structure/rack,/obj/machinery/conveyor,/obj/structure/closet))) //This is used for ants.

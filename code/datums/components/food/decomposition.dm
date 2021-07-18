@@ -61,21 +61,17 @@
 		return
 	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
 
-	if(!(istype(food.loc, /turf/open))) // Is this currently in an open turf?
-		remove_timer() // If not, remove any active timers and return
-		return
-	if(locate(/obj/structure/table) in get_turf(food)) // Is this currently over a table?
+	var/turf/open/T = food.loc
+
+	if(!istype(T)) //Are we actually in an open turf?
 		remove_timer()
 		return
-	if(locate(/obj/structure/rack) in get_turf(food)) // Is it on a rack?
-		remove_timer()
-		return
-	if(locate(/obj/machinery/conveyor) in get_turf(food)) // Makes sure no decals spawn on disposals conveyors
-		remove_timer()
-		return
-	if(locate(/obj/structure/closet) in get_turf(food)) //Is it on a closet/fridge/locker/crate?
-		remove_timer()
-		return
+
+	for(var/k in T.contents) //Check contents of turf
+		if(typecache_elevated_structures[k]) //Are we actually on an elevated structure?
+			remove_timer()
+			return
+
 	// If all other checks fail, then begin decomposition.
 	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
 
