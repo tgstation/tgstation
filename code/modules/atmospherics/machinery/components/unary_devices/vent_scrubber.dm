@@ -210,9 +210,8 @@
 	if(widenet)
 		check_turfs()
 
-//we populate a list of turfs with nonatmos-blocked cardinal turfs AND
-// diagonal turfs that can share atmos with *both* of the cardinal turfs
-
+///we populate a list of turfs with nonatmos-blocked cardinal turfs AND
+/// diagonal turfs that can share atmos with *both* of the cardinal turfs
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
 	var/old_adjacent_turfs_length = length(adjacent_turfs)
 	adjacent_turfs.Cut()
@@ -263,6 +262,7 @@
 		broadcast_status()
 		return //do not update_appearance
 
+	if(scrubbing == SCRUBBING)
 	var/new_filters_length = length(filter_types)
 	update_mode_power_usage(ACTIVE_POWER_USE, new_filters_length)
 

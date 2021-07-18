@@ -167,14 +167,9 @@
 	power_change()
 	if(use_power == NO_POWER_USE)
 		return
-	update_current_power_usage()
 
-	become_area_sensitive(INNATE_TRAIT)
-	var/area/our_area = get_area(src)
-	if(our_area)
-		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
-	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+	update_current_power_usage()
+	setup_area_power_relationship()
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -184,6 +179,34 @@
 	QDEL_NULL(circuit)
 	unset_static_power()
 	return ..()
+
+/**
+ * proc to call when the machine starts to require power after a duration of not requiring power
+ * sets up power related connections to its area if it exists and becomes area sensitive
+ * does not affect power usage itself
+ */
+/obj/machinery/proc/setup_area_power_relationship()
+	become_area_sensitive(INNATE_TRAIT)
+
+	var/area/our_area = get_area(src)
+	if(our_area)
+		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
+	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+
+/**
+ * proc to call when the machine stops requiring power after a duration of requiring power
+ * saves memory by removing the power relationship with its area if it exists and loses area sensitivity
+ * does not affect power usage itself
+ */
+/obj/machinery/proc/remove_area_power_relationship()
+	var/area/our_area = get_area(src)
+	if(our_area)
+		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
+
+	REMOVE_TRAIT(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)
+	UnregisterSignal(src, COMSIG_ENTER_AREA)
+	UnregisterSignal(src, COMSIG_EXIT_AREA)
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
@@ -350,10 +373,6 @@
 
 	unset_static_power()
 
-	var/old_use_power = use_power //if we go from using power to NO_POWER_USE, stop being area sensitive, vice versa we become area sensitive
-	if(use_power == NO_POWER_USE)
-		become_area_sensitive(INNATE_TRAIT)
-
 	var/new_usage = 0
 	switch(new_use_power)
 		if(IDLE_POWER_USE)
@@ -361,6 +380,10 @@
 		if(ACTIVE_POWER_USE)
 			new_usage = active_power_usage
 
+	if(use_power == NO_POWER_USE)
+		setup_area_power_relationship()
+	else if(new_use_power == NO_POWER_USE)
+		remove_area_power_relationship()
 
 	static_power_usage = new_usage
 
@@ -390,10 +413,10 @@
 	return TRUE
 
 ///internal proc that removes all static power usage from the current area
-/obj/machinery/proc/unset_static_power(area/area_to_unset = null) //make this a macro?
+/obj/machinery/proc/unset_static_power()
 	var/old_usage = static_power_usage
 
-	var/area/our_area = area_to_unset ? area_to_unset : get_area(src)
+	var/area/our_area = get_area(src)
 
 	if(our_area && old_usage)
 		our_area.removeStaticPower(old_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
@@ -401,9 +424,9 @@
 
 	return old_usage
 
-//TODOKYLER: holy fuck this autodoc sucks make this clearer
 /**
- * updates the specified power mode usage of this machine and if the machine is using that mode, the actual power usage
+ * sets the power_usage linked to the specified use_power_mode to new_usage
+ * e.g. update_mode_power_usage(ACTIVE_POWER_USE, 10) sets active_power_use = 10 and updates its power draw from the machines area if use_power == ACTIVE_POWER_USE
  *
  * Arguments:
  * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
@@ -432,13 +455,7 @@
 
 	return TRUE
 
-/**
- * updates the specified power mode usage of this machine and if the machine is using that mode, the actual power usage
- *
- * Arguments:
- * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
- * * new_usage - the new value to set the specified power mode var to
- */
+///makes this machine draw power from its area according to which use_power mode it is set to
 /obj/machinery/proc/update_current_power_usage()
 	if(static_power_usage)
 		unset_static_power()
@@ -452,6 +469,8 @@
 			static_power_usage = idle_power_usage
 		if(ACTIVE_POWER_USE)
 			static_power_usage = active_power_usage
+		if(NO_POWER_USE)
+			return
 
 	if(static_power_usage)
 		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
