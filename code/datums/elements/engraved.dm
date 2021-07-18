@@ -20,7 +20,7 @@
 	//ADD ENGRAVED OVERLAY HERE
 
 ///signal called on parent being examined
-/datum/component/engraved/proc/on_examine(datum/source, mob/user, list/examine_list)
+/datum/element/engraved/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_boldnotice("[engraved_description]")
 

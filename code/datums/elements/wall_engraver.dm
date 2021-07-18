@@ -17,7 +17,7 @@
 	UnregisterSignal(source, COMSIG_ITEM_PRE_ATTACK_SECONDARY)
 
 ///signal called on parent being examined
-/datum/component/wall_engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
+/datum/element/wall_engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("You can engrave some walls with your secondary attack if you can think of something interesting to engrave.")
 
@@ -49,5 +49,5 @@
 		return
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
-	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED))
+	wall.AddElement(/datum/element/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED))
 	///REMOVE THE MEMORY ONCE ENGRAVED
