@@ -2711,8 +2711,8 @@
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/ants
-	name = "Ants"
-	description = "A sample of a lost breed of Space Ants (formicidae bastardium tyrannus), they are well-known for ravaging the living shit out of pretty much anything."
+	name = "Blants"
+	description = "Holy smokes! BLANTS. BLANTUS BARTICLES BATUMS. Shoutout to my home dog, jatums too. Look it up, they exist."
 	reagent_state = SOLID
 	color = "#993333"
 	taste_mult = 1.3
@@ -2730,7 +2730,7 @@
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.005),0.1))) //Scales with time. Around 12.5 brute for 50 seconds.
 	if(DT_PROB(5, delta_time))
 		if(DT_PROB(5, delta_time)) //Super rare statement
-			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+			victim.say("AUGH NO NOT THE BLANTS! NOT THE BLANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
 		else
 			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/ants)
 	if(DT_PROB(15, delta_time))
@@ -2742,7 +2742,7 @@
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	ant_damage = 0
-	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
+	to_chat(living_anthill, "<span class='notice'>You feel like the last of the blants are out of your system.</span>")
 	return ..()
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
