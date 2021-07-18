@@ -3724,8 +3724,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aoM" = (
@@ -4078,7 +4076,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer4{
+/obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
 	dir = 4;
 	name = Air In
 	},
@@ -4090,6 +4088,9 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aqt" = (
@@ -28468,7 +28469,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer4{
+/obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
 	dir = 8;
 	name = Air Out
 	},
