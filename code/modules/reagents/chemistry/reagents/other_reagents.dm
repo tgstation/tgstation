@@ -2720,7 +2720,7 @@
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	glass_name = "glass of blants"
 	glass_desc = "Bottoms up...?"
-	ph = 4.6 // Ants contain Formic Acid
+	ph = 4.6 // Blants contain Formic Acid
 	/// How much damage the blants are going to be doing (rises with each tick the blants are in someone's body)
 	var/ant_damage = 0
 	/// Tells the debuff how many blants we are being covered with.

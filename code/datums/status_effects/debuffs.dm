@@ -993,7 +993,7 @@
 		if(!prob(1)) // 99%
 			to_chat(victim, "<span class='userdanger'>You're covered in MORE blants!</span>")
 		else // 1%
-			victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/blants)
+			victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE BLANTS!!", forced = /datum/status_effect/blants)
 		ants_remaining += amount_left
 	. = ..()
 
@@ -1015,7 +1015,7 @@
 		if(prob(15))
 			switch(rand(1,2))
 				if(1)
-					victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!", "MAKE IT END!!", "THEY'RE EVERYWHERE!!", "GET THEM OFF!!", "SOMEBODY HELP ME!!"), forced = /datum/status_effect/blants)
+					victim.say(pick("GET THEM OFF ME!!", "OH GOD THE BLANTS!!", "MAKE IT END!!", "THEY'RE EVERYWHERE!!", "GET THEM OFF!!", "SOMEBODY HELP ME!!"), forced = /datum/status_effect/blants)
 				if(2)
 					victim.emote("scream")
 		if(prob(50))
@@ -1041,7 +1041,7 @@
 		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more blants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/blants
-	name = "Ants!"
+	name = "Blants!"
 	desc = "<span class='warning'>JESUS FUCKING CHRIST! CLICK TO GET THOSE THINGS OFF!</span>"
 	icon_state = "antalert"
 
