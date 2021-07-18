@@ -68,7 +68,7 @@
 		return
 
 	for(var/k in T.contents) //Check contents of turf
-		if(typecache_elevated_structures[k]) //Are we actually on an elevated structure?
+		if(GLOB.typecache_elevated_structures[k]) //Are we actually on an elevated structure?
 			remove_timer()
 			return
 
