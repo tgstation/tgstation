@@ -58,7 +58,7 @@
 /obj/item/organ/cyberimp/arm/examine(mob/user)
 	. = ..()
 	if(status == ORGAN_ROBOTIC)
-	. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
+		. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
 
 /obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
 	. = ..()
