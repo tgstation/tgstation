@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - refactor: "Directional lights might seem more smooth now"

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Energy Guns use balloon alerts when swapping mode"

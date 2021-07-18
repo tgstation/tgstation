@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - qol: "Most advanced tools now use balloon alert"
