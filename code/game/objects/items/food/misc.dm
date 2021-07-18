@@ -700,7 +700,7 @@
 	name = "ant candy"
 	desc = "A colony of ants suspended in hardened sugar. Those things are dead, right?"
 	icon_state = "ant_pop"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5, /datum/reagent/ants = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1, "insects" = 1)
 	foodtypes = JUNKFOOD | SUGAR | GROSS
 	food_flags = FOOD_FINGER_FOOD

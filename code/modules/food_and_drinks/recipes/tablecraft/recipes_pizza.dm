@@ -107,8 +107,7 @@
 	reqs = list(
 		/obj/item/food/pizzabread = 1,
 		/obj/item/food/cheese = 2,
-		/obj/item/food/grown/tomato = 1,
-		/datum/reagent/ants = 20
+		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/ants
 	subcategory = CAT_PIZZA
