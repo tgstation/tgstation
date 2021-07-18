@@ -88,8 +88,8 @@
 	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	/// Amount of damage sustained if hit by a heavy EMP pulse
 	var/heavy_emp_damage = 25
-	///Alert listener datum, handes caring about alert events and such
-	var/datum/alert_listener/listener
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
 	/// Internal storage slot. Fits any item
 	var/obj/item/internal_storage
 	/// Headwear slot
@@ -206,11 +206,11 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	listener = new(list(ALERT_ATMOS, ALERT_FIRE, ALERT_POWER), list(z))
-	RegisterSignal(listener, COMSIG_ALERT_TRIGGERED, .proc/alert_triggered)
-	RegisterSignal(listener, COMSIG_ALERT_CLEARED, .proc/alert_cleared)
-	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alert_listener/proc/prevent_alert_changes)
-	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alert_listener/proc/allow_alert_changes)
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -321,11 +321,11 @@
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
 
-/mob/living/simple_animal/drone/proc/alert_triggered(datum/source, alert_type, area/source_area)
-	to_chat(src, "--- [alert_type] alarm detected in [source_area.name]!")
+/mob/living/simple_animal/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
 
-/mob/living/simple_animal/drone/proc/alert_cleared(datum/source, alert_type, area/source_area)
-	to_chat(src, "--- [alert_type] alarm in [source_area.name] has been cleared.")
+/mob/living/simple_animal/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
 /mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
 	SIGNAL_HANDLER

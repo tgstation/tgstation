@@ -71,11 +71,11 @@
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
 
-	listener = new(list(ALERT_ATMOS, ALERT_FIRE, ALERT_POWER, ALERT_CAMERA, ALERT_BURGLAR, ALERT_MOTION), list(z))
-	RegisterSignal(listener, COMSIG_ALERT_TRIGGERED, .proc/alert_triggered)
-	RegisterSignal(listener, COMSIG_ALERT_CLEARED, .proc/alert_cleared)
-	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alert_listener/proc/prevent_alert_changes)
-	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alert_listener/proc/allow_alert_changes)
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/silicon/robot/model/syndicate/Initialize()
 	. = ..()
@@ -197,12 +197,12 @@
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
 	var/list/alarms = listener.alarms
-	for (var/alert_type in alarms)
-		dat += text("<B>[alert_type]</B><BR>\n")
-		var/list/L = alarms[alert_type]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
+	for (var/alarm_type in alarms)
+		dat += text("<B>[alarm_type]</B><BR>\n")
+		var/list/alerts = alarms[alarm_type]
+		if (length(alerts))
+			for (var/alarm in alerts)
+				var/list/alm = alerts[alarm]
 				var/area/A = alm[1]
 				dat += "<NOBR>"
 				dat += text("-- [A.name]")
@@ -256,11 +256,11 @@
 	if(connected_ai)
 		. += "Master AI: [connected_ai.name]"
 
-/mob/living/silicon/robot/proc/alert_triggered(datum/source, alert_type, area/source_area)
-	queueAlarm(text("--- [alert_type] alarm detected in [source_area.name]!"), alert_type)
+/mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	queueAlarm(text("--- [alarm_type] alarm detected in [source_area.name]!"), alarm_type)
 
-/mob/living/silicon/robot/proc/alert_cleared(datum/source, alert_type, area/source_area)
-	queueAlarm("--- [alert_type] alarm in [source_area.name] has been cleared.", alert_type, 0)
+/mob/living/silicon/robot/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, 0)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
 	if (A == modularInterface)

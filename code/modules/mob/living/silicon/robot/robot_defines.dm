@@ -131,8 +131,8 @@
 
 	/// the last health before updating - to check net change in health
 	var/previous_health
-	///Alert listener datum, handes caring about alert events and such
-	var/datum/alert_listener/listener
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
 
 
 /***************************************************************************************

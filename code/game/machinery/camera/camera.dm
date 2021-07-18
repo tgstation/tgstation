@@ -40,8 +40,8 @@
 	var/upgrades = 0
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
-	///Represents a signel source of camera alerts about movement or camera tampering
-	var/datum/alert_handler/alert_manager
+	///Represents a signel source of camera alarms about movement or camera tampering
+	var/datum/alarm_handler/alarm_manager
 
 /obj/machinery/camera/preset/toxins //Bomb test site in space
 	name = "Hardened Bomb-Test Camera"
@@ -86,7 +86,7 @@
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
 
-	alert_manager = new(src)
+	alarm_manager = new(src)
 
 /obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
@@ -108,7 +108,7 @@
 	cancelCameraAlarm()
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
-	QDEL_NULL(alert_manager)
+	QDEL_NULL(alarm_manager)
 	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= c_tag
@@ -437,11 +437,11 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	alert_manager.send_alert(ALERT_CAMERA, src, src)
+	alarm_manager.send_alarm(ALARM_CAMERA, src, src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	alert_manager.clear_alert(ALERT_CAMERA)
+	alarm_manager.clear_alarm(ALARM_CAMERA)
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)

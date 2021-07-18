@@ -22,7 +22,7 @@
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
 	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing
-	var/datum/alert_handler/alert_manager
+	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
 
@@ -135,7 +135,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	power_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
-	alert_manager = new(src) // just in case
+	alarm_manager = new(src) // just in case
 	return ..()
 
 /*
@@ -235,7 +235,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		GLOB.areas_by_type[type] = null
 	GLOB.sortedAreas -= src
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(alert_manager)
+	QDEL_NULL(alarm_manager)
 	return ..()
 
 /**
@@ -275,7 +275,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_appearance()
-	alert_manager.send_alert(ALERT_FIRE, source)
+	alarm_manager.send_alarm(ALARM_FIRE, source)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_appearance()
-	alert_manager.clear_alert(ALERT_FIRE, source)
+	alarm_manager.clear_alarm(ALARM_FIRE, source)
 	STOP_PROCESSING(SSobj, src)
 
 /**

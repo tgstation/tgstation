@@ -82,8 +82,8 @@
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
-	///Represents a signel source of atmos alerts, complains to all the listeners if one of our thresholds is violated
-	var/datum/alert_handler/alert_manager
+	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
+	var/datum/alarm_handler/alarm_manager
 
 	var/list/TLV = list( // Breathable air.
 		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min2, min1, max1, max2
@@ -229,13 +229,13 @@
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
 
-	alert_manager = new(src)
+	alarm_manager = new(src)
 	update_appearance()
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
 	QDEL_NULL(wires)
-	QDEL_NULL(alert_manager)
+	QDEL_NULL(alarm_manager)
 	return ..()
 
 /obj/machinery/airalarm/Initialize(mapload)
@@ -275,7 +275,7 @@
 	)
 
 	var/area/A = get_area(src)
-	data["atmos_alarm"] = !!A.active_alarms[ALERT_ATMOS]
+	data["atmos_alarm"] = !!A.active_alarms[ALARM_ATMOS]
 	data["fire_alarm"] = A.fire
 
 	var/turf/T = get_turf(src)
@@ -445,11 +445,11 @@
 			apply_mode(usr)
 			. = TRUE
 		if("alarm")
-			if(alert_manager.send_alert(ALERT_ATMOS))
+			if(alarm_manager.send_alarm(ALARM_ATMOS))
 				post_alert(2)
 			. = TRUE
 		if("reset")
-			if(alert_manager.clear_alert(ALERT_ATMOS))
+			if(alarm_manager.clear_alarm(ALARM_ATMOS))
 				post_alert(0)
 			. = TRUE
 	update_appearance()
@@ -656,7 +656,7 @@
 		return ..()
 
 	var/area/our_area = get_area(src)
-	switch(max(danger_level, !!our_area.active_alarms[ALERT_ATMOS]))
+	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
 		if(0)
 			icon_state = "alarm0"
 		if(1)
@@ -734,9 +734,9 @@
 
 	var/did_anything_happen = FALSE
 	if(new_area_danger_level)
-		did_anything_happen = alert_manager.send_alert(ALERT_ATMOS)
+		did_anything_happen = alarm_manager.send_alarm(ALARM_ATMOS)
 	else
-		did_anything_happen = alert_manager.clear_alert(ALERT_ATMOS)
+		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
 	if(did_anything_happen) //if something actually changed
 		post_alert(new_area_danger_level)
 

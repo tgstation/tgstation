@@ -48,7 +48,7 @@
 					A.mode = 1 // AALARM_MODE_SCRUB
 				A.apply_mode(usr)
 		if(WIRE_ALARM) // Clear alarms.
-			if(A.alert_manager.clear_alert(ALERT_ATMOS))
+			if(A.alarm_manager.clear_alarm(ALARM_ATMOS))
 				A.post_alert(0)
 			A.update_appearance()
 
@@ -69,6 +69,6 @@
 				A.mode = 3 // AALARM_MODE_PANIC
 				A.apply_mode(usr)
 		if(WIRE_ALARM) // Post alarm.
-			if(A.alert_manager.send_alert(ALERT_ATMOS))
+			if(A.alarm_manager.send_alarm(ALARM_ATMOS))
 				A.post_alert(2)
 			A.update_appearance()

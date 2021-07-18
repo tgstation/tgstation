@@ -10,15 +10,15 @@
 	tgui_id = "NtosStationAlertConsole"
 	program_icon = "bell"
 	var/has_alert = 0
-	///Listens for alerts, manages our listing of alarms
-	var/datum/alert_listener/listener
+	///Listens for alarms, manages our listing of alarms
+	var/datum/alarm_listener/listener
 
 /datum/computer_file/program/alarm_monitor/New()
-	//We want to send an alert if we're in one of the mining home areas
+	//We want to send an alarm if we're in one of the mining home areas
 	//Or if we're on station. Otherwise, die.
 	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
-	listener = new(list(ALERT_ATMOS, ALERT_FIRE, ALERT_POWER), null, allowed_areas)
-	RegisterSignal(listener, list(COMSIG_ALERT_TRIGGERED, COMSIG_ALERT_CLEARED), .proc/update_alarm_display)
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), null, allowed_areas)
+	RegisterSignal(listener, list(COMSIG_ALARM_TRIGGERED, COMSIG_ALARM_CLEARED), .proc/update_alarm_display)
 	return ..()
 
 /datum/computer_file/program/alarm_monitor/Destroy()
@@ -44,17 +44,16 @@
 
 	data["alarms"] = list()
 	var/list/alarms = listener.alarms
-	for(var/alert_type in alarms)
-		data["alarms"][alert_type] = list()
-		for(var/area in alarms[alert_type])
-			data["alarms"][alert_type] += area
+	for(var/alarm_type in alarms)
+		data["alarms"][alarm_type] = list()
+		for(var/area in alarms[alarm_type])
+			data["alarms"][alarm_type] += area
 
 	return data
 
 /datum/computer_file/program/alarm_monitor/proc/update_alarm_display()
 	has_alert = FALSE
-	var/list/alarms = listener.alarms
-	if(length(alarms))
+	if(length(listener.alarms))
 		has_alert = TRUE
 
 /datum/computer_file/program/alarm_monitor/run_program(mob/user)
@@ -63,4 +62,4 @@
 
 /datum/computer_file/program/alarm_monitor/kill_program(forced = FALSE)
 	GLOB.alarmdisplay -= src
-	..()
+	return ..()

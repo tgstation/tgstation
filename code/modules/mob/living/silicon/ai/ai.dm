@@ -100,8 +100,8 @@
 	var/cam_prev
 
 	var/datum/robot_control/robot_control
-	///Alert listener datum, handes caring about alert events and such
-	var/datum/alert_listener/listener
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -174,9 +174,9 @@
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
-	listener = new(list(ALERT_ATMOS, ALERT_FIRE, ALERT_POWER, ALERT_CAMERA, ALERT_BURGLAR, ALERT_MOTION), list(z))
-	RegisterSignal(listener, COMSIG_ALERT_TRIGGERED, .proc/alert_triggered)
-	RegisterSignal(listener, COMSIG_ALERT_CLEARED, .proc/alert_cleared)
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -528,29 +528,29 @@
 	Bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
 
-/mob/living/silicon/ai/proc/alert_triggered(datum/source, alert_type, area/source_area)
+/mob/living/silicon/ai/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	var/list/cameras = source_area.cameras
 	var/home_name = source_area.name
 
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
 		if (cam.can_use())
-			queueAlarm("--- [alert_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alert_type)
+			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
 			var/dat2 = ""
 			for (var/obj/machinery/camera/camera as anything in cameras)
 				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[]</A>", (!first_run) ? "" : " | ", camera.c_tag) //I'm not fixing this shit...
 				first_run = TRUE
-			queueAlarm(text ("--- [] alarm detected in []! ([])", alert_type, home_name, dat2), alert_type)
+			queueAlarm(text ("--- [] alarm detected in []! ([])", alarm_type, home_name, dat2), alarm_type)
 	else
-		queueAlarm(text("--- [] alarm detected in []! (No Camera)", alert_type, home_name), alert_type)
+		queueAlarm(text("--- [] alarm detected in []! (No Camera)", alarm_type, home_name), alarm_type)
 	if (viewalerts)
 		ai_alerts()
 	return 1
 
-/mob/living/silicon/ai/proc/alert_cleared(datum/source, alert_type, area/source_area)
-	queueAlarm("--- [alert_type] alarm in [source_area.name] has been cleared.", alert_type, 0)
+/mob/living/silicon/ai/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, 0)
 	if(viewalerts)
 		ai_alerts()
 
