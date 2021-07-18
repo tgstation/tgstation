@@ -43,7 +43,7 @@
  *
  *  Destroy()
  *
- *	update_power_usage()
+ *	update_mode_power_usage()
  *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
  *		called after the idle or active power usage has been changed.
  *
@@ -111,7 +111,7 @@
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
 	var/active_power_usage = 0
 	///the current amount of static power usage this machine is taking from its area
-	var/static_power_usage = 0 //try to not use this at first, just the idle and active power usage vars
+	var/static_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP
 		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	///A combination of factors such as having power, not being broken and so on. Boolean.
@@ -165,9 +165,11 @@
 /obj/machinery/LateInitialize()
 	. = ..()
 	power_change()
-	if(use_power)
-		update_power_usage(use_power, use_power == IDLE_POWER_USE ? idle_power_usage : active_power_usage)
-	become_area_sensitive(ROUNDSTART_TRAIT)
+	if(use_power == NO_POWER_USE)
+		return
+	update_current_power_usage()
+
+	become_area_sensitive(INNATE_TRAIT)
 	var/area/our_area = get_area(src)
 	if(our_area)
 		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
@@ -185,8 +187,7 @@
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
-	update_power_usage(use_power, use_power == IDLE_POWER_USE ? idle_power_usage : active_power_usage)
-	//TODOKYLER: get an actual updating proc for this
+	update_current_power_usage()
 	power_change()
 	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
@@ -349,6 +350,10 @@
 
 	unset_static_power()
 
+	var/old_use_power = use_power //if we go from using power to NO_POWER_USE, stop being area sensitive, vice versa we become area sensitive
+	if(use_power == NO_POWER_USE)
+		become_area_sensitive(INNATE_TRAIT)
+
 	var/new_usage = 0
 	switch(new_use_power)
 		if(IDLE_POWER_USE)
@@ -356,11 +361,12 @@
 		if(ACTIVE_POWER_USE)
 			new_usage = active_power_usage
 
+
 	static_power_usage = new_usage
 
 	var/area/our_area = get_area(src)
 
-	if(our_area)
+	if(our_area && new_usage)
 		our_area.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
 
 	use_power = new_use_power
@@ -403,11 +409,12 @@
  * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
  * * new_usage - the new value to set the specified power mode var to
  */
-/obj/machinery/proc/update_power_usage(use_power_mode, new_usage)
-	if(use_power_mode == NO_POWER_USE && new_usage)
+/obj/machinery/proc/update_mode_power_usage(use_power_mode, new_usage)
+	if(use_power_mode == NO_POWER_USE)
+		stack_trace("trying to set the power usage associated with NO_POWER_USE in update_mode_power_usage()!")
 		return FALSE
-	if(use_power_mode && use_power_mode == use_power)
-		unset_static_power() //completely remove our static_power_usage from our area, then readd new_usage
+
+	unset_static_power() //completely remove our static_power_usage from our area, then readd new_usage
 
 	switch(use_power_mode)
 		if(IDLE_POWER_USE)
@@ -421,6 +428,32 @@
 	var/area/our_area = get_area(src)
 
 	if(our_area)
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	return TRUE
+
+/**
+ * updates the specified power mode usage of this machine and if the machine is using that mode, the actual power usage
+ *
+ * Arguments:
+ * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
+ * * new_usage - the new value to set the specified power mode var to
+ */
+/obj/machinery/proc/update_current_power_usage()
+	if(static_power_usage)
+		unset_static_power()
+
+	var/area/our_area = get_area(src)
+	if(!our_area)
+		return FALSE
+
+	switch(use_power)
+		if(IDLE_POWER_USE)
+			static_power_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			static_power_usage = active_power_usage
+
+	if(static_power_usage)
 		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
 
 	return TRUE

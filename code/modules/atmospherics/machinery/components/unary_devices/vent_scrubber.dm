@@ -221,7 +221,7 @@
 	var/new_adjacent_turfs_length = length(adjacent_turfs)
 	var/initial_idle = initial(idle_power_usage)
 	if(old_adjacent_turfs_length != new_adjacent_turfs_length)
-		update_power_usage(IDLE_POWER_USE, initial_idle + initial_idle * (new_adjacent_turfs_length * (new_adjacent_turfs_length / 2)))
+		update_mode_power_usage(IDLE_POWER_USE, initial_idle + initial_idle * (new_adjacent_turfs_length * (new_adjacent_turfs_length / 2)))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
@@ -264,7 +264,7 @@
 		return //do not update_appearance
 
 	var/new_filters_length = length(filter_types)
-	update_power_usage(use_power, new_filters_length)
+	update_mode_power_usage(ACTIVE_POWER_USE, new_filters_length)
 
 	broadcast_status()
 	update_appearance()

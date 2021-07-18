@@ -181,7 +181,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		update_power_usage(ACTIVE_POWER_USE, (power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+		update_mode_power_usage(ACTIVE_POWER_USE, (power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 
 	return TRUE
 

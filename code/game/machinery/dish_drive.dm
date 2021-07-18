@@ -71,11 +71,10 @@
 	for(var/obj/item/stock_parts/S in component_parts)
 		total_rating += S.rating
 	if(total_rating >= 9)
-		active_power_usage = 0
-		use_power = NO_POWER_USE
+		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
-		update_power_usage(IDLE_POWER_USE, max(0, idle_power_usage - total_rating))
-		update_power_usage(ACTIVE_POWER_USE, max(0, active_power_usage - total_rating))
+		update_mode_power_usage(IDLE_POWER_USE, max(0, idle_power_usage - total_rating))
+		update_mode_power_usage(ACTIVE_POWER_USE, max(0, active_power_usage - total_rating))
 	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
 	if(board)
 		suction_enabled = board.suction
