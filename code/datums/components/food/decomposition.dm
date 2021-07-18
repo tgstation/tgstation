@@ -73,6 +73,9 @@
 	if(locate(/obj/machinery/conveyor) in get_turf(food)) // Makes sure no decals spawn on disposals conveyors
 		remove_timer()
 		return
+	if(locate(/obj/structure/closet) in get_turf(food)) //Is it on a closet/fridge/locker/crate?
+		remove_timer()
+		return
 	// If all other checks fail, then begin decomposition.
 	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
 
