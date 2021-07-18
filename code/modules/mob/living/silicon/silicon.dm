@@ -25,8 +25,8 @@
 
 	var/obj/item/radio/borg/radio = null  ///If this is a path, this gets created as an object in Initialize.
 
-	var/list/alarm_types_show = list(ALERT_ATMOS = 0, ALERT_FIRE = 0, ALERT_POWER = 0, ALERT_CAMERA = 0, ALERT_MOTION = 0)
-	var/list/alarm_types_clear = list(ALERT_ATMOS = 0, ALERT_FIRE = 0, ALERT_POWER = 0, ALERT_CAMERA = 0, ALERT_MOTION = 0)
+	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
+	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
 	var/lawcheck[1]
 	var/ioncheck[1]
@@ -100,8 +100,8 @@
 	else if(alarms_to_show.len)
 
 		var/msg = "--- "
-		for(var/alert_type in alarm_types_show)
-			msg += "[uppertext(alert_type)]: [alarm_types_show[alert_type]] alarms detected. - "
+		for(var/alarm_type in alarm_types_show)
+			msg += "[uppertext(alarm_type)]: [alarm_types_show[alarm_type]] alarms detected. - "
 
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
@@ -113,8 +113,8 @@
 	else if(alarms_to_clear.len)
 		var/msg = "--- "
 
-		for(var/alert_type in alarm_types_clear)
-			msg += "[uppertext(alert_type)]: [alarm_types_clear[alert_type]] alarms cleared. - "
+		for(var/alarm_type in alarm_types_clear)
+			msg += "[uppertext(alarm_type)]: [alarm_types_clear[alarm_type]] alarms cleared. - "
 
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
