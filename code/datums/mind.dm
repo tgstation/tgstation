@@ -37,6 +37,8 @@
 	var/active = FALSE
 
 	var/memory
+	///a list of /datum/memories. assoc type of memory = memory datum. only one type of memory will be stored, new ones of the same type overriding the last.
+	var/list/memories = list()
 
 	var/assigned_role
 	var/special_role
@@ -96,6 +98,7 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	QDEL_LIST(memories)
 	QDEL_LIST(antag_datums)
 	QDEL_NULL(language_holder)
 	set_current(null)
@@ -248,6 +251,45 @@
 
 	last_death = world.time
 
+///new memory proc
+/datum/mind/proc/add_memory(memory_type, atom/target)
+	var/story_mood = MOOD_LEVEL_NEUTRAL
+	var/datum/component/mood/mood_component = current.GetComponent(/datum/component/mood)
+	if(mood_component)
+		story_mood = mood_component.mood_level
+
+	var/datum/memory/replaced_memory = memories[memory_type]
+	if(replaced_memory)
+		qdel(replaced_memory)
+
+	memories[memory_type] = new /datum/memory(build_story_mob(current), memory_type, build_target(target), story_mood)
+
+///returns the story name of a mob
+/datum/mind/proc/build_story_mob(mob/living/target)
+	if(special_role && target == current)
+		return lowertext(special_role)
+	if(assigned_role)
+		return lowertext(assigned_role)
+	if(isanimal(current))
+		return lowertext(initial(current.name))
+	return "someone"
+
+///returns the story name of any atom
+/datum/mind/proc/build_target(atom/target)
+	if(isliving(target))
+		return build_story_mob(target)
+	return lowertext(initial(target.name))
+
+/datum/mind/proc/select_memory(verbage)
+	if(memories.len == 1)
+		var/datum/memory/singular_memory = memories[1]
+		var/memory_name = singular_memory.action + " with " + singular_memory.target
+		var/response = tgui_alert(current, "Do you want to [verbage] the memory of [memory_name]?", verbage + " this?", "Yes", "No")
+		if(response != "Yes")
+			return
+		return singular_memory
+
+///old memory proc
 /datum/mind/proc/store_memory(new_text)
 	var/newlength = length_char(memory) + length_char(new_text)
 	if (newlength > MAX_MESSAGE_LEN * 100)

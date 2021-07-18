@@ -105,7 +105,7 @@
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
-				surgery.complete()
+				surgery.complete(user)
 
 	if(target.stat == DEAD && was_sleeping && user.client)
 		user.client.give_award(/datum/award/achievement/misc/sandman, user)

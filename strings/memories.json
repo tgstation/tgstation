@@ -1,0 +1,67 @@
+{
+	"happy":[
+		"chuckles",
+		"has a huge grin",
+		"looks determined",
+		"seems cheerful about it all",
+		"seems confident",
+		"whistles to themselves"
+	],
+	"neutral":[
+		"chats with %TARGET",
+		"is impatient",
+		"is uninterested",
+		"looks around cautiously",
+		"seems okay",
+		"works diligently"
+	],
+	"sad":[
+		"has dried tears on their face",
+		"is arguing with %TARGET",
+		"is complaining loudly",
+		"is having a temper tantrum",
+		"is whiney about it all",
+		"looks angry",
+		"seems sad"
+	],
+	"engravings_forewords":[
+		"Depicted on the engraving is of",
+		"Embedded in the wall is a story of",
+		"In the engraving is of",
+		"On the wall, you see",
+		"This piece depicts"
+	],
+	"engravings_somethings":[
+		"A %SOMETHING stands in the background.",
+		"A crowd is cheering in the background.",
+		"The engraving has repeating text behind the foreground.",
+		"The top part is dominated by a %SOMETHING.",
+		"There is a circle of danging %SOMETHINGs.",
+		"There is a tiny %SOMETHING in the corner."
+	],
+	"engravings_styles":[
+		"The engraving has a surrealist style.",
+		"The engraving has a cubist style.",
+		"The engraving has a minimalist style."
+	],
+	"changeling_absorb_foreword":[
+		"A distant memory swims by you, it is of",
+		"A story of the past reveals itself, speaking of",
+		"Deeply tangled in their mind is a memory of",
+		"Your mental spines begin unravelling a story of"
+	],
+	"surgery_starts":[
+		"%PERFORMER carefully using a scalpel on %TARGET.",
+		"%PERFORMER using a bone saw on %TARGET.",
+		"%TARGET being operated on by %PERFORMER."
+	],
+	"surgery_moods":[
+		"%PERFORMER %MOOD as a blood splatter lands on %PERFORMER's face.",
+		"%PERFORMER %MOOD as the surgery continues.",
+		"%PERFORMER %MOOD as they pick apart %TARGET.",
+		"%PERFORMER %MOOD as they tear into %TARGET."
+	],
+	"silverscale_names":[
+		"Antelope's Run"
+	]
+}

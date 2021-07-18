@@ -326,6 +326,7 @@
 /obj/item/chisel/Initialize()
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/wall_engraver)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null
