@@ -406,8 +406,14 @@
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (affect_silicon || override_blindness_check || !is_blind()))
-		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
+		if(client?.prefs?.epilepsy_friendly)
+			testing("eps")
+			overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash_eps)
+			addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length * 0.5), length * 1.5)
+		else
+			testing("norm")
+			overlay_fullscreen("flash", type)
+			addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
 		return TRUE
 	return FALSE
 
