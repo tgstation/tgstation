@@ -67,9 +67,8 @@
 		remove_timer()
 		return
 
-	for(var/content in open_turf.contents) //Check contents of turf
-		var/atom/movable/movable_content = content //Convert to movable.
-		if(GLOB.typecache_elevated_structures[movable_content.type]) //Are we actually on an elevated structure?
+	for(var/content as anything in open_turf.contents)
+		if(GLOB.typecache_elevated_structures[content.type])
 			remove_timer()
 			return
 
