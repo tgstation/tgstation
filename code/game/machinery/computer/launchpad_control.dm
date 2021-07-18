@@ -139,6 +139,8 @@
 		return FALSE
 	return TRUE
 
+/// Performs checks on whether or not the launch pad can be used.
+/// Returns `null` if there are no errors, otherwise will return the error string.
 /obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
 		return "ERROR: Launchpad not responding. Check launchpad integrity."
