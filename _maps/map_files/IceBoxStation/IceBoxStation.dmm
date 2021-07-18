@@ -4078,7 +4078,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
 	dir = 4;
-	name = Air In
+	name = "Air In"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -28471,7 +28471,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
 	dir = 8;
-	name = Air Out
+	name = "Air Out"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
