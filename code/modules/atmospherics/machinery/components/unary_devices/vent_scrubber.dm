@@ -19,7 +19,7 @@
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
 	var/volume_rate = 200
-	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
+	var/widenet = FALSE //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
 	var/frequency = FREQ_ATMOS_CONTROL
@@ -226,6 +226,10 @@
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
+	var/old_widenet = widenet
+	var/old_scrubbing = scrubbing
+	var/old_filter_length = length(filter_types)
+
 	var/atom/signal_sender = signal.data["user"]
 
 	if("power" in signal.data)
@@ -262,13 +266,24 @@
 		broadcast_status()
 		return //do not update_appearance
 
-	if(scrubbing == SCRUBBING)
-	var/new_filters_length = length(filter_types)
 	update_mode_power_usage(ACTIVE_POWER_USE, new_filters_length)
 
 	broadcast_status()
 	update_appearance()
-	return
+
+	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
+		return
+
+	var/new_power_usage = 0
+	if(scrubbing == SCRUBBING)
+		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
+		update_use_power(IDLE_POWER_USE)
+	else
+		new_power_usage = active_power_usage
+		update_use_power(ACTIVE_POWER_USE)
+
+	if(widenet)
+		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()

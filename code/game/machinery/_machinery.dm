@@ -368,6 +368,7 @@
 
 ///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
 /obj/machinery/proc/update_use_power(new_use_power)
+	SHOULD_CALL_PARENT(TRUE)
 	if(new_use_power == use_power)
 		return FALSE
 
@@ -398,6 +399,7 @@
 
 ///updates the power channel this machine uses. removes the static power usage from the old channel and readds it to the new channel
 /obj/machinery/proc/update_power_channel(new_power_channel)
+	SHOULD_CALL_PARENT(TRUE)
 	if(new_power_channel == power_channel)
 		return FALSE
 
@@ -414,6 +416,7 @@
 
 ///internal proc that removes all static power usage from the current area
 /obj/machinery/proc/unset_static_power()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/old_usage = static_power_usage
 
 	var/area/our_area = get_area(src)
@@ -433,6 +436,7 @@
  * * new_usage - the new value to set the specified power mode var to
  */
 /obj/machinery/proc/update_mode_power_usage(use_power_mode, new_usage)
+	SHOULD_CALL_PARENT(TRUE)
 	if(use_power_mode == NO_POWER_USE)
 		stack_trace("trying to set the power usage associated with NO_POWER_USE in update_mode_power_usage()!")
 		return FALSE
