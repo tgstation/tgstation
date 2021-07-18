@@ -250,20 +250,20 @@
 	i_kill_you(I, user)
 	. = ..()
 
-// Ant Pizza, now with more ants.
-/obj/item/food/pizza/ants
+// Ant Pizza, now with more blants.
+/obj/item/food/pizza/blants
 	name = "\improper Ant Party pizza"
 	desc = "/// Filled with bugs, remember to fix"
 	icon_state = "antpizza"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/ants = 25, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/blants = 25, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
-	slice_type = /obj/item/food/pizzaslice/ants
+	slice_type = /obj/item/food/pizzaslice/blants
 	boxtag = "Anthill Deluxe"
 
-/obj/item/food/pizzaslice/ants
+/obj/item/food/pizzaslice/blants
 	name = "\improper Ant Party pizza slice"
-	desc = "The key to a perfect slice of pizza is not to overdo it with the ants."
+	desc = "The key to a perfect slice of pizza is not to overdo it with the blants."
 	icon_state = "antpizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS

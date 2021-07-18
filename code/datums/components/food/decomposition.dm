@@ -1,4 +1,4 @@
-//"Don't leave food on the floor, that's how we get ants"
+//"Don't leave food on the floor, that's how we get blants"
 
 #define DECOMPOSITION_TIME 10 MINUTES
 #define DECOMPOSITION_TIME_RAW 5 MINUTES
@@ -99,9 +99,9 @@
 
 /datum/component/decomposition/proc/decompose()
 	var/obj/decomp = parent //Lets us spawn things at decomp
-	new /obj/effect/decal/cleanable/ants(decomp.loc)
+	new /obj/effect/decal/cleanable/blants(decomp.loc)
 	new /obj/item/food/badrecipe/moldy(decomp.loc)
-	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold and ants! Gross!</span>")
+	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold and blants! Gross!</span>")
 	qdel(decomp)
 	return
 

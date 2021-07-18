@@ -48,13 +48,13 @@
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 
-/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) // Cockroaches are predators to space ants
+/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) // Cockroaches are predators to space blants
 	. = ..()
 	turns_since_scan++
 	if(turns_since_scan > time_to_hunt)
 		turns_since_scan = 0
-		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
-		for(var/obj/effect/decal/cleanable/ants/potential_target in view(2, get_turf(src)))
+		var/list/target_types = list(/obj/effect/decal/cleanable/blants)
+		for(var/obj/effect/decal/cleanable/blants/potential_target in view(2, get_turf(src)))
 			if(potential_target.type in target_types)
 				hunt(potential_target)
 				return

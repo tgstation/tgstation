@@ -1,6 +1,6 @@
 /mob/living/simple_animal/ant
 	name = "giant ant"
-	desc = "A writhing mass of ants, glued together to make an adorable pet!"
+	desc = "A writhing mass of blants, glued together to make an adorable pet!"
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "ant"
 	icon_living = "ant"
@@ -18,7 +18,7 @@
 	minbodytemp = 200
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
-	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/effect/decal/cleanable/ants = 1) //It's just a bunch of ants glued together into a larger ant
+	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/effect/decal/cleanable/blants = 1) //It's just a bunch of blants glued together into a larger ant
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -38,7 +38,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	time_to_hunt = rand(5,10)
 
-/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the ants have become the predators.
+/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the blants have become the predators.
 	. = ..()
 	turns_since_scan++
 	if(turns_since_scan > time_to_hunt)

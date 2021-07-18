@@ -723,7 +723,7 @@
 			prey = null
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
-	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
+	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like blants or spider webs.
 		manual_emote("chomps [hunted]!")
 		qdel(hunted)
 		hunted = null

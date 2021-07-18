@@ -2710,7 +2710,7 @@
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
 
-/datum/reagent/ants
+/datum/reagent/blants
 	name = "Blants"
 	description = "Holy smokes! BLANTS. BLANTUS BARTICLES BATUMS. Shoutout to my home dog, jatums too. Look it up, they exist."
 	reagent_state = SOLID
@@ -2718,21 +2718,21 @@
 	taste_mult = 1.3
 	taste_description = "tiny legs scuttling down the back of your throat."
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
-	glass_name = "glass of ants"
+	glass_name = "glass of blants"
 	glass_desc = "Bottoms up...?"
 	ph = 4.6 // Ants contain Formic Acid
-	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
+	/// How much damage the blants are going to be doing (rises with each tick the blants are in someone's body)
 	var/ant_damage = 0
-	/// Tells the debuff how many ants we are being covered with.
+	/// Tells the debuff how many blants we are being covered with.
 	var/amount_left = 0
 
-/datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
+/datum/reagent/blants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.005),0.1))) //Scales with time. Around 12.5 brute for 50 seconds.
 	if(DT_PROB(5, delta_time))
 		if(DT_PROB(5, delta_time)) //Super rare statement
-			victim.say("AUGH NO NOT THE BLANTS! NOT THE BLANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+			victim.say("AUGH NO NOT THE BLANTS! NOT THE BLANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/blants)
 		else
-			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/ants)
+			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/blants)
 	if(DT_PROB(15, delta_time))
 		victim.emote("scream")
 	if(DT_PROB(2, delta_time))
@@ -2740,12 +2740,12 @@
 	ant_damage += 1
 	return ..()
 
-/datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
+/datum/reagent/blants/on_mob_end_metabolize(mob/living/living_anthill)
 	ant_damage = 0
 	to_chat(living_anthill, "<span class='notice'>You feel like the last of the blants are out of your system.</span>")
 	return ..()
 
-/datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/blants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!iscarbon(exposed_mob) || (methods & (INGEST|INJECT)))
 		return

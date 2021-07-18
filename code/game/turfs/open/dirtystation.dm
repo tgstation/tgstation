@@ -37,7 +37,7 @@
 	if(prob(80)) //mid dirt  - 1/15
 		return
 
-		//Construction zones. Blood, sweat, and oil.  Oh, and dirt. A small colony of space-ants or two will pop up
+		//Construction zones. Blood, sweat, and oil.  Oh, and dirt. A small colony of space-blants or two will pop up
 	var/static/list/engine_dirt_areas = typecacheof(list(/area/engineering,
 														/area/command/heads_quarters/ce,
 														/area/science/robotics,
@@ -58,7 +58,7 @@
 				if(35 to 95)//60%
 					new /obj/effect/decal/cleanable/dirt(src)
 				if(95 to 100)//5%
-					new /obj/effect/decal/cleanable/ants(src)
+					new /obj/effect/decal/cleanable/blants(src)
 		return
 
 		//Bathrooms. Blood, vomit, and shavings in the sinks.
@@ -71,7 +71,7 @@
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
 		else if(prob(40)) //16% effective chance
-			new /obj/effect/decal/cleanable/ants(src)
+			new /obj/effect/decal/cleanable/blants(src)
 		return
 
 	// Cargo bays covered in oil.
@@ -100,7 +100,7 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		return
 
-		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.), ants.
+		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.), blants.
 	var/static/list/kitchen_dirt_areas = typecacheof(list(/area/service/kitchen,
 														/area/service/cafeteria))
 	if(is_type_in_typecache(A, kitchen_dirt_areas))
@@ -110,7 +110,7 @@
 			else
 				new /obj/effect/decal/cleanable/food/flour(src)
 		else if(prob(20)) //12% effective chance
-			new /obj/effect/decal/cleanable/ants(src)
+			new /obj/effect/decal/cleanable/blants(src)
 		return
 
 		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.

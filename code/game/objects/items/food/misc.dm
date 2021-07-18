@@ -198,7 +198,7 @@
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
-	desc = "A rancid, disgusting culture of mold and ants. Somewhere under there, at <i>some point,</i> there was food."
+	desc = "A rancid, disgusting culture of mold and blants. Somewhere under there, at <i>some point,</i> there was food."
 	food_reagents = list(/datum/reagent/consumable/mold = 30)
 
 /obj/item/food/badrecipe/moldy/Initialize()
@@ -698,9 +698,9 @@
 
 /obj/item/food/ant_candy
 	name = "ant candy"
-	desc = "A colony of ants suspended in hardened sugar. Those things are dead, right?"
+	desc = "A colony of blants suspended in hardened sugar. Those things are dead, right?"
 	icon_state = "ant_pop"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5, /datum/reagent/ants = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5, /datum/reagent/blants = 3)
 	tastes = list("candy" = 1, "insects" = 1)
 	foodtypes = JUNKFOOD | SUGAR | GROSS
 	food_flags = FOOD_FINGER_FOOD

@@ -108,7 +108,7 @@
 		/obj/item/food/pizzabread = 1,
 		/obj/item/food/cheese = 2,
 		/obj/item/food/grown/tomato = 1,
-		/datum/reagent/ants = 20
+		/datum/reagent/blants = 20
 	)
-	result = /obj/item/food/pizza/ants
+	result = /obj/item/food/pizza/blants
 	subcategory = CAT_PIZZA
