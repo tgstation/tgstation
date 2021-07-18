@@ -2,20 +2,26 @@
 	"happy":[
 		"chuckles",
 		"has a huge grin",
+		"has a twisted grin like a maniac.",
+		"is silently working away like a pro.",
 		"looks determined",
 		"seems cheerful about it all",
 		"seems confident",
 		"whistles to themselves"
 	],
 	"neutral":[
+		"appears clueless",
 		"chats with %TARGET",
+		"is darting their eyes around",
 		"is impatient",
 		"is uninterested",
 		"looks around cautiously",
+		"seems a bit sleepy",
 		"seems okay",
 		"works diligently"
 	],
 	"sad":[
+		"appears crushed",
 		"has dried tears on their face",
 		"is arguing with %TARGET",
 		"is complaining loudly",
@@ -32,22 +38,38 @@
 		"This piece depicts"
 	],
 	"engravings_somethings":[
+		"%PERFORMER can also be seen cringing at the sight of %SOMETHING.",
+		"%PERFORMER can also be seen cringing at the sight of %TARGET.",
+		"%PERFORMER is being arrested, clutching a %SOMETHING.",
+		"%PERFORMER is doing a sick ass backflip!",
+		"%PERFORMER is locked inside of an escape pod.",
+		"%PERFORMER is performing a t-pose, scaring %TARGET.",
+		"%PERFORMER is secretly admiring a %SOMETHING.",
+		"%PERFORMER is slightly floating above the ground.",
+		"%PERFORMER is standing on atop a soapbox.",
+		"%SOMETHING is being worshipped by %PERFORMER.",
+		"%SOMETHING is etched so crudely you'd think a three-year-old did it.",
+		"%TARGET has a cartoony thought bubble.",
+		"%TARGET is lying on the floor, defeated by %SOMETHING.",
 		"A %SOMETHING stands in the background.",
 		"A crowd is cheering in the background.",
+		"A heavily pixelated %SOMETHING is sitting there, ominously.",
+		"A political comic starring %SOMETHING.",
+		"The bottom left has been signed by the author.",
 		"The engraving has repeating text behind the foreground.",
 		"The top part is dominated by a %SOMETHING.",
 		"There is a circle of danging %SOMETHINGs.",
 		"There is a tiny %SOMETHING in the corner."
 	],
 	"engravings_styles":[
-		"The engraving has a surrealist style.",
 		"The engraving has a cubist style.",
-		"The engraving has a minimalist style."
+		"The engraving has a minimalist style.",
+		"The engraving has a surrealist style."
 	],
 	"changeling_absorb_foreword":[
-		"You unravel a story about",
 		"A story of the past reveals itself, speaking of",
 		"Deeply tangled in their mind is a memory of",
+		"You unravel a story about",
 		"Your mental spines begin unravelling a story of"
 	],
 	"surgery_starts":[
@@ -56,22 +78,22 @@
 		"%TARGET being operated on by %PERFORMER."
 	],
 	"surgery_moods":[
+		"%PERFORMER %MOOD after finishing %INFO1.",
 		"%PERFORMER %MOOD as a blood splatter lands on %PERFORMER's face.",
 		"%PERFORMER %MOOD as the %INFO1 continues.",
 		"%PERFORMER %MOOD as they pick apart %TARGET.",
-		"%PERFORMER %MOOD as they tear into %TARGET.",
-		"%PERFORMER %MOOD after finishing %INFO1."
+		"%PERFORMER %MOOD as they tear into %TARGET."
 	],
 	"bomb_starts":[
-		"%PERFORMER slapping down a %TARGET.",
 		"%PERFORMER presses an ominous button, and %TARGET begins beeping.",
+		"%PERFORMER slapping down a %TARGET.",
 		"%TARGET is armed by %PERFORMER."
 	],
 	"bomb_moods":[
+		"%PERFORMER %MOOD and begins to walk away from the bomb.",
 		"%PERFORMER %MOOD as the bomb begins to tick.",
 		"%PERFORMER %MOOD with the bomb winding down.",
-		"beep... beep... %PERFORMER %MOOD.",
-		"%PERFORMER %MOOD and begins to walk away from the bomb."
+		"beep... beep... %PERFORMER %MOOD."
 	],
 	"highfive_starts":[
 		"%PERFORMER and %TARGET are having a legendary %INFO1.",
@@ -79,10 +101,10 @@
 		"%TARGET and %PERFORMER are high fiving each other."
 	],
 	"highfive_moods":[
-		"Wow! %PERFORMER %MOOD!",
-		"What a %INFO1! %PERFORMER %MOOD.",
 		"%PERFORMER %MOOD as the %INFO1 connects.",
-		"%PERFORMER %MOOD at all the compatriotism going on."
+		"%PERFORMER %MOOD at all the compatriotism going on.",
+		"What a %INFO1! %PERFORMER %MOOD.",
+		"Wow! %PERFORMER %MOOD!"
 	],
 	"borged_starts":[
 		"%PERFORMER and %TARGET are having a legendary %INFO1.",
