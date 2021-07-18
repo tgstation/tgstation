@@ -128,16 +128,8 @@
 			continue
 		if(!(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT))
 			continue
-		var/ghost_view = ghost.client.view
-		if(ghost.z == z)
-			if(isnum(ghost_view))
-				if(get_dist(src, ghost) < ghost_view)
-					continue
-			else
-				var/list/view_range_list = splittext(ghost_view, "x")
-				if(abs(x - ghost.x) < ((text2num(view_range_list[1]) - 1) / 2))
-					if(abs(y - ghost.y) < ((text2num(view_range_list[2]) - 1) / 2))
-						continue
+		if(ghost.in_ghost_sight_range(src, DEFAULT_MESSAGE_RANGE, DEFAULT_MESSAGE_RANGE))
+			continue
 		ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, src)] [message]</span>")
 
 

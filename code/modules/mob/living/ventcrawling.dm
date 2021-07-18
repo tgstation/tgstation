@@ -102,7 +102,7 @@
 		if(client)
 			for(var/obj/machinery/atmospherics/pipenet_part in total_members)
 				// If the machinery is not in view or is not meant to be seen, continue
-				if(!in_view_range(client.mob, pipenet_part))
+				if(!client.mob.in_view_range(pipenet_part))
 					continue
 				if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
 					continue
