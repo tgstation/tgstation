@@ -778,7 +778,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_warning("Antag HUD already unlocked."))
 		return
 
-	var/response = tgui_alert(src, "Are you sure you want to reveal antagonist info? You will become unrevivable if you have a body, and disqualified from all ghost role offers and spawners for this round.", "Confirm Antag HUD Unlock", list("Yes - I am sure", "No - Cancel"))
+	var/response = tgui_alert(src, "Are you sure you want to reveal antagonists? [can_reenter_corpse ? "You will be unrevivable, and" : "You will be"] disqualified from ghost role offers and spawners.", "Confirm Antag HUD Unlock", list("Yes - I am sure", "No - Cancel"))
 	if(response != "Yes - I am sure")
 		return
 
