@@ -61,14 +61,15 @@
 		return
 	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
 
-	var/turf/open/T = food.loc
+	var/turf/open/open_turf = food.loc
 
-	if(!istype(T)) //Are we actually in an open turf?
+	if(!istype(open_turf)) //Are we actually in an open turf?
 		remove_timer()
 		return
 
-	for(var/k in T.contents) //Check contents of turf
-		if(GLOB.typecache_elevated_structures[k]) //Are we actually on an elevated structure?
+	for(var/content in open_turf.contents) //Check contents of turf
+		var/atom/movable/movable_content = content //Convert to movable.
+		if(GLOB.typecache_elevated_structures[movable_content.type]) //Are we actually on an elevated structure?
 			remove_timer()
 			return
 
