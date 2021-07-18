@@ -188,8 +188,8 @@
 	name = "security spray nozzle"
 	desc = "A pacifying spray nozzle attached to a pepperspray tank, designed to silence perps."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "mistersecjani"
-	inhand_icon_state = "mistersecjani"
+	icon_state = "mistersec"
+	inhand_icon_state = "mistersec"
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
