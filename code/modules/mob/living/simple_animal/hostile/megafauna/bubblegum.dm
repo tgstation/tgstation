@@ -105,11 +105,11 @@ Difficulty: Hard
 	chosen_message = "<span class='colossus'>You are now warping to blood around your clicked position.</span>"
 	chosen_attack_num = 4
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	. = ..()
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE]))
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE])
 		enrage_till = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE])
 		enrage_till += cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()

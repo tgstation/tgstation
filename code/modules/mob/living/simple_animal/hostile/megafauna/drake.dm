@@ -111,7 +111,7 @@
 		return
 
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)
-	update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = ranged_cooldown_time))
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = ranged_cooldown_time), ignore_staggered = TRUE)
 
 	if(client)
 		switch(chosen_attack)

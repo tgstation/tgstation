@@ -153,15 +153,18 @@
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
-/// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds, list to allow using named
-/mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates)
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_MELEE]))
+/// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
+/mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
+	if(!ignore_staggered && has_status_effect(STATUS_EFFECT_STAGGER))
+		for(var/update in cooldown_updates)
+			cooldown_updates[update] *= 2
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_MELEE])
 		recovery_time = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_MELEE]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_MELEE]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_MELEE])
 		recovery_time += cooldown_updates[COOLDOWN_UPDATE_ADD_MELEE]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_RANGED]))
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_RANGED])
 		ranged_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_RANGED]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_RANGED]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_RANGED])
 		ranged_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_RANGED]
 
 /// Grants medals and achievements to surrounding players

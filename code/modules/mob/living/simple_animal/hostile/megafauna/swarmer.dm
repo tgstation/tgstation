@@ -90,15 +90,15 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		update_cooldowns(list(COOLDOWN_UPDATE_SET_HELP = call_help_cooldown_amt))
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/update_cooldowns(list/cooldown_updates)
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	. = ..()
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN]))
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN])
 		swarmer_spawn_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN])
 		swarmer_spawn_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_HELP]))
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_HELP])
 		call_help_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_HELP]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_HELP]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_HELP])
 		call_help_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_HELP]
 
 //SWARMER AI

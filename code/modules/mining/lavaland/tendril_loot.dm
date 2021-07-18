@@ -810,6 +810,9 @@
 	action_background_icon_state = "bg_clock"
 	action_icon = 'icons/mob/actions/actions_items.dmi'
 	action_icon_state = "scan"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
+	var/cooldown_time = 30 SECONDS
+	COOLDOWN_DECLARE(scan_cooldown)
 
 /obj/effect/proc_holder/scan/on_lose(mob/living/user)
 	remove_ranged_ability()
@@ -834,14 +837,115 @@
 	if(ranged_ability_user.stat)
 		remove_ranged_ability()
 		return
-	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = ranged_ability_user
-	if(!pouch_owner.prank_pouch.len)
-		//active = FALSE
-		pouch_owner.icon_state = "glutton"
-		remove_ranged_ability(span_notice("Your prank pouch is empty,."))
+	if(!COOLDOWN_FINISHED(src, scan_cooldown))
+		balloon_alert(ranged_ability_user, "not ready!")
 		return
-	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)
-	projected_morsel.forceMove(pouch_owner.loc)
-	projected_morsel.throw_at(target, 8, 2, pouch_owner)
-	flick("glutton_mouth", pouch_owner)
-	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
+	if(!isliving(target) || target == ranged_ability_user)
+		balloon_alert(ranged_ability_user, "invalid target!")
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(STATUS_EFFECT_STAGGER)
+	var/datum/status_effect/agent_pinpointer/scan_pinpointer = ranged_ability_user.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
+	scan_pinpointer.scan_target = living_target
+	living_target.Jitter(5 SECONDS)
+	to_chat(living_target, span_warning("You've been staggered!"))
+	ranged_ability_user.playsound_local(get_turf(ranged_ability_user), 'sound/magic/smoke.ogg', 50, TRUE)
+	balloon_alert(ranged_ability_user, "[living_target] scanned")
+	COOLDOWN_START(src, scan_cooldown, cooldown_time)
+	addtimer(CALLBACK(src, /atom/.proc/balloon_alert, ranged_ability_user, "scan recharged"), cooldown_time)
+	remove_ranged_ability()
+	return TRUE
+
+/datum/status_effect/agent_pinpointer/scan
+	duration = 15 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/scan
+	tick_interval = 2 SECONDS
+	range_fuzz_factor = 0
+	minimum_range = 1
+	range_mid = 5
+	range_far = 15
+
+/datum/status_effect/agent_pinpointer/scan/scan_for_target()
+	return
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/scan
+	name = "Scan Target"
+	desc = "Contact may or may not be close."
+
+/obj/item/organ/cyberimp/arm/katana
+	name = "dark mass"
+	desc = "An eerie metal shard surrounded by dark energies."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "cursed_katana_organ"
+	status = ORGAN_ORGANIC
+	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
+	items_to_create = list(/obj/item/cursed_katana)
+	extend_sound = 'sound/items/unsheath.ogg'
+	retract_sound = 'sound/items/sheath.ogg'
+
+/obj/item/organ/cyberimp/arm/katana/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user, span_danger("The mass goes up your arm and goes inside it!"))
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	var/index = user.get_held_index_of_item(src)
+	zone = (index == LEFT_HANDS ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
+	SetSlotFromZone()
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	Insert(user)
+
+#define LEFT_SLASH "lmb"
+#define RIGHT_SLASH "rmb"
+
+/obj/item/cursed_katana
+	name = "cursed katana"
+	desc = "A katana used to seal something vile away long ago. \
+	Even with the weapon destroyed, all the pieces containing the creature have coagulated back together to find a new host."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "cursed_katana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 12
+	armour_penetration = 30
+	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
+	var/drew_blood = FALSE
+	var/list/input_list = list()
+
+/obj/item/cursed_katana/examine(mob/user)
+	. = ..()
+	. += drew_blood ? span_nicegreen("It's sated... for now.") : span_danger("It will not be sated until it tastes blood.")
+	. += span_notice("<i>There seem to be inscriptions on it... you could examine them closer?</i>")
+
+/obj/item/cursed_katana/examine_more(mob/user)
+	. = ..()
+	. += span_notice("Left Slash, Left Slash, Right Slash - <b>Strike</b>")
+
+/obj/item/cursed_katana/dropped(mob/user)
+	. = ..()
+	if(!drew_blood && iscarbon(user))
+		var/mob/living/carbon/holder = user
+		to_chat(holder, span_userdanger("[src] lashes out at you in hunger!"))
+		playsound(src, 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		var/obj/item/bodypart/part = holder.get_holding_bodypart_of_item(src)
+		part?.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	drew_blood = FALSE
+	input_list.Cut()
+
+/obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
+	var/list/modifiers = params2list(click_parameters)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		input_list += RIGHT_SLASH
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
+		input_list += LEFT_SLASH
+	if(check_input())
+		return TRUE
+	else
+		. = ..()
+		if(!drew_blood && target.stat != DEAD)
+			drew_blood = TRUE
+
+/obj/item/cursed_katana/proc/check_input()
+	return FALSE

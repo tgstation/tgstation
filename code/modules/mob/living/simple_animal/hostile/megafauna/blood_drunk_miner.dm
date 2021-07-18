@@ -90,15 +90,15 @@ Difficulty: Medium
 	chosen_message = "<span class='colossus'>You are now transforming your weapon.</span>"
 	chosen_attack_num = 3
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/update_cooldowns(list/cooldown_updates)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	. = ..()
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_DASH]))
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_DASH])
 		dash_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_DASH]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_DASH]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_DASH])
 		dash_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_DASH]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_SET_TRANSFORM]))
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_TRANSFORM])
 		time_until_next_transform = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_TRANSFORM]
-	if(isnum(cooldown_updates[COOLDOWN_UPDATE_ADD_TRANSFORM]))
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_TRANSFORM])
 		time_until_next_transform += cooldown_updates[COOLDOWN_UPDATE_ADD_TRANSFORM]
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
@@ -200,7 +200,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/shoot_ka()
 	if(ranged_cooldown <= world.time && get_dist(src, target) <= MINER_DASH_RANGE && !Adjacent(target))
-		update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = ranged_cooldown_time))
+		update_cooldowns(list(COOLDOWN_UPDATE_ADD_RANGED = ranged_cooldown_time), ignore_staggered = TRUE)
 		visible_message(span_danger("[src] fires the proto-kinetic accelerator!"))
 		face_atom(target)
 		new /obj/effect/temp_visual/dir_setting/firing_effect(loc, dir)
