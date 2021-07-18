@@ -892,8 +892,22 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-#define LEFT_SLASH "lmb"
-#define RIGHT_SLASH "rmb"
+/obj/item/organ/cyberimp/arm/katana/Retract()
+	var/obj/item/cursed_katana/katana = active_item
+	if(!katana)
+		return
+	if(!katana.drew_blood)
+		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
+		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
+		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
+		part?.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	return ..()
+
+#define LEFT_SLASH "Left Slash"
+#define RIGHT_SLASH "Right Slash"
+#define COMBO_STEPS "steps"
+#define COMBO_PROC "proc"
+#define ATTACK_STRIKE "Strike"
 
 /obj/item/cursed_katana
 	name = "cursed katana"
@@ -913,6 +927,22 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
 	var/drew_blood = FALSE
 	var/list/input_list = list()
+	var/list/combo_strings = list()
+	var/static/list/combo_list = list(
+		"Strike" = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/strike)
+		)
+
+/obj/item/cursed_katana/Initialize()
+	. = ..()
+	for(var/combo in combo_list)
+		var/step_string = ""
+		var/list/combo_steps = combo_list[COMBO_STEPS]
+		for(var/combo_step in combo_steps)
+			step_string += combo_step
+			if(combo_step == combo_steps[length(combo_steps)])
+				break
+			step_string += ", "
+		combo_strings += span_notice("<b>[combo]</b> - [step_string]")
 
 /obj/item/cursed_katana/examine(mob/user)
 	. = ..()
@@ -921,31 +951,47 @@
 
 /obj/item/cursed_katana/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Left Slash, Left Slash, Right Slash - <b>Strike</b>")
+	. += combo_strings
 
 /obj/item/cursed_katana/dropped(mob/user)
 	. = ..()
-	if(!drew_blood && iscarbon(user))
-		var/mob/living/carbon/holder = user
-		to_chat(holder, span_userdanger("[src] lashes out at you in hunger!"))
-		playsound(src, 'sound/magic/demon_attack1.ogg', 50, TRUE)
-		var/obj/item/bodypart/part = holder.get_holding_bodypart_of_item(src)
-		part?.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
-	drew_blood = FALSE
 	input_list.Cut()
+	drew_blood = FALSE
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
+	if(target.stat == DEAD)
+		return ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		return
 	var/list/modifiers = params2list(click_parameters)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		input_list += RIGHT_SLASH
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		input_list += LEFT_SLASH
-	if(check_input())
+	if(check_input(target, user))
+		input_list.Cut()
 		return TRUE
 	else
-		. = ..()
-		if(!drew_blood && target.stat != DEAD)
-			drew_blood = TRUE
+		drew_blood = TRUE
+		return ..()
 
-/obj/item/cursed_katana/proc/check_input()
+/obj/item/cursed_katana/proc/check_input(mob/living/target, mob/user)
+	for(var/list/combo as anything in combo_list)
+		var/list/steps = combo[COMBO_STEPS]
+		if(compare_list(input_list,steps))
+			INVOKE_ASYNC(src, combo[COMBO_PROC], target, user)
+			return TRUE
 	return FALSE
+
+/obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
+	to_chat(user, "you strike homie!")
+	return
+
+#undef LEFT_SLASH
+#undef RIGHT_SLASH
+#undef COMBO_STEPS
+#undef COMBO_PROC
+#undef ATTACK_STRIKE
