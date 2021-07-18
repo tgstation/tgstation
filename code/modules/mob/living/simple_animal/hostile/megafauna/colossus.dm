@@ -402,7 +402,6 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	use_power = NO_POWER_USE
 	anchored = FALSE
 	density = TRUE
-	flags_1 = HEAR_1
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
@@ -416,6 +415,7 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	. = ..()
 	if(!activation_method)
 		activation_method = pick(possible_methods)
+	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()

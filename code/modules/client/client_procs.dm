@@ -325,9 +325,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 	tgui_panel.initialize()
 
-	if(alert_mob_dupe_login)
-		spawn()
-			tgui_alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+	if(alert_mob_dupe_login && !holder)
+		INVOKE_ASYNC(GLOBAL_PROC, /proc/tgui_alert, mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime

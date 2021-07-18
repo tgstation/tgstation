@@ -8,7 +8,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = HEAR_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
@@ -38,6 +37,7 @@
 		mytape = new starting_tape_type(src)
 	soundloop = new(src)
 	update_appearance()
+	become_hearing_sensitive()
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
