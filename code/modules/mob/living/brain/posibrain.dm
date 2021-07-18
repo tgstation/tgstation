@@ -99,7 +99,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	return FALSE
 
 ///Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
-/obj/item/mmi/posibrain/proc/activate(var/mob/dead/observer/user)
+/obj/item/mmi/posibrain/proc/activate(mob/dead/observer/user)
 	if(QDELETED(brainmob))
 		return
 	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
