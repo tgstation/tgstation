@@ -34,10 +34,10 @@
 		return
 	if(!(wall.turf_flags & ENGRAVABLE))
 		user.balloon_alert(user, "wall cannot be engraved!")
+		return
 	if(!user.mind.memories)
 		user.balloon_alert(user, "nothing memorable to engrave!")
 		return
-
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")
 	if(!user.Adjacent(wall))
 		return
@@ -49,5 +49,5 @@
 		return
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
-	wall.AddElement(/datum/element/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED))
+	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED))
 	///REMOVE THE MEMORY ONCE ENGRAVED

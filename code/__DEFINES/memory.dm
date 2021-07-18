@@ -1,11 +1,16 @@
 ///name of the file that has all the memory strings
 #define MEMORY_FILE "memories.json"
+///name of the file that has all the saved engravings
+#define ENGRAVING_SAVE_FILE "data/engravings/[SSmapping.config.map_name]_engravings.json"
+///how many engravings will be loaded max with persistence
+#define MAX_PERSISTENT_ENGRAVINGS 20
 
 ///threshold for the memory being a happy one 8)
 #define MEMORY_HAPPY_THRESHOLD 7
 ///threshold for the memory being a sad one :^(
 #define MEMORY_SAD_THRESHOLD 7
-
+///moodlet set if the creature with the memory doesn't use mood (doesn't include mood line)
+#define MOODLESS_MEMORY "nope"
 
 //These defines are for what notable event happened
 ///a memory of completing a surgery.
