@@ -877,3 +877,5 @@
 		if(entry.limit)
 			entry.limit--
 		uses -= entry.cost
+
+	can_refund = FALSE
