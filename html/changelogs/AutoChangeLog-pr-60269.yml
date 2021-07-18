@@ -1,4 +1,0 @@
-author: "interestingusernam3"
-delete-after: True
-changes: 
-  - bugfix: "The implant pad will no longer incorrectly describe TRAC implants as being usable as teleporter beacons."

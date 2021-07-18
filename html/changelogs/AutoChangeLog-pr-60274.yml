@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed carps losing track of who they're following if they take a path that obstructs their vision"
