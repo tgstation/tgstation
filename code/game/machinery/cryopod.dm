@@ -226,9 +226,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	crew_member["name"] = mob_occupant.real_name
 
-	if(mob_occupant.mind && mob_occupant.mind.assigned_role)
+	if(mob_occupant.mind)
 		// Handle job slot/tater cleanup.
-		var/job = mob_occupant.mind.assigned_role
+		var/job = mob_occupant.mind.assigned_role.title
 		crew_member["job"] = job
 		SSjob.FreeRole(job)
 		if(LAZYLEN(mob_occupant.mind.objectives))
@@ -300,12 +300,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		return
 
 	if(target == user)
-		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
-
-		var/datum/job/target_job = SSjob.GetJob(target.mind.assigned_role)
-
-		if(target_job && target_job.req_admin_notify)
+		if(target.mind.assigned_role.req_admin_notify)
 			tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
+		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
 		if(antag)
 			tgui_alert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
 

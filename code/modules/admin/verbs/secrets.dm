@@ -86,11 +86,9 @@
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/J = SSjob.GetJob("Security Officer")
-			if(!J)
-				return
-			J.total_positions = -1
-			J.spawn_positions = -1
+			var/datum/job/sec_job = SSjob.GetJobType(/datum/job/security_officer)
+			sec_job.total_positions = -1
+			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
@@ -607,7 +605,7 @@
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.copy_to(spawnedMob)
+				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
 				spawnedMob.key = chosen.key
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
