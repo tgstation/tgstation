@@ -67,7 +67,7 @@
 		remove_timer()
 		return
 
-	for(var/content as anything in open_turf.contents)
+	for(var/atom/content as anything in open_turf.contents)
 		if(GLOB.typecache_elevated_structures[content.type])
 			remove_timer()
 			return
