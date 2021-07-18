@@ -10,9 +10,6 @@
 	/// Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
 	var/cops_arrived = 0
 
-/atom/movable/screen/wanted/New()
-	return ..()
-
 /atom/movable/screen/wanted/Initialize()
 	. = ..()
 	update_appearance()

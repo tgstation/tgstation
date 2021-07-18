@@ -20,6 +20,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		add_verb(src, /mob/dead/proc/server_hop)
 	set_focus(src)
+	become_hearing_sensitive()
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/canUseStorage()

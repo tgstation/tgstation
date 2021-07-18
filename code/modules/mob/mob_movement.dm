@@ -516,6 +516,11 @@
 	if(zMove(DOWN, TRUE, ventcrawling_mob))
 		to_chat(src, span_notice("You move down."))
 
+/mob/can_zFall(turf/source, levels, turf/target, direction)
+	if(buckled)
+		return buckled.can_zFall(source, levels, target, direction)
+	return ..()
+
 ///Move a mob between z levels, if it's valid to move z's on this turf
 /mob/proc/zMove(dir, feedback = FALSE, ventcrawling = FALSE)
 	if(dir != UP && dir != DOWN)
@@ -534,7 +539,7 @@
 			to_chat(src, span_warning("You couldn't move there!"))
 		return FALSE
 	if(!ventcrawling) //let this be handled in atmosmachinery.dm
-		forceMove(target)
+		return Move(target)
 	else
 		var/obj/machinery/atmospherics/pipe = loc
 		pipe.relaymove(src, dir)
