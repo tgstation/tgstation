@@ -252,6 +252,7 @@
 /obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
+	//AddElement(/datum/element/connect_loc, mapload)
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()

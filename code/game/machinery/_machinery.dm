@@ -481,18 +481,6 @@
 
 	return TRUE
 
-//TODOKYLER: remove
-/obj/machinery/proc/auto_use_power()
-	if(!powered(power_channel))
-		return FALSE
-	switch(use_power)
-		if(IDLE_POWER_USE)
-			use_power(idle_power_usage, power_channel)
-		if(ACTIVE_POWER_USE to INFINITY)
-			use_power(active_power_usage, power_channel)
-	return TRUE
-
-
 ///Called when we want to change the value of the `is_operational` variable. Boolean.
 /obj/machinery/proc/set_is_operational(new_value)
 	if(new_value == is_operational)

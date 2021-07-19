@@ -50,23 +50,6 @@
 	adjacent_turfs.Cut()
 	return ..()
 
-//TODOKYLER: make this update statically
-/obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
-	if(!on || welded || !is_operational || !powered(power_channel))
-		return FALSE
-
-	var/amount = idle_power_usage
-
-	if(scrubbing == SCRUBBING)
-		amount += idle_power_usage * length(filter_types)
-	else //scrubbing == SIPHONING
-		amount = active_power_usage
-
-	if(widenet)
-		amount += amount * (adjacent_turfs.len * (adjacent_turfs.len / 2)) //this parts gone
-	use_power(amount, power_channel)
-	return TRUE
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
@@ -163,7 +146,7 @@
 	if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
 		return FALSE
 
-	if(scrubbing & SCRUBBING)
+	if(scrubbing == SCRUBBING)
 		if(length(env_gases & filter_types))
 			var/transfer_moles = min(1, volume_rate / environment.volume) * environment.total_moles()
 
@@ -213,14 +196,9 @@
 ///we populate a list of turfs with nonatmos-blocked cardinal turfs AND
 /// diagonal turfs that can share atmos with *both* of the cardinal turfs
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
-	var/old_adjacent_turfs_length = length(adjacent_turfs)
 	adjacent_turfs.Cut()
 	var/turf/T = get_turf(src)
 	adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
-	var/new_adjacent_turfs_length = length(adjacent_turfs)
-	var/initial_idle = initial(idle_power_usage)
-	if(old_adjacent_turfs_length != new_adjacent_turfs_length)
-		update_mode_power_usage(IDLE_POWER_USE, initial_idle + initial_idle * (new_adjacent_turfs_length * (new_adjacent_turfs_length / 2)))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
@@ -242,7 +220,6 @@
 	if("toggle_widenet" in signal.data)
 		widenet = !widenet
 
-	var/old_scrubbing = scrubbing
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
 	if("toggle_scrubbing" in signal.data)
@@ -266,8 +243,6 @@
 		broadcast_status()
 		return //do not update_appearance
 
-	update_mode_power_usage(ACTIVE_POWER_USE, new_filters_length)
-
 	broadcast_status()
 	update_appearance()
 
@@ -284,6 +259,8 @@
 
 	if(widenet)
 		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
+
+	update_mode_power_usage(use_power, new_power_usage)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()
