@@ -31,7 +31,7 @@
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 		else
 			to_chat(exposed_carbon, span_userdanger("A terrible pain travels down your back as wings burst out!"))
-		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
+		exposed_carbon.dna.species.grant_flight(exposed_carbon)
 		if(holycheck)
 			to_chat(exposed_carbon, span_notice("You feel blessed!"))
 			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SPECIES_TRAIT)
