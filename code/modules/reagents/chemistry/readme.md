@@ -1,5 +1,7 @@
 **NOTE: IF YOU UPDATE THE REAGENT-SYSTEM, ALSO UPDATE THIS README.**
 
+Credit to the original "Goonchem" system goes to Cogwerks, and all the other goonstation coders for the original idea and implementation of this.
+
 ```
 Structure: ///////////////////          //////////////////////////
 		   // Mob or object // -------> // Reagents var (datum) // 	    Is a reference to the datum that holds the reagents.
@@ -245,12 +247,3 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			If this returns 1, you can use syringes and droppers
 			to draw from the contents of this object.
 ```
-
-# GOON CHEMS README:
-Credit goes to Cogwerks, and all the other goonstation coders for the original idea and implementation of this over at goonstation.
-
-- THE REQUESTED DON'T PORT LIST: IF YOU PORT THESE THE GOONS WILL MURDER US IN OUR SLEEP SO PLEASE DON'T KTHX - Iamgoofball
-- Any of the Secret Chems
-- Goon in-joke chems (Eg. Cat Drugs, Hairgrownium)
-- Liquid Electricity
-- Rajajajah
