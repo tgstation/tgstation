@@ -23,15 +23,10 @@
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
+	src.unremovable_circuit_components = unremovable_circuit_components
 
-	var/list/circuit_components = list()
 	for(var/obj/item/circuit_component/circuit_component as anything in unremovable_circuit_components)
-		if(ispath(circuit_component))
-			circuit_component = new()
 		circuit_component.removable = FALSE
-		circuit_components += circuit_component
-
-	src.unremovable_circuit_components = circuit_components
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
