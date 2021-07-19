@@ -52,3 +52,8 @@
 	icon_state = "construction"
 	shell_to_spawn = /obj/machinery/door/airlock/shell
 	screw_delay = 10 SECONDS
+
+/obj/item/shell/bci
+	name = "brain-computer interface assembly"
+	icon_state = "bci-open"
+	shell_to_spawn = /obj/item/organ/cyberimp/bci

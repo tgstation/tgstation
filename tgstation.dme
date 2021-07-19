@@ -3676,6 +3676,7 @@
 #include "code\modules\wiremod\preset\speech_relay.dm"
 #include "code\modules\wiremod\shell\airlock.dm"
 #include "code\modules\wiremod\shell\bot.dm"
+#include "code\modules\wiremod\shell\brain_computer_interface.dm"
 #include "code\modules\wiremod\shell\compact_remote.dm"
 #include "code\modules\wiremod\shell\controller.dm"
 #include "code\modules\wiremod\shell\drone.dm"

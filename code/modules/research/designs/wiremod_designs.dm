@@ -302,3 +302,16 @@
 	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
+
+/datum/design/bci_shell
+	name = "Brain-Computer Interface Shell"
+	desc = "An implant that can be placed in a user's head to control circuits using their brain."
+	id = "bci_shell"
+	materials = list(
+		/datum/material/glass = 2000,
+		/datum/material/iron = 11000,
+		/datum/material/gold = 500,
+	)
+	build_path = /obj/item/shell/bci
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
