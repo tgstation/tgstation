@@ -916,7 +916,6 @@
 	optimal_ph_min = 3
 	optimal_ph_max = 12
 	required_temp = 50
-	overheat_temp = 950
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
