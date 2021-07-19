@@ -10720,8 +10720,8 @@
 	},
 /area/holodeck/rec_center)
 "aIK" = (
-/obj/structure/closet/l3closet,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/vending/drugs,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "aIL" = (
@@ -35780,17 +35780,8 @@
 	name = "Head of Personnel's Requests Console"
 	},
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/storage/box/silver_ids{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/assembly/flash/handheld{
-	pixel_x = -8
-	},
+/obj/item/storage/secure/briefcase,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "jKR" = (
@@ -37033,6 +37024,7 @@
 	departmentType = 1;
 	name = "Medbay Requests Console"
 	},
+/obj/structure/closet/l3closet,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "kgP" = (
@@ -42196,9 +42188,6 @@
 "mhs" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_y = 26
-	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "mhz" = (
@@ -42599,9 +42588,6 @@
 "mna" = (
 /obj/structure/chair/sofa/right{
 	dir = 8
-	},
-/obj/item/toy/plush/moth{
-	name = "Moffgomery Mofferson"
 	},
 /turf/open/floor/carpet/blue,
 /area/medical/psychology)
@@ -57818,6 +57804,9 @@
 /area/cargo/storage)
 "sqn" = (
 /obj/machinery/meter,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_x = -24
+	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
