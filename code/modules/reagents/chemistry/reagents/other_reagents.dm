@@ -2710,6 +2710,7 @@
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
 
+// [Original ants concept from Keelin on Goon]
 /datum/reagent/ants
 	name = "Ants"
 	description = "A genetic crossbreed between ants and termites, their bites land at a 3 on the Schmidt Pain Scale."
