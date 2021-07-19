@@ -224,6 +224,10 @@
 	. = list()
 	.["components"] = list()
 	for(var/obj/item/circuit_component/component as anything in attached_components)
+		if (component.circuit_flags & CIRCUIT_FLAG_HIDDEN)
+			.["components"] += null
+			continue
+
 		var/list/component_data = list()
 		component_data["input_ports"] = list()
 		for(var/datum/port/input/port as anything in component.input_ports)

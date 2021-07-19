@@ -232,7 +232,7 @@ export class IntegratedCircuit extends Component {
             backgroundImage={resolveAsset('grid_background.png')}
             imageWidth={900}
           >
-            {components.map((comp, index) => (
+            {components.map((comp, index) => comp && (
               <ObjectComponent
                 key={index}
                 {...comp}
@@ -267,6 +267,10 @@ const Connections = (props, context) => {
   const connections = [];
 
   for (const comp of components) {
+    if (comp === null) {
+      continue;
+    }
+
     for (const port of comp.input_ports) {
       if (port.connected_to === NULL_REF) continue;
       const output_port = locations[port.connected_to];
