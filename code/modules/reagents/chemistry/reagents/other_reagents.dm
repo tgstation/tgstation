@@ -2712,7 +2712,7 @@
 
 /datum/reagent/ants
 	name = "Ants"
-	description = "A sample of a lost breed of Space Ants (formicidae bastardium tyrannus), they are well-known for ravaging the living shit out of pretty much anything."
+	description = "A genetic crossbreed between ants and termites, their bites land at a 3 on the Schmidt Pain Scale."
 	reagent_state = SOLID
 	color = "#993333"
 	taste_mult = 1.3
