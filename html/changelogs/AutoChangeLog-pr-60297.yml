@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "NanoTrasen has realized that its previous theoretical fix for ghost ears didn't work, not that that's a problem since ghosts don't exist but NanoTrasen has fixed its mistake."

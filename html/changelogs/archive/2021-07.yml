@@ -604,3 +604,26 @@
   interestingusernam3:
   - bugfix: The implant pad will no longer incorrectly describe TRAC implants as being
       usable as teleporter beacons.
+2021-07-19:
+  Arkatos:
+  - qol: You can now load equipment outright by double clicking the corresponding
+      equipment button in the Select Equipment UI.
+  Fikou:
+  - expansion: During moth week, teleporter accidents make you Moths
+  InsaneRed:
+  - balance: Elder Atmosian armor now takes less metallic hydrogen to craft and is
+      better armored.
+  - qol: Most advanced tools now use balloon alert
+  Kylerace:
+  - bugfix: NanoTrasen has realized that its previous theoretical fix for ghost ears
+      didn't work, not that that's a problem since ghosts don't exist but NanoTrasen
+      has fixed its mistake.
+  Melbert:
+  - qol: Energy Guns use balloon alerts when swapping mode
+  Mothblocks:
+  - expansion: Added a box of silver IDs to the HoP office on TramStation.
+  Seris02:
+  - bugfix: fixed sentient diseases reinfecting when dead
+  TheSmallBlue:
+  - expansion: Added USB cable support to bluespace launchpad consoles to use with
+      integrated circuits.

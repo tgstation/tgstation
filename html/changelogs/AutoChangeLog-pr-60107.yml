@@ -1,4 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - bugfix: "fixed sentient diseases reinfecting when dead"
