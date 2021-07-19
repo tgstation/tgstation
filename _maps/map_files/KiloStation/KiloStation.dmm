@@ -2936,7 +2936,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ajj" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -12050,6 +12050,9 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/bookcase/random/reference,
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aOy" = (
@@ -12527,6 +12530,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aPH" = (
@@ -15349,8 +15353,13 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/ecto_sniffer{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "aXj" = (
@@ -17167,6 +17176,9 @@
 "bbK" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_x = -22
+	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bbL" = (
@@ -29819,10 +29831,6 @@
 /area/hallway/primary/aft)
 "bZX" = (
 /obj/structure/table,
-/obj/item/toy/figure/dsquad{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -41992,12 +42000,7 @@
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "dxK" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "cmoprivacy";
-	name = "Office Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/command/heads_quarters/cmo)
 "dyi" = (
 /obj/effect/landmark/start/bartender,
@@ -55621,7 +55624,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
@@ -56711,7 +56714,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining/common,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
@@ -65806,9 +65808,6 @@
 /area/service/chapel/office)
 "nXj" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_y = 26
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -74639,7 +74638,7 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "rFl" = (
-/obj/machinery/atmospherics/components/unary/tank/toxins{
+/obj/machinery/atmospherics/components/tank/toxins{
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
@@ -87096,6 +87095,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "wZx" = (
@@ -88957,6 +88957,10 @@
 	desc = "Often used to flavor food or make people sneeze. Fashionably moved to the left side of the table.";
 	pixel_x = -8;
 	pixel_y = 2
+	},
+/obj/item/toy/figure/prisoner{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
@@ -109207,7 +109211,7 @@ avB
 aWm
 eqk
 eWO
-eWO
+dxK
 eWO
 dxK
 eWO

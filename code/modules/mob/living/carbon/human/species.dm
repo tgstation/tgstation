@@ -78,6 +78,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,\
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,\
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest)
+
+	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
+	var/list/external_organs = list()
+
 	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speedmod = 0
 	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
@@ -123,8 +127,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/flying_species = FALSE
 	///The actual flying ability given to flying species
 	var/datum/action/innate/flight/fly
-	///Current wings icon
-	var/wings_icon = "Angel"
 	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wings_icons = list("Angel")
 	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
@@ -188,6 +190,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Forces an item into this species' hands. Only an honorary mutantthing because this is not an organ and not loaded in the same way, you've been warned to do your research.
 	var/obj/item/mutanthands
 
+
+
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
@@ -228,7 +232,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			GLOB.roundstart_races += S.id
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "human"
+		GLOB.roundstart_races += SPECIES_HUMAN
 
 /**
  * Checks if a species is eligible to be picked at roundstart.
@@ -400,6 +404,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
 
+	if(ishuman(C))
+		var/mob/living/carbon/human/human = C
+		for(var/obj/item/organ/external/organ_path as anything in external_organs)
+			//Load a persons preferences from DNA
+			var/preference_name = human.dna.features[initial(organ_path.preference)]
+
+			var/obj/item/organ/external/new_organ = new organ_path(null, preference_name, human.body_type)
+
+			new_organ.Insert(human)
+
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
@@ -445,6 +459,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+	for(var/obj/item/organ/external/organ in C.internal_organs)
+		if(organ.type in external_organs)
+			organ.Remove(C)
+			qdel(organ)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
@@ -460,15 +478,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/i in inherent_factions)
 			C.faction -= i
 
-	if(flying_species)
-		fly.Remove(C)
-		QDEL_NULL(fly)
-		if(C.movement_type & FLYING)
-			ToggleFlight(C)
-	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
-		C.dna.species.mutant_bodyparts -= "wings"
-		C.dna.features["wings"] = "None"
-		C.update_body()
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
@@ -816,7 +825,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_monkey"
 
-
 	if(mutant_bodyparts["waggingtail_human"])
 		if(source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_human"
@@ -833,35 +841,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if (mutant_bodyparts["tail"])
 			bodyparts_to_add -= "waggingspines"
 
-	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
-		if((source.wear_mask && (source.wear_mask.flags_inv & HIDESNOUT)) || (source.head && (source.head.flags_inv & HIDESNOUT)) || !noggin || noggin.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "snout"
-
-	if(mutant_bodyparts["frills"])
-		if(!source.dna.features["frills"] || source.dna.features["frills"] == "None" || source.head && (source.head.flags_inv & HIDEEARS) || !noggin || noggin.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "frills"
-
-	if(mutant_bodyparts["horns"])
-		if(!source.dna.features["horns"] || source.dna.features["horns"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || noggin.status == BODYPART_ROBOTIC)
-			bodyparts_to_add -= "horns"
-
 	if(mutant_bodyparts["ears"])
 		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || noggin.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "ears"
-
-	if(mutant_bodyparts["wings"])
-		if(!source.dna.features["wings"] || source.dna.features["wings"] == "None" || (source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT) && (!source.wear_suit.species_exception || !is_type_in_list(src, source.wear_suit.species_exception))))
-			bodyparts_to_add -= "wings"
-
-	if(mutant_bodyparts["wings_open"])
-		if(source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT) && (!source.wear_suit.species_exception || !is_type_in_list(src, source.wear_suit.species_exception)))
-			bodyparts_to_add -= "wings_open"
-		else if (mutant_bodyparts["wings"])
-			bodyparts_to_add -= "wings_open"
-
-	if(mutant_bodyparts["moth_antennae"])
-		if(!source.dna.features["moth_antennae"] || source.dna.features["moth_antennae"] == "None" || !noggin)
-			bodyparts_to_add -= "moth_antennae"
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
@@ -909,26 +891,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					accessory = GLOB.spines_list[source.dna.features["spines"]]
 				if("waggingspines")
 					accessory = GLOB.animated_spines_list[source.dna.features["spines"]]
-				if("snout")
-					accessory = GLOB.snouts_list[source.dna.features["snout"]]
-				if("frills")
-					accessory = GLOB.frills_list[source.dna.features["frills"]]
-				if("horns")
-					accessory = GLOB.horns_list[source.dna.features["horns"]]
 				if("ears")
 					accessory = GLOB.ears_list[source.dna.features["ears"]]
 				if("body_markings")
 					accessory = GLOB.body_markings_list[source.dna.features["body_markings"]]
-				if("wings")
-					accessory = GLOB.wings_list[source.dna.features["wings"]]
-				if("wingsopen")
-					accessory = GLOB.wings_open_list[source.dna.features["wings"]]
 				if("legs")
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
-				if("moth_wings")
-					accessory = GLOB.moth_wings_list[source.dna.features["moth_wings"]]
-				if("moth_antennae")
-					accessory = GLOB.moth_antennae_list[source.dna.features["moth_antennae"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
 				if("tail_monkey")
@@ -999,7 +967,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	source.apply_overlay(BODY_ADJ_LAYER)
 	source.apply_overlay(BODY_FRONT_LAYER)
 
-
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.
 /datum/species/proc/mutant_bodyparts_layertext(layer)
@@ -1031,8 +998,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
-	if(flying_species)
-		HandleFlight(H)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1185,11 +1150,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.visible_message(span_notice("[H] start putting on [I]..."), span_notice("You start putting on [I]..."))
 	return do_after(H, I.equip_delay_self, target = H)
 
-/datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+
+/// Equips the necessary species-relevant gear before putting on the rest of the uniform.
+/datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
-/datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.update_mutant_bodyparts()
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == exotic_blood)
@@ -1213,97 +1178,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	outfit_important_for_life= new()
 	outfit_important_for_life.equip(human_to_equip)
-
-////////
-//LIFE//
-////////
-/datum/species/proc/handle_digestion(mob/living/carbon/human/H, delta_time, times_fired)
-	if(HAS_TRAIT(H, TRAIT_NOHUNGER))
-		return //hunger is for BABIES
-
-	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(HAS_TRAIT_FROM(H, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(H.overeatduration < (200 SECONDS))
-			to_chat(H, span_notice("You feel fit again!"))
-			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
-			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
-	else
-		if(H.overeatduration >= (200 SECONDS))
-			to_chat(H, span_danger("You suddenly feel blubbery!"))
-			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
-			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			H.update_inv_w_uniform()
-			H.update_inv_wear_suit()
-
-	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
-		// THEY HUNGER
-		var/hunger_rate = HUNGER_FACTOR
-		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-		if(mood && mood.sanity > SANITY_DISTURBED)
-			hunger_rate *= max(1 - 0.002 * mood.sanity, 0.5) //0.85 to 0.75
-		// Whether we cap off our satiety or move it towards 0
-		if(H.satiety > MAX_SATIETY)
-			H.satiety = MAX_SATIETY
-		else if(H.satiety > 0)
-			H.satiety--
-		else if(H.satiety < -MAX_SATIETY)
-			H.satiety = -MAX_SATIETY
-		else if(H.satiety < 0)
-			H.satiety++
-			if(DT_PROB(round(-H.satiety/77), delta_time))
-				H.Jitter(5)
-			hunger_rate = 3 * HUNGER_FACTOR
-		hunger_rate *= H.physiology.hunger_mod
-		H.adjust_nutrition(-hunger_rate * delta_time)
-
-	if(H.nutrition > NUTRITION_LEVEL_FULL)
-		if(H.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
-			H.overeatduration = min(H.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
-	else
-		if(H.overeatduration > 0)
-			H.overeatduration = max(H.overeatduration - (2 SECONDS * delta_time), 0) //doubled the unfat rate
-
-	//metabolism change
-	if(H.nutrition > NUTRITION_LEVEL_FAT)
-		H.metabolism_efficiency = 1
-	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-		if(H.metabolism_efficiency != 1.25 && !HAS_TRAIT(H, TRAIT_NOHUNGER))
-			to_chat(H, span_notice("You feel vigorous."))
-			H.metabolism_efficiency = 1.25
-	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		if(H.metabolism_efficiency != 0.8)
-			to_chat(H, span_notice("You feel sluggish."))
-		H.metabolism_efficiency = 0.8
-	else
-		if(H.metabolism_efficiency == 1.25)
-			to_chat(H, span_notice("You no longer feel vigorous."))
-		H.metabolism_efficiency = 1
-
-	//Hunger slowdown for if mood isn't enabled
-	if(CONFIG_GET(flag/disable_human_mood))
-		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-			if(hungry >= 70)
-				H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
-			else if(isethereal(H))
-				var/datum/species/ethereal/E = H.dna.species
-				if(E.get_charge(H) <= ETHEREAL_CHARGE_NORMAL)
-					H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - E.get_charge(H) / 100)))
-			else
-				H.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
-
-	switch(H.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /atom/movable/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			H.clear_alert("nutrition")
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /atom/movable/screen/alert/hungry)
-		if(0 to NUTRITION_LEVEL_STARVING)
-			H.throw_alert("nutrition", /atom/movable/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return FALSE
@@ -1334,7 +1208,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(radiation > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
 		to_chat(source, span_danger("You mutate!"))
-		source.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
+		source.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 		source.emote("gasp")
 		source.domutcheck()
 
@@ -1679,14 +1553,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// called before a projectile hit
 	return 0
 
-/////////////
-//BREATHING//
-/////////////
-
-/datum/species/proc/breathe(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		return TRUE
-
 //////////////////////////
 // ENVIRONMENT HANDLERS //
 //////////////////////////
@@ -1992,6 +1858,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!CanIgniteMob(H))
 		return TRUE
 	if(H.on_fire)
+		SEND_SIGNAL(H, COMSIG_HUMAN_BURNING)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
 		var/obscured = H.check_obscured_slots(TRUE)
@@ -2064,19 +1931,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	if(flying_species && H.movement_type & FLYING)
-		ToggleFlight(H)
-		flyslip(H)
-	. = stunmod * H.physiology.stun_mod * amount
-
-//////////////
-//Space Move//
-//////////////
-
-/datum/species/proc/space_move(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
-		return TRUE
-	return FALSE
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings)
+			wings.toggle_flight(H)
+			wings.fly_slip(H)
+	. = stunmod * H.physiology.stun_mod * amount
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
@@ -2162,6 +2022,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(flying_species) //species that already have flying traits should not work with this proc
 		return
 	flying_species = TRUE
+	var/wings_icon
 	if(wings_icons.len > 1)
 		if(!H.client)
 			wings_icon = pick(wings_icons)
@@ -2181,95 +2042,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				wings_icon = pick(wings_icons)
 	else
 		wings_icon = wings_icons[1]
-	if(isnull(fly))
-		fly = new
-		fly.Grant(H)
-	if(H.dna.features["wings"] != wings_icon)
-		mutant_bodyparts["wings"] = wings_icon
-		H.dna.features["wings"] = wings_icon
-		H.update_body()
 
-/datum/species/proc/HandleFlight(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		if(!CanFly(H))
-			ToggleFlight(H)
-			return FALSE
-		return TRUE
-	else
-		return FALSE
-
-/datum/species/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.body_position == LYING_DOWN)
-		return FALSE
-	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))) //Jumpsuits have tail holes, so it makes sense they have wing holes too
-		to_chat(H, span_warning("Your suit blocks your wings from extending!"))
-		return FALSE
-	var/turf/T = get_turf(H)
-	if(!T)
-		return FALSE
-
-	var/datum/gas_mixture/environment = T.return_air()
-	if(environment && !(environment.return_pressure() > 30))
-		to_chat(H, span_warning("The atmosphere is too thin for you to fly!"))
-		return FALSE
-	else
-		return TRUE
-
-/datum/species/proc/flyslip(mob/living/carbon/human/H)
-	var/obj/buckled_obj
-	if(H.buckled)
-		buckled_obj = H.buckled
-
-	to_chat(H, span_notice("Your wings spazz out and launch you!"))
-
-	playsound(H.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
-
-	for(var/obj/item/I in H.held_items)
-		H.accident(I)
-
-	var/olddir = H.dir
-
-	H.stop_pulling()
-	if(buckled_obj)
-		buckled_obj.unbuckle_mob(H)
-		step(buckled_obj, olddir)
-	else
-		new /datum/forced_movement(H, get_ranged_target_turf(H, olddir, 4), 1, FALSE, CALLBACK(H, /mob/living/carbon/.proc/spin, 1, 1))
-	return TRUE
-
-//UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
-/datum/species/proc/ToggleFlight(mob/living/carbon/human/H)
-	if(!HAS_TRAIT_FROM(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
-		stunmod *= 2
-		speedmod -= 0.35
-		ADD_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		ADD_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_on(H, SPECIES_TRAIT)
-		H.OpenWings()
-	else
-		stunmod *= 0.5
-		speedmod += 0.35
-		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
-		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
-		passtable_off(H, SPECIES_TRAIT)
-		H.CloseWings()
-
-/datum/action/innate/flight
-	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "flight"
-
-/datum/action/innate/flight/Activate()
-	var/mob/living/carbon/human/H = owner
-	var/datum/species/S = H.dna.species
-	if(S.CanFly(H))
-		S.ToggleFlight(H)
-		if(!(H.movement_type & FLYING))
-			to_chat(H, span_notice("You settle gently back onto the ground..."))
-		else
-			to_chat(H, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			H.set_resting(FALSE, TRUE)
+	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.body_type)
+	wings.Insert(H)
+	handle_mutant_bodyparts(H)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds

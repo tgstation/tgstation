@@ -8,7 +8,6 @@
 	icon_state = "morph"
 	icon_living = "morph"
 	icon_dead = "morph_dead"
-	speed = 2
 	combat_mode = TRUE
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -109,7 +108,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	set_varspeed(0)
+	add_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
@@ -137,7 +136,7 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	set_varspeed(initial(speed))
+	remove_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
@@ -227,8 +226,8 @@
 		return MAP_ERROR
 	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
 	player_mind.transfer_to(S)
-	player_mind.assigned_role = "Morph"
-	player_mind.special_role = "Morph"
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
+	player_mind.special_role = ROLE_MORPH
 	player_mind.add_antag_datum(/datum/antagonist/morph)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a morph by an event.")

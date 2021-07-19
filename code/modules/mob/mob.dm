@@ -41,7 +41,6 @@
 			observe.reset_perspective(null)
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
-	clear_client_in_contents() //Gotta do this here as well as Logout, since client will be null by the time it gets there, cause of that ghostize
 	ghostize() //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
@@ -85,6 +84,7 @@
 	update_config_movespeed()
 	initialize_actionspeed()
 	update_movespeed(TRUE)
+	become_hearing_sensitive()
 
 /**
  * Generate the tag for this mob
@@ -214,7 +214,8 @@
 		if(M.see_invisible < invisibility)//if src is invisible to M
 			msg = blind_message
 		else if(T != loc && T != src) //if src is inside something and not a turf.
-			msg = blind_message
+			if(M != loc) // Only give the blind message to hearers that aren't the location
+				msg = blind_message
 		else if(M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
 		if(!msg)
@@ -971,18 +972,10 @@
  *
  * You can buckle on mobs if you're next to them since most are dense
  */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE, ignore_self = FALSE)
 	if(M.buckled)
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(M.loc != T)
-		var/old_density = density
-		density = FALSE // Hacky and doesn't use set_density()
-		var/can_step = step_towards(M, T)
-		density = old_density // Avoid changing density directly in normal circumstances, without the setter.
-		if(!can_step)
-			return FALSE
-	return ..()
+	return ..(M, force, check_loc, buckle_mob_flags, ignore_self = TRUE)
 
 ///Call back post buckle to a mob to offset your visual height
 /mob/post_buckle_mob(mob/living/M)
@@ -1058,14 +1051,17 @@
  *
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
-/mob/proc/fully_replace_character_name(oldname,newname)
+/mob/proc/fully_replace_character_name(oldname, newname)
 	if(!newname)
 		log_message("[src] failed name change from [oldname] as no new name was specified", LOG_OWNERSHIP)
+		return FALSE
+	if(oldname == newname)
+		log_message("[src] failed name change as the new name was the same as the old one: [oldname]", LOG_OWNERSHIP)
 		return FALSE
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
-	log_played_names(ckey,newname)
+	log_played_names(ckey, newname)
 
 	real_name = newname
 	name = newname

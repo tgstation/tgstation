@@ -186,15 +186,24 @@
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
-	var/cooldown = 40 // Default wait time until can stun again.
-	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
-	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
-	var/stamina_damage = 55 // Do we deal stamina damage.
-	var/affect_silicon = FALSE // Does it stun silicons.
-	var/on_sound // "On" sound, played when switching between able to stun or not.
-	var/on_stun_sound = 'sound/effects/woodhit.ogg' // Default path to sound for when we stun.
-	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
-	var/on = TRUE // Are we on or off.
+	/// Default wait time until can stun again.
+	var/cooldown = (4 SECONDS)
+	/// The length of the knockdown applied to a struck living, non-cyborg mob.
+	var/knockdown_time = (1.5 SECONDS)
+	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
+	var/stun_time_cyborg = (5 SECONDS)
+	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
+	var/stamina_damage = 55
+	/// Can we stun cyborgs?
+	var/affect_cyborg = FALSE
+	/// "On" sound, played when switching between able to stun or not.
+	var/on_sound 
+	/// The path of the default sound to play when we stun something.
+	var/on_stun_sound = 'sound/effects/woodhit.ogg'
+	/// Do we animate the "hit" when stunning something?
+	var/stun_animation = TRUE
+	/// Are we on or off?
+	var/on = TRUE
 
 	var/on_icon_state // What is our sprite when turned on
 	var/off_icon_state // What is our sprite when turned off
@@ -211,11 +220,11 @@
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[round(100 / stamina_damage, 0.1)] hit\s!")]"
 
-// Description for trying to stun when still on cooldown.
+/// Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
 
-// Description for when turning their baton "on"
+/// Description for when turning the baton "on".
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
@@ -224,7 +233,7 @@
 
 	return .
 
-// Default message for stunning mob.
+/// Default message for stunning a living, non-cyborg mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
@@ -233,8 +242,8 @@
 
 	return .
 
-// Default message for stunning a silicon.
-/obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
+/// Default message for stunning a cyborg.
+/obj/item/melee/classic_baton/proc/get_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
 	.["visible"] = span_danger("[user] pulses [target]'s sensors with the baton!")
@@ -242,12 +251,21 @@
 
 	return .
 
-// Are we applying any special effects when we stun to carbon
-/obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+/// Default message for trying to stun a cyborg with a baton that can't stun cyborgs.
+/obj/item/melee/classic_baton/proc/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
+	. = list()
+
+	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
+	.["local"] = "<span class='userdanger'>[target] tries to... knock you down with [src]?</span>" //look at the top of his head!
+
+	return .
+
+/// Contains any special effects that we apply to living, non-cyborg mobs we stun. Does not include applying a knockdown, dealing stamina damage, etc.
+/obj/item/melee/classic_baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	return
 
-// Are we applying any special effects when we stun to silicon
-/obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
+/// Contains any special effects that we apply to cyborgs we stun. Does not include flashing the cyborg's screen, hardstunning them, etc.
+/obj/item/melee/classic_baton/proc/additional_effects_cyborg(mob/living/target, mob/living/user)
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
@@ -256,37 +274,27 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='userdanger'>You hit yourself over the head!</span>")
+		user.visible_message("<span class ='userdanger'>You accidentally hit yourself over the head with [src]!</span>", "<span class='danger'>[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!</span>")
 
-		user.Paralyze(knockdown_time_carbon * force)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
-
-		additional_effects_carbon(user) // user is the target here
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
-		else
-			user.take_bodypart_damage(2*force)
-		return
-	if(iscyborg(target))
-		// We don't stun if we're on harm.
-		if (!user.combat_mode)
-			if (affect_silicon)
-				var/list/desc = get_silicon_stun_description(target, user)
-
-				target.flash_act(affect_silicon = TRUE)
-				target.Paralyze(stun_time_silicon)
-				additional_effects_silicon(target, user)
-
-				user.visible_message(desc["visible"], desc["local"])
+		if(iscyborg(user))
+			if(affect_cyborg)
+				user.flash_act(affect_silicon = TRUE)
+				user.Paralyze(stun_time_cyborg * force)
+				additional_effects_cyborg(user, user) // user is the target here
 				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
-
-				if (stun_animation)
-					user.do_attack_animation(target)
 			else
-				..()
+				playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 		else
-			..()
+			user.Paralyze(knockdown_time * force)
+			user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+			additional_effects_non_cyborg(user, user) // user is the target here
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+
+		user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+
+		log_combat(user, target, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
+		if(stun_animation)
+			user.do_attack_animation(user)
 		return
 	if(!isliving(target))
 		return
@@ -309,18 +317,30 @@
 
 	var/list/desc = get_stun_description(target, user)
 
-	if (stun_animation)
-		user.do_attack_animation(target)
+	if(iscyborg(target))
+		if(affect_cyborg)
+			desc = get_cyborg_stun_description(target, user)
 
-	playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
-	target.Knockdown(knockdown_time_carbon)
-	target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-	additional_effects_carbon(target, user)
+			target.flash_act(affect_silicon = TRUE)
+			target.Paralyze(stun_time_cyborg)
+			additional_effects_cyborg(target, user)
 
-	log_combat(user, target, "stunned", src)
-	add_fingerprint(user)
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+		else
+			desc = get_unga_dunga_cyborg_stun_description(target, user)
+
+			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
+	else
+		target.Knockdown(knockdown_time)
+		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		additional_effects_non_cyborg(target, user)
+
+		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 
 	target.visible_message(desc["visible"], desc["local"])
+	log_combat(user, target, "stun attacked", src)
+	if(stun_animation)
+		user.do_attack_animation(target)
 
 	if(!iscarbon(user))
 		target.LAssailant = null
@@ -419,7 +439,7 @@
 
 	cooldown = 25
 	stamina_damage = 85
-	affect_silicon = TRUE
+	affect_cyborg = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
@@ -433,7 +453,7 @@
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")
 
-/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
+/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
 	target.stuttering += 20
 

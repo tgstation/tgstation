@@ -1,0 +1,8 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a bug where emotes such as a carp gnash will mess up a name if the name contains a pronoun within it"
+  - bugfix: "Fixed an incorrect variable in a var that manages pronouns"
+  - spellcheck: "Updated some Simple Mob examines and emotes to default to plural (they) rather than object (it)"
+  - spellcheck: "two clown mobs (Clown Hulk, and Clown Chad) are now explicitly male. one Corgi type (Void) is neuter (it)"
+  - spellcheck: "many animals like cows and chickens are hardcoded female, but uses neutral pronouns in examines and emotes, updated that to be explicitly she pronouns"

@@ -98,8 +98,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
-	RegisterSignal(parent, COMSIG_CLICK_RIGHT, .proc/on_right_click)
+	RegisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_HAND_SECONDARY), .proc/on_open_storage_click)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/on_open_storage_attackby)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
@@ -134,6 +134,8 @@
 	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
 /datum/component/storage/proc/update_actions()
+	SIGNAL_HANDLER
+
 	QDEL_NULL(modeswitch_action)
 	if(!isitem(parent) || !allow_quick_gather)
 		return
@@ -467,10 +469,10 @@
 		return FALSE
 	return master._removal_reset(thing)
 
-/datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
+/datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	_removal_reset(thing)
+	_removal_reset(gone)
 	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
@@ -839,22 +841,15 @@
 
 	return hide_from(target)
 
-/datum/component/storage/proc/on_alt_click(datum/source, mob/user)
-	SIGNAL_HANDLER
 
-	if(on_right_click(source, user))
-		to_chat(user,span_warning("This action is being moved from alt-click to right-click."))
-
-/datum/component/storage/proc/on_right_click(datum/source, mob/user)
-	SIGNAL_HANDLER
-
+/datum/component/storage/proc/open_storage(mob/user)
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
-		return
+		return FALSE
 	if(locked)
 		to_chat(user, span_warning("[parent] seems to be locked!"))
-		return
+		return FALSE
 
-	. = COMPONENT_CANCEL_CLICK_RIGHT
+	. = TRUE
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
@@ -867,6 +862,18 @@
 		return
 
 	INVOKE_ASYNC(src, .proc/attempt_put_in_hands, to_remove, user)
+
+/datum/component/storage/proc/on_open_storage_click(datum/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(open_storage(user))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/storage/proc/on_open_storage_attackby(datum/source, obj/item/weapon, mob/user, params)
+	SIGNAL_HANDLER
+
+	if(open_storage(user))
+		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 ///attempt to put an item from contents into the users hands
 /datum/component/storage/proc/attempt_put_in_hands(obj/item/to_remove, mob/user)

@@ -5,8 +5,7 @@
  */
 /obj/item/circuit_component/hear
 	display_name = "Voice Activator"
-
-	flags_1 = HEAR_1
+	display_desc = "A component that listens for messages. Requires a shell."
 
 	/// The message heard
 	var/datum/port/output/message_port
@@ -23,6 +22,8 @@
 	language_port = add_output_port("Language", PORT_TYPE_STRING)
 	speaker_port = add_output_port("Speaker", PORT_TYPE_ATOM)
 	trigger_port = add_output_port("Triggered", PORT_TYPE_SIGNAL)
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
+
 
 
 /obj/item/circuit_component/hear/Destroy()

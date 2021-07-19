@@ -434,7 +434,7 @@
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
-			else if( prob( min(60, (switchcount^2)*0.01) ) )
+			else if( prob( min(60, (switchcount**2)*0.01) ) )
 				if(trigger)
 					burn_out()
 			else
@@ -703,14 +703,13 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-			var/datum/species/ethereal/eth_species = H.dna?.species
-			if(istype(eth_species))
-				var/datum/species/ethereal/E = H.dna.species
-				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-				if((E.drain_time > world.time) || !stomach)
+			var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+			if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+				var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+				if(stomach.drain_time > world.time)
 					return
 				to_chat(H, span_notice("You start channeling some power through the [fitting] into your body."))
-				E.drain_time = world.time + LIGHT_DRAIN_TIME
+				stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 				if(do_after(user, LIGHT_DRAIN_TIME, target = src))
 					if(istype(stomach))
 						to_chat(H, span_notice("You receive some charge from the [fitting]."))
@@ -924,7 +923,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/light/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

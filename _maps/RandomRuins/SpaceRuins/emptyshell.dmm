@@ -36,10 +36,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
@@ -47,10 +44,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 

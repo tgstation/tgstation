@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "You should no longer lose deathnettle durability when clicking on floors or walls"

@@ -327,7 +327,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
-	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engineering/supermatter, /area/science/test_area, /area/space, /area/solars, /area/mine, /area/ruin, /area/asteroid))
+	var/static/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engineering/supermatter, /area/science/test_area, /area/space, /area/solars, /area/mine, /area/ruin, /area/asteroid))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please hold!", confidential = TRUE)
@@ -578,6 +578,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "<li><u>[path]</u><ul>"
+		if (I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
+			dellog += "<li>SUSPENDED FOR LAG</li>"
 		if (I.failures)
 			dellog += "<li>Failures: [I.failures]</li>"
 		dellog += "<li>qdel() Count: [I.qdels]</li>"
@@ -585,6 +587,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if (I.hard_deletes)
 			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
 			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
+			dellog += "<li>Highest Time Spent Hard Deleting: [I.hard_delete_max]ms</li>"
+			if (I.hard_deletes_over_threshold)
+				dellog += "<li>Hard Deletes Over Threshold: [I.hard_deletes_over_threshold]</li>"
 		if (I.slept_destroy)
 			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
 		if (I.no_respect_force)
@@ -701,6 +706,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		to_chat(src, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 	else
 		to_chat(src, span_warning("Failed to place [template.name]."), confidential = TRUE)
+
+/client/proc/run_empty_query(val as num)
+	set category = "Debug"
+	set name = "Run empty query"
+	set desc = "Amount of queries to run"
+
+	var/list/queries = list()
+	for(var/i in 1 to val)
+		var/datum/db_query/query = SSdbcore.NewQuery("NULL")
+		INVOKE_ASYNC(query, /datum/db_query.proc/Execute)
+		queries += query
+
+	for(var/datum/db_query/query as anything in queries)
+		query.sync()
+		qdel(query)
+	queries.Cut()
+
+	message_admins("[key_name_admin(src)] ran [val] empty queries.")
 
 /client/proc/clear_dynamic_transit()
 	set category = "Debug"
