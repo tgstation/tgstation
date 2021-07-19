@@ -51,9 +51,9 @@
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
 
-	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays.
 	var/list/managed_vis_overlays
-	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc
+	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
@@ -293,7 +293,7 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(managed_overlays)
+	LAZYNULL(managed_overlays)
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
@@ -714,7 +714,10 @@
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
