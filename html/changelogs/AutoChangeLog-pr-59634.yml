@@ -1,6 +1,6 @@
 author: "Wallem"
 delete-after: True
-changes:
+changes: 
   - rscadd: "Due to a leak in Nanotrasen Brand Ant Farms during shipping, a large influx of space-ants have been inadvertently dumped onto every Nanotrasen station. Don't go leaving food around too long, and please be sure to watch your step, we're pretty sure they bite..."
   - imageadd: "New giant ant sprite by Doshmobile"
   - rscadd: "Original ant concept by Keelin on Goon"
