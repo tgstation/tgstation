@@ -113,6 +113,11 @@
 	id = "comp_tostring"
 	build_path = /obj/item/circuit_component/tostring
 
+/datum/design/component/tonumber
+	name = "To Number"
+	id = "comp_tonumber"
+	build_path = /obj/item/circuit_component/tonumber
+
 /datum/design/component/typecheck
 	name = "Typecheck Component"
 	id = "comp_typecheck"
