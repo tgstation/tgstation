@@ -4,9 +4,9 @@
  * A handheld device that lets you flash it over people.
  */
 /obj/item/wiremod_scanner
-	name = "compact remote"
+	name = "scanner"
 	icon = 'icons/obj/wiremod.dmi'
-	icon_state = "setup_small_simple"
+	icon_state = "setup_small"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -17,35 +17,52 @@
 /obj/item/wiremod_scanner/Initialize()
 	. = ..()
 	AddComponent(/datum/component/shell, list(
-		new /obj/item/circuit_component/compact_remote()
+		new /obj/item/circuit_component/wiremod_scanner()
 	), SHELL_CAPACITY_SMALL)
 
-/obj/item/circuit_component/compact_remote
-	display_name = "Compact Remote"
-	display_desc = "Used to receive inputs from the compact remote shell. Use the shell in hand to trigger the output signal."
+/obj/item/circuit_component/wiremod_scanner
+	display_name = "Scanner"
+	display_desc = "Used to receive scanned entities from the scanner."
 
-	/// Called when attack_self is called on the shell.
+	/// Called when afterattack is called on the shell.
 	var/datum/port/output/signal
 
-/obj/item/circuit_component/compact_remote/Initialize()
-	. = ..()
-	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
+	/// The attacker
+	var/datum/port/output/attacker
 
-/obj/item/circuit_component/compact_remote/Destroy()
+	/// The entity being attacked
+	var/datum/port/output/attacking
+
+
+
+/obj/item/circuit_component/wiremod_scanner/Initialize()
+	. = ..()
+	attacker = add_output_port("Scanner", PORT_TYPE_ATOM)
+	attacking = add_output_port("Scanned Entity", PORT_TYPE_ATOM)
+	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/wiremod_scanner/Destroy()
+	attacker = null
+	attacking = null
 	signal = null
 	return ..()
 
-/obj/item/circuit_component/compact_remote/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
+/obj/item/circuit_component/wiremod_scanner/register_shell(atom/movable/shell)
+	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, .proc/handle_afterattack)
 
-/obj/item/circuit_component/compact_remote/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, COMSIG_ITEM_ATTACK_SELF)
+/obj/item/circuit_component/wiremod_scanner/unregister_shell(atom/movable/shell)
+	UnregisterSignal(shell, COMSIG_ITEM_AFTERATTACK)
 
 /**
  * Called when the shell item is used in hand.
  */
-/obj/item/circuit_component/compact_remote/proc/send_trigger(atom/source, mob/user)
+/obj/item/circuit_component/wiremod_scanner/proc/handle_afterattack(atom/source, atom/target, mob/user, proximity_flag)
 	SIGNAL_HANDLER
-	source.balloon_alert(user, "clicked primary button")
+	if(!proximity_flag)
+		return
+	source.balloon_alert(user, "scanned object")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	attacker.set_output(user)
+	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)
+
