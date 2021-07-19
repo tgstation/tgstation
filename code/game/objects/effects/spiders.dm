@@ -136,7 +136,7 @@
 	short_desc = "You are a spider."
 	important_info = "Follow your directives at all costs."
 	faction = list("spiders")
-	assignedrole = "Spider"
+	spawner_job_path = /datum/job/spider
 	banType = ROLE_ALIEN
 	ready = FALSE
 	radial_based = TRUE

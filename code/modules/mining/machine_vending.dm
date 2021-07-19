@@ -254,8 +254,8 @@
 	..()
 
 /obj/item/card/mining_point_card/examine(mob/user)
-	..()
-	to_chat(user, span_alert("There's [points] point\s on the card."))
+	. = ..()
+	. += span_alert("There's [points] point\s on the card.")
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"

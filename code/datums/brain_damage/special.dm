@@ -378,10 +378,10 @@
 	image_state = "secbot-c"
 	var/victim
 
-/obj/effect/hallucination/simple/securitron/New()
-	name = pick ( "officer Beepsky", "officer Johnson", "officer Pingsky")
-	START_PROCESSING(SSfastprocess,src)
-	..()
+/obj/effect/hallucination/simple/securitron/Initialize()
+	. = ..()
+	name = pick("officer Beepsky", "officer Johnson", "officer Pingsky")
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/hallucination/simple/securitron/process()
 	if(prob(60))

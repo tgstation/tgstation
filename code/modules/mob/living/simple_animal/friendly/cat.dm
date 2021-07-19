@@ -29,12 +29,7 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	///Limits how often cats can spam chasing mice.
-	COOLDOWN_DECLARE(emote_cooldown)
-	///Can this cat catch special mice?
-	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	can_be_held = TRUE

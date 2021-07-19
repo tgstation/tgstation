@@ -416,9 +416,9 @@ SUBSYSTEM_DEF(explosions)
 /// The upper limit on screenshake amplitude for nearby explosions.
 #define NEAR_SHAKE_CAP 5
 /// The upper limit on screenshake amplifude for distant explosions.
-#define FAR_SHAKE_CAP 2.5
+#define FAR_SHAKE_CAP 1.5
 /// The duration of the screenshake for nearby explosions.
-#define NEAR_SHAKE_DURATION (2.5 SECONDS)
+#define NEAR_SHAKE_DURATION (1.5 SECONDS)
 /// The duration of the screenshake for distant explosions.
 #define FAR_SHAKE_DURATION (1 SECONDS)
 /// The lower limit for the randomly selected hull creaking frequency.
