@@ -138,7 +138,7 @@
 	name = "module duplicator"
 	desc = "Allows you to duplicate module components so that you don't have to recreate them. Scan a module component over this machine to add it as an entry."
 	icon = 'icons/obj/wiremod_fab.dmi'
-	icon_state = "fab-idle"
+	icon_state = "module-fab-idle"
 	circuit = /obj/item/circuitboard/machine/module_duplicator
 
 	/// The internal material bus
@@ -148,15 +148,10 @@
 
 	var/list/scanned_designs = list()
 
-	/// The techweb the printer will get researched designs from
-	var/datum/techweb/techweb
-
 	var/cost_per_component = 1000
 
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
-
-	techweb = SSresearch.science_tech
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
@@ -294,7 +289,7 @@
 /obj/machinery/module_duplicator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
-	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", tool)
+	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
 
 /obj/machinery/module_duplicator/proc/get_material_cost_data(list/materials)
 	var/list/data = list()
