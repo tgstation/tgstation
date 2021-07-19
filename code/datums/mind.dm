@@ -38,7 +38,8 @@
 
 	var/memory
 
-	var/assigned_role
+	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
+	var/datum/job/assigned_role
 	var/special_role
 	var/list/restricted_roles = list()
 	var/list/datum/objective/objectives = list()
@@ -51,7 +52,6 @@
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
-	var/damnation_type = 0
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
@@ -93,6 +93,7 @@
 	key = _key
 	martial_art = default_martial_art
 	init_known_skills()
+	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -496,10 +497,14 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(SSjob.station_jobs)
-		if (!new_role)
+		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sortList(SSjob.station_jobs)
+		if(isnull(new_role))
 			return
-		assigned_role = new_role
+		var/datum/job/new_job = SSjob.GetJob(new_role)
+		if (!new_job)
+			to_chat(usr, span_warning("Job not found."))
+			return
+		set_assigned_role(new_role)
 
 	else if (href_list["memory_edit"])
 		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
@@ -696,11 +701,14 @@
 		special_role = ROLE_CHANGELING
 	return C
 
+
 /datum/mind/proc/make_wizard()
-	if(!has_antag_datum(/datum/antagonist/wizard))
-		special_role = ROLE_WIZARD
-		assigned_role = ROLE_WIZARD
-		add_antag_datum(/datum/antagonist/wizard)
+	if(has_antag_datum(/datum/antagonist/wizard))
+		return
+	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
+	special_role = ROLE_WIZARD
+	add_antag_datum(/datum/antagonist/wizard)
+
 
 /datum/mind/proc/make_rev()
 	var/datum/antagonist/rev/head/head = new()
@@ -804,11 +812,21 @@
 	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
 	return affected_addiction.on_lose_addiction_points(src)
 
+
+/// Setter for the assigned_role job datum.
+/datum/mind/proc/set_assigned_role(datum/job/new_role)
+	if(assigned_role == new_role)
+		return
+	. = assigned_role
+	assigned_role = new_role
+
+
 /mob/dead/new_player/sync_mind()
 	return
 
 /mob/dead/observer/sync_mind()
 	return
+
 
 //Initialisation procs
 /mob/proc/mind_initialize()
@@ -822,28 +840,26 @@
 		mind.name = real_name
 	mind.set_current(src)
 
+
 /mob/living/carbon/mind_initialize()
 	..()
 	last_mind = mind
 
-//HUMAN
-/mob/living/carbon/human/mind_initialize()
-	..()
-	if(!mind.assigned_role)
-		mind.assigned_role = "Unassigned" //default
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
-	..()
-	mind.assigned_role = "AI"
+	. = ..()
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/ai))
+
 
 //BORG
 /mob/living/silicon/robot/mind_initialize()
-	..()
-	mind.assigned_role = "Cyborg"
+	. = ..()
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cyborg))
+
 
 //PAI
 /mob/living/silicon/pai/mind_initialize()
-	..()
-	mind.assigned_role = ROLE_PAI
+	. = ..()
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/personal_ai))
 	mind.special_role = ""

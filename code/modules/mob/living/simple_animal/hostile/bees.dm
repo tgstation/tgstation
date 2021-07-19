@@ -67,6 +67,8 @@
 	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
+	if(flags_1 & HOLOGRAM_1)
+		return
 	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
@@ -87,6 +89,8 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	if((flags_1 & HOLOGRAM_1))
+		return ..()
 	var/obj/item/trash/bee/bee_to_eat = new(loc)
 	bee_to_eat.pixel_x = pixel_x
 	bee_to_eat.pixel_y = pixel_y
@@ -95,7 +99,7 @@
 		bee_to_eat.reagents.add_reagent(beegent.type, 5)
 	bee_to_eat.update_appearance()
 	beegent = null
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/bee/examine(mob/user)

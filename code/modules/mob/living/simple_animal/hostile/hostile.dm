@@ -607,18 +607,27 @@
  * Proc that handles a charge attack windup for a mob.
  */
 /mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
-	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	if(charge_state || !(COOLDOWN_FINISHED(src, charge_cooldown)))
 		return FALSE
-
-	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
+	if(!can_charge_target(target))
 		return FALSE
 	Shake(15, 15, 1 SECONDS)
 	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
 
 /**
+ * Proc that checks if the mob can charge attack.
+ */
+/mob/living/simple_animal/hostile/proc/can_charge_target(atom/target)
+	if(stat == DEAD || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED) || !has_gravity() || !target.has_gravity())
+		return FALSE
+	return TRUE
+
+/**
  * Proc that throws the mob at the target after the windup.
  */
 /mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
+	if(!can_charge_target(target))
+		return FALSE
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
 	COOLDOWN_START(src, charge_cooldown, charge_frequency)

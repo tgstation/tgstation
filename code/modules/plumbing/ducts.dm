@@ -61,7 +61,7 @@ All the important duct code:
 		if(D == src)
 			continue
 		if(D.duct_layer & duct_layer)
-			disconnect_duct()
+			return INITIALIZE_HINT_QDEL //If we have company, end it all
 
 	attempt_connect()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
@@ -166,8 +166,9 @@ All the important duct code:
 	lose_neighbours()
 	reset_connects(0)
 	update_appearance()
-	if(ispath(drop_on_wrench) && !QDELING(src))
+	if(ispath(drop_on_wrench))
 		new drop_on_wrench(drop_location())
+	if(!QDELETED(src))
 		qdel(src)
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
