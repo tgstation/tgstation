@@ -220,16 +220,17 @@
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
-	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant. Right Click to activate seed extraction."
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
-/obj/item/storage/bag/plants/portaseeder/attack_hand_secondary(mob/user, list/modifiers)
-	if(user.incapacitated())
+/obj/item/storage/bag/plants/portaseeder/verb/dissolve_contents()
+	set name = "Activate Seed Extraction"
+	set category = "Object"
+	set desc = "Activate to convert your plants into plantable seeds."
+	if(usr.incapacitated())
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
-
-	
 
 // -----------------------------
 //        Sheet Snatcher
