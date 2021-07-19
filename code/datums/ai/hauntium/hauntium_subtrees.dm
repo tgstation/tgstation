@@ -18,5 +18,5 @@
 		if(get_dist(potential_target, item_pawn) <= 7)
 			controller.blackboard[BB_HAUNT_TARGET] = potential_target
 			controller.current_movement_target = potential_target
-			controller.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/item_move_close_and_attack/haunted)
+			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/item_move_close_and_attack/haunted))
 			return SUBTREE_RETURN_FINISH_PLANNING

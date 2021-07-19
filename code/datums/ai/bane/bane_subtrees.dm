@@ -10,5 +10,5 @@
 			break
 	if(batman)
 		controller.current_movement_target = batman
-		controller.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/break_spine/bane)
+		LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/break_spine/bane))
 		return SUBTREE_RETURN_FINISH_PLANNING

@@ -101,9 +101,9 @@ have ways of interacting with a specific mob and control it.
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
 	current_movement_target = weapon
 	if(pickpocket)
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket)
+		LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket))
 	else
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground)
+		LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground))
 	return TRUE
 
 /// Returns either the best weapon from the given choices or null if held weapons are better

@@ -10,7 +10,7 @@ multiple modular subtrees with behaviors
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits
 	///Current actions being performed by the AI.
-	var/list/current_behaviors = list()
+	var/list/current_behaviors
 	///Current actions and their respective last time ran as an assoc list.
 	var/list/behavior_cooldowns = list()
 	///Current status of AI (OFF/ON)
@@ -128,7 +128,7 @@ multiple modular subtrees with behaviors
 		walk(pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
-	if(!current_behaviors?.len)
+	if(!LAZYLEN(current_behaviors))
 		PerformIdleBehavior(delta_time) //Do some stupid shit while we have nothing to do
 		return
 
@@ -174,7 +174,7 @@ multiple modular subtrees with behaviors
 	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
 		return FALSE
 
-	current_behaviors = list()
+	LAZYINITLIST(current_behaviors)
 
 	for(var/datum/ai_planning_subtree/subtree in planning_subtrees)
 		if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
@@ -206,7 +206,7 @@ multiple modular subtrees with behaviors
 	arguments[1] = src
 	if(!behavior.setup(arglist(arguments)))
 		return
-	current_behaviors += behavior
+	LAZYADD(current_behaviors, behavior)
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
