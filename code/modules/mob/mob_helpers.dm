@@ -214,6 +214,7 @@
 		. += letter
 	return sanitize(.)
 
+#define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
 ///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
 ///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.

@@ -414,7 +414,7 @@ SUBSYSTEM_DEF(explosions)
 /// The probability that a distant explosion SFX will be a far explosion sound rather than an echo. (0-100)
 #define FAR_SOUND_PROB 75
 /// The upper limit on screenshake amplitude for nearby explosions.
-#define NEAR_SHAKE_CAP 10
+#define NEAR_SHAKE_CAP 5
 /// The upper limit on screenshake amplifude for distant explosions.
 #define FAR_SHAKE_CAP 2.5
 /// The duration of the screenshake for nearby explosions.
