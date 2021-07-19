@@ -46,7 +46,7 @@
 			organ_rejection_dam = 10
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
-				if(!(bodypart_to_attach.animal_origin & human_target.dna.species.allowed_animal_origin))
+				if(!(bodypart_to_attach.part_origin & human_target.dna.species.allowed_animal_origin))
 					to_chat(user, span_warning("[bodypart_to_attach] doesn't match the patient's morphology."))
 					return -1
 				if(human_target.dna.species.id != bodypart_to_attach.species_id)
