@@ -49,6 +49,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
 
+	//ANTAG UI
+
+	///name of the UI that will try to open, right now having nothing means this won't exist but in the future all should.
+	var/ui_name
+	///button to access antag interface
+	var/datum/action/antag_info/info_button
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
@@ -133,8 +140,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() without a mind")
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
+	if(ui_name)//in the future, this should entirely replace greet.
+		info_button = new(owner.current, src)
+		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
+		if(ui_name)
+			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
 	if(is_banned(owner.current) && replace_banned)
@@ -182,6 +194,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	LAZYREMOVE(owner.antag_datums, src)
 	if(!LAZYLEN(owner.antag_datums) && !soft_antag)
 		owner.current.remove_from_current_living_antags()
+	if(info_button)
+		QDEL_NULL(info_button)
 	if(!silent && owner.current)
 		farewell()
 	var/datum/team/team = get_team()
@@ -360,3 +374,48 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+///ANTAGONIST UI STUFF
+
+/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_name, name)
+		ui.open()
+
+/datum/antagonist/ui_state(mob/user)
+	return GLOB.always_state
+
+///generic helper to send objectives as data through tgui. supports smart objectives too!
+/datum/antagonist/proc/get_objectives()
+	var/objective_count = 1
+	var/list/objective_data = list()
+	//all obj
+	for(var/datum/objective/objective in objectives)
+		objective_data += list(list(
+			"count" = objective_count,
+			"name" = objective.objective_name,
+			"explanation" = objective.explanation_text,
+			"complete" = objective.completed,
+		))
+		objective_count++
+	return objective_data
+
+//button for antags to review their descriptions/info
+
+/datum/action/antag_info
+	name = "Open Antag Information:"
+	button_icon_state = "round_end"
+	var/datum/antagonist/antag_datum
+
+/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+	. = ..()
+	src.antag_datum = antag_datum
+	name += " [antag_datum.name]"
+
+/datum/action/antag_info/Trigger()
+	if(antag_datum)
+		antag_datum.ui_interact(owner)
+
+/datum/action/antag_info/IsAvailable()
+	return TRUE
