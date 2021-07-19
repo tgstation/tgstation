@@ -30,7 +30,7 @@ multiple modular subtrees with behaviors
 	///Cooldown for new plans, to prevent AI from going nuts if it can't think of new plans and looping on end
 	COOLDOWN_DECLARE(failed_planning_cooldown)
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run
-	var/list/planning_subtrees = list()
+	var/list/planning_subtrees
 
 	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
@@ -70,6 +70,8 @@ multiple modular subtrees with behaviors
 
 ///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES
 /datum/ai_controller/proc/init_subtrees()
+	if(!LAZYLEN(planning_subtrees))
+		return
 	var/list/temp_subtree_list = list()
 	for(var/subtree in planning_subtrees)
 		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
@@ -176,9 +178,10 @@ multiple modular subtrees with behaviors
 
 	LAZYINITLIST(current_behaviors)
 
-	for(var/datum/ai_planning_subtree/subtree in planning_subtrees)
-		if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
-			break
+	if(LAZYLEN(planning_subtrees))
+		for(var/datum/ai_planning_subtree/subtree in planning_subtrees)
+			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
+				break
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -219,6 +222,8 @@ multiple modular subtrees with behaviors
 	behavior.perform(arglist(arguments))
 
 /datum/ai_controller/proc/CancelActions()
+	if(!LAZYLEN(current_behaviors))
+		return
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
 		current_behavior.finish_action(src, FALSE)

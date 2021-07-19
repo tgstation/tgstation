@@ -3,7 +3,7 @@
 
 	if(ismob(item_pawn.loc)) //We're being held, maybe escape?
 		if(DT_PROB(HAUNTED_ITEM_ESCAPE_GRASP_CHANCE, delta_time))
-			controller.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/item_escape_grasp)
+			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/item_escape_grasp))
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(!DT_PROB(HAUNTED_ITEM_ATTACK_HAUNT_CHANCE, delta_time))
