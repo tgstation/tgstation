@@ -912,8 +912,9 @@
 /datum/chemical_reaction/ants
 	results = list(/datum/reagent/ants = 3)
 	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 6)
-	optimal_ph_min = 1
-	optimal_ph_max = 13
+	//FermiChem vars:
+	optimal_ph_min = 3
+	optimal_ph_max = 12
 	required_temp = 50
 	overheat_temp = 950
 	reaction_flags = REACTION_INSTANT
