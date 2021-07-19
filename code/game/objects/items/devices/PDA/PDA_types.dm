@@ -88,7 +88,7 @@
 /obj/item/pda/security
 	name = "security PDA"
 	default_cartridge = /obj/item/cartridge/security
-	greyscale_colors = "#cc4242#339900"
+	greyscale_colors = "#193a7a#339900"
 
 /obj/item/pda/detective
 	name = "detective PDA"
@@ -99,7 +99,7 @@
 	name = "warden PDA"
 	default_cartridge = /obj/item/cartridge/security
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#cc4242#339900#cccc00"
+	greyscale_colors = "#193a7a#339900#cccc00"
 
 /obj/item/pda/janitor
 	name = "janitor PDA"
@@ -128,7 +128,7 @@
 	name = "head of security PDA"
 	default_cartridge = /obj/item/cartridge/hos
 	greyscale_config = /datum/greyscale_config/pda/head
-	greyscale_colors = "#cc4242#339900"
+	greyscale_colors = "#193a7a#339900"
 
 /obj/item/pda/heads/ce
 	name = "chief engineer PDA"
