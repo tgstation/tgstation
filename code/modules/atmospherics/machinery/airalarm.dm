@@ -89,6 +89,8 @@
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
 
+	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = .proc/check_air_dangerlevel)
+
 	var/list/TLV = list( // Breathable air.
 		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min2, min1, max1, max2
 		"temperature" = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
@@ -143,7 +145,7 @@
 /obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
-	//AddElement(/datum/element/connect_loc, mapload)
+	AddElement(/datum/element/connect_loc, atmos_connections)
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -570,30 +572,26 @@
 			icon_state = "alarm1"
 	return ..()
 
-/obj/machinery/airalarm/process()
+/obj/machinery/airalarm/proc/check_air_dangerlevel(turf/location, datum/gas_mixture/environment, exposed_temperature)
+	SIGNAL_HANDLER
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
-		return
-
-	var/turf/location = get_turf(src)
-	if(!location)
 		return
 
 	var/datum/tlv/current_tlv
 	//cache for sanic speed (lists are references anyways)
 	var/list/cached_tlv = TLV
 
-	var/datum/gas_mixture/environment = location.return_air()
 	var/list/env_gases = environment.gases
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+	var/partial_pressure = R_IDEAL_GAS_EQUATION * exposed_temperature / environment.volume
 
 	current_tlv = cached_tlv["pressure"]
 	var/environment_pressure = environment.return_pressure()
-	pressure_dangerlevel = current_tlv.get_danger_level(environment_pressure)
+	var/pressure_dangerlevel = current_tlv.get_danger_level(environment_pressure)
 
 	current_tlv = cached_tlv["temperature"]
-	temperature_dangerlevel = current_tlv.get_danger_level(environment.temperature)
+	var/temperature_dangerlevel = current_tlv.get_danger_level(exposed_temperature)
 
-	gas_dangerlevel = 0
+	var/gas_dangerlevel = 0
 	for(var/gas_id in env_gases)
 		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
