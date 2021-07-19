@@ -54,7 +54,7 @@
 	UnregisterSignal(shell, COMSIG_ITEM_AFTERATTACK)
 
 /**
- * Called when the shell item is used in hand.
+ * Called when the shell item attacks something
  */
 /obj/item/circuit_component/wiremod_scanner/proc/handle_afterattack(atom/source, atom/target, mob/user, proximity_flag)
 	SIGNAL_HANDLER
