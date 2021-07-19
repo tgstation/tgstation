@@ -666,10 +666,10 @@
 	set name = "Notes"
 	set category = "IC"
 	set desc = "View your character's notes memory."
-	if(mind)
-		mind.show_memory(src)
-	else
+	if(!mind)
 		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
+		return
+	mind.show_memory(src)
 
 /**
  * Add a note to the mind datum
