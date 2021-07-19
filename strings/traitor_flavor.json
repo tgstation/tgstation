@@ -75,7 +75,7 @@
 		"allies": "Death to the Syndicate. Killing infiltrators is a whole different kind of internal affair we fully approve of dealing with.",
 		"goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
 		"uplink": "For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.",
-		"ui_theme": "syndicate"
+		"ui_theme": "ntos"
 	},
 	"Corporate Climber": {
 		"introduction": "You are the Corporate Climber.",
