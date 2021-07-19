@@ -88,10 +88,10 @@
 "aB" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -348,7 +348,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "bM" = (
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "bP" = (
@@ -471,10 +471,10 @@
 /turf/closed/wall,
 /area/mine/laborcamp/security)
 "cb" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/structure/table,
@@ -484,7 +484,7 @@
 "cc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
@@ -570,7 +570,7 @@
 /area/mine/laborcamp/security)
 "cC" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/iron,
@@ -1867,10 +1867,10 @@
 /area/maintenance/aft)
 "jk" = (
 /obj/machinery/computer/prisoner,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
@@ -2475,8 +2475,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2486,7 +2486,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -3640,10 +3640,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "zX" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue,
 /obj/structure/closet/secure_closet/labor_camp_security,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
@@ -3772,10 +3772,10 @@
 /area/mine/laborcamp)
 "Bw" = (
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Bz" = (
@@ -4043,7 +4043,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "DW" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
@@ -4170,8 +4170,8 @@
 /area/maintenance/aft)
 "Fd" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -5064,7 +5064,7 @@
 "MG" = (
 /obj/machinery/computer/secure_data,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -5316,7 +5316,7 @@
 /area/maintenance/aft)
 "Pa" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue,
 /obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
@@ -5692,7 +5692,7 @@
 /turf/open/floor/plating,
 /area/service/hydroponics)
 "SE" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/structure/sign/poster/official/twelve_gauge{
@@ -5717,7 +5717,7 @@
 "SV" = (
 /obj/machinery/computer/security/labor,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -5961,10 +5961,10 @@
 "UC" = (
 /obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/freezer/gulag_fridge,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -5984,7 +5984,7 @@
 /area/mine/laborcamp)
 "UH" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -5993,10 +5993,10 @@
 /obj/machinery/vending/security{
 	onstation_override = 1
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron,
