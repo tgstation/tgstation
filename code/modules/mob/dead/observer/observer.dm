@@ -795,7 +795,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			antag_hud.add_hud_to(src)
 
 	to_chat(src, span_notice("Antag HUD unlocked."))
-	log_game("[key_name(src)] has Unlocked their ghost Antag HUD sight.")
+	log_message("Unlocked their ghost Antag HUD sight.", LOG_GAME)
 
 /mob/dead/observer/verb/toggle_health_scan()
 	set name = "Toggle Health Scan"
