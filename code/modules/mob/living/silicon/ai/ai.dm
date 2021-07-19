@@ -98,9 +98,11 @@
 	var/display_icon_override
 
 	var/list/cam_hotkeys = new/list(9)
-	var/cam_prev
+	var/atom/cam_prev
 
 	var/datum/robot_control/robot_control
+	///remember AI's last location
+	var/atom/lastloc
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -126,9 +128,8 @@
 	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
 	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
 	to_chat(src, "To use something, simply click on it.")
-	to_chat(src, "Use say :b to speak to your cyborgs through binary.")
 	to_chat(src, "For department channels, use the following say commands:")
-	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science.")
+	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
 	show_laws()
 	to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
@@ -180,6 +181,7 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
+				cameraFollow = null //stop following something, we want to jump away.
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -190,6 +192,7 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
+				cameraFollow = null //stop following something, we want to jump away.
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -423,12 +426,20 @@
 		if(last_paper_seen)
 			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
-	if(href_list["jumptoholopad"])
-		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"]) in GLOB.machines
-		if(H)
-			H.attack_ai(src) //may as well recycle
+	if(href_list["jump_to_holopad"])
+		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
+		if(Holopad)
+			cam_prev = get_turf(eyeobj)
+			eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
+	if(href_list["project_to_holopad"])
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in GLOB.machines
+		if(Holopad)
+			lastloc = get_turf(eyeobj)
+			Holopad.attack_ai_secondary(src) //may as well recycle
+		else
+			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
 		var/string = href_list["track"]
 		trackable_mobs()
@@ -444,6 +455,7 @@
 		if(name == string)
 			target += src
 		if(target.len)
+			cam_prev = get_turf(eyeobj)
 			ai_actual_track(pick(target))
 		else
 			to_chat(src, "Target is not on or near any active cameras on the station.")
@@ -834,10 +846,16 @@
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if (iscarbon(speaker))
-		var/mob/living/carbon/S = speaker
-		if(S.job)
-			jobpart = "[S.job]"
+	if (isliving(speaker))
+		var/mob/living/living_speaker = speaker
+		if(living_speaker.job)
+			jobpart = "[living_speaker.job]"
+	if (istype(speaker, /obj/effect/overlay/holo_pad_hologram))
+		var/obj/effect/overlay/holo_pad_hologram/holo = speaker
+		if(holo.Impersonation?.job)
+			jobpart = "[holo.Impersonation.job]"
+		else if(usr?.job) // not great, but AI holograms have no other usable ref
+			jobpart = "[usr.job]"
 
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 

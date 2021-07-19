@@ -212,6 +212,7 @@
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
 				if(duct.duct_layer == ducting_layer)
 					duct.remove_connects(turn(D, 180))
+					duct.neighbours.Remove(parent)
 					duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing

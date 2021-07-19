@@ -97,6 +97,39 @@
 	can_flashlight = TRUE
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/marine
+	name = "marine combat helmet"
+	desc = "A multirole helmet painted in a tactical black, the added binoculars aren't functional, but they make you feel operator as fuck."
+	icon_state = "marine_command"
+	inhand_icon_state = "helmetalt"
+	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 40, ACID = 50, WOUND = 20)
+	can_flashlight = TRUE
+	dog_fashion = null
+
+/obj/item/clothing/head/helmet/marine/Initialize()
+	set_attached_light(new /obj/item/flashlight/seclite)
+	update_helmlight()
+	update_appearance()
+	. = ..()
+
+/obj/item/clothing/head/helmet/marine/security
+	name = "marine heavy helmet"
+	desc = "A heavier armored marine helmet, painted black and with an added ballistic screen for extra protection from dangers to the face."
+	icon_state = "marine_security"
+	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, RAD = 0, FIRE = 50, ACID = 50, WOUND = 20)
+
+/obj/item/clothing/head/helmet/marine/engineer
+	name = "marine utility helmet"
+	desc = "A helmet with a pair of military grade welding goggles, sacrificing some armor protection for more environmental protection."
+	icon_state = "marine_engineer"
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, RAD = 30, FIRE = 70, ACID = 70, WOUND = 10)
+
+/obj/item/clothing/head/helmet/marine/medic
+	name = "marine medic helmet"
+	desc = "A multirole helmet with an attached antenna, which looks cool despite being useless. Has some extra biological protection installed."
+	icon_state = "marine_medic"
+	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, RAD = 10, FIRE = 50, ACID = 70, WOUND = 10)
+
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
@@ -372,7 +405,7 @@
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2helmet"
-	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
+	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, RAD = 50, FIRE = 65, ACID = 40, WOUND = 15)
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
@@ -564,6 +597,4 @@
 	if(attached_light)
 		update_appearance()
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
