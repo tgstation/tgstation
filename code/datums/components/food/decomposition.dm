@@ -73,7 +73,7 @@
 	if(locate(/obj/machinery/conveyor) in get_turf(food)) // Makes sure no decals spawn on disposals conveyors
 		remove_timer()
 		return
-	if(locate(/obj/structure/closet) in get_turf(food))
+	if(locate(/obj/structure/closet/secure_closet/freezer) in get_turf(food)) // Ants get out of my fridge REEE. 
 		remove_timer()
 		return
 	// If all other checks fail, then begin decomposition.
