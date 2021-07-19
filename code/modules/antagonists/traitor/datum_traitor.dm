@@ -58,6 +58,8 @@
 
 	pick_employer(faction)
 
+	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
+
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
@@ -79,8 +81,6 @@
 	var/list/possible_employers = list()
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
-
-	possible_employers = GLOB.syndicate_employers.Copy()
 	if(istype(ending_objective, /datum/objective/hijack))
 		possible_employers -= GLOB.normal_employers
 	else //escape or martyrdom

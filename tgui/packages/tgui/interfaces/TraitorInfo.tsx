@@ -1,7 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Dimmer, Section, Stack } from '../components';
+import { multiline } from 'common/string';
+import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
+
+const allystyle = {
+  fontWeight: 'bold',
+  color: 'yellow',
+};
 
 const badstyle = {
   color: 'red',
@@ -74,6 +80,54 @@ const IntroductionSection = (props, context) => {
   );
 };
 
+const EmployerSection = (props, context) => {
+  const { data } = useBackend<Info>(context);
+  const {
+    allies,
+    goal,
+  } = data;
+  return (
+    <Section
+      fill
+      title="Employer"
+      scrollable
+      buttons={
+        <Button
+          icon="hammer"
+          tooltip={multiline`
+            This is a gameplay suggestion for bored traitors.
+            You don't have to follow it... kinda like spacelaw!`}
+          tooltipPosition="bottom-start">
+          Policy
+        </Button>
+      }>
+      <Stack vertical fill>
+        <Stack.Item grow>
+          <Stack vertical>
+            <Stack.Item>
+              <span style={allystyle}>
+                Your allegiances:<br />
+              </span>
+              <BlockQuote>
+                {allies}
+              </BlockQuote>
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item>
+              <span style={goalstyle}>
+                Employer thoughts:<br />
+              </span>
+              <BlockQuote>
+                {goal}
+              </BlockQuote>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </Section>
+  );
+};
+
 const UplinkSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
@@ -101,8 +155,8 @@ const UplinkSection = (props, context) => {
               <span style={goalstyle}>Code: {code}</span>
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item>
-              <BlockQuote grow>
+            <Stack.Item mt="1%">
+              <BlockQuote>
                 {uplink_unlock_info}
               </BlockQuote>
             </Stack.Item>
@@ -122,7 +176,7 @@ const CodewordsSection = (props, context) => {
   return (
     <Section title="Codewords">
       <Stack fill>
-        <Stack.Item grow>
+        <Stack.Item grow basis={0}>
           <BlockQuote>
             The Syndicate have provided you with the following
             codewords to identify fellow agents. Use the codewords
@@ -136,18 +190,18 @@ const CodewordsSection = (props, context) => {
           </BlockQuote>
         </Stack.Item>
         <Stack.Divider mr={1} />
-        <Stack.Item>
-          <Stack vertical fill>
-            <Stack.Item grow>
+        <Stack.Item grow basis={0}>
+          <Stack vertical>
+            <Stack.Item>
               Code Phrases:
             </Stack.Item>
-            <Stack.Item grow bold textColor="blue">
+            <Stack.Item bold textColor="blue">
               {phrases}
             </Stack.Item>
-            <Stack.Item grow>
+            <Stack.Item>
               Code Responses:
             </Stack.Item>
-            <Stack.Item grow bold textColor="red">
+            <Stack.Item bold textColor="red">
               {responses}
             </Stack.Item>
           </Stack>
@@ -170,7 +224,14 @@ export const TraitorInfo = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
-            <IntroductionSection />
+            <Stack fill>
+              <Stack.Item width="70%">
+                <IntroductionSection />
+              </Stack.Item>
+              <Stack.Item width="30%">
+                <EmployerSection />
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
           <Stack.Item>
             <UplinkSection />

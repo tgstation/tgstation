@@ -44,7 +44,7 @@ export const NightmareInfo = (props, context) => {
                     Tip #2:&ensp;
                   </span>
                   Pick unfair fights. You are incredibly strong
-                  in one versus one sitations, use it. The more
+                  in one versus one situations, use it. The more
                   you fight, the harder it will be to keep it dark.<br />
                   <span style={tipstyle}>
                     Tip #3:&ensp;
