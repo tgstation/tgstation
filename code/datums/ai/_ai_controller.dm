@@ -50,12 +50,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
-
-	var/list/temp_subtree_list = list()
-	for(var/subtree in planning_subtrees)
-		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
-		temp_subtree_list += subtree_instance
-	planning_subtrees = temp_subtree_list
+	init_subtrees()
 
 	PossessPawn(new_pawn)
 
@@ -63,6 +58,23 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	return ..()
+
+///Overrides the current ai_movement of this controller with a new one
+/datum/ai_controller/proc/change_ai_movement(datum/ai_movement/new_movement)
+	ai_movement = SSai_movement.movement_types[new_movement]
+
+///Completely replaces the planning_subtrees with a new set based on argument provided, list provided must contain specifically typepaths
+/datum/ai_controller/proc/replace_planning_subtrees(list/typepaths_of_new_subtrees)
+	planning_subtrees = typepaths_of_new_subtrees
+	init_subtrees()
+
+///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES
+/datum/ai_controller/proc/init_subtrees()
+	var/list/temp_subtree_list = list()
+	for(var/subtree in planning_subtrees)
+		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
+		temp_subtree_list += subtree_instance
+	planning_subtrees = temp_subtree_list
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
@@ -165,7 +177,8 @@ multiple modular subtrees with behaviors
 	current_behaviors = list()
 
 	for(var/datum/ai_planning_subtree/subtree in planning_subtrees)
-		subtree.SelectBehaviors(src, delta_time)
+		if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
+			break
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
