@@ -15,21 +15,15 @@
 	if(max2)
 		hazard_max = max2
 
-/datum/tlv/proc/get_danger_level(val as num)
-	switch(val)
-		if(hazard_max to INFINITY)
-			if(hazard_max != -1)
-				return TLV_OUTSIDE_HAZARD_LIMIT
-		if(0 to hazard_min)
-			if(hazard_min != -1)
-				return TLV_OUTSIDE_HAZARD_LIMIT
-
-		if(warning_max to INFINITY)
-			if(warning_max != -1)
-				return TLV_OUTSIDE_WARNING_LIMIT
-		if(0 to warning_min)
-			if(warning_min != -1)
-				return TLV_OUTSIDE_WARNING_LIMIT
+/datum/tlv/proc/get_danger_level(val)
+	if(hazard_max != TLV_DONT_CHECK && val >= hazard_max)
+		return TLV_OUTSIDE_HAZARD_LIMIT
+	if(hazard_min != TLV_DONT_CHECK && val <= hazard_min)
+		return TLV_OUTSIDE_HAZARD_LIMIT
+	if(warning_max != TLV_DONT_CHECK && val >= warning_max)
+		return TLV_OUTSIDE_WARNING_LIMIT
+	if(warning_min != TLV_DONT_CHECK && val <= warning_min)
+		return TLV_OUTSIDE_WARNING_LIMIT
 
 	return TLV_NO_DANGER
 
@@ -697,17 +691,19 @@
 
 	current_tlv = cached_tlv["pressure"]
 	var/environment_pressure = environment.return_pressure()
-	var/pressure_dangerlevel = current_tlv.get_danger_level(environment_pressure)
+	pressure_dangerlevel = current_tlv.get_danger_level(environment_pressure)
 
 	current_tlv = cached_tlv["temperature"]
-	var/temperature_dangerlevel = current_tlv.get_danger_level(environment.temperature)
+	temperature_dangerlevel = current_tlv.get_danger_level(environment.temperature)
 
-	var/gas_dangerlevel = 0
+	gas_dangerlevel = 0
 	for(var/gas_id in env_gases)
 		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
 		current_tlv = cached_tlv[gas_id]
 		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
+
+	environment.garbage_collect()
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)

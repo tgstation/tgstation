@@ -260,7 +260,7 @@
 	if(widenet)
 		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
 
-	update_mode_power_usage(use_power, new_power_usage)
+	use_power(new_power_usage)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()
