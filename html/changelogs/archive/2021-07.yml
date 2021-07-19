@@ -548,7 +548,7 @@
       or jump to a location and you wont jump back to the person you tracked
   Sheits:
   - bugfix: Flight potions now work on fly people, androids and skeletons
-  Wallem:
+  Keelin & Wallem:
   - bugfix: Lets people wash the ant debuff off of themselves, as intended.
   - rscadd: Due to a leak in Nanotrasen Brand Ant Farms during shipping, a large influx
       of space-ants have been inadvertently dumped onto every Nanotrasen station.
