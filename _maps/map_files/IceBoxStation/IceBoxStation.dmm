@@ -1657,9 +1657,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "ahT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall,
 /area/maintenance/fore/secondary)
 "ahU" = (
@@ -3387,9 +3385,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 5
-	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "anE" = (
@@ -3731,7 +3726,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aoM" = (
@@ -3878,10 +3873,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/pump/on/layer4{
-	dir = 8;
-	name = "Air out"
-	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apx" = (
@@ -3890,9 +3881,6 @@
 	req_access_txt = "12;24"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apy" = (
@@ -3900,9 +3888,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apz" = (
@@ -4093,8 +4079,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/binary/pump/on/layer4{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
+	dir = 4;
+	name = "Air In"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -4103,8 +4090,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 9
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -28417,6 +28405,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
+	dir = 8;
+	name = "Air Out"
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "hzs" = (
@@ -35786,6 +35778,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "lMe" = (
@@ -93176,7 +93169,7 @@ ahn
 tFJ
 anF
 ahn
-ahn
+ahT
 apx
 ahT
 baY
