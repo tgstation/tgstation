@@ -3,6 +3,8 @@ Reproductive extracts:
 	When fed three monkey cubes, produces between
 	1 and 4 normal slime extracts of the same colour.
 */
+
+
 /obj/item/slimecross/reproductive
 	name = "reproductive extract"
 	desc = "It pulses with a strange hunger."
@@ -12,7 +14,10 @@ Reproductive extracts:
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
 	var/last_produce = 0
-	var/cooldown = 30 // 3 seconds.
+	var/cooldown = 3 SECONDS // 3 seconds.
+/obj/item/slimecross/reproductive/Initialize()
+	. = ..()
+	LoadComponent(/datum/component/storage/concrete/fake_inventory)
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
 	if((last_produce + cooldown) > world.time)
