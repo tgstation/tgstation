@@ -7730,6 +7730,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "ayU" = (

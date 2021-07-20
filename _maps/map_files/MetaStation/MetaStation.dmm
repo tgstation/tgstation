@@ -8851,6 +8851,9 @@
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible{
 	dir = 6
 	},
+/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bDt" = (
@@ -66954,6 +66957,11 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/science/storage)
+"tSb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "tSf" = (
 /obj/structure/closet/secure_closet/courtroom,
 /obj/machinery/light_switch/directional/north,
@@ -119572,7 +119580,7 @@ qUk
 apc
 qYi
 nuA
-xOg
+tSb
 adk
 afQ
 ejw
