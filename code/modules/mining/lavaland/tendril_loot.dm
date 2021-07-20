@@ -772,6 +772,8 @@
 	scan_pinpointer.scan_target = living_target
 	living_target.Jitter(5 SECONDS)
 	to_chat(living_target, span_warning("You've been staggered!"))
+	living_target.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
+	addtimer(CALLBACK(src, /atom/.proc/remove_filter, living_target, "scan"), 15 SECONDS)
 	ranged_ability_user.playsound_local(get_turf(ranged_ability_user), 'sound/magic/smoke.ogg', 50, TRUE)
 	balloon_alert(ranged_ability_user, "[living_target] scanned")
 	COOLDOWN_START(src, scan_cooldown, cooldown_time)
@@ -837,7 +839,12 @@
 #define RIGHT_SLASH "Right Slash"
 #define COMBO_STEPS "steps"
 #define COMBO_PROC "proc"
-#define ATTACK_STRIKE "Strike"
+#define ATTACK_STRIKE "Hilt Strike"
+#define ATTACK_SLICE "Wide Slice"
+#define ATTACK_CLOAK "Dark Cloak"
+#define ATTACK_CUT "Tendon Cut"
+#define ATTACK_DASH "Dash Attack"
+#define ATTACK_SHATTER "Shatter"
 
 /obj/item/cursed_katana
 	name = "cursed katana"
@@ -847,8 +854,9 @@
 	icon_state = "cursed_katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 12
+	force = 15
 	armour_penetration = 30
+	block_chance = 30
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
@@ -860,7 +868,12 @@
 	var/list/input_list = list()
 	var/list/combo_strings = list()
 	var/static/list/combo_list = list(
-		"Strike" = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/strike)
+		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/strike),
+		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/slice),
+		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/cloak),
+		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/cut),
+		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/dash),
+		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/shatter),
 		)
 
 /obj/item/cursed_katana/Initialize()
@@ -906,15 +919,15 @@
 		balloon_alert(user, "you don't want to harm!")
 		return
 	var/list/modifiers = params2list(click_parameters)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		input_list += RIGHT_SLASH
-	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		input_list += LEFT_SLASH
 	if(user != target)
 		drew_blood = TRUE
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			input_list += RIGHT_SLASH
+		if(LAZYACCESS(modifiers, LEFT_CLICK))
+			input_list += LEFT_SLASH
 	if(ishostile(target))
 		user.changeNext_move(CLICK_CD_RAPID)
-	if(check_input(target, user))
+	if(check_input(target, user) || length(input_list) > 4)
 		input_list.Cut()
 		if(timerid)
 			deltimer(timerid)
@@ -922,6 +935,11 @@
 	else
 		timerid = addtimer(CALLBACK(src, .proc/reset_inputs, user), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 		return ..()
+
+/obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
 
 /obj/item/cursed_katana/proc/check_input(mob/living/target, mob/user)
 	for(var/combo in combo_list)
@@ -936,7 +954,27 @@
 	balloon_alert(user, "you return to guard stance")
 
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
-	balloon_alert(user, "YOU STRUCK!!!! WIN!!!")
+	balloon_alert(user, "strike")
+	return
+
+/obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
+	balloon_alert(user, "slice")
+	return
+
+/obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
+	balloon_alert(user, "cloak")
+	return
+
+/obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
+	balloon_alert(user, "cut")
+	return
+
+/obj/item/cursed_katana/proc/dash(mob/living/target, mob/user)
+	balloon_alert(user, "dash")
+	return
+
+/obj/item/cursed_katana/proc/shatter(mob/living/target, mob/user)
+	balloon_alert(user, "shatter")
 	return
 
 #undef LEFT_SLASH
@@ -944,3 +982,8 @@
 #undef COMBO_STEPS
 #undef COMBO_PROC
 #undef ATTACK_STRIKE
+#undef ATTACK_SLICE
+#undef ATTACK_CLOAK
+#undef ATTACK_CUT
+#undef ATTACK_DASH
+#undef ATTACK_SHATTER
