@@ -309,8 +309,7 @@
 	id = "bci_shell"
 	materials = list(
 		/datum/material/glass = 2000,
-		/datum/material/iron = 11000,
-		/datum/material/gold = 500,
+		/datum/material/iron = 8000,
 	)
 	build_path = /obj/item/shell/bci
 	build_type = PROTOLATHE | COMPONENT_PRINTER
