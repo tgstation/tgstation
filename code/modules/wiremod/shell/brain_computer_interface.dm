@@ -509,11 +509,20 @@
 	return TRUE
 
 /obj/machinery/bci_implanter/relaymove(mob/living/user, direction)
-	if(user.stat || locked)
-		if(COOLDOWN_FINISHED(src, message_cooldown))
+	var/message
+
+	if (locked)
+		message = "it won't budge!"
+	else if (user.stat != CONSCIOUS)
+		message = "you don't have the energy!"
+
+	if (!isnull(message))
+		if (COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 			balloon_alert(user, "it won't budge!")
+
 		return
+
 	open_machine()
 
 /obj/machinery/bci_implanter/interact(mob/user)
