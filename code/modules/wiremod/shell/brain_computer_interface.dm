@@ -110,8 +110,6 @@
 
 /obj/item/circuit_component/bci_action/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
-	if (!istype(bci))
-		CRASH("BCI action button was placed inside [shell] ([shell.type]), not a BCI")
 
 	bci_action = new(src)
 	update_action()
@@ -120,8 +118,6 @@
 
 /obj/item/circuit_component/bci_action/unregister_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
-	if (!istype(bci))
-		CRASH("BCI action button was unregistered for [shell] ([shell.type]), not a BCI")
 
 	bci.actions -= bci_action
 	QDEL_NULL(bci_action)
@@ -197,8 +193,6 @@
 
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
-	if (!istype(bci))
-		CRASH("BCI charge listener was placed inside [shell] ([shell.type]), not a BCI")
 
 	charge_action = new(src)
 	bci.actions += list(charge_action)
@@ -208,8 +202,6 @@
 
 /obj/item/circuit_component/bci_core/unregister_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
-	if (!istype(bci))
-		CRASH("BCI charge listener was unregistered for [shell] ([shell.type]), not a BCI")
 
 	bci.actions -= charge_action
 	QDEL_NULL(charge_action)
