@@ -50694,9 +50694,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "hWj" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -50707,6 +50704,8 @@
 	c_tag = "Atmospherics - Testing Room";
 	name = "atmospherics camera"
 	},
+/obj/machinery/electrolyzer,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "hWu" = (
@@ -71466,7 +71465,7 @@
 "nuU" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
@@ -75915,10 +75914,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "owI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/electrolyzer,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "owY" = (
@@ -102833,12 +102834,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
-"vwT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos/upper)
 "vwU" = (
 /obj/effect/landmark/start/scientist,
 /obj/effect/turf_decal/tile/neutral{
@@ -140021,7 +140016,7 @@ twf
 awb
 hWj
 owI
-vwT
+xpD
 nuU
 awb
 ipq

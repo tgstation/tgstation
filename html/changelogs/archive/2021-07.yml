@@ -627,3 +627,34 @@
   TheSmallBlue:
   - expansion: Added USB cable support to bluespace launchpad consoles to use with
       integrated circuits.
+2021-07-20:
+  Ghilker:
+  - expansion: added downsides to shoving too much fuel/moderator inside the machine,
+      the cooling volume can be adjusted in the GUI to make it stronger/weaker based
+      on the user needs
+  Nari Harimoto:
+  - bugfix: Fixes a bug where emotes such as a carp gnash will mess up a name if the
+      name contains a pronoun within it
+  - bugfix: Fixed an incorrect variable in a var that manages pronouns
+  - spellcheck: Updated some Simple Mob examines and emotes to default to plural (they)
+      rather than object (it)
+  - spellcheck: two clown mobs (Clown Hulk, and Clown Chad) are now explicitly male.
+      one Corgi type (Void) is neuter (it)
+  - spellcheck: many animals like cows and chickens are hardcoded female, but uses
+      neutral pronouns in examines and emotes, updated that to be explicitly she pronouns
+  Ryll/Shaps:
+  - bugfix: You should no longer lose deathnettle durability when clicking on floors
+      or walls
+  TheSmallBlue:
+  - expansion: Added the To Number circuit component.
+  Time-Green:
+  - bugfix: cutting open heads wont drop horns, frills etc on the ground (you could
+      literally stick it into a human to give them frills but nooooooo you wanted
+      to report the bug)
+  TiviPlus:
+  - bugfix: Fixed weather being opaque
+  Watermelon914:
+  - bugfix: Fixed the duffelbag curse and curse of hunger code in general.
+  - balance: Wizard gets bonus points for choosing the randomized options in their
+      spellbook. They will get 15 points worth of spells if they choose "Full random"
+      and they will get 12 points worth of spells if they choose "Semi random".

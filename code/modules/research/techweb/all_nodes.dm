@@ -230,6 +230,7 @@
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
+		"comp_tonumber",
 		"comp_tostring",
 		"comp_typecheck",
 		"compact_remote_shell",
