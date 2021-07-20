@@ -132,6 +132,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#c6c0b5"
 
+/obj/machinery/portable_atmospherics/canister/air/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
 	desc = "Antinoblium, we still don't know what it does, but it sells for a lot"
@@ -140,6 +143,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
 
+/obj/machinery/portable_atmospherics/canister/antinoblium/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
@@ -147,12 +153,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#d0d2a0"
 
+/obj/machinery/portable_atmospherics/canister/bz/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	gas_type = /datum/gas/carbon_dioxide
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#4e4c48"
+
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
@@ -162,6 +174,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6696ee#fefb30"
 
+/obj/machinery/portable_atmospherics/canister/freon/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "Halon canister"
 	desc = "Halon, removes oxygen from high temperature fires and cools down the area"
@@ -169,6 +184,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
+
+/obj/machinery/portable_atmospherics/canister/halon/empty
+ 	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/healium
 	name = "Healium canister"
@@ -178,6 +196,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009823#ff0e00"
 
+/obj/machinery/portable_atmospherics/canister/healium/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/helium
 	name = "Helium canister"
 	desc = "Helium, inert gas"
@@ -185,6 +206,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
+
+/obj/machinery/portable_atmospherics/canister/helium/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"
@@ -194,6 +218,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#bdc2c0#ffffff"
 
+/obj/machinery/portable_atmospherics/canister/hydrogen/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
 	desc = "Miasma. Makes you wish your nose was blocked."
@@ -202,12 +229,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009823#f7d5d3"
 
+/obj/machinery/portable_atmospherics/canister/miasma/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	gas_type = /datum/gas/nitrogen
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#d41010"
+
+/obj/machinery/portable_atmospherics/canister/nitrogen/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
@@ -216,12 +249,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
 
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/nitryl
 	name = "Nitryl canister"
 	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
 	gas_type = /datum/gas/nitryl
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#7b4732"
+
+/obj/machinery/portable_atmospherics/canister/nitryl/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "Hyper-noblium canister"
@@ -230,6 +269,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6399fc#b2b2b2"
 
+/obj/machinery/portable_atmospherics/canister/nob/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Oxygen canister"
 	desc = "Oxygen. Necessary for human life."
@@ -237,12 +279,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#2786e5#e8fefe"
 
+/obj/machinery/portable_atmospherics/canister/oxygen/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"
 	desc = "Pluoxium. Like oxygen, but more bang for your buck."
 	gas_type = /datum/gas/pluoxium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#2786e5"
+
+/obj/machinery/portable_atmospherics/canister/pluoxium/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/proto_nitrate
 	name = "Proto Nitrate canister"
@@ -252,12 +300,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#008200#33cc33"
 
+/obj/machinery/portable_atmospherics/canister/proto_nitrate/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/stimulum
 	name = "Stimulum canister"
 	desc = "Stimulum. High energy gas, high energy people."
 	gas_type = /datum/gas/stimulum
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#9b5d7f"
+
+/obj/machinery/portable_atmospherics/canister/stimulum/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Plasma canister"
@@ -266,12 +320,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#f62800#000000"
 
+/obj/machinery/portable_atmospherics/canister/toxins/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "Tritium canister"
 	desc = "Tritium. Inhalation might cause irradiation."
 	gas_type = /datum/gas/tritium
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#3fcd40#000000"
+
+/obj/machinery/portable_atmospherics/canister/tritium/empty
+	filled = 0
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "Water vapor canister"
@@ -281,6 +341,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#4c4e4d#f7d5d3"
 
+/obj/machinery/portable_atmospherics/canister/water_vapor/empty
+	filled = 0
+
 /obj/machinery/portable_atmospherics/canister/zauker
 	name = "Zauker canister"
 	desc = "Zauker, highly toxic"
@@ -288,6 +351,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009a00#006600"
+
+/obj/machinery/portable_atmospherics/canister/zauker/empty
+	filled = 0
 
 // Special canisters below here
 
