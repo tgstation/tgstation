@@ -399,6 +399,7 @@ SUBSYSTEM_DEF(ticker)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
 			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
+		player_assigned_role.after_roundstart_spawn(new_player_living, new_player_mob.client)
 		if(picked_spare_id_candidate == new_player_mob)
 			captainless = FALSE
 			var/acting_captain = !is_captain_job(player_assigned_role)
