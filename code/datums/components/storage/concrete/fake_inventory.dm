@@ -4,8 +4,8 @@
 	insert_preposition = "in"
 	attack_hand_interact = FALSE
 	quickdraw = FALSE
-    //These need to be false in order for the extract's food to be unextractable
-    //from the inventory
+//These need to be false in order for the extract's food to be unextractable
+//from the inventory
 
 /datum/component/storage/concrete/fake_inventory/Initialize()
 	. = ..()
