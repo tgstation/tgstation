@@ -29,10 +29,12 @@
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
 	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
-	maxHealth = 400
-	health = 400
+	maxHealth = 320
+	health = 320
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
 	speed = 0
+	movement_type = FLYING
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -45,7 +47,7 @@
 	health_doll_icon = "spacedragon"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	mob_size = MOB_SIZE_LARGE
@@ -156,7 +158,7 @@
 			to_chat(src, span_warning("You begin to swallow [L] whole..."))
 			if(do_after(src, 30, target = L))
 				if(eat(L))
-					adjustHealth(-L.maxHealth * 0.5)
+					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
 	if(istype(target, /obj/vehicle/sealed/mecha))
@@ -298,7 +300,7 @@
 		for(var/obj/machinery/door/D in T.contents)
 			if(D.density)
 				return
-		delayFire += 1.0
+		delayFire += 1.5
 		addtimer(CALLBACK(src, .proc/dragon_fire_line, T), delayFire)
 
 /**
@@ -550,9 +552,11 @@
 	/// Current charge state of the rift.
 	var/charge_state = CHARGE_ONGOING
 	/// The interval for adding additional space carp spawns to the rift.
-	var/carp_interval = 30
+	var/carp_interval = 60
 	/// The time since an extra carp was added to the ghost role spawning pool.
 	var/last_carp_inc = 0
+	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
+	var/list/ckey_list = list()
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
@@ -666,6 +670,12 @@
 /obj/structure/carp_rift/proc/summon_carp(mob/user)
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
+	var/is_listed = FALSE
+	if (user.ckey in ckey_list)
+		if(carp_stored == 1)
+			to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
+			return FALSE
+		is_listed = TRUE
 	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
 	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
@@ -673,8 +683,11 @@
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
 	var/mob/living/simple_animal/hostile/carp/newcarp = new /mob/living/simple_animal/hostile/carp(loc)
+	if(!is_listed)
+		ckey_list += user.ckey
 	newcarp.key = user.key
-	var/datum/antagonist/space_dragon/S = dragon.mind.has_antag_datum(/datum/antagonist/space_dragon)
+	newcarp.set_name()
+	var/datum/antagonist/space_dragon/S = dragon?.mind?.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		S.carp += newcarp.mind
 	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts.  Do not jeopardize the mission, and protect the rifts at all costs!"))

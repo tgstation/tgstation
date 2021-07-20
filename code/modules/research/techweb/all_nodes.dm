@@ -151,6 +151,7 @@
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",
+		"wirebrush",
 		"wirecutters",
 		"wrench",
 	)
@@ -212,6 +213,7 @@
 		"comp_light",
 		"comp_logic",
 		"comp_mmi",
+		"comp_module",
 		"comp_multiplexer",
 		"comp_not",
 		"comp_pressuresensor",
@@ -228,6 +230,7 @@
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
+		"comp_tonumber",
 		"comp_tostring",
 		"comp_typecheck",
 		"compact_remote_shell",
@@ -1213,6 +1216,7 @@
 		"laserscalpel",
 		"mechanicalpinches",
 		"searingtool",
+		"wirebrush_adv",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)

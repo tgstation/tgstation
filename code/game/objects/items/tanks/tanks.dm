@@ -87,7 +87,6 @@
 
 /obj/item/tank/Destroy()
 	air_contents = null
-
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

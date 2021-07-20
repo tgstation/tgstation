@@ -57,9 +57,8 @@
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
-			if(observers?.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
+			if(length(observers))
+				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
 						observe.client.screen += I
 					else

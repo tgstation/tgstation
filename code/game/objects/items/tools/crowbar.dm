@@ -103,13 +103,13 @@
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CROWBAR)
 		tool_behaviour = TOOL_WIRECUTTER
-		to_chat(user, span_notice("You attach the cutting jaws to [src]."))
+		balloon_alert(user, "attached cutting jaws")
 		usesound = 'sound/items/jaws_cut.ogg'
 		update_appearance()
 
 	else
 		tool_behaviour = TOOL_CROWBAR
-		to_chat(user, span_notice("You attach the prying jaws to [src]."))
+		balloon_alert(user, "attached prying jaws")
 		usesound = 'sound/items/jaws_pry.ogg'
 		update_appearance()
 

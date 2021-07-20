@@ -259,7 +259,7 @@
 
 
 /obj/item/organ/heart/ethereal
-	name = "Crystal core"
+	name = "crystal core"
 	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
@@ -335,8 +335,13 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
-	victim.visible_message(span_notice("Crystals start forming around [victim]."))
+	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
+		return // no reviving during mafia, or other inconvenient times.
+
+	victim.visible_message(
+		span_notice("Crystals start forming around [victim]."),
+		span_nicegreen("Crystals start forming around your dead body."),
+	)
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
@@ -348,8 +353,10 @@
 ///Ran when disarmed, prevents the ethereal from reviving
 /obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
 	SIGNAL_HANDLER
-	to_chat(defender, span_notice("The crystals on your corpse are gently broken off, and will need some time to recover."))
-	defender.visible_message(span_notice("The crystals on [defender] are gently broken off."))
+	defender.visible_message(
+		span_notice("The crystals on [defender] are gently broken off."),
+		span_notice("The crystals on your corpse are gently broken off, and will need some time to recover."),
+	)
 	deltimer(crystalize_timer_id)
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, defender), CRYSTALIZE_DISARM_WAIT_TIME, TIMER_STOPPABLE) //Lets us restart the timer on disarm
 
@@ -405,13 +412,15 @@
 
 	var/mob/living/carbon/human/ethereal = source
 
-	to_chat(ethereal, span_warning("The crystals on your body have completely broken"))
-	ethereal.visible_message(span_notice("The crystals on [ethereal] are completely shattered and stopped growing"))
+	ethereal.visible_message(
+		span_notice("The crystals on [ethereal] are completely shattered and stopped growing."),
+		span_warning("The crystals on your body have completely broken."),
+	)
 
 	stop_crystalization_process(ethereal)
 
 /obj/structure/ethereal_crystal
-	name = "Ethereal Resurrection Crystal"
+	name = "ethereal resurrection crystal"
 	desc = "It seems to contain the corpse of an ethereal mending its wounds."
 	icon = 'icons/obj/ethereal_crystal.dmi'
 	icon_state = "ethereal_crystal"

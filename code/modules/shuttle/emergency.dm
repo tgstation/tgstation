@@ -268,7 +268,7 @@
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
-		var/datum/job/J = pick(SSjob.occupations)
+		var/datum/job/J = pick(SSjob.joinable_occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
 

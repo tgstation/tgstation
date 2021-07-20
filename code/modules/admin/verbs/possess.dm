@@ -29,9 +29,11 @@
 /proc/release()
 	set name = "Release Obj"
 	set category = "Object"
-	//usr.loc = get_turf(usr)
 
-	if(usr.control_object && usr.name_archive) //if you have a name archived and if you are actually relassing an object
+	if(!usr.control_object) //lest we are banished to the nullspace realm.
+		return
+
+	if(usr.name_archive) //if you have a name archived
 		usr.real_name = usr.name_archive
 		usr.name_archive = ""
 		usr.name = usr.real_name

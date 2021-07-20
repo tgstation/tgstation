@@ -46,9 +46,7 @@
 
 	set_light_on(on)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
@@ -297,7 +295,7 @@
 		if(amount == maxamount)
 			hardsuit_type = "mining_goliath_full"
 	icon_state = "hardsuit[on]-[hardsuit_type]"
-	light_color = LIGHT_COLOR_FLARE
+	set_light_color(LIGHT_COLOR_FLARE)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		if(wearer.head == src)
@@ -350,10 +348,6 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags = STOPSPRESSUREDAMAGE
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon_state()
-	icon_state = "hardsuit[on]-[hardsuit_type]"
-	return ..()
-
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
 	. = ..()
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/syndi))
@@ -385,13 +379,12 @@
 	update_appearance()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	toggle_hardsuit_mode(user)
-	user.update_inv_head()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	icon_state = "hardsuit[on]-[hardsuit_type]"
+	user.update_inv_head()
+	update_action_buttons()
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
@@ -711,8 +704,7 @@
 /obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!..() || !ishuman(M))
 		return FALSE
-	var/mob/living/carbon/human/H = M
-	if(H.mind.assigned_role == "Clown")
+	if(is_clown_job(M.mind.assigned_role))
 		return TRUE
 	else
 		return FALSE
