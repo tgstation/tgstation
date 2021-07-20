@@ -35,7 +35,7 @@
 
 /obj/item/circuit_component/bluespace_launchpad/Initialize()
 	. = ..()
-	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE)
+	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE, default = 1)
 	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER, FALSE)
 	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER, FALSE)
 	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
@@ -86,27 +86,13 @@
 	if(isnull(the_pad))
 		return
 
-	var/x_dest = x_pos.input_value
-	if(isnull(x_dest))
-		return
-
-	var/y_dest = y_pos.input_value
-	if(isnull(y_dest))
-		return
-
-	if(x_dest > the_pad.range || y_dest > the_pad.range)
-		why_fail.set_output("Cannot go that far! Current maximum reach: [the_pad.range]")
-		on_fail.set_output(COMPONENT_SIGNAL)
-		return
-
 	var/checks = attached_console.teleport_checks(the_pad)
-
 	if(!isnull(checks))
 		why_fail.set_output(checks)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	the_pad.set_offset(x_dest, y_dest)
+	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
