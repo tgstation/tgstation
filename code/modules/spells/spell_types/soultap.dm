@@ -1,4 +1,3 @@
-#define HEALTH_LOST_PER_SOUL_TAP 20
 
 //SOUL TAP!//
 //Trades 20 max health for a refresh on all of your spells. I was considering making it depend on the cooldowns of your spells, but I want to support "Big spell wizard" with this loadout.

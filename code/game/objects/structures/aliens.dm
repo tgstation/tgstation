@@ -102,6 +102,11 @@
 	desc = "Thick material shaped into a wall. Eugh."
 	color = "#8EC127"
 
+/obj/structure/alien/resin/wall/superweapon_cocoon //For chrysalis
+	name = "chrysalis cocoon"
+	desc = "Some sort of yellow cocoon in an egglike shape. It pulses and throbs from within."
+	color = "#f7f335"
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
@@ -248,6 +253,10 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."
 	color = "#4BAE56"
 
+/obj/structure/alien/weeds/node/superweapon_cocoon
+	name = "cocoon floor"
+	desc = "The goopy, soupy innard filled bottom of the cocoon. It has a sickly yellow color to it."
+	color = "#f7f335"
 
 #undef NODERANGE
 

@@ -27,3 +27,6 @@
 #define INVOCATION_EMOTE "emote"
 ///Forces the wizard to whisper (and be able to) to cast the spell.
 #define INVOCATION_WHISPER "whisper"
+
+///how much max health a wizard loses per soul tap
+#define HEALTH_LOST_PER_SOUL_TAP 20

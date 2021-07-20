@@ -101,6 +101,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 	WIZARD_LOADOUT_SOULTAP, \
 )
 
+///protagonist stuffs 😏
+
+///how much max health the nanotrasen superweapon gets
+#define SUPERWEAPON_MAXHEALTH 50
+
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 

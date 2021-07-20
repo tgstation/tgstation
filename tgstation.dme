@@ -1777,6 +1777,7 @@
 #include "code\modules\antagonists\nukeop\equipment\nuclearbomb.dm"
 #include "code\modules\antagonists\nukeop\equipment\pinpointer.dm"
 #include "code\modules\antagonists\pirate\pirate.dm"
+#include "code\modules\antagonists\protagonists\nanotrasen_superweapon.dm"
 #include "code\modules\antagonists\protagonists\protagonist.dm"
 #include "code\modules\antagonists\protagonists\scaredy_prince.dm"
 #include "code\modules\antagonists\revenant\revenant.dm"

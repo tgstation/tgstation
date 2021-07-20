@@ -6,6 +6,7 @@
 #define ACIDFLESH /datum/mutation/human/acidflesh
 #define ANTENNA /datum/mutation/human/antenna
 #define ANTIGLOWY /datum/mutation/human/glow/anti
+#define AUTONOMY /datum/mutation/human/self_amputation
 #define BADBLINK /datum/mutation/human/badblink
 #define BADSIGHT /datum/mutation/human/nearsight
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
@@ -30,9 +31,9 @@
 #define HULK /datum/mutation/human/hulk
 #define INSULATED /datum/mutation/human/insulated
 #define LASEREYES /datum/mutation/human/laser_eyes
+#define LIGHT_MEDIEVAL /datum/mutation/human/medieval/no_startings
 #define MARTYRDOM /datum/mutation/human/martyrdom
 #define MEDIEVAL /datum/mutation/human/medieval
-#define LIGHT_MEDIEVAL /datum/mutation/human/medieval/no_startings
 #define MINDREAD /datum/mutation/human/mindreader
 #define MUTATE /datum/mutation/human/bad_dna
 #define MUT_MUTE /datum/mutation/human/mute
@@ -41,7 +42,6 @@
 #define PARANOIA /datum/mutation/human/paranoia
 #define RACEMUT /datum/mutation/human/race
 #define RADIOACTIVE /datum/mutation/human/radioactive
-#define AUTONOMY /datum/mutation/human/self_amputation
 #define SHOCKTOUCH /datum/mutation/human/shock
 #define SPACEMUT /datum/mutation/human/space_adaptation
 #define SPASTIC /datum/mutation/human/spastic
@@ -49,6 +49,7 @@
 #define STIMMED /datum/mutation/human/stimmed
 #define STONER /datum/mutation/human/stoner
 #define STRONG /datum/mutation/human/strong
+#define SUPERWEAPON_METAMORPH /datum/mutation/human/superweapon
 #define SWEDISH /datum/mutation/human/swedish
 #define TELEPATHY /datum/mutation/human/telepathy
 #define THERMAL /datum/mutation/human/thermal
@@ -69,6 +70,14 @@
 #define UF_CHANGED "uf changed"
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
+
+///actual time until the superweapon metamorphs
+#define METAMORPH_COCOON_TIME 20 MINUTES
+
+///this mutation path has many powers related to the mind.
+#define SUPERWEAPON_PSIONICS "psionics"
+///this mutation path has many powers related to the cold.
+#define SUPERWEAPON_CRYONICS "cryonics"
 
 // String identifiers for associative list lookup
 

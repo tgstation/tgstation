@@ -33,5 +33,5 @@
 
 /datum/antagonist/protagonist/scaredy_prince/proc/announce_arrival()
 	. = ..()
-	minor_announce("The local space kingdom sends their royalty to visit us! Be sure to be gracious to our guest and keep them safe to ensure our alliance with them stays strong.", "Royal visit!")
-	SEND_SOUND(world, sound('sound/effects/royal_decree.ogg', volume = 50))
+	minor_announce("Central Command has assigned your station a visit from nobility ruling a local medieval world. Make sure they are treated well and protected, as they are an important asset to Nanotrasen's future developments.", "Royal visit!")
+	SEND_SOUND(world, sound('sound/ambience/protag/royal_decree.ogg', volume = 50))
