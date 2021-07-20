@@ -167,23 +167,34 @@
 		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
+// Mapping
 
+/obj/machinery/atmospherics/components/binary/pressure_valve/layer1
+	piping_layer = 1
+	icon_state= "pvalve_map-1"
 /obj/machinery/atmospherics/components/binary/pressure_valve/layer2
 	piping_layer = 2
 	icon_state= "pvalve_map-2"
-
 /obj/machinery/atmospherics/components/binary/pressure_valve/layer4
 	piping_layer = 4
 	icon_state= "pvalve_map-4"
+/obj/machinery/atmospherics/components/binary/pressure_valve/layer5
+	piping_layer = 5
+	icon_state= "pvalve_map-5"
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/on
 	on = TRUE
 	icon_state = "pvalve_on_map-3"
 
+/obj/machinery/atmospherics/components/binary/pressure_valve/on/layer1
+	piping_layer = 1
+	icon_state= "pvalve_on_map-1"
 /obj/machinery/atmospherics/components/binary/pressure_valve/on/layer2
 	piping_layer = 2
 	icon_state= "pvalve_on_map-2"
-
 /obj/machinery/atmospherics/components/binary/pressure_valve/on/layer4
 	piping_layer = 4
 	icon_state= "pvalve_on_map-4"
+/obj/machinery/atmospherics/components/binary/pressure_valve/on/layer5
+	piping_layer = 5
+	icon_state= "pvalve_on_map-5"

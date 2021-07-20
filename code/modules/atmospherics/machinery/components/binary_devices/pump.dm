@@ -160,23 +160,34 @@
 		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
+// Mapping
 
+/obj/machinery/atmospherics/components/binary/pump/layer1
+	piping_layer = 1
+	icon_state= "pump_map-1"
 /obj/machinery/atmospherics/components/binary/pump/layer2
 	piping_layer = 2
 	icon_state= "pump_map-2"
-
 /obj/machinery/atmospherics/components/binary/pump/layer4
 	piping_layer = 4
 	icon_state= "pump_map-4"
+/obj/machinery/atmospherics/components/binary/pump/layer5
+	piping_layer = 5
+	icon_state= "pump_map-5"
 
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
 	icon_state = "pump_on_map-3"
 
+/obj/machinery/atmospherics/components/binary/pump/on/layer1
+	piping_layer = 1
+	icon_state= "pump_on_map-1"
 /obj/machinery/atmospherics/components/binary/pump/on/layer2
 	piping_layer = 2
 	icon_state= "pump_on_map-2"
-
 /obj/machinery/atmospherics/components/binary/pump/on/layer4
 	piping_layer = 4
 	icon_state= "pump_on_map-4"
+/obj/machinery/atmospherics/components/binary/pump/on/layer5
+	piping_layer = 5
+	icon_state= "pump_on_map-5"

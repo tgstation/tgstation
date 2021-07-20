@@ -306,26 +306,37 @@
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
+// Mapping
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
+	piping_layer = 1
+	icon_state = "scrub_map-1"
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2
 	piping_layer = 2
 	icon_state = "scrub_map-2"
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer4
 	piping_layer = 4
 	icon_state = "scrub_map-4"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer5
+	piping_layer = 5
+	icon_state = "scrub_map-5"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	on = TRUE
 	icon_state = "scrub_map_on-3"
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
+	piping_layer = 1
+	icon_state = "scrub_map_on-1"
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2
 	piping_layer = 2
 	icon_state = "scrub_map_on-2"
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer5
+	piping_layer = 5
+	icon_state = "scrub_map_on-5"
 
 #undef SIPHONING
 #undef SCRUBBING

@@ -28,10 +28,11 @@
 	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
 	return
 
+// Mapping
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2
 	piping_layer = 2
 	icon_state = "pipe11-2"
-
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer4
 	piping_layer = 4
 	icon_state = "pipe11-4"

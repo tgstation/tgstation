@@ -201,24 +201,34 @@
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
 	return TRUE
 
-// mapping
+// Mapping
 
+/obj/machinery/atmospherics/components/binary/volume_pump/layer1
+	piping_layer = 1
+	icon_state = "volpump_map-1"
 /obj/machinery/atmospherics/components/binary/volume_pump/layer2
 	piping_layer = 2
 	icon_state = "volpump_map-2"
-
-/obj/machinery/atmospherics/components/binary/volume_pump/layer2
-	piping_layer = 2
-	icon_state = "volpump_map-2"
+/obj/machinery/atmospherics/components/binary/volume_pump/layer4
+	piping_layer = 4
+	icon_state = "volpump_map-4"
+/obj/machinery/atmospherics/components/binary/volume_pump/layer5
+	piping_layer = 5
+	icon_state = "volpump_map-5"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = TRUE
 	icon_state = "volpump_on_map"
 
+/obj/machinery/atmospherics/components/binary/volume_pump/on/layer1
+	piping_layer = 1
+	icon_state = "volpump_map-1"
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer2
 	piping_layer = 2
 	icon_state = "volpump_map-2"
-
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer4
 	piping_layer = 4
 	icon_state = "volpump_map-4"
+/obj/machinery/atmospherics/components/binary/volume_pump/on/layer5
+	piping_layer = 5
+	icon_state = "volpump_map-5"

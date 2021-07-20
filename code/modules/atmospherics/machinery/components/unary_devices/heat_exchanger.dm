@@ -15,14 +15,6 @@
 
 	pipe_state = "heunary"
 
-/obj/machinery/atmospherics/components/unary/heat_exchanger/layer2
-	piping_layer = 2
-	icon_state = "he_map-2"
-
-/obj/machinery/atmospherics/components/unary/heat_exchanger/layer4
-	piping_layer = 4
-	icon_state = "he_map-4"
-
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon_state()
 	icon_state = "he[nodes[1] ? 1 : 0]"
 	return ..()
@@ -76,3 +68,12 @@
 
 	if(abs(other_old_temperature-partnerair_contents.temperature) > 1)
 		partner.update_parents()
+
+// Mapping
+
+/obj/machinery/atmospherics/components/unary/heat_exchanger/layer2
+	piping_layer = 2
+	icon_state = "he_map-2"
+/obj/machinery/atmospherics/components/unary/heat_exchanger/layer4
+	piping_layer = 4
+	icon_state = "he_map-4"

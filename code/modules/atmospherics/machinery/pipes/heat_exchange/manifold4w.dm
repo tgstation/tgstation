@@ -29,10 +29,11 @@
 			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
 	update_layer()
 
+// Mapping
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer2
 	piping_layer = 2
 	icon_state = "manifold4w-2"
-
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer4
 	piping_layer = 4
 	icon_state = "manifold4w-4"

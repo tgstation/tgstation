@@ -164,11 +164,17 @@ Passive gate is similar to the regular pump except:
 		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
+// Mapping
 
+/obj/machinery/atmospherics/components/binary/passive_gate/layer1
+	piping_layer = 1
+	icon_state = "passgate_map-1"
 /obj/machinery/atmospherics/components/binary/passive_gate/layer2
 	piping_layer = 2
 	icon_state = "passgate_map-2"
-
 /obj/machinery/atmospherics/components/binary/passive_gate/layer4
 	piping_layer = 4
 	icon_state = "passgate_map-4"
+/obj/machinery/atmospherics/components/binary/passive_gate/layer5
+	piping_layer = 5
+	icon_state = "passgate_map-5"

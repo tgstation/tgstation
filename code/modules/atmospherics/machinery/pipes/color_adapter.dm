@@ -49,14 +49,13 @@
 		pipe.layer = layer + 0.01
 		. += pipe
 
+// Mapping
+
 /obj/machinery/atmospherics/pipe/color_adapter/layer1
 	icon_state = "adapter_map-1"
-
 /obj/machinery/atmospherics/pipe/color_adapter/layer2
 	icon_state = "adapter_map-2"
-
 /obj/machinery/atmospherics/pipe/color_adapter/layer4
 	icon_state = "adapter_map-4"
-
 /obj/machinery/atmospherics/pipe/color_adapter/layer5
 	icon_state = "adapter_map-5"

@@ -194,26 +194,36 @@
 		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
-// mapping
+// Mapping
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer1
+	piping_layer = 1
+	icon_state = "inje_map-1"
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer2
 	piping_layer = 2
 	icon_state = "inje_map-2"
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer4
 	piping_layer = 4
 	icon_state = "inje_map-4"
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer5
+	piping_layer = 5
+	icon_state = "inje_map-5"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
+	piping_layer = 1
+	icon_state = "inje_map-1"
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2
 	piping_layer = 2
 	icon_state = "inje_map-2"
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4
 	piping_layer = 4
 	icon_state = "inje_map-4"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer5
+	piping_layer = 5
+	icon_state = "inje_map-5"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE

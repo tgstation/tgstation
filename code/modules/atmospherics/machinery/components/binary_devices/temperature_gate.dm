@@ -129,3 +129,68 @@
 		else
 			to_chat(user, span_notice("You set the [src]'s sensors to the default settings."))
 	return TRUE
+
+// Mapping
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/layer1
+	piping_layer = 1
+	icon_state = "tgate_map-1"
+/obj/machinery/atmospherics/components/binary/temperature_gate/layer2
+	piping_layer = 2
+	icon_state = "tgate_map-2"
+/obj/machinery/atmospherics/components/binary/temperature_gate/layer4
+	piping_layer = 4
+	icon_state = "tgate_map-4"
+/obj/machinery/atmospherics/components/binary/temperature_gate/layer5
+	piping_layer = 5
+	icon_state = "tgate_map-5"
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/on
+	on = TRUE
+	icon_state = "tgate_on_map-3"
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/on/layer1
+	piping_layer = 1
+	icon_state = "tgate_on_map-1"
+/obj/machinery/atmospherics/components/binary/temperature_gate/on/layer2
+	piping_layer = 2
+	icon_state = "tgate_on_map-2"
+/obj/machinery/atmospherics/components/binary/temperature_gate/on/layer4
+	piping_layer = 4
+	icon_state = "tgate_on_map-4"
+/obj/machinery/atmospherics/components/binary/temperature_gate/on/layer5
+	piping_layer = 5
+	icon_state = "tgate_on_map-5"
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted
+	inverted = TRUE
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/layer1
+	piping_layer = 1
+	icon_state = "tgate_map-1"
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/layer2
+	piping_layer = 2
+	icon_state = "tgate_map-2"
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/layer4
+	piping_layer = 4
+	icon_state = "tgate_map-4"
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/layer5
+	piping_layer = 5
+	icon_state = "tgate_map-5"
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/on
+	on = TRUE
+	icon_state = "tgate_on_map-3"
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/on/layer1
+	piping_layer = 1
+	icon_state = "tgate_on_map-1"
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/on/layer2
+	piping_layer = 2
+	icon_state = "tgate_on_map-2"
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/on/layer4
+	piping_layer = 4
+	icon_state = "tgate_on_map-4"
+/obj/machinery/atmospherics/components/binary/temperature_gate/inverted/on/layer5
+	piping_layer = 5
+	icon_state = "tgate_on_map-5"
