@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "cutting open heads wont drop horns, frills etc on the ground (you could literally stick it into a human to give them frills but nooooooo you wanted to report the bug)"
