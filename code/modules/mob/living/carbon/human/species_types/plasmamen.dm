@@ -78,11 +78,13 @@
 		no_protection = TRUE
 	. = ..()
 
-/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(J.plasmaman_outfit)
-		H.equipOutfit(J.plasmaman_outfit, visualsOnly)
-	H.internal = H.get_item_for_held_index(2)
-	H.update_internals_hud_icon(1)
+
+/datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	if(job.plasmaman_outfit)
+		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
+	equipping.internal = equipping.get_item_for_held_index(2)
+	equipping.update_internals_hud_icon(1)
+
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
@@ -111,7 +113,7 @@
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+					H.manual_emote(pick("oofs silently.", "looks like [H.p_their()] bones hurt.", "grimaces, as though [H.p_their()] bones hurt."))
 				if(3)
 					to_chat(H, span_warning("Your bones hurt!"))
 		if(chem.overdosed)

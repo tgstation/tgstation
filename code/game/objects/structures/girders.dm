@@ -43,6 +43,7 @@
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
 			M.add_fingerprint(user)
 			qdel(src)
+			return
 
 	else if(istype(W, /obj/item/stack))
 		if(iswallturf(loc))
@@ -70,6 +71,7 @@
 					var/obj/structure/falsewall/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
+					return
 			else
 				if(S.get_amount() < 5)
 					to_chat(user, span_warning("You need at least five rods to add plating!"))
@@ -104,6 +106,7 @@
 					var/obj/structure/falsewall/F = new (loc)
 					transfer_fingerprints_to(F)
 					qdel(src)
+					return
 			else if(state == GIRDER_REINF)
 				to_chat(user, span_warning("You can't finish a reinforced girder with regular iron. You need a plasteel sheet for that."))
 				return
@@ -137,6 +140,7 @@
 					var/obj/structure/falsewall/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
+					return
 			else if(state == GIRDER_REINF)
 				if(S.get_amount() < 1)
 					return
@@ -183,6 +187,7 @@
 					var/obj/structure/falsewall/FW = new falsewall_type (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
+					return
 			else
 				if(S.get_amount() < 2)
 					to_chat(user, span_warning("You need at least two sheets to add plating!"))

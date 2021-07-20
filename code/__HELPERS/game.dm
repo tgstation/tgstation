@@ -8,6 +8,9 @@
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 
+/// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
+#define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
+
 /proc/get_area_name(atom/X, format_text = FALSE)
 	var/area/A = isarea(X) ? X : get_area(X)
 	if(!A)
@@ -162,20 +165,6 @@
 			turfs += T
 	return turfs
 
-
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-//Sped this up again for real this time
-/proc/recursive_hear_check(O)
-	var/list/processing_list = list(O)
-	. = list()
-	var/i = 0
-	while(i < length(processing_list))
-		var/atom/A = processing_list[++i]
-		if(A.flags_1 & HEAR_1)
-			. += A
-		processing_list += A.contents
-
 /** recursive_organ_check
  * inputs: O (object to start with)
  * outputs:
@@ -213,34 +202,20 @@
 
 	return
 
-/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). recursively checks contents for hearers
+/// Returns a list of hearers in view(view_radius) from source (ignoring luminosity). uses important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 /proc/get_hearers_in_view(view_radius, atom/source)
-
 	var/turf/center_turf = get_turf(source)
 	. = list()
 	if(!center_turf)
 		return
-	var/list/processing_list = list()
-	if (view_radius == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += center_turf.contents // We can shave off one iteration by assuming turfs cannot hear
-	else
-		var/lum = center_turf.luminosity
-		center_turf.luminosity = 6 // This is the maximum luminosity
-		var/target = source.loc == center_turf ? source : center_turf //this is reasonably faster if true, and very slightly slower if false
-		for(var/atom/movable/movable in view(view_radius, target))
-			if(movable.flags_1 & HEAR_1) //dont add the movables returned by view() to processing_list to reduce recursive iterations, just check them
-				. += movable
-				SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-			processing_list += movable.contents
-		center_turf.luminosity = lum
-
-	var/i = 0
-	while(i < length(processing_list)) // recursive_hear_check inlined here, the large majority of the work is in this part for big contents trees
-		var/atom/atom_to_check = processing_list[++i]
-		if(atom_to_check.flags_1 & HEAR_1)
-			. += atom_to_check
-			SEND_SIGNAL(atom_to_check, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-		processing_list += atom_to_check.contents
+	var/lum = center_turf.luminosity
+	center_turf.luminosity = 6 // This is the maximum luminosity
+	for(var/atom/movable/movable in view(view_radius, center_turf))
+		var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+		if(recursive_contents)
+			. += recursive_contents
+			SEND_SIGNAL(movable, COMSIG_ATOM_HEARER_IN_VIEW, .)
+	center_turf.luminosity = lum
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
@@ -483,7 +458,7 @@
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	G_found.client.prefs.copy_to(new_character)
+	G_found.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
 	new_character.key = G_found.key
 
@@ -525,7 +500,7 @@
 		return
 	if(!GLOB.announcement_systems.len)
 		return
-	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
 
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)

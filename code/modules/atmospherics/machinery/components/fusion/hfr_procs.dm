@@ -60,16 +60,19 @@
 			if(linked_input && linked_input != object)
 				. =  FALSE
 			linked_input = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
 				. =  FALSE
 			linked_output = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
 				. =  FALSE
 			linked_moderator = object
+			machine_parts |= object
 
 	if(!linked_interface || !linked_input || !linked_moderator || !linked_output || corners.len != 4)
 		. = FALSE
@@ -338,3 +341,22 @@
 			local.assume_air(remove)
 		loc.assume_air(moderator_internal)
 	qdel(src)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
+	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
+		if(part.cracked)
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
+	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
+	part.cracked = TRUE
+	part.update_appearance()
+	return part
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/spill_gases(obj/origin, datum/gas_mixture/target_mix, ratio)
+	var/datum/gas_mixture/remove_mixture = target_mix.remove_ratio(ratio)
+	var/turf/origin_turf = origin.loc
+	if(!origin_turf)
+		return
+	origin_turf.assume_air(remove_mixture)
