@@ -624,7 +624,7 @@
 #include "code\datums\components\storage\concrete\_concrete.dm"
 #include "code\datums\components\storage\concrete\bag_of_holding.dm"
 #include "code\datums\components\storage\concrete\bluespace.dm"
-#include "code\datums\components\storage\concrete\fake_inventory.dm"
+#include "code\datums\components\storage\concrete\extract_inventory.dm"
 #include "code\datums\components\storage\concrete\fish_case.dm"
 #include "code\datums\components\storage\concrete\implant.dm"
 #include "code\datums\components\storage\concrete\pockets.dm"

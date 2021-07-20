@@ -14,10 +14,10 @@ Reproductive extracts:
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
 	var/last_produce = 0
-	var/cooldown = 3 SECONDS // 3 seconds.
+	var/cooldown = 3 SECONDS
 /obj/item/slimecross/reproductive/Initialize()
 	. = ..()
-	LoadComponent(/datum/component/storage/concrete/fake_inventory)
+	LoadComponent(/datum/component/storage/concrete/extract_inventory)
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
 	if((last_produce + cooldown) > world.time)
