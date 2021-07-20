@@ -366,28 +366,31 @@
 	update_appearance()
 
 /obj/machinery/bci_implanter/update_icon_state()
-	//running and someone in there
-	if(occupant)
+	if (occupant)
 		icon_state = busy ? busy_icon_state : "[base_icon_state]_occupied"
 		return ..()
-	//running
 	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 	return ..()
 
 /obj/machinery/bci_implanter/update_overlays()
-	. = ..()
-	if((machine_stat & MAINT) || panel_open)
-		. += "maint"
-		return
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
+	var/list/overlays = ..()
 
-	if(busy || locked)
-		. += "red"
-		if(locked)
-			. += "bolted"
-		return
-	. += "green"
+	if ((machine_stat & MAINT) || panel_open)
+		overlays += "maint"
+		return overlays
+
+	if (machine_stat & (NOPOWER|BROKEN))
+		return overlays
+
+	if (busy || locked)
+		overlays += "red"
+		if (locked)
+			overlays += "bolted"
+		return overlays
+
+	overlays += "green"
+
+	return overlays
 
 /obj/machinery/bci_implanter/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
