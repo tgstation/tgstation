@@ -279,3 +279,17 @@
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
 	return
+
+/// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
+/obj/item/organ/proc/get_status_text()
+	var/status = ""
+	if(owner.has_reagent(/datum/reagent/inverse/technetium))
+		status = "<font color='#E42426'> organ is [round((damage/maxHealth)*100, 1)]% damaged.</font>"
+	else if(organ_flags & ORGAN_FAILING)
+		status = "<font color='#cc3333'>Non-Functional</font>"
+	else if(damage > high_threshold)
+		status = "<font color='#ff9933'>Severely Damaged</font>"
+	else if (damage > low_threshold)
+		status = "<font color='#ffcc33'>Mildly Damaged</font>"
+
+	return status
