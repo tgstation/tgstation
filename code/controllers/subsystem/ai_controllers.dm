@@ -23,7 +23,10 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_subtrees[subtree_type] = subtree
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
-	for(var/datum/ai_controller/ai_controller as anything in active_ai_controllers)
+	for(var/datum/ai_controller/ai_controller in active_ai_controllers)
+		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
+			continue
+
 		if(!LAZYLEN(ai_controller.current_behaviors))
 			ai_controller.SelectBehaviors(wait * 0.1)
 			if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
