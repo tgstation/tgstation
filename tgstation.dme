@@ -460,6 +460,7 @@
 #include "code\datums\ai\bane\bane_subtrees.dm"
 #include "code\datums\ai\cursed\cursed_behaviors.dm"
 #include "code\datums\ai\cursed\cursed_controller.dm"
+#include "code\datums\ai\cursed\cursed_subtrees.dm"
 #include "code\datums\ai\dog\dog_behaviors.dm"
 #include "code\datums\ai\dog\dog_controller.dm"
 #include "code\datums\ai\dog\dog_subtrees.dm"

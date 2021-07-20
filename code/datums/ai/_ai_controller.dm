@@ -49,7 +49,7 @@ multiple modular subtrees with behaviors
 	var/paused_until = 0
 
 /datum/ai_controller/New(atom/new_pawn)
-	ai_movement = SSai_movement.movement_types[ai_movement]
+	change_ai_movement_type(ai_movement)
 	init_subtrees()
 
 	PossessPawn(new_pawn)
@@ -60,7 +60,7 @@ multiple modular subtrees with behaviors
 	return ..()
 
 ///Overrides the current ai_movement of this controller with a new one
-/datum/ai_controller/proc/change_ai_movement(datum/ai_movement/new_movement)
+/datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
 
 ///Completely replaces the planning_subtrees with a new set based on argument provided, list provided must contain specifically typepaths
