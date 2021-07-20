@@ -381,7 +381,7 @@
 		chosen_class = ctf_gear[choice]
 
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
-	new_team_member.prefs.copy_to(M)
+	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.set_species(/datum/species/synth)
 	M.key = new_team_member.key
 	M.faction += team

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the rat king's abilities being usable while dead."
-  - bugfix: "Fixed the rat king's Domain ability being usable on cooldown."

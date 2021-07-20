@@ -1,7 +1,7 @@
 /datum/job/bartender
 	title = "Bartender"
 	department_head = list("Head of Personnel")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
@@ -24,6 +24,20 @@
 		/obj/item/stack/sheet/mineral/plasma = 10,
 		/obj/item/stack/sheet/mineral/uranium = 10,
 	)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+
+
+/datum/job/bartender/award_service(client/winner, award)
+	winner.give_award(award, winner.mob)
+
+	var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
+	var/award_score = bar.total_income
+	var/award_status = winner.get_award_status(/datum/award/score/bartender_tourist_score)
+	if(award_score - award_status > 0)
+		award_score -= award_status
+	winner.give_award(/datum/award/score/bartender_tourist_score, winner.mob, award_score)
+
 
 /datum/outfit/job/bartender
 	name = "Bartender"

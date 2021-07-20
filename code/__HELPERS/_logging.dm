@@ -123,9 +123,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_econ))
 		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
-/proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
+/proc/log_manifest(ckey, datum/mind/mind, mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
-		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
+		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role.title] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
 
 /proc/log_bomber(atom/user, details, atom/bomb, additional_details, message_admins = TRUE)
 	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][additional_details ? " [additional_details]" : ""]."

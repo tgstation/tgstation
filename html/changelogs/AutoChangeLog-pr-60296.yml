@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - bugfix: "Fixes closets/lockers/crates/ect being subject to ant decompisition."

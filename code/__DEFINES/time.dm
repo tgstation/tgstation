@@ -29,6 +29,7 @@
 #define GARBAGEDAY "Garbage Day"
 #define MONKEYDAY "Monkey Day"
 #define PRIDE_WEEK "Pride Week"
+#define MOTH_WEEK "Moth Week"
 /*
 
 Days of the week to make it easier to reference them.

@@ -166,7 +166,7 @@
 		heirloom_type = pick(holder_species.family_heirlooms)
 	else
 		// Our quirk holder's job
-		var/datum/job/holder_job = SSjob.GetJob(human_holder.mind?.assigned_role)
+		var/datum/job/holder_job = human_holder.mind?.assigned_role
 		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
 			heirloom_type = pick(holder_job.family_heirlooms)
 
