@@ -31,19 +31,34 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	faction = list("neutral")
 	var/squish_chance = 50
+	// Randomizes hunting intervals, minumum 5 turns
+	var/time_to_hunt = 5
+
 
 /mob/living/simple_animal/hostile/cockroach/Initialize()
 	. = ..()
 	add_cell_sample()
 	make_squashable()
-
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	time_to_hunt = rand(5,10)
 
 /mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+
+/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) // Cockroaches are predators to space ants
+	. = ..()
+	turns_since_scan++
+	if(turns_since_scan > time_to_hunt)
+		turns_since_scan = 0
+		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
+		for(var/obj/effect/decal/cleanable/ants/potential_target in view(2, get_turf(src)))
+			if(potential_target.type in target_types)
+				hunt(potential_target)
+				return
+
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
@@ -104,7 +119,7 @@
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
-		living_target.visible_message("<span class='danger'>[living_target] steps onto [cockroach]'s spike!</span>", "<span class='userdanger'>You step onto [cockroach]'s spike!</span>")
+		living_target.visible_message(span_danger("[living_target] steps onto [cockroach]'s spike!"), span_userdanger("You step onto [cockroach]'s spike!"))
 		return TRUE
-	living_target.visible_message("<span class='notice'>[living_target] squashes [cockroach], not even noticing its spike.</span>", "<span class='notice'>You squashed [cockroach], not even noticing its spike.</span>")
+	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE

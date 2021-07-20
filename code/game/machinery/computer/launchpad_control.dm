@@ -12,9 +12,110 @@
 /obj/machinery/computer/launchpad/Initialize()
 	launchpads = list()
 	. = ..()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/bluespace_launchpad,
+	))
+
+/obj/item/circuit_component/bluespace_launchpad
+	display_name = "Bluespace Launchpad Console"
+	display_desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
+
+	var/datum/port/input/launchpad_id
+	var/datum/port/input/x_pos
+	var/datum/port/input/y_pos
+	var/datum/port/input/send_trigger
+	var/datum/port/input/retrieve_trigger
+
+	var/datum/port/output/sent
+	var/datum/port/output/retrieved
+	var/datum/port/output/on_fail
+	var/datum/port/output/why_fail
+
+	var/obj/machinery/computer/launchpad/attached_console
+
+/obj/item/circuit_component/bluespace_launchpad/Initialize()
+	. = ..()
+	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE)
+	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER, FALSE)
+	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER, FALSE)
+	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
+	retrieve_trigger = add_input_port("Retrieve", PORT_TYPE_SIGNAL)
+
+	sent = add_output_port("Sent", PORT_TYPE_SIGNAL)
+	retrieved = add_output_port("Retrieved", PORT_TYPE_SIGNAL)
+	why_fail = add_output_port("Fail reason", PORT_TYPE_STRING)
+	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/bluespace_launchpad/Destroy()
+	launchpad_id = null
+	x_pos = null
+	y_pos = null
+	send_trigger = null
+	retrieve_trigger = null
+	sent = null
+	retrieved = null
+	on_fail = null
+	why_fail = null
+	return ..()
+
+/obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/computer/launchpad))
+		attached_console = parent
+
+/obj/item/circuit_component/bluespace_launchpad/unregister_usb_parent(atom/movable/parent)
+	attached_console = null
+	return ..()
+
+/obj/item/circuit_component/bluespace_launchpad/input_received(datum/port/input/port)
+	. = ..()
+
+	if(.)
+		return
+
+	if(!attached_console || length(attached_console.launchpads) == 0)
+		why_fail.set_output("No launchpads connected!")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	var/current_launchpad = launchpad_id.input_value
+	if(isnull(current_launchpad))
+		return
+
+	var/obj/machinery/launchpad/the_pad = attached_console.launchpads[current_launchpad]
+	if(isnull(the_pad))
+		return
+
+	var/x_dest = x_pos.input_value
+	if(isnull(x_dest))
+		return
+
+	var/y_dest = y_pos.input_value
+	if(isnull(y_dest))
+		return
+
+	if(x_dest > the_pad.range || y_dest > the_pad.range)
+		why_fail.set_output("Cannot go that far! Current maximum reach: [the_pad.range]")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	var/checks = attached_console.teleport_checks(the_pad)
+
+	if(!isnull(checks))
+		why_fail.set_output(checks)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	the_pad.set_offset(x_dest, y_dest)
+
+	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
+		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
+
+	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
+		the_pad.doteleport(null, FALSE, alternate_log_name = parent.get_creator())
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
-	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
+	to_chat(user, span_warning("You are too primitive to use this computer!"))
 	return
 
 /obj/machinery/computer/launchpad/attackby(obj/item/W, mob/user, params)
@@ -26,9 +127,9 @@
 			if(LAZYLEN(launchpads) < maximum_pads)
 				launchpads |= M.buffer
 				M.buffer = null
-				to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+				to_chat(user, span_notice("You upload the data from the [W.name]'s buffer."))
 			else
-				to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
+				to_chat(user, span_warning("[src] cannot handle any more connections!"))
 	else
 		return ..()
 
@@ -38,14 +139,19 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/computer/launchpad/proc/teleport(mob/user, obj/machinery/launchpad/pad, sending)
+/// Performs checks on whether or not the launch pad can be used.
+/// Returns `null` if there are no errors, otherwise will return the error string.
+/obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
-		to_chat(user, "<span class='warning'>ERROR: Launchpad not responding. Check launchpad integrity.</span>")
-		return
+		return "ERROR: Launchpad not responding. Check launchpad integrity."
 	if(!pad.isAvailable())
-		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Make sure the launchpad is ready and powered.</span>")
-		return
-	pad.doteleport(user, sending)
+		return "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
+	if(pad.teleporting)
+		return "ERROR: Launchpad busy."
+	var/turf/pad_turf = get_turf(pad)
+	if(pad_turf && is_centcom_level(pad_turf.z))
+		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
+	return null
 
 /obj/machinery/computer/launchpad/proc/get_pad(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -121,10 +227,19 @@
 				selected_id = null
 			. = TRUE
 		if("launch")
-			teleport(usr, current_pad, TRUE)
+			var/checks = teleport_checks(current_pad)
+			if(isnull(checks))
+				current_pad.doteleport(usr, TRUE)
+			else
+				to_chat(usr, span_warning(checks))
 			. = TRUE
 
 		if("pull")
-			teleport(usr, current_pad, FALSE)
+			var/checks = teleport_checks(current_pad)
+			if(isnull(checks))
+				current_pad.doteleport(usr, FALSE)
+			else
+				to_chat(usr, span_warning(checks))
+
 			. = TRUE
 	. = TRUE

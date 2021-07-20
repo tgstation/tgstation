@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - qol: "Adds electrolizers to atmos storage  across maps for quality of life purposes and removes the useless turbine to ai sat pipeline in icebox."

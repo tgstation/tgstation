@@ -207,7 +207,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -408,7 +408,7 @@
 	if(CheckFriendlyFire(A))
 		return
 	if(!(simple_mob_flags & SILENCE_RANGED_MESSAGE))
-		visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
+		visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
 
 
 	if(rapid > 1)
@@ -607,18 +607,27 @@
  * Proc that handles a charge attack windup for a mob.
  */
 /mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
-	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	if(charge_state || !(COOLDOWN_FINISHED(src, charge_cooldown)))
 		return FALSE
-
-	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
+	if(!can_charge_target(target))
 		return FALSE
 	Shake(15, 15, 1 SECONDS)
 	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
 
 /**
+ * Proc that checks if the mob can charge attack.
+ */
+/mob/living/simple_animal/hostile/proc/can_charge_target(atom/target)
+	if(stat == DEAD || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED) || !has_gravity() || !target.has_gravity())
+		return FALSE
+	return TRUE
+
+/**
  * Proc that throws the mob at the target after the windup.
  */
 /mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
+	if(!can_charge_target(target))
+		return FALSE
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
 	COOLDOWN_START(src, charge_cooldown, charge_frequency)
@@ -646,13 +655,13 @@
 				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
 					blocked = TRUE
 			if(!blocked)
-				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
+				L.visible_message(span_danger("[src] charges on [L]!"), span_userdanger("[src] charges into you!"))
 				L.Knockdown(knockdown_time)
 			else
 				Stun((knockdown_time * 2), ignore_canstun = TRUE)
 			charge_end()
-		else if(hit_atom.density && !hit_atom.CanPass(src))
-			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
+		else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))
+			visible_message(span_danger("[src] smashes into [hit_atom]!"))
 			Stun((knockdown_time * 2), ignore_canstun = TRUE)
 
 		if(charge_state)

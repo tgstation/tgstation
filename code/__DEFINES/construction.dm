@@ -58,6 +58,10 @@
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
 
+// Stationary gas tanks
+#define TANK_FRAME 0
+#define TANK_PLATING_UNSECURED 1
+
 //other construction-related things
 
 //windows affected by Nar'Sie turn this color.
@@ -84,6 +88,7 @@
 #define CAT_BURGER "Burgers"
 #define CAT_CAKE "Cakes"
 #define CAT_EGG "Egg-Based Food"
+#define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
 #define CAT_MISCFOOD "Misc. Food"
 #define CAT_MEXICAN "Mexican Food"

@@ -51,6 +51,7 @@
 	if(!name)
 		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
+/// Call this proc to handle all the data extraction from the json configuration. Can be forced to load values from disk instead of memory.
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
 		json_config = file(string_json_config)
@@ -66,12 +67,25 @@
 
 	ReadMetadata()
 
+/// Called after every config has refreshed, this proc handles data verification that depends on multiple entwined configurations.
+/datum/greyscale_config/proc/CrossVerify()
+	for(var/icon_state in icon_states)
+		var/list/verification_targets = icon_states[icon_state]
+		verification_targets = verification_targets.Copy()
+		while(length(verification_targets))
+			var/datum/greyscale_layer/layer = verification_targets[length(verification_targets)]
+			verification_targets.len--
+			if(islist(layer))
+				verification_targets += layer
+				continue
+			layer.CrossVerify()
+
 /// Gets the name used for debug purposes
 /datum/greyscale_config/proc/DebugName()
 	var/display_name = name || "MISSING_NAME"
 	return "[display_name] ([icon_file]|[json_config])"
 
-/// Takes the json icon state configuration and puts it into a more processed format
+/// Takes the json icon state configuration and puts it into a more processed format.
 /datum/greyscale_config/proc/ReadIconStateConfiguration(list/data)
 	icon_states = list()
 	for(var/state in data)
@@ -93,7 +107,7 @@
 		var/layer_type = SSgreyscale.layer_types[data["type"]]
 		if(!layer_type)
 			CRASH("An unknown layer type was specified in the json of greyscale configuration [DebugName()]: [data["layer_type"]]")
-		return new layer_type(icon_file, data)
+		return new layer_type(icon_file, data.Copy()) // We don't want anything in there touching our version of the data
 	var/list/output = list()
 	for(var/list/group as anything in data)
 		output += ReadLayerGroup(group)
@@ -108,19 +122,22 @@
 	width = source.Width()
 
 	var/list/datum/greyscale_layer/all_layers = list()
-	var/list/to_process = list()
 	for(var/state in icon_states)
-		to_process += icon_states[state]
-	while(length(to_process))
-		var/current = to_process[length(to_process)]
-		to_process.len--
-		if(islist(current))
-			to_process += current
-		else
-			all_layers += current
+		var/list/to_process = list(icon_states[state])
+		var/list/state_layers = list()
 
-	if(length(all_layers) > MAX_SANE_LAYERS)
-		stack_trace("[DebugName()] has [length(all_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
+		while(length(to_process))
+			var/current = to_process[length(to_process)]
+			to_process.len--
+			if(islist(current))
+				to_process += current
+			else
+				state_layers += current
+
+		all_layers += state_layers
+
+		if(length(state_layers) > MAX_SANE_LAYERS)
+			stack_trace("[DebugName()] icon state '[state]' has [length(state_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
 
 	var/list/color_groups = list()
 	var/largest_id = 0

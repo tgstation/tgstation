@@ -68,14 +68,14 @@
 		var/obj/item/keycard/key = I
 		if((!puzzle_id || puzzle_id == key.puzzle_id)  && density)
 			if(open_message)
-				to_chat(user, "<span class='notice'>[open_message]</span>")
+				to_chat(user, span_notice("[open_message]"))
 			open()
 			return
 		else if(puzzle_id != key.puzzle_id)
-			to_chat(user, "<span class='notice'>[src] buzzes. This must not be the right key.</span>")
+			to_chat(user, span_notice("[src] buzzes. This must not be the right key."))
 			return
 		else
-			to_chat(user, "<span class='notice'>This door doesn't appear to close.</span>")
+			to_chat(user, span_notice("This door doesn't appear to close."))
 			return
 
 //Test doors. Gives admins a few doors to use quickly should they so choose for events.
@@ -117,17 +117,19 @@
 	trigger_delay = 10
 	protected = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	undertile_pressureplate = FALSE
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
 /obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
-	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
+	if(undertile_pressureplate)
+		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = FALSE) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
-		. += "<span class='notice'>This one appears to be spent already.</span>"
+		. += span_notice("This one appears to be spent already.")
 
 /obj/item/pressure_plate/hologrid/trigger()
 	if(!claimed)

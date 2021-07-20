@@ -36,7 +36,7 @@
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			stabilizers = !stabilizers
-			to_chat(user, "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>")
+			to_chat(user, span_notice("You turn the jetpack stabilization [stabilizers ? "on" : "off"]."))
 	else
 		toggle_internals(user)
 
@@ -46,19 +46,20 @@
 		return
 
 	if(!on)
-		turn_on(user)
-		to_chat(user, "<span class='notice'>You turn the jetpack on.</span>")
+		if(turn_on(user))
+			to_chat(user, span_notice("You turn the jetpack on."))
+		else
+			to_chat(user, span_notice("You fail to turn the jetpack on."))
+			return
 	else
 		turn_off(user)
-		to_chat(user, "<span class='notice'>You turn the jetpack off.</span>")
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		to_chat(user, span_notice("You turn the jetpack off."))
+	update_action_buttons()
 
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
 	if(!allow_thrust(0.01, user))
-		return
+		return FALSE
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
@@ -66,16 +67,19 @@
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	return TRUE
+
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+	if(user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
-	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	SIGNAL_HANDLER
@@ -118,7 +122,7 @@
 	if (istype(user, /mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.say("WHAT THE FUCK IS CARBON DIOXIDE?")
-		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
+		H.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
 		return (OXYLOSS)
 	else
 		..()
@@ -136,7 +140,7 @@
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
 	if(rand(0,250) == 0)
-		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
+		to_chat(user, span_notice("You feel your jetpack's engines cut out."))
 		turn_off(user)
 		return
 	return ..()
@@ -201,54 +205,100 @@
 	full_speed = FALSE
 	var/datum/gas_mixture/tempair_contents
 	var/obj/item/tank/internals/tank = null
-	var/mob/living/carbon/human/cur_user
+	var/mob/living/carbon/human/active_user = null
+	var/obj/item/clothing/suit/space/hardsuit/active_hardsuit = null
+
 
 /obj/item/tank/jetpack/suit/Initialize()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	tempair_contents = air_contents
 
+
+/obj/item/tank/jetpack/suit/Destroy()
+	if(on)
+		turn_off()
+	return ..()
+
+
 /obj/item/tank/jetpack/suit/attack_self()
 	return
 
 /obj/item/tank/jetpack/suit/cycle(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
-		to_chat(user, "<span class='warning'>\The [src] must be connected to a hardsuit!</span>")
+		to_chat(user, span_warning("\The [src] must be connected to a hardsuit!"))
 		return
 
 	var/mob/living/carbon/human/H = user
 	if(!istype(H.s_store, /obj/item/tank/internals))
-		to_chat(user, "<span class='warning'>You need a tank in your suit storage!</span>")
+		to_chat(user, span_warning("You need a tank in your suit storage!"))
 		return
-	..()
+	return ..()
+
 
 /obj/item/tank/jetpack/suit/turn_on(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc) || loc.loc != user)
-		return
-	var/mob/living/carbon/human/H = user
-	tank = H.s_store
+		return FALSE
+	active_user = user
+	tank = active_user.s_store
 	air_contents = tank.return_air()
+	. = ..()
+	if(!.)
+		active_user = null
+		tank = null
+		air_contents = null
+		return
+	active_hardsuit = loc
+	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, .proc/on_user_del)
 	START_PROCESSING(SSobj, src)
-	cur_user = user
-	..()
+
 
 /obj/item/tank/jetpack/suit/turn_off(mob/user)
+	STOP_PROCESSING(SSobj, src)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	if(active_hardsuit)
+		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
+		active_hardsuit = null
+	if(active_user)
+		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+		active_user = null
 	tank = null
 	air_contents = tempair_contents
-	STOP_PROCESSING(SSobj, src)
-	cur_user = null
-	..()
+	return ..()
+
 
 /obj/item/tank/jetpack/suit/process()
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
-		turn_off(cur_user)
-		return
 	var/mob/living/carbon/human/H = loc.loc
 	if(!tank || tank != H.s_store)
-		turn_off(cur_user)
+		turn_off(active_user)
 		return
 	excited = TRUE
-	return ..()
+	..()
+
+
+/// Called when the jetpack moves, presumably away from the hardsuit.
+/obj/item/tank/jetpack/suit/proc/on_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
+	SIGNAL_HANDLER
+	if(istype(loc, /obj/item/clothing/suit/space/hardsuit) && ishuman(loc.loc) && loc.loc == active_user)
+		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
+		active_hardsuit = loc
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
+		return
+	turn_off(active_user)
+
+
+/// Called when the hardsuit loc moves, presumably away from the human user.
+/obj/item/tank/jetpack/suit/proc/on_hardsuit_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
+	SIGNAL_HANDLER
+	turn_off(active_user)
+
+
+/// Called when the human wearing the suit that contains this jetpack is deleted.
+/obj/item/tank/jetpack/suit/proc/on_user_del(mob/living/carbon/human/source, force)
+	SIGNAL_HANDLER
+	turn_off(active_user)
 
 
 //Return a jetpack that the mob can use

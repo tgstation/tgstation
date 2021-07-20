@@ -50,12 +50,16 @@
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue
 		for (var/filter in fqs.devices)
-			var/list/f = fqs.devices[filter]
-			if (!f)
+			var/list/filtered = fqs.devices[filter]
+			if (!filtered)
 				output += "&nbsp;&nbsp;[filter]: ERROR<br>"
 				continue
-			output += "&nbsp;&nbsp;[filter]: [f.len]<br>"
-			for (var/device in f)
+			output += "&nbsp;&nbsp;[filter]: [filtered.len]<br>"
+			for(var/datum/weakref/device_ref as anything in filtered)
+				var/atom/device = device_ref.resolve()
+				if(!device)
+					filtered -= device_ref
+					continue
 				if (istype(device, /atom))
 					var/atom/A = device
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([AREACOORD(A)])<br>"
@@ -95,7 +99,7 @@
 			message_admins("[key_name_admin(usr)] re-enabled the CDN asset transport")
 			log_admin("[key_name(usr)] re-enabled the CDN asset transport")
 		else
-			to_chat(usr, "<span class='adminnotice'>The CDN is not enabled!</span>")
+			to_chat(usr, span_adminnotice("The CDN is not enabled!"))
 			if (tgui_alert(usr, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
 				SSassets.transport.dont_mutate_filenames = !SSassets.transport.dont_mutate_filenames
 				message_admins("[key_name_admin(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")

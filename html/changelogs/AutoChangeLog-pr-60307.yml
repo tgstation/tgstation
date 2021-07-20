@@ -1,0 +1,4 @@
+author: "TheSmallBlue"
+delete-after: True
+changes: 
+  - bugfix: "Hulks and larvas can no longer just punch the SM with no consequences"

@@ -6,7 +6,7 @@
 	var/obj/item/integrated_circuit/attached_circuit
 
 	/// Flags containing what this shell can do
-	var/shell_flags = 0
+	var/shell_flags = NONE
 
 	/// The capacity of the shell.
 	var/capacity = INFINITY
@@ -38,6 +38,7 @@
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
+	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 
 /datum/component/shell/UnregisterFromParent()
@@ -48,7 +49,8 @@
 		COMSIG_OBJ_DECONSTRUCT,
 		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
 		COMSIG_PARENT_EXAMINE,
-		COMSIG_ATOM_ATTACK_GHOST
+		COMSIG_ATOM_ATTACK_GHOST,
+		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -69,14 +71,16 @@
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!attached_circuit)
-		examine_text += "<span class='notice'>There is no integrated circuit attached.</span>"
+		examine_text += span_notice("There is no integrated circuit attached.")
 		return
 
-	examine_text += "<span class='notice'>There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].</span>"
-	examine_text += "<span class='notice'>The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].</span>"
+	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
+	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
-	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
+	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
+	if (shell_flags & SHELL_FLAG_USB_PORT)
+		examine_text += span_notice("There is a <b>USB port</b> on the front.")
 
 /**
  * Called when the shell is wrenched.
@@ -93,13 +97,28 @@
 /datum/component/shell/proc/on_attack_by(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
 	if(istype(item, /obj/item/stock_parts/cell))
-		source.balloon_alert(attacker, "can't pull cell in directly!")
+		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
 
-	if(attached_circuit?.owner_id && item == attached_circuit.owner_id.resolve())
-		locked = !locked
-		source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+	if(istype(item, /obj/item/inducer))
+		var/obj/item/inducer/inducer = item
+		INVOKE_ASYNC(inducer, /obj/item.proc/attack_obj, attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
+
+	if(attached_circuit)
+		if(attached_circuit.owner_id && item == attached_circuit.owner_id.resolve())
+			set_locked(!locked)
+			source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+			return COMPONENT_NO_AFTERATTACK
+
+		if(!attached_circuit.owner_id && istype(item, /obj/item/card/id))
+			source.balloon_alert(attacker, "owner id set for [item]")
+			attached_circuit.owner_id = WEAKREF(item)
+			return COMPONENT_NO_AFTERATTACK
+
+		if(istype(item, /obj/item/circuit_component))
+			attached_circuit.add_component_manually(item, attacker)
+			return
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
@@ -117,7 +136,14 @@
 		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
+	logic_board.inserter_mind = WEAKREF(attacker.mind)
 	attach_circuit(logic_board, attacker)
+
+/// Sets whether the shell is locked or not
+/datum/component/shell/proc/set_locked(new_value)
+	locked = new_value
+	attached_circuit?.locked = locked
+
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -125,6 +151,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -140,6 +168,8 @@
 		return
 
 	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
@@ -163,15 +193,22 @@
 	SIGNAL_HANDLER
 	remove_circuit()
 
-/datum/component/shell/proc/on_circuit_add_component(datum/source, obj/item/circuit_component/added_comp)
+/datum/component/shell/proc/on_circuit_add_component_manually(atom/source, obj/item/circuit_component/added_comp, mob/living/user)
 	SIGNAL_HANDLER
-	return COMPONENT_CANCEL_ADD_COMPONENT
+	if(locked)
+		source.balloon_alert(user, "it's locked!")
+		return COMPONENT_CANCEL_ADD_COMPONENT
+
+	if(length(attached_circuit.attached_components) - length(unremovable_circuit_components) >= capacity)
+		source.balloon_alert(user, "it's at maximum capacity!")
+		return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.
  */
 /datum/component/shell/proc/attach_circuit(obj/item/integrated_circuit/circuitboard, mob/living/user)
-	if(!user.transferItemToLoc(circuitboard, parent))
+	var/atom/movable/parent_atom = parent
+	if(!user.transferItemToLoc(circuitboard, parent_atom))
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
@@ -180,11 +217,13 @@
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
-	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT, .proc/on_circuit_add_component)
-	attached_circuit.set_shell(parent)
+	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
+	attached_circuit.set_shell(parent_atom)
+	if(attached_circuit.display_name != "")
+		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
+	attached_circuit.locked = FALSE
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		var/atom/movable/parent_atom = parent
 		on_unfasten(parent_atom, parent_atom.anchored)
 
 /**
@@ -196,7 +235,7 @@
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_QDELETING,
-		COMSIG_CIRCUIT_ADD_COMPONENT,
+		COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY,
 	))
 	if(attached_circuit.loc == parent)
 		var/atom/parent_atom = parent
@@ -205,4 +244,19 @@
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
+	attached_circuit.locked = FALSE
 	attached_circuit = null
+
+/datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
+	SIGNAL_HANDLER
+
+	if (!(shell_flags & SHELL_FLAG_USB_PORT))
+		source.balloon_alert(user, "this shell has no usb ports")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
+	if (isnull(attached_circuit))
+		source.balloon_alert(user, "no circuit inside")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+
+	usb_cable.attached_circuit = attached_circuit
+	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
