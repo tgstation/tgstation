@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds the scanner shell that lets you scan objects."
