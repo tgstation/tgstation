@@ -147,3 +147,10 @@
 	. = ..()
 	var/datum/antagonist/protagonist/scaredy_prince/prince_antag_datum = antag_datum_instance
 	name = "Royalty from house [prince_antag_datum.family_name]"
+
+/datum/station_trait/protagonist/nanotrasen_superweapon
+	name = "Superweapon"
+	report_message = "Central Command is sending the only surviving test subject in a superweapon project. You should be careful, they are incredibly frail and Syndicate Agents will see them as an easy target to cripple Nanotrasen."
+	role_to_give = /datum/antagonist/protagonist/nanotrasen_superweapon
+	weight = 4
+	trait_flags = NONE

@@ -1,6 +1,6 @@
 /datum/antagonist/protagonist/nanotrasen_superweapon
 	name = "Nanotrasen superweapon"
-	outfit_type = /datum/outfit/royal_prince
+	outfit_type = /datum/outfit/superweapon
 	min_age = 25
 	max_age = 50
 
@@ -25,7 +25,7 @@
 
 /datum/antagonist/protagonist/nanotrasen_superweapon/equip_protagonist()
 	. = ..()
-	var/new_name = "[owner.current.first_name()] "
+	var/new_name = "Subject '[owner.current.first_name()]' "
 	for(var/i in 1 to 6)
 		if(prob(30) || i == 1)
 			name += ascii2text(rand(65, 90)) //A - Z
