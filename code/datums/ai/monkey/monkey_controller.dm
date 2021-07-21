@@ -58,14 +58,14 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_LIVING_START_PULL,\
 	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED))
-	pawn.RemoveElement(/datum/element/connect_loc_behalf)
+	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 	return ..() //Run parent at end
 
 // Stops sentient monkeys from being knocked over like weak dunces.
 /datum/ai_controller/monkey/on_sentience_gained()
 	..()
-	pawn.RemoveElement(/datum/element/connect_loc_behalf)
+	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/on_sentience_lost()
 	..()
