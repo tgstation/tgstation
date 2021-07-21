@@ -276,8 +276,7 @@
 	return ..()
 
 /obj/effect/spawner/lootdrop/maintenance/proc/hide()
-	invisibility = INVISIBILITY_OBSERVER
-	alpha = 100
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/spawner/lootdrop/maintenance/proc/get_effective_lootcount()
 	var/effective_lootcount = lootcount

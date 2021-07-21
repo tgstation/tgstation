@@ -89,7 +89,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	/// Cooldown for when it's now safe to try an despawn the player.
 	COOLDOWN_DECLARE(despawn_world_time)
 
-	var/obj/machinery/computer/cryopod/control_computer
+	///Weakref to our controller
+	var/datum/weakref/control_computer_weakref
 	COOLDOWN_DECLARE(last_no_computer_message)
 
 /obj/machinery/cryopod/Initialize()
@@ -102,27 +103,27 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 // This is not a good situation
 /obj/machinery/cryopod/Destroy()
-	control_computer = null
+	control_computer_weakref = null
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
 	for(var/cryo_console as anything in GLOB.cryopod_computers)
 		var/obj/machinery/computer/cryopod/console = cryo_console
 		if(get_area(console) == get_area(src))
-			control_computer = console
+			control_computer_weakref = WEAKREF(console)
 			break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
-	if(!control_computer && urgent && COOLDOWN_FINISHED(src, last_no_computer_message))
+	if(!control_computer_weakref && urgent && COOLDOWN_FINISHED(src, last_no_computer_message))
 		COOLDOWN_START(src, last_no_computer_message, 5 MINUTES)
 		log_admin("Cryopod in [get_area(src)] could not find control computer!")
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
 
-	return control_computer != null
+	return control_computer_weakref != null
 
 /obj/machinery/cryopod/close_machine(atom/movable/target)
-	if(!control_computer)
+	if(!control_computer_weakref)
 		find_control_computer(TRUE)
 	if((isnull(target) || isliving(target)) && state_open && !panel_open)
 		..(target)
@@ -156,7 +157,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		open_machine()
 
 	if(!mob_occupant.client && COOLDOWN_FINISHED(src, despawn_world_time))
-		if(!control_computer)
+		if(!control_computer_weakref)
 			find_control_computer(urgent = TRUE)
 
 		despawn_occupant()
@@ -250,7 +251,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			announce_rank = general_record.fields["rank"]
 			qdel(general_record)
 
-	control_computer?.frozen_crew += list(crew_member)
+	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
+	if(!control_computer)
+		control_computer_weakref = null
+	else
+		control_computer.frozen_crew += list(crew_member)
 
 	// Make an announcement and log the person entering storage.
 	if(GLOB.announcement_systems.len)
@@ -264,13 +269,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			continue
 
 		mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
-
-	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(TRUE))
-		if(world.time < 15 MINUTES) // before the 15 minute mark
-			mob_occupant.ghostize(FALSE) // Players despawned too early may not re-enter the game
-		else
-			mob_occupant.ghostize(TRUE)
 
 	handle_objectives()
 	QDEL_NULL(occupant)
