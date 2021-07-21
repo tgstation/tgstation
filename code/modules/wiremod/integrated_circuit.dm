@@ -53,7 +53,7 @@
 
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	set_cell(new /obj/item/stock_parts/cell/high(src))
 
 /obj/item/integrated_circuit/Destroy()
 	for(var/obj/item/circuit_component/to_delete in attached_components)
@@ -73,6 +73,10 @@
 	else
 		. += span_notice("There is no power cell installed.")
 
+/obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/cell_to_set)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_CELL, cell_to_set)
+	cell = cell_to_set
+
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/circuit_component))
@@ -85,7 +89,7 @@
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		cell = I
+		set_cell(I)
 		I.add_fingerprint(user)
 		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 		return
@@ -101,7 +105,7 @@
 		I.play_tool_sound(src)
 		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
 		cell.forceMove(drop_location())
-		cell = null
+		set_cell(null)
 		return
 
 /**
@@ -114,7 +118,8 @@
  */
 /obj/item/integrated_circuit/proc/set_shell(atom/movable/new_shell)
 	remove_current_shell()
-	on = TRUE
+	set_on(TRUE)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_SHELL, new_shell)
 	shell = new_shell
 	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
@@ -122,8 +127,6 @@
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
 		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
-	if(display_name != "")
-		shell.name = "[initial(shell.name)] ([display_name])"
 
 /**
  * Unregisters the current shell attached to this circuit.
@@ -137,8 +140,12 @@
 		attached_component.unregister_shell(shell)
 	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
 	shell = null
-	on = FALSE
+	set_on(FALSE)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SHELL_REMOVED)
+
+/obj/item/integrated_circuit/proc/set_on(new_value)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_ON, new_value)
+	on = new_value
 
 /**
  * Adds a component to the circuitboard
@@ -428,9 +435,9 @@
 			var/new_name = params["display_name"]
 
 			if(new_name)
-				display_name = strip_html(params["display_name"], label_max_length)
+				set_display_name(strip_html(params["display_name"], label_max_length))
 			else
-				display_name = ""
+				set_display_name("")
 
 			if(shell)
 				if(display_name != "")
@@ -457,6 +464,10 @@
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 #undef WITHIN_RANGE
+
+/// Sets the display name that appears on the shell.
+/obj/item/integrated_circuit/proc/set_display_name(new_name)
+	display_name = new_name
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.

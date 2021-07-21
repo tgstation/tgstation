@@ -491,3 +491,205 @@
   - bugfix: Eggs now work when cracked into glasses
   tralezab:
   - balance: space dragons are rarer
+2021-07-16:
+  ATHATH:
+  - spellcheck: The grammar of the box and organ box suicides has been slightly improved.
+  - rscadd: Attempting to performing an organ box suicide while you're immune to cold
+      now makes you perform a box suicide with it instead.
+  - bugfix: Successfully performing the non-cold immune variant of the organ box suicide
+      now causes you to die of burn damage, not brute damage.
+  - rscadd: A special suicide has been added to space helmets. It has a special variant
+      for if you attempt it in a cold environment (while not immune to cold).
+  Mordent:
+  - bugfix: Hover effect on tgui Tabs made less visually laggy.
+  Watermelon914:
+  - rscadd: Added a more complex AI to carps that allow you to tell them to attack
+      people or to follow you. These carps can be tamed with raw meat, which'll then
+      give you control over them if you succeed in taming them. A carp will only be
+      tamed to 1 person.
+2021-07-17:
+  Arkatos:
+  - bugfix: Fixed a case where a PDA's action button icon did not properly update
+      upon light toggle.
+  Fikou:
+  - bugfix: grav anomalies will no longer permanently make you unclickable
+  - rscdel: deletes a door from deltastation mining shuttle
+  JohnFulpWillard:
+  - bugfix: You can now put people in coffins again after fireman carrying them.
+  Kylerace:
+  - bugfix: slippery things, among others will no longer stop working forever after
+      throwing them into hyperspace
+  Maurukas:
+  - bugfix: A rogue decal has been purged from Deltastation
+  - bugfix: The toxins airlocks on Delta, Tram, Meta and Kilo can now be opened from
+      inside the airlock
+  Nari Harimoto:
+  - qol: AI now opens the holopad with left click, and projects a hologram with right
+      click. AI's right clicking the holopad will immediately project, no more double
+      clicking
+  - rscadd: AI's right clicking any holopad while projected via the "Project Hologram?"
+      button when presence is requested, will cancel the projection and put their
+      camera back to where they started (moving far away from the pad will not do
+      this, nor would ctrl-clicking the pad)
+  - rscadd: when an AI's presence is requested to a holopad they get a chat message
+      that has two options, jump to the location, works as it does currently, and
+      "Project Hologram" which will immediately project a hologram there, right clicking
+      the pad will move you back to where you were
+  - rscadd: Ctrl+leftclicking on the holopad will end the holopad call directly without
+      jumping you back to your last location (it does nothing if you are not already
+      a hologram)
+  - qol: AI's can now examine a holopad to see the AI specific controls for the pads
+      (need to shift+right click and examine from the menu, cant shift-click examine,
+      issue with how the AI itself functions.)
+  - qol: when you jump to someone from their name in chat, or a location from chat
+      such as when presence is requested, you can hit "~" or "0" to jump back
+  - qol: when you jump back to your previous location with the "Jump Back" key or
+      to a saved location with "1-9" it stops all following, so you can jump back
+      or jump to a location and you wont jump back to the person you tracked
+  Sheits:
+  - bugfix: Flight potions now work on fly people, androids and skeletons
+  Wallem:
+  - bugfix: Lets people wash the ant debuff off of themselves, as intended.
+  - rscadd: Due to a leak in Nanotrasen Brand Ant Farms during shipping, a large influx
+      of space-ants have been inadvertently dumped onto every Nanotrasen station.
+      Don't go leaving food around too long, and please be sure to watch your step,
+      we're pretty sure they bite...
+  - imageadd: New giant ant sprite by Doshmobile
+  Wayland-Smithy:
+  - bugfix: Fixed HTML encoding of automatic evac news alerts emergency_reason.
+  - qol: Admin Supplypod Presets can now also be loaded by double clicking their label.
+  - qol: Holopad call Holograms now move in sync with their receiver pad.
+  - bugfix: Fixed a Holodisk replay Hologram bug, and Hologram Rays not updating when
+      the pad is moved.
+  aaaa1023:
+  - spellcheck: adds a missing space in the description of the ERT Medical Officer's
+      plushie box.
+  coiax:
+  - bugfix: Ethereal players cannot erroneously revive during mafia games.
+  interestingusernam3:
+  - bugfix: A Charlie station fluff paper about the Supermatter is no longer misnamed
+      "singularity generator". THERE WAS NEVER SUCH A THING AS A SINGULARITY GENERATOR.
+      OCEANIA HAD ALWAYS BEEN AT WAR WITH EASTASIA.
+2021-07-18:
+  Helianthus00:
+  - qol: Far explosions now cause far less shake and near explosions have been reduced
+      slightly to scale with this change.
+  IndieanaJones:
+  - balance: Space Dragon has received some nerfs to make fighting it and its carps
+      fairer to the crew.
+  - bugfix: Fixed a bug where carp rifts without an owner could spawn infinite carp.
+  InsaneRed:
+  - bugfix: fixed up some issues with the ski shoes vehicle description
+  Kylerace:
+  - bugfix: NanoTrasen has pushed a fix for nonexistent ghost ears, allowing them
+      to theoretically hear nearby sounds again if they existed, which they don't.
+  Maurukas:
+  - bugfix: One standard moth plushie has been issued to the tramstation psychologist's
+      office.
+  PositiveEntropy, Meyhazah:
+  - imageadd: Adds new fire extinguisher sprites based on Tau Ceti's!
+  Sheits:
+  - imageadd: Replaces the old aquarium sprites
+  TiviPlus:
+  - refactor: Directional lights might seem more smooth now
+  Watermelon914:
+  - qol: Allows charging circuit shells by using inducers.
+  - qol: Allows setting the owner ID of a circuit through a shell.
+  - bugfix: Fixed carps losing track of who they're following if they take a path
+      that obstructs their vision
+  - expansion: Adds the module circuit component.
+  - bugfix: Fixed carrying being broken.
+  - bugfix: Fixed light explosions having 0 chance to delimb someone if they have
+      no bomb resist.
+  interestingusernam3:
+  - bugfix: The implant pad will no longer incorrectly describe TRAC implants as being
+      usable as teleporter beacons.
+2021-07-19:
+  Arkatos:
+  - qol: You can now load equipment outright by double clicking the corresponding
+      equipment button in the Select Equipment UI.
+  Fikou:
+  - expansion: During moth week, teleporter accidents make you Moths
+  InsaneRed:
+  - balance: Elder Atmosian armor now takes less metallic hydrogen to craft and is
+      better armored.
+  - qol: Most advanced tools now use balloon alert
+  Kylerace:
+  - bugfix: NanoTrasen has realized that its previous theoretical fix for ghost ears
+      didn't work, not that that's a problem since ghosts don't exist but NanoTrasen
+      has fixed its mistake.
+  Melbert:
+  - qol: Energy Guns use balloon alerts when swapping mode
+  Mothblocks:
+  - expansion: Added a box of silver IDs to the HoP office on TramStation.
+  Seris02:
+  - bugfix: fixed sentient diseases reinfecting when dead
+  TheSmallBlue:
+  - expansion: Added USB cable support to bluespace launchpad consoles to use with
+      integrated circuits.
+2021-07-20:
+  Ghilker:
+  - expansion: added downsides to shoving too much fuel/moderator inside the machine,
+      the cooling volume can be adjusted in the GUI to make it stronger/weaker based
+      on the user needs
+  Nari Harimoto:
+  - bugfix: Fixes a bug where emotes such as a carp gnash will mess up a name if the
+      name contains a pronoun within it
+  - bugfix: Fixed an incorrect variable in a var that manages pronouns
+  - spellcheck: Updated some Simple Mob examines and emotes to default to plural (they)
+      rather than object (it)
+  - spellcheck: two clown mobs (Clown Hulk, and Clown Chad) are now explicitly male.
+      one Corgi type (Void) is neuter (it)
+  - spellcheck: many animals like cows and chickens are hardcoded female, but uses
+      neutral pronouns in examines and emotes, updated that to be explicitly she pronouns
+  Ryll/Shaps:
+  - bugfix: You should no longer lose deathnettle durability when clicking on floors
+      or walls
+  TheSmallBlue:
+  - expansion: Added the To Number circuit component.
+  Time-Green:
+  - bugfix: cutting open heads wont drop horns, frills etc on the ground (you could
+      literally stick it into a human to give them frills but nooooooo you wanted
+      to report the bug)
+  TiviPlus:
+  - bugfix: Fixed weather being opaque
+  Watermelon914:
+  - bugfix: Fixed the duffelbag curse and curse of hunger code in general.
+  - balance: Wizard gets bonus points for choosing the randomized options in their
+      spellbook. They will get 15 points worth of spells if they choose "Full random"
+      and they will get 12 points worth of spells if they choose "Semi random".
+2021-07-21:
+  BurgerBB:
+  - bugfix: Fixes closets/lockers/crates/ect being subject to ant decompisition.
+  InsaneRed:
+  - qol: Adds electrolizers to atmos storage  across maps for quality of life purposes
+      and removes the useless turbine to ai sat pipeline in icebox.
+  JohnFulpWillard:
+  - bugfix: Deltastation's HoP line now has a flasher.
+  - bugfix: Deltastation's Atmos waste now sends external connectors to waste, rather
+      than the other way around.
+  Kubisopplay:
+  - bugfix: A CABAL of syndicate hackers broke Nanotrasen protections, allowing malfunctions
+      in AI to finally happen again
+  Malgover:
+  - rscadd: Adds ANTI-TIDER-2500 to the SecTech vendor
+  Seris02:
+  - bugfix: classic baton can stamcrit again
+  TheSmallBlue:
+  - bugfix: Hulks and larvas can no longer just punch the SM with no consequences
+  Wallem:
+  - bugfix: ants have a higher tolerance to extreme ph levels when breeding. New ant
+      desc.
+  Watermelon914:
+  - expansion: Adds the scanner shell that lets you scan objects.
+  aaaa1023:
+  - bugfix: Icebox interrogation room is connected to the main power grid again.
+  - bugfix: Icebox security atmos goes through the atmos maintenance room again rather
+      than just bypassing it.
+  coiax:
+  - rscadd: Appendicitis is now no longer a disease. It has the same effects, although
+      shows up slightly differently on health scanners. It also is no longer caused
+      by the event system, and can happen to any appendix inside a person.
+  dragomagol:
+  - qol: changed the links for the bartender and cook guides to the appropriate new
+      wiki pages

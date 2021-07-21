@@ -34,7 +34,7 @@
 	if(!src || QDELETED(src))//we got toasted while animating
 		return
 	//Make space carp
-	var/mob/living/M = new mobtype(get_turf(src))
+	var/mob/living/simple_animal/hostile/carp/M = new mobtype(get_turf(src), owner)
 	//Make carp non-hostile to user, and their allies
 	if(owner)
 		var/list/factions = owner.faction.Copy()
