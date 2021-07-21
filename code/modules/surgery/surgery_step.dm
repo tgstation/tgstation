@@ -30,18 +30,17 @@
 	return FALSE
 
 /datum/surgery_step/proc/can_operate(mob/user, mob/living/target, obj/item/tool)
-	if(accept_hand)
-		if(!tool)
-			return TRUE
-		if(iscyborg(user))
-			return TRUE
-	if(accept_any_item)
-		if(tool && tool_check(user, tool))
-			return TRUE
+	if(accept_hand && (!tool || iscyborg(user)))
+		return TRUE
+	if(accept_any_item && tool && tool_check(user, tool))
+		return TRUE
 	if(!tool)
 		return FALSE
 	for(var/key in implements)
-		if((ispath(key) && !istype(tool, key)) || tool.tool_behaviour != key)
+		if(ispath(key))
+			if(!istype(tool, key))
+				continue
+		else if(tool.tool_behaviour != key)
 			continue
 		implement_type = key
 		if(tool_check(user, tool))

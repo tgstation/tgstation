@@ -58,7 +58,7 @@
 		return
 	if(!honorbound.DirectAccess(clickingon) && !isgun(weapon))
 		return
-	if(weapon.item_flags & NOBLUDGEON)
+	if(weapon?.item_flags & NOBLUDGEON)
 		return
 	if(!honorbound.combat_mode)
 		if((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))
