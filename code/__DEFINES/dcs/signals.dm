@@ -1151,8 +1151,11 @@
 // /datum/component/storage signals
 
 ///() - returns bool.
+
 #define COMSIG_CONTAINS_STORAGE "is_storage"
 ///(obj/item/inserting, mob/user, silent, force) - returns bool
+#define COMSIG_TRY_STORAGE_CONSUME_CONTENTS "storage_try_consume_contents"
+///() void signal to be sent when checking if reproductive extracts are full
 #define COMSIG_TRY_STORAGE_INSERT "storage_try_insert"
 ///(mob/show_to, force) - returns bool.
 #define COMSIG_TRY_STORAGE_SHOW "storage_show_to"
@@ -1176,6 +1179,7 @@
 #define COMSIG_TRY_STORAGE_RETURN_INVENTORY "storage_return_inventory"
 ///(obj/item/insertion_candidate, mob/user, silent) - returns bool
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"
+///(obj/item/contents_to_consume, int number_to_consume) -
 
 // /datum/component/swabbing signals
 #define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples" ///Called when you try to swab something using the swabable component, includes a mutable list of what has been swabbed so far so it can be modified.

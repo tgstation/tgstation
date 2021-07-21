@@ -12,9 +12,9 @@ Reproductive extracts:
 	effect = "reproductive"
 	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
 	var/extract_type = /obj/item/slime_extract/
-	var/cubes_eaten = 0
-	var/last_produce = 0
 	var/cooldown = 3 SECONDS
+	var/last_produce = 0
+
 /obj/item/slimecross/reproductive/Initialize()
 	. = ..()
 	LoadComponent(/datum/component/storage/concrete/extract_inventory)
@@ -25,30 +25,9 @@ Reproductive extracts:
 		return
 	if(istype(O, /obj/item/storage/bag/bio))
 		var/list/inserted = list()
-		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/monkeycube, src, 1, null, null, user, inserted)
+		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/monkeycube, src, 3, null, null, user, inserted)
 		if(inserted.len)
-			var/obj/item/food/monkeycube/M = inserted[1]
-			if(istype(M))
-				eat_cube(M, user)
-		else
-			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
-	if(istype(O,/obj/item/food/monkeycube))
-		eat_cube(O, user)
-	if(cubes_eaten >= 3)
-		var/cores = rand(1,4)
-		visible_message(span_notice("[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!"))
-		playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
-		last_produce = world.time
-		for(var/i = 0, i < cores, i++)
-			new extract_type(get_turf(loc))
-		cubes_eaten = 0
-
-/obj/item/slimecross/reproductive/proc/eat_cube(obj/item/food/monkeycube, mob/user)
-		qdel(monkeycube)
-		cubes_eaten++
-		to_chat(user, span_notice("You feed [monkeycube] to [src], and it pulses gently."))
-		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_CONSUME_CONTENTS)
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey
 	colour = "grey"
