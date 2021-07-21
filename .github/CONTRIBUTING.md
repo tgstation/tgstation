@@ -415,7 +415,7 @@ for(var/atom/thing as anything in bag_of_atoms)
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
-* New files must have descriptive names, you cannot make new files called any variations of miscellaneous for example.
+* New files must have descriptive names, you cannot make new files called any variations of miscellaneous for example. If your file name gives no indication of what is inside it, it is bad.
 
 ### SQL
 * Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
