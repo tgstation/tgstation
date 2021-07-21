@@ -543,7 +543,7 @@
 	inhand_icon_state = "human_leather"
 
 /obj/item/clothing/head/fishcap
-	name = "Fishing Cap"
+	name = "fishing cap"
 	desc = "Women fear me \n\ Fish fear me \n\ Men turn their eyes away from me \n\ As I walk no beast dares make a sound in my presence \n\ I am alone on this barren Earth."
 	worn_icon = 'icons/mob/clothing/head/fishcap.dmi'
 	icon_state = "fishcap"
