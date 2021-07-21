@@ -197,7 +197,7 @@
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// "On" sound, played when switching between able to stun or not.
-	var/on_sound 
+	var/on_sound
 	/// The path of the default sound to play when we stun something.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// Do we animate the "hit" when stunning something?
@@ -332,7 +332,7 @@
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
 		target.Knockdown(knockdown_time)
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		target.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(target, user)
 
 		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)

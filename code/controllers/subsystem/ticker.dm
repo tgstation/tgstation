@@ -385,7 +385,7 @@ SUBSYSTEM_DEF(ticker)
 		picked_spare_id_candidate = pick(spare_id_candidates)
 
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
-		if(!isliving(new_player_mob.new_character))
+		if(QDELETED(new_player_mob) || !isliving(new_player_mob.new_character))
 			CHECK_TICK
 			continue
 		var/mob/living/new_player_living = new_player_mob.new_character
@@ -394,7 +394,7 @@ SUBSYSTEM_DEF(ticker)
 			continue
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
 		if(ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
-			if(new_player_mob.client.prefs.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
+			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
 				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
