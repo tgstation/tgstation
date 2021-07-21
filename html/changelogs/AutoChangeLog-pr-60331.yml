@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Appendicitis is now no longer a disease. It has the same effects,
-although shows up slightly differently on health scanners. It also is no
-longer caused by the event system, and can happen to any appendix inside
-a person."

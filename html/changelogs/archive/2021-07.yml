@@ -658,3 +658,38 @@
   - balance: Wizard gets bonus points for choosing the randomized options in their
       spellbook. They will get 15 points worth of spells if they choose "Full random"
       and they will get 12 points worth of spells if they choose "Semi random".
+2021-07-21:
+  BurgerBB:
+  - bugfix: Fixes closets/lockers/crates/ect being subject to ant decompisition.
+  InsaneRed:
+  - qol: Adds electrolizers to atmos storage  across maps for quality of life purposes
+      and removes the useless turbine to ai sat pipeline in icebox.
+  JohnFulpWillard:
+  - bugfix: Deltastation's HoP line now has a flasher.
+  - bugfix: Deltastation's Atmos waste now sends external connectors to waste, rather
+      than the other way around.
+  Kubisopplay:
+  - bugfix: A CABAL of syndicate hackers broke Nanotrasen protections, allowing malfunctions
+      in AI to finally happen again
+  Malgover:
+  - rscadd: Adds ANTI-TIDER-2500 to the SecTech vendor
+  Seris02:
+  - bugfix: classic baton can stamcrit again
+  TheSmallBlue:
+  - bugfix: Hulks and larvas can no longer just punch the SM with no consequences
+  Wallem:
+  - bugfix: ants have a higher tolerance to extreme ph levels when breeding. New ant
+      desc.
+  Watermelon914:
+  - expansion: Adds the scanner shell that lets you scan objects.
+  aaaa1023:
+  - bugfix: Icebox interrogation room is connected to the main power grid again.
+  - bugfix: Icebox security atmos goes through the atmos maintenance room again rather
+      than just bypassing it.
+  coiax:
+  - rscadd: Appendicitis is now no longer a disease. It has the same effects, although
+      shows up slightly differently on health scanners. It also is no longer caused
+      by the event system, and can happen to any appendix inside a person.
+  dragomagol:
+  - qol: changed the links for the bartender and cook guides to the appropriate new
+      wiki pages
