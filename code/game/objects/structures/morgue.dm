@@ -217,22 +217,19 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	dir = SOUTH
 	var/id = 1
 
+/obj/structure/bodycontainer/crematorium/Initialize()
+	. = ..()
+	GLOB.crematoriums += src
+	connected = new /obj/structure/tray/c_tray(src)
+	connected.connected = src
+
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
 	to_chat(user, span_warning("[src] is locked against you."))
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	GLOB.crematoriums.Remove(src)
+	GLOB.crematoriums -= src
 	return ..()
-
-/obj/structure/bodycontainer/crematorium/New()
-	GLOB.crematoriums.Add(src)
-	..()
-
-/obj/structure/bodycontainer/crematorium/Initialize()
-	. = ..()
-	connected = new /obj/structure/tray/c_tray(src)
-	connected.connected = src
 
 /obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"

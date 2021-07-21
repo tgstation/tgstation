@@ -147,7 +147,7 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
 		return TRUE
 	if(user.mind)
-		if(user.mind.assigned_role == "Clown") //traitor clowns can use this, even though they're technically not clumsy
+		if(is_clown_job(user.mind.assigned_role)) //traitor clowns can use this, even though they're technically not clumsy
 			return TRUE
 		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
 			return TRUE
