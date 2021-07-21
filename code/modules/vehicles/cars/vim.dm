@@ -30,7 +30,7 @@
 	new /obj/effect/decal/cleanable/oil(get_turf(src))
 	do_sparks(5, TRUE, src)
 	visible_message(span_boldannounce("[src] blows apart!"))
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/car/vim/mob_try_enter(mob/entering)
 	if(!isanimal(entering))
@@ -38,7 +38,7 @@
 	var/mob/living/simple_animal/animal = entering
 	if(animal.mob_size != MOB_SIZE_TINY)
 		return FALSE
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/car/vim/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
