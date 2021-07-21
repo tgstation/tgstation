@@ -184,31 +184,35 @@
 		return TRUE
 	return FALSE
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
+/obj/item/melee/baton/attack(mob/target, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
 
-	if(iscyborg(M))
+	if(iscyborg(target))
 		..()
 		return
 
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/L = M
-		if(check_martial_counter(L, user))
+	if(ishuman(target))
+		var/mob/living/carbon/human/blocking_target = target
+		if(blocking_target.check_block())
+			blocking_target.visible_message(
+				span_danger("[blocking_target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!"),
+				span_userdanger("You block the attack!")
+			)
+			user.Stun(40)
 			return
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
-				baton_effect(M, user)
+				baton_effect(target, user)
 		..()
 		return
 	else if(turned_on)
 		if(attack_cooldown_check <= world.time)
-			if(baton_effect(M, user))
-				user.do_attack_animation(M)
+			if(baton_effect(target, user))
+				user.do_attack_animation(target)
 				return
 		else
 			to_chat(user, span_danger("The baton is still charging!"))
@@ -217,7 +221,7 @@
 		..()
 		return
 	else
-		M.visible_message(span_warning("[user] prods [M] with [src]. Luckily it was off."), \
+		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 					span_warning("[user] prods you with [src]. Luckily it was off."))
 		return
 

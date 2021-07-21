@@ -1,0 +1,19 @@
+/obj/item/melee/beesword
+	name = "The Stinger"
+	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "beesword"
+	inhand_icon_state = "stinger"
+	worn_icon_state = "stinger"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	force = 5
+	w_class = WEIGHT_CLASS_BULKY
+	sharpness = SHARP_EDGED
+	throwforce = 10
+	block_chance = 20
+	armour_penetration = 65
+	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
+	attack_verb_simple = list("slash", "sting", "prickle", "poke")
+	hitsound = 'sound/weapons/rapierhit.ogg'
