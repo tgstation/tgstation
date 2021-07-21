@@ -440,27 +440,34 @@
 				M.emote(pick("twitch","giggle"))
 	..()
 
-/datum/reagent/drug/mushroomhallucinogen/on_mob_add(mob/living/L)
+/datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/L)
 	. = ..()
-	var/atom/movable/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
 	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
 	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
 	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
 
-	affected_plane_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+	game_plane_master_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
 
-	for(var/i in affected_plane_controller.get_filters("rainbow"))
-		animate(i, color = col_filter_identity, time = 0 SECONDS, loop = -1)
-		animate(color = col_filter_green, time = 4 SECONDS)
-		animate(color = col_filter_blue, time = 4 SECONDS)
-		animate(color = col_filter_red, time = 4 SECONDS)
+	for(var/filter in game_plane_master_controller.get_filters("rainbow"))
+		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1)
+		animate(filter, color = col_filter_green, time = 4 SECONDS)
+		animate(filter, color = col_filter_blue, time = 4 SECONDS)
+		animate(filter, color = col_filter_red, time = 4 SECONDS)
 
-/datum/reagent/drug/mushroomhallucinogen/on_mob_delete(mob/living/L)
+	game_plane_master_controller.add_filter("psilocybin_wave", 10, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
+
+	for(var/filter in game_plane_master_controller.get_filters("psilocybin_wave"))
+		animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32)
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	var/atom/movable/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	affected_plane_controller.remove_filter("rainbow")
+	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("rainbow")
+	game_plane_master_controller.remove_filter("psilocybin_wave")
 
 /datum/reagent/drug/blastoff
 	name = "bLaSToFF"
@@ -491,6 +498,8 @@
 	var/list/col_filter_red = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.900,0,0,0) //most red color
 
 	game_plane_master_controller.add_filter("blastoff_filter", 10, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY))
+	game_plane_master_controller.add_filter("blastoff_wave", 1, list("type" = "wave", "x" = 32, "y" = 32))
+
 
 	for(var/filter in game_plane_master_controller.get_filters("blastoff_filter"))
 		animate(filter, color = col_filter_blue, time = 3 SECONDS, loop = -1)
@@ -498,7 +507,11 @@
 		animate(color = col_filter_red, time = 3 SECONDS)
 		animate(color = col_filter_mid, time = 3 SECONDS)
 
+	for(var/filter in game_plane_master_controller.get_filters("blastoff_wave"))
+		animate(filter, time = 32 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32)
+
 	L.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
+
 
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -509,6 +522,7 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.remove_filter("blastoff_filter")
+	game_plane_master_controller.remove_filter("blastoff_wave")
 	M.sound_environment_override = NONE
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -541,8 +555,9 @@
 		var/atom/throw_target = get_edge_target_turf(dancer, dancer.dir)
 		dancer.SpinAnimation(12,3)
 		dancer.visible_message("<span class='userdanger'>[dancer] does an extravagant flip!</span>")
-		dancer.throw_at(throw_target, range = 4, speed = 1, force = overdosed ? 3 : 1)
+		dancer.throw_at(throw_target, range = 4, speed = 1, force = overdosed ? 4 : 1)
 
+///This proc listens to the spin signal and throws the mob every third spin
 /datum/reagent/drug/blastoff/proc/on_spin()
 	SIGNAL_HANDLER
 
@@ -564,6 +579,9 @@
 		var/throwtarget = get_edge_target_turf(dancer_turf, get_dir(dancer_turf, get_step_away(dance_partner, dancer_turf)))
 		dance_partner.throw_at(target = throwtarget, range = 2, speed = 1)
 
+/datum/reagent/drug/blastoff/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= SPAN_CLOWN
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
@@ -596,11 +614,13 @@
 	for(var/filter in game_plane_master_controller.get_filters("saturnx_filter"))
 		animate(filter, loop = -1, color = col_filter_full, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 		//uneven so we spend slightly less time with bright colors
-		animate(color = col_filter_twothird, time = 2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
-		animate(color = col_filter_half, time = 9 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_twothird, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(color = col_filter_half, time = 6 SECONDS, easing = LINEAR_EASING)
 		animate(color = col_filter_empty, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
-		animate(color = col_filter_half, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
-		animate(color = col_filter_twothird, time = 9 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_half, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(color = col_filter_twothird, time = 12 SECONDS, easing = LINEAR_EASING)
+
+	game_plane_master_controller.add_filter("saturnx_bloom", 1, list("type" = "bloom", "threshold" = "#e4e4e4", "offset" = 2, "size" = 2))
 
 ///This proc turns the guy who took the drug invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
@@ -622,6 +642,7 @@
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("saturnx_filter")
+	game_plane_master_controller.remove_filter("saturnx_bloom")
 
 /datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
