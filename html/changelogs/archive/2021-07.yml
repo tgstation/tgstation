@@ -604,3 +604,92 @@
   interestingusernam3:
   - bugfix: The implant pad will no longer incorrectly describe TRAC implants as being
       usable as teleporter beacons.
+2021-07-19:
+  Arkatos:
+  - qol: You can now load equipment outright by double clicking the corresponding
+      equipment button in the Select Equipment UI.
+  Fikou:
+  - expansion: During moth week, teleporter accidents make you Moths
+  InsaneRed:
+  - balance: Elder Atmosian armor now takes less metallic hydrogen to craft and is
+      better armored.
+  - qol: Most advanced tools now use balloon alert
+  Kylerace:
+  - bugfix: NanoTrasen has realized that its previous theoretical fix for ghost ears
+      didn't work, not that that's a problem since ghosts don't exist but NanoTrasen
+      has fixed its mistake.
+  Melbert:
+  - qol: Energy Guns use balloon alerts when swapping mode
+  Mothblocks:
+  - expansion: Added a box of silver IDs to the HoP office on TramStation.
+  Seris02:
+  - bugfix: fixed sentient diseases reinfecting when dead
+  TheSmallBlue:
+  - expansion: Added USB cable support to bluespace launchpad consoles to use with
+      integrated circuits.
+2021-07-20:
+  Ghilker:
+  - expansion: added downsides to shoving too much fuel/moderator inside the machine,
+      the cooling volume can be adjusted in the GUI to make it stronger/weaker based
+      on the user needs
+  Nari Harimoto:
+  - bugfix: Fixes a bug where emotes such as a carp gnash will mess up a name if the
+      name contains a pronoun within it
+  - bugfix: Fixed an incorrect variable in a var that manages pronouns
+  - spellcheck: Updated some Simple Mob examines and emotes to default to plural (they)
+      rather than object (it)
+  - spellcheck: two clown mobs (Clown Hulk, and Clown Chad) are now explicitly male.
+      one Corgi type (Void) is neuter (it)
+  - spellcheck: many animals like cows and chickens are hardcoded female, but uses
+      neutral pronouns in examines and emotes, updated that to be explicitly she pronouns
+  Ryll/Shaps:
+  - bugfix: You should no longer lose deathnettle durability when clicking on floors
+      or walls
+  TheSmallBlue:
+  - expansion: Added the To Number circuit component.
+  Time-Green:
+  - bugfix: cutting open heads wont drop horns, frills etc on the ground (you could
+      literally stick it into a human to give them frills but nooooooo you wanted
+      to report the bug)
+  TiviPlus:
+  - bugfix: Fixed weather being opaque
+  Watermelon914:
+  - bugfix: Fixed the duffelbag curse and curse of hunger code in general.
+  - balance: Wizard gets bonus points for choosing the randomized options in their
+      spellbook. They will get 15 points worth of spells if they choose "Full random"
+      and they will get 12 points worth of spells if they choose "Semi random".
+2021-07-21:
+  BurgerBB:
+  - bugfix: Fixes closets/lockers/crates/ect being subject to ant decompisition.
+  InsaneRed:
+  - qol: Adds electrolizers to atmos storage  across maps for quality of life purposes
+      and removes the useless turbine to ai sat pipeline in icebox.
+  JohnFulpWillard:
+  - bugfix: Deltastation's HoP line now has a flasher.
+  - bugfix: Deltastation's Atmos waste now sends external connectors to waste, rather
+      than the other way around.
+  Kubisopplay:
+  - bugfix: A CABAL of syndicate hackers broke Nanotrasen protections, allowing malfunctions
+      in AI to finally happen again
+  Malgover:
+  - rscadd: Adds ANTI-TIDER-2500 to the SecTech vendor
+  Seris02:
+  - bugfix: classic baton can stamcrit again
+  TheSmallBlue:
+  - bugfix: Hulks and larvas can no longer just punch the SM with no consequences
+  Wallem:
+  - bugfix: ants have a higher tolerance to extreme ph levels when breeding. New ant
+      desc.
+  Watermelon914:
+  - expansion: Adds the scanner shell that lets you scan objects.
+  aaaa1023:
+  - bugfix: Icebox interrogation room is connected to the main power grid again.
+  - bugfix: Icebox security atmos goes through the atmos maintenance room again rather
+      than just bypassing it.
+  coiax:
+  - rscadd: Appendicitis is now no longer a disease. It has the same effects, although
+      shows up slightly differently on health scanners. It also is no longer caused
+      by the event system, and can happen to any appendix inside a person.
+  dragomagol:
+  - qol: changed the links for the bartender and cook guides to the appropriate new
+      wiki pages

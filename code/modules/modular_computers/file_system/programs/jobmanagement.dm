@@ -37,21 +37,32 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
+
+/datum/computer_file/program/job_management/proc/can_edit_job(datum/job/job)
+	if(!job || !(job.job_flags & JOB_CREW_MEMBER) || (job.title in blacklisted))
+		return FALSE
+	return TRUE
+
+
 /datum/computer_file/program/job_management/proc/can_open_job(datum/job/job)
-	if(!(job?.title in blacklisted))
-		if((job.total_positions <= length(GLOB.player_list) * (max_relative_positions / 100)))
-			var/delta = (world.time / 10) - GLOB.time_last_changed_position
-			if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
-				return TRUE
+	if(!can_edit_job(job))
+		return FALSE
+	if((job.total_positions <= length(GLOB.player_list) * (max_relative_positions / 100)))
+		var/delta = (world.time / 10) - GLOB.time_last_changed_position
+		if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
+			return TRUE
 	return FALSE
 
+
 /datum/computer_file/program/job_management/proc/can_close_job(datum/job/job)
-	if(!(job?.title in blacklisted))
-		if(job.total_positions > length(GLOB.player_list) * (max_relative_positions / 100))
-			var/delta = (world.time / 10) - GLOB.time_last_changed_position
-			if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
-				return TRUE
+	if(!can_edit_job(job))
+		return FALSE
+	if(job.total_positions > length(GLOB.player_list) * (max_relative_positions / 100))
+		var/delta = (world.time / 10) - GLOB.time_last_changed_position
+		if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
+			return TRUE
 	return FALSE
+
 
 /datum/computer_file/program/job_management/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -95,7 +106,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				return
 			var/priority_target = params["target"]
 			var/datum/job/j = SSjob.GetJob(priority_target)
-			if(!j)
+			if(!j || !can_edit_job(j))
 				return
 			if(j.total_positions <= j.current_positions)
 				return
@@ -119,7 +130,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	data["authed"] = authed
 
 	var/list/pos = list()
-	for(var/j in SSjob.occupations)
+	for(var/j in SSjob.joinable_occupations)
 		var/datum/job/job = j
 		if(job.title in blacklisted)
 			continue

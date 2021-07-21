@@ -227,14 +227,8 @@
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
 	var/static/list/show_directions = list(SOUTH, WEST)
-	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
-		var/assignment
-		if(H.mind.assigned_role)
-			assignment = H.mind.assigned_role
-		else if(H.job)
-			assignment = H.job
-		else
-			assignment = "Unassigned"
+	if(H.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST)
+		var/assignment = H.mind.assigned_role.title
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++,6)
@@ -302,9 +296,9 @@
 
 		//Locked Record
 		var/datum/data/record/L = new()
-		L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]") //surely this should just be id, like the others?
+		L.fields["id"] = md5("[H.real_name][assignment]") //surely this should just be id, like the others?
 		L.fields["name"] = H.real_name
-		L.fields["rank"] = H.mind.assigned_role
+		L.fields["rank"] = assignment
 		L.fields["age"] = H.age
 		L.fields["gender"] = H.gender
 		if(H.gender == "male")
@@ -324,7 +318,7 @@
 	return
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
-	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+	var/datum/job/J = H.mind.assigned_role
 	var/datum/preferences/P
 	if(!C)
 		C = H.client

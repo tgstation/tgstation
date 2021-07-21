@@ -41,7 +41,6 @@
 			observe.reset_perspective(null)
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
-	clear_client_in_contents() //Gotta do this here as well as Logout, since client will be null by the time it gets there, cause of that ghostize
 	ghostize() //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
@@ -1052,14 +1051,17 @@
  *
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
-/mob/proc/fully_replace_character_name(oldname,newname)
+/mob/proc/fully_replace_character_name(oldname, newname)
 	if(!newname)
 		log_message("[src] failed name change from [oldname] as no new name was specified", LOG_OWNERSHIP)
+		return FALSE
+	if(oldname == newname)
+		log_message("[src] failed name change as the new name was the same as the old one: [oldname]", LOG_OWNERSHIP)
 		return FALSE
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
-	log_played_names(ckey,newname)
+	log_played_names(ckey, newname)
 
 	real_name = newname
 	name = newname
