@@ -10721,8 +10721,8 @@
 	},
 /area/holodeck/rec_center)
 "aIK" = (
-/obj/structure/closet/l3closet,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/vending/drugs,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "aIL" = (
@@ -37034,6 +37034,7 @@
 	departmentType = 1;
 	name = "Medbay Requests Console"
 	},
+/obj/structure/closet/l3closet,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "kgP" = (

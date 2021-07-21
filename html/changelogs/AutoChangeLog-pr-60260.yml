@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Deltastation's HoP line now has a flasher."
-  - bugfix: "Deltastation's Atmos waste now sends external connectors to waste, rather than the other way around."
