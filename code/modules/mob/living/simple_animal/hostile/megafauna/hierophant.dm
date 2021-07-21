@@ -343,13 +343,13 @@ Difficulty: Hard
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	SLEEP_CHECK_DEATH(1)
 	visible_message(span_hierophant_warning("[src] fades out!"))
-	density = FALSE
+	set_density(FALSE)
 	SLEEP_CHECK_DEATH(2)
 	forceMove(T)
 	SLEEP_CHECK_DEATH(1)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
 	SLEEP_CHECK_DEATH(1)
-	density = TRUE
+	set_density(TRUE)
 	visible_message(span_hierophant_warning("[src] fades in!"))
 	SLEEP_CHECK_DEATH(1) //at this point the blasts we made detonate
 	blinking = FALSE
@@ -535,7 +535,7 @@ Difficulty: Hard
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(QDELETED(caster))
 		return FALSE
@@ -659,7 +659,7 @@ Difficulty: Hard
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/temp_visual/hierophant/blast/damaging/proc/blast()
 	var/turf/T = get_turf(src)

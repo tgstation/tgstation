@@ -85,7 +85,7 @@
 /obj/structure/displaycase/obj_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		density = FALSE
+		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, TRUE)

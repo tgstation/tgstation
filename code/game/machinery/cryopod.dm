@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/machines/cryopod.dmi'
 	icon_state = "cellconsole_1"
+	icon_keyboard = null
 	// circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
@@ -88,7 +89,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	/// Cooldown for when it's now safe to try an despawn the player.
 	COOLDOWN_DECLARE(despawn_world_time)
 
-	var/obj/machinery/computer/cryopod/control_computer
+	///Weakref to our controller
+	var/datum/weakref/control_computer_weakref
 	COOLDOWN_DECLARE(last_no_computer_message)
 
 /obj/machinery/cryopod/Initialize()
@@ -101,27 +103,27 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 // This is not a good situation
 /obj/machinery/cryopod/Destroy()
-	control_computer = null
+	control_computer_weakref = null
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
 	for(var/cryo_console as anything in GLOB.cryopod_computers)
 		var/obj/machinery/computer/cryopod/console = cryo_console
 		if(get_area(console) == get_area(src))
-			control_computer = console
+			control_computer_weakref = WEAKREF(console)
 			break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
-	if(!control_computer && urgent && COOLDOWN_FINISHED(src, last_no_computer_message))
+	if(!control_computer_weakref && urgent && COOLDOWN_FINISHED(src, last_no_computer_message))
 		COOLDOWN_START(src, last_no_computer_message, 5 MINUTES)
 		log_admin("Cryopod in [get_area(src)] could not find control computer!")
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
 
-	return control_computer != null
+	return control_computer_weakref != null
 
 /obj/machinery/cryopod/close_machine(atom/movable/target)
-	if(!control_computer)
+	if(!control_computer_weakref)
 		find_control_computer(TRUE)
 	if((isnull(target) || isliving(target)) && state_open && !panel_open)
 		..(target)
@@ -135,7 +137,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 /obj/machinery/cryopod/open_machine()
 	..()
 	icon_state = "cryopod-open"
-	density = TRUE
+	set_density(TRUE)
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist_act(mob/living/user)
@@ -155,7 +157,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		open_machine()
 
 	if(!mob_occupant.client && COOLDOWN_FINISHED(src, despawn_world_time))
-		if(!control_computer)
+		if(!control_computer_weakref)
 			find_control_computer(urgent = TRUE)
 
 		despawn_occupant()
@@ -172,8 +174,17 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			for(var/datum/mind/mind in objective.team.members)
 				to_chat(mind.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
 				mind.announce_objectives()
-		else if(objective.target && istype(objective.target, /datum/mind))
-			if(objective.target == mob_occupant.mind)
+		else if(istype(objective.target) && objective.target == mob_occupant.mind)
+			if(istype(objective, /datum/objective/contract))
+				var/datum/antagonist/traitor/affected_traitor = objective.owner.has_antag_datum(/datum/antagonist/traitor)
+				var/datum/contractor_hub/affected_contractor_hub = affected_traitor.contractor_hub
+				for(var/datum/syndicate_contract/affected_contract as anything in affected_contractor_hub.assigned_contracts)
+					if(affected_contract.contract == objective)
+						affected_contract.generate(affected_contractor_hub.assigned_targets)
+						affected_contractor_hub.assigned_targets.Add(affected_contract.contract.target)
+						to_chat(objective.owner.current, "<BR>[span_userdanger("Contract target out of reach. Contract rerolled.")]")
+						break
+			else
 				var/old_target = objective.target
 				objective.target = null
 				if(!objective)
@@ -216,9 +227,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	crew_member["name"] = mob_occupant.real_name
 
-	if(mob_occupant.mind && mob_occupant.mind.assigned_role)
+	if(mob_occupant.mind)
 		// Handle job slot/tater cleanup.
-		var/job = mob_occupant.mind.assigned_role
+		var/job = mob_occupant.mind.assigned_role.title
 		crew_member["job"] = job
 		SSjob.FreeRole(job)
 		if(LAZYLEN(mob_occupant.mind.objectives))
@@ -240,7 +251,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			announce_rank = general_record.fields["rank"]
 			qdel(general_record)
 
-	control_computer?.frozen_crew += list(crew_member)
+	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
+	if(!control_computer)
+		control_computer_weakref = null
+	else
+		control_computer.frozen_crew += list(crew_member)
 
 	// Make an announcement and log the person entering storage.
 	if(GLOB.announcement_systems.len)
@@ -249,22 +264,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/mob_content in mob_occupant)
-		var/obj/item/item_content = mob_content
+	for(var/obj/item/item_content as anything in mob_occupant)
 		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
 			continue
 
 		mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
-
-	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(TRUE))
-		if(world.time < 15 MINUTES) // before the 15 minute mark
-			mob_occupant.ghostize(FALSE) // Players despawned too early may not re-enter the game
-		else
-			mob_occupant.ghostize(TRUE)
 
 	handle_objectives()
 	QDEL_NULL(occupant)
@@ -294,12 +298,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		return
 
 	if(target == user)
-		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
-
-		var/datum/job/target_job = SSjob.GetJob(target.mind.assigned_role)
-
-		if(target_job && target_job.req_admin_notify)
+		if(target.mind.assigned_role.req_admin_notify)
 			tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
+		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
 		if(antag)
 			tgui_alert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
 

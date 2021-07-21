@@ -48,7 +48,6 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
-
 	if(_owner)
 		owner = _owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -168,12 +167,8 @@
 			var/datum/uplink_item/I = uplink_items[category][item]
 			if(I.limited_stock == 0)
 				continue
-			if(I.restricted_roles.len)
-				var/is_inaccessible = TRUE
-				for(var/R in I.restricted_roles)
-					if(R == user.mind.assigned_role || debug)
-						is_inaccessible = FALSE
-				if(is_inaccessible)
+			if(length(I.restricted_roles))
+				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
 					continue
 			if(I.restricted_species)
 				if(ishuman(user))
@@ -253,7 +248,13 @@
 	SIGNAL_HANDLER
 
 	var/mob/user = arguments[2]
-	owner = "[user.key]"
+	owner = user?.key
+	if(owner && !purchase_log)
+		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
+		if(GLOB.uplink_purchase_logs_by_key[owner])
+			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
+		else
+			purchase_log = new(owner, src)
 
 /datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	SIGNAL_HANDLER

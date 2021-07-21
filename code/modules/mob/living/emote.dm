@@ -123,13 +123,14 @@
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
-		if(H.dna.features["wings"] != "None")
-			if(H.dna.species.mutant_bodyparts["wingsopen"])
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings)
+			if(wings.wings_open)
 				open = TRUE
-				H.CloseWings()
+				wings.close_wings()
 			else
-				H.OpenWings()
-			addtimer(CALLBACK(H, open ? /mob/living/carbon/human.proc/OpenWings : /mob/living/carbon/human.proc/CloseWings), wing_time)
+				wings.open_wings()
+			addtimer(CALLBACK(wings, open ? /obj/item/organ/external/wings/functional.proc/open_wings : /obj/item/organ/external/wings/functional.proc/close_wings), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -231,7 +232,7 @@
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+		if(H.dna.species.id == SPECIES_HUMAN && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
 				return 'sound/voice/human/womanlaugh.ogg'
 			else

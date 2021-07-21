@@ -74,12 +74,12 @@
 	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/ollie, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	density = TRUE
+	set_density(TRUE)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-		density = FALSE
+		set_density(FALSE)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
@@ -286,7 +286,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
-	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
+	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	instability = 8
 	wheel_name = "skis"
 	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes

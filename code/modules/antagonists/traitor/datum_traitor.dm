@@ -24,6 +24,7 @@
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
+	suicide_cry = "FOR THE SYNDICATE!!"
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
@@ -125,7 +126,7 @@
 		objectives += kill_objective
 		return
 
-	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
+	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role.departments & DEPARTMENT_SCIENCE))
 		var/datum/objective/download/download_objective = new
 		download_objective.owner = owner
 		download_objective.gen_amount_goal()

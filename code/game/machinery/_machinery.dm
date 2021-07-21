@@ -227,7 +227,7 @@
  */
 /obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
-	density = FALSE
+	set_density(FALSE)
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
@@ -294,7 +294,7 @@
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
-	density = TRUE
+	set_density(TRUE)
 	if(!target)
 		for(var/am in loc)
 			if (!(can_be_occupant(am)))
@@ -770,12 +770,12 @@
 		power -= power * 0.0005
 	return ..()
 
-/obj/machinery/Exited(atom/movable/AM, atom/newloc)
+/obj/machinery/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(AM == occupant)
+	if(gone == occupant)
 		set_occupant(null)
-	if(AM == circuit)
-		LAZYREMOVE(component_parts, AM)
+	if(gone == circuit)
+		LAZYREMOVE(component_parts, gone)
 		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8

@@ -323,7 +323,7 @@
 		return FALSE
 	. = TRUE
 	moveToNullspace()
-	owner = new_limb_owner
+	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 	if(held_index)
 		if(held_index > new_limb_owner.hand_bodyparts.len)
@@ -361,6 +361,8 @@
 		LAZYADD(new_limb_owner.all_scars, scar)
 
 	update_bodypart_damage_state()
+	if(can_be_disabled)
+		update_disabled()
 
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()

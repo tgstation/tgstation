@@ -38,7 +38,7 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 	return ..()
 
@@ -60,10 +60,13 @@
 		if(S)
 			S.update_appearance()
 
-/obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+/obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
-	if(!isobserver(leaving) && isTerminator() && (get_dir(src, new_location) == dir))
+	if(leaving == src)
+		return // Let's not block ourselves.
+
+	if(!isobserver(leaving) && isTerminator() && direction == dir)
 		INVOKE_ASYNC(src, .proc/stair_ascend, leaving)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT

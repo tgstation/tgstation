@@ -215,7 +215,7 @@
 			to_chat(user, span_warning("[I] is too large for the drain enclosure."))
 			return
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
+			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
 		hiddenitem = I
 		to_chat(user, span_notice("You place [I] into the drain enclosure."))
@@ -488,6 +488,22 @@
 		return
 	return ..()
 
+/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	tool.play_tool_sound(src)
+	deconstruct()
+	return TRUE
+
+/obj/structure/sinkframe/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	return ..()
+
+/obj/structure/sinkframe/proc/drop_materials()
+	for(var/datum/material/material as anything in custom_materials)
+		new material.sheet_type(loc, FLOOR(custom_materials[material] / MINERAL_MATERIAL_AMOUNT, 1))
+	return
+
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
 	name = "Water Source"
@@ -656,11 +672,11 @@
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
-		density = FALSE
+		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		density = TRUE
+		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
 
@@ -756,14 +772,14 @@
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
-	density = FALSE
+	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
-	density = TRUE
+	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)
 		set_opacity(TRUE)

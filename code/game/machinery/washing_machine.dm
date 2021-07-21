@@ -346,6 +346,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
@@ -373,5 +377,5 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
-	density = TRUE //because machinery/open_machine() sets it to 0
+	set_density(TRUE) //because machinery/open_machine() sets it to FALSE
 	color_source = null

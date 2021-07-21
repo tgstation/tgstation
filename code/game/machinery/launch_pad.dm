@@ -108,16 +108,12 @@
 		y_offset = clamp(y, -range, range)
 	update_indicator()
 
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending)
-	if(teleporting)
-		to_chat(user, span_warning("ERROR: Launchpad busy."))
-		return
+/// Performs the teleport.
+/// sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
+/// alternate_log_name - An alternative name to use in logs, if `user` is not present..
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, alternate_log_name = null)
 
 	var/turf/dest = get_turf(src)
-
-	if(dest && is_centcom_level(dest.z))
-		to_chat(user, span_warning("ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."))
-		return
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
@@ -153,7 +149,7 @@
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	log_msg += ": [key_name(user)] has teleported "
+	log_msg += ": [alternate_log_name || key_name(user)] triggered a teleport "
 
 	if(sending)
 		source = dest
@@ -284,7 +280,7 @@
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] starts setting down [src]...", "You start setting up [pad]..."))
+	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()

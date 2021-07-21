@@ -412,7 +412,16 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
 	var/datum/radio_frequency/freq = SSradio.return_frequency(frequency)
-	var/list/devices = freq.devices["_default"]
+
+	var/list/devices = list()
+	var/list/device_refs = freq.devices["_default"]
+	for(var/datum/weakref/device_ref as anything in device_refs)
+		var/atom/device = device_ref.resolve()
+		if(!device)
+			device_refs -= device_ref
+			continue
+		devices += device
+
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
 		IO |= text[1]

@@ -50,12 +50,16 @@
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue
 		for (var/filter in fqs.devices)
-			var/list/f = fqs.devices[filter]
-			if (!f)
+			var/list/filtered = fqs.devices[filter]
+			if (!filtered)
 				output += "&nbsp;&nbsp;[filter]: ERROR<br>"
 				continue
-			output += "&nbsp;&nbsp;[filter]: [f.len]<br>"
-			for (var/device in f)
+			output += "&nbsp;&nbsp;[filter]: [filtered.len]<br>"
+			for(var/datum/weakref/device_ref as anything in filtered)
+				var/atom/device = device_ref.resolve()
+				if(!device)
+					filtered -= device_ref
+					continue
 				if (istype(device, /atom))
 					var/atom/A = device
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([AREACOORD(A)])<br>"

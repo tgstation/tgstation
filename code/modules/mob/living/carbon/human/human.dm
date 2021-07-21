@@ -28,7 +28,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
@@ -445,7 +445,7 @@
 		threatcount += 2
 
 	//Check for nonhuman scum
-	if(dna && dna.species.id && dna.species.id != "human")
+	if(dna && dna.species.id && dna.species.id != SPECIES_HUMAN)
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
@@ -941,14 +941,7 @@
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
-	if(target.loc != loc)
-		var/old_density = density
-		density = FALSE
-		step_towards(target, loc)
-		density = old_density
-
-	if(target.loc == loc)
-		return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
+	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))
@@ -1014,8 +1007,8 @@
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
 
-	if(mind.assigned_role in SSjob.name_occupations)
-		.[mind.assigned_role] = minutes
+	if(mind.assigned_role.title in SSjob.name_occupations)
+		.[mind.assigned_role.title] = minutes
 
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey

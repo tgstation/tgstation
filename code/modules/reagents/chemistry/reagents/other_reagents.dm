@@ -427,7 +427,7 @@
 	if(ishuman(exposed_mob))
 		if(methods & (PATCH|VAPOR))
 			var/mob/living/carbon/human/exposed_human = exposed_mob
-			if(exposed_human.dna.species.id == "human")
+			if(exposed_human.dna.species.id == SPECIES_HUMAN)
 				switch(exposed_human.skin_tone)
 					if("african1")
 						exposed_human.skin_tone = "african2"
@@ -713,6 +713,7 @@
 	to_chat(H, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
+	H.dna.update_dna_identity()
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -2059,12 +2060,20 @@
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	color_callback = CALLBACK(src, .proc/UpdateColor)
+	SSticker.OnRoundstart(color_callback)
+	return ..()
+
+/datum/reagent/colorful_reagent/Destroy()
+	LAZYREMOVE(SSticker.round_end_events, color_callback) //Prevents harddels during roundstart
+	color_callback = null //Fly free little callback
 	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
+	color_callback = null
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -2420,14 +2429,6 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-
-/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/L)
-	..()
-	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/L, delta_time, times_fired)
 	if(L.mind)
 		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -2716,3 +2717,47 @@
 		var/color
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
+
+// [Original ants concept by Keelin on Goon]
+/datum/reagent/ants
+	name = "Ants"
+	description = "A genetic crossbreed between ants and termites, their bites land at a 3 on the Schmidt Pain Scale."
+	reagent_state = SOLID
+	color = "#993333"
+	taste_mult = 1.3
+	taste_description = "tiny legs scuttling down the back of your throat"
+	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
+	glass_name = "glass of ants"
+	glass_desc = "Bottoms up...?"
+	ph = 4.6 // Ants contain Formic Acid
+	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
+	var/ant_damage = 0
+	/// Tells the debuff how many ants we are being covered with.
+	var/amount_left = 0
+
+/datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
+	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.005),0.1))) //Scales with time. Around 12.5 brute for 50 seconds.
+	if(DT_PROB(5, delta_time))
+		if(DT_PROB(5, delta_time)) //Super rare statement
+			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+		else
+			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/ants)
+	if(DT_PROB(15, delta_time))
+		victim.emote("scream")
+	if(DT_PROB(2, delta_time))
+		victim.vomit(rand(1, 2), stun = FALSE)
+	ant_damage += 1
+	return ..()
+
+/datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
+	ant_damage = 0
+	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
+	return ..()
+
+/datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!iscarbon(exposed_mob) || (methods & (INGEST|INJECT)))
+		return
+	if(methods & (PATCH|TOUCH|VAPOR))
+		amount_left = round(reac_volume,0.1)
+		exposed_mob.apply_status_effect(STATUS_EFFECT_ANTS, amount_left)

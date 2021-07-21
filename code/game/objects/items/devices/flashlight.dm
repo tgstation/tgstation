@@ -40,9 +40,7 @@
 	on = !on
 	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	update_brightness(user)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 	return 1
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
@@ -171,6 +169,7 @@
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
+	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	light_range = 2
 	var/holo_cooldown = 0

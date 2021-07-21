@@ -200,7 +200,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/table/wood/bar/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -215,8 +215,8 @@
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.mind && H.mind.assigned_role == "Bartender")
+		var/mob/living/carbon/human/human_user = user
+		if(is_bartender_job(human_user.mind?.assigned_role))
 			return TRUE
 
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)
@@ -236,7 +236,7 @@
 	var/static/list/check_times = list()
 	var/list/payees = list()
 
-/obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/scanner_gate/luxury_shuttle/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 
 	if(mover in approved_passengers)

@@ -40,8 +40,46 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_INTERNAL_AFFAIRS "Internal Affairs Agent"
 #define ROLE_FAMILIES "Familes Antagonists"
+
+#define ROLE_POSITRONIC_BRAIN "Positronic Brain"
+#define ROLE_FREE_GOLEM "Free Golem"
+#define ROLE_SERVANT_GOLEM "Servant Golem"
+#define ROLE_NUCLEAR_OPERATIVE "Nuclear Operative"
+#define ROLE_CLOWN_OPERATIVE "Clown Operative"
+#define ROLE_LONE_OPERATIVE "Lone Operative"
+#define ROLE_NIGHTMARE "Nightmare"
+#define ROLE_WIZARD_APPRENTICE "apprentice"
+#define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
+#define ROLE_SENTIENT_DISEASE "Sentient Disease"
+#define ROLE_MORPH "Morph"
+#define ROLE_SANTA "Santa"
+#define ROLE_FUGITIVE "Fugitive"
+
+//Spawner roles
+#define ROLE_GHOST_ROLE "Ghost Role"
+#define ROLE_SPIDER "Spider"
+#define ROLE_EXILE "Exile"
+#define ROLE_FUGITIVE_HUNTER "Fugitive Hunter"
+#define ROLE_ESCAPED_PRISONER "Escaped Prisoner"
+#define ROLE_LIFEBRINGER "Lifebringer"
+#define ROLE_ASHWALKER "Ash Walker"
+#define ROLE_LAVALAND_SYNDICATE "Lavaland Syndicate"
+#define ROLE_HERMIT "Hermit"
+#define ROLE_BEACH_BUM "Beach Bum"
+#define ROLE_HOTEL_STAFF "Hotel Staff"
+#define ROLE_SPACE_SYNDICATE "Space Syndicate"
 #define ROLE_SYNDICATE_CYBERSUN "Cybersun Space Syndicate" //Ghost role syndi from Forgottenship ruin
 #define ROLE_SYNDICATE_CYBERSUN_CAPTAIN "Cybersun Space Syndicate Captain" //Forgottenship captain syndie
+#define ROLE_HEADSLUG_CHANGELING "Headslug Changeling"
+#define ROLE_SPACE_PIRATE "Space Pirate"
+#define ROLE_ANCIENT_CREW "Ancient Crew"
+#define ROLE_SPACE_DOCTOR "Space Doctor"
+#define ROLE_SPACE_BARTENDER "Space Bartender"
+#define ROLE_SPACE_BAR_PATRON "Space Bar Patron"
+#define ROLE_SKELETON "Skeleton"
+#define ROLE_ZOMBIE "Zombie"
+#define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
+
 
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's

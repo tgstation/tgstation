@@ -68,6 +68,12 @@
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
 
+/datum/component/riding/creature/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+	// Ensure that the /mob/post_buckle_mob(mob/living/M) does not mess us up with layers
+	// If we do not do this override we'll be stuck with the above proc (+ 0.1)-ing our rider's layer incorrectly
+	rider.layer = initial(rider.layer)
+	return ..()
+
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/living_parent, mob/living/former_rider, force = FALSE)
 	if(istype(living_parent) && istype(former_rider))
 		living_parent.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")
@@ -155,7 +161,7 @@
 		human_parent.buckle_lying = 0
 		// the riding mob is made nondense so they don't bump into any dense atoms the carrier is pulling,
 		// since pulled movables are moved before buckled movables
-		riding_mob.density = FALSE
+		riding_mob.set_density(FALSE)
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
@@ -179,7 +185,7 @@
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	former_rider.density = TRUE
+	former_rider.set_density(!former_rider.body_position)
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off

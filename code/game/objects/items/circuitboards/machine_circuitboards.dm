@@ -436,7 +436,7 @@
 	build_path = /obj/machinery/rnd/production/protolathe/department
 
 /obj/item/circuitboard/machine/reagentgrinder
-	name = "Machine Design (All-In-One Grinder)"
+	name = "All-In-One Grinder (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/reagentgrinder/constructed
 	req_components = list(
@@ -1357,3 +1357,10 @@
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 4,
 		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/ecto_sniffer
+	name = "Ectoscopic Sniffer (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/ecto_sniffer
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1)

@@ -50,11 +50,12 @@
 	if(!exposed_mob.has_dna() || HAS_TRAIT(exposed_mob, TRAIT_GENELESS) || HAS_TRAIT(exposed_mob, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if(((methods & VAPOR) && prob(min(33, reac_volume))) || (methods & (INGEST|PATCH|INJECT)))
-		exposed_mob.randmuti()
+		exposed_mob.random_mutate_unique_identity()
+		exposed_mob.random_mutate_unique_features()
 		if(prob(98))
-			exposed_mob.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			exposed_mob.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
 		else
-			exposed_mob.easy_randmut(POSITIVE)
+			exposed_mob.easy_random_mutate(POSITIVE)
 		exposed_mob.updateappearance()
 		exposed_mob.domutcheck()
 
@@ -816,12 +817,16 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/delayed_toxin_damage = 0
+
+/datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
+	delayed_toxin_damage += (delta_time * 3)
+	. = ..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	var/toxdamage = current_cycle*3*REM
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
-	M.adjustToxLoss(toxdamage)
-	..()
+	M.log_message("has taken [delayed_toxin_damage] toxin damage from amanitin toxin", LOG_ATTACK)
+	M.adjustToxLoss(delayed_toxin_damage)
+	. = ..()
 
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
@@ -1125,7 +1130,7 @@
 			if(1)
 				M.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(2)
-				M.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+				M.manual_emote(pick("oofs silently.", "looks like [M.p_their()] bones hurt.", "grimaces, as though [M.p_their()] bones hurt."))
 			if(3)
 				to_chat(M, span_warning("Your bones hurt!"))
 	return ..()

@@ -1047,30 +1047,32 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
+/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
 	var/static/list/humanoid_icon_cache = list()
-	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
-
-		if(prefs)
-			prefs.copy_to(body,TRUE,FALSE)
-		if(J)
-			J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
-		else if (outfit_override)
-			body.equipOutfit(outfit_override,visualsOnly = TRUE)
-
-
-		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-		COMPILE_OVERLAYS(body)
-		for(var/D in showDirs)
-			var/icon/partial = getFlatIcon(body, defdir=D)
-			out_icon.Insert(partial,dir=D)
-
-		humanoid_icon_cache[icon_id] = out_icon
-		dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
-		return out_icon
-	else
+	if(icon_id && humanoid_icon_cache[icon_id])
 		return humanoid_icon_cache[icon_id]
+
+	var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
+
+	if(prefs)
+		prefs.apply_prefs_to(body, TRUE)
+
+	var/datum/outfit/outfit = outfit_override || job?.outfit
+	if(job)
+		body.dna.species.pre_equip_species_outfit(job, body, TRUE)
+	if(outfit)
+		body.equipOutfit(outfit, TRUE)
+
+	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+	COMPILE_OVERLAYS(body)
+	for(var/D in showDirs)
+		var/icon/partial = getFlatIcon(body, defdir=D)
+		out_icon.Insert(partial,dir=D)
+
+	humanoid_icon_cache[icon_id] = out_icon
+	dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
+	return out_icon
+
 
 //Hook, override to run code on- wait this is images
 //Images have dir without being an atom, so they get their own definition.
@@ -1123,6 +1125,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 /proc/icon2html(thing, target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE, extra_classes = null)
 	if (!thing)
+		return
+	if(SSlag_switch.measures[DISABLE_USR_ICON2HTML] && usr && !HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES))
 		return
 
 	var/key
@@ -1224,6 +1228,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 //Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_icon2html(thing, target, sourceonly = FALSE)
 	if (!thing)
+		return
+	if(SSlag_switch.measures[DISABLE_USR_ICON2HTML] && usr && !HAS_TRAIT(usr, TRAIT_BYPASS_MEASURES))
 		return
 
 	if (isicon(thing))

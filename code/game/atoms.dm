@@ -51,9 +51,9 @@
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
 
-	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays.
 	var/list/managed_vis_overlays
-	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc
+	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
@@ -83,7 +83,7 @@
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
 	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
-	var/list/custom_materials
+	var/list/datum/material/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
@@ -132,6 +132,9 @@
 	var/greyscale_config
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
+
+	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
+	var/list/datum/merger/mergers
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
@@ -290,7 +293,7 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(managed_overlays)
+	LAZYNULL(managed_overlays)
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
@@ -315,19 +318,19 @@
 	P.set_angle(new_angle_s)
 	return TRUE
 
-///Can the mover object pass this atom, while heading for the target turf
-/atom/proc/CanPass(atom/movable/mover, turf/target)
+/// Whether the mover object can avoid being blocked by this atom, while arriving from (or leaving through) the border_dir.
+/atom/proc/CanPass(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
 	if(mover.movement_type & PHASING)
 		return TRUE
-	. = CanAllowThrough(mover, target)
+	. = CanAllowThrough(mover, border_dir)
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
 	if(!mover.generic_canpass)
-		return mover.CanPassThrough(src, target, .)
+		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
 /// Returns true or false to allow the mover to move through src
-/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+/atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)
 	if(mover.pass_flags & pass_flags_self)
@@ -452,7 +455,6 @@
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	qdel(giver)
 	return null
 
 ///Remove air from this atom
@@ -711,7 +713,10 @@
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
@@ -748,6 +753,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
+		return
+	update_atom_colour()
+	QUEUE_SMOOTH(src)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
@@ -1312,20 +1321,20 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
  */
-/atom/Entered(atom/movable/AM, atom/oldLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
-	SEND_SIGNAL(AM, COMSIG_ATOM_ENTERING, src, oldLoc)
+/atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
+	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, old_loc, old_locs)
 
 /**
  * An atom is attempting to exit this atom's contents
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
  */
-/atom/Exit(atom/movable/AM, atom/newLoc)
+/atom/Exit(atom/movable/leaving, direction)
 	// Don't call `..()` here, otherwise `Uncross()` gets called.
 	// See the doc comment on `Uncross()` to learn why this is bad.
 
-	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, leaving, direction) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
 
 	return TRUE
@@ -1335,8 +1344,8 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXITED]
  */
-/atom/Exited(atom/movable/AM, atom/newLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
+/atom/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
 
 ///Return atom temperature
 /atom/proc/return_temperature()
@@ -1698,9 +1707,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
@@ -1845,6 +1852,16 @@
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
+
+///Setter for the `density` variable to append behavior related to its changing.
+/atom/proc/set_density(new_value)
+	SHOULD_CALL_PARENT(TRUE)
+	if(density == new_value)
+		return
+	. = density
+	density = new_value
+
+
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
 	if(base_pixel_x == new_value)
@@ -1919,7 +1936,7 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	return
+	AddComponent(/datum/component/rust)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -2036,7 +2053,19 @@
 	// Statusbar
 	status_bar_set_text(usr, name)
 	// Screentips
-	if(!usr?.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
-		usr.hud_used.screentip_text.maptext = ""
-	else
-		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+	if(usr?.hud_used)
+		if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+			usr.hud_used.screentip_text.maptext = ""
+		else
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+
+/// Gets a merger datum representing the connected blob of objects in the allowed_types argument
+/atom/proc/GetMergeGroup(id, list/allowed_types)
+	RETURN_TYPE(/datum/merger)
+	var/datum/merger/candidate
+	if(mergers)
+		candidate = mergers[id]
+	if(!candidate)
+		new /datum/merger(id, allowed_types, src)
+		candidate = mergers[id]
+	return candidate

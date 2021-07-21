@@ -268,7 +268,7 @@
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
-		var/datum/job/J = pick(SSjob.occupations)
+		var/datum/job/J = pick(SSjob.joinable_occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
 
@@ -694,6 +694,8 @@
 	new /obj/item/pickaxe/emergency(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/storage/toolbox/emergency(src)
+	new /obj/item/bodybag/environmental(src)
+	new /obj/item/bodybag/environmental(src)
 
 /obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
 	if (can_interact(user))
