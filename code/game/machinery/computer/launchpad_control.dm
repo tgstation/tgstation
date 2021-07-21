@@ -33,11 +33,24 @@
 
 	var/obj/machinery/computer/launchpad/attached_console
 
+/obj/item/circuit_component/bluespace_launchpad/get_ui_notices()
+	. = ..()
+	var/current_launchpad = launchpad_id.input_value
+	if(isnull(current_launchpad))
+		return
+
+	var/obj/machinery/launchpad/the_pad = attached_console.launchpads[current_launchpad]
+	if(isnull(the_pad))
+		return
+
+	. += create_ui_notice("Minimum Range: [-the_pad.range]", "orange", "minus")
+	. += create_ui_notice("Maximum Range: [the_pad.range]", "orange", "plus")
+
 /obj/item/circuit_component/bluespace_launchpad/Initialize()
 	. = ..()
 	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE, default = 1)
-	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER, FALSE)
-	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER, FALSE)
+	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER)
+	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER)
 	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
 	retrieve_trigger = add_input_port("Retrieve", PORT_TYPE_SIGNAL)
 
@@ -86,13 +99,21 @@
 	if(isnull(the_pad))
 		return
 
+	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
+
+	if(COMPONENT_TRIGGERED_BY(port, x_pos))
+		x_pos.set_input(the_pad.x_offset, FALSE)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(port, y_pos))
+		y_pos.set_input(the_pad.y_offset, FALSE)
+		return
+
 	var/checks = attached_console.teleport_checks(the_pad)
 	if(!isnull(checks))
 		why_fail.set_output(checks)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
-
-	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
