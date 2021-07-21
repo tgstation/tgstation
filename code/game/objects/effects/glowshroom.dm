@@ -1,6 +1,6 @@
-#define GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR 10
-#define GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM 0.2
-#define GLOWSHROOM_BASE_INTEGRITY 60
+
+GLOBAL_VAR_INIT(glowshrooms, 0)
+
 /obj/structure/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
@@ -252,9 +252,3 @@
 		myseed.potency = 50
 		myseed.endurance = 50
 		myseed.yield = 5
-
-
-
-#undef GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR
-#undef GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM
-#undef GLOWSHROOM_BASE_INTEGRITY
