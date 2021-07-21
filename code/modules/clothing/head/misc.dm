@@ -541,6 +541,7 @@
 	desc = "This will scare them. All will know my power."
 	icon_state = "human_leather"
 	inhand_icon_state = "human_leather"
+<<<<<<< refs/remotes/Bytube/fishing-cap
 
 /obj/item/clothing/head/fishcap
 <<<<<<< refs/remotes/Bytube/fishing-cap
@@ -552,3 +553,5 @@
 	worn_icon = 'icons/mob/clothing/head/fishcap.dmi'
 	icon_state = "fishcap"
 	inhand_icon_state = "fishcap"
+=======
+>>>>>>> Revert "Adds a new hat for seasoned fishermen"
