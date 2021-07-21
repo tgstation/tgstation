@@ -542,6 +542,7 @@
 	icon_state = "human_leather"
 	inhand_icon_state = "human_leather"
 <<<<<<< refs/remotes/Bytube/fishing-cap
+<<<<<<< refs/remotes/Bytube/fishing-cap
 
 /obj/item/clothing/head/fishcap
 <<<<<<< refs/remotes/Bytube/fishing-cap
@@ -549,9 +550,17 @@
 =======
 	name = "Fishing Cap"
 >>>>>>> Adds a new hat for seasoned fishermen
+=======
+
+/obj/item/clothing/head/fishcap
+	name = "Fishing Cap"
+>>>>>>> Revert "Revert "Adds a new hat for seasoned fishermen""
 	desc = "Women fear me \n\ Fish fear me \n\ Men turn their eyes away from me \n\ As I walk no beast dares make a sound in my presence \n\ I am alone on this barren Earth."
 	worn_icon = 'icons/mob/clothing/head/fishcap.dmi'
 	icon_state = "fishcap"
 	inhand_icon_state = "fishcap"
+<<<<<<< refs/remotes/Bytube/fishing-cap
 =======
 >>>>>>> Revert "Adds a new hat for seasoned fishermen"
+=======
+>>>>>>> Revert "Revert "Adds a new hat for seasoned fishermen""
