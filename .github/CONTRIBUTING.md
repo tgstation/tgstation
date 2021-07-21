@@ -93,9 +93,9 @@ Things you **CAN'T** do:
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier. It'll save both your time and ours, by making sure you don't have to make any changes and we don't have to ask you to. Thank you for reading this section!
 
 ### Object Oriented Code
-As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
+As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code should be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
 
-### All BYOND paths must contain the full path
+### All BYOND paths should contain the full path
 (i.e. absolute pathing)
 
 DM will allow you nest almost any type keyword into a block, such as:
@@ -126,7 +126,7 @@ datum
 				code
 ```
 
-The use of this is not allowed in this project as it makes finding definitions via full text searching next to impossible. The only exception is the variables of an object may be nested to the object, but must not nest further.
+The use of this is not allowed in this project as it makes finding definitions via full text searching next to impossible. The only exception is the variables of an object may be nested to the object, but should not nest further.
 
 The previous code made compliant:
 
@@ -184,15 +184,15 @@ In the above example, we made our health_loss variable a per second value rather
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
 ### No overriding type safety checks
-The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
+The use of the : operator to override type safety checks is not allowed. You should cast the variable to the proper type.
 
-### Type paths must begin with a `/`
+### Type paths should begin with a `/`
 eg: `/datum/thing`, not `datum/thing`
 
-### Type paths must be snake case
+### Type paths should be snake case
 eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bluebird` or `/datum/blueBird`
 
-### Datum type paths must began with "datum"
+### Datum type paths should began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
 
 ### Do not use text/string based type paths
@@ -210,7 +210,7 @@ var/path_type = "/obj/item/baseball_bat"
 While DM allows other ways of declaring variables, this one should be used for consistency.
 
 ### Tabs, not spaces
-You must use tabs to indent your code, NOT SPACES.
+You should use tabs to indent your code, NOT SPACES.
 
 Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
 
@@ -227,7 +227,7 @@ Do not use tabs/spaces for indentation in the middle of a code line. Not only is
 ```
 
 ### No hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
+Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there should be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
 
@@ -396,11 +396,11 @@ for(var/atom/thing as anything in bag_of_atoms)
 
 ### Develop Secure Code
 
-* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
+* Player input should always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
 
-* Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
+* Calls to the database should be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
 
-* All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
+* All calls to topics should be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
 
 * Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
 
@@ -418,15 +418,15 @@ for(var/atom/thing as anything in bag_of_atoms)
 ### SQL
 * Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
-* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
+* All changes to the database's layout(schema) should be specified in the database changelog in SQL, as well as reflected in the schema files
 
-* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
+* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines should be incremented.
 
-* Queries must never specify the database, be it in code, or in text files in the repo.
+* Queries should never specify the database, be it in code, or in text files in the repo.
 
-* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+* Primary keys are inherently immutable and you should never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
 
-* The ttl for data from the database is 10 seconds. You must have a compelling reason to store and reuse data for longer then this.
+* The ttl for data from the database is 10 seconds. You should have a compelling reason to store and reuse data for longer then this.
 
 * Do not write stored and transformed data to the database, instead, apply the transformation to the data in the database directly.
 	* ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
@@ -434,10 +434,10 @@ for(var/atom/thing as anything in bag_of_atoms)
 
 ### Mapping Standards
 * Adding, Removing, or Replacing Station Maps
-	* All pull requests adding, removing, or replacing station maps must receive prior approval from a maptainer, or they will be closed without additional warning.
+	* All pull requests adding, removing, or replacing station maps should receive prior approval from a maptainer, or they will be closed without additional warning.
 
 * TGM Format & Map Merge
-	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format). This is done using the [Map Merge](https://tgstation13.org/wiki/Map_Merger) utility included in the repo to convert the file to TGM format.
+	* All new maps submitted to the repo through a pull request should be in TGM format (unless there is a valid reason present to have it in the default BYOND format). This is done using the [Map Merge](https://tgstation13.org/wiki/Map_Merger) utility included in the repo to convert the file to TGM format.
 	* Likewise, you MUST run Map Merge prior to opening your PR when updating existing maps to minimize the change differences (even when using third party mapping programs such as FastDMM.)
 		* Failure to run Map Merge on a map after using third party mapping programs (such as FastDMM) greatly increases the risk of the map's key dictionary becoming corrupted by future edits after running map merge. Resolving the corruption issue involves rebuilding the map's key dictionary; id est rewriting all the keys contained within the map by reconverting it from BYOND to TGM format - which creates very large differences that ultimately delay the PR process and is extremely likely to cause merge conflicts with other pull requests.
 
@@ -448,14 +448,14 @@ for(var/atom/thing as anything in bag_of_atoms)
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
 ### User Interfaces
-* All new player-facing user interfaces must use TGUI.
+* All new player-facing user interfaces should use TGUI.
 * Raw HTML is permitted for admin and debug UIs.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
 ### Signal Handlers
-All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
+All procs that are registered to listen for signals using `RegisterSignal()` should contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
 /type/path/proc/signal_callback()
 	SIGNAL_HANDLER
@@ -463,7 +463,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc should be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
@@ -526,7 +526,7 @@ This prevents double-negatives (such as `if (!is_not_flying)` which can make com
 
 #### Exceptions to variable names
 
-Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names should follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
 
 Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
 
@@ -701,7 +701,7 @@ Setting `is_red` in args is simple, and directly names the variable the argument
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
-* Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
+* Changes to the `/config` tree should be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
 
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
@@ -734,7 +734,7 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 #### Use
 * Bitwise AND - '&'
 	* Should be written as `variable & CONSTANT` NEVER `CONSTANT & variable`. Both are valid, but the latter is confusing and nonstandard.
-* Associated lists declarations must have their key value quoted if it's a string
+* Associated lists declarations should have their key value quoted if it's a string
 	* WRONG: `list(a = "b")`
 	* RIGHT: `list("a" = "b")`
 
@@ -792,7 +792,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * You are expected to have tested your pull requests if it is anything that would warrant testing. Text only changes, single number balance changes, and similar generally don't need testing, but anything else does. This means by extension web edits are disallowed for larger changes.
 
-* You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you must provide proof by way of profiling that your changes are faster.
+* You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you should provide proof by way of profiling that your changes are faster.
 
 * We ask that you use the changelog system to document your player facing changes, which prevents our players from being caught unaware by said changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
 
@@ -810,9 +810,9 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 ## Porting features/sprites/sounds/tools from other codebases
 
-If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
+If you are porting features/tools from other codebases, you should give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
 
-Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated. However if you are porting assets from GoonStation or usually any assets under the [Creative Commons 3.0 BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/) are to go into the 'goon' folder of the /tg/station codebase.
+Regarding sprites & sounds, you should credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated. However if you are porting assets from GoonStation or usually any assets under the [Creative Commons 3.0 BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/) are to go into the 'goon' folder of the /tg/station codebase.
 
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
