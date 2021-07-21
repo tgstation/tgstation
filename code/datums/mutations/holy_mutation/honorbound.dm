@@ -66,7 +66,7 @@
 		var/mob/living/living_target = clickingon
 		for(var/datum/surgery/S in living_target.surgeries)
 			if(living_target.body_position == LYING_DOWN || !S.lying_required || !iscarbon(living_target))
-				if(S.next_step_check(honorbound))
+				if(S.next_step(honorbound, only_check = TRUE))
 					return
 
 	var/mob/living/clickedmob = clickingon

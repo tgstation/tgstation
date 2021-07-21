@@ -88,7 +88,8 @@
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
 
-/datum/surgery/proc/next_step(mob/living/user, modifiers)
+/// Try to advance (or, if only_check is TRUE, just see if it's possible) to the next step of the surgery datum.
+/datum/surgery/proc/next_step(mob/living/user, modifiers, only_check = FALSE)
 	if(location != user.zone_selected)
 		return FALSE
 	if(step_in_progress)
@@ -101,28 +102,16 @@
 	var/datum/surgery_step/step = get_surgery_step()
 	if(step)
 		var/obj/item/tool = user.get_active_held_item()
-		if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		if(only_check)
+			if(step.can_operate(user, target, tool))
+				return TRUE
+		else if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
 		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
-			to_chat(user, span_warning("This step requires a different tool!"))
+			if(!only_check)
+				to_chat(user, span_warning("This step requires a different tool!"))
 			return TRUE
 	return FALSE
-
-/// Used for stuff such as honorbound checks.
-/datum/surgery/proc/next_step_check(mob/user)
-	if(location != user.zone_selected)
-		return FALSE
-	if(step_in_progress)
-		return TRUE
-	var/datum/surgery_step/step = get_surgery_step()
-	if(!step)
-		return FALSE
-	var/obj/item/tool = user.get_active_held_item()
-	if(step.can_operate(user, target, tool))
-		return TRUE
-	if(tool && tool.item_flags & SURGICAL_TOOL) //Won't whack the target.
-		return TRUE
-
 
 /datum/surgery/proc/get_surgery_step()
 	var/step_type = steps[status]
