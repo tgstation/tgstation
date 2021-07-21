@@ -535,7 +535,9 @@
 	created_name = "\improper Vim"
 
 /obj/item/bot_assembly/vim/attackby(obj/item/part, mob/user, params)
-	..()
+	. = ..()
+	if(.)
+		return
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
 			if(istype(part, /obj/item/bodypart/l_leg/robot) || istype(part, /obj/item/bodypart/r_leg/robot))

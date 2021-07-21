@@ -288,6 +288,8 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, params)
 	. = ..()
+	if(.)
+		return
 	if(!istype(attacked_with, /obj/item/bodypart/l_leg/robot) && !istype(attacked_with, /obj/item/bodypart/r_leg/robot))
 		return
 	if(ismob(loc))
