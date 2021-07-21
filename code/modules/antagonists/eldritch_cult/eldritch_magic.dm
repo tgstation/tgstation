@@ -539,7 +539,7 @@
 	name = "Mansus Link"
 	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a Mansus Net, allowing them to communicate with each other from afar."
 	school = SCHOOL_FORBIDDEN
-	charge_max = 300
+	charge_max = 6 SECONDS
 	clothes_req = FALSE
 	invocation = "PI'RC' TH' M'ND"
 	invocation_type = "whisper"
