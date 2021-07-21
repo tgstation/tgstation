@@ -111,24 +111,6 @@ Contains:
 	slowdown = 4
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
-	//Space santa outfit suit
-/obj/item/clothing/head/helmet/space/santahat
-	name = "Santa's hat"
-	desc = "Ho ho ho. Merrry X-mas!"
-	icon_state = "santahat"
-	flags_cover = HEADCOVERSEYES
-
-	dog_fashion = /datum/dog_fashion/head/santa
-
-/obj/item/clothing/suit/space/santa
-	name = "Santa's suit"
-	desc = "Festive!"
-	icon_state = "santa"
-	inhand_icon_state = "santa"
-	slowdown = 0
-	allowed = list(/obj/item) //for stuffing exta special presents
-
-
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "modified EVA helmet"

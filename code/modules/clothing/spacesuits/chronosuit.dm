@@ -1,3 +1,13 @@
+
+/datum/outfit/chrono_agent
+	name = "Timeline Eradication Agent"
+	uniform = /obj/item/clothing/under/color/white
+	suit = /obj/item/clothing/suit/space/chronos
+	back = /obj/item/chrono_eraser
+	head = /obj/item/clothing/head/helmet/space/chronos
+	mask = /obj/item/clothing/mask/breath
+	suit_store = /obj/item/tank/internals/oxygen
+
 /obj/item/clothing/head/helmet/space/chronos
 	name = "Chronosuit Helmet"
 	desc = "A white helmet with an opaque blue visor."
