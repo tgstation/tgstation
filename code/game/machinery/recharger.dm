@@ -152,7 +152,7 @@
 		if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
 			finished_recharging = TRUE
 			playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-			say("The [charging.name] has finished recharging!")
+			say("[charging] has finished recharging!")
 
 	else
 		return PROCESS_KILL
