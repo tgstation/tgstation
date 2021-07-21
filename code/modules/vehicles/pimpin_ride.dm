@@ -121,7 +121,8 @@
 /obj/item/janicart_upgrade
 	name = "base upgrade"
 	desc = "An abstract upgrade for mobile janicarts."
-	icon_state = "janicart_upgrade"
+	icon = 'icons/obj/janicart_upgrade.dmi'
+	icon_state = "janicart_buffer"
 	greyscale_config = /datum/greyscale_config/janicart_upgrade
 	/// The greyscale config for the on-cart installed upgrade overlay
 	var/overlay_greyscale_config = /datum/greyscale_config/janicart_upgrade/installed
@@ -157,6 +158,7 @@
 
 /obj/item/janicart_upgrade/vacuum
 	name = "vacuum upgrade"
+	icon_state = "janicart_vacuum"
 	desc = "An upgrade for mobile janicarts which adds a vacuum functionality."
 	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
