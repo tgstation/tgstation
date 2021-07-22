@@ -693,3 +693,10 @@
   dragomagol:
   - qol: changed the links for the bartender and cook guides to the appropriate new
       wiki pages
+2021-07-22:
+  Ghommie:
+  - bugfix: fixed some oddities with the wheelchair wheels overlay.
+  Guestify:
+  - qol: Added nanodrug vend to tramstation
+  vincentiusvin:
+  - bugfix: fixed cryocells and hfr runtiming on quick consecutive wrench actions.
