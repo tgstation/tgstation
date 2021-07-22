@@ -35,7 +35,7 @@ Reproductive extracts:
 		to_chat(user, span_warning("[src] is still digesting!"))
 		return
 
-	if(length(contents) >= 3) //if for some reason the contents are full, but it didnt digest, attempt to digest again
+	if(length(contents) >= feedAmount) //if for some reason the contents are full, but it didnt digest, attempt to digest again
 		to_chat(user, span_warning("[src] appears to be full but is not digesting! Maybe poking it stimulated it to digest."))
 		slimeStorage.processCubes(src, user)
 		return
