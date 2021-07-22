@@ -1224,6 +1224,7 @@
 #include "code\game\objects\items\toys.dm"
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\vending_items.dm"
+#include "code\game\objects\items\virgin_mary.dm"
 #include "code\game\objects\items\wayfinding.dm"
 #include "code\game\objects\items\weaponry.dm"
 #include "code\game\objects\items\circuitboards\circuitboard.dm"
