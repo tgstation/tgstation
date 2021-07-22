@@ -332,7 +332,7 @@
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
 		target.Knockdown(knockdown_time)
-		target.apply_damage(stamina_damage, STAMINA)
+		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
 		additional_effects_non_cyborg(target, user)
 
 		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
