@@ -1247,7 +1247,7 @@
 /obj/item/storage/box/gum/happiness/Initialize()
 	. = ..()
 	if (prob(25))
-		desc += "You can faintly make out the word 'Hemopagopril' was once scribbled on it."
+		desc += " You can faintly make out the word 'Hemopagopril' was once scribbled on it."
 
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
