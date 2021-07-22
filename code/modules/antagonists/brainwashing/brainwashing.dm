@@ -32,7 +32,7 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
-	ui_name = "BrainwashedInfo"
+	ui_name = "AntagInfoBrainwashed"
 	suicide_cry = "FOR... SOMEONE!!"
 
 /datum/antagonist/brainwashed/ui_static_data(mob/user)
