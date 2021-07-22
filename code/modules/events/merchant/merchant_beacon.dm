@@ -7,6 +7,7 @@
 
 	mode = "BIGMONEYV.1"
 	active = FALSE
+	allow_snow = TRUE
 
 	///minimum countdown ticks
 	var/countdown_min = 1 MINUTES

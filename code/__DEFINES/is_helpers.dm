@@ -32,6 +32,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isclosedturf(A) (istype(A, /turf/closed))
 
+#define isicemoonturf(A) (istype(A, /turf/open/floor/plating/asteroid/snow/icemoon))
+
 #define isindestructiblewall(A) (istype(A, /turf/closed/indestructible))
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))

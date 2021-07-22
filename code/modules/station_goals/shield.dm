@@ -93,6 +93,8 @@
 	anchored = FALSE
 	density = TRUE
 	use_power = FALSE
+	///if true, allows the sat to be anchored on snow. for satellites that should work on icebox
+	var/allow_snow = FALSE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	var/static/gid = 0
@@ -119,9 +121,10 @@
 	update_appearance()
 
 /obj/machinery/satellite/proc/toggle(mob/user)
-	if(!active && !isinspace())
+	var/allowed = isinspace() || (allow_snow && isicemoonturf())
+	if(!active && !allowed)
 		if(user)
-			to_chat(user, span_warning("You can only activate [src] in space."))
+			to_chat(user, span_warning("[src] needs to be outside!"))
 		return FALSE
 	if(user)
 		to_chat(user, span_notice("You [active ? "deactivate": "activate"] [src]."))

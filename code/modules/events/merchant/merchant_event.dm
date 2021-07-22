@@ -47,7 +47,7 @@
 	var/datum/map_template/shuttle/merchant/ship = new visiting_merchant.map_template_path
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
-	var/z = SSmapping.empty_space.z_value
+	var/z = SSmapping.transit.z_value
 	var/turf/shuttle_spawning_turf = locate(x,y,z)
 	if(!shuttle_spawning_turf)
 		CRASH("Merchant shuttle found no turf to load in!")
