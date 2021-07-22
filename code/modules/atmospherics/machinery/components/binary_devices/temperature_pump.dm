@@ -113,7 +113,7 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/on
 	on = TRUE
-	heat_transfer_rate = max_heat_transfer_rate
+	heat_transfer_rate = 100
 	icon_state = "tpump_on_map-3"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/on/layer1
