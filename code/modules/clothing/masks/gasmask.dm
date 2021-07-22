@@ -15,20 +15,16 @@
 	///List to keep track of each filter
 	var/list/gas_filters
 	///Is the filter allowed to spawn from the start?
-	var/plasmaman_type = FALSE
+	var/starting_filter_type = /obj/item/gas_filter
 
 /obj/item/clothing/mask/gas/Initialize()
 	. = ..()
 	if(!max_filters)
 		return
 
-	var/filter_type = /obj/item/gas_filter
-	if(plasmaman_type)
-		filter_type = /obj/item/gas_filter/plasmaman
-
 	for(var/i in 1 to max_filters)
-		new filter_type(src)
-		LAZYADD(gas_filters, filter_type)
+		new starting_filter_type(src)
+		LAZYADD(gas_filters, starting_filter_type)
 	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/Destroy()
@@ -167,7 +163,7 @@
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
-	plasmaman_type = TRUE
+	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
@@ -226,7 +222,7 @@
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/plasmaman
-	plasmaman_type = TRUE
+	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()
