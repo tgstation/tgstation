@@ -253,6 +253,7 @@
 
 	animate(pixel_x=oldx, pixel_y=oldy, time=3)
 
+#undef TILES_PER_SECOND
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)
