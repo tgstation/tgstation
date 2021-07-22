@@ -121,8 +121,7 @@
 	update_appearance()
 
 /obj/machinery/satellite/proc/toggle(mob/user)
-	var/allowed = isinspace() || (allow_snow && isicemoonturf())
-	if(!active && !allowed)
+	if(!active && !(isinspace() || (allow_snow && isicemoonturf())))
 		if(user)
 			to_chat(user, span_warning("[src] needs to be outside!"))
 		return FALSE
