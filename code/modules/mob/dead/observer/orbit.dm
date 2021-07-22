@@ -57,6 +57,10 @@
 	var/list/misc = list()
 	var/list/npcs = list()
 
+	var/antagonist_vision = FALSE
+	if(user.client && check_rights_for(user.client, R_ADMIN))
+		antagonist_vision = TRUE
+
 	var/list/pois = getpois(skip_mindless = TRUE, specify_dead_role = FALSE)
 	for (var/name in pois)
 		var/list/serialized = list()
@@ -87,7 +91,7 @@
 
 				for (var/_A in mind.antag_datums)
 					var/datum/antagonist/A = _A
-					if (A.show_to_ghosts)
+					if (antagonist_vision || A.show_to_ghosts)
 						was_antagonist = TRUE
 						serialized["antag"] = A.name
 						antagonists += list(serialized)
@@ -104,6 +108,7 @@
 	data["ghosts"] = ghosts
 	data["misc"] = misc
 	data["npcs"] = npcs
+	data["all_antagonists"] = antagonist_vision
 	return data
 
 /datum/orbit_menu/ui_assets()

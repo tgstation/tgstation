@@ -87,6 +87,7 @@ export const Orbit = (props, context) => {
     ghosts,
     misc,
     npcs,
+    all_antagonists,
   } = data;
 
   const [searchText, setSearchText] = useLocalState(context, "searchText", "");
@@ -103,6 +104,9 @@ export const Orbit = (props, context) => {
   sortedAntagonists.sort((a, b) => {
     return compareString(a[0], b[0]);
   });
+
+
+  let antagonists_title = all_antagonists ? "All Antagonists" : "Ghost-Visible Antagonists"
 
   const orbitMostRelevant = searchText => {
     for (const source of [
@@ -165,7 +169,7 @@ export const Orbit = (props, context) => {
           </Flex>
         </Section>
         {antagonists.length > 0 && (
-          <Section title="Ghost-Visible Antagonists">
+          <Section title={`${antagonists_title}`}>
             {sortedAntagonists.map(([name, antags]) => (
               <Section key={name} title={name} level={2}>
                 {antags
