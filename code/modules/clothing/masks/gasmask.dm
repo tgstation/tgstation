@@ -15,15 +15,20 @@
 	///List to keep track of each filter
 	var/list/gas_filters
 	///Is the filter allowed to spawn from the start?
-	var/starting_filter = TRUE
+	var/plasmaman_type = FALSE
 
 /obj/item/clothing/mask/gas/Initialize()
 	. = ..()
-	if(!max_filters || !starting_filter)
+	if(!max_filters)
 		return
+
+	var/filter_type = /obj/item/gas_filter
+	if(plasmaman_type)
+		filter_type = /obj/item/gas_filter/plasmaman
+
 	for(var/i in 1 to max_filters)
-		var/obj/item/gas_filter/filter = new(src)
-		LAZYADD(gas_filters, filter)
+		new filter_type(src)
+		LAZYADD(gas_filters, filter_type)
 	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/Destroy()
@@ -159,8 +164,10 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
-	starting_filter = FALSE
 	var/list/clownmask_designs = list()
+
+/obj/item/clothing/mask/gas/clown_hat/plasmaman
+	plasmaman_type = TRUE
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
@@ -204,7 +211,6 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
-	starting_filter = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -217,8 +223,10 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
-	starting_filter = FALSE
 	var/list/mimemask_designs = list()
+
+/obj/item/clothing/mask/gas/mime/plasmaman
+	plasmaman_type = TRUE
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()
@@ -268,7 +276,6 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
-	starting_filter = FALSE
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
