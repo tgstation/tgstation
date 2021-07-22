@@ -66,7 +66,7 @@
 
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
 	if (chained)
-		chained = null
+		chained = FALSE
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs( user.loc )
 		icon_state = initial(icon_state)
@@ -77,7 +77,7 @@
 	// Note: not using istype here because we want to ignore all subtypes
 	if (H.type == /obj/item/restraints/handcuffs && !chained)
 		qdel(H)
-		chained = 1
+		chained = TRUE
 		slowdown = 15
 		icon_state = "sneakers_chained"
 	return
