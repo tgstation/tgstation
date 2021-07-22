@@ -20,6 +20,7 @@ Reproductive extracts:
 	var/cooldown = 3 SECONDS
 	var/last_produce = 0
 	var/datum/component/storage/concrete/extract_inventory/slimeStorage
+	
 /obj/item/slimecross/reproductive/examine()
 	. = ..()
 	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
