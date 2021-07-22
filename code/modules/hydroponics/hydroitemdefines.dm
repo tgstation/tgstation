@@ -104,8 +104,10 @@
  * user - the person doing the scanning
  */
 /obj/item/plant_analyzer/proc/plant_biotype_health_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
-	user.visible_message(span_notice("[user] analyzes [scanned_mob]'s vitals."), \
-						span_notice("You analyze [scanned_mob]'s vitals."))
+	user.visible_message(
+		span_notice("[user] analyzes [scanned_mob]'s vitals."),
+		span_notice("You analyze [scanned_mob]'s vitals.")
+		)
 
 	healthscan(user, scanned_mob, advanced = TRUE)
 	add_fingerprint(user)
@@ -117,8 +119,10 @@
  * user - the person doing the scanning
  */
 /obj/item/plant_analyzer/proc/plant_biotype_chem_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
-	user.visible_message(span_notice("[user] analyzes [scanned_mob]'s bloodstream."), \
-						span_notice("You analyze [scanned_mob]'s bloodstream."))
+	user.visible_message(
+		span_notice("[user] analyzes [scanned_mob]'s bloodstream."),
+		span_notice("You analyze [scanned_mob]'s bloodstream.")
+		)
 	chemscan(user, scanned_mob)
 	add_fingerprint(user)
 
@@ -131,15 +135,14 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_stats(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "<span class='info'>*---------*\n"
+	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
-		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]</span>\n"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
-		returned_message += "[span_info("<B>No plant found.</B>")]\n"
+		returned_message += span_bold("No plant found.\n")
 
-	returned_message += "<span class='info'>"
 	returned_message += "- Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]\n"
 	returned_message += "- Pest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]\n"
 	returned_message += "- Toxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]\n"
@@ -148,8 +151,8 @@
 	if(scanned_tray.yieldmod != 1)
 		returned_message += "- Yield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]\n"
 
-	returned_message += "*---------*</span>"
-	return returned_message
+	returned_message += "*---------*"
+	return span_info(returned_message)
 
 /**
  * This proc is called when we scan a hydroponics tray or soil on right click (chemicals mode)
@@ -160,15 +163,13 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_chems(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "<span class='info'>*---------*\n"
+	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
-		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]</span>\n"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
 		returned_message += scan_plant_chems(scanned_tray.myseed)
 	else
-		returned_message += "[span_info("<B>No plant found.</B>")]\n"
-
-	returned_message += "<span class='info'>"
+		returned_message += span_bold("No plant found.\n")
 
 	returned_message += "- Tray contains:\n"
 	if(scanned_tray.reagents.reagent_list.len)
@@ -177,8 +178,8 @@
 	else
 		returned_message += "[span_notice("No reagents found.")]\n"
 
-	returned_message += "*---------*</span>"
-	return returned_message
+	returned_message += "*---------*"
+	return span_info(returned_message)
 
 /**
  * This proc is called when a seed or any grown plant is scanned on left click (stats mode).
@@ -189,7 +190,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "[span_info("*---------*\nThis is \a <span class='name'>[scanned_object]")].\n"
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -199,8 +200,8 @@
 	else
 		returned_message += "*---------*\nNo genes found.\n*---------*"
 
-	returned_message += "</span>\n"
-	return returned_message
+	returned_message += "\n"
+	return span_info(returned_message)
 
 /**
  * This proc is called when a seed or any grown plant is scanned on right click (chemical mode).
@@ -211,7 +212,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
-	var/returned_message = "[span_info("*---------*\nThis is \a <span class='name'>[scanned_object]")].\n"
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -223,8 +224,8 @@
 	else
 		returned_message += "*---------*\nNo reagents found.\n*---------*"
 
-	returned_message += "</span>\n"
-	return returned_message
+	returned_message += "\n"
+	return span_info(returned_message)
 
 /**
  * This proc is formats the traits and stats of a seed into a message.
@@ -257,7 +258,7 @@
 	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
 	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
 	if(scanned.rarity)
-		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]</span>\n"
+		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]\n"
 	var/all_removable_traits = ""
 	var/all_immutable_traits = ""
 	for(var/datum/plant_gene/trait/traits in scanned.genes)
@@ -268,8 +269,8 @@
 		else
 			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
 
-	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]</span>\n"
-	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]</span>\n"
+	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]\n"
+	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]\n"
 	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
 	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
@@ -291,10 +292,10 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_genes(obj/item/seeds/scanned)
 	var/text = ""
 	text += "- Plant Reagent Genes -\n"
-	text += "*---------*\n<span class='notice'>"
+	text += "*---------*\n"
 	for(var/datum/plant_gene/reagent/gene in scanned.genes)
 		text += "- [gene.get_name()] -\n"
-	text += "</span>*---------*"
+	text += "*---------*"
 	return text
 
 /**
@@ -307,21 +308,21 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "<br>[span_info("- Plant Reagents -")]"
-	text += "<br>[span_info("Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]")]"
+	text += "- Plant Reagents -\n"
+	text += "Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]\n"
 	var/chem_cap = 0
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
 		var/datum/reagent/reagent  = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
-		reagents_text += "\n[span_info("- [reagent.name]: [amount]")]"
+		reagents_text += "\n- [reagent.name]: [amount]"
 	if(chem_cap > 100)
-		text += "<br>[span_warning("- Reagent Traits Over 100% Production")]</br>"
+		text += "- [span_danger("Reagent Traits Over 100% Production")]\n"
 
 	if(reagents_text)
-		text += "<br>[span_info("*---------*")]"
+		text += "*---------*"
 		text += reagents_text
-	text += "<br>[span_info("*---------*")]"
+	text += "\n*---------*"
 	return text
 
 /**
@@ -332,7 +333,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_graft_text(obj/item/graft/scanned_graft)
-	var/text = "[span_info("*---------*")]\n<span class='info'>- Plant Graft -\n"
+	var/text = "*---------*\n- Plant Graft -\n"
 	if(scanned_graft.parent_name)
 		text += "- Parent Plant: [span_notice("[scanned_graft.parent_name]")] -\n"
 	if(scanned_graft.stored_trait)
@@ -344,8 +345,8 @@
 	text += "- Lifespan: [span_notice("[scanned_graft.lifespan]")]\n"
 	text += "- Weed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]\n"
 	text += "- Weed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]\n"
-	text += "*---------*</span>"
-	return text
+	text += "*---------*"
+	return span_info(text)
 
 
 // *************************************
