@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Gas meters, freezers, and air alarms all now use GAGS coloring to display colors based on temperature. (red is hot, green is room temp, and purple is cold)"

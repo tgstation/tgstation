@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Index Table outputting a table instead of a list."
