@@ -137,6 +137,16 @@
 	else
 		airlock.locked = TRUE
 
+/obj/effect/mapping_helpers/airlock/welded
+	name = "airlock welded helper"
+	icon_state = "airlock_welded_helper"
+
+/obj/effect/mapping_helpers/airlock/welded/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.welded)
+		log_mapping("[src] at [AREACOORD(src)] tried to weld [airlock] but it's already locked!")
+	else
+		airlock.welded = TRUE
+
 
 /obj/effect/mapping_helpers/airlock/unres
 	name = "airlock unresctricted side helper"
