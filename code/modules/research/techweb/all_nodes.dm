@@ -1155,6 +1155,7 @@
 		"rangemod",
 		"superresonator",
 		"triggermod",
+		"mecha_kineticgun",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

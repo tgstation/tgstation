@@ -134,10 +134,11 @@
 		return TRUE
 	return FALSE
 
+//Exosuit-mounted kinetic accelerator
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
-	equip_cooldown = 20
+	equip_cooldown = 15
 	name = "Exosuit Proto-kinetic Accelerator"
-	desc = "An exosuit-mounted mining tool."
+	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
 	icon_state = "mecha_kineticgun"
 	energy_drain = 30
 	projectile = /obj/projectile/kinetic
