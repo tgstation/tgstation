@@ -311,25 +311,25 @@ GLOBAL_LIST(gang_tags)
 	name = "Punctuation"
 	icon_state = "+"
 
-/obj/effect/decal/cleanable/crayon/punctuation/+
+/obj/effect/decal/cleanable/crayon/punctuation/plus
 	icon_state = "+"
-/obj/effect/decal/cleanable/crayon/punctuation/-
+/obj/effect/decal/cleanable/crayon/punctuation/minus
 	icon_state = "-"
-/obj/effect/decal/cleanable/crayon/punctuation/!
+/obj/effect/decal/cleanable/crayon/punctuation/exclaimation
 	icon_state = "!"
-/obj/effect/decal/cleanable/crayon/punctuation/?
+/obj/effect/decal/cleanable/crayon/punctuation/question
 	icon_state = "?"
-/obj/effect/decal/cleanable/crayon/punctuation/=
+/obj/effect/decal/cleanable/crayon/punctuation/equal
 	icon_state = "="
-/obj/effect/decal/cleanable/crayon/punctuation/%
+/obj/effect/decal/cleanable/crayon/punctuation/percent
 	icon_state = "%"
-/obj/effect/decal/cleanable/crayon/punctuation/&
+/obj/effect/decal/cleanable/crayon/punctuation/and
 	icon_state = "&"
-/obj/effect/decal/cleanable/crayon/punctuation/,
+/obj/effect/decal/cleanable/crayon/punctuation/comma
 	icon_state = ","
-/obj/effect/decal/cleanable/crayon/punctuation/.
+/obj/effect/decal/cleanable/crayon/punctuation/period
 	icon_state = "."
-/obj/effect/decal/cleanable/crayon/punctuation/#
+/obj/effect/decal/cleanable/crayon/punctuation/hash
 	icon_state = "#"
 /obj/effect/decal/cleanable/crayon/punctuation/slash
 	icon_state = "/"
