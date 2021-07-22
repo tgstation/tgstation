@@ -736,6 +736,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/mind_initialize()
 	return
 
+/mob/dead/observer/Login()
+	. = ..()
+	var/datum/player_details/deets = LAZYACCESS(GLOB.player_details, ckey)
+	if(antag_sight_unlocked || !deets || !deets.antag_sight_unlocked)
+		return
+	// prevent ghosts reverting unlock after finding a safe way to spawn, like CTF
+	// unfortunately mind datum is no good for this
+	antag_sight_unlocked = TRUE
+	for(var/datum/atom_hud/antag/antag_hud in GLOB.huds)
+		antag_hud.add_hud_to(src)
+
 /mob/dead/observer/proc/show_data_huds()
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/H = GLOB.huds[hudtype]
@@ -783,6 +794,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	antag_sight_unlocked = TRUE
+	var/datum/player_details/deets = GLOB.player_details[ckey]
+	deets.antag_sight_unlocked = TRUE
 
 	if(can_reenter_corpse) // force DNR, copy pasta of that verb
 		can_reenter_corpse = FALSE

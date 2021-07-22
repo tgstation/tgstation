@@ -80,7 +80,12 @@
 		source = LOGSRC_CLIENT
 	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_src=[source]'>LOGS</a>\] <br>"
 
-	body += "<b>Mob type</b> = [M.type]<br><br>"
+	body += "<b>Mob type</b> = [M.type]<br>"
+
+	if(M.client)
+		var/datum/player_details/deets = LAZYACCESS(GLOB.player_details, M.ckey)
+		body += "<b>AntagHUD unlocked</b> = [deets?.antag_sight_unlocked ? "True" : "False"]<br>"
+	body += "<br>"
 
 	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(M)]'>Kick</A> | "
 	if(M.client)

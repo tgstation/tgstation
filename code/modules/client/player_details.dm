@@ -5,6 +5,7 @@
 	var/list/post_logout_callbacks = list()
 	var/list/played_names = list() //List of names this key played under this round
 	var/byond_version = "Unknown"
+	var/antag_sight_unlocked = FALSE
 	var/datum/achievement_data/achievements
 
 /datum/player_details/New(key)
