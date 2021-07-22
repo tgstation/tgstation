@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Research consoles now correctly show GAGS-ified icons properly. No more missing janicart upgrades!"
