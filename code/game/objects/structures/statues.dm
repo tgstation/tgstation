@@ -92,6 +92,10 @@
 	name = "statue of a scientist"
 	icon_state = "sci"
 
+/obj/structure/statue/plasma/xeno
+	name = "statue of a xenomorph"
+	icon_state = "xeno"
+
 /obj/structure/statue/plasma/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
