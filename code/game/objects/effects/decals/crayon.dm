@@ -16,7 +16,7 @@ GLOBAL_LIST(gang_tags)
 	. = ..()
 	if(e_name)
 		name = e_name
-	desc = "A [name] vandalizing the station."
+	desc = "A graffiti vandalizing the station."
 	if(alt_icon)
 		icon = alt_icon
 	if(type)
