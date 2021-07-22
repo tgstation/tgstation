@@ -43366,7 +43366,9 @@
 /area/security/prison)
 "ehM" = (
 /mob/living/simple_animal/hostile/carp{
-	environment_smash = 0
+	environment_smash = 0;
+	name = "Tuna";
+	real_name = "Tuna"
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
@@ -50070,6 +50072,11 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
+"heK" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/sheet/glass,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "hfo" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -82583,6 +82590,11 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
+"vcT" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/sheet/glass,
+/turf/open/space/basic,
+/area/solars/port/aft)
 "vdd" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/start/hangover,
@@ -102350,7 +102362,7 @@ tnI
 oUy
 aau
 aeU
-cmU
+heK
 jOe
 jOe
 jOe
@@ -102866,7 +102878,7 @@ asO
 cmU
 cmU
 foo
-foo
+vcT
 foo
 foo
 foo
@@ -104410,7 +104422,7 @@ cmU
 aeU
 aeU
 aeU
-tMV
+aeU
 aDS
 vOE
 bFI
@@ -104666,7 +104678,7 @@ acK
 cmU
 aeU
 aUz
-aeU
+tMV
 aeU
 cnS
 cuU
