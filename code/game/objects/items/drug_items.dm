@@ -50,7 +50,7 @@
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
 		reagent_flags = OPENCONTAINER
 		spillable = TRUE
-		return update_icon()
+		update_appearance()
 	. = ..()
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

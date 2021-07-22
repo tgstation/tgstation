@@ -579,9 +579,6 @@
 		var/throwtarget = get_edge_target_turf(dancer_turf, get_dir(dancer_turf, get_step_away(dance_partner, dancer_turf)))
 		dance_partner.throw_at(target = throwtarget, range = 2, speed = 1)
 
-/datum/reagent/drug/blastoff/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-	speech_args[SPEECH_SPANS] |= SPAN_CLOWN
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
@@ -616,7 +613,7 @@
 		//uneven so we spend slightly less time with bright colors
 		animate(color = col_filter_twothird, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
 		animate(color = col_filter_half, time = 6 SECONDS, easing = LINEAR_EASING)
-		animate(color = col_filter_empty, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+		animate(color = col_filter_empty, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 		animate(color = col_filter_half, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
 		animate(color = col_filter_twothird, time = 12 SECONDS, easing = LINEAR_EASING)
 
@@ -706,15 +703,14 @@ TODO:
 saturnx implementation
 	make saturnx colour matrix linger longer in the desaturated region.
 	add blur(angular?) filter or staic wave filter
-	fix the hair not becoming invisible first time the drug is take bug. (manually call update_hair?)
 
 blastoff implementation
-	add animated ripple filter?
 	fix blast off ampoule sprite not updating when opened.
 
 mushroom_hallucinogen implementation
-	add an animated wave filter.
+	fix out why the rainbow filter and the wave filter don't play nice.
 
+add tastes to the new reagents
 make sure the design doc and code aligns.
 
 Testing
