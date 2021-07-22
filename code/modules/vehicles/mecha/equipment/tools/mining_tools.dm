@@ -1,5 +1,5 @@
 
-// Drill, Diamond drill, Mining scanner
+// Drill, Diamond drill, Mining scanner, Exosuit Proto-kinetic Accelerator
 
 #define DRILL_BASIC 1
 #define DRILL_HARDENED 2
@@ -189,6 +189,20 @@
 			return
 		scanning_time = world.time + equip_cooldown
 		mineral_scan_pulse(get_turf(src))
+
+/obj/item/mecha_parts/mecha_equipment/mounted_kinetic_accelerator
+	name = "exosuit proto-kinetic accelerator"
+	desc = "previously handheld"
+	icon_state = "mecha_drill"
+	equip_cooldown = 15
+	energy_drain = 10
+	force = 15
+	harmful = TRUE
+	range = MECHA_RANGED
+	tool_behaviour = TOOL_MINING
+	toolspeed = 0.9
+
+	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED
