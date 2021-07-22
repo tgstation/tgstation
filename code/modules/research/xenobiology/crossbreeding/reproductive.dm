@@ -3,11 +3,6 @@ Reproductive extracts:
 	When fed three monkey cubes, produces between
 	1 and 4 normal slime extracts of the same colour.
 */
-/*
-Reproductive extracts:
-	When fed three monkey cubes, produces between
-	1 and 4 normal slime extracts of the same colour.
-*/
 
 
 /obj/item/slimecross/reproductive
@@ -21,7 +16,7 @@ Reproductive extracts:
 	var/feedAmount = 3
 	var/last_produce = 0
 	var/datum/component/storage/concrete/extract_inventory/slimeStorage
-	
+
 /obj/item/slimecross/reproductive/examine()
 	. = ..()
 	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
@@ -60,7 +55,7 @@ Reproductive extracts:
 				return
 			else
 				to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
-				
+
 /obj/item/slimecross/reproductive/Destroy()
 	slimeStorage = null
 	return ..()
