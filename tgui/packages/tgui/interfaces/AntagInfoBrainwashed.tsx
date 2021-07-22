@@ -16,7 +16,7 @@ type Info = {
   objectives: Objective[];
 };
 
-export const BrainwashedInfo = (props, context) => {
+export const AntagInfoBrainwashed = (props, context) => {
   return (
     <Window
       width={400}

@@ -13,7 +13,7 @@ const noticestyle = {
   color: 'lightblue',
 };
 
-export const MorphInfo = (props, context) => {
+export const AntagInfoMorph = (props, context) => {
   return (
     <Window
       width={620}

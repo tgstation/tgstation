@@ -44,7 +44,7 @@ type Info = {
   objectives: Objective[];
 };
 
-export const WizardInfo = (props, context) => {
+export const AntagInfoWizard = (props, context) => {
   return (
     <Window
       width={620}

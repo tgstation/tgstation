@@ -211,7 +211,7 @@ const CodewordsSection = (props, context) => {
   );
 };
 
-export const TraitorInfo = (props, context) => {
+export const AntagInfoTraitor = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
     theme,
