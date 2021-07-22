@@ -28,6 +28,6 @@
 	var/cores = rand(1,4)
 	playsound(parent, 'sound/effects/splat.ogg', 40, TRUE)
 	parent.last_produce = world.time
-	to_chat(user, span_notice("[parent] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":]!"))
+	to_chat(user, span_notice("[parent] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!"))
 	for(var/i = 0, i < cores, i++)
 		new parent.extract_type(get_turf(parent.loc))
