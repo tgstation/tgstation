@@ -48,9 +48,9 @@
 	has_filter = TRUE
 	return TRUE
 
-/obj/item/clothing/mask/gas/crowbar_act(mob/living/user, obj/item/tool)
+/obj/item/clothing/mask/gas/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(!has_filter || !max_filters)
-		return
+		return ..()
 	for(var/i in 1 to max_filters)
 		var/obj/item/gas_filter/filter = locate() in src
 		if(!filter)
