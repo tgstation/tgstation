@@ -426,6 +426,7 @@
 
 /obj/projectile/magic/locker/Destroy()
 	locker_suck = FALSE
+	//RemoveElement(/datum/element/connect_loc) //We do this manually so the forcemoves don't "hit" us. This behavior is kinda dumb, someone refactor this
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()

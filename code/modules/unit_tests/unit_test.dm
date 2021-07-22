@@ -24,7 +24,7 @@ GLOBAL_VAR(test_log)
 
 	/// The top right floor turf of the testing zone
 	var/turf/run_loc_floor_top_right
-	///The priority of the test, the larger it is the earlier it fires
+	///The priority of the test, the larger it is the later it fires
 	var/priority = TEST_DEFAULT
 	//internal shit
 	var/focus = FALSE

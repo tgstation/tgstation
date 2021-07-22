@@ -17,7 +17,7 @@
 
 /turf/open/floor/plating/rust/New()
 	var/atom/wall_new = new /turf/open/floor/plating(src)
-	wall_new.AddComponent(/datum/component/rust)
+	wall_new.AddComponent(/datum/component/rust, "plating_rust")
 
 /datum/component/rust/Initialize(rust_iconstate = "rust")
 	. = ..()
