@@ -45,7 +45,7 @@
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
+			if(has_job_loyalties && (H.mind.assigned_role.title in job_loyalties))
 				inspired += H
 			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H

@@ -255,6 +255,18 @@ export const Hypertorus = (props, context) => {
                   heating_conductor: value,
                 })} />
             </LabeledList.Item>
+            <LabeledList.Item label="Cooling Volume">
+              <NumberInput
+                animated
+                value={parseFloat(data.cooling_volume)}
+                width="63px"
+                unit="L"
+                minValue={50}
+                maxValue={2000}
+                onDrag={(e, value) => act('cooling_volume', {
+                  cooling_volume: value,
+                })} />
+            </LabeledList.Item>
             <LabeledList.Item label="Magnetic Constrictor">
               <NumberInput
                 animated

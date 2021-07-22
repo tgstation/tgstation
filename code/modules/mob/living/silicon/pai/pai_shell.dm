@@ -58,7 +58,7 @@
 	stop_pulling()
 	if(istype(loc, /obj/item/clothing/head/mob_holder))
 		var/obj/item/clothing/head/mob_holder/MH = loc
-		MH.release()
+		MH.release(display_messages = FALSE)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card

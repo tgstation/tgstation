@@ -10,15 +10,12 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/fetch_thing = controller.blackboard[BB_FETCH_TARGET]
 
-	if(fetch_thing.anchored || !isturf(fetch_thing.loc) || IS_EDIBLE(fetch_thing)) //either we can't pick it up, or we'd rather eat it, so stop trying.
+	//either we can't pick it up, or we'd rather eat it, so stop trying.
+	if(fetch_thing.anchored || !isturf(fetch_thing.loc) || IS_EDIBLE(fetch_thing) || !living_pawn.CanReach(fetch_thing))
 		finish_action(controller, FALSE)
 		return
 
-	if(in_range(living_pawn, fetch_thing))
-		finish_action(controller, TRUE)
-		return
-
-	finish_action(controller, FALSE)
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/fetch/finish_action(datum/ai_controller/controller, success)
 	. = ..()

@@ -15,19 +15,6 @@
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(OXYLOSS)
 
-/obj/item/restraints/Destroy()
-	if(iscarbon(loc))
-		var/mob/living/carbon/M = loc
-		if(M.handcuffed == src)
-			M.set_handcuffed(null)
-			M.update_handcuffed()
-			if(M.buckled && M.buckled.buckle_requires_restraints)
-				M.buckled.unbuckle_mob(M)
-		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.update_inv_legcuffed()
-	return ..()
-
 /**
  * # Handcuffs
  *
@@ -115,10 +102,8 @@
 	else if(dispense)
 		cuffs = new type()
 
-	cuffs.forceMove(target)
-	target.set_handcuffed(cuffs)
+	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	target.update_handcuffed()
 	if(trashtype && !dispense)
 		qdel(src)
 	return
@@ -374,10 +359,7 @@
 				if(C.body_position == STANDING_UP)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
-						C.legcuffed = src
-						forceMove(C)
-						C.update_equipment_speed_mods()
-						C.update_inv_legcuffed()
+						INVOKE_ASYNC(C, /mob/living/carbon.proc/equip_to_slot, src, ITEM_SLOT_LEGCUFFED)
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 			else if(snap && isanimal(L))
 				var/mob/living/simple_animal/SA = L
@@ -458,10 +440,7 @@
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message(span_danger("\The [src] ensnares [C]!"))
-		C.legcuffed = src
-		forceMove(C)
-		C.update_equipment_speed_mods()
-		C.update_inv_legcuffed()
+		C.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, span_userdanger("\The [src] ensnares you!"))
 		C.Knockdown(knockdown)
@@ -500,6 +479,7 @@
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.spring_trap(null, hit_atom)
 		qdel(src)
+		return
 	. = ..()
 
 /**
