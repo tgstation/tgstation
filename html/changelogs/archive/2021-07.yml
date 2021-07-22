@@ -693,3 +693,16 @@
   dragomagol:
   - qol: changed the links for the bartender and cook guides to the appropriate new
       wiki pages
+2021-07-22:
+  Ghommie:
+  - bugfix: fixed some oddities with the wheelchair wheels overlay.
+  Guestify:
+  - qol: Added nanodrug vend to tramstation
+  Watermelon914:
+  - bugfix: Fixed Index Table outputting a table instead of a list.
+  timothymtorres:
+  - qol: Gas meters, freezers, and air alarms all now use GAGS coloring to display
+      colors based on temperature. (red is hot, green is room temp, and purple is
+      cold)
+  vincentiusvin:
+  - bugfix: fixed cryocells and hfr runtiming on quick consecutive wrench actions.
