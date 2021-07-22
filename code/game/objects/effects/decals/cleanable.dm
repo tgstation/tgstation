@@ -105,3 +105,10 @@
 		return bloodiness
 	else
 		return 0
+
+/obj/effect/decal/cleanable/generic
+	name = "clutter"
+	desc = "Someone should clean that up."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shards"
+	beauty = -50
