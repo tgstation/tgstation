@@ -154,6 +154,11 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#3F3C40#FFCE5B"
 
+/obj/item/clothing/head/hos/beret/navyhos
+	name = "head of security's beret"
+	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
+	greyscale_colors = "#3C485A#FFCE5B"
+
 /obj/item/clothing/head/hos/beret/syndicate
 	name = "syndicate beret"
 	desc = "A black beret with thick armor padding inside. Stylish and robust."
@@ -247,24 +252,16 @@
 	dog_fashion = null
 	flags_1 = NONE
 
-/obj/item/clothing/head/beret/sec/navyhos
-	name = "head of security's beret"
-	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
-	greyscale_colors = "#3C485A#FFCE5B"
 
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
-	icon_state = "beret_badge_fancy_twist"
-	greyscale_config = /datum/greyscale_config/beret_badge_fancy
-	greyscale_config_worn = /datum/greyscale_config/beret_badge_fancy/worn
-	greyscale_colors = "#3C485A#FF0000#00AEEF"
+	greyscale_colors = "#3C485A#00AEEF"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 30, ACID = 50, WOUND = 6)
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
-	icon_state = "beret_badge_bolt"
 	greyscale_colors = "#3C485A#FF0000"
 
 
@@ -289,26 +286,13 @@
 /obj/item/clothing/head/beret/medical
 	name = "medical beret"
 	desc = "A medical-flavored beret for the doctor in you!"
-	icon_state = "beret_badge_med"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#FFFFFF#5A96BB"
+	greyscale_colors = "#FFFFFF"
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/medical/paramedic
 	name = "paramedic beret"
 	desc = "For finding corpses in style!"
-	greyscale_colors = "#16313D#5893B5"
-
-/obj/item/clothing/head/beret/medical/chemist
-	name = "chemist beret"
-	desc = "Not acid-proof!"
-	greyscale_colors = "#FFFFFF#FF3300"
-
-/obj/item/clothing/head/beret/medical/virologist
-	name = "virologist beret"
-	desc = "Sneezing in this expensive beret would be a waste of a good beret."
-	greyscale_colors = "#FFFFFF#006600"
+	greyscale_colors = "#16313D"
 
 
 //Engineering
@@ -316,19 +300,13 @@
 /obj/item/clothing/head/beret/engi
 	name = "engineering beret"
 	desc = "Might not protect you from radiation, but definitely will protect you from looking unfashionable!"
-	icon_state = "beret_badge_engi"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#FFBC30#EFEFEF"
+	greyscale_colors = "#FFBC30"
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/atmos
 	name = "atmospheric beret"
 	desc = "While \"pipes\" and \"style\" might not rhyme, this beret sure makes you feel like they should!"
-	icon_state = "beret_badge"
-	greyscale_config = /datum/greyscale_config/beret_badge
-	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#FFDE15#00A5FF"
+	greyscale_colors = "#FFDE15"
 	flags_1 = NONE
 
 

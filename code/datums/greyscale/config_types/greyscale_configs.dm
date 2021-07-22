@@ -301,15 +301,6 @@
 	name = "Beret With Badge Worn"
 	json_config = 'code/datums/greyscale/json_configs/beret_badge_worn.json'
 
-/datum/greyscale_config/beret_badge_fancy
-	name = "Beret With Fancy Badge"
-	icon_file = 'icons/obj/clothing/head/beret.dmi'
-	json_config = 'code/datums/greyscale/json_configs/beret_badge_fancy.json'
-
-/datum/greyscale_config/beret_badge_fancy/worn
-	name = "Beret With Fancy Badge Worn"
-	json_config = 'code/datums/greyscale/json_configs/beret_badge_fancy_worn.json'
-
 /datum/greyscale_config/suspenders
 	name = "Suspenders"
 	icon_file = 'icons/obj/clothing/belts.dmi'
