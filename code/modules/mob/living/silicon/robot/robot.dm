@@ -209,14 +209,14 @@
 	var/dat = ""
 	var/list/alarms = listener.alarms
 	for (var/alarm_type in alarms)
-		dat += text("<B>[alarm_type]</B><BR>\n")
+		dat += "<B>[alarm_type]</B><BR>\n"
 		var/list/alerts = alarms[alarm_type]
 		if (length(alerts))
 			for (var/alarm in alerts)
 				var/list/alm = alerts[alarm]
 				var/area/A = alm[1]
 				dat += "<NOBR>"
-				dat += text("-- [A.name]")
+				dat += "-- [A.name]"
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
@@ -259,7 +259,7 @@
 	if(cell)
 		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
 	else
-		. += text("No Cell Inserted!")
+		. += "No Cell Inserted!"
 
 	if(model)
 		for(var/datum/robot_energy_storage/st in model.storages)
@@ -268,10 +268,12 @@
 		. += "Master AI: [connected_ai.name]"
 
 /mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
-	queueAlarm(text("--- [alarm_type] alarm detected in [source_area.name]!"), alarm_type)
+	SIGNAL_HANDLER
+	queueAlarm("--- [alarm_type] alarm detected in [source_area.name]!", alarm_type)
 
 /mob/living/silicon/robot/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
-	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, 0)
+	SIGNAL_HANDLER
+	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, FALSE)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
 	if (A == modularInterface)

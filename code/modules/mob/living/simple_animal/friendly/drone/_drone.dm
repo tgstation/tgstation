@@ -322,9 +322,11 @@
 		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
 
 /mob/living/simple_animal/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
 	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
 
 /mob/living/simple_animal/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
 	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
 /mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)

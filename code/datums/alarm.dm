@@ -1,23 +1,36 @@
+//This files deals with the generic sending and receiving of "alarms"
+//This is a somewhat blanket term, it covers things like fire/power/atmos alarms, along with some oddballs
+//Side effect of how the system is used, these are mostly things that are of interest to ais and borgs
+//Though it could easily be expanded to cover other senders/revievers
+//The system as a whole differs from reading off a global list in a few ways.
+//In that A, it allows us to send cameras for ais/borgs/potentially others to jump to
+//And B, it's not like we're giving you all the alarms that have been sent, because of the seperate listing for each reviever
+//You only recieve alarms sent after you start to listen
+//Also of note, due to an optimzation done on areas, one alarm handler will only ever send one "on" or "off" alarm
+//So the whole only receving stuff sent post creation thing actually matters
+//Honestly I'm not sure how much of this is a feature, and how much is just old code
+//But I'm leaving it how I found it
+
 ///Represents a single source of alarms, one alarm handler will only ever count for one alarm per listener
 /datum/alarm_handler
-	///A list of alarm type -> list of area names we currently have alarms in
+	///A list of alarm type -> list of areas we currently have alarms in
 	var/list/sent_alarms = list()
 	///Our source atom
 	var/atom/source_atom
 
-/datum/alarm_handler/New(atom/_source_atom)
-	if(istype(_source_atom))
-		source_atom = _source_atom
+/datum/alarm_handler/New(atom/source_atom)
+	if(istype(source_atom))
+		src.source_atom = source_atom
 	else
 		var/source_type = ""
-		if(istype(_source_atom, /datum))
-			source_type = _source_atom.type
+		if(istype(source_atom, /datum))
+			source_type = source_atom.type
 		stack_trace("a non atom was passed into alarm_handler! [_source_atom] [source_type]")
 	return ..()
 
 /datum/alarm_handler/Destroy()
 	for(var/alarm_type in sent_alarms)
-		for(var/area/area_to_clear in sent_alarms[alarm_type])
+		for(var/area/area_to_clear as anything in sent_alarms[alarm_type])
 			//Yeet all connected alarms
 			clear_alarm_from_area(alarm_type, area_to_clear)
 	source_atom = null
@@ -26,7 +39,9 @@
 ///Sends an alarm to any interested things, does some checks to prevent unneeded work
 ///Important to note is that source_atom is not held as a ref, we're used as a proxy to prevent hard deletes
 ///optional_camera should only be used when you have one camera you want to pass along to alarm listeners, most of the time you should have no use for it
-/datum/alarm_handler/proc/send_alarm(alarm_type, atom/use_as_source_atom = source_atom, optional_camera)
+/datum/alarm_handler/proc/send_alarm(alarm_type, atom/use_as_source_atom, optional_camera)
+	if(!use_as_source_atom)
+		use_as_source_atom = source_atom
 	if(!use_as_source_atom)
 		return
 
@@ -53,12 +68,13 @@
 	return TRUE
 
 ///Clears an alarm from any interested listeners
-/datum/alarm_handler/proc/clear_alarm(alarm_type, use_as_source_atom = source_atom)
+/datum/alarm_handler/proc/clear_alarm(alarm_type, use_as_source_atom)
+	if(!use_as_source_atom)
+		use_as_source_atom = source_atom
 	if(!use_as_source_atom)
 		return
 
-	var/area/our_area = get_area(use_as_source_atom)
-	return clear_alarm_from_area(alarm_type, our_area)
+	return clear_alarm_from_area(alarm_type, get_area(use_as_source_atom))
 
 ///Exists so we can request that the alarms from an area are cleared, even if our source atom is no longer in that area
 /datum/alarm_handler/proc/clear_alarm_from_area(alarm_type, area/our_area)
@@ -95,16 +111,17 @@
 	var/accepting_alarm_changes = TRUE
 
 ///Accepts a list of alarm types to pay attention to, a list of valid z levels, and a list of valid areas. areas and zlevels are ignored if null
-/datum/alarm_listener/New(_alarms_to_listen_for, _allowed_z_levels, _allowed_areas)
-	allowed_z_levels = _allowed_z_levels
-	allowed_areas = _allowed_areas
-	for(var/alarm_type in _alarms_to_listen_for)
+/datum/alarm_listener/New(alarms_to_listen_for, allowed_z_levels, allowed_areas)
+	src.allowed_z_levels = allowed_z_levels
+	src.allowed_areas = allowed_areas
+	for(var/alarm_type in alarms_to_listen_for)
 		RegisterSignal(SSdcs, COMSIG_ALARM_FIRE(alarm_type), .proc/add_alarm)
 		RegisterSignal(SSdcs, COMSIG_ALARM_CLEAR(alarm_type), .proc/clear_alarm)
 
 	return ..()
 
-///Adds an alarm to our alarms list, you probobly shouldn't be calling this manually
+///Adds an alarm to our alarms list, you shouldn't be calling this manually
+///It should all be handled by the signal listening we do, unless you want to only send an alarm to one listener
 /datum/alarm_listener/proc/add_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/source_area, source_z, optional_camera)
 	if (!accepting_alarm_changes)
 		return
@@ -137,7 +154,8 @@
 	alarms_of_our_type[source_area.name] = list(source_area, cameras, list(handler))
 	SEND_SIGNAL(src, COMSIG_ALARM_TRIGGERED, alarm_type, source_area)
 
-///Removes an alarm to our alarms list, you probobly shouldn't be calling this manually
+///Removes an alarm to our alarms list, you probably shouldn't be calling this manually
+///It should all be handled by the signal listening we do, unless you want to only remove an alarm to one listener
 /datum/alarm_listener/proc/clear_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/source_area)
 	if(!accepting_alarm_changes)
 		return
@@ -151,7 +169,7 @@
 		return
 
 	var/list/alarm = alarms_of_our_type[source_area.name]
-	var/list/sources  = alarm[3]
+	var/list/sources = alarm[3]
 	sources -= handler
 
 	if (length(sources))

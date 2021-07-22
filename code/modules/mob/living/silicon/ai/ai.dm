@@ -271,12 +271,12 @@
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
 	if(stat != CONSCIOUS)
-		. += text("Systems nonfunctional")
+		. += "Systems nonfunctional"
 		return
-	. += text("System integrity: [(health + 100) * 0.5]%")
+	. += "System integrity: [(health + 100) * 0.5]%"
 	if(isturf(loc)) //only show if we're "in" a core
-		. += text("Backup Power: [battery * 0.5]%")
-	. += text("Connected cyborgs: [length(connected_robots)]")
+		. += "Backup Power: [battery * 0.5]%"
+	. += "Connected cyborgs: [length(connected_robots)]"
 	for(var/r in connected_robots)
 		var/mob/living/silicon/robot/connected_robot = r
 		var/robot_status = "Nominal"
@@ -287,16 +287,16 @@
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
 		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
-		. += text("[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
-		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]")
-	. += text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]") //Count of total AI shells
+		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
+		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
+	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=[REF(src)];mach_close=aialerts'>Close</A><BR><BR>"
 	var/list/alarms = listener.alarms
 	for (var/alarm_type in alarms)
-		dat += text("<B>[]</B><BR>\n", alarm_type)
+		dat += "<B>[alarm_type]</B><BR>\n"
 		var/list/alerts = alarms[alarm_type]
 		if (length(alerts))
 			for (var/alarm in alerts)
@@ -308,15 +308,15 @@
 				if (C && istype(C, /list))
 					var/dat2 = ""
 					for (var/obj/machinery/camera/I in C)
-						dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[]</A>", (dat2=="") ? "" : " | ", I.c_tag)
-					dat += text("-- [] ([])", A.name, (dat2!="") ? dat2 : "No Camera")
+						dat2 += "[(dat2=="") ? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(I)]>[I.c_tag]</A>"
+					dat += "-- [A.name] ([(dat2!="") ? dat2 : "No Camera"])"
 				else if (C && istype(C, /obj/machinery/camera))
 					var/obj/machinery/camera/Ctmp = C
-					dat += text("-- [] (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[]</A>)", A.name, Ctmp.c_tag)
+					dat += "-- [A.name] (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[Ctmp.c_tag]</A>)"
 				else
-					dat += text("-- [] (No Camera)", A.name)
+					dat += "-- [A.name] (No Camera)",
 				if (sources.len > 1)
-					dat += text("- [] sources", sources.len)
+					dat += "- [sources.len] sources",
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
@@ -416,7 +416,7 @@
 	if (href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
-		var/t1 = text("window=[]", href_list["mach_close"])
+		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
@@ -541,6 +541,7 @@
 	call_bot_cooldown = 0
 
 /mob/living/silicon/ai/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
 	var/list/cameras = source_area.cameras
 	var/home_name = source_area.name
 
@@ -552,16 +553,17 @@
 			var/first_run = FALSE
 			var/dat2 = ""
 			for (var/obj/machinery/camera/camera as anything in cameras)
-				dat2 += text("[]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[]</A>", (!first_run) ? "" : " | ", camera.c_tag) //I'm not fixing this shit...
+				dat2 += "[(!first_run) ? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
 				first_run = TRUE
-			queueAlarm(text ("--- [] alarm detected in []! ([])", alarm_type, home_name, dat2), alarm_type)
+			queueAlarm("--- [alarm_type] alarm detected in [home_name]! ([dat2])", alarm_type)
 	else
-		queueAlarm(text("--- [] alarm detected in []! (No Camera)", alarm_type, home_name), alarm_type)
+		queueAlarm("--- [alarm_type] alarm detected in [home_name]! (No Camera)", alarm_type)
 	if (viewalerts)
 		ai_alerts()
 	return 1
 
 /mob/living/silicon/ai/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
 	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, 0)
 	if(viewalerts)
 		ai_alerts()

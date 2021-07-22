@@ -79,7 +79,7 @@
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
-/mob/living/silicon/proc/queueAlarm(message, type, incoming = 1)
+/mob/living/silicon/proc/queueAlarm(message, type, incoming = FALSE)
 	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
 	if(incoming)
 		alarms_to_show += message

@@ -52,6 +52,7 @@
 	return data
 
 /datum/computer_file/program/alarm_monitor/proc/update_alarm_display()
+	SIGNAL_HANDLER
 	has_alert = FALSE
 	if(length(listener.alarms))
 		has_alert = TRUE
