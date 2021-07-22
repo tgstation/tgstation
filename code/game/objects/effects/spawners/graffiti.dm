@@ -3,7 +3,7 @@
 	name = "random graffiti spawner"
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "random_graffiti"
-	graffiti_table = list(
+	var/list/graffiti_table = list(
 		/obj/effect/decal/cleanable/crayon/rune/rune1,
 		/obj/effect/decal/cleanable/crayon/rune/rune2,
 		/obj/effect/decal/cleanable/crayon/rune/rune3,
@@ -25,10 +25,6 @@
 		/obj/effect/decal/cleanable/crayon/graffiti/poseur_tag,
 		/obj/effect/decal/cleanable/crayon/graffiti/prolizard,
 		/obj/effect/decal/cleanable/crayon/graffiti/antilizard,
-		// large graffiti is too big and will likely go out of bounds
-		//obj/effect/decal/cleanable/crayon/graffiti_large/yiffhell,
-		//obj/effect/decal/cleanable/crayon/graffiti_large/secborg,
-		//obj/effect/decal/cleanable/crayon/graffiti_large/paint,
 		/obj/effect/decal/cleanable/crayon/symbols/danger,
 		/obj/effect/decal/cleanable/crayon/symbols/firedanger,
 		/obj/effect/decal/cleanable/crayon/symbols/electricdanger,
@@ -76,8 +72,7 @@
 		/obj/effect/decal/cleanable/crayon/oriented/chevron,
 		/obj/effect/decal/cleanable/crayon/oriented/footprint,
 		/obj/effect/decal/cleanable/crayon/oriented/clawprint,
-		/obj/effect/decal/cleanable/crayon/oriented/pawprint
-	)
+		/obj/effect/decal/cleanable/crayon/oriented/pawprint)
 
 /obj/effect/graffiti_spawner/Initialize()
 	..()
@@ -85,10 +80,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	var/graffiti = pickweight(graffiti_table)
-	graffiti.rotation = rand(0, 360)
-	graffiti.paint_colour = "#[random_short_color()]"
-	//spawned_object.add_atom_colour()
-	//target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-	new graffiti(get_turf(src))
+	var/obj/effect/decal/cleanable/crayon/graffiti_decal = new graffiti(get_turf(src))
+	graffiti_decal.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
 
 	return INITIALIZE_HINT_QDEL
