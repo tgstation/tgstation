@@ -336,10 +336,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 5
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "abg" = (
@@ -354,10 +354,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 9
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "abj" = (
@@ -620,7 +620,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "acg" = (
@@ -1675,7 +1675,7 @@
 /area/security/courtroom)
 "afR" = (
 /obj/structure/table/wood,
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/service/library)
 "afU" = (
@@ -2558,8 +2558,8 @@
 /area/command/gateway)
 "ajj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/plating,
 /area/commons/vacant_room/commissary)
 "ajk" = (
@@ -2773,8 +2773,8 @@
 	dir = 1
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/effect/landmark/start/hangover,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/port)
 "ajU" = (
@@ -4781,7 +4781,7 @@
 /area/security/brig)
 "aqf" = (
 /obj/structure/table/wood,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/wood,
 /area/service/library)
 "aqg" = (
@@ -4840,7 +4840,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "aqp" = (
@@ -6589,7 +6589,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "avk" = (
@@ -6819,8 +6819,8 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "avY" = (
@@ -6832,10 +6832,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
 "awf" = (
@@ -7150,7 +7150,7 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "awX" = (
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "awY" = (
@@ -8194,9 +8194,9 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "aAt" = (
@@ -8609,8 +8609,8 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/lawyer,
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "aBU" = (
@@ -8966,7 +8966,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "aDa" = (
@@ -9022,17 +9022,17 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "aDp" = (
 /obj/structure/chair/comfy/beige{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/hallway/secondary/entry)
 "aDq" = (
@@ -9369,17 +9369,17 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "aEo" = (
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "aEp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
 "aEq" = (
@@ -9506,9 +9506,9 @@
 /turf/closed/wall,
 /area/construction/mining/aux_base)
 "aEK" = (
-/obj/machinery/newscaster/security_unit/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "aEL" = (
@@ -10436,8 +10436,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "aHN" = (
@@ -14606,7 +14606,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "byJ" = (
@@ -16204,7 +16204,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "cdu" = (
@@ -17628,7 +17628,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "cIN" = (
@@ -18934,7 +18934,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "dku" = (
@@ -21754,12 +21754,12 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "emO" = (
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Civilian - Library Back Room";
 	dir = 5
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/grimy,
 /area/service/library)
 "emS" = (
@@ -23657,7 +23657,7 @@
 /area/maintenance/starboard/secondary)
 "fat" = (
 /obj/effect/spawner/randomcolavend,
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -25305,11 +25305,11 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "fIp" = (
@@ -28623,7 +28623,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "gYh" = (
@@ -31533,8 +31533,8 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "idX" = (
@@ -32202,7 +32202,7 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 15
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "isF" = (
@@ -32444,7 +32444,7 @@
 	dir = 6;
 	network = list("ss13","science")
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/science/research)
 "ixB" = (
@@ -38303,7 +38303,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "kDm" = (
@@ -39290,7 +39290,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/cargo/qm)
 "kXD" = (
@@ -44773,7 +44773,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "njM" = (
@@ -49114,7 +49114,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "oUw" = (
@@ -52056,10 +52056,10 @@
 /area/security/prison)
 "qab" = (
 /obj/structure/cable,
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 12
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -52410,7 +52410,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "qiW" = (
@@ -61895,11 +61895,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/engineering/main)
 "tRt" = (
@@ -62816,10 +62816,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "uht" = (
@@ -64125,7 +64125,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/science/lab)
 "uLZ" = (
@@ -64386,7 +64386,7 @@
 	c_tag = "Secure - Telecomms Control Room";
 	dir = 6
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "uQB" = (
@@ -67659,7 +67659,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/head/welding,
 /obj/item/clothing/glasses/welding,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "wdJ" = (
@@ -67784,7 +67784,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
 "wfN" = (
@@ -70669,11 +70669,11 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/machinery/newscaster/security_unit/directional/north,
 /obj/machinery/camera{
 	c_tag = "Civilian - Lounge South";
 	dir = 6
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "xif" = (
