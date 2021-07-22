@@ -325,6 +325,7 @@
 	transfer_character()
 
 	SSjob.EquipRank(character, job, character.client)
+	job.after_latejoin_spawn(character)
 
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
