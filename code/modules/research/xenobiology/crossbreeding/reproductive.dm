@@ -18,6 +18,7 @@ Reproductive extracts:
 	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
 	var/extract_type = /obj/item/slime_extract/
 	var/cooldown = 3 SECONDS
+	var/feedAmount = 3
 	var/last_produce = 0
 	var/datum/component/storage/concrete/extract_inventory/slimeStorage
 	
