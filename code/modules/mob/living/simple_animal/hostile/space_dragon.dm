@@ -668,10 +668,10 @@
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
 	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
+	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
+		return FALSE
 	if(user.antag_sight_unlocked)
 		to_chat(user, span_warning("You cannot spawn after unlocking the Antag HUD."))
-		return FALSE
-	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))

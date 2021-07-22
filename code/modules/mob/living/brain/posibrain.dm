@@ -108,10 +108,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		to_chat(user, span_warning("[src] fizzles slightly. Sadly it doesn't take those who suicided!"))
 		return
 	var/posi_ask = tgui_alert(usr,"Become a [name]? (Warning, You can no longer be revived, and all past lives will be forgotten!)","Are you positive?",list("Yes","No"))
+	if(posi_ask == "No" || QDELETED(src))
+		return
 	if(user.antag_sight_unlocked)
 		to_chat(user, span_warning("[src] cannot be used after unlocking the Antag HUD."))
-		return
-	if(posi_ask == "No" || QDELETED(src))
 		return
 	if(brainmob.suiciding) //clear suicide status if the old occupant suicided.
 		brainmob.set_suicide(FALSE)

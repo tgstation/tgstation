@@ -76,10 +76,10 @@
  */
 /obj/structure/swarmer_beacon/proc/que_swarmer(mob/dead/observer/user)
 	var/swarm_ask = tgui_alert(usr, "Become a swarmer?", "Do you wish to consume the station?", list("Yes", "No"))
+	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
+		return FALSE
 	if(user.antag_sight_unlocked)
 		to_chat(user, span_warning("You cannot spawn after unlocking the Antag HUD."))
-		return FALSE
-	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
