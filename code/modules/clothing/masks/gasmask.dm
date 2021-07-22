@@ -36,15 +36,15 @@
 		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
 
 /obj/item/clothing/mask/gas/attackby(obj/item/filter, mob/user)
-	. = ..()
 	if(!istype(filter, /obj/item/gas_filter))
-		return TRUE
+		return ..()
 	if(LAZYLEN(gas_filters) >= max_filters)
-		return TRUE
+		return ..()
 	if(!user.transferItemToLoc(filter, src))
-		return TRUE
+		return ..()
 	LAZYADD(gas_filters, filter)
 	has_filter = TRUE
+	return TRUE
 
 ///Check _masks.dm for this one
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
