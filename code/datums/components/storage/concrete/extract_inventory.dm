@@ -15,22 +15,19 @@
 
 /datum/component/storage/concrete/extract_inventory/Initialize()
 	. = ..()
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_CONSUME_CONTENTS, .proc/processCubes)
 	set_holdable(/obj/item/food/monkeycube, list(/obj/item/food/monkeycube/syndicate, /obj/item/food/monkeycube/gorilla, /obj/item/food/monkeycube/chicken, /obj/item/food/monkeycube/bee))
 
 
-/datum/component/storage/concrete/extract_inventory/proc/processCubes(obj/item/slimecross/reproductive/P)
-	SIGNAL_HANDLER
+/datum/component/storage/concrete/extract_inventory/proc/processCubes(obj/item/slimecross/reproductive/parent, mob/user)
 
-	var/obj/item/slimecross/reproductive/parent = P
 	if(length(parent.contents) >= max_items)
 		QDEL_LIST(parent.contents)
-		createExtracts(parent)
+		createExtracts(parent,user)
 
-/datum/component/storage/concrete/extract_inventory/proc/createExtracts(obj/item/slimecross/reproductive/P)
-	var/obj/item/slimecross/reproductive/parent = P
+/datum/component/storage/concrete/extract_inventory/proc/createExtracts(obj/item/slimecross/reproductive/parent, mob/user)
 	var/cores = rand(1,4)
 	playsound(parent, 'sound/effects/splat.ogg', 40, TRUE)
 	parent.last_produce = world.time
+	to_chat(user, span_notice("[parent] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":]!"))
 	for(var/i = 0, i < cores, i++)
 		new parent.extract_type(get_turf(parent.loc))

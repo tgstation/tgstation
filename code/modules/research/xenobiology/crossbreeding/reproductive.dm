@@ -19,14 +19,14 @@ Reproductive extracts:
 	var/extract_type = /obj/item/slime_extract/
 	var/cooldown = 3 SECONDS
 	var/last_produce = 0
-
+	var/datum/component/storage/concrete/extract_inventory/slimeStorage
 /obj/item/slimecross/reproductive/examine()
 	. = ..()
 	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
 
 /obj/item/slimecross/reproductive/Initialize()
 	. = ..()
-	LoadComponent(/datum/component/storage/concrete/extract_inventory)
+	slimeStorage = AddComponent(/datum/component/storage/concrete/extract_inventory)
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
 	if((last_produce + cooldown) > world.time)
@@ -35,7 +35,7 @@ Reproductive extracts:
 
 	if(length(contents) >= 3) //if for some reason the contents are full, but it didnt digest, attempt to digest again
 		to_chat(user, span_warning("[src] appears to be full but is not digesting! Maybe poking it stimulated it to digest."))
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_CONSUME_CONTENTS)
+		slimeStorage.processCubes(src, user)
 		return
 
 	if(istype(O, /obj/item/storage/bag/bio))
@@ -44,7 +44,7 @@ Reproductive extracts:
 		if(inserted.len)
 			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
 			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_CONSUME_CONTENTS)
+			slimeStorage.processCubes(src, user)
 		else
 			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
 		return
@@ -52,8 +52,8 @@ Reproductive extracts:
 	else if(istype(O, /obj/item/food/monkeycube))
 		if(length(contents) < 3)
 			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE, TRUE))
-				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_CONSUME_CONTENTS)
 				to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
+				slimeStorage.processCubes(src, user)
 				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 				return
 			else
