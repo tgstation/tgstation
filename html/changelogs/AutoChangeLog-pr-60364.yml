@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "toggling combat mode will now send a sound to the player even if the character is deafened."
