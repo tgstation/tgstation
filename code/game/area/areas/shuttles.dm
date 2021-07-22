@@ -49,13 +49,13 @@
 /area/shuttle/syndicate/airlock
 	name = "Syndicate Infiltrator Airlock"
 
-////////////////////////////Merchant Shuttle////////////////////////////
-
+///area subtype used by merchant shuttles
 /area/shuttle/merchant
 	name = "Merchant Shuttle"
 	area_flags = NOTELEPORT | UNIQUE_AREA | NO_ALERTS
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+///special subtype of merchant shuttles that can be used to invoke procs when entered
 /area/shuttle/merchant/offlimits
 	icon_state = "shuttlered"
 

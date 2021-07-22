@@ -113,11 +113,13 @@
 /**
  * Reacts to a mob arriving to the offlimits area
  *
- * Grabs a signal and reacts to the offlimits area being entered by a mob
+ * Grabs a signal and reacts to the offlimits area being entered by a mob.
+ * Subtypes check if the object is valid to react to with . = ..() and execute their code for "trespassing" into the offlimits area
  * Arguments:
  * * source - the area
  * * arriving - the mob entering
  * * direction - direction entered from
+ * Returns FALSE if not actually a mob. this signal fires for all atoms, but only mobs are considered valid trespassers.
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_enter_reaction(datum/source, mob/living/arriving, direction)
 	SIGNAL_HANDLER
@@ -128,11 +130,13 @@
 /**
  * Reacts to a mob leaving the offlimits area
  *
- * Grabs a signal and reacts to the offlimits area being entered by a mob
+ * Grabs a signal and reacts to the offlimits area being exited by a mob.
+ * Subtypes check if the object is valid to react to with . = ..() and execute their code for a trespasser leaving the offlimits area
  * Arguments:
  * * source - the area
  * * leaving - the mob leaving
  * * direction - direction left from
+ * Returns FALSE if not actually a mob. this signal fires for all atoms, but only mobs are considered valid trespassers.
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_exit_reaction(datum/source, mob/living/leaving, direction)
 	SIGNAL_HANDLER

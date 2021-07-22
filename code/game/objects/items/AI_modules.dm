@@ -609,8 +609,7 @@ AI MODULES
 	name = "'Overlord' Core AI Module"
 	law_id = "overlord"
 
-/******************Diogenes***************/
-
+///Diogenes, the fuck you lawset. No really, fuck you, read the lawset.
 /obj/item/ai_module/core/full/diogenes
 	name = "'Diogenes' Core AI Module"
 	law_id = "diogenes"

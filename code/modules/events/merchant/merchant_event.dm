@@ -36,10 +36,9 @@
 		return
 
 	var/datum/bank_account/station_balance = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(!station_balance?.has_money(INITIAL_VISIT_COST))
+	if(!station_balance?.has_money(INITIAL_VISIT_COST) || !station_balance?.adjust_money(-INITIAL_VISIT_COST))
 		priority_announce(visiting_merchant.message_too_poor, sender_override = visiting_merchant)
 		return
-	station_balance?.adjust_money(-INITIAL_VISIT_COST)
 	priority_announce(visiting_merchant.message_docking, sender_override = visiting_merchant)
 	spawn_shuttle()
 
@@ -56,12 +55,7 @@
 	if(!ship.load(shuttle_spawning_turf))
 		CRASH("Merchant shuttle failed to load!")
 
-	var/obj/docking_port/mobile/merchant/port
-	//we can cheat and only search open turfs for the docking port
-	for(var/turf/open/loaded_turf in ship.get_affected_turfs(shuttle_spawning_turf))
-		port = locate(/obj/docking_port/mobile/merchant) in loaded_turf
-		if(port)
-			break
+	var/obj/docking_port/mobile/merchant/port = locate(/obj/docking_port/mobile/merchant) in ship.get_affected_turfs(shuttle_spawning_turf)
 	if(!port)
 		CRASH("Merchant shuttle's docking port could not be found! Please double check the docking port type is /merchant in the map file")
 

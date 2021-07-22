@@ -14,7 +14,7 @@
 	var/countdown_max = 4 MINUTES
 	///the current countdown till the merchant event is triggered
 	var/countdown
-	///how much the countdown goes down per tick
+	///how much the countdown goes down per second
 	var/countdown_decrease = 2 SECONDS
 	///looping beeping noise that satellites always be doing
 	var/datum/looping_sound/satellite/soundloop
@@ -22,14 +22,14 @@
 /obj/machinery/satellite/merchant/Initialize()
 	. = ..()
 
-	soundloop = new(list(src), FALSE)
+	soundloop = new(list(src), start_immediately = FALSE)
 	countdown = rand(countdown_min, countdown_max)
 
-/obj/machinery/satellite/merchant/process()
+/obj/machinery/satellite/merchant/process(delta_time)
 	if(!active)
 		return
 
-	countdown -= countdown_decrease
+	countdown -= delta_time
 
 	if(countdown <= 0)
 		toggle() //toggle it off, maybe do something cool with this later
