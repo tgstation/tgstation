@@ -40,7 +40,7 @@
 		list("flag" = DEPARTMENT_SILICON, "name" = "Silicon")
 	)
 
-	for(var/job in SSjob.occupations)
+	for(var/job in SSjob.joinable_occupations)
 		// Check if there are additional open positions or if there is no limit
 		if ((job["total_positions"] > 0 && job["total_positions"] > job["current_positions"]) || (job["total_positions"] == -1))
 			for(var/department in departments)

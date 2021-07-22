@@ -78,6 +78,8 @@
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/spellbook/book)
 	if(!refundable)
 		return FALSE
+	if(!book.can_refund)
+		return FALSE
 	if(!S)
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
@@ -660,7 +662,16 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 	var/uses = 10
-	var/temp = null
+
+	/// The bonus that you get from going semi-random.
+	var/semi_random_bonus = 2
+
+	/// The bonus that you get from going full random.
+	var/full_random_bonus = 5
+
+	/// Determines if this spellbook can refund anything.
+	var/can_refund = TRUE
+
 	var/mob/living/carbon/human/owner
 	var/list/entries = list()
 
@@ -681,7 +692,7 @@
 		owner = user
 		return
 	if(user != owner)
-		if(user.mind.special_role == "apprentice")
+		if(user.mind.special_role == ROLE_WIZARD_APPRENTICE)
 			to_chat(user, "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not.")
 		else
 			to_chat(user, span_warning("The [name] does not recognize you as its owner and refuses to open!"))
@@ -689,6 +700,10 @@
 	. = ..()
 
 /obj/item/spellbook/attackby(obj/item/O, mob/user, params)
+	if(!can_refund)
+		to_chat(user, span_warning("You can't refund anything!"))
+		return
+
 	if(istype(O, /obj/item/antag_spawner/contract))
 		var/obj/item/antag_spawner/contract/contract = O
 		if(contract.used)
@@ -734,6 +749,8 @@
 	var/list/data = list()
 	data["owner"] = owner
 	data["points"] = uses
+	data["semi_random_bonus"] = initial(uses) + semi_random_bonus
+	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
 //This is a MASSIVE amount of data, please be careful if you remove it from static.
@@ -789,10 +806,10 @@
 		return
 	switch(action)
 		if("semirandomize")
-			semirandomize(wizard)
+			semirandomize(wizard, semi_random_bonus)
 			update_static_data(wizard) //update statics!
 		if("randomize")
-			randomize(wizard)
+			randomize(wizard, full_random_bonus)
 			update_static_data(wizard) //update statics!
 		else //some loadout
 			wizard_loadout(wizard, action)
@@ -829,7 +846,7 @@
 	if(uses)
 		stack_trace("Wizard Loadout \"[loadout]\" does not use 10 wizard spell slots. Stop scamming players out.")
 
-/obj/item/spellbook/proc/semirandomize(mob/living/carbon/human/wizard)
+/obj/item/spellbook/proc/semirandomize(mob/living/carbon/human/wizard, bonus_to_give = 0)
 	var/list/needed_cats = list("Offensive", "Mobility")
 	var/list/shuffled_entries = shuffle(entries)
 	for(var/i in 1 to 2)
@@ -845,15 +862,20 @@
 					uses -= entry.cost
 				break
 	//we have given two specific category spells to the wizard. the rest are completely random!
-	randomize(wizard)
+	randomize(wizard, bonus_to_give = bonus_to_give)
 
-/obj/item/spellbook/proc/randomize(mob/living/carbon/human/wizard)
+/obj/item/spellbook/proc/randomize(mob/living/carbon/human/wizard, bonus_to_give = 0)
 	var/list/entries_copy = entries.Copy()
-	while(uses > 0)
-		var/datum/spellbook_entry/entry = pick_n_take(entries_copy)
-		if(entry?.CanBuy(wizard,src))
-			if(entry.Buy(wizard,src))
-				entry.refundable = FALSE //once you go random, you never go back
-				if(entry.limit)
-					entry.limit--
-				uses -= entry.cost
+	uses += bonus_to_give
+	while(uses > 0 && length(entries_copy))
+		var/datum/spellbook_entry/entry = pick(entries_copy)
+		if(!entry?.CanBuy(wizard,src) || !entry.Buy(wizard,src))
+			entries_copy -= entry
+			continue
+
+		entry.refundable = FALSE //once you go random, you never go back
+		if(entry.limit)
+			entry.limit--
+		uses -= entry.cost
+
+	can_refund = FALSE

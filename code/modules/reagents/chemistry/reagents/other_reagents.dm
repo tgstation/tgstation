@@ -2060,12 +2060,20 @@
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	color_callback = CALLBACK(src, .proc/UpdateColor)
+	SSticker.OnRoundstart(color_callback)
+	return ..()
+
+/datum/reagent/colorful_reagent/Destroy()
+	LAZYREMOVE(SSticker.round_end_events, color_callback) //Prevents harddels during roundstart
+	color_callback = null //Fly free little callback
 	return ..()
 
 /datum/reagent/colorful_reagent/proc/UpdateColor()
+	color_callback = null
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -2710,13 +2718,14 @@
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
 
+// [Original ants concept by Keelin on Goon]
 /datum/reagent/ants
 	name = "Ants"
-	description = "A sample of a lost breed of Space Ants (formicidae bastardium tyrannus), they are well-known for ravaging the living shit out of pretty much anything."
+	description = "A genetic crossbreed between ants and termites, their bites land at a 3 on the Schmidt Pain Scale."
 	reagent_state = SOLID
 	color = "#993333"
 	taste_mult = 1.3
-	taste_description = "tiny legs scuttling down the back of your throat."
+	taste_description = "tiny legs scuttling down the back of your throat"
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	glass_name = "glass of ants"
 	glass_desc = "Bottoms up...?"

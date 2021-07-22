@@ -126,7 +126,7 @@
 		objectives += kill_objective
 		return
 
-	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
+	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role.departments & DEPARTMENT_SCIENCE))
 		var/datum/objective/download/download_objective = new
 		download_objective.owner = owner
 		download_objective.gen_amount_goal()

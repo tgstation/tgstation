@@ -197,7 +197,7 @@
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// "On" sound, played when switching between able to stun or not.
-	var/on_sound 
+	var/on_sound
 	/// The path of the default sound to play when we stun something.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// Do we animate the "hit" when stunning something?

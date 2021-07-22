@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "Gas masks now properly filter gases when a filter is applied (can be made roundstart from any lathe and every gas mask starts with one in them)"

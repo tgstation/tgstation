@@ -139,13 +139,13 @@
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role])"
+	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
 	recipient_ref = WEAKREF(recipient)
 
 	var/mob/living/body = recipient.current
 	var/list/goodies = generic_goodies
 
-	var/datum/job/this_job = SSjob.name_occupations[recipient.assigned_role]
+	var/datum/job/this_job = recipient.assigned_role
 	if(this_job)
 		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
 			color = department_colors[this_job.paycheck_department]
@@ -222,7 +222,7 @@
 		if(human.stat == DEAD || !human.mind)
 			continue
 		// Skip wizards, nuke ops, cyborgs; Centcom does not send them mail
-		if(!SSjob.GetJob(human.mind.assigned_role) || (human.mind.assigned_role in GLOB.nonhuman_positions))
+		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 
 		mail_recipients += human.mind
