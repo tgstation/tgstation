@@ -121,9 +121,7 @@
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_enter_reaction(datum/source, mob/living/arriving, direction)
 	SIGNAL_HANDLER
-	if(!istype(arriving))
-		return FALSE
-	return TRUE
+	return istype(arriving)
 
 /**
  * Reacts to a mob leaving the offlimits area
@@ -362,7 +360,7 @@
 		/obj/item/ai_module/core/full/overlord = 150,
 		/obj/item/autosurgeon/organ/robo_tongue = 200,
 		/obj/item/silicon_sentience = 500,
-		/obj/item/wing_mods = 1500
+		/obj/item/wing_mods = 1500,
 	)
 	wanted_items = list()
 	gender = NEUTER
@@ -453,7 +451,7 @@
 ///small helper proc that does the part of the area exit signal that sleeps
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/deaggro_intruder(mob/living/intruder)
 	say(exitofflimitsphrase)
-	enemies &= ~WEAKREF(intruder)
+	enemies -= WEAKREF(intruder)
 
 ///this trader is used in the merchant event.
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/oddities

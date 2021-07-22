@@ -1,5 +1,5 @@
 /**
- * ## sentience granter element!
+ * ## sentience granter component!
  *
  * component that reproduces the behavior of making an item
  * a single use that makes something sentient

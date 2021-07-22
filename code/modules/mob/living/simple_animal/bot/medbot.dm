@@ -104,8 +104,8 @@
 		/mob/living/simple_animal/bot,
 		/mob/living/simple_animal/hostile/swarmer,
 		/mob/living/simple_animal/hostile/hivebot,
-		/mob/living/simple_animal/hostile/retaliate/trader/amorphous
-		)
+		/mob/living/simple_animal/hostile/retaliate/trader/amorphous,
+	)
 
 /mob/living/simple_animal/bot/medbot/amorphous/shambles
 	name = "Shambles"
