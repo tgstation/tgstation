@@ -230,6 +230,7 @@
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
+		"comp_tonumber",
 		"comp_tostring",
 		"comp_typecheck",
 		"compact_remote_shell",
@@ -657,6 +658,7 @@
 		"door_shell",
 		"controller_shell",
 		"money_bot_shell",
+		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

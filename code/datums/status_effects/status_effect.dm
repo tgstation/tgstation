@@ -21,11 +21,11 @@
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
-	if(owner)
-		LAZYADD(owner.status_effects, src)
-	if(!owner || !on_apply())
+	if(QDELETED(owner) || !on_apply())
 		qdel(src)
 		return
+	if(owner)
+		LAZYADD(owner.status_effects, src)
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval

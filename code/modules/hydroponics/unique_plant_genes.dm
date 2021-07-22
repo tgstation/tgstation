@@ -71,7 +71,7 @@
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
- * target - the person who is attacked by the plant
+ * target - the atom which is attacked by the plant
  */
 /datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	SIGNAL_HANDLER
@@ -95,6 +95,8 @@
 /datum/plant_gene/trait/attack/novaflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	. = ..()
 
+	if(!ismovable(target))
+		return
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 	else
@@ -105,16 +107,16 @@
 /datum/plant_gene/trait/attack/sunflower_attack
 	name = "Bright Petals"
 
-/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
+/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/living/user)
 	. = ..()
 
-	if(!istype(target))
+	if(!ismob(target))
 		return
-
-	user.visible_message("<font color='green'>[user] smacks [target] with their [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target, user))
-	if(target != user)
-		to_chat(target, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
-	to_chat(user, "<font color='green'>Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target]!</font>")
+	var/mob/target_mob = target
+	user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
+	if(target_mob != user)
+		to_chat(target_mob, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
+	to_chat(user, "<font color='green'>Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target_mob]!</font>")
 
 /// Normal nettle's force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack
@@ -124,10 +126,12 @@
 /datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	. = ..()
 
+	if(!ismovable(target))
+		return
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 	else
-		to_chat(user, "<span class='warning'>All the leaves have fallen off [our_plant] from violent whacking.</span>")
+		to_chat(user, "<span class='warning'>All the leaves have fallen off [our_plant] from violent whacking!</span>")
 		qdel(our_plant)
 
 /// Deathnettle force + degradation on attack
