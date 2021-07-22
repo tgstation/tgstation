@@ -1151,7 +1151,6 @@
 // /datum/component/storage signals
 
 ///() - returns bool.
-
 #define COMSIG_CONTAINS_STORAGE "is_storage"
 ///(obj/item/inserting, mob/user, silent, force) - returns bool
 #define COMSIG_TRY_STORAGE_INSERT "storage_try_insert"
