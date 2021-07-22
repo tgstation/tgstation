@@ -52,7 +52,7 @@ Reproductive extracts:
 		return
 
 	else if(istype(O, /obj/item/food/monkeycube))
-		if(length(contents) < 3)
+		if(length(contents) < feedAmount)
 			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE, TRUE))
 				to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
 				slimeStorage.processCubes(src, user)
