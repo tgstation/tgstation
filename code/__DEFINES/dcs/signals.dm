@@ -1155,7 +1155,7 @@
 #define COMSIG_CONTAINS_STORAGE "is_storage"
 ///(obj/item/inserting, mob/user, silent, force) - returns bool
 #define COMSIG_TRY_STORAGE_CONSUME_CONTENTS "storage_try_consume_contents"
-///() void signal to be sent when checking if reproductive extracts are full
+///() void signal to be sent to check if the storage is full, and if so process them
 #define COMSIG_TRY_STORAGE_INSERT "storage_try_insert"
 ///(mob/show_to, force) - returns bool.
 #define COMSIG_TRY_STORAGE_SHOW "storage_show_to"
