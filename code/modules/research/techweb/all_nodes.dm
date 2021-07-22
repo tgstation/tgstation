@@ -55,6 +55,8 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"gas_filter",
+		"plasmaman_gas_filter",
 	)
 
 /datum/techweb_node/mmi
