@@ -25,7 +25,7 @@
 		var/source_type = ""
 		if(istype(source_atom, /datum))
 			source_type = source_atom.type
-		stack_trace("a non atom was passed into alarm_handler! [_source_atom] [source_type]")
+		stack_trace("a non atom was passed into alarm_handler! [source_atom] [source_type]")
 	return ..()
 
 /datum/alarm_handler/Destroy()

@@ -314,9 +314,9 @@
 					var/obj/machinery/camera/Ctmp = C
 					dat += "-- [A.name] (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[Ctmp.c_tag]</A>)"
 				else
-					dat += "-- [A.name] (No Camera)",
+					dat += "-- [A.name] (No Camera)"
 				if (sources.len > 1)
-					dat += "- [sources.len] sources",
+					dat += "- [sources.len] sources"
 				dat += "</NOBR><BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
