@@ -41,7 +41,7 @@
 	. = ..()
 	if(!reagents.total_volume)
 		icon_state = "blastoff_empty"
-	else if(is_open_container())
+	else if(spillable)
 		icon_state = "blastoff_open"
 	else
 		icon_state = "blastoff_ampoule"

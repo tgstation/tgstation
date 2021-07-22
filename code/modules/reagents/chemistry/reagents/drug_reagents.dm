@@ -453,15 +453,15 @@
 	game_plane_master_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
 
 	for(var/filter in game_plane_master_controller.get_filters("rainbow"))
-		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1)
-		animate(filter, color = col_filter_green, time = 4 SECONDS)
-		animate(filter, color = col_filter_blue, time = 4 SECONDS)
-		animate(filter, color = col_filter_red, time = 4 SECONDS)
+		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
 
 	game_plane_master_controller.add_filter("psilocybin_wave", 10, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
 
 	for(var/filter in game_plane_master_controller.get_filters("psilocybin_wave"))
-		animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32)
+		animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32, flags = ANIMATION_PARALLEL)
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -502,13 +502,13 @@
 
 
 	for(var/filter in game_plane_master_controller.get_filters("blastoff_filter"))
-		animate(filter, color = col_filter_blue, time = 3 SECONDS, loop = -1)
+		animate(filter, color = col_filter_blue, time = 3 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
 		animate(color = col_filter_mid, time = 3 SECONDS)
 		animate(color = col_filter_red, time = 3 SECONDS)
 		animate(color = col_filter_mid, time = 3 SECONDS)
 
 	for(var/filter in game_plane_master_controller.get_filters("blastoff_wave"))
-		animate(filter, time = 32 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32)
+		animate(filter, time = 32 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32, flags = ANIMATION_PARALLEL)
 
 	L.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 
