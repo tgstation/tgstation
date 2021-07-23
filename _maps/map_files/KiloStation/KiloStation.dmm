@@ -56170,6 +56170,9 @@
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/closet/crate/engineering/electrical,
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "jPk" = (
@@ -87131,7 +87134,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/computer/shuttle/mining/common,
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "wZx" = (
