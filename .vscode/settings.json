@@ -16,6 +16,7 @@
 		"*.dmi": "imagePreview.previewEditor"
 	},
 	"files.eol": "\n",
+	"files.insertFinalNewline": true,
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
 	"[javascript]": {
