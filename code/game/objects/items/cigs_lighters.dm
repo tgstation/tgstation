@@ -1036,7 +1036,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(reagents.get_reagent_amount(/datum/reagent/fuel))
 		//HOT STUFF
-		vaper.adjust_fire_stacks(2 * delta_time * 0.5)
+		vaper.adjust_fire_stacks(delta_time * 1)
 		vaper.IgniteMob()
 
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
