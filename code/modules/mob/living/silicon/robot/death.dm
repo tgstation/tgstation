@@ -22,7 +22,6 @@
 	. = ..()
 
 	locked = FALSE //unlock cover
-	set_combat_mode(FALSE, TRUE) //remove combat mode if dead, so you can swap with dead borgs
 
 	if(!QDELETED(builtInCamera) && builtInCamera.status)
 		builtInCamera.toggle_cam(src,0)
