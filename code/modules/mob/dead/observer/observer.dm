@@ -393,15 +393,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(response != "DNR")
 		return
 
+	force_dnr()
+
+	to_chat(src, span_boldnotice("You can no longer be brought back into your body."))
+	return TRUE
+
+/// Sets the DNR values, used by multiple verbs
+/mob/dead/observer/proc/force_dnr()
+	if(!mind || !can_reenter_corpse)
+		return
+
 	can_reenter_corpse = FALSE
 	// Update med huds
 	var/mob/living/carbon/current = mind.current
 	current.med_hud_set_status()
 	// Disassociates observer mind from the body mind
 	mind = null
-
-	to_chat(src, span_boldnotice("You can no longer be brought back into your body."))
-	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(message, sound, atom/source, flashwindow = TRUE)
 	if(flashwindow)
@@ -793,15 +800,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(response != "Yes - I am sure")
 		return
 
+	force_dnr()
 	antag_sight_unlocked = TRUE
 	var/datum/player_details/deets = GLOB.player_details[ckey]
 	deets.antag_sight_unlocked = TRUE
-
-	if(can_reenter_corpse) // force DNR, copy pasta of that verb
-		can_reenter_corpse = FALSE
-		var/mob/living/carbon/current = mind.current
-		current.med_hud_set_status()
-		mind = null
 
 	if(data_huds_on) // add the huds right away if already on
 		for(var/datum/atom_hud/antag/antag_hud in GLOB.huds)
