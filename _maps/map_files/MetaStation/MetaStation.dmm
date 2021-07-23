@@ -4374,9 +4374,6 @@
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"aHw" = (
-/turf/open/floor/plating,
-/area/medical/medbay/central)
 "aHx" = (
 /turf/closed/wall/r_wall,
 /area/hallway/primary/fore)
@@ -49796,7 +49793,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/medical/coldroom)
+/area/medical/cryo)
 "onR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
@@ -50738,7 +50735,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/medical/medbay/central)
+/area/maintenance/aft)
 "oDQ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -61183,7 +61180,7 @@
 "rYp" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
-/area/medical/medbay/central)
+/area/maintenance/aft)
 "rYC" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -69760,7 +69757,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/medical/medbay/central)
+/area/maintenance/aft)
 "uNx" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/techstorage/security,
@@ -102910,7 +102907,7 @@ vgF
 wMP
 cqi
 tay
-aHw
+jNL
 diR
 bbw
 iRA
@@ -103171,7 +103168,7 @@ uNj
 cJr
 qqO
 cLd
-iRA
+wRK
 sNW
 uXo
 qkk
@@ -103428,7 +103425,7 @@ rYp
 diR
 aQv
 pfR
-iRA
+wRK
 axD
 aSC
 cmS
@@ -103685,7 +103682,7 @@ tay
 tay
 tay
 mhN
-iRA
+wRK
 yih
 aSC
 qis
@@ -104199,7 +104196,7 @@ rXb
 fRx
 qRV
 sjN
-iRA
+wRK
 cFQ
 nMX
 kKn
@@ -104456,7 +104453,7 @@ aCl
 fej
 tay
 mhN
-iRA
+wRK
 fZo
 nMX
 kKn
@@ -104713,7 +104710,7 @@ tay
 tay
 tay
 pug
-iRA
+wRK
 qOc
 nMX
 kKn
@@ -104970,7 +104967,7 @@ leR
 leR
 leR
 cvC
-iRA
+wRK
 wRK
 ldn
 sxa
