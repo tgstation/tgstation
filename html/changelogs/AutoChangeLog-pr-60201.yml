@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Plant Analyzer's readout should look less weird and more consistent again."
