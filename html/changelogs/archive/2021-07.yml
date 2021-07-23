@@ -706,3 +706,23 @@
       cold)
   vincentiusvin:
   - bugfix: fixed cryocells and hfr runtiming on quick consecutive wrench actions.
+2021-07-23:
+  ATHATH:
+  - bugfix: Classic batons (and their subtypes) no longer spread their stamina damage
+      across multiple body parts.
+  Fikou:
+  - bugfix: You can no longer be the living dead by having adminordrazine when you
+      die
+  Ghilker:
+  - rscadd: Gas masks now properly filter gases when a filter is applied (can be made
+      roundstart from any lathe and every gas mask starts with one in them)
+  Krysonism:
+  - bugfix: Vatbeasts can use their powerful tentacle slap ability again.
+  Melbert:
+  - bugfix: Plant Analyzer's readout should look less weird and more consistent again.
+  Thunder12345:
+  - bugfix: Orange shoes no longer turn into errors when detaching handcuffs
+  tralezab:
+  - code_imp: killed the grown misc file!
+  - expansion: Roboticists can now construct critter-sized mechas, start with an EVA
+      helmet and a leg!
