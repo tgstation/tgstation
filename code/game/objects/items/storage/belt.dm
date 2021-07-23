@@ -739,7 +739,7 @@
 	name = "botanical belt"
 	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
 	icon_state = "plantbelt"
-	inhand_icon_state = "plantbelt"
+	inhand_icon_state = "plant"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
