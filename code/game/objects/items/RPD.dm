@@ -14,7 +14,7 @@ RPD
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
-		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/smart, TRUE),
+		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/smart/constructed, TRUE),
 		new /datum/pipe_info/pipe("Layer Adapter", /obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
 		new /datum/pipe_info/pipe("Color Adapter", /obj/machinery/atmospherics/pipe/color_adapter, TRUE),
 		new /datum/pipe_info/pipe("Bridge Pipe", /obj/machinery/atmospherics/pipe/bridge_pipe, TRUE),
@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							queued_p_dir,
 							null,
 							GLOB.pipe_paint_colors[paint_color],
-							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
+							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart/constructed) ? p_init_dir : null,
 						)
 						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
 							var/obj/item/pipe/trinary/flippable/F = pipe_type
