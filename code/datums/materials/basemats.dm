@@ -127,12 +127,17 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250)
+		
+	// Cancel out the material_modifier to get a pure unadulterated material amount
+	var/real_amount = amount
+	if(source.material_modifier)
+		real_amount /= source.material_modifier
+	source.AddComponent(/datum/component/combustible_flooder, "plasma", real_amount*0.005, T20C, TRUE)
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
-	qdel(source.GetComponent(/datum/component/explodable))
+	qdel(source.GetComponent(/datum/component/combustible_flooder))
 
 /datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
@@ -333,10 +338,15 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300)
+	
+	// Cancel out the material_modifier to get a pure unadulterated material amount
+	var/real_amount = amount
+	if(source.material_modifier)
+		real_amount /= source.material_modifier
+	source.AddComponent(/datum/component/combustible_flooder, "plasma", real_amount*0.075, real_amount*0.01+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300))
+	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	return ..()
 
 /datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

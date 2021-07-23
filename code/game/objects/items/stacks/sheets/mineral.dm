@@ -175,19 +175,6 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	. = ..()
 	. += GLOB.plasma_recipes
 
-/obj/item/stack/sheet/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		var/turf/T = get_turf(src)
-		message_admins("Plasma sheets ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma sheets ignited by [key_name(user)] in [AREACOORD(T)]")
-		fire_act(W.get_temperature())
-	else
-		return ..()
-
-/obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
-	atmos_spawn_air("plasma=[amount*10];TEMP=[exposed_temperature]")
-	qdel(src)
-
 /obj/item/stack/sheet/mineral/plasma/five
 	amount = 5
 
