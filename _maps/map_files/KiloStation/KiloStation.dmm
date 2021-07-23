@@ -70910,9 +70910,7 @@
 /area/cargo/miningoffice)
 "pZk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/extinguisher/mini,
-/obj/item/storage/toolbox/emergency,
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "pZn" = (
@@ -71085,13 +71083,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen)
-"qeN" = (
-/obj/structure/sign/warning/securearea,
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = 32
-	},
-/turf/closed/wall,
-/area/engineering/gravity_generator)
 "qeS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -87131,7 +87122,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -87143,6 +87133,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/computer/shuttle/mining/common,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "wZx" = (
@@ -128605,7 +128598,7 @@ lsw
 lsw
 dtq
 xyp
-qeN
+qSF
 lsw
 bOb
 cFs
