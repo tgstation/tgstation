@@ -2730,6 +2730,7 @@
 	glass_name = "glass of ants"
 	glass_desc = "Bottoms up...?"
 	ph = 4.6 // Ants contain Formic Acid
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
 	var/ant_damage = 0
 	/// Tells the debuff how many ants we are being covered with.
