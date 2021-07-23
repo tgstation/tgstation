@@ -26,7 +26,7 @@
 			confidential = TRUE)
 		return
 	var/list/client/targets[0]
-	for(var/client/client in GLOB.clients)
+	for(var/client/client as anything in GLOB.clients)
 		if(client.mob)
 			if(isnewplayer(client.mob))
 				targets["(New Player) - [client]"] = client
