@@ -15,8 +15,8 @@
 	. = ..()
 	if(is_ctf_target(target) && blocked == FALSE)
 		if(iscarbon(target))
-			var/mob/living/carbon/M = target
-			M.adjustBruteLoss(150, 0)
+			var/mob/living/carbon/target_mob = target
+			target_mob.adjustBruteLoss(150, 0)
 		return BULLET_ACT_HIT
 
 /obj/item/ammo_box/magazine/recharge/ctf
@@ -185,9 +185,9 @@
 /obj/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.visible_message(span_danger("[M] explodes into a shower of gibs!"))
-		M.gib()
+		var/mob/living/carbon/target_mob = target
+		target_mob.visible_message(span_danger("[target_mob] explodes into a shower of gibs!"))
+		target_mob.gib()
 
 // SHIELDED HARDSUIT
 

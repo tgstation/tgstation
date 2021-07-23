@@ -29,36 +29,35 @@
 	///Which slots to apply TRAIT_NODROP to the items in
 	var/list/nodrop_slots = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_EARS)
 
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
 
 	if(has_card)
-		var/obj/item/card/id/W = H.wear_id
-		no_drops += W
-		W.registered_name = H.real_name
-		W.update_label()
-		W.update_icon()
+		var/obj/item/card/id/idcard = human_to_equip.wear_id
+		no_drops += idcard
+		idcard.registered_name = human_to_equip.real_name
+		idcard.update_label()
+		idcard.update_icon()
 
 	// Make clothing in the specified slots NODROP
 	for(var/slot in nodrop_slots)
-		no_drops += H.get_item_by_slot(slot)
+		no_drops += human_to_equip.get_item_by_slot(slot)
 	// Make items in the hands NODROP
-	for(var/obj/item/I in H.held_items)
-		no_drops += I
+	for(var/obj/item/held_item in human_to_equip.held_items)
+		no_drops += held_item
 	listclearnulls(no_drops) // For any slots we didn't have filled
 	// Apply TRAIT_NODROP to everything
-	for(var/i in no_drops)
-		var/obj/item/I = i
-		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
+	for(var/obj/item/item_to_nodrop as anything in no_drops)
+		ADD_TRAIT(item_to_nodrop, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 	if(has_radio)
-		var/obj/item/radio/R = H.ears
-		R.set_frequency(team_radio_freq)
-		R.freqlock = TRUE
-		R.independent = TRUE
-	H.dna.species.stunmod = 0
+		var/obj/item/radio/headset = human_to_equip.ears
+		headset.set_frequency(team_radio_freq)
+		headset.freqlock = TRUE
+		headset.independent = TRUE
+	human_to_equip.dna.species.stunmod = 0
 
 /datum/outfit/ctf/instagib
 	name = "CTF Instagib (Solo)"

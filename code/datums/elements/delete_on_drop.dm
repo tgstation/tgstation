@@ -12,6 +12,7 @@
 	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/del_on_drop)
 
 /datum/element/delete_on_drop/Detach(datum/source)
+	. = ..()
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 
 /datum/element/delete_on_drop/proc/del_on_drop(atom/source)
