@@ -52,28 +52,40 @@
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
-	var/foldabletype = /obj/item/roller
+	/// Internal storage for the roller item that created us
+	var/obj/item/roller
+
+/obj/structure/bed/roller/Initialize(mapload, obj/item/roller/roller)
+	. = ..()
+	if(!roller)
+		roller = new /obj/item/roller/roller(src)
+	src.roller = roller
+	roller.forceMove(src)
+	name = roller.name
+
+/obj/structure/bed/roller/Destroy()
+	if(roller)
+		qdel(roller)
+		roller = null
+	return ..()
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/roller/robo))
-		var/obj/item/roller/robo/R = W
-		if(R.loaded)
-			to_chat(user, span_warning("You already have a roller bed docked!"))
-			return
-
-		if(has_buckled_mobs())
-			if(buckled_mobs.len > 1)
-				unbuckle_all_mobs()
-				user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
-			else
-				user_unbuckle_mob(buckled_mobs[1],user)
-		else
-			R.loaded = src
-			forceMove(R)
-			user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
-		return 1
-	else
+	if(!istype(W, /obj/item/roller/robo))
 		return ..()
+
+	var/obj/item/roller/robo/robo_roller = W
+	if(robo_roller.loaded)
+		to_chat(user, span_warning("You already have a roller bed docked!"))
+		return TRUE
+
+	if(length(buckled_mobs))
+		unbuckle_all_mobs()
+		user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
+
+	robo_roller.loaded = src
+	forceMove(robo_roller)
+	user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
+	return TRUE
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	. = ..()
@@ -83,8 +95,9 @@
 		if(has_buckled_mobs())
 			return FALSE
 		usr.visible_message(span_notice("[usr] collapses \the [src.name]."), span_notice("You collapse \the [src.name]."))
-		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
+		usr.put_in_hands(roller)
+		transfer_fingerprints_to(roller)
+		roller = null
 		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
@@ -120,8 +133,7 @@
 			to_chat(user, span_warning("[R] already has a roller bed loaded!"))
 			return
 		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [R]."))
-		R.loaded = new/obj/structure/bed/roller(R)
-		qdel(src) //"Load"
+		R.loaded = new/obj/structure/bed/roller(R, src)
 		return
 	else
 		return ..()
@@ -137,9 +149,8 @@
 		deploy_roller(user, target)
 
 /obj/item/roller/proc/deploy_roller(mob/user, atom/location)
-	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(location)
-	R.add_fingerprint(user)
-	qdel(src)
+	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(location, src)
+	transfer_fingerprints_to(R)
 
 /obj/item/roller/robo //ROLLER ROBO DA!
 	name = "roller bed dock"
