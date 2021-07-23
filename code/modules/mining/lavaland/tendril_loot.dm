@@ -606,7 +606,7 @@
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
-#define DAMAGE_TO_CHARGE_SCALE 0.5
+#define DAMAGE_TO_CHARGE_SCALE 0.75
 #define CHARGE_DRAINED_PER_SECOND 5
 #define BERSERK_MELEE_ARMOR_ADDED 50
 #define BERSERK_ATTACK_SPEED_MODIFIER 0.25
@@ -655,6 +655,7 @@
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
 		to_chat(owner, span_notice("Berserk mode is fully charged."))
+		balloon_alert(owner, "berserk charged")
 
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/IsReflect()
 	if(berserk_active)
@@ -735,7 +736,7 @@
 	action_icon = 'icons/mob/actions/actions_items.dmi'
 	action_icon_state = "scan"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
-	var/cooldown_time = 30 SECONDS
+	var/cooldown_time = 45 SECONDS
 	COOLDOWN_DECLARE(scan_cooldown)
 
 /obj/effect/proc_holder/scan/on_lose(mob/living/user)
@@ -766,6 +767,7 @@
 		return
 	if(!isliving(target) || target == ranged_ability_user)
 		balloon_alert(ranged_ability_user, "invalid target!")
+		return
 	var/mob/living/living_target = target
 	living_target.apply_status_effect(STATUS_EFFECT_STAGGER)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = ranged_ability_user.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
@@ -773,7 +775,7 @@
 	living_target.Jitter(5 SECONDS)
 	to_chat(living_target, span_warning("You've been staggered!"))
 	living_target.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
-	addtimer(CALLBACK(src, /atom/.proc/remove_filter, living_target, "scan"), 15 SECONDS)
+	addtimer(CALLBACK(living_target, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
 	ranged_ability_user.playsound_local(get_turf(ranged_ability_user), 'sound/magic/smoke.ogg', 50, TRUE)
 	balloon_alert(ranged_ability_user, "[living_target] scanned")
 	COOLDOWN_START(src, scan_cooldown, cooldown_time)
@@ -879,14 +881,8 @@
 /obj/item/cursed_katana/Initialize()
 	. = ..()
 	for(var/combo in combo_list)
-		var/step_string = ""
 		var/list/combo_specifics = combo_list[combo]
-		var/list/combo_steps = combo_specifics[COMBO_STEPS]
-		for(var/combo_step in combo_steps)
-			step_string += combo_step
-			if(combo_step == combo_steps[length(combo_steps)])
-				break
-			step_string += ", "
+		var/step_string = english_list(combo_specifics[COMBO_STEPS])
 		combo_strings += span_notice("<b>[combo]</b> - [step_string]")
 
 /obj/item/cursed_katana/examine(mob/user)
@@ -900,17 +896,13 @@
 
 /obj/item/cursed_katana/dropped(mob/user)
 	. = ..()
-	input_list.Cut()
-	if(timerid)
-		deltimer(timerid)
+	reset_inputs(null, TRUE)
 	if(isturf(loc))
 		qdel(src)
 
 /obj/item/cursed_katana/attack_self(mob/user)
 	. = ..()
-	if(timerid)
-		deltimer(timerid)
-	reset_inputs(user)
+	reset_inputs(user, TRUE)
 
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
 	if(target.stat == DEAD)
@@ -927,13 +919,13 @@
 			input_list += LEFT_SLASH
 	if(ishostile(target))
 		user.changeNext_move(CLICK_CD_RAPID)
-	if(check_input(target, user) || length(input_list) > 4)
-		input_list.Cut()
-		if(timerid)
-			deltimer(timerid)
+	if(length(input_list) > 4)
+		reset_inputs(user, TRUE)
+	if(check_input(target, user))
+		reset_inputs(null, TRUE)
 		return TRUE
 	else
-		timerid = addtimer(CALLBACK(src, .proc/reset_inputs, user), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, .proc/reset_inputs, user, FALSE), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 		return ..()
 
 /obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -949,13 +941,31 @@
 			return TRUE
 	return FALSE
 
-/obj/item/cursed_katana/proc/reset_inputs(mob/user)
+/obj/item/cursed_katana/proc/reset_inputs(mob/user, deltimer)
 	input_list.Cut()
-	balloon_alert(user, "you return to guard stance")
+	if(user)
+		balloon_alert(user, "you return to neutral stance")
+	if(deltimer && timerid)
+		deltimer(timerid)
 
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
-	balloon_alert(user, "strike")
-	return
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/strike_throw_impact)
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
+	target.apply_damage(damage = 20, bare_wound_bonus = 10)
+
+/obj/item/cursed_katana/proc/strike_throw_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
+	if(isclosedturf(hit_atom))
+		if(isanimal(source))
+			var/mob/living/simple_animal/target = source
+			target.apply_damage(damage = 10)
+		else if(iscarbon(source))
+			var/mob/living/carbon/target = source
+			target.set_confusion(max(target.get_confusion(), 8))
+	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
 	balloon_alert(user, "slice")
