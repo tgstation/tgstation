@@ -1,6 +1,5 @@
-#define AQUARIUM_COMPANY "Aquatech Ltd."
 
-// Fish feed can
+///Fish feed can
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "Autogenerates nutritious fish feed based on sample inside."
@@ -13,7 +12,7 @@
 	create_reagents(5, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 1) //Default fish diet
 
-// Stasis fish case container for moving fish between aquariums safely.
+///Stasis fish case container for moving fish between aquariums safely.
 /obj/item/storage/fish_case
 	name = "stasis fish case"
 	desc = "A small case keeping the fish inside in stasis."
@@ -29,7 +28,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
 
-/// Fish case with single random fish inside.
+///Fish case with single random fish inside.
 /obj/item/storage/fish_case/random/PopulateContents()
 	. = ..()
 	generate_fish(src, select_fish_type())
@@ -40,7 +39,7 @@
 /obj/item/storage/fish_case/random/freshwater/select_fish_type()
 	return random_fish_type(required_fluid=AQUARIUM_FLUID_FRESHWATER)
 
-/// Book detailing where to get the fish and their properties.
+///Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog
 	name = "Fish Encyclopedia"
 	desc = "Indexes all fish known to mankind (and related species)."
@@ -114,12 +113,3 @@
 /obj/item/storage/box/aquarium_props/PopulateContents()
 	for(var/prop_type in subtypesof(/datum/aquarium_behaviour/prop))
 		generate_fish(src, prop_type, /obj/item/aquarium_prop)
-
-/obj/item/storage/box/fish_debug
-	name = "box full of fish"
-
-/obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/fish_type in subtypesof(/datum/aquarium_behaviour/fish))
-		generate_fish(src,fish_type)
-
-#undef AQUARIUM_COMPANY

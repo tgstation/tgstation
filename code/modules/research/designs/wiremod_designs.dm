@@ -113,6 +113,11 @@
 	id = "comp_tostring"
 	build_path = /obj/item/circuit_component/tostring
 
+/datum/design/component/tonumber
+	name = "To Number"
+	id = "comp_tonumber"
+	build_path = /obj/item/circuit_component/tonumber
+
 /datum/design/component/typecheck
 	name = "Typecheck Component"
 	id = "comp_typecheck"
@@ -243,6 +248,15 @@
 	desc = "A handheld shell with several buttons."
 	id = "controller_shell"
 	build_path = /obj/item/controller
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	category = list("Circuitry", "Shells")
+
+/datum/design/scanner_shell
+	name = "Scanner Shell"
+	desc = "A handheld scanner shell that can scan entities."
+	id = "scanner_shell"
+	build_path = /obj/item/wiremod_scanner
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
 	category = list("Circuitry", "Shells")

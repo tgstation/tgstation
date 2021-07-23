@@ -398,7 +398,15 @@
 	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
 	revolutionary?.remove_revolutionary(borged = TRUE)
 
-/datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
+/**
+ * ## give_uplink
+ *
+ * A mind proc for giving anyone an uplink.
+ * arguments:
+ * * silent: if this should send a message to the mind getting the uplink. traitors do not use this silence, but the silence var on their antag datum.
+ * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
+ */
+/datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum)
 	if(!current)
 		return
 	var/mob/living/carbon/human/traitor_mob = current
@@ -440,31 +448,32 @@
 	if(!uplink_loc) // We've looked everywhere, let's just implant you
 		implant = TRUE
 
-	if (!implant)
-		. = uplink_loc
-		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
-		if(!U)
-			CRASH("Uplink creation failed.")
-		U.setup_unlock_code()
+	if(implant)
+		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
+		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
-			if(uplink_loc == R)
-				to_chat(traitor_mob, span_boldnotice("[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(U.unlock_code)] to unlock its hidden features."))
-			else if(uplink_loc == PDA)
-				to_chat(traitor_mob, span_boldnotice("[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[U.unlock_code]\" into the ringtone select to unlock its hidden features."))
-			else if(uplink_loc == P)
-				to_chat(traitor_mob, span_boldnotice("[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [english_list(U.unlock_code)] from its starting position to unlock its hidden features."))
+			to_chat(traitor_mob, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
+		return new_implant
 
-		if(uplink_owner)
-			uplink_owner.antag_memory += U.unlock_note + "<br>"
-		else
-			traitor_mob.mind.store_memory(U.unlock_note)
-	else
-		var/obj/item/implant/uplink/starting/I = new(traitor_mob)
-		I.implant(traitor_mob, null, silent = TRUE)
-		if(!silent)
-			to_chat(traitor_mob, span_boldnotice("[employer] has cunningly implanted you with a Syndicate Uplink (although uplink implants cost valuable TC, so you will have slightly less). Simply trigger the uplink to access it."))
-		return I
-
+	. = uplink_loc
+	var/unlock_text
+	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
+	if(!new_uplink)
+		CRASH("Uplink creation failed.")
+	new_uplink.setup_unlock_code()
+	if(uplink_loc == R)
+		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
+	else if(uplink_loc == PDA)
+		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features."
+	else if(uplink_loc == P)
+		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
+	new_uplink.unlock_text = unlock_text
+	if(!silent)
+		to_chat(traitor_mob, span_boldnotice(unlock_text))
+	if(!antag_datum)
+		traitor_mob.mind.store_memory(new_uplink.unlock_note)
+		return
+	antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -689,7 +698,7 @@
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
-				if(!equip_traitor())
+				if(!give_uplink(antag_datum = has_antag_datum(/datum/antagonist/traitor)))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
 				else
