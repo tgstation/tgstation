@@ -11,6 +11,16 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
 	connection_num = 0
+	///Is the pipe mapped on roundstart? 
+	var/mapped = TRUE
+
+/obj/machinery/atmospherics/pipe/smart/constructed
+	mapped = FALSE
+
+/obj/machinery/atmospherics/pipe/smart/LateInitialize()
+	. = ..()
+	if(mapped)
+		SetInitDirections(dir)
 
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
