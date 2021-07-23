@@ -127,16 +127,16 @@
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/roller/robo))
-		var/obj/item/roller/robo/R = I
-		if(R.loaded)
-			to_chat(user, span_warning("[R] already has a roller bed loaded!"))
-			return
-		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [R]."))
-		R.loaded = new/obj/structure/bed/roller(R, src)
-		return
-	else
+	if(!istype(I, /obj/item/roller/robo))
 		return ..()
+
+	var/obj/item/roller/robo/robo_roller = I
+	if(robo_roller.loaded)
+		to_chat(user, span_warning("[robo_roller] already has a roller bed loaded!"))
+		return TRUE
+	user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [robo_roller]."))
+	robo_roller.loaded = new/obj/structure/bed/roller(robo_roller, src)
+	return TRUE
 
 /obj/item/roller/attack_self(mob/user)
 	deploy_roller(user, user.loc)
