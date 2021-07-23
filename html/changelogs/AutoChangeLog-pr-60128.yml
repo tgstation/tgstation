@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes intrinsically paralytic mobs being cured from their paralysis just because they got a brand new (prosthetic) limb."
