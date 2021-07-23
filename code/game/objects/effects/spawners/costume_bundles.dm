@@ -69,6 +69,17 @@
 		/obj/item/clothing/head/that,
 	)
 
+/obj/effect/spawner/bundle/referee
+	name = "referee costume spawner"
+	items = list(
+		/obj/item/clothing/mask/whistle,
+		/obj/item/clothing/gloves/color/latex,
+		/obj/item/clothing/shoes/laceup,
+		/obj/item/clothing/glasses/hud/health,
+		/obj/item/clothing/head/soft/mime,
+		/obj/item/clothing/under/rank/civilian/bartender,
+	)
+
 /obj/effect/spawner/bundle/costume/highlander
 	name = "highlander costume spawner"
 	items = list(
