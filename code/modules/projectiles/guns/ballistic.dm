@@ -218,6 +218,7 @@
 		if(casing_ejector || !from_firing)
 			AC.forceMove(drop_location()) //Eject casing onto ground.
 			AC.bounce_away(TRUE)
+			SEND_SIGNAL(AC, COMSIG_CASING_EJECTED)
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
