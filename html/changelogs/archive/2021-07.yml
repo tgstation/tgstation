@@ -706,3 +706,36 @@
       cold)
   vincentiusvin:
   - bugfix: fixed cryocells and hfr runtiming on quick consecutive wrench actions.
+2021-07-23:
+  ATHATH:
+  - bugfix: Classic batons (and their subtypes) no longer spread their stamina damage
+      across multiple body parts.
+  Fikou:
+  - bugfix: You can no longer be the living dead by having adminordrazine when you
+      die
+  Ghilker:
+  - rscadd: Gas masks now properly filter gases when a filter is applied (can be made
+      roundstart from any lathe and every gas mask starts with one in them)
+  Ghommie:
+  - bugfix: toggling combat mode will now send a sound to the player even if the character
+      is deafened.
+  Krysonism:
+  - bugfix: Vatbeasts can use their powerful tentacle slap ability again.
+  Melbert:
+  - bugfix: Plant Analyzer's readout should look less weird and more consistent again.
+  Mothblocks:
+  - bugfix: Fixed item quirks like photographer putting their items in the wrong spot.
+  Thunder12345:
+  - bugfix: Orange shoes no longer turn into errors when detaching handcuffs
+  bobbahbrown:
+  - bugfix: Research consoles now correctly show GAGS-ified icons properly. No more
+      missing janicart upgrades!
+  tralezab:
+  - code_imp: killed the grown misc file!
+  - expansion: Roboticists can now construct critter-sized mechas, start with an EVA
+      helmet and a leg!
+  - code_imp: killed the aquarium misc file!
+  - rscadd: traitors now get some extra flavor. doesn't mean anything mechanically
+      or ruleswise right now, but maybe it will inspire some more creative traitoring?
+  - rscadd: a few antags now have a tgui menu instead of a greet. spiffy! they include
+      antag info you need.
