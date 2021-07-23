@@ -12530,6 +12530,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aPH" = (
@@ -41995,12 +41996,7 @@
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "dxK" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "cmoprivacy";
-	name = "Office Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/command/heads_quarters/cmo)
 "dyi" = (
 /obj/effect/landmark/start/bartender,
@@ -56173,6 +56169,12 @@
 /obj/structure/sign/warning/xeno_mining{
 	pixel_x = 32
 	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "jPk" = (
@@ -71083,6 +71085,13 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen)
+"qeN" = (
+/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 32
+	},
+/turf/closed/wall,
+/area/engineering/gravity_generator)
 "qeS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -109249,7 +109258,7 @@ avB
 aWm
 eqk
 eWO
-eWO
+dxK
 eWO
 dxK
 eWO
@@ -128596,7 +128605,7 @@ lsw
 lsw
 dtq
 xyp
-qSF
+qeN
 lsw
 bOb
 cFs
