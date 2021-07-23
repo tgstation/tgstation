@@ -8,7 +8,7 @@
 	belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -108,11 +108,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
-		to_chat(user, span_notice("You attach the bolt bit to [src]."))
+		balloon_alert(user, "attached bolt bit")
 		icon_state = "drill_bolt"
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		to_chat(user, span_notice("You attach the screw bit to [src]."))
+		balloon_alert(user, "attached screw bit")
 		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg

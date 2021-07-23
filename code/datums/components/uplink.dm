@@ -26,7 +26,8 @@
 	var/failsafe_code
 	var/compact_mode = FALSE
 	var/debug = FALSE
-
+	///Instructions on how to access the uplink based on location
+	var/unlock_text
 	var/list/previous_attempts
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
@@ -167,12 +168,8 @@
 			var/datum/uplink_item/I = uplink_items[category][item]
 			if(I.limited_stock == 0)
 				continue
-			if(I.restricted_roles.len)
-				var/is_inaccessible = TRUE
-				for(var/R in I.restricted_roles)
-					if(R == user.mind.assigned_role || debug)
-						is_inaccessible = FALSE
-				if(is_inaccessible)
+			if(length(I.restricted_roles))
+				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
 					continue
 			if(I.restricted_species)
 				if(ishuman(user))
@@ -252,7 +249,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/user = arguments[2]
-	owner = user.key
+	owner = user?.key
 	if(owner && !purchase_log)
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 		if(GLOB.uplink_purchase_logs_by_key[owner])

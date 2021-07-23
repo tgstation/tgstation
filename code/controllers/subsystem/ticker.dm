@@ -329,7 +329,11 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
-			player.create_character(FALSE)
+			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
+			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
+				player.new_player_panel()
+				continue
+			player.create_character(destination)
 		else
 			player.new_player_panel()
 		CHECK_TICK
@@ -359,35 +363,48 @@ SUBSYSTEM_DEF(ticker)
 		if(is_banned_from(new_player_mob.ckey, list("Captain")))
 			CHECK_TICK
 			continue
+		if(!ishuman(new_player_mob.new_character))
+			continue
 		var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
-		if(istype(new_player_human) && new_player_human.mind?.assigned_role)
-			// Keep a rolling tally of who'll get the cap's spare ID vault code.
-			// Check assigned_role's priority and curate the candidate list appropriately.
-			var/player_assigned_role = new_player_human.mind.assigned_role
-			var/spare_id_priority = SSjob.chain_of_command[player_assigned_role]
-			if(spare_id_priority)
-				if(spare_id_priority < highest_rank)
-					spare_id_candidates.Cut()
-					spare_id_candidates += new_player_mob
-					highest_rank = spare_id_priority
-				else if(spare_id_priority == highest_rank)
-					spare_id_candidates += new_player_mob
-			CHECK_TICK
+		if(!new_player_human.mind || is_unassigned_job(new_player_human.mind.assigned_role))
+			continue
+		// Keep a rolling tally of who'll get the cap's spare ID vault code.
+		// Check assigned_role's priority and curate the candidate list appropriately.
+		var/player_assigned_role = new_player_human.mind.assigned_role.title
+		var/spare_id_priority = SSjob.chain_of_command[player_assigned_role]
+		if(spare_id_priority)
+			if(spare_id_priority < highest_rank)
+				spare_id_candidates.Cut()
+				spare_id_candidates += new_player_mob
+				highest_rank = spare_id_priority
+			else if(spare_id_priority == highest_rank)
+				spare_id_candidates += new_player_mob
+		CHECK_TICK
 
 	if(length(spare_id_candidates))
 		picked_spare_id_candidate = pick(spare_id_candidates)
 
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		if(QDELETED(new_player_mob) || !isliving(new_player_mob.new_character))
+			CHECK_TICK
+			continue
 		var/mob/living/new_player_living = new_player_mob.new_character
-		if(istype(new_player_living) && new_player_living.mind?.assigned_role)
-			var/player_assigned_role = new_player_living.mind.assigned_role
-			var/player_is_captain = (picked_spare_id_candidate == new_player_mob) || (SSjob.always_promote_captain_job && (player_assigned_role == "Captain"))
-			if(player_is_captain)
-				captainless = FALSE
-			if(player_assigned_role != new_player_living.mind.special_role)
-				new_player_living = SSjob.EquipRank(new_player_mob, player_assigned_role, FALSE, player_is_captain)
-				if(CONFIG_GET(flag/roundstart_traits) && ishuman(new_player_living))
-					SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
+		if(!new_player_living.mind || is_unassigned_job(new_player_living.mind.assigned_role))
+			CHECK_TICK
+			continue
+		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
+		if(player_assigned_role.job_flags & JOB_EQUIP_RANK)
+			SSjob.EquipRank(new_player_living, player_assigned_role, new_player_mob.client)
+		player_assigned_role.after_roundstart_spawn(new_player_living, new_player_mob.client)
+		if(picked_spare_id_candidate == new_player_mob)
+			captainless = FALSE
+			var/acting_captain = !is_captain_job(player_assigned_role)
+			SSjob.promote_to_captain(new_player_living, acting_captain)
+			OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, player_assigned_role.get_captaincy_announcement(new_player_living)))
+		if(ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
+			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
+				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
+			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		CHECK_TICK
 
 	if(captainless)
@@ -396,6 +413,7 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
 			CHECK_TICK
+
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
 	list/new_players,
@@ -406,7 +424,7 @@ SUBSYSTEM_DEF(ticker)
 
 	for (var/mob/dead/new_player/new_player_mob as anything in new_players)
 		var/mob/living/carbon/human/character = new_player_mob.new_character
-		if (istype(character) && character.mind?.assigned_role == "Security Officer")
+		if (istype(character) && is_security_officer_job(character.mind?.assigned_role))
 			officer_mobs += character
 
 			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
@@ -550,7 +568,7 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
 			if(emergency_reason)
-				news_message = "[decoded_station_name] has been evacuated after transmitting the following distress beacon:\n\n[emergency_reason]"
+				news_message = "[decoded_station_name] has been evacuated after transmitting the following distress beacon:\n\n[html_decode(emergency_reason)]"
 			else
 				news_message = "The crew of [decoded_station_name] has been evacuated amid unconfirmed reports of enemy activity."
 		if(BLOB_WIN)

@@ -12530,6 +12530,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/defibrillator_mount/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aPH" = (
@@ -17175,6 +17176,9 @@
 "bbK" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_x = -22
+	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bbL" = (
@@ -41996,12 +42000,7 @@
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "dxK" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "cmoprivacy";
-	name = "Office Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/command/heads_quarters/cmo)
 "dyi" = (
 /obj/effect/landmark/start/bartender,
@@ -65809,9 +65808,6 @@
 /area/service/chapel/office)
 "nXj" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
-	pixel_y = 26
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -70886,9 +70882,7 @@
 /area/cargo/miningoffice)
 "pZk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/extinguisher/mini,
-/obj/item/storage/toolbox/emergency,
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "pZn" = (
@@ -109215,7 +109209,7 @@ avB
 aWm
 eqk
 eWO
-eWO
+dxK
 eWO
 dxK
 eWO

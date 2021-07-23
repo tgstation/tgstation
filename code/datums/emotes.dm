@@ -173,7 +173,7 @@
 	if(findtext(msg, "them"))
 		msg = replacetext(msg, "them", user.p_them())
 	if(findtext(msg, "they"))
-		msg = replacetext(message, "they", user.p_they())
+		msg = replacetext(msg, "they", user.p_they())
 	if(findtext(msg, "%s"))
 		msg = replacetext(msg, "%s", user.p_s())
 	return msg
@@ -270,13 +270,6 @@
 */
 /mob/proc/manual_emote(text) //Just override the song and dance
 	. = TRUE
-	if(findtext(text, "their"))
-		text = replacetext(text, "their", p_their())
-	if(findtext(text, "them"))
-		text = replacetext(text, "them", p_them())
-	if(findtext(text, "%s"))
-		text = replacetext(text, "%s", p_s())
-
 	if(stat != CONSCIOUS)
 		return
 

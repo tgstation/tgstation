@@ -4,7 +4,12 @@
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
+	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_CAN_USE_FLIGHT_POTION,
+	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("tail_lizard" = "Smooth", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 	external_organs = list(/obj/item/organ/external/horns = "None",
@@ -118,11 +123,11 @@ Lizard subspecies: ASHWALKERS
 	id = SPECIES_LIZARD_ASH
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
+	mutantlungs = /obj/item/organ/lungs/ashwalker
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
-		TRAIT_NOBREATH,
 		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
