@@ -299,6 +299,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
 	greyscale_colors = "#13d968#ffffff"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -307,6 +308,7 @@
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
 	greyscale_colors = "#d565d3#f8db18"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
@@ -315,7 +317,10 @@
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
-	icon_state = "flat_cap"
+	icon_state = "beret_flat"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#8F7654"
 	inhand_icon_state = "detective"
 
 /obj/item/clothing/head/hunter
@@ -433,6 +438,9 @@
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage in military conflict, for some reason."
 	icon_state = "beret"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#972A2A"
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
@@ -541,30 +549,3 @@
 	desc = "This will scare them. All will know my power."
 	icon_state = "human_leather"
 	inhand_icon_state = "human_leather"
-<<<<<<< refs/remotes/Bytube/fishing-cap
-<<<<<<< refs/remotes/Bytube/fishing-cap
-
-/obj/item/clothing/head/fishcap
-<<<<<<< refs/remotes/Bytube/fishing-cap
-<<<<<<< refs/remotes/Bytube/fishing-cap
-	name = "fishing cap"
-=======
-	name = "Fishing Cap"
->>>>>>> Adds a new hat for seasoned fishermen
-=======
-
-/obj/item/clothing/head/fishcap
-	name = "Fishing Cap"
->>>>>>> Revert "Revert "Adds a new hat for seasoned fishermen""
-=======
-	name = "fishing cap"
->>>>>>> adds fishing cap to clothing vendor
-	desc = "Women fear me \n\ Fish fear me \n\ Men turn their eyes away from me \n\ As I walk no beast dares make a sound in my presence \n\ I am alone on this barren Earth."
-	worn_icon = 'icons/mob/clothing/head/fishcap.dmi'
-	icon_state = "fishcap"
-	inhand_icon_state = "fishcap"
-<<<<<<< refs/remotes/Bytube/fishing-cap
-=======
->>>>>>> Revert "Adds a new hat for seasoned fishermen"
-=======
->>>>>>> Revert "Revert "Adds a new hat for seasoned fishermen""
