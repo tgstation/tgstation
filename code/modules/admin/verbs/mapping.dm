@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
 
 	for(var/obj/effect/abstract/marker/intercom/marker in GLOB.all_abstract_markers)
-		qdel(marker))
+		qdel(marker)
 
 	if(intercom_range_display_status)
 		for(var/frequency in GLOB.all_radios)
