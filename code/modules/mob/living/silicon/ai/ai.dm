@@ -111,6 +111,8 @@
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
+	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
+
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
@@ -382,10 +384,12 @@
 	var/is_anchored = FALSE
 	if(move_resist == MOVE_FORCE_OVERPOWERING)
 		move_resist = MOVE_FORCE_NORMAL
+		status_flags |= CANPUSH //we want the borg to be push-able when un-anchored
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	else
 		is_anchored = TRUE
 		move_resist = MOVE_FORCE_OVERPOWERING
+		status_flags &= ~CANPUSH //we dont want the borg to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")

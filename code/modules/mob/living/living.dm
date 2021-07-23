@@ -175,6 +175,11 @@
 		var/mob/living/carbon/human/human = M
 		if(human.combat_mode)
 			return TRUE
+	//if they are a cyborg, and they're not in help intent, block pushing
+	if(iscyborg(M))
+		var/mob/living/silicon/robot/borg = M
+		if(borg.combat_mode)
+			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
