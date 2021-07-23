@@ -139,6 +139,20 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 
+	list(//music
+		/obj/item/instrument/violin = 1,
+		/obj/item/instrument/banjo = 1,
+		/obj/item/instrument/guitar = 1,
+		/obj/item/instrument/eguitar = 1,
+		/obj/item/instrument/glockenspiel = 1,
+		/obj/item/instrument/accordion = 1,
+		/obj/item/instrument/trumpet = 1,
+		/obj/item/instrument/saxophone = 1,
+		/obj/item/instrument/trombone = 1,
+		/obj/item/instrument/recorder = 1,
+		/obj/item/instrument/harmonica = 1,
+		) = 1,
+
 	list(//misc
 		/obj/item/radio/off = 1,
 		/obj/item/extinguisher = 1,
@@ -237,6 +251,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//music
+		/obj/item/instrument/bikehorn = 3,
+		/obj/item/instrument/violin/golden = 3,
+		/obj/item/instrument/musicalmoth = 1,
+		) = 1,
+
 	list(//fakeout items, keep this list at low relative weight
 		/obj/item/dice/d20 = 1, //To balance out the stealth die of fates in oddities
 		/obj/item/clothing/shoes/jackboots = 1,
@@ -312,7 +332,10 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
-		/obj/item/storage/box/donkpockets/donkpocketgondola = 1
+		/obj/item/storage/box/donkpockets/donkpocketgondola = 1,
+		/obj/item/instrument/saxophone/spectral = 1,
+		/obj/item/instrument/trumpet/spectral = 1,
+		/obj/item/instrument/trombone/spectral = 1,
 	))
 
 //Maintenance loot spawner pools
