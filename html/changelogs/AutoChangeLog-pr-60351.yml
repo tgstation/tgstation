@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Classic batons (and their subtypes) no longer spread their stamina damage across multiple body parts."
