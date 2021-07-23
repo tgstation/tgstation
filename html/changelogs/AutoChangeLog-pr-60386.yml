@@ -1,0 +1,4 @@
+author: "aaaa1023"
+delete-after: True
+changes: 
+  - spellcheck: "Bloodspider directive now calls Changelings \"Vicious\" and not \"Visicious\""
