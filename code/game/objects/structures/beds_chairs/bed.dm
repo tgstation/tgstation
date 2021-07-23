@@ -58,7 +58,7 @@
 /obj/structure/bed/roller/Initialize(mapload, obj/item/roller/roller)
 	. = ..()
 	if(!roller)
-		roller = new /obj/item/roller/roller(src)
+		roller = new /obj/item/roller(src)
 	src.roller = roller
 	roller.forceMove(src)
 	name = roller.name
