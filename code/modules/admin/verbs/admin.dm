@@ -1,3 +1,5 @@
+// Admin Tab - Admin Verbs
+
 /client/proc/show_tip()
 	set category = "Admin"
 	set name = "Show Tip"
