@@ -299,6 +299,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
 	greyscale_colors = "#13d968#ffffff"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -307,6 +308,7 @@
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
 	greyscale_colors = "#d565d3#f8db18"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
@@ -315,7 +317,10 @@
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
-	icon_state = "flat_cap"
+	icon_state = "beret_flat"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#8F7654"
 	inhand_icon_state = "detective"
 
 /obj/item/clothing/head/hunter
@@ -433,6 +438,9 @@
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage in military conflict, for some reason."
 	icon_state = "beret"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#972A2A"
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
@@ -535,3 +543,9 @@
 	flags_inv = 0
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	strip_delay = (8 SECONDS)
+
+/obj/item/clothing/head/human_leather
+	name = "human skin hat"
+	desc = "This will scare them. All will know my power."
+	icon_state = "human_leather"
+	inhand_icon_state = "human_leather"

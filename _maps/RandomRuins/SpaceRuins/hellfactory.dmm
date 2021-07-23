@@ -64,11 +64,11 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
-/obj/structure/fluff/hedge/opaque,
+/obj/structure/hedge/opaque,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "ak" = (
-/obj/machinery/atmospherics/components/unary/tank/oxygen{
+/obj/machinery/atmospherics/components/tank/oxygen{
 	dir = 8;
 	gas_type = /datum/gas/water_vapor;
 	initialize_directions = 8
@@ -172,7 +172,7 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
 "ay" = (
-/obj/structure/fluff/hedge/opaque,
+/obj/structure/hedge/opaque,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "az" = (

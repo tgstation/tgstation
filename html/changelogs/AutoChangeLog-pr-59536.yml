@@ -1,0 +1,7 @@
+author: "GoldenAlpharex, with some help of Imaginos (PositiveEntropy)"
+delete-after: True
+changes: 
+  - imageadd: "Added a new badge to display on future berets."
+  - expansion: "Nanotrasen's fashion department decided to release a brand new series of berets, meant to replace the old collection and featuring a wider array of possibilities!"
+  - refactor: "Berets are now converted to GAGS, with more options for customization and greater consistancy between the sprites."
+  - code_imp: "Not all GAGS sprites can be recolored in vendors by default anymore."

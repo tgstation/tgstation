@@ -223,14 +223,15 @@
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
-/obj/item/storage/bag/plants/portaseeder/verb/dissolve_contents()
-	set name = "Activate Seed Extraction"
-	set category = "Object"
-	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.incapacitated())
+/obj/item/storage/bag/plants/portaseeder/examine(mob/user)
+	. = ..()
+	. += span_notice("Ctrl-click to activate seed extraction.")
+
+/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
+	if(user.incapacitated())
 		return
-	for(var/obj/item/O in contents)
-		seedify(O, 1)
+	for(var/obj/item/plant in contents)
+		seedify(plant, 1)
 
 // -----------------------------
 //        Sheet Snatcher
@@ -372,11 +373,11 @@
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
 
-/obj/item/storage/bag/tray/Entered()
+/obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	update_appearance()
 
-/obj/item/storage/bag/tray/Exited()
+/obj/item/storage/bag/tray/Exited(atom/movable/gone, direction)
 	. = ..()
 	update_appearance()
 

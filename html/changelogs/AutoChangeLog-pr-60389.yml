@@ -1,0 +1,4 @@
+author: "aaaa1023"
+delete-after: True
+changes: 
+  - bugfix: "There are no longer maintenance zone tiles inside the circuits lab on icebox."

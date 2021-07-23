@@ -2305,7 +2305,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "RB" = (
-/obj/structure/fluff/hedge{
+/obj/structure/hedge{
 	resistance_flags = 64
 	},
 /turf/open/floor/plating/grass,

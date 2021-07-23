@@ -166,7 +166,7 @@
 		heirloom_type = pick(holder_species.family_heirlooms)
 	else
 		// Our quirk holder's job
-		var/datum/job/holder_job = SSjob.GetJob(human_holder.mind?.assigned_role)
+		var/datum/job/holder_job = human_holder.mind?.assigned_role
 		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
 			heirloom_type = pick(holder_job.family_heirlooms)
 
@@ -308,7 +308,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	if(human_holder.dna?.species.id in list("shadow", "nightmare"))
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
 		return
 
 	var/turf/holder_turf = get_turf(quirk_holder)

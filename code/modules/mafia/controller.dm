@@ -572,6 +572,7 @@
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
 		ADD_TRAIT(H, TRAIT_NOFIRE, MAFIA_TRAIT)
 		ADD_TRAIT(H, TRAIT_NOBREATH, MAFIA_TRAIT)
+		ADD_TRAIT(H, TRAIT_CANNOT_CRYSTALIZE, MAFIA_TRAIT)
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
@@ -579,7 +580,7 @@
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]
 		if(player_client)
-			player_client.prefs.copy_to(H)
+			player_client.prefs.safe_transfer_prefs_to(H, is_antag = TRUE)
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key

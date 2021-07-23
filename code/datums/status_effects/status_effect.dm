@@ -21,11 +21,11 @@
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
-	if(owner)
-		LAZYADD(owner.status_effects, src)
-	if(!owner || !on_apply())
+	if(QDELETED(owner) || !on_apply())
 		qdel(src)
 		return
+	if(owner)
+		LAZYADD(owner.status_effects, src)
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval
@@ -78,7 +78,7 @@
 /datum/status_effect/proc/before_remove() //! Called before being removed; returning FALSE will cancel removal
 	return TRUE
 
-/datum/status_effect/proc/refresh()
+/datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
 	if(original_duration == -1)
 		return
@@ -112,17 +112,17 @@
 	. = FALSE
 	var/datum/status_effect/S1 = effect
 	LAZYINITLIST(status_effects)
+	var/list/arguments = args.Copy()
+	arguments[1] = src
 	for(var/datum/status_effect/S in status_effects)
 		if(S.id == initial(S1.id) && S.status_type)
 			if(S.status_type == STATUS_EFFECT_REPLACE)
 				S.be_replaced()
 			else if(S.status_type == STATUS_EFFECT_REFRESH)
-				S.refresh()
+				S.refresh(arglist(arguments))
 				return
 			else
 				return
-	var/list/arguments = args.Copy()
-	arguments[1] = src
 	S1 = new effect(arguments)
 	. = S1
 

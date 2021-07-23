@@ -153,10 +153,8 @@
 		return FALSE
 	pulse(FALSE)
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
-	for(var/CHM in get_hearers_in_view(hearing_range, src))
-		if(ismob(CHM))
-			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
@@ -167,15 +165,15 @@
 	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
 	listeningTo = newloc
 
-/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
+/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
-	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
+	if(src == gone || istype(gone, /obj/effect/beam/i_beam))
 		return
-	if (offender && isitem(offender))
-		var/obj/item/I = offender
+	if(isitem(gone))
+		var/obj/item/I = gone
 		if (I.item_flags & ABSTRACT)
 			return
 	INVOKE_ASYNC(src, .proc/refreshBeam)
@@ -234,7 +232,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/beam/i_beam/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
 	SIGNAL_HANDLER

@@ -7,7 +7,7 @@
 	complementary_color = "#AF7B8D"
 	message_living = ", and you feel <i>alive</i>"
 	reagent = /datum/reagent/blob/regenerative_materia
-	core_regen_bonus = 20
+	core_regen_bonus = 18
 	point_rate_bonus = 1
 
 /datum/reagent/blob/regenerative_materia

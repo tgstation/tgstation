@@ -23,7 +23,7 @@
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
-		var/rando_race = pick(GLOB.roundstart_races)
+		var/rando_race = GLOB.species_list[pick(GLOB.roundstart_races)]
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()
