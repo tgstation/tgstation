@@ -2069,11 +2069,3 @@
 		new /datum/merger(id, allowed_types, src)
 		candidate = mergers[id]
 	return candidate
-
-/**
- * Returns whether or not an atom is player colorable GAGS-wise.
- *
- * Returns FALSE by default, to be overriden whenever it needs to be colorable.
- */
-/atom/proc/is_player_colorable()
-	return FALSE

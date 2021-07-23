@@ -129,7 +129,7 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
-	flags_1 = IS_PLAYER_COLORABLE
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 
 //Security

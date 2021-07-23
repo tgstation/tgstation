@@ -11,7 +11,7 @@
 	inhand_icon_state = "jumpsuit"
 	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
-	flags_1 = IS_PLAYER_COLORABLE
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/color/jumpskirt
 	body_parts_covered = CHEST|GROIN|ARMS

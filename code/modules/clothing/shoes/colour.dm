@@ -4,7 +4,7 @@
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	flags_1 = IS_PLAYER_COLORABLE
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
