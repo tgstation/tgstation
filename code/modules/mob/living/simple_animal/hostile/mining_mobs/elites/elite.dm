@@ -288,7 +288,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		mychild.times_won++
 		mychild.maxHealth = mychild.maxHealth * 0.5
 		mychild.health = mychild.maxHealth
-	if(times_won == 1)
+	if(mychild.times_won == 1)
 		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
 		to_chat(mychild, span_boldwarning("As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel that you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide."))
 		to_chat(mychild, "<b>Your maximum health total has been halved, but you can now heal by standing on your tumor. \nBear in mind that if anyone interacts with your tumor, you'll be resummoned here to carry out another fight with a temporarily restored maximum health total.\nAlso, be wary of your fellow Lavaland inhabitants, as they likely won't be happy to see you!</b>")
