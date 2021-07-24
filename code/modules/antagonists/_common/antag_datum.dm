@@ -48,6 +48,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_name_in_check_antagonists = FALSE
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
+	/// The typepath for the outfit to show in the preview for the preferences menu.
+	var/preview_outfit
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -55,9 +57,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
-	if(!owner)
-		stack_trace("Destroy()ing antagonist datum when it has no owner.")
-	else
+	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 	owner = null
 	return ..()
@@ -303,6 +303,25 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// List of ["Command"] = CALLBACK(), user will be appeneded to callback arguments on execution
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
+
+/// Returns the icon to show on the preferences menu.
+/// A dummy is passed in. This dummy is shared between calls.
+/// It is not guaranteed to be clean, so call `delete_equipment()` yourself
+/// before you dress it.
+/datum/antagonist/proc/get_preview_icon(mob/living/carbon/human/dummy)
+	if (!preview_outfit)
+		return null
+
+	// delete_equipment() is handled by get_preview_icon() and not by callers
+	// so that they are able to cache icons without wasteful equipment deletions.
+	// This is used in, for instance, nuke ops/lone ops, which share the same icon.
+	// This is also helpful as not all antagonist icons will be humans, such as
+	// sentient diseases or aliens.
+	dummy.delete_equipment()
+	dummy.equipOutfit(preview_outfit)
+	COMPILE_OVERLAYS(dummy)
+
+	return getFlatIcon(dummy)
 
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))

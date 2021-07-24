@@ -6,8 +6,18 @@
 
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
-#define ROLE_SYNDICATE "Syndicate"
+
+/// Roundstart
 #define ROLE_TRAITOR "Traitor"
+
+/// Midrounds
+#define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
+
+/// Latejoins
+#define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
+
+/// MOTHBLOCKS TODO: Unsorted
+#define ROLE_SYNDICATE "Syndicate"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_WIZARD "Wizard"

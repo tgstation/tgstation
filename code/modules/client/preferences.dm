@@ -241,6 +241,7 @@ GLOBAL_VAR(preferences_species_data)
 
 /datum/preferences/ui_assets(mob/user)
 	return list(
+		get_asset_datum(/datum/asset/spritesheet/antagonists),
 		get_asset_datum(/datum/asset/spritesheet/preferences),
 	)
 

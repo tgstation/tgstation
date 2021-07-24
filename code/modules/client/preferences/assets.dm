@@ -41,3 +41,26 @@
 /// Returns the key that will be used in the spritesheet for a given value.
 /datum/preference/proc/get_spritesheet_key(value)
 	return "[savefile_key]___[sanitize_css_class_name(value)]"
+
+/// Assets generated for the antagoninsts panel
+/datum/asset/spritesheet/antagonists
+	name = "antagonists"
+
+/datum/asset/spritesheet/antagonists/register()
+	var/mob/living/carbon/human/dummy/consistent/dummy = new
+
+	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		var/datum/antagonist/antagonist_type = initial(ruleset.antag_datum)
+		if (isnull(antagonist_type))
+			continue
+
+		var/datum/antagonist/antagonist = new antagonist_type
+		var/icon/preview_icon = antagonist.get_preview_icon(dummy)
+
+		if (isnull(preview_icon))
+			continue
+
+		// antag_flag is guaranteed to be unique by unit tests.
+		Insert(sanitize_css_class_name(lowertext(initial(ruleset.antag_flag))), preview_icon)
+
+	return ..()

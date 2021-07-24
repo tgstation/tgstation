@@ -52,7 +52,8 @@
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
 	antag_datum = /datum/antagonist/traitor
-	antag_flag = ROLE_TRAITOR
+	antag_flag = ROLE_SYNDICATE_INFILTRATOR
+	antag_flag_override = ROLE_TRAITOR
 	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI","Cyborg")
 	required_candidates = 1

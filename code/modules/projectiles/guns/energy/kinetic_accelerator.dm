@@ -27,6 +27,10 @@
 
 	var/recharge_timerid
 
+/obj/item/gun/energy/kinetic_accelerator/Destroy()
+	// BREWKPOINT THIS
+	return ..()
+
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
 	. = ..()
 	if(max_mod_capacity)

@@ -184,7 +184,8 @@
 /datum/dynamic_ruleset/midround/autotraitor
 	name = "Syndicate Sleeper Agent"
 	antag_datum = /datum/antagonist/traitor
-	antag_flag = ROLE_TRAITOR
+	antag_flag = ROLE_SLEEPER_AGENT
+	antag_flag_override = ROLE_TRAITOR
 	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	required_candidates = 1
