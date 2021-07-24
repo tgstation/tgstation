@@ -1,6 +1,6 @@
 /obj/effect/spawner/lootdrop/clothing
-name = "clothing loot spawner"
-desc = "Time to look pretty."
+	name = "clothing loot spawner"
+	desc = "Time to look pretty."
 
 /obj/effect/spawner/lootdrop/clothing/costume
 	name = "random costume spawner"

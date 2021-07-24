@@ -1,6 +1,6 @@
 /obj/effect/spawner/lootdrop/aimodule
-name = "AI module spawner"
-desc = "State laws human."
+	name = "AI module spawner"
+	desc = "State laws human."
 
 /obj/effect/spawner/lootdrop/aimodule/harmless // These shouldn't allow the AI to start butchering people
 	name = "harmless AI module spawner"

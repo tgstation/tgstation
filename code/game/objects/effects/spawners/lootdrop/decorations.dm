@@ -1,6 +1,6 @@
 /obj/effect/spawner/lootdrop/decorations
-name = "decoration loot spawner"
-desc = "Time for some bling bling."
+	name = "decoration loot spawner"
+	desc = "Time for some bling bling."
 
 /obj/effect/spawner/lootdrop/decorations/material
 	lootcount = 1
@@ -52,7 +52,7 @@ desc = "Time for some bling bling."
 	/obj/structure/statue/silver/secborg = 20,
 	/obj/structure/statue/silver/medborg = 20,
 	/obj/structure/statue/plasma/scientist = 15,
-	/obj/structure/statue/plasma/xeno = 15,
+	//obj/structure/statue/plasma/xeno = 15,
 	/obj/structure/statue/gold/hos = 5,
 	/obj/structure/statue/gold/hop = 5,
 	/obj/structure/statue/gold/cmo = 5,
