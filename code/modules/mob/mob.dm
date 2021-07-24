@@ -655,38 +655,6 @@
 
 	limb_attack_self()
 
-
-/**
- * Get the notes of this mob
- *
- * This actually gets the mind datums notes
- */
-/mob/verb/memory()
-	set name = "Notes"
-	set category = "IC"
-	set desc = "View your character's notes memory."
-	if(!mind)
-		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
-		return
-	mind.show_memory(src)
-
-/**
- * Add a note to the mind datum
- */
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
-	set category = "IC"
-	if(mind)
-		if (world.time < memory_throttle_time)
-			return
-		memory_throttle_time = world.time + 5 SECONDS
-		msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
-	else
-		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
-
 /**
  * Allows you to respawn, abandoning your current mob
  *

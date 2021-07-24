@@ -36,7 +36,6 @@
 	var/mob/living/current
 	var/active = FALSE
 
-	var/memory
 	///a list of /datum/memories. assoc type of memory = memory datum. only one type of memory will be stored, new ones of the same type overriding the last.
 	var/list/memories = list()
 

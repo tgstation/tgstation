@@ -15,6 +15,8 @@
 	var/list/extra_info
 	///mood of the person performing the event when they did it. changes the description.
 	var/mood
+	///if this the memory of the person holding it (for changelings) in the future if there are more circumstances around memories this can be made into a flag
+	var/original_memory = TRUE
 
 /datum/memory/New(name, performer, action, target, extra_info, mood)
 	. = ..()

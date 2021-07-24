@@ -5,13 +5,14 @@
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
+	///if we're currently absorbing, used for sanity
+	var/is_absorbing = FALSE
 
 /datum/action/changeling/absorb_dna/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(changeling.isabsorbing)
+	if(is_absorbing)
 		to_chat(user, span_warning("We are already absorbing!"))
 		return
 
@@ -25,28 +26,13 @@
 	var/mob/living/carbon/target = user.pulling
 	return changeling.can_absorb_dna(target)
 
-
-
 /datum/action/changeling/absorb_dna/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
-	changeling.isabsorbing = 1
-	for(var/i in 1 to 3)
-		switch(i)
-			if(1)
-				to_chat(user, span_notice("This creature is compatible. We must hold still..."))
-			if(2)
-				user.visible_message(span_warning("[user] extends a proboscis!"), span_notice("We extend a proboscis."))
-			if(3)
-				user.visible_message(span_danger("[user] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
-				to_chat(target, span_userdanger("You feel a sharp stabbing pain!"))
-				target.take_overall_damage(40)
+	is_absorbing = TRUE
 
-		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[i]"))
-		if(!do_mob(user, target, 150))
-			to_chat(user, span_warning("Our absorption of [target] has been interrupted!"))
-			changeling.isabsorbing = 0
-			return
+	if(!attempt_absorb())
+		return
 
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
 	user.visible_message(span_danger("[user] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
@@ -63,28 +49,45 @@
 	owner.copy_languages(target, LANGUAGE_ABSORB)
 
 	if(target.mind && user.mind)//if the victim and user have minds
+		absorb_memories()
+
+	is_absorbing = FALSE
+
+	changeling.chem_charges = min(changeling.chem_charges+10, changeling.chem_storage)
+	changeling.canrespec = TRUE
+
+	target.death(0)
+	target.Drain()
+	return TRUE
+
+/datum/action/changeling/absorb_dna/proc/absorb_memories()
 		var/datum/mind/suckedbrain = target.mind
-		user.mind.memory += "<BR><b>We've absorbed [target]'s memories into our own...</b><BR>[suckedbrain.memory]<BR>"
-		for(var/A in suckedbrain.antag_datums)
-			var/datum/antagonist/antag_types = A
-			var/list/all_objectives = antag_types.objectives.Copy()
+
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+
+		for(var/datum/memory/stolen_memory as anything in suckedbrain.memories)
+			stolen_memory.original_memory = FALSE
+			user.mind.memories += stolen_memory
+			suckedbrain.memories -= stolen_memory
+
+		for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)
+			var/list/all_objectives = antagonist_datum.objectives.Copy()
 			if(antag_types.antag_memory)
-				user.mind.memory += "[antag_types.antag_memory]<BR>"
-			if(LAZYLEN(all_objectives))
-				user.mind.memory += "<B>Objectives:</B>"
-				var/obj_count = 1
-				for(var/O in all_objectives)
-					var/datum/objective/objective = O
-					user.mind.memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
-					var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
-					if(other_owners.len)
-						user.mind.memory += "<ul>"
-						for(var/mind in other_owners)
-							var/datum/mind/M = mind
-							user.mind.memory += "<li>Conspirator: [M.name]</li>"
-						user.mind.memory += "</ul>"
-		user.mind.memory += "<b>That's all [target] had.</b><BR>"
-		user.memory() //I can read your mind, kekeke. Output all their notes.
+				changeling.antag_memory += "[antag_types.antag_memory]<BR>"
+			if(!LAZYLEN(all_objectives))
+				continue
+			changeling.antag_memory += "<B>Objectives:</B>"
+			var/obj_count = 1
+			for(var/datum/objective/objective as anything in all_objectives)
+				changeling.antag_memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+				var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
+				if(!other_owners.len)
+					continue
+				changeling.antag_memory += "<ul>"
+				for(var/datum/mind/conspirator as anything in other_owners)
+					changeling.antag_memory += "<li>Conspirator: [M.name]</li>"
+				changeling.antag_memory += "</ul>"
+		changeling.antag_memory += "<b>That's all [target] had.</b><BR>"
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.
 		//Recent as opposed to all because rounds tend to have a LOT of text.
@@ -121,27 +124,32 @@
 		var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
 			to_chat(user, span_boldnotice("[target] was one of us. We have absorbed their power."))
-			target_ling.remove_changeling_powers()
 			changeling.geneticpoints += round(target_ling.geneticpoints/2)
 			changeling.total_geneticspoints = changeling.geneticpoints //updates the total sum of genetic points when you absorb another ling
-			target_ling.geneticpoints = 0
-			target_ling.canrespec = 0
 			changeling.chem_storage += round(target_ling.chem_storage/2)
 			changeling.total_chem_storage = changeling.chem_storage //updates the total sum of chemicals stored for when you absorb another ling
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
-			target_ling.chem_charges = 0
-			target_ling.chem_storage = 0
 			changeling.absorbedcount += (target_ling.absorbedcount)
-			target_ling.stored_profiles.len = 1
-			target_ling.absorbedcount = 0
-			target_ling.was_absorbed = TRUE
 
+			var/list/copied_objectives = target_ling.objectives.Copy()
+			target.mind.remove_antag_datum(/datum/antagonist/changeling)
+			var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
+			fallen.objectives = copied_objectives
 
-	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
+/datum/action/changeling/absorb_dna/proc/attempt_absorb()
+	for(var/absorbing_iteration in 1 to 3)
+		switch(absorbing_iteration)
+			if(1)
+				to_chat(user, span_notice("This creature is compatible. We must hold still..."))
+			if(2)
+				user.visible_message(span_warning("[user] extends a proboscis!"), span_notice("We extend a proboscis."))
+			if(3)
+				user.visible_message(span_danger("[user] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
+				to_chat(target, span_userdanger("You feel a sharp stabbing pain!"))
+				target.take_overall_damage(40)
 
-	changeling.isabsorbing = 0
-	changeling.canrespec = 1
-
-	target.death(0)
-	target.Drain()
-	return TRUE
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[i]"))
+		if(!do_mob(user, target, 15 SECONDS))
+			to_chat(user, span_warning("Our absorption of [target] has been interrupted!"))
+			is_absorbing = FALSE
+			return
