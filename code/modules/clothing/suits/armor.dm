@@ -138,7 +138,7 @@
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
 
-/obj/item/clothing/suit/toggle/armor/vest/capcarapace/alt
+/obj/item/clothing/suit/toggle/captains_parade
 	name = "captain's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
@@ -147,7 +147,7 @@
 	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 100, ACID = 90, WOUND = 10)
 	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/armor/vest/capcarapace/alt/Initialize()
+/obj/item/clothing/suit/toggle/captains_parade/Initialize()
 	. = ..()
 	allowed = GLOB.security_wintercoat_allowed
 
