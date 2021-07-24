@@ -1,10 +1,8 @@
 import { useBackend, useLocalState } from '../backend';
-import { multiline } from 'common/string';
 import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
-const allystyle = {
+const hivestyle = {
   fontWeight: 'bold',
   color: 'yellow',
 };
@@ -62,7 +60,10 @@ const IntroductionSection = (props, context) => {
     <Section fill title="Intro" scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
-          You are the Changeling from {hive_name}.
+          You are the Changeling from
+          <span style={hivestyle}>
+            {hive_name}
+          </span>.
         </Stack.Item>
         <Stack.Item grow>
           <ObjectivePrintout />
