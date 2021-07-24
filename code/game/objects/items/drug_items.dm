@@ -50,7 +50,7 @@
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
 		reagent_flags = OPENCONTAINER
 		spillable = TRUE
-		playsound(src, 'sounds/items/ampoule_snap.ogg', 40)
+		playsound(src, 'sound/items/ampoule_snap.ogg', 40)
 		update_appearance()
 	. = ..()
 

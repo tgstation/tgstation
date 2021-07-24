@@ -553,8 +553,8 @@
 		flip_count = 0
 		var/atom/throw_target = get_edge_target_turf(dancer, dancer.dir)
 		dancer.SpinAnimation(12,3)
-		dancer.visible_message("<span class='userdanger'>[dancer] does an extravagant flip!</span>")
-		dancer.throw_at(throw_target, range = 4, speed = 1, force = overdosed ? 4 : 1)
+		dancer.visible_message(span_notice("[dancer] does an extravagant flip!"), span_nicegreen("You do an extravagant flip!"))
+		dancer.throw_at(throw_target, range = 4, speed = overdosed ? 4 : 1)
 
 ///This proc listens to the spin signal and throws the mob every third spin
 /datum/reagent/drug/blastoff/proc/on_spin()
@@ -567,7 +567,7 @@
 	spin_count++
 	if(spin_count >= BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE) //Do a super flip
 		spin_count = 0
-		dancer.visible_message("<span class='userdanger'>[dancer] spins around violently!</span>")
+		dancer.visible_message(span_danger("[dancer] spins around violently!"), span_danger("You spin around violently!"))
 		dancer.spin(30, 2)
 		if(dancer.disgust < 40)
 			dancer.adjust_disgust(10)
@@ -575,8 +575,12 @@
 			return
 		var/dancer_turf = get_turf(dancer)
 		var/atom/movable/dance_partner = dancer.pulledby
+		dance_partner.visible_message(span_danger("[dance_partner] tries to hold onto [dancer], but is thrown back!"), span_danger("You try to hold onto [dancer], but you are thrown back!"), null, COMBAT_MESSAGE_RANGE)
 		var/throwtarget = get_edge_target_turf(dancer_turf, get_dir(dancer_turf, get_step_away(dance_partner, dancer_turf)))
-		dance_partner.throw_at(target = throwtarget, range = 2, speed = 1)
+		if(overdosed)
+			dance_partner.throw_at(target = throwtarget, range = 7, speed = 4)
+		else
+			dance_partner.throw_at(target = throwtarget, range = 4, speed = 1) //superspeed
 
 /datum/reagent/drug/saturnx
 	name = "SaturnX"
@@ -649,6 +653,8 @@
 	. = ..()
 	if(DT_PROB(7.5, delta_time))
 		M.emote("giggle")
+	if(DT_PROB(5, delta_time))
+		M.emote("laugh")
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
 /datum/reagent/drug/kroncaine
@@ -700,13 +706,3 @@
 	M.Jitter(10 * REM * delta_time)
 	if(DT_PROB(10, delta_time))
 		to_chat(M, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
-
-/*
-
-TODO:
-
-saturnx moodlet
-make sure the design doc and code aligns.
-
-Testing
-*/
