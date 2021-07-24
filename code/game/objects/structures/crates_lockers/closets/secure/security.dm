@@ -72,6 +72,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/hos(src)
+	new /obj/item/clothing/suit/toggle/armor/hos/hos_formal(src)
 	new /obj/item/cartridge/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
