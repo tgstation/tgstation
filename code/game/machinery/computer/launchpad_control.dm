@@ -92,7 +92,9 @@
 		return
 
 	var/current_launchpad = launchpad_id.input_value
-	if(isnull(current_launchpad))
+	if(isnull(current_launchpad) || current_launchpad < 1 || current_launchpad > length(attached_console.launchpads))
+		why_fail.set_output("Invalid launchpad selected!")
+		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
 	var/obj/machinery/launchpad/the_pad = attached_console.launchpads[current_launchpad]
