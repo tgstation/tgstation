@@ -1,6 +1,6 @@
 /obj/effect/spawner/lootdrop/trash
-name = "trash spawner"
-desc = "Ewwwwwww gross."
+	name = "trash spawner"
+	desc = "Ewwwwwww gross."
 
 /obj/effect/spawner/lootdrop/trash/garbage
 	name = "garbage spawner"
@@ -87,12 +87,7 @@ desc = "Ewwwwwww gross."
 	name = "random graffiti spawner"
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "random_graffiti"
-	loot = list(/obj/effect/decal/cleanable/crayon)
-
-/obj/effect/spawner/lootdrop/graffiti/Initialize()
-	. = ..()
-
-	var/graffiti_icon_states = list(
+	loot = list(
 	"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
 	"amyjon", "face", "matt", "revolution", "engie", "guy",
 	"end", "dwarf", "uboa", "body", "cyka", "star", "poseur tag",
@@ -101,14 +96,14 @@ desc = "Ewwwwwww gross."
 	"food", "peace", "like", "skull", "nay", "heart", "credit",
 	"smallbrush", "brush", "largebrush", "splatter", "snake", "stickman",
 	"carp", "ghost", "clown", "taser", "disk", "fireaxe", "toolbox",
-	"corgi", "cat", "toilet", "blueprint", "beepsky", "scroll", "bottle", "shotgun",
-	"arrow", "line", "thinline", "shortline", "body", "chevron", "footprint",
-	"clawprint", "pawprint",
+	"corgi", "cat", "toilet", "blueprint", "beepsky", "scroll", "bottle",
+	"shotgun", "arrow", "line", "thinline", "shortline", "body", "chevron",
+	"footprint", "clawprint", "pawprint",
 	)
-	var/graffiti_choice = pickweight(graffiti_icon_states)
-	//var/obj/effect/decal/cleanable/crayon/graffiti_decal = new graffiti_choice(get_turf(src))
-	//graffiti_decal.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
-	..add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
-	..icon_state = graffiti_choice
 
+/obj/effect/spawner/lootdrop/graffiti/Initialize()
+	. = ..()
+	var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
+	graffiti.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
+	graffiti.icon_state = pick(loot)
 	return INITIALIZE_HINT_QDEL
