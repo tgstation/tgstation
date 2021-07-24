@@ -91,14 +91,13 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/current_launchpad = launchpad_id.input_value
-	if(isnull(current_launchpad) || current_launchpad < 1 || current_launchpad > length(attached_console.launchpads))
-		why_fail.set_output("Invalid launchpad selected!")
-		on_fail.set_output(COMPONENT_SIGNAL)
+	if(!launchpad_id.input_value)
 		return
 
-	var/obj/machinery/launchpad/the_pad = attached_console.launchpads[current_launchpad]
+	var/obj/machinery/launchpad/the_pad = KEYBYINDEX(attached_console.launchpads, launchpad_id.input_value)
 	if(isnull(the_pad))
+		why_fail.set_output("Invalid launchpad selected!")
+		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
 	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
