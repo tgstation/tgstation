@@ -383,7 +383,7 @@
 
 
 /mob/living/carbon/human/apply_prefs_job(client/player_client, datum/job/job)
-	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
+	// var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 	// MOTHBLOCKS TODO: All this random shit

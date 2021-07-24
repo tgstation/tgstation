@@ -2086,3 +2086,24 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			continue
 
 		current_part.change_bodypart(species_part)
+
+/// Returns a list of strings representing features this species has.
+/// Used by the preferences UI to know what buttons to show.
+/datum/species/proc/get_features()
+	var/list/features = list()
+
+	for (var/body_part in mutant_bodyparts)
+		features += body_part
+
+	for (var/trait in species_traits)
+		switch (trait)
+			if (EYECOLOR)
+				features += "eye_color"
+			if (FACEHAIR)
+				features += "facial_hair"
+				features += "facial_hair_color"
+			if (HAIR)
+				features += "hair"
+				features += "hair_color"
+
+	return features

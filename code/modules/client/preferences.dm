@@ -540,10 +540,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	character.underwear_color = underwear_color
 	character.socks = socks
 
-	character.dna.real_name = character.real_name
-
-	character.dna.features = features.Copy()
-
 	// MOTHBLOCKS TODO: Put this on name/real_name/apply
 	// if(roundstart_checks)
 	// 	if(CONFIG_GET(flag/humans_need_surnames) && (read_preference(/datum/preference/choiced/species) == /datum/species/human))
@@ -557,6 +553,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		preference.apply(character, read_preference(preference_type))
+
+	character.dna.features = features.Copy()
+	character.dna.real_name = character.real_name
 
 	// MOTHBLOCKS TODO: What is all this for? If it doesn't include moth wings, then what is it?
 	// Is it the same problem with cloning moths not giving wings? Oversight?
@@ -640,22 +639,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 				"toxic_food" = bitfield2list(species.toxic_food, food_flags),
 			)
 
-		var/list/features = list()
-
-		for (var/body_part in species.mutant_bodyparts)
-			features += body_part
-
-		for (var/trait in species.species_traits)
-			switch (trait)
-				if (EYECOLOR)
-					features += "eye_color"
-				if (FACEHAIR)
-					features += "facial_hair"
-					features += "facial_hair_color"
-				if (HAIR)
-					features += "hair"
-					features += "hair_color"
-
 		// MOTHBLOCKS TODO: Move this to ts/json files and unit test consistency.
 		species_data[species_id] = list(
 			"name" = species.name,
@@ -663,7 +646,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 			"use_skintones" = species.use_skintones,
 			"sexes" = species.sexes,
 
-			"features" = features,
+			"features" = species.get_features(),
 		) + diet
 
 	return species_data

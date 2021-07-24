@@ -12,3 +12,5 @@
 	var/obj/item/melee/transforming/energy/sword/sword = locate() in H.held_items
 	sword.icon_state = "swordred"
 	sword.worn_icon_state = "swordred"
+
+	H.update_inv_hands()

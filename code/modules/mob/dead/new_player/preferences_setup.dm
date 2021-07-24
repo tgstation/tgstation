@@ -145,7 +145,7 @@
 		available_hardcore_quirks -= picked_quirk
 
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(mob/living/carbon/human/dummy/mannequin)
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 	var/highest_pref = 0
@@ -165,7 +165,6 @@
 	// 		return
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 	apply_prefs_to(mannequin, TRUE)
 
 	if(previewJob)
