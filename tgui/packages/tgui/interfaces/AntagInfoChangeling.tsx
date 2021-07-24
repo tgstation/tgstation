@@ -26,16 +26,8 @@ type Objective = {
 }
 
 type Info = {
-  phrases: string;
-  responses: string;
-  theme: string;
-  allies: string;
-  goal: string;
-  intro: string;
-  code: string;
-  has_uplink: BooleanLike;
-  uplink_intro: string;
-  uplink_unlock_info: string;
+  stolen_antag_info: string;
+  memories: string[];
   objectives: Objective[];
 };
 
@@ -64,13 +56,13 @@ const ObjectivePrintout = (props, context) => {
 const IntroductionSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const {
-    intro,
+    hive_name,
   } = data;
   return (
     <Section fill title="Intro" scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
-          {intro}
+          You are the Changeling from {hive_name}.
         </Stack.Item>
         <Stack.Item grow>
           <ObjectivePrintout />
@@ -80,94 +72,7 @@ const IntroductionSection = (props, context) => {
   );
 };
 
-const EmployerSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const {
-    allies,
-    goal,
-  } = data;
-  return (
-    <Section
-      fill
-      title="Employer"
-      scrollable
-      buttons={
-        <Button
-          icon="hammer"
-          tooltip={multiline`
-            This is a gameplay suggestion for bored traitors.
-            You don't have to follow it... kinda like spacelaw!`}
-          tooltipPosition="bottom-start">
-          Policy
-        </Button>
-      }>
-      <Stack vertical fill>
-        <Stack.Item grow>
-          <Stack vertical>
-            <Stack.Item>
-              <span style={allystyle}>
-                Your allegiances:<br />
-              </span>
-              <BlockQuote>
-                {allies}
-              </BlockQuote>
-            </Stack.Item>
-            <Stack.Divider />
-            <Stack.Item>
-              <span style={goalstyle}>
-                Employer thoughts:<br />
-              </span>
-              <BlockQuote>
-                {goal}
-              </BlockQuote>
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
-const UplinkSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const {
-    has_uplink,
-    uplink_intro,
-    uplink_unlock_info,
-    code,
-  } = data;
-  return (
-    <Section
-      title="Uplink"
-      mb={!has_uplink && -1}>
-      <Stack fill>
-        {!has_uplink && (
-          <Dimmer>
-            <Stack.Item fontSize="18px">
-              You were not supplied with an uplink.
-            </Stack.Item>
-          </Dimmer>
-        ) || (
-          <>
-            <Stack.Item bold>
-              {uplink_intro}
-              <br />
-              <span style={goalstyle}>Code: {code}</span>
-            </Stack.Item>
-            <Stack.Divider />
-            <Stack.Item mt="1%">
-              <BlockQuote>
-                {uplink_unlock_info}
-              </BlockQuote>
-            </Stack.Item>
-          </>
-        )}
-      </Stack>
-    </Section>
-  );
-};
-
-const CodewordsSection = (props, context) => {
+const MemoriesSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
     phrases,
@@ -211,33 +116,65 @@ const CodewordsSection = (props, context) => {
   );
 };
 
-export const AntagInfoTraitor = (props, context) => {
+const VictimPatternsSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
-    theme,
+    has_uplink,
+    uplink_intro,
+    uplink_unlock_info,
+    code,
   } = data;
+  return (
+    <Section
+      title="Uplink"
+      mb={!has_uplink && -1}>
+      <Stack fill>
+        {!has_uplink && (
+          <Dimmer>
+            <Stack.Item fontSize="18px">
+              You were not supplied with an uplink.
+            </Stack.Item>
+          </Dimmer>
+        ) || (
+          <>
+            <Stack.Item bold>
+              {uplink_intro}
+              <br />
+              <span style={goalstyle}>Code: {code}</span>
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item mt="1%">
+              <BlockQuote>
+                {uplink_unlock_info}
+              </BlockQuote>
+            </Stack.Item>
+          </>
+        )}
+      </Stack>
+    </Section>
+  );
+};
+
+export const AntagInfoChangeling = (props, context) => {
+  const { data } = useBackend<Info>(context);
   return (
     <Window
       width={620}
-      height={580}
-      theme={theme}>
-      <Window.Content>
+      height={580}>
+      <Window.Content backgroundColor="#edca6b">
         <Stack vertical fill>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item width="70%">
-                <IntroductionSection />
+            <IntroductionSection />
+          </Stack.Item>
+          <Stack.Item>
+            <Stack>
+              <Stack.Item>
+                <MemoriesSection />
               </Stack.Item>
-              <Stack.Item width="30%">
-                <EmployerSection />
+              <Stack.Item>
+                <VictimPatternsSection />
               </Stack.Item>
             </Stack>
-          </Stack.Item>
-          <Stack.Item>
-            <UplinkSection />
-          </Stack.Item>
-          <Stack.Item>
-            <CodewordsSection />
           </Stack.Item>
         </Stack>
       </Window.Content>

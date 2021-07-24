@@ -44,6 +44,8 @@
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
+	var/hive_name
+
 	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
 	var/static/list/slot2type = list(
@@ -60,11 +62,10 @@
 		"wear_id" = /obj/item/changeling/id,
 		"s_store" = /obj/item/changeling,
 	)
-	///list of datum memories taken from absorbed people
-	var/list/consumed_memories = list()
 
 /datum/antagonist/changeling/New()
 	. = ..()
+	hive_name = hive_name()
 	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
 		if(!C.owner || C.owner == owner)
 			continue
@@ -695,6 +696,7 @@
 			continue
 		memory_names += stolen_memory.name
 	data["memories"] = list(memory_names)
+	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
 	return data
