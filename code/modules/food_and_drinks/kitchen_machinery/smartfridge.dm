@@ -219,28 +219,19 @@
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
-			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
-				for(var/obj/item/O in src)
-					if(O.name == params["name"])
-						if(O in component_parts)
-							CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
-						dispense(O, usr)
-						break
-				if (visible_contents)
-					update_appearance()
-				return TRUE
-
-			for(var/obj/item/O in src)
+			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				if(O.name == params["name"])
-					if(O in component_parts)
-						CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
-					dispense(O, usr)
+				if(format_text(dispensed_item.name) == format_text(params["name"]))
+					if(dispensed_item in component_parts)
+						CRASH("Attempted removal of [dispensed_item] component_part from vending machine via vending interface.")
+					dispense(dispensed_item, usr)
 					desired--
+
 			if (visible_contents)
 				update_appearance()
 			return TRUE
+
 	return FALSE
 
 
