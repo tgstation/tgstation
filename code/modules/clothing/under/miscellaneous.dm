@@ -105,10 +105,3 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = "by_suit"
 	can_adjust = FALSE
-
-/obj/item/clothing/under/misc/referee
-	name = "referee uniform"
-	desc = "A standard black and white striped uniform to signal authority."
-	icon_state = "referee"
-	inhand_icon_state = "referee"
-	can_adjust = FALSE
