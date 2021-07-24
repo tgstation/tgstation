@@ -392,14 +392,14 @@
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
-	if(M.mind && M.mind.assigned_role)
-		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-	if(M.mind && M.mind.special_role)
-		poll_message = "[poll_message] Status:[M.mind.special_role]."
-	else if(M.mind)
-		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
-		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
+	if(M.mind)
+		poll_message = "[poll_message] Job: [M.mind.assigned_role.title]."
+		if(M.mind.special_role)
+			poll_message = "[poll_message] Status: [M.mind.special_role]."
+		else
+			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+			if(A)
+				poll_message = "[poll_message] Status: [A.name]."
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
 
 	if(LAZYLEN(candidates))
@@ -500,10 +500,11 @@
 	. = list()
 	. += "[type]"
 	if(mind)
-		. += mind.assigned_role
+		if(mind.assigned_role.policy_index)
+			. += mind.assigned_role.policy_index
 		. += mind.special_role //In case there's something special leftover, try to avoid
-		for(var/datum/antagonist/A in mind.antag_datums)
-			. += "[A.type]"
+		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+			. += "[antag_datum.type]"
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()

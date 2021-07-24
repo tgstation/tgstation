@@ -3,10 +3,11 @@
 	desc = "A rare and highly anomalous event often accompanied by unknown entities shredding spacetime continouum. We'd advise you to start running."
 
 	telegraph_duration = 2 SECONDS
-	telegraph_overlay = "void"
+	telegraph_overlay = "light_snow"
 
 	weather_message = "<span class='danger'><i>You feel air around you getting colder... and void's sweet embrace...</i></span>"
-	weather_overlay = "void_storm"
+	weather_overlay = "snow_storm"
+	weather_color = COLOR_BLACK
 	weather_duration_lower = 60 SECONDS
 	weather_duration_upper = 120 SECONDS
 

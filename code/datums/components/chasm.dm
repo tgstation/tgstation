@@ -4,7 +4,8 @@
 	var/fall_message = "GAH! Ah... where are you?"
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
 
-	var/static/list/falling_atoms = list() // Atoms currently falling into chasms
+	/// List of refs to falling objects -> how many levels deep we've fallen
+	var/static/list/falling_atoms = list()
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/singularity,
 		/obj/energy_ball,
@@ -54,7 +55,6 @@
 	return LAZYLEN(found_safeties)
 
 /datum/component/chasm/proc/drop_stuff(AM)
-	. = 0
 	if (is_safe())
 		return FALSE
 
@@ -62,12 +62,13 @@
 	var/to_check = AM ? list(AM) : parent.contents
 	for (var/thing in to_check)
 		if (droppable(thing))
-			. = 1
+			. = TRUE
 			INVOKE_ASYNC(src, .proc/drop, thing)
 
 /datum/component/chasm/proc/droppable(atom/movable/AM)
+	var/datum/weakref/falling_ref = WEAKREF(AM)
 	// avoid an infinite loop, but allow falling a large distance
-	if(falling_atoms[AM] && falling_atoms[AM] > 30)
+	if(falling_atoms[falling_ref] && falling_atoms[falling_ref] > 30)
 		return FALSE
 	if(!isliving(AM) && !isobj(AM))
 		return FALSE
@@ -91,10 +92,12 @@
 	return TRUE
 
 /datum/component/chasm/proc/drop(atom/movable/AM)
+	var/datum/weakref/falling_ref = WEAKREF(AM)
 	//Make sure the item is still there after our sleep
-	if(!AM || QDELETED(AM))
+	if(!AM || !falling_ref?.resolve())
+		falling_atoms -= falling_ref
 		return
-	falling_atoms[AM] = (falling_atoms[AM] || 0) + 1
+	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
 	var/turf/T = target_turf
 
 	if(T)
@@ -106,7 +109,7 @@
 			var/mob/living/L = AM
 			L.Paralyze(100)
 			L.adjustBruteLoss(30)
-		falling_atoms -= AM
+		falling_atoms -= falling_ref
 
 	else
 		// send to oblivion
@@ -139,7 +142,7 @@
 			if(L.stat != DEAD)
 				L.death(TRUE)
 
-		falling_atoms -= AM
+		falling_atoms -= falling_ref
 		qdel(AM)
 		if(AM && !QDELETED(AM)) //It's indestructible
 			var/atom/parent = src.parent

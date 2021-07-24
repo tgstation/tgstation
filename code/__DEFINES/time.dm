@@ -29,6 +29,7 @@
 #define GARBAGEDAY "Garbage Day"
 #define MONKEYDAY "Monkey Day"
 #define PRIDE_WEEK "Pride Week"
+#define MOTH_WEEK "Moth Week"
 /*
 
 Days of the week to make it easier to reference them.
@@ -53,7 +54,7 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 #define TICKS *world.tick_lag
 
-#define MILLISECONDS * 0.10
+#define MILLISECONDS * 0.01
 
 #define DS2TICKS(DS) ((DS)/world.tick_lag)
 

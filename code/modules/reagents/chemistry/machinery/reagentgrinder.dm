@@ -334,3 +334,8 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
+		//Recipe to make whipped cream
+		if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
+			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
+			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)

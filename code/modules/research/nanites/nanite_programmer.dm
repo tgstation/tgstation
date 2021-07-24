@@ -8,8 +8,11 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
-	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
+
+/obj/machinery/nanite_programmer/Initialize()
+	. = ..()
+	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 
 /obj/machinery/nanite_programmer/update_overlays()
 	. = ..()

@@ -75,8 +75,20 @@ GLOBAL_VAR(preferences_species_data)
 	var/facial_hairstyle = "Shaved" //Face hair type
 	var/skin_tone = "caucasian1" //Skin color
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
-	/// MOTHBLOCKS TODO: Remove and make this a part of random_character's arguments
-	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
+	var/list/randomise = list(
+		RANDOM_UNDERWEAR = TRUE,
+		RANDOM_UNDERWEAR_COLOR = TRUE,
+		RANDOM_UNDERSHIRT = TRUE,
+		RANDOM_SOCKS = TRUE,
+		RANDOM_BACKPACK = TRUE,
+		RANDOM_JUMPSUIT_STYLE = TRUE,
+		RANDOM_HAIRSTYLE = TRUE,
+		RANDOM_HAIR_COLOR = TRUE,
+		RANDOM_FACIAL_HAIRSTYLE = TRUE,
+		RANDOM_FACIAL_HAIR_COLOR = TRUE,
+		RANDOM_SKIN_TONE = TRUE,
+		RANDOM_EYE_COLOR = TRUE,
+		)
 	var/phobia = "spiders"
 
 	var/list/custom_names = list()
@@ -127,9 +139,6 @@ GLOBAL_VAR(preferences_species_data)
 
 	var/action_buttons_screen_locs = list()
 
-	///This var stores the amount of points the owner will get for making it out alive.
-	var/hardcore_survival_score = 0
-
 	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
 	var/hearted
 	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
@@ -171,7 +180,7 @@ GLOBAL_VAR(preferences_species_data)
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
-	random_character() //let's create a random character then - rather than a fat, bald and naked man.
+	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
 	C?.set_macros()
 
@@ -256,7 +265,7 @@ GLOBAL_VAR(preferences_species_data)
 		if ("change_slot")
 			// SAFETY: `load_character` performs sanitization the slot number
 			if (!load_character(params["slot"]))
-				random_character()
+				apply_character_randomization_prefs()
 				// save_character()
 
 			character_preview_view.update_body()
@@ -495,25 +504,43 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
+/// Sanitization checks to be performed before using these preferences.
+/datum/preferences/proc/sanitize_chosen_prefs()
+	// MOTHBLOCKS TODO: sanitize_chosen_prefs
+	// Most likely remove this in favor of prefs themselves sanitizing
 
-	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
+	// if(!(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
+	// 	pref_species = new /datum/species/human
+	// 	save_character()
 
-	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
-		random_species()
+	// if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == SPECIES_HUMAN))
+	// 	var/firstspace = findtext(real_name, " ")
+	// 	var/name_length = length(real_name)
+	// 	if(!firstspace) //we need a surname
+	// 		real_name += " [pick(GLOB.last_names)]"
+	// 	else if(firstspace == name_length)
+	// 		real_name += "[pick(GLOB.last_names)]"
 
-	if((randomise[RANDOM_BODY] || (randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
-		slot_randomized = TRUE
-		random_character(gender, antagonist)
+/// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
+/datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
+	apply_character_randomization_prefs(is_antag)
+	sanitize_chosen_prefs()
+	apply_prefs_to(character, icon_updates)
 
-	if((randomise[RANDOM_NAME] || (randomise[RANDOM_NAME_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
-		slot_randomized = TRUE
-		// MOTHBLOCKS TODO: Random name for antags
-		// real_name = species.random_name(gender)
+/// Applies the given preferences to a human mob.
+/datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
+	if(gender == MALE || gender == FEMALE)
+		character.body_type = gender
+	else
+		character.body_type = body_type
 
-	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
-		if(can_be_random_hardcore())
-			hardcore_random_setup(character, antagonist, is_latejoiner)
+	character.skin_tone = skin_tone
+	character.hairstyle = hairstyle
+	character.facial_hairstyle = facial_hairstyle
+	character.underwear_color = underwear_color
+	character.socks = socks
+
+	character.dna.real_name = character.real_name
 
 	character.dna.features = features.Copy()
 
@@ -531,19 +558,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		preference.apply(character, read_preference(preference_type))
 
-	if(gender == MALE || gender == FEMALE)
-		character.body_type = gender
-	else
-		character.body_type = body_type
-
-	character.skin_tone = skin_tone
-	character.hairstyle = hairstyle
-	character.facial_hairstyle = facial_hairstyle
-	character.underwear_color = underwear_color
-	character.socks = socks
-
-	character.dna.real_name = character.real_name
-
 	// MOTHBLOCKS TODO: What is all this for? If it doesn't include moth wings, then what is it?
 	// Is it the same problem with cloning moths not giving wings? Oversight?
 
@@ -557,14 +571,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		character.update_hair()
 		character.update_body_parts()
 
-/datum/preferences/proc/can_be_random_hardcore()
-	if(parent.mob.mind.assigned_role in GLOB.command_positions) //No command staff
+
+/// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
+/datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
+	if(!randomise[RANDOM_HARDCORE])
 		return FALSE
-	for(var/A in parent.mob.mind.antag_datums)
-		var/datum/antagonist/antag
+	if(job.departments & DEPARTMENT_COMMAND) //No command staff
+		return FALSE
+	for(var/datum/antagonist/antag as anything in mind.antag_datums)
 		if(antag.get_team()) //No team antags
 			return FALSE
 	return TRUE
+
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

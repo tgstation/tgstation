@@ -9,6 +9,8 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	movement_type = FLYING
+	ai_controller = /datum/ai_controller/hostile_friend
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2)
@@ -65,7 +67,7 @@
 		"silver" = "#fdfbf3"
 	)
 
-/mob/living/simple_animal/hostile/carp/Initialize(mapload)
+/mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
 	if(random_color)
 		set_greyscale(new_config=/datum/greyscale_config/carp)
@@ -73,15 +75,29 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
-	make_tameable()
+	if(ai_controller)
+		ai_controller.blackboard[BB_HOSTILE_ATTACK_WORD] = pick(speak_emote)
+		if(tamer)
+			tamed(tamer)
+		else
+			make_tameable()
+
+/mob/living/simple_animal/hostile/carp/proc/make_tameable()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+
+/mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
+	can_buckle = TRUE
+	buckle_lying = 0
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
+	if(ai_controller)
+		var/datum/ai_controller/hostile_friend/ai_current_controller = ai_controller
+		ai_current_controller.befriend(tamer)
+		can_have_ai = FALSE
+		toggle_ai(AI_OFF)
 
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-
-/mob/living/simple_animal/hostile/carp/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /**
  * Randomly assigns a color to a carp from either a common or rare color variant lists
@@ -118,22 +134,15 @@
 	if(stat == CONSCIOUS)
 		chomp_plastic()
 
-/mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
-
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
+	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 	random_color = FALSE
 
-
-/mob/living/simple_animal/hostile/carp/holocarp/make_tameable()
-	return
 
 /mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
 	return
@@ -147,6 +156,7 @@
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
 	health_doll_icon = "megacarp"
+	ai_controller = null
 	maxHealth = 20
 	health = 20
 	pixel_x = -16
@@ -169,8 +179,6 @@
 	move_to_delay = rand(3,7)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
-/mob/living/simple_animal/hostile/carp/megacarp/make_tameable()
-	return
 
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -200,6 +208,7 @@
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
 	gender = FEMALE
 	speak_emote = list("squeaks")
+	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	faction = list("neutral")
 	health = 200
@@ -214,8 +223,6 @@
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
 
-/mob/living/simple_animal/hostile/carp/lia/make_tameable()
-	return
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
@@ -223,6 +230,7 @@
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 	speak_emote = list("squeaks")
+	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
@@ -239,9 +247,6 @@
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
-
-/mob/living/simple_animal/hostile/carp/cayenne/make_tameable()
-	return
 
 /mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
 	if(disky)
