@@ -224,7 +224,7 @@
 					break
 				if(format_text(dispensed_item.name) == format_text(params["name"]))
 					if(dispensed_item in component_parts)
-						CRASH("Attempted removal of [dispensed_item] component_part from vending machine via vending interface.")
+						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 					dispense(dispensed_item, usr)
 					desired--
 
