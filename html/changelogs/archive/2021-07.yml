@@ -739,3 +739,44 @@
       or ruleswise right now, but maybe it will inspire some more creative traitoring?
   - rscadd: a few antags now have a tgui menu instead of a greet. spiffy! they include
       antag info you need.
+2021-07-24:
+  GoldenAlpharex, with some help of Imaginos (PositiveEntropy):
+  - imageadd: Added a new badge to display on future berets.
+  - expansion: Nanotrasen's fashion department decided to release a brand new series
+      of berets, meant to replace the old collection and featuring a wider array of
+      possibilities!
+  - refactor: Berets are now converted to GAGS, with more options for customization
+      and greater consistancy between the sprites.
+  - code_imp: Not all GAGS sprites can be recolored in vendors by default anymore.
+  Kubisopplay:
+  - bugfix: Syndicate hackers outsmarted another group of syndicate hackers, and updated
+      defensive protocols of cyborgs slaved to malfunctioning ais, once again letting
+      them defend against emags
+  Melbert:
+  - qol: Ctrl-click now activates the porta-seeder.
+  Thunder12345:
+  - rscadd: Added class mechanics to Capture The Flag, with two new classes.
+  - rscadd: The Assaulter class is a fast skirmisher armed with a shotgun and rocket
+      gloves, but a very fragile energy shield.
+  - rscadd: The Marksman class is a sniper armed with a hitscan rifle doing lower
+      than standard damage.
+  - imageadd: 'Added a bunch of icons for Assaulter and Marksman gear. tweak: The
+      fair maidens on the medieval simulation shuttle are no longer weapons of mass
+      destruction'
+  - bugfix: You can no longer spawn outside of CTF matches when multiple classes are
+      available.
+  - refactor: Rewritten the multi-class part of CTF spawning to use radial menus.
+  - refactor: Medieval simulation has been refactored to bring it fully under the
+      CTF framework
+  TiviPlus:
+  - bugfix: fixed normal panic bunker sometimes rejecting when it shouldnt
+  aaaa1023:
+  - spellcheck: Bloodspider directive now calls Changelings "Vicious" and not "Visicious"
+  - spellcheck: Added missing space in the happiness gum box's description.
+  - bugfix: There are no longer maintenance zone tiles inside the circuits lab on
+      icebox.
+  interestingusernam3:
+  - admin: Admins can't make it possible to deconstruct a hedge by wrenching with
+      a single var edit anymore.
+  vincentiusvin:
+  - bugfix: fixed hfr crate having the wrong parts
