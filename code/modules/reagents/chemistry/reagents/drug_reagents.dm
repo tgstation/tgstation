@@ -423,19 +423,17 @@
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!M.slurring)
 		M.slurring = 1 * REM * delta_time
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tripping", /datum/mood_event/high, name)
 	switch(current_cycle)
 		if(1 to 5)
-			M.Dizzy(5 * REM * delta_time)
 			if(DT_PROB(5, delta_time))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			M.Jitter(10 * REM * delta_time)
-			M.Dizzy(10 * REM * delta_time)
 			if(DT_PROB(10, delta_time))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
 			M.Jitter(20 * REM * delta_time)
-			M.Dizzy(20 * REM * delta_time)
 			if(DT_PROB(16, delta_time))
 				M.emote(pick("twitch","giggle"))
 	..()
@@ -474,6 +472,7 @@
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
 	reagent_state = LIQUID
 	color = "#9015a9"
+	taste_description = "holodisk cleaner"
 	ph = 5
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -512,7 +511,6 @@
 
 	L.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 
-
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 
@@ -530,6 +528,7 @@
 
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
 	M.AdjustKnockdown(-20)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "vibing", /datum/mood_event/high, name)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		M.emote("flip")
@@ -583,6 +582,7 @@
 	name = "SaturnX"
 	description = "This compound was first discovered during the infancy of cloaking technology and at the time thought to be a promising candidate agent. It was withdrawn for consideration after the researchers discovered a slew of associated safety issues including thought disorders and hepatoxicity."
 	reagent_state = SOLID
+	taste_description = "metallic bitterness"
 	color = "#638b9b"
 	overdose_threshold = 25
 	ph = 10
@@ -595,7 +595,7 @@
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
 	. = ..()
-	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 20)
+	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 30)
 	to_chat(L, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
 	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
 
@@ -604,20 +604,24 @@
 	var/list/col_filter_full = list(1,0,0,0, 0,1.00,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 	var/list/col_filter_twothird = list(1,0,0,0, 0,0.68,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 	var/list/col_filter_half = list(1,0,0,0, 0,0.42,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-	var/list/col_filter_empty = list(1,0,0,0, 0,0.11,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0) //leaves just a bit of color
+	var/list/col_filter_empty = list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
 	game_plane_master_controller.add_filter("saturnx_filter", 10, color_matrix_filter(col_filter_twothird, FILTER_COLOR_HCY))
 
 	for(var/filter in game_plane_master_controller.get_filters("saturnx_filter"))
-		animate(filter, loop = -1, color = col_filter_full, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+		animate(filter, loop = -1, color = col_filter_full, time = 4 SECONDS, easing = CIRCULAR_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 		//uneven so we spend slightly less time with bright colors
-		animate(color = col_filter_twothird, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
-		animate(color = col_filter_half, time = 6 SECONDS, easing = LINEAR_EASING)
-		animate(color = col_filter_empty, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
-		animate(color = col_filter_half, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(color = col_filter_twothird, time = 6 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_half, time = 3 SECONDS, easing = LINEAR_EASING)
+		animate(color = col_filter_empty, time = 2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(color = col_filter_half, time = 24 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 		animate(color = col_filter_twothird, time = 12 SECONDS, easing = LINEAR_EASING)
 
-	game_plane_master_controller.add_filter("saturnx_bloom", 1, list("type" = "bloom", "threshold" = "#e4e4e4", "offset" = 2, "size" = 2))
+	game_plane_master_controller.add_filter("saturnx_blur", 1, list("type" = "radial_blur", "size" = 0))
+
+	for(var/filter in game_plane_master_controller.get_filters("saturnx_blur"))
+		animate(filter, loop = -1, size = 0.04, time = 2 SECONDS, easing = ELASTIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+		animate(size = 0, time = 6 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 
 ///This proc turns the guy who took the drug invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
@@ -634,12 +638,12 @@
 		REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
 		to_chat(M, span_notice("As you sober up, opacity once again returns to your body meats."))
 	M.update_body()
+	M.update_hair()
 	M.sound_environment_override = NONE
-
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("saturnx_filter")
-	game_plane_master_controller.remove_filter("saturnx_bloom")
+	game_plane_master_controller.remove_filter("saturnx_blur")
 
 /datum/reagent/drug/saturnx/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
@@ -652,6 +656,7 @@
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"
+	taste_description = "numbing bitterness"
 	ph = 8
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -700,17 +705,7 @@
 
 TODO:
 
-saturnx implementation
-	make saturnx colour matrix linger longer in the desaturated region.
-	add blur(angular?) filter or staic wave filter
-
-blastoff implementation
-	fix blast off ampoule sprite not updating when opened.
-
-mushroom_hallucinogen implementation
-	fix out why the rainbow filter and the wave filter don't play nice.
-
-add tastes to the new reagents
+saturnx moodlet
 make sure the design doc and code aligns.
 
 Testing

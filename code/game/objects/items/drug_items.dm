@@ -2,7 +2,7 @@
 	name = "generic drug"
 	desc =  "I am error"
 	icon = 'icons/obj/drugs.dmi'
-	foodtypes = TOXIC
+	foodtypes = GROSS
 	food_flags = FOOD_FINGER_FOOD
 	max_volume = 50
 	eat_time = 1 SECONDS
@@ -50,6 +50,7 @@
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
 		reagent_flags = OPENCONTAINER
 		spillable = TRUE
+		playsound(src, 'sounds/items/ampoule_snap.ogg', 40)
 		update_appearance()
 	. = ..()
 
