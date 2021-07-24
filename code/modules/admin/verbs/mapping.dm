@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Intercom Range Display"
 
 	var/static/intercom_range_display_status = FALSE
-	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
+	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something //blamed
 
 	for(var/obj/effect/abstract/marker/intercom/marker in GLOB.all_abstract_markers)
 		qdel(marker)
@@ -144,10 +144,8 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	if(intercom_range_display_status)
 		for(var/frequency in GLOB.all_radios)
 			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
-				for(var/turf/turf in orange(7,intercom))
+				for(var/turf/turf in view(7,intercom.loc))
 					var/atom/marker = new /obj/effect/abstract/marker/intercom(turf)
-					if(!(marker in view(7,intercom.loc)))
-						qdel(marker)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_show_at_list()
