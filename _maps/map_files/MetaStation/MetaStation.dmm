@@ -559,7 +559,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark,
 /area/medical/break_room)
 "aee" = (
@@ -1030,7 +1030,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
@@ -1326,7 +1326,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ajg" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -4428,7 +4428,7 @@
 "aHV" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aIh" = (
@@ -5301,7 +5301,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
@@ -6581,7 +6581,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bce" = (
@@ -10203,7 +10203,7 @@
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bUT" = (
@@ -10487,7 +10487,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bXC" = (
@@ -11801,7 +11801,7 @@
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "ckv" = (
@@ -11831,7 +11831,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/iron/showroomfloor,
 /area/maintenance/starboard/secondary)
 "ckz" = (
@@ -14256,7 +14256,7 @@
 /area/medical/abandoned)
 "cHw" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/memeorgans,
+/obj/effect/spawner/lootdrop/medical/memeorgans,
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
@@ -15200,7 +15200,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "cQx" = (
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/structure/closet/crate,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -17371,7 +17371,7 @@
 /area/maintenance/starboard/fore)
 "dua" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -18188,7 +18188,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
@@ -18549,7 +18549,7 @@
 /area/medical/pharmacy)
 "dMl" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -21383,7 +21383,7 @@
 /area/service/theater)
 "eIg" = (
 /obj/structure/closet/crate/trashcart,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/trash/chips,
 /obj/item/trash/candy,
 /obj/machinery/firealarm/directional/north,
@@ -30284,7 +30284,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "hNE" = (
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
@@ -31393,7 +31393,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
@@ -32653,7 +32653,7 @@
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/drinkingglasses,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "iFn" = (
@@ -35231,7 +35231,7 @@
 	},
 /area/maintenance/central)
 "jAh" = (
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "jAu" = (
@@ -38140,7 +38140,7 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "kBo" = (
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "kBC" = (
@@ -43512,7 +43512,7 @@
 /area/medical/abandoned)
 "moO" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
 "mph" = (
@@ -48096,7 +48096,7 @@
 /area/hallway/primary/starboard)
 "nKN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "nLb" = (
@@ -50499,7 +50499,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/iron,
 /area/commons/toilet/auxiliary)
 "ozE" = (
@@ -54612,7 +54612,7 @@
 /area/commons/fitness/recreation)
 "pQZ" = (
 /obj/item/plant_analyzer,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "pRl" = (
@@ -61073,7 +61073,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "rXb" = (
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/lootdrop/trash/cigbutt,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
@@ -61665,7 +61665,7 @@
 /area/medical/break_room)
 "sgs" = (
 /obj/structure/chair/stool/directional/east,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "sgA" = (
@@ -63671,7 +63671,7 @@
 /area/science/mixing)
 "sQH" = (
 /obj/structure/table/glass,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -75354,7 +75354,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "wHx" = (
@@ -78548,7 +78548,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "xJw" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "xJx" = (
@@ -79105,7 +79105,7 @@
 "xSj" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,

@@ -1986,7 +1986,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+/obj/effect/spawner/lootdrop/clothing/kittyears_or_rabbitears,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "agq" = (
@@ -24659,7 +24659,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/memeorgans,
+/obj/effect/spawner/lootdrop/medical/memeorgans,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bLa" = (
@@ -37128,7 +37128,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+/obj/effect/spawner/lootdrop/clothing/kittyears_or_rabbitears,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -44891,7 +44891,7 @@
 "eNG" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
@@ -49302,7 +49302,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "gOH" = (
@@ -49542,7 +49542,7 @@
 /turf/open/floor/wood,
 /area/service/bar)
 "gUp" = (
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/lootdrop/trash/cigbutt,
 /turf/open/floor/plating,
 /area/security/prison)
 "gUM" = (
@@ -58136,7 +58136,7 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
@@ -61378,7 +61378,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /turf/open/floor/iron/white,
 /area/security/prison/safe)
 "lWY" = (
@@ -62938,7 +62938,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
 /obj/item/trash/chips,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/weldingtool/mini,
 /turf/open/floor/iron/grimy,
 /area/security/prison/safe)
@@ -66465,7 +66465,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
@@ -66582,7 +66582,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/storage/crayons{
 	pixel_x = -6;
 	pixel_y = 1
@@ -66630,7 +66630,7 @@
 	name = "prison intercom";
 	prison_radio = 1
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/food_or_drink/donkpockets,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "opN" = (
@@ -67424,7 +67424,7 @@
 	},
 /obj/machinery/washing_machine,
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "oGc" = (
@@ -80558,7 +80558,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -82006,7 +82006,7 @@
 /area/maintenance/starboard/aft)
 "uQC" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/lootdrop/trash/cigbutt,
 /turf/open/floor/plating,
 /area/security/prison)
 "uQY" = (
@@ -85112,7 +85112,7 @@
 "whz" = (
 /obj/structure/toilet,
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /turf/open/floor/vault,
 /area/security/prison)
 "wig" = (
@@ -87346,7 +87346,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},

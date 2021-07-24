@@ -11196,7 +11196,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/lootdrop/trash/cigbutt,
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
 "aLX" = (
@@ -12443,7 +12443,7 @@
 /area/engineering/supermatter/room)
 "aTC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aTE" = (
@@ -14982,7 +14982,7 @@
 /area/security/checkpoint/engineering)
 "bGj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bGp" = (
@@ -16087,7 +16087,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/machinery/camera{
 	c_tag = "Maintenance - West Tram Tunnel 3";
 	dir = 6
@@ -17616,7 +17616,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cIH" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "cII" = (
@@ -19459,7 +19459,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 7";
 	dir = 1;
@@ -19710,7 +19710,7 @@
 /area/ai_monitored/command/storage/eva)
 "dyu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "dyU" = (
@@ -20044,7 +20044,7 @@
 /turf/open/floor/iron/dark,
 /area/science/nanite)
 "dFv" = (
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -20448,7 +20448,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -21332,7 +21332,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/lootdrop/trash/cigbutt,
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "eel" = (
@@ -22267,7 +22267,7 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "evF" = (
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -22339,7 +22339,7 @@
 /area/engineering/atmos)
 "ewN" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
@@ -22917,7 +22917,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "eLO" = (
@@ -23570,7 +23570,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "eZn" = (
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -23757,7 +23757,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 4";
 	dir = 4;
@@ -23904,7 +23904,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ffU" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
@@ -24142,7 +24142,7 @@
 /area/cargo/storage)
 "fkV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "flc" = (
@@ -24763,7 +24763,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "fyi" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
@@ -26398,7 +26398,7 @@
 /area/cargo/qm)
 "gcW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "gdR" = (
@@ -26991,7 +26991,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "grp" = (
@@ -27167,7 +27167,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "guC" = (
@@ -28277,7 +28277,7 @@
 /area/service/kitchen/coldroom)
 "gQo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "gQw" = (
@@ -28871,7 +28871,7 @@
 /area/mine/explored)
 "hcD" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "hcG" = (
@@ -29210,7 +29210,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "hhJ" = (
@@ -29747,7 +29747,7 @@
 /area/maintenance/starboard/secondary)
 "hqm" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -29985,7 +29985,7 @@
 /area/engineering/storage/tech)
 "huW" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "huY" = (
@@ -33954,7 +33954,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "iXl" = (
@@ -34390,7 +34390,7 @@
 /area/medical/medbay/central)
 "jiq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "jiz" = (
@@ -34420,7 +34420,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 10
 	},
-/obj/effect/spawner/lootdrop/botanical_waste,
+/obj/effect/spawner/lootdrop/trash/botanical_waste,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
@@ -35052,7 +35052,7 @@
 /area/space/nearstation)
 "jwN" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "jxc" = (
@@ -35583,7 +35583,7 @@
 /area/security/prison)
 "jHG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "jIf" = (
@@ -36803,7 +36803,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 2";
 	dir = 6;
@@ -37342,7 +37342,7 @@
 "kni" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "knj" = (
@@ -37764,7 +37764,7 @@
 /area/ai_monitored/command/nuke_storage)
 "kte" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -38112,7 +38112,7 @@
 /turf/open/floor/iron/dark,
 /area/science/nanite)
 "kzW" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
@@ -38314,7 +38314,7 @@
 "kDG" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
@@ -38724,7 +38724,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 1";
 	dir = 6;
@@ -39000,7 +39000,7 @@
 /area/science/research)
 "kSJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/structure/railing,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
@@ -40074,7 +40074,7 @@
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "lmq" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /turf/open/floor/plating/asteroid,
 /area/mine/explored)
 "lmw" = (
@@ -41194,7 +41194,7 @@
 /area/security/prison/safe)
 "lHs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "lHt" = (
@@ -43805,7 +43805,7 @@
 /area/medical/pharmacy)
 "mOj" = (
 /obj/machinery/light/small/directional/east,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -45381,7 +45381,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "nxj" = (
@@ -45699,7 +45699,7 @@
 "nCx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "nDB" = (
@@ -46408,7 +46408,7 @@
 "nTN" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/storage/box/donkpockets/donkpocketberry,
 /turf/open/floor/plating,
 /area/security/prison)
@@ -46783,7 +46783,7 @@
 /area/maintenance/tram/right)
 "ocS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/structure/railing,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
@@ -47550,7 +47550,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "oqb" = (
@@ -47674,7 +47674,7 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "osD" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -48032,7 +48032,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -49050,7 +49050,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "oTP" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/central/secondary)
 "oTW" = (
@@ -52096,7 +52096,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "qbC" = (
@@ -54226,7 +54226,7 @@
 "qYl" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "qYo" = (
@@ -54407,7 +54407,7 @@
 "rbk" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "rbr" = (
@@ -54992,7 +54992,7 @@
 /area/security/office)
 "rmZ" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/lootdrop/entertainment/drugs,
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/item/flashlight{
 	pixel_x = 1;
@@ -55186,7 +55186,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "rqD" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/central)
 "rqE" = (
@@ -55787,7 +55787,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "rCB" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
 /turf/open/floor/plating,
@@ -56103,7 +56103,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "rJw" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/lootdrop/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -56296,7 +56296,7 @@
 /area/commons/vacant_room/commissary)
 "rMi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "rMM" = (
@@ -56691,7 +56691,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/lootdrop/entertainment/drugs,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "rUY" = (
@@ -56803,7 +56803,7 @@
 "rXD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/contraband/prison,
 /obj/item/trash/sosjerky,
 /obj/item/trash/boritos,
 /obj/item/trash/can,
@@ -57549,7 +57549,7 @@
 /area/medical/medbay/central)
 "smE" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/botanical_waste,
+/obj/effect/spawner/lootdrop/trash/botanical_waste,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "smO" = (
@@ -57725,7 +57725,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "spv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "spw" = (
@@ -57951,7 +57951,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "ssA" = (
@@ -58195,7 +58195,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "sxK" = (
@@ -60450,7 +60450,7 @@
 /area/science/mixing/chamber)
 "tre" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -60718,7 +60718,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "tvK" = (
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/port/fore)
 "tvO" = (
@@ -61248,7 +61248,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "tGk" = (
@@ -63386,8 +63386,8 @@
 /obj/item/reagent_containers/pill/maintenance{
 	pixel_y = 7
 	},
-/obj/effect/spawner/lootdrop/maint_drugs,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/lootdrop/entertainment/drugs,
+/obj/effect/spawner/lootdrop/entertainment/drugs,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "utu" = (
@@ -63911,7 +63911,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "uIR" = (
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -64895,7 +64895,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "vaG" = (
@@ -65609,7 +65609,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
@@ -67267,7 +67267,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "vWW" = (
@@ -67310,7 +67310,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "vXG" = (
@@ -67952,7 +67952,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/botanical_waste,
+/obj/effect/spawner/lootdrop/trash/botanical_waste,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
@@ -68324,7 +68324,7 @@
 "wrn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "wrr" = (
@@ -69001,7 +69001,7 @@
 /area/commons/dorms)
 "wBu" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/garbage_spawner,
+/obj/effect/spawner/lootdrop/trash/garbage,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "wBy" = (
@@ -69384,7 +69384,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "wIc" = (
@@ -70128,7 +70128,7 @@
 /area/security/prison)
 "wWv" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "wWA" = (
@@ -71718,7 +71718,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "xCz" = (
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/department/medical)
 "xCF" = (
@@ -72842,7 +72842,7 @@
 /area/cargo/miningdock)
 "xVR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/trash/food_packaging,
 /obj/structure/railing{
 	dir = 1
 	},

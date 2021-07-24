@@ -8,7 +8,7 @@
 							/obj/effect/spawner/bundle/moisture_trap = 50,
 							/obj/effect/spawner/bundle/hobo_squat = 30,
 							/obj/structure/closet/mini_fridge = 35,
-							/obj/effect/spawner/lootdrop/gross_decal_spawner = 30,
+							/obj/effect/spawner/lootdrop/trash/mess = 30,
 							/obj/structure/closet/crate/decorations = 15)
 
 

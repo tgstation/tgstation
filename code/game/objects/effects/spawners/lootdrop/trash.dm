@@ -5,11 +5,11 @@ desc = "Ewwwwwww gross."
 /obj/effect/spawner/lootdrop/trash/garbage
 	name = "garbage spawner"
 	loot = list(
-	/obj/effect/spawner/lootdrop/food_packaging = 56,
+	/obj/effect/spawner/lootdrop/trash/food_packaging = 56,
 	/obj/item/trash/can = 8,
 	/obj/item/shard = 8,
-	/obj/effect/spawner/lootdrop/botanical_waste = 8,
-	/obj/effect/spawner/lootdrop/cigbutt = 8,
+	/obj/effect/spawner/lootdrop/trash/botanical_waste = 8,
+	/obj/effect/spawner/lootdrop/trash/cigbutt = 8,
 	/obj/item/reagent_containers/syringe = 5,
 	/obj/item/light/tube/broken = 3,
 	/obj/item/food/deadmouse = 2,
@@ -87,22 +87,28 @@ desc = "Ewwwwwww gross."
 	name = "random graffiti spawner"
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "random_graffiti"
-	loot = list()
+	loot = list(/obj/effect/decal/cleanable/crayon)
 
 /obj/effect/spawner/lootdrop/graffiti/Initialize()
-	loot += subtypesof(/obj/effect/decal/cleanable/crayon/oriented)
-	loot += subtypesof(/obj/effect/decal/cleanable/crayon/drawings)
-	loot += subtypesof(/obj/effect/decal/cleanable/crayon/symbols)
-	loot += subtypesof(/obj/effect/decal/cleanable/crayon/symbols)
-	loot += subtypesof(/obj/effect/decal/cleanable/crayon/graffiti)
-	loot += subtypesof(/obj/effect/decal/cleanable/crayon/rune)
-	..()
+	. = ..()
 
-	if(!length(loot))
-		return INITIALIZE_HINT_QDEL
-
-	var/graffiti_choice = pickweight(loot)
-	var/obj/effect/decal/cleanable/crayon/graffiti_decal = new graffiti_choice(get_turf(src))
-	graffiti_decal.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
+	var/graffiti_icon_states = list(
+	"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
+	"amyjon", "face", "matt", "revolution", "engie", "guy",
+	"end", "dwarf", "uboa", "body", "cyka", "star", "poseur tag",
+	"prolizard", "antilizard", "danger", "firedanger", "electricdanger",
+	"biohazard", "radiation", "safe", "evac", "space", "med", "trade", "shop",
+	"food", "peace", "like", "skull", "nay", "heart", "credit",
+	"smallbrush", "brush", "largebrush", "splatter", "snake", "stickman",
+	"carp", "ghost", "clown", "taser", "disk", "fireaxe", "toolbox",
+	"corgi", "cat", "toilet", "blueprint", "beepsky", "scroll", "bottle", "shotgun",
+	"arrow", "line", "thinline", "shortline", "body", "chevron", "footprint",
+	"clawprint", "pawprint",
+	)
+	var/graffiti_choice = pickweight(graffiti_icon_states)
+	//var/obj/effect/decal/cleanable/crayon/graffiti_decal = new graffiti_choice(get_turf(src))
+	//graffiti_decal.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
+	..add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
+	..icon_state = graffiti_choice
 
 	return INITIALIZE_HINT_QDEL

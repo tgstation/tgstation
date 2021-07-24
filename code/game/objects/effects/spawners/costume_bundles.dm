@@ -57,7 +57,7 @@
 	name = "maid costume spawner"
 	items = list(
 	/obj/item/clothing/under/dress/skirt,
-	/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears,
+	/obj/effect/spawner/lootdrop/clothing/beret_or_rabbitears,
 	/obj/item/clothing/glasses/blindfold,
 	)
 
@@ -81,7 +81,7 @@
 	items = list(
 	/obj/item/clothing/accessory/waistcoat,
 	/obj/item/clothing/glasses/monocle,
-	/obj/effect/spawner/lootdrop/minor/bowler_or_that,
+	/obj/effect/spawner/lootdrop/clothing/bowler_or_that,
 	/obj/item/clothing/shoes/sneakers/black,
 	/obj/item/cane,
 	/obj/item/clothing/under/suit/sl,
@@ -117,7 +117,7 @@
 	name = "waiter costume spawner"
 	items = list(
 	/obj/item/clothing/under/suit/waiter,
-	/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+	/obj/effect/spawner/lootdrop/clothing/kittyears_or_rabbitears,
 	/obj/item/clothing/suit/apron,
 	)
 
@@ -126,7 +126,7 @@
 	items = list(
 	/obj/item/clothing/under/costume/pirate,
 	/obj/item/clothing/suit/pirate,
-	/obj/effect/spawner/lootdrop/minor/pirate_or_bandana,
+	/obj/effect/spawner/lootdrop/clothing/pirate_or_bandana,
 	/obj/item/clothing/glasses/eyepatch,
 	)
 
@@ -141,7 +141,7 @@
 	name = "imperium monk costume spawner"
 	items = list(
 	/obj/item/clothing/suit/imperium_monk,
-	/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask,
+	/obj/effect/spawner/lootdrop/clothing/twentyfive_percent_cyborg_mask,
 	)
 
 /obj/effect/spawner/bundle/costume/holiday_priest
@@ -224,7 +224,7 @@
 	items = list(
 	/obj/structure/bed/maint,
 	/obj/effect/spawner/scatter/grime,
-	/obj/effect/spawner/lootdrop/maint_drugs,
+	/obj/effect/spawner/lootdrop/entertainment/drugs,
 	)
 
 /obj/effect/spawner/bundle/moisture_trap
