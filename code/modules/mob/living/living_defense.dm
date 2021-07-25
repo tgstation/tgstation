@@ -407,11 +407,10 @@
 		return FALSE
 	if(get_eye_protection() < intensity && (affect_silicon || override_blindness_check || !is_blind()))
 		if(client?.prefs?.darkened_flash)
-			overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/black)
-			addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length * 0.5), length * 1.5)
-		else
-			overlay_fullscreen("flash", type)
-			addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
+			type = /atom/movable/screen/fullscreen/flash/black
+
+		overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
 		return TRUE
 	return FALSE
 
