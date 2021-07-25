@@ -127,6 +127,7 @@
 	update_pipe_icon()
 	update_layer()
 
+
 /obj/machinery/atmospherics/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])

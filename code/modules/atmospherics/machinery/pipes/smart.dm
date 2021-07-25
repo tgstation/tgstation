@@ -11,6 +11,32 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
 	connection_num = 0
+	var/list/connections
+
+/obj/machinery/atmospherics/pipe/smart/proc/check_connections()
+	connection_num = 0
+	connections = NONE
+	for(var/direction in GLOB.cardinals)
+		var/turf/turf = get_step(src, direction)
+		if(!turf)
+			continue
+		for(var/obj/machinery/atmospherics/machine in turf)
+			if(connection_check(machine, piping_layer))
+				connections |= direction
+				connection_num++
+				break
+
+	switch(connection_num)
+		if(0)
+			dir = 2
+		if(1)
+			dir = connections
+		if(2)
+			dir = check_binary_direction(connections)
+		if(3)
+			dir = connections
+		if(4)
+			dir = 15
 
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
@@ -56,6 +82,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 					bitfield |= WEST_SHORTPIPE
 
 	icon_state = "[bitfield]_[piping_layer]"
+	check_connections()
 
 /obj/machinery/atmospherics/pipe/smart/SetInitDirections(init_dir)
 	if(init_dir)
