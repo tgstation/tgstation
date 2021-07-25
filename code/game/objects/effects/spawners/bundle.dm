@@ -63,7 +63,7 @@
 		/obj/item/clothing/under/suit/black,
 		/obj/item/clothing/head/that)
 
-/obj/effect/spawner/bundle/referee
+/obj/effect/spawner/bundle/costume/referee
 	name = "referee costume spawner"
 	items = list(
 		/obj/item/clothing/mask/whistle,
