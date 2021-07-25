@@ -60,8 +60,8 @@ export const AntagInfoNightmare = (props, context) => {
             <Section fill title="Powers">
               <LabeledList>
                 <LabeledList.Item label="Shadow Dance">
-                  Whilst in the shadows, you are immune to all melee
-                  and ranged attacks, whilst also rapidly regenerating
+                  Whilst in the shadows, you are immune to all
+                  ranged attacks, whilst also rapidly regenerating
                   health.
                 </LabeledList.Item>
                 <LabeledList.Item label="Shadow Walk">
