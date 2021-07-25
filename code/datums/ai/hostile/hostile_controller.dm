@@ -114,7 +114,7 @@
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
-	if(!istype(clicker) || !blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
+	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
 		return
 	. = COMPONENT_CANCEL_CLICK_ALT
 	INVOKE_ASYNC(src, .proc/command_radial, clicker)
