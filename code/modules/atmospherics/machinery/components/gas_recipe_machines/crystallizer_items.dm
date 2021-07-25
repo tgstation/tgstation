@@ -13,7 +13,7 @@
 	if(!proximity)
 		return
 	if(!istype(C))
-		to_chat(user, span_warning("The potion can only be used on clothing!"))
+		to_chat(user, span_warning("The crystal can only be used on clothing!"))
 		return
 	if(istype(C, /obj/item/clothing/suit/space))
 		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
@@ -21,10 +21,10 @@
 	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
 		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
 		return ..()
-	to_chat(user, span_notice("You slather the blue gunk over the [C], making it airtight."))
+	to_chat(user, span_notice("[C], is now airtight."))
 	C.name = "pressure-resistant [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+	C.add_atom_colour("#00fff7", FIXED_COLOUR_PRIORITY)
 	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	C.cold_protection = C.body_parts_covered
 	C.clothing_flags |= STOPSPRESSUREDAMAGE
