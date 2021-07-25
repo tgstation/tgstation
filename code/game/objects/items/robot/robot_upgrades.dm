@@ -296,12 +296,12 @@
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		LAZYADD(R.weather_immunities, "lava")
+		LAZYADD(R.weather_immunities, WEATHER_LAVA)
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		LAZYREMOVE(R.weather_immunities, "lava")
+		LAZYREMOVE(R.weather_immunities, WEATHER_LAVA)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"

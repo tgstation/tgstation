@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
 
 GLOBAL_LIST_EMPTY(player_list) //all mobs **with clients attached**.
+GLOBAL_LIST_EMPTY(keyloop_list) //as above but can be limited to boost performance
 GLOBAL_LIST_EMPTY(mob_list) //all mobs, including clientless
 GLOBAL_LIST_EMPTY(mob_directory) //mob_id -> mob
 GLOBAL_LIST_EMPTY(alive_mob_list) //all alive mobs, including clientless. Excludes /mob/dead/new_player

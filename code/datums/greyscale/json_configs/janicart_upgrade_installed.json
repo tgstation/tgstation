@@ -1,0 +1,28 @@
+{
+	"janicart_upgrade": [
+		{
+			"type": "icon_state",
+			"icon_state": "cart_housing",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cart_bristles",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cart_accent",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cart_light",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

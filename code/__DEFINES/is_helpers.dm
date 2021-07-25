@@ -236,3 +236,16 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
 	/obj/item/storage/book)))
+
+
+// Jobs
+#define is_assistant_job(job_type) (istype(job_type, /datum/job/assistant))
+#define is_bartender_job(job_type) (istype(job_type, /datum/job/bartender))
+#define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
+#define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
+#define is_clown_job(job_type) (istype(job_type, /datum/job/clown))
+#define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
+#define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
+#define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
+#define is_research_director_job(job_type) (istype(job_type, /datum/job/research_director))
+#define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))

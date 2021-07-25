@@ -132,26 +132,6 @@
 	TRIGGER_CIRCUIT_COMPONENT(src, null)
 
 /**
- * Matches the output port's datatype with the input port's current connected port.
- *
- * Returns true if datatype was changed, otherwise returns false.
- * Arguments:
- * * input_port - The input port to check the connected port from.
- * * output_port - The output port to convert. Warning, this does change the output port.
- */
-/obj/item/circuit_component/proc/match_port_datatype(datum/port/input/input_port, datum/port/output/output_port)
-	if(input_port.connected_port)
-		var/datum/port/connected_port = input_port.connected_port
-		if(connected_port.datatype != output_port.datatype)
-			output_port.set_datatype(connected_port.datatype)
-			return TRUE
-	else
-		output_port.set_datatype(output_port.default_datatype)
-		return TRUE
-	return FALSE
-
-
-/**
  * Adds an input port and returns it
  *
  * Arguments:
@@ -162,8 +142,21 @@
 /obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null)
 	var/datum/port/input/input_port = new(src, name, type, trigger, default)
 	input_ports += input_port
+	if(parent)
+		SStgui.update_uis(parent)
 	return input_port
 
+/**
+ * Removes an input port and deletes it. This will not cleanup any references made by derivatives of the circuit component
+ *
+ * Arguments:
+ * * input_port - The input port to remove.
+ */
+/obj/item/circuit_component/proc/remove_input_port(datum/port/input/input_port)
+	input_ports -= input_port
+	qdel(input_port)
+	if(parent)
+		SStgui.update_uis(parent)
 
 /**
  * Adds an output port and returns it
@@ -176,6 +169,18 @@
 	var/datum/port/output/output_port = new(src, name, type)
 	output_ports += output_port
 	return output_port
+
+/**
+ * Removes an output port and deletes it. This will not cleanup any references made by derivatives of the circuit component
+ *
+ * Arguments:
+ * * output_port - The output port to remove.
+ */
+/obj/item/circuit_component/proc/remove_output_port(datum/port/output/output_port)
+	output_ports -= output_port
+	qdel(output_port)
+	if(parent)
+		SStgui.update_uis(parent)
 
 /**
  * Called whenever an input is received from one of the ports.

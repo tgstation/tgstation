@@ -484,6 +484,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/military/assault/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
+		/obj/item/ammo_box/magazine/wt550m9 = 4,
+	), src)
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
@@ -510,7 +516,7 @@
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	var/static/items_inside = list(
+	generate_items_inside(list(
 		/obj/item/grenade/flashbang = 1,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
@@ -521,8 +527,8 @@
 		/obj/item/grenade/chem_grenade/facid = 1,
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/screwdriver = 1,
-		/obj/item/multitool = 1)
-	generate_items_inside(items_inside,src)
+		/obj/item/multitool = 1,
+	),src)
 
 
 /obj/item/storage/belt/wands

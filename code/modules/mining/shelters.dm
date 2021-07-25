@@ -1,10 +1,10 @@
 /datum/map_template/shelter
 	var/shelter_id
 	var/description
-	var/blacklisted_turfs
-	var/whitelisted_turfs
-	var/banned_areas
-	var/banned_objects
+	var/list/blacklisted_turfs
+	var/list/whitelisted_turfs
+	var/list/banned_areas
+	var/list/banned_objects
 
 /datum/map_template/shelter/New()
 	. = ..()

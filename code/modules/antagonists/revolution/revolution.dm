@@ -11,6 +11,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
+	suicide_cry = "VIVA LA REVOLUTION!!"
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
 	var/deconversion_reason
@@ -21,7 +22,7 @@
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(.)
-		if(new_owner.assigned_role in GLOB.command_positions)
+		if(new_owner.assigned_role.departments & DEPARTMENT_COMMAND)
 			return FALSE
 		if(new_owner.unconvertable)
 			return FALSE
@@ -416,7 +417,7 @@
 			if (isnull(mind))
 				continue
 
-			if (!(mind.assigned_role in GLOB.command_positions + GLOB.security_positions))
+			if (!(mind.assigned_role.departments & (DEPARTMENT_SECURITY|DEPARTMENT_COMMAND)))
 				continue
 
 			if (mind in ex_revs + ex_headrevs)

@@ -16,7 +16,7 @@
 
 /obj/item/circuit_component/combiner/populate_options()
 	var/static/component_options = list(
-		COMP_TYPE_ANY,
+		PORT_TYPE_ANY,
 		PORT_TYPE_STRING,
 		PORT_TYPE_NUMBER,
 		PORT_TYPE_LIST,
@@ -27,12 +27,11 @@
 
 /obj/item/circuit_component/combiner/Initialize()
 	. = ..()
-	current_option = COMP_TYPE_ANY
-	current_type = COMP_TYPE_ANY
+	current_type = current_option
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
-		add_input_port(letter, PORT_TYPE_ANY)
-	output_port = add_output_port("Output", PORT_TYPE_ANY)
+		add_input_port(letter, current_option)
+	output_port = add_output_port("Output", current_option)
 
 /obj/item/circuit_component/combiner/Destroy()
 	output_port = null
@@ -40,10 +39,8 @@
 
 /obj/item/circuit_component/combiner/input_received(datum/port/input/port)
 	. = ..()
-	if(current_type != current_option && (current_option != COMP_TYPE_ANY || current_type != PORT_TYPE_ANY))
+	if(current_type != current_option)
 		current_type = current_option
-		if(current_type == COMP_TYPE_ANY)
-			current_type = PORT_TYPE_ANY
 		for(var/datum/port/input/input_port as anything in input_ports)
 			input_port.set_datatype(current_type)
 		output_port.set_datatype(current_type)

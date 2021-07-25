@@ -52,10 +52,6 @@
 			return "grey"
 
 /datum/port/Destroy(force)
-	if(!force && !QDELETED(connected_component))
-		// This should never happen. Ports should be deleted with their components
-		stack_trace("Attempted to delete a port with a non-destroyed connected_component! (port name: [name], component type: [connected_component.type])")
-		return QDEL_HINT_LETMELIVE
 	connected_component = null
 	return ..()
 
@@ -79,7 +75,7 @@
 			if(isatom(value_to_convert))
 				return PORT_TYPE_ATOM
 			else
-				return "[value_to_convert]"
+				return copytext("[value_to_convert]", 1, PORT_MAX_STRING_LENGTH)
 
 	if(isatom(value_to_convert))
 		var/atom/atom_to_check = value_to_convert
@@ -155,7 +151,7 @@
 	set_output(null)
 
 /**
- * Determines if a datatype is compatible with this port.
+ * Determines if a datatype is compatible with another port of a different type.
  *
  * Arguments:
  * * other_datatype - The datatype to check

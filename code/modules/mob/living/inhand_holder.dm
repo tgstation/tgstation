@@ -53,17 +53,18 @@
 		if(del_on_release && !destroying)
 			qdel(src)
 		return FALSE
+	var/mob/living/released_mob = held_mob
+	held_mob = null // stops the held mob from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/L = loc
 		if(display_messages)
-			to_chat(L, span_warning("[held_mob] wriggles free!"))
+			to_chat(L, span_warning("[released_mob] wriggles free!"))
 		L.dropItemToGround(src)
-	held_mob.forceMove(get_turf(held_mob))
-	held_mob.reset_perspective()
-	held_mob.setDir(SOUTH)
+	released_mob.forceMove(drop_location())
+	released_mob.reset_perspective()
+	released_mob.setDir(SOUTH)
 	if(display_messages)
-		held_mob.visible_message(span_warning("[held_mob] uncurls!"))
-	held_mob = null
+		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
 	if(del_on_release && !destroying)
 		qdel(src)
 	return TRUE

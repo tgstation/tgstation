@@ -71,12 +71,22 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
-	if(!is_valid_turf(T) && LAZYLEN(GLOB.blobstart))
+	if(is_valid_turf(T))
+		return
+
+	if(LAZYLEN(GLOB.blobstart))
 		var/list/blobstarts = shuffle(GLOB.blobstart)
 		for(var/_T in blobstarts)
 			if(is_valid_turf(_T))
 				T = _T
 				break
+	else // no blob starts so look for an alternate
+		for(var/i in 1 to 16)
+			var/turf/picked_safe = find_safe_turf()
+			if(is_valid_turf(picked_safe))
+				T = picked_safe
+				break
+
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
 	forceMove(T)
@@ -102,7 +112,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
-	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isspaceturf(T))
+	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isgroundlessturf(T))
 		return FALSE
 	return TRUE
 
@@ -293,7 +303,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			return FALSE
 	else
 		var/area/A = get_area(NewLoc)
-		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+		if(isgroundlessturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or goundless tiles
 			return FALSE
 		forceMove(NewLoc)
 		return TRUE
