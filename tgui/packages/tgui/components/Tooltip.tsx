@@ -9,6 +9,8 @@ type TooltipProps = {
   children?: InfernoNode;
   content: InfernoNode;
   position?: Placement,
+
+  // tooltipStyle:
 };
 
 type TooltipState = {

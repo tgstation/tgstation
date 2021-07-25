@@ -60,6 +60,8 @@
 		if (isnull(preview_icon))
 			continue
 
+		// preview_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
 		// antag_flag is guaranteed to be unique by unit tests.
 		Insert(sanitize_css_class_name(lowertext(initial(ruleset.antag_flag))), preview_icon)
 

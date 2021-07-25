@@ -2,8 +2,7 @@
  * This folder represents the antagonists you can choose in the preferences
  * menu.
  *
- * Every file in this folder represents one antagonist. The filename matters--
- * it is the antag_flag, made lowercase, and with non-alphanumerics removed.
+ * Every file in this folder represents one antagonist.
  *
  * For example "Syndicate Sleeper Agent" -> syndicatesleeperagent.ts
  *
@@ -20,12 +19,16 @@
  */
 
 export type Antagonist = {
+  // the antag_flag, made lowercase, and with non-alphanumerics removed.
+  key: string;
+
   name: string;
   description: string[];
-  category: Category,
+  category: Category;
+  priority?: number;
 };
 
-enum Category {
+export enum Category {
   Roundstart,
   Midround,
   Latejoin,

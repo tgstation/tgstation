@@ -17,6 +17,54 @@ $department_map: (
 );
 
 .PreferencesMenu {
+  &__Antags {
+    &__antagSelection {
+      &__antagonist {
+        padding-right: 10px;
+
+        .antagonist-icon-parent {
+          border-radius: 50%;
+          box-sizing: content-box;
+          overflow: hidden;
+
+          height: 96px;
+          width: 96px;
+
+          .antagonist-icon {
+            border-radius: 50%;
+            -ms-interpolation-mode: nearest-neighbor;
+            transition: transform 0.1s ease-in;
+
+            &:hover {
+              transform: scale(1.3);
+              transition: transform 1s ease-out;
+            }
+          }
+        }
+
+        &--off {
+          .antagonist-icon-parent {
+            border: 4px solid colors.$red;
+
+            .antagonist-icon {
+              opacity: 0.5;
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        &--on {
+          .antagonist-icon-parent {
+            border: 4px solid colors.$green;
+          }
+        }
+      }
+    }
+  }
+
   &__Jobs {
     > * {
       flex: 1;

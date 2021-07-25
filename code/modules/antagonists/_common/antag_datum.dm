@@ -340,7 +340,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	dummy.equipOutfit(preview_outfit)
 	COMPILE_OVERLAYS(dummy)
 
-	return getFlatIcon(dummy)
+	var/icon/icon = getFlatIcon(dummy)
+
+	// Zoom in on the top of the head and the chest
+	// I have no idea how to do this dynamically.
+	icon.Scale(115, 115)
+
+	// This is probably better as a Crop, but I cannot figure it out.
+	icon.Shift(WEST, 10)
+	icon.Shift(SOUTH, 30)
+
+	icon.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon
 
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))
