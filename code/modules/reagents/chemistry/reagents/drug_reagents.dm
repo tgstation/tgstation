@@ -473,7 +473,7 @@
 	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
 	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
 
-	game_plane_master_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+	game_plane_master_controller.add_filter("rainbow", 10, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
 
 	for(var/filter in game_plane_master_controller.get_filters("rainbow"))
 		animate(filter, color = col_filter_identity, time = 0 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
@@ -481,7 +481,7 @@
 		animate(color = col_filter_blue, time = 4 SECONDS)
 		animate(color = col_filter_red, time = 4 SECONDS)
 
-	game_plane_master_controller.add_filter("psilocybin_wave", 10, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
+	game_plane_master_controller.add_filter("psilocybin_wave", 1, list("type" = "wave", "size" = 2, "x" = 32, "y" = 32))
 
 	for(var/filter in game_plane_master_controller.get_filters("psilocybin_wave"))
 		animate(filter, time = 64 SECONDS, loop = -1, easing = LINEAR_EASING, offset = 32, flags = ANIMATION_PARALLEL)
@@ -715,7 +715,7 @@
 	. = ..()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
-	M.Jitter(2 * REM * delta_time)
+	M.Jitter(10 * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
 	if(volume < 10)

@@ -12,8 +12,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	//wow, lore
 	desc = "A hefty lead pipe.\nLead in an uncommon sight in this sector after being phased out due to employee health concerns.\nThose of a more cynical disposition assume that the NT lead ban is a scheme to prevent the metal from being diverted to Syndicate ammunition factories."
-	force = 13
-	throwforce = 13
+	force = 15
+	throwforce = 12
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
 	wound_bonus = 20
@@ -36,5 +36,8 @@
 //starts partially discharged
 /obj/item/stock_parts/cell/lead/Initialize()
 	. = ..()
-	charge = rand(20,80)
+	charge = rand(0.2,0.8) * maxcharge
+
+/obj/item/stock_parts/cell/lead/ComponentInitialize()
+	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
