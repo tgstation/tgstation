@@ -87,10 +87,20 @@
 				value = L[key]
 			variable_html += debug_variable(i, value, 0, L)
 	else
-		names = sortList(names)
-		for(var/V in names)
-			if(D.can_vv_get(V))
-				variable_html += D.vv_get_var(V)
+		log_world("Opening vv_explorer.json")
+		var/raw_vv_explorer = file2text("data/vv_explorer.json")
+		log_world("JSON decoding vv_explorer")
+		var/vv_explorer = safe_json_decode(raw_vv_explorer)
+		log_world("JSON decoding complete.")
+		var/list/annotated_variables = vv_explorer[D.type]
+		// Looks roughly like
+		// {"/obj/item/candle": ["lit", "wax_type"], "/obj/item": ["w_class"]}
+
+
+		for(var/parent_type in annotated_variables)
+			for(var/variable_name in annotated_variables[parent_type])
+				if(D.can_vv_get(variable_name))
+					variable_html += D.vv_get_var(variable_name)
 
 	var/html = {"
 <html>
