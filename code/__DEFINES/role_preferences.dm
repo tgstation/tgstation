@@ -95,7 +95,17 @@
 /// Keys are the antagonist, values are the number of days since the player's
 /// first connection in order to play.
 GLOBAL_LIST_INIT(special_roles, list(
+	// Roundstart
 	ROLE_TRAITOR = 0,
+
+	// Midround
+	ROLE_SLEEPER_AGENT = 0,
+
+	// Latejoin
+	ROLE_SYNDICATE_INFILTRATOR = 0,
+
+	// MOTHBLOCKS TODO: Unsorted
+
 	ROLE_BROTHER = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_CHANGELING = 0,

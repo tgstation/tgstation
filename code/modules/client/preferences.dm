@@ -26,9 +26,6 @@ GLOBAL_VAR(preferences_species_data)
 
 	//Antag preferences
 	var/list/be_special = list() //Special role selection
-	var/tmp/old_be_special = 0 //Bitflag version of be_special, used to update old savefiles and nothing more
-										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
-										//autocorrected this round, not that you'd need to check that.
 
 	var/UI_style = null
 	var/buttons_locked = FALSE
@@ -242,10 +239,19 @@ GLOBAL_VAR(preferences_species_data)
 		// If we do this in GLOBAL_VAR_INIT, the species list is not created yet.
 		GLOB.preferences_species_data = generate_preferences_species_data()
 
+	var/list/selected_antags = list()
+
+	for (var/antag in be_special)
+		selected_antags += serialize_antag_name(antag)
+
 	return list(
 		"generated_preference_values" = generated_preference_values,
 		"overflow_role" = SSjob.overflow_role,
 		"species" = GLOB.preferences_species_data,
+
+		// MOTHBLOCKS TODO: Only send when needed, just like generated_preference_values
+		// MOTHBLOCKS TODO: Send banned/not old enough antags
+		"selected_antags" = selected_antags,
 	)
 
 /datum/preferences/ui_assets(mob/user)
@@ -266,7 +272,7 @@ GLOBAL_VAR(preferences_species_data)
 			// SAFETY: `load_character` performs sanitization the slot number
 			if (!load_character(params["slot"]))
 				apply_character_randomization_prefs()
-				// save_character()
+				save_character()
 
 			character_preview_view.update_body()
 		if ("request_values")
@@ -334,6 +340,26 @@ GLOBAL_VAR(preferences_species_data)
 				return FALSE
 
 			return set_job_preference_level(job, level)
+		if ("set_antags")
+			var/sent_antags = params["antags"]
+			var/toggled = params["toggled"]
+
+			var/antags = list()
+
+			var/serialized_antags = get_serialized_antags()
+
+			for (var/sent_antag in sent_antags)
+				var/special_role = serialized_antags[sent_antag]
+				if (!special_role)
+					continue
+
+				antags += special_role
+
+			// MOTHBLOCKS TODO: Check antag ban(?) and age requirement
+			if (toggled)
+				be_special |= antags
+			else
+				be_special -= antags
 
 	return TRUE
 
@@ -356,6 +382,17 @@ GLOBAL_VAR(preferences_species_data)
 		values = choices
 
 	return values
+
+/datum/preferences/proc/get_serialized_antags()
+	var/list/serialized_antags
+
+	if (isnull(serialized_antags))
+		serialized_antags = list()
+
+		for (var/special_role in GLOB.special_roles)
+			serialized_antags[serialize_antag_name(special_role)] = special_role
+
+	return serialized_antags
 
 /datum/preferences/proc/compile_character_preferences(mob/user)
 	var/list/preferences = list()
@@ -650,3 +687,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 		) + diet
 
 	return species_data
+
+/// Serializes an antag name to be used for preferences UI
+/proc/serialize_antag_name(antag_name)
+	// These are sent through CSS, so they need to be safe to use as class names.
+	return lowertext(sanitize_css_class_name(antag_name))

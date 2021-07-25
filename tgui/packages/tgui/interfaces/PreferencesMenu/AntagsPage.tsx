@@ -1,8 +1,10 @@
 import { binaryInsertWith } from "common/collections";
 import { classes } from "common/react";
-import { Box, Divider, Flex, Section, Stack, Tooltip } from "../../components";
+import { useBackend, useLocalState } from "../../backend";
+import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from "../../components";
 import { logger } from "../../logging";
 import { Antagonist, Category } from "./antagonists/base";
+import { PreferencesMenuData } from "./data";
 
 const requireAntag = require.context("./antagonists/antagonists", false, /.ts$/);
 
@@ -36,18 +38,76 @@ for (const antagKey of requireAntag.keys()) {
 const AntagSelection = (props: {
   antagonists: Antagonist[],
   name: string,
-}) => {
+}, context) => {
+  const { act, data } = useBackend<PreferencesMenuData>(context);
   const className = "PreferencesMenu__Antags__antagSelection";
 
+  const [predictedState, setPredictedState]
+    = useLocalState(
+      context,
+      "AntagSelection_predictedState",
+      new Set(data.selected_antags),
+    );
+
+  const enableAntags = (antags: string[]) => {
+    const newState = new Set(predictedState);
+
+    for (const antag of antags) {
+      newState.add(antag);
+    }
+
+    setPredictedState(newState);
+
+    act("set_antags", {
+      antags,
+      toggled: true,
+    });
+  };
+
+  const disableAntags = (antags: string[]) => {
+    const newState = new Set(predictedState);
+
+    for (const antag of antags) {
+      newState.delete(antag);
+    }
+
+    setPredictedState(newState);
+
+    act("set_antags", {
+      antags,
+      toggled: false,
+    });
+  };
+
+  const antagonistKeys = props.antagonists.map(antagonist => antagonist.key);
+
   return (
-    <Section title={props.name}>
+    <Section title={props.name} buttons={(
+      <>
+        <Button
+          color="good"
+          onClick={() => enableAntags(antagonistKeys)}
+        >
+          Enable All
+        </Button>
+
+        <Button
+          color="bad"
+          onClick={() => disableAntags(antagonistKeys)}
+        >
+          Disable All
+        </Button>
+      </>
+    )}>
       <Flex className={className}>
         {props.antagonists.map(antagonist => {
           return (
             <Flex.Item
               className={classes([
                 `${className}__antagonist`,
-                `${className}__antagonist--off`,
+                `${className}__antagonist--${
+                  predictedState.has(antagonist.key) ? "on" : "off"
+                }`,
               ])}
               key={antagonist.key}
             >
@@ -76,7 +136,16 @@ const AntagSelection = (props: {
                       })}
                     </>
                   } position="bottom">
-                    <Box className={"antagonist-icon-parent"}>
+                    <Box
+                      className={"antagonist-icon-parent"}
+                      onClick={() => {
+                        if (predictedState.has(antagonist.key)) {
+                          disableAntags([antagonist.key]);
+                        } else {
+                          enableAntags([antagonist.key]);
+                        }
+                      }}
+                    >
                       <Box className={classes([
                         "antagonists96x96",
                         antagonist.key,

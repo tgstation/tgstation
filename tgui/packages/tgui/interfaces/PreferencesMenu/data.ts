@@ -85,6 +85,7 @@ export type PreferencesMenuData = {
 
   generated_preference_values?: Record<string, Record<string, string>>;
   overflow_role: string;
+  selected_antags: string[];
   species: Record<string, ServerSpeciesData>;
 
   active_name: string;
