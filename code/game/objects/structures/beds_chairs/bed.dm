@@ -65,8 +65,7 @@
 
 /obj/structure/bed/roller/Destroy()
 	if(roller)
-		qdel(roller)
-		roller = null
+		QDEL_NULL(roller)
 	return ..()
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
