@@ -780,3 +780,6 @@
       a single var edit anymore.
   vincentiusvin:
   - bugfix: fixed hfr crate having the wrong parts
+2021-07-25:
+  tralezab:
+  - bugfix: Nightmares were getting a broken ui panel, now they don't!
