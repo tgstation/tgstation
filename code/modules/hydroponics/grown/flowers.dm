@@ -269,12 +269,23 @@
 	seed = /obj/item/seeds/rose
 	name = "\improper rose"
 	desc = "The classic fleur d'amour - flower of love. Watch for its thorns!"
+	base_icon_state = "rose"
 	icon_state = "rose"
+	worn_icon_state = "rose"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
+
+/obj/item/food/grown/rose/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot == ITEM_SLOT_MASK)
+		worn_icon_state = "[base_icon_state]_mouth"
+		user.update_inv_wear_mask()
+	else
+		worn_icon_state = base_icon_state
+		user.update_inv_head()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
