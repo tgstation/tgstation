@@ -7,11 +7,6 @@ const hivestyle = {
   color: 'yellow',
 };
 
-const badstyle = {
-  color: 'red',
-  fontWeight: 'bold',
-};
-
 const goalstyle = {
   color: 'lightblue',
   fontWeight: 'bold',
@@ -24,6 +19,7 @@ type Objective = {
 }
 
 type Info = {
+  hive_name: string;
   stolen_antag_info: string;
   memories: string[];
   objectives: Objective[];
@@ -60,9 +56,9 @@ const IntroductionSection = (props, context) => {
     <Section fill title="Intro" scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
-          You are the Changeling from
+          You are the Changeling from the
           <span style={hivestyle}>
-            {hive_name}
+            &ensp;{hive_name}
           </span>.
         </Stack.Item>
         <Stack.Item grow>
@@ -74,42 +70,34 @@ const IntroductionSection = (props, context) => {
 };
 
 const MemoriesSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+  const { act, data } = useBackend<Info>(context);
   const {
-    phrases,
-    responses,
+    memories,
   } = data;
   return (
-    <Section title="Codewords">
-      <Stack fill>
-        <Stack.Item grow basis={0}>
+    <Section fill scrollable title="Stolen Memories">
+      <Stack vertical fill>
+        <Stack.Item>
           <BlockQuote>
-            The Syndicate have provided you with the following
-            codewords to identify fellow agents. Use the codewords
-            during regular conversation to identify other agents.
-            Proceed with caution, however, as everyone is a
-            potential foe.
-            <span style={badstyle}>
-              &ensp;You have memorized the codewords, allowing you
-              to recognise them when heard.
-            </span>
+            As a Changeling, absorbing targets allows
+            you to collect their memories. They should
+            help you impersonate your target!
           </BlockQuote>
         </Stack.Item>
         <Stack.Divider mr={1} />
-        <Stack.Item grow basis={0}>
+        <Stack.Item grow>
           <Stack vertical>
-            <Stack.Item>
-              Code Phrases:
-            </Stack.Item>
-            <Stack.Item bold textColor="blue">
-              {phrases}
-            </Stack.Item>
-            <Stack.Item>
-              Code Responses:
-            </Stack.Item>
-            <Stack.Item bold textColor="red">
-              {responses}
-            </Stack.Item>
+            {!memories && "None!"
+            || memories.map(memory => (
+              <Stack.Item key={memory}>
+                <Button
+                  onClick={() => act('read_memory', {
+                    name: memory,
+                  })}>
+                  {memory}
+                </Button>
+              </Stack.Item>
+            )) }
           </Stack>
         </Stack.Item>
       </Stack>
@@ -120,38 +108,11 @@ const MemoriesSection = (props, context) => {
 const VictimPatternsSection = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
-    has_uplink,
-    uplink_intro,
-    uplink_unlock_info,
-    code,
+    stolen_antag_info,
   } = data;
   return (
-    <Section
-      title="Uplink"
-      mb={!has_uplink && -1}>
-      <Stack fill>
-        {!has_uplink && (
-          <Dimmer>
-            <Stack.Item fontSize="18px">
-              You were not supplied with an uplink.
-            </Stack.Item>
-          </Dimmer>
-        ) || (
-          <>
-            <Stack.Item bold>
-              {uplink_intro}
-              <br />
-              <span style={goalstyle}>Code: {code}</span>
-            </Stack.Item>
-            <Stack.Divider />
-            <Stack.Item mt="1%">
-              <BlockQuote>
-                {uplink_unlock_info}
-              </BlockQuote>
-            </Stack.Item>
-          </>
-        )}
-      </Stack>
+    <Section fill scrollable title="Additional Stolen Information">
+      {stolen_antag_info}
     </Section>
   );
 };
@@ -161,18 +122,19 @@ export const AntagInfoChangeling = (props, context) => {
   return (
     <Window
       width={620}
-      height={580}>
-      <Window.Content backgroundColor="#edca6b">
+      height={580}
+      theme="neutral">
+      <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
             <IntroductionSection />
           </Stack.Item>
-          <Stack.Item>
-            <Stack>
-              <Stack.Item>
+          <Stack.Item grow>
+            <Stack fill>
+              <Stack.Item grow basis={0}>
                 <MemoriesSection />
               </Stack.Item>
-              <Stack.Item>
+              <Stack.Item grow basis={0}>
                 <VictimPatternsSection />
               </Stack.Item>
             </Stack>

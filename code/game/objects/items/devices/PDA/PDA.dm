@@ -76,6 +76,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
+	///account id of the ID held
+	var/account_id
 
 	var/obj/item/paicard/pai = null // A slot for a personal AI device
 

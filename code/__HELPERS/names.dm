@@ -229,7 +229,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
 
 /proc/hive_name()
-	return "the [pick(GLOB.hive_names)] hive"
+	return "[pick(GLOB.hive_names)]-hive"
 
 /**
  * returns an ic name of the tool needed

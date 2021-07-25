@@ -63,13 +63,13 @@
 		"s_store" = /obj/item/changeling,
 	)
 
+	var/list/stolen_memories = list()
+
 /datum/antagonist/changeling/New()
 	. = ..()
 	hive_name = hive_name()
-	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
-		if(!C.owner || C.owner == owner)
-			continue
-		if(C.was_absorbed) //make sure the other ling wasn't already killed by another one. only matters if the changeling that absorbed them was gibbed after.
+	for(var/datum/antagonist/changeling/other_ling in GLOB.antagonists)
+		if(!other_ling.owner || other_ling.owner == owner)
 			continue
 		competitive_objectives = TRUE
 		break
@@ -242,7 +242,7 @@
 			return TRUE
 	return FALSE
 
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose=1)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -467,11 +467,6 @@
 			objectives += identity_theft
 		escape_objective_possible = FALSE
 
-
-/datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
-	. = ..()
-	to_chat(new_owner.current, span_boldannounce("Our powers have awoken. A flash of memory returns to us...we are a changeling!"))
-
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
 	if(stored_profiles.len && (owner.current.real_name != first_prof.name))
@@ -691,9 +686,7 @@
 /datum/antagonist/changeling/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/memory_names = list()
-	for(var/datum/memory/stolen_memory as anything in owner.memories)
-		if(stolen_memory.original_memory) //changeling's memories, not absorbed ones
-			continue
+	for(var/datum/memory/stolen_memory as anything in stolen_memories)
 		memory_names += stolen_memory.name
 	data["memories"] = list(memory_names)
 	data["hive_name"] = hive_name

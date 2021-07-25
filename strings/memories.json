@@ -72,6 +72,10 @@
 		"You unravel a story about",
 		"Your mental spines begin unravelling a story of"
 	],
+	"changeling_absorb_somethings":[
+		"You continue to peel away the story.",
+		"Your mental spines dive deeper into the memory."
+	],
 	"surgery_starts":[
 		"%PERFORMER carefully performing %INFO1 on %TARGET.",
 		"%PERFORMER using a bone saw on %TARGET.",
@@ -113,5 +117,14 @@
 	],
 	"borged_moods":[
 		"There shouldn't be any; you're a brain at this point!"
+	],
+	"death_starts":[
+		"%PERFORMER's heart stops beating at %INFO1.",
+		"%PERFORMER has perished at %INFO1.",
+		"at %INFO1, %PERFORMER has left the land of the living.",
+		"%PERFORMER seizes up and falls limp, their eyes dead and lifeless..."
+	],
+	"death_moods":[
+		"There shouldn't be any; this is set to be a moodless memory!"
 	]
 }

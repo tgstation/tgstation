@@ -251,18 +251,20 @@
 
 	last_death = world.time
 
-///new memory proc
-/datum/mind/proc/add_memory(name, memory_type, atom/target, extra_info)
+///document this
+/datum/mind/proc/add_memory(name, memory_type, atom/target, extra_info, no_mood)
 	var/story_mood = MOODLESS_MEMORY
-	var/datum/component/mood/mood_component = current.GetComponent(/datum/component/mood)
-	if(mood_component)
-		story_mood = mood_component.mood_level
+	if(!no_mood)
+		var/datum/component/mood/mood_component = current.GetComponent(/datum/component/mood)
+		if(mood_component)
+			story_mood = mood_component.mood_level
 
 	var/datum/memory/replaced_memory = memories[memory_type]
 	if(replaced_memory)
 		qdel(replaced_memory)
 
 	memories[memory_type] = new /datum/memory(name, build_story_mob(current), memory_type, build_target(target), extra_info, story_mood)
+	return memories[memory_type]
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)
@@ -288,13 +290,6 @@
 		if(response != "Yes")
 			return
 		return singular_memory
-
-///old memory proc
-/datum/mind/proc/store_memory(new_text)
-	var/newlength = length_char(memory) + length_char(new_text)
-	if (newlength > MAX_MESSAGE_LEN * 100)
-		memory = copytext_char(memory, -newlength-MAX_MESSAGE_LEN * 100)
-	memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
 	QDEL_LIST(memories)
@@ -469,9 +464,6 @@
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, span_boldnotice(unlock_text))
-	if(!antag_datum)
-		traitor_mob.mind.store_memory(new_uplink.unlock_note)
-		return
 	antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 
 
@@ -502,35 +494,6 @@
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, span_userdanger("Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed."))
 
-/datum/mind/proc/show_memory(mob/recipient, window=1)
-	if(!recipient)
-		recipient = current
-	var/output = "<B>[current.real_name]'s Memories:</B><br>"
-	output += memory
-
-
-	var/list/all_objectives = list()
-	for(var/datum/antagonist/A in antag_datums)
-		output += A.antag_memory
-		all_objectives |= A.objectives
-
-	if(all_objectives.len)
-		output += "<B>Objectives:</B>"
-		var/obj_count = 1
-		for(var/datum/objective/objective in all_objectives)
-			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
-			var/list/datum/mind/other_owners = objective.get_owners() - src
-			if(other_owners.len)
-				output += "<ul>"
-				for(var/datum/mind/M in other_owners)
-					output += "<li>Conspirator: [M.name]</li>"
-				output += "</ul>"
-
-	if(window)
-		recipient << browse(output,"window=memory")
-	else if(all_objectives.len || memory)
-		to_chat(recipient, "<span class='infoplain'><i>[output]</i></span>")
-
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		return
@@ -555,12 +518,6 @@
 			to_chat(usr, span_warning("Job not found."))
 			return
 		set_assigned_role(new_role)
-
-	else if (href_list["memory_edit"])
-		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
-		if (isnull(new_memo))
-			return
-		memory = new_memo
 
 	else if (href_list["obj_edit"] || href_list["obj_add"])
 		var/objective_pos //Edited objectives need to keep same order in antag objective list
@@ -685,7 +642,7 @@
 					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
-				memory = null//Remove any memory they may have had.
+				wipe_memory()//Remove any memory they may have had.
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN, 0))

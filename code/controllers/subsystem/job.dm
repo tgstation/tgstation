@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(job)
 	flags = SS_NO_FIRE
 
 	/// List of all jobs.
-	var/list/all_occupations = list() 
+	var/list/all_occupations = list()
 	/// List of jobs that can be joined through the starting menu.
 	var/list/joinable_occupations = list()
 	var/list/datum/job/name_occupations = list() //Dict of all jobs, keys are titles
@@ -472,7 +472,8 @@ SUBSYSTEM_DEF(job)
 
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.add_memory("Your account ID is [wageslave.account_id].")
+		wageslave.mind.add_memory("account ID: [wageslave.account_id]", MEMORY_ACCOUNT, NO_TARGET, list(wageslave.account_id))
+
 
 	job.after_spawn(equipping, player_client)
 

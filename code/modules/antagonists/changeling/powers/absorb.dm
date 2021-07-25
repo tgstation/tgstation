@@ -8,48 +8,49 @@
 	///if we're currently absorbing, used for sanity
 	var/is_absorbing = FALSE
 
-/datum/action/changeling/absorb_dna/can_sting(mob/living/carbon/user)
+/datum/action/changeling/absorb_dna/can_sting(mob/living/carbon/owner)
 	if(!..())
 		return
 
 	if(is_absorbing)
-		to_chat(user, span_warning("We are already absorbing!"))
+		to_chat(owner, span_warning("We are already absorbing!"))
 		return
 
-	if(!user.pulling || !iscarbon(user.pulling))
-		to_chat(user, span_warning("We must be grabbing a creature to absorb them!"))
+	if(!owner.pulling || !iscarbon(owner.pulling))
+		to_chat(owner, span_warning("We must be grabbing a creature to absorb them!"))
 		return
-	if(user.grab_state <= GRAB_NECK)
-		to_chat(user, span_warning("We must have a tighter grip to absorb this creature!"))
+	if(owner.grab_state <= GRAB_NECK)
+		to_chat(owner, span_warning("We must have a tighter grip to absorb this creature!"))
 		return
 
-	var/mob/living/carbon/target = user.pulling
+	var/mob/living/carbon/target = owner.pulling
+	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
 	return changeling.can_absorb_dna(target)
 
-/datum/action/changeling/absorb_dna/sting_action(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	var/mob/living/carbon/human/target = user.pulling
+/datum/action/changeling/absorb_dna/sting_action(mob/owner)
+	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/mob/living/carbon/human/target = owner.pulling
 	is_absorbing = TRUE
 
-	if(!attempt_absorb())
+	if(!attempt_absorb(target))
 		return
 
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
-	user.visible_message(span_danger("[user] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
+	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
 	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
 
 	if(!changeling.has_dna(target.dna))
 		changeling.add_new_profile(target)
 		changeling.trueabsorbs++
 
-	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
-		user.set_nutrition(min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
+	if(owner.nutrition < NUTRITION_LEVEL_WELL_FED)
+		owner.set_nutrition(min((owner.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
 
 	// Absorb a lizard, speak Draconic.
 	owner.copy_languages(target, LANGUAGE_ABSORB)
 
-	if(target.mind && user.mind)//if the victim and user have minds
-		absorb_memories()
+	if(target.mind && owner.mind)//if the victim and owner have minds
+		absorb_memories(target)
 
 	is_absorbing = FALSE
 
@@ -60,96 +61,97 @@
 	target.Drain()
 	return TRUE
 
-/datum/action/changeling/absorb_dna/proc/absorb_memories()
-		var/datum/mind/suckedbrain = target.mind
+/datum/action/changeling/absorb_dna/proc/absorb_memories(mob/living/carbon/human/target)
+	var/datum/mind/suckedbrain = target.mind
 
-		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
 
-		for(var/datum/memory/stolen_memory as anything in suckedbrain.memories)
-			stolen_memory.original_memory = FALSE
-			user.mind.memories += stolen_memory
-			suckedbrain.memories -= stolen_memory
+	for(var/memory_type in suckedbrain.memories)
+		var/datum/memory/stolen_memory = suckedbrain.memories[memory_type]
+		changeling.stolen_memories += stolen_memory
+	suckedbrain.wipe_memory()
 
-		for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)
-			var/list/all_objectives = antagonist_datum.objectives.Copy()
-			if(antag_types.antag_memory)
-				changeling.antag_memory += "[antag_types.antag_memory]<BR>"
-			if(!LAZYLEN(all_objectives))
+	for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)
+		var/list/all_objectives = antagonist_datum.objectives.Copy()
+		if(antagonist_datum.antag_memory)
+			changeling.antag_memory += "[antagonist_datum.antag_memory]<BR>"
+		if(!LAZYLEN(all_objectives))
+			continue
+		changeling.antag_memory += "<B>Objectives:</B>"
+		var/obj_count = 1
+		for(var/datum/objective/objective as anything in all_objectives)
+			changeling.antag_memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+			var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
+			if(!other_owners.len)
 				continue
-			changeling.antag_memory += "<B>Objectives:</B>"
-			var/obj_count = 1
-			for(var/datum/objective/objective as anything in all_objectives)
-				changeling.antag_memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
-				var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
-				if(!other_owners.len)
-					continue
-				changeling.antag_memory += "<ul>"
-				for(var/datum/mind/conspirator as anything in other_owners)
-					changeling.antag_memory += "<li>Conspirator: [M.name]</li>"
-				changeling.antag_memory += "</ul>"
-		changeling.antag_memory += "<b>That's all [target] had.</b><BR>"
+			changeling.antag_memory += "<ul>"
+			for(var/datum/mind/conspirator as anything in other_owners)
+				changeling.antag_memory += "<li>Conspirator: [conspirator.name]</li>"
+			changeling.antag_memory += "</ul>"
+	changeling.antag_memory += "<b>That's all [target] had.</b><BR>"
 
-		//Some of target's recent speech, so the changeling can attempt to imitate them better.
-		//Recent as opposed to all because rounds tend to have a LOT of text.
+	//Some of target's recent speech, so the changeling can attempt to imitate them better.
+	//Recent as opposed to all because rounds tend to have a LOT of text.
 
-		var/list/recent_speech = list()
-		var/list/say_log = list()
-		var/log_source = target.logging
-		for(var/log_type in log_source)
-			var/nlog_type = text2num(log_type)
-			if(nlog_type & LOG_SAY)
-				var/list/reversed = log_source[log_type]
-				if(islist(reversed))
-					say_log = reverseRange(reversed.Copy())
-					break
+	var/list/recent_speech = list()
+	var/list/say_log = list()
+	var/log_source = target.logging
+	for(var/log_type in log_source)
+		var/nlog_type = text2num(log_type)
+		if(nlog_type & LOG_SAY)
+			var/list/reversed = log_source[log_type]
+			if(islist(reversed))
+				say_log = reverseRange(reversed.Copy())
+				break
 
-		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
-			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
-		else
-			for(var/spoken_memory in say_log)
-				if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
-					break
-				recent_speech[spoken_memory] = say_log[spoken_memory]
+	if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
+		recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
+	else
+		for(var/spoken_memory in say_log)
+			if(recent_speech.len >= LING_ABSORB_RECENT_SPEECH)
+				break
+			recent_speech[spoken_memory] = say_log[spoken_memory]
 
-		if(recent_speech.len)
-			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
-			to_chat(user, span_boldnotice("Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!"))
-			for(var/spoken_memory in recent_speech)
-				changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
-				to_chat(user, span_notice("\"[recent_speech[spoken_memory]]\""))
-			changeling.antag_memory += "<B>We have no more knowledge of [target]'s speech patterns.</B><br>"
-			to_chat(user, span_boldnotice("We have no more knowledge of [target]'s speech patterns."))
+	if(recent_speech.len)
+		changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
+		to_chat(owner, span_boldnotice("Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!"))
+		for(var/spoken_memory in recent_speech)
+			changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
+			to_chat(owner, span_notice("\"[recent_speech[spoken_memory]]\""))
+		changeling.antag_memory += "<B>We have no more knowledge of [target]'s speech patterns.</B><br>"
+		to_chat(owner, span_boldnotice("We have no more knowledge of [target]'s speech patterns."))
 
 
-		var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
-			to_chat(user, span_boldnotice("[target] was one of us. We have absorbed their power."))
-			changeling.geneticpoints += round(target_ling.geneticpoints/2)
-			changeling.total_geneticspoints = changeling.geneticpoints //updates the total sum of genetic points when you absorb another ling
-			changeling.chem_storage += round(target_ling.chem_storage/2)
-			changeling.total_chem_storage = changeling.chem_storage //updates the total sum of chemicals stored for when you absorb another ling
-			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
-			changeling.absorbedcount += (target_ling.absorbedcount)
+	var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
+		to_chat(owner, span_boldnotice("[target] was one of us. We have absorbed their power."))
+		changeling.geneticpoints += round(target_ling.geneticpoints/2)
+		changeling.total_geneticspoints = changeling.geneticpoints //updates the total sum of genetic points when you absorb another ling
+		changeling.chem_storage += round(target_ling.chem_storage/2)
+		changeling.total_chem_storage = changeling.chem_storage //updates the total sum of chemicals stored for when you absorb another ling
+		changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
+		changeling.absorbedcount += (target_ling.absorbedcount)
 
-			var/list/copied_objectives = target_ling.objectives.Copy()
-			target.mind.remove_antag_datum(/datum/antagonist/changeling)
-			var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
-			fallen.objectives = copied_objectives
+		var/list/copied_objectives = target_ling.objectives.Copy()
+		target.mind.remove_antag_datum(/datum/antagonist/changeling)
+		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
+		fallen.objectives = copied_objectives
 
-/datum/action/changeling/absorb_dna/proc/attempt_absorb()
+/datum/action/changeling/absorb_dna/proc/attempt_absorb(mob/living/carbon/human/target)
 	for(var/absorbing_iteration in 1 to 3)
 		switch(absorbing_iteration)
 			if(1)
-				to_chat(user, span_notice("This creature is compatible. We must hold still..."))
+				to_chat(owner, span_notice("This creature is compatible. We must hold still..."))
 			if(2)
-				user.visible_message(span_warning("[user] extends a proboscis!"), span_notice("We extend a proboscis."))
+				owner.visible_message(span_warning("[owner] extends a proboscis!"), span_notice("We extend a proboscis."))
 			if(3)
-				user.visible_message(span_danger("[user] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
+				owner.visible_message(span_danger("[owner] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
 				to_chat(target, span_userdanger("You feel a sharp stabbing pain!"))
 				target.take_overall_damage(40)
 
-		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[i]"))
-		if(!do_mob(user, target, 15 SECONDS))
-			to_chat(user, span_warning("Our absorption of [target] has been interrupted!"))
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[absorbing_iteration]"))
+		if(!do_mob(owner, target, 15 SECONDS))
+			to_chat(owner, span_warning("Our absorption of [target] has been interrupted!"))
 			is_absorbing = FALSE
-			return
+			return FALSE
+	return TRUE
