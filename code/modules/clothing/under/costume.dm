@@ -283,7 +283,7 @@
 	inhand_icon_state = "SwagOutfit"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/misc/referee
+/obj/item/clothing/under/costume/referee
 	name = "referee uniform"
 	desc = "A standard black and white striped uniform to signal authority."
 	icon_state = "referee"

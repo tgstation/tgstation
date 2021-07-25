@@ -70,7 +70,7 @@
 		/obj/item/clothing/gloves/color/latex,
 		/obj/item/clothing/shoes/laceup,
 		/obj/item/clothing/head/soft/black,
-		/obj/item/clothing/under/misc/referee)
+		/obj/item/clothing/under/costume/referee)
 
 /obj/effect/spawner/bundle/costume/highlander
 	name = "highlander costume spawner"
