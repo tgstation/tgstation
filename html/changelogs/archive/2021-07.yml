@@ -570,3 +570,37 @@
   - bugfix: A Charlie station fluff paper about the Supermatter is no longer misnamed
       "singularity generator". THERE WAS NEVER SUCH A THING AS A SINGULARITY GENERATOR.
       OCEANIA HAD ALWAYS BEEN AT WAR WITH EASTASIA.
+2021-07-18:
+  Helianthus00:
+  - qol: Far explosions now cause far less shake and near explosions have been reduced
+      slightly to scale with this change.
+  IndieanaJones:
+  - balance: Space Dragon has received some nerfs to make fighting it and its carps
+      fairer to the crew.
+  - bugfix: Fixed a bug where carp rifts without an owner could spawn infinite carp.
+  InsaneRed:
+  - bugfix: fixed up some issues with the ski shoes vehicle description
+  Kylerace:
+  - bugfix: NanoTrasen has pushed a fix for nonexistent ghost ears, allowing them
+      to theoretically hear nearby sounds again if they existed, which they don't.
+  Maurukas:
+  - bugfix: One standard moth plushie has been issued to the tramstation psychologist's
+      office.
+  PositiveEntropy, Meyhazah:
+  - imageadd: Adds new fire extinguisher sprites based on Tau Ceti's!
+  Sheits:
+  - imageadd: Replaces the old aquarium sprites
+  TiviPlus:
+  - refactor: Directional lights might seem more smooth now
+  Watermelon914:
+  - qol: Allows charging circuit shells by using inducers.
+  - qol: Allows setting the owner ID of a circuit through a shell.
+  - bugfix: Fixed carps losing track of who they're following if they take a path
+      that obstructs their vision
+  - expansion: Adds the module circuit component.
+  - bugfix: Fixed carrying being broken.
+  - bugfix: Fixed light explosions having 0 chance to delimb someone if they have
+      no bomb resist.
+  interestingusernam3:
+  - bugfix: The implant pad will no longer incorrectly describe TRAC implants as being
+      usable as teleporter beacons.

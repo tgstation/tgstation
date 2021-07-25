@@ -440,6 +440,12 @@
 		var/max_limb_loss = 0
 		var/probability = 0
 		switch(severity)
+			if(EXPLODE_NONE)
+				max_limb_loss = 1
+				probability = 20
+			if(EXPLODE_LIGHT)
+				max_limb_loss = 2
+				probability = 30
 			if(EXPLODE_HEAVY)
 				max_limb_loss = 3
 				probability = 40

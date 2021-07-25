@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - qol: "Allows charging circuit shells by using inducers."
-  - qol: "Allows setting the owner ID of a circuit through a shell."
