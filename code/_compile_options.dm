@@ -7,7 +7,7 @@
 #ifdef DEBUG
 #define USE_CUSTOM_ERROR_HANDLER
 #endif
-
+#define FORCE_MAP "_maps/multiz_debug.json"
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 

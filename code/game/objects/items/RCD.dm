@@ -186,6 +186,8 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
+	if(A.z != user.z)
+		return
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
 		return FALSE
@@ -273,6 +275,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		mode = construction_mode
+		rcd_create(target, user)
 
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
@@ -871,6 +878,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		pre_attack_secondary(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/construction/rcd/arcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(ranged && range_check(target, user))
+		mode = construction_mode
+		rcd_create(target, user)
 
 /obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
 	. = ..()

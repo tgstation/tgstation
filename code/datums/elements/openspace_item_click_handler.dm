@@ -6,20 +6,20 @@
 	element_flags = ELEMENT_DETACH
 
 /datum/element/openspace_item_click_handler/Attach(datum/target)
-	..()
+	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 
 /datum/element/openspace_item_click_handler/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
-	..()
+	return ..()
 
-/datum/element/openspace_item_click_handler/proc/on_afterattack(item/source, atom/target, mob/user, proximity_flag, click_parameters)
+//Invokes the proctype with a turf above as target.
+/datum/element/openspace_item_click_handler/proc/on_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
 	if(target.z == user.z)
 		return
 	var/turf/turf_above = get_step_multiz(target, UP)
 	if(turf_above?.z == user.z)
-		user.next_click = null  // reset the cooldown and try again on the turf above.
-		user.ClickOn(turf_above, click_parameters)
-	return
+		INVOKE_ASYNC(source, /obj/item.proc/handle_openspace_click, turf_above, user, user.CanReach(turf_above, source), click_parameters)
