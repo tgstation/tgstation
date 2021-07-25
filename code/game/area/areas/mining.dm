@@ -170,6 +170,9 @@
 	name = "Icemoon Wastes"
 	outdoors = TRUE
 
+/area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS | NOTELEPORT
+
 /area/icemoon/surface/outdoors/labor_camp
 	name = "Icemoon Labor Camp"
 	area_flags = UNIQUE_AREA | NO_ALERTS

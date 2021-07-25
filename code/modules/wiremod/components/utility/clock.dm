@@ -5,12 +5,17 @@
  */
 /obj/item/circuit_component/clock
 	display_name = "Clock"
+	display_desc = "A component that repeatedly fires."
 
 	/// Whether the clock is on or not
 	var/datum/port/input/on
 
 	/// The signal from this clock component
 	var/datum/port/output/signal
+
+/obj/item/circuit_component/clock/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Clock Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
 
 /obj/item/circuit_component/clock/Initialize()
 	. = ..()

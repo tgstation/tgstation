@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/light
 	display_name = "Light"
+	display_desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
 
 	/// The colours of the light
 	var/datum/port/input/red
@@ -20,6 +21,10 @@
 	var/max_power = 5
 	var/min_lightness = 0.4
 	var/shell_light_color
+
+/obj/item/circuit_component/light/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Maximum Brightness: [max_power]", "orange", "lightbulb")
 
 /obj/item/circuit_component/light/Initialize()
 	. = ..()

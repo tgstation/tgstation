@@ -22,6 +22,8 @@
 	icon = 'icons/mecha/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
+	//does not include mmi compatibility
+	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	movedelay = 3
 	dir_in = 2 //Facing South.
 	max_integrity = 450 //really tanky, like damn

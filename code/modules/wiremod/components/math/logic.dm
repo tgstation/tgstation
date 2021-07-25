@@ -5,17 +5,15 @@
  */
 /obj/item/circuit_component/compare/logic
 	display_name = "Logic"
+	display_desc = "A component with 'and' and 'or' capabilities."
 
-
-GLOBAL_LIST_INIT(comp_logic_options, list(
-	COMP_LOGIC_AND,
-	COMP_LOGIC_OR,
-	COMP_LOGIC_XOR
-))
-
-/obj/item/circuit_component/compare/logic/Initialize()
-	options = GLOB.comp_logic_options
-	return ..()
+/obj/item/circuit_component/compare/logic/populate_options()
+	var/static/component_options = list(
+		COMP_LOGIC_AND,
+		COMP_LOGIC_OR,
+		COMP_LOGIC_XOR,
+	)
+	options = component_options
 
 /obj/item/circuit_component/compare/logic/do_comparisons(list/ports)
 	. = FALSE

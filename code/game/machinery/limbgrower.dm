@@ -12,7 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	/// The category of limbs we're browing in our UI.
-	var/selected_category = "human"
+	var/selected_category = SPECIES_HUMAN
 	/// If we're currently printing something.
 	var/busy = FALSE
 	/// How efficient our machine is. Better parts = less chemicals used and less power used. Range of 1 to 0.25.
@@ -24,7 +24,7 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list("human", "lizard", "moth", "plasmaman", "ethereal", "other")
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, "other")
 
 /obj/machinery/limbgrower/Initialize()
 	create_reagents(100, OPENCONTAINER)
@@ -216,9 +216,9 @@
 	/// The limb we're making with our buildpath, so we can edit it.
 	var/obj/item/bodypart/limb = new buildpath(loc)
 	/// Species with greyscale limbs.
-	var/list/greyscale_species = list("human", "lizard", "ethereal")
+	var/list/greyscale_species = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_ETHEREAL)
 	if(selected_category in greyscale_species) //Species with greyscale parts should be included here
-		if(selected_category == "human") //humans don't use the full colour spectrum, they use random_skin_tone
+		if(selected_category == SPECIES_HUMAN) //humans don't use the full colour spectrum, they use random_skin_tone
 			limb.skin_tone = random_skin_tone()
 		else
 			limb.species_color = random_short_color()

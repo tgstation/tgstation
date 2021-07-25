@@ -263,14 +263,13 @@
 			if(!recording_recipe)
 				var/reagent = GLOB.name2reagent[reagent_name]
 				if(beaker && dispensable_reagents.Find(reagent))
-					var/datum/reagents/R = beaker.reagents
-					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
 
-					if(!cell.use(actual / powerefficiency))
+					var/datum/reagents/holder = beaker.reagents
+					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
+					if(!cell?.use(to_dispense / powerefficiency))
 						say("Not enough energy to complete operation!")
 						return
-					R.add_reagent(reagent, actual, reagtemp = dispensed_temperature)
+					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature)
 
 					work_animation()
 			else
@@ -290,6 +289,7 @@
 		if("dispense_recipe")
 			if(!is_operational || QDELETED(cell))
 				return
+
 			var/list/chemicals_to_dispense = saved_recipes[params["recipe"]]
 			if(!LAZYLEN(chemicals_to_dispense))
 				return
@@ -301,15 +301,16 @@
 				if(!recording_recipe)
 					if(!beaker)
 						return
-					var/datum/reagents/R = beaker.reagents
-					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(dispense_amount, (cell.charge * powerefficiency)*10, free)
-					if(actual)
-						if(!cell.use(actual / powerefficiency))
-							say("Not enough energy to complete operation!")
-							return
-						R.add_reagent(reagent, actual, reagtemp = dispensed_temperature)
-						work_animation()
+
+					var/datum/reagents/holder = beaker.reagents
+					var/to_dispense = max(0, min(dispense_amount, holder.maximum_volume - holder.total_volume))
+					if(!to_dispense)
+						continue
+					if(!cell?.use(to_dispense / powerefficiency))
+						say("Not enough energy to complete operation!")
+						return
+					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature)
+					work_animation()
 				else
 					recording_recipe[key] += dispense_amount
 			. = TRUE

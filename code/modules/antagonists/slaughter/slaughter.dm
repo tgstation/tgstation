@@ -95,20 +95,21 @@
 	if(bloodpool)
 		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
 
-/mob/living/simple_animal/hostile/imp/slaughter/RightClickOn(atom/A)
-	if(!isliving(A))
-		return ..()
+/// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
+/mob/living/simple_animal/hostile/imp/slaughter/proc/bodyslam(atom/attack_target)
+	if(!isliving(attack_target))
+		return
 
-	if(!Adjacent(A))
-		to_chat(src, span_warning("You are too far away to use your slam attack on [A]!"))
+	if(!Adjacent(attack_target))
+		to_chat(src, span_warning("You are too far away to use your slam attack on [attack_target]!"))
 		return
 
 	if(slam_cooldown + slam_cooldown_time > world.time)
 		to_chat(src, span_warning("Your slam ability is still on cooldown!"))
 		return
 
-	face_atom(A)
-	var/mob/living/victim = A
+	face_atom(attack_target)
+	var/mob/living/victim = attack_target
 	victim.take_bodypart_damage(brute=20, wound_bonus=wound_bonus) // don't worry, there's more punishment when they hit something
 	visible_message(span_danger("[src] slams into [victim] with monstrous strength!"), span_danger("You slam into [victim] with monstrous strength!"), ignored_mobs=victim)
 	to_chat(victim, span_userdanger("[src] slams into you with monstrous strength, sending you flying like a ragdoll!"))
@@ -117,11 +118,16 @@
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		bodyslam(attack_target)
+		return
+
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(iscarbon(A))
-		var/mob/living/carbon/target = A
+
+	if(iscarbon(attack_target))
+		var/mob/living/carbon/target = attack_target
 		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
 			current_hitstreak++
 			wound_bonus += wound_bonus_per_hit

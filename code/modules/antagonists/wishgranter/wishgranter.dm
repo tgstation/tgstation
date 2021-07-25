@@ -3,6 +3,7 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
+	suicide_cry = "HAHAHAHAHA!!"
 
 /datum/antagonist/wishgranter/proc/forge_objectives()
 	var/datum/objective/hijack/hijack = new

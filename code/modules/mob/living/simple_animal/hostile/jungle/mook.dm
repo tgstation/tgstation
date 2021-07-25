@@ -36,11 +36,11 @@
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
-/mob/living/simple_animal/hostile/jungle/mook/CanAllowThrough(atom/movable/O)
+/mob/living/simple_animal/hostile/jungle/mook/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(istype(O, /mob/living/simple_animal/hostile/jungle/mook))
-		var/mob/living/simple_animal/hostile/jungle/mook/M = O
-		if(M.attack_state == MOOK_ATTACK_ACTIVE && M.throwing)
+	if(istype(mover, /mob/living/simple_animal/hostile/jungle/mook))
+		var/mob/living/simple_animal/hostile/jungle/mook/mook_moover = mover
+		if(mook_moover.attack_state == MOOK_ATTACK_ACTIVE && mook_moover.throwing)
 			return TRUE
 
 /mob/living/simple_animal/hostile/jungle/mook/death()

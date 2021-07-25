@@ -39,11 +39,7 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/wheelchair_content in contents)
-		var/atom/movable/atom_content = wheelchair_content
+	for(var/atom/movable/atom_content as anything in contents)
 		atom_content.forceMove(T)
 	return ..()
 
@@ -120,11 +116,7 @@
 	new /obj/item/stack/rods(drop_location(), 8)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
 	var/turf/T = get_turf(src)
-#if MIN_COMPILER_VERSION >= 514
-	#warn Please replace the loop below this warning with an `as anything` loop.
-#endif
-	for(var/wheelchair_content in contents)
-		var/atom/movable/atom_content = wheelchair_content
+	for(var/atom/movable/atom_content as anything in contents)
 		atom_content.forceMove(T)
 	qdel(src)
 	return TRUE

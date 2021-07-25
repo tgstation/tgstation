@@ -5,22 +5,21 @@
  */
 /obj/item/circuit_component/compare/comparison
 	display_name = "Comparison"
+	display_desc = "A component that compares two objects."
 
 	input_port_amount = 2
 	var/current_type = PORT_TYPE_ANY
 
-GLOBAL_LIST_INIT(comp_comparison_options, list(
-	COMP_COMPARISON_EQUAL,
-	COMP_COMPARISON_NOT_EQUAL,
-	COMP_COMPARISON_GREATER_THAN,
-	COMP_COMPARISON_LESS_THAN,
-	COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
-	COMP_COMPARISON_LESS_THAN_OR_EQUAL
-))
-
-/obj/item/circuit_component/compare/comparison/Initialize()
-	options = GLOB.comp_comparison_options
-	return ..()
+/obj/item/circuit_component/compare/comparison/populate_options()
+	var/static/component_options = list(
+		COMP_COMPARISON_EQUAL,
+		COMP_COMPARISON_NOT_EQUAL,
+		COMP_COMPARISON_GREATER_THAN,
+		COMP_COMPARISON_LESS_THAN,
+		COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
+		COMP_COMPARISON_LESS_THAN_OR_EQUAL,
+	)
+	options = component_options
 
 /obj/item/circuit_component/compare/comparison/input_received(datum/port/input/port)
 	switch(current_option)

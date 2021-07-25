@@ -3,6 +3,15 @@
 
 $bg-map: colors.$bg-map !default;
 
+.CircuitInfo__Examined {
+  background-color:rgba(0, 0, 0, 1);
+  padding: 8px;
+  border-radius: 5px;
+
+  user-select: none;
+  pointer-events: none;
+}
+
 .ObjectComponent__Titlebar {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;

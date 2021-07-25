@@ -127,12 +127,16 @@
 
 		if("recolor")
 			var/index = text2num(params["color_index"])
-			split_colors[index] = lowertext(params["new_color"])
-			queue_refresh()
+			var/new_color = lowertext(params["new_color"])
+			if(split_colors[index] != new_color)
+				split_colors[index] = new_color
+				queue_refresh()
 
 		if("recolor_from_string")
-			ReadColorsFromString(lowertext(params["color_string"]))
-			queue_refresh()
+			var/full_color_string = lowertext(params["color_string"])
+			if(full_color_string != split_colors.Join())
+				ReadColorsFromString(full_color_string)
+				queue_refresh()
 
 		if("pick_color")
 			var/group = params["color_index"]

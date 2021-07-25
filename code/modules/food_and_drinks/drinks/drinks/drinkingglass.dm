@@ -125,7 +125,8 @@
 				to_chat(user, span_notice("[src] is full."))
 			else
 				to_chat(user, span_notice("You break [E] in [src]."))
-				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 5)
+				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 2)
+				reagents.add_reagent(/datum/reagent/consumable/eggwhite, 4)
 				qdel(E)
 			return
 	else

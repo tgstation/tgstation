@@ -127,6 +127,10 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	togglename = "straps"
 	species_exception = list(/datum/species/golem)
+	greyscale_config = /datum/greyscale_config/suspenders
+	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
+	greyscale_colors = "#ff0000"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 //Security
 /obj/item/clothing/suit/security/officer

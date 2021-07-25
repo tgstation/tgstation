@@ -152,7 +152,34 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
+	light_color = "#fff2bf"
+	worn_y_offset = 1
 
+
+/obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
+	. = ..()
+	if(isnull(.))
+		return
+	update_icon(UPDATE_OVERLAYS)
+
+
+/obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
+	. = ..()
+	if(light_on)
+		. += emissive_appearance(icon, "carved_pumpkin-emissive", alpha = src.alpha)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(worn_icon, "carved_pumpkin-emissive", alpha = src.alpha, appearance_flags = KEEP_APART)
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
+	name = "carved blumpkin"
+	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
+	icon_state = "hardhat0_blumpkin"
+	inhand_icon_state = "hardhat0_blumpkin"
+	hat_type = "blumpkin"
+	light_color = "#76ff8e"
 /*
  * Kitty ears
  */

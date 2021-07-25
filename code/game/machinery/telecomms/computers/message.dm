@@ -64,12 +64,9 @@
 	else
 		to_chat(user, span_notice("A no server error appears on the screen."))
 
-/obj/machinery/computer/message_monitor/New()
-	..()
-	GLOB.telecomms_list += src
-
 /obj/machinery/computer/message_monitor/Initialize()
 	..()
+	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/message_monitor/LateInitialize()

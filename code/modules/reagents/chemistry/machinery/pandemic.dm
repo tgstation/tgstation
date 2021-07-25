@@ -7,6 +7,7 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
+	icon_keyboard = null
 	base_icon_state = "mixer"
 	use_power = TRUE
 	idle_power_usage = 20

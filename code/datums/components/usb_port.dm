@@ -19,12 +19,19 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.circuit_component_types = circuit_component_types
+	circuit_components = list()
+
+	for(var/circuit_component_type in circuit_component_types)
+		var/obj/item/circuit_component/circuit_component = new circuit_component_type(null)
+		circuit_components += circuit_component
 
 /datum/component/usb_port/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
+		component.register_usb_parent(parent)
 
 /datum/component/usb_port/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -33,10 +40,14 @@
 		COMSIG_PARENT_EXAMINE,
 	))
 
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
+		component.unregister_usb_parent(parent)
+
 	unregister_circuit_signals()
+	attached_circuit = null
 
 /datum/component/usb_port/Destroy()
-	QDEL_LAZYLIST(circuit_components)
+	QDEL_LIST(circuit_components)
 	QDEL_NULL(usb_cable_beam)
 
 	attached_circuit = null
@@ -58,16 +69,12 @@
 		UnregisterSignal(shell, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(shell, COMSIG_PARENT_EXAMINE)
 
-/datum/component/usb_port/proc/create_circuit_components(obj/item/integrated_circuit/circuitboard)
-	var/created_circuit_components = list()
+/datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
+		circuitboard.add_component(component)
+		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
 
-	for(var/circuit_component_type in circuit_component_types)
-		var/obj/item/circuit_component/circuit_component = new circuit_component_type(parent)
-		circuitboard.add_component(circuit_component)
-		created_circuit_components += circuit_component
-		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
-
-	return created_circuit_components
+	return
 
 /datum/component/usb_port/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -103,7 +110,7 @@
 	attached_circuit = connecting_cable.attached_circuit
 
 	connecting_cable.forceMove(attached_circuit)
-	circuit_components = create_circuit_components(attached_circuit)
+	attach_circuit_components(attached_circuit)
 	attached_circuit.interact(user)
 
 	usb_cable_beam = atom_parent.Beam(attached_circuit.shell, "usb_cable_beam", 'icons/obj/wiremod.dmi')
@@ -128,19 +135,15 @@
 
 /datum/component/usb_port/proc/on_circuit_deleting()
 	SIGNAL_HANDLER
-	unregister_circuit_signals()
-	attached_circuit = null
+	detach()
 	qdel(usb_cable_ref)
 
 /datum/component/usb_port/proc/on_circuit_component_removed(datum/source)
 	SIGNAL_HANDLER
-
-	qdel(source)
 	detach()
 
 /datum/component/usb_port/proc/on_circuit_shell_removed()
 	SIGNAL_HANDLER
-
 	detach()
 
 /datum/component/usb_port/proc/detach()
@@ -148,13 +151,16 @@
 	if (isnull(usb_cable))
 		return
 
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
+		UnregisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED)
+		attached_circuit.remove_component(component)
+		component.moveToNullspace()
+
 	unregister_circuit_signals()
 
 	var/atom/atom_parent = parent
 	usb_cable.forceMove(atom_parent.drop_location())
 	usb_cable.balloon_alert_to_viewers("snap")
-
-	QDEL_LAZYLIST(circuit_components)
 
 	attached_circuit = null
 	usb_cable_ref = null

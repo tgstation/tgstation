@@ -44,7 +44,7 @@
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "aj" = (
-/obj/item/paper/fluff/ruins/oldstation/protosing,
+/obj/item/paper/fluff/ruins/oldstation/protosupermatter,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ak" = (

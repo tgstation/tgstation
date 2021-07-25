@@ -117,23 +117,27 @@
 	var/datum/port/output/travelling_output
 
 	/// The tram controls computer (/obj/machinery/computer/tram_controls)
-	var/datum/weakref/computer
+	var/obj/machinery/computer/tram_controls/computer
 
 /obj/item/circuit_component/tram_controls/Initialize()
 	. = ..()
-
-	var/obj/machinery/computer/tram_controls/computer_object = get(src, /obj/machinery/computer/tram_controls)
-	if (computer_object)
-		computer = WEAKREF(computer_object)
-
-		RegisterSignal(computer_object.tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
-		RegisterSignal(computer_object.tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
-
 	new_destination = add_input_port("Destination", PORT_TYPE_STRING, FALSE)
 	trigger_move = add_input_port("Send Tram", PORT_TYPE_SIGNAL)
 
 	location = add_output_port("Location", PORT_TYPE_STRING)
 	travelling_output = add_output_port("Travelling", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/tram_controls/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if (istype(parent, /obj/machinery/computer/tram_controls))
+		computer = parent
+		RegisterSignal(computer.tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
+		RegisterSignal(computer.tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
+
+/obj/item/circuit_component/tram_controls/unregister_usb_parent(atom/movable/parent)
+	computer = null
+	UnregisterSignal(computer.tram_part, list(COMSIG_TRAM_SET_TRAVELLING, COMSIG_TRAM_TRAVEL))
+	return ..()
 
 /obj/item/circuit_component/tram_controls/Destroy()
 	new_destination = null
@@ -151,12 +155,10 @@
 	if (!COMPONENT_TRIGGERED_BY(trigger_move, port))
 		return
 
-	var/obj/machinery/computer/tram_controls/tram_controls = computer.resolve()
-
-	if (isnull(tram_controls))
+	if (isnull(computer))
 		return
 
-	if (!tram_controls.powered())
+	if (!computer.powered())
 		return
 
 	var/destination
@@ -169,14 +171,12 @@
 	if (!destination)
 		return
 
-	tram_controls.try_send_tram(destination)
+	computer.try_send_tram(destination)
 
 /obj/item/circuit_component/tram_controls/proc/on_tram_set_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
-
 	travelling_output.set_output(travelling)
 
 /obj/item/circuit_component/tram_controls/proc/on_tram_travel(datum/source, obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	SIGNAL_HANDLER
-
 	location.set_output(to_where.name)
