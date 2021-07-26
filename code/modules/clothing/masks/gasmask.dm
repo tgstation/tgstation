@@ -14,17 +14,17 @@
 	var/max_filters = 1
 	///List to keep track of each filter
 	var/list/gas_filters
-	///Is the filter allowed to spawn from the start?
+	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
 
 /obj/item/clothing/mask/gas/Initialize()
 	. = ..()
-	if(!max_filters)
+	if(!max_filters || !starting_filter_type)
 		return
 
 	for(var/i in 1 to max_filters)
-		new starting_filter_type(src)
-		LAZYADD(gas_filters, starting_filter_type)
+		var/obj/item/gas_filter/inserted_filter = new starting_filter_type(src)
+		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/Destroy()
