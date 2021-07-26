@@ -53,6 +53,7 @@
 	return ..()
 
 
+// If I is in range, L[I]. If I is out of range, wrap around.
 #define WRAPACCESS(L, I) L[(((I||1)-1)%length(L)+length(L))%length(L)+1]
 /obj/item/circuit_component/multiplexer/input_received(datum/port/input/port)
 	. = ..()
