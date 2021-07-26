@@ -1,26 +1,27 @@
 /**
- * # Combiner Component
+ * # Multiplexer Component
  *
- * Combines multiple inputs into 1 output port.
+ * Routes one of multiple inputs into one of multiple outputs.
  */
 /obj/item/circuit_component/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "A component that allows you to selectively choose which input port provides an output. The first port is the selector and takes a number between 1 and the maximum port amount."
+	display_desc = "Don't know how to wire up your circuit? This lets the circuit decide."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	/// The port to select from, goes from 1 to input_port_amount
-	var/datum/port/input/input_port
+	/// Which ports to connect.
+	var/datum/port/input/nin
+	var/datum/port/input/nout
 
-	/// The amount of input ports to have
+	/// How many ports to have.
 	var/input_port_amount = 4
-
-	var/datum/port/output/output_port
+	var/output_port_amount = 4
 
 	/// Current type of the ports
 	var/current_type
 
-	/// The multiplexer inputs. These are what get selected for the output by the input_port.
-	var/list/datum/port/input/multiplexer_inputs
+	/// The ports to route.
+	var/list/datum/port/input/ins
+	var/list/datum/port/input/outs
 
 /obj/item/circuit_component/multiplexer/populate_options()
 	var/static/component_options = list(
@@ -35,29 +36,34 @@
 /obj/item/circuit_component/multiplexer/Initialize()
 	. = ..()
 	current_type = current_option
-	input_port = add_input_port("Selector", PORT_TYPE_NUMBER, default = 1)
-	multiplexer_inputs = list()
+	nin = add_input_port("Input", PORT_TYPE_NUMBER, default = 1)
+	nout = add_input_port("Output", PORT_TYPE_NUMBER, default = 1)
+	ins = list()
 	for(var/port_id in 1 to input_port_amount)
-		multiplexer_inputs += add_input_port("Port [port_id]", current_type)
-	output_port = add_output_port("Output", current_type)
+		ins += add_input_port("Port [port_id]", current_type)
+	outs = list()
+	for(var/port_id in 1 to output_port_amount)
+		outs += add_output_port("Port [port_id]", current_type)
 
 /obj/item/circuit_component/multiplexer/Destroy()
-	output_port = null
-	multiplexer_inputs.Cut()
-	multiplexer_inputs = null
+	ins.Cut()
+	ins = null
+	outs.Cut()
+	outs = null
 	return ..()
 
 
+#define WRAPACCESS(L, I) L[(((I||1)-1)%length(L)+length(L))%length(L)+1]
 /obj/item/circuit_component/multiplexer/input_received(datum/port/input/port)
 	. = ..()
 	if(current_type != current_option)
 		current_type = current_option
 		for(var/datum/port/input/input_port as anything in multiplexer_inputs)
 			input_port.set_datatype(current_type)
-		output_port.set_datatype(current_type)
+		for(var/datum/port/input/output_port as anything in multiplexer_outputs)
+			output_port.set_datatype(current_type)
 
-	input_port.set_input(clamp(input_port.input_value || 1, 1, input_port_amount), FALSE)
 	if(.)
 		return
-	output_port.set_output(multiplexer_inputs[input_port.input_value].input_value)
+	WRAPACCESS(outs, nout.input_value).set_output(WRAPACCESS(ins,nin.input_value))
 
