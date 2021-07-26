@@ -366,7 +366,8 @@
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	antag_datum = /datum/antagonist/wizard
-	antag_flag = ROLE_WIZARD
+	antag_flag = ROLE_WIZARD_MIDROUND
+	antag_flag_override = ROLE_WIZARD
 	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1

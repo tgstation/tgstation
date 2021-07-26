@@ -49,9 +49,19 @@
 /datum/asset/spritesheet/antagonists/register()
 	var/mob/living/carbon/human/dummy/consistent/dummy = new
 
+	var/list/generated_icons = list()
+	var/list/to_insert = list()
+
 	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
 		var/datum/antagonist/antagonist_type = initial(ruleset.antag_datum)
 		if (isnull(antagonist_type))
+			continue
+
+		// antag_flag is guaranteed to be unique by unit tests.
+		var/spritesheet_key = serialize_antag_name(initial(ruleset.antag_flag))
+
+		if (!isnull(generated_icons[antagonist_type]))
+			to_insert[spritesheet_key] = generated_icons[antagonist_type]
 			continue
 
 		var/datum/antagonist/antagonist = new antagonist_type
@@ -60,9 +70,15 @@
 		if (isnull(preview_icon))
 			continue
 
+		// preview_icons are not scaled at this stage INTENTIONALLY.
+		// If an icon is not prepared to be scaled to that size, it looks really ugly, and this
+		// makes it harder to figure out what size it *actually* is.
 		// preview_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
-		// antag_flag is guaranteed to be unique by unit tests.
-		Insert(serialize_antag_name(initial(ruleset.antag_flag)), preview_icon)
+		generated_icons[antagonist_type] = preview_icon
+		to_insert[spritesheet_key] = preview_icon
+
+	for (var/spritesheet_key in to_insert)
+		Insert(spritesheet_key, to_insert[spritesheet_key])
 
 	return ..()

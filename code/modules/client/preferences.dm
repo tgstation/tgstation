@@ -356,6 +356,7 @@ GLOBAL_VAR(preferences_species_data)
 				antags += special_role
 
 			// MOTHBLOCKS TODO: Check antag ban(?) and age requirement
+			// (?) because antag bans are handled in all ruleset code
 			if (toggled)
 				be_special |= antags
 			else

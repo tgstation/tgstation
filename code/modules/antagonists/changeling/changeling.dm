@@ -694,6 +694,20 @@
 
 	return parts.Join("<br>")
 
+/datum/antagonist/changeling/get_preview_icon(mob/living/carbon/human/dummy)
+	var/icon/final_icon = render_preview_outfit(dummy, /datum/outfit/changeling)
+	var/icon/split_icon = render_preview_outfit(dummy, /datum/outfit/job/engineer)
+
+	final_icon.Shift(WEST, world.icon_size / 2)
+	final_icon.Shift(EAST, world.icon_size / 2)
+
+	split_icon.Shift(EAST, world.icon_size / 2)
+	split_icon.Shift(WEST, world.icon_size / 2)
+
+	final_icon.Blend(split_icon, ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
+
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
 	name = "Headslug Changeling"
@@ -714,3 +728,10 @@
 	if(policy)
 		to_chat(owner, policy)
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+
+/datum/outfit/changeling
+	name = "Changeling"
+
+	head = /obj/item/clothing/head/helmet/changeling
+	suit = /obj/item/clothing/suit/armor/changeling
+	l_hand = /obj/item/melee/arm_blade

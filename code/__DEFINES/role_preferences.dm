@@ -9,9 +9,12 @@
 
 /// Roundstart
 #define ROLE_TRAITOR "Traitor"
+#define ROLE_WIZARD "Wizard"
 
 /// Midrounds
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
+#define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
+#define ROLE_REV_HEAD "Head Revolutionary"
 
 /// Latejoins
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
@@ -20,10 +23,8 @@
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_CHANGELING "Changeling"
-#define ROLE_WIZARD "Wizard"
 #define ROLE_MALF "Malf AI"
 #define ROLE_REV "Revolutionary"
-#define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_PAI "pAI"

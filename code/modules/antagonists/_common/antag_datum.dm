@@ -323,25 +323,24 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
-/// Returns the icon to show on the preferences menu.
-/// A dummy is passed in. This dummy is shared between calls.
-/// It is not guaranteed to be clean, so call `delete_equipment()` yourself
-/// before you dress it.
-/datum/antagonist/proc/get_preview_icon(mob/living/carbon/human/dummy)
-	if (!preview_outfit)
-		return null
-
+/// Creates an icon from the preview outfit.
+/// Custom implementors of `get_preview_icon` should use this, as the
+/// result of `get_preview_icon` is expected to be the completed version.
+/datum/antagonist/proc/render_preview_outfit(mob/living/carbon/human/dummy, datum/outfit/outfit)
 	// delete_equipment() is handled by get_preview_icon() and not by callers
 	// so that they are able to cache icons without wasteful equipment deletions.
 	// This is used in, for instance, nuke ops/lone ops, which share the same icon.
 	// This is also helpful as not all antagonist icons will be humans, such as
 	// sentient diseases or aliens.
 	dummy.delete_equipment()
-	dummy.equipOutfit(preview_outfit)
+	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	COMPILE_OVERLAYS(dummy)
 
-	var/icon/icon = getFlatIcon(dummy)
+	return getFlatIcon(dummy)
 
+/// Given an icon, will crop it to be consistent of those in the preferences menu.
+/// Not necessary, and in fact will look bad if it's anything other than a human.
+/datum/antagonist/proc/finish_preview_icon(icon/icon)
 	// Zoom in on the top of the head and the chest
 	// I have no idea how to do this dynamically.
 	icon.Scale(115, 115)
@@ -353,6 +352,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 	icon.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
+
+/// Returns the icon to show on the preferences menu.
+/// A dummy is passed in. This dummy is shared between calls.
+/// It is not guaranteed to be clean, so call `delete_equipment()` yourself
+/// before you dress it.
+/datum/antagonist/proc/get_preview_icon(mob/living/carbon/human/dummy)
+	if (!preview_outfit)
+		return null
+
+	return finish_preview_icon(render_preview_outfit(dummy, preview_outfit))
 
 /datum/antagonist/Topic(href,href_list)
 	if(!check_rights(R_ADMIN))
