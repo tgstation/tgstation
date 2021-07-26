@@ -440,6 +440,7 @@
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
+		src.SpinAnimation(7,1)
 		if(flip_cooldown <= world.time)
 			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 				to_chat(user, span_userdanger("While trying to flip the [src] you pull the trigger and accidently shoot yourself!"))
