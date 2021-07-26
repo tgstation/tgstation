@@ -363,6 +363,9 @@ GLOBAL_VAR(preferences_species_data)
 
 	return TRUE
 
+/datum/preferences/ui_close(mob/user)
+	save_preferences()
+
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src, user.client)
 	character_preview_view.update_body()
