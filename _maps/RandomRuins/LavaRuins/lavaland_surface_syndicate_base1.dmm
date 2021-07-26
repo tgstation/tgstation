@@ -5793,6 +5793,10 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+"IU" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/template_noop,
+/area/template_noop)
 "JB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible{
 	dir = 8;
@@ -5916,7 +5920,7 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 
 (1,1,1) = {"
-aa
+IU
 aa
 aa
 aa
