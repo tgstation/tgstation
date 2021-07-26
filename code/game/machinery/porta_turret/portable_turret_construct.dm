@@ -25,7 +25,7 @@
 		if(PTURRET_UNSECURED)
 			. += span_notice("The external bolts are <b>unwrenched</b>, and the frame could be <i>pried</i> apart.")
 		if(PTURRET_BOLTED)
-			. += span_notice("The external bolts are <i>wrenched</i> in place, the frame requires <b>metal</b> for its internal armor.")
+			. += span_notice("The frame requires <b>metal</b> for its internal armor, the external bolts are <i>wrenched</i> in place.")
 		if(PTURRET_START_INTERNAL_ARMOUR)
 			. += span_notice("The turret's armor needs to be <b>bolted</b> in place, the armor looked like it could be <i>welded</i> out.")
 		if(PTURRET_INTERNAL_ARMOUR_ON)
@@ -36,8 +36,6 @@
 			. += span_notice("The turret's access hatch is <b>unscrewed</b>.")
 		if(PTURRET_CLOSED)
 			. += span_notice("The turret requires <b>metal</b> for its external armor, the access hatch could be <i>unscrewed</i>.")
-		if(PTURRET_START_EXTERNAL_ARMOUR)
-			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off")
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off")
 
