@@ -10,3 +10,5 @@ GLOBAL_VAR(stickbanadminexemptiontimerid) //stores the timerid of the callback t
 	return smites
 
 GLOBAL_LIST_INIT_TYPED(smites, /datum/smite, init_smites())
+
+GLOBAL_VAR_INIT(admin_notice, "") // Admin notice that all clients see when joining the server
