@@ -622,6 +622,9 @@
 	if(target_turf in targeted_turfs)
 		balloon_alert(user, "already targeted!")
 		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		balloon_alert(user, "you don't want to harm!")
+		return
 	var/power_boosted = FALSE
 	for(var/datum/weather/weather as anything in SSweather.processing)
 		if(weather.stage != MAIN_STAGE)

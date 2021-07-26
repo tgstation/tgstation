@@ -825,7 +825,7 @@
 
 /obj/item/organ/cyberimp/arm/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
-	if(!katana)
+	if(!katana || katana.shattered)
 		return
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
@@ -865,6 +865,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
+	var/shattered = FALSE
 	var/drew_blood = FALSE
 	var/timerid
 	var/list/input_list = list()
@@ -905,18 +906,17 @@
 	reset_inputs(user, TRUE)
 
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
-	if(target.stat == DEAD)
+	if(target.stat == DEAD || target == user)
 		return ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		balloon_alert(user, "you don't want to harm!")
 		return
+	drew_blood = TRUE
 	var/list/modifiers = params2list(click_parameters)
-	if(user != target)
-		drew_blood = TRUE
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			input_list += RIGHT_SLASH
-		if(LAZYACCESS(modifiers, LEFT_CLICK))
-			input_list += LEFT_SLASH
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		input_list += RIGHT_SLASH
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
+		input_list += LEFT_SLASH
 	if(ishostile(target))
 		user.changeNext_move(CLICK_CD_RAPID)
 	if(length(input_list) > 4)
@@ -949,43 +949,107 @@
 		deltimer(timerid)
 
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
+	user.visible_message(span_warning("[user] strikes [target] with [src]'s hilt!"),
+		span_notice("You hilt strike [target]!"))
+	to_chat(target, span_userdanger("You've been struck by [user]!"))
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/strike_throw_impact)
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
 	target.apply_damage(damage = 20, bare_wound_bonus = 10)
+	to_chat(target, span_userdanger("You've been struck by [user]!"))
+	user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-/obj/item/cursed_katana/proc/strike_throw_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
+/obj/item/cursed_katana/proc/strike_throw_impact(mob/living/source, atom/hit_atom, datum/thrownthing/thrownthing)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
 	if(isclosedturf(hit_atom))
-		if(isanimal(source))
-			var/mob/living/simple_animal/target = source
-			target.apply_damage(damage = 10)
+		source.apply_damage(damage = 5)
+		if(ishostile(source))
+			var/mob/living/simple_animal/hostile/target = source
+			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
 			target.set_confusion(max(target.get_confusion(), 8))
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
-	balloon_alert(user, "slice")
-	return
+	user.visible_message(span_warning("[user] does a wide slice!"),
+		span_notice("You do a wide slice!"))
+	var/turf/user_turf = get_turf(user)
+	var/dir_to_target = get_dir(user_turf, get_turf(target))
+	var/static/list/cursed_katana_slice_angles = list(0, -45, 45, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
+	for(var/iteration in cursed_katana_slice_angles)
+		var/turf/turf = get_step(user_turf, turn(dir_to_target, iteration))
+		user.do_attack_animation(turf, ATTACK_EFFECT_SLASH)
+		for(var/mob/living/additional_target in turf)
+			if(user.Adjacent(additional_target) && additional_target.density)
+				additional_target.apply_damage(damage = 20, sharpness = SHARP_EDGED, bare_wound_bonus = 10)
+				to_chat(additional_target, span_userdanger("You've been sliced by [user]!"))
+	target.apply_damage(damage = 5, sharpness = SHARP_EDGED, wound_bonus = 10)
 
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
-	balloon_alert(user, "cloak")
-	return
+	user.alpha = 150
+	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
+	user.sight |= SEE_SELF // so we can see us
+	user.visible_message(span_warning("[user] vanishes into thin air!"),
+		span_notice("You enter the dark cloak."))
+	if(ishostile(target))
+		var/mob/living/simple_animal/hostile/hostile_target
+		hostile_target.LoseTarget()
+	addtimer(CALLBACK(src, .proc/uncloak, user), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/obj/item/cursed_katana/proc/uncloak(mob/user)
+	user.alpha = 255
+	user.invisibility = 0
+	user.sight &= ~SEE_SELF
+	user.visible_message(span_warning("[user] appears from thin air!"),
+		span_notice("You exit the dark cloak."))
 
 /obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
-	balloon_alert(user, "cut")
-	return
+	user.visible_message(span_warning("[user] cuts [target]'s tendons!"),
+		span_notice("You tendon cut [target]!"))
+	to_chat(target, span_userdanger("Your tendons have been cut by [user]!"))
+	target.apply_damage(damage = 15, sharpness = SHARP_EDGED, wound_bonus = 15)
+	user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
+	var/datum/status_effect/stacking/saw_bleed/bloodletting/status = target.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
+	if(!status)
+		target.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, 4)
+	else
+		status.add_stacks(4)
 
 /obj/item/cursed_katana/proc/dash(mob/living/target, mob/user)
-	balloon_alert(user, "dash")
-	return
+	user.visible_message(span_warning("[user] dashes through [target]!"),
+		span_notice("You dash through [target]!"))
+	to_chat(target, span_userdanger("[user] dashes through you!"))
+	target.apply_damage(damage = 20, sharpness = SHARP_POINTY, bare_wound_bonus = 10)
+	new /obj/effect/temp_visual/guardian/phase/out(get_turf(user))
+	var/turf/dash_target = get_ranged_target_turf(target, user.dir, 8)
+	new /obj/effect/temp_visual/guardian/phase(dash_target)
+	do_teleport(user, dash_target, channel = TELEPORT_CHANNEL_MAGIC)
 
 /obj/item/cursed_katana/proc/shatter(mob/living/target, mob/user)
-	balloon_alert(user, "shatter")
-	return
+	user.visible_message(span_warning("[user] shatters [src] over [target]!"),
+		span_notice("You shatter [src] over [target]!"))
+	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
+	target.apply_damage(damage = 25, wound_bonus = 20)
+	var/turf/target_turf = get_turf(target)
+	target_turf.AddComponent(/datum/component/pellet_cloud, /obj/projectile/cursed_katana, 3)
+	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
+	shattered = TRUE
+	moveToNullspace()
+	addtimer(CALLBACK(src, .proc/coagulate, user), 45 SECONDS)
+
+/obj/projectile/cursed_katana
+	name = "cursed shard"
+	icon_state = "katana"
+	damage_type = BRUTE
+	damage = 5
+	range = 4
+
+/obj/item/cursed_katana/proc/coagulate(mob/user)
+	balloon_alert(user, "katana coagulated")
+	shattered = FALSE
 
 #undef LEFT_SLASH
 #undef RIGHT_SLASH
