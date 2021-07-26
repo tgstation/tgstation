@@ -22596,9 +22596,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
-"dYq" = (
-/turf/closed/wall,
-/area/science/nanite)
 "dYC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -24908,7 +24905,7 @@
 /area/hallway/primary/central)
 "fwp" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "fwq" = (
 /obj/effect/turf_decal/tile/brown{
@@ -26699,7 +26696,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "gwW" = (
 /obj/structure/statue/snow/snowman,
@@ -26710,7 +26707,7 @@
 /obj/item/food/snowcones/pwrgame{
 	pixel_x = 12
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "gxp" = (
 /obj/machinery/light_switch/directional/north,
@@ -29344,7 +29341,7 @@
 /area/engineering/atmos)
 "hZk" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "hZo" = (
 /obj/structure/sign/warning/securearea,
@@ -29444,7 +29441,7 @@
 /area/engineering/supermatter/room)
 "icS" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "icU" = (
 /obj/machinery/status_display/evac/directional/east,
@@ -35761,7 +35758,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "lLw" = (
 /obj/effect/landmark/blobstart,
@@ -37334,7 +37331,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "mBy" = (
 /obj/structure/urinal/directional/north,
@@ -41312,7 +41309,7 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "oMZ" = (
 /obj/item/radio/intercom/directional/south,
@@ -43900,7 +43897,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "qek" = (
 /obj/machinery/door/firedoor,
@@ -44678,7 +44675,7 @@
 	pixel_x = 16;
 	pixel_y = 4
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "qGO" = (
 /obj/structure/window/reinforced{
@@ -44755,7 +44752,7 @@
 /turf/open/floor/wood,
 /area/service/library)
 "qIV" = (
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "qIY" = (
 /obj/structure/cable,
@@ -47937,7 +47934,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "suY" = (
 /obj/machinery/vending/cigarette,
@@ -48545,7 +48542,7 @@
 /area/maintenance/port/fore)
 "sMS" = (
 /obj/structure/flora/tree/dead,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "sMU" = (
 /obj/machinery/light_switch/directional/north,
@@ -49204,7 +49201,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "tgF" = (
 /obj/structure/table,
@@ -51862,7 +51859,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "uzt" = (
 /obj/structure/table/wood,
@@ -106855,8 +106852,8 @@ bpE
 bpE
 bpE
 bpE
-dYq
-dYq
+boB
+boB
 pLE
 qSi
 sql
