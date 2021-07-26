@@ -64,11 +64,11 @@ have ways of interacting with a specific mob and control it.
 
 // Stops sentient monkeys from being knocked over like weak dunces.
 /datum/ai_controller/monkey/on_sentience_gained()
-	..()
+	. = ..()
 	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/on_sentience_lost()
-	..()
+	. = ..()
 	AddElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/able_to_run()
