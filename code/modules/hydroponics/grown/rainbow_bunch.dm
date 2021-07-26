@@ -34,6 +34,7 @@
 	attack_verb_simple = list("pompf")
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
+	preserved_food = TRUE
 
 /obj/item/food/grown/rainbow_flower/Initialize()
 	. = ..()
