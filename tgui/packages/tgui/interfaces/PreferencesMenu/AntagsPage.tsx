@@ -111,16 +111,17 @@ const AntagSelection = (props: {
               ])}
               key={antagonist.key}
             >
-              <Stack vertical>
+              <Stack align="center" height="140px" vertical>
                 <Stack.Item style={{
                   "font-weight": "bold",
+                  "margin-top": "auto",
                   "max-width": "100px",
                   "text-align": "center",
                 }}>
                   {antagonist.name}
                 </Stack.Item>
 
-                <Stack.Item>
+                <Stack.Item align="center">
                   <Tooltip content={
                     <>
                       {antagonist.description.map((text, index) => {

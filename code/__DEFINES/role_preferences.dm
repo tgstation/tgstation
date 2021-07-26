@@ -10,6 +10,8 @@
 /// Roundstart
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_CHANGELING "Changeling"
+#define ROLE_OPERATIVE "Operative"
 
 /// Midrounds
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
@@ -21,8 +23,6 @@
 
 /// MOTHBLOCKS TODO: Unsorted
 #define ROLE_SYNDICATE "Syndicate"
-#define ROLE_OPERATIVE "Operative"
-#define ROLE_CHANGELING "Changeling"
 #define ROLE_MALF "Malf AI"
 #define ROLE_REV "Revolutionary"
 #define ROLE_REV_SUCCESSFUL "Victorious Revolutionary"
