@@ -39,7 +39,6 @@ GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(aiEyes)
 GLOBAL_LIST_EMPTY(suit_sensors_list) //all people with suit sensors on
-GLOBAL_LIST_EMPTY(nanite_sensors_list) //app people with nanite monitoring program
 
 /// All alive mobs with clients.
 GLOBAL_LIST_EMPTY(alive_player_list)
