@@ -556,4 +556,7 @@
 	worn_icon = 'icons/mob/clothing/head/fishcap.dmi'
 	icon_state = "fishcap"
 	inhand_icon_state = "fishcap"
+<<<<<<< refs/remotes/Bytube/fishing-cap
 	
+=======
+>>>>>>> oh boy another merge conflict
