@@ -694,6 +694,21 @@
 	data["objectives"] = get_objectives()
 	return data
 
+/datum/antagonist/changeling/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("read_memory")
+			var/datum/memory/chosen_memory
+			for(var/datum/memory/stolen_memory in stolen_memories)
+				if(name == params["name"])
+					chosen_memory = stolen_memory
+					break
+			if(!chosen_memory)
+				to_chat(owner.current, span_warning("That memory cannot be read!"))
+				return
+
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
 	name = "Headslug Changeling"
