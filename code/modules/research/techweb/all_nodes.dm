@@ -216,7 +216,7 @@
 		"comp_logic",
 		"comp_mmi",
 		"comp_module",
-		"comp_multiplexer",
+		"comp_router",
 		"comp_not",
 		"comp_pressuresensor",
 		"comp_radio",
