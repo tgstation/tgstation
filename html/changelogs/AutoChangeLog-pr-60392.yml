@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - bugfix: "Only foods which are created at mapload require player interaction in order to decompose."
