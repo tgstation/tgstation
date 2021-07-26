@@ -41,7 +41,7 @@
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
 				<b>Life:</b> 10 minutes after death of host.<BR>
-				<b>Important Notes:</b> Implant also works as a teleporter beacon.<BR>
+				<b>Important Notes:</b> Implant [allow_teleport ? "also works" : "does not work"] as a teleporter beacon.<BR>
 				<HR>
 				<b>Implant Details:</b> <BR>
 				<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>

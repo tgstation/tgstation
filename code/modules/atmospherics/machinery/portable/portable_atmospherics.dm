@@ -26,7 +26,7 @@
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
-	QDEL_NULL(air_contents)
+	air_contents = null
 	SSair.stop_processing_machine(src)
 
 	return ..()

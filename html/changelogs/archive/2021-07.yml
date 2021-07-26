@@ -548,7 +548,7 @@
       or jump to a location and you wont jump back to the person you tracked
   Sheits:
   - bugfix: Flight potions now work on fly people, androids and skeletons
-  Wallem:
+  Wallem, based off of work done by Keelin:
   - bugfix: Lets people wash the ant debuff off of themselves, as intended.
   - rscadd: Due to a leak in Nanotrasen Brand Ant Farms during shipping, a large influx
       of space-ants have been inadvertently dumped onto every Nanotrasen station.
@@ -570,3 +570,226 @@
   - bugfix: A Charlie station fluff paper about the Supermatter is no longer misnamed
       "singularity generator". THERE WAS NEVER SUCH A THING AS A SINGULARITY GENERATOR.
       OCEANIA HAD ALWAYS BEEN AT WAR WITH EASTASIA.
+2021-07-18:
+  Helianthus00:
+  - qol: Far explosions now cause far less shake and near explosions have been reduced
+      slightly to scale with this change.
+  IndieanaJones:
+  - balance: Space Dragon has received some nerfs to make fighting it and its carps
+      fairer to the crew.
+  - bugfix: Fixed a bug where carp rifts without an owner could spawn infinite carp.
+  InsaneRed:
+  - bugfix: fixed up some issues with the ski shoes vehicle description
+  Kylerace:
+  - bugfix: NanoTrasen has pushed a fix for nonexistent ghost ears, allowing them
+      to theoretically hear nearby sounds again if they existed, which they don't.
+  Maurukas:
+  - bugfix: One standard moth plushie has been issued to the tramstation psychologist's
+      office.
+  PositiveEntropy, Meyhazah:
+  - imageadd: Adds new fire extinguisher sprites based on Tau Ceti's!
+  Sheits:
+  - imageadd: Replaces the old aquarium sprites
+  TiviPlus:
+  - refactor: Directional lights might seem more smooth now
+  Watermelon914:
+  - qol: Allows charging circuit shells by using inducers.
+  - qol: Allows setting the owner ID of a circuit through a shell.
+  - bugfix: Fixed carps losing track of who they're following if they take a path
+      that obstructs their vision
+  - expansion: Adds the module circuit component.
+  - bugfix: Fixed carrying being broken.
+  - bugfix: Fixed light explosions having 0 chance to delimb someone if they have
+      no bomb resist.
+  interestingusernam3:
+  - bugfix: The implant pad will no longer incorrectly describe TRAC implants as being
+      usable as teleporter beacons.
+2021-07-19:
+  Arkatos:
+  - qol: You can now load equipment outright by double clicking the corresponding
+      equipment button in the Select Equipment UI.
+  Fikou:
+  - expansion: During moth week, teleporter accidents make you Moths
+  InsaneRed:
+  - balance: Elder Atmosian armor now takes less metallic hydrogen to craft and is
+      better armored.
+  - qol: Most advanced tools now use balloon alert
+  Kylerace:
+  - bugfix: NanoTrasen has realized that its previous theoretical fix for ghost ears
+      didn't work, not that that's a problem since ghosts don't exist but NanoTrasen
+      has fixed its mistake.
+  Melbert:
+  - qol: Energy Guns use balloon alerts when swapping mode
+  Mothblocks:
+  - expansion: Added a box of silver IDs to the HoP office on TramStation.
+  Seris02:
+  - bugfix: fixed sentient diseases reinfecting when dead
+  TheSmallBlue:
+  - expansion: Added USB cable support to bluespace launchpad consoles to use with
+      integrated circuits.
+2021-07-20:
+  Ghilker:
+  - expansion: added downsides to shoving too much fuel/moderator inside the machine,
+      the cooling volume can be adjusted in the GUI to make it stronger/weaker based
+      on the user needs
+  Nari Harimoto:
+  - bugfix: Fixes a bug where emotes such as a carp gnash will mess up a name if the
+      name contains a pronoun within it
+  - bugfix: Fixed an incorrect variable in a var that manages pronouns
+  - spellcheck: Updated some Simple Mob examines and emotes to default to plural (they)
+      rather than object (it)
+  - spellcheck: two clown mobs (Clown Hulk, and Clown Chad) are now explicitly male.
+      one Corgi type (Void) is neuter (it)
+  - spellcheck: many animals like cows and chickens are hardcoded female, but uses
+      neutral pronouns in examines and emotes, updated that to be explicitly she pronouns
+  Ryll/Shaps:
+  - bugfix: You should no longer lose deathnettle durability when clicking on floors
+      or walls
+  TheSmallBlue:
+  - expansion: Added the To Number circuit component.
+  Time-Green:
+  - bugfix: cutting open heads wont drop horns, frills etc on the ground (you could
+      literally stick it into a human to give them frills but nooooooo you wanted
+      to report the bug)
+  TiviPlus:
+  - bugfix: Fixed weather being opaque
+  Watermelon914:
+  - bugfix: Fixed the duffelbag curse and curse of hunger code in general.
+  - balance: Wizard gets bonus points for choosing the randomized options in their
+      spellbook. They will get 15 points worth of spells if they choose "Full random"
+      and they will get 12 points worth of spells if they choose "Semi random".
+2021-07-21:
+  BurgerBB:
+  - bugfix: Fixes closets/lockers/crates/ect being subject to ant decompisition.
+  InsaneRed:
+  - qol: Adds electrolizers to atmos storage  across maps for quality of life purposes
+      and removes the useless turbine to ai sat pipeline in icebox.
+  JohnFulpWillard:
+  - bugfix: Deltastation's HoP line now has a flasher.
+  - bugfix: Deltastation's Atmos waste now sends external connectors to waste, rather
+      than the other way around.
+  Kubisopplay:
+  - bugfix: A CABAL of syndicate hackers broke Nanotrasen protections, allowing malfunctions
+      in AI to finally happen again
+  Malgover:
+  - rscadd: Adds ANTI-TIDER-2500 to the SecTech vendor
+  Seris02:
+  - bugfix: classic baton can stamcrit again
+  TheSmallBlue:
+  - bugfix: Hulks and larvas can no longer just punch the SM with no consequences
+  Wallem:
+  - bugfix: ants have a higher tolerance to extreme ph levels when breeding. New ant
+      desc.
+  Watermelon914:
+  - expansion: Adds the scanner shell that lets you scan objects.
+  aaaa1023:
+  - bugfix: Icebox interrogation room is connected to the main power grid again.
+  - bugfix: Icebox security atmos goes through the atmos maintenance room again rather
+      than just bypassing it.
+  coiax:
+  - rscadd: Appendicitis is now no longer a disease. It has the same effects, although
+      shows up slightly differently on health scanners. It also is no longer caused
+      by the event system, and can happen to any appendix inside a person.
+  dragomagol:
+  - qol: changed the links for the bartender and cook guides to the appropriate new
+      wiki pages
+2021-07-22:
+  Ghommie:
+  - bugfix: fixed some oddities with the wheelchair wheels overlay.
+  Guestify:
+  - qol: Added nanodrug vend to tramstation
+  Watermelon914:
+  - bugfix: Fixed Index Table outputting a table instead of a list.
+  timothymtorres:
+  - qol: Gas meters, freezers, and air alarms all now use GAGS coloring to display
+      colors based on temperature. (red is hot, green is room temp, and purple is
+      cold)
+  vincentiusvin:
+  - bugfix: fixed cryocells and hfr runtiming on quick consecutive wrench actions.
+2021-07-23:
+  ATHATH:
+  - bugfix: Classic batons (and their subtypes) no longer spread their stamina damage
+      across multiple body parts.
+  Fikou:
+  - bugfix: You can no longer be the living dead by having adminordrazine when you
+      die
+  Ghilker:
+  - rscadd: Gas masks now properly filter gases when a filter is applied (can be made
+      roundstart from any lathe and every gas mask starts with one in them)
+  Ghommie:
+  - bugfix: toggling combat mode will now send a sound to the player even if the character
+      is deafened.
+  Krysonism:
+  - bugfix: Vatbeasts can use their powerful tentacle slap ability again.
+  Melbert:
+  - bugfix: Plant Analyzer's readout should look less weird and more consistent again.
+  Mothblocks:
+  - bugfix: Fixed item quirks like photographer putting their items in the wrong spot.
+  Thunder12345:
+  - bugfix: Orange shoes no longer turn into errors when detaching handcuffs
+  bobbahbrown:
+  - bugfix: Research consoles now correctly show GAGS-ified icons properly. No more
+      missing janicart upgrades!
+  tralezab:
+  - code_imp: killed the grown misc file!
+  - expansion: Roboticists can now construct critter-sized mechas, start with an EVA
+      helmet and a leg!
+  - code_imp: killed the aquarium misc file!
+  - rscadd: traitors now get some extra flavor. doesn't mean anything mechanically
+      or ruleswise right now, but maybe it will inspire some more creative traitoring?
+  - rscadd: a few antags now have a tgui menu instead of a greet. spiffy! they include
+      antag info you need.
+2021-07-24:
+  GoldenAlpharex, with some help of Imaginos (PositiveEntropy):
+  - imageadd: Added a new badge to display on future berets.
+  - expansion: Nanotrasen's fashion department decided to release a brand new series
+      of berets, meant to replace the old collection and featuring a wider array of
+      possibilities!
+  - refactor: Berets are now converted to GAGS, with more options for customization
+      and greater consistancy between the sprites.
+  - code_imp: Not all GAGS sprites can be recolored in vendors by default anymore.
+  Kubisopplay:
+  - bugfix: Syndicate hackers outsmarted another group of syndicate hackers, and updated
+      defensive protocols of cyborgs slaved to malfunctioning ais, once again letting
+      them defend against emags
+  Melbert:
+  - qol: Ctrl-click now activates the porta-seeder.
+  Thunder12345:
+  - rscadd: Added class mechanics to Capture The Flag, with two new classes.
+  - rscadd: The Assaulter class is a fast skirmisher armed with a shotgun and rocket
+      gloves, but a very fragile energy shield.
+  - rscadd: The Marksman class is a sniper armed with a hitscan rifle doing lower
+      than standard damage.
+  - imageadd: 'Added a bunch of icons for Assaulter and Marksman gear. tweak: The
+      fair maidens on the medieval simulation shuttle are no longer weapons of mass
+      destruction'
+  - bugfix: You can no longer spawn outside of CTF matches when multiple classes are
+      available.
+  - refactor: Rewritten the multi-class part of CTF spawning to use radial menus.
+  - refactor: Medieval simulation has been refactored to bring it fully under the
+      CTF framework
+  TiviPlus:
+  - bugfix: fixed normal panic bunker sometimes rejecting when it shouldnt
+  aaaa1023:
+  - spellcheck: Bloodspider directive now calls Changelings "Vicious" and not "Visicious"
+  - spellcheck: Added missing space in the happiness gum box's description.
+  - bugfix: There are no longer maintenance zone tiles inside the circuits lab on
+      icebox.
+  interestingusernam3:
+  - admin: Admins can't make it possible to deconstruct a hedge by wrenching with
+      a single var edit anymore.
+  vincentiusvin:
+  - bugfix: fixed hfr crate having the wrong parts
+2021-07-25:
+  tralezab:
+  - bugfix: Nightmares were getting a broken ui panel, now they don't!
+2021-07-26:
+  Ghommie:
+  - bugfix: Fixes some hardships with placing lattice on multiz maps.
+  Melbert:
+  - bugfix: Roses in mask slot now have their correct worn sprite again.
+  Wayland-Smithy:
+  - bugfix: Fixed Chat Highlighting working on your own OOC messages.
+  timothymtorres:
+  - bugfix: High Volume Vent Pump Layer 3 icon state to be correct
+  - balance: Add musical instruments to maint loot list

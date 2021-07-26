@@ -1,7 +1,7 @@
 /datum/job/mime
 	title = "Mime"
 	department_head = list("Head of Personnel")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
@@ -25,8 +25,18 @@
 		/obj/item/book/mimery = 1,
 	)
 
-/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.apply_pref_name("mime", M.client)
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+
+	voice_of_god_power = 0.5 //Why are you speaking
+	voice_of_god_silence_power = 3
+
+
+/datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	if(!ishuman(spawned))
+		return
+	spawned.apply_pref_name("mime", player_client)
+
 
 /datum/outfit/job/mime
 	name = "Mime"

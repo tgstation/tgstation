@@ -17,7 +17,7 @@
 	Your goal is to protect the vault you are assigned to, cultivate the seeds passed onto you, \
 	and eventually bring life to this desolate planet while waiting for contact from your creators. \
 	Estimated time of last contact: Deployment, 5000 millennia ago."
-	assignedrole = "Lifebringer"
+	spawner_job_path = /datum/job/lifebringer
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
@@ -89,7 +89,7 @@
 	flavour_text = "The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. \
 	Fresh sacrifices for your nest."
-	assignedrole = "Ash Walker"
+	spawner_job_path = /datum/job/ash_walker
 	var/datum/team/ashwalkers/team
 	var/obj/structure/ash_walker_eggshell/eggshell
 
@@ -149,7 +149,7 @@
 	short_desc = "You are cursed."
 	flavour_text = "Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you \
 	did so, it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland."
-	assignedrole = "Exile"
+	spawner_job_path = /datum/job/exile
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
@@ -230,9 +230,9 @@
 		else
 			H.fully_replace_character_name(null, name)
 	if(has_owner)
-		new_spawn.mind.assigned_role = "Servant Golem"
+		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/servant_golem))
 	else
-		new_spawn.mind.assigned_role = "Free Golem"
+		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -283,7 +283,7 @@
 	flavour_text = "Each day you barely scrape by, and between the terrible conditions of your makeshift shelter, \
 	the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
-	assignedrole = "Hermit"
+	spawner_job_path = /datum/job/hermit
 
 /obj/effect/mob_spawn/human/hermit/Initialize(mapload)
 	. = ..()
@@ -329,7 +329,7 @@
 	mob_species = /datum/species/human
 	short_desc = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
 	flavour_text = "You were fine hunting polar bears and taming wolves out here on your own, but now that there are corporate stooges around, you need to watch your step."
-	assignedrole = "Hermit"
+	spawner_job_path = /datum/job/hermit
 
 /datum/outfit/hermit
 	name = "Lavaland hermit"
@@ -353,7 +353,7 @@
 	short_desc = "You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you."
 	flavour_text = "Good. It seems as though your ship crashed. You remember that you were convicted of "
-	assignedrole = "Escaped Prisoner"
+	spawner_job_path = /datum/job/escaped_prisoner
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.fully_replace_character_name(null,"NTP #LL-0[rand(111,999)]") //Nanotrasen Prisoner #Lavaland-(numbers)
@@ -392,7 +392,7 @@
 	short_desc = "You are a staff member of a top-of-the-line space hotel!"
 	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests, advertise the hotel, and make sure the manager doesn't fire you."
 	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
-	assignedrole = "Hotel Staff"
+	spawner_job_path = /datum/job/hotel_staff
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
@@ -432,7 +432,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/syndicate_empty
-	assignedrole = "Space Syndicate" //I know this is really dumb, but Syndicate operative is nuke ops
+	spawner_job_path = /datum/job/space_syndicate
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
@@ -519,7 +519,7 @@
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
 	l_pocket = /obj/item/assembly/flash/handheld
-	assignedrole = "Ancient Crew"
+	spawner_job_path = /datum/job/ancient_crew
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -545,7 +545,7 @@
 	id = /obj/item/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
-	assignedrole = "Ancient Crew"
+	spawner_job_path = /datum/job/ancient_crew
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -570,7 +570,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack
-	assignedrole = "Ancient Crew"
+	spawner_job_path = /datum/job/ancient_crew
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -593,7 +593,7 @@
 	show_flavour = FALSE //Flavour only exists for spawners menu
 	short_desc = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
-	assignedrole = "Space Pirate"
+	spawner_job_path = /datum/job/space_pirate
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
 	///Whether or not it will spawn a fluff structure upon opening.
@@ -683,14 +683,15 @@
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Fix the ship, find a way to power it and follow your captain's orders."
 	important_info = "Obey orders given by your captain. DO NOT let the ship fall into enemy hands."
 	outfit = /datum/outfit/syndicatespace/syndicrew
-	assignedrole = ROLE_SYNDICATE_CYBERSUN
+	spawner_job_path = /datum/job/syndicate_cybersun
 
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
-	var/policy = get_policy(assignedrole)
+	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
+	var/policy = get_policy(spawn_job.policy_index)
 	if(policy)
 		to_chat(new_spawn, span_bold("[policy]"))
 
@@ -700,7 +701,7 @@
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
 	important_info = "Protect the ship and secret documents in your backpack with your own life."
 	outfit = /datum/outfit/syndicatespace/syndicaptain
-	assignedrole = ROLE_SYNDICATE_CYBERSUN_CAPTAIN
+	spawner_job_path = /datum/job/syndicate_cybersun_captain
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -749,7 +750,7 @@
 	icon_state = "sleeper"
 	short_desc = "You're, like, totally a dudebro, bruh."
 	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
-	assignedrole = "Beach Bum"
+	spawner_job_path = /datum/job/beach_bum
 
 /obj/effect/mob_spawn/human/beach/alive/lifeguard
 	short_desc = "You're a spunky lifeguard!"
@@ -785,7 +786,7 @@
 	icon_state = "sleeper"
 	short_desc = "You are a space bartender!"
 	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
-	assignedrole = "Space Bartender"
+	spawner_job_path = /datum/job/space_bartender
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -811,7 +812,7 @@
 	icon_state = "remains"
 	short_desc = "By unknown powers, your skeletal remains have been reanimated!"
 	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
-	assignedrole = "Skeleton"
+	spawner_job_path = /datum/job/skeleton
 
 /obj/effect/mob_spawn/human/skeleton/alive/special(mob/living/new_spawn)
 	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
@@ -842,7 +843,7 @@
 	permanent = TRUE
 	uses = -1
 	outfit = /datum/outfit/spacebartender
-	assignedrole = "Space Bar Patron"
+	spawner_job_path = /datum/job/space_bar_patron
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user, list/modifiers)
 	var/despawn = tgui_alert(usr, "Return to cryosleep? (Warning, Your mob will be deleted!)", null, list("Yes", "No"))
@@ -886,7 +887,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	short_desc = "You are a space doctor!"
-	assignedrole = "Space Doctor"
+	spawner_job_path = /datum/job/space_doctor
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/doctor)
 	. = ..()
