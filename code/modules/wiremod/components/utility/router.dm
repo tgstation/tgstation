@@ -5,12 +5,12 @@
  */
 /obj/item/circuit_component/router
 	display_name = "Router"
-	display_desc = "Don't know how to wire up your circuit? This lets the circuit decide.\n\nThe input indicated by the Input input will be written to the output indicated by the Output input. Got it? Indices out of range will wrap around."
+	display_desc = "Writes an input of your choice to an output of your choice. If you set 'Which Input?' to any of ...-6,-2,2,6,10,... and 'Which Output?' to any of ...-5,-1,3,7,11,..., Input 2 will be written to Output 3."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Which ports to connect.
-	var/datum/port/input/nin
-	var/datum/port/input/nout
+	var/datum/port/input/which_input
+	var/datum/port/input/which_output
 
 	/// How many ports to have.
 	var/input_port_amount = 4
@@ -36,14 +36,16 @@
 /obj/item/circuit_component/router/Initialize()
 	. = ..()
 	current_type = current_option
-	nin = add_input_port("Input", PORT_TYPE_NUMBER, default = 1)
-	nout = add_input_port("Output", PORT_TYPE_NUMBER, default = 1)
+	if(input_port_amount > 1)
+		which_input = add_input_port("'Which Input?'", PORT_TYPE_NUMBER, default = 1)
+	if(output_port_amount > 1)
+		which_output = add_input_port("'Which Output?'", PORT_TYPE_NUMBER, default = 1)
 	ins = list()
 	for(var/port_id in 1 to input_port_amount)
-		ins += add_input_port("Input [port_id]", current_type)
+		ins += add_input_port(input_port_amount > 1 ? "Input [port_id]" : "Input", current_type)
 	outs = list()
 	for(var/port_id in 1 to output_port_amount)
-		outs += add_output_port("Output [port_id]", current_type)
+		outs += add_output_port(output_port_amount > 1 ? "Output [port_id]" : "Output", current_type)
 
 /obj/item/circuit_component/router/Destroy()
 	ins.Cut()
@@ -65,7 +67,11 @@
 			output.set_datatype(current_type)
 	if(.)
 		return
-	var/datum/port/input/input = WRAPACCESS(ins, nin.input_value)
-	var/datum/port/output/output = WRAPACCESS(outs, nout.input_value)
+	var/datum/port/input/input = WRAPACCESS(ins, which_input ? which_input.input_value : 1)
+	var/datum/port/output/output = WRAPACCESS(outs, which_output ? which_output.input_value : 1)
 	output.set_output(input.input_value)
 
+/obj/item/circuit_component/router/multiplexer
+	display_name = "Multiplexer"
+	display_desc = "Writes an input of your choice to the output. If you set 'Which Input?' to any of ...-5,-1,3,7,11,..., Input 2 will be written to the output."
+	output_port_amount = 1

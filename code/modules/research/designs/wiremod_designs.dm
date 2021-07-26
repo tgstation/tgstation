@@ -198,6 +198,11 @@
 	id = "comp_router"
 	build_path = /obj/item/circuit_component/router
 
+/datum/design/component/multiplexer
+	name = "Multiplexer Component"
+	id = "comp_multiplexer"
+	build_path = /obj/item/circuit_component/router/multiplexer
+
 /datum/design/component/get_column
 	name = "Get Column Component"
 	id = "comp_get_column"
