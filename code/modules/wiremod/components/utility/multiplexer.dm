@@ -1,11 +1,11 @@
 /**
  * # Multiplexer Component
  *
- * Routes one of multiple inputs into one of multiple outputs.
+ * Writes one of multiple inputs to one of multiple outputs.
  */
 /obj/item/circuit_component/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "Don't know how to wire up your circuit? This lets the circuit decide.\n\nInput m will be routed to Output n, where m is the value of the Input input and n is the value of the Output input. Indices out of range will wrap around."
+	display_desc = "Don't know how to wire up your circuit? This lets the circuit decide.\n\nThe input indicated by the Input input will be written to the output indicated by the Output input. Got it? Indices out of range will wrap around."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Which ports to connect.
@@ -21,7 +21,7 @@
 
 	/// The ports to route.
 	var/list/datum/port/input/ins
-	var/list/datum/port/input/outs
+	var/list/datum/port/output/outs
 
 /obj/item/circuit_component/multiplexer/populate_options()
 	var/static/component_options = list(
@@ -56,6 +56,12 @@
 #define WRAPACCESS(L, I) L[(((I||1)-1)%length(L)+length(L))%length(L)+1]
 /obj/item/circuit_component/multiplexer/input_received(datum/port/input/port)
 	. = ..()
+	if(current_type != current_option)
+		current_type = current_option
+		for(var/datum/port/input/input as anything in ins)
+			input.set_datatype(current_type)
+		for(var/datum/port/output/output as anything in outs)
+			output.set_datatype(current_type)
 	if(.)
 		return
 	var/datum/port/input/input = WRAPACCESS(ins, nin.input_value)
