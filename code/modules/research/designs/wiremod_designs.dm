@@ -321,3 +321,23 @@
 	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
+
+/datum/design/bci_shell
+	name = "Brain-Computer Interface Shell"
+	desc = "An implant that can be placed in a user's head to control circuits using their brain."
+	id = "bci_shell"
+	materials = list(
+		/datum/material/glass = 2000,
+		/datum/material/iron = 8000,
+	)
+	build_path = /obj/item/shell/bci
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/board/bci_implanter
+	name = "Brain-Computer Interface Manipulation Chamber"
+	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
+	id = "bci_implanter"
+	build_path = /obj/item/circuitboard/machine/bci_implanter
+	build_type = IMPRINTER | COMPONENT_PRINTER
+	category = list("Circuitry", "Core")
