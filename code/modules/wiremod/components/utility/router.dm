@@ -37,9 +37,9 @@
 	. = ..()
 	current_type = current_option
 	if(input_port_amount > 1)
-		which_input = add_input_port("Input Selector", PORT_TYPE_NUMBER, default = 1)
+		input_selector = add_input_port("Input Selector", PORT_TYPE_NUMBER, default = 1)
 	if(output_port_amount > 1)
-		which_output = add_input_port("Output Selector", PORT_TYPE_NUMBER, default = 1)
+		output_selector = add_input_port("Output Selector", PORT_TYPE_NUMBER, default = 1)
 	ins = list()
 	for(var/port_id in 1 to input_port_amount)
 		ins += add_input_port(input_port_amount > 1 ? "Input [port_id]" : "Input", current_type)
@@ -67,8 +67,8 @@
 			output.set_datatype(current_type)
 	if(.)
 		return
-	var/datum/port/input/input = WRAPACCESS(ins, which_input ? which_input.input_value : 1)
-	var/datum/port/output/output = WRAPACCESS(outs, which_output ? which_output.input_value : 1)
+	var/datum/port/input/input = WRAPACCESS(ins, input_selector ? input_selector.input_value : 1)
+	var/datum/port/output/output = WRAPACCESS(outs, output_selector ? output_selector.input_value : 1)
 	output.set_output(input.input_value)
 
 /obj/item/circuit_component/router/multiplexer
