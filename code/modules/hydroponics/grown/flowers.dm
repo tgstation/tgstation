@@ -30,6 +30,7 @@
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 	greyscale_colors = "#d23838"
+	preserved_food = TRUE
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -80,6 +81,7 @@
 	icon_state = "spacemanstrumpet"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
+	preserved_food = TRUE
 
 // Geranium
 /obj/item/seeds/poppy/geranium
@@ -149,6 +151,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
+	preserved_food = TRUE
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -210,6 +213,7 @@
 	icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
+	preserved_food = TRUE
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
@@ -277,6 +281,7 @@
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
+	preserved_food = TRUE
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
