@@ -783,3 +783,6 @@
 2021-07-25:
   tralezab:
   - bugfix: Nightmares were getting a broken ui panel, now they don't!
+2021-07-26:
+  timothymtorres:
+  - bugfix: High Volume Vent Pump Layer 3 icon state to be correct
