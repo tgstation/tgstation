@@ -371,6 +371,7 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
 	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	tint = 0.9
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"

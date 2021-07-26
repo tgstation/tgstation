@@ -127,6 +127,7 @@
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.3
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"

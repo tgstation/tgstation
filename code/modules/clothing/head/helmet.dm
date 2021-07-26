@@ -133,7 +133,7 @@
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
-	tint = 2
+	tint = 1.5
 
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
@@ -299,6 +299,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
+	tint = 0.2
 
 /obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
@@ -330,6 +331,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	tint = 0.5
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
@@ -360,6 +362,7 @@
 	icon_state = "skull"
 	inhand_icon_state = "skull"
 	strip_delay = 100
+	tint = 0.2
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
@@ -399,6 +402,7 @@
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	strip_delay = 80
+	tint = 0.5
 
 /obj/item/clothing/head/helmet/elder_atmosian
 	name = "\improper Elder Atmosian Helmet"
@@ -409,6 +413,7 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	tint = 0.2
 
 //monkey sentience caps
 

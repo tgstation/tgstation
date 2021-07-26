@@ -106,6 +106,7 @@
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.3
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
@@ -115,6 +116,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.9
 
 /obj/item/clothing/head/snowman
 	name = "snowman head"
@@ -124,6 +126,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.3
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
@@ -133,6 +136,7 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES
+	tint = 0.3
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -228,6 +232,7 @@
 	inhand_icon_state = "chickensuit"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.3
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
@@ -236,6 +241,7 @@
 	inhand_icon_state = "griffinhat"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.3
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -251,6 +257,7 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	tint = 0.3
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -411,6 +418,7 @@
 	icon_state = "lobster_hat"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.1
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"

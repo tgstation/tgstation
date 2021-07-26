@@ -269,7 +269,7 @@
 	inhand_icon_state = "sunglasses"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 1
+	tint = 0.9
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 

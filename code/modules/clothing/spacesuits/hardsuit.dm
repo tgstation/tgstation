@@ -347,6 +347,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags = STOPSPRESSUREDAMAGE
+	tint = 0.3
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
 	. = ..()
@@ -650,6 +651,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
+	tint = 0.5
 
 /obj/item/clothing/head/helmet/space/hardsuit/swat/attack_self()
 

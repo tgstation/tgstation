@@ -23,6 +23,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	dog_fashion = null
+	tint = 0.3
 
 /obj/item/clothing/suit/space
 	name = "space suit"

@@ -543,6 +543,7 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
+	tint = 0.9
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 

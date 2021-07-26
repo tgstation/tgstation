@@ -10,6 +10,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 8 SECONDS
 	dog_fashion = null
+	tint = 0.9
 
 /obj/item/clothing/suit/armor/riot/chaplain/clock
 	name = "forgotten armour"
@@ -30,6 +31,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	tint = 0.9
 
 /obj/item/clothing/suit/armor/riot/chaplain
 	name = "crusader armour"

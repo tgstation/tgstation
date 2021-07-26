@@ -342,6 +342,7 @@
 	body_parts_covered = HEAD
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.3
 
 /obj/item/clothing/suit/security/officer/russian
 	name = "\improper Russian officer's jacket"

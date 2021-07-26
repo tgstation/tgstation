@@ -154,6 +154,7 @@
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
 	worn_y_offset = 1
+	tint = 0.4
 
 
 /obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
@@ -227,6 +228,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	tint = 0.2
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 

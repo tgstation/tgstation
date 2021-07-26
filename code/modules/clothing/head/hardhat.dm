@@ -105,6 +105,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	tint = 0.5
 
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
