@@ -25,7 +25,7 @@
 			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
 			confidential = TRUE)
 		return
-	var/list/client/targets[0]
+	var/list/targets = list()
 	for(var/client/client as anything in GLOB.clients)
 		if(client.mob)
 			if(isnewplayer(client.mob))
