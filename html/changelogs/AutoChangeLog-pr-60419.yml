@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "lavaland syndie base and seed vault no longer explode into green tiles"
