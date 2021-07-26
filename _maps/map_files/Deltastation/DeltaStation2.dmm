@@ -26191,9 +26191,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/science/genetics)
-"djF" = (
-/turf/closed/wall/r_wall,
-/area/science/nanite)
 "djG" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -26209,7 +26206,7 @@
 /obj/structure/table/reinforced,
 /obj/item/mmi,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "djI" = (
 /obj/structure/sign/poster/random{
 	pixel_y = 32
@@ -26229,7 +26226,7 @@
 /obj/item/integrated_circuit/loaded/speech_relay,
 /obj/item/integrated_circuit/loaded/hello_world,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "djJ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -26244,10 +26241,7 @@
 /obj/machinery/component_printer,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
-"djK" = (
-/turf/closed/wall,
-/area/science/nanite)
+/area/science/misc_lab)
 "djL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -26677,7 +26671,7 @@
 /obj/item/compact_remote,
 /obj/item/compact_remote,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dlu" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -26692,7 +26686,7 @@
 	},
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dlv" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/light_switch/directional/east,
@@ -26708,7 +26702,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dlz" = (
 /obj/structure/sign/warning/nosmoking,
 /turf/closed/wall,
@@ -26889,7 +26883,7 @@
 "dmF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/science/nanite)
+/area/science/misc_lab)
 "dmG" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -26905,7 +26899,7 @@
 /obj/structure/table/reinforced,
 /obj/item/controller,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dmH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -26919,7 +26913,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dmI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -26933,7 +26927,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dmJ" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
@@ -26947,7 +26941,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dmL" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
@@ -27791,7 +27785,7 @@
 	},
 /obj/item/multitool/circuit,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dqr" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -27808,7 +27802,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dqu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -28073,7 +28067,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "drN" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -28086,7 +28080,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "drO" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
@@ -28102,7 +28096,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "drP" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing)
@@ -28474,7 +28468,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "dti" = (
 /obj/structure/closet/bombcloset,
 /obj/effect/turf_decal/stripes/line{
@@ -28798,17 +28792,17 @@
 /obj/item/stock_parts/cell/high,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "duD" = (
 /obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
-/area/science/nanite)
+/area/science/misc_lab)
 "duE" = (
 /obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/open/floor/engine,
-/area/science/nanite)
+/area/science/misc_lab)
 "duF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -38473,7 +38467,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "eAI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
@@ -41978,7 +41972,7 @@
 "fuF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
-	name = "Nanite Lab";
+	name = "Circuits Lab";
 	req_access_txt = "47"
 	},
 /obj/structure/disposalpipe/segment{
@@ -41997,7 +41991,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/nanite)
+/area/science/misc_lab)
 "fuJ" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/structure/cable,
@@ -45982,7 +45976,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "gGK" = (
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 8
@@ -51927,7 +51921,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "imN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -73373,7 +73367,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "nTx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -85335,7 +85329,7 @@
 /area/cargo/storage)
 "qUc" = (
 /turf/open/floor/engine,
-/area/science/nanite)
+/area/science/misc_lab)
 "qUh" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -102649,7 +102643,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "vxa" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -103527,7 +103521,7 @@
 /area/engineering/supermatter/room)
 "vJu" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Nanite Lab Maintenance";
+	name = "Circuits Lab Maintenance";
 	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
@@ -107814,7 +107808,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "wTb" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/neutral{
@@ -108069,7 +108063,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "wWd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/effect/turf_decal/tile/yellow{
@@ -109269,7 +109263,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "xox" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -111929,7 +111923,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/science/nanite)
+/area/science/misc_lab)
 "ybi" = (
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
@@ -142451,16 +142445,16 @@ cNd
 cOM
 dgt
 cMY
-djF
-djF
-djF
+gSi
+gSi
+gSi
 nTq
-djF
-djF
-djF
-djF
-djF
-djF
+gSi
+gSi
+gSi
+gSi
+gSi
+gSi
 cxO
 oFE
 caE
@@ -142717,7 +142711,7 @@ drM
 gFZ
 duz
 wTa
-djF
+gSi
 dzp
 pxk
 caE
@@ -143231,7 +143225,7 @@ imL
 qUc
 duD
 qUc
-djF
+gSi
 dzo
 oks
 exk
@@ -143488,7 +143482,7 @@ drO
 qUc
 duE
 qUc
-djF
+gSi
 tbn
 cjq
 dBZ
@@ -143736,16 +143730,16 @@ cNc
 cMY
 cMY
 dhU
-djK
-djK
+tCh
+tCh
 dmF
 fuF
 dmF
-djF
-djF
-djF
-djF
-djF
+gSi
+gSi
+gSi
+gSi
+gSi
 drP
 drP
 drP
