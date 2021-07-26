@@ -48,6 +48,8 @@
 		outs += add_output_port(output_port_amount > 1 ? "Output [port_id]" : "Output", current_type)
 
 /obj/item/circuit_component/router/Destroy()
+	input_selector = null
+	output_selector = null
 	ins.Cut()
 	ins = null
 	outs.Cut()
