@@ -73,5 +73,5 @@
 
 /obj/item/circuit_component/router/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "Writes an input of your choice to the output. If you set 'Which Input?' to any of ...-5,-1,3,7,11,..., Input 2 will be written to the output."
+	display_desc = "Writes an input of your choice to the output. If you set 'Which Input?' to any of ...-5,-1,3,7,11,..., Input 3 will be written to the output."
 	output_port_amount = 1
