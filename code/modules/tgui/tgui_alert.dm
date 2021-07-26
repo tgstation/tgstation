@@ -70,7 +70,7 @@
 	var/start_time
 	/// The lifespan of the tgui_modal, after which the window will close and delete itself.
 	var/timeout
-	/// The bool that controls if this model should grab window focus
+	/// The bool that controls if this modal should grab window focus
 	var/autofocus
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
