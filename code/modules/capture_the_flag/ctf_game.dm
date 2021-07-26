@@ -43,10 +43,6 @@
 		reset.flag = src
 	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
 
-/obj/item/ctf/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
-
 /obj/item/ctf/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
 		return PROCESS_KILL
@@ -223,7 +219,7 @@
 	var/list/recently_dead_ckeys = list()
 	var/ctf_enabled = FALSE
 	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
-	var/list/ctf_gear = list("white" = /datum/outfit/ctf)
+	var/list/ctf_gear = list("Rifleman" = /datum/outfit/ctf, "Assaulter" = /datum/outfit/ctf/assault, "Marksman" = /datum/outfit/ctf/marksman)
 	var/instagib_gear = /datum/outfit/ctf/instagib
 	var/ammo_type = /obj/effect/powerup/ammo/ctf
 	// Fast paced gameplay, no real time for burn infections.
@@ -246,7 +242,7 @@
 			continue
 		// Anyone in crit, automatically reap
 		var/mob/living/living_participant = i
-		if(HAS_TRAIT(living_participant, TRAIT_CRITICAL_CONDITION) || living_participant.stat == DEAD)
+		if(HAS_TRAIT(living_participant, TRAIT_CRITICAL_CONDITION) || living_participant.stat == DEAD || !living_participant.client) // If they're critted, dead or no longer in their body, dust them
 			ctf_dust_old(living_participant)
 		else
 			// The changes that you've been hit with no shield but not
@@ -259,7 +255,7 @@
 	icon_state = "syndbeacon"
 	team = RED_TEAM
 	team_span = "redteamradio"
-	ctf_gear = list("red" = /datum/outfit/ctf/red)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/red, "Assaulter" = /datum/outfit/ctf/assault/red, "Marksman" = /datum/outfit/ctf/marksman/red)
 	instagib_gear = /datum/outfit/ctf/red/instagib
 
 /obj/machinery/capture_the_flag/blue
@@ -267,7 +263,7 @@
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
 	team_span = "blueteamradio"
-	ctf_gear = list("blue" = /datum/outfit/ctf/blue)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/blue, "Assaulter" = /datum/outfit/ctf/assault/blue, "Marksman" = /datum/outfit/ctf/marksman/blue)
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 /obj/machinery/capture_the_flag/green
@@ -275,7 +271,7 @@
 	icon_state = "greenbeacon"
 	team = GREEN_TEAM
 	team_span = "greenteamradio"
-	ctf_gear = list("green" = /datum/outfit/ctf/green)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/green, "Assaulter" = /datum/outfit/ctf/assault/green, "Marksman" = /datum/outfit/ctf/marksman/green)
 	instagib_gear = /datum/outfit/ctf/green/instagib
 
 /obj/machinery/capture_the_flag/yellow
@@ -283,7 +279,7 @@
 	icon_state = "yellowbeacon"
 	team = YELLOW_TEAM
 	team_span = "yellowteamradio"
-	ctf_gear = list("yellow" = /datum/outfit/ctf/yellow)
+	ctf_gear = list("Rifleman" = /datum/outfit/ctf/yellow, "Assaulter" = /datum/outfit/ctf/assault/yellow, "Marksman" = /datum/outfit/ctf/marksman/yellow)
 	instagib_gear = /datum/outfit/ctf/yellow/instagib
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -335,10 +331,12 @@
 		if(CTF.team_members.len < src.team_members.len)
 			to_chat(user, span_warning("[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up."))
 			return
+
 	var/client/new_team_member = user.client
-	if(user.mind && user.mind.current)
-		ctf_dust_old(user.mind.current)
+	team_members |= new_team_member.ckey
+	to_chat(user, "<span class='warning'>You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!</span>")
 	spawn_team_member(new_team_member)
+
 
 //does not add to recently dead, because it dusts and that triggers ctf_qdelled_player
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
@@ -360,21 +358,28 @@
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
 	var/datum/outfit/chosen_class
+
 	if(ctf_gear.len == 1) //no choices to make
 		for(var/key in ctf_gear)
 			chosen_class = ctf_gear[key]
-	else if(ctf_gear.len > 3) //a lot of choices, so much that we can't use a basic alert
-		var/result = input(new_team_member, "Select a class.", "CTF") as null|anything in sortList(ctf_gear)
-		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
-			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
-		chosen_class = ctf_gear[result]
-	else //2-3 choices
-		var/list/names_only = assoc_list_strip_value(ctf_gear)
-		names_only.len += 1 //create a new null entry so if it's a 2-sized list, names_only[3] is null instead of out of bounds
-		var/result = tgui_alert(new_team_member, "Select a class.", "CTF", list(names_only[1], names_only[2], names_only[3]))
-		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
-			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
-		chosen_class = ctf_gear[result]
+
+	else //there's a choice to make, present a radial menu
+		var/list/display_classes = list()
+
+		for(var/key in ctf_gear)
+			var/datum/outfit/ctf/class = ctf_gear[key]
+			var/datum/radial_menu_choice/option = new
+			option.image  = image(icon = initial(class.icon), icon_state = initial(class.icon_state))
+			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
+			display_classes[key] = option
+
+		sortList(display_classes)
+		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
+		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob) || src.ctf_enabled == FALSE || !(new_team_member.ckey in src.team_members))
+			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
+				   //there isn't a game going on any more, you are no longer a member of this team (perhaps a new match already started?)
+		chosen_class = ctf_gear[choice]
+
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.set_species(/datum/species/synth)
@@ -385,7 +390,6 @@
 	for(var/trait in player_traits)
 		ADD_TRAIT(M, trait, CAPTURE_THE_FLAG_TRAIT)
 	spawned_mobs[M] = chosen_class
-	team_members |= new_team_member.ckey
 	return M //used in medisim.dm
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -446,7 +450,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK, header = "CTF has been activated")
+	notify_ghosts("[name] has been activated!", source = src, action=NOTIFY_ORBIT, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
@@ -496,256 +500,6 @@
 		if(CTF.ctf_enabled == TRUE)
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf
-	desc = "This looks like it could really hurt in melee."
-	force = 75
-	mag_type = /obj/item/ammo_box/magazine/m50/ctf
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
-
-/obj/item/ammo_box/magazine/m50/ctf
-	ammo_type = /obj/item/ammo_casing/a50/ctf
-
-/obj/item/ammo_casing/a50/ctf
-	projectile_type = /obj/projectile/bullet/ctf
-
-/obj/projectile/bullet/ctf
-	damage = 0
-
-/obj/projectile/bullet/ctf/prehit_pierce(atom/target)
-	if(is_ctf_target(target))
-		damage = 60
-		return PROJECTILE_PIERCE_NONE /// hey uhh don't hit anyone behind them
-	. = ..()
-
-/obj/item/gun/ballistic/automatic/laser/ctf
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
-	desc = "This looks like it could really hurt in melee."
-	force = 50
-
-/obj/item/gun/ballistic/automatic/laser/ctf/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
-
-/obj/item/ammo_box/magazine/recharge/ctf
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
-
-/obj/item/ammo_box/magazine/recharge/ctf/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
-
-/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
-
-/obj/item/ammo_casing/caseless/laser/ctf
-	projectile_type = /obj/projectile/beam/ctf
-
-/obj/projectile/beam/ctf
-	damage = 0
-	icon_state = "omnilaser"
-
-/obj/projectile/beam/ctf/prehit_pierce(atom/target)
-	if(is_ctf_target(target))
-		damage = 150
-		return PROJECTILE_PIERCE_NONE /// hey uhhh don't hit anyone behind them
-	. = ..()
-
-/proc/is_ctf_target(atom/target)
-	. = FALSE
-	if(istype(target, /obj/structure/barricade/security/ctf))
-		. = TRUE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
-			if(H in CTF.spawned_mobs)
-				. = TRUE
-				break
-
-// RED TEAM GUNS
-
-/obj/item/gun/ballistic/automatic/laser/ctf/red
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
-
-/obj/item/ammo_box/magazine/recharge/ctf/red
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
-
-/obj/item/ammo_casing/caseless/laser/ctf/red
-	projectile_type = /obj/projectile/beam/ctf/red
-
-/obj/projectile/beam/ctf/red
-	icon_state = "laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-
-// BLUE TEAM GUNS
-
-/obj/item/gun/ballistic/automatic/laser/ctf/blue
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
-
-/obj/item/ammo_box/magazine/recharge/ctf/blue
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
-
-/obj/item/ammo_casing/caseless/laser/ctf/blue
-	projectile_type = /obj/projectile/beam/ctf/blue
-
-/obj/projectile/beam/ctf/blue
-	icon_state = "bluelaser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-
-// GREEN TEAM GUNS
-
-/obj/item/gun/ballistic/automatic/laser/ctf/green
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/green
-
-/obj/item/ammo_box/magazine/recharge/ctf/green
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/green
-
-/obj/item/ammo_casing/caseless/laser/ctf/green
-	projectile_type = /obj/projectile/beam/ctf/green
-
-/obj/projectile/beam/ctf/green
-	icon_state = "xray"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
-
-// YELLOW TEAM GUNS
-
-/obj/item/gun/ballistic/automatic/laser/ctf/yellow
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/yellow
-
-/obj/item/ammo_box/magazine/recharge/ctf/yellow
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/yellow
-
-/obj/item/ammo_casing/caseless/laser/ctf/yellow
-	projectile_type = /obj/projectile/beam/ctf/yellow
-
-/obj/projectile/beam/ctf/yellow
-	icon_state = "gaussstrong"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-
-/datum/outfit/ctf
-	name = "CTF"
-	ears = /obj/item/radio/headset
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
-	toggle_helmet = FALSE // see the whites of their eyes
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/away
-	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
-
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
-	if(visualsOnly)
-		return
-	var/list/no_drops = list()
-	var/obj/item/card/id/W = H.wear_id
-	no_drops += W
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
-
-	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
-	for(var/i in no_drops)
-		var/obj/item/I = i
-		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
-
-/datum/outfit/ctf/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill
-	shoes = /obj/item/clothing/shoes/jackboots/fast
-
-/datum/outfit/ctf/red
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	id = /obj/item/card/id/red //it's red
-
-/datum/outfit/ctf/red/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill/red
-	shoes = /obj/item/clothing/shoes/jackboots/fast
-
-/datum/outfit/ctf/blue
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
-	id = /obj/item/card/id/blue //it's blue
-
-/datum/outfit/ctf/blue/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill/blue
-	shoes = /obj/item/clothing/shoes/jackboots/fast
-
-/datum/outfit/ctf/green
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
-	id = /obj/item/card/id/green //it's green
-
-/datum/outfit/ctf/green/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill/green
-	shoes = /obj/item/clothing/shoes/jackboots/fast
-
-/datum/outfit/ctf/yellow
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
-	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
-	id = /obj/item/card/id/yellow //it's yellow
-
-/datum/outfit/ctf/yellow/instagib
-	r_hand = /obj/item/gun/energy/laser/instakill/yellow
-	shoes = /obj/item/clothing/shoes/jackboots/fast
-
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_RED)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
-
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_BLUE)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
-
-/datum/outfit/ctf/green/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_GREEN)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
-
-/datum/outfit/ctf/yellow/post_equip(mob/living/carbon/human/H)
-	..()
-	var/obj/item/radio/R = H.ears
-	R.set_frequency(FREQ_CTF_YELLOW)
-	R.freqlock = TRUE
-	R.independent = TRUE
-	H.dna.species.stunmod = 0
-
 
 /obj/structure/trap/ctf
 	name = "Spawn protection"
@@ -867,6 +621,17 @@
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, game_area))
 						to_chat(M, span_userdanger("[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!"))
+				break
+
+/proc/is_ctf_target(atom/target)
+	. = FALSE
+	if(istype(target, /obj/structure/barricade/security/ctf))
+		. = TRUE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+			if(H in CTF.spawned_mobs)
+				. = TRUE
 				break
 
 #undef WHITE_TEAM

@@ -550,13 +550,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		qdel(query_client_in_db)
 		return
 
+	var/client_is_in_db = query_client_in_db.NextRow()
 	//If we aren't an admin, and the flag is set
 	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 		var/living_recs = CONFIG_GET(number/panic_bunker_living)
 		//Relies on pref existing, but this proc is only called after that occurs, so we're fine.
 		var/minutes = get_exp_living(pure_numeric = TRUE)
-		if(minutes <= living_recs && !CONFIG_GET(flag/panic_bunker_interview))
-			var/reject_message = "Failed Login: [key] - Account attempting to connect during panic bunker, but they do not have the required living time [minutes]/[living_recs]"
+		if((minutes < living_recs && !CONFIG_GET(flag/panic_bunker_interview)) || (!living_recs && !client_is_in_db))
+			var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
+			[living_recs ? "they do not have the required living time [minutes]/[living_recs]": "was rejected"]"
 			log_access(reject_message)
 			message_admins(span_adminnotice("[reject_message]"))
 			var/message = CONFIG_GET(string/panic_bunker_message)
@@ -573,7 +575,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(src)
 			return
 
-	if(!query_client_in_db.NextRow())
+	if(!client_is_in_db)
 		new_player = 1
 		account_join_date = findJoinDate()
 		var/datum/db_query/query_add_player = SSdbcore.NewQuery({"

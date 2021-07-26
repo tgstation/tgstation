@@ -283,6 +283,24 @@
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
+/datum/greyscale_config/beret
+	name = "Beret"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret.json'
+
+/datum/greyscale_config/beret/worn
+	name = "Beret Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_worn.json'
+
+/datum/greyscale_config/beret_badge
+	name = "Beret With Badge"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret_badge.json'
+
+/datum/greyscale_config/beret_badge/worn
+	name = "Beret With Badge Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_badge_worn.json'
+
 /datum/greyscale_config/suspenders
 	name = "Suspenders"
 	icon_file = 'icons/obj/clothing/belts.dmi'

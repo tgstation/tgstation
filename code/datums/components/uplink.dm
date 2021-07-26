@@ -26,7 +26,8 @@
 	var/failsafe_code
 	var/compact_mode = FALSE
 	var/debug = FALSE
-
+	///Instructions on how to access the uplink based on location
+	var/unlock_text
 	var/list/previous_attempts
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)

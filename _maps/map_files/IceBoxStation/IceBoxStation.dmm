@@ -17948,7 +17948,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
-/area/maintenance/starboard/aft)
+/area/science/misc_lab)
 "chH" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -26015,7 +26015,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
-/area/maintenance/starboard/aft)
+/area/science/misc_lab)
 "gaT" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -52738,7 +52738,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
-/area/maintenance/starboard/aft)
+/area/science/misc_lab)
 "vdE" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -57234,7 +57234,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/maintenance/starboard/aft)
+/area/science/misc_lab)
 "xGS" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/directional/west,
@@ -104039,7 +104039,7 @@ tJy
 uWL
 hFE
 gaD
-mtK
+bQZ
 bTC
 uTB
 cmo
@@ -104296,7 +104296,7 @@ dov
 wgT
 dov
 chC
-mtK
+bQZ
 mIV
 iLm
 iLm
@@ -104809,8 +104809,8 @@ iGi
 xWW
 jpx
 rbd
-cNW
-mtK
+bPN
+bQZ
 qUz
 cNW
 cNW
