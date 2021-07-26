@@ -56,9 +56,8 @@
 
 	front_id = null
 	var/winning_tally = 0
-	for(var/card in contents)
-		var/obj/item/card/id/id_card = card
-		if(!istype(id_card))
+	for(var/obj/item/card/id/id_card in contents)
+		if(!istype(id_card, /obj/item/card/id))
 			continue
 
 		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
