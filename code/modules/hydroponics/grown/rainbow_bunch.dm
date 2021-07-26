@@ -16,7 +16,7 @@
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_dead = "rainbowbunch-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/rainbow_flower
@@ -34,7 +34,6 @@
 	attack_verb_simple = list("pompf")
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
-	preserved_food = TRUE
 
 /obj/item/food/grown/rainbow_flower/Initialize()
 	. = ..()

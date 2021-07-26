@@ -15,6 +15,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
+	genes = list(/datum/plant_gene/trait/preserved)
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
 	reagents_add = list(/datum/reagent/medicine/c2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
@@ -30,7 +31,6 @@
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 	greyscale_colors = "#d23838"
-	preserved_food = TRUE
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -69,7 +69,7 @@
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
 	mutatelist = list()
-	genes = list(/datum/plant_gene/reagent/polypyr)
+	genes = list(/datum/plant_gene/reagent/polypyr, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
 	graft_gene = /datum/plant_gene/reagent/polypyr
@@ -81,7 +81,6 @@
 	icon_state = "spacemanstrumpet"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	preserved_food = TRUE
 
 // Geranium
 /obj/item/seeds/poppy/geranium
@@ -138,7 +137,7 @@
 	potency = 30
 	instability = 1
 	growthstages = 4
-	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
@@ -151,7 +150,6 @@
 	slot_flags = ITEM_SLOT_HEAD
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
-	preserved_food = TRUE
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -200,7 +198,7 @@
 	icon_grow = "moonflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/food/grown/moonflower
-	genes = list(/datum/plant_gene/trait/glow/purple)
+	genes = list(/datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/preserved)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
@@ -213,7 +211,6 @@
 	icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
-	preserved_food = TRUE
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
@@ -261,7 +258,7 @@
 	potency = 15
 	instability = 20 //Roses crossbreed easily, and there's many many species of them.
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "rose-grow"
 	icon_dead = "rose-dead"
@@ -281,7 +278,6 @@
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
-	preserved_food = TRUE
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
