@@ -209,14 +209,13 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		if(antag_flag_override)
-			if(!(antag_flag_override in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(candidate_player)
-				continue
-		else
-			if(!(antag_flag in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(candidate_player)
-				continue
+		if (!(antag_flag in candidate_client.prefs.be_special))
+			candidates.Remove(candidate_player)
+			continue
+
+		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(candidate_player)
+			continue
 
 		// If this ruleset has exclusive_roles set, we want to only consider players who have those
 		// job prefs enabled and are eligible to play that job. Otherwise, continue as before.

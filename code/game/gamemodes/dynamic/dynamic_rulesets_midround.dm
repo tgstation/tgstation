@@ -46,14 +46,12 @@
 		if(M.client.get_remaining_days(minimum_required_age) > 0)
 			trimmed_list.Remove(M)
 			continue
-		if(antag_flag_override)
-			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				trimmed_list.Remove(M)
-				continue
-		else
-			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				trimmed_list.Remove(M)
-				continue
+		if (!(antag_flag in M.client.prefs.be_special))
+			trimmed_list.Remove(M)
+			continue
+		if (is_banned_from(M.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			trimmed_list.Remove(M)
+			continue
 		if (M.mind)
 			if (restrict_ghost_roles && (M.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 				trimmed_list.Remove(M)
@@ -104,7 +102,7 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
+	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
 		mode.dynamic_log("The ruleset [name] received no applications.")
