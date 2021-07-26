@@ -1,7 +1,7 @@
 import { multiline } from 'common/string';
 import { url } from 'node:inspector';
-import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Button, Dimmer, Modal, Section, Stack } from '../components';
+import { useBackend, useLocalState, useSharedState } from '../backend';
+import { BlockQuote, Button, Dimmer, Dropdown, Modal, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const hivestyle = {
@@ -35,10 +35,15 @@ type Objective = {
   explanation: string;
 }
 
+type Memory = {
+  name: string;
+  story: string;
+}
+
 type Info = {
   hive_name: string;
   stolen_antag_info: string;
-  memories: string[];
+  memories: Memory[];
   objectives: Objective[];
 };
 
@@ -161,10 +166,14 @@ const MemoriesSection = (props, context) => {
   const {
     memories,
   } = data;
+  const [
+    selectedMemory,
+    setSelectedMemory,
+  ] = useSharedState(context, "memory", memories[0]);
   return (
     <Section
       fill
-      scrollable={!!memories[0].length}
+      scrollable={!!memories.length}
       title="Stolen Memories"
       buttons={
         <Button
@@ -176,22 +185,27 @@ const MemoriesSection = (props, context) => {
             help you impersonate your target!
           `} />
       }>
-      <Stack vertical>
-        {!memories[0].length && (
-          <Dimmer mr="-100%" bold>
-            You need to absorb a victim first!
-          </Dimmer>
-        ) || memories.map(memory => (
-          <Stack.Item key={memory}>
-            <Button
-              onClick={() => act('read_memory', {
-                name: memory,
-              })}>
-              {memory}
-            </Button>
+      {!memories.length && (
+        <Dimmer mr="-100%" bold>
+          You need to absorb a victim first!
+        </Dimmer>
+      ) || (
+        <Stack vertical>
+          <Stack.Item>
+            <Dropdown
+              selected={setSelectedMemory}
+              options={
+                memories.map(memory => {
+                  return memory.name;
+                })
+              }
+              onSelected={selected => setSelectedMemory(selected)} />
           </Stack.Item>
-        )) }
-      </Stack>
+          <Stack.Item>
+            {selectedMemory}
+          </Stack.Item>
+        </Stack>
+      )}
     </Section>
   );
 };

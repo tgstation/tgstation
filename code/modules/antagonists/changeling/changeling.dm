@@ -685,29 +685,17 @@
 
 /datum/antagonist/changeling/ui_static_data(mob/user)
 	var/list/data = list()
-	var/list/memory_names = list()
-	for(var/datum/memory/stolen_memory as anything in stolen_memories)
-		memory_names += stolen_memory.name
-	data["memories"] = list(memory_names)
+	var/list/memories = list()
+	for(var/stolen_memory_name in stolen_memories)
+		var/list/memory_data = list()
+		memory_data["name"] = stolen_memory_name
+		memory_data["story"] = stolen_memories[stolen_memory_name]
+		memories += memory_data
+	data["memories"] = list(memories)
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
 	return data
-
-/datum/antagonist/changeling/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("read_memory")
-			var/datum/memory/chosen_memory
-			for(var/datum/memory/stolen_memory in stolen_memories)
-				if(name == params["name"])
-					chosen_memory = stolen_memory
-					break
-			if(!chosen_memory)
-				to_chat(owner.current, span_warning("That memory cannot be read!"))
-				return
 
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
