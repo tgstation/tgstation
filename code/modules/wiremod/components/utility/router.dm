@@ -5,12 +5,12 @@
  */
 /obj/item/circuit_component/router
 	display_name = "Router"
-	display_desc = "Writes an input of your choice to an output of your choice. If you set 'Which Input?' to any of ...-6,-2,2,6,10,... and 'Which Output?' to any of ...-5,-1,3,7,11,..., Input 2 will be written to Output 3."
+	display_desc = "Copies the input chosen by \"Input Selector\" to the output chosen by \"Output Selector\"."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Which ports to connect.
-	var/datum/port/input/which_input
-	var/datum/port/input/which_output
+	var/datum/port/input/input_selector
+	var/datum/port/input/output_selector
 
 	/// How many ports to have.
 	var/input_port_amount = 4
@@ -37,9 +37,9 @@
 	. = ..()
 	current_type = current_option
 	if(input_port_amount > 1)
-		which_input = add_input_port("'Which Input?'", PORT_TYPE_NUMBER, default = 1)
+		which_input = add_input_port("Input Selector", PORT_TYPE_NUMBER, default = 1)
 	if(output_port_amount > 1)
-		which_output = add_input_port("'Which Output?'", PORT_TYPE_NUMBER, default = 1)
+		which_output = add_input_port("Output Selector", PORT_TYPE_NUMBER, default = 1)
 	ins = list()
 	for(var/port_id in 1 to input_port_amount)
 		ins += add_input_port(input_port_amount > 1 ? "Input [port_id]" : "Input", current_type)
@@ -73,5 +73,5 @@
 
 /obj/item/circuit_component/router/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "Writes an input of your choice to the output. If you set 'Which Input?' to any of ...-5,-1,3,7,11,..., Input 3 will be written to the output."
+	display_desc = "Copies the input chosen by \"Input Selector\" to the output."
 	output_port_amount = 1
