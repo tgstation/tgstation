@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - code_imp: "bless aware hud is no longer hardcoded for chaplains"
