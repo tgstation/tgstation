@@ -217,7 +217,7 @@
 		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	..()
+	. = ..()
 	user.face_atom(src)
 	if(user.melee_damage_upper == 0)
 		if(user != src)
