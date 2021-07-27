@@ -675,6 +675,7 @@
 		"comp_bci_action",
 		"comp_object_overlay",
 		"comp_bar_overlay",
+		"comp_click_intercept",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 

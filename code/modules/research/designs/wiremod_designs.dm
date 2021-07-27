@@ -253,6 +253,11 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
+/datum/design/component/click_intercept
+	name = "BCI Click Interceptor"
+	id = "comp_click_intercept"
+	build_path = /obj/item/circuit_component/click_intercept
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
