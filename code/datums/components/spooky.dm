@@ -45,9 +45,10 @@
 		if(too_spooky)
 			if(prob(90))
 				var/obj/item/instrument = pick(
-				/obj/item/instrument/saxophone/spectral,
-				/obj/item/instrument/trumpet/spectral,
-				/obj/item/instrument/trombone/spectral)
+					/obj/item/instrument/saxophone/spectral,
+					/obj/item/instrument/trumpet/spectral,
+					/obj/item/instrument/trombone/spectral,
+				)
 				new instrument(T)
 			else
 				to_chat(H, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
