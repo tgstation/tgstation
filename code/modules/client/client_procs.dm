@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_panel.initialize()
 
 	if(alert_mob_dupe_login && !holder)
-		var/dupe_login_message = "You're ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
+		var/dupe_login_message = "Your ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
 		if (alert_admin_multikey)
 			dupe_login_message += "\nAdmins have been informed."
 			message_admins(span_danger("<B>MULTIKEYING: </B></span><span class='notice'>[key_name_admin(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned."))
