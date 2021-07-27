@@ -25,8 +25,6 @@
 	icon_dead = "herald_dying"
 	icon_gib = "syndicate_gib"
 	health_doll_icon = "herald"
-	maxHealth = 1000
-	health = 1000
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attack_verb_continuous = "preaches to"

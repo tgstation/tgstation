@@ -25,8 +25,6 @@
 	icon_dead = "pandora_dead"
 	icon_gib = "syndicate_gib"
 	health_doll_icon = "pandora"
-	maxHealth = 1000
-	health = 1000
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_verb_continuous = "smashes into the side of"

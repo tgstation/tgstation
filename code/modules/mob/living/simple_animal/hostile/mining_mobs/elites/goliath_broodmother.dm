@@ -26,8 +26,6 @@
 	icon_dead = "egg_sac"
 	icon_gib = "syndicate_gib"
 	health_doll_icon = "broodmother"
-	maxHealth = 1000
-	health = 1000
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	armour_penetration = 30
