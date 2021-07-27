@@ -37,7 +37,7 @@ Reproductive extracts:
 
 	if(istype(O, /obj/item/storage/bag/bio))
 		var/list/inserted = list()
-		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/monkeycube, src, feedAmount - length(contents), null, null, user, inserted)
+		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
 		if(inserted.len)
 			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
 			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
@@ -47,14 +47,15 @@ Reproductive extracts:
 		return
 
 	else if(istype(O, /obj/item/food/monkeycube))
-		if(length(contents) < feedAmount) //This check is nesscary since the storage is perma locked, which means you have to force move items in, which means it ignores the content limits
-			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE, TRUE))
-				to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
-				slimeStorage.processCubes(src, user)
-				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-				return
-			else
-				to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
+		slimeStorage.locked = FALSE //This weird unlock-then-lock nonsense brought to you courtesy of storage jank
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE, FALSE)
+		slimeStorage.locked = TRUE
+		to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
+		slimeStorage.processCubes(src, user)
+		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+		return
+	else
+		to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
 
 /obj/item/slimecross/reproductive/Destroy()
 	slimeStorage = null
