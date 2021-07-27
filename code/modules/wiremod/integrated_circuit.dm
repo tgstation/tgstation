@@ -383,7 +383,7 @@
 			var/datum/port/input/port = component.input_ports[port_id]
 
 			if(params["set_null"])
-				port.set_input(null)
+				port.put(null)
 				return TRUE
 
 			if(params["marked_atom"])
@@ -393,24 +393,24 @@
 				if(!istype(marker))
 					return TRUE
 				if(!marker.marked_atom)
-					port.set_input(null)
+					port.put(null)
 					marker.say("Cleared port ('[port.name]')'s value.")
 					return TRUE
 				marker.say("Updated port ('[port.name]')'s value to the marked entity.")
-				port.set_input(marker.marked_atom)
+				port.put(marker.marked_atom)
 				return TRUE
 
 			var/user_input = params["input"]
 			switch(port.datatype)
 				if(PORT_TYPE_NUMBER)
-					port.set_input(text2num(user_input))
+					port.put(text2num(user_input))
 				if(PORT_TYPE_ANY)
-					port.set_input(text2num(user_input) || user_input)
+					port.put(text2num(user_input) || user_input)
 				if(PORT_TYPE_STRING)
-					port.set_input(user_input)
+					port.put(user_input)
 				if(PORT_TYPE_SIGNAL)
 					balloon_alert(usr, "triggered [port.name]")
-					port.set_input(COMPONENT_SIGNAL)
+					port.put(COMPONENT_SIGNAL)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])

@@ -113,21 +113,21 @@
 
 /obj/item/circuit_component/airlock/proc/on_airlock_set_bolted(datum/source, should_bolt)
 	SIGNAL_HANDLER
-	is_bolted.set_output(should_bolt)
+	is_bolted.put(should_bolt)
 	if(should_bolt)
-		bolted.set_output(COMPONENT_SIGNAL)
+		bolted.put(COMPONENT_SIGNAL)
 	else
-		unbolted.set_output(COMPONENT_SIGNAL)
+		unbolted.put(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/airlock/proc/on_airlock_open(datum/source, force)
 	SIGNAL_HANDLER
-	is_open.set_output(TRUE)
-	opened.set_output(COMPONENT_SIGNAL)
+	is_open.put(TRUE)
+	opened.put(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/airlock/proc/on_airlock_closed(datum/source, forced)
 	SIGNAL_HANDLER
-	is_open.set_output(FALSE)
-	closed.set_output(COMPONENT_SIGNAL)
+	is_open.put(FALSE)
+	closed.put(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/airlock/input_received(datum/port/input/port)
 	. = ..()

@@ -145,8 +145,8 @@ Passive gate is similar to the regular pump except:
 	if("power_toggle" in signal.data)
 		on = !on
 
-	if("set_output_pressure" in signal.data)
-		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*100)
+	if("put_pressure" in signal.data)
+		target_pressure = clamp(text2num(signal.data["put_pressure"]),0,ONE_ATMOSPHERE*100)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

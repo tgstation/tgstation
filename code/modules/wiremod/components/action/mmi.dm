@@ -151,13 +151,13 @@
 		return ..()
 
 	if(direct & NORTH)
-		north.set_output(COMPONENT_SIGNAL)
+		north.put(COMPONENT_SIGNAL)
 	if(direct & WEST)
-		west.set_output(COMPONENT_SIGNAL)
+		west.put(COMPONENT_SIGNAL)
 	if(direct & EAST)
-		east.set_output(COMPONENT_SIGNAL)
+		east.put(COMPONENT_SIGNAL)
 	if(direct & SOUTH)
-		south.set_output(COMPONENT_SIGNAL)
+		south.put(COMPONENT_SIGNAL)
 
 	return TRUE
 
@@ -165,12 +165,12 @@
 	SIGNAL_HANDLER
 	var/list/modifiers = params2list(mods)
 	if(modifiers[RIGHT_CLICK])
-		clicked_atom.set_output(target)
-		secondary_attack.set_output(COMPONENT_SIGNAL)
+		clicked_atom.put(target)
+		secondary_attack.put(COMPONENT_SIGNAL)
 		. = COMSIG_MOB_CANCEL_CLICKON
 	else if(modifiers[LEFT_CLICK] && !modifiers[SHIFT_CLICK] && !modifiers[ALT_CLICK] && !modifiers[CTRL_CLICK])
-		clicked_atom.set_output(target)
-		attack.set_output(COMPONENT_SIGNAL)
+		clicked_atom.put(target)
+		attack.put(COMPONENT_SIGNAL)
 		. = COMSIG_MOB_CANCEL_CLICKON
 
 /obj/item/circuit_component/mmi/add_to(obj/item/integrated_circuit/add_to)

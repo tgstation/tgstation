@@ -56,8 +56,8 @@
 			input_port.set_datatype(current_type)
 		output_port.set_datatype(current_type)
 
-	input_port.set_input(clamp(input_port.value || 1, 1, input_port_amount), FALSE)
+	input_port.put(clamp(input_port.value || 1, 1, input_port_amount))
 	if(.)
 		return
-	output_port.set_output(multiplexer_inputs[input_port.value].value)
+	output_port.put(multiplexer_inputs[input_port.value].value)
 

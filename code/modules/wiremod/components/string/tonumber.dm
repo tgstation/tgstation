@@ -31,4 +31,4 @@
 	if(.)
 		return
 
-	output.set_output(text2num(input_port.value))
+	output.put(text2num(input_port.value))

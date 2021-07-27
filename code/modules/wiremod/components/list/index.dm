@@ -37,12 +37,12 @@
 	var/list/list_input = list_port.value
 
 	if(!islist(list_input) || !index)
-		output.set_output(null)
+		output.put(null)
 		return
 
 	if(isnum(index) && (index < 1 || index > length(list_input)))
-		output.set_output(null)
+		output.put(null)
 		return
 
-	output.set_output(list_input[index])
+	output.put(list_input[index])
 

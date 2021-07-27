@@ -39,8 +39,8 @@
 	var/max_val = maximum.value || 0
 
 	if(max_val < min_val)
-		output.set_output(0)
+		output.put(0)
 		return
 
-	output.set_output(rand(min_val, max_val))
+	output.put(rand(min_val, max_val))
 

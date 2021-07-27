@@ -62,9 +62,10 @@
 	return ..()
 
 /**
+ * Sets the port's value to v.
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
-/datum/port/proc/set_value(v)
+/datum/port/proc/put(v)
 	if(value == v)
 		return
 	if(isatom(value))
@@ -101,7 +102,7 @@
 /datum/port/proc/set_datatype(new_type)
 	var/old_type = datatype
 	datatype = new_type
-	set_value(compatible_datatypes(old_type, new_type) ? value : null)
+	put(compatible_datatypes(old_type, new_type) ? value : null)
 	color = datatype_to_color()
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
@@ -115,7 +116,7 @@
 /datum/port/input/set_datatype(new_type)
 	for(var/datum/port/output/output as anything in connected_ports)
 		if(!compatible_datatypes(output.datatype,datatype))
-			disconnect(input)
+			disconnect(output)
 	..()
 
 /**
@@ -131,8 +132,8 @@
  * Arguments:
  * * v - The value to set it to
  */
-/datum/port/proc/set_output(v)
-	set_value(v)
+/datum/port/output/put(v)
+	..(v)
 	for(var/datum/port/input/input as anything in connected_ports)
 		input.receive_output(value)
 
@@ -175,14 +176,10 @@
 	/// Whether this port triggers an update whenever an output is received.
 	var/trigger = FALSE
 
-	/// The default value of this input
-	var/default
-
 /datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
+	put(default)
 	src.trigger = trigger
-	src.default = default
-	set_input(default, FALSE)
 
 /**
  * Introduces two ports to one another.
@@ -194,7 +191,7 @@
 	tgt.connected_ports |= src
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
-		set_input(tgt.value)
+		put(tgt.value)
 
 
 /**
@@ -206,8 +203,8 @@
  * * new_value - The new value received from the output port
  */
 /datum/port/input/proc/receive_output(datum/port/output/connected_port, new_value)
-	SIGNAL_HANDLER
-	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, new_value))
+	put(new_value)
+	// SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, new_value))
 
 /**
  * Updates the value of the input
@@ -216,7 +213,7 @@
  * Arguments:
  * * port_to_register - The port to connect the input port to
  */
-/datum/port/input/proc/set_input(v, send_update = TRUE)
-	set_value(v)
-	if(trigger && send_update)
+/datum/port/input/put(v)
+	..(v)
+	if(trigger)
 		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)

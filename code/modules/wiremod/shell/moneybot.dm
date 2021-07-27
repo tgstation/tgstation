@@ -73,7 +73,7 @@
 
 	var/to_dispense = clamp(dispense_amount.value, 0, attached_bot.stored_money)
 	if(!to_dispense)
-		on_fail.set_output(COMPONENT_SIGNAL)
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	attached_bot.add_money(-to_dispense)
@@ -106,7 +106,7 @@
 	. = ..()
 	if(istype(shell, /obj/structure/money_bot))
 		attached_bot = shell
-		total_money.set_output(attached_bot.stored_money)
+		total_money.put(attached_bot.stored_money)
 		RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_money_insert)
 		RegisterSignal(shell, COMSIG_MONEYBOT_ADD_MONEY, .proc/handle_money_update)
 
@@ -115,7 +115,7 @@
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_MONEYBOT_ADD_MONEY,
 	))
-	total_money.set_output(null)
+	total_money.put(null)
 	attached_bot = null
 	return ..()
 
@@ -138,11 +138,11 @@
 
 	attached_bot.add_money(amount_to_insert)
 	balloon_alert(attacker, "inserted [amount_to_insert] credits.")
-	money_input.set_output(amount_to_insert)
-	money_trigger.set_output(COMPONENT_SIGNAL)
+	money_input.put(amount_to_insert)
+	money_trigger.put(COMPONENT_SIGNAL)
 	qdel(item)
 
 /obj/item/circuit_component/money_bot/proc/handle_money_update(atom/source)
 	SIGNAL_HANDLER
 	if(attached_bot)
-		total_money.set_output(attached_bot.stored_money)
+		total_money.put(attached_bot.stored_money)

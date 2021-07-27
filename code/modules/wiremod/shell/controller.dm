@@ -63,7 +63,7 @@
 		return
 	source.balloon_alert(user, "clicked primary button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
-	signal.set_output(COMPONENT_SIGNAL)
+	signal.put(COMPONENT_SIGNAL)
 
 /**
  * Called when the shell item is alt-clicked
@@ -74,7 +74,7 @@
 		return
 	source.balloon_alert(user, "clicked alternate button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
-	alt.set_output(COMPONENT_SIGNAL)
+	alt.put(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
@@ -82,4 +82,4 @@
 		return
 	source.balloon_alert(user, "clicked extra button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
-	right.set_output(COMPONENT_SIGNAL)
+	right.put(COMPONENT_SIGNAL)

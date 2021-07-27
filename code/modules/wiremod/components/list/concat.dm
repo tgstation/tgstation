@@ -50,5 +50,5 @@
 		else
 			text_list += "[entry]"
 
-	output.set_output(text_list.Join(seperator))
+	output.put(text_list.Join(seperator))
 

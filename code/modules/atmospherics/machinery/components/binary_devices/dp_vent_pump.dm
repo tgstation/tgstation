@@ -176,8 +176,8 @@
 	if("set_input_pressure" in signal.data)
 		input_pressure_min = clamp(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
 
-	if("set_output_pressure" in signal.data)
-		output_pressure_max = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+	if("put_pressure" in signal.data)
+		output_pressure_max = clamp(text2num(signal.data["put_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
 		external_pressure_bound = clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)

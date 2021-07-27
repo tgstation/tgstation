@@ -155,7 +155,7 @@
 	return ..()
 
 /datum/action/innate/bci_action/Activate()
-	circuit_component.signal.set_output(COMPONENT_SIGNAL)
+	circuit_component.signal.put(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"
@@ -233,7 +233,7 @@
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
-	user_port.set_output(owner)
+	user_port.put(owner)
 	user = WEAKREF(owner)
 
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
@@ -242,7 +242,7 @@
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
-	user_port.set_output(null)
+	user_port.put(null)
 	user = null
 
 	UnregisterSignal(owner, list(

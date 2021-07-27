@@ -74,8 +74,8 @@
 		return
 
 	if(!attached_console || length(attached_console.launchpads) == 0)
-		why_fail.set_output("No launchpads connected!")
-		on_fail.set_output(COMPONENT_SIGNAL)
+		why_fail.put("No launchpads connected!")
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	var/current_launchpad = launchpad_id.value
@@ -95,15 +95,15 @@
 		return
 
 	if(x_dest > the_pad.range || y_dest > the_pad.range)
-		why_fail.set_output("Cannot go that far! Current maximum reach: [the_pad.range]")
-		on_fail.set_output(COMPONENT_SIGNAL)
+		why_fail.put("Cannot go that far! Current maximum reach: [the_pad.range]")
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	var/checks = attached_console.teleport_checks(the_pad)
 
 	if(!isnull(checks))
-		why_fail.set_output(checks)
-		on_fail.set_output(COMPONENT_SIGNAL)
+		why_fail.put(checks)
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	the_pad.set_offset(x_dest, y_dest)

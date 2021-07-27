@@ -71,7 +71,7 @@
 		return
 	var/datum/port/input/input = WRAPACCESS(ins, input_selector ? input_selector.value : 1)
 	var/datum/port/output/output = WRAPACCESS(outs, output_selector ? output_selector.value : 1)
-	output.set_output(input.value)
+	output.put(input.value)
 
 /obj/item/circuit_component/router/multiplexer
 	display_name = "Multiplexer"

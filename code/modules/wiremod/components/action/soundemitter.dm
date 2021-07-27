@@ -62,8 +62,8 @@
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	. = ..()
-	volume.set_input(clamp(volume.value, 0, 100), FALSE)
-	frequency.set_input(clamp(frequency.value, -100, 100), FALSE)
+	volume.put(clamp(volume.value, 0, 100))
+	frequency.put(clamp(frequency.value, -100, 100))
 	if(.)
 		return
 

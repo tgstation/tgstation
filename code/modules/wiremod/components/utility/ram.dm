@@ -60,7 +60,7 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(clear, port))
-		output.set_output(null)
+		output.put(null)
 		return
 
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
@@ -68,4 +68,4 @@
 
 	var/input_val = input_port.value
 
-	output.set_output(input_val)
+	output.put(input_val)

@@ -40,7 +40,7 @@
 	return ..()
 
 /obj/item/circuit_component/clock/process(delta_time)
-	signal.set_output(COMPONENT_SIGNAL)
+	signal.put(COMPONENT_SIGNAL)
 
 /**
  * Adds the component to the SSclock_component process list

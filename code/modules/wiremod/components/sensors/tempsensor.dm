@@ -27,14 +27,14 @@
 	//Get current turf
 	var/turf/location = get_turf(src)
 	if(!location)
-		result.set_output(null)
+		result.put(null)
 		return
 	//Get environment info
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total_moles = environment.total_moles()
 	if(total_moles)
 		//If there's atmos, return temperature
-		result.set_output(round(environment.temperature,1))
+		result.put(round(environment.temperature,1))
 	else
-		result.set_output(0)
+		result.put(0)
 

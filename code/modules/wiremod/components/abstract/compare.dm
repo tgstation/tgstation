@@ -57,10 +57,10 @@
 	var/logic_result = do_comparisons(ports)
 	if(COMPONENT_TRIGGERED_BY(compare, port))
 		if(logic_result)
-			true.set_output(COMPONENT_SIGNAL)
+			true.put(COMPONENT_SIGNAL)
 		else
-			false.set_output(COMPONENT_SIGNAL)
-	result.set_output(logic_result)
+			false.put(COMPONENT_SIGNAL)
+	result.put(logic_result)
 
 /// Do the comparisons and return a result
 /obj/item/circuit_component/compare/proc/do_comparisons(list/ports)

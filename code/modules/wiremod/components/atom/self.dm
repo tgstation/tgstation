@@ -19,7 +19,7 @@
 	return ..()
 
 /obj/item/circuit_component/self/register_shell(atom/movable/shell)
-	output.set_output(shell)
+	output.put(shell)
 
 /obj/item/circuit_component/self/unregister_shell(atom/movable/shell)
-	output.set_output(null)
+	output.put(null)

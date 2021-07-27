@@ -73,5 +73,5 @@
 			if(COMP_ARITHMETIC_MIN)
 				result = min(result, value)
 
-	output.set_output(result)
+	output.put(result)
 

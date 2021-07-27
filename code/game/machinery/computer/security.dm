@@ -79,11 +79,11 @@
 		return
 
 	if(!attached_console || !attached_console.authenticated)
-		on_fail.set_output(COMPONENT_SIGNAL)
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	if(isnull(GLOB.data_core.general))
-		on_fail.set_output(COMPONENT_SIGNAL)
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	var/list/new_table = list()
@@ -103,7 +103,7 @@
 
 		new_table += list(entry)
 
-	records.set_output(new_table)
+	records.put(new_table)
 
 /obj/item/circuit_component/arrest_console_arrest
 	display_name = "Security Records Set Status"
@@ -163,17 +163,17 @@
 		return
 
 	if(!attached_console || !attached_console.authenticated)
-		on_fail.set_output(COMPONENT_SIGNAL)
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	var/status_to_set = new_status.value
 	if(!status_to_set || !(status_to_set in options))
 		status_to_set = current_option
 
-	new_status_set.set_output(status_to_set)
+	new_status_set.put(status_to_set)
 	var/list/target_table = targets.value
 	if(!target_table)
-		on_fail.set_output(COMPONENT_SIGNAL)
+		on_fail.put(COMPONENT_SIGNAL)
 		return
 
 	var/successful_set = 0

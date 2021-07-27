@@ -37,12 +37,12 @@
 
 	var/list/target_list = received_table.value
 	if(!islist(target_list) || !length(target_list))
-		output_list.set_output(null)
+		output_list.put(null)
 		return
 
 	var/index = target_index.value
 	if(index < 1 || index > length(target_list))
-		output_list.set_output(null)
+		output_list.put(null)
 		return
 
-	output_list.set_output(target_list[index])
+	output_list.put(target_list[index])

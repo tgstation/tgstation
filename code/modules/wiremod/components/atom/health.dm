@@ -56,16 +56,16 @@
 	var/mob/living/organism = input_port.value
 	var/turf/current_turf = get_turf(src)
 	if(!istype(organism) || get_dist(current_turf, organism) > max_range || current_turf.z != organism.z)
-		brute.set_output(null)
-		burn.set_output(null)
-		toxin.set_output(null)
-		oxy.set_output(null)
-		health.set_output(null)
+		brute.put(null)
+		burn.put(null)
+		toxin.put(null)
+		oxy.put(null)
+		health.put(null)
 		return
 
-	brute.set_output(organism.getBruteLoss())
-	burn.set_output(organism.getFireLoss())
-	toxin.set_output(organism.getToxLoss())
-	oxy.set_output(organism.getOxyLoss())
-	health.set_output(organism.health)
+	brute.put(organism.getBruteLoss())
+	burn.put(organism.getFireLoss())
+	toxin.put(organism.getToxLoss())
+	oxy.put(organism.getOxyLoss())
+	health.put(organism.health)
 

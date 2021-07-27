@@ -55,17 +55,17 @@
 	var/turf/location = get_turf(src)
 
 	if(object.z != location.z || get_dist(location, object) > max_range)
-		output.set_output(null)
+		output.put(null)
 		return
 
 	var/direction = get_dir(location, get_turf(object))
-	output.set_output(dir2text(direction))
+	output.put(dir2text(direction))
 
 	if(direction & NORTH)
-		north.set_output(COMPONENT_SIGNAL)
+		north.put(COMPONENT_SIGNAL)
 	if(direction & SOUTH)
-		south.set_output(COMPONENT_SIGNAL)
+		south.put(COMPONENT_SIGNAL)
 	if(direction & EAST)
-		east.set_output(COMPONENT_SIGNAL)
+		east.put(COMPONENT_SIGNAL)
 	if(direction & WEST)
-		west.set_output(COMPONENT_SIGNAL)
+		west.put(COMPONENT_SIGNAL)

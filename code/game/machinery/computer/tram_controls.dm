@@ -175,8 +175,8 @@
 
 /obj/item/circuit_component/tram_controls/proc/on_tram_set_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
-	travelling_output.set_output(travelling)
+	travelling_output.put(travelling)
 
 /obj/item/circuit_component/tram_controls/proc/on_tram_travel(datum/source, obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	SIGNAL_HANDLER
-	location.set_output(to_where.name)
+	location.put(to_where.name)
