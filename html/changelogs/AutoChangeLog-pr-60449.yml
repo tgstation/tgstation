@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fixed wallets not granting access for ID cards inside them."
