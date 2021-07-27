@@ -16,6 +16,3 @@
 	variable = TRUE
 	blacklisted_movetypes = (FLYING|FLOATING)
 
-/datum/movespeed_modifier/status_effect/stimulant_withdrawal
-	multiplicative_slowdown = 0.20
-	blacklisted_movetypes = (FLOATING)

@@ -466,6 +466,9 @@
 /datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/L)
 	. = ..()
 
+	if(!L.hud_used)
+		return
+
 	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
@@ -488,6 +491,8 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/M)
 	. = ..()
+	if(!M.hud_used)
+		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("rainbow")
 	game_plane_master_controller.remove_filter("psilocybin_wave")
@@ -515,6 +520,9 @@
 	RegisterSignal(L, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
 	RegisterSignal(L, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
 
+	if(!L.hud_used)
+		return
+
 	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	var/list/col_filter_blue = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.764,0,0,0) //most blue color
@@ -541,6 +549,9 @@
 
 	UnregisterSignal(M, COMSIG_MOB_EMOTED("flip"))
 	UnregisterSignal(M, COMSIG_MOB_EMOTED("spin"))
+
+	if(!M.hud_used)
+		return
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
@@ -627,6 +638,8 @@
 	playsound(L, 'sound/chemistry/saturnx_fade.ogg', 30)
 	to_chat(L, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
 	addtimer(CALLBACK(src, .proc/turn_man_invisible, L), 10) //just a quick delay to synch up the sound.
+	if(!L.hud_used)
+		return
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
@@ -670,6 +683,9 @@
 	M.update_hair()
 	M.sound_environment_override = NONE
 
+	if(!M.hud_used)
+		return
+
 	var/atom/movable/plane_master_controller/game_plane_master_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("saturnx_filter")
 	game_plane_master_controller.remove_filter("saturnx_blur")
@@ -691,6 +707,7 @@
 	ph = 8
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 20)
 
 /datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
