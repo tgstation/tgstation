@@ -1472,10 +1472,6 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/storage)
-"fd" = (
-/obj/structure/sign/departments/nanites,
-/turf/closed/wall/r_wall,
-/area/construction)
 "fe" = (
 /obj/machinery/computer/cargo{
 	dir = 8
@@ -6428,7 +6424,7 @@ dn
 dn
 dn
 dL
-fd
+cN
 ZP
 Df
 Nb

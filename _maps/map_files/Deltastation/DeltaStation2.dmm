@@ -45951,7 +45951,7 @@
 "gFZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
-	c_tag = "Research Division - Nanite Lab";
+	c_tag = "Research Division - Circuits Lab";
 	dir = 4;
 	name = "science camera";
 	network = list("ss13","rd")
