@@ -47,7 +47,7 @@ Reproductive extracts:
 		return
 
 	else if(istype(O, /obj/item/food/monkeycube))
-		if(length(contents) < feedAmount)
+		if(length(contents) < feedAmount) //This check is nesscary since the storage is perma locked, which means you have to force move items in, which means it ignores the content limits
 			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE, TRUE))
 				to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
 				slimeStorage.processCubes(src, user)
