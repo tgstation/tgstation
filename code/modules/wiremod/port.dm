@@ -62,8 +62,7 @@
 	return ..()
 
 /**
- * Sets the port's value to v. Assumes type compatibility.
- * Implicitly converts the type (e.g. number -> string), and assumes this can be done.
+ * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
 /datum/port/proc/set_value(v)
 	if(value == v)
