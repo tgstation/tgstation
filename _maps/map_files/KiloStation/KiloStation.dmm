@@ -37019,11 +37019,6 @@
 	},
 /area/maintenance/port/aft)
 "cxk" = (
-/obj/machinery/power/solar_control{
-	dir = 4;
-	id = "aftport";
-	name = "Port Quarter Solar Control"
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -37033,6 +37028,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -43364,6 +43363,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/security/prison)
+"ehM" = (
+/mob/living/simple_animal/hostile/carp{
+	environment_smash = 0;
+	name = "Tuna";
+	real_name = "Tuna"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/space/nearstation)
 "eih" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -50064,6 +50071,11 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
+"heK" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/sheet/glass,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "hfo" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -56138,19 +56150,35 @@
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
 "jPh" = (
+/obj/structure/cable,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = 32
-	},
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "jPk" = (
 /obj/structure/table/glass,
@@ -74156,6 +74184,11 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/hallway/primary/port)
+"rtX" = (
+/obj/effect/turf_decal/box,
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel/airless,
+/area/solars/starboard/aft)
 "rtZ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -79413,6 +79446,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"tMV" = (
+/obj/item/circuitboard/computer/solar_control,
+/turf/open/floor/plating/asteroid/airless,
+/area/space/nearstation)
 "tNa" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
@@ -82556,6 +82593,11 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
+"vcT" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/sheet/glass,
+/turf/open/space/basic,
+/area/solars/port/aft)
 "vdd" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/start/hangover,
@@ -87077,23 +87119,23 @@
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "wYW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/computer/shuttle/mining/common,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "wZx" = (
@@ -102324,7 +102366,7 @@ tnI
 oUy
 aau
 aeU
-cmU
+heK
 jOe
 jOe
 jOe
@@ -102840,7 +102882,7 @@ asO
 cmU
 cmU
 foo
-foo
+vcT
 foo
 foo
 foo
@@ -104315,7 +104357,7 @@ aeu
 aeU
 aeU
 coy
-aeU
+ehM
 aDS
 nBm
 bFI
@@ -104640,7 +104682,7 @@ acK
 cmU
 aeU
 aUz
-aeU
+tMV
 aeU
 cnS
 cuU
@@ -131898,10 +131940,10 @@ aeu
 aUz
 cmU
 nRr
-nRr
-nRr
-nRr
-nRr
+rtX
+rtX
+rtX
+rtX
 kuv
 nRr
 nRr
@@ -132413,15 +132455,15 @@ aeU
 cmU
 nRr
 nRr
-nRr
-nRr
-nRr
+rtX
+rtX
+rtX
 kuv
 nRr
 nRr
 nRr
-nRr
-nRr
+rtX
+rtX
 acm
 aeo
 acm
@@ -132926,7 +132968,7 @@ aeU
 cmU
 nRr
 nRr
-nRr
+rtX
 nRr
 nRr
 xOh
@@ -133442,12 +133484,12 @@ nRr
 nRr
 nRr
 nRr
-nRr
+rtX
 xOh
 kuv
 xOh
-nRr
-nRr
+rtX
+rtX
 nRr
 nRr
 nRr
@@ -133959,9 +134001,9 @@ nRr
 nRr
 nRr
 kuv
-nRr
-nRr
-nRr
+rtX
+rtX
+rtX
 nRr
 nRr
 acm
