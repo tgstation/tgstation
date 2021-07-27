@@ -1,6 +1,6 @@
 ///Footstep component. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
-	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE|ELEMENT_COMPLEX_DETACH
+	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
 	id_arg_index = 2
 	///A list containing living mobs and the number of steps they have taken since the last time their footsteps were played.
 	var/list/steps_for_living = list()
