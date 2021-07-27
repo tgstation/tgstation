@@ -60,7 +60,7 @@
 /obj/item/stack/cannonball/trashball
 	name = "trashballs"
 	singular_name = "trashball"
-	desc = "A clump of tightly packed garbage. It'll work as a cannonball, but it may be unhealthy to actually put this in a cannon."
+	desc = "A clump of tightly packed garbage. It'll work as a cannonball, but it may be unhealthy to actually put this in a real cannon."
 	max_amount = 4
 	icon_state = "trashballs"
 	merge_type = /obj/item/stack/cannonball/trashball

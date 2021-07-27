@@ -3149,7 +3149,7 @@
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\magic.dm"
 #include "code\modules\projectiles\projectile\bullets\_incendiary.dm"
-#include "code\modules\projectiles\projectile\bullets\cannon.dm"
+#include "code\modules\projectiles\projectile\bullets\cannonball.dm"
 #include "code\modules\projectiles\projectile\bullets\dart_syringe.dm"
 #include "code\modules\projectiles\projectile\bullets\dnainjector.dm"
 #include "code\modules\projectiles\projectile\bullets\grenade.dm"
