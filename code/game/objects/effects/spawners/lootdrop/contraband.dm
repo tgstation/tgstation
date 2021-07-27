@@ -40,10 +40,10 @@
 /obj/effect/spawner/lootdrop/contraband/permabrig_weapon
 	name = "permabrig weapon spawner"
 	loot = list(
-	/obj/item/kitchen/knife/shiv = 4,
-	/obj/item/kitchen/knife/shiv/carrot = 4,
-	/obj/item/tailclub = 2, //want to buy makeshift wooden club sprite
-	/obj/item/kitchen/knife = 2,
+	/obj/item/kitchen/knife/shiv = 5,
+	/obj/item/kitchen/knife/shiv/carrot = 5,
+	/obj/item/tailclub = 5, //want to buy makeshift wooden club sprite
+	/obj/item/kitchen/knife = 3,
 	/obj/item/assembly/flash/handheld = 1,
 	/obj/item/grenade/smokebomb = 1,
 	)
