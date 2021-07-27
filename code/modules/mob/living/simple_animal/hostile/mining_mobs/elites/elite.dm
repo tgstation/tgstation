@@ -286,10 +286,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(!mychild || !istype(mychild))
 		return
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
-	if(boosted)
-		mychild.times_won++
-		mychild.maxHealth = mychild.maxHealth * 0.4
-		mychild.health = mychild.maxHealth
+	if(!boosted)
+		return
+	mychild.times_won++
+	mychild.maxHealth = mychild.maxHealth * 0.4
+	mychild.health = mychild.maxHealth
 	if(mychild.times_won == 1)
 		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
 		to_chat(mychild, span_boldwarning("As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel that you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide."))
