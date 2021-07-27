@@ -793,3 +793,14 @@
   timothymtorres:
   - bugfix: High Volume Vent Pump Layer 3 icon state to be correct
   - balance: Add musical instruments to maint loot list
+2021-07-27:
+  Domitius:
+  - bugfix: One spraycan can no longer colour every light on the station.
+  Nari Harimoto:
+  - bugfix: AI can now no longer be pushed even when anchored, only when dead or unanchored
+      can it be pushed (grab a dead core to swap places)
+  - bugfix: borgs can now no longer be pushed when in combat mode and alive, you will
+      always swap places with dead borg corpses.
+  Wallem:
+  - bugfix: Only foods which are created at mapload require player interaction in
+      order to decompose.
