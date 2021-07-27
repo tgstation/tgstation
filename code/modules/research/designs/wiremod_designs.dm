@@ -238,6 +238,20 @@
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
 
+/datum/design/component/bci_action
+	name = "BCI Action Component"
+	id = "comp_bci_action"
+	build_path = /obj/item/circuit_component/bci_action
+
+/datum/design/component/object_overlay
+	name = "BCI Action Component"
+	id = "comp_object_overlay"
+	build_path = /obj/item/circuit_component/object_overlay
+
+/datum/design/component/bar_overlay
+	name = "Bar Overlay Component"
+	id = "comp_bar_overlay"
+	build_path = /obj/item/circuit_component/object_overlay/bar
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

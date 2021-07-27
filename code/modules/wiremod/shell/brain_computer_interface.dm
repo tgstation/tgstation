@@ -36,10 +36,12 @@
 /obj/item/circuit_component/bci
 	display_name = "Brain-Computer Interface"
 	display_desc = "Used to receive inputs for the brain-computer interface. User is presented with three buttons."
+	removable = FALSE
 
 /obj/item/circuit_component/bci_action
 	display_name = "BCI Action"
-	display_desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	display_desc = "Represents an action the user can take when implanted with the brain-computer interface. Only usable by, well, brain-computer interface."
+	required_shells = list(/obj/item/organ/cyberimp/bci)
 
 	/// The name to use for the button
 	var/datum/port/input/button_name
@@ -160,6 +162,8 @@
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"
 	display_desc = "Controls the core operations of the BCI."
+
+	removable = FALSE
 
 	/// A reference to the action button to look at charge/get info
 	var/datum/action/innate/bci_charge_action/charge_action
@@ -519,7 +523,7 @@
 	if (!isnull(message))
 		if (COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
-			balloon_alert(user, "it won't budge!")
+			balloon_alert(user, message)
 
 		return
 
