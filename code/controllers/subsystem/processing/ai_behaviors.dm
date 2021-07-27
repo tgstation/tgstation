@@ -6,7 +6,7 @@ PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_AI_CONTROLLERS
 	wait = 1
-	///an assoc list of all ai_behaviors by type, to
+	///List of all ai_behavior singletons, key is the typepath while assigned value is a newly created instance of the typepath. See SetupAIBehaviors()
 	var/list/ai_behaviors
 
 /datum/controller/subsystem/processing/ai_behaviors/Initialize(timeofday)

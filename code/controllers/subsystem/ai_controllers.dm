@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(ai_controllers)
 	init_order = INIT_ORDER_AI_CONTROLLERS
 	wait = 0.5 SECONDS //Plan every half second if required, not great not terrible.
 
-	///List of all ai_subtree singletons
+	///List of all ai_subtree singletons, key is the typepath while assigned value is a newly created instance of the typepath. See setup_subtrees()
 	var/list/ai_subtrees = list()
 	///List of all ai controllers currently running
 	var/list/active_ai_controllers = list()
@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_subtrees[subtree_type] = subtree
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
-	for(var/datum/ai_controller/ai_controller in active_ai_controllers)
+	for(var/datum/ai_controller/ai_controller as anything in active_ai_controllers)
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			continue
 

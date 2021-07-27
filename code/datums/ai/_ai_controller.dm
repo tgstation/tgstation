@@ -29,7 +29,7 @@ multiple modular subtrees with behaviors
 	var/max_target_distance = 14
 	///Cooldown for new plans, to prevent AI from going nuts if it can't think of new plans and looping on end
 	COOLDOWN_DECLARE(failed_planning_cooldown)
-	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run
+	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run. On initialization of this type, it will start as a typepath(s) and get converted to references of ai_subtrees found in SSai_controllers when init_subtrees() is called
 	var/list/planning_subtrees
 
 	// Movement related things here
@@ -68,7 +68,7 @@ multiple modular subtrees with behaviors
 	planning_subtrees = typepaths_of_new_subtrees
 	init_subtrees()
 
-///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES
+///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
 /datum/ai_controller/proc/init_subtrees()
 	if(!LAZYLEN(planning_subtrees))
 		return
@@ -179,7 +179,7 @@ multiple modular subtrees with behaviors
 	LAZYINITLIST(current_behaviors)
 
 	if(LAZYLEN(planning_subtrees))
-		for(var/datum/ai_planning_subtree/subtree in planning_subtrees)
+		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
 			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
