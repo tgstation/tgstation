@@ -34,4 +34,4 @@
 	parentSlimeExtract.last_produce = world.time
 	to_chat(user, span_notice("[parentSlimeExtract] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!"))
 	for(var/i in 1 to cores)
-		new parentSlimeExtract.extract_type(drop_location())
+		new parentSlimeExtract.extract_type(parentSlimeExtract.drop_location())
