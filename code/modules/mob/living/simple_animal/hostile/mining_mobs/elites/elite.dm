@@ -11,8 +11,8 @@
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
-	maxHealth = 800 //this number is temporarily multiplied by 2.5x during the boss battle
-	health = 800
+	maxHealth = 1000
+	health = 1000
 	obj_damage = 30
 	vision_range = 6
 	aggro_vision_range = 18
