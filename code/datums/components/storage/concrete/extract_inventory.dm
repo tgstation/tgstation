@@ -16,7 +16,15 @@
 
 /datum/component/storage/concrete/extract_inventory/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	set_holdable(/obj/item/food/monkeycube)
+=======
+<<<<<<< HEAD
+	set_holdable(/obj/item/food/monkeycube)
+=======
+set_holdable(/obj/item/food/monkeycube)
+>>>>>>> master
+>>>>>>> master
 	if(istype(parent, /obj/item/slimecross/reproductive))
 		parentSlimeExtract = parent
 	else
