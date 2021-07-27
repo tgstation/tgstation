@@ -1454,7 +1454,6 @@
 #include "code\game\objects\structures\cannons\cannon.dm"
 #include "code\game\objects\structures\cannons\cannon_instructions.dm"
 #include "code\game\objects\structures\cannons\cannonballs.dm"
-#include "code\game\objects\structures\cannons\trash_cannon.dm"
 #include "code\game\objects\structures\construction_console\construction_actions.dm"
 #include "code\game\objects\structures\construction_console\construction_console.dm"
 #include "code\game\objects\structures\construction_console\construction_console_aux.dm"

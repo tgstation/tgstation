@@ -1,5 +1,7 @@
-//how much projectile damage is lost when using a bad fuel
+///how much projectile damage is lost when using a bad fuel
 #define BAD_FUEL_DAMAGE_TAX 20
+///extra chance it explodes upon firing
+#define BAD_FUEL_EXPLODE_PROBABILTY 10
 
 /obj/structure/cannon
 	name = "cannon"
@@ -111,11 +113,18 @@
 	var/fires_before_deconstruction = 5
 
 /obj/structure/cannon/trash/fire()
+	var/explode_chance = 10
 	var/used_alt_fuel = reagents.has_reagent(/datum/reagent/fuel, charge_size)
+	if(used_alt_fuel)
+		explode_chance += BAD_FUEL_EXPLODE_PROBABILTY
 	. = ..()
 	fires_before_deconstruction--
 	if(used_alt_fuel)
 		fires_before_deconstruction--
+	if(prob(explode_chance))
+		visible_message(span_userdanger("[src] explodes!"))
+		explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
+		return
 	if(fires_before_deconstruction <= 0)
 		visible_message(span_warning("[src] falls apart from operation!"))
 		qdel(src)
@@ -124,3 +133,6 @@
 	new /obj/item/stack/sheet/iron/five(src.loc)
 	new /obj/item/stack/rods(src.loc)
 	. = ..()
+
+#undef BAD_FUEL_DAMAGE_TAX
+#undef BAD_FUEL_EXPLODE_PROBABILTY
