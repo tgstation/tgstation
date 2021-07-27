@@ -71,7 +71,7 @@
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_LIFE=2)
 	required_path = /obj/item/stock_parts/manipulator/nano
-	traded_path = list(/obj/item/seeds/tomato/killer,/obj/item/seeds/orange_3d,/obj/item/seeds/firelemon,/obj/item/seeds/gatfruit)
+	traded_path = list(/obj/item/seeds/tomato/killer,/obj/item/seeds/orange_3d,/obj/item/seeds/firelemon)
 	amount = 1
 
 /datum/exploration_event/simple/trader/fish

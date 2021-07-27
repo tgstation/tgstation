@@ -2330,7 +2330,6 @@
 #include "code\modules\hydroponics\grown\eggplant.dm"
 #include "code\modules\hydroponics\grown\flowers.dm"
 #include "code\modules\hydroponics\grown\garlic.dm"
-#include "code\modules\hydroponics\grown\gatfruit.dm"
 #include "code\modules\hydroponics\grown\grass_carpet.dm"
 #include "code\modules\hydroponics\grown\hedges.dm"
 #include "code\modules\hydroponics\grown\korta_nut.dm"
