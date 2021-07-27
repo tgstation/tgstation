@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		for(var/frequency in GLOB.all_radios)
 			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
 				for(var/turf/turf in view(7,intercom.loc))
-					var/atom/marker = new /obj/effect/abstract/marker/intercom(turf)
+					new /obj/effect/abstract/marker/intercom(turf)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_show_at_list()
