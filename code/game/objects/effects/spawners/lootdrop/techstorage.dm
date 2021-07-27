@@ -110,3 +110,11 @@
 /obj/effect/spawner/lootdrop/techstorage/arcade_boards/Initialize(mapload)
 	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
 	return ..()
+
+/obj/effect/spawner/lootdrop/techstorage/data_disk
+	name = "data disk spawner"
+	lootcount = 1
+	loot = list(
+	/obj/item/disk/data = 49,
+	/obj/item/disk/nuclear/fake/obvious = 1,
+	)

@@ -27,120 +27,164 @@
 	loot = list(
 	/obj/item/gun/ballistic/revolver/russian = 5,
 	/obj/item/clothing/head/ushanka = 3,
-	/obj/item/storage/box/syndie_kit/throwing_weapons,
-	/obj/item/coin/gold,
-	/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+	/obj/item/coin/gold = 3,
+	/obj/item/dice/d6 = 3,
+	/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
+	/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 	)
 
 /obj/effect/spawner/lootdrop/entertainment/drugs
 	name = "recreational drugs spawner"
 	loot = list(
-	/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
-	/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
-	/obj/item/reagent_containers/syringe = 15,
-	/obj/item/cigbutt/roach = 15,
-	/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
+	/obj/item/reagent_containers/food/drinks/bottle/hooch = 10,
+	/obj/item/clothing/mask/cigarette/rollie/cannabis = 3,
+	/obj/item/reagent_containers/syringe = 3,
+	/obj/item/cigbutt/roach = 3,
+	/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 1,
+	/obj/item/reagent_containers/pill/maintenance = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/dice
+	name = "dice spawner"
+	loot = list(
+	/obj/item/dice/d4,
+	/obj/item/dice/d6,
+	/obj/item/dice/d8,
+	/obj/item/dice/d10,
+	/obj/item/dice/d12,
+	/obj/item/dice/d20,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/coin
+	name = "coin spawner"
+	loot = list(
+	/obj/item/coin/iron = 10,
+	/obj/item/coin/silver = 5,
+	/obj/item/coin/plasma = 5,
+	/obj/item/coin/uranium = 5,
+	/obj/item/coin/titanium = 5,
+	/obj/item/coin/diamond = 3,
+	/obj/item/coin/bananium = 3,
+	/obj/item/coin/adamantine = 2,
+	/obj/item/coin/mythril = 2,
+	/obj/item/coin/plastic = 2,
+	/obj/item/coin/runite = 2,
+	/obj/item/coin/twoheaded = 1,
+	/obj/item/coin/antagtoken = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/pen
+	name = "pen spawner"
+	loot = list(
+	/obj/item/pen = 30,
+	/obj/item/pen/blue = 5,
+	/obj/item/pen/red = 5,
+	/obj/item/flashlight/pen = 5,
+	/obj/item/pen/fourcolor = 2,
+	/obj/item/flashlight/pen/paramedic = 2,
+	/obj/item/pen/fountain = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/stamp
+	name = "stamp spawner"
+	loot = list(
+	/obj/item/stamp = 3,
+	/obj/item/stamp/denied = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/crayon
+	name = "crayon spawner"
+	loot = list(
+	/obj/item/toy/crayon/red,
+	/obj/item/toy/crayon/orange,
+	/obj/item/toy/crayon/yellow,
+	/obj/item/toy/crayon/green,
+	/obj/item/toy/crayon/blue,
+	/obj/item/toy/crayon/purple,
+	/obj/item/toy/crayon/black,
+	/obj/item/toy/crayon/white,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/cigarette_pack
+	name = "cigarette pack spawner"
+	loot = list(
+	/obj/item/storage/fancy/cigarettes = 3,
+	/obj/item/storage/fancy/cigarettes/dromedaryco = 3,
+	/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,
+	/obj/item/storage/fancy/cigarettes/cigpack_robust = 3,
+	/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
+	/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 1,
+	/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
+	/obj/item/storage/fancy/cigarettes/cigpack_candy = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/cigarette
+	name = "cigarette spawner"
+	loot = list(
+	/obj/item/clothing/mask/cigarette/space_cigarette = 3,
+	/obj/item/clothing/mask/cigarette/rollie/cannabis = 3,
+	/obj/item/clothing/mask/cigarette/rollie/nicotine = 3,
+	/obj/item/clothing/mask/cigarette/dromedary = 2,
+	/obj/item/clothing/mask/cigarette/uplift = 2,
+	/obj/item/clothing/mask/cigarette/robust = 2,
+	/obj/item/clothing/mask/cigarette/carp = 1,
+	/obj/item/clothing/mask/cigarette/robustgold = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/cigar
+	name = "cigar spawner"
+	loot = list(
+	/obj/item/clothing/mask/cigarette/cigar = 3,
+	/obj/item/clothing/mask/cigarette/cigar/havana = 2,
+	/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/lighter_small // for wallets
+	name = "lighter wallet spawner"
+	loot = list(
+	/obj/item/match = 10,
+	/obj/item/lighter/greyscale = 10,
+	/obj/item/lighter = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/lighter
+	name = "lighter spawner"
+	loot = list(
+	/obj/item/storage/box/matches = 10,
+	/obj/item/lighter/greyscale = 10,
+	/obj/item/lighter = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/paper
+	name = "paper spawner"
+	loot = list(
+	/obj/item/paper = 20,
+	/obj/item/paper/pamphlet/gateway = 3,
+	/obj/item/paper/pamphlet/violent_video_games = 3,
+	/obj/item/paper/pamphlet/radstorm = 3,
+	/obj/item/paper/crumpled = 2,
+	/obj/item/paper/crumpled/bloody = 2,
+	/obj/item/paper/crumpled/muddy = 2,
+	/obj/item/paper/construction = 1,
+	/obj/item/paper/carbon = 1,
 	)
 
 /obj/effect/spawner/lootdrop/entertainment/wallet_loot
 	name = "wallet contents spawner"
 	lootcount = 1
-	loot = list(
-		list(
-		// Same weights as contraband loot cigarettes (with no packs)
-		/obj/item/clothing/mask/cigarette/space_cigarette = 4,
-		/obj/item/clothing/mask/cigarette/robust = 2,
-		/obj/item/clothing/mask/cigarette/carp = 3,
-		/obj/item/clothing/mask/cigarette/uplift = 2,
-		/obj/item/clothing/mask/cigarette/dromedary = 3,
-		/obj/item/clothing/mask/cigarette/robustgold = 1,
-		/obj/item/clothing/mask/cigarette/rollie/cannabis = 4,
-		) = 1,
-		list(
-		/obj/item/flashlight/pen = 90,
-		/obj/item/flashlight/pen/paramedic = 10,
-		) = 1,
-		list( // The same seeds in the Supply "Seeds Crate"
-		/obj/item/seeds/chili = 1,
-		/obj/item/seeds/cotton = 1,
-		/obj/item/seeds/berry = 1,
-		/obj/item/seeds/corn = 1,
-		/obj/item/seeds/eggplant = 1,
-		/obj/item/seeds/tomato = 1,
-		/obj/item/seeds/soya = 1,
-		/obj/item/seeds/wheat = 1,
-		/obj/item/seeds/wheat/rice = 1,
-		/obj/item/seeds/carrot = 1,
-		/obj/item/seeds/sunflower = 1,
-		/obj/item/seeds/rose = 1,
-		/obj/item/seeds/chanter = 1,
-		/obj/item/seeds/potato = 1,
-		/obj/item/seeds/sugarcane = 1,
-		) = 1,
-		list(
-		/obj/item/stack/medical/suture = 1,
-		/obj/item/stack/medical/mesh = 1,
-		/obj/item/stack/medical/gauze = 1,
-		) = 1,
-		list(
-		/obj/item/toy/crayon/red = 1,
-		/obj/item/toy/crayon/orange = 1,
-		/obj/item/toy/crayon/yellow = 1,
-		/obj/item/toy/crayon/green = 1,
-		/obj/item/toy/crayon/blue = 1,
-		/obj/item/toy/crayon/purple = 1,
-		/obj/item/toy/crayon/black = 1,
-		/obj/item/toy/crayon/rainbow = 1,
-		) = 1,
-		list(
-		/obj/item/coin/iron = 1,
-		/obj/item/coin/silver = 1,
-		/obj/item/coin/diamond = 1,
-		/obj/item/coin/plasma = 1,
-		/obj/item/coin/uranium = 1,
-		/obj/item/coin/titanium = 1,
-		/obj/item/coin/bananium = 1,
-		/obj/item/coin/adamantine = 1,
-		/obj/item/coin/mythril = 1,
-		/obj/item/coin/plastic = 1,
-		/obj/item/coin/runite = 1,
-		/obj/item/coin/twoheaded = 1,
-		/obj/item/coin/antagtoken = 1,
-		) = 1,
-		list(
-		/obj/item/dice/d4 = 1,
-		/obj/item/dice/d6 = 1,
-		/obj/item/dice/d8 = 1,
-		/obj/item/dice/d10 = 1,
-		/obj/item/dice/d12 = 1,
-		/obj/item/dice/d20 = 1,
-		) = 1,
-		list(
-		/obj/item/disk/data = 99,
-		/obj/item/disk/nuclear/fake/obvious = 1,
-		) = 1,
-	/obj/item/implanter = 1,
-		list(
-		/obj/item/lighter = 25,
-		/obj/item/lighter/greyscale = 75,
-		) = 1,
-	/obj/item/lipstick/random = 1,
-	/obj/item/match = 1,
-	/obj/item/paper/pamphlet/gateway = 1,
-		list(
-		/obj/item/pen = 1,
-		/obj/item/pen/blue = 1,
-		/obj/item/pen/red = 1,
-		/obj/item/pen/fourcolor = 1,
-		/obj/item/pen/fountain = 1,
-		) = 1,
-	// random photos would go here. IF I HAD ONE. :'(
-	/obj/item/reagent_containers/dropper = 1,
-	/obj/item/reagent_containers/syringe = 1,
-	/obj/item/reagent_containers/pill/maintenance = 1,
-	/obj/item/screwdriver = 1,
-		list(
-		/obj/item/stamp = 50,
-		/obj/item/stamp/denied = 50,
-		) = 1,
+	loot = list(	// random photos would go here. IF I HAD ONE. :'(
+	/obj/item/lipstick/random,
+	/obj/item/reagent_containers/pill/maintenance,
+	/obj/effect/spawner/lootdrop/food_or_drink/seed,
+	/obj/effect/spawner/lootdrop/medical/minor_healing,
+	/obj/effect/spawner/lootdrop/medical/injector,
+	/obj/effect/spawner/lootdrop/entertainment/coin,
+	/obj/effect/spawner/lootdrop/entertainment/dice,
+	/obj/effect/spawner/lootdrop/entertainment/cigarette,
+	/obj/effect/spawner/lootdrop/entertainment/lighter_small,
+	/obj/effect/spawner/lootdrop/entertainment/paper,
+	/obj/effect/spawner/lootdrop/entertainment/crayon,
+	/obj/effect/spawner/lootdrop/entertainment/pen,
+	/obj/effect/spawner/lootdrop/entertainment/stamp,
+	/obj/effect/spawner/lootdrop/techstorage/data_disk,
 	)

@@ -2,6 +2,14 @@
 	name = "medical loot spawner"
 	desc = "Doc, gimmie something good."
 
+/obj/effect/spawner/lootdrop/medical/minor_healing
+	name = "minor healing spawner"
+	loot = list(
+	/obj/item/stack/medical/suture = 1,
+	/obj/item/stack/medical/mesh = 1,
+	/obj/item/stack/medical/gauze = 1,
+	)
+
 /obj/effect/spawner/lootdrop/medical/organ_spawner
 	name = "ayylien organ spawner"
 	lootcount = 3
@@ -41,6 +49,14 @@
 	/obj/item/organ/lungs/plasmaman,
 	/obj/item/organ/tail/cat,
 	/obj/item/organ/tail/lizard,
+	)
+
+/obj/effect/spawner/lootdrop/medical/injector
+	name = "injector spawner"
+	loot = list(
+	/obj/item/implanter = 1,
+	/obj/item/reagent_containers/dropper = 1,
+	/obj/item/reagent_containers/syringe = 1,
 	)
 
 /obj/effect/spawner/lootdrop/medical/two_percent_xeno_egg_spawner
