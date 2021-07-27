@@ -135,7 +135,7 @@
 /datum/port/output/put(v)
 	..(v)
 	for(var/datum/port/input/input as anything in connected_ports)
-		input.receive_output(value)
+		input.receive_output(src, value)
 
 
 /datum/port/proc/disconnect(datum/port/tgt)
@@ -152,8 +152,8 @@
  * Determines if a datatype can be cast to another.
  *
  * Arguments:
- * * from - The datatype to cast from.
- * * to - The datatype to cast to.
+ * * old_type - The datatype to cast from.
+ * * new_type - The datatype to cast to.
  */
 /proc/compatible_datatypes(old_type, new_type)
 	if(new_type == PORT_TYPE_ANY)
