@@ -135,7 +135,7 @@
 /datum/port/output/put(v)
 	..(v)
 	for(var/datum/port/input/input as anything in connected_ports)
-		input.receive_output(src, value)
+		input.receive_value(src, value)
 
 
 /datum/port/proc/disconnect(datum/port/tgt)
