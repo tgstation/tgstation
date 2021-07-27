@@ -27,10 +27,43 @@
 	loot = list(
 	/obj/item/gun/ballistic/revolver/russian = 5,
 	/obj/item/clothing/head/ushanka = 3,
-	/obj/item/coin/gold = 3,
+	/obj/effect/spawner/lootdrop/entertainment/coin = 3,
+	/obj/effect/spawner/lootdrop/entertainment/money = 3,
 	/obj/item/dice/d6 = 3,
 	/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
 	/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/money
+	name = "money spawner"
+	lootcount = 3
+	fan_out_items = TRUE
+	loot = list(
+	/obj/item/stack/spacecash/c1 = 150,
+	/obj/item/stack/spacecash/c10 = 100,
+	/obj/item/stack/spacecash/c20 = 75,
+	/obj/item/stack/spacecash/c50 = 50,
+	/obj/item/stack/spacecash/c100 = 30,
+	/obj/item/stack/spacecash/c200 = 10,
+	/obj/item/stack/spacecash/c500 = 1,
+	)
+
+/obj/effect/spawner/lootdrop/entertainment/coin
+	name = "coin spawner"
+	loot = list(
+	/obj/item/coin/iron = 10,
+	/obj/item/coin/silver = 5,
+	/obj/item/coin/plasma = 5,
+	/obj/item/coin/uranium = 5,
+	/obj/item/coin/titanium = 5,
+	/obj/item/coin/diamond = 3,
+	/obj/item/coin/bananium = 3,
+	/obj/item/coin/adamantine = 2,
+	/obj/item/coin/mythril = 2,
+	/obj/item/coin/plastic = 2,
+	/obj/item/coin/runite = 2,
+	/obj/item/coin/twoheaded = 1,
+	/obj/item/coin/antagtoken = 1,
 	)
 
 /obj/effect/spawner/lootdrop/entertainment/drugs
@@ -53,24 +86,6 @@
 	/obj/item/dice/d10,
 	/obj/item/dice/d12,
 	/obj/item/dice/d20,
-	)
-
-/obj/effect/spawner/lootdrop/entertainment/coin
-	name = "coin spawner"
-	loot = list(
-	/obj/item/coin/iron = 10,
-	/obj/item/coin/silver = 5,
-	/obj/item/coin/plasma = 5,
-	/obj/item/coin/uranium = 5,
-	/obj/item/coin/titanium = 5,
-	/obj/item/coin/diamond = 3,
-	/obj/item/coin/bananium = 3,
-	/obj/item/coin/adamantine = 2,
-	/obj/item/coin/mythril = 2,
-	/obj/item/coin/plastic = 2,
-	/obj/item/coin/runite = 2,
-	/obj/item/coin/twoheaded = 1,
-	/obj/item/coin/antagtoken = 1,
 	)
 
 /obj/effect/spawner/lootdrop/entertainment/pen
