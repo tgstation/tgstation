@@ -78,7 +78,7 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/current_launchpad = launchpad_id.input_value
+	var/current_launchpad = launchpad_id.value
 	if(isnull(current_launchpad))
 		return
 
@@ -86,11 +86,11 @@
 	if(isnull(the_pad))
 		return
 
-	var/x_dest = x_pos.input_value
+	var/x_dest = x_pos.value
 	if(isnull(x_dest))
 		return
 
-	var/y_dest = y_pos.input_value
+	var/y_dest = y_pos.value
 	if(isnull(y_dest))
 		return
 

@@ -1,5 +1,5 @@
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
-#define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
+#define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.value && trigger == port)
 
 /// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
 #define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)

@@ -62,8 +62,8 @@
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	. = ..()
-	volume.set_input(clamp(volume.input_value, 0, 100), FALSE)
-	frequency.set_input(clamp(frequency.input_value, -100, 100), FALSE)
+	volume.set_input(clamp(volume.value, 0, 100), FALSE)
+	frequency.set_input(clamp(frequency.value, -100, 100), FALSE)
 	if(.)
 		return
 
@@ -74,6 +74,6 @@
 	if(!sound_to_play)
 		return
 
-	playsound(src, sound_to_play, volume.input_value, frequency != 0, frequency = frequency.input_value)
+	playsound(src, sound_to_play, volume.value, frequency != 0, frequency = frequency.value)
 
 	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER, sound_cooldown)

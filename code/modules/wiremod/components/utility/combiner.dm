@@ -47,4 +47,4 @@
 
 	if(. || !port)
 		return TRUE
-	output_port.set_output(port.input_value)
+	output_port.set_output(port.value)

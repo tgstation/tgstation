@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(comp_typecheck_options, list(
 
 	// We're only comparing the first port/value. There shouldn't be any more.
 	var/datum/port/input/input_port = ports[1]
-	var/input_val = input_port.input_value
+	var/input_val = input_port.value
 	switch(current_option)
 		if(PORT_TYPE_STRING)
 			return istext(input_val)

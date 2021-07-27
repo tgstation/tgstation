@@ -41,8 +41,8 @@
 		return FALSE
 
 	// Comparison component only compares the first two ports
-	var/input1 = input_ports[1].input_value
-	var/input2 = input_ports[2].input_value
+	var/input1 = input_ports[1].value
+	var/input2 = input_ports[2].value
 
 	switch(current_option)
 		if(COMP_COMPARISON_EQUAL)

@@ -49,7 +49,7 @@
 	if(.)
 		return
 
-	var/atom/object = input_port.input_value
+	var/atom/object = input_port.value
 	if(!object)
 		return
 	var/turf/location = get_turf(src)

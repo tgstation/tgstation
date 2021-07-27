@@ -63,14 +63,14 @@
 	if(.)
 		return
 
-	var/list/input_list = received_table.input_value
-	if(!islist(input_list) || isnum(column_name.input_value))
+	var/list/input_list = received_table.value
+	if(!islist(input_list) || isnum(column_name.value))
 		return
 
-	var/comparison_value = comparison_input.input_value
+	var/comparison_value = comparison_input.value
 	var/list/new_list = list()
 	for(var/list/entry in input_list)
-		var/anything = entry[column_name.input_value]
+		var/anything = entry[column_name.value]
 		if(islist(anything))
 			continue
 		if(current_option != COMP_COMPARISON_EQUAL && current_option != COMP_COMPARISON_NOT_EQUAL && !isnum(anything))

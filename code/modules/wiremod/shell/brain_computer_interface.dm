@@ -132,7 +132,7 @@
 		update_action()
 
 /obj/item/circuit_component/bci_action/proc/update_action()
-	bci_action.name = button_name.input_value
+	bci_action.name = button_name.value
 	bci_action.button_icon_state = "nanite_[replacetextEx(lowertext(current_option), " ", "_")]"
 
 /datum/action/innate/bci_action
@@ -217,7 +217,7 @@
 		return .
 
 	if (COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		var/sent_message = trim(message.input_value)
+		var/sent_message = trim(message.value)
 		if (!sent_message)
 			return
 

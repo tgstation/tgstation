@@ -48,10 +48,10 @@
 	var/datum/port/input/first_port = ports[1]
 	ports -= first_port
 	ports -= trigger_input
-	var/result = first_port.input_value
+	var/result = first_port.value
 
 	for(var/datum/port/input/input_port as anything in ports)
-		var/value = input_port.input_value
+		var/value = input_port.value
 		if(isnull(value))
 			continue
 
