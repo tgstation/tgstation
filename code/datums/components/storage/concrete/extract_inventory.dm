@@ -17,10 +17,10 @@
 /datum/component/storage/concrete/extract_inventory/Initialize()
 	. = ..()
 	set_holdable(/obj/item/food/monkeycube)
-	if(istype(parent, /obj/item/slimecross/reproductive))
-		parentSlimeExtract = parent
-	else
+	if(!istype(parent, /obj/item/slimecross/reproductive))
 		return COMPONENT_INCOMPATIBLE
+	parentSlimeExtract = parent
+
 
 /datum/component/storage/concrete/extract_inventory/proc/processCubes(obj/item/slimecross/reproductive/parentSlimeExtract, mob/user)
 
