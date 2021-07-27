@@ -75,9 +75,9 @@
 			return
 		if(carbon_source.m_intent == MOVE_INTENT_WALK)
 			return// stealth
-	var/steps = steps_for_living[source]++
+	var/steps = ++steps_for_living[source]
 
-	if(steps >= 7)
+	if(steps >= 6)
 		steps = steps_for_living[source] = 0
 
 	if(steps % 2)
