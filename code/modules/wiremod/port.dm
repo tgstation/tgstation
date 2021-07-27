@@ -57,7 +57,7 @@
 			return "grey"
 
 /datum/port/Destroy(force)
-	disconnect()
+	disconnect_all()
 	connected_component = null
 	return ..()
 
@@ -113,10 +113,9 @@
  * Called by [/obj/item/circuit_component] whenever it is disconnected from
  * an integrated circuit
  */
-/datum/port/proc/disconnect()
+/datum/port/proc/disconnect_all()
 	for(var/datum/port/port as anything in connected_ports)
-		port.connected_ports -= src
-	connected_ports = null
+		disconnect(port)
 
 /**
  * Sets the output value of the port
@@ -127,10 +126,15 @@
 /datum/port/proc/set_output(v)
 	set_value(v)
 	for(var/datum/port/input/input as anything in connected_ports)
-		if(!compatible_datatypes(type,input.datatype))
-			connected_ports -= input
-			input.connected_ports -= src
-		input.receive_output(value)
+		if(compatible_datatypes(type,input.datatype))
+			input.receive_output(value)
+		else
+			disconnect(input)
+
+
+/datum/port/proc/disconnect(/datum/port/other)
+	connected_ports -= other
+	other.connected_ports -= src
 
 /// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
 /datum/port/proc/null_output(datum/source)
@@ -181,8 +185,8 @@
 /datum/port/input/proc/connect(datum/port/output/output)
 	if(!compatible_datatypes(output.datatype, src.datatype))
 		return
-	connected_ports += output
-	output.connected_ports += src
+	connected_ports |= output
+	output.connected_ports |= src
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
 		set_input(output.value)

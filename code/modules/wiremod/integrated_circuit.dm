@@ -234,16 +234,17 @@
 			var/current_data = port.value
 			if(isatom(current_data)) // Prevent passing the name of the atom.
 				current_data = null
+			var/list/connected_to = list()
+			for(var/datum/port/output/output as anything in port.connected_ports)
+				connected_to += list(REF(output))
 			component_data["input_ports"] += list(list(
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port), // The ref is the identifier to work out what it is connected to
-				"connected_to" = list(),
+				"connected_to" = connected_to,
 				"color" = port.color,
 				"current_data" = current_data,
 			))
-			for(var/datum/port/output/output as anything in port.connected_ports)
-				component_data["input_ports"]["connected_to"] += REF(output)
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
 			component_data["output_ports"] += list(list(
@@ -339,7 +340,7 @@
 				return
 
 			var/datum/port/port = port_table[port_id]
-			port.disconnect()
+			port.disconnect_all()
 			. = TRUE
 		if("detach_component")
 			var/component_id = text2num(params["component_id"])
