@@ -61,11 +61,7 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bci_action/Destroy()
-	button_name = null
-	signal = null
-
 	QDEL_NULL(bci_action)
-
 	return ..()
 
 /obj/item/circuit_component/bci_action/populate_options()
@@ -181,14 +177,6 @@
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)
-
-	message = null
-	send_message_signal = null
-
-	user_port = null
-
-	user = null
-
 	return ..()
 
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)

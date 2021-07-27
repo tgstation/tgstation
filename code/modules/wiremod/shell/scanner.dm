@@ -41,12 +41,6 @@
 	attacking = add_output_port("Scanned Entity", PORT_TYPE_ATOM)
 	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/wiremod_scanner/Destroy()
-	attacker = null
-	attacking = null
-	signal = null
-	return ..()
-
 /obj/item/circuit_component/wiremod_scanner/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, .proc/handle_afterattack)
 
