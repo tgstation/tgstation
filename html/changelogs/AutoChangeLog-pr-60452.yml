@@ -1,0 +1,5 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - qol: "Poll Candidates alerts no longer steal window focus, like ghost role rolls and cult leadership votes."
+  - code_imp: "Added an autofocus argument to tgui_alert, defaults on, that can be used to prevent accidental inputs from surprise alerts when used."

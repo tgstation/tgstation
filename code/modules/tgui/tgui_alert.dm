@@ -8,8 +8,9 @@
  * * title - The of the alert modal, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0)
+/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -18,7 +19,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
+	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout, autofocus)
 	alert.ui_interact(user)
 	alert.wait()
 	if (alert)
@@ -36,8 +37,9 @@
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
+ * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0)
+/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -46,7 +48,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
+	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout, autofocus)
 	alert.ui_interact(user)
 
 /**
@@ -68,13 +70,16 @@
 	var/start_time
 	/// The lifespan of the tgui_modal, after which the window will close and delete itself.
 	var/timeout
+	/// The bool that controls if this modal should grab window focus
+	var/autofocus
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
+/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, autofocus)
 	src.title = title
 	src.message = message
 	src.buttons = buttons.Copy()
+	src.autofocus = autofocus
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -110,7 +115,8 @@
 	. = list(
 		"title" = title,
 		"message" = message,
-		"buttons" = buttons
+		"buttons" = buttons,
+		"autofocus" = autofocus
 	)
 
 	if(timeout)
@@ -140,8 +146,8 @@
 	/// The callback to be invoked by the tgui_modal upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout)
-	..(user, message, title, buttons, timeout)
+/datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout, autofocus)
+	..(user, message, title, buttons, timeout, autofocus)
 	src.callback = callback
 
 /datum/tgui_modal/async/Destroy(force, ...)

@@ -315,10 +315,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 // Format an energy value measured in Power Cell units.
 /proc/DisplayEnergy(units)
 	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into GLOB.CELLRATE energy units when charging cells.
+	// excess power into watts when charging cells.
 	// With the current configuration of wait=20 and CELLRATE=0.002, this
 	// means that one unit is 1 kJ.
-	return DisplayJoules(units * SSmachines.wait * 0.1 / GLOB.CELLRATE)
+	return DisplayJoules(units * SSmachines.wait * 0.1 WATTS)
 
 /proc/get_mob_by_ckey(key)
 	if(!key)
