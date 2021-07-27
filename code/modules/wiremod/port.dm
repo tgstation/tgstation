@@ -202,9 +202,8 @@
  * * connected_port - The connected output port
  * * new_value - The new value received from the output port
  */
-/datum/port/input/proc/receive_output(datum/port/output/connected_port, new_value)
-	put(new_value)
-	// SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, new_value))
+/datum/port/input/proc/receive_value(datum/port/output/connected_port, new_value)
+	SScircuit_component.add_callback(CALLBACK(src, .proc/put, new_value))
 
 /**
  * Updates the value of the input
