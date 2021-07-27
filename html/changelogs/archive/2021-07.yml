@@ -793,3 +793,49 @@
   timothymtorres:
   - bugfix: High Volume Vent Pump Layer 3 icon state to be correct
   - balance: Add musical instruments to maint loot list
+2021-07-27:
+  Domitius:
+  - bugfix: One spraycan can no longer colour every light on the station.
+  Fikou:
+  - code_imp: bless aware hud is no longer hardcoded for chaplains
+  Ghommie:
+  - bugfix: Sentient monkeys are no longer subsceptible to being knocked over by mobs
+      in their way.
+  JohnFulpWillard:
+  - bugfix: Zombies no longer get permanently hungry.
+  Mothblocks:
+  - rscadd: Added brain-computer interface circuit shells.
+  Nari Harimoto:
+  - bugfix: AI can now no longer be pushed even when anchored, only when dead or unanchored
+      can it be pushed (grab a dead core to swap places)
+  - bugfix: borgs can now no longer be pushed when in combat mode and alive, you will
+      always swap places with dead borg corpses.
+  PositiveEntropy, tf-4:
+  - imageadd: Thanks to a collaboration between the frontier sector and the core sector,
+      the parade jackets now boast new and varied apperances for all to enjoy, with
+      a new parade jacket releasing for the Head of Security!
+  - imageadd: In no short effort than the finest of tailors, the captain's hat, the
+      centcom hat, the captain's jumpsuit and the captain's carapace now have finer
+      gold trims and the finest quality leather available, making them more vibrant
+      for all!
+  - expansion: To utilize the new variants, simply alt-click a parade jacket, or a
+      centcom commander coat. You can also obtain a Head of Security parade jacket
+      by simply accessing the Head of Security's closet!
+  TheSmallBlue:
+  - expansion: Adds the pathfinding component.
+  Thunder12345:
+  - code_imp: Killed the miscellaneous items file!
+  Wallem:
+  - bugfix: Only foods which are created at mapload require player interaction in
+      order to decompose.
+  Wayland-Smithy:
+  - spellcheck: Made the Doppler Array explosive sale message less wordy.
+  - bugfix: Fixed Chat Highlighting working on your own Binary messages.
+  dragomagol:
+  - bugfix: lavaland syndie base and seed vault no longer explode into green tiles
+  timothymtorres:
+  - expansion: Added xeno plasma statue
+  tralezab:
+  - spellcheck: Tiger Cooperative Traitors now have a slightly better uplink information
+      flavor text
+  - code_imp: killed the global vars misc file!
