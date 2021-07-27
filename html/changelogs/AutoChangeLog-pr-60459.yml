@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "the elite syndie suit now has the proper icons on its first equip"
