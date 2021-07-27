@@ -107,11 +107,20 @@
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
 
+/datum/port/output/set_datatype(new_type)
+	for(var/datum/port/input/input as anything in connected_ports)
+		if(!compatible_datatypes(datatype,input.datatype))
+			disconnect(input)
+	..()
+
+/datum/port/input/set_datatype(new_type)
+	for(var/datum/port/output/output as anything in connected_ports)
+		if(!compatible_datatypes(output.datatype,datatype))
+			disconnect(input)
+	..()
+
 /**
- * Disconnects a port from all other ports
- *
- * Called by [/obj/item/circuit_component] whenever it is disconnected from
- * an integrated circuit
+ * Disconnects a port from all other ports.
  */
 /datum/port/proc/disconnect_all()
 	for(var/datum/port/port as anything in connected_ports)
@@ -126,15 +135,12 @@
 /datum/port/proc/set_output(v)
 	set_value(v)
 	for(var/datum/port/input/input as anything in connected_ports)
-		if(compatible_datatypes(type,input.datatype))
-			input.receive_output(value)
-		else
-			disconnect(input)
+		input.receive_output(value)
 
 
-/datum/port/proc/disconnect(/datum/port/other)
-	connected_ports -= other
-	other.connected_ports -= src
+/datum/port/proc/disconnect(datum/port/tgt)
+	src.connected_ports -= tgt
+	tgt.connected_ports -= src
 
 /// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
 /datum/port/proc/null_output(datum/source)
@@ -182,14 +188,14 @@
 /**
  * Introduces two ports to one another.
  */
-/datum/port/input/proc/connect(datum/port/output/output)
-	if(!compatible_datatypes(output.datatype, src.datatype))
+/datum/port/input/proc/connect(datum/port/output/tgt)
+	if(!compatible_datatypes(tgt.datatype, src.datatype))
 		return
-	connected_ports |= output
-	output.connected_ports |= src
+	src.connected_ports |= tgt
+	tgt.connected_ports |= src
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
-		set_input(output.value)
+		set_input(tgt.value)
 
 
 /**
