@@ -1,6 +1,6 @@
 /**
  * Adding this component to an Atom will have it automatically render an overlay.
- * The overlay can be specified in new as the first and only parameter; it defaults to "rust" if not included.
+ * The overlay can be specified in new as the first paramter; if not set it defaults to rust_overlay's rust_default
  */
 /datum/component/rust
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -19,22 +19,21 @@
 	var/atom/wall_new = new /turf/open/floor/plating(src)
 	wall_new.AddComponent(/datum/component/rust)
 
-/datum/component/rust/Initialize(rust_iconstate = "rust")
+/datum/component/rust/Initialize(mutable_appearance/overlay)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	rust_overlay = overlay || mutable_appearance('icons/effects/rust_overlay.dmi', "rust_default")
+	// Unfortunately registering with parent sometimes doesn't cause an overlay update
+	ADD_TRAIT(parent, TRAIT_RUSTY, src)
 	var/atom/parent_atom = parent
-	if(!(rust_iconstate in icon_states(parent_atom.icon)))
-		return COMPONENT_INCOMPATIBLE
-
-	rust_overlay = mutable_appearance(parent_atom.icon, rust_iconstate)
+	parent_atom.update_icon(UPDATE_OVERLAYS)
 
 /datum/component/rust/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(parent, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/parent_del)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
-	ADD_TRAIT(parent, TRAIT_RUSTY, src)
 
 /datum/component/rust/UnregisterFromParent()
 	UnregisterSignal(parent,\
