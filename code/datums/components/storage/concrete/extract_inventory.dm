@@ -24,7 +24,6 @@
 =======
 set_holdable(/obj/item/food/monkeycube)
 >>>>>>> master
->>>>>>> master
 	if(istype(parent, /obj/item/slimecross/reproductive))
 		parentSlimeExtract = parent
 	else
