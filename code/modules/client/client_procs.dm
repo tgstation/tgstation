@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
 
 	var/alert_mob_dupe_login = FALSE
-	var/alert_admin_mulitkey = FALSE
+	var/alert_admin_multikey = FALSE
 	if(CONFIG_GET(flag/log_access))
 		var/list/joined_players = list()
 		for(var/player_ckey in GLOB.joined_player_list)
@@ -343,8 +343,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_panel.initialize()
 
 	if(alert_mob_dupe_login && !holder)
-		dupe_login_message = "You're ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
-		if (alert_admin_mulitkey)
+		var/dupe_login_message = "You're ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
+		if (alert_admin_multikey)
 			dupe_login_message += "\nAdmins have been informed."
 			message_admins(span_danger("<B>MULTIKEYING: </B></span><span class='notice'>[key_name_admin(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned."))
 			log_admin_private("MULTIKEYING: [key_name(src)] has a matching CID+IP with another player and is clearly multikeying. They have been warned to leave the server or risk getting banned.")
