@@ -6,7 +6,6 @@ import { CSS_COLORS } from '../../constants';
 import { classes, shallowDiffers } from '../../../common/react';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
-import { logger } from '../../logging';
 
 const NULL_REF = "[0x0]";
 const ABSOLUTE_Y_OFFSET = -32;
