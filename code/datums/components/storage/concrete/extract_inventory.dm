@@ -19,7 +19,6 @@
 <<<<<<< HEAD
 	set_holdable(/obj/item/food/monkeycube)
 =======
-<<<<<<< HEAD
 set_holdable(/obj/item/food/monkeycube)
 >>>>>>> master
 	if(istype(parent, /obj/item/slimecross/reproductive))
