@@ -37,8 +37,8 @@
 	if(speaker == parent?.shell)
 		return
 
-	message_port.put(raw_message)
+	message_port.set_output(raw_message)
 	if(message_language)
-		language_port.put(initial(message_language.name))
-	speaker_port.put(speaker)
-	trigger_port.put(COMPONENT_SIGNAL)
+		language_port.set_output(initial(message_language.name))
+	speaker_port.set_output(speaker)
+	trigger_port.set_output(COMPONENT_SIGNAL)

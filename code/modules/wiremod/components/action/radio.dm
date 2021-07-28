@@ -42,7 +42,7 @@
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
 	. = ..()
-	freq.put(sanitize_frequency(freq.value, TRUE), FALSE)
+	freq.set_input(sanitize_frequency(freq.value, TRUE))
 	if(.)
 		return
 	var/frequency = freq.value
@@ -65,4 +65,4 @@
 	if(current_option == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
 		return
 
-	trigger_output.put(COMPONENT_SIGNAL)
+	trigger_output.set_output(COMPONENT_SIGNAL)

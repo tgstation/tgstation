@@ -45,4 +45,4 @@
 			continue
 		new_list += anything
 
-	output_list.put(new_list)
+	output_list.set_output(new_list)

@@ -93,4 +93,4 @@
 		if(add_to_list)
 			new_list += list(entry)
 
-	filtered_table.put(new_list)
+	filtered_table.set_output(new_list)

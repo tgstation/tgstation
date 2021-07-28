@@ -45,4 +45,4 @@
 
 	var/list/result = splittext(value,separator_value)
 
-	output.put(result)
+	output.set_output(result)

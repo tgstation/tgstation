@@ -10,5 +10,5 @@
 	var/obj/item/circuit_component/speech/speech = new()
 	add_component(speech)
 
-	speech.message.put("Hello World")
+	speech.message.set_input("Hello World")
 

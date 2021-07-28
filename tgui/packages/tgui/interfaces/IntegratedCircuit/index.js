@@ -7,7 +7,6 @@ import { classes, shallowDiffers } from '../../../common/react';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
 
-const NULL_REF = "[0x0]";
 const ABSOLUTE_Y_OFFSET = -32;
 const SVG_CURVE_INTENSITY = 64;
 

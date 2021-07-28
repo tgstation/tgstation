@@ -75,8 +75,8 @@
 	var/atom/path_id = id_card.value
 	if(path_id && !istype(path_id, /obj/item/card/id))
 		path_id = null
-		failed.put(COMPONENT_SIGNAL)
-		reason_failed.put("Object marked is not an ID! Using no ID instead.")
+		failed.set_output(COMPONENT_SIGNAL)
+		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")
 
 	// Get both the current turf and the destination's turf
 	var/turf/current_turf = get_turf(src)
@@ -84,7 +84,7 @@
 
 	// We're already here! No need to do anything.
 	if(current_turf == destination)
-		finished.put(COMPONENT_SIGNAL)
+		finished.set_output(COMPONENT_SIGNAL)
 		old_dest = null
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 		next_turf = null
@@ -97,7 +97,7 @@
 		if(current_turf == next_turf)
 			popleft(path)
 			next_turf = get_turf(path[1])
-			output.put(next_turf)
+			output.set_output(next_turf)
 
 			// Restart the cooldown since we don't need a new path ( TIMER_COOLDOWN_START might restart the timer by itself and i dont need to call TIMER_COOLDOWN_END, but better safe than sorry )
 			TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
@@ -107,8 +107,8 @@
 	else // Either we're not going to the same place or the cooldown is over. Either way, we need a new path
 
 		if(destination != old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
-			failed.put(COMPONENT_SIGNAL)
-			reason_failed.put("Cooldown still active!")
+			failed.set_output(COMPONENT_SIGNAL)
+			reason_failed.set_output("Cooldown still active!")
 			return
 
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
@@ -117,13 +117,13 @@
 		path = get_path_to(src, destination, max_range, id=path_id)
 		if(length(path) == 0 || !path)// Check if we can even path there
 			next_turf = null
-			failed.put(COMPONENT_SIGNAL)
-			reason_failed.put("Can't go there!")
+			failed.set_output(COMPONENT_SIGNAL)
+			reason_failed.set_output("Can't go there!")
 			return
 		else
 			TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF, different_path_cooldown)
 			popleft(path) // The first step is literally where we are right now, so we dont need it
 			next_turf = get_turf(path[1])
-			output.put(next_turf)
+			output.set_output(next_turf)
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME, same_path_cooldown)
 

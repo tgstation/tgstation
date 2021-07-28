@@ -48,5 +48,5 @@
 		if(COMP_TEXT_UPPER)
 			result = uppertext(value)
 
-	output.put(result)
+	output.set_output(result)
 

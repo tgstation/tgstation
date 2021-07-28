@@ -42,5 +42,5 @@
 
 		result += "[value]"
 
-	output.put(result)
+	output.set_output(result)
 

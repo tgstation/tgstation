@@ -33,8 +33,8 @@
 
 	var/mob/living/carbon/human/human = input_port.value
 	if(!istype(human) || !human.has_dna())
-		output.put(null)
+		output.set_output(null)
 		return
 
-	output.put(human.dna.species.name)
+	output.set_output(human.dna.species.name)
 

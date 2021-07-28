@@ -30,5 +30,5 @@
 	if(.)
 		return
 
-	result.put(!input_port.value)
+	result.set_output(!input_port.value)
 

@@ -61,7 +61,7 @@
  * Sets the port's value to value.
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
-/datum/port/proc/put(value)
+/datum/port/proc/set_value(value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
 	if(src.value == value)
 		return
@@ -77,6 +77,21 @@
 	src.value = value
 
 /**
+ * Updates the value of the input
+ *
+ * It updates the value of the input and calls input_received on the connected component
+ * Arguments:
+ * * port_to_register - The port to connect the input port to
+ */
+/datum/port/input/proc/set_input(value)
+	set_value(value)
+	if(trigger)
+		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
+
+/datum/port/output/proc/set_output(value)
+	set_value(value)
+
+/**
  * Sets the datatype of the port.
  *
  * Arguments:
@@ -86,7 +101,7 @@
 	SEND_SIGNAL(src, COMSIG_PORT_SET_TYPE, new_type)
 	var/old_type = datatype
 	datatype = new_type
-	put(compatible_datatypes(old_type, new_type) ? value : null)
+	set_value(compatible_datatypes(old_type, new_type) ? value : null)
 	color = datatype_to_color()
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
@@ -156,7 +171,7 @@
 
 /datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
-	put(default)
+	set_input(default)
 	src.trigger = trigger
 	src.connected_ports = list()
 
@@ -172,14 +187,14 @@
 	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
-		put(output.value)
+		set_input(output.value)
 
 /**
  * Mirror value updates from connected output ports after an input_receive_delay.
  */
 /datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	SScircuit_component.add_callback(CALLBACK(src, .proc/put, value))
+	SScircuit_component.add_callback(CALLBACK(src, .proc/set_input, value))
 
 /**
  * Handle type updates from connected output ports, breaking uncastable connections.
@@ -188,15 +203,3 @@
 	SIGNAL_HANDLER
 	if(!compatible_datatypes(new_type, src.datatype))
 		disconnect(output)
-
-/**
- * Updates the value of the input
- *
- * It updates the value of the input and calls input_received on the connected component
- * Arguments:
- * * port_to_register - The port to connect the input port to
- */
-/datum/port/input/put(value)
-	..(value)
-	if(trigger)
-		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)

@@ -46,4 +46,4 @@
 	SIGNAL_HANDLER
 	source.balloon_alert(user, "pushed button")
 	playsound(source, get_sfx("terminal_type"), 25, FALSE)
-	signal.put(COMPONENT_SIGNAL)
+	signal.set_output(COMPONENT_SIGNAL)

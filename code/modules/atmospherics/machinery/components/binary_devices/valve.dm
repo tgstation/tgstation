@@ -125,11 +125,11 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return ..()
 
 /obj/item/circuit_component/digital_valve/proc/handle_valve_toggled(datum/source, on)
-	is_open.put(on)
+	is_open.set_output(on)
 	if(on)
-		opened.put(COMPONENT_SIGNAL)
+		opened.set_output(COMPONENT_SIGNAL)
 	else
-		closed.put(COMPONENT_SIGNAL)
+		closed.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/digital_valve/input_received(datum/port/input/port)
 	. = ..()

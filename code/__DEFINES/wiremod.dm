@@ -2,7 +2,7 @@
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.value && trigger == port)
 
 /// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
-#define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.put(COMPONENT_SIGNAL)
+#define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
 
 // Port defines
 

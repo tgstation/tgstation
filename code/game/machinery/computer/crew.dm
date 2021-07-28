@@ -84,7 +84,7 @@
 
 		new_table += list(entry)
 
-	records.put(new_table)
+	records.set_output(new_table)
 
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
