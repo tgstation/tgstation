@@ -15,8 +15,8 @@
 	rust_overlay = image(_rust_icon, _rust_icon_state)
 	ADD_TRAIT(parent, TRAIT_RUSTY, src)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
-	RegisterSignal(parent, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
+	RegisterSignal(parent, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	var/atom/parent_atom = parent
 	parent_atom.update_icon(UPDATE_OVERLAYS)
@@ -24,7 +24,7 @@
 /datum/element/rust/Detach(datum/source, ...)
 	. = ..()
 	UnregisterSignal(parent,\
-		list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), COMSIG_PARENT_PREQDELETED)
+		list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(parent, TRAIT_RUSTY, src)
 	var/atom/parent_atom = parent
 	parent_atom.update_icon(UPDATE_OVERLAYS)
