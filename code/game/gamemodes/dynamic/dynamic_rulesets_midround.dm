@@ -762,12 +762,7 @@
 	create_midwife_eggs(spawncount)
 	return ..()
 
-//////////////////////////////////////////////
-//                                          //
-//           REVENANT  (GHOST)              //
-//                                          //
-//////////////////////////////////////////////
-
+/// Revenant ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
 	antag_datum = /datum/antagonist/revenant
@@ -780,48 +775,41 @@
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
 	repeatable = TRUE
+	var/dead_mobs_required = 20
+	var/need_extra_spawns_value = 15
 	var/list/spawn_locs = list()
-	var/rev_spawn_threshold = 20
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
-	var/deadMobs = 0
-	for(var/mob/M in GLOB.dead_mob_list)
-		deadMobs++
-	if(deadMobs < rev_spawn_threshold)
+	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/execute()
-	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
-		var/turf/T = get_turf(L)
-		if(T && is_station_level(T.z))
-			spawn_locs += T
-	if(!spawn_locs.len || spawn_locs.len < 15) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
-		for(var/obj/structure/bodycontainer/bc in GLOB.bodycontainers)
-			var/turf/T = get_turf(bc)
-			if(T && is_station_level(T.z))
-				spawn_locs += T
+	for(var/mob/living/corpse in GLOB.dead_mob_list) //look for any dead bodies
+		var/turf/corpse_turf = get_turf(corpse)
+		if(corpse_turf && is_station_level(corpse_turf.z))
+			spawn_locs += corpse_turf
+	if(!spawn_locs.len || spawn_locs.len < need_extra_spawns_value) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
+		for(var/obj/structure/bodycontainer/corpse_container in GLOB.bodycontainers)
+			var/turf/container_turf = get_turf(corpse_container)
+			if(container_turf && is_station_level(container_turf.z))
+				spawn_locs += container_turf
 	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
-		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
-			if(isturf(L.loc))
-				spawn_locs += L.loc
+		for(var/obj/effect/landmark/carpspawn/carp_spawnpoint in GLOB.landmarks_list)
+			if(isturf(carp_spawnpoint.loc))
+				spawn_locs += carp_spawnpoint.loc
 	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
 		return FALSE
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
-	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
-	revvie.key = applicant.key
-	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by the midround ruleset.")
-	log_game("[key_name(revvie)] was spawned as a revenant by the midround ruleset.")
-	return revvie
+	var/mob/living/simple_animal/revenant/revenant = new(pick(spawn_locs))
+	revenant.key = applicant.key
+	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by the midround ruleset.")
+	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
+	return revenant
 
-//////////////////////////////////////////////
-//                                          //
-//       SENTIENT DISEASE (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-
+/// Sentient Disease ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
 	antag_datum = /datum/antagonist/disease
@@ -832,7 +820,6 @@
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
-	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
@@ -842,13 +829,8 @@
 	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
 	return virus
 
-//////////////////////////////////////////////
-//                                          //
-//       SPACE PIRATES     (GHOST)          //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/pirates
+/// Space Pirates ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/pirates
 	name = "Space Pirates"
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
@@ -860,11 +842,44 @@
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
+/datum/dynamic_ruleset/midround/from_ghosts/pirates/acceptable(population=0, threat=0)
+	if (!SSmapping.empty_space)
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/midround/pirates/execute()
-	//A lot of pirate code is baked into the event directly, so let's just make a copy of the event and opt to run it.
-	var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-	pirate_event.dynamic_should_hijack = FALSE
-	pirate_event.runEvent()
+	send_pirate_threat()
+	return ..()
+
+/// Obsessed ruleset
+/datum/dynamic_ruleset/midround/obsessed
+	name = "Obsessed"
+	antag_datum = /datum/antagonist/obsessed
+	antag_flag = ROLE_OBSESSED
+	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/obsessed/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/carbon/human/candidate in candidates)
+		if(!candidate.getorgan(/obj/item/organ/brain) || candidate.mind.has_antag_datum(/datum/antagonist/obsessed) || candidate.stat == DEAD || (!candidate.client || !(ROLE_OBSESSED in candidate.client.prefs.be_special)) || !SSjob.GetJob(candidate.mind.assigned_role) || candidate.mind.assigned_role in GLOB.nonhuman_positions)
+			candidates -= candidate
+
+/datum/dynamic_ruleset/midround/obsessed/execute()
+	if(!candidates || !candidates.len)
+		return FALSE
+	var/mob/living/carbon/human/obsessed = pick_n_take(candidates)
+	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
+	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
+	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return ..()
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
