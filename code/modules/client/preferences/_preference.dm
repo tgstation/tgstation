@@ -38,6 +38,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// Do not instantiate if type matches this.
 	var/abstract_type = /datum/preference
 
+	/// What savefile should this preference be read from?
+	/// Valid values are PREFERENCE_CHARACTER and PREFERENCE_PLAYER.
+	/// See the documentation in [code/__DEFINES/preferences.dm].
+	// MOTHBLOCKS TODO: Verify all are set (and valid) in unit tests.
+	var/savefile_identifier
+
 /// Called on the saved input when retrieving.
 /// Input is the value inside the savefile, output is to tell other code
 /// what the value is.
@@ -97,23 +103,35 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`apply()` was not implemented for [type]!")
 
+/// Returns which savefile to use for a given savefile identifier
+/datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)
+	RETURN_TYPE(/savefile)
+
+	var/savefile/savefile = new /savefile(path)
+
+	switch (savefile_identifier)
+		if (PREFERENCE_CHARACTER)
+			savefile.cd = "/character[default_slot]"
+		if (PREFERENCE_PLAYER)
+			savefile.cd = "/"
+		else
+			CRASH("Unknown savefile identifier [savefile_identifier]")
+
+	return savefile
+
 /// Read a /datum/preference type and return its value
 /datum/preferences/proc/read_preference(preference_type)
 	var/datum/preference/preference_entry = GLOB.preference_entries[preference_type]
 	if (isnull(preference_entry))
 		CRASH("Preference type `[preference_type]` is invalid!")
 
-	var/savefile/savefile = new /savefile(path)
-	savefile.cd = "/character[default_slot]"
-	return preference_entry.read(savefile)
+	return preference_entry.read(get_savefile_for_savefile_identifier(preference_entry.savefile_identifier))
 
 /// Set a /datum/preference type.
 /// Returns TRUE for a successful preference application.
 /// Returns FALSE if it is invalid.
 /datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
-	var/savefile/savefile = new /savefile(path)
-	savefile.cd = "/character[default_slot]"
-	return preference.write(savefile, preference_value)
+	return preference.write(get_savefile_for_savefile_identifier(preference.savefile_identifier), preference_value)
 
 /// Checks that a given value is valid.
 /// Must be overriden by subtypes.

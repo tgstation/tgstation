@@ -1,6 +1,7 @@
 /// A preference for a name. Used not just for normal names, but also for clown names, etc.
 /datum/preference/name
 	category = "names"
+	savefile_identifier = PREFERENCE_CHARACTER
 	abstract_type = /datum/preference/name
 
 	/// The display name when showing on the "other names" panel

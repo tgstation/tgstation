@@ -1,6 +1,7 @@
 /datum/preference/age
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_key = "age"
+	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/age/deserialize(input)
 	return sanitize_integer(input, AGE_MIN, AGE_MAX, create_default_value())

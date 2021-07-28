@@ -6,6 +6,7 @@
 
 /datum/preference/choiced/moth_antennae
 	savefile_key = "feature_moth_antennae"
+	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	should_generate_icons = TRUE
 
@@ -29,6 +30,7 @@
 
 /datum/preference/choiced/moth_markings
 	savefile_key = "feature_moth_markings"
+	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	should_generate_icons = TRUE
 
@@ -87,6 +89,7 @@
 
 /datum/preference/choiced/moth_wings
 	savefile_key = "feature_moth_wings"
+	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	should_generate_icons = TRUE
 
@@ -108,6 +111,7 @@
 
 /datum/preference/color/eye_color
 	savefile_key = "eye_color"
+	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/color/eye_color/apply(mob/living/carbon/human/target, value)
@@ -121,6 +125,7 @@
 
 /datum/preference/color/facial_hair_color
 	savefile_key = "facial_hair_color"
+	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/color/facial_hair_color/apply(mob/living/carbon/human/target, value)
@@ -128,6 +133,7 @@
 
 /datum/preference/color/hair_color
 	savefile_key = "hair_color"
+	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/color/hair_color/apply(mob/living/carbon/human/target, value)

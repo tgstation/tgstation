@@ -1,5 +1,6 @@
 /// Gender preference
 /datum/preference/choiced/gender
+	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "gender"
 
 /datum/preference/choiced/gender/init_possible_values()

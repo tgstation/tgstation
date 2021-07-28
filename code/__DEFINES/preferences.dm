@@ -148,3 +148,9 @@
 #define RANDOMIZE_SKIN_TONE (1<<14)
 #define RANDOMIZE_EYE_COLOR (1<<15)
 #define RANDOMIZE_FEATURES (1<<16)
+
+// Values for /datum/preference/savefile_identifier
+/// This preference is character specific.
+#define PREFERENCE_CHARACTER "character"
+/// This preference is account specific.
+#define PREFERENCE_PLAYER "player"

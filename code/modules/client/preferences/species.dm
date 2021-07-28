@@ -1,5 +1,6 @@
 /// Species preference
 /datum/preference/choiced/species
+	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "species"
 
 // MOTHBLOCKS TODO: What is keyed_list/roundstart_no_hard_check?
