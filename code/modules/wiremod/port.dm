@@ -109,7 +109,7 @@
 
 /datum/port/input/set_datatype(new_type)
 	for(var/datum/port/output/output as anything in connected_ports)
-		if(!compatible_datatypes(output.datatype,datatype))
+		if(!compatible_datatypes(output.datatype,new_type))
 			disconnect(output)
 	..()
 
