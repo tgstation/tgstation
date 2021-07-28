@@ -7724,15 +7724,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
-"ayT" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/electrolyzer,
-/turf/open/floor/iron,
-/area/maintenance/disposal/incinerator)
 "ayU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -10720,11 +10711,6 @@
 	name = "Holodeck Projector Floor"
 	},
 /area/holodeck/rec_center)
-"aIK" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/vending/drugs,
-/turf/open/floor/iron/dark,
-/area/medical/storage)
 "aIL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -15208,6 +15194,11 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/commons/storage/tools)
+"bKr" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/vending/drugs,
+/turf/open/floor/iron/dark,
+/area/medical/storage)
 "bKx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -18339,6 +18330,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
+"cWg" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/machinery/module_duplicator,
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "cWr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -33942,6 +33940,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/psychology)
+"iWO" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "iWV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -35773,27 +35780,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
-"jKG" = (
-/obj/machinery/requests_console/directional/north{
-	announcementConsole = 1;
-	department = "Head of Personnel's Desk";
-	departmentType = 5;
-	name = "Head of Personnel's Requests Console"
-	},
-/obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/storage/box/silver_ids{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/assembly/flash/handheld{
-	pixel_x = -8
-	},
-/turf/open/floor/wood,
-/area/command/heads_quarters/hop)
 "jKR" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/white/line{
@@ -37024,19 +37010,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/science/misc_lab)
-"kgy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/obj/machinery/requests_console/directional/north{
-	department = "Medbay";
-	departmentType = 1;
-	name = "Medbay Requests Console"
-	},
-/obj/structure/closet/l3closet,
-/turf/open/floor/iron/white,
-/area/medical/storage)
 "kgP" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -43225,17 +43198,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
-"mzy" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
-/obj/structure/rack,
-/obj/machinery/light/directional/south,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/compact_remote,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "mzF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -48429,15 +48391,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
-"oHX" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
-/obj/structure/rack,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/integrated_circuit/loaded/hello_world,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "oIj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -63781,6 +63734,19 @@
 "uEX" = (
 /turf/closed/wall,
 /area/security/checkpoint/escape)
+"uFJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/machinery/requests_console/directional/north{
+	department = "Medbay";
+	departmentType = 1;
+	name = "Medbay Requests Console"
+	},
+/obj/structure/closet/l3closet,
+/turf/open/floor/iron/white,
+/area/medical/storage)
 "uFL" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
@@ -65846,6 +65812,27 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
+"vxi" = (
+/obj/machinery/requests_console/directional/north{
+	announcementConsole = 1;
+	department = "Head of Personnel's Desk";
+	departmentType = 5;
+	name = "Head of Personnel's Requests Console"
+	},
+/obj/structure/table/wood,
+/obj/item/storage/secure/briefcase{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/storage/box/silver_ids{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/assembly/flash/handheld{
+	pixel_x = -8
+	},
+/turf/open/floor/wood,
+/area/command/heads_quarters/hop)
 "vxz" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/start/hangover,
@@ -72564,6 +72551,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"xRv" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/obj/structure/rack,
+/obj/machinery/light/directional/south,
+/obj/item/controller,
+/obj/item/compact_remote,
+/obj/item/integrated_circuit/loaded/hello_world,
+/obj/item/integrated_circuit/loaded/speech_relay,
+/obj/item/compact_remote,
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "xRE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -112131,7 +112131,7 @@ rzp
 tWb
 jbA
 diU
-ayT
+iWO
 jyz
 jaO
 eDs
@@ -119580,7 +119580,7 @@ xVI
 omI
 kgw
 nAo
-oHX
+cWg
 der
 mkm
 czI
@@ -119837,7 +119837,7 @@ pft
 ixB
 utS
 vVw
-mzy
+xRv
 der
 der
 der
@@ -167628,7 +167628,7 @@ gkW
 xZF
 bsl
 ofE
-kgy
+uFJ
 tOs
 oeG
 rIE
@@ -168403,7 +168403,7 @@ mJp
 nEg
 mhz
 ozN
-aIK
+bKr
 snA
 aae
 aae
@@ -171446,7 +171446,7 @@ vGu
 iEx
 jgJ
 vGu
-jKG
+vxi
 dUE
 vGR
 qWH
