@@ -138,9 +138,7 @@
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/offlimits_exit_reaction(datum/source, mob/living/leaving, direction)
 	SIGNAL_HANDLER
-	if(!istype(leaving))
-		return FALSE
-	return TRUE
+	return istype(leaving)
 
 /**
  * Checks if the user is ok to use the radial
