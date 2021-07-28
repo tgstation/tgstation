@@ -34830,9 +34830,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "dVY" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -34846,6 +34843,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -35060,22 +35060,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/hallway/secondary/exit/departure_lounge)
+/turf/open/floor/iron/grimy,
+/area/service/chapel/main)
 "dWU" = (
+/obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -38955,12 +38945,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"eFU" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron/grimy,
-/area/service/chapel/main)
 "eFX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -44864,6 +44848,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -58108,17 +58095,6 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
 /area/command/meeting_room/council)
-"jWm" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/hallway/secondary/exit/departure_lounge)
 "jWo" = (
 /obj/structure/cable,
 /turf/open/floor/iron{
@@ -76064,7 +76040,9 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "oyj" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron/grimy,
 /area/service/chapel/main)
 "oyx" = (
@@ -77160,6 +77138,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -96629,9 +96610,6 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Hall"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -109446,12 +109424,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
-"xnL" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/iron/grimy,
-/area/service/chapel/main)
 "xnP" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -148614,7 +148586,7 @@ gKO
 dYu
 nlB
 noK
-xnL
+hPv
 oyj
 nqU
 rPJ
@@ -148871,8 +148843,8 @@ vcI
 dSJ
 nlB
 yjE
-eFU
 hPv
+dWS
 lJI
 dTS
 iWi
@@ -149386,8 +149358,8 @@ dST
 dTJ
 dUB
 dVl
+dWU
 dVl
-dWS
 tpS
 dVl
 dZn
@@ -149644,7 +149616,7 @@ sCL
 vHW
 vHW
 oLg
-jWm
+gzW
 gzW
 gzW
 gzW
@@ -149901,7 +149873,7 @@ dTE
 dUx
 dUx
 dVY
-dWU
+dUx
 dUx
 dUx
 dUx
