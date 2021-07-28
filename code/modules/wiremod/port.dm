@@ -61,33 +61,21 @@
  * Sets the port's value to v.
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
-/datum/port/proc/put(v)
-	if(value == v)
+/datum/port/proc/put(new_value)
+	if(value == new_value)
 		return
 	if(isatom(value))
 		UnregisterSignal(value, COMSIG_PARENT_QDELETING)
-	value = v
-	if(isnull(value))
-		return
-	value = cast(value, datatype)
+	if(datatype == PORT_TYPE_STRING)
+		// So that they can't easily get the name like this.
+		new_value = isatom(value) ? PORT_TYPE_ATOM : copytext("[value]", 1, PORT_MAX_STRING_LENGTH)
+	value = new_value
 	if(isatom(value))
 		var/atom/atom_to_check = value
 		if(QDELETED(atom_to_check))
 			return null
 		RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_output)
 
-/**
- * Implicit conversion of a value to a type.
- * Assumes that the types are compatible.
- */
-/proc/cast(value, type)
-	switch(type)
-		if(PORT_TYPE_STRING)
-			// So that they can't easily get the name like this.
-			if(isatom(value))
-				return PORT_TYPE_ATOM
-			return copytext("[value]", 1, PORT_MAX_STRING_LENGTH)
-	return value
 
 /**
  * Sets the datatype of the port.
@@ -155,8 +143,6 @@
  * * new_type - The datatype to cast to.
  */
 /proc/compatible_datatypes(old_type, new_type)
-	if(isnull(old_type))
-		return FALSE
 	if(new_type == PORT_TYPE_ANY)
 		return TRUE
 	if(new_type == old_type)
