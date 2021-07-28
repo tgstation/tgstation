@@ -180,15 +180,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME 5 MINUTES
 
-//unmagic-strings for types of polls
-#define POLLTYPE_OPTION "OPTION"
-#define POLLTYPE_TEXT "TEXT"
-#define POLLTYPE_RATING "NUMVAL"
-#define POLLTYPE_MULTI "MULTICHOICE"
-#define POLLTYPE_IRV "IRV"
-
-
-
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 

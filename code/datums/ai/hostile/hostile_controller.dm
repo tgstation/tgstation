@@ -41,7 +41,7 @@
 	return ..() //Run parent at end
 
 /datum/ai_controller/hostile_friend/proc/on_prebuckle(mob/source, mob/living/buckler, force, buckle_mob_flags)
-	if(force)
+	if(force || ai_status == AI_STATUS_OFF)
 		return
 	if(WEAKREF(buckler) != blackboard[BB_HOSTILE_FRIEND])
 		return COMPONENT_BLOCK_BUCKLE
@@ -114,7 +114,7 @@
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
-	if(!istype(clicker) || !blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
+	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
 		return
 	. = COMPONENT_CANCEL_CLICK_ALT
 	INVOKE_ASYNC(src, .proc/command_radial, clicker)

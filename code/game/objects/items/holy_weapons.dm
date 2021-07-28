@@ -40,59 +40,6 @@
 	slowdown = 0
 	clothing_flags = NONE
 
-/obj/item/choice_beacon/holy
-	name = "armaments beacon"
-	desc = "Contains a set of armaments for the chaplain."
-
-/obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
-	if(user.mind && user.mind.holy_role)
-		return ..()
-	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
-		return FALSE
-
-/obj/item/choice_beacon/holy/generate_display_names()
-	var/static/list/holy_item_list
-	if(!holy_item_list)
-		holy_item_list = list()
-		var/list/templist = typesof(/obj/item/storage/box/holy)
-		for(var/V in templist)
-			var/atom/A = V
-			holy_item_list[initial(A.name)] = A
-	return holy_item_list
-
-/obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
-	if(!GLOB.holy_armor_type)
-		..()
-		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
-		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-		GLOB.holy_armor_type = choice
-	else
-		to_chat(M, span_warning("A selection has already been made. Self-Destructing..."))
-		return
-
-
-/obj/item/storage/box/holy/clock
-	name = "Forgotten kit"
-
-/obj/item/storage/box/holy/clock/PopulateContents()
-	new /obj/item/clothing/head/helmet/chaplain/clock(src)
-	new /obj/item/clothing/suit/armor/riot/chaplain/clock(src)
-
-/obj/item/storage/box/holy
-	name = "Templar Kit"
-
-/obj/item/storage/box/holy/PopulateContents()
-	new /obj/item/clothing/head/helmet/chaplain(src)
-	new /obj/item/clothing/suit/armor/riot/chaplain(src)
-
-/obj/item/storage/box/holy/student
-	name = "Profane Scholar Kit"
-
-/obj/item/storage/box/holy/student/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/studentuni(src)
-	new /obj/item/clothing/head/helmet/chaplain/cage(src)
-
 /obj/item/clothing/suit/armor/riot/chaplain/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
@@ -109,13 +56,6 @@
 	dynamic_hair_suffix = ""
 	worn_y_offset = 7
 
-/obj/item/storage/box/holy/sentinel
-	name = "Stone Sentinel Kit"
-
-/obj/item/storage/box/holy/sentinel/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
-	new /obj/item/clothing/head/helmet/chaplain/ancient(src)
-
 /obj/item/clothing/head/helmet/chaplain/ancient
 	name = "ancient helmet"
 	desc = "None may pass!"
@@ -127,13 +67,6 @@
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
 	inhand_icon_state = "knight_ancient"
-
-/obj/item/storage/box/holy/witchhunter
-	name = "Witchhunter Kit"
-
-/obj/item/storage/box/holy/witchhunter/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/witchhunter(src)
-	new /obj/item/clothing/head/helmet/chaplain/witchunter_hat(src)
 
 /obj/item/clothing/suit/armor/riot/chaplain/witchhunter
 	name = "witchunter garb"
@@ -150,13 +83,6 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEEYES|HIDEHAIR
 
-/obj/item/storage/box/holy/adept
-	name = "Divine Adept Kit"
-
-/obj/item/storage/box/holy/adept/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
-	new /obj/item/clothing/head/helmet/chaplain/adept(src)
-
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
 	desc = "Its only heretical when others do it."
@@ -170,16 +96,6 @@
 	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	inhand_icon_state = "crusader"
-
-/obj/item/storage/box/holy/follower
-	name = "Followers of the Chaplain Kit"
-
-/obj/item/storage/box/holy/follower/PopulateContents()
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"

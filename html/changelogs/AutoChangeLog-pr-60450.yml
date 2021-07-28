@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - bugfix: "Flowers now have a Natrual Insecticide gene which protects them from decomposition upon harvest."

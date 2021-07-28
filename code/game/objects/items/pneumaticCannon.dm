@@ -83,6 +83,7 @@
 	else if(W.type == type)
 		to_chat(user, span_warning("You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption."))
 	else if(W.tool_behaviour == TOOL_WRENCH)
+		playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
 		switch(pressureSetting)
 			if(1)
 				pressureSetting = 2

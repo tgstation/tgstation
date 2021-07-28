@@ -1371,6 +1371,12 @@
 	/// Cancels the attack chain, but without performing any other action.
 	#define COMSIG_CANCEL_USB_CABLE_ATTACK (1<<2)
 
+/// Called when the circuit component is saved.
+#define COMSIG_CIRCUIT_COMPONENT_SAVE "circuit_component_save"
+
+/// Called when an external object is loaded.
+#define COMSIG_MOVABLE_CIRCUIT_LOADED "movable_circuit_loaded"
+
 /// Sent from /obj/structure/industrial_lift/tram when its travelling status updates. (travelling)
 #define COMSIG_TRAM_SET_TRAVELLING "tram_set_travelling"
 
@@ -1393,3 +1399,11 @@
 #define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
 /// Called on a bag being detached from a vacuum parent
 #define COMSIG_VACUUM_BAG_DETACH "comsig_vacuum_bag_detach"
+
+// Organ signals
+/// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
+#define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
+
+/// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
+#define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+
