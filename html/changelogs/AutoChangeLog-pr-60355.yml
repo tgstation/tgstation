@@ -1,6 +1,0 @@
-author: "EuSouAFazer"
-delete-after: True
-changes: 
-  - expansion: "Kilostation Medbay's solar now starts with a Space Carp that cannot destroy stuff."
-  - expansion: "Kilostation Security's solar now doesn't have a solar computer, instead having an empty computer frame and the circuitboard nearby. There is also 2 glass nearby as well."
-  - expansion: "Kilostation Engineering's solar now starts partially built, with a box with assembly and glass nearby."
