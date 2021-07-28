@@ -210,7 +210,7 @@
 	. = ..()
 	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
 	// Especially since it looks like we don't even change the default icon/iconstate???
-	AddComponent(/datum/component/rust)
+	AddElement(/datum/element/rust)
 
 /turf/open/floor/stone
 	name = "stone brick floor"

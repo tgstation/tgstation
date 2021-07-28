@@ -10,7 +10,7 @@
 
 /datum/element/rust/Attach(atom/target, _rust_icon = 'icons/effects/rust_overlay.dmi', _rust_icon_state = "rust_default")
 	. = ..()
-	if(!isatom(parent))
+	if(!isatom(target))
 		return COMPONENT_INCOMPATIBLE
 	rust_overlay = image(_rust_icon, _rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, src)
@@ -47,14 +47,14 @@
 		if(TOOL_WELDER)
 			if(item.use(5))
 				user.balloon_alert(user, "burning off rust...")
-				if(!do_after(user, 5 SECONDS * item.toolspeed, parent))
+				if(!do_after(user, 5 SECONDS * item.toolspeed, source))
 					return
 				user.balloon_alert(user, "burned off rust")
 				qdel(src)
 				return
 		if(TOOL_RUSTSCRAPER)
 			user.balloon_alert(user, "scraping off rust...")
-			if(!do_after(user, 2 SECONDS * item.toolspeed, parent))
+			if(!do_after(user, 2 SECONDS * item.toolspeed, source))
 				return
 			user.balloon_alert(user, "scraped off rust")
 			qdel(src)
