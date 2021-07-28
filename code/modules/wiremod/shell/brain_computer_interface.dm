@@ -133,13 +133,13 @@
 
 /obj/item/circuit_component/bci_action/proc/update_action()
 	bci_action.name = button_name.input_value
-	bci_action.button_icon_state = "nanite_[replacetextEx(lowertext(current_option), " ", "_")]"
+	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(current_option), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "nanite_power"
+	button_icon_state = "bci_power"
 
 	var/obj/item/circuit_component/bci_action/circuit_component
 
@@ -317,9 +317,9 @@
 	name = "brain-computer interface manipulation chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
 	circuit = /obj/item/circuitboard/machine/bci_implanter
-	icon = 'icons/obj/machines/nanite_chamber.dmi'
-	icon_state = "nanite_chamber"
-	base_icon_state = "nanite_chamber"
+	icon = 'icons/obj/machines/bci_implanter.dmi'
+	icon_state = "bci_implanter"
+	base_icon_state = "bci_implanter"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
