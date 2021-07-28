@@ -42015,7 +42015,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "dyu" = (
 /obj/structure/flora/grass/jungle{
@@ -69101,7 +69101,7 @@
 "pqf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "pqg" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -72095,7 +72095,7 @@
 /obj/item/toy/plush/plasmamanplushie{
 	name = "Lithium II"
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "qCn" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -83661,7 +83661,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "vzr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -85185,7 +85185,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/item/flashlight/lamp,
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "wje" = (
 /obj/structure/table/glass,
@@ -89394,7 +89394,7 @@
 /obj/item/toy/plush/plasmamanplushie{
 	name = "Dianion XV"
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "xUW" = (
 /obj/effect/turf_decal/tile/neutral{
