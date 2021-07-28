@@ -84,20 +84,23 @@
 
 	var/atom/anchor = get_atom_on_turf(src)
 	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
-	set_holoform(choice)
-	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [chassis]."))
+	if(!choice)
+		return FALSE
+	set_holochassis(choice)
+	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [choice]."))
+	update_resting()
 
 /**
  * Sets the holochassis skin and updates the icons
  * * Arguments:
- * * chassis The animal skin that will be used for the pAI holoform
+ * * choice The animal skin that will be used for the pAI holoform
  */
-/mob/living/silicon/pai/proc/set_holoform(chassis)
-	if(!chassis)
+/mob/living/silicon/pai/proc/set_holochassis(choice)
+	if(!choice)
 		return FALSE
+	chassis = choice
 	icon_state = "[chassis]"
 	held_state = "[chassis]"
-	update_resting()
 
 /**
  * Checks if we are allowed to interact with a radial menu
