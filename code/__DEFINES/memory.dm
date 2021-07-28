@@ -26,6 +26,10 @@
 #define MEMORY_BORGED "borged"
 ///a memory of dying! includes time of death
 #define MEMORY_DEATH "death"
+///a memory of being creampied! Mentions where
+#define MEMORY_CREAMPIED "creampied"
+///a memory of being slipped! Mentions on what
+#define MEMORY_SLIPPED "slipped"
 
 ///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
