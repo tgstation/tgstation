@@ -240,7 +240,7 @@
 #undef HIEROPHANT_BLINK_RANGE
 #undef HIEROPHANT_BLINK_COOLDOWN
 
-//Bubblegum: Mayhem in a Bottle, Demon Lungs
+//Bubblegum: Mayhem in a Bottle, H.E.C.K. Suit, Soulscythe
 
 /obj/item/mayhem
 	name = "mayhem in a bottle"
@@ -256,6 +256,99 @@
 	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
 	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
+
+/obj/item/clothing/suit/space/hardsuit/hostile_environment
+	name = "H.E.C.K. suit"
+	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
+	icon_state = "hostile_env"
+	inhand_icon_state = "hostile_env"
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
+	slowdown = 0
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+
+/obj/item/clothing/suit/space/hardsuit/hostile_environment/process(delta_time)
+	. = ..()
+	var/mob/living/carbon/wearer = loc
+	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
+		if(DT_PROB(7.5, delta_time))
+			new /datum/hallucination/oh_yeah(wearer)
+			to_chat(wearer, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b>"))
+		else
+			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment
+	name = "H.E.C.K. helmet"
+	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
+	icon_state = "hardsuit0-heck"
+	inhand_icon_state = "hostile_env"
+	hardsuit_type = "heck"
+	w_class = WEIGHT_CLASS_NORMAL
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
+	actions_types = list()
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/Initialize()
+	. = ..()
+	update_appearance()
+	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	butchering.butchering_enabled = TRUE
+	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/dropped(mob/user, silent = FALSE)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	butchering.butchering_enabled = FALSE
+	to_chat(user, span_notice("You lose your bloodlust."))
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/proc/butcher_target(mob/user, atom/target, proximity)
+	SIGNAL_HANDLER
+	if(!isliving(target))
+		return
+	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/proc/consume(mob/living/user, mob/living/butchered)
+	if(butchered.mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT))
+		return
+	var/health_consumed = butchered.maxHealth * 0.1
+	user.heal_ordered_damage(health_consumed, list(BRUTE, BURN, TOX))
+	to_chat(user, span_notice("You heal from the corpse of [butchered]."))
+	var/datum/client_colour/color = user.add_client_colour(/datum/client_colour/bloodlust)
+	QDEL_IN(color, 1 SECONDS)
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/update_overlays()
+	. = ..()
+	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
+	glass_overlay.appearance_flags = RESET_COLOR
+	. += glass_overlay
+
+/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/glass_overlay = mutable_appearance('icons/mob/clothing/head.dmi', "hostile_env_glass")
+		glass_overlay.appearance_flags = RESET_COLOR
+		. += glass_overlay
+
+/obj/item/soulscythe
+	name = "soulscythe"
+	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "soulscythe"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	var/mob/living/simple_animal/hostile/soulscythe/soul
+
+/obj/item/soulscythe/attack_self(mob/user, modifiers)
+	. = ..()
+
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 

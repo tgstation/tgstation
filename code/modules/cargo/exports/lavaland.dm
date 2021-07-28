@@ -34,8 +34,6 @@
 						/obj/item/dragons_blood,
 						/obj/item/lava_staff,
 						/obj/item/prisoncube,
-						/obj/item/clothing/suit/space/hostile_environment,
-						/obj/item/clothing/head/helmet/space/hostile_environment,
 						)
 
 //Megafauna loot, except for ash drakes
@@ -50,6 +48,7 @@
 						/obj/item/mayhem,
 						/obj/item/gun/magic/staff/spellblade,
 						/obj/item/storm_staff,
+						/obj/item/clothing/suit/space/hardsuit/hostile_environment,
 						)
 
 /datum/export/lavaland/megafauna/total_printout(datum/export_report/ex, notes = TRUE) //in the unlikely case a miner feels like selling megafauna loot

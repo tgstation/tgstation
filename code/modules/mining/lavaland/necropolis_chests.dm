@@ -97,7 +97,6 @@
 			new /obj/item/lava_staff(src)
 		if(3)
 			new /obj/item/book/granter/spell/sacredflame(src)
-			new /obj/item/gun/magic/wand/fireball(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 
@@ -112,14 +111,13 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
-	new /obj/item/clothing/suit/space/hostile_environment(src)
-	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
+	new /obj/item/clothing/suit/space/hardsuit/hostile_environment(src)
 	var/loot = rand(1,2)
 	switch(loot)
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/gun/magic/staff/spellblade(src)
+			new /obj/item/soulscythe(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"
