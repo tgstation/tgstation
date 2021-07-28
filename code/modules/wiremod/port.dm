@@ -104,7 +104,7 @@
 		SStgui.update_uis(connected_component.parent)
 
 /datum/port/output/set_datatype(new_type)
-	SEND_SIGNAL(src, COMSIG_PORT_TYPE, new_type)
+	SEND_SIGNAL(src, COMSIG_WIREMOD, new_type=new_type)
 	..()
 
 /datum/port/input/set_datatype(new_type)
@@ -123,7 +123,7 @@
 		disconnect(port)
 
 /datum/port/output/disconnect_all()
-	SEND_SIGNAL(src, COMSIG_PORT_TYPE, null)
+	SEND_SIGNAL(src, COMSIG_WIREMOD, disconnect=TRUE)
 
 
 /**
@@ -134,13 +134,12 @@
  */
 /datum/port/output/put(v)
 	..(v)
-	SEND_SIGNAL(src, COMSIG_PORT_VALUE, v)
+	SEND_SIGNAL(src, COMSIG_WIREMOD, new_value=v)
 
 
 /datum/port/input/proc/disconnect(datum/port/output/output)
 	connected_ports -= output
-	UnregisterSignal(output, COMSIG_PORT_TYPE)
-	UnregisterSignal(output, COMSIG_PORT_VALUE)
+	UnregisterSignal(output, COMSIG_WIREMOD)
 
 /// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
 /datum/port/proc/null_output(datum/source)
@@ -195,30 +194,24 @@
 	if(!compatible_datatypes(output.datatype, src.datatype))
 		return
 	connected_ports |= output
-	RegisterSignal(output, COMSIG_PORT_TYPE, .proc/receive_type)
-	RegisterSignal(output, COMSIG_PORT_VALUE, .proc/receive_value)
+	RegisterSignal(output, COMSIG_WIREMOD, .proc/receive)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
 		put(output.value)
 
 /**
  * Handle an output port update.
+ * Values are handled with an input_receive_delay
  */
-/datum/port/input/proc/receive_type(datum/port/output/output, new_type)
+/datum/port/input/proc/receive(datum/port/output/output, new_value=null, new_type=null, disconnect=FALSE)
 	SIGNAL_HANDLER
-	if(!compatible_datatypes(new_type, src.datatype))
+	if(disconnect)
 		disconnect(output)
-
-/**
- * Sets a timer depending on the value of the input_receive_delay
- *
- * The timer will call a proc that updates the value.
- * Arguments:
- * * connected_port - The connected output port
- * * new_value - The new value received from the output port
- */
-/datum/port/input/proc/receive_value(datum/port/output/connected_port, new_value)
-	SScircuit_component.add_callback(CALLBACK(src, .proc/put, new_value))
+	else if(new_type)
+		if(!compatible_datatypes(new_type, src.datatype))
+			disconnect(output)
+	else
+		SScircuit_component.add_callback(CALLBACK(src, .proc/put, new_value))
 
 /**
  * Updates the value of the input
