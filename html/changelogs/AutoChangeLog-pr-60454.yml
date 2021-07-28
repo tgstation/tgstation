@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - qol: "Adds some on examine instructions for constructing a turret"
