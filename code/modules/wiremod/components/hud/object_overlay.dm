@@ -120,5 +120,3 @@
 	for(var/atom/target_atom in active_overlays)
 		owner.client.images.Remove(active_overlays[target_atom])
 		active_overlays.Remove(target_atom)
-
-#undef OBJECT_OVERLAY_LIMIT
