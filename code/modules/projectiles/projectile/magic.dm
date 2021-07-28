@@ -161,7 +161,7 @@
 		M = shapeshift.stored
 		shapeshift.restore()
 
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+	if(!istype(M) || istype(M, /mob/living/simple_animal/hostile/mimic/copy)) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
 	M.notransform = TRUE
