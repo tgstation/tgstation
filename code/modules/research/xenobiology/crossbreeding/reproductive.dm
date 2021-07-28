@@ -48,14 +48,15 @@ Reproductive extracts:
 
 	else if(istype(O, /obj/item/food/monkeycube))
 		slimeStorage.locked = FALSE //This weird unlock-then-lock nonsense brought to you courtesy of storage jank
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE, FALSE)
-		slimeStorage.locked = TRUE
-		to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
-		slimeStorage.processCubes(src, user)
-		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-		return
-	else
-		to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
+		if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE))
+			to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
+			slimeStorage.processCubes(src, user)
+			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+			slimeStorage.locked = TRUE //relock once its done inserting
+			return
+		else
+			slimeStorage.locked = TRUE //it couldnt insert for some reason, relock it
+			to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
 
 /obj/item/slimecross/reproductive/Destroy()
 	slimeStorage = null
