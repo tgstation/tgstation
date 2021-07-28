@@ -149,7 +149,7 @@
 /obj/item/plate/oven_tray
 	name = "oven tray"
 	desc = "Time to bake cookies!"
-	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "oven_tray"
 
 
 
