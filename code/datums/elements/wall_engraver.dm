@@ -40,7 +40,6 @@
 		return
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")
 	if(!memory_to_engrave)
-		message_admins("posted cringe")
 		return
 	if(!user.Adjacent(wall))
 		return

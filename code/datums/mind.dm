@@ -263,12 +263,13 @@
 	if(replaced_memory)
 		qdel(replaced_memory)
 
+	var/extra_info_parsed = list()
 
 	for(var/key in extra_info)
-		var/detail = extra_info
-		extra_info[key] = build_story_detail(detail)
+		var/detail = extra_info[key]
+		extra_info_parsed[key] = build_story_detail(detail)
 
-	memories[memory_type] = new /datum/memory(build_story_mob(current), memory_type, extra_info, story_mood)
+	memories[memory_type] = new /datum/memory(build_story_mob(current), memory_type, extra_info_parsed, story_mood)
 	return memories[memory_type]
 
 ///returns the story name of a mob
@@ -292,7 +293,7 @@
 
 /datum/mind/proc/select_memory(verbage)
 
-	var/list/choice_list = choices
+	var/list/choice_list = list()
 
 	for(var/key in memories)
 		var/datum/memory/memory_iter = memories[key]

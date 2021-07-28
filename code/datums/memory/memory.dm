@@ -124,8 +124,10 @@
 /datum/memory/proc/generate_memory_name()
 	var/names = strings(MEMORY_FILE, action + "_names")
 	var/line = pick(names)
+	line = replacetext(line, "%MEMORIZER", "\improper[memorizer]")
 	for(var/key in extra_info)
 		var/detail = extra_info[key]
 		line = replacetext(line, "%[key]", "[detail]")
+	name = line
 
 
