@@ -12,7 +12,8 @@
 	. = ..()
 	if(!isatom(target))
 		return COMPONENT_INCOMPATIBLE
-	rust_overlay = image(_rust_icon, _rust_icon_state)
+	if(!rust_overlay)
+		rust_overlay = image(_rust_icon, _rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, src)
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
