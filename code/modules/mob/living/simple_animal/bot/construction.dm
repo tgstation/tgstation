@@ -526,3 +526,55 @@
 				new /obj/item/assembly/prox_sensor(Tsec)
 				to_chat(user, span_notice("You detach the proximity sensor from [src]."))
 				build_step--
+
+//Vim Assembly
+/obj/item/bot_assembly/vim
+	name = "incomplete vim assembly"
+	desc = "A space helmet with a leg attached to it. Looks like it needs another leg, if it is to become something."
+	icon_state = "vim_0"
+	created_name = "\improper Vim"
+
+/obj/item/bot_assembly/vim/attackby(obj/item/part, mob/user, params)
+	. = ..()
+	if(.)
+		return
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(istype(part, /obj/item/bodypart/l_leg/robot) || istype(part, /obj/item/bodypart/r_leg/robot))
+				if(!user.temporarilyRemoveItemFromInventory(part))
+					return
+				balloon_alert(user, "leg attached")
+				icon_state = "vim_1"
+				desc = "Some kind of incomplete mechanism. It seems to be missing the headlights."
+				qdel(part)
+				build_step++
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(istype(part, /obj/item/flashlight))
+				if(!user.temporarilyRemoveItemFromInventory(part))
+					return
+				balloon_alert(user, "flashlight added")
+				icon_state = "vim_2"
+				desc = "Some kind of incomplete mechanism. The flashlight is added, but not secured."
+				qdel(part)
+				build_step++
+
+		if(ASSEMBLY_THIRD_STEP)
+			if(part.tool_behaviour == TOOL_SCREWDRIVER)
+				balloon_alert(user, "securing flashlight...")
+				if(!part.use_tool(src, user, 4 SECONDS, volume=100))
+					return
+				balloon_alert(user, "flashlight secured")
+				icon_state = "vim_3"
+				desc = "Some kind of incomplete mechanism. It seems nearly completed, and just needs a voice assembly."
+				build_step++
+
+		if(ASSEMBLY_FOURTH_STEP)
+			if(istype(part, /obj/item/assembly/voice))
+				if(!can_finish_build(part, user))
+					return
+				balloon_alert(user, "assembly finished")
+				var/obj/vehicle/sealed/car/vim/new_vim = new(drop_location())
+				new_vim.name = created_name
+				qdel(part)
+				qdel(src)

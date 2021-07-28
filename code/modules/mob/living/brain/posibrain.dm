@@ -21,7 +21,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	///Message sent as a visible message on failure
 	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
 	///Role assigned to the newly created mind
-	var/new_role = "Positronic Brain"
+	var/posibrain_job_path = /datum/job/positronic_brain
 	///Visible message sent when a player possesses the brain
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	///Examine message when the posibrain has no mob
@@ -125,7 +125,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.timeofhostdeath = C.timeofdeath
 	brainmob.set_stat(CONSCIOUS)
 	if(brainmob.mind)
-		brainmob.mind.assigned_role = new_role
+		brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
 	if(C.mind)
 		C.mind.transfer_to(brainmob)
 
@@ -148,7 +148,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)
-	brainmob.mind.assigned_role = new_role
+	brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
 	brainmob.set_stat(CONSCIOUS)
 
 	visible_message(new_mob_message)

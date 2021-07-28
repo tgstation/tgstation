@@ -1,0 +1,4 @@
+author: "Itseasytosee"
+delete-after: True
+changes: 
+  - qol: "ghosts will no longer get fake virus alerts"
