@@ -46773,7 +46773,7 @@
 /obj/item/toy/plush/plasmamanplushie{
 	name = "Dianion XV"
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "fEv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -52367,6 +52367,14 @@
 /obj/item/exodrone,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"ihW" = (
+/mob/living/simple_animal/hostile/carp{
+	environment_smash = 0;
+	name = "Tuna";
+	real_name = "Tuna"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/space/nearstation)
 "iig" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53571,7 +53579,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "iKf" = (
 /obj/effect/turf_decal/stripes/line{
@@ -53784,7 +53792,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/item/flashlight/lamp,
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "iNS" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -55286,7 +55294,7 @@
 /obj/item/toy/plush/plasmamanplushie{
 	name = "Lithium II"
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "jtw" = (
 /obj/effect/decal/cleanable/dirt,
@@ -59442,23 +59450,23 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "kYB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/computer/shuttle/mining/common,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "kYM" = (
@@ -61416,6 +61424,10 @@
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/iron/white,
 /area/security/prison/safe)
+"lWV" = (
+/obj/item/circuitboard/computer/solar_control,
+/turf/open/floor/plating/asteroid/airless,
+/area/space/nearstation)
 "lWY" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral{
@@ -62170,7 +62182,7 @@
 "moK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "moM" = (
 /obj/structure/table/reinforced,
@@ -64278,19 +64290,35 @@
 /turf/open/floor/iron/showroomfloor,
 /area/service/bar/atrium)
 "nlx" = (
+/obj/structure/cable,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = 32
-	},
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "nlG" = (
 /obj/machinery/mass_driver{
@@ -68103,6 +68131,11 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison/safe)
+"oWM" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/sheet/glass,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "oXB" = (
 /obj/machinery/computer/security{
 	dir = 4
@@ -68548,37 +68581,17 @@
 /area/engineering/atmos)
 "pdW" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/assembly/signaler{
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another. Slightly scooted.";
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/assembly/signaler{
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another. Slightly scooted.";
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/assembly/signaler{
-	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another. Slightly scooted.";
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/iron/showroomfloor,
 /area/science/test_area)
 "pen" = (
@@ -69569,7 +69582,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/turf/open/floor/plating/rust/plasma,
+/turf/open/floor/plating/plasma/rust,
 /area/maintenance/space_hut/plasmaman)
 "pwa" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -72719,9 +72732,7 @@
 /area/service/chapel/main)
 "qPj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/extinguisher/mini,
-/obj/item/storage/toolbox/emergency,
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "qPt" = (
@@ -77829,11 +77840,6 @@
 /turf/closed/wall,
 /area/command/bridge)
 "tgq" = (
-/obj/machinery/power/solar_control{
-	dir = 4;
-	id = "aftport";
-	name = "Port Quarter Solar Control"
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -77843,6 +77849,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -80631,6 +80641,11 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/space/nearstation)
+"ujp" = (
+/obj/effect/turf_decal/box,
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel/airless,
+/area/solars/starboard/aft)
 "ujw" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/stripes/line{
@@ -83755,6 +83770,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/test_area)
+"vAB" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/sheet/glass,
+/turf/open/space/basic,
+/area/solars/port/aft)
 "vAL" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
@@ -83775,9 +83795,9 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/research/explosive_compressor,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron/dark,
 /area/science/test_area)
 "vBv" = (
@@ -102326,7 +102346,7 @@ tnI
 oUy
 aau
 aeU
-cmU
+oWM
 jOe
 jOe
 jOe
@@ -102842,7 +102862,7 @@ asO
 cmU
 cmU
 foo
-foo
+vAB
 foo
 foo
 foo
@@ -104317,7 +104337,7 @@ aeu
 aeU
 aeU
 coy
-aeU
+ihW
 aDS
 nBm
 bFI
@@ -104642,7 +104662,7 @@ acK
 cmU
 aeU
 aUz
-aeU
+lWV
 aeU
 cnS
 cuU
@@ -131900,10 +131920,10 @@ aeu
 aUz
 cmU
 nRr
-nRr
-nRr
-nRr
-nRr
+ujp
+ujp
+ujp
+ujp
 kuv
 nRr
 nRr
@@ -132415,15 +132435,15 @@ aeU
 cmU
 nRr
 nRr
-nRr
-nRr
-nRr
+ujp
+ujp
+ujp
 kuv
 nRr
 nRr
 nRr
-nRr
-nRr
+ujp
+ujp
 acm
 aeo
 acm
@@ -132928,7 +132948,7 @@ aeU
 cmU
 nRr
 nRr
-nRr
+ujp
 nRr
 nRr
 xOh
@@ -133444,12 +133464,12 @@ nRr
 nRr
 nRr
 nRr
-nRr
+ujp
 xOh
 kuv
 xOh
-nRr
-nRr
+ujp
+ujp
 nRr
 nRr
 nRr
@@ -133961,9 +133981,9 @@ nRr
 nRr
 nRr
 kuv
-nRr
-nRr
-nRr
+ujp
+ujp
+ujp
 nRr
 nRr
 acm
