@@ -9,7 +9,7 @@
 /obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!human.wear_suit)
 		return TRUE
-	if(human.wear_suit.flags_inv & ~HIDEJUMPSUIT)
+	if(!(human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return TRUE
 	if(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
 		return TRUE
@@ -169,6 +169,9 @@
 
 /obj/item/organ/external/wings/moth/get_global_feature_list()
 	return GLOB.moth_wings_list
+
+/obj/item/organ/external/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
+	return TRUE
 
 /obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()

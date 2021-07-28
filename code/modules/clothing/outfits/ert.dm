@@ -628,7 +628,7 @@
 )
 	uniform = /obj/item/clothing/under/syndicate/camo
 	belt = /obj/item/storage/belt/utility/full/powertools
-	glasses =  /obj/item/clothing/glasses/night
+	glasses =  /obj/item/clothing/glasses/welding
 	r_pocket = /obj/item/rcd_ammo/large
 
 /datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)

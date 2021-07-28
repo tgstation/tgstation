@@ -169,6 +169,8 @@
 
 /obj/structure/closet/proc/take_contents()
 	var/atom/L = drop_location()
+	if(!L)
+		return
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
 			break

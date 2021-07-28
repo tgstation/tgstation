@@ -314,6 +314,7 @@
 /proc/truncate(text, max_length)
 	if(length(text) > max_length)
 		return copytext(text, 1, max_length)
+	return text
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)

@@ -38,6 +38,9 @@
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif
 
+/// Gets the version of rust_g
+/proc/rustg_get_version() return call(RUST_G, "get_version")()
+
 /**
  * This proc generates a cellular automata noise grid which can be used in procedural generation methods.
  *
@@ -98,4 +101,12 @@
 #define rustg_sql_connected(handle) call(RUST_G, "sql_connected")(handle)
 #define rustg_sql_disconnect_pool(handle) call(RUST_G, "sql_disconnect_pool")(handle)
 #define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")
+
+#define rustg_url_encode(text) call(RUST_G, "url_encode")(text)
+#define rustg_url_decode(text) call(RUST_G, "url_decode")(text)
+
+#ifdef RUSTG_OVERRIDE_BUILTINS
+	#define url_encode(text) rustg_url_encode(text)
+	#define url_decode(text) rustg_url_decode(text)
+#endif
 

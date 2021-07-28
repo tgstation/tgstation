@@ -260,7 +260,7 @@
 			new_mob = new path(M.loc)
 
 		if("humanoid")
-			new_mob = new /mob/living/carbon/human(M.loc)
+			var/mob/living/carbon/human/new_human = new (M.loc)
 
 			if(prob(50))
 				var/list/chooseable_races = list()
@@ -269,17 +269,16 @@
 					if(initial(S.changesource_flags) & WABBAJACK)
 						chooseable_races += speciestype
 
-				if(chooseable_races.len)
-					new_mob.set_species(pick(chooseable_races))
+				if(length(chooseable_races))
+					new_human.set_species(pick(chooseable_races))
 
-			var/datum/preferences/A = new() //Randomize appearance for the human
-			A.copy_to(new_mob, icon_updates=0)
-
-			var/mob/living/carbon/human/H = new_mob
-			H.update_body()
-			H.update_hair()
-			H.update_body_parts()
-			H.dna.update_dna_identity()
+			// Randomize everything but the species, which was already handled above.
+			new_human.randomize_human_appearance(~RANDOMIZE_SPECIES)
+			new_human.update_body()
+			new_human.update_hair()
+			new_human.update_body_parts()
+			new_human.dna.update_dna_identity()
+			new_mob = new_human
 
 	if(!new_mob)
 		return
@@ -575,8 +574,8 @@
 /obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/M)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
 	var/poll_message = "Do you want to play as [M.real_name]?"
-	if(M.mind && M.mind.assigned_role)
-		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+	if(M.mind)
+		poll_message = "[poll_message] Job:[M.mind.assigned_role.title]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
 	else if(M.mind)

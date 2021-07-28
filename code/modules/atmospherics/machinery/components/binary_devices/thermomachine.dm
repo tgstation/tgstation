@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	icon_state = "freezer"
+	icon_state = "thermo_base"
 
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
@@ -19,11 +19,10 @@
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
-	set_dir_on_move = FALSE
+	greyscale_config = /datum/greyscale_config/thermomachine
+	greyscale_colors = COLOR_VIBRANT_LIME
 
-	var/icon_state_off = "freezer"
-	var/icon_state_on = "freezer_1"
-	var/icon_state_open = "freezer-o"
+	set_dir_on_move = FALSE
 
 	var/min_temperature = T20C //actual temperature will be defined by RefreshParts() and by the cooling var
 	var/max_temperature = T20C //actual temperature will be defined by RefreshParts() and by the cooling var
@@ -81,30 +80,43 @@
 
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
-	if(cooling)
-		icon_state_off = "freezer"
-		icon_state_on = "freezer_1"
-		icon_state_open = "freezer-o"
-	else
-		icon_state_off = "heater"
-		icon_state_on = "heater_1"
-		icon_state_open = "heater-o"
+	switch(target_temperature)
+		if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+			greyscale_colors = COLOR_RED
+		if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+			greyscale_colors = COLOR_ORANGE
+		if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+			greyscale_colors = COLOR_YELLOW
+		if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+			greyscale_colors = COLOR_VIBRANT_LIME
+		if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+			greyscale_colors = COLOR_CYAN
+		if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+			greyscale_colors = COLOR_BLUE
+		else
+			greyscale_colors = COLOR_VIOLET
+
+	set_greyscale(colors=greyscale_colors)
+
 	if(panel_open)
-		icon_state = icon_state_open
+		icon_state = "thermo-open"
 		return ..()
 	if(on && is_operational)
-		icon_state = icon_state_on
+		if(skipping_work)
+			icon_state = "thermo_1_blinking"
+		else
+			icon_state = "thermo_1"
 		return ..()
-	icon_state = icon_state_off
+	icon_state = "thermo_0"
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_overlays()
 	. = ..()
-	. += getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer)
-	. += getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer)
-	if(skipping_work && on)
-		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
-		. += skipping
+	if(!initial(icon))
+		return
+	var/mutable_appearance/thermo_overlay = new(initial(icon))
+	. += getpipeimage(thermo_overlay, "pipe", dir, COLOR_LIME, piping_layer)
+	. += getpipeimage(thermo_overlay, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
@@ -232,7 +244,7 @@
 		if(!anchored)
 			to_chat(user, span_notice("Anchor [src] first!"))
 			return
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, item))
+		if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", item))
 			change_pipe_connection(panel_open)
 			return
 	if(default_change_direction_wrench(user, item))
@@ -446,15 +458,11 @@
 	. = ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer
-	icon_state = "freezer"
-	icon_state_off = "freezer"
-	icon_state_on = "freezer_1"
-	icon_state_open = "freezer-o"
 	cooling = TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on
 	on = TRUE
-	icon_state = "freezer_1"
+	icon_state = "thermo_base_1"
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize()
 	. = ..()
@@ -463,20 +471,19 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
+	icon_state = "thermo_base_1"
+	greyscale_colors = COLOR_CYAN
+	cooling = TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize()
 	. = ..()
 	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/binary/thermomachine/heater
-	icon_state = "heater"
-	icon_state_off = "heater"
-	icon_state_on = "heater_1"
-	icon_state_open = "heater-o"
 	cooling = FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/heater/on
 	on = TRUE
-	icon_state = "heater_1"
+	icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_SAFE_TEMPERATURE

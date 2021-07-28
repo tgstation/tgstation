@@ -254,6 +254,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/deaf_message
 	var/deaf_type
+	var/avoid_highlight
+	if(istype(speaker, /atom/movable/virtualspeaker))
+		var/atom/movable/virtualspeaker/virt = speaker
+		avoid_highlight = src == virt.source
+	else
+		avoid_highlight = src == speaker
+
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 		if(speaker != src)
@@ -272,7 +279,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		message = deaf_message
 
-		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlighting = speaker == src)
+		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
 		return message
 
 	if(speaker != src)
@@ -290,7 +297,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
-	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlighting = speaker == src)
+	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
 	return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, list/message_mods = list())
@@ -318,20 +325,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
 				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
-		for(var/_M in GLOB.player_list)
-			var/mob/M = _M
-			if(QDELETED(M)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
+		for(var/mob/player_mob as anything in GLOB.player_list)
+			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
 				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
-			if(M.stat != DEAD) //not dead, not important
+			if(player_mob.stat != DEAD) //not dead, not important
 				continue
-			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
+			if(get_dist(player_mob, src) > 7 || player_mob.z != z) //they're out of range of normal hearing
 				if(eavesdrop_range)
-					if(!(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+					if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
-				else if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				else if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
-			listening |= M
-			the_dead[M] = TRUE
+			listening |= player_mob
+			the_dead[player_mob] = TRUE
 
 	var/eavesdropping
 	var/eavesrendered
@@ -340,12 +346,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mods)
 
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
-	for(var/_AM in listening)
-		var/atom/movable/AM = _AM
-		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
-			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mods)
+	for(var/atom/movable/listening_movable as anything in listening)
+		if(eavesdrop_range && get_dist(source, listening_movable) > message_range && !(the_dead[listening_movable]))
+			listening_movable.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mods)
 		else
-			AM.Hear(rendered, src, message_language, message, , spans, message_mods)
+			listening_movable.Hear(rendered, src, message_language, message, , spans, message_mods)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//speech bubble

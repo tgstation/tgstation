@@ -218,6 +218,8 @@
 		leaver.update_appearance()
 
 	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
+		if(joiner == src)
+			continue
 		var/datum/gas_mixture/joiner_share = joiner.air_contents
 		if(joiner_share)
 			air_contents.merge(joiner_share)
@@ -345,8 +347,8 @@
 
 /obj/machinery/atmospherics/components/tank/air/Initialize()
 	. = ..()
-	FillToPressure(/datum/gas/oxygen, safety_margin=0.1)
-	FillToPressure(/datum/gas/nitrogen, safety_margin=0.5)
+	FillToPressure(/datum/gas/oxygen, safety_margin=(O2STANDARD * 0.5))
+	FillToPressure(/datum/gas/nitrogen, safety_margin=(N2STANDARD * 0.5))
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide

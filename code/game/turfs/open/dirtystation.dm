@@ -37,7 +37,7 @@
 	if(prob(80)) //mid dirt  - 1/15
 		return
 
-		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
+		//Construction zones. Blood, sweat, and oil.  Oh, and dirt. A small colony of space-ants or two will pop up
 	var/static/list/engine_dirt_areas = typecacheof(list(/area/engineering,
 														/area/command/heads_quarters/ce,
 														/area/science/robotics,
@@ -49,13 +49,16 @@
 		if(prob(3))
 			new /obj/effect/decal/cleanable/blood/old(src)
 		else
-			if(prob(35))
-				if(prob(4))
-					new /obj/effect/decal/cleanable/robot_debris/old(src)
-				else
-					new /obj/effect/decal/cleanable/oil(src)
-			else
-				new /obj/effect/decal/cleanable/dirt(src)
+			switch (rand(1, 100))
+				if(1 to 35)//35%
+					if(prob(4))
+						new /obj/effect/decal/cleanable/robot_debris/old(src)
+					else
+						new /obj/effect/decal/cleanable/oil(src)
+				if(35 to 95)//60%
+					new /obj/effect/decal/cleanable/dirt(src)
+				if(95 to 100)//5%
+					new /obj/effect/decal/cleanable/ants(src)
 		return
 
 		//Bathrooms. Blood, vomit, and shavings in the sinks.
@@ -67,6 +70,8 @@
 				new /obj/effect/decal/cleanable/vomit/old(src)
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
+		else if(prob(40)) //16% effective chance
+			new /obj/effect/decal/cleanable/ants(src)
 		return
 
 	// Cargo bays covered in oil.
@@ -95,7 +100,7 @@
 				new /obj/effect/decal/cleanable/blood/old(src)
 		return
 
-		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.)
+		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.), ants.
 	var/static/list/kitchen_dirt_areas = typecacheof(list(/area/service/kitchen,
 														/area/service/cafeteria))
 	if(is_type_in_typecache(A, kitchen_dirt_areas))
@@ -104,6 +109,8 @@
 				new /obj/effect/decal/cleanable/food/egg_smudge(src)
 			else
 				new /obj/effect/decal/cleanable/food/flour(src)
+		else if(prob(20)) //12% effective chance
+			new /obj/effect/decal/cleanable/ants(src)
 		return
 
 		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.

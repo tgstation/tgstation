@@ -89,7 +89,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
 
-	if(istype(source, /turf)) //turfs
+	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
 	source.mat_update_desc(src)

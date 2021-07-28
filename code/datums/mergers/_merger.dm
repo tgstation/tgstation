@@ -19,10 +19,7 @@
 #endif
 
 	/// Signals in members to trigger a refresh
-	var/static/list/refresh_signals = list(
-		COMSIG_PARENT_QDELETING,
-		COMSIG_MOVABLE_MOVED,
-	)
+	var/static/list/refresh_signals = list(COMSIG_MOVABLE_MOVED)
 
 /datum/merger/New(id, list/merged_typecache, atom/origin, attempt_merge_proc)
 #if MERGERS_DEBUG
@@ -42,18 +39,21 @@
 /datum/merger/proc/RemoveMember(atom/thing, clean=TRUE)
 	SEND_SIGNAL(thing, COMSIG_MERGER_REMOVING, src)
 	UnregisterSignal(thing, refresh_signals)
+	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
 	if(!thing.mergers)
 		return
 	thing.mergers -= id
 	if(clean && !length(thing.mergers))
 		thing.mergers = null
 	members -= thing
+	origin = null
 	if(origin == thing && length(members))
 		origin = pick(members)
 
-/datum/merger/proc/AddMember(atom/thing, connected_dir)
+/datum/merger/proc/AddMember(atom/thing, connected_dir) // note that this fires for the origin of the merger as well
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
 	RegisterSignal(thing, refresh_signals, .proc/QueueRefresh)
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/HandleMemberDel)
 	if(!thing.mergers)
 		thing.mergers = list()
 	else if(thing.mergers[id])
@@ -72,6 +72,11 @@
 	if(SSatoms.initialized != INITIALIZATION_INNEW_MAPLOAD)
 		sleep(1 SECONDS)
 #endif
+
+/datum/merger/proc/HandleMemberDel(atom/source)
+	SIGNAL_HANDLER
+	RemoveMember(source)
+	QueueRefresh()
 
 /datum/merger/proc/QueueRefresh()
 	SIGNAL_HANDLER

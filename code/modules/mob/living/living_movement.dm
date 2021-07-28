@@ -52,6 +52,8 @@
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
 /mob/living/canZMove(dir, turf/target)
+	if(buckled)
+		return buckled.can_zTravel(target, dir) && (buckled.movement_type & FLYING | FLOATING)
 	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
 
 /mob/living/keybind_face_direction(direction)

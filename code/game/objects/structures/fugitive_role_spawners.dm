@@ -1,7 +1,7 @@
 
 
 /obj/effect/mob_spawn/human/fugitive
-	assignedrole = "Fugitive Hunter"
+	spawner_job_path = /datum/job/fugitive_hunter
 	flavour_text = "" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
 	roundstart = FALSE
 	death = FALSE
