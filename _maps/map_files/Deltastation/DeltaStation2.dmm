@@ -29329,6 +29329,9 @@
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "dxq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -29339,8 +29342,6 @@
 	c_tag = "Atmospherics - Testing Room";
 	name = "atmospherics camera"
 	},
-/obj/machinery/electrolyzer,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "dxr" = (
@@ -39250,12 +39251,10 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "eKe" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/electrolyzer,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "eKl" = (
@@ -40517,7 +40516,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "eZa" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -41520,6 +41519,12 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
+"fmY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "fnc" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -51317,11 +51322,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/machinery/flasher/directional/east{
-	id = "hopflash";
-	pixel_x = 0;
-	pixel_y = 26
 	},
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central/fore)
@@ -67332,7 +67332,7 @@
 /obj/structure/displaycase/forsale/kitchen,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "mqO" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
@@ -67719,7 +67719,7 @@
 "mvy" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
@@ -73991,7 +73991,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/machinery/module_duplicator,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "nZB" = (
@@ -83762,7 +83761,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "qyU" = (
 /obj/structure/table,
 /obj/item/clothing/under/suit/black_really,
@@ -89729,10 +89728,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/hidden{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1;
-	name = "External Waste Ports to Filter"
-	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "saw" = (
@@ -99967,7 +99963,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "uEX" = (
 /obj/structure/table/wood,
 /obj/item/food/chips,
@@ -101595,7 +101591,7 @@
 	req_one_access_txt = "25;28"
 	},
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "veA" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -104821,7 +104817,7 @@
 "vWK" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/service/bar)
+/area/service/bar/atrium)
 "vWL" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -106800,7 +106796,7 @@
 	},
 /obj/item/lighter,
 /turf/open/floor/iron/dark,
-/area/service/bar)
+/area/service/bar/atrium)
 "wyv" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency{
@@ -140025,7 +140021,7 @@ twf
 awb
 dxq
 eKe
-xpD
+fmY
 mvy
 awb
 ipq
@@ -149529,7 +149525,7 @@ wPK
 rBV
 ffo
 gvd
-aXI
+ncV
 hFM
 wtr
 unM
@@ -149786,7 +149782,7 @@ ffo
 ffo
 ffo
 bvm
-aXI
+ncV
 vWE
 xXQ
 hXi
@@ -150043,7 +150039,7 @@ ouP
 jiM
 ffo
 gvd
-aXI
+ncV
 wrg
 euO
 vsR
@@ -150300,7 +150296,7 @@ ffo
 ffo
 ffo
 bvm
-aXI
+ncV
 kUs
 iJD
 mvD
@@ -150557,7 +150553,7 @@ uGU
 szL
 ffo
 wNq
-aXI
+ncV
 ude
 euO
 unM
@@ -150814,7 +150810,7 @@ ffo
 ffo
 ffo
 bvm
-aXI
+ncV
 dZu
 jNP
 krF
@@ -151071,7 +151067,7 @@ tlv
 fMD
 ffo
 lCh
-aXI
+ncV
 mvi
 qMY
 snN
@@ -151328,10 +151324,10 @@ ffo
 ffo
 ffo
 fPb
-aXI
-aXI
-aXI
-aXI
+ncV
+ncV
+ncV
+ncV
 vWK
 ncV
 ncV

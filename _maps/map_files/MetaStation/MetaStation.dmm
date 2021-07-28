@@ -22246,9 +22246,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "eUZ" = (
@@ -32684,7 +32681,7 @@
 "iGd" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/medical/medbay/central)
 "iGq" = (
 /obj/structure/lattice,
 /obj/item/broken_bottle,
@@ -45898,7 +45895,6 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
-/obj/machinery/module_duplicator,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "ncL" = (
@@ -59362,11 +59358,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/storage)
-"rvj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/electrolyzer,
-/turf/open/floor/iron,
-/area/maintenance/disposal/incinerator)
 "rvk" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -63237,6 +63228,9 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
+"sJF" = (
+/turf/open/floor/plating,
+/area/medical/medbay/central)
 "sJJ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
@@ -73083,7 +73077,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/medical/medbay/central)
 "vRT" = (
 /obj/machinery/light/directional/south,
 /obj/item/stack/sheet/cardboard{
@@ -78569,7 +78563,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/medical/medbay/central)
 "xJX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -78912,7 +78906,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/medical/cryo)
+/area/medical/coldroom)
 "xPf" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/trimline/blue/filled/end,
@@ -80135,7 +80129,7 @@
 /obj/item/clothing/head/beret/sec/navyofficer,
 /obj/item/clothing/head/beret/sec/navyofficer,
 /obj/item/clothing/head/beret/sec/navywarden,
-/obj/item/clothing/head/hos/beret/navyhos,
+/obj/item/clothing/head/beret/sec/navyhos,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -102908,7 +102902,7 @@ vgF
 wMP
 cqi
 tay
-jNL
+sJF
 diR
 bbw
 iRA
@@ -103169,7 +103163,7 @@ xJW
 cJr
 qqO
 cLd
-wRK
+iRA
 sNW
 uXo
 qkk
@@ -103426,7 +103420,7 @@ iGd
 diR
 aQv
 pfR
-wRK
+iRA
 axD
 aSC
 cmS
@@ -103683,7 +103677,7 @@ tay
 tay
 tay
 mhN
-wRK
+iRA
 yih
 aSC
 qis
@@ -104197,7 +104191,7 @@ rXb
 fRx
 qRV
 sjN
-wRK
+iRA
 cFQ
 nMX
 kKn
@@ -104454,7 +104448,7 @@ aCl
 fej
 tay
 mhN
-wRK
+iRA
 fZo
 nMX
 kKn
@@ -104711,7 +104705,7 @@ tay
 tay
 tay
 pug
-wRK
+iRA
 qOc
 nMX
 kKn
@@ -104968,7 +104962,7 @@ leR
 leR
 leR
 cvC
-wRK
+iRA
 wRK
 ldn
 sxa
@@ -119578,7 +119572,7 @@ qUk
 apc
 qYi
 nuA
-rvj
+xOg
 adk
 afQ
 ejw
