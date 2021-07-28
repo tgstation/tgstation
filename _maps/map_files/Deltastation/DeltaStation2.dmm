@@ -70014,12 +70014,18 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "nbI" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer/cargo,
 /obj/effect/turf_decal/tile/purple{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
@@ -98853,6 +98859,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "ury" = (
