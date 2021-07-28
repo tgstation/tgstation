@@ -17,7 +17,7 @@
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  */
-/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude)
+/proc/get_path_to(caller, end, max_distance = 30, mintargetdist, id=null, simulated_only = TRUE, turf/exclude, skip_first=TRUE)
 	if(!caller || !get_turf(end))
 		return
 
@@ -34,6 +34,8 @@
 	SSpathfinder.mobs.found(l)
 	if(!path)
 		path = list()
+	if(skip_first)
+		path.Cut(1,2)
 	return path
 
 /**
