@@ -152,6 +152,8 @@
 						   span_danger("You feel something attaching itself to you, and a strong desire to discuss your [elaborate_backstory] at length!"))
 
 	ADD_TRAIT(duffelvictim, TRAIT_DUFFEL_CURSE_PROOF, CURSED_ITEM_TRAIT(conjuredduffel.name))
+	conjuredduffel.pickup(duffelvictim)
+	conjuredduffel.forceMove(duffelvictim)
 	if(duffelvictim.dropItemToGround(duffelvictim.back))
 		duffelvictim.equip_to_slot_if_possible(conjuredduffel, ITEM_SLOT_BACK, TRUE, TRUE)
 	else

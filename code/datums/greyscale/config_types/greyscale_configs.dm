@@ -283,6 +283,24 @@
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
+/datum/greyscale_config/beret
+	name = "Beret"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret.json'
+
+/datum/greyscale_config/beret/worn
+	name = "Beret Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_worn.json'
+
+/datum/greyscale_config/beret_badge
+	name = "Beret With Badge"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret_badge.json'
+
+/datum/greyscale_config/beret_badge/worn
+	name = "Beret With Badge Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_badge_worn.json'
+
 /datum/greyscale_config/suspenders
 	name = "Suspenders"
 	icon_file = 'icons/obj/clothing/belts.dmi'
@@ -337,6 +355,16 @@
 	name = "Wrapping Paper"
 	icon_file = 'icons/obj/stack_objects.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wrap_paper.json'
+
+/datum/greyscale_config/meter
+	name = "Meter"
+	icon_file = 'icons/obj/atmospherics/pipes/meter.dmi'
+	json_config = 'code/datums/greyscale/json_configs/meter.json'
+
+/datum/greyscale_config/thermomachine
+	name = "Thermomachine"
+	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'
 
 /datum/greyscale_config/janicart_upgrade
 	name = "Janicart Upgrade"

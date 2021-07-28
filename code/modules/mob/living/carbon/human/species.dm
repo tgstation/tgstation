@@ -1150,11 +1150,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.visible_message(span_notice("[H] start putting on [I]..."), span_notice("You start putting on [I]..."))
 	return do_after(H, I.equip_delay_self, target = H)
 
-/datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+
+/// Equips the necessary species-relevant gear before putting on the rest of the uniform.
+/datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
-/datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.update_mutant_bodyparts()
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == exotic_blood)
@@ -1683,9 +1683,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		// display alerts based on how hot it is
 		switch(humi.bodytemperature)
-			if(0 to 460)
+			if(bodytemp_heat_damage_limit to BODYTEMP_HEAT_WARNING_2)
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
-			if(461 to 700)
+			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 			else
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
@@ -1699,9 +1699,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
 		switch(humi.bodytemperature)
-			if(201 to bodytemp_cold_damage_limit)
+			if(BODYTEMP_COLD_WARNING_2 to bodytemp_cold_damage_limit)
 				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-			if(120 to 200)
+			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
 				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 			else
 				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)

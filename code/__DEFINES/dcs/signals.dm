@@ -25,6 +25,8 @@
 #define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
 /// job subsystem has spawned and equipped a new mob
 #define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
+/// job datum has been called to deal with the aftermath of a latejoin spawn
+#define COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN "!job_after_latejoin_spawn"
 /// crewmember joined the game (mob/living, rank)
 #define COMSIG_GLOB_CREWMEMBER_JOINED "!crewmember_joined"
 /// Random event is trying to roll. (/datum/round_event_control/random_event)
@@ -933,6 +935,8 @@
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GUN_FIRED "gun_fired"
+///called in /obj/item/gun/ballistic/process_chamber (casing)
+#define COMSIG_CASING_EJECTED "casing_ejected"
 
 // /obj/effect/proc_holder/spell signals
 
@@ -1369,6 +1373,12 @@
 	/// Cancels the attack chain, but without performing any other action.
 	#define COMSIG_CANCEL_USB_CABLE_ATTACK (1<<2)
 
+/// Called when the circuit component is saved.
+#define COMSIG_CIRCUIT_COMPONENT_SAVE "circuit_component_save"
+
+/// Called when an external object is loaded.
+#define COMSIG_MOVABLE_CIRCUIT_LOADED "movable_circuit_loaded"
+
 /// Sent from /obj/structure/industrial_lift/tram when its travelling status updates. (travelling)
 #define COMSIG_TRAM_SET_TRAVELLING "tram_set_travelling"
 
@@ -1391,3 +1401,11 @@
 #define COMSIG_VACUUM_BAG_ATTACH "comsig_vacuum_bag_attach"
 /// Called on a bag being detached from a vacuum parent
 #define COMSIG_VACUUM_BAG_DETACH "comsig_vacuum_bag_detach"
+
+// Organ signals
+/// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
+#define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
+
+/// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
+#define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+

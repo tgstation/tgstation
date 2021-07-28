@@ -55,6 +55,8 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"gas_filter",
+		"plasmaman_gas_filter",
 	)
 
 /datum/techweb_node/mmi
@@ -230,11 +232,13 @@
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
+		"comp_tonumber",
 		"comp_tostring",
 		"comp_typecheck",
 		"compact_remote_shell",
 		"component_printer",
 		"integrated_circuit",
+		"module_duplicator",
 		"usb_cable",
 	)
 
@@ -653,10 +657,13 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
 		"bot_shell",
 		"door_shell",
 		"controller_shell",
 		"money_bot_shell",
+		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -666,6 +673,7 @@
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
 	design_ids = list(
+		"comp_pathfind",
 		"comp_pull",
 		"drone_shell",
 	)

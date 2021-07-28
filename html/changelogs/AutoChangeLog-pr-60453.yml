@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "constructs examine text color matches the rest of their theme."
