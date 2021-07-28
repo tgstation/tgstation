@@ -11,9 +11,9 @@
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-		new /obj/item/circuit_component/bci_action("One"),
-		new /obj/item/circuit_component/bci_action("Two"),
-		new /obj/item/circuit_component/bci_action("Three"),
+		new /obj/item/circuit_component/bci_action(src, "One"),
+		new /obj/item/circuit_component/bci_action(src, "Two"),
+		new /obj/item/circuit_component/bci_action(src, "Three"),
 	), SHELL_CAPACITY_SMALL)
 
 /obj/item/organ/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
