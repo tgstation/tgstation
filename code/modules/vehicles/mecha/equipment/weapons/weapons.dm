@@ -147,11 +147,11 @@
 
 //attachable to all mechas, like the plasma cutter
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M)
-	if(..()) //combat mech
+	. = ..()
+	if(.) //combat mech
+		return
+	if(LAZYLEN(M.equipment) < M.max_equip)
 		return TRUE
-	else if(LAZYLEN(M.equipment) < M.max_equip)
-		return TRUE
-	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
