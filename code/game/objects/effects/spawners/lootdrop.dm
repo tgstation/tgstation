@@ -885,7 +885,6 @@
 		/obj/item/reagent_containers/dropper = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/pill/maintenance = 1,
-		/obj/item/screwdriver = 1,
 		list(
 			/obj/item/stamp = 50,
 			/obj/item/stamp/denied = 50,
