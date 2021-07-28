@@ -164,6 +164,12 @@
 	if(!istype(M) || istype(M, /mob/living/simple_animal/hostile/mimic/copy)) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
+	if(istype(M, /mob/living/silicon/pai))
+		var/holoform = pick(M.possible_chassis)
+		M.set_holoform(holoform)
+		to_chat(M, span_boldnotice("Your holochassis form morphs into that of a [holoform]."
+		return
+
 	M.notransform = TRUE
 	ADD_TRAIT(M, TRAIT_IMMOBILIZED, MAGIC_TRAIT)
 	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
