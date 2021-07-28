@@ -1,10 +1,20 @@
-/datum/component/spooky
+/datum/element/spooky
+	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	id_arg_index = 2
 	var/too_spooky = TRUE //will it spawn a new instrument?
 
-/datum/component/spooky/Initialize()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
+/datum/element/spooky/Attach(datum/target, too_spooky = TRUE)
+	. = ..()
+	if(!isitem(target))
+		return ELEMENT_INCOMPATIBLE
+	src.too_spooky = too_spooky
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
 
-/datum/component/spooky/proc/spectral_attack(datum/source, mob/living/carbon/C, mob/user)
+/datum/element/spooky/Detach(datum/source)
+	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
+	return ..()
+
+/datum/element/spooky/proc/spectral_attack(datum/source, mob/living/carbon/C, mob/user)
 	SIGNAL_HANDLER
 
 	if(ishuman(user)) //this weapon wasn't meant for mortals.
@@ -36,7 +46,7 @@
 		C.Jitter(15)
 		C.stuttering = 20
 
-/datum/component/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
+/datum/element/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 		H.Paralyze(20)
 		H.set_species(/datum/species/skeleton)
@@ -55,7 +65,7 @@
 		to_chat(H, span_boldnotice("A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties."))
 		change_name(H) //time for a new name!
 
-/datum/component/spooky/proc/change_name(mob/living/carbon/human/H)
+/datum/element/spooky/proc/change_name(mob/living/carbon/human/H)
 	var/t = sanitize_name(stripped_input(H, "Enter your new skeleton name", H.real_name, null, MAX_NAME_LEN))
 	if(!t)
 		t = "spooky skeleton"
