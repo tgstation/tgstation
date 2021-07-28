@@ -870,7 +870,7 @@
 	..()
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
-		if(!candidate.getorgan(/obj/item/organ/brain) || candidate.mind.has_antag_datum(/datum/antagonist/obsessed) || candidate.stat == DEAD || (!candidate.client || !(ROLE_OBSESSED in candidate.client.prefs.be_special)) || !SSjob.GetJob(candidate.mind.assigned_role) || candidate.mind.assigned_role in GLOB.nonhuman_positions)
+		if(!candidate.getorgan(/obj/item/organ/brain) || candidate.mind.has_antag_datum(/datum/antagonist/obsessed) || candidate.stat == DEAD || !candidate.client || !(ROLE_OBSESSED in candidate.client.prefs.be_special) || !SSjob.GetJob(candidate.mind.assigned_role) || candidate.mind.assigned_role in GLOB.nonhuman_positions)
 			candidates -= candidate
 
 /datum/dynamic_ruleset/midround/obsessed/execute()
