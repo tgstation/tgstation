@@ -95,11 +95,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	var/list/identifiers = list()
 	var/list/external_objects = list() // Objects that are connected to a component. These objects will be linked to the components.
 	for(var/obj/item/circuit_component/component as anything in attached_components)
-		var/index = 1
-		var/identifier = "[component.type][index]"
-		while(identifier in identifiers)
-			index++
-			identifier = "[component.type][index]"
+		var/identifier = "[component.type][length(identifiers)]"
 		identifiers += identifier
 		circuit_to_identifiers[component] = identifier
 		var/list/objects = list()
@@ -141,12 +137,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/list/new_data = list()
 		new_data["type"] = object.type
 		new_data["connected_components"] = external_objects[object]
-		var/index = 1
-		var/identifier = "[object.type][index]"
-		while(identifier in external_objects_key)
-			index++
-			identifier = "[object.type][index]"
-		external_objects_key[identifier] = new_data
+		external_objects_key["[object.type][length(external_objects_key)]"] = new_data
 
 	var/list/general_data = list()
 	general_data["components"] = circuit_data
