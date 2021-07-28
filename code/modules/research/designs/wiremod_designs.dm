@@ -258,6 +258,11 @@
 	id = "comp_click_intercept"
 	build_path = /obj/item/circuit_component/click_intercept
 
+/datum/design/component/counter_overlay
+	name = "Counter Overlay Component"
+	id = "comp_counter_overlay"
+	build_path = /obj/item/circuit_component/counter_overlay
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
