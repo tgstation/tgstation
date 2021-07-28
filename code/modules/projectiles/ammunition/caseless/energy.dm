@@ -7,11 +7,3 @@
 	projectile_type = /obj/projectile/beam
 	fire_sound = 'sound/weapons/laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
-
-	// Harpoons (Ballistic Harpoon Gun)
-
-/obj/item/ammo_casing/caseless/harpoon
-	name = "harpoon"
-	caliber = CALIBER_HARPOON
-	icon_state = "magspear"
-	projectile_type = /obj/projectile/bullet/harpoon
