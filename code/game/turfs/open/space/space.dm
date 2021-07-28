@@ -158,7 +158,7 @@
 		else
 			to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
 
-/turf/open/space/Entered(atom/movable/arrived, direction)
+/turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(!arrived || src != arrived.loc)
 		return
@@ -197,11 +197,6 @@
 
 			puller = pulling
 			pulling = next_pulling
-
-		//now we're on the new z_level, proceed the space drifting
-		stoplag()//Let a diagonal move finish, if necessary
-		arrived.newtonian_move(arrived.inertia_dir)
-		arrived.inertia_moving = TRUE
 
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

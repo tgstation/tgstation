@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - balance: "Agent ID cards can now steal accesses wirelessly from other players by right click slapping them with the agent ID card. This operation is completely covert, minus the fact you have to hold your ID card in your hand to initiate it."
-  - balance: "Agent ID cards can now steal accesses wirelessly from ID cards in containers including bags, wallets, tablets and PDAs without having to open them or remove ID cards first by right clicking. You can still open containers to steal accesses from exact cards as before."

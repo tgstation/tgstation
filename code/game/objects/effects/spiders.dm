@@ -52,7 +52,7 @@
 		icon_state = "stickyweb2"
 	. = ..()
 
-/obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(genetic)
 		return
@@ -75,7 +75,7 @@
 	allowed_mob = allowedmob
 	. = ..()
 
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..() //this is the normal spider web return aka a spider would make this TRUE
 	if(mover == allowed_mob)
 		return TRUE
@@ -136,7 +136,7 @@
 	short_desc = "You are a spider."
 	important_info = "Follow your directives at all costs."
 	faction = list("spiders")
-	assignedrole = "Spider"
+	spawner_job_path = /datum/job/spider
 	banType = ROLE_ALIEN
 	ready = FALSE
 	radial_based = TRUE
@@ -215,7 +215,7 @@
 	name = "bloody egg cluster"
 	color = rgb(255, 0, 0)
 	short_desc = "You are a bloody spider."
-	directive = "You are the spawn of a visicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
+	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
 		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh,

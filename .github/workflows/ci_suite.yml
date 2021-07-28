@@ -16,8 +16,8 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          path: ~/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
       - name: Install Tools
         run: |
           pip3 install setuptools
@@ -51,8 +51,8 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Compile All Maps
         run: |
           bash tools/ci/install_byond.sh
@@ -77,8 +77,8 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
       - name: Setup database
         run: |
           sudo systemctl start mysql

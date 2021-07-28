@@ -57,7 +57,7 @@
 			visible_message(span_warning("\The [src] is broken by [user] with an electromagnetic card!"))
 			return
 
-/obj/item/storage/lockbox/Entered(atom/movable/arrived, direction)
+/obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	open = TRUE
 	update_appearance()

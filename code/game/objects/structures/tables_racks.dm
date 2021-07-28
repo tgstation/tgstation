@@ -100,7 +100,7 @@
 	return
 
 
-/obj/structure/table/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
@@ -632,7 +632,7 @@
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
-/obj/structure/rack/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/rack/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return

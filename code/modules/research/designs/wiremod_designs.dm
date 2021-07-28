@@ -113,6 +113,11 @@
 	id = "comp_tostring"
 	build_path = /obj/item/circuit_component/tostring
 
+/datum/design/component/tonumber
+	name = "To Number"
+	id = "comp_tonumber"
+	build_path = /obj/item/circuit_component/tonumber
+
 /datum/design/component/typecheck
 	name = "Typecheck Component"
 	id = "comp_typecheck"
@@ -168,10 +173,20 @@
 	id = "comp_combiner"
 	build_path = /obj/item/circuit_component/combiner
 
+/datum/design/component/split
+	name = "Split Component"
+	id = "comp_split"
+	build_path = /obj/item/circuit_component/split
+
 /datum/design/component/pull
 	name = "Pull Component"
 	id = "comp_pull"
 	build_path = /obj/item/circuit_component/pull
+
+/datum/design/component/soundemitter
+	name = "Sound Emitter Component"
+	id = "comp_soundemitter"
+	build_path = /obj/item/circuit_component/soundemitter
 
 /datum/design/component/mmi
 	name = "MMI Component"
@@ -182,6 +197,47 @@
 	name = "Multiplexer Component"
 	id = "comp_multiplexer"
 	build_path = /obj/item/circuit_component/multiplexer
+
+/datum/design/component/get_column
+	name = "Get Column Component"
+	id = "comp_get_column"
+	build_path = /obj/item/circuit_component/get_column
+
+/datum/design/component/index_table
+	name = "Index Table Component"
+	id = "comp_index_table"
+	build_path = /obj/item/circuit_component/index_table
+
+/datum/design/component/concat_list
+	name = "Concatenate List Component"
+	id = "comp_concat_list"
+	build_path = /obj/item/circuit_component/concat_list
+
+/datum/design/component/select_query
+	name = "Select Query Component"
+	id = "comp_select_query"
+	build_path = /obj/item/circuit_component/select
+
+/datum/design/component/pathfind
+	name = "Pathfinder"
+	id = "comp_pathfind"
+	build_path = /obj/item/circuit_component/pathfind
+
+/datum/design/component/tempsensor
+	name = "Temperature Sensor Component"
+	id = "comp_tempsensor"
+	build_path = /obj/item/circuit_component/tempsensor
+
+/datum/design/component/pressuresensor
+	name = "Pressure Sensor Component"
+	id = "comp_pressuresensor"
+	build_path = /obj/item/circuit_component/pressuresensor
+
+/datum/design/component/module
+	name = "Module Component"
+	id = "comp_module"
+	build_path = /obj/item/circuit_component/module
+
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -197,6 +253,15 @@
 	desc = "A handheld shell with several buttons."
 	id = "controller_shell"
 	build_path = /obj/item/controller
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	category = list("Circuitry", "Shells")
+
+/datum/design/scanner_shell
+	name = "Scanner Shell"
+	desc = "A handheld scanner shell that can scan entities."
+	id = "scanner_shell"
+	build_path = /obj/item/wiremod_scanner
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
 	category = list("Circuitry", "Shells")
@@ -256,3 +321,23 @@
 	build_path = /obj/item/shell/airlock
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
+
+/datum/design/bci_shell
+	name = "Brain-Computer Interface Shell"
+	desc = "An implant that can be placed in a user's head to control circuits using their brain."
+	id = "bci_shell"
+	materials = list(
+		/datum/material/glass = 2000,
+		/datum/material/iron = 8000,
+	)
+	build_path = /obj/item/shell/bci
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/board/bci_implanter
+	name = "Brain-Computer Interface Manipulation Chamber"
+	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
+	id = "bci_implanter"
+	build_path = /obj/item/circuitboard/machine/bci_implanter
+	build_type = IMPRINTER | COMPONENT_PRINTER
+	category = list("Circuitry", "Core")

@@ -55,6 +55,8 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"gas_filter",
+		"plasmaman_gas_filter",
 	)
 
 /datum/techweb_node/mmi
@@ -151,6 +153,7 @@
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",
+		"wirebrush",
 		"wirecutters",
 		"wrench",
 	)
@@ -199,27 +202,37 @@
 		"comp_combiner",
 		"comp_comparison",
 		"comp_concat",
+		"comp_concat_list",
 		"comp_delay",
 		"comp_direction",
+		"comp_get_column",
 		"comp_gps",
 		"comp_health",
 		"comp_hear",
 		"comp_index",
+		"comp_index_table",
 		"comp_length",
 		"comp_light",
 		"comp_logic",
 		"comp_mmi",
+		"comp_module",
 		"comp_multiplexer",
 		"comp_not",
+		"comp_pressuresensor",
 		"comp_radio",
 		"comp_ram",
 		"comp_random",
+		"comp_select_query",
 		"comp_self",
+		"comp_soundemitter",
 		"comp_species",
 		"comp_speech",
 		"comp_speech",
+		"comp_split",
 		"comp_string_contains",
+		"comp_tempsensor",
 		"comp_textcase",
+		"comp_tonumber",
 		"comp_tostring",
 		"comp_typecheck",
 		"compact_remote_shell",
@@ -643,10 +656,13 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
 		"bot_shell",
 		"door_shell",
 		"controller_shell",
 		"money_bot_shell",
+		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -656,6 +672,7 @@
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
 	design_ids = list(
+		"comp_pathfind",
 		"comp_pull",
 		"drone_shell",
 	)
@@ -1168,6 +1185,7 @@
 		"beartrap",
 		"blutrash",
 		"buffer",
+		"vacuum",
 		"holobarrier_jani",
 		"light_replacer",
 		"paint_remover",
@@ -1204,6 +1222,7 @@
 		"laserscalpel",
 		"mechanicalpinches",
 		"searingtool",
+		"wirebrush_adv",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)

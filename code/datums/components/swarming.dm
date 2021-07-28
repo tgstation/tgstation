@@ -25,7 +25,7 @@
 	swarm_members = null
 	return ..()
 
-/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, direction)
+/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	var/datum/component/swarming/other_swarm = arrived.GetComponent(/datum/component/swarming)

@@ -167,7 +167,6 @@
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	desc = "Excellent for securing things away from grubby hands."
-	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	anchored = TRUE
 	density = FALSE

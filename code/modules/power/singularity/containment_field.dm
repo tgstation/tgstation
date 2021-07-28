@@ -72,7 +72,9 @@
 /obj/machinery/field/containment/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
-		shock(AM)
+		var/mob/living/living_moving_through_field = AM
+		if(!living_moving_through_field.incorporeal_move)
+			shock(AM)
 
 	if(ismachinery(AM) || isstructure(AM) || ismecha(AM))
 		bump_field(AM)
@@ -117,7 +119,7 @@
 		return
 
 
-/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE

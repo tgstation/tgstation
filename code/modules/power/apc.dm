@@ -852,51 +852,50 @@
 	if(.)
 		return
 
-	if(isethereal(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/species/ethereal/E = H.dna.species
-		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-		if((E.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK) && stomach)
-			if(H.combat_mode)
-				if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
-					to_chat(H, span_warning("The APC's syphon safeties prevent you from draining power!"))
-					return
-				if(stomach.crystal_charge > charge_limit)
-					to_chat(H, span_warning("Your charge is full!"))
-					return
-				E.drain_time = world.time + APC_DRAIN_TIME
-				to_chat(H, span_notice("You start channeling some power through the APC into your body."))
-				if(do_after(user, APC_DRAIN_TIME, target = src))
-					if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
+		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+
+		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
+			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+			if((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK))
+				if(H.combat_mode)
+					if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
+						to_chat(H, span_warning("The APC's syphon safeties prevent you from draining power!"))
 						return
-					if(istype(stomach))
+					if(stomach.crystal_charge > charge_limit)
+						to_chat(H, span_warning("Your charge is full!"))
+						return
+					stomach.drain_time = world.time + APC_DRAIN_TIME
+					to_chat(H, span_notice("You start channeling some power through the APC into your body."))
+					if(do_after(user, APC_DRAIN_TIME, target = src))
+						if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
+							return
 						to_chat(H, span_notice("You receive some charge from the APC."))
 						stomach.adjust_charge(APC_POWER_GAIN)
 						cell.charge -= APC_POWER_GAIN
-					else
-						to_chat(H, span_warning("You can't receive charge from the APC!"))
-				return
-			else
-				if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-					to_chat(H, span_warning("The APC can't receive anymore power!"))
 					return
-				if(stomach.crystal_charge < APC_POWER_GAIN)
-					to_chat(H, span_warning("Your charge is too low!"))
-					return
-				E.drain_time = world.time + APC_DRAIN_TIME
-				to_chat(H, span_notice("You start channeling power through your body into the APC."))
-				if(do_after(user, APC_DRAIN_TIME, target = src))
-					if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
-						to_chat(H, span_warning("You can't transfer power to the APC!"))
+				else
+					if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
+						to_chat(H, span_warning("The APC can't receive anymore power!"))
 						return
-					if(istype(stomach))
-						to_chat(H, span_notice("You transfer some power to the APC."))
-						stomach.adjust_charge(-APC_POWER_GAIN)
-						cell.charge += APC_POWER_GAIN
-					else
-						to_chat(H, span_warning("You can't transfer power to the APC!"))
-				return
+					if(stomach.crystal_charge < APC_POWER_GAIN)
+						to_chat(H, span_warning("Your charge is too low!"))
+						return
+					stomach.drain_time = world.time + APC_DRAIN_TIME
+					to_chat(H, span_notice("You start channeling power through your body into the APC."))
+					if(do_after(user, APC_DRAIN_TIME, target = src))
+						if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach.crystal_charge < APC_POWER_GAIN))
+							to_chat(H, span_warning("You can't transfer power to the APC!"))
+							return
+						if(istype(stomach))
+							to_chat(H, span_notice("You transfer some power to the APC."))
+							stomach.adjust_charge(-APC_POWER_GAIN)
+							cell.charge += APC_POWER_GAIN
+						else
+							to_chat(H, span_warning("You can't transfer power to the APC!"))
+					return
 
 	if(opened && (!issilicon(user)))
 		if(cell)
@@ -1274,18 +1273,18 @@
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, GLOB.CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > lastused_total) // if power excess recharge the cell
 										// by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/GLOB.CELLRATE) // add the load used to recharge the cell
+			add_load(cellused WATTS) // add the load used to recharge the cell
 
 
 		else // no excess, and not enough per-apc
-			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess) //recharge with what we can
+			if((cell.charge WATTS + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
+				cell.charge = min(cell.maxcharge, cell.charge + excess JOULES) //recharge with what we can
 				add_load(excess) // so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
@@ -1333,8 +1332,8 @@
 		if(chargemode && charging == APC_CHARGING && operating)
 			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
-				add_load(ch/GLOB.CELLRATE) // Removes the power we're taking from the grid
+				var/ch = min(excess JOULES, cell.maxcharge JOULES)
+				add_load(ch WATTS) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else

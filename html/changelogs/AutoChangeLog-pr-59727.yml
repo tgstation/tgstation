@@ -1,7 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - qol: "Improved radial info messages for some spider variants to better reflect their strengths and weaknesses."
-  - bugfix: "Spider egg clusters now stop processing when they mature to improve performance."
-  - refactor: "Spider egg clusters were integrated into the mob spawner system. This means you will now see grown spider eggs in the ghost spawners interface."
-  - admin: "Alien-banned players are no longer allowed to spawn from the spider egg clusters."

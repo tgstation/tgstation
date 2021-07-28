@@ -249,6 +249,8 @@
 	return !requiresID() || ..()
 
 /obj/machinery/door/airlock/proc/ntnet_receive(datum/source, datum/netdata/data)
+	SIGNAL_HANDLER
+
 	// Check if the airlock is powered and can accept control packets.
 	if(!hasPower() || !canAIControl())
 		return
@@ -307,7 +309,7 @@
 	if(locked == should_bolt)
 		return
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT, should_bolt)
-	. = locked 
+	. = locked
 	locked = should_bolt
 
 /obj/machinery/door/airlock/unlock()

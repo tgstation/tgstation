@@ -79,12 +79,13 @@
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 
 	var/mob/living/victim = target.loc
+	var/mob/living/living_pawn = controller.pawn
 
-	if(!istype(victim))
+	if(!istype(victim) || !living_pawn.CanReach(victim))
 		finish_action(controller, FALSE)
 		return
 
-	var/mob/living/living_pawn = controller.pawn
+
 
 	victim.visible_message(span_warning("[living_pawn] starts trying to take [target] from [victim]!"), span_danger("[living_pawn] tries to take [target]!"))
 
@@ -92,7 +93,7 @@
 
 	var/success = FALSE
 
-	if(do_mob(living_pawn, victim, MONKEY_ITEM_SNATCH_DELAY) && target)
+	if(do_mob(living_pawn, victim, MONKEY_ITEM_SNATCH_DELAY) && target && living_pawn.CanReach(victim))
 
 		for(var/obj/item/I in victim.held_items)
 			if(I == target)

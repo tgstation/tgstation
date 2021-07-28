@@ -23,10 +23,10 @@
 	name = "energy field"
 	desc = "Get off my turf!"
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/CanAllowThrough(atom/movable/AM, turf/target)
+/obj/effect/abstract/proximity_checker/advanced/field_turf/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(parent)
-		return parent.field_turf_canpass(AM, src, target)
+		return parent.field_turf_canpass(mover, src, border_dir)
 
 /obj/effect/abstract/proximity_checker/advanced/field_turf/on_entered(datum/source, atom/movable/AM)
 	. = ..()
@@ -44,10 +44,10 @@
 	name = "energy field edge"
 	desc = "Edgy description here."
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/CanAllowThrough(atom/movable/AM, turf/target)
+/obj/effect/abstract/proximity_checker/advanced/field_edge/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(parent)
-		return parent.field_edge_canpass(AM, src, target)
+		return parent.field_edge_canpass(mover, src, border_dir)
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/on_entered(datum/source, atom/movable/AM)
 	. = ..()

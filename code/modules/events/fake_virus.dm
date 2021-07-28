@@ -2,11 +2,12 @@
 	name = "Fake Virus"
 	typepath = /datum/round_event/fake_virus
 	weight = 20
+	alert_observers = FALSE
 
 /datum/round_event/fake_virus/start()
 	var/list/fake_virus_victims = list()
 	for(var/mob/living/carbon/human/victim in shuffle(GLOB.player_list))
-		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !SSjob.GetJob(victim.mind.assigned_role) || (victim.mind.assigned_role in GLOB.nonhuman_positions))
+		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !(victim.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 		fake_virus_victims += victim
 

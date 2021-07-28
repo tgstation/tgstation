@@ -38,8 +38,10 @@
 	var/burns_in_oven = FALSE
 	///Price of this food if sold in a venue
 	var/venue_value
+	///Food that's immune to decomposition.
+	var/preserved_food = FALSE
 
-/obj/item/food/Initialize()
+/obj/item/food/Initialize(mapload)
 	. = ..()
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
@@ -53,6 +55,7 @@
 	MakeProcessable()
 	MakeLeaveTrash()
 	MakeGrillable()
+	MakeDecompose(mapload)
 	MakeBakeable()
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
@@ -92,3 +95,8 @@
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type)
 	return
+
+///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+/obj/item/food/proc/MakeDecompose(mapload)
+	if(!preserved_food)
+		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes)

@@ -162,6 +162,8 @@
 	UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
 
 /datum/action/item_action/organ_action/statue/proc/statue_destroyed(datum/source)
+	SIGNAL_HANDLER
+
 	to_chat(owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
 	if(iscarbon(owner))
 		//drop everything, just in case
@@ -249,7 +251,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/mob/living/carbon/human/user = source
 	var/rendered = span_abductor("<b>[user.real_name]:</b> [message]")
-	user.log_talk(message, LOG_SAY, tag="abductor")
+	user.log_talk(message, LOG_SAY, tag=SPECIES_ABDUCTOR)
 	for(var/mob/living/carbon/human/living_mob in GLOB.alive_mob_list)
 		var/obj/item/organ/tongue/abductor/tongue = living_mob.getorganslot(ORGAN_SLOT_TONGUE)
 		if(!istype(tongue))

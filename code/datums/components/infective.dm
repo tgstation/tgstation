@@ -109,7 +109,7 @@
 		var/obj/item/I = parent
 		I.permeability_coefficient = old_permeability
 
-/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, direction)
+/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(isliving(arrived))

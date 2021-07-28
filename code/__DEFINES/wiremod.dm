@@ -1,32 +1,35 @@
-#define PORT_INPUT_RECEIVE_DELAY 0.2 SECONDS
-
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
 
 /// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
 #define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
 
+// Port defines
+
+#define PORT_MAX_NAME_LENGTH 50
+
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
-#define PORT_TYPE_ANY null
+#define PORT_TYPE_ANY "any"
 
 // Fundamental datatypes
 /// String datatype
 #define PORT_TYPE_STRING "string"
-#define PORT_MAX_STRING_LENGTH 500
+#define PORT_MAX_STRING_LENGTH 5000
+#define PORT_MAX_STRING_DISPLAY 100
 /// Number datatype
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
 /// List datatype
 #define PORT_TYPE_LIST "list"
+/// Table datatype. Derivative of list, contains other lists with matching columns.
+#define PORT_TYPE_TABLE "table"
 
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
-/// Any datatype (USED ONLY FOR DISPLAY, DO NOT USE)
-#define COMP_TYPE_ANY "any"
 
 
 /// The maximum range between a port and an atom
@@ -88,6 +91,25 @@
 #define COMP_RADIO_PUBLIC "public"
 #define COMP_RADIO_PRIVATE "private"
 
+// Sound component
+#define COMP_SOUND_BUZZ "Buzz"
+#define COMP_SOUND_BUZZ_TWO "Buzz Twice"
+#define COMP_SOUND_CHIME "Chime"
+#define COMP_SOUND_HONK "Honk"
+#define COMP_SOUND_PING "Ping"
+#define COMP_SOUND_SAD "Sad Trombone"
+#define COMP_SOUND_WARN "Warn"
+#define COMP_SOUND_SLOWCLAP "Slow Clap"
+
+// Security Arrest Console
+#define COMP_STATE_ARREST "*Arrest*"
+#define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_PAROL "Paroled"
+#define COMP_STATE_DISCHARGED "Discharged"
+#define COMP_STATE_NONE "None"
+
+#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -116,3 +138,5 @@
 #define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
 /// Creates an output trigger that sends a pulse whenever the component is successfully triggered
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
+/// This circuit component does not show in the menu.
+#define CIRCUIT_FLAG_HIDDEN (1<<2)

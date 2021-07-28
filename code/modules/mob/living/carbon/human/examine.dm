@@ -81,8 +81,11 @@
 	if(!(obscured & ITEM_SLOT_EYES) )
 		if(glasses  && !(glasses.item_flags & EXAMINE_SKIP))
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
-		else if(eye_color == BLOODCULT_EYE && IS_CULTIST(src) && HAS_TRAIT(src, CULT_EYES))
-			. += span_warning("<B>[t_His] eyes are glowing an unnatural red!</B>")
+		else if(eye_color == BLOODCULT_EYE)
+			if(IS_CULTIST(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
+				. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
+			else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
+				. += "<span class='warning'><B>[t_His] eyes are bloodshot!</B></span>"
 
 	//ears
 	if(ears && !(obscured & ITEM_SLOT_EARS) && !(ears.item_flags & EXAMINE_SKIP))
@@ -355,7 +358,7 @@
 		if(getorgan(/obj/item/organ/brain))
 			if(ai_controller?.ai_status == AI_STATUS_ON)
 				msg += "[span_deadsay("[t_He] do[t_es]n't appear to be [t_him]self.")]\n"
-			if(!key)
+			else if(!key)
 				msg += "[span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")]\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"

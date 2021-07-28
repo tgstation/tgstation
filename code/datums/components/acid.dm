@@ -50,7 +50,7 @@
 	var/atom/parent_atom = parent
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	parent_atom.update_appearance()
-	sizzle = new(list(parent), TRUE)
+	sizzle = new(parent, TRUE)
 	START_PROCESSING(SSacid, src)
 
 /datum/component/acid/Destroy(force, silent)
@@ -201,7 +201,7 @@
 
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
-/datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, direction)
+/datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(!isliving(arrived))

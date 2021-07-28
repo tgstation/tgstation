@@ -194,7 +194,7 @@
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue //YOU'RE FLYING OVER IT
-			if("snow" in L.weather_immunities)
+			if(WEATHER_SNOW in L.weather_immunities)
 				continue
 
 			var/buckle_check = L.buckled
@@ -205,7 +205,7 @@
 
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
-				if("snow" in live.weather_immunities)
+				if(WEATHER_SNOW in live.weather_immunities)
 					continue
 
 			L.adjustFireLoss(2)
@@ -222,7 +222,7 @@
 
 					for(var/BP in PP.bodyparts)
 						var/obj/item/bodypart/NN = BP
-						if(NN.status == BODYPART_ORGANIC && NN.species_id != "plasmaman") //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+						if(NN.status == BODYPART_ORGANIC && NN.species_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 							plasma_parts += NN
 						if(NN.status == BODYPART_ROBOTIC)
 							robo_parts += NN

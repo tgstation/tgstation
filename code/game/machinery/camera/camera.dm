@@ -23,7 +23,7 @@
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/camera_bug/bug = null
-	var/obj/structure/camera_assembly/assembly = null
+	var/datum/weakref/assembly_ref = null
 	var/area/myarea = null
 
 	//OTHER
@@ -56,6 +56,7 @@
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
+	var/obj/structure/camera_assembly/assembly
 	if(CA)
 		assembly = CA
 		if(assembly.xray_module)
@@ -73,6 +74,7 @@
 	else
 		assembly = new(src)
 		assembly.state = 4 //STATE_FINISHED
+	assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -100,11 +102,12 @@
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+	GLOB.cameranet.removeCamera(src)
 	GLOB.cameranet.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
 		myarea.clear_camera(src)
-	QDEL_NULL(assembly)
+	QDEL_NULL(assembly_ref)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
@@ -113,7 +116,7 @@
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
-	. += ..()
+	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
 		. += "It has electromagnetic interference shielding installed."
 	else
@@ -204,6 +207,10 @@
 	. = ..()
 	if(!panel_open)
 		return
+	var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+	if(!assembly)
+		assembly_ref = null
+		return
 	var/list/droppable_parts = list()
 	if(assembly.xray_module)
 		droppable_parts += assembly.xray_module
@@ -267,6 +274,9 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
+		var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
+		if(!assembly)
+			assembly_ref = null
 		if(I.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
 				if(!user.temporarilyRemoveItemFromInventory(I))
@@ -342,7 +352,7 @@
 		else
 			to_chat(user, span_notice("Camera bugged."))
 			bug = I
-			bug.bugged_cameras[src.c_tag] = src
+			bug.bugged_cameras[src.c_tag] = WEAKREF(src)
 		return
 
 	return ..()
@@ -364,12 +374,13 @@
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
+			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 			if(!assembly)
 				assembly = new()
 			assembly.forceMove(drop_location())
 			assembly.state = 1
 			assembly.setDir(dir)
-			assembly = null
+			assembly_ref = null
 		else
 			var/obj/item/I = new /obj/item/wallframe/camera (loc)
 			I.update_integrity(I.max_integrity * 0.5)
@@ -390,7 +401,7 @@
 	icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
 	return ..()
 
-/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
+/obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	status = !status
 	if(can_use())
 		GLOB.cameranet.addCamera(src)

@@ -560,8 +560,8 @@
  * Projectile can pass through
  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
  */
-/obj/projectile/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
-	return impacted[blocker]? TRUE : ..()
+/obj/projectile/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
+	return impacted[blocker] ? TRUE : ..()
 
 /**
  * Projectile moved:
@@ -828,6 +828,8 @@
 		else if(T != loc)
 			step_towards(src, T)
 			hitscan_last = loc
+	if(QDELETED(src)) //deleted on last move
+		return
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move

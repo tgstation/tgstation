@@ -202,7 +202,7 @@
 	custom_materials = list(/datum/material/bananium = 500)
 	var/sound_cooldown = 0
 
-/turf/open/floor/mineral/bananium/Entered(atom/movable/arrived, direction)
+/turf/open/floor/mineral/bananium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(.)
 		return
@@ -258,7 +258,7 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(atom/movable/arrived, direction)
+/turf/open/floor/mineral/uranium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(.)
 		return

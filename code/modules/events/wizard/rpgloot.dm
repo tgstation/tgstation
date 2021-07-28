@@ -64,6 +64,8 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 
 ///signal sent by a new item being created.
 /datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
+	SIGNAL_HANDLER
+
 	created_item.AddComponent(/datum/component/fantasy)
 
 /**

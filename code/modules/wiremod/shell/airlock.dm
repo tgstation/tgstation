@@ -1,3 +1,13 @@
+/datum/wires/airlock/shell
+	holder_type = /obj/machinery/door/airlock/shell
+	proper_name = "Circuit Airlock"
+
+/datum/wires/airlock/shell/on_cut(wire, mend)
+	// Don't allow them to re-enable autoclose.
+	if(wire == WIRE_TIMING)
+		return
+	return ..()
+
 /obj/machinery/door/airlock/shell
 	name = "circuit airlock"
 	autoclose = FALSE
@@ -13,6 +23,15 @@
 
 /obj/machinery/door/airlock/shell/check_access(obj/item/I)
 	return FALSE
+
+/obj/machinery/door/airlock/shell/canAIControl(mob/user)
+	return FALSE
+
+/obj/machinery/door/airlock/shell/canAIHack(mob/user)
+	return FALSE
+
+/obj/machinery/door/airlock/shell/set_wires()
+	return new /datum/wires/airlock/shell(src)
 
 /obj/item/circuit_component/airlock
 	display_name = "Airlock"

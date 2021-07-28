@@ -1,6 +1,6 @@
 /datum/species/monkey
 	name = "Monkey"
-	id = "monkey"
+	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	attack_verb = "bite"
 	attack_effect = ATTACK_EFFECT_BITE

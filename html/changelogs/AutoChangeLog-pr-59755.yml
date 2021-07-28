@@ -1,7 +1,0 @@
-author: "Sheits"
-delete-after: True
-changes: 
-  - bugfix: "Made android and skeleton wings work instead of telling the user \"you feel nothing but a terrible aftertaste\" when they drink strange elixir"
-  - bugfix: "Made android and skeleton wings not use a mutant colour overlay like lizard wings"
-  - imageadd: "Fly wings :)"
-  - code_imp: "Added android species check"

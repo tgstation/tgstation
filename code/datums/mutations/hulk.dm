@@ -6,7 +6,7 @@
 	locked = TRUE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
-	species_allowed = list("human") //no skeleton/lizard hulk
+	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
 	var/scream_delay = 50

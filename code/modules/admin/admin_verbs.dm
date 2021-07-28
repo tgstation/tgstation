@@ -28,6 +28,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	return list(
 	/client/proc/invisimin, /*allows our mob to go invisible/visible*/
 // /datum/admins/proc/show_traitor_panel, /*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
+	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/show_player_panel, /*shows an interface for individual players, with various links (links require additional flags*/
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
@@ -181,7 +182,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/print_cards,
 	#ifdef TESTING
 	/client/proc/check_missing_sprites,
-	/client/proc/export_dynamic_json,
 	/client/proc/run_dynamic_simulations,
 	#endif
 	/client/proc/display_sendmaps,

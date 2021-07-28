@@ -92,6 +92,10 @@
 	name = "statue of a scientist"
 	icon_state = "sci"
 
+/obj/structure/statue/plasma/xeno
+	name = "statue of a xenomorph"
+	icon_state = "xeno"
+
 /obj/structure/statue/plasma/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -313,6 +317,8 @@
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
+	tool_behaviour = TOOL_RUSTSCRAPER
+	toolspeed = 3 // You're gonna have a bad time
 
 	/// Block we're currently carving in
 	var/obj/structure/carving_block/prepared_block
