@@ -1,3 +1,6 @@
+/// A list of all integrated circuits
+GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
+
 /**
  * # Integrated Circuitboard
  *
@@ -49,6 +52,9 @@
 
 /obj/item/integrated_circuit/Initialize()
 	. = ..()
+
+	GLOB.integrated_circuits += src
+
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 /obj/item/integrated_circuit/loaded/Initialize()
@@ -64,6 +70,7 @@
 	examined_component = null
 	owner_id = null
 	QDEL_NULL(cell)
+	GLOB.integrated_circuits -= src
 	return ..()
 
 /obj/item/integrated_circuit/examine(mob/user)
