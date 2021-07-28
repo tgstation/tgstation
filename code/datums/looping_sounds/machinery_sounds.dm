@@ -70,7 +70,7 @@
 	mid_sounds = list('sound/machines/oven/oven_loop_mid.ogg' = 1)
 	mid_length = 14
 	end_sound = 'sound/machines/oven/oven_loop_end.ogg'
-	volume = 50
+	volume = 100
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

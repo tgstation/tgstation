@@ -98,5 +98,5 @@
 #define OVEN_LID_Y_OFFSET -15
 
 #define OVEN_TRAY_Y_OFFSET -16
-#define OVEN_TRAY_X_OFFSET -4
+#define OVEN_TRAY_X_OFFSET -2
 

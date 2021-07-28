@@ -19,7 +19,6 @@
 	var/datum/looping_sound/oven/oven_loop
 	///Current state of smoke coming from the oven
 	var/smoke_state = OVEN_SMOKE_STATE_NONE
-	var/gay = -11
 
 /obj/machinery/oven/Initialize()
 	. = ..()
@@ -40,7 +39,7 @@
 	. = ..()
 	if(open)
 		var/mutable_appearance/door_overlay = mutable_appearance(icon, "oven_lid_open")
-		door_overlay.pixel_y = gay
+		door_overlay.pixel_y = OVEN_LID_Y_OFFSET
 		. += door_overlay
 	else
 		. += mutable_appearance(icon, "oven_lid_closed")
@@ -69,7 +68,7 @@
 		baked_item.fire_act(1000) //Hot hot hot!
 
 		if(DT_PROB(10, delta_time))
-			visible_message(span_danger("A nasty smell comes from [baked_item] inside of the [src]!"))
+			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	smoke_state = worst_cooked_food_state
 	update_appearance()
 
@@ -89,8 +88,8 @@
 
 	vis_contents += oven_tray
 	oven_tray.flags_1 |= IS_ONTOP_1
-	oven_tray.pixel_y = -16
-	oven_tray.pixel_x = -4
+	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
+	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
 
 	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	update_baking_audio()
@@ -112,14 +111,14 @@
 	. = ..()
 	open = !open
 	if(open)
-		playsound(src, 'sound/machines/oven/oven_open.ogg', 60, TRUE)
+		playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
 		smoke_state = OVEN_SMOKE_STATE_NONE
 		to_chat(user, span_notice("You open [src]."))
 		end_processing()
 		if(used_tray)
 			used_tray.vis_flags &= ~VIS_HIDE
 	else
-		playsound(src, 'sound/machines/oven/oven_close.ogg', 60, TRUE)
+		playsound(src, 'sound/machines/oven/oven_close.ogg', 75, TRUE)
 		to_chat(user, span_notice("You close [src]."))
 		if(used_tray)
 			begin_processing()
