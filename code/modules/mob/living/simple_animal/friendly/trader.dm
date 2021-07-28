@@ -448,7 +448,7 @@
 ///small helper proc that does the part of the area enter signal that sleeps
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/aggro_intruder(mob/living/intruder)
 	say(offlimitsphrase)
-	enemies |= WEAKREF(intruder)
+	enemies += WEAKREF(intruder)
 
 ///small helper proc that does the part of the area exit signal that sleeps
 /mob/living/simple_animal/hostile/retaliate/trader/pirate/proc/deaggro_intruder(mob/living/intruder)
