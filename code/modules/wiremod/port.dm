@@ -22,9 +22,6 @@
 	/// The port color. If unset, appears as blue.
 	var/color
 
-	/// The ports this port is wired to.
-	var/list/datum/port/connected_ports
-
 /datum/port/New(obj/item/circuit_component/to_connect, name, datatype)
 	if(!to_connect)
 		qdel(src)
@@ -37,7 +34,6 @@
 	src.datatype = datatype
 	src.default_datatype = datatype
 	src.color = datatype_to_color()
-	src.connected_ports = list()
 
 
 ///Converts the datatype into an appropriate colour
@@ -108,9 +104,7 @@
 		SStgui.update_uis(connected_component.parent)
 
 /datum/port/output/set_datatype(new_type)
-	for(var/datum/port/input/input as anything in connected_ports)
-		if(!compatible_datatypes(datatype,input.datatype))
-			disconnect(input)
+	SEND_SIGNAL(src, COMSIG_PORT_TYPE, new_type)
 	..()
 
 /datum/port/input/set_datatype(new_type)
@@ -123,8 +117,14 @@
  * Disconnects a port from all other ports.
  */
 /datum/port/proc/disconnect_all()
+
+/datum/port/input/disconnect_all()
 	for(var/datum/port/port as anything in connected_ports)
 		disconnect(port)
+
+/datum/port/output/disconnect_all()
+	SEND_SIGNAL(src, COMSIG_PORT_TYPE, null)
+
 
 /**
  * Sets the output value of the port
@@ -134,13 +134,13 @@
  */
 /datum/port/output/put(v)
 	..(v)
-	for(var/datum/port/input/input as anything in connected_ports)
-		input.receive_value(src, value)
+	SEND_SIGNAL(src, COMSIG_PORT_VALUE, v)
 
 
-/datum/port/proc/disconnect(datum/port/tgt)
-	src.connected_ports -= tgt
-	tgt.connected_ports -= src
+/datum/port/input/proc/disconnect(datum/port/output/output)
+	connected_ports -= output
+	UnregisterSignal(output, COMSIG_PORT_TYPE)
+	UnregisterSignal(output, COMSIG_PORT_VALUE)
 
 /// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
 /datum/port/proc/null_output(datum/source)
@@ -156,6 +156,8 @@
  * * new_type - The datatype to cast to.
  */
 /proc/compatible_datatypes(old_type, new_type)
+	if(isnull(old_type))
+		return FALSE
 	if(new_type == PORT_TYPE_ANY)
 		return TRUE
 	if(new_type == old_type)
@@ -176,23 +178,36 @@
 	/// Whether this port triggers an update whenever an output is received.
 	var/trigger = FALSE
 
+	/// The ports this port is wired to.
+	var/list/datum/port/connected_ports
+
 /datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
 	put(default)
 	src.trigger = trigger
+	src.connected_ports = list()
 
 /**
  * Introduces two ports to one another.
  */
-/datum/port/input/proc/connect(datum/port/output/tgt)
-	if(!compatible_datatypes(tgt.datatype, src.datatype))
+/datum/port/input/proc/connect(datum/port/output/output)
+	SIGNAL_HANDLER
+	if(!compatible_datatypes(output.datatype, src.datatype))
 		return
-	src.connected_ports |= tgt
-	tgt.connected_ports |= src
+	connected_ports |= output
+	RegisterSignal(output, COMSIG_PORT_TYPE, .proc/receive_type)
+	RegisterSignal(output, COMSIG_PORT_VALUE, .proc/receive_value)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
-		put(tgt.value)
+		put(output.value)
 
+/**
+ * Handle an output port update.
+ */
+/datum/port/input/proc/receive_type(datum/port/output/output, new_type)
+	SIGNAL_HANDLER
+	if(!compatible_datatypes(new_type, src.datatype))
+		disconnect(output)
 
 /**
  * Sets a timer depending on the value of the input_receive_delay
