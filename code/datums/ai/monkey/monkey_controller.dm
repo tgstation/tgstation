@@ -20,6 +20,9 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_MONKEY_NEXT_HUNGRY = 0
 	)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
 
 /datum/ai_controller/monkey/angry
 
@@ -47,9 +50,7 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
 	RegisterSignal(new_pawn, COMSIG_FOOD_EATEN, .proc/on_eat)
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
+
 	AddElement(/datum/element/connect_loc_behalf, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
@@ -57,9 +58,18 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_LIVING_START_PULL,\
 	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED))
-	pawn.RemoveElement(/datum/element/connect_loc_behalf)
+	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 	return ..() //Run parent at end
+
+// Stops sentient monkeys from being knocked over like weak dunces.
+/datum/ai_controller/monkey/on_sentience_gained()
+	. = ..()
+	RemoveElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
+
+/datum/ai_controller/monkey/on_sentience_lost()
+	. = ..()
+	AddElement(/datum/element/connect_loc_behalf, pawn, loc_connections)
 
 /datum/ai_controller/monkey/able_to_run()
 	. = ..()
