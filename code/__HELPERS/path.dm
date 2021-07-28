@@ -34,7 +34,7 @@
 	SSpathfinder.mobs.found(l)
 	if(!path)
 		path = list()
-	if(skip_first)
+	if(length(path) > 0 && skip_first)
 		path.Cut(1,2)
 	return path
 
