@@ -53,7 +53,7 @@
 		owner.client.click_intercept = null
 
 /obj/item/circuit_component/click_intercept/proc/InterceptClickOn(mob/user, params, atom/object)
-	owner.client.click_intercept = null
+	user.client.click_intercept = null
 	clicked_atom.set_output(object)
 	trigger_output.set_output(COMPONENT_SIGNAL)
-	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_CLICK_INTERCEPT, 1 SECOND)
+	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_CLICK_INTERCEPT, 1 SECONDS)
