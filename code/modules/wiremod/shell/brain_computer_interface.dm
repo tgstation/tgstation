@@ -10,7 +10,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/shell, list(
-		new /obj/item/circuit_component/bci_core,
+		new /obj/item/circuit_component/bci_core(src),
 		new /obj/item/circuit_component/bci_action(src, "One"),
 		new /obj/item/circuit_component/bci_action(src, "Two"),
 		new /obj/item/circuit_component/bci_action(src, "Three"),
@@ -393,12 +393,15 @@
 	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
 
+	if(!user.Adjacent(src))
+		return
+
 	if (locked)
 		balloon_alert(user, "it's locked!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
-	if (isnull(bci_to_implant_resolved) && user.Adjacent(src))
+	if (isnull(bci_to_implant_resolved))
 		balloon_alert(user, "no bci inserted!")
 	else
 		user.put_in_hands(bci_to_implant_resolved)
