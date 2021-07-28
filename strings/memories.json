@@ -94,9 +94,9 @@
 		"%TARGET is armed by %PERFORMER."
 	],
 	"bomb_moods":[
-		"%PERFORMER %MOOD and begins to walk away from the bomb.",
-		"%PERFORMER %MOOD as the bomb begins to tick.",
-		"%PERFORMER %MOOD with the bomb winding down.",
+		"%PERFORMER %MOOD and begins to walk away from %TARGET.",
+		"%PERFORMER %MOOD as %TARGET begins to tick.",
+		"%PERFORMER %MOOD with %TARGET winding down.",
 		"beep... beep... %PERFORMER %MOOD."
 	],
 	"highfive_starts":[
@@ -126,5 +126,25 @@
 	],
 	"death_moods":[
 		"There shouldn't be any; this is set to be a moodless memory!"
+	],
+	"creampied_starts":[
+		"%PERFORMER's face is covered in cream at %INFO1.",
+		"%PERFORMER has taken a creampie at %INFO1.",
+		"at %INFO1, %PERFORMER became a cream-covered mess."
+	],
+	"creampied_moods":[
+		"%PERFORMER %MOOD as the cream drips off their face.",
+		"%PERFORMER %MOOD at the idea of their now expanded laundry task.",
+		"%PERFORMER %MOOD as they lick off some of the pie."
+	],
+	"slipped_starts":[
+		"%PERFORMER tumbled right over %TARGET.",
+		"%PERFORMER couldn't keep standing when faced with %TARGET.",
+		"the perilous %TARGET took %PERFORMER down a notch."
+	],
+	"slipped_moods":[
+		"%PERFORMER %MOOD as they crawl up from the ground.",
+		"%PERFORMER %MOOD on the ground."
 	]
+
 }

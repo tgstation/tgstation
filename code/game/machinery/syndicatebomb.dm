@@ -205,6 +205,7 @@
 		if(!active)
 			visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
 			activate()
+			user.mind?.add_memory("armed a [src]", MEMORY_BOMB_PRIMED, src)
 			update_appearance()
 			add_fingerprint(user)
 
