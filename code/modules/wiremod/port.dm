@@ -58,24 +58,23 @@
 	return ..()
 
 /**
- * Sets the port's value to v.
+ * Sets the port's value to value.
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
-/datum/port/proc/put(new_value)
-	if(value == new_value)
+/datum/port/proc/put(value)
+	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
+	if(src.value == value)
 		return
-	if(isatom(value))
-		UnregisterSignal(value, COMSIG_PARENT_QDELETING)
+	if(isatom(src.value))
+		UnregisterSignal(src.value, COMSIG_PARENT_QDELETING)
 	if(datatype == PORT_TYPE_STRING)
 		// So that they can't easily get the name like this.
-		new_value = isatom(value) ? PORT_TYPE_ATOM : copytext("[value]", 1, PORT_MAX_STRING_LENGTH)
-	value = new_value
+		value = isatom(value) ? PORT_TYPE_ATOM : copytext("[value]", 1, PORT_MAX_STRING_LENGTH)
 	if(isatom(value))
 		var/atom/atom_to_check = value
-		if(QDELETED(atom_to_check))
-			return null
-		RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_output)
-
+		if(!QDELETED(atom_to_check))
+			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/on_value_qdeleting)
+	src.value = value
 
 /**
  * Sets the datatype of the port.
@@ -84,16 +83,13 @@
  * * new_type - The type this port is to be set to.
  */
 /datum/port/proc/set_datatype(new_type)
+	SEND_SIGNAL(src, COMSIG_PORT_SET_TYPE, new_type)
 	var/old_type = datatype
 	datatype = new_type
 	put(compatible_datatypes(old_type, new_type) ? value : null)
 	color = datatype_to_color()
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
-
-/datum/port/output/set_datatype(new_type)
-	SEND_SIGNAL(src, COMSIG_WIREMOD, new_type=new_type)
-	..()
 
 /datum/port/input/set_datatype(new_type)
 	for(var/datum/port/output/output as anything in connected_ports)
@@ -105,35 +101,27 @@
  * Disconnects a port from all other ports.
  */
 /datum/port/proc/disconnect_all()
+	SEND_SIGNAL(src, COMSIG_PORT_DISCONNECT)
 
 /datum/port/input/disconnect_all()
+	..()
 	for(var/datum/port/port as anything in connected_ports)
 		disconnect(port)
 
-/datum/port/output/disconnect_all()
-	SEND_SIGNAL(src, COMSIG_WIREMOD, disconnect=TRUE)
-
-
-/**
- * Sets the output value of the port
- *
- * Arguments:
- * * v - The value to set it to
- */
-/datum/port/output/put(v)
-	..(v)
-	SEND_SIGNAL(src, COMSIG_WIREMOD, new_value=v)
-
-
 /datum/port/input/proc/disconnect(datum/port/output/output)
+	SIGNAL_HANDLER
 	connected_ports -= output
-	UnregisterSignal(output, COMSIG_WIREMOD)
+	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
+	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)
+	UnregisterSignal(output, COMSIG_PORT_DISCONNECT)
 
-/// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
-/datum/port/proc/null_output(datum/source)
+/// Do our part in setting all source references anywhere to null.
+/datum/port/proc/on_value_qdeleting(datum/source)
 	SIGNAL_HANDLER
 	if(value == source)
 		value = null
+	else
+		stack_trace("Impossible? [src] should only receive COMSIG_PARENT_QDELETING from an atom currently in the port, not [source].")
 
 /**
  * Determines if a datatype can be cast to another.
@@ -176,28 +164,30 @@
  * Introduces two ports to one another.
  */
 /datum/port/input/proc/connect(datum/port/output/output)
-	SIGNAL_HANDLER
 	if(!compatible_datatypes(output.datatype, src.datatype))
 		return
 	connected_ports |= output
-	RegisterSignal(output, COMSIG_WIREMOD, .proc/receive)
+	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
+	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/receive_type)
+	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(datatype != PORT_TYPE_SIGNAL)
 		put(output.value)
 
 /**
- * Handle an output port update.
- * Values are handled with an input_receive_delay
+ * Mirror value updates from connected output ports after an input_receive_delay.
  */
-/datum/port/input/proc/receive(datum/port/output/output, new_value=null, new_type=null, disconnect=FALSE)
+/datum/port/input/proc/receive_value(datum/port/output/output, value)
 	SIGNAL_HANDLER
-	if(disconnect)
+	SScircuit_component.add_callback(CALLBACK(src, .proc/put, value))
+
+/**
+ * Handle type updates from connected output ports, breaking uncastable connections.
+ */
+/datum/port/input/proc/receive_type(datum/port/output/output, new_type)
+	SIGNAL_HANDLER
+	if(!compatible_datatypes(new_type, src.datatype))
 		disconnect(output)
-	else if(new_type)
-		if(!compatible_datatypes(new_type, src.datatype))
-			disconnect(output)
-	else
-		SScircuit_component.add_callback(CALLBACK(src, .proc/put, new_value))
 
 /**
  * Updates the value of the input
@@ -206,7 +196,7 @@
  * Arguments:
  * * port_to_register - The port to connect the input port to
  */
-/datum/port/input/put(v)
-	..(v)
+/datum/port/input/put(value)
+	..(value)
 	if(trigger)
 		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)

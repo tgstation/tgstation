@@ -271,13 +271,12 @@ const Connections = (props, context) => {
       continue;
     }
 
-    for (const port of comp.input_ports) {
-      for (const porto of port.connected_to) {
-        const output_port = locations[porto];
+    for (const input of comp.input_ports) {
+      for (const output of input.connected_to) {
         connections.push({
-          color: output_port && output_port.color || "blue",
-          from: output_port,
-          to: locations[port.ref],
+          color: locations[output]?.color || "blue",
+          from: locations[output],
+          to: locations[input.ref],
         });
       }
     }

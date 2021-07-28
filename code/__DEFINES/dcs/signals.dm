@@ -1325,8 +1325,13 @@
 /// Sent on exoscan failure/manual interruption: ()
 #define COMSIG_EXOSCAN_INTERRUPTED "exoscan_interrupted"
 
-/// Circuit component output ports talk to input ports.
-#define COMSIG_WIREMOD "port_wiremod"
+// Component signals
+/// Sent when the value of a port is set.
+#define COMSIG_PORT_SET_VALUE "port_set_value"
+/// Sent when the type of a port is set.
+#define COMSIG_PORT_SET_TYPE "port_set_type"
+/// Sent when a port disconnects from everything.
+#define COMSIG_PORT_DISCONNECT "port_disconnect"
 
 /// Sent when a [/obj/item/circuit_component] is added to a circuit.
 #define COMSIG_CIRCUIT_ADD_COMPONENT "circuit_add_component"
