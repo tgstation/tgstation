@@ -50,7 +50,7 @@
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	for(var/image/number in numbers)
+	for(var/image/number as anything in numbers)
 		owner.client.images.Remove(number)
 	numbers = list()
 
@@ -79,6 +79,6 @@
 /obj/item/circuit_component/counter_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 	owner.client.images.Remove(counter)
-	for(var/image/number in numbers)
+	for(var/image/number as anything in numbers)
 		owner.client.images.Remove(number)
 	qdel(counter)

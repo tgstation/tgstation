@@ -14,7 +14,7 @@
 	var/datum/port/output/clicked_atom
 
 	var/obj/item/organ/cyberimp/bci/bci
-	var/coodown
+	var/intercept_cooldown = 1 SECONDS
 
 /obj/item/circuit_component/click_intercept/Initialize()
 	. = ..()
@@ -56,4 +56,9 @@
 	user.client.click_intercept = null
 	clicked_atom.set_output(object)
 	trigger_output.set_output(COMPONENT_SIGNAL)
-	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_CLICK_INTERCEPT, 1 SECONDS)
+	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_CLICK_INTERCEPT, intercept_cooldown)
+
+/obj/item/circuit_component/click_intercept/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Click Interception Cooldown: [DisplayTimeText(intercept_cooldown)]", "orange", "stopwatch")
+	. += create_ui_notice("Only usable in BCI circuits", "orange", "info")
