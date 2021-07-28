@@ -5,6 +5,8 @@
  * Requires a BCI shell.
  */
 
+#define OBJECT_OVERLAY_LIMIT 10
+
 /obj/item/circuit_component/object_overlay/bar
 	display_name = "Bar Overlay"
 	display_desc = "A component that shows a bar overlay ontop of an object. Requires a BCI shell. Requires a 0-100 number to work propperly."

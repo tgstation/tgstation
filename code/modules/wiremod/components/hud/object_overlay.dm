@@ -5,8 +5,6 @@
  * Requires a BCI shell.
  */
 
-#define OBJECT_OVERLAY_LIMIT 10
-
 /obj/item/circuit_component/object_overlay
 	display_name = "Object Overlay"
 	display_desc = "A component that shows an overlay ontop of an object. Requires a BCI shell."
