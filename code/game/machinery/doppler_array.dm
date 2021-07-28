@@ -247,7 +247,7 @@
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(cash_gain)
-			say("Explosion details and mixture analyzed and sold to the highest bidder for [cash_gain] cr.")
+			say("Explosion details and mixture analysis sold to the highest bidder for [cash_gain] cr.")
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return
