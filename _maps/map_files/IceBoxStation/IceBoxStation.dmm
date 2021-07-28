@@ -22345,7 +22345,6 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/stamp/qm,
 /obj/item/pen/red,
 /obj/item/pen{
 	pixel_x = 4;
@@ -51822,7 +51821,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -54831,6 +54829,7 @@
 "wnf" = (
 /obj/structure/table,
 /obj/structure/cable,
+/obj/item/stamp/qm,
 /turf/open/floor/carpet,
 /area/cargo/qm)
 "wnj" = (
