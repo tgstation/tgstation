@@ -215,8 +215,8 @@
 				desired = text2num(params["amount"])
 			else
 				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
-				if(isnull(desired))
-					desired = 0
+				if(!desired)
+					return FALSE
 
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
@@ -224,6 +224,9 @@
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
+				// Grab the first item in contents which name matches our passed name.
+				// format_text() is used here to strip \improper and \proper from both names,
+				// which is required for correct string comparison between them.
 				if(format_text(dispensed_item.name) == format_text(params["name"]))
 					if(dispensed_item in component_parts)
 						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
