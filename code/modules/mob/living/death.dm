@@ -80,7 +80,7 @@
 			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
 			ghostize(TRUE)
 	if(mind)
-		mind.add_memory("died at [tod]", MEMORY_DEATH, NO_TARGET, list(tod), no_mood = TRUE)
+		mind.add_memory(MEMORY_DEATH, list(DETAIL_TIME_OF_DEATH = tod, DETAIL_VICTIM = src), no_mood = TRUE)
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)

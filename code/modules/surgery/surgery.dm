@@ -121,7 +121,7 @@
 
 /datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-	surgeon.mind.add_memory("completed \"[lowertext(name)]\"", MEMORY_SUCCESSFUL_SURGERY, target, list("lowertext(name)"))
+	surgeon.mind.add_memory(MEMORY_SUCCESSFUL_SURGERY, list(DETAIL_VICTIM = target, DETAIL_SURGERY_TYPE = src))
 	qdel(src)
 
 /datum/surgery/advanced

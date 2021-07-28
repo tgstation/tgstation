@@ -697,7 +697,7 @@
 /datum/quirk/item_quirk/junkie/smoker/post_add()
 	. = ..()
 	var/brand = initial(drug_container_type.name)
-	quirk_holder.mind.add_memory("favorite ciggie brand: [brand]", MEMORY_QUIRK_DRUG, NO_TARGET, list(brand))
+	quirk_holder.mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand))
 
 /datum/quirk/item_quirk/junkie/smoker/process(delta_time)
 	. = ..()
@@ -752,7 +752,7 @@
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 
 /datum/quirk/item_quirk/allergic/post_add()
-	quirk_holder.mind.add_memory("allergic to [allergy_string]", MEMORY_ALLERGY, NO_TARGET, list(allergy_string))
+	quirk_holder.mind.add_memory(MEMORY_ALLERGY, list(DETAIL_ALLERGY_TYPE = allergy_string))
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
 /datum/quirk/item_quirk/allergic/process(delta_time)

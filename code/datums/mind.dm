@@ -252,7 +252,7 @@
 	last_death = world.time
 
 ///document this
-/datum/mind/proc/add_memory(name, memory_type, atom/target, extra_info, no_mood)
+/datum/mind/proc/add_memory(memory_type, extra_info, no_mood)
 	var/story_mood = MOODLESS_MEMORY
 	if(!no_mood)
 		var/datum/component/mood/mood_component = current.GetComponent(/datum/component/mood)
@@ -263,7 +263,12 @@
 	if(replaced_memory)
 		qdel(replaced_memory)
 
-	memories[memory_type] = new /datum/memory(name, build_story_mob(current), memory_type, build_target(target), extra_info, story_mood)
+
+	for(var/key in extra_info)
+		var/detail = extra_info
+		extra_info[key] = build_story_detail(detail)
+
+	memories[memory_type] = new /datum/memory(build_story_mob(current), memory_type, extra_info, story_mood)
 	return memories[memory_type]
 
 ///returns the story name of a mob
@@ -276,20 +281,29 @@
 		return lowertext(initial(current.name))
 	return "someone"
 
-///returns the story name of any atom
-/datum/mind/proc/build_target(atom/target)
+///returns the story name of anything
+/datum/mind/proc/build_story_detail(detail)
+	if(!isatom(detail))
+		return detail //Its either text or deserves to runtime.
+	var/atom/target = detail
 	if(isliving(target))
 		return build_story_mob(target)
 	return lowertext(initial(target.name))
 
 /datum/mind/proc/select_memory(verbage)
-	if(memories.len == 1)
-		var/datum/memory/singular_memory = memories[1]
-		var/memory_name = singular_memory.action + " with " + singular_memory.target
-		var/response = tgui_alert(current, "Do you want to [verbage] the memory of [memory_name]?", verbage + " this?", "Yes", "No")
-		if(response != "Yes")
-			return
-		return singular_memory
+
+	var/list/choice_list = choices
+
+	for(var/key in memories)
+		var/datum/memory/memory_iter = memories[key]
+		choice_list[memory_iter.name] = memory_iter
+
+	var/choice = tgui_input_list(usr, "Select a memory", "Memory Selection?", choice_list)
+	var/datum/memory/memory_choice = choice_list[choice]
+
+	if(!memory_choice)
+		return
+	return memory_choice
 
 /datum/mind/proc/wipe_memory()
 	QDEL_LIST(memories)

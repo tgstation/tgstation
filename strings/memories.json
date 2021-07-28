@@ -2,8 +2,8 @@
 	"happy":[
 		"chuckles",
 		"has a huge grin",
-		"has a twisted grin like a maniac.",
-		"is silently working away like a pro.",
+		"has a twisted grin like a maniac",
+		"is silently working away like a pro",
 		"looks determined",
 		"seems cheerful about it all",
 		"seems confident",
@@ -38,16 +38,16 @@
 		"This piece depicts"
 	],
 	"engravings_somethings":[
-		"%PERFORMER can also be seen cringing at the sight of %SOMETHING.",
-		"%PERFORMER can also be seen cringing at the sight of %TARGET.",
-		"%PERFORMER is being arrested, clutching a %SOMETHING.",
-		"%PERFORMER is doing a sick ass backflip!",
-		"%PERFORMER is locked inside of an escape pod.",
-		"%PERFORMER is performing a t-pose, scaring %TARGET.",
-		"%PERFORMER is secretly admiring a %SOMETHING.",
-		"%PERFORMER is slightly floating above the ground.",
-		"%PERFORMER is standing on atop a soapbox.",
-		"%SOMETHING is being worshipped by %PERFORMER.",
+		"%MEMORIZER can also be seen cringing at the sight of %SOMETHING.",
+		"%MEMORIZER can also be seen cringing at the sight of %TARGET.",
+		"%MEMORIZER is being arrested, clutching a %SOMETHING.",
+		"%MEMORIZER is doing a sick ass backflip!",
+		"%MEMORIZER is locked inside of an escape pod.",
+		"%MEMORIZER is performing a t-pose, scaring %TARGET.",
+		"%MEMORIZER is secretly admiring a %SOMETHING.",
+		"%MEMORIZER is slightly floating above the ground.",
+		"%MEMORIZER is standing on atop a soapbox.",
+		"%SOMETHING is being worshipped by %MEMORIZER.",
 		"%SOMETHING is etched so crudely you'd think a three-year-old did it.",
 		"%TARGET has a cartoony thought bubble.",
 		"%TARGET is lying on the floor, defeated by %SOMETHING.",
@@ -76,75 +76,122 @@
 		"You continue to peel away the story.",
 		"Your mental spines dive deeper into the memory."
 	],
+	"allergy_names":[
+		"The %ALLERGY_TYPE allergy of %MEMORIZER"
+	],
+	"allergy_starts":[
+		"%MEMORIZER sneezes from coming in contact with %ALLERGY_TYPE."
+	],
+	"allergy_moods":[
+		"%MEMORIZER %MOOD as they wipe their nose."
+	],
+	"account_names":[
+		"The bank ID of %MEMORIZER"
+	],
+	"account_starts":[
+		"%MEMORIZER's flexes their last brain cells, proudly showing the lucky numbers %ACCOUNT_ID.",
+		"%ACCOUNT_ID. The numbers mason, what do they mean!?"
+	],
+	"account_moods":[
+		"%MEMORIZER %MOOD as try to keep their drool in.",
+		"%MEMORIZER %MOOD and runs from their wrangler."
+	],
+	"surgery_names":[
+		"The %SURGERY_TYPE of %VICTIM by %MEMORIZER"
+	],
 	"surgery_starts":[
-		"%PERFORMER carefully performing %INFO1 on %TARGET.",
-		"%PERFORMER using a bone saw on %TARGET.",
-		"%TARGET being operated on by %PERFORMER."
+		"%MEMORIZER carefully performing %SURGERY_TYPE on %TARGET.",
+		"%MEMORIZER using a bone saw on %TARGET.",
+		"%TARGET being operated on by %MEMORIZER."
 	],
 	"surgery_moods":[
-		"%PERFORMER %MOOD after finishing %INFO1.",
-		"%PERFORMER %MOOD as a blood splatter lands on %PERFORMER's face.",
-		"%PERFORMER %MOOD as the %INFO1 continues.",
-		"%PERFORMER %MOOD as they pick apart %TARGET.",
-		"%PERFORMER %MOOD as they tear into %TARGET."
+		"%MEMORIZER %MOOD after finishing %SURGERY_TYPE.",
+		"%MEMORIZER %MOOD as a blood splatter lands on %MEMORIZER's face.",
+		"%MEMORIZER %MOOD as the %SURGERY_TYPE continues.",
+		"%MEMORIZER %MOOD as they pick apart %TARGET.",
+		"%MEMORIZER %MOOD as they tear into %TARGET."
+	],
+	"bomb_names":[
+		"The arming of %BOMB_TYPE by %MEMORIZER"
 	],
 	"bomb_starts":[
-		"%PERFORMER presses an ominous button, and %TARGET begins beeping.",
-		"%PERFORMER slapping down a %TARGET.",
-		"%TARGET is armed by %PERFORMER."
+		"%MEMORIZER presses an ominous button, and %BOMB begins beeping.",
+		"%MEMORIZER slapping down a %BOMB_TYPE.",
+		"%BOMB is armed by %MEMORIZER."
 	],
 	"bomb_moods":[
-		"%PERFORMER %MOOD and begins to walk away from %TARGET.",
-		"%PERFORMER %MOOD as %TARGET begins to tick.",
-		"%PERFORMER %MOOD with %TARGET winding down.",
-		"beep... beep... %PERFORMER %MOOD."
+		"%MEMORIZER %MOOD and begins to walk away from %BOMB_TYPE.",
+		"%MEMORIZER %MOOD as %BOMB_TYPE begins to tick.",
+		"%MEMORIZER %MOOD with %BOMB_TYPE winding down.",
+		"beep... beep... %MEMORIZER %MOOD."
+	],
+	"bomb_happy":[
+		"feels too cool to look at %BOMB_TYPE"
+	],
+	"highfive_names":[
+		"The %HIGHFIVE_TYPE between %MEMORIZER and %VICTIM"
 	],
 	"highfive_starts":[
-		"%PERFORMER and %TARGET are having a legendary %INFO1.",
-		"%PERFORMER is giving %TARGET a %INFO1.",
-		"%TARGET and %PERFORMER are high fiving each other."
+		"%MEMORIZER and %VICTIM are having a legendary %HIGHFIVE_TYPE.",
+		"%MEMORIZER is giving %VICTIM a %HIGHFIVE_TYPE.",
+		"%VICTIM and %MEMORIZER are giving each other a %HIGHFIVE_TYPE."
 	],
 	"highfive_moods":[
-		"%PERFORMER %MOOD as the %INFO1 connects.",
-		"%PERFORMER %MOOD at all the compatriotism going on.",
-		"What a %INFO1! %PERFORMER %MOOD.",
-		"Wow! %PERFORMER %MOOD!"
+		"%MEMORIZER %MOOD as the %INFO1 connects.",
+		"%MEMORIZER %MOOD at all the compatriotism going on.",
+		"What a %INFO1! %MEMORIZER %MOOD.",
+		"Wow! %MEMORIZER %MOOD!"
+	],
+	"borged_names":[
+		"The borging of %VICTIM"
 	],
 	"borged_starts":[
-		"%PERFORMER and %TARGET are having a legendary %INFO1.",
-		"%PERFORMER is giving %TARGET a %INFO1.",
-		"%TARGET and %PERFORMER have completed a friendly %INFO1."
+		"%MEMORIZER and %TARGET are having a legendary %INFO1.",
+		"%MEMORIZER is giving %TARGET a %INFO1.",
+		"%TARGET and %MEMORIZER have completed a friendly %INFO1."
 	],
 	"borged_moods":[
 		"There shouldn't be any; you're a brain at this point!"
 	],
+	"death_names":[
+		"The death of %VICTIM"
+	],
 	"death_starts":[
-		"%PERFORMER's heart stops beating at %INFO1.",
-		"%PERFORMER has perished at %INFO1.",
-		"at %INFO1, %PERFORMER has left the land of the living.",
-		"%PERFORMER seizes up and falls limp, their eyes dead and lifeless..."
+		"%VICTIM's heart stops beating at %TIME_OF_DEATH.",
+		"%VICTIM has perished at %TIME_OF_DEATH.",
+		"at %TIME_OF_DEATH, %VICTIM has left the land of the living.",
+		"%VICTIM seizes up and falls limp, their eyes dead and lifeless..."
 	],
 	"death_moods":[
 		"There shouldn't be any; this is set to be a moodless memory!"
 	],
+	"creampied_names":[
+		"The creaming of %VICTIM"
+	],
 	"creampied_starts":[
-		"%PERFORMER's face is covered in cream at %INFO1.",
-		"%PERFORMER has taken a creampie at %INFO1.",
-		"at %INFO1, %PERFORMER became a cream-covered mess."
+		"%VICTIM's face is covered in cream at %INFO1.",
+		"%VICTIM has taken a creampie at %INFO1.",
+		"at %WHERE, %VICTIM became a cream-covered mess."
 	],
 	"creampied_moods":[
-		"%PERFORMER %MOOD as the cream drips off their face.",
-		"%PERFORMER %MOOD at the idea of their now expanded laundry task.",
-		"%PERFORMER %MOOD as they lick off some of the pie."
+		"%VICTIM %MOOD as the cream drips off their face.",
+		"%VICTIM %MOOD because of their now expanded laundry task.",
+		"%VICTIM %MOOD as they lick off some of the pie."
+	],
+	"slipped_names":[
+		"The slipping of %VICTIM"
+
 	],
 	"slipped_starts":[
-		"%PERFORMER tumbled right over %TARGET.",
-		"%PERFORMER couldn't keep standing when faced with %TARGET.",
-		"the perilous %TARGET took %PERFORMER down a notch."
+		"%MEMORIZER tumbled right over %WHAT_BY.",
+		"%MEMORIZER couldn't keep standing when faced with %WHAT_BY.",
+		"the perilous %WHAT_BY took %MEMORIZER down a notch."
 	],
 	"slipped_moods":[
-		"%PERFORMER %MOOD as they crawl up from the ground.",
-		"%PERFORMER %MOOD on the ground."
+		"%MEMORIZER %MOOD as they crawl up from the ground.",
+		"%MEMORIZER %MOOD while on the ground."
+	],
+	"slipped_sad":[
+		"doesn't even want to get up and looks depressed"
 	]
-
 }

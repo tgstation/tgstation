@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	var/mob/living/the_creamed_mob = parent
 	if(the_creamed_mob.mind)
 		var/area/the_cream_zone = get_area(the_creamed_mob)
-		the_creamed_mob.mind.add_memory("was creampied in [the_cream_zone.name]", MEMORY_CREAMPIED, the_creamed_mob, list(lowertext(the_cream_zone.name)))
+		the_creamed_mob.mind.add_memory(MEMORY_CREAMPIED, list(DETAIL_VICTIM = the_creamed_mob, DETAIL_WHERE = the_cream_zone))
 
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
