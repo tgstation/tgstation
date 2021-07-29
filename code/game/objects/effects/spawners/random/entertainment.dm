@@ -149,7 +149,7 @@
 		/obj/effect/spawner/random/entertainment/coin,
 		/obj/effect/spawner/random/entertainment/dice,
 		/obj/effect/spawner/random/entertainment/cigarette,
-		/obj/effect/spawner/random/entertainment/lighter_small,
+		/obj/effect/spawner/random/entertainment/wallet_lighter,
 		/obj/effect/spawner/random/bureaucracy/paper,
 		/obj/effect/spawner/random/bureaucracy/crayon,
 		/obj/effect/spawner/random/bureaucracy/pen,

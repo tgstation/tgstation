@@ -1139,6 +1139,8 @@
 #include "code\game\objects\effects\spawners\random\bureaucracy.dm"
 #include "code\game\objects\effects\spawners\random\clothing.dm"
 #include "code\game\objects\effects\spawners\random\entertainment.dm"
+#include "code\game\objects\effects\spawners\random\food_or_drink.dm"
+#include "code\game\objects\effects\spawners\random\medical.dm"
 #include "code\game\objects\effects\spawners\random\random.dm"
 #include "code\game\objects\effects\spawners\random\structure.dm"
 #include "code\game\objects\effects\spawners\random\techstorage.dm"
