@@ -12,3 +12,4 @@
 /obj/effect/spawner/bundle/moisture_trap : /obj/effect/spawner/random/trash/moisture_trap
 /obj/effect/spawner/lootdrop/maint_drugs : /obj/effect/spawner/random/entertainment/drugs
 /obj/effect/spawner/lootdrop/grille_or_trash : /obj/effect/spawner/random/trash/grille_or_waste
+/obj/effect/spawner/lootdrop/botanical_waste : /obj/effect/spawner/random/trash/botanical_waste

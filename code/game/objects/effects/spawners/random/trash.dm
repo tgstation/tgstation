@@ -2,6 +2,14 @@
 	name = "trash spawner"
 	desc = "Ewwwwwww gross."
 
+/obj/effect/spawner/random/trash/botanical_waste
+	name = "botanical waste spawner"
+	loot = list(
+		/obj/item/grown/bananapeel = 6,
+		/obj/item/grown/corncob = 3,
+		/obj/item/food/grown/bungopit = 1,
+	)
+
 /obj/effect/spawner/random/trash/grille_or_waste
 	name = "grille or waste spawner"
 	loot = list(

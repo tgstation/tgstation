@@ -172,7 +172,7 @@
 	loot = list(/obj/effect/spawner/lootdrop/food_packaging = 56,
 				/obj/item/trash/can = 8,
 				/obj/item/shard = 8,
-				/obj/effect/spawner/lootdrop/botanical_waste = 8,
+				/obj/effect/spawner/random/trash/botanical_waste = 8,
 				/obj/effect/spawner/lootdrop/cigbutt = 8,
 				/obj/item/reagent_containers/syringe = 5,
 				/obj/item/food/deadmouse = 2,
@@ -201,7 +201,7 @@
 				/obj/item/trash/can/food/peaches/maint = 4,
 				/obj/item/trash/semki = 2)
 
-/obj/effect/spawner/lootdrop/botanical_waste
+/obj/effect/spawner/random/trash/botanical_waste
 	name = "botanical waste spawner"
 	loot = list(/obj/item/grown/bananapeel = 60,
 				/obj/item/grown/corncob = 30,
@@ -222,20 +222,6 @@
 				/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5)
-
-/obj/effect/spawner/random/trash/grille_or_waste
-	name = "maint grille or trash spawner"
-	loot = list(/obj/structure/grille = 5,
-			/obj/item/cigbutt = 1,
-			/obj/item/trash/cheesie = 1,
-			/obj/item/trash/candy = 1,
-			/obj/item/trash/chips = 1,
-			/obj/item/food/deadmouse = 1,
-			/obj/item/trash/pistachios = 1,
-			/obj/item/trash/popcorn = 1,
-			/obj/item/trash/raisins = 1,
-			/obj/item/trash/sosjerky = 1,
-			/obj/item/trash/syndi_cakes = 1)
 
 /obj/effect/spawner/lootdrop/three_course_meal
 	name = "three course meal spawner"
