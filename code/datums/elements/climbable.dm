@@ -34,7 +34,7 @@
 	examine_texts += span_notice("[source] looks climbable.")
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
-	var/dir_step = get_dir(user,source.loc)
+	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
 	if(source.flags_1 & ON_BORDER_1 && user.loc != source.loc && (dir_step & source.dir) == source.dir)
 		return FALSE
@@ -91,8 +91,8 @@
 	//it's on border you are actually vaulting over it to the direction it's facing.
 	if(climbed_thing.flags_1 & ON_BORDER_1 && (climbed_thing.loc == user.loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
 		//can be vaulted over in two different cardinal directions.
-		if((climbed_thing.dir in GLOB.diagonals) && climbed_thing.loc == user.loc)
-			dir_step = (user.dir & climbed_thing.dir) || angle2dir_cardinal(dir2angle(climbed_thing.dir))
+		if(ISDIAGONALDIR(climbed_thing.dir) && climbed_thing.loc == user.loc)
+			dir_step = (user.dir & climbed_thing.dir) || climbed_thing.dir // try to step to the direction the user is facing if possible.
 		else
 			dir_step = get_dir(user, get_step(climbed_thing, climbed_thing.dir))
 	. = step(user, dir_step)
