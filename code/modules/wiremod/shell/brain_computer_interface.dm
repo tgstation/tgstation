@@ -14,7 +14,7 @@
 		new /obj/item/circuit_component/bci_action("One"),
 		new /obj/item/circuit_component/bci_action("Two"),
 		new /obj/item/circuit_component/bci_action("Three"),
-	), SHELL_CAPACITY_SMALL)
+	), SHELL_CAPACITY_MEDIUM)
 
 /obj/item/organ/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
