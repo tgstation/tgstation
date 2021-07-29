@@ -685,12 +685,12 @@
 
 /datum/antagonist/changeling/ui_static_data(mob/user)
 	var/list/data = list()
-	var/list/memories = list()
+	var/list/memories
 	for(var/stolen_memory_name in stolen_memories)
 		var/list/memory_data = list()
 		memory_data["name"] = stolen_memory_name
 		memory_data["story"] = stolen_memories[stolen_memory_name]
-		memories += memory_data
+		LAZYADD(memories, memory_data)
 	data["memories"] = list(memories)
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory

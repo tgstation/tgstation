@@ -1,5 +1,4 @@
 import { multiline } from 'common/string';
-import { url } from 'node:inspector';
 import { useBackend, useLocalState, useSharedState } from '../backend';
 import { BlockQuote, Button, Dimmer, Dropdown, Modal, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -185,7 +184,7 @@ const MemoriesSection = (props, context) => {
             help you impersonate your target!
           `} />
       }>
-      {!memories.length && (
+      {!!memories && (
         <Dimmer mr="-100%" bold>
           You need to absorb a victim first!
         </Dimmer>
@@ -193,7 +192,7 @@ const MemoriesSection = (props, context) => {
         <Stack vertical>
           <Stack.Item>
             <Dropdown
-              selected={setSelectedMemory}
+              selected={selectedMemory}
               options={
                 memories.map(memory => {
                   return memory.name;
@@ -202,7 +201,7 @@ const MemoriesSection = (props, context) => {
               onSelected={selected => setSelectedMemory(selected)} />
           </Stack.Item>
           <Stack.Item>
-            {selectedMemory}
+            {!!selectedMemory && selectedMemory}
           </Stack.Item>
         </Stack>
       )}
