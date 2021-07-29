@@ -43,7 +43,7 @@
 	overlay_id = GLOB.object_overlay_id
 	GLOB.object_overlay_id += 1
 
-/obj/item/circuit_component/counter_overlay/Destroy()
+/obj/item/circuit_component/object_overlay/Destroy()
 	for(var/active_overlay in active_overlays)
 		QDEL_NULL(active_overlay)
 	. = ..()

@@ -33,7 +33,7 @@
 	options_map = options_to_icons_bar
 
 /obj/item/circuit_component/object_overlay/bar/show_to_owner(atom/target_atom, mob/living/owner)
-	if(LAZYLEN(active_overlays) >= OBJECT_OVERLAY_LIMIT)
+	if(LAZYLEN(active_overlays) >= BAR_OVERLAY_LIMIT)
 		return
 
 	if(active_overlays[target_atom])
