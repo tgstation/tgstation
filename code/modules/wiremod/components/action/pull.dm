@@ -15,10 +15,6 @@
 	. = ..()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
 
-/obj/item/circuit_component/pull/Destroy()
-	target = null
-	return ..()
-
 /obj/item/circuit_component/pull/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

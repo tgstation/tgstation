@@ -34,11 +34,6 @@
 	. = ..()
 	records = add_output_port("Crew Monitoring Data", PORT_TYPE_TABLE)
 
-/obj/item/circuit_component/medical_console_data/Destroy()
-	records = null
-	return ..()
-
-
 /obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
 	if(istype(parent, /obj/machinery/computer/crew))

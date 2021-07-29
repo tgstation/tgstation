@@ -59,18 +59,6 @@
 	why_fail = add_output_port("Fail reason", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/bluespace_launchpad/Destroy()
-	launchpad_id = null
-	x_pos = null
-	y_pos = null
-	send_trigger = null
-	retrieve_trigger = null
-	sent = null
-	retrieved = null
-	on_fail = null
-	why_fail = null
-	return ..()
-
 /obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/parent)
 	. = ..()
 	if(istype(parent, /obj/machinery/computer/launchpad))

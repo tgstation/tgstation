@@ -16,10 +16,6 @@
 	. = ..()
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/tempsensor/Destroy()
-	result = null
-	return ..()
-
 /obj/item/circuit_component/pressuresensor/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
