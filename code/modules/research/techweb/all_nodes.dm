@@ -681,6 +681,26 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
+/datum/techweb_node/advacned_bci
+	id = "advacned_bci"
+	display_name = "Advanced Brain-Computer Interfaces"
+	description = "Grants access to an advanced version of BCI that is capable of storing more components."
+	prereq_ids = list("bci_shells", "adv_biotech", "adv_engi")
+	design_ids = list(
+		"bci_shell_adv",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+/datum/techweb_node/alien_bci
+	id = "alien_bci"
+	display_name = "Alien Brain-Computer Interfaces"
+	description = "Grants access to even better BCIs that can store even more components than advanced ones."
+	prereq_ids = list("advacned_bci", "alien_bio", "micro_bluespace")
+	design_ids = list(
+		"bci_shell_alien",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
 /datum/techweb_node/movable_shells_tech
 	id = "movable_shells"
 	display_name = "Movable Shell Research"

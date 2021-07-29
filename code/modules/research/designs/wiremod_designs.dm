@@ -361,6 +361,34 @@
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 
+/datum/design/bci_shell_advanced
+	name = "Advanced Brain-Computer Interface Shell"
+	desc = "An advanced version of brain-computer interface with more circuit capacity."
+	id = "bci_shell_adv"
+	materials = list(
+		/datum/material/glass = 2000,
+		/datum/material/iron = 6000,
+		/datum/material/silver = 1000,
+		/datum/material/gold = 1000,
+	)
+	build_path = /obj/item/shell/bci/advanced
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/bci_shell_alien
+	name = "Alien Brain-Computer Interface Shell"
+	desc = "A brain-computer interface manufactured with usage of the most advanced alien technology."
+	id = "bci_shell_alien"
+	materials = list(
+		/datum/material/alloy/alien = 6000,
+		/datum/material/glass = 2000,
+		/datum/material/silver = 1000,
+		/datum/material/gold = 1000,
+	)
+	build_path = /obj/item/shell/bci/alien
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
 /datum/design/board/bci_implanter
 	name = "Brain-Computer Interface Manipulation Chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."

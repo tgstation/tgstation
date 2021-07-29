@@ -57,3 +57,13 @@
 	name = "brain-computer interface assembly"
 	icon_state = "bci-open"
 	shell_to_spawn = /obj/item/organ/cyberimp/bci
+
+/obj/item/shell/bci/advanced
+	name = "advanced brain-computer interface assembly"
+	icon_state = "bci_advanced-open"
+	shell_to_spawn = /obj/item/organ/cyberimp/bci/advanced
+
+/obj/item/shell/bci/alien
+	name = "alien brain-computer interface assembly"
+	icon_state = "bci_alien-open"
+	shell_to_spawn = /obj/item/organ/cyberimp/bci/alien
