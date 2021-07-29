@@ -191,6 +191,18 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"aN" = (
+/obj/structure/table/wood/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/paicard,
+/turf/open/floor/iron,
+/area/service/bar)
 "aS" = (
 /obj/structure/sign/warning/docking{
 	pixel_x = -32
@@ -2257,6 +2269,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "kg" = (
@@ -3132,6 +3145,12 @@
 "qd" = (
 /turf/open/floor/iron,
 /area/mine/mechbay)
+"qf" = (
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/mine/storage)
 "qg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/cafeteria,
@@ -3185,6 +3204,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/service/theater)
 "qs" = (
@@ -3710,6 +3730,16 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"tB" = (
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/dark,
+/area/service/hydroponics)
 "tG" = (
 /obj/structure/sign/poster/random{
 	pixel_x = 32
@@ -3881,6 +3911,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/service/bar)
 "ux" = (
@@ -3952,6 +3983,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
+"uV" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/mine/storage)
 "uZ" = (
 /obj/structure/railing,
 /turf/open/openspace/icemoon/keep_below,
@@ -3977,9 +4012,6 @@
 /obj/effect/loot_site_spawner,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"vj" = (
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/unexplored/rivers)
 "vk" = (
 /obj/structure/table,
 /obj/item/paper,
@@ -4383,6 +4415,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"xR" = (
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/bar)
 "xU" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -4419,9 +4455,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"yl" = (
-/turf/closed/mineral/random/snow,
-/area/icemoon/underground/unexplored/rivers)
 "yr" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp)
@@ -5105,6 +5138,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"CN" = (
+/obj/structure/table,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen)
 "CQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -5175,7 +5213,7 @@
 "Dk" = (
 /obj/structure/fence/door,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored/rivers)
+/area/icemoon/underground/explored)
 "Dn" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -5386,6 +5424,12 @@
 /obj/item/seeds/apple,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"EC" = (
+/obj/machinery/door/window/westleft{
+	name = "Exterior Access"
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/service)
 "EF" = (
 /obj/structure/cable,
 /obj/machinery/button/door/directional/west{
@@ -5420,7 +5464,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored/rivers)
+/area/icemoon/underground/explored)
 "EL" = (
 /obj/machinery/shower{
 	pixel_y = 22
@@ -5457,7 +5501,7 @@
 	},
 /obj/structure/sign/nanotrasen,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored/rivers)
+/area/icemoon/underground/explored)
 "EV" = (
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/fore)
@@ -5474,6 +5518,22 @@
 "Fa" = (
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Fc" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/machinery/door/window/westright{
+	dir = 1;
+	name = "Exterior Access";
+	req_access_txt = "35"
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/service/hydroponics)
 "Fd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -6026,7 +6086,7 @@
 /area/mine/laborcamp)
 "IE" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/mine/storage)
 "IF" = (
 /obj/structure/closet/crate,
@@ -6095,7 +6155,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored/rivers)
+/area/icemoon/underground/explored)
 "Ji" = (
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -6680,6 +6740,7 @@
 "Mq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/service/theater)
 "Mv" = (
@@ -7745,6 +7806,11 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/machinery/door/window/westleft{
+	dir = 1;
+	name = "Exterior Access";
+	req_access_txt = "35"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -8004,6 +8070,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/hallway/secondary/service)
+"Uc" = (
+/obj/machinery/door/window/westright{
+	name = "Exterior Access"
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "Uf" = (
@@ -8621,9 +8693,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"Yc" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored/rivers)
 "Yd" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -38680,7 +38749,7 @@ ak
 ak
 ak
 NH
-NH
+sT
 AF
 Sk
 KT
@@ -38935,7 +39004,7 @@ ak
 ak
 ak
 ak
-ak
+NH
 NH
 NH
 AF
@@ -39192,13 +39261,13 @@ ak
 ak
 ak
 ak
-ak
+NH
 NH
 NH
 IE
-TE
-TE
-TE
+uV
+uV
+uV
 IE
 NH
 NH
@@ -39437,9 +39506,9 @@ ak
 ak
 ak
 ak
-vj
-vj
-vj
+mO
+mO
+mO
 ak
 ak
 ak
@@ -39449,14 +39518,14 @@ ak
 ak
 ak
 ak
-ak
-ak
+sT
 NH
 NH
-NH
-NH
-NH
-NH
+sT
+sT
+sT
+sT
+sT
 NH
 ak
 ak
@@ -39693,22 +39762,22 @@ ak
 ak
 ak
 ak
-vj
-yl
-vj
-vj
-vj
-vj
-vj
+mO
+Et
+mO
+mO
+mO
+mO
+mO
 ak
 ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+sT
+sT
+sT
+NH
 NH
 NH
 NH
@@ -39949,23 +40018,23 @@ ak
 ak
 ak
 ak
-ak
-Yc
-Yc
-Yc
-Yc
-Yc
-vj
-vj
-vj
-vj
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+mO
+Fp
+Fp
+Fp
+Fp
+Fp
+mO
+mO
+mO
+mO
+mO
+mO
+NH
+sT
+sT
+sT
+NH
 ak
 ak
 ak
@@ -40207,21 +40276,21 @@ ak
 ak
 ak
 EK
-Yc
-Yc
-yl
-Yc
-Yc
-Yc
-Yc
-vj
-vj
-vj
-ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+Et
+Fp
+Fp
+Fp
+Fp
+mO
+mO
+mO
+mO
+mO
+qf
+sT
+NH
 ak
 ak
 ak
@@ -40464,20 +40533,20 @@ ak
 ak
 ak
 ER
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-vj
-vj
-vj
-ak
-ak
-ak
+Fp
+Fp
+PG
+PG
+Fp
+PG
+PG
+Fp
+mO
+mO
+mO
+mO
+mO
+mO
 ak
 ak
 ak
@@ -40721,22 +40790,22 @@ ak
 ak
 ak
 Dk
-Yc
-Yc
-Yc
+Fp
+PG
+PG
 Ql
 Ql
 Ql
 Ql
 Ql
 Ql
-vj
-vj
-ak
-ak
-ak
-ak
-ak
+mO
+mO
+mO
+mO
+mO
+mO
+mO
 ak
 ak
 ak
@@ -40976,10 +41045,10 @@ ak
 ak
 ak
 ak
-Yc
+Fp
 Jf
-Yc
-Yc
+PG
+PG
 Ql
 Ql
 Rx
@@ -40988,13 +41057,13 @@ MN
 pd
 Ql
 Ql
-vj
-vj
-ak
-ak
-ak
-ak
-ak
+mO
+mO
+mO
+mO
+mO
+mO
+mO
 ak
 ak
 ak
@@ -41233,9 +41302,9 @@ ak
 ak
 ak
 ak
-Yc
+Fp
 Jf
-Yc
+PG
 Et
 Ql
 Tr
@@ -41245,14 +41314,14 @@ Tq
 bH
 iU
 Ql
-vj
-vj
+mO
+mO
+mO
 ak
 ak
-ak
-ak
-ak
-ak
+mO
+mO
+mO
 ak
 ak
 ak
@@ -41489,8 +41558,8 @@ ak
 ak
 ak
 ak
-Yc
-Yc
+Fp
+Fp
 Et
 Et
 nJ
@@ -41503,8 +41572,8 @@ ZJ
 OR
 Ql
 Ql
-vj
-vj
+mO
+mO
 ak
 ak
 ak
@@ -41745,9 +41814,9 @@ ak
 ak
 ak
 ak
-Yc
-Yc
-Yc
+Fp
+Fp
+Fp
 Et
 nJ
 nJ
@@ -41760,9 +41829,9 @@ Ha
 ed
 pd
 Ql
-Yc
-vj
-vj
+Fp
+mO
+mO
 ak
 ak
 ak
@@ -42002,8 +42071,8 @@ ak
 ak
 ak
 ak
-Yc
-Yc
+Fp
+Fp
 Et
 Et
 nJ
@@ -42267,7 +42336,7 @@ nJ
 zf
 dt
 FX
-bH
+tB
 wr
 aI
 HT
@@ -43044,7 +43113,7 @@ OM
 EN
 OD
 iD
-Tc
+Fc
 Dy
 OU
 PG
@@ -45355,7 +45424,7 @@ Yd
 Ba
 ts
 BR
-BR
+xR
 BR
 ig
 hO
@@ -46633,7 +46702,7 @@ GP
 YM
 Dr
 ho
-PF
+aN
 Lk
 Ju
 pt
@@ -46898,7 +46967,7 @@ op
 td
 mR
 QI
-be
+CN
 HP
 Ie
 Bt
@@ -48680,7 +48749,7 @@ ak
 ak
 ak
 ak
-ak
+Et
 qJ
 Ji
 TV
@@ -48937,7 +49006,7 @@ ak
 ak
 ak
 ak
-ak
+Et
 qJ
 IG
 TV
@@ -49193,11 +49262,11 @@ ak
 ak
 ak
 ak
-ak
-ak
+Et
+Et
 qJ
-Ji
-Ji
+Uc
+EC
 qJ
 fK
 fK
@@ -49450,8 +49519,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+Et
+Et
 qJ
 Dh
 Dh
@@ -49708,7 +49777,7 @@ ak
 ak
 ak
 ak
-ak
+Et
 Ty
 Bb
 Bb
@@ -49965,10 +50034,10 @@ ak
 ak
 ak
 ak
-ak
-Fp
+Jf
 PG
-Fp
+PG
+PG
 Et
 Et
 Et
@@ -50222,9 +50291,9 @@ ak
 ak
 ak
 ak
-ak
-ak
+ER
 Fp
+PG
 PG
 PG
 Et
@@ -50479,10 +50548,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+Jf
 Fp
+Fp
+PG
 PG
 Fp
 Fp
@@ -50736,10 +50805,10 @@ ak
 ak
 ak
 ak
+Jf
 ak
-ak
-ak
-ak
+Fp
+Fp
 Fp
 PG
 ak
@@ -50993,12 +51062,12 @@ ak
 ak
 ak
 ak
+Et
 ak
 ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+Fp
 ak
 ak
 ak

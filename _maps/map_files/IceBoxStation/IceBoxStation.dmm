@@ -10969,6 +10969,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "bmz" = (
+/obj/effect/landmark/blobstart,
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/fore)
 "bmD" = (
@@ -23162,6 +23163,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/main)
+"ezv" = (
+/obj/effect/turf_decal/tile/red/full,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/large,
+/area/service/kitchen/diner)
 "ezI" = (
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
@@ -27673,6 +27679,7 @@
 /area/commons/locker)
 "hjK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "hjZ" = (
@@ -30080,6 +30087,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/command/bridge)
+"iFE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/service/hydroponics)
 "iFN" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -49999,6 +50013,11 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"tKM" = (
+/obj/effect/landmark/event_spawn,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/wood,
+/area/hallway/secondary/service)
 "tKQ" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
@@ -92745,7 +92764,7 @@ baY
 hRC
 mbE
 jZm
-sjm
+iFE
 qzs
 eLt
 tSH
@@ -95316,7 +95335,7 @@ jjD
 cVb
 sEw
 bly
-xLr
+tKM
 cVb
 jyX
 vUT
@@ -95579,7 +95598,7 @@ uxw
 aLr
 jCG
 hrL
-oaK
+ezv
 neE
 oaK
 dtF
