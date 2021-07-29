@@ -14,6 +14,18 @@
 		/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 	)
 
+/obj/effect/spawner/random/entertainment/money
+	name = "money spawner"
+	lootcount = 3
+	fan_out_items = TRUE
+	loot = list(
+		/obj/item/stack/spacecash/c1 = 10,
+		/obj/item/stack/spacecash/c10 = 5,
+		/obj/item/stack/spacecash/c20 = 3,
+		/obj/item/stack/spacecash/c50 = 2,
+		/obj/item/stack/spacecash/c100 = 1,
+	)
+
 /obj/effect/spawner/random/entertainment/drugs
 	name = "recreational drugs spawner"
 	loot = list(
