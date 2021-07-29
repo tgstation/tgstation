@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style)
+		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)

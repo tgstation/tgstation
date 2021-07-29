@@ -26,7 +26,7 @@
 
 	return values
 
-/datum/preference/choiced/backpack/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value)
 	target.backpack = value
 
 /// Jumpsuit preference
@@ -44,7 +44,7 @@
 
 	return values
 
-/datum/preference/choiced/jumpsuit/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/jumpsuit/apply_to_human(mob/living/carbon/human/target, value)
 	target.jumpsuit_style = value
 
 /// Socks preference
@@ -57,7 +57,7 @@
 /datum/preference/choiced/socks/init_possible_values()
 	return possible_values_for_sprite_accessory_list(GLOB.socks_list)
 
-/datum/preference/choiced/socks/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value)
 	target.socks = value
 
 /// Undershirt preference
@@ -70,7 +70,7 @@
 /datum/preference/choiced/undershirt/init_possible_values()
 	return possible_values_for_sprite_accessory_list(GLOB.undershirt_list)
 
-/datum/preference/choiced/undershirt/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value)
 	target.undershirt = value
 
 /// Underwear preference
@@ -83,7 +83,7 @@
 /datum/preference/choiced/underwear/init_possible_values()
 	return possible_values_for_sprite_accessory_list(GLOB.underwear_list)
 
-/datum/preference/choiced/underwear/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value)
 	target.underwear = value
 
 #undef PREFERENCE_CATEGORY_CLOTHING

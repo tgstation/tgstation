@@ -2031,6 +2031,7 @@
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\names.dm"
 #include "code\modules\client\preferences\species.dm"
+#include "code\modules\client\preferences\ui_style.dm"
 #include "code\modules\client\preferences\uplink_location.dm"
 #include "code\modules\client\verbs\etips.dm"
 #include "code\modules\client\verbs\ooc.dm"

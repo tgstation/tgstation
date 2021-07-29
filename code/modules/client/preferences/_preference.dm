@@ -95,13 +95,23 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	WRITE_FILE(savefile[savefile_key], value)
 	return TRUE
 
+/// Apply this preference onto the given client.
+/// Must be overriden by subtypes.
+// MOTHBLOCKS TODO: Unit test this
+// MOTHBLOCKS TODO: Only those with PREFERENCE_PLAYER (and document)
+/datum/preference/proc/apply_to_client(client/client, value)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("`apply_to_client()` was not implemented for [type]!")
+
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 // MOTHBLOCKS TODO: Unit test this
-/datum/preference/proc/apply(mob/living/carbon/human/target, value)
+// MOTHBLOCKS TODO: Only those with PREFERENCE_CHARACTER (and document)
+/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
-	CRASH("`apply()` was not implemented for [type]!")
+	CRASH("`apply_to_human()` was not implemented for [type]!")
 
 /// Returns which savefile to use for a given savefile identifier
 /datum/preferences/proc/get_savefile_for_savefile_identifier(savefile_identifier)

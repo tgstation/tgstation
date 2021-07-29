@@ -5,16 +5,25 @@ import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../../component
 import { Window } from "../../layouts";
 import { CharacterProfile, PreferencesMenuData } from "./data";
 import { AntagsPage } from "./AntagsPage";
+import { GamePreferencesPage } from "./GamePreferencesPage";
 import { JobsPage } from "./JobsPage";
 import { MainPage } from "./MainPage";
 import { SpeciesPage } from "./SpeciesPage";
 
 enum Page {
   Antags,
+  Game,
   Jobs,
   Main,
   Species,
 }
+
+const CHARACTER_PREFERENCE_PAGES = new Set([
+  Page.Antags,
+  Page.Jobs,
+  Page.Main,
+  Page.Species,
+]);
 
 const CharacterProfiles = (props: {
   activeName: string,
@@ -41,13 +50,16 @@ const CharacterProfiles = (props: {
 
 export const PreferencesMenu = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
-  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Antags);
+  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Main);
 
   let page;
 
   switch (currentPage) {
     case Page.Antags:
       page = <AntagsPage />;
+      break;
+    case Page.Game:
+      page = <GamePreferencesPage />;
       break;
     case Page.Jobs:
       page = <JobsPage />;
@@ -66,17 +78,20 @@ export const PreferencesMenu = (props, context) => {
     <Window title="Character Preferences" width={920} height={770} scrollable>
       <Window.Content>
         <Stack vertical fill>
-          <Stack.Item>
-            <CharacterProfiles
-              activeName={data.active_name}
-              onClick={(slot) => {
-                act("change_slot", {
-                  slot: slot + 1,
-                });
-              }} profiles={data.character_profiles} />
-          </Stack.Item>
-
-          <Stack.Divider />
+          {CHARACTER_PREFERENCE_PAGES.has(currentPage) && (
+            <>
+              <Stack.Item>
+                <CharacterProfiles
+                  activeName={data.active_name}
+                  onClick={(slot) => {
+                    act("change_slot", {
+                      slot: slot + 1,
+                    });
+                  }} profiles={data.character_profiles} />
+              </Stack.Item>
+              <Stack.Divider />
+            </>
+          )}
 
           <Stack.Item>
             {page}

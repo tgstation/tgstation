@@ -25,7 +25,7 @@
 
 	return values
 
-/datum/preference/choiced/moth_antennae/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/moth_antennae/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_antennae"] = value
 
 /datum/preference/choiced/moth_markings
@@ -84,7 +84,7 @@
 
 	return values
 
-/datum/preference/choiced/moth_markings/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/moth_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_markings"] = value
 
 /datum/preference/choiced/moth_wings
@@ -106,7 +106,7 @@
 
 	return values
 
-/datum/preference/choiced/moth_wings/apply(mob/living/carbon/human/target, value)
+/datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value
 
 /datum/preference/color/eye_color
@@ -114,7 +114,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
-/datum/preference/color/eye_color/apply(mob/living/carbon/human/target, value)
+/datum/preference/color/eye_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.eye_color = value
 
 	var/obj/item/organ/eyes/eyes_organ = target.getorgan(/obj/item/organ/eyes)
@@ -128,7 +128,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
-/datum/preference/color/facial_hair_color/apply(mob/living/carbon/human/target, value)
+/datum/preference/color/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.facial_hair_color = value
 
 /datum/preference/color/hair_color
@@ -136,7 +136,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
-/datum/preference/color/hair_color/apply(mob/living/carbon/human/target, value)
+/datum/preference/color/hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.hair_color = value
 
 #undef PREFERENCE_CATEGORY_FEATURES

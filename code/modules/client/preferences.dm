@@ -27,7 +27,6 @@ GLOBAL_VAR(preferences_species_data)
 	//Antag preferences
 	var/list/be_special = list() //Special role selection
 
-	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = TRUE
 
@@ -165,7 +164,6 @@ GLOBAL_VAR(preferences_species_data)
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		custom_names[custom_name_id] = get_default_name(custom_name_id)
 
-	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -302,6 +300,9 @@ GLOBAL_VAR(preferences_species_data)
 			// recreating the whole thing, but this would complicate the preference
 			// API while adding the potential for drift.
 			character_preview_view.update_body()
+
+			if (requested_preference.savefile_identifier == PREFERENCE_PLAYER)
+				requested_preference.apply_to_client(parent, value)
 
 			return TRUE
 		if ("set_color_preference")
@@ -593,7 +594,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
-		preference.apply(character, read_preference(preference_type))
+		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
+			continue
+
+		preference.apply_to_human(character, read_preference(preference_type))
 
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name

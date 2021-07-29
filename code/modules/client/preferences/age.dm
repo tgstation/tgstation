@@ -18,5 +18,5 @@
 /datum/preference/age/is_valid(value)
 	return !isnull(value) && value >= AGE_MIN && value <= AGE_MAX
 
-/datum/preference/age/apply(mob/living/carbon/human/target, value)
+/datum/preference/age/apply_to_human(mob/living/carbon/human/target, value)
 	target.age = value

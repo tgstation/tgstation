@@ -10,7 +10,7 @@
 	/// These will be grouped together on the preferences menu
 	var/group
 
-/datum/preference/name/apply(mob/living/carbon/human/target, value)
+/datum/preference/name/apply_to_human(mob/living/carbon/human/target, value)
 	target.real_name = value
 	target.name = value
 
