@@ -48,7 +48,7 @@
 		"a %SOMETHING is being worshipped by %MEMORIZER.",
 		"a %SOMETHING is etched so crudely you'd think a three-year-old did it.",
 		"%MEMORIZER has a cartoony thought bubble.",
-		"%MEMORIZER is lying on the floor, defeated by %SOMETHING.",
+		"%MEMORIZER is lying on the floor, defeated by a %SOMETHING.",
 		"A %SOMETHING stands in the background.",
 		"A crowd is cheering in the background.",
 		"A heavily pixelated %SOMETHING is sitting there, ominously.",
