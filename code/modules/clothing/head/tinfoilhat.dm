@@ -57,8 +57,8 @@
 
 /obj/item/clothing/head/foilhat/attack_hand(mob/user, list/modifiers)
 	if(!warped && iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.head)
+		var/mob/living/carbon/wearer = user
+		if(src == wearer.head)
 			to_chat(user, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
 			return
 	return ..()

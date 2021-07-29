@@ -24,9 +24,9 @@
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(ishuman(location))
-		var/mob/living/carbon/human/M = location
-		if(M.is_holding(src) || M.head == src)
-			location = M.loc
+		var/mob/living/carbon/human/wearer = location
+		if(M.is_holding(src) || wearer.head == src)
+			location = wearer.loc
 
 	if(isturf(location))
 		location.hotspot_expose(700, 1)
