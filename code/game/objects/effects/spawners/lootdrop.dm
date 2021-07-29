@@ -3,12 +3,13 @@
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
 	anchored = TRUE // Stops persistent lootdrop spawns from being shoved into lockers
+	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/lootcount = 1 //how many items will be spawned
 	var/lootdoubles = TRUE //if the same item can be spawned twice
-	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
-	/// Whether the spawner should immediately spawn loot and cleanup on Initialize()
-	var/spawn_on_init = TRUE
+	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
+	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
+	var/scatter_radius = 0	//determines how big of a range (in tiles) we should scatter things in.
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	. = ..()
