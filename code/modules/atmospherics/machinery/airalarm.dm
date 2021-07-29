@@ -900,6 +900,7 @@
 
 	var/datum/port/output/pressure
 	var/datum/port/output/temperature
+	var/datum/port/output/gas_amount
 
 	var/obj/machinery/airalarm/connected_alarm
 	var/list/options_map
@@ -993,7 +994,7 @@
 		pressure.set_output(round(environment.return_pressure()))
 		temperature.set_output(round(environment.temperature))
 		if(ispath(options_map[current_option]))
-			gas_amount.set_output(round(location.air.gases[options_map[current_option]][MOLES]))
+			gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
 		return
 
 	var/datum/tlv/tlv = connected_alarm.TLV[options_map[current_option]]
