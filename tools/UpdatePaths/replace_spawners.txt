@@ -1,3 +1,4 @@
 #comment This replaces the effect/spawner paths to the new refactored paths https://github.com/tgstation/tgstation/pull/60522
 
 /obj/effect/loot_site_spawner : /obj/effect/spawner/random/structure/crate
+/obj/effect/spawner/lootdrop/costume : /obj/effect/spawner/random/clothing/costume

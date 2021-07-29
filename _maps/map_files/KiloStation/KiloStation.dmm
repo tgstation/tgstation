@@ -404,8 +404,8 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/costume,
-/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "abx" = (
@@ -2767,7 +2767,7 @@
 "aiF" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/random/clothing/costume,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -3442,7 +3442,7 @@
 "akw" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/costume,
+/obj/effect/spawner/random/clothing/costume,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -36978,10 +36978,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/costume{
-	pixel_x = 4;
-	pixel_y = 4
-	},
+/obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
