@@ -72,7 +72,7 @@
 	loot = list(
 		/obj/structure/bed/maint,
 		/obj/effect/spawner/scatter/grime,
-		obj/effect/spawner/random/entertainment/drugs,
+		/obj/effect/spawner/random/entertainment/drugs,
 	)
 
 /obj/effect/spawner/random/trash/moisture_trap
