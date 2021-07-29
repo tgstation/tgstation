@@ -5,6 +5,7 @@
 	icon_state = "bci"
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
+	var/shell_capacity = SHELL_CAPACITY_SMALL
 
 /obj/item/organ/cyberimp/bci/Initialize()
 	. = ..()
@@ -14,7 +15,7 @@
 		new /obj/item/circuit_component/bci_action("One"),
 		new /obj/item/circuit_component/bci_action("Two"),
 		new /obj/item/circuit_component/bci_action("Three"),
-	), SHELL_CAPACITY_SMALL)
+	), shell_capacity)
 
 /obj/item/organ/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -32,6 +33,18 @@
 		owner.say(message, forced = "circuit speech")
 	else
 		return ..()
+
+/obj/item/organ/cyberimp/bci/advanced
+	name = "advanced brain-computer interface"
+	desc = "An advanced version of brain-computer interface with more circuit capacity."
+	icon_state = "bci_advanced"
+	shell_capacity = SHELL_CAPACITY_MEDIUM
+
+/obj/item/organ/cyberimp/bci/alien
+	name = "alien brain-computer interface"
+	desc = "A brain-computer interface manufactured with usage of the most advanced alien technology."
+	icon_state = "bci_alien"
+	shell_capacity = SHELL_CAPACITY_BIG
 
 /obj/item/circuit_component/bci
 	display_name = "Brain-Computer Interface"

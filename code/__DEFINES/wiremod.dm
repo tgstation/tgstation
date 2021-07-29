@@ -127,6 +127,7 @@
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10
 #define SHELL_CAPACITY_MEDIUM 25
+#define SHELL_CAPACITY_BIG 35
 #define SHELL_CAPACITY_LARGE 50
 #define SHELL_CAPACITY_VERY_LARGE 500
 
