@@ -5,7 +5,7 @@
 /obj/effect/spawner/random/clothing/costume
 	name = "random costume spawner"
 
-/obj/effect/spawner/random/costume/Initialize()
+/obj/effect/spawner/random/clothing/costume/Initialize()
 	loot = list()
 	for(var/path in subtypesof(/obj/effect/spawner/costume))
 		loot[path] = TRUE
