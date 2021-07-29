@@ -47,8 +47,8 @@
 /obj/effect/spawner/random/clothing/mafia_outfit
 	name = "mafia outfit spawner"
 	loot = list(
-		/obj/effect/spawner/bundle/costume/mafia = 20,
-		/obj/effect/spawner/bundle/costume/mafia/white = 5,
-		/obj/effect/spawner/bundle/costume/mafia/beige = 5,
-		/obj/effect/spawner/bundle/costume/mafia/checkered = 2,
+		/obj/effect/spawner/costume/mafia = 20,
+		/obj/effect/spawner/costume/mafia/white = 5,
+		/obj/effect/spawner/costume/mafia/beige = 5,
+		/obj/effect/spawner/costume/mafia/checkered = 2,
 	)
