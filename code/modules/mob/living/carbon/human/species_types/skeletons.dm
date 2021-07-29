@@ -25,6 +25,7 @@
 		TRAIT_FAKEDEATH,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOCLONELOSS,
+		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
@@ -57,7 +58,7 @@
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+					H.manual_emote(pick("oofs silently.", "looks like [H.p_their()] bones hurt.", "grimaces, as though [H.p_their()] bones hurt."))
 				if(3)
 					to_chat(H, span_warning("Your bones hurt!"))
 		if(chem.overdosed)

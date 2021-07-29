@@ -96,8 +96,9 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
-	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
-	holder = null
+	if(holder)
+		RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+		holder = null
 
 /*
  * The slip proc, but for equipped items.

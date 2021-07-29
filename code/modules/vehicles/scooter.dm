@@ -84,13 +84,14 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
-	if(!A.density || !has_buckled_mobs())
+	if(!A.density || !has_buckled_mobs() || world.time < next_crash)
 		return
 
+	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
 	rider.adjustStaminaLoss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
+	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding)
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		rider.throw_at(throw_target, 3, 2)
@@ -104,7 +105,6 @@
 		var/backdir = turn(dir, 180)
 		step(src, backdir)
 		rider.spin(4, 1)
-	next_crash = world.time + 10
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
@@ -286,7 +286,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
-	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
+	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	instability = 8
 	wheel_name = "skis"
 	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes

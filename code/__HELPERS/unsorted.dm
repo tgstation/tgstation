@@ -199,10 +199,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/loop = 1
 	var/safety = 0
 
-	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
+	var/random = CONFIG_GET(flag/force_random_names) || (C ? is_banned_from(C.ckey, "Appearance") : FALSE)
 
 	while(loop && safety < 5)
-		if(C?.prefs.custom_names[role] && !safety && !banned)
+		if(!safety && !random && C?.prefs.custom_names[role])
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
@@ -315,10 +315,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 // Format an energy value measured in Power Cell units.
 /proc/DisplayEnergy(units)
 	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into GLOB.CELLRATE energy units when charging cells.
+	// excess power into watts when charging cells.
 	// With the current configuration of wait=20 and CELLRATE=0.002, this
 	// means that one unit is 1 kJ.
-	return DisplayJoules(units * SSmachines.wait * 0.1 / GLOB.CELLRATE)
+	return DisplayJoules(units * SSmachines.wait * 0.1 WATTS)
 
 /proc/get_mob_by_ckey(key)
 	if(!key)
@@ -511,15 +511,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/areas = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
-			if(cache[A.type])
-				areas += V
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(cache[area_to_check.type])
+				areas += area_to_check
 	else
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
-			if(A.type == areatype)
-				areas += V
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(area_to_check.type == areatype)
+				areas += area_to_check
 	return areas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -536,21 +534,19 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/turfs = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
-			if(!cache[A.type])
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(!cache[area_to_check.type])
 				continue
-			for(var/turf/T in A)
-				if(target_z == 0 || target_z == T.z)
-					turfs += T
+			for(var/turf/turf_in_area in area_to_check)
+				if(target_z == 0 || target_z == turf_in_area.z)
+					turfs += turf_in_area
 	else
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
-			if(A.type != areatype)
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(area_to_check.type != areatype)
 				continue
-			for(var/turf/T in A)
-				if(target_z == 0 || target_z == T.z)
-					turfs += T
+			for(var/turf/turf_in_area in area_to_check)
+				if(target_z == 0 || target_z == turf_in_area.z)
+					turfs += turf_in_area
 	return turfs
 
 /proc/get_cardinal_dir(atom/A, atom/B)

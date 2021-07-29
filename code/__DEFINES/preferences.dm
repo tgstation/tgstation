@@ -129,3 +129,22 @@
 
 //recommened client FPS
 #define RECOMMENDED_FPS 40
+
+// randomise_appearance_prefs() and randomize_human_appearance() proc flags
+#define RANDOMIZE_GENDER (1<<0)
+#define RANDOMIZE_SPECIES (1<<1)
+#define RANDOMIZE_NAME (1<<2)
+#define RANDOMIZE_AGE (1<<3)
+#define RANDOMIZE_UNDERWEAR (1<<4)
+#define RANDOMIZE_UNDERWEAR_COLOR (1<<5)
+#define RANDOMIZE_UNDERSHIRT (1<<6)
+#define RANDOMIZE_SOCKS (1<<7)
+#define RANDOMIZE_BACKPACK (1<<8)
+#define RANDOMIZE_JUMPSUIT_STYLE (1<<9)
+#define RANDOMIZE_HAIRSTYLE (1<<10)
+#define RANDOMIZE_FACIAL_HAIRSTYLE (1<<11)
+#define RANDOMIZE_HAIR_COLOR (1<<12)
+#define RANDOMIZE_FACIAL_HAIR_COLOR (1<<13)
+#define RANDOMIZE_SKIN_TONE (1<<14)
+#define RANDOMIZE_EYE_COLOR (1<<15)
+#define RANDOMIZE_FEATURES (1<<16)

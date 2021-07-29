@@ -131,7 +131,7 @@
 			var/currentHandIndex = user.get_held_index_of_item(src)
 			user.transferItemToLoc(src, null)
 			user.put_in_hand(nk, currentHandIndex)
-			user.visible_message(span_notice("You tie [src] up like a neckerchief."), span_notice("[user] ties [src] up like a neckerchief."))
+			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
 			qdel(src)
 		else
 			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))

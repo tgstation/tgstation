@@ -2,7 +2,7 @@
 	title = "Captain"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("CentCom")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space law"
@@ -32,10 +32,14 @@
 		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10
 	)
 
-/datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
-	..()
-	if(announce_captaincy)
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+
+	voice_of_god_power = 1.4 //Command staff has authority
+
+
+/datum/job/captain/get_captaincy_announcement(mob/living/captain)
+	return "Captain [captain.real_name] on deck!"
+
 
 /datum/outfit/job/captain
 	name = "Captain"

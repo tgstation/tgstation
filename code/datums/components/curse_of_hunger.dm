@@ -123,11 +123,13 @@
 	if(!poison_food_tolerance)
 		cursed.dropItemToGround(cursed_item, TRUE)
 		return
-	hunger++
-	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) && prob(20))
+	hunger += delta_time
+	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) || prob(80))
 		return
+
+	var/list/locations_to_check = (cursed.contents + cursed_item.contents)
 	//check hungry enough to eat something!
-	for(var/obj/item/food in cursed.contents)
+	for(var/obj/item/food in locations_to_check)
 		if(!IS_EDIBLE(food))
 			continue
 		food.forceMove(cursed.loc)

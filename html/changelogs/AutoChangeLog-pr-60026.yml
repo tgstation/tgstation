@@ -1,5 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Tram ghost magnet and other cases of observer forceMove."
-  - code_imp: "Renamed some observer code vars for better readability. Portals check types less."

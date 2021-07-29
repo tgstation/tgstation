@@ -1,10 +1,9 @@
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
-	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
+	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom. Not technically a king."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
 	icon_dead = "regalrat_dead"
-	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
 	maxHealth = 70
@@ -47,7 +46,7 @@
 	QDEL_NULL(riot)
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be their crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
@@ -79,9 +78,9 @@
 	if(istype(user,/mob/living/simple_animal/hostile/rat))
 		var/mob/living/simple_animal/hostile/rat/ratself = user
 		if(ratself.faction_check_mob(src, TRUE))
-			. += span_notice("This is your king. Long live his majesty!")
+			. += span_notice("This is your king. Long live their majesty!")
 		else
-			. += span_warning("This is a false king! Strike him down!")
+			. += span_warning("This is a false king! Strike them down!")
 	else if(user != src && istype(user,/mob/living/simple_animal/hostile/regalrat))
 		. += span_warning("Who is this foolish false king? This will not stand!")
 
@@ -141,6 +140,7 @@
 /datum/action/cooldown/domain
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
+	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 60
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
@@ -148,6 +148,8 @@
 
 /datum/action/cooldown/domain/Trigger()
 	. = ..()
+	if(!.)
+		return
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
 	switch (rand(1,10))
@@ -168,6 +170,7 @@
 /datum/action/cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
+	check_flags = AB_CHECK_CONSCIOUS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
@@ -194,21 +197,21 @@
 			to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
 			return
 		new /mob/living/simple_animal/mouse(owner.loc)
-		owner.visible_message(span_warning("[owner] commands a mouse to its side!"))
+		owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
 	else
-		owner.visible_message(span_warning("[owner] commands its army to action, mutating them into rats!"))
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/rat
 	name = "rat"
-	desc = "It's a nasty, ugly, evil, disease-ridden rodent with anger issues."
+	desc = "They're a nasty, ugly, evil, disease-ridden rodent with anger issues."
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	speak = list("Skree!","SKREEE!","Squeak?")
 	speak_emote = list("squeaks")
 	emote_hear = list("Hisses.")
-	emote_see = list("runs in a circle.", "stands on its hind legs.")
+	emote_see = list("runs in a circle.", "stands on their hind legs.")
 	melee_damage_lower = 3
 	melee_damage_upper = 5
 	obj_damage = 5
@@ -266,7 +269,7 @@
 		if(ratking.faction_check_mob(src, TRUE))
 			. += span_notice("This rat serves under you.")
 		else
-			. += span_warning("This peasant serves a different king! Strike him down!")
+			. += span_warning("This peasant serves a different king! Strike them down!")
 
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))

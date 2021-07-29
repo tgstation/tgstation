@@ -31,19 +31,34 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	faction = list("neutral")
 	var/squish_chance = 50
+	// Randomizes hunting intervals, minumum 5 turns
+	var/time_to_hunt = 5
+
 
 /mob/living/simple_animal/hostile/cockroach/Initialize()
 	. = ..()
 	add_cell_sample()
 	make_squashable()
-
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	time_to_hunt = rand(5,10)
 
 /mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+
+/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) // Cockroaches are predators to space ants
+	. = ..()
+	turns_since_scan++
+	if(turns_since_scan > time_to_hunt)
+		turns_since_scan = 0
+		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
+		for(var/obj/effect/decal/cleanable/ants/potential_target in view(2, get_turf(src)))
+			if(potential_target.type in target_types)
+				hunt(potential_target)
+				return
+
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot

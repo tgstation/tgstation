@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Fixed all clients being forced to Fit Viewport regardless of their Auto Fit Viewport preference being set to manual."

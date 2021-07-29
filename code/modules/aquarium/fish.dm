@@ -196,3 +196,10 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
+
+/obj/item/storage/box/fish_debug
+	name = "box full of fish"
+
+/obj/item/storage/box/fish_debug/PopulateContents()
+	for(var/fish_type in subtypesof(/datum/aquarium_behaviour/fish))
+		generate_fish(src,fish_type)

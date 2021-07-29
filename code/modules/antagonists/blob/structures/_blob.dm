@@ -10,6 +10,7 @@
 	layer = BELOW_MOB_LAYER
 	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
+	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
 	max_integrity = BLOB_REGULAR_MAX_HP

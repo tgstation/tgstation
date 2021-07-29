@@ -44,12 +44,6 @@
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/arrest_console_data/Destroy()
-	records = null
-	on_fail = null
-	return ..()
-
-
 /obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
 	if(istype(parent, /obj/machinery/computer/secure_data))
@@ -150,13 +144,6 @@
 	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/arrest_console_arrest/Destroy()
-	targets = null
-	new_status = null
-	new_status_set = null
-	on_fail = null
-	return ..()
-
 /obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
@@ -183,9 +170,11 @@
 		if(!sec_record)
 			continue
 
-		successful_set++
+		if(sec_record.fields["criminal"] != status_to_set)
+			successful_set++
+			names_of_entries += target["name"]
 		sec_record.fields["criminal"] = status_to_set
-		names_of_entries += target["name"]
+
 
 	if(successful_set > 0)
 		investigate_log("[names_of_entries.Join(", ")] have been set to [status_to_set] by [parent.get_creator()].", INVESTIGATE_RECORDS)

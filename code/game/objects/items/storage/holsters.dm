@@ -52,14 +52,14 @@
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/dueling
+		/obj/item/gun/energy/dueling,
 		))
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
-	var/static/items_inside = list(
+	generate_items_inside(list(
 		/obj/item/gun/ballistic/revolver/detective = 1,
-		/obj/item/ammo_box/c38 = 2)
-	generate_items_inside(items_inside,src)
+		/obj/item/ammo_box/c38 = 2,
+	),src)
 
 /obj/item/storage/belt/holster/detective/full/ert
 	name = "marine's holster"

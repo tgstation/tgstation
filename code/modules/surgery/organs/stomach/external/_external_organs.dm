@@ -102,22 +102,22 @@
 */
 /obj/item/organ/external/proc/mutant_bodyparts_layertext(layer)
 	switch(layer)
-		if(EXTERNAL_BEHIND_LAYER)
+		if(BODY_BEHIND_LAYER)
 			return "_BEHIND"
-		if(EXTERNAL_ADJACENT_LAYER)
+		if(BODY_ADJ_LAYER)
 			return "_ADJ"
-		if(EXTERNAL_FRONT_LAYER)
+		if(BODY_FRONT_LAYER)
 			return "_FRONT"
 
 ///Converts a bitflag to the right layer. I'd love to make this a static index list, but byond made an attempt on my life when i did
 /obj/item/organ/external/proc/bitflag_to_layer(layer)
 	switch(layer)
 		if(EXTERNAL_BEHIND)
-			return EXTERNAL_BEHIND_LAYER
+			return BODY_BEHIND_LAYER
 		if(EXTERNAL_ADJACENT)
-			return EXTERNAL_ADJACENT_LAYER
+			return BODY_ADJ_LAYER
 		if(EXTERNAL_FRONT)
-			return EXTERNAL_FRONT_LAYER
+			return BODY_FRONT_LAYER
 
 ///Because all the preferences have names like "Beautiful Sharp Snout" we need to get the sprite datum with the actual important info
 /obj/item/organ/external/proc/get_sprite_datum(sprite)

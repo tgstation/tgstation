@@ -38,13 +38,6 @@
 /obj/item/circuit_component/compare/proc/load_custom_ports()
 	return
 
-/obj/item/circuit_component/compare/Destroy()
-	true = null
-	false = null
-	result = null
-	compare = null
-	return ..()
-
 /obj/item/circuit_component/compare/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
