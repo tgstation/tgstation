@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed carps being given orders without a friend via radial menu."
-  - bugfix: "Fixed sentient carps being unridable because of the ai datum."

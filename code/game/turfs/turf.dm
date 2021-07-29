@@ -586,10 +586,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	else if (toxvomit == VOMIT_NANITE)
-		V.name = "metallic slurry"
-		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
-		V.icon_state = "vomitnanite_[pick(1,4)]"
 	if (purge_ratio && iscarbon(M))
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 

@@ -1,6 +1,0 @@
-author: "Greniza"
-delete-after: True
-changes: 
-  - bugfix: "prisoner transport bags can now be cinched properly"
-  - bugfix: "syndicate prisoner transport bags now expel the expected amount of gas due to an occupant's exhale"
-  - spellcheck: "makes cinching a PTB have proper pronouns according to an onlooker"
