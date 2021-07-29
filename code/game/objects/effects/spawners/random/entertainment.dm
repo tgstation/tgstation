@@ -120,3 +120,11 @@
 		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
 		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
 	)
+
+/obj/effect/spawner/random/entertainment/wallet_lighter
+	name = "lighter wallet spawner"
+	loot = list(
+		/obj/item/match = 10,
+		/obj/item/lighter/greyscale = 10,
+		/obj/item/lighter = 1,
+	)
