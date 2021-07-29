@@ -16,11 +16,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"ar" = (
-/obj/structure/chair/stool/directional/west,
-/obj/machinery/light/directional/west,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "aS" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
@@ -30,6 +25,11 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"bl" = (
+/obj/structure/chair/stool/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/table,
@@ -773,6 +773,7 @@
 /area/shuttle/escape/brig)
 "vL" = (
 /obj/structure/table/optable,
+/obj/item/surgical_drapes,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "vP" = (
@@ -966,9 +967,6 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"AR" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "Bf" = (
 /obj/machinery/computer/slot_machine,
@@ -1313,6 +1311,9 @@
 "NV" = (
 /obj/effect/turf_decal/siding/thinplating/corner,
 /turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"Oa" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "OI" = (
 /obj/machinery/status_display/evac/directional/west,
@@ -1763,7 +1764,7 @@ OI
 mm
 cb
 Wp
-ar
+bl
 PS
 dL
 Uu
@@ -2283,7 +2284,7 @@ Uu
 Uu
 Uu
 Uu
-AR
+Oa
 iA
 KG
 Mb
@@ -2291,7 +2292,7 @@ Mb
 Mb
 jE
 JB
-AR
+Oa
 Uu
 Uu
 Uu
