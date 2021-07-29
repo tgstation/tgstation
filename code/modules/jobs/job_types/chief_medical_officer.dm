@@ -27,7 +27,7 @@
 	bounty_types = CIV_JOB_MED
 
 	mail_goodies = list(
-		/obj/effect/spawner/random/medical/organ_spawner = 10,
+		/obj/effect/spawner/random/medical/organs = 10,
 		/obj/effect/spawner/random/medical/memeorgans = 8,
 		/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly = 4,
 		/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly = 1

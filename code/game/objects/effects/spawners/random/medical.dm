@@ -18,7 +18,7 @@
 		/obj/item/reagent_containers/syringe,
 	)
 
-/obj/effect/spawner/random/medical/organ_spawner
+/obj/effect/spawner/random/medical/organs
 	name = "ayylien organ spawner"
 	lootcount = 3
 	loot = list(

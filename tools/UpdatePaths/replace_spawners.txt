@@ -18,5 +18,5 @@
 /obj/effect/spawner/lootdrop/garbage_spawner : /obj/effect/spawner/random/trash/garbage
 /obj/effect/spawner/lootdrop/gambling : /obj/effect/spawner/random/entertainment/gambling
 /obj/effect/spawner/lootdrop/wallet_loot : /obj/effect/spawner/random/entertainment/wallet_storage
-/obj/effect/spawner/lootdrop/organ_spawner : /obj/effect/spawner/random/medical/organ_spawner
+/obj/effect/spawner/lootdrop/organ_spawner : /obj/effect/spawner/random/medical/organs
 /obj/effect/spawner/lootdrop/memeorgans : /obj/effect/spawner/random/medical/memeorgans
