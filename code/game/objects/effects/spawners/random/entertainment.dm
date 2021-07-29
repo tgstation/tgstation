@@ -123,8 +123,36 @@
 
 /obj/effect/spawner/random/entertainment/wallet_lighter
 	name = "lighter wallet spawner"
-	loot = list(
+	loot = list( // these fit inside a wallet
 		/obj/item/match = 10,
 		/obj/item/lighter/greyscale = 10,
 		/obj/item/lighter = 1,
+	)
+
+/obj/effect/spawner/random/entertainment/lighter
+	name = "lighter spawner"
+	loot = list(
+		/obj/item/storage/box/matches = 10,
+		/obj/item/lighter/greyscale = 10,
+		/obj/item/lighter = 1,
+	)
+
+/obj/effect/spawner/random/entertainment/wallet_storage
+	name = "wallet contents spawner"
+	lootcount = 1
+	loot = list(	// random photos would go here. IF I HAD ONE. :'(
+		/obj/item/lipstick/random,
+		/obj/item/reagent_containers/pill/maintenance,
+		/obj/effect/spawner/random/food_or_drink/seed,
+		/obj/effect/spawner/random/medical/minor_healing,
+		/obj/effect/spawner/random/medical/injector,
+		/obj/effect/spawner/random/entertainment/coin,
+		/obj/effect/spawner/random/entertainment/dice,
+		/obj/effect/spawner/random/entertainment/cigarette,
+		/obj/effect/spawner/random/entertainment/lighter_small,
+		/obj/effect/spawner/random/bureaucracy/paper,
+		/obj/effect/spawner/random/bureaucracy/crayon,
+		/obj/effect/spawner/random/bureaucracy/pen,
+		/obj/effect/spawner/random/bureaucracy/stamp,
+		/obj/effect/spawner/random/techstorage/data_disk,
 	)
