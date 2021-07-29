@@ -97,3 +97,40 @@
 		var/turf/open/floor_loc = turf_loc
 		floor_loc.atmos_spawn_air("n2o=[n2o_gas_amount / distance_from_center];TEMP=273")
 	qdel(src)
+
+/obj/item/grenade/gas_crystal/crystal_foam
+	name = "crystal foam"
+	desc = "A crystal with a foggy inside"
+	icon_state = "crystal_foam"
+	var/list/obj/item/reagent_containers/glass/beakers = list()
+	var/breach_range = 7
+
+/obj/item/grenade/gas_crystal/crystal_foam/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/large/first_beaker = new(src)
+	var/obj/item/reagent_containers/glass/beaker/second_beaker = new(src)
+
+	first_beaker.reagents.add_reagent(/datum/reagent/aluminium, 75)
+	second_beaker.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 25)
+	second_beaker.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
+
+	beakers += first_beaker
+	beakers += second_beaker
+
+/obj/item/grenade/gas_crystal/crystal_foam/detonate(mob/living/lanced_by)
+	. = ..()
+
+	var/list/datum/reagents/reactants = list()
+	for(var/obj/item/reagent_containers/glass/beaker in beakers)
+		reactants += beaker.reagents
+
+	var/turf/detonation_turf = get_turf(src)
+	
+	chem_splash(detonation_turf, breach_range, reactants)
+
+	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
+
+	update_mob()
+
+	qdel(src)
