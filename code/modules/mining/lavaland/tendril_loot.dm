@@ -843,9 +843,9 @@
 #define COMBO_PROC "proc"
 #define ATTACK_STRIKE "Hilt Strike"
 #define ATTACK_SLICE "Wide Slice"
-#define ATTACK_CLOAK "Dark Cloak"
-#define ATTACK_CUT "Tendon Cut"
 #define ATTACK_DASH "Dash Attack"
+#define ATTACK_CUT "Tendon Cut"
+#define ATTACK_CLOAK "Dark Cloak"
 #define ATTACK_SHATTER "Shatter"
 
 /obj/item/cursed_katana
@@ -873,9 +873,9 @@
 	var/static/list/combo_list = list(
 		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/strike),
 		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/slice),
-		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/cloak),
+		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/dash),
 		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/cut),
-		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/dash),
+		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/cloak),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/shatter),
 		)
 
@@ -998,9 +998,9 @@
 		span_notice("You enter the dark cloak."))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/hostile_target
+		var/mob/living/simple_animal/hostile/hostile_target = target
 		hostile_target.LoseTarget()
-	addtimer(CALLBACK(src, .proc/uncloak, user), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, .proc/uncloak, user), 5 SECONDS, TIMER_UNIQUE)
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
@@ -1019,9 +1019,9 @@
 	playsound(src, 'sound/weapons/rapierhit.ogg', 50, TRUE)
 	var/datum/status_effect/stacking/saw_bleed/bloodletting/status = target.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
 	if(!status)
-		target.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, 4)
+		target.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, 6)
 	else
-		status.add_stacks(4)
+		status.add_stacks(6)
 
 /obj/item/cursed_katana/proc/dash(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] dashes through [target]!"),
@@ -1031,7 +1031,7 @@
 	target.apply_damage(damage = 20, sharpness = SHARP_POINTY, bare_wound_bonus = 10)
 	var/turf/dash_target = get_turf(target)
 	for(var/distance in 0 to 8)
-		if(dash_target.is_blocked_turf_ignore_climbable())
+		if(dash_target.is_blocked_turf(TRUE))
 			break
 		dash_target = get_step(dash_target, user.dir)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(user))
@@ -1061,7 +1061,7 @@
 #undef COMBO_PROC
 #undef ATTACK_STRIKE
 #undef ATTACK_SLICE
-#undef ATTACK_CLOAK
-#undef ATTACK_CUT
 #undef ATTACK_DASH
+#undef ATTACK_CUT
+#undef ATTACK_CLOAK
 #undef ATTACK_SHATTER
