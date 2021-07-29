@@ -120,10 +120,10 @@
 
 /obj/structure/closet/mini_fridge/PopulateContents()
 	. = ..()
-	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
-	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
+	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(50))
-		new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+		new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(40))
 		new /obj/item/food/pizzaslice/moldy(src)
 	else if(prob(30))
