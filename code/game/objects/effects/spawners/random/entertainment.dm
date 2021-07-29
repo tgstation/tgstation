@@ -1,8 +1,8 @@
-/obj/effect/spawner/lootdrop/entertainment
+/obj/effect/spawner/random/entertainment
 	name = "entertainment loot spawner"
 	desc = "It's time to paaaaaarty!"
 
-/obj/effect/spawner/lootdrop/entertainment/musical_instrument
+/obj/effect/spawner/random/entertainment/musical_instrument
 	name = "musical instrument spawner"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "random_instrument"
@@ -22,19 +22,19 @@
 	/obj/item/instrument/violin/golden = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/gambling
+/obj/effect/spawner/random/entertainment/gambling
 	name = "gambling valuables spawner"
 	loot = list(
 	/obj/item/gun/ballistic/revolver/russian = 5,
 	/obj/item/clothing/head/ushanka = 3,
-	/obj/effect/spawner/lootdrop/entertainment/coin = 3,
-	/obj/effect/spawner/lootdrop/entertainment/money = 3,
+	/obj/effect/spawner/random/entertainment/coin = 3,
+	/obj/effect/spawner/random/entertainment/money = 3,
 	/obj/item/dice/d6 = 3,
 	/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
 	/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/money
+/obj/effect/spawner/random/entertainment/money
 	name = "money spawner"
 	lootcount = 3
 	fan_out_items = TRUE
@@ -48,7 +48,7 @@
 	/obj/item/stack/spacecash/c500 = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/coin
+/obj/effect/spawner/random/entertainment/coin
 	name = "coin spawner"
 	loot = list(
 	/obj/item/coin/iron = 10,
@@ -66,7 +66,7 @@
 	/obj/item/coin/antagtoken = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/drugs
+/obj/effect/spawner/random/entertainment/drugs
 	name = "recreational drugs spawner"
 	loot = list(
 	/obj/item/reagent_containers/food/drinks/bottle/hooch = 10,
@@ -77,7 +77,7 @@
 	/obj/item/reagent_containers/pill/maintenance = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/dice
+/obj/effect/spawner/random/entertainment/dice
 	name = "dice spawner"
 	loot = list(
 	/obj/item/dice/d4,
@@ -88,7 +88,7 @@
 	/obj/item/dice/d20,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/pen
+/obj/effect/spawner/random/entertainment/pen
 	name = "pen spawner"
 	loot = list(
 	/obj/item/pen = 30,
@@ -100,14 +100,14 @@
 	/obj/item/pen/fountain = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/stamp
+/obj/effect/spawner/random/entertainment/stamp
 	name = "stamp spawner"
 	loot = list(
 	/obj/item/stamp = 3,
 	/obj/item/stamp/denied = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/crayon
+/obj/effect/spawner/random/entertainment/crayon
 	name = "crayon spawner"
 	loot = list(
 	/obj/item/toy/crayon/red,
@@ -120,7 +120,7 @@
 	/obj/item/toy/crayon/white,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/cigarette_pack
+/obj/effect/spawner/random/entertainment/cigarette_pack
 	name = "cigarette pack spawner"
 	loot = list(
 	/obj/item/storage/fancy/cigarettes = 3,
@@ -133,7 +133,7 @@
 	/obj/item/storage/fancy/cigarettes/cigpack_candy = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/cigarette
+/obj/effect/spawner/random/entertainment/cigarette
 	name = "cigarette spawner"
 	loot = list(
 	/obj/item/clothing/mask/cigarette/space_cigarette = 3,
@@ -146,7 +146,7 @@
 	/obj/item/clothing/mask/cigarette/robustgold = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/cigar
+/obj/effect/spawner/random/entertainment/cigar
 	name = "cigar spawner"
 	loot = list(
 	/obj/item/clothing/mask/cigarette/cigar = 3,
@@ -154,7 +154,7 @@
 	/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/lighter_small // for wallets
+/obj/effect/spawner/random/entertainment/lighter_small // for wallets
 	name = "lighter wallet spawner"
 	loot = list(
 	/obj/item/match = 10,
@@ -162,7 +162,7 @@
 	/obj/item/lighter = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/lighter
+/obj/effect/spawner/random/entertainment/lighter
 	name = "lighter spawner"
 	loot = list(
 	/obj/item/storage/box/matches = 10,
@@ -170,7 +170,7 @@
 	/obj/item/lighter = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/paper
+/obj/effect/spawner/random/entertainment/paper
 	name = "paper spawner"
 	loot = list(
 	/obj/item/paper = 20,
@@ -184,22 +184,22 @@
 	/obj/item/paper/carbon = 1,
 	)
 
-/obj/effect/spawner/lootdrop/entertainment/wallet_loot
+/obj/effect/spawner/random/entertainment/wallet_loot
 	name = "wallet contents spawner"
 	lootcount = 1
 	loot = list(	// random photos would go here. IF I HAD ONE. :'(
 	/obj/item/lipstick/random,
 	/obj/item/reagent_containers/pill/maintenance,
-	/obj/effect/spawner/lootdrop/food_or_drink/seed,
-	/obj/effect/spawner/lootdrop/medical/minor_healing,
-	/obj/effect/spawner/lootdrop/medical/injector,
-	/obj/effect/spawner/lootdrop/entertainment/coin,
-	/obj/effect/spawner/lootdrop/entertainment/dice,
-	/obj/effect/spawner/lootdrop/entertainment/cigarette,
-	/obj/effect/spawner/lootdrop/entertainment/lighter_small,
-	/obj/effect/spawner/lootdrop/entertainment/paper,
-	/obj/effect/spawner/lootdrop/entertainment/crayon,
-	/obj/effect/spawner/lootdrop/entertainment/pen,
-	/obj/effect/spawner/lootdrop/entertainment/stamp,
-	/obj/effect/spawner/lootdrop/techstorage/data_disk,
+	/obj/effect/spawner/random/food_or_drink/seed,
+	/obj/effect/spawner/random/medical/minor_healing,
+	/obj/effect/spawner/random/medical/injector,
+	/obj/effect/spawner/random/entertainment/coin,
+	/obj/effect/spawner/random/entertainment/dice,
+	/obj/effect/spawner/random/entertainment/cigarette,
+	/obj/effect/spawner/random/entertainment/lighter_small,
+	/obj/effect/spawner/random/entertainment/paper,
+	/obj/effect/spawner/random/entertainment/crayon,
+	/obj/effect/spawner/random/entertainment/pen,
+	/obj/effect/spawner/random/entertainment/stamp,
+	/obj/effect/spawner/random/techstorage/data_disk,
 	)

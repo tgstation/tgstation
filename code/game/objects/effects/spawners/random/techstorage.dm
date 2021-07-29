@@ -1,11 +1,11 @@
 // Tech storage circuit board spawners
-/obj/effect/spawner/lootdrop/techstorage
+/obj/effect/spawner/random/techstorage
 	name = "generic circuit board spawner"
 	lootdoubles = FALSE
 	fan_out_items = TRUE
 	lootcount = INFINITY
 
-/obj/effect/spawner/lootdrop/techstorage/service
+/obj/effect/spawner/random/techstorage/service
 	name = "service circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/arcade/battle,
@@ -20,7 +20,7 @@
 	/obj/item/circuitboard/computer/slot_machine,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/rnd
+/obj/effect/spawner/random/techstorage/rnd
 	name = "RnD circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/aifixer,
@@ -39,7 +39,7 @@
 	/obj/item/circuitboard/machine/dnascanner,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/security
+/obj/effect/spawner/random/techstorage/security
 	name = "security circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/secure_data,
@@ -47,7 +47,7 @@
 	/obj/item/circuitboard/computer/prisoner,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/engineering
+/obj/effect/spawner/random/techstorage/engineering
 	name = "engineering circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/atmos_alert,
@@ -55,7 +55,7 @@
 	/obj/item/circuitboard/computer/powermonitor,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/tcomms
+/obj/effect/spawner/random/techstorage/tcomms
 	name = "tcomms circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/message_monitor,
@@ -69,7 +69,7 @@
 	/obj/item/circuitboard/computer/comm_monitor,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/medical
+/obj/effect/spawner/random/techstorage/medical
 	name = "medical circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/machine/chem_dispenser,
@@ -79,7 +79,7 @@
 	/obj/item/circuitboard/computer/pandemic,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/ai
+/obj/effect/spawner/random/techstorage/ai
 	name = "secure AI circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/aiupload,
@@ -87,14 +87,14 @@
 	/obj/item/circuitboard/aicore,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/command
+/obj/effect/spawner/random/techstorage/command
 	name = "secure command circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/crew,
 	/obj/item/circuitboard/computer/communications,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure
+/obj/effect/spawner/random/techstorage/rnd_secure
 	name = "secure RnD circuit board spawner"
 	loot = list(
 	/obj/item/circuitboard/computer/mecha_control,
@@ -102,16 +102,16 @@
 	/obj/item/circuitboard/computer/robotics,
 	)
 
-/obj/effect/spawner/lootdrop/techstorage/arcade_boards
+/obj/effect/spawner/random/techstorage/arcade_boards
 	name = "arcade board spawner"
 	lootcount = 1
 	loot = list()
 
-/obj/effect/spawner/lootdrop/techstorage/arcade_boards/Initialize(mapload)
+/obj/effect/spawner/random/techstorage/arcade_boards/Initialize(mapload)
 	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
 	return ..()
 
-/obj/effect/spawner/lootdrop/techstorage/data_disk
+/obj/effect/spawner/random/techstorage/data_disk
 	name = "data disk spawner"
 	lootcount = 1
 	loot = list(

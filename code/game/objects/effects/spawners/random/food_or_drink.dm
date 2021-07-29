@@ -1,8 +1,8 @@
-/obj/effect/spawner/lootdrop/food_or_drink
+/obj/effect/spawner/random/food_or_drink
 	name = "food or drink loot spawner"
 	desc = "Nom nom nom"
 
-/obj/effect/spawner/lootdrop/food_or_drink/donkpockets
+/obj/effect/spawner/random/food_or_drink/donkpockets
 	name = "donk pocket box spawner"
 	lootdoubles = FALSE
 	loot = list(
@@ -13,7 +13,7 @@
 	/obj/item/storage/box/donkpockets/donkpockethonk = 1,
 	)
 
-/obj/effect/spawner/lootdrop/food_or_drink/refreshing_beverage
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage
 	name = "good soda spawner"
 	loot = list(
 	/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
@@ -31,7 +31,7 @@
 	/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5,
 	)
 
-/obj/effect/spawner/lootdrop/food_or_drink/booze
+/obj/effect/spawner/random/food_or_drink/booze
 	name = "booze spawner"
 	loot = list(
 	/obj/item/reagent_containers/food/drinks/beer = 250,
@@ -65,7 +65,7 @@
 	/obj/item/reagent_containers/food/drinks/bottle/trappist = 1,
 	)
 
-/obj/effect/spawner/lootdrop/food_or_drink/three_course_meal
+/obj/effect/spawner/random/food_or_drink/three_course_meal
 	name = "three course meal spawner"
 	lootcount = 3
 	lootdoubles = FALSE
@@ -93,14 +93,13 @@
 		/obj/item/food/burger/fivealarm
 	)
 
-/obj/effect/spawner/lootdrop/food_or_drink/three_course_meal/Initialize(mapload)
+/obj/effect/spawner/random/food_or_drink/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
 	. = ..()
 
-/obj/effect/spawner/lootdrop/food_or_drink/seed
+/obj/effect/spawner/random/food_or_drink/seed
 	name = "seed spawner"
-	loot = list(
-	list( // The same seeds in the Supply "Seeds Crate"
+	loot = list( // The same seeds in the Supply "Seeds Crate"
 	/obj/item/seeds/chili = 1,
 	/obj/item/seeds/cotton = 1,
 	/obj/item/seeds/berry = 1,

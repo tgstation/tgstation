@@ -1,8 +1,8 @@
-/obj/effect/spawner/lootdrop/contraband
+/obj/effect/spawner/random/contraband
 	name = "contraband loot spawner"
 	desc = "Pstttthhh! Pass it under the table."
 
-/obj/effect/spawner/lootdrop/contraband/crate
+/obj/effect/spawner/random/contraband/crate
 	name = "illegal crate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = FALSE
 	loot = list(
@@ -10,7 +10,7 @@
 	/obj/structure/closet/crate/secure/loot = 20,
 	)
 
-/obj/effect/spawner/lootdrop/contraband/armory
+/obj/effect/spawner/random/contraband/armory
 	name = "armory loot spawner"
 	loot = list(
 	/obj/item/gun/ballistic/automatic/pistol = 8,
@@ -22,7 +22,7 @@
 	/obj/item/gun/ballistic/revolver/mateba,
 	)
 
-/obj/effect/spawner/lootdrop/contraband/narcotics
+/obj/effect/spawner/random/contraband/narcotics
 	name = "narcotics loot spawner"
 	loot = list(
 	/obj/item/reagent_containers/syringe/contraband/space_drugs,
@@ -37,7 +37,7 @@
 	/obj/item/storage/pill_bottle/psicodine,
 	)
 
-/obj/effect/spawner/lootdrop/contraband/permabrig_weapon
+/obj/effect/spawner/random/contraband/permabrig_weapon
 	name = "permabrig weapon spawner"
 	loot = list(
 	/obj/item/kitchen/knife/shiv = 5,
@@ -48,7 +48,7 @@
 	/obj/item/grenade/smokebomb = 1,
 	)
 
-/obj/effect/spawner/lootdrop/contraband/permabrig_gear
+/obj/effect/spawner/random/contraband/permabrig_gear
 	name = "permabrig gear spawner"
 	loot = list(
 	/obj/item/toy/crayon/spraycan,
@@ -62,14 +62,14 @@
 	/obj/item/radio/off,
 	)
 
-/obj/effect/spawner/lootdrop/contraband/prison
+/obj/effect/spawner/random/contraband/prison
 	name = "prison loot spawner"
 	loot = list(
-	/obj/effect/spawner/lootdrop/entertainment/cigarette = 20,
-	/obj/effect/spawner/lootdrop/contraband/narcotics = 10,
-	/obj/effect/spawner/lootdrop/contraband/permabrig_weapon = 10,
-	/obj/effect/spawner/lootdrop/contraband/permabrig_gear = 10,
-	/obj/effect/spawner/lootdrop/entertainment/cigarette_pack = 5,
-	/obj/effect/spawner/lootdrop/entertainment/lighter = 5,
-	/obj/effect/spawner/lootdrop/food_or_drink/booze = 5,
+	/obj/effect/spawner/random/entertainment/cigarette = 20,
+	/obj/effect/spawner/random/contraband/narcotics = 10,
+	/obj/effect/spawner/random/contraband/permabrig_weapon = 10,
+	/obj/effect/spawner/random/contraband/permabrig_gear = 10,
+	/obj/effect/spawner/random/entertainment/cigarette_pack = 5,
+	/obj/effect/spawner/random/entertainment/lighter = 5,
+	/obj/effect/spawner/random/food_or_drink/booze = 5,
 	)

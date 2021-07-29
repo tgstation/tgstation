@@ -1,8 +1,8 @@
-/obj/effect/spawner/lootdrop/decorations
+/obj/effect/spawner/random/decorations
 	name = "decoration loot spawner"
 	desc = "Time for some bling bling."
 
-/obj/effect/spawner/lootdrop/decorations/material
+/obj/effect/spawner/random/decorations/material
 	lootcount = 1
 	loot = list(
 	/obj/item/stack/sheet/sandblock{amount = 30} = 25,
@@ -15,7 +15,7 @@
 	/obj/item/stack/tile/pod/dark{amount = 20} = 3,
 	)
 
-/obj/effect/spawner/lootdrop/decorations/carpet
+/obj/effect/spawner/random/decorations/carpet
 	lootcount = 1
 	loot = list(
 	/obj/item/stack/tile/carpet{amount = 30} = 35,
@@ -25,7 +25,7 @@
 	/obj/item/stack/tile/carpet/executive/thirty = 15,
 	)
 
-/obj/effect/spawner/lootdrop/decorations/ornament
+/obj/effect/spawner/random/decorations/ornament
 	lootcount = 1
 	loot = list(
 	/obj/item/sign = 10,
@@ -36,7 +36,7 @@
 	/obj/item/flashlight/lamp/bananalamp = 3,
 	)
 
-/obj/effect/spawner/lootdrop/decorations/statue
+/obj/effect/spawner/random/decorations/statue
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "random_statue"
 	lootdoubles = FALSE

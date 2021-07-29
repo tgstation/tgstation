@@ -1,9 +1,9 @@
-/obj/effect/spawner/lootdrop/space
+/obj/effect/spawner/random/space
 	name = "generic space ruin loot spawner"
 	lootcount = 1
 
 /// Randomly picks 5 wads of space cash.
-/obj/effect/spawner/lootdrop/space/cashmoney
+/obj/effect/spawner/random/space/cashmoney
 	lootcount = 5
 	fan_out_items = TRUE
 	loot = list(
@@ -19,7 +19,7 @@
 	)
 
 /// Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
-/obj/effect/spawner/lootdrop/space/fancytech
+/obj/effect/spawner/random/space/fancytech
 	lootcount = 2
 	loot = list(
 	/obj/item/raw_anomaly_core/random = 1,
@@ -28,7 +28,7 @@
 	)
 
 /// A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
-/obj/effect/spawner/lootdrop/space/rareseed
+/obj/effect/spawner/random/space/rareseed
 	lootcount = 5
 	loot = list(
 	/obj/item/seeds/random = 30,
@@ -48,7 +48,7 @@
 	)
 
 /// A single roundstart species language book.
-/obj/effect/spawner/lootdrop/space/languagebook
+/obj/effect/spawner/random/space/languagebook
 	lootcount = 1
 	loot = list(
 	/obj/item/language_manual/roundstart_species = 100,
@@ -57,7 +57,7 @@
 	)
 
 /// Random selecton of a few rarer materials.
-/obj/effect/spawner/lootdrop/space/material
+/obj/effect/spawner/random/space/material
 	lootcount = 3
 	loot = list(
 	/obj/item/stack/sheet/runed_metal/ten = 20,
@@ -70,7 +70,7 @@
 	)
 
 /// Some sort of random and rare tool. Only a single drop.
-/obj/effect/spawner/lootdrop/space/fancytool
+/obj/effect/spawner/random/space/fancytool
 	lootcount = 1
 	loot = list(
 	/obj/item/wrench/abductor = 1,
@@ -92,7 +92,7 @@
 	)
 
 /// Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
-/obj/effect/spawner/lootdrop/space/fancytool/engineonly
+/obj/effect/spawner/random/space/fancytool/engineonly
 	loot = list(
 	/obj/item/wrench/caravan = 1,
 	/obj/item/wirecutters/caravan = 1,
@@ -101,7 +101,7 @@
 	)
 
 /// Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
-/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly
+/obj/effect/spawner/random/space/fancytool/advmedicalonly
 	loot = list(
 	/obj/item/scalpel/advanced = 1,
 	/obj/item/retractor/advanced = 1,
@@ -109,7 +109,7 @@
 	)
 
 /// Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
-/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly
+/obj/effect/spawner/random/space/fancytool/raremedicalonly
 	loot = list(
 	/obj/item/scalpel/alien = 1,
 	/obj/item/hemostat/alien = 1,
@@ -120,7 +120,7 @@
 	)
 
 /// A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
-/obj/effect/spawner/lootdrop/space/syndiecosmetic
+/obj/effect/spawner/random/space/syndiecosmetic
 	lootcount = 2
 	loot = list(
 	/obj/item/clothing/under/syndicate = 10,

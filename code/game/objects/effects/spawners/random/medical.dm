@@ -1,8 +1,8 @@
-/obj/effect/spawner/lootdrop/medical
+/obj/effect/spawner/random/medical
 	name = "medical loot spawner"
 	desc = "Doc, gimmie something good."
 
-/obj/effect/spawner/lootdrop/medical/minor_healing
+/obj/effect/spawner/random/medical/minor_healing
 	name = "minor healing spawner"
 	loot = list(
 	/obj/item/stack/medical/suture = 1,
@@ -10,7 +10,7 @@
 	/obj/item/stack/medical/gauze = 1,
 	)
 
-/obj/effect/spawner/lootdrop/medical/organ_spawner
+/obj/effect/spawner/random/medical/organ_spawner
 	name = "ayylien organ spawner"
 	lootcount = 3
 	loot = list(
@@ -28,7 +28,7 @@
 	/obj/item/organ/body_egg/alien_embryo = 1,
 	)
 
-/obj/effect/spawner/lootdrop/medical/memeorgans
+/obj/effect/spawner/random/medical/memeorgans
 	name = "meme organ spawner"
 	lootcount = 5
 	loot = list(
@@ -51,7 +51,7 @@
 	/obj/item/organ/tail/lizard,
 	)
 
-/obj/effect/spawner/lootdrop/medical/injector
+/obj/effect/spawner/random/medical/injector
 	name = "injector spawner"
 	loot = list(
 	/obj/item/implanter = 1,
@@ -59,7 +59,7 @@
 	/obj/item/reagent_containers/syringe = 1,
 	)
 
-/obj/effect/spawner/lootdrop/medical/two_percent_xeno_egg_spawner
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner
 	name = "2% chance xeno egg spawner"
 	loot = list(
 	/obj/effect/decal/remains/xeno = 49,

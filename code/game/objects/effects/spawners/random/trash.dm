@@ -1,15 +1,15 @@
-/obj/effect/spawner/lootdrop/trash
+/obj/effect/spawner/random/trash
 	name = "trash spawner"
 	desc = "Ewwwwwww gross."
 
-/obj/effect/spawner/lootdrop/trash/garbage
+/obj/effect/spawner/random/trash/garbage
 	name = "garbage spawner"
 	loot = list(
-	/obj/effect/spawner/lootdrop/trash/food_packaging = 56,
+	/obj/effect/spawner/random/trash/food_packaging = 56,
 	/obj/item/trash/can = 8,
 	/obj/item/shard = 8,
-	/obj/effect/spawner/lootdrop/trash/botanical_waste = 8,
-	/obj/effect/spawner/lootdrop/trash/cigbutt = 8,
+	/obj/effect/spawner/random/trash/botanical_waste = 8,
+	/obj/effect/spawner/random/trash/cigbutt = 8,
 	/obj/item/reagent_containers/syringe = 5,
 	/obj/item/light/tube/broken = 3,
 	/obj/item/food/deadmouse = 2,
@@ -17,7 +17,7 @@
 	/obj/item/trash/candle = 1,
 	)
 
-/obj/effect/spawner/lootdrop/trash/cigbutt
+/obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
 	loot = list(
 	/obj/item/cigbutt = 65,
@@ -25,7 +25,7 @@
 	/obj/item/cigbutt/cigarbutt = 15,
 	)
 
-/obj/effect/spawner/lootdrop/trash/food_packaging
+/obj/effect/spawner/random/trash/food_packaging
 	name = "empty food packaging spawner"
 	loot = list(
 	/obj/item/trash/raisins = 20,
@@ -42,7 +42,7 @@
 	/obj/item/trash/semki = 2,
 	)
 
-/obj/effect/spawner/lootdrop/trash/botanical_waste
+/obj/effect/spawner/random/trash/botanical_waste
 	name = "botanical waste spawner"
 	loot = list(
 	/obj/item/grown/bananapeel = 60,
@@ -50,7 +50,7 @@
 	/obj/item/food/grown/bungopit = 10,
 	)
 
-/obj/effect/spawner/lootdrop/trash/grille_or_waste
+/obj/effect/spawner/random/trash/grille_or_waste
 	name = "grille or waste spawner"
 	loot = list(
 	/obj/structure/grille = 5,
@@ -67,7 +67,7 @@
 	)
 
 ///This spawner can spawn either a swabbable or non-swabble decal, the purpose of this is provide swabbing spots that cannot be rushed every round using map knowledge.
-/obj/effect/spawner/lootdrop/trash/mess
+/obj/effect/spawner/random/trash/mess
 	name = "gross decal spawner"
 	icon_state = "random_trash"
 	loot = list(
@@ -83,7 +83,48 @@
 	/obj/effect/decal/cleanable/ants = 5,
 	)
 
-/obj/effect/spawner/lootdrop/graffiti
+/obj/effect/spawner/random/trash/hobo_squat
+	name = "hobo squat spawner"
+	spawn_all_items = TRUE
+	loot = list(
+	/obj/structure/bed/maint,
+	/obj/effect/spawner/scatter/grime,
+	/obj/effect/spawner/random/entertainment/drugs,
+	)
+
+/obj/effect/spawner/random/trash/moisture_trap
+	name = "moisture trap spawner"
+	spawn_all_items = TRUE
+	loot = list(
+	/obj/effect/spawner/scatter/moisture,
+	/obj/structure/moisture_trap,
+	)
+
+///This spawner will scatter garbage around a dirty site.
+/obj/effect/spawner/random/trash/grime
+	name = "trash and grime scatterer"
+	lootcount = 5
+	scatter_radius = 2
+	loot_table = list(
+	/obj/effect/spawner/random/trash/garbage = 30,
+	/mob/living/simple_animal/hostile/cockroach = 25,
+	/obj/effect/decal/cleanable/garbage = 20,
+	/obj/effect/decal/cleanable/vomit/old = 15,
+	/obj/effect/spawner/random/trash/cigbutt = 10)
+
+///This spawner will scatter water related items around a moist site.
+/obj/effect/spawner/random/trash/moisture
+	lootcount = 2
+	loot_table = list(
+	/obj/item/clothing/head/cone = 35,
+	/obj/item/clothing/suit/caution = 15,
+	/mob/living/simple_animal/hostile/retaliate/frog = 10,
+	/obj/item/reagent_containers/glass/rag = 10,
+	/obj/item/reagent_containers/glass/bucket = 10,
+	/obj/effect/decal/cleanable/blood/old = 10,
+	/obj/structure/mopbucket = 10)
+
+/obj/effect/spawner/random/graffiti
 	name = "random graffiti spawner"
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "random_graffiti"
@@ -101,7 +142,7 @@
 	"footprint", "clawprint", "pawprint",
 	)
 
-/obj/effect/spawner/lootdrop/graffiti/Initialize()
+/obj/effect/spawner/random/graffiti/Initialize()
 	. = ..()
 	var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
 	graffiti.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
