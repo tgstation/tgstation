@@ -52,7 +52,7 @@
 
 	active_overlays[target_atom] = WEAKREF(target_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
-		"bar_overlay_[overlay_id]",
+		"bar_overlay_[REF(src)]",
 		cool_overlay,
 		owner,
 	))

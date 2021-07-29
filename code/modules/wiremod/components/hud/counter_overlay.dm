@@ -22,8 +22,6 @@
 	var/list/numbers = list()
 	var/counter_appearance
 
-	var/overlay_id
-
 /obj/item/circuit_component/counter_overlay/Initialize()
 	. = ..()
 	counter_number = add_input_port("Displayed Number", PORT_TYPE_NUMBER)
@@ -32,9 +30,6 @@
 
 	image_pixel_x = add_input_port("X-Axis Shift", PORT_TYPE_NUMBER)
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
-
-	overlay_id = GLOB.object_overlay_id
-	GLOB.object_overlay_id += 1
 
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
 	bci = shell
@@ -71,7 +66,7 @@
 
 	counter_appearance = WEAKREF(owner.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
-		"counter_overlay_[overlay_id]",
+		"counter_overlay_[REF(src)]",
 		counter,
 		owner,
 	))
@@ -89,7 +84,7 @@
 
 		numbers.Add(WEAKREF(owner.add_alt_appearance(
 			/datum/atom_hud/alternate_appearance/basic/one_person,
-			"counter_overlay_[overlay_id]_[i]",
+			"counter_overlay_[REF(src)]_[i]",
 			number,
 			owner,
 		)))
