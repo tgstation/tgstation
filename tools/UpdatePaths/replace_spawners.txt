@@ -14,3 +14,4 @@
 /obj/effect/spawner/lootdrop/grille_or_trash : /obj/effect/spawner/random/trash/grille_or_waste
 /obj/effect/spawner/lootdrop/botanical_waste : /obj/effect/spawner/random/trash/botanical_waste
 /obj/effect/spawner/lootdrop/food_packaging : /obj/effect/spawner/random/trash/food_packaging
+/obj/effect/spawner/lootdrop/cigbutt : /obj/effect/spawner/random/trash/cigbutt

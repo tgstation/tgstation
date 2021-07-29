@@ -173,18 +173,12 @@
 				/obj/item/trash/can = 8,
 				/obj/item/shard = 8,
 				/obj/effect/spawner/random/trash/botanical_waste = 8,
-				/obj/effect/spawner/lootdrop/cigbutt = 8,
+				/obj/effect/spawner/random/trash/cigbutt = 8,
 				/obj/item/reagent_containers/syringe = 5,
 				/obj/item/food/deadmouse = 2,
 				/obj/item/light/tube/broken = 3,
 				/obj/item/light/tube/broken = 1,
 				/obj/item/trash/candle = 1)
-
-/obj/effect/spawner/lootdrop/cigbutt
-	name = "cigarette butt spawner"
-	loot = list(/obj/item/cigbutt = 65,
-				/obj/item/cigbutt/roach = 20,
-				/obj/item/cigbutt/cigarbutt = 15)
 
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"

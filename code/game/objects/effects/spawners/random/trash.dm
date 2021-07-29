@@ -2,6 +2,14 @@
 	name = "trash spawner"
 	desc = "Ewwwwwww gross."
 
+/obj/effect/spawner/random/trash/cigbutt
+	name = "cigarette butt spawner"
+	loot = list(
+		/obj/item/cigbutt = 65,
+		/obj/item/cigbutt/roach = 20,
+		/obj/item/cigbutt/cigarbutt = 15,
+	)
+
 /obj/effect/spawner/random/trash/food_packaging
 	name = "empty food packaging spawner"
 	loot = list(
