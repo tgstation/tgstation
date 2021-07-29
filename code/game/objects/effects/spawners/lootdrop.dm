@@ -223,7 +223,7 @@
 				/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5)
 
-/obj/effect/spawner/lootdrop/grille_or_trash
+/obj/effect/spawner/random/trash/grille_or_waste
 	name = "maint grille or trash spawner"
 	loot = list(/obj/structure/grille = 5,
 			/obj/item/cigbutt = 1,
