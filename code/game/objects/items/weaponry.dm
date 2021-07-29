@@ -882,7 +882,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
-	sharpness = SHARP_EDGED
 	force = 14
 	throwforce = 12
 	hitsound = 'sound/weapons/bladeslice.ogg'
