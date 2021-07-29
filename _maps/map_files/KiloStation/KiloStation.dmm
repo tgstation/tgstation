@@ -25783,7 +25783,7 @@
 "bQc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bQg" = (
@@ -58055,7 +58055,7 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
@@ -66574,7 +66574,7 @@
 	name = "prison intercom";
 	prison_radio = 1
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "opN" = (

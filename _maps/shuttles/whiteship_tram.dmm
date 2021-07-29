@@ -862,7 +862,7 @@
 /obj/item/circuitboard/machine/microwave,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/manipulator,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "cp" = (

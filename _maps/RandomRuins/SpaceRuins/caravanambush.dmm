@@ -667,8 +667,8 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate/secure,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter2)
 "hX" = (

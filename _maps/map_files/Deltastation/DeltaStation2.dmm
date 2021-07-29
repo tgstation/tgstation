@@ -45389,7 +45389,7 @@
 "gAD" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/pill_bottle/dice,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron/grimy,
 /area/service/abandoned_gambling_den)
 "gBh" = (
@@ -93528,7 +93528,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "sYU" = (
@@ -109839,7 +109839,7 @@
 /area/commons/locker)
 "xvE" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/storage/box/donkpockets,
 /obj/item/clothing/head/chefhat,
 /obj/effect/turf_decal/bot,

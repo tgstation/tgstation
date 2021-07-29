@@ -813,7 +813,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/obj/effect/spawner/random/food_or_drink/rare_seed,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "dg" = (
@@ -1796,7 +1796,7 @@
 /area/awaymission/bmpship/midship)
 "hk" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "hl" = (
@@ -1866,7 +1866,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/obj/effect/spawner/random/food_or_drink/rare_seed,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "EQ" = (
@@ -1881,7 +1881,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/obj/effect/spawner/random/food_or_drink/rare_seed,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/midship)
 "Hy" = (

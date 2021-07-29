@@ -412,22 +412,6 @@
 	name = "generic space ruin loot spawner"
 	lootcount = 1
 
-/// Space loot spawner. Randomlu picks 5 wads of space cash.
-/obj/effect/spawner/lootdrop/space/cashmoney
-	lootcount = 5
-	fan_out_items = TRUE
-	loot = list(
-		/obj/item/stack/spacecash/c1 = 100,
-		/obj/item/stack/spacecash/c10 = 80,
-		/obj/item/stack/spacecash/c20 = 60,
-		/obj/item/stack/spacecash/c50 = 40,
-		/obj/item/stack/spacecash/c100 = 30,
-		/obj/item/stack/spacecash/c200 = 20,
-		/obj/item/stack/spacecash/c500 = 10,
-		/obj/item/stack/spacecash/c1000 = 5,
-		/obj/item/stack/spacecash/c10000 = 1
-	)
-
 /// Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 /obj/effect/spawner/lootdrop/space/fancytech
 	lootcount = 2
