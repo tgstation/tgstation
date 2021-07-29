@@ -20,3 +20,4 @@
 /obj/effect/spawner/lootdrop/wallet_loot : /obj/effect/spawner/random/entertainment/wallet_storage
 /obj/effect/spawner/lootdrop/organ_spawner : /obj/effect/spawner/random/medical/organs
 /obj/effect/spawner/lootdrop/memeorgans : /obj/effect/spawner/random/medical/memeorgans
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner : /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner

@@ -58,3 +58,10 @@
 		/obj/item/organ/tail/cat,
 		/obj/item/organ/tail/lizard,
 	)
+
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner
+	name = "2% chance xeno egg spawner"
+	loot = list(
+		/obj/effect/decal/remains/xeno = 49,
+		/obj/effect/spawner/xeno_egg_delivery = 1,
+	)
