@@ -112,3 +112,11 @@
 		/obj/item/clothing/mask/cigarette/carp = 1,
 		/obj/item/clothing/mask/cigarette/robustgold = 1,
 	)
+
+/obj/effect/spawner/random/entertainment/cigar
+	name = "cigar spawner"
+	loot = list(
+		/obj/item/clothing/mask/cigarette/cigar = 3,
+		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
+		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+	)
