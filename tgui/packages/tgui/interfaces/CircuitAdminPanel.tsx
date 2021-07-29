@@ -1,3 +1,4 @@
+import { BooleanLike } from "common/react";
 import { useBackend } from "../backend";
 import { Button, Table } from "../components";
 import { Window } from "../layouts";
@@ -6,8 +7,8 @@ type CircuitAdminPanelData = {
   circuits: {
     ref: string;
     name: string;
-    inserter?: string;
-    shell?: string;
+    creator: string;
+    has_inserter: BooleanLike;
   }[]
 }
 
@@ -24,11 +25,7 @@ export const CircuitAdminPanel = (props, context) => {
             </Table.Cell>
 
             <Table.Cell>
-              Inserter
-            </Table.Cell>
-
-            <Table.Cell>
-              Shell
+              Creator
             </Table.Cell>
 
             <Table.Cell>
@@ -48,23 +45,7 @@ export const CircuitAdminPanel = (props, context) => {
                 </Table.Cell>
 
                 <Table.Cell>
-                  {
-                    circuit.inserter
-                    && (
-                      <>
-                        {circuit.inserter} |{" "}
-
-                        <Button onClick={createAct("open_player_panel")}>
-                          Player Panel
-                        </Button>
-                      </>
-                    )
-                   || "<no inserter>"
-                  }
-                </Table.Cell>
-
-                <Table.Cell>
-                  {circuit.shell || "<no shell>"}
+                  {circuit.creator}
                 </Table.Cell>
 
                 <Table.Cell>
@@ -72,9 +53,19 @@ export const CircuitAdminPanel = (props, context) => {
                     Follow
                   </Button>
 
+                  <Button onClick={createAct("open_circuit")}>
+                    Open
+                  </Button>
+
                   <Button onClick={createAct("vv_circuit")}>
                     VV
                   </Button>
+
+                  {!!circuit.has_inserter && (
+                    <Button onClick={createAct("open_player_panel")}>
+                      Player Panel
+                    </Button>
+                  )}
                 </Table.Cell>
               </Table.Row>
             );

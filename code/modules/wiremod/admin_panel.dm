@@ -18,8 +18,8 @@
 		data["circuits"] += list(list(
 			"ref" = REF(circuit),
 			"name" = "[circuit.name] in [loc_name(circuit)]",
-			"inserter" = inserter && key_name(inserter),
-			"shell" = circuit.shell?.name,
+			"creator" = circuit.get_creator(),
+			"has_inserter" = !isnull(inserter),
 		))
 
 	return data
@@ -42,6 +42,8 @@
 			usr.client?.admin_follow(circuit)
 		if ("vv_circuit")
 			usr.client?.debug_variables(circuit)
+		if ("open_circuit")
+			circuit.ui_interact(usr)
 		if ("open_player_panel")
 			var/datum/mind/inserter = circuit.inserter_mind?.resolve()
 			usr.client?.holder?.show_player_panel(inserter?.current)
