@@ -168,7 +168,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/handle_specials()
 	. = ..()
-	allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
+	allowed_turf_typecache = typecacheof(list(/turf/open/floor/plating/asteroid/snow, /turf/open/floor/grass/snow, /turf/open/floor/holofloor/snow, /turf/open/floor/plating/ice))
 
 /datum/component/riding/vehicle/secway
 	keytype = /obj/item/key/security
