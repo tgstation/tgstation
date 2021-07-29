@@ -9,13 +9,13 @@
 
 /obj/item/circuit_component/object_overlay/bar
 	display_name = "Bar Overlay"
-	display_desc = "A component that shows a bar overlay ontop of an object. Requires a BCI shell. Requires a 0-100 number to work propperly."
+	display_desc = "Requires a BCI shell. A component that shows a bar overlay ontop of an object from a range of 0 to 100."
 
 	var/datum/port/input/bar_number
 
 /obj/item/circuit_component/object_overlay/bar/Initialize()
 	. = ..()
-	bar_number = add_input_port("Number", PORT_TYPE_ATOM)
+	bar_number = add_input_port("Number", PORT_TYPE_NUMBER)
 
 	set_option("Vertical")
 
@@ -52,11 +52,9 @@
 	if(image_pixel_y.input_value)
 		cool_overlay.pixel_y = image_pixel_y.input_value
 
-	var/alt_appearance = WEAKREF(target_atom.add_alt_appearance(
+	active_overlays[target_atom] = WEAKREF(target_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"bar_overlay_[overlay_id]",
 		cool_overlay,
 		owner,
 	))
-
-	active_overlays[target_atom] = alt_appearance

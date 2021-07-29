@@ -19,7 +19,6 @@
 	var/datum/port/input/signal_update
 
 	var/obj/item/organ/cyberimp/bci/bci
-	var/image/counter
 	var/list/numbers = list()
 	var/counter_appearance
 
@@ -43,6 +42,9 @@
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
+	QDEL_NULL(counter_appearance)
+	for(var/number in numbers)
+		QDEL_NULL(number)
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/counter_overlay/input_received(datum/port/input/port)
@@ -61,7 +63,7 @@
 	numbers = list()
 
 	QDEL_NULL(counter_appearance)
-	counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner)
+	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner)
 	if(image_pixel_x.input_value)
 		counter.pixel_x = image_pixel_x.input_value
 	if(image_pixel_y.input_value)
@@ -85,17 +87,21 @@
 		if(image_pixel_y.input_value)
 			number.pixel_y = image_pixel_y.input_value
 
-		var/number_appearance = WEAKREF(owner.add_alt_appearance(
+		numbers.Add(WEAKREF(owner.add_alt_appearance(
 			/datum/atom_hud/alternate_appearance/basic/one_person,
 			"counter_overlay_[overlay_id]_[i]",
 			number,
 			owner,
-		))
-
-		numbers.Add(number_appearance)
+		)))
 
 /obj/item/circuit_component/counter_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 	QDEL_NULL(counter_appearance)
 	for(var/number in numbers)
 		QDEL_NULL(number)
+
+/obj/item/circuit_component/counter_overlay/Destroy()
+	QDEL_NULL(counter_appearance)
+	for(var/number in numbers)
+		QDEL_NULL(number)
+	. = ..()

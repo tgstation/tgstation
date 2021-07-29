@@ -247,7 +247,7 @@
 	build_path = /obj/item/circuit_component/bci_action
 
 /datum/design/component/bci/object_overlay
-	name = "BCI Action Component"
+	name = "Object Overlay Component"
 	id = "comp_object_overlay"
 	build_path = /obj/item/circuit_component/object_overlay
 

@@ -669,15 +669,15 @@
 	id = "bci_shells"
 	display_name = "Brain-Computer Interfaces"
 	description = "Grants access to biocompatable shell designs and components."
-	prereq_ids = list("adv_shells", "biotech")
+	prereq_ids = list("adv_shells")
 	design_ids = list(
 		"bci_implanter",
 		"bci_shell",
-		"comp_bci_action",
-		"comp_object_overlay",
 		"comp_bar_overlay",
+		"comp_bci_action",
 		"comp_click_intercept",
 		"comp_counter_overlay",
+		"comp_object_overlay",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 

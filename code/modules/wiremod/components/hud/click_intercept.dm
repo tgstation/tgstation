@@ -7,7 +7,7 @@
 
 /obj/item/circuit_component/click_intercept
 	display_name = "Click Intercept"
-	display_desc = "A component that when activated will intercept next user's click and output the object that was clicked. Requires a shell."
+	display_desc = "Requires a BCI shell. A component that when activated will intercept next user's click and output the object that was clicked."
 
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 

@@ -5,11 +5,9 @@
  * Requires a BCI shell.
  */
 
-GLOBAL_VAR_INIT(object_overlay_id, 0) //I need every object_overlay component to have a DIFFERENT ID because else they are going to overlap
-
 /obj/item/circuit_component/object_overlay
 	display_name = "Object Overlay"
-	display_desc = "A component that shows an overlay ontop of an object. Requires a BCI shell."
+	display_desc = "Requires a BCI shell. A component that shows an overlay on top of an object."
 
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
@@ -25,7 +23,6 @@ GLOBAL_VAR_INIT(object_overlay_id, 0) //I need every object_overlay component to
 
 	var/obj/item/organ/cyberimp/bci/bci
 	var/list/active_overlays = list()
-	var/list/atom_locs = list()
 	var/list/options_map
 
 	var/overlay_id
@@ -43,6 +40,11 @@ GLOBAL_VAR_INIT(object_overlay_id, 0) //I need every object_overlay component to
 	set_option("Corners (Blue)")
 	overlay_id = GLOB.object_overlay_id
 	GLOB.object_overlay_id += 1
+
+/obj/item/circuit_component/counter_overlay/Destroy()
+	for(var/active_overlay in active_overlays)
+		QDEL_NULL(active_overlay)
+	. = ..()
 
 /obj/item/circuit_component/object_overlay/populate_options()
 	var/static/component_options = list(
