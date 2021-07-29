@@ -121,7 +121,7 @@
 
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
-		parsed_story += "This took place in [GLOB.year_integer+540]."
+		parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
 
 	return parsed_story
 

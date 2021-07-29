@@ -3,6 +3,7 @@
  *
  * component for walls that applies an engraved overlay and lets you examine it to read a story (+ art element yay)
  * new creations will get a high art value, cross round scrawlings will get a low one.
+ * MUST be a component, though it doesn't look like it. SSPersistence demandeth
  */
 /datum/component/engraved
 	///the generated story string
@@ -41,7 +42,7 @@
 ///signal called on parent being examined
 /datum/component/engraved/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_boldnotice("[engraved_description]")
+	examine_list += span_boldnotice(engraved_description)
 
 ///returns all the information SSpersistence needs in a list to load up this engraving on a future round!
 /datum/component/engraved/proc/save_persistent()

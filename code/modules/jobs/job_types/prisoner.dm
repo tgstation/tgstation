@@ -34,3 +34,8 @@
 	belt = null
 
 	id_trim = /datum/id_trim/job/prisoner
+
+/datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
+	. = ..()
+	var/obj/item/bodypart/tatted_limb = pick(new_prisoner.bodyparts)
+	tatted_limb.AddComponent(/datum/component/tattoo)

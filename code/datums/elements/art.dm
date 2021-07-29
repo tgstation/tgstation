@@ -64,3 +64,19 @@
 
 	user.visible_message(span_notice("[user] stops to inspect [source]."), \
 		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
+
+/datum/element/art/commoner
+
+/datum/element/art/commoner/apply_moodlet(atom/source, mob/user, impress)
+	var/msg
+	var/list/haters = list(GLOB.command_positions + GLOB.security_positions + GLOB.security_sub_positions + "Quartermaster")
+
+	if(!(user.mind.assigned_role.title in haters))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("relatable", "awe-inspiring", "true", "real")]!"
+	else
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		msg = "Wow, [source.p_they()] sucks."
+
+	user.visible_message(span_notice("[user] stops to inspect [source]."), \
+		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
