@@ -2,6 +2,17 @@
 	name = "food or drink loot spawner"
 	desc = "Nom nom nom"
 
+/obj/effect/spawner/random/food_or_drink/donkpockets
+	name = "donk pocket box spawner"
+	lootdoubles = FALSE
+	loot = list(
+		/obj/item/storage/box/donkpockets/donkpocketspicy,
+		/obj/item/storage/box/donkpockets/donkpocketteriyaki,
+		/obj/item/storage/box/donkpockets/donkpocketpizza,
+		/obj/item/storage/box/donkpockets/donkpocketberry,
+		/obj/item/storage/box/donkpockets/donkpockethonk,
+	)
+
 /obj/effect/spawner/random/food_or_drink/seed
 	name = "seed spawner"
 	loot = list( // The same seeds in the Supply "Seeds Crate"

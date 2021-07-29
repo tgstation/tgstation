@@ -23,3 +23,4 @@
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner : /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner
 /obj/effect/spawner/lootdrop/three_course_meal : /obj/effect/spawner/random/food_or_drink/three_course_meal
 /obj/effect/spawner/lootdrop/refreshing_beverage : /obj/effect/spawner/random/food_or_drink/refreshing_beverage
+/obj/effect/spawner/lootdrop/donkpockets : /obj/effect/spawner/random/food_or_drink/donkpockets

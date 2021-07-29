@@ -21,7 +21,7 @@ Assistant
 	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 
 	mail_goodies = list(
-		/obj/effect/spawner/lootdrop/donkpockets = 10,
+		/obj/effect/spawner/random/food_or_drink/donkpockets = 10,
 		/obj/item/clothing/mask/gas = 10,
 		/obj/item/clothing/gloves/color/fyellow = 7,
 		/obj/item/choice_beacon/music = 5,
