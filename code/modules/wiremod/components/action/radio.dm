@@ -12,6 +12,13 @@
 	/// Signal input
 	var/datum/port/input/code
 
+	// TODO: Move this all over to ntnet instead of radio signals
+	/// The data to send over
+	var/datum/port/input/data_to_send
+
+	/// The data received
+	var/datum/port/output/received_data
+
 	/// Current frequency value
 	var/current_freq = DEFAULT_SIGNALER_CODE
 
@@ -29,8 +36,10 @@
 	freq = add_input_port("Frequency", PORT_TYPE_NUMBER, default = FREQ_SIGNALER)
 	code = add_input_port("Code", PORT_TYPE_NUMBER, default = DEFAULT_SIGNALER_CODE)
 	TRIGGER_CIRCUIT_COMPONENT(src, null)
-	// These are cleaned up on the parent
+	data_to_send = add_input_port("Data To Send", PORT_TYPE_LIST)
 	trigger_input = add_input_port("Send", PORT_TYPE_SIGNAL)
+
+	received_data = add_output_port("Received Data", PORT_TYPE_LIST)
 	trigger_output = add_output_port("Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/radio/Destroy()
@@ -49,7 +58,7 @@
 	current_freq = frequency
 
 	if(COMPONENT_TRIGGERED_BY(trigger_input, port))
-		var/datum/signal/signal = new(list("code" = round(code.input_value) || 0, "key" = parent?.owner_id))
+		var/datum/signal/signal = new(list("code" = round(code.input_value) || 0, "key" = parent?.owner_id, "data" = data_to_send.input_value))
 		radio_connection.post_signal(src, signal)
 
 /obj/item/circuit_component/radio/receive_signal(datum/signal/signal)
@@ -62,4 +71,5 @@
 	if(current_option == COMP_RADIO_PRIVATE && parent?.owner_id != signal.data["key"])
 		return
 
+	received_data.set_output(signal.data["data"])
 	trigger_output.set_output(COMPONENT_SIGNAL)
