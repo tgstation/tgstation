@@ -138,7 +138,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Genetics Pen";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
@@ -2243,7 +2243,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Break Room";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/cafeteria{
@@ -4023,7 +4023,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Lower North";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
@@ -6973,7 +6973,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Lower Main North";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
@@ -10565,7 +10565,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Airlock";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
@@ -14163,7 +14163,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Lobby";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white,
@@ -22003,7 +22003,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Toxins North";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -22804,7 +22804,8 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upload Access";
-	dir = 5
+	dir = 5;
+	network = list("ss13","aiupload")
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
@@ -24540,7 +24541,7 @@
 /obj/machinery/computer/security/telescreen{
 	dir = 1;
 	name = "Science Camera Monitor";
-	network = list("ss13","science");
+	network = list("ss13","rd");
 	pixel_y = -28
 	},
 /turf/open/floor/iron,
@@ -26617,6 +26618,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/science/research)
 "gqc" = (
@@ -28850,7 +28852,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology West";
 	dir = 5;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
@@ -30590,7 +30592,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Lower East";
 	dir = 8;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
@@ -33198,7 +33200,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Security Outpost";
 	dir = 1;
-	network = list("ss13","science","Security")
+	network = list("ss13","rd","Security")
 	},
 /obj/effect/landmark/start/depsec/science,
 /obj/structure/reagent_dispensers/peppertank/directional/south,
@@ -34209,7 +34211,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Research Director's Office";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/machinery/light/directional/north,
 /obj/item/folder/white,
@@ -35816,7 +35818,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Toxins Burn Chamber";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
@@ -35988,7 +35990,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Lower Power Hatch";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
@@ -36790,7 +36792,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Restroom";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/freezer,
 /area/science/research)
@@ -37521,7 +37523,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Main Lower Right";
 	dir = 5;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -38615,7 +38617,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Left Entry Airlock";
 	dir = 5;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -38625,7 +38627,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Toxins Launch Room";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -39743,8 +39745,9 @@
 	name = "Circuit Laboratory";
 	req_access_txt = "47"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/maintenance/starboard/secondary)
+/area/science/misc_lab)
 "lll" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -41330,7 +41333,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Cytology Lab";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/cytology)
@@ -41875,7 +41878,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Mech Bay";
 	dir = 5;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
@@ -44455,7 +44458,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Main Upper Left";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -44643,7 +44646,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Lower Main South";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
@@ -45647,7 +45650,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Experimentor Lab Testing Range";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/science/explab)
@@ -47124,6 +47127,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/science/misc_lab)
 "omZ" = (
@@ -47383,7 +47387,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/science/misc_lab)
+/area/maintenance/starboard/secondary)
 "orw" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/decal/cleanable/dirt,
@@ -47486,7 +47490,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Main Lower Left";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -47897,7 +47901,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Cytology Pen";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/science/cytology)
@@ -48139,7 +48143,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Robotics North";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark,
@@ -49072,7 +49076,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - AI Station Access";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -49422,9 +49426,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -49585,6 +49586,11 @@
 	dir = 10
 	},
 /obj/machinery/module_duplicator,
+/obj/machinery/camera{
+	c_tag = "Circuits Lab";
+	dir = 4;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron,
 /area/science/misc_lab)
 "pil" = (
@@ -50103,7 +50109,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Upper Power Hatch";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/plating,
 /area/science/research)
@@ -54634,7 +54640,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Main Central";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -55000,7 +55006,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Kill Room";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -55037,7 +55043,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology South";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
@@ -55045,7 +55051,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Lower Containment Chamber";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -55116,7 +55122,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Lower South";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
@@ -55365,7 +55371,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Toxins Misc Storage";
 	dir = 8;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -56718,7 +56724,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Server Room";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/science/server)
@@ -57031,7 +57037,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Experimentor Lab";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/explab)
@@ -58433,7 +58439,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Main Upper Right";
 	dir = 5;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -59540,7 +59546,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Maintenance Intersection";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
@@ -59692,7 +59698,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Toxins Canister Storage";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -60352,7 +60358,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology Lower West";
 	dir = 4;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
@@ -61862,7 +61868,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Main AI Access Hall";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -62437,6 +62443,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/science/research)
 "ufF" = (
@@ -65486,7 +65493,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Right Entry Airlock";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -66212,7 +66219,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Toxins South";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -66801,7 +66808,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - AI Station Access Exterior";
 	dir = 1;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/research)
@@ -67385,7 +67392,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Genetics";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/science/genetics)
@@ -67831,7 +67838,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology East";
 	dir = 9;
-	network = list("ss13","science")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
@@ -68628,7 +68635,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Research & Development";
 	dir = 6;
-	network = list("ss13","science")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/lab)
@@ -119010,7 +119017,7 @@ aRL
 aRL
 aRL
 aRL
-sQi
+aRL
 der
 der
 der

@@ -15446,7 +15446,7 @@
 "ccN" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/science/misc_lab)
+/area/maintenance/port)
 "ccU" = (
 /obj/effect/spawner/randomsnackvend,
 /obj/machinery/light/directional/west,
@@ -18479,7 +18479,7 @@
 /obj/item/screwdriver,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "crG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -28831,7 +28831,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "dwt" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -40328,9 +40328,9 @@
 "faI" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/camera{
-	c_tag = "MiniSat Service Bay";
+	c_tag = "Science Maintnence";
 	dir = 8;
-	network = list("minisat");
+	network = list("ss13","rd");
 	start_active = 1
 	},
 /obj/structure/cable,
@@ -51739,14 +51739,9 @@
 /area/command/gateway)
 "iod" = (
 /obj/structure/table/reinforced,
-/obj/machinery/camera{
-	c_tag = "Science - Experimentation Lab";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "iog" = (
 /obj/item/clothing/suit/hazardvest{
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
@@ -52508,9 +52503,8 @@
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "iyK" = (
-/obj/effect/turf_decal/tile/purple,
-/turf/closed/wall/r_wall,
-/area/science/misc_lab)
+/turf/open/floor/iron,
+/area/maintenance/port)
 "iyX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -56470,7 +56464,7 @@
 "jER" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "jES" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
@@ -66343,11 +66337,6 @@
 	},
 /turf/open/floor/plating,
 /area/service/abandoned_gambling_den)
-"mhV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/turf/open/floor/plating,
-/area/science/misc_lab)
 "mhX" = (
 /obj/machinery/camera{
 	c_tag = "Art Gallery";
@@ -67372,7 +67361,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "muI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -72672,10 +72661,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
-"nNa" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/science/misc_lab)
 "nNm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/filingcabinet/filingcabinet,
@@ -84454,7 +84439,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "qKC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -88682,7 +88667,7 @@
 "rOQ" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "rPb" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -92076,6 +92061,10 @@
 	pixel_y = -26
 	},
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/computer/security/telescreen/rd{
+	dir = 4;
+	pixel_x = -26
+	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "sGN" = (
@@ -99601,7 +99590,7 @@
 	},
 /obj/structure/rack,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "uCT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -100957,10 +100946,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
-"uWD" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/science/misc_lab)
 "uWH" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
@@ -107219,9 +107204,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
-"wId" = (
-/turf/open/floor/plating,
-/area/science/misc_lab)
 "wIn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -107440,7 +107422,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "wMU" = (
 /obj/machinery/button/flasher{
 	id = "Cell 5";
@@ -109555,7 +109537,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/misc_lab)
+/area/maintenance/port)
 "xsP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -137295,7 +137277,7 @@ iuP
 exk
 swm
 pfQ
-tCh
+caE
 crF
 rOQ
 gSi
@@ -137552,7 +137534,7 @@ cjq
 ced
 wXQ
 moY
-tCh
+caE
 iod
 qKy
 gSi
@@ -137809,9 +137791,9 @@ cMY
 cMY
 ceb
 moY
-tCh
+caE
 wMH
-nNa
+qpq
 gSi
 uRm
 xKO
@@ -138066,9 +138048,9 @@ cNd
 cMY
 cea
 kEw
-tCh
-nNa
-nNa
+caE
+qpq
+qpq
 gSi
 mLI
 xKO
@@ -138580,8 +138562,8 @@ xtH
 cMY
 deX
 aiu
-tCh
-nNa
+caE
+qpq
 dwo
 gSi
 gve
@@ -138837,8 +138819,8 @@ lvo
 cMY
 deX
 joJ
-tCh
-mhV
+caE
+xMn
 ccN
 gSi
 lPk
@@ -139094,9 +139076,9 @@ xXC
 cMY
 deY
 oAw
-tCh
-wId
-xKO
+caE
+cea
+iyK
 gSi
 oBr
 ifR
@@ -139351,9 +139333,9 @@ enx
 cMY
 cjp
 hST
-tCh
-wId
-wId
+caE
+cea
+cea
 gSi
 kYl
 oox
@@ -139608,10 +139590,10 @@ dcd
 cMY
 deZ
 joJ
-tCh
+caE
 uCC
-uWD
-iyK
+ceb
+gSi
 rMT
 oox
 qhk
@@ -139865,9 +139847,9 @@ rMk
 cMY
 deX
 joJ
-tCh
-tCh
-tCh
+caE
+caE
+caE
 gSi
 sUT
 fGC
