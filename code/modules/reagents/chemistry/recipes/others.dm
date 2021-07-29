@@ -911,7 +911,7 @@
 
 /datum/chemical_reaction/ants // Breeding ants together, high sugar cost makes this take a while to farm.
 	results = list(/datum/reagent/ants = 3)
-	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 7)
+	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 8)
 	//FermiChem vars:
 	optimal_ph_min = 3
 	optimal_ph_max = 12
