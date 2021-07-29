@@ -229,18 +229,3 @@
 		/obj/item/clothing/under/suit/beige,
 		/obj/item/clothing/shoes/laceup,
 	)
-
-/obj/effect/spawner/hobo_squat
-	name = "hobo squat spawner"
-	items = list(
-		/obj/structure/bed/maint,
-		/obj/effect/spawner/scatter/grime,
-		/obj/effect/spawner/lootdrop/maint_drugs,
-	)
-
-/obj/effect/spawner/moisture_trap
-	name = "moisture trap spawner"
-	items = list(
-		/obj/effect/spawner/scatter/moisture,
-		/obj/structure/moisture_trap,
-	)

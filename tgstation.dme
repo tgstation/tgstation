@@ -1139,6 +1139,7 @@
 #include "code\game\objects\effects\spawners\random\clothing.dm"
 #include "code\game\objects\effects\spawners\random\random.dm"
 #include "code\game\objects\effects\spawners\random\structure.dm"
+#include "code\game\objects\effects\spawners\random\trash.dm"
 #include "code\game\objects\effects\temporary_visuals\cult.dm"
 #include "code\game\objects\effects\temporary_visuals\miscellaneous.dm"
 #include "code\game\objects\effects\temporary_visuals\temporary_visual.dm"
