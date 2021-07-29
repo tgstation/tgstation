@@ -185,8 +185,6 @@
  * Introduces two ports to one another.
  */
 /datum/port/input/proc/connect(datum/port/output/output)
-	if(!compatible_datatypes(output.datatype, src.datatype))
-		return
 	connected_ports |= output
 	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
 	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/receive_type)
