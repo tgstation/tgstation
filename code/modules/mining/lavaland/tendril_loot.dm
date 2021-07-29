@@ -1029,11 +1029,11 @@
 	to_chat(target, span_userdanger("[user] dashes through you!"))
 	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
 	target.apply_damage(damage = 20, sharpness = SHARP_POINTY, bare_wound_bonus = 10)
-	var/turf/dash_target
+	var/turf/dash_target = get_turf(target)
 	for(var/distance in 0 to 8)
-		dash_target = get_step(dash_target, user.dir)
 		if(dash_target.is_blocked_turf_ignore_climbable())
 			break
+		dash_target = get_step(dash_target, user.dir)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(user))
 	new /obj/effect/temp_visual/guardian/phase(dash_target)
 	do_teleport(user, dash_target, channel = TELEPORT_CHANNEL_MAGIC)
