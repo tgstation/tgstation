@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - expansion: "Adds the module duplicator that allows people to duplicate their module components so that they don't have to recreate the entire code again."
-  - admin: "Added the ability to save/load integrated circuits."
