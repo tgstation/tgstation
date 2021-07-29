@@ -130,7 +130,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	. = ..()
@@ -140,11 +140,11 @@
 		M.emote("cough")
 		return TRUE
 
-/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/AM, oldloc)
+/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/projectile/beam))
-		var/obj/projectile/beam/B = AM
-		B.damage = (B.damage/2)
+	if(istype(arrived, /obj/projectile/beam))
+		var/obj/projectile/beam/beam = arrived
+		beam.damage *= 0.5
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
@@ -186,7 +186,7 @@
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 					U.welded = TRUE
 					U.update_appearance()
-					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
+					U.visible_message(span_danger("[U] is frozen shut!"))
 		for(var/mob/living/L in T)
 			L.extinguish_mob()
 		for(var/obj/item/Item in T)

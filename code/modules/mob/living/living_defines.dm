@@ -2,7 +2,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 
 	hud_type = /datum/hud/living
@@ -62,7 +62,7 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/roundstart_quirks = list()
+	var/list/quirks = list()
 
 	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
 	///Mob specific surgery speed modifier

@@ -17,9 +17,9 @@
 	var/last_light
 
 /datum/experiment/explosion/is_complete()
-	return required_devastation <= last_devastation \
-		&& required_heavy <= last_heavy \
-		&& required_light <= last_light
+	return (!required_devastation || required_devastation <= last_devastation) \
+		&& (!required_heavy || required_heavy <= last_heavy) \
+		&& (!required_light || required_light <= last_light)
 
 /datum/experiment/explosion/check_progress()
 	var/status_message = "You must record an explosion with ranges of at least \

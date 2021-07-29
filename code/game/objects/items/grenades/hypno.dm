@@ -42,14 +42,14 @@
 	if(!distance || loc == M || loc == M.loc)
 		M.Paralyze(10)
 		M.Knockdown(100)
-		to_chat(M, "<span class='hypnophrase'>The sound echoes in your brain...</span>")
+		to_chat(M, span_hypnophrase("The sound echoes in your brain..."))
 		M.hallucination += 50
 	else
 		if(distance <= 1)
 			M.Paralyze(5)
 			M.Knockdown(30)
 		if(hypno_sound)
-			to_chat(M, "<span class='hypnophrase'>The sound echoes in your brain...</span>")
+			to_chat(M, span_hypnophrase("The sound echoes in your brain..."))
 			M.hallucination += 50
 
 	//Flash
@@ -61,7 +61,7 @@
 			if(C.hypnosis_vulnerable()) //The sound causes the necessary conditions unless the target has mindshield or hearing protection
 				C.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
 			else
-				to_chat(C, "<span class='hypnophrase'>The light is so pretty...</span>")
+				to_chat(C, span_hypnophrase("The light is so pretty..."))
 				C.add_confusion(min(C.get_confusion() + 10, 20))
 				C.dizziness += min(C.dizziness + 10, 20)
 				C.drowsyness += min(C.drowsyness + 10, 20)

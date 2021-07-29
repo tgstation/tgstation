@@ -30,7 +30,7 @@
 /obj/item/organ/ears/on_life(delta_time, times_fired)
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
-		to_chat(owner, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
+		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
 
 	. = ..()
 	// if we have non-damage related deafness like mutations, quirks or clothing (earmuffs), don't bother processing here. Ear healing from earmuffs or chems happen elsewhere
@@ -66,36 +66,36 @@
 	icon_state = "kitty"
 	damage_multiplier = 2
 
-/obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/ears/cat/Insert(mob/living/carbon/human/ear_owner, special = 0, drop_if_replaced = TRUE)
 	..()
-	if(istype(H))
-		color = H.hair_color
-		H.dna.features["ears"] = H.dna.species.mutant_bodyparts["ears"] = "Cat"
-		H.update_body()
+	if(istype(ear_owner))
+		color = ear_owner.hair_color
+		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"
+		ear_owner.update_body()
 
-/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/ear_owner,  special = 0)
 	..()
-	if(istype(H))
-		color = H.hair_color
-		H.dna.features["ears"] = "None"
-		H.dna.species.mutant_bodyparts -= "ears"
-		H.update_body()
+	if(istype(ear_owner))
+		color = ear_owner.hair_color
+		ear_owner.dna.features["ears"] = "None"
+		ear_owner.dna.species.mutant_bodyparts -= "ears"
+		ear_owner.update_body()
 
 /obj/item/organ/ears/penguin
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."
 
-/obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/ear_owner, special = 0, drop_if_replaced = TRUE)
 	. = ..()
-	if(istype(H))
-		to_chat(H, "<span class='notice'>You suddenly feel like you've lost your balance.</span>")
-		H.AddElement(/datum/element/waddling)
+	if(istype(ear_owner))
+		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
+		ear_owner.AddElement(/datum/element/waddling)
 
-/obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/H,  special = 0)
+/obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/ear_owner,  special = 0)
 	. = ..()
-	if(istype(H))
-		to_chat(H, "<span class='notice'>Your sense of balance comes back to you.</span>")
-		H.RemoveElement(/datum/element/waddling)
+	if(istype(ear_owner))
+		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
+		ear_owner.RemoveElement(/datum/element/waddling)
 
 /obj/item/organ/ears/bronze
 	name = "tin ears"

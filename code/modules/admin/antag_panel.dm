@@ -99,7 +99,7 @@ GLOBAL_VAR(antag_prototypes)
 
 	var/out = "<B>[name]</B>[(current && (current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role.title]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
 
 	var/special_statuses = get_special_statuses()
@@ -146,7 +146,7 @@ GLOBAL_VAR(antag_prototypes)
 
 		if(!current_antag) //Show antagging options
 			if(possible_admin_antags.len)
-				antag_header_parts += "<span class='highlight'>None</span>"
+				antag_header_parts += span_highlight("None")
 				antag_header_parts += possible_admin_antags
 			else
 				//If there's no antags to show in this category skip the section completely

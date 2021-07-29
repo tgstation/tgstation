@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "Getting hit point blank by an explosion will shake your screen a good bit more then before"
+  - qol: "\"Shakes\" from explosions or hitting things really hard will look a bit smoother now"

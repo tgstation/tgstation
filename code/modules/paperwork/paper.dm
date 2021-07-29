@@ -119,7 +119,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(HAS_TRAIT(H, TRAIT_CLUMSY) && prob(25))
-			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
+			to_chat(H, span_warning("You cut yourself on the paper! Ahhhh! Ahhhhh!"))
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
@@ -129,7 +129,7 @@
 	add_fingerprint(usr)
 
 /obj/item/paper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
+	user.visible_message(span_suicide("[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku..."))
 	return (BRUTELOSS)
 
 /obj/item/paper/proc/clearpaper()
@@ -142,12 +142,12 @@
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !isobserver(user))
-		. += "<span class='warning'>You're too far away to read it!</span>"
+		. += span_warning("You're too far away to read it!")
 		return
 	if(user.can_read(src))
 		ui_interact(user)
 		return
-	. += "<span class='warning'>You cannot read it!</span>"
+	. += span_warning("You cannot read it!")
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 		// Are we on fire?  Hard ot read if so
@@ -179,8 +179,8 @@
 		return
 	. = TRUE
 	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
-		user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
-							"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
+		user.visible_message(span_warning("[user] accidentally ignites [user.p_them()]self!"), \
+							span_userdanger("You miss [src] and accidentally light yourself on fire!"))
 		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
 			user.dropItemToGround(I)
 		user.adjust_fire_stacks(1)
@@ -204,12 +204,12 @@
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
-			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
+			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-		to_chat(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+		to_chat(user, span_notice("You ready your stamp over the paper! "))
 		ui_interact(user)
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
@@ -288,6 +288,10 @@
 		data["is_crayon"] = FALSE
 		data["stamp_icon_state"] = "FAKE"
 		data["stamp_class"] = "FAKE"
+	if(istype(loc, /obj/structure/noticeboard))
+		var/obj/structure/noticeboard/noticeboard = loc
+		if(!noticeboard.allowed(user))
+			data["edit_mode"] = MODE_READING
 	data["field_counter"] = field_counter
 	data["form_fields"] = form_fields
 
@@ -322,7 +326,7 @@
 
 				update_static_data(usr,ui)
 				var/obj/O = ui.user.get_active_held_item()
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with \the [O.name]!</span>", "<span class='notice'>You stamp [src] with \the [O.name]!</span>")
+				ui.user.visible_message(span_notice("[ui.user] stamps [src] with \the [O.name]!"), span_notice("You stamp [src] with \the [O.name]!"))
 			else
 				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 			. = TRUE
@@ -350,6 +354,11 @@
 
 			update_appearance()
 			. = TRUE
+
+/obj/item/paper/ui_host(mob/user)
+	if(istype(loc, /obj/structure/noticeboard))
+		return loc
+	return ..()
 
 /**
  * Construction paper

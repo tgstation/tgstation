@@ -59,7 +59,7 @@
 	///The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
-	var/menu_description = "Versatile spider variant for frontline combat. Jack of all trades, master of none. Does not inject toxin."
+	var/menu_description = "Versatile spider variant for frontline combat with high health and damage. Does not inject toxin."
 
 /mob/living/simple_animal/hostile/giant_spider/Initialize()
 	. = ..()
@@ -73,10 +73,10 @@
 	if(!. || !client)
 		return FALSE
 	if(directive)
-		to_chat(src, "<span class='spider'>Your mother left you a directive! Follow it at all costs.</span>")
-		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
+		to_chat(src, span_spider("Your mother left you a directive! Follow it at all costs."))
+		to_chat(src, span_spider("<b>[directive]</b>"))
 		if(mind)
-			mind.store_memory("<span class='spider'><b>[directive]</b></span>")
+			mind.store_memory(span_spider("<b>[directive]</b>"))
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/giant_spider/Destroy()
@@ -91,7 +91,7 @@
  *
  * A subtype of the giant spider with purple eyes and toxin injection.
  *
- * A subtype of the giant spider which is faster, has toxin injection, but less health.  This spider is only slightly slower than a human.
+ * A subtype of the giant spider which is faster, has toxin injection, but less health and damage.  This spider is only slightly slower than a human.
  */
 /mob/living/simple_animal/hostile/giant_spider/hunter
 	name = "hunter spider"
@@ -106,7 +106,7 @@
 	poison_per_bite = 10
 	move_to_delay = 5
 	speed = -0.1
-	menu_description = "Fast spider variant specializing in catching running prey, but has less health. Toxin injection of 10u per bite."
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage. Toxin injection of 10u per bite."
 
 /**
  * # Spider Nurse
@@ -130,7 +130,7 @@
 	melee_damage_upper = 10
 	poison_per_bite = 3
 	web_speed = 0.25
-	menu_description = "Support spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
@@ -146,17 +146,17 @@
 		return ..()
 	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
 	if(hurt_spider == src)
-		to_chat(src, "<span class='warning'>You don't have the dexerity to wrap your own wounds.</span>")
+		to_chat(src, span_warning("You don't have the dexerity to wrap your own wounds."))
 		return
 	if(hurt_spider.health >= hurt_spider.maxHealth)
-		to_chat(src, "<span class='warning'>You can't find any wounds to wrap up.</span>")
+		to_chat(src, span_warning("You can't find any wounds to wrap up."))
 		return
-	visible_message("<span class='notice'>[src] begins wrapping the wounds of [hurt_spider].</span>","<span class='notice'>You begin wrapping the wounds of [hurt_spider].</span>")
+	visible_message(span_notice("[src] begins wrapping the wounds of [hurt_spider]."),span_notice("You begin wrapping the wounds of [hurt_spider]."))
 	is_busy = TRUE
 	if(do_after(src, 20, target = hurt_spider))
 		hurt_spider.heal_overall_damage(20, 20)
 		new /obj/effect/temp_visual/heal(get_turf(hurt_spider), "#80F5FF")
-		visible_message("<span class='notice'>[src] wraps the wounds of [hurt_spider].</span>","<span class='notice'>You wrap the wounds of [hurt_spider].</span>")
+		visible_message(span_notice("[src] wraps the wounds of [hurt_spider]."),span_notice("You wrap the wounds of [hurt_spider]."))
 	is_busy = FALSE
 
 /**
@@ -297,19 +297,19 @@
 	if(stat == DEAD || !cocoon_target || cocoon_target.anchored)
 		return
 	if(cocoon_target == src)
-		to_chat(src, "<span class='warning'>You can't wrap yourself!</span>")
+		to_chat(src, span_warning("You can't wrap yourself!"))
 		return
 	if(istype(cocoon_target, /mob/living/simple_animal/hostile/giant_spider))
-		to_chat(src, "<span class='warning'>You can't wrap other spiders!</span>")
+		to_chat(src, span_warning("You can't wrap other spiders!"))
 		return
 	if(!Adjacent(cocoon_target))
-		to_chat(src, "<span class='warning'>You can't reach [cocoon_target]!</span>")
+		to_chat(src, span_warning("You can't reach [cocoon_target]!"))
 		return
 	if(is_busy)
-		to_chat(src, "<span class='warning'>You're already doing something else!</span>")
+		to_chat(src, span_warning("You're already doing something else!"))
 		return
 	is_busy = TRUE
-	visible_message("<span class='notice'>[src] begins to secrete a sticky substance around [cocoon_target].</span>","<span class='notice'>You begin wrapping [cocoon_target] into a cocoon.</span>")
+	visible_message(span_notice("[src] begins to secrete a sticky substance around [cocoon_target]."),span_notice("You begin wrapping [cocoon_target] into a cocoon."))
 	stop_automated_movement = TRUE
 	if(do_after(src, 50, target = cocoon_target))
 		if(is_busy)
@@ -320,10 +320,10 @@
 					consumed_mobs[living_target.tag] = TRUE
 					fed++
 					lay_eggs_enriched.UpdateButtonIcon(TRUE)
-					visible_message("<span class='danger'>[src] sticks a proboscis into [living_target] and sucks a viscous substance out.</span>","<span class='notice'>You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs.</span>")
+					visible_message(span_danger("[src] sticks a proboscis into [living_target] and sucks a viscous substance out."),span_notice("You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs."))
 					living_target.death() //you just ate them, they're dead.
 				else
-					to_chat(src, "<span class='warning'>[living_target] cannot sate your hunger!</span>")
+					to_chat(src, span_warning("[living_target] cannot sate your hunger!"))
 			cocoon_target.forceMove(casing)
 			if(cocoon_target.density || ismob(cocoon_target))
 				casing.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
@@ -352,12 +352,12 @@
 
 	var/obj/structure/spider/stickyweb/web = locate() in spider_turf
 	if(web)
-		to_chat(spider, "<span class='warning'>There's already a web here!</span>")
+		to_chat(spider, span_warning("There's already a web here!"))
 		return
 
 	if(!spider.is_busy)
 		spider.is_busy = TRUE
-		spider.visible_message("<span class='notice'>[spider] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+		spider.visible_message(span_notice("[spider] begins to secrete a sticky substance."),span_notice("You begin to lay a web."))
 		spider.stop_automated_movement = TRUE
 		if(do_after(spider, 40 * spider.web_speed, target = spider_turf))
 			if(spider.is_busy && spider.loc == spider_turf)
@@ -365,22 +365,16 @@
 		spider.is_busy = FALSE
 		spider.stop_automated_movement = FALSE
 	else
-		to_chat(spider, "<span class='warning'>You're already doing something else!</span>")
+		to_chat(spider, span_warning("You're already doing something else!"))
 
 /obj/effect/proc_holder/wrap
 	name = "Wrap"
 	panel = "Spider"
-	active = FALSE
-	action = null
 	desc = "Wrap something or someone in a cocoon. If it's a human or similar species, you'll also consume them, allowing you to lay enriched eggs."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
-
-/obj/effect/proc_holder/wrap/Initialize()
-	. = ..()
-	action = new(src)
 
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
@@ -397,10 +391,10 @@
 /obj/effect/proc_holder/wrap/proc/activate(mob/living/user)
 	var/message
 	if(active)
-		message = "<span class='notice'>You no longer prepare to wrap something in a cocoon.</span>"
+		message = span_notice("You no longer prepare to wrap something in a cocoon.")
 		remove_ranged_ability(message)
 	else
-		message = "<span class='notice'>You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B></span>"
+		message = span_notice("You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B>")
 		add_ranged_ability(user, message, TRUE)
 		return TRUE
 
@@ -428,17 +422,11 @@
 /obj/effect/proc_holder/tarantula_charge
 	name = "Charge"
 	panel = "Spider"
-	active = FALSE
-	action = null
 	desc = "Charge at a target, knocking them down if you collide with them.  Stuns yourself if you fail."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
-
-/obj/effect/proc_holder/tarantula_charge/Initialize()
-	. = ..()
-	action = new(src)
 
 /obj/effect/proc_holder/tarantula_charge/update_icon()
 	action.button_icon_state = "wrap_[active]"
@@ -456,13 +444,13 @@
 	var/message
 	var/mob/living/simple_animal/hostile/giant_spider/tarantula/spider = user
 	if(active)
-		message = "<span class='notice'>You stop preparing to charge.</span>"
+		message = span_notice("You stop preparing to charge.")
 		remove_ranged_ability(message)
 	else
 		if(!COOLDOWN_FINISHED(spider, charge_cooldown))
-			message = "<span class='notice'>Your charge is still on cooldown!</B></span>"
+			message = span_notice("Your charge is still on cooldown!</B>")
 			remove_ranged_ability(message)
-		message = "<span class='notice'>You prepare to charge. <B>Left-click your target to charge them!</B></span>"
+		message = span_notice("You prepare to charge. <B>Left-click your target to charge them!</B>")
 		add_ranged_ability(user, message, TRUE)
 		return 1
 
@@ -507,21 +495,21 @@
 
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(spider)
 	if(eggs)
-		to_chat(spider, "<span class='warning'>There is already a cluster of eggs here!</span>")
+		to_chat(spider, span_warning("There is already a cluster of eggs here!"))
 	else if(enriched && !spider.fed)
-		to_chat(spider, "<span class='warning'>You are too hungry to do this!</span>")
+		to_chat(spider, span_warning("You are too hungry to do this!"))
 	else if(!spider.is_busy)
 		spider.is_busy = TRUE
-		spider.visible_message("<span class='notice'>[spider] begins to lay a cluster of eggs.</span>","<span class='notice'>You begin to lay a cluster of eggs.</span>")
+		spider.visible_message(span_notice("[spider] begins to lay a cluster of eggs."),span_notice("You begin to lay a cluster of eggs."))
 		spider.stop_automated_movement = TRUE
 		if(do_after(spider, 100, target = get_turf(spider)))
 			if(spider.is_busy)
 				eggs = locate() in get_turf(spider)
 				if(!eggs || !isturf(spider.loc))
-					var/egg_choice = enriched ? /obj/structure/spider/eggcluster/enriched : /obj/structure/spider/eggcluster
-					var/obj/structure/spider/eggcluster/new_eggs = new egg_choice(get_turf(spider))
+					var/egg_choice = enriched ? /obj/effect/mob_spawn/spider/enriched : /obj/effect/mob_spawn/spider
+					var/obj/effect/mob_spawn/spider/new_eggs = new egg_choice(get_turf(spider))
 					new_eggs.directive = spider.directive
-					new_eggs.faction = spider.faction.Copy()
+					new_eggs.faction = spider.faction
 					if(enriched)
 						spider.fed--
 					UpdateButtonIcon(TRUE)
@@ -583,7 +571,7 @@
 	if(!message)
 		return
 	var/my_message
-	my_message = "<span class='spider'><b>Command from [user]:</b> [message]</span>"
+	my_message = span_spider("<b>Command from [user]:</b> [message]")
 	for(var/mob/living/simple_animal/hostile/giant_spider/spider in GLOB.spidermobs)
 		to_chat(spider, my_message)
 	for(var/ghost in GLOB.dead_mob_list)
@@ -607,7 +595,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Versatile ice spider variant for frontline combat. Jack of all trades, master of none. Immune to temperature damage. Does not inject frost oil."
+	menu_description = "Versatile ice spider variant for frontline combat with high health and damage. Immune to temperature damage. Does not inject frost oil."
 
 /**
  * # Ice Nurse Spider
@@ -623,7 +611,7 @@
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
-	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Immune to temperature damage. Frost oil injection of 3u per bite."
+	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Immune to temperature damage. Frost oil injection of 3u per bite."
 
 /**
  * # Ice Hunter Spider
@@ -640,7 +628,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Fast ice spider variant specializing in catching running prey, but has less health. Immune to temperature damage. Frost oil injection of 10u per bite."
+	menu_description = "Fast ice spider variant specializing in catching running prey and frost oil injection, but has less health and damage. Immune to temperature damage. Frost oil injection of 10u per bite."
 
 /**
  * # Scrawny Hunter Spider
@@ -657,7 +645,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
-	menu_description = "Fast spider variant specializing in catching running prey, but has less damage than a normal hunter spider at the cost of more health. Toxin injection of 10u per bite."
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less damage than a normal hunter spider at the cost of a little more health. Toxin injection of 10u per bite."
 
 /**
  * # Scrawny Tarantula
@@ -689,7 +677,7 @@
 	health = 30
 	maxHealth = 30
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes, and looks abnormally thin and frail."
-	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
 
 /**
  * # Flesh Spider
@@ -705,7 +693,7 @@
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
-	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health. Toxin injection of 10u per bite."
+	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage. Toxin injection of 10u per bite."
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Moved(atom/oldloc, dir)
 	. = ..()
@@ -717,14 +705,14 @@
 		return
 	if(src == target)
 		if(health >= maxHealth)
-			to_chat(src, "<span class='warning'>You're not injured, there's no reason to heal.</span>")
+			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
-		visible_message("<span class='notice'>[src] begins mending themselves...</span>","<span class='notice'>You begin mending your wounds...</span>")
+		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
 		is_busy = TRUE
 		if(do_after(src, 20, target = src))
 			heal_overall_damage(50, 50)
 			new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
-			visible_message("<span class='notice'>[src]'s wounds mend together.</span>","<span class='notice'>You mend your wounds together.</span>")
+			visible_message(span_notice("[src]'s wounds mend together."),span_notice("You mend your wounds together."))
 		is_busy = FALSE
 		return
 	return ..()

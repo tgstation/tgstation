@@ -39,7 +39,7 @@
 		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
-	anchored = FALSE
+	set_anchored(FALSE)
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -63,7 +63,7 @@
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
-	anchored = TRUE
+	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)
 	START_PROCESSING(SSfastprocess, src)

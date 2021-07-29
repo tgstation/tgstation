@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_on_off()
 	. = TRUE
 	if(s_busy)
-		to_chat(loc, "<span class='warning'>ERROR</span>: You cannot use this function at this time.")
+		to_chat(loc, "[span_warning("ERROR")]: You cannot use this function at this time.")
 		return FALSE
 	s_busy = TRUE
 	if(s_initialized)
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 		s_busy = FALSE
 		return
 	if (phase > NINJA_LOCK_PHASE && (ninja.stat == DEAD || ninja.health <= 0))
-		to_chat(ninja, "<span class='danger'><B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG...</span>")
+		to_chat(ninja, span_danger("<B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG..."))
 		unlock_suit(ninja)
 		s_busy = FALSE
 		return
@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 			s_initialized = TRUE
 			s_busy = FALSE
 
-	to_chat(ninja, "<span class='notice'>[message]</span>")
+	to_chat(ninja, span_notice("[message]"))
 	playsound(ninja, 'sound/effects/sparks1.ogg', 10, TRUE)
 
 	if (phase < NINJA_COMPLETE_PHASE)
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 			message = "Logging off, [ninja.real_name]. " + message
 		if(NINJA_DEINIT_STEALTH_PHASE)
 			cancel_stealth()
-	to_chat(ninja, "<span class='notice'>[message]</span>")
+	to_chat(ninja, span_notice("[message]"))
 	playsound(ninja, 'sound/items/deconstruct.ogg', 10, TRUE)
 
 	if (phase < NINJA_COMPLETE_PHASE)

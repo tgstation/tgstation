@@ -1,6 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Minebots now drop their ores on death, they no longer bring them with themselves in the grave."
-  - spellcheck: "less \"minebot armor upgrade already has reinforced armor!\""
-  - qol: "Minebot upgrades now tell the user when they've been successfully applied."

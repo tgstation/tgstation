@@ -609,7 +609,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/bmpship/midship)
 "cu" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -860,7 +860,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "du" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "dv" = (
@@ -1464,7 +1464,7 @@
 	},
 /area/awaymission/bmpship/fore)
 "fK" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -1566,7 +1566,7 @@
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "gg" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "gh" = (
@@ -1856,6 +1856,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
+"zW" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/bmpship/aft)
 "DS" = (
 /obj/machinery/hydroponics,
 /obj/effect/turf_decal/tile/green,
@@ -4356,7 +4360,7 @@ cw
 cw
 fP
 ac
-gg
+zW
 dl
 cE
 cE

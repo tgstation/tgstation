@@ -279,7 +279,7 @@
 			else
 				if (occupant)
 					var/mob/living/mob_occupant = occupant
-					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
+					to_chat(mob_occupant, span_userdanger("[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!"))
 				cook()
 		if ("lock", "unlock")
 			if (!state_open)
@@ -323,27 +323,27 @@
 			return
 	var/mob/living/target = A
 	if(!state_open)
-		to_chat(user, "<span class='warning'>The unit's doors are shut!</span>")
+		to_chat(user, span_warning("The unit's doors are shut!"))
 		return
 	if(!is_operational)
-		to_chat(user, "<span class='warning'>The unit is not operational!</span>")
+		to_chat(user, span_warning("The unit is not operational!"))
 		return
 	if(occupant || helmet || suit || storage)
-		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
+		to_chat(user, span_warning("It's too cluttered inside to fit in!"))
 		return
 
 	if(target == user)
-		user.visible_message("<span class='warning'>[user] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>")
+		user.visible_message(span_warning("[user] starts squeezing into [src]!"), span_notice("You start working your way into [src]..."))
 	else
-		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
+		target.visible_message(span_warning("[user] starts shoving [target] into [src]!"), span_userdanger("[user] starts shoving you into [src]!"))
 
 	if(do_mob(user, target, 30))
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind [user.p_them()]!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+			user.visible_message(span_warning("[user] slips into [src] and closes the door behind [user.p_them()]!"), "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
 		else
-			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!</span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
+			target.visible_message(span_warning("[user] pushes [target] into [src] and shuts its door!"), span_userdanger("[user] shoves you into [src] and shuts the door!"))
 		close_machine(target)
 		add_fingerprint(user)
 
@@ -376,7 +376,7 @@
 		uv = FALSE
 		locked = FALSE
 		if(uv_super)
-			visible_message("<span class='warning'>[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber.</span>")
+			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 			helmet = null
 			qdel(helmet)
@@ -390,9 +390,9 @@
 			wires.cut_all()
 		else
 			if(!mob_occupant)
-				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
+				visible_message(span_notice("[src]'s door slides open. The glowing yellow lights dim to a gentle green."))
 			else
-				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
+				visible_message(span_warning("[src]'s door slides open, barraging you with the nauseating smell of charred flesh."))
 				mob_occupant.radiation = 0
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
@@ -442,7 +442,7 @@
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+			to_chat(user, span_warning("[src]'s door won't budge!"))
 		return
 	open_machine()
 	dump_inventory_contents()
@@ -454,21 +454,21 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
-		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='hear'>You hear a thump from [src].</span>")
+	user.visible_message(span_notice("You see [user] kicking against the doors of [src]!"), \
+		span_notice("You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)"), \
+		span_hear("You hear a thump from [src]."))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+			span_notice("You successfully break out of [src]!"))
 		open_machine()
 		dump_inventory_contents()
 
 	add_fingerprint(user)
 	if(locked)
-		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
-			"<span class='notice'>You start kicking against the doors...</span>")
+		visible_message(span_notice("You see [user] kicking against the doors of [src]!"), \
+			span_notice("You start kicking against the doors..."))
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
@@ -476,42 +476,42 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
-			"<span class='notice'>You escape the cramped confines of [src]!</span>")
+		visible_message(span_notice("You see [user] burst out of [src]!"), \
+			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational)
 		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
-				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
+				to_chat(user, span_warning("The unit already contains a suit!."))
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head))
 			if(helmet)
-				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
+				to_chat(user, span_warning("The unit already contains a helmet!"))
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
-				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
+				to_chat(user, span_warning("The unit already contains a mask!"))
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
 			mask = I
 		else
 			if(storage)
-				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
+				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
 			storage = I
 
-		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
+		visible_message(span_notice("[user] inserts [I] into [src]"), span_notice("You load [I] into [src]."))
 		update_appearance()
 		return
 
@@ -533,7 +533,7 @@
 */
 /obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER && uv)
-		to_chat(user, "<span class='warning'>It might not be wise to fiddle with [src] while it's running...</span>")
+		to_chat(user, span_warning("It might not be wise to fiddle with [src] while it's running..."))
 		return TRUE
 	return ..()
 
@@ -542,5 +542,5 @@
 	. = !(state_open || panel_open || is_operational || locked || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
 		open_machine()

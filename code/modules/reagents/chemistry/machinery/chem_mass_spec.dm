@@ -56,7 +56,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		if(!user.transferItemToLoc(beaker, src))
 			return
 		replace_beaker(user, BEAKER1, beaker)
-		to_chat(user, "<span class='notice'>You add [beaker] to [src].</span>")
+		to_chat(user, span_notice("You add [beaker] to [src]."))
 		updateUsrDialog()
 	update_appearance()
 	..()
@@ -71,7 +71,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		if(!user.transferItemToLoc(beaker, src))
 			return
 		replace_beaker(user, BEAKER2, beaker)
-		to_chat(user, "<span class='notice'>You add [beaker] to [src].</span>")
+		to_chat(user, span_notice("You add [beaker] to [src]."))
 		updateUsrDialog()
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

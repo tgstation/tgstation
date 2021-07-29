@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(id_access)
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	// We use this because creating the trim singletons requires the config to be loaded.
-	SSmapping.HACK_LoadMapConfig()
 	setup_access_flags()
 	setup_region_lists()
 	setup_trim_singletons()

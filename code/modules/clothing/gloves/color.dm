@@ -27,11 +27,11 @@
 		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 		if(success)
 			if(C == user)
-				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
+				C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
 			else
-				C.visible_message("<span class='warning'>[U] sprays glittery rubber on the hands of [C]!</span>")
+				C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
 		else
-			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
+			C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
 
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
@@ -58,7 +58,7 @@
 	charges_remaining--
 	if(charges_remaining <= 0)
 		var/turf/location = get_turf(src)
-		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
 		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap

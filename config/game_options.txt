@@ -223,18 +223,6 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
-## Comment this out to disable the antagonist reputation system. This system rewards players who participate in the game instead of greytiding by giving them slightly higher odds to
-## roll antagonist in subsequent rounds until they get it.
-##
-## For details See the comments for /datum/game_mode/proc/antag_pick in code/game/gamemodes/game_mode.dm
-# USE_ANTAG_REP
-
-## The maximum amount of antagonist reputation tickets a player can bank (not use at once)
-ANTAG_REP_MAXIMUM 200
-
-## The default amount of tickets all users use while rolling
-DEFAULT_ANTAG_TICKETS 100
-
 ## The maximum amount of extra tickets a user may use from their ticket bank in addition to the default tickets
 MAX_TICKETS_PER_ROLL 100
 

@@ -58,7 +58,7 @@
 	var/datum/objective/destroy = new /datum/objective/destroy_nation(null, attacking_nation)
 	destroy.team = src
 	objectives += destroy
-	update_all_member_objectives("<span class='danger'>The nation of [attacking_nation] has declared the intent to conquer [src]! You have new objectives.</span>")
+	update_all_member_objectives(span_danger("The nation of [attacking_nation] has declared the intent to conquer [src]! You have new objectives."))
 
 /datum/team/nation/proc/update_all_member_objectives(message)
 	for(var/datum/mind/member in members)
@@ -72,6 +72,7 @@
 	name = "Separatists"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	suicide_cry = "FOR THE MOTHERLAND!!"
 	var/datum/team/nation/nation
 
 /datum/antagonist/separatist/on_gain()
@@ -97,7 +98,7 @@
 	return nation
 
 /datum/antagonist/separatist/greet()
-	to_chat(owner, "<span class='boldannounce'>You are a separatist for an independent [nation.nation_department]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!</span>")
+	to_chat(owner, span_boldannounce("You are a separatist for an independent [nation.nation_department]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!"))
 	owner.announce_objectives()
 
 //objectives

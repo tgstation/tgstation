@@ -297,7 +297,7 @@
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sortList(mobtypes, /proc/cmp_typepaths_asc))
 
 	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
 		return
 
 	if(notransform)
@@ -320,7 +320,7 @@
 	new_mob.key = key
 	new_mob.set_combat_mode(TRUE)
 
-	to_chat(new_mob, "<span class='boldnotice'>You suddenly feel more... animalistic.</span>")
+	to_chat(new_mob, span_boldnotice("You suddenly feel more... animalistic."))
 	. = new_mob
 	qdel(src)
 
@@ -330,14 +330,14 @@
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sortList(mobtypes, /proc/cmp_typepaths_asc))
 
 	if(!safe_animal(mobpath))
-		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
+		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
 		return
 
 	var/mob/living/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
 	new_mob.set_combat_mode(TRUE)
-	to_chat(new_mob, "<span class='boldnotice'>You feel more... animalistic.</span>")
+	to_chat(new_mob, span_boldnotice("You feel more... animalistic."))
 
 	. = new_mob
 	qdel(src)

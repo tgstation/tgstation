@@ -35,7 +35,7 @@
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			D.adjust_money(value)
-			to_chat(user, "<span class='notice'>You deposit [I]. The Cargo Budget is now [D.account_balance] cr.</span>")
+			to_chat(user, span_notice("You deposit [I]. The Cargo Budget is now [D.account_balance] cr."))
 		qdel(I)
 		return
 	return ..()

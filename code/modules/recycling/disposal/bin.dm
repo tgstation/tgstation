@@ -87,15 +87,15 @@
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			I.play_tool_sound(src)
-			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
+			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
-			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
+			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
 			if(I.use_tool(src, user, 20, volume=100) && panel_open)
-				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
+				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
 				deconstruct()
 			return
 
@@ -109,27 +109,27 @@
 		return ..()
 
 /obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
-	king.visible_message("<span class='warning'>[king] starts rummaging through [src].</span>","<span class='notice'>You rummage through [src]...</span>")
+	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
 	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
 		var/loot = rand(1,100)
 		switch(loot)
 			if(1 to 5)
-				to_chat(king, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
+				to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
 				var/pickedcoin = pick(GLOB.ratking_coins)
 				for(var/i = 1 to rand(1,3))
 					new pickedcoin(get_turf(king))
 			if(6 to 33)
 				say(pick("Treasure!","Our precious!","Cheese!"))
-				to_chat(king, "<span class='notice'>Score! You find some cheese!</span>")
+				to_chat(king, span_notice("Score! You find some cheese!"))
 				new /obj/item/food/cheese(get_turf(king))
 			else
 				var/pickedtrash = pick(GLOB.ratking_trash)
-				to_chat(king, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
+				to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
 				new pickedtrash(get_turf(king))
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
-	user.visible_message("<span class='notice'>[user.name] places \the [I] into \the [src].</span>", "<span class='notice'>You place \the [I] into \the [src].</span>")
+	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
 
 //mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
@@ -150,24 +150,24 @@
 	if(target.buckled || target.has_buckled_mobs())
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
-		to_chat(user, "<span class='warning'>[target] doesn't fit inside [src]!</span>")
+		to_chat(user, span_warning("[target] doesn't fit inside [src]!"))
 		return
 	add_fingerprint(user)
 	if(user == target)
-		user.visible_message("<span class='warning'>[user] starts climbing into [src].</span>", "<span class='notice'>You start climbing into [src]...</span>")
+		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
 	else
-		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", "<span class='userdanger'>[user] starts putting you into [src]!</span>")
+		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
 	if(do_mob(user, target, 20))
 		if (!loc)
 			return
 		target.forceMove(src)
 		if(user == target)
-			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", "<span class='notice'>You climb into [src].</span>")
+			user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
 			. = TRUE
 		else
-			target.visible_message("<span class='danger'>[user] places [target] in [src].</span>", "<span class='userdanger'>[user] places you in [src].</span>")
+			target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
 			log_combat(user, target, "stuffed", addition="into [src]")
-			target.LAssailant = user
+			target.LAssailant = WEAKREF(user)
 			. = TRUE
 		update_appearance()
 
@@ -247,7 +247,7 @@
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)
 			stored.set_anchored(FALSE)
-			stored.density = TRUE
+			stored.set_density(TRUE)
 			stored.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
@@ -285,7 +285,7 @@
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
 		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
-		to_chat(user, "<span class='warning'>You empty the bag.</span>")
+		to_chat(user, span_warning("You empty the bag."))
 		for(var/obj/item/O in T.contents)
 			STR.remove_from_storage(O,src)
 		T.update_appearance()
@@ -350,10 +350,10 @@
 	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
 			AM.forceMove(src)
-			visible_message("<span class='notice'>[AM] lands in [src].</span>")
+			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
 		else
-			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message(span_notice("[AM] bounces off of [src]'s rim!"))
 			return ..()
 	else
 		return ..()
@@ -498,7 +498,7 @@
 	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
-			to_chat(M, "<span class='warning'>You hit the edge of the chute.</span>")
+			to_chat(M, span_warning("You hit the edge of the chute."))
 			return
 		M.forceMove(src)
 	flush()

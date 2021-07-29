@@ -10,6 +10,7 @@
 	show_to_ghosts = TRUE
 	prevent_roundtype_conversion = FALSE
 	antagpanel_category = "Ash Walkers"
+	suicide_cry = "I HAVE NO IDEA WHAT THIS THING DOES!!"
 	var/datum/team/ashwalkers/ashie_team
 
 /datum/antagonist/ashwalker/create_team(datum/team/team)

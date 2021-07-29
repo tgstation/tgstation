@@ -204,11 +204,13 @@
 	desc = "Corrupted steel."
 	icon_state = "plating_rust"
 
-/turf/open/floor/plating/rust/plasma
-	initial_gas_mix = "plasma=104;TEMP=293.15"
-
-/turf/open/floor/plating/rust/rust_heretic_act()
-	return
+/turf/open/floor/plating/plasma
+	initial_gas_mix = ATMOS_TANK_PLASMA
+/turf/open/floor/plating/plasma/rust/Initialize(mapload)
+	. = ..()
+	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
+	// Especially since it looks like we don't even change the default icon/iconstate???
+	AddComponent(/datum/component/rust)
 
 /turf/open/floor/stone
 	name = "stone brick floor"

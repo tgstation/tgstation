@@ -5,7 +5,7 @@
 	set name = "Say"
 	set category = "IC"
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	if(message)
 		say(message)
@@ -15,7 +15,7 @@
 	set name = "Whisper"
 	set category = "IC"
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	whisper(message)
 
@@ -29,7 +29,7 @@
 	set category = "IC"
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -42,7 +42,7 @@
 	var/alt_name = ""
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	var/jb = is_banned_from(ckey, "Deadchat")
@@ -50,15 +50,21 @@
 		return
 
 	if(jb)
-		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
+		to_chat(src, span_danger("You have been banned from deadchat."))
 		return
 
 
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
-			to_chat(src, "<span class='danger'>You cannot talk in deadchat (muted).</span>")
+			to_chat(src, span_danger("You cannot talk in deadchat (muted)."))
 			return
+
+		if(SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && src == usr)
+			if(!COOLDOWN_FINISHED(client, say_slowmode))
+				to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+				return
+			COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
 		if(src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return

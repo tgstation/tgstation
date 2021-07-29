@@ -111,8 +111,6 @@
 	///Simple_animal access.
 	///Innate access uses an internal ID card.
 	var/obj/item/card/id/access_card = null
-	///In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against.
-	var/buffed = 0
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
@@ -144,15 +142,6 @@
 	///convenience var for forcibly waking up an idling AI on next check.
 	var/shouldwakeup = FALSE
 
-	///Domestication.
-	var/tame = FALSE
-	///What the mob eats, typically used for taming or animal husbandry.
-	var/list/food_type
-	///Starting success chance for taming.
-	var/tame_chance
-	///Added success chance after every failed tame attempt.
-	var/bonus_tame_chance
-
 	///I don't want to confuse this with client registered_z.
 	var/my_z
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
@@ -166,6 +155,13 @@
 	var/sharpness = NONE
 	///Generic flags
 	var/simple_mob_flags = NONE
+
+	///Limits how often mobs can hunt other mobs
+	COOLDOWN_DECLARE(emote_cooldown)
+	var/turns_since_scan = 0
+
+	///Is this animal horrible at hunting?
+	var/inept_hunter = FALSE
 
 
 /mob/living/simple_animal/Initialize(mapload)
@@ -196,10 +192,10 @@
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
-		AddComponent(/datum/component/footstep, footstep_type)
-	if(!unsuitable_cold_damage)
+		AddElement(/datum/element/footstep, footstep_type)
+	if(!isnull(unsuitable_cold_damage))
 		unsuitable_cold_damage = unsuitable_atmos_damage
-	if(!unsuitable_heat_damage)
+	if(!isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
 /mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
@@ -224,30 +220,10 @@
 	walk(src, 0)
 	return ..()
 
-/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
-	if(!is_type_in_list(O, food_type))
-		return ..()
-	if(stat == DEAD)
-		to_chat(user, "<span class='warning'>[src] is dead!</span>")
-		return
-	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
-	qdel(O)
-	if(tame)
-		return
-	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-		tame = TRUE
-		tamed(user)
-	else
-		tame_chance += bonus_tame_chance
-
-///Extra effects to add when the mob is tamed, such as adding a riding component
-/mob/living/simple_animal/proc/tamed(whomst)
-	tame = TRUE
-
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
+		. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
 	if(access_card)
 		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
@@ -484,7 +460,7 @@
 		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
-		density = FALSE
+		set_density(FALSE)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -518,7 +494,7 @@
 	if(!.)
 		return
 	icon_state = icon_living
-	density = initial(density)
+	set_density(initial(density))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -715,3 +691,41 @@
 
 /mob/living/simple_animal/proc/stop_deadchat_plays()
 	stop_automated_movement = FALSE
+
+
+//Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.
+/mob/living/simple_animal/proc/hunt(hunted)
+	if(src == hunted) //Make sure it doesn't eat itself. While not likely to ever happen, might as well check just in case.
+		return
+	stop_automated_movement = FALSE
+	if(!isturf(src.loc)) // Are we on a proper turf?
+		return
+	if(stat || resting || buckled) // Are we concious, upright, and not buckled?
+		return
+	if(!COOLDOWN_FINISHED(src, emote_cooldown)) // Has the cooldown on this ended?
+		return
+	if(!Adjacent(hunted))
+		stop_automated_movement = TRUE
+		walk_to(src,hunted,0,3)
+		if(Adjacent(hunted))
+			hunt(hunted) // In case it gets next to the target immediately, skip the scan timer and kill it.
+		return
+	if(isliving(hunted)) // Are we hunting a living mob?
+		var/mob/living/prey = hunted
+		if(inept_hunter) // Make your hunter inept to have them unable to catch their prey.
+			visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
+			step(prey, pick(GLOB.cardinals))
+			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+			return
+		if(!(prey.stat))
+			manual_emote("chomps [prey]!")
+			prey.death()
+			prey = null
+			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+			return
+	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
+		manual_emote("chomps [hunted]!")
+		qdel(hunted)
+		hunted = null
+		COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+		return

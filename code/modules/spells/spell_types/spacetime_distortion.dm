@@ -87,7 +87,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))

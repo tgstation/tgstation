@@ -384,15 +384,6 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			var/mob/dead/observer/O = mob
 			O.update_sight()
 
-/client/verb/toggle_intent_style()
-	set name = "Toggle Intent Selection Style"
-	set category = "Preferences"
-	set desc = "Toggle between directly clicking the desired intent or clicking to rotate through."
-	prefs.toggles ^= INTENT_STYLE
-	to_chat(src, "<span class='infoplain'>[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]</span>")
-	prefs.save_preferences()
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Intent Selection", "[prefs.toggles & INTENT_STYLE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
@@ -413,9 +404,9 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
 	prefs.save_preferences()
 	if(prefs.inquisitive_ghost)
-		to_chat(src, "<span class='notice'>You will now examine everything you click on.</span>")
+		to_chat(src, span_notice("You will now examine everything you click on."))
 	else
-		to_chat(src, "<span class='notice'>You will no longer examine things you click on.</span>")
+		to_chat(src, span_notice("You will no longer examine things you click on."))
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost Inquisitiveness", "[prefs.inquisitive_ghost ? "Enabled" : "Disabled"]"))
 
 //Admin Preferences

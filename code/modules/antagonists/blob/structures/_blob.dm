@@ -10,9 +10,10 @@
 	layer = BELOW_MOB_LAYER
 	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
+	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
-	max_integrity = 30
+	max_integrity = BLOB_REGULAR_MAX_HP
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
@@ -145,11 +146,11 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T)) //is the target turf impassable
+	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T)) //is anything in the turf impassable
+		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
 			make_blob = FALSE
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
@@ -158,9 +159,9 @@
 
 	if(make_blob) //well, can we?
 		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
-		B.density = TRUE
-		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
-			B.density = initial(B.density)
+		B.set_density(TRUE)
+		if(T.Enter(B)) //NOW we can attempt to move into the tile
+			B.set_density(initial(B.density))
 			B.forceMove(T)
 			B.update_appearance()
 			if(B.overmind && expand_reaction)
@@ -208,7 +209,7 @@
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
 			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
@@ -220,17 +221,17 @@
 	RETURN_TYPE(/list)
 	. = list()
 	if(overmind)
-		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>",
-		"<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>",
-		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect || "N/A"]</span>")
+		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font>[span_notice(".")]</b>",
+		"<b>Material Effects:</b> [span_notice("[overmind.blobstrain.analyzerdescdamage]")]",
+		"<b>Material Properties:</b> [span_notice("[overmind.blobstrain.analyzerdesceffect || "N/A"]")]")
 	else
 		. += "<b>No Material Detected!</b>"
 
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
-	return list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>",
-							"<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>",
-							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
+	return list("<b>Blob Type:</b> [span_notice("[uppertext(initial(name))]")]",
+							"<b>Health:</b> [span_notice("[obj_integrity]/[max_integrity]")]",
+							"<b>Effects:</b> [span_notice("[scannerreport()]")]")
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -314,8 +315,13 @@
 	icon_state = "blob"
 	light_range = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
+	var/initial_integrity = BLOB_REGULAR_HP_INIT
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
+
+/obj/structure/blob/normal/Initialize(mapload, owner_overmind)
+	. = ..()
+	update_integrity(initial_integrity)
 
 /obj/structure/blob/normal/scannerreport()
 	if(obj_integrity <= 15)

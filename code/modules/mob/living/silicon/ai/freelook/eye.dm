@@ -74,15 +74,15 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/ai_eye/proc/setLoc(T, force_update = FALSE)
+/mob/camera/ai_eye/proc/setLoc(destination, force_update = FALSE)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
-		T = get_turf(T)
-		if(!force_update && (T == get_turf(src)) )
+		destination = get_turf(destination)
+		if(!force_update && (destination == get_turf(src)) )
 			return //we are already here!
-		if (T)
-			abstract_move(T)
+		if (destination)
+			abstract_move(destination)
 		else
 			moveToNullspace()
 		if(use_static)
@@ -94,7 +94,7 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai, T)
+			H.move_hologram(ai, destination)
 		if(ai.camera_light_on)
 			ai.light_cameras()
 		if(ai.master_multicam)
@@ -107,11 +107,11 @@
 	var/turf/target = get_step_multiz(src, dir)
 	if(!target)
 		if(feedback)
-			to_chat(ai, "<span class='warning'>There's nowhere to go in that direction!</span>")
+			to_chat(ai, span_warning("There's nowhere to go in that direction!"))
 		return FALSE
 	if(!canZMove(dir, target))
 		if(feedback)
-			to_chat(ai, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(ai, span_warning("You couldn't move there!"))
 		return FALSE
 	setLoc(target, TRUE)
 	return TRUE

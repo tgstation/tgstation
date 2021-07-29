@@ -38,7 +38,7 @@
 /datum/ai_behavior/vendor_rise_up/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
-	vendor_pawn.visible_message("<span class='warning'>[vendor_pawn] untilts itself!</span>")
+	vendor_pawn.visible_message(span_warning("[vendor_pawn] untilts itself!"))
 	if(controller.blackboard[BB_VENDING_LAST_HIT_SUCCESFUL])
 		controller.blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + succes_tilt_cooldown
 	vendor_pawn.untilt()
