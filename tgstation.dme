@@ -1137,6 +1137,7 @@
 #include "code\game\objects\effects\spawners\vending.dm"
 #include "code\game\objects\effects\spawners\xeno_egg_delivery.dm"
 #include "code\game\objects\effects\spawners\random\clothing.dm"
+#include "code\game\objects\effects\spawners\random\entertainment.dm"
 #include "code\game\objects\effects\spawners\random\random.dm"
 #include "code\game\objects\effects\spawners\random\structure.dm"
 #include "code\game\objects\effects\spawners\random\trash.dm"
