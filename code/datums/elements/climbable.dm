@@ -5,12 +5,10 @@
 	var/climb_time = (2 SECONDS)
 	///Stun duration for when you get onto the object
 	var/climb_stun = (2 SECONDS)
-	///For objects on the border of two or more tiles and that can be vaulted over from both sides.
-	var/on_border = FALSE
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
 
-/datum/element/climbable/Attach(datum/target, climb_time, climb_stun, on_border = FALSE)
+/datum/element/climbable/Attach(datum/target, climb_time, climb_stun)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))
@@ -19,7 +17,6 @@
 		src.climb_time = climb_time
 	if(climb_stun)
 		src.climb_stun = climb_stun
-	src.on_border = on_border
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/attack_hand)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -39,7 +36,7 @@
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
 	var/dir_step = get_dir(user,source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
-	if(on_border && user.loc != source.loc && (dir_step & source.dir) == source.dir)
+	if(source.flags_1 & ON_BORDER_1 && user.loc != source.loc && (dir_step & source.dir) == source.dir)
 		return FALSE
 	return TRUE
 
@@ -91,8 +88,8 @@
 		return
 	climbed_thing.set_density(FALSE)
 	var/dir_step = get_dir(user, climbed_thing.loc)
-	//it's a railing-like object and you are vaulting over it to the direction it's facing.
-	if(on_border && (climbed_thing.loc == user.loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
+	//it's on border you are actually vaulting over it to the direction it's facing.
+	if(climbed_thing.flags_1 & ON_BORDER_1 && (climbed_thing.loc == user.loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
 		//can be vaulted over in two different cardinal directions.
 		if((climbed_thing.dir in GLOB.diagonals) && climbed_thing.loc == user.loc)
 			dir_step = (user.dir & climbed_thing.dir) || angle2dir_cardinal(dir2angle(climbed_thing.dir))
