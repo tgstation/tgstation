@@ -60,7 +60,9 @@
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
-		/mob/living/simple_animal/chick
+		/mob/living/simple_animal/chick,
+		/mob/living/simple_animal/cow/wisdom,
+		/obj/item/skub
 	)
 
 	var/tone_down_the_randomness = FALSE
@@ -108,14 +110,21 @@
 
 	var/parsed_story = ""
 
+	var/mob/living/crew_member
+
 	var/mob/living/something = pick(something_pool)
+
+	//var/datum/antagonist/obsessed/creeper = memorizer.mind.has_antag_datum(/datum/antagonist/obsessed)
+	//if(creeper && creeper.trauma.obsession)
+	//	crew_member = creeper.trauma.obsession //ALWAYS ENGRAVE MY OBSESSION!
 
 	var/list/crew_members = list()
 	for(var/mob/living/carbon/human/potential_crew_member as anything in GLOB.player_list)
 		if(potential_crew_member?.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
 			crew_members += potential_crew_member
 
-	var/mob/living/crew_member = pick(crew_members)
+
+	crew_member = pick(crew_members)
 
 	for(var/line in story_pieces)
 		for(var/key in extra_info)

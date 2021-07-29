@@ -34,13 +34,18 @@
 #define MEMORY_SPAGHETTI_SPILL "spaghetti_spilled"
 ///A memory of getting a kiss blown. Provides the kisser and kissee.
 #define MEMORY_KISS "kiss"
-
-///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
-
 ///A memory of a really good meal
 #define MEMORY_MEAL "meal"
 ///A memory of a really good drink
 #define MEMORY_DRINK "drink"
+///A memory of being lit
+#define MEMORY_FIRE "fire"
+/// A memory of limb loss
+#define MEMORY_DISMEMBERED "limb loss"
+/// A memory of seeing a pet die
+#define MEMORY_PET_DEAD "pet_dead"
+
+///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
 
 ///a memory of getting gibbed, an alternate to death
@@ -87,5 +92,5 @@
 #define DETAIL_KISSER "KISSER"
 #define DETAIL_FOOD "FOOD"
 #define DETAIL_DRINK "DRINK"
-
+#define DETAIL_LOST_LIMB "LOST_LIMB"
 

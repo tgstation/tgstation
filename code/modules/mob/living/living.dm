@@ -1227,6 +1227,7 @@
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		throw_alert("fire", /atom/movable/screen/alert/fire)
 		update_fire()
+		mind?.add_memory(MEMORY_FIRE, list(DETAIL_VICTIM = src))
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
 	return FALSE
