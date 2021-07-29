@@ -40175,7 +40175,7 @@
 /area/cargo/storage)
 "eYJ" = (
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/iron/grimy,
 /area/service/abandoned_gambling_den)
 "eZa" = (
@@ -79274,9 +79274,7 @@
 /area/medical/medbay/central)
 "prZ" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/spawner/lootdrop/memeorgans{
-	lootcount = 1
-	},
+/obj/effect/spawner/random/medical/memeorgans,
 /turf/open/floor/plating,
 /area/service/library/abandoned)
 "psw" = (

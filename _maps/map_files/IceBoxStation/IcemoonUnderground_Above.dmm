@@ -2886,7 +2886,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "sv" = (
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "sF" = (

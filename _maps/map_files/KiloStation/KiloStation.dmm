@@ -19039,7 +19039,7 @@
 /area/science/xenobiology)
 "bho" = (
 /obj/effect/landmark/xeno_spawn,
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bhp" = (
@@ -24501,7 +24501,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/memeorgans,
+/obj/effect/spawner/random/medical/memeorgans,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bLa" = (
