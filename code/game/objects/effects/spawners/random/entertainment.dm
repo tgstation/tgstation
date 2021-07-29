@@ -54,6 +54,16 @@
 		/obj/item/coin/antagtoken = 1,
 	)
 
+/obj/effect/spawner/random/entertainment/money_small
+	name = "small money spawner"
+	lootcount = 3
+	fan_out_items = TRUE
+	loot = list(
+		/obj/item/stack/spacecash/c1 = 5,
+		/obj/item/stack/spacecash/c10 = 3,
+		/obj/item/stack/spacecash/c20 = 2,
+	)
+
 /obj/effect/spawner/random/entertainment/money
 	name = "money spawner"
 	lootcount = 3
@@ -64,6 +74,22 @@
 		/obj/item/stack/spacecash/c20 = 3,
 		/obj/item/stack/spacecash/c50 = 2,
 		/obj/item/stack/spacecash/c100 = 1,
+	)
+
+/obj/effect/spawner/random/entertainment/money_large
+	name = "large money spawner"
+	lootcount = 5
+	fan_out_items = TRUE
+	loot = list(
+		/obj/item/stack/spacecash/c1 = 100,
+		/obj/item/stack/spacecash/c10 = 80,
+		/obj/item/stack/spacecash/c20 = 60,
+		/obj/item/stack/spacecash/c50 = 40,
+		/obj/item/stack/spacecash/c100 = 30,
+		/obj/item/stack/spacecash/c200 = 20,
+		/obj/item/stack/spacecash/c500 = 10,
+		/obj/item/stack/spacecash/c1000 = 5,
+		/obj/item/stack/spacecash/c10000 = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/drugs
