@@ -24,12 +24,6 @@
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/random/Destroy()
-	minimum = null
-	maximum = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/random/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

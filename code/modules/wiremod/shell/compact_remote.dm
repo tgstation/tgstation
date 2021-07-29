@@ -34,11 +34,6 @@
 	entity = add_output_port("User", PORT_TYPE_ATOM)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/compact_remote/Destroy()
-	signal = null
-	entity = null
-	return ..()
-
 /obj/item/circuit_component/compact_remote/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
 
