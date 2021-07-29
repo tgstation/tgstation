@@ -17,18 +17,16 @@
 	. = ..()
 	bar_number = add_input_port("Number", PORT_TYPE_NUMBER)
 
-	set_option("Vertical")
-
 /obj/item/circuit_component/object_overlay/bar/populate_options()
 	var/static/component_options_bar = list(
-		"Horizontal",
-		"Vertical"
+		"Vertical",
+		"Horizontal"
 	)
 	options = component_options_bar
 
 	var/static/options_to_icons_bar = list(
-		"Horizontal" = "barhoriz",
-		"Vertical" = "barvert"
+		"Vertical" = "barvert",
+		"Horizontal" = "barhoriz"
 	)
 	options_map = options_to_icons_bar
 

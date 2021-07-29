@@ -39,7 +39,6 @@
 	image_pixel_x = add_input_port("X-Axis Shift", PORT_TYPE_NUMBER)
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
 
-	set_option("Corners (Blue)")
 	overlay_id = GLOB.object_overlay_id
 	GLOB.object_overlay_id += 1
 
