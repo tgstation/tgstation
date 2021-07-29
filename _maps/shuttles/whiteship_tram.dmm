@@ -375,7 +375,7 @@
 "be" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bf" = (

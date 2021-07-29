@@ -2,10 +2,9 @@ obj/effect/spawner/random/structure
 	name = "structure spawner"
 	desc = "Now you see me, now you don't..."
 
-//obj/effect/spawner/lootdrop/crate
-
 ///this spawner usually spawns a boring crate, but has a chance to replace the crate with "loot crate" with a different loot table or a decorative site.
-/obj/effect/loot_site_spawner
+//obj/effect/spawner/random/structure/crate
+/obj/effect/spawner/random/structure/crate
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "loot_site"
 	///This is the loot table for the spawner. Try to make sure the weights add up to 1000, so it is easy to understand.
@@ -18,7 +17,7 @@ obj/effect/spawner/random/structure
 							/obj/structure/closet/crate/decorations = 15)
 
 
-/obj/effect/loot_site_spawner/Initialize()
+/obj/effect/spawner/random/structure/crate/Initialize()
 	..()
 	if(!length(loot_table))
 		return INITIALIZE_HINT_QDEL

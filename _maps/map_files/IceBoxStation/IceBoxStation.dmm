@@ -4333,7 +4333,7 @@
 /turf/open/floor/iron/dark,
 /area/security/prison/safe)
 "arM" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arP" = (
@@ -5076,7 +5076,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awF" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awG" = (
@@ -7444,7 +7444,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aMI" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/maintenance/starboard)
@@ -10511,7 +10511,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bji" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bjl" = (
@@ -14391,7 +14391,7 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "bEF" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bEJ" = (
@@ -16925,7 +16925,7 @@
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "bXZ" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bYa" = (
@@ -17035,7 +17035,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bYs" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bYt" = (
@@ -17636,7 +17636,7 @@
 /area/maintenance/starboard/aft)
 "cda" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cdc" = (
@@ -18059,7 +18059,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
 "cjI" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cjK" = (
@@ -20729,7 +20729,7 @@
 /area/tcommsat/server)
 "cSF" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cSK" = (
@@ -23055,7 +23055,7 @@
 	},
 /area/engineering/break_room)
 "emN" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -24256,7 +24256,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "faR" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -28766,7 +28766,7 @@
 /turf/open/floor/plating,
 /area/engineering/break_room)
 "hGN" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "hHm" = (
@@ -46722,7 +46722,7 @@
 /area/engineering/storage/tech)
 "rKv" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -50035,7 +50035,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
 "tFJ" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)

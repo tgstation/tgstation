@@ -82,7 +82,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "aA" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aB" = (
@@ -2585,7 +2585,7 @@
 /obj/structure/sign/departments/xenobio{
 	pixel_x = -32
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "pI" = (
@@ -3110,7 +3110,7 @@
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "vg" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "vk" = (
@@ -6115,7 +6115,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "VI" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -6675,7 +6675,7 @@
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "ZP" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ZR" = (

@@ -3072,7 +3072,7 @@
 /area/maintenance/starboard/fore)
 "arU" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ase" = (
@@ -3457,7 +3457,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "avr" = (
@@ -3805,7 +3805,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayT" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayU" = (
@@ -8090,7 +8090,7 @@
 "bjo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "bjK" = (
@@ -8101,7 +8101,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bjN" = (
@@ -17236,7 +17236,7 @@
 /area/maintenance/starboard)
 "clv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "clw" = (
@@ -18918,7 +18918,7 @@
 "cuH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -19331,7 +19331,7 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "cza" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "czb" = (
@@ -19550,7 +19550,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/bot,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/port)
 "cAZ" = (
@@ -20363,7 +20363,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -20688,7 +20688,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/science/xenobiology)
 "cNj" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cNk" = (
@@ -23267,7 +23267,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -24597,7 +24597,7 @@
 /area/medical/medbay/central)
 "ddl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ddm" = (
@@ -25101,7 +25101,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/port)
 "deZ" = (
@@ -28728,7 +28728,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
 "dvR" = (
@@ -31754,7 +31754,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "dJp" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dJu" = (
@@ -32180,7 +32180,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "dLd" = (
@@ -32384,7 +32384,7 @@
 /area/maintenance/port/aft)
 "dLT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dLU" = (
@@ -36438,7 +36438,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/structure/cable,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
 "eeq" = (
@@ -46727,7 +46727,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/port)
 "gWz" = (
@@ -46865,7 +46865,7 @@
 "gXL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "gXU" = (
@@ -60064,7 +60064,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "kBN" = (
@@ -66891,7 +66891,7 @@
 /area/commons/dorms)
 "moT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "moY" = (
@@ -76082,7 +76082,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "oCe" = (
@@ -87547,7 +87547,7 @@
 /turf/open/floor/iron,
 /area/science/storage)
 "rzE" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "rzM" = (
@@ -91223,7 +91223,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "sxV" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "sxX" = (
@@ -93764,7 +93764,7 @@
 /area/ai_monitored/turret_protected/ai)
 "tbn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "tbr" = (
@@ -105193,7 +105193,7 @@
 "wew" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "weA" = (
@@ -105888,7 +105888,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "woF" = (

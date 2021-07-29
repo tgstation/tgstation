@@ -12165,7 +12165,7 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "aTh" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -16532,7 +16532,7 @@
 /area/science/test_area)
 "cpp" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/airless,
 /area/mine/explored)
 "cpF" = (
@@ -21855,7 +21855,7 @@
 /area/hallway/secondary/construction/engineering)
 "eth" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "etq" = (
@@ -31030,7 +31030,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "hYK" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/item/relic,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/department/medical)
@@ -41160,7 +41160,7 @@
 /area/command/gateway)
 "lNp" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "lNy" = (
@@ -41559,7 +41559,7 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "lWe" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/item/relic,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
@@ -42707,7 +42707,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "muB" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/port/fore)
 "muI" = (
@@ -45581,7 +45581,7 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "nHG" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating/asteroid,
 /area/mine/explored)
 "nHL" = (
@@ -47844,7 +47844,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "oBZ" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -49730,7 +49730,7 @@
 /turf/open/floor/iron/white,
 /area/science/lab)
 "plQ" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
@@ -50063,7 +50063,7 @@
 /area/service/hydroponics)
 "psM" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "psZ" = (
@@ -50728,7 +50728,7 @@
 /turf/closed/wall,
 /area/cargo/sorting)
 "pED" = (
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight{
 	pixel_x = 1;
@@ -52886,7 +52886,7 @@
 /area/security/prison)
 "qyW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/loot_site_spawner,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "qyZ" = (
