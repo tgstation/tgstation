@@ -108,14 +108,23 @@
 
 	var/parsed_story = ""
 
+	var/mob/living/something = pick(something_pool)
+
+	var/list/crew_members = list()
+	for(var/mob/living/carbon/human/potential_crew_member as anything in GLOB.player_list)
+		if(potential_crew_member?.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
+			crew_members += potential_crew_member
+
+	var/mob/living/crew_member = pick(crew_members)
+
 	for(var/line in story_pieces)
 		for(var/key in extra_info)
 			var/detail = extra_info[key]
 			line = replacetext(line, "%[key]", "[detail]")
 		line = replacetext(line, "%MEMORIZER", "\improper[memorizer]")
 		line = replacetext(line, "%MOOD", pick(story_moods))
-		var/mob/living/something = pick(something_pool)
 		line = replacetext(line, "%SOMETHING", initial(something.name))
+		line = replacetext(line, "%CREWMEMBER", "the [lowertext(initial(crew_member?.mind.assigned_role.title))]")
 
 		parsed_story += "[line] "
 
