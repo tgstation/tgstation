@@ -2,6 +2,9 @@
 #define MEMORY_FILE "memories.json"
 ///name of the file that has all the saved engravings
 #define ENGRAVING_SAVE_FILE "data/engravings/[SSmapping.config.map_name]_engravings.json"
+///name of the file that has all the prisoner tattoos
+#define PRISONER_TATTOO_SAVE_FILE "data/engravings/prisoner_tattoos.json"
+
 ///how many engravings will be loaded max with persistence
 #define MAX_PERSISTENT_ENGRAVINGS 20
 
@@ -12,7 +15,7 @@
 ///moodlet set if the creature with the memory doesn't use mood (doesn't include mood line)
 #define MOODLESS_MEMORY "nope"
 
-//These defines are for what notable event happened
+//These defines are for what notable event happened. they correspond to the json lists related to the memory
 ///a memory of completing a surgery.
 #define MEMORY_SUCCESSFUL_SURGERY "surgery"
 ///a memory of priming a bomb
@@ -34,6 +37,12 @@
 
 ///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
+///A memory of a really good meal
+#define MEMORY_MEAL "meal"
+///A memory of a really good drink
+#define MEMORY_DRINK "drink"
+
+
 ///a memory of getting gibbed, an alternate to death
 #define MEMORY_GIBBING "gibbed"
 
@@ -41,7 +50,7 @@
  * These are also memories, but they're examples of what I kinda don't want to be memories. They're stuff that I had to port
  * over to this system from the old old and they don't make for good examples
  *
- * ideally these eventually get moved off this system
+ * ideally these eventually get moved off this system... though engraving your bank account is so HILARIOUSLY dumb so maybe leave that one
  */
 ///your memorized code
 #define MEMORY_ACCOUNT "account"
@@ -55,6 +64,8 @@
 #define STORY_ENGRAVING "engravings"
 ///changeling memory reading
 #define STORY_CHANGELING_ABSORB "changeling_absorb"
+///tattoos
+#define STORY_TATTOO "tattoo"
 
 //These defines are story flags for including special bits on the generated story.
 ///include a date this event happened
@@ -74,6 +85,7 @@
 #define DETAIL_BOMB_TYPE "BOMB_TYPE"
 #define DETAIL_ACCOUNT_ID "ACCOUNT_ID"
 #define DETAIL_KISSER "KISSER"
-
+#define DETAIL_FOOD "FOOD"
+#define DETAIL_DRINK "DRINK"
 
 

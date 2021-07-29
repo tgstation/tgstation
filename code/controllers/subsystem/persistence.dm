@@ -7,7 +7,10 @@ SUBSYSTEM_DEF(persistence)
 	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 
+	///loaded wall engravings + ones created in the round
 	var/list/wall_engravings = list()
+	///tattoo styles saved in the database for prisoners roundstart
+	var/list/prison_tattoos = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_maps = list()
@@ -22,6 +25,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()
 	load_wall_engravings()
+	load_prisoner_tattoos()
 	LoadTrophies()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
@@ -34,6 +38,7 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/collect_data()
 	save_wall_engravings()
+	save_prisoner_tattoos()
 	CollectTrophies()
 	CollectMaps()
 	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
@@ -94,6 +99,34 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file(ENGRAVING_SAVE_FILE)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(saved_data))
+
+/datum/controller/subsystem/persistence/proc/load_prisoner_tattoos()
+	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	var/datum/job/prisoner_datum = SSjob.name_occupations["Prisoner"]
+	if(!prisoner_datum)
+		return
+	var/iterations_allowed = prisoner_datum.spawn_positions
+
+	var/successfully_loaded_prisoner_tats = 0
+	for(var/tattoo in json)
+		if(!iterations_allowed)
+			break
+		iterations_allowed--
+
+		prisoner_tattoos += tattoo
+		successfully_loaded_prisoner_tats++
+
+	log_world("Loaded [successfully_loaded_prisoner_tats] prison tattoos")
+
+/datum/controller/subsystem/persistence/proc/save_prisoner_tattoos()
+	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(prisoner_tattoos))
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new

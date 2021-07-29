@@ -81,6 +81,44 @@
 		"You continue to peel away the story.",
 		"Your mental spines dive deeper into the memory."
 	],
+	"tattoo_foreword":[
+		"This tattoo's story is of",
+		"Inked into the skin is a story of",
+		"On the tattoo is a tale of",
+		"The tattoo depicts"
+	],
+	"tattoo_somethings":[
+		"%CREWMEMBER looms over the tattooo.",
+		"%SOMETHINGs border around the main work.",
+		"A car is driving across the tattoo.",
+		"A chinese dragon swirls around the tattoo.",
+		"A cobra stares out from the tattoo.",
+		"A frankenstein is coming to life in the tattoo.",
+		"A giant \"CHELP\" is in the background of the tattoo.",
+		"A monthperson is zipping a jumpsuit over their head in the background.",
+		"A rainbow is at the top of the tattoo.",
+		"A space kraken is holding the tattoo.",
+		"A tarantula is fighting a %CREWMEMBER on the tattoo.",
+		"A two headed space eagle soars across the tattoo.",
+		"An inked anchor weighs down the tattoo.",
+		"Holy shit, is that a %SOMETHING?",
+		"Some space politician is dancing on the side of the tattoo.",
+		"The tattoo has a drawing of a %SOMETHING that says \"I LOST THE BET\".",
+		"The tattoo has a giant flaming skull.",
+		"The tattoo has a little dish with a %SOMETHING on it.",
+		"The tattoo has weird philosophical quotes.",
+		"The tattoo is bordered by a swirling space dragon.",
+		"The tattoo says something in nekomimetic."
+	],
+	"tattoo_styles":[
+		"The tattoo is in a mad max style.",
+		"The tattoo is styled to look cyberpunk.",
+		"The tattoo looks cartoony.",
+		"The tattoo looks like it was done by an ameteur.",
+		"The tattoo looks professional.",
+		"This tattoo is Nanotrasen approved",
+		"This tattoo is Syndicate approved"
+	],
 	"allergy_names":[
 		"The %ALLERGY_TYPE allergy of %MEMORIZER"
 	],
@@ -219,5 +257,41 @@
 	"kiss_moods":[
 		"%VICTIM %MOOD as the kiss lands on their cheek.",
 		"%VICTIM %MOOD as it happens."
+	],
+	"quirk_drug_names":[
+		"%MEMORIZER's smoking problem"
+	],
+	"quirk_drug_starts":[
+		"%MEMORIZER fiending for some %FAV_BRAND ciggies.",
+		"%FAV_BRAND cigarettes being plundered by %MEMORIZER.",
+		"%MEMORIZER buying a box of %FAV_BRAND nicotine sticks."
+	],
+	"quirk_drug_moods":[
+		"%MEMORIZER %MOOD as they light another up."
+	],
+	"meal_names":[
+		"a delicious %FOOD %MEMORIZER ate"
+	],
+	"meal_starts":[
+		"%MEMORIZER enjoying an incredibly good %FOOD.",
+		"%MEMORIZER producing a slice of life anime reaction to eating %FOOD.",
+		"%FOOD leaving a long lasting impression on %MEMORIZER.",
+		"%FOOD changing %MEMORIZER's outlook on food.",
+		"%FOOD is leaving %MEMORIZER round and full."
+	],
+	"meal_moods":[
+		"%MEMORIZER %MOOD as they take another bite."
+	],
+	"drink_names":[
+		"a delicious %DRINK %MEMORIZER consumed"
+	],
+	"drink_starts":[
+		"%MEMORIZER enjoying an incredibly good %DRINK.",
+		"%MEMORIZER slurping some tasty %DRINK.",
+		"%DRINK leaving a long lasting impression on %MEMORIZER.",
+		"%DRINK changing %MEMORIZER's outlook on classy drinking."
+	],
+	"drink_moods":[
+		"%MEMORIZER %MOOD as they take another sip."
 	]
 }

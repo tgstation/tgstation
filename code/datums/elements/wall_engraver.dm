@@ -52,4 +52,6 @@
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
 	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED))
+	///while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
+	SSpersistence.prison_tattoos += memory_to_engrave.generate_story(STORY_TATTOO)
 	///REMOVE THE MEMORY ONCE ENGRAVED
