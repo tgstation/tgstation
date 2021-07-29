@@ -5,25 +5,22 @@
 	///name of the memory the user sees
 	var/name
 	///job of the person performing the event
-	var/performer
+	var/memorizer
 	///the action done to the target, see memory.dm in _DEFINES
 	var/action
-	///whatever the action was done to, if it's a person it's their job name!
-	var/target
-
-	///extra information used in the memories to more accurately describe what happened
+	///extra information used in the memories to more accurately describe what happened. Assoc list of key -> string identifying what kind of info it is, value is an atom or string identifying the detail.
 	var/list/extra_info
 	///mood of the person performing the event when they did it. changes the description.
 	var/mood
 
-/datum/memory/New(name, performer, action, target, extra_info, mood)
+/datum/memory/New(memorizer, action, extra_info, mood)
 	. = ..()
-	src.name = name
-	src.performer = performer
+	src.memorizer = memorizer
 	src.action = action
-	src.target = target
 	src.extra_info = extra_info
 	src.mood = mood
+
+	generate_memory_name()
 
 /datum/memory/proc/generate_story(story_type, story_flags)
 	var/list/story_pieces = list()
@@ -82,10 +79,16 @@
 		switch(mood)
 			if(MOOD_LEVEL_HAPPY4 to MOOD_LEVEL_HAPPY2)
 				story_moods = strings(MEMORY_FILE, "happy")
+				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]happy")
 			if(MOOD_LEVEL_HAPPY2-1 to MOOD_LEVEL_SAD2+1)
 				story_moods = strings(MEMORY_FILE, "neutral")
+				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]neutral")
 			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD4)
 				story_moods = strings(MEMORY_FILE, "sad")
+				if("[action]sad" in GLOB.string_cache[MEMORY_FILE])
+					story_moods += strings(MEMORY_FILE, "[action]sad")
 
 	//storybuilding
 
@@ -103,19 +106,32 @@
 
 	//replacements
 
-	var/info_count = 0
+	var/parsed_story = ""
 
 	for(var/line in story_pieces)
-		line = replacetext(line, "%PERFORMER", "\improper[performer]")
-		line = replacetext(line, "%TARGET", target)
+		for(var/key in extra_info)
+			var/detail = extra_info[key]
+			line = replacetext(line, "%[key]", "[detail]")
+		line = replacetext(line, "%MEMORIZER", "\improper[memorizer]")
 		line = replacetext(line, "%MOOD", pick(story_moods))
 		var/mob/living/something = pick(something_pool)
 		line = replacetext(line, "%SOMETHING", initial(something.name))
-		for(var/info in extra_info)
-			info_count++
-			line = replacetext(line, "%INFO[info_count]", extra_info[info_count])
+
+		parsed_story += "[line] "
+
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
-		story_pieces.Add("This took place in [GLOB.year_integer+540].")
+		parsed_story += "This took place in [GLOB.year_integer+540]."
 
-	return story_pieces.Join(" ")
+	return parsed_story
+
+/datum/memory/proc/generate_memory_name()
+	var/names = strings(MEMORY_FILE, action + "_names")
+	var/line = pick(names)
+	line = replacetext(line, "%MEMORIZER", "\improper[memorizer]")
+	for(var/key in extra_info)
+		var/detail = extra_info[key]
+		line = replacetext(line, "%[key]", "[detail]")
+	name = line
+
+

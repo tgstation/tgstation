@@ -30,7 +30,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/element/wall_engraver/proc/try_chisel(obj/item/item, turf/closed/wall, mob/living/user)
-	if(istype(wall) || !user.mind)
+	if(!istype(wall) || !user.mind)
 		return
 	if(!(wall.turf_flags & ENGRAVABLE))
 		user.balloon_alert(user, "wall cannot be engraved!")
@@ -39,13 +39,15 @@
 		user.balloon_alert(user, "nothing memorable to engrave!")
 		return
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")
+	if(!memory_to_engrave)
+		return
 	if(!user.Adjacent(wall))
 		return
 	item.add_fingerprint(user)
 	playsound(item, item.hitsound, 30, TRUE, -1)
 	user.do_attack_animation(wall)
 	user.balloon_alert(user, "engraving wall...")
-	if(!do_after(user, 10 SECONDS, target = wall))
+	if(!do_after(user, 1 SECONDS, target = wall))
 		return
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
