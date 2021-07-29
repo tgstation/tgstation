@@ -2,6 +2,28 @@
 	name = "entertainment loot spawner"
 	desc = "It's time to paaaaaarty!"
 
+/obj/effect/spawner/random/entertainment/musical_instrument
+	name = "musical instrument spawner"
+	// enable the music icons later after PR gets merged - 7/29/2021
+	//icon = 'icons/obj/musician.dmi'
+	//icon_state = "random_instrument"
+	loot = list(
+		/obj/item/instrument/violin = 5,
+		/obj/item/instrument/banjo = 5,
+		/obj/item/instrument/guitar = 5,
+		/obj/item/instrument/eguitar = 5,
+		/obj/item/instrument/glockenspiel = 5,
+		/obj/item/instrument/accordion = 5,
+		/obj/item/instrument/trumpet = 5,
+		/obj/item/instrument/saxophone = 5,
+		/obj/item/instrument/trombone = 5,
+		/obj/item/instrument/recorder = 5,
+		/obj/item/instrument/harmonica = 5,
+		/obj/item/instrument/bikehorn = 2,
+		/obj/item/instrument/violin/golden = 2,
+		/obj/item/instrument/musicalmoth = 1,
+	)
+
 /obj/effect/spawner/random/entertainment/gambling
 	name = "gambling valuables spawner"
 	loot = list(
