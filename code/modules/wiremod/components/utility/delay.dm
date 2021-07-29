@@ -22,12 +22,6 @@
 
 	output = add_output_port("Result", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/delay/Destroy()
-	output = null
-	trigger = null
-	delay_amount = null
-	return ..()
-
 /obj/item/circuit_component/delay/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

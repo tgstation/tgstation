@@ -44,21 +44,6 @@
 	failed = add_output_port("Failed", PORT_TYPE_SIGNAL)
 	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/pathfind/Destroy()
-	input_X = null
-	input_Y = null
-	id_card = null
-
-	output = null
-	finished = null
-	failed = null
-	reason_failed = null
-
-	path = null
-	old_dest = null
-	next_turf = null
-	return ..()
-
 /obj/item/circuit_component/pathfind/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

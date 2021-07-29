@@ -872,3 +872,61 @@
   timothymtorres, SomeoneYouProbablyKnow:
   - expansion: Added a referee costume to autodrope and costume spawners
   - imageadd: Added referee costume
+2021-07-29:
+  EuSouAFazer:
+  - bugfix: Removed the duplicate QM stamp on Icebox
+  Fikou:
+  - admin: default instakill rifle doesnt delete itself
+  Ghilker:
+  - bugfix: HFR now properly take damage when overfilled with fuel
+  Ghommie:
+  - bugfix: Fixes ridden skateboards crashing back-to-back when bumping a dense atom
+      while another is behind them.
+  Greniza:
+  - bugfix: prisoner transport bags can now be cinched properly
+  - bugfix: syndicate prisoner transport bags now expel the expected amount of gas
+      due to an occupant's exhale
+  - spellcheck: makes cinching a PTB have proper pronouns according to an onlooker
+  Improvedname:
+  - balance: Construction bags fit once more in your pockets
+  Itseasytosee:
+  - qol: ghosts will no longer get fake virus alerts
+  Melbert:
+  - bugfix: Some things that wouldn't dispense themselves from smartfridges now will
+      properly give themselves up. Some examples include Roses, Nettles / Deathnettles,
+      and Salad of Edens.
+  - bugfix: The mapped sprite for GAGS Lizard Plushes works, now. Mappers rejoice.
+  - admin: Tray planted kudzu will now log in investigate -> botany instead of its
+      own file.
+  Mey-Ha-Zah, Fikou:
+  - imageadd: new sprites for the ash walker egg
+  Mothblocks:
+  - rscdel: Nanites have been removed.
+  Shroopy:
+  - bugfix: robots now work properly
+  Thunder12345:
+  - code_imp: Removes all misc files/folders from the projectiles module
+  Wallem:
+  - bugfix: Flowers now have a Natrual Insecticide gene which protects them from decomposition
+      upon harvest.
+  Watermelon914:
+  - expansion: Adds the module duplicator that allows people to duplicate their module
+      components so that they don't have to recreate the entire code again.
+  - admin: Added the ability to save/load integrated circuits.
+  - bugfix: Fixed carps being given orders without a friend via radial menu.
+  - bugfix: Fixed sentient carps being unridable because of the ai datum.
+  - bugfix: Fixed the launchpad usb connection not working with null x/y offset inputs.
+  itseasytosee:
+  - soundadd: There are now sounds for adjusting the pressure on a pneumatic cannon.
+  - qol: attacking disembodied brains now has animations and sounds.
+  - bugfix: constructs examine text color matches the rest of their theme.
+  - qol: Your gun will now actually spin around in your hand while gun-spinning
+  - bugfix: Certain non-magic ranged weapons will no longer "appear to have a magic
+      crystal installed"
+  - qol: Adds some on examine instructions for constructing a turret
+  tf-4:
+  - qol: dash items like the ninja katana now give a balloon alert instead of a chat
+      message
+  - bugfix: Meta medbay now has all its areas set correctly
+  timothymtorres:
+  - bugfix: Fixed spectral instruments spawn probability

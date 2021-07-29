@@ -15,20 +15,39 @@
 	/// The beam connecting the USB cable to the machine
 	var/datum/beam/usb_cable_beam
 
+	/// The current physical object that the beam is connected to and listens to.
+	var/atom/movable/physical_object
+
 /datum/component/usb_port/Initialize(list/circuit_component_types)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	circuit_components = list()
 
-	for(var/circuit_component_type in circuit_component_types)
-		var/obj/item/circuit_component/circuit_component = new circuit_component_type(null)
-		circuit_components += circuit_component
+	set_circuit_components(circuit_component_types)
+
+/datum/component/usb_port/proc/set_circuit_components(list/components)
+	var/should_register = FALSE
+	if(length(circuit_components))
+		UnregisterFromParent()
+		should_register = TRUE
+		QDEL_LIST(circuit_components)
+
+	for(var/circuit_component in components)
+		var/obj/item/circuit_component/component = circuit_component
+		if(ispath(circuit_component))
+			component = new circuit_component(null)
+		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		circuit_components += component
+
+	if(should_register)
+		RegisterWithParent()
 
 /datum/component/usb_port/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
@@ -38,13 +57,35 @@
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_EXAMINE,
+		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.unregister_usb_parent(parent)
 
 	unregister_circuit_signals()
+	unregister_physical_signals()
 	attached_circuit = null
+
+/datum/component/usb_port/proc/save_component(datum/source, list/objects)
+	SIGNAL_HANDLER
+	objects += parent
+
+/datum/component/usb_port/proc/on_load(datum/source, obj/item/integrated_circuit/circuit, list/components)
+	SIGNAL_HANDLER
+	var/list/components_in_list = list()
+	for(var/obj/item/circuit_component/component as anything in components)
+		components_in_list += component.type
+
+	for(var/obj/item/circuit_component/component as anything in circuit_components)
+		if(component.type in components_in_list)
+			continue
+		components += component.type
+	set_circuit_components(components)
+	var/obj/item/usb_cable/cable = new(circuit.drop_location())
+	cable.attached_circuit = circuit
+
+	on_atom_usb_cable_try_attach(src, cable, null)
 
 /datum/component/usb_port/Destroy()
 	QDEL_LIST(circuit_components)
@@ -62,19 +103,22 @@
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_CIRCUIT_SHELL_REMOVED,
 		COMSIG_PARENT_QDELETING,
+		COMSIG_CIRCUIT_SET_SHELL,
 	))
 
-	var/shell = attached_circuit.shell
-	if (!isnull(shell))
-		UnregisterSignal(shell, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(shell, COMSIG_PARENT_EXAMINE)
+/datum/component/usb_port/proc/unregister_physical_signals()
+	if (isnull(physical_object))
+		return
+
+	UnregisterSignal(physical_object, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_PARENT_EXAMINE,
+	))
 
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		circuitboard.add_component(component)
 		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
-
-	return
 
 /datum/component/usb_port/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -95,15 +139,18 @@
 	var/atom/atom_parent = parent
 
 	if (!isnull(attached_circuit))
-		atom_parent.balloon_alert(user, "usb already connected")
+		if(user)
+			atom_parent.balloon_alert(user, "usb already connected")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (isnull(connecting_cable.attached_circuit))
-		connecting_cable.balloon_alert(user, "connect to a shell first")
+		if(user)
+			connecting_cable.balloon_alert(user, "connect to a shell first")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (!IN_GIVEN_RANGE(connecting_cable.attached_circuit, parent, USB_CABLE_MAX_RANGE))
-		connecting_cable.balloon_alert(user, "too far away")
+		if(user)
+			connecting_cable.balloon_alert(user, "too far away")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	usb_cable_ref = WEAKREF(connecting_cable)
@@ -111,16 +158,37 @@
 
 	connecting_cable.forceMove(attached_circuit)
 	attach_circuit_components(attached_circuit)
-	attached_circuit.interact(user)
+	if(user)
+		attached_circuit.interact(user)
 
-	usb_cable_beam = atom_parent.Beam(attached_circuit.shell, "usb_cable_beam", 'icons/obj/wiremod.dmi')
+	var/new_physical_object = attached_circuit.shell
+	if(!new_physical_object)
+		new_physical_object = attached_circuit
 
 	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, .proc/on_circuit_shell_removed)
 	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_deleting)
-	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(attached_circuit.shell, COMSIG_PARENT_EXAMINE, .proc/on_examine_shell)
+	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, .proc/on_set_shell)
+	set_physical_object(new_physical_object)
 
 	return COMSIG_USB_CABLE_ATTACHED
+
+/datum/component/usb_port/proc/set_physical_object(atom/movable/new_physical_object)
+	if(physical_object)
+		unregister_physical_signals()
+	if(usb_cable_beam)
+		QDEL_NULL(usb_cable_beam)
+
+	var/atom/atom_parent = parent
+	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/wiremod.dmi')
+
+	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(new_physical_object, COMSIG_PARENT_EXAMINE, .proc/on_examine_shell)
+	physical_object = new_physical_object
+
+// Adds support for loading circuits without shells but with usb cables, or loading circuits with shells because the shells might not load first.
+/datum/component/usb_port/proc/on_set_shell(datum/source, atom/movable/new_shell)
+	SIGNAL_HANDLER
+	set_physical_object(new_shell)
 
 /datum/component/usb_port/proc/on_moved()
 	SIGNAL_HANDLER
@@ -157,11 +225,13 @@
 		component.moveToNullspace()
 
 	unregister_circuit_signals()
+	unregister_physical_signals()
 
 	var/atom/atom_parent = parent
 	usb_cable.forceMove(atom_parent.drop_location())
 	usb_cable.balloon_alert_to_viewers("snap")
 
+	physical_object = null
 	attached_circuit = null
 	usb_cable_ref = null
 

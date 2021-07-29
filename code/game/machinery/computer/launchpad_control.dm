@@ -33,11 +33,24 @@
 
 	var/obj/machinery/computer/launchpad/attached_console
 
+/obj/item/circuit_component/bluespace_launchpad/get_ui_notices()
+	. = ..()
+	var/current_launchpad = launchpad_id.input_value
+	if(isnull(current_launchpad))
+		return
+
+	var/obj/machinery/launchpad/the_pad = attached_console.launchpads[current_launchpad]
+	if(isnull(the_pad))
+		return
+
+	. += create_ui_notice("Minimum Range: [-the_pad.range]", "orange", "minus")
+	. += create_ui_notice("Maximum Range: [the_pad.range]", "orange", "plus")
+
 /obj/item/circuit_component/bluespace_launchpad/Initialize()
 	. = ..()
-	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE)
-	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER, FALSE)
-	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER, FALSE)
+	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE, default = 1)
+	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER)
+	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER)
 	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
 	retrieve_trigger = add_input_port("Retrieve", PORT_TYPE_SIGNAL)
 
@@ -45,18 +58,6 @@
 	retrieved = add_output_port("Retrieved", PORT_TYPE_SIGNAL)
 	why_fail = add_output_port("Fail reason", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/bluespace_launchpad/Destroy()
-	launchpad_id = null
-	x_pos = null
-	y_pos = null
-	send_trigger = null
-	retrieve_trigger = null
-	sent = null
-	retrieved = null
-	on_fail = null
-	why_fail = null
-	return ..()
 
 /obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -78,35 +79,30 @@
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/current_launchpad = launchpad_id.input_value
-	if(isnull(current_launchpad))
+	if(!launchpad_id.input_value)
 		return
 
-	var/obj/machinery/launchpad/the_pad = attached_console.launchpads[current_launchpad]
+	var/obj/machinery/launchpad/the_pad = KEYBYINDEX(attached_console.launchpads, launchpad_id.input_value)
 	if(isnull(the_pad))
-		return
-
-	var/x_dest = x_pos.input_value
-	if(isnull(x_dest))
-		return
-
-	var/y_dest = y_pos.input_value
-	if(isnull(y_dest))
-		return
-
-	if(x_dest > the_pad.range || y_dest > the_pad.range)
-		why_fail.set_output("Cannot go that far! Current maximum reach: [the_pad.range]")
+		why_fail.set_output("Invalid launchpad selected!")
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/checks = attached_console.teleport_checks(the_pad)
+	the_pad.set_offset(x_pos.input_value, y_pos.input_value)
 
+	if(COMPONENT_TRIGGERED_BY(port, x_pos))
+		x_pos.set_input(the_pad.x_offset, FALSE)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(port, y_pos))
+		y_pos.set_input(the_pad.y_offset, FALSE)
+		return
+
+	var/checks = attached_console.teleport_checks(the_pad)
 	if(!isnull(checks))
 		why_fail.set_output(checks)
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
-
-	the_pad.set_offset(x_dest, y_dest)
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
