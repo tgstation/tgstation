@@ -20,7 +20,12 @@
 
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/lootdrop/proc/spawn_loot(lootcount_override)
+	var/list/spawn_locations = get_spawn_locations(scatter_radius)
 	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
+
+	if(spawn_all_loot)
+		lootcount = INFINITY
+		lootdoubles = FALSE
 
 	if(loot?.len)
 		var/loot_spawned = 0
@@ -30,9 +35,13 @@
 				lootspawn = pickweight(lootspawn)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
+			if(lootspawn && (scatter_radius == 0 || spawn_locations.len))
+				var/turf/spawn_loc = loc
+				if(scatter_radius > 0)
+					spawn_loc = pick_n_take(spawn_locations)
 
-			if(lootspawn)
-				var/atom/movable/spawned_loot = new lootspawn(loc)
+				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
+
 				if (!fan_out_items)
 					if (pixel_x != 0)
 						spawned_loot.pixel_x = pixel_x
