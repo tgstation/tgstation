@@ -31,30 +31,28 @@
 		"seems sad"
 	],
 	"engravings_forewords":[
-		"Depicted on the engraving is of",
+		"Depicted on the engraving is a depiction of",
 		"Embedded in the wall is a story of",
-		"In the engraving is of",
+		"In the engraving is displayed the tale of",
 		"On the wall, you see",
 		"This piece depicts"
 	],
 	"engravings_somethings":[
-		"%MEMORIZER can also be seen cringing at the sight of %SOMETHING.",
-		"%MEMORIZER can also be seen cringing at the sight of %TARGET.",
+		"%MEMORIZER can also be seen cringing at the sight of a %SOMETHING.",
 		"%MEMORIZER is being arrested, clutching a %SOMETHING.",
 		"%MEMORIZER is doing a sick ass backflip!",
 		"%MEMORIZER is locked inside of an escape pod.",
-		"%MEMORIZER is performing a t-pose, scaring %TARGET.",
 		"%MEMORIZER is secretly admiring a %SOMETHING.",
 		"%MEMORIZER is slightly floating above the ground.",
 		"%MEMORIZER is standing on atop a soapbox.",
-		"%SOMETHING is being worshipped by %MEMORIZER.",
-		"%SOMETHING is etched so crudely you'd think a three-year-old did it.",
-		"%TARGET has a cartoony thought bubble.",
-		"%TARGET is lying on the floor, defeated by %SOMETHING.",
+		"a %SOMETHING is being worshipped by %MEMORIZER.",
+		"a %SOMETHING is etched so crudely you'd think a three-year-old did it.",
+		"%MEMORIZER has a cartoony thought bubble.",
+		"%MEMORIZER is lying on the floor, defeated by %SOMETHING.",
 		"A %SOMETHING stands in the background.",
 		"A crowd is cheering in the background.",
 		"A heavily pixelated %SOMETHING is sitting there, ominously.",
-		"A political comic starring %SOMETHING.",
+		"A political comic starring a %SOMETHING.",
 		"The bottom left has been signed by the author.",
 		"The engraving has repeating text behind the foreground.",
 		"The top part is dominated by a %SOMETHING.",
@@ -80,7 +78,7 @@
 		"The %ALLERGY_TYPE allergy of %MEMORIZER"
 	],
 	"allergy_starts":[
-		"%MEMORIZER sneezes from coming in contact with %ALLERGY_TYPE."
+		"%MEMORIZER sneezing after coming into contact with %ALLERGY_TYPE."
 	],
 	"allergy_moods":[
 		"%MEMORIZER %MOOD as they wipe their nose."
@@ -89,7 +87,7 @@
 		"The bank ID of %MEMORIZER"
 	],
 	"account_starts":[
-		"%MEMORIZER's flexes their last brain cells, proudly showing the lucky numbers %ACCOUNT_ID.",
+		"%MEMORIZER flexing their last brain cells, proudly showing the lucky numbers %ACCOUNT_ID.",
 		"%ACCOUNT_ID. The numbers mason, what do they mean!?"
 	],
 	"account_moods":[
@@ -115,9 +113,9 @@
 		"The arming of %BOMB_TYPE by %MEMORIZER"
 	],
 	"bomb_starts":[
-		"%MEMORIZER presses an ominous button, and %BOMB begins beeping.",
+		"%MEMORIZER pressing an ominous button, causing %BOMB to begin beeping.",
 		"%MEMORIZER slapping down a %BOMB_TYPE.",
-		"%BOMB is armed by %MEMORIZER."
+		"%BOMB being armed by %MEMORIZER."
 	],
 	"bomb_moods":[
 		"%MEMORIZER %MOOD and begins to walk away from %BOMB_TYPE.",
@@ -132,23 +130,22 @@
 		"The %HIGHFIVE_TYPE between %MEMORIZER and %VICTIM"
 	],
 	"highfive_starts":[
-		"%MEMORIZER and %VICTIM are having a legendary %HIGHFIVE_TYPE.",
-		"%MEMORIZER is giving %VICTIM a %HIGHFIVE_TYPE.",
-		"%VICTIM and %MEMORIZER are giving each other a %HIGHFIVE_TYPE."
+		"%MEMORIZER and %VICTIM having a a legendary %HIGHFIVE_TYPE.",
+		"%MEMORIZER giving %VICTIM a %HIGHFIVE_TYPE.",
+		"%VICTIM and %MEMORIZER giving each other a %HIGHFIVE_TYPE."
 	],
 	"highfive_moods":[
-		"%MEMORIZER %MOOD as the %INFO1 connects.",
+		"%MEMORIZER %MOOD as the %HIGHFIVE_TYPE connects.",
 		"%MEMORIZER %MOOD at all the compatriotism going on.",
-		"What a %INFO1! %MEMORIZER %MOOD.",
+		"What a %HIGHFIVE_TYPE! %MEMORIZER %MOOD.",
 		"Wow! %MEMORIZER %MOOD!"
 	],
 	"borged_names":[
 		"The borging of %VICTIM"
 	],
 	"borged_starts":[
-		"%MEMORIZER and %TARGET are having a legendary %INFO1.",
-		"%MEMORIZER is giving %TARGET a %INFO1.",
-		"%TARGET and %MEMORIZER have completed a friendly %INFO1."
+		"%VICTIM havign their brain put into a robot.",
+		"%VICTIM getting turned into a bucket of bolts."
 	],
 	"borged_moods":[
 		"There shouldn't be any; you're a brain at this point!"
@@ -157,10 +154,10 @@
 		"The death of %VICTIM"
 	],
 	"death_starts":[
-		"%VICTIM's heart stops beating at %TIME_OF_DEATH.",
-		"%VICTIM has perished at %TIME_OF_DEATH.",
-		"at %TIME_OF_DEATH, %VICTIM has left the land of the living.",
-		"%VICTIM seizes up and falls limp, their eyes dead and lifeless..."
+		"%VICTIM's heart stopping at %TIME_OF_DEATH.",
+		"%VICTIM having perished at %TIME_OF_DEATH.",
+		"The death of %VICTIM at %TIME_OF_DEATH.",
+		"%VICTIM seizing up and falling limp, their eyes dead and lifeless..."
 	],
 	"death_moods":[
 		"There shouldn't be any; this is set to be a moodless memory!"
@@ -169,9 +166,9 @@
 		"The creaming of %VICTIM"
 	],
 	"creampied_starts":[
-		"%VICTIM's face is covered in cream at %INFO1.",
-		"%VICTIM has taken a creampie at %INFO1.",
-		"at %WHERE, %VICTIM became a cream-covered mess."
+		"%VICTIM's face being covered in cream at %WHERE.",
+		"%VICTIM getting creampied at %WHERE.",
+		"the area of %WHERE, where %VICTIM became a cream-covered mess."
 	],
 	"creampied_moods":[
 		"%VICTIM %MOOD as the cream drips off their face.",
@@ -180,16 +177,15 @@
 	],
 	"slipped_names":[
 		"The slipping of %VICTIM"
-
 	],
 	"slipped_starts":[
-		"%MEMORIZER tumbled right over %WHAT_BY.",
-		"%MEMORIZER couldn't keep standing when faced with %WHAT_BY.",
-		"the perilous %WHAT_BY took %MEMORIZER down a notch."
+		"%VICTIM tumbling right over %WHAT_BY.",
+		"%VICTIM not being able to keep standing when faced with %WHAT_BY.",
+		"the perilous %WHAT_BY which took %VICTIM down a notch."
 	],
 	"slipped_moods":[
-		"%MEMORIZER %MOOD as they crawl up from the ground.",
-		"%MEMORIZER %MOOD while on the ground."
+		"%VICTIM %MOOD as they crawl up from the ground.",
+		"%VICTIM %MOOD while on the ground."
 	],
 	"slipped_sad":[
 		"doesn't even want to get up and looks depressed"

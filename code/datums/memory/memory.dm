@@ -106,6 +106,8 @@
 
 	//replacements
 
+	var/parsed_story = ""
+
 	for(var/line in story_pieces)
 		for(var/key in extra_info)
 			var/detail = extra_info[key]
@@ -115,11 +117,13 @@
 		var/mob/living/something = pick(something_pool)
 		line = replacetext(line, "%SOMETHING", initial(something.name))
 
+		parsed_story += "[line] "
+
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
-		story_pieces.Add("This took place in [GLOB.year_integer+540].")
+		parsed_story += "This took place in [GLOB.year_integer+540]."
 
-	return story_pieces.Join(" ")
+	return parsed_story
 
 /datum/memory/proc/generate_memory_name()
 	var/names = strings(MEMORY_FILE, action + "_names")
