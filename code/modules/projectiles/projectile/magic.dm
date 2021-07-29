@@ -164,7 +164,7 @@
 	if(!istype(M) || istype(M, /mob/living/simple_animal/hostile/mimic/copy) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	if(istype(M, /mob/living/silicon/pai))
+	if(ispAI(M))
 		var/mob/living/silicon/pai/Bot = M
 		var/holochassis = pick(Bot.possible_chassis)
 		Bot.set_holochassis(holochassis)
