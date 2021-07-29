@@ -27,8 +27,6 @@
 	var/list/active_overlays = list()
 	var/list/options_map
 
-	var/overlay_id
-
 /obj/item/circuit_component/object_overlay/Initialize()
 	. = ..()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
@@ -38,10 +36,6 @@
 
 	image_pixel_x = add_input_port("X-Axis Shift", PORT_TYPE_NUMBER)
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
-
-	set_option("Corners (Blue)")
-	overlay_id = GLOB.object_overlay_id
-	GLOB.object_overlay_id += 1
 
 /obj/item/circuit_component/object_overlay/Destroy()
 	for(var/active_overlay in active_overlays)
@@ -121,7 +115,7 @@
 
 	var/alt_appearance = WEAKREF(target_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
-		"object_overlay_[overlay_id]",
+		"object_overlay_[REF(src)]",
 		cool_overlay,
 		owner,
 	))
