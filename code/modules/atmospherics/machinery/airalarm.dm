@@ -918,58 +918,22 @@
 	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/air_alarm/populate_options()
-	var/static/component_options = list(
+	var/static/list/component_options = list(
 		"Pressure",
-		"Temperature",
-		"Oxygen",
-		"Nitrogen",
-		"Carbon Dioxide",
-		"Miasma",
-		"Plasma",
-		"Nitrous Oxide",
-		"BZ",
-		"Hypernoblium",
-		"Water Vapor",
-		"Tritium",
-		"Stimulum",
-		"Nitryl",
-		"Pluoxium",
-		"Freon",
-		"Hydrogen",
-		"Healium",
-		"Proto Nitrate",
-		"Zauker",
-		"Helium",
-		"Antinoblium",
-		"Halon"
+		"Temperature"
 	)
 	options = component_options
 
-	var/static/options_to_key = list(
+	var/static/list/options_to_key = list(
 		"Pressure" = "pressure",
-		"Temperature" = "temperature",
-		"Oxygen" = /datum/gas/oxygen,
-		"Nitrogen" = /datum/gas/nitrogen,
-		"Carbon Dioxide" = /datum/gas/carbon_dioxide,
-		"Miasma" = /datum/gas/miasma,
-		"Plasma" = /datum/gas/plasma,
-		"Nitrous Oxide" = /datum/gas/nitrous_oxide,
-		"BZ" = /datum/gas/bz,
-		"Hypernoblium" = /datum/gas/hypernoblium,
-		"Water Vapor" = /datum/gas/water_vapor,
-		"Tritium" = /datum/gas/tritium,
-		"Stimulum" = /datum/gas/stimulum,
-		"Nitryl" = /datum/gas/nitryl,
-		"Pluoxium" = /datum/gas/pluoxium,
-		"Freon" = /datum/gas/freon,
-		"Hydrogen" = /datum/gas/hydrogen,
-		"Healium" = /datum/gas/healium,
-		"Proto Nitrate" = /datum/gas/proto_nitrate,
-		"Zauker" = /datum/gas/zauker,
-		"Helium" = /datum/gas/helium,
-		"Antinoblium" = /datum/gas/antinoblium,
-		"Halon" = /datum/gas/halon
+		"Temperature" = "temperature"
 	)
+
+	for(var/gas_type in subtypesof(/datum/gas))
+		var/datum/gas/new_gas = new gas_type()
+		component_options.Add(new_gas.name)
+		options_to_key[new_gas.name] = gas_type
+		qdel(new_gas)
 
 	options_map = options_to_key
 
