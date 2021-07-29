@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(persistence)
 			break
 		iterations_allowed--
 
-		prisoner_tattoos += tattoo
+		prison_tattoos += tattoo
 		successfully_loaded_prisoner_tats++
 
 	log_world("Loaded [successfully_loaded_prisoner_tats] prison tattoos")
@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_prisoner_tattoos()
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(prisoner_tattoos))
+	WRITE_FILE(json_file, json_encode(prison_tattoos))
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new

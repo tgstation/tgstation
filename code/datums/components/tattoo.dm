@@ -28,6 +28,7 @@
 
 /datum/component/tattoo/Destroy(force, silent)
 	. = ..()
+	var/obj/item/bodypart/tatted_limb = parent
 	if(tatted_limb.owner)
 		clear_tatted_owner(tatted_limb.owner)
 	parent.RemoveElement(/datum/element/art/commoner)
@@ -53,7 +54,7 @@
 	SIGNAL_HANDLER
 
 	var/obj/item/bodypart/tatted_limb = parent
-	for(var/obj/item/clothing/possibly_blocking in H.get_equipped_items())
+	for(var/obj/item/clothing/possibly_blocking in bodypart_owner.get_equipped_items())
 		if(possibly_blocking.body_parts_covered & tatted_limb.body_part) //check to see if something is obscuring their tattoo.
 			return
 
