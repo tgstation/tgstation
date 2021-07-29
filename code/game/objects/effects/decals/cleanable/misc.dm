@@ -264,13 +264,25 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spaceants"
 	beauty = -150
+	var/ant_bite_damage
+	var/ant_volume
+	var/is_caltrop = FALSE
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
 	. = ..()
 	var/scale = (rand(6, 8) / 10) + (rand(2, 5) / 50)
 	transform = matrix(transform, scale, scale, MATRIX_SCALE)
 	setDir(pick(GLOB.cardinals))
-	reagents.add_reagent(/datum/reagent/ants, rand(2, 5))
+	ant_volume = rand(3, 5)
+	reagents.add_reagent(/datum/reagent/ants, ant_volume)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
-	AddElement(/datum/element/caltrop, min_damage = 0.2, max_damage = 1, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+	update_ant_damage()
+
+/obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
+	if(is_caltrop)
+		RemoveElement(/datum/element/caltrop, min_damage = 0.5, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+	ant_volume += spilled_ants
+	ant_bite_damage = min(10, round((ant_volume * 0.2),0.1))
+	AddElement(/datum/element/caltrop, min_damage = 0.5, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+	is_caltrop = TRUE
