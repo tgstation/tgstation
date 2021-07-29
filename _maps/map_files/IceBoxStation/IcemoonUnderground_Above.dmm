@@ -3977,6 +3977,9 @@
 /obj/effect/loot_site_spawner,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"vj" = (
+/turf/open/openspace/icemoon/keep_below,
+/area/icemoon/underground/unexplored/rivers)
 "vk" = (
 /obj/structure/table,
 /obj/item/paper,
@@ -4416,6 +4419,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"yl" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/unexplored/rivers)
 "yr" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp)
@@ -5166,6 +5172,10 @@
 	dir = 1
 	},
 /area/hallway/secondary/service)
+"Dk" = (
+/obj/structure/fence/door,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
 "Dn" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -5405,6 +5415,12 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
+"EK" = (
+/obj/structure/fence/end{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
 "EL" = (
 /obj/machinery/shower{
 	pixel_y = 22
@@ -5435,6 +5451,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"ER" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/nanotrasen,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
 "EV" = (
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/fore)
@@ -6067,6 +6090,12 @@
 /obj/structure/table,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"Jf" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
 "Ji" = (
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -8200,6 +8229,13 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"Vl" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/structure/sign/nanotrasen,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "Vo" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -8585,6 +8621,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"Yc" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
 "Yd" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -39398,9 +39437,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+vj
+vj
+vj
 ak
 ak
 ak
@@ -39654,13 +39693,13 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+vj
+yl
+vj
+vj
+vj
+vj
+vj
 ak
 ak
 ak
@@ -39911,15 +39950,15 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Yc
+Yc
+Yc
+Yc
+Yc
+vj
+vj
+vj
+vj
 ak
 ak
 ak
@@ -40167,17 +40206,17 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+EK
+Yc
+Yc
+yl
+Yc
+Yc
+Yc
+Yc
+vj
+vj
+vj
 ak
 ak
 ak
@@ -40424,18 +40463,18 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+ER
+Yc
+Yc
+Yc
+Yc
+Yc
+Yc
+Yc
+Yc
+vj
+vj
+vj
 ak
 ak
 ak
@@ -40681,18 +40720,18 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+Dk
+Yc
+Yc
+Yc
 Ql
 Ql
 Ql
 Ql
 Ql
 Ql
-ak
-ak
+vj
+vj
 ak
 ak
 ak
@@ -40937,10 +40976,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+Yc
+Jf
+Yc
+Yc
 Ql
 Ql
 Rx
@@ -40949,8 +40988,8 @@ MN
 pd
 Ql
 Ql
-ak
-ak
+vj
+vj
 ak
 ak
 ak
@@ -41194,9 +41233,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+Yc
+Jf
+Yc
 Et
 Ql
 Tr
@@ -41206,8 +41245,8 @@ Tq
 bH
 iU
 Ql
-ak
-ak
+vj
+vj
 ak
 ak
 ak
@@ -41450,8 +41489,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+Yc
+Yc
 Et
 Et
 nJ
@@ -41464,8 +41503,8 @@ ZJ
 OR
 Ql
 Ql
-ak
-ak
+vj
+vj
 ak
 ak
 ak
@@ -41706,9 +41745,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+Yc
+Yc
+Yc
 Et
 nJ
 nJ
@@ -41721,9 +41760,9 @@ Ha
 ed
 pd
 Ql
-ak
-ak
-ak
+Yc
+vj
+vj
 ak
 ak
 ak
@@ -41963,8 +42002,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+Yc
+Yc
 Et
 Et
 nJ
@@ -42754,7 +42793,7 @@ OU
 PG
 PG
 GL
-RT
+Vl
 ak
 ak
 ak
