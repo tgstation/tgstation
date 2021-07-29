@@ -24,12 +24,6 @@
 
 	output_list = add_output_port("Output", PORT_TYPE_LIST)
 
-/obj/item/circuit_component/index_table/Destroy()
-	received_table = null
-	target_index = null
-	output_list = null
-	return ..()
-
 /obj/item/circuit_component/index_table/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

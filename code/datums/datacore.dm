@@ -1,3 +1,6 @@
+
+GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
+
 //TODO: someone please get rid of this shit
 /datum/datacore
 	var/list/medical = list()

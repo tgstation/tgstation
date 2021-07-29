@@ -76,6 +76,10 @@
 				return PORT_TYPE_ATOM
 			else
 				return copytext("[value_to_convert]", 1, PORT_MAX_STRING_LENGTH)
+		if(PORT_TYPE_NUMBER)
+			if(!istext(value_to_convert) && !isnum(value_to_convert))
+				return null
+			return text2num(value_to_convert)
 
 	if(isatom(value_to_convert))
 		var/atom/atom_to_check = value_to_convert

@@ -33,10 +33,6 @@
 		add_input_port(letter, current_option)
 	output_port = add_output_port("Output", current_option)
 
-/obj/item/circuit_component/combiner/Destroy()
-	output_port = null
-	return ..()
-
 /obj/item/circuit_component/combiner/input_received(datum/port/input/port)
 	. = ..()
 	if(current_type != current_option)
