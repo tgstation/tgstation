@@ -6,5 +6,5 @@
 /obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask : /obj/effect/spawner/random/clothing/twentyfive_percent_cyborg_mask
 /obj/effect/spawner/lootdrop/minor/pirate_or_bandana : /obj/effect/spawner/random/clothing/pirate_or_bandana
 /obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears : /obj/effect/spawner/random/clothing/kittyears_or_rabbitears
-/obj/effect/spawner/random/clothing/bowler_or_that
-/obj/effect/spawner/random/clothing/beret_or_rabbitears
+/obj/effect/spawner/lootdrop/minor/bowler_or_that : /obj/effect/spawner/random/clothing/bowler_or_that
+/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears : /obj/effect/spawner/random/clothing/beret_or_rabbitears

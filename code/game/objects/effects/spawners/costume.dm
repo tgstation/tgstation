@@ -57,7 +57,7 @@
 	name = "maid costume spawner"
 	items = list(
 		/obj/item/clothing/under/dress/skirt,
-		/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears,
+		/obj/effect/spawner/random/clothing/beret_or_rabbitears,
 		/obj/item/clothing/glasses/blindfold,
 	)
 
@@ -92,7 +92,7 @@
 	items = list(
 		/obj/item/clothing/accessory/waistcoat,
 		/obj/item/clothing/glasses/monocle,
-		/obj/effect/spawner/lootdrop/minor/bowler_or_that,
+		/obj/effect/spawner/random/clothing/bowler_or_that,
 		/obj/item/clothing/shoes/sneakers/black,
 		/obj/item/cane,
 		/obj/item/clothing/under/suit/sl,
