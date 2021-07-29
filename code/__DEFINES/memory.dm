@@ -27,6 +27,10 @@
 #define MEMORY_CREAMPIED "creampied"
 ///a memory of being slipped! Mentions on what
 #define MEMORY_SLIPPED "slipped"
+///A memory of letting my spaghetti spill, how embarrasing!
+#define MEMORY_SPAGHETTI_SPILL "spaghetti_spilled"
+///A memory of getting a kiss blown. Provides the kisser and kissee.
+#define MEMORY_KISS "kiss"
 
 ///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
@@ -69,6 +73,7 @@
 #define DETAIL_HIGHFIVE_TYPE "HIGHFIVE_TYPE"
 #define DETAIL_BOMB_TYPE "BOMB_TYPE"
 #define DETAIL_ACCOUNT_ID "ACCOUNT_ID"
+#define DETAIL_KISSER "KISSER"
 
 
 

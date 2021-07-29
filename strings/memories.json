@@ -39,25 +39,32 @@
 	],
 	"engravings_somethings":[
 		"%MEMORIZER can also be seen cringing at the sight of a %SOMETHING.",
-		"%MEMORIZER is being arrested, clutching a %SOMETHING.",
-		"%MEMORIZER is doing a sick ass backflip!",
-		"%MEMORIZER is locked inside of an escape pod.",
-		"%MEMORIZER is secretly admiring a %SOMETHING.",
-		"%MEMORIZER is slightly floating above the ground.",
-		"%MEMORIZER is standing on atop a soapbox.",
-		"a %SOMETHING is being worshipped by %MEMORIZER.",
-		"a %SOMETHING is etched so crudely you'd think a three-year-old did it.",
-		"%MEMORIZER has a cartoony thought bubble.",
+		"in the meantime, %CREWMEMBER is being arrested, clutching a %SOMETHING.",
+		"%CREWMEMBER is doing a sick ass backflip in the meantime!",
+		"%MEMORIZER also appears to be locked inside of an escape pod.",
+		"A classic easter egg can be found in way of a %SOMETHING",
+		"%MEMORIZER can also be seen secretly admiring a %SOMETHING.",
+		"%MEMORIZER is floating slightly above the ground.",
+		"also depicted is %CREWMEMBER standing on top of a soapbox.",
+		"depicted also is %MEMORIZER, having an intellectual talk with a %SOMETHING.",
+		"in the middle a %SOMETHING is being worshipped by %MEMORIZER.",
+		"there is also a %SOMETHING etched in the corner. It was done so crudely you'd think a three-year-old did it.",
+		"%MEMORIZER has a cartoony thought bubble in the engraving.",
 		"%MEMORIZER is lying on the floor, defeated by a %SOMETHING.",
 		"A %SOMETHING stands in the background.",
-		"A crowd is cheering in the background.",
+		"A crowd can be seen cheering in the background.",
 		"A heavily pixelated %SOMETHING is sitting there, ominously.",
-		"A political comic starring a %SOMETHING.",
-		"The bottom left has been signed by the author.",
+		"it is engraved as a political comic, with %SOMETHING saying a snarky line in the bottom left.",
+		"A weeping statue of liberty can be seen in the corner",
+		"The bottom left has been signed by the author, %MEMORIZER",
 		"The engraving has repeating text behind the foreground.",
 		"The top part is dominated by a %SOMETHING.",
 		"There is a circle of danging %SOMETHINGs.",
-		"There is a tiny %SOMETHING in the corner."
+		"There is a tiny %SOMETHING in the corner.",
+		"%CREWMEMBER is watching, laughing at %MEMORIZER.",
+		"%CREWMEMBER is watching, crying at the situation.",
+		"%CREWMEMBER is shocked by the situation.",
+		"%CREWMEMBER is bearting %MEMORIZER over the ordeal."
 	],
 	"engravings_styles":[
 		"The engraving has a cubist style.",
@@ -189,5 +196,28 @@
 	],
 	"slipped_sad":[
 		"doesn't even want to get up and looks depressed"
+	],
+	"spaghetti_spilled_names":[
+		"%VICTIM's spaghetti blunder"
+	],
+	"spaghetti_spilled_starts":[
+		"%VICTIM's spaghetti pouring out of their pockets.",
+		"%VICTIM's pockets not being able to contain their spaghetti.",
+		"the dangers of keeping spaghetti in one's pockets, which %victim will now know forever."
+	],
+	"spaghetti_spilled_moods":[
+		"%VICTIM %MOOD as the spaghetti poured out.",
+		"%VICTIM %MOOD as they try to pick up the scraps."
+	],
+	"kiss_names":[
+		"the kiss blown to %VICTIM"
+	],
+	"kiss_starts":[
+		"%VICTIM's receiving a blown kiss from %KISSER.",
+		"%KISSER blowing a kiss to %VICTIM."
+	],
+	"kiss_moods":[
+		"%VICTIM %MOOD as the kiss lands on their cheek.",
+		"%VICTIM %MOOD as it happens."
 	]
 }
