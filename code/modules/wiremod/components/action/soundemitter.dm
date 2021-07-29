@@ -29,11 +29,6 @@
 	volume = add_input_port("Volume", PORT_TYPE_NUMBER, default = 35)
 	frequency = add_input_port("Frequency", PORT_TYPE_NUMBER, default = 0)
 
-/obj/item/circuit_component/soundemitter/Destroy()
-	frequency = null
-	volume = null
-	return ..()
-
 /obj/item/circuit_component/soundemitter/populate_options()
 	var/static/component_options = list(
 		COMP_SOUND_BUZZ,

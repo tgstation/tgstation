@@ -34,10 +34,7 @@
 	trigger_output = add_output_port("Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/radio/Destroy()
-	freq = null
-	code = null
 	SSradio.remove_object(src, current_freq)
-	radio_connection = null
 	return ..()
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)

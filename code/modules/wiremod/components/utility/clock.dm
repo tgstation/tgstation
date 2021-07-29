@@ -34,8 +34,6 @@
 		stop_process()
 
 /obj/item/circuit_component/clock/Destroy()
-	on = null
-	signal = null
 	stop_process()
 	return ..()
 

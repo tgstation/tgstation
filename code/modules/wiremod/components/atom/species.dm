@@ -21,11 +21,6 @@
 
 	output = add_output_port("Species", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/species/Destroy()
-	input_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/species/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

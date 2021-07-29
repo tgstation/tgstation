@@ -39,15 +39,6 @@
 	oxy = add_output_port("Suffocation Damage", PORT_TYPE_NUMBER)
 	health = add_output_port("Health", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/health/Destroy()
-	input_port = null
-	brute = null
-	burn = null
-	toxin = null
-	oxy = null
-	health = null
-	return ..()
-
 /obj/item/circuit_component/health/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

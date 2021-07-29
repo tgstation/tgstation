@@ -22,12 +22,6 @@
 
 	output = add_output_port("Value", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/index/Destroy()
-	list_port = null
-	index_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/index/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

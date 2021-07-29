@@ -35,10 +35,6 @@
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/arithmetic/Destroy()
-	output = null
-	return ..()
-
 /obj/item/circuit_component/arithmetic/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

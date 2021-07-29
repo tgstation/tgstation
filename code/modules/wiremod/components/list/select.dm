@@ -41,13 +41,6 @@
 
 	filtered_table = add_output_port("Output", PORT_TYPE_TABLE)
 
-/obj/item/circuit_component/select/Destroy()
-	received_table = null
-	column_name = null
-	comparison_input = null
-	filtered_table = null
-	return ..()
-
 /obj/item/circuit_component/select/input_received(datum/port/input/port)
 	. = ..()
 	switch(current_option)

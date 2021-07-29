@@ -139,14 +139,6 @@
 	UnregisterSignal(computer.tram_part, list(COMSIG_TRAM_SET_TRAVELLING, COMSIG_TRAM_TRAVEL))
 	return ..()
 
-/obj/item/circuit_component/tram_controls/Destroy()
-	new_destination = null
-	trigger_move = null
-	location = null
-	travelling_output = null
-	computer = null
-	return ..()
-
 /obj/item/circuit_component/tram_controls/input_received(datum/port/input/port)
 	. = ..()
 	if (.)

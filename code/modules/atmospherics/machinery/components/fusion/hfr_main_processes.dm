@@ -52,7 +52,7 @@
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
-		critical_threshold_proximity = min(max(0.001 * internal_fusion.total_moles() - 10, 0), HYPERTORUS_MAX_MOLE_DAMAGE)
+		critical_threshold_proximity += min(max(0.001 * internal_fusion.total_moles() - 10, 0), HYPERTORUS_MAX_MOLE_DAMAGE)
 
 	if(moderator_internal.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES && !check_cracked_parts())
 		var/obj/machinery/atmospherics/components/unary/hypertorus/part = create_crack()

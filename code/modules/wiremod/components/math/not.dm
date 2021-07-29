@@ -20,11 +20,6 @@
 
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/not/Destroy()
-	input_port = null
-	result = null
-	return ..()
-
 /obj/item/circuit_component/not/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

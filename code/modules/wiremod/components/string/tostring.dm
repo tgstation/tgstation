@@ -23,11 +23,6 @@
 
 	output = add_output_port("Output", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/tostring/Destroy()
-	input_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/tostring/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

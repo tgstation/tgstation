@@ -24,12 +24,6 @@
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_LIST)
 
-/obj/item/circuit_component/split/Destroy()
-	input_port = null
-	separator = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/split/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

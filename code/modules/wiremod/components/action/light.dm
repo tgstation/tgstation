@@ -35,15 +35,6 @@
 
 	on = add_input_port("On", PORT_TYPE_NUMBER)
 
-
-/obj/item/circuit_component/light/Destroy()
-	red = null
-	green = null
-	blue = null
-	brightness = null
-	on = null
-	return ..()
-
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()
 	TRIGGER_CIRCUIT_COMPONENT(src, null)

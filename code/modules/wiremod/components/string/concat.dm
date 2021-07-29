@@ -22,10 +22,6 @@
 
 	output = add_output_port("Output", PORT_TYPE_STRING)
 
-/obj/item/circuit_component/concat/Destroy()
-	output = null
-	return ..()
-
 /obj/item/circuit_component/concat/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

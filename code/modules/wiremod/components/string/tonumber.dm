@@ -21,11 +21,6 @@
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/tonumber/Destroy()
-	input_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/tonumber/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

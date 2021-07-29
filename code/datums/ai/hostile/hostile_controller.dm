@@ -41,7 +41,7 @@
 	return ..() //Run parent at end
 
 /datum/ai_controller/hostile_friend/proc/on_prebuckle(mob/source, mob/living/buckler, force, buckle_mob_flags)
-	if(force)
+	if(force || ai_status == AI_STATUS_OFF)
 		return
 	if(WEAKREF(buckler) != blackboard[BB_HOSTILE_FRIEND])
 		return COMPONENT_BLOCK_BUCKLE
@@ -114,7 +114,7 @@
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
-	if(!istype(clicker) || !blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
+	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
 		return
 	. = COMPONENT_CANCEL_CLICK_ALT
 	INVOKE_ASYNC(src, .proc/command_radial, clicker)
@@ -187,8 +187,8 @@
 			current_movement_target = commander
 			var/mob/living/living_pawn = pawn
 			if(living_pawn.buckled)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/follow)
+				LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/resist))//in case they are in bed or something
+			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/follow))
 		// attack: harass whoever the commander points to
 		if(COMMAND_ATTACK)
 			pawn.visible_message(span_danger("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] growl[pawn.p_s()] intensely.")) // imagine getting intimidated by a corgi
@@ -218,5 +218,5 @@
 		current_movement_target = pointed_movable
 		blackboard[BB_ATTACK_TARGET] = WEAKREF(pointed_movable)
 		if(living_pawn.buckled)
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/attack)
+			LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/resist))//in case they are in bed or something
+		LAZYADD(current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/attack))

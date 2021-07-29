@@ -2,9 +2,8 @@
 	"meter": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure0",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "pressure_off",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",

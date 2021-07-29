@@ -41,13 +41,6 @@
 		multiplexer_inputs += add_input_port("Port [port_id]", current_type)
 	output_port = add_output_port("Output", current_type)
 
-/obj/item/circuit_component/multiplexer/Destroy()
-	output_port = null
-	multiplexer_inputs.Cut()
-	multiplexer_inputs = null
-	return ..()
-
-
 /obj/item/circuit_component/multiplexer/input_received(datum/port/input/port)
 	. = ..()
 	if(current_type != current_option)
