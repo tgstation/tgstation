@@ -1,0 +1,4 @@
+author: "godspeedfunnyman"
+delete-after: True
+changes: 
+  - bugfix: "Adds APC electronics and replaces uranium with plasma in donut whiteship"
