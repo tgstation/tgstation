@@ -244,6 +244,7 @@
 	flags_1 = NONE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
+	pinless = TRUE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle
 	fire_sound = 'sound/effects/splat.ogg'
 	force = 0

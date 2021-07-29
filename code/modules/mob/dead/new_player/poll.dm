@@ -1,3 +1,12 @@
+
+///All currently running polls held as datums
+GLOBAL_LIST_EMPTY(polls)
+GLOBAL_PROTECT(polls)
+
+///All poll option datums of running polls
+GLOBAL_LIST_EMPTY(poll_options)
+GLOBAL_PROTECT(poll_options)
+
 /**
  * Shows a list of currently running polls a player can vote/has voted on
  *

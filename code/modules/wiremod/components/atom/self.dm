@@ -14,10 +14,6 @@
 	. = ..()
 	output = add_output_port("Self", PORT_TYPE_ATOM)
 
-/obj/item/circuit_component/self/Destroy()
-	output = null
-	return ..()
-
 /obj/item/circuit_component/self/register_shell(atom/movable/shell)
 	output.set_output(shell)
 
