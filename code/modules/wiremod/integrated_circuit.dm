@@ -7,6 +7,7 @@
  */
 /obj/item/integrated_circuit
 	name = "integrated circuit"
+	desc = "By inserting components and a cell into this, wiring them up, and putting them into a shell, anyone can pretend to be a programmer."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
