@@ -240,6 +240,9 @@
 /obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/air_alarm,
+	))
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -883,6 +886,121 @@
 			I.take_damage(I.max_integrity * 0.5, sound_effect=FALSE)
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
+
+/obj/item/circuit_component/air_alarm
+	display_name = "Air Alarm"
+	display_desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
+
+	var/datum/port/input/min_2
+	var/datum/port/input/min_1
+	var/datum/port/input/max_1
+	var/datum/port/input/max_2
+
+	var/datum/port/input/request_data
+
+	var/datum/port/output/pressure
+	var/datum/port/output/temperature
+
+	var/obj/machinery/airalarm/connected_alarm
+	var/list/options_map
+
+/obj/item/circuit_component/air_alarm/Initialize()
+	. = ..()
+	min_2 = add_input_port("Min 2", PORT_TYPE_NUMBER)
+	min_1 = add_input_port("Min 1", PORT_TYPE_NUMBER)
+	max_1 = add_input_port("Max 1", PORT_TYPE_NUMBER)
+	max_2 = add_input_port("Max 2", PORT_TYPE_NUMBER)
+	request_data = add_input_port("Request Atmosphere Data", PORT_TYPE_SIGNAL)
+
+	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
+	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
+	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/air_alarm/populate_options()
+	var/static/component_options = list(
+		"Pressure",
+		"Temperature",
+		"Oxygen",
+		"Nitrogen",
+		"Carbon Dioxide",
+		"Miasma",
+		"Plasma",
+		"Nitrous Oxide",
+		"BZ",
+		"Hypernoblium",
+		"Water Vapor",
+		"Tritium",
+		"Stimulum",
+		"Nitryl",
+		"Pluoxium",
+		"Freon",
+		"Hydrogen",
+		"Healium",
+		"Proto Nitrate",
+		"Zauker",
+		"Helium",
+		"Antinoblium",
+		"Halon"
+	)
+	options = component_options
+
+	var/static/options_to_key = list(
+		"Pressure" = "pressure",
+		"Temperature" = "temperature",
+		"Oxygen" = /datum/gas/oxygen,
+		"Nitrogen" = /datum/gas/nitrogen,
+		"Carbon Dioxide" = /datum/gas/carbon_dioxide,
+		"Miasma" = /datum/gas/miasma,
+		"Plasma" = /datum/gas/plasma,
+		"Nitrous Oxide" = /datum/gas/nitrous_oxide,
+		"BZ" = /datum/gas/bz,
+		"Hypernoblium" = /datum/gas/hypernoblium,
+		"Water Vapor" = /datum/gas/water_vapor,
+		"Tritium" = /datum/gas/tritium,
+		"Stimulum" = /datum/gas/stimulum,
+		"Nitryl" = /datum/gas/nitryl,
+		"Pluoxium" = /datum/gas/pluoxium,
+		"Freon" = /datum/gas/freon,
+		"Hydrogen" = /datum/gas/hydrogen,
+		"Healium" = /datum/gas/healium,
+		"Proto Nitrate" = /datum/gas/proto_nitrate,
+		"Zauker" = /datum/gas/zauker,
+		"Helium" = /datum/gas/helium,
+		"Antinoblium" = /datum/gas/antinoblium,
+		"Halon" = /datum/gas/halon
+	)
+
+	options_map = options_to_key
+
+/obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/airalarm))
+		connected_alarm = parent
+
+/obj/item/circuit_component/air_alarm/unregister_usb_parent(atom/movable/parent)
+	connected_alarm = null
+	return ..()
+
+/obj/item/circuit_component/air_alarm/input_received(datum/port/input/port)
+	. = ..()
+
+	if(. || !connected_alarm)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(request_data, port))
+		var/turf/alarm_turf = get_turf(connected_alarm)
+		var/datum/gas_mixture/environment = alarm_turf.return_air()
+		pressure.set_output(round(environment.return_pressure()))
+		temperature.set_output(round(environment.temperature))
+		if(ispath(options_map[current_option]))
+			gas_amount.set_output(round(location.air.gases[options_map[current_option]][MOLES]))
+		return
+
+	var/datum/tlv/tlv = connected_alarm.TLV[options_map[current_option]]
+	tlv.min2 = min_2
+	tlv.min1 = min_1
+	tlv.max1 = max_1
+	tlv.max2 = max_2
 
 #undef AALARM_MODE_SCRUBBING
 #undef AALARM_MODE_VENTING
