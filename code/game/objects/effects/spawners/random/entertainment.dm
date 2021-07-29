@@ -53,3 +53,14 @@
 		/obj/item/cigbutt/roach = 15,
 		/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
 	)
+
+/obj/effect/spawner/random/entertainment/dice
+	name = "dice spawner"
+	loot = list(
+		/obj/item/dice/d4,
+		/obj/item/dice/d6,
+		/obj/item/dice/d8,
+		/obj/item/dice/d10,
+		/obj/item/dice/d12,
+		/obj/item/dice/d20,
+	)
