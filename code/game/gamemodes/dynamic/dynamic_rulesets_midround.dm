@@ -856,7 +856,6 @@
 	name = "Obsessed"
 	antag_datum = /datum/antagonist/obsessed
 	antag_flag = ROLE_OBSESSED
-	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
