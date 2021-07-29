@@ -8,12 +8,12 @@
 	/// The rust image itself, since the icon and icon state are only used as an argument
 	var/image/rust_overlay
 
-/datum/element/rust/Attach(atom/target, _rust_icon = 'icons/effects/rust_overlay.dmi', _rust_icon_state = "rust_default")
+/datum/element/rust/Attach(atom/target, rust_icon = 'icons/effects/rust_overlay.dmi', rust_icon_state = "rust_default")
 	. = ..()
 	if(!isatom(target))
 		return COMPONENT_INCOMPATIBLE
 	if(!rust_overlay)
-		rust_overlay = image(_rust_icon, _rust_icon_state)
+		rust_overlay = image(rust_icon, rust_icon)
 	ADD_TRAIT(target, TRAIT_RUSTY, src)
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
@@ -21,10 +21,11 @@
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_icon(UPDATE_OVERLAYS)
 
-/datum/element/rust/Detach(atom/source, ...)
+/datum/element/rust/Detach(atom/source)
 	. = ..()
-	UnregisterSignal(source,\
-		list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
+	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
+	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, src)
 	source.update_icon(UPDATE_OVERLAYS)
 
@@ -60,16 +61,3 @@
 			user.balloon_alert(user, "scraped off rust")
 			qdel(src)
 			return
-
-//This is really bad, but i assume it's necessary for mapping?
-/turf/closed/wall/rust/New()
-	var/atom/wall_new = new /turf/closed/wall(src)
-	wall_new.AddElement(/datum/element/rust)
-
-/turf/closed/wall/r_wall/rust/New()
-	var/atom/wall_new = new /turf/closed/wall/r_wall(src)
-	wall_new.AddElement(/datum/element/rust)
-
-/turf/open/floor/plating/rust/New()
-	var/atom/wall_new = new /turf/open/floor/plating(src)
-	wall_new.AddElement(/datum/element/rust)
