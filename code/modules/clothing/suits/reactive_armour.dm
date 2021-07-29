@@ -52,6 +52,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
+	. = ..()
 	if(active)
 		icon_state = "reactive"
 		inhand_icon_state = "reactive"
