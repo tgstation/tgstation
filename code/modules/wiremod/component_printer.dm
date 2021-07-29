@@ -212,6 +212,8 @@
 	return TRUE
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
+	flick("module-fab-print", src)
+	sleep(16)
 	var/obj/item/circuit_component/module/module = new(drop_location())
 	module.load_data_from_list(design["dupe_data"])
 	return module
@@ -250,6 +252,9 @@
 	data["name"] = module.display_name
 	data["desc"] = "A module that has been loaded in by [user]."
 	data["materials"] = list(/datum/material/glass = total_cost)
+
+	flick("module-fab-scan", src)
+	sleep(14)
 
 	scanned_designs += list(data)
 
