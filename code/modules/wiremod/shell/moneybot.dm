@@ -79,11 +79,6 @@
 	attached_bot.add_money(-to_dispense)
 	new /obj/item/holochip(drop_location(), to_dispense)
 
-/obj/item/circuit_component/money_dispenser/Destroy()
-	dispense_amount = null
-	attached_bot = null
-	return ..()
-
 /obj/item/circuit_component/money_bot
 	display_name = "Money Bot"
 	var/obj/structure/money_bot/attached_bot
@@ -117,13 +112,6 @@
 	))
 	total_money.set_output(null)
 	attached_bot = null
-	return ..()
-
-/obj/item/circuit_component/money_bot/Destroy()
-	attached_bot = null
-	total_money = null
-	money_input = null
-	money_trigger = null
 	return ..()
 
 /obj/item/circuit_component/money_bot/proc/handle_money_insert(atom/source, obj/item/item, mob/living/attacker)

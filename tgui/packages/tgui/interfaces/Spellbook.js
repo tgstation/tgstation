@@ -309,7 +309,7 @@ const lineHeightRandomize = 6;
 
 const Randomize = (props, context) => {
   const { act, data } = useBackend(context);
-  const { points } = data;
+  const { points, semi_random_bonus, full_random_bonus } = data;
   return (
     <Stack fill vertical>
       {points < 10 && (
@@ -317,6 +317,7 @@ const Randomize = (props, context) => {
       )}
       <Stack.Item grow mt={10}>
         Semi-Randomize will ensure you at least get some mobility and lethality.
+        Guaranteed to have {semi_random_bonus} points worth of spells.
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
@@ -331,6 +332,7 @@ const Randomize = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         Full Random will give you anything. There&apos;s no going back, either!
+        Guaranteed to have {full_random_bonus} points worth of spells.
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger>

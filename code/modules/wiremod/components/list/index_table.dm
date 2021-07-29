@@ -22,13 +22,7 @@
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	target_index = add_input_port("Index", PORT_TYPE_NUMBER)
 
-	output_list = add_output_port("Output", PORT_TYPE_TABLE)
-
-/obj/item/circuit_component/index_table/Destroy()
-	received_table = null
-	target_index = null
-	output_list = null
-	return ..()
+	output_list = add_output_port("Output", PORT_TYPE_LIST)
 
 /obj/item/circuit_component/index_table/input_received(datum/port/input/port)
 	. = ..()

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - admin: "Adds a safety check to the \"Release Obj\" admin proc"

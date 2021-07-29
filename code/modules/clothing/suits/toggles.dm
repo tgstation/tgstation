@@ -50,9 +50,7 @@
 		if(alternative_mode)
 			QDEL_NULL(hood)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -79,9 +77,7 @@
 			suittoggled = TRUE
 			icon_state = "[initial(icon_state)]_t"
 			H.update_inv_wear_suit()
-			for(var/X in actions)
-				var/datum/action/A = X
-				A.UpdateButtonIcon()
+			update_action_buttons()
 	else
 		RemoveHood()
 
@@ -132,9 +128,7 @@
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = TRUE
 	usr.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	. = ..()

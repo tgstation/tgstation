@@ -41,12 +41,12 @@
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(myhead)
-		user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
 		myhead.dismember()
-		myhead.forceMove(src)//force your enemies to kill themselves with your head collection box!
+		myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
 		playsound(user, "desecration-01.ogg", 50, TRUE, -1)
 		return BRUTELOSS
-	user.visible_message(span_suicide("[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/storage/box/update_overlays()
@@ -104,14 +104,6 @@
 /obj/item/storage/box/disks/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
-
-/obj/item/storage/box/disks_nanite
-	name = "nanite program disks box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks_nanite/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/nanite_program(src)
 
 // Ordinary survival box
 /obj/item/storage/box/survival
@@ -866,7 +858,7 @@
 
 /obj/item/storage/box/hug/plushes
 	name = "tactical cuddle kit"
-	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell\
+	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell \
 	for Medical Officers who just take the box for themselves."
 
 	/// the plushies that aren't of things trying to kill you
@@ -1247,7 +1239,7 @@
 /obj/item/storage/box/gum/happiness/Initialize()
 	. = ..()
 	if (prob(25))
-		desc += "You can faintly make out the word 'Hemopagopril' was once scribbled on it."
+		desc += " You can faintly make out the word 'Hemopagopril' was once scribbled on it."
 
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
@@ -1392,3 +1384,246 @@
 		/obj/item/slimecross/stabilized/rainbow=1,\
 		)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
+	name = "ingredients box"
+	illustration = "fruit"
+	var/theme_name
+
+/obj/item/storage/box/ingredients/Initialize()
+	. = ..()
+	if(theme_name)
+		name = "[name] ([theme_name])"
+		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."
+		inhand_icon_state = "syringe_kit"
+
+/obj/item/storage/box/ingredients/wildcard
+	theme_name = "wildcard"
+
+/obj/item/storage/box/ingredients/wildcard/PopulateContents()
+	for(var/i in 1 to 7)
+		var/randomFood = pick(/obj/item/food/grown/chili,
+							  /obj/item/food/grown/tomato,
+							  /obj/item/food/grown/carrot,
+							  /obj/item/food/grown/potato,
+							  /obj/item/food/grown/potato/sweet,
+							  /obj/item/food/grown/apple,
+							  /obj/item/food/chocolatebar,
+							  /obj/item/food/grown/cherries,
+							  /obj/item/food/grown/banana,
+							  /obj/item/food/grown/cabbage,
+							  /obj/item/food/grown/soybeans,
+							  /obj/item/food/grown/corn,
+							  /obj/item/food/grown/mushroom/plumphelmet,
+							  /obj/item/food/grown/mushroom/chanterelle)
+		new randomFood(src)
+
+/obj/item/storage/box/ingredients/fiesta
+	theme_name = "fiesta"
+
+/obj/item/storage/box/ingredients/fiesta/PopulateContents()
+	new /obj/item/food/tortilla(src)
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/corn(src)
+		new /obj/item/food/grown/soybeans(src)
+		new /obj/item/food/grown/chili(src)
+
+/obj/item/storage/box/ingredients/italian
+	theme_name = "italian"
+
+/obj/item/storage/box/ingredients/italian/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/food/grown/tomato(src)
+		new /obj/item/food/meatball(src)
+	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
+
+/obj/item/storage/box/ingredients/vegetarian
+	theme_name = "vegetarian"
+
+/obj/item/storage/box/ingredients/vegetarian/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/carrot(src)
+	new /obj/item/food/grown/eggplant(src)
+	new /obj/item/food/grown/potato(src)
+	new /obj/item/food/grown/apple(src)
+	new /obj/item/food/grown/corn(src)
+	new /obj/item/food/grown/tomato(src)
+
+/obj/item/storage/box/ingredients/american
+	theme_name = "american"
+
+/obj/item/storage/box/ingredients/american/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/potato(src)
+		new /obj/item/food/grown/tomato(src)
+		new /obj/item/food/grown/corn(src)
+	new /obj/item/food/meatball(src)
+
+/obj/item/storage/box/ingredients/fruity
+	theme_name = "fruity"
+
+/obj/item/storage/box/ingredients/fruity/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/apple(src)
+		new /obj/item/food/grown/citrus/orange(src)
+	new /obj/item/food/grown/citrus/lemon(src)
+	new /obj/item/food/grown/citrus/lime(src)
+	new /obj/item/food/grown/watermelon(src)
+
+/obj/item/storage/box/ingredients/sweets
+	theme_name = "sweets"
+
+/obj/item/storage/box/ingredients/sweets/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/cherries(src)
+		new /obj/item/food/grown/banana(src)
+	new /obj/item/food/chocolatebar(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/food/grown/apple(src)
+
+/obj/item/storage/box/ingredients/delights
+	theme_name = "delights"
+
+/obj/item/storage/box/ingredients/delights/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/potato/sweet(src)
+		new /obj/item/food/grown/bluecherries(src)
+	new /obj/item/food/grown/vanillapod(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/food/grown/berries(src)
+
+/obj/item/storage/box/ingredients/grains
+	theme_name = "grains"
+
+/obj/item/storage/box/ingredients/grains/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/food/grown/oat(src)
+	new /obj/item/food/grown/wheat(src)
+	new /obj/item/food/grown/cocoapod(src)
+	new /obj/item/reagent_containers/honeycomb(src)
+	new /obj/item/seeds/poppy(src)
+
+/obj/item/storage/box/ingredients/carnivore
+	theme_name = "carnivore"
+
+/obj/item/storage/box/ingredients/carnivore/PopulateContents()
+	new /obj/item/food/meat/slab/bear(src)
+	new /obj/item/food/meat/slab/spider(src)
+	new /obj/item/food/spidereggs(src)
+	new /obj/item/food/fishmeat/carp(src)
+	new /obj/item/food/meat/slab/xeno(src)
+	new /obj/item/food/meat/slab/corgi(src)
+	new /obj/item/food/meatball(src)
+
+/obj/item/storage/box/ingredients/exotic
+	theme_name = "exotic"
+
+/obj/item/storage/box/ingredients/exotic/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/fishmeat/carp(src)
+		new /obj/item/food/grown/soybeans(src)
+		new /obj/item/food/grown/cabbage(src)
+	new /obj/item/food/grown/chili(src)
+
+/obj/item/storage/box/ingredients/random
+	theme_name = "random"
+	desc = "This box should not exist, contact the proper authorities."
+
+/obj/item/storage/box/ingredients/random/Initialize()
+	.=..()
+	var/chosen_box = pick(subtypesof(/obj/item/storage/box/ingredients) - /obj/item/storage/box/ingredients/random)
+	new chosen_box(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/item/storage/box/hero
+	name = "Courageous Tomb Raider - 1940's."
+	desc = "This legendary figure of still dubious historical accuracy is thought to have been a world-famous archeologist who embarked on countless adventures in far away lands, along with his trademark whip and fedora hat."
+
+/obj/item/storage/box/hero/PopulateContents()
+	new /obj/item/clothing/head/fedora/curator(src)
+	new /obj/item/clothing/suit/curator(src)
+	new /obj/item/clothing/under/rank/civilian/curator/treasure_hunter(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/melee/curator_whip(src)
+
+/obj/item/storage/box/hero/astronaut
+	name = "First Man on the Moon - 1960's."
+	desc = "One small step for a man, one giant leap for mankind. Relive the beginnings of space exploration with this fully functional set of vintage EVA equipment."
+
+/obj/item/storage/box/hero/astronaut/PopulateContents()
+	new /obj/item/clothing/suit/space/nasavoid(src)
+	new /obj/item/clothing/head/helmet/space/nasavoid(src)
+	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/gps(src)
+
+/obj/item/storage/box/hero/scottish
+	name = "Braveheart, the Scottish rebel - 1300's."
+	desc = "Seemingly a legendary figure in the battle for Scottish independence, this historical figure is closely associated with blue facepaint, big swords, strange man skirts, and his ever enduring catchphrase: 'FREEDOM!!'"
+
+/obj/item/storage/box/hero/scottish/PopulateContents()
+	new /obj/item/clothing/under/costume/kilt(src)
+	new /obj/item/claymore/weak/ceremonial(src)
+	new /obj/item/toy/crayon/spraycan(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/hero/carphunter
+	name = "Carp Hunter, Wildlife Expert - 2506."
+	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
+
+/obj/item/storage/box/hero/carphunter/PopulateContents()
+	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
+	new /obj/item/clothing/mask/gas/carp(src)
+	new /obj/item/kitchen/knife/hunting(src)
+	new /obj/item/storage/box/papersack/meat(src)
+
+/obj/item/storage/box/holy/clock
+	name = "Forgotten kit"
+
+/obj/item/storage/box/holy/clock/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain/clock(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/clock(src)
+
+/obj/item/storage/box/holy
+	name = "Templar Kit"
+
+/obj/item/storage/box/holy/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain(src)
+
+/obj/item/storage/box/holy/student
+	name = "Profane Scholar Kit"
+
+/obj/item/storage/box/holy/student/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/studentuni(src)
+	new /obj/item/clothing/head/helmet/chaplain/cage(src)
+
+/obj/item/storage/box/holy/sentinel
+	name = "Stone Sentinel Kit"
+
+/obj/item/storage/box/holy/sentinel/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
+	new /obj/item/clothing/head/helmet/chaplain/ancient(src)
+
+/obj/item/storage/box/holy/witchhunter
+	name = "Witchhunter Kit"
+
+/obj/item/storage/box/holy/witchhunter/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/witchhunter(src)
+	new /obj/item/clothing/head/helmet/chaplain/witchunter_hat(src)
+
+/obj/item/storage/box/holy/adept
+	name = "Divine Adept Kit"
+
+/obj/item/storage/box/holy/adept/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
+	new /obj/item/clothing/head/helmet/chaplain/adept(src)
+
+/obj/item/storage/box/holy/follower
+	name = "Followers of the Chaplain Kit"
+
+/obj/item/storage/box/holy/follower/PopulateContents()
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)

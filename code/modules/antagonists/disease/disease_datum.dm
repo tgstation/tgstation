@@ -6,8 +6,8 @@
 	var/disease_name = ""
 
 /datum/antagonist/disease/on_gain()
-	owner.special_role = "Sentient Disease"
-	owner.assigned_role = "Sentient Disease"
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/sentient_disease))
+	owner.special_role = ROLE_SENTIENT_DISEASE
 	var/datum/objective/O = new /datum/objective/disease_infect()
 	O.owner = owner
 	objectives += O
