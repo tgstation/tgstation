@@ -5,6 +5,8 @@
  * Requires a BCI shell.
  */
 
+#define OBJECT_OVERLAY_LIMIT 10
+
 /obj/item/circuit_component/object_overlay
 	display_name = "Object Overlay"
 	display_desc = "Requires a BCI shell. A component that shows an overlay on top of an object."
@@ -132,3 +134,5 @@
 	for(var/atom/target_atom in active_overlays)
 		QDEL_NULL(active_overlays[target_atom])
 		active_overlays.Remove(target_atom)
+
+#undef OBJECT_OVERLAY_LIMIT

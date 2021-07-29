@@ -5,7 +5,7 @@
  * Requires a BCI shell.
  */
 
-#define OBJECT_OVERLAY_LIMIT 10
+#define BAR_OVERLAY_LIMIT 10
 
 /obj/item/circuit_component/object_overlay/bar
 	display_name = "Bar Overlay"
@@ -58,3 +58,5 @@
 		cool_overlay,
 		owner,
 	))
+
+#undef BAR_OVERLAY_LIMIT
