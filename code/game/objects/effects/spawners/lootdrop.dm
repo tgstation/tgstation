@@ -157,16 +157,6 @@
 				/obj/item/pda = 1
 				)
 
-/obj/effect/spawner/lootdrop/gambling
-	name = "gambling valuables spawner"
-	loot = list(
-				/obj/item/gun/ballistic/revolver/russian = 5,
-				/obj/item/clothing/head/ushanka = 3,
-				/obj/item/storage/box/syndie_kit/throwing_weapons,
-				/obj/item/coin/gold,
-				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
-				)
-
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"
 	loot = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
