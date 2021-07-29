@@ -452,25 +452,6 @@
 		/obj/item/crowbar/red/caravan = 1
 	)
 
-/// Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
-/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly
-	loot = list(
-		/obj/item/scalpel/advanced = 1,
-		/obj/item/retractor/advanced = 1,
-		/obj/item/cautery/advanced = 1
-	)
-
-/// Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
-/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly
-	loot = list(
-		/obj/item/scalpel/alien = 1,
-		/obj/item/hemostat/alien = 1,
-		/obj/item/retractor/alien = 1,
-		/obj/item/circular_saw/alien = 1,
-		/obj/item/surgicaldrill/alien = 1,
-		/obj/item/cautery/alien = 1
-	)
-
 /// Space loot spawner. A single roundstart species language book.
 /obj/effect/spawner/lootdrop/space/languagebook
 	lootcount = 1

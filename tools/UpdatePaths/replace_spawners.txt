@@ -26,3 +26,5 @@
 /obj/effect/spawner/lootdrop/donkpockets : /obj/effect/spawner/random/food_or_drink/donkpockets
 /obj/effect/spawner/lootdrop/space/rareseed : /obj/effect/spawner/random/food_or_drink/rare_seed
 /obj/effect/spawner/lootdrop/space/cashmoney : /obj/effect/spawner/random/entertainment/money_large
+/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly : /obj/effect/spawner/random/medical/surgery_tool_rare
+/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly : /obj/effect/spawner/random/medical/surgery_tool_advanced
