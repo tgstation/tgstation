@@ -161,12 +161,19 @@
 	return FALSE
 
 /datum/port/output
+
+/**
+ * An input port remembers connected output ports.
+ *
+ * Registers the PORT_SET_VALUE signal on each connected port,
+ * and keeps its value equal to the last such signal received.
+ */
 /datum/port/input
 	/// Whether this port triggers an update whenever an output is received.
 	var/trigger = FALSE
 
 	/// The ports this port is wired to.
-	var/list/datum/port/connected_ports
+	var/list/datum/port/output/connected_ports
 
 /datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
