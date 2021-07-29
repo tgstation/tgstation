@@ -25425,6 +25425,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
 "fXO" = (
@@ -54545,6 +54546,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
+"pOY" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/science/misc_lab/range)
 "pPb" = (
 /mob/living/simple_animal/chicken{
 	name = "Featherbottom";
@@ -69059,6 +69065,7 @@
 	c_tag = "Science Firing Range";
 	network = list("ss13","rd")
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
 "uzL" = (
@@ -114969,7 +114976,7 @@ paq
 quV
 pbs
 cuZ
-pcn
+pOY
 oxa
 cFB
 pcn
