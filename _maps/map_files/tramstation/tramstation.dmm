@@ -54759,7 +54759,7 @@
 /area/security/office)
 "rmZ" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/item/flashlight{
 	pixel_x = 1;
@@ -56438,7 +56438,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "rUY" = (
@@ -63128,8 +63128,8 @@
 /obj/item/reagent_containers/pill/maintenance{
 	pixel_y = 7
 	},
-/obj/effect/spawner/lootdrop/maint_drugs,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "utu" = (

@@ -223,14 +223,6 @@
 				/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5)
 
-/obj/effect/spawner/lootdrop/maint_drugs
-	name = "maint drugs spawner"
-	loot = list(/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
-				/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
-				/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
-				/obj/item/reagent_containers/syringe = 15,
-				/obj/item/cigbutt/roach = 15)
-
 /obj/effect/spawner/lootdrop/grille_or_trash
 	name = "maint grille or trash spawner"
 	loot = list(/obj/structure/grille = 5,

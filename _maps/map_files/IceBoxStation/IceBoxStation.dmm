@@ -39090,7 +39090,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "nuM" = (
@@ -51477,7 +51477,7 @@
 /area/maintenance/port/fore)
 "urK" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maint_drugs,
+/obj/effect/spawner/random/entertainment/drugs,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "urN" = (

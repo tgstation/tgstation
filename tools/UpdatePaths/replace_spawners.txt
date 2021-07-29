@@ -10,3 +10,4 @@
 /obj/effect/spawner/lootdrop/minor/beret_or_rabbitears : /obj/effect/spawner/random/clothing/beret_or_rabbitears
 /obj/effect/spawner/bundle/hobo_squat : /obj/effect/spawner/random/trash/hobo_squat
 /obj/effect/spawner/bundle/moisture_trap : /obj/effect/spawner/random/trash/moisture_trap
+/obj/effect/spawner/lootdrop/maint_drugs : /obj/effect/spawner/random/entertainment/drugs
