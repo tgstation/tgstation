@@ -44,12 +44,6 @@
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/arrest_console_data/Destroy()
-	records = null
-	on_fail = null
-	return ..()
-
-
 /obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
 	if(istype(parent, /obj/machinery/computer/secure_data))
@@ -149,13 +143,6 @@
 	new_status = add_input_port("New Status", PORT_TYPE_STRING)
 	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/arrest_console_arrest/Destroy()
-	targets = null
-	new_status = null
-	new_status_set = null
-	on_fail = null
-	return ..()
 
 /obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
 	. = ..()

@@ -65,6 +65,9 @@
 /obj/effect/abstract/marker/at
 	name = "active turf marker"
 
+/obj/effect/abstract/marker/intercom
+	name = "intercom range marker"
+	color = COLOR_YELLOW
 
 /obj/effect/dummy/lighting_obj
 	name = "lighting fx obj"

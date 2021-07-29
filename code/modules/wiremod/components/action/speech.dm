@@ -22,11 +22,6 @@
 	. = ..()
 	message = add_input_port("Message", PORT_TYPE_STRING, FALSE)
 
-
-/obj/item/circuit_component/speech/Destroy()
-	message = null
-	return ..()
-
 /obj/item/circuit_component/speech/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

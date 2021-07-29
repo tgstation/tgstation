@@ -21,12 +21,6 @@
 	y_pos = add_output_port("Y", PORT_TYPE_NUMBER)
 	z_pos = add_output_port("Z", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/gps/Destroy()
-	x_pos = null
-	y_pos = null
-	z_pos = null
-	return ..()
-
 /obj/item/circuit_component/gps/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
