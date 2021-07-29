@@ -1,4 +1,4 @@
-/obj/effect/spawner/bundle
+/obj/effect/spawner/costume
 	name = "costume spawner"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
