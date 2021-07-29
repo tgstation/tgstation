@@ -37,7 +37,7 @@
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
-	if(cell)
+	if(isatom(cell))
 		QDEL_NULL(cell)
 	return ..()
 
