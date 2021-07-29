@@ -406,15 +406,6 @@
 		/obj/effect/decal/remains/xeno = 49,
 		/obj/effect/spawner/xeno_egg_delivery = 1)
 
-/obj/effect/spawner/lootdrop/costume
-	name = "random costume spawner"
-
-/obj/effect/spawner/lootdrop/costume/Initialize()
-	loot = list()
-	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
-		loot[path] = TRUE
-	. = ..()
-
 // Minor lootdrops follow
 
 /obj/effect/spawner/lootdrop/minor/beret_or_rabbitears
