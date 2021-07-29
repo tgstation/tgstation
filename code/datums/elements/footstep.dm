@@ -1,4 +1,4 @@
-///Footstep component. Plays footsteps at parents location when it is appropriate.
+///Footstep element. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
 	id_arg_index = 2
@@ -75,10 +75,12 @@
 			return
 		if(carbon_source.m_intent == MOVE_INTENT_WALK)
 			return// stealth
-	var/steps = ++steps_for_living[source]
+	steps_for_living[source] += 1
+	var/steps = steps_for_living[source]
 
 	if(steps >= 6)
-		steps = steps_for_living[source] = 0
+		steps_for_living[source] = 0
+		steps = 0
 
 	if(steps % 2)
 		return
@@ -90,25 +92,25 @@
 /datum/element/footstep/proc/play_simplestep(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/turf/open/turf = prepare_step(source)
-	if(!turf)
+	var/turf/open/source_loc = prepare_step(source)
+	if(!source_loc)
 		return
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(turf, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
+		playsound(source_loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
 		return
 	var/turf_footstep
 	switch(footstep_type)
 		if(FOOTSTEP_MOB_CLAW)
-			turf_footstep = turf.clawfootstep
+			turf_footstep = source_loc.clawfootstep
 		if(FOOTSTEP_MOB_BAREFOOT)
-			turf_footstep = turf.barefootstep
+			turf_footstep = source_loc.barefootstep
 		if(FOOTSTEP_MOB_HEAVY)
-			turf_footstep = turf.heavyfootstep
+			turf_footstep = source_loc.heavyfootstep
 		if(FOOTSTEP_MOB_SHOE)
-			turf_footstep = turf.footstep
+			turf_footstep = source_loc.footstep
 	if(!turf_footstep)
 		return
-	playsound(turf, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
@@ -123,31 +125,31 @@
 		volume_multiplier = 0.6
 		range_adjustment = -2
 
-	var/turf/open/turf = prepare_step(source)
-	if(!turf)
+	var/turf/open/source_loc = prepare_step(source)
+	if(!source_loc)
 		return
 
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
-		playsound(turf, pick(GLOB.footstep[turf.footstep][1]),
-			GLOB.footstep[turf.footstep][2] * volume * volume_multiplier,
+		playsound(source_loc, pick(GLOB.footstep[source_loc.footstep][1]),
+			GLOB.footstep[source_loc.footstep][2] * volume * volume_multiplier,
 			TRUE,
-			GLOB.footstep[turf.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+			GLOB.footstep[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 	else
 		if(source.dna.species.special_step_sounds)
-			playsound(turf, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
+			playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
-			playsound(turf, pick(GLOB.barefootstep[turf.barefootstep][1]),
-				GLOB.barefootstep[turf.barefootstep][2] * volume * volume_multiplier,
+			playsound(source_loc, pick(GLOB.barefootstep[source_loc.barefootstep][1]),
+				GLOB.barefootstep[source_loc.barefootstep][2] * volume * volume_multiplier,
 				TRUE,
-				GLOB.barefootstep[turf.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+				GLOB.barefootstep[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 
 
 ///Prepares a footstep for machine walking
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source)
 	SIGNAL_HANDLER
 
-	var/turf/open/turf = get_turf(source)
-	if(!istype(turf))
+	var/turf/open/source_loc = get_turf(source)
+	if(!istype(source_loc))
 		return
-	playsound(turf, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
