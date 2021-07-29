@@ -61089,7 +61089,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "rXb" = (
-/obj/effect/spawner/lootdrop/cigbutt,
+/obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},

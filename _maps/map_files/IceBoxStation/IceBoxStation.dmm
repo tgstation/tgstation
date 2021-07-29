@@ -24121,7 +24121,7 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "eYk" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "eYo" = (
@@ -25316,7 +25316,7 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "fJq" = (
-/obj/effect/spawner/lootdrop/grille_or_trash,
+/obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "fJA" = (
