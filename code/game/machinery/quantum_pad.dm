@@ -25,6 +25,10 @@
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
 
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/quantumpad,
+	))
+
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
 	return ..()
@@ -132,7 +136,7 @@
 	if(linked_pad)
 		ghost.forceMove(get_turf(linked_pad))
 
-/obj/machinery/quantumpad/proc/doteleport(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
+/obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(target_pad)
 		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 		teleporting = TRUE
@@ -142,11 +146,13 @@
 				teleporting = FALSE
 				return
 			if(machine_stat & NOPOWER)
-				to_chat(user, span_warning("[src] is unpowered!"))
+				if(user)
+					to_chat(user, span_warning("[src] is unpowered!"))
 				teleporting = FALSE
 				return
 			if(!target_pad || QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
-				to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
+				if(user)
+					to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
 				teleporting = FALSE
 				return
 
@@ -190,3 +196,39 @@
 /obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"
 	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
+
+/obj/item/circuit_component/quantumpad
+	display_name = "Quantum Pad"
+	display_desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	var/obj/machinery/quantumpad/attached_pad
+
+/obj/item/circuit_component/quantumpad/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/quantumpad))
+		attached_pad = parent
+
+/obj/item/circuit_component/quantumpad/unregister_usb_parent(atom/movable/parent)
+	attached_pad = null
+	return ..()
+
+/obj/item/circuit_component/quantumpad/input_received(datum/port/input/port)
+	. = ..()
+	if(. || !attached_pad)
+		return
+
+	if(!attached_pad.linked_pad || QDELETED(attached_pad.linked_pad))
+		return
+
+	if(world.time < attached_pad.last_teleport + attached_pad.teleport_cooldown)
+		return
+
+	if(attached_pad.teleporting || attached_pad.linked_pad.teleporting)
+		return
+
+	if(attached_pad.linked_pad.machine_stat & NOPOWER)
+		return
+
+	attached_pad.doteleport(target_pad = attached_pad.linked_pad)
+
