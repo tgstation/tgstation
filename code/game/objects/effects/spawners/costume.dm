@@ -128,7 +128,7 @@
 	name = "waiter costume spawner"
 	items = list(
 		/obj/item/clothing/under/suit/waiter,
-		/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+		/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 		/obj/item/clothing/suit/apron,
 	)
 
@@ -137,7 +137,7 @@
 	items = list(
 		/obj/item/clothing/under/costume/pirate,
 		/obj/item/clothing/suit/pirate,
-		/obj/effect/spawner/lootdrop/minor/pirate_or_bandana,
+		/obj/effect/spawner/random/clothing/pirate_or_bandana,
 		/obj/item/clothing/glasses/eyepatch,
 	)
 

@@ -420,24 +420,6 @@
 		/obj/item/clothing/head/bowler = 1,
 		/obj/item/clothing/head/that = 1)
 
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears
-	name = "kitty ears or rabbit ears spawner"
-	loot = list(
-		/obj/item/clothing/head/kitty = 1,
-		/obj/item/clothing/head/rabbitears = 1)
-
-/obj/effect/spawner/lootdrop/minor/pirate_or_bandana
-	name = "pirate hat or bandana spawner"
-	loot = list(
-		/obj/item/clothing/head/pirate = 1,
-		/obj/item/clothing/head/bandana = 1)
-
-/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask
-	name = "25% cyborg mask spawner"
-	loot = list(
-		/obj/item/clothing/mask/gas/cyborg = 25,
-		"" = 75)
-
 /obj/effect/spawner/lootdrop/aimodule_harmless // These shouldn't allow the AI to start butchering people
 	name = "harmless AI module spawner"
 	loot = list(
