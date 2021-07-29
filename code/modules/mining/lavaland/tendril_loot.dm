@@ -1031,9 +1031,12 @@
 	target.apply_damage(damage = 20, sharpness = SHARP_POINTY, bare_wound_bonus = 10)
 	var/turf/dash_target = get_turf(target)
 	for(var/distance in 0 to 8)
-		if(dash_target.is_blocked_turf(TRUE))
+		var/turf/current_dash_target = dash_target
+		current_dash_target = get_step(current_dash_target, user.dir)
+		if(!current_dash_target.is_blocked_turf(TRUE))
+			dash_target = current_dash_target
+		else
 			break
-		dash_target = get_step(dash_target, user.dir)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(user))
 	new /obj/effect/temp_visual/guardian/phase(dash_target)
 	do_teleport(user, dash_target, channel = TELEPORT_CHANNEL_MAGIC)
@@ -1042,7 +1045,7 @@
 	user.visible_message(span_warning("[user] shatters [src] over [target]!"),
 		span_notice("You shatter [src] over [target]!"))
 	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
-	target.apply_damage(damage = ishostile(target) ? 75 : 25, wound_bonus = 20)
+	target.apply_damage(damage = ishostile(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 	shattered = TRUE
