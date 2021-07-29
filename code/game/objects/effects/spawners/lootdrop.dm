@@ -9,6 +9,7 @@
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
 	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
+	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores lootcount)
 	var/scatter_radius = 0	//determines how big of a range (in tiles) we should scatter things in.
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
@@ -20,6 +21,9 @@
 
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/lootdrop/proc/spawn_loot(lootcount_override)
+	if(!prob(spawn_loot_chance))
+		return INITIALIZE_HINT_QDEL
+
 	var/list/spawn_locations = get_spawn_locations(scatter_radius)
 	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
 
