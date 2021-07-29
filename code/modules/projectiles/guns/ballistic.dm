@@ -260,7 +260,7 @@
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	if (user)
-		to_chat(user, span_notice("You drop the [bolt_wording] of \the [src]."))
+		to_chat(user, span_notice("You drop the [bolt_wording] of [src]."))
 	chamber_round()
 	bolt_locked = FALSE
 	update_appearance()
@@ -268,7 +268,7 @@
 ///Handles all the logic needed for magazine insertion
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
 	if(!istype(AM, mag_type))
-		to_chat(user, span_warning("\The [AM] doesn't seem to fit into [src]..."))
+		to_chat(user, span_warning("[AM] doesn't seem to fit into [src]..."))
 		return FALSE
 	if(user.transferItemToLoc(AM, src))
 		magazine = AM
@@ -322,7 +322,7 @@
 			if (tac_reloads)
 				eject_magazine(user, FALSE, AM)
 			else
-				to_chat(user, span_notice("There's already a [magazine_wording] in \the [src]."))
+				to_chat(user, span_notice("There's already a [magazine_wording] in [src]."))
 		return
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
@@ -331,7 +331,7 @@
 				chambered = null
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
 			if (num_loaded)
-				to_chat(user, span_notice("You load [num_loaded] [cartridge_wording]\s into \the [src]."))
+				to_chat(user, span_notice("You load [num_loaded] [cartridge_wording]\s into [src]."))
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
 				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
 					chamber_round()
@@ -593,7 +593,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, /obj/item/A)
 	if(misfire_probability == 0)
-		to_chat(user, span_notice("\The [src] seems to be already clean of fouling."))
+		to_chat(user, span_notice("[src] seems to be already clean of fouling."))
 		return
 
 	user.changeNext_move(CLICK_CD_MELEE)
