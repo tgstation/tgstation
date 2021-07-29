@@ -5,9 +5,6 @@
 ///how many engravings will be loaded max with persistence
 #define MAX_PERSISTENT_ENGRAVINGS 20
 
-///replacement for null that makes the memory additions more readable and as such more addable
-#define NO_TARGET null
-
 ///threshold for the memory being a happy one 8)
 #define MEMORY_HAPPY_THRESHOLD 7
 ///threshold for the memory being a sad one :^(
@@ -26,6 +23,10 @@
 #define MEMORY_BORGED "borged"
 ///a memory of dying! includes time of death
 #define MEMORY_DEATH "death"
+///a memory of being creampied! Mentions where
+#define MEMORY_CREAMPIED "creampied"
+///a memory of being slipped! Mentions on what
+#define MEMORY_SLIPPED "slipped"
 
 ///YOU HAVE WRITTEN MEMORY FLAVOR TO THIS POINT//
 
@@ -54,3 +55,20 @@
 //These defines are story flags for including special bits on the generated story.
 ///include a date this event happened
 #define STORY_FLAG_DATED (1<<0)
+
+///Generic memory info keys
+#define DETAIL_WHERE "WHERE"
+#define DETAIL_VICTIM "VICTIM"
+#define DETAIL_WHAT_BY "WHAT_BY"
+
+//Specific memory info keys
+#define DETAIL_SURGERY_TYPE "SURGERY_TYPE"
+#define DETAIL_TIME_OF_DEATH "TIME_OF_DEATH"
+#define DETAIL_ALLERGY_TYPE "ALLERGY_TYPE"
+#define DETAIL_FAV_BRAND "FAV_BRAND"
+#define DETAIL_HIGHFIVE_TYPE "HIGHFIVE_TYPE"
+#define DETAIL_BOMB_TYPE "BOMB_TYPE"
+#define DETAIL_ACCOUNT_ID "ACCOUNT_ID"
+
+
+
