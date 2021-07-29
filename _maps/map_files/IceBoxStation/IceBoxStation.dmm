@@ -12834,7 +12834,7 @@
 /area/medical/medbay/aft)
 "bvB" = (
 /obj/machinery/camera{
-	c_tag = "Genetics Access";
+	c_tag = "Med-Sci Access";
 	dir = 8;
 	network = list("ss13","medbay","rd");
 	pixel_y = -22
