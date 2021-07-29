@@ -37,7 +37,7 @@
 		return
 
 	if(active_overlays[target_atom])
-		owner.client.images.Remove(active_overlays[target_atom])
+		QDEL_NULL(active_overlays[target_atom])
 
 	var/number_clear = clamp(bar_number.input_value, 0, 100)
 	if(current_option == "Horizontal")
@@ -52,5 +52,11 @@
 	if(image_pixel_y.input_value)
 		cool_overlay.pixel_y = image_pixel_y.input_value
 
-	active_overlays[target_atom] = cool_overlay
-	owner.client.images |= cool_overlay
+	var/alt_appearance = WEAKREF(target_atom.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/one_person,
+		"bar_overlay_[overlay_id]",
+		cool_overlay,
+		owner,
+	))
+
+	active_overlays[target_atom] = alt_appearance

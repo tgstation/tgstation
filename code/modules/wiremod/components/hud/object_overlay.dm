@@ -5,6 +5,8 @@
  * Requires a BCI shell.
  */
 
+GLOBAL_VAR_INIT(object_overlay_id, 0) //I need every object_overlay component to have a DIFFERENT ID because else they are going to overlap
+
 /obj/item/circuit_component/object_overlay
 	display_name = "Object Overlay"
 	display_desc = "A component that shows an overlay ontop of an object. Requires a BCI shell."
@@ -26,6 +28,8 @@
 	var/list/atom_locs = list()
 	var/list/options_map
 
+	var/overlay_id
+
 /obj/item/circuit_component/object_overlay/Initialize()
 	. = ..()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
@@ -37,6 +41,8 @@
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
 
 	set_option("Corners (Blue)")
+	overlay_id = GLOB.object_overlay_id
+	GLOB.object_overlay_id += 1
 
 /obj/item/circuit_component/object_overlay/populate_options()
 	var/static/component_options = list(
@@ -91,7 +97,7 @@
 		show_to_owner(target_atom, owner)
 
 	if(COMPONENT_TRIGGERED_BY(signal_off, port) && (target_atom in active_overlays))
-		owner.client.images.Remove(active_overlays[target_atom])
+		QDEL_NULL(active_overlays[target_atom])
 		active_overlays.Remove(target_atom)
 
 /obj/item/circuit_component/object_overlay/proc/show_to_owner(atom/target_atom, mob/living/owner)
@@ -99,7 +105,7 @@
 		return
 
 	if(active_overlays[target_atom])
-		owner.client.images.Remove(active_overlays[target_atom])
+		QDEL_NULL(active_overlays[target_atom])
 
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[current_option], layer = RIPPLE_LAYER)
 
@@ -109,12 +115,18 @@
 	if(image_pixel_y.input_value)
 		cool_overlay.pixel_y = image_pixel_y.input_value
 
-	active_overlays[target_atom] = cool_overlay
-	owner.client.images |= cool_overlay
+	var/alt_appearance = WEAKREF(target_atom.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/one_person,
+		"object_overlay_[overlay_id]",
+		cool_overlay,
+		owner,
+	))
+
+	active_overlays[target_atom] = alt_appearance
 
 /obj/item/circuit_component/object_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
 	for(var/atom/target_atom in active_overlays)
-		owner.client.images.Remove(active_overlays[target_atom])
+		QDEL_NULL(active_overlays[target_atom])
 		active_overlays.Remove(target_atom)

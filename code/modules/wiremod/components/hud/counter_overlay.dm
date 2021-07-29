@@ -21,6 +21,9 @@
 	var/obj/item/organ/cyberimp/bci/bci
 	var/image/counter
 	var/list/numbers = list()
+	var/counter_appearance
+
+	var/overlay_id
 
 /obj/item/circuit_component/counter_overlay/Initialize()
 	. = ..()
@@ -30,6 +33,9 @@
 
 	image_pixel_x = add_input_port("X-Axis Shift", PORT_TYPE_NUMBER)
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
+
+	overlay_id = GLOB.object_overlay_id
+	GLOB.object_overlay_id += 1
 
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
 	bci = shell
@@ -50,17 +56,23 @@
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	for(var/image/number as anything in numbers)
-		owner.client.images.Remove(number)
+	for(var/number in numbers)
+		QDEL_NULL(number)
 	numbers = list()
 
-	owner.client.images.Remove(counter)
+	QDEL_NULL(counter_appearance)
 	counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner)
 	if(image_pixel_x.input_value)
 		counter.pixel_x = image_pixel_x.input_value
 	if(image_pixel_y.input_value)
 		counter.pixel_y = image_pixel_y.input_value
-	owner.client.images |= counter
+
+	counter_appearance = WEAKREF(owner.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/one_person,
+		"counter_overlay_[overlay_id]",
+		counter,
+		owner,
+	))
 
 	var/cleared_number = clamp(round(counter_number.input_value), 0, 999)
 
@@ -73,12 +85,17 @@
 		if(image_pixel_y.input_value)
 			number.pixel_y = image_pixel_y.input_value
 
-		numbers.Add(number)
-		owner.client.images |= number
+		var/number_appearance = WEAKREF(owner.add_alt_appearance(
+			/datum/atom_hud/alternate_appearance/basic/one_person,
+			"counter_overlay_[overlay_id]_[i]",
+			number,
+			owner,
+		))
+
+		numbers.Add(number_appearance)
 
 /obj/item/circuit_component/counter_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
-	owner.client.images.Remove(counter)
-	for(var/image/number as anything in numbers)
-		owner.client.images.Remove(number)
-	qdel(counter)
+	QDEL_NULL(counter_appearance)
+	for(var/number in numbers)
+		QDEL_NULL(number)
