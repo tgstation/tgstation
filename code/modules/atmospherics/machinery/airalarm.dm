@@ -985,7 +985,7 @@
 /obj/item/circuit_component/air_alarm/input_received(datum/port/input/port)
 	. = ..()
 
-	if(. || !connected_alarm || !connected_alarm.unlocked)
+	if(. || !connected_alarm || !connected_alarm.locked)
 		return
 
 	if(COMPONENT_TRIGGERED_BY(request_data, port))
