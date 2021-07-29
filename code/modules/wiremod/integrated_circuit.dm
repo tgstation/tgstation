@@ -321,7 +321,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(!compatible_datatypes(output.datatype, src.datatype))
+			if(!compatible_datatypes(output_port.datatype, input_port.datatype))
 				return
 			input_port.connect(output_port)
 			. = TRUE
