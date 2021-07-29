@@ -61,8 +61,8 @@
 	P.update_appearance()
 	return P
 
-/datum/supply_order/proc/generateManifest(obj/container, owner, packname) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(container, id, 0)
+/datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost_override) //generates-the-manifests.
+	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(container, id, cost_override || pack.cost)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
@@ -118,8 +118,8 @@
 	generateManifest(C, account_holder, pack)
 	return C
 
-/datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents)
+/datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents, misc_cost)
 	for (var/I in misc_contents)
 		new I(miscbox)
-	generateManifest(miscbox, misc_own, "")
+	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
