@@ -13,7 +13,6 @@
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/deploy)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/undeploy)
 
 	var/obj/item/typecast = thing_to_be_deployed
 	deployed_name = initial(typecast.name)
@@ -26,22 +25,23 @@
 	else //Also tells the player if you are bad at coding
 		examine_list += span_notice("It appears that you should be able to deploy this, but you can't see how, better report this to coders!")
 
-/datum/component/deployable/proc/deploy(datum/src, mob/user, location, direction) //If there's no user, location and direction are used
+/datum/component/deployable/proc/deploy(datum/source, mob/user, location, direction) //If there's no user, location and direction are used
 	SIGNAL_HANDLER
 
+	var/obj/deploy_item = source //I got errors for not using this, so be it
 	var/obj/deployed_object //Used for spawning the deployed object
-	var/deploy_location //Where our deployed_object gets put
+	var/turf/deploy_location //Where our deployed_object gets put
 	var/new_direction //What direction do we want our deployed object in
 	if(user)
 		if(!ishuman(user))
 			return
 
 		deploy_location = get_step(user, user.dir)
-		if(deploy_location.is_blocked_turf())
-			balloon_alert(user, "insufficient room to deploy here.")
+		if(deploy_location.is_blocked_turf(TRUE))
+			user.balloon_alert(user, "insufficient room to deploy here.")
 			return
 		new_direction = user.dir
-		balloon_alert(user, "deploying...")
+		user.balloon_alert(user, "deploying...")
 		if(!do_after(user, deploy_time))
 			return
 	else
@@ -52,6 +52,6 @@
 	deployed_object.setDir(new_direction) //Changes the direction of the deployed object to be that of where the user was facing
 
 	//Sets the integrity of the new deployed machine to that of the object it came from
-	deployed_object.max_integrity = src.max_integrity
-	deployed_object.obj_integrity = src.obj_integrity
+	deployed_object.max_integrity = deploy_item.max_integrity
+	deployed_object.obj_integrity = deploy_item.obj_integrity
 	deployed_object.update_icon_state()
