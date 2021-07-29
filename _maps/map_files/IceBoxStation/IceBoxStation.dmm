@@ -45066,7 +45066,7 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "qQH" = (
-/obj/effect/spawner/lootdrop/minor/bowler_or_that,
+/obj/effect/spawner/random/clothing/bowler_or_that,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)

@@ -1986,7 +1986,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "agq" = (
@@ -36979,7 +36979,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/costume,
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

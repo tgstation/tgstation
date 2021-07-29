@@ -6335,7 +6335,7 @@
 /area/maintenance/fore)
 "XN" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/minor/bowler_or_that,
+/obj/effect/spawner/random/clothing/bowler_or_that,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "XU" = (
