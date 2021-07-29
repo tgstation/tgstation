@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "tcg flippers no longer have the scaling element"
