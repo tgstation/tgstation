@@ -487,26 +487,6 @@
 		/obj/item/cautery/alien = 1
 	)
 
-/// Space loot spawner. A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
-/obj/effect/spawner/lootdrop/space/rareseed
-	lootcount = 5
-	loot = list(
-		/obj/item/seeds/random = 30,
-		/obj/item/seeds/angel = 1,
-		/obj/item/seeds/glowshroom/glowcap = 1,
-		/obj/item/seeds/glowshroom/shadowshroom = 1,
-		/obj/item/seeds/liberty = 5,
-		/obj/item/seeds/nettle/death = 1,
-		/obj/item/seeds/plump/walkingmushroom = 1,
-		/obj/item/seeds/reishi = 5,
-		/obj/item/seeds/cannabis/rainbow = 1,
-		/obj/item/seeds/cannabis/death = 1,
-		/obj/item/seeds/cannabis/white = 1,
-		/obj/item/seeds/cannabis/ultimate = 1,
-		/obj/item/seeds/replicapod = 5,
-		/obj/item/seeds/kudzu = 1
-	)
-
 /// Space loot spawner. A single roundstart species language book.
 /obj/effect/spawner/lootdrop/space/languagebook
 	lootcount = 1

@@ -33,6 +33,25 @@
 		/obj/item/seeds/sugarcane = 1,
 	)
 
+/obj/effect/spawner/random/food_or_drink/rare_seed
+	lootcount = 5
+	loot = list( // /obj/item/seeds/random is not a random seed, but an exotic seed.
+		/obj/item/seeds/random = 30,
+		/obj/item/seeds/liberty = 5,
+		/obj/item/seeds/replicapod = 5,
+		/obj/item/seeds/reishi = 5,
+		/obj/item/seeds/nettle/death = 1,
+		/obj/item/seeds/plump/walkingmushroom = 1,
+		/obj/item/seeds/cannabis/rainbow = 1,
+		/obj/item/seeds/cannabis/death = 1,
+		/obj/item/seeds/cannabis/white = 1,
+		/obj/item/seeds/cannabis/ultimate = 1,
+		/obj/item/seeds/kudzu = 1,
+		/obj/item/seeds/angel = 1,
+		/obj/item/seeds/glowshroom/glowcap = 1,
+		/obj/item/seeds/glowshroom/shadowshroom = 1,
+	)
+
 /obj/effect/spawner/random/food_or_drink/three_course_meal
 	name = "three course meal spawner"
 	lootcount = 3

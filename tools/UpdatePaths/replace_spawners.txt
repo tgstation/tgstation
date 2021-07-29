@@ -24,3 +24,4 @@
 /obj/effect/spawner/lootdrop/three_course_meal : /obj/effect/spawner/random/food_or_drink/three_course_meal
 /obj/effect/spawner/lootdrop/refreshing_beverage : /obj/effect/spawner/random/food_or_drink/refreshing_beverage
 /obj/effect/spawner/lootdrop/donkpockets : /obj/effect/spawner/random/food_or_drink/donkpockets
+/obj/effect/spawner/lootdrop/space/rareseed : /obj/effect/spawner/random/food_or_drink/rare_seed
