@@ -276,10 +276,10 @@
 /datum/mind/proc/build_story_mob(mob/living/target)
 	if(special_role && target == current)
 		return "the [lowertext(special_role)]"
-	if(assigned_role)
+	if(assigned_role && target == current)
 		return  "the [lowertext(initial(assigned_role.title))]"
-	if(isanimal(current))
-		return "the [lowertext(initial(current.name))]"
+	if(isanimal(target))
+		return "the [lowertext(initial(target.name))]"
 	return "someone"
 
 ///returns the story name of anything

@@ -11,7 +11,6 @@
 	],
 	"neutral":[
 		"appears clueless",
-		"chats with %TARGET",
 		"is darting their eyes around",
 		"is impatient",
 		"is uninterested",
@@ -23,7 +22,6 @@
 	"sad":[
 		"appears crushed",
 		"has dried tears on their face",
-		"is arguing with %TARGET",
 		"is complaining loudly",
 		"is having a temper tantrum",
 		"is whiney about it all",
@@ -64,7 +62,8 @@
 		"%CREWMEMBER is watching, laughing at %MEMORIZER.",
 		"%CREWMEMBER is watching, crying at the situation.",
 		"%CREWMEMBER is shocked by the situation.",
-		"%CREWMEMBER is bearting %MEMORIZER over the ordeal."
+		"%CREWMEMBER is berating %MEMORIZER over the ordeal.",
+		"For some reason, %CREWMEMBER is also there."
 	],
 	"engravings_styles":[
 		"The engraving has a cubist style.",
@@ -88,7 +87,7 @@
 		"The tattoo depicts"
 	],
 	"tattoo_somethings":[
-		"%CREWMEMBER looms over the tattooo.",
+		"%CREWMEMBER looms over the tattoo.",
 		"%SOMETHINGs border around the main work.",
 		"A car is driving across the tattoo.",
 		"A chinese dragon swirls around the tattoo.",
@@ -293,5 +292,40 @@
 	],
 	"drink_moods":[
 		"%MEMORIZER %MOOD as they take another sip."
+	],
+	"fire_names":[
+		"the burning of %VICTIM"
+	],
+	"fire_starts":[
+		"%VICTIM bursting into flames.",
+		"%VICTIM turning into a human torch.",
+		"the fire that engulfed %VICTIM."
+	],
+	"fire_moods":[
+		"%VICTIM %MOOD as their skin melts."
+	],
+	"dismembered_names":[
+		"the loss of %VICTIM's %LOST_LIMB"
+	],
+	"dismembered_starts":[
+		"%VICTIM's %LOST_LIMB flinging away.",
+		"%VICTIM's %LOST_LIMB being shot into the abyss.",
+		"%VICTIM becoming eligble for handicapped parking."
+	],
+	"dismembered_moods":[
+		"%VICTIM %MOOD after losing %LOST_LIMB.",
+		"Without %LOST_LIMB, %VICTIM %MOOD."
+	],
+	"pet_dead_names":[
+		"the death of %VICTIM"
+	],
+	"pet_dead_starts":[
+		"%MEMORIZER honoring %VICTIM, the station's pet",
+		"%VICTIM's funeral, which is attended by a group of crewmembers",
+		"A shallow hole, with %VICTIM inside."
+	],
+	"pet_dead_moods":[
+		"%MEMORIZER %MOOD without %VICTIM.",
+		"Without %VICTIM, %MEMORIZER %MOOD."
 	]
 }

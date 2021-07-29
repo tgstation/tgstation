@@ -68,6 +68,9 @@
 		collar_type = "[initial(collar_type)]_dead"
 	regenerate_icons()
 
+	for(var/mob/living/carbon/horrified_person in view(7, src))
+		horrified_person.mind?.add_memory(MEMORY_PET_DEAD, list(DETAIL_VICTIM = src))
+
 /mob/living/simple_animal/pet/regenerate_icons()
 	cut_overlays()
 	if(pcollar && collar_type)
