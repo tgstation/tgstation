@@ -10,7 +10,7 @@
 	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
 	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
 	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores lootcount)
-	var/scatter_radius = 0	//determines how big of a range (in tiles) we should scatter things in.
+	var/spawn_scatter_radius = 0	//determines how big of a range (in tiles) we should scatter things in.
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	. = ..()
@@ -24,7 +24,7 @@
 	if(!prob(spawn_loot_chance))
 		return INITIALIZE_HINT_QDEL
 
-	var/list/spawn_locations = get_spawn_locations(scatter_radius)
+	var/list/spawn_locations = get_spawn_locations(spawn_scatter_radius)
 	var/lootcount = isnull(lootcount_override) ? src.lootcount : lootcount_override
 
 	if(spawn_all_loot)
@@ -39,9 +39,9 @@
 				lootspawn = pickweight(lootspawn)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
-			if(lootspawn && (scatter_radius == 0 || spawn_locations.len))
+			if(lootspawn && (spawn_scatter_radius == 0 || spawn_locations.len))
 				var/turf/spawn_loc = loc
-				if(scatter_radius > 0)
+				if(spawn_scatter_radius > 0)
 					spawn_loc = pick_n_take(spawn_locations)
 
 				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
@@ -56,7 +56,7 @@
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
 
-///If the spawner has a scatter_radius set, this creates a list of nearby turfs available
+///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available
 /obj/effect/spawner/lootdrop/proc/get_spawn_locations(radius)
 	var/list/scatter_locations = list()
 
