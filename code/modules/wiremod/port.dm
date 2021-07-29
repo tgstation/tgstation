@@ -70,7 +70,7 @@
 	if(datatype == PORT_TYPE_STRING)
 		// So that they can't easily get the name like this.
 		value = isatom(value) ? PORT_TYPE_ATOM : copytext("[value]", 1, PORT_MAX_STRING_LENGTH)
-	if(PORT_TYPE_NUMBER)
+	if(datatype == PORT_TYPE_NUMBER)
 		if(istext(value))
 			value = text2num(value)
 	if(isatom(value))
