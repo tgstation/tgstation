@@ -43,6 +43,17 @@
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
 
+///If the spawner has a scatter_radius set, this creates a list of nearby turfs available
+/obj/effect/spawner/lootdrop/proc/get_spawn_locations(radius)
+	var/list/scatter_locations = list()
+
+	if(radius >= 0)
+		for(var/turf/turf_in_view in view(radius, get_turf(src)))
+			if(!turf_in_view.density)
+				scatter_locations += turf_in_view
+
+	return scatter_locations
+
 /obj/effect/spawner/lootdrop/donkpockets
 	name = "donk pocket box spawner"
 	lootdoubles = FALSE
