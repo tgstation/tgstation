@@ -2,6 +2,21 @@
 	name = "trash spawner"
 	desc = "Ewwwwwww gross."
 
+/obj/effect/spawner/random/trash/garbage
+	name = "garbage spawner"
+	loot = list(
+		/obj/effect/spawner/random/trash/food_packaging = 56,
+		/obj/item/trash/can = 8,
+		/obj/item/shard = 8,
+		/obj/effect/spawner/random/trash/botanical_waste = 8,
+		/obj/effect/spawner/random/trash/cigbutt = 8,
+		/obj/item/reagent_containers/syringe = 5,
+		/obj/item/light/tube/broken = 3,
+		/obj/item/food/deadmouse = 2,
+		/obj/item/light/tube/broken = 1,
+		/obj/item/trash/candle = 1,
+	)
+
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
 	loot = list(

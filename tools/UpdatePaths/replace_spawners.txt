@@ -15,3 +15,4 @@
 /obj/effect/spawner/lootdrop/botanical_waste : /obj/effect/spawner/random/trash/botanical_waste
 /obj/effect/spawner/lootdrop/food_packaging : /obj/effect/spawner/random/trash/food_packaging
 /obj/effect/spawner/lootdrop/cigbutt : /obj/effect/spawner/random/trash/cigbutt
+/obj/effect/spawner/lootdrop/garbage_spawner : /obj/effect/spawner/random/trash/garbage

@@ -112,7 +112,7 @@
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
 			new /obj/item/storage/bag/trash/filled(src)
 	new /obj/effect/spawner/scatter/grime(loc)

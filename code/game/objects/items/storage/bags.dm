@@ -84,7 +84,7 @@
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(1, 7))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 	update_icon_state()
 
 /obj/item/storage/bag/trash/bluespace

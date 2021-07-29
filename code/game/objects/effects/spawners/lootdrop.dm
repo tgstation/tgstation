@@ -167,7 +167,7 @@
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 				)
 
-/obj/effect/spawner/lootdrop/garbage_spawner
+/obj/effect/spawner/random/trash/garbage
 	name = "garbage_spawner"
 	loot = list(/obj/effect/spawner/random/trash/food_packaging = 56,
 				/obj/item/trash/can = 8,
