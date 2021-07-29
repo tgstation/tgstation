@@ -344,11 +344,14 @@
 	icon_state = "soulscythe"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 25
+	throwforce = 17
+	armour_penetration = 50
 	var/mob/living/simple_animal/hostile/soulscythe/soul
 
-/obj/item/soulscythe/attack_self(mob/user, modifiers)
+/obj/item/soulscythe/examine(mob/user)
 	. = ..()
-
+	. += span_userdanger("This item isnt currently finished if youre seeing it during a testmerge sorry")
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
