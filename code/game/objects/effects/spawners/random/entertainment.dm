@@ -99,3 +99,16 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy = 1,
 	)
+
+/obj/effect/spawner/random/entertainment/cigarette
+	name = "cigarette spawner"
+	loot = list(
+		/obj/item/clothing/mask/cigarette/space_cigarette = 3,
+		/obj/item/clothing/mask/cigarette/rollie/cannabis = 3,
+		/obj/item/clothing/mask/cigarette/rollie/nicotine = 3,
+		/obj/item/clothing/mask/cigarette/dromedary = 2,
+		/obj/item/clothing/mask/cigarette/uplift = 2,
+		/obj/item/clothing/mask/cigarette/robust = 2,
+		/obj/item/clothing/mask/cigarette/carp = 1,
+		/obj/item/clothing/mask/cigarette/robustgold = 1,
+	)
