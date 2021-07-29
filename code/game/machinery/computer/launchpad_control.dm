@@ -18,7 +18,7 @@
 
 /obj/item/circuit_component/bluespace_launchpad
 	display_name = "Bluespace Launchpad Console"
-	display_desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
+	desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
 
 	var/datum/port/input/launchpad_id
 	var/datum/port/input/x_pos

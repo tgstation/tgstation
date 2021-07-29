@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/module
 	display_name = "Module"
-	display_desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
+	desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
 
 	var/obj/item/integrated_circuit/module/internal_circuit
 
@@ -47,7 +47,7 @@
 
 /obj/item/circuit_component/module_input
 	display_name = "Input"
-	display_desc = "A component that receives data from the module it is attached to"
+	desc = "A component that receives data from the module it is attached to"
 
 	removable = FALSE
 
@@ -60,7 +60,7 @@
 
 /obj/item/circuit_component/module_output
 	display_name = "Output"
-	display_desc = "A component that outputs data to the module it is attached to."
+	desc = "A component that outputs data to the module it is attached to."
 
 	removable = FALSE
 

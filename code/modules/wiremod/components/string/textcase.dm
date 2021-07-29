@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/textcase
 	display_name = "Text Case"
-	display_desc = "A component that makes its input uppercase or lowercase."
+	desc = "A component that makes its input uppercase or lowercase."
 
 	/// The input port
 	var/datum/port/input/input_port

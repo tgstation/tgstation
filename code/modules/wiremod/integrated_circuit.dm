@@ -266,7 +266,7 @@
 		examined = examined_component.resolve()
 
 	.["examined_name"] = examined?.display_name
-	.["examined_desc"] = examined?.display_desc
+	.["examined_desc"] = examined?.desc
 	.["examined_notices"] = examined?.get_ui_notices()
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
