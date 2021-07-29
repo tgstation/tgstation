@@ -86,3 +86,16 @@
 		/obj/item/dice/d12,
 		/obj/item/dice/d20,
 	)
+
+/obj/effect/spawner/random/entertainment/cigarette_pack
+	name = "cigarette pack spawner"
+	loot = list(
+		/obj/item/storage/fancy/cigarettes = 3,
+		/obj/item/storage/fancy/cigarettes/dromedaryco = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_robust = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_candy = 1,
+	)
