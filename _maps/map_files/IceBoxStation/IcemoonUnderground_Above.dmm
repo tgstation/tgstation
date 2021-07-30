@@ -2504,6 +2504,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/service/bar)
 "lc" = (
@@ -2581,6 +2582,13 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/aft)
+"lH" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/service/bar)
 "lM" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
@@ -5238,7 +5246,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/service/bar)
@@ -6013,7 +6020,6 @@
 /obj/structure/sink/kitchen{
 	pixel_y = 24
 	},
-/obj/machinery/duct,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -7848,6 +7854,7 @@
 /obj/structure/table/wood/bar,
 /obj/item/holosign_creator/robot_seat/bar,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/service/bar)
 "RJ" = (
@@ -9034,6 +9041,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/service/bar)
 "YA" = (
@@ -47476,7 +47484,7 @@ uB
 gR
 NX
 he
-tt
+lH
 tt
 ad
 Go
