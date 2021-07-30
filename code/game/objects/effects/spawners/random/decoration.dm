@@ -60,7 +60,7 @@
 		/obj/structure/statue/silver/secborg = 20,
 		/obj/structure/statue/silver/medborg = 20,
 		/obj/structure/statue/plasma/scientist = 15,
-		obj/structure/statue/plasma/xeno = 15,
+		/obj/structure/statue/plasma/xeno = 15,
 		/obj/structure/statue/gold/hos = 5,
 		/obj/structure/statue/gold/hop = 5,
 		/obj/structure/statue/gold/cmo = 5,
