@@ -28,6 +28,7 @@
 /obj/item/integrated_circuit/module/set_display_name(new_name)
 	. = ..()
 	attached_module.display_name = new_name
+	attached_module.name = "module ([new_name])"
 
 /obj/item/integrated_circuit/module/load_component(type)
 	if(!attached_module)

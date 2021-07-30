@@ -485,10 +485,6 @@
 /obj/item/integrated_circuit/proc/set_display_name(new_name)
 	display_name = new_name
 
-/obj/item/integrated_circuit/module/set_display_name(new_name)
-	..()
-	name = "module ([new_name])"
-
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.
  */
