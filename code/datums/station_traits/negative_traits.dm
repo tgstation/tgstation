@@ -46,17 +46,26 @@
 
 /datum/station_trait/hangover/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, .proc/on_job_after_spawn)
 
-/datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/spawned_mob, joined_late)
+
+/datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(joined_late)
+	if(!prob(35))
 		return
-	if(prob(35))
-		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cone))
-		hat = new hat(spawned_mob)
-		spawned_mob.equip_to_slot(hat, ITEM_SLOT_HEAD)
+	var/obj/item/hat = pick(
+		/obj/item/clothing/head/sombrero,
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/mask/balaclava,
+		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/cardborg,
+		/obj/item/clothing/head/pirate,
+		/obj/item/clothing/head/cone,
+		)
+	hat = new hat(spawned_mob)
+	spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_HEAD)
+
 
 /datum/station_trait/blackout
 	name = "Blackout"
@@ -67,10 +76,9 @@
 
 /datum/station_trait/blackout/on_round_start()
 	. = ..()
-	for(var/a in GLOB.apcs_list)
-		var/obj/machinery/power/apc/current_apc = a
-		if(prob(60))
-			current_apc.overload_lighting()
+	for(var/obj/machinery/power/apc/apc as anything in GLOB.apcs_list)
+		if(is_station_level(apc.z) && prob(60))
+			apc.overload_lighting()
 
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"
@@ -87,11 +95,20 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	var/list/jobs_to_use = list("Clown", "Bartender", "Cook", "Botanist", "Cargo Technician", "Mime", "Janitor", "Prisoner")
 	var/chosen_job
 
 /datum/station_trait/overflow_job_bureaucracy/New()
 	. = ..()
+	var/list/jobs_to_use = list(
+		/datum/job/clown,
+		/datum/job/bartender,
+		/datum/job/cook,
+		/datum/job/botanist,
+		/datum/job/cargo_technician,
+		/datum/job/mime,
+		/datum/job/janitor,
+		/datum/job/prisoner,
+		)
 	chosen_job = pick(jobs_to_use)
 	RegisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/set_overflow_job_override)
 

@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - admin: "Adds logging for cult reaching red eye and halo milestones"

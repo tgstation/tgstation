@@ -761,7 +761,7 @@
 	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
 
-	if((intern_threshold >= playtime) && (user.mind?.assigned_role in SSjob.station_jobs))
+	if((intern_threshold >= playtime) && (user.mind?.assigned_role.title in SSjob.station_jobs))
 		is_intern = TRUE
 		update_label()
 		return

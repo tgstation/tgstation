@@ -4,6 +4,10 @@
 /// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
 #define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
 
+// Port defines
+
+#define PORT_MAX_NAME_LENGTH 50
+
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
@@ -134,3 +138,7 @@
 #define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
 /// Creates an output trigger that sends a pulse whenever the component is successfully triggered
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
+/// Prohibits the component from being duplicated via the module duplicator
+#define CIRCUIT_FLAG_UNDUPEABLE (1<<2)
+/// This circuit component does not show in the menu.
+#define CIRCUIT_FLAG_HIDDEN (1<<3)

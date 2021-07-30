@@ -52,10 +52,6 @@
 			return "grey"
 
 /datum/port/Destroy(force)
-	if(!force && !QDELETED(connected_component))
-		// This should never happen. Ports should be deleted with their components
-		stack_trace("Attempted to delete a port with a non-destroyed connected_component! (port name: [name], component type: [connected_component.type])")
-		return QDEL_HINT_LETMELIVE
 	connected_component = null
 	return ..()
 
@@ -80,6 +76,10 @@
 				return PORT_TYPE_ATOM
 			else
 				return copytext("[value_to_convert]", 1, PORT_MAX_STRING_LENGTH)
+		if(PORT_TYPE_NUMBER)
+			if(!istext(value_to_convert) && !isnum(value_to_convert))
+				return null
+			return text2num(value_to_convert)
 
 	if(isatom(value_to_convert))
 		var/atom/atom_to_check = value_to_convert

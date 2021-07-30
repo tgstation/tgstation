@@ -80,20 +80,6 @@
 	bolted = add_output_port("Bolted", PORT_TYPE_SIGNAL)
 	unbolted = add_output_port("Unbolted", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/airlock/Destroy()
-	bolt = null
-	unbolt = null
-	open = null
-	close = null
-	is_open = null
-	is_bolted = null
-	opened = null
-	closed = null
-	bolted = null
-	unbolted = null
-	attached_airlock = null
-	return ..()
-
 /obj/item/circuit_component/airlock/register_shell(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))

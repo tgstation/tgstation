@@ -15,7 +15,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, params)
 	var/area/ourarea = get_area(src)
-	if(!action_checks(target) || ourarea & NOTELEPORT)
+	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
 	var/turf/T = get_turf(target)
 	if(T && (loc.z == T.z) && (get_dist(loc, T) <= teleport_range))
