@@ -238,6 +238,20 @@
 	id = "comp_module"
 	build_path = /obj/item/circuit_component/module
 
+/datum/design/component/get_hid
+	name = "HID Request Component"
+	id = "comp_get_hid"
+	build_path = /obj/item/circuit_component/get_hid
+
+/datum/design/component/ntnet_receive
+	name = "Pressure NTNet Receiver"
+	id = "comp_ntnet_receive"
+	build_path = /obj/item/circuit_component/ntnet_receive
+
+/datum/design/component/ntnet_send
+	name = "NTNet Request Component"
+	id = "comp_ntnet_send"
+	build_path = /obj/item/circuit_component/ntnet_send
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
