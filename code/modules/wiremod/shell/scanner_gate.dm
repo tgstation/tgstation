@@ -2,6 +2,12 @@
 /obj/machinery/scanner_gate/circuit
 	name = "circuit scanner gate"
 	icon_state = "scangate_black"
+	circuit = /obj/item/circuitboard/machine/scanner_gate/shell
+
+/obj/item/circuitboard/machine/scanner_gate/shell
+	name = "Scanner Gate Shell (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/scanner_gate/circuit
 
 /obj/machinery/scanner_gate/circuit/Initialize()
 	. = ..()
