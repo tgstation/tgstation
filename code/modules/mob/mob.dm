@@ -1353,7 +1353,6 @@
 
 ///Creates an image to show the mob's name on
 /mob/proc/create_name_image()
-
 	name_image = image(loc = src, layer = CHAT_LAYER)
 	name_image.plane = MOB_NAME_PLANE
 	name_image.appearance_flags = APPEARANCE_UI | KEEP_APART
