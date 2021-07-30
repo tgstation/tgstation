@@ -147,19 +147,19 @@ SUBSYSTEM_DEF(research)
 		QDEL_LIST(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
-		var/datum/design/DN = path
-		if(isnull(initial(DN.id)))
-			stack_trace("WARNING: Design with null ID detected. Build path: [initial(DN.build_path)]")
-			continue
-		else if(initial(DN.id) == DESIGN_ID_IGNORE)
-			continue
-		DN = new path
-		if(returned[initial(DN.id)])
-			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
-			errored_datums[DN] = initial(DN.id)
-			continue
-		DN.InitializeMaterials() //Initialize the materials in the design
-		returned[initial(DN.id)] = DN
+		var/datum/design/design = new path
+		for(var/datum/design/subdesign in (design.subdesigns || list(design)))
+			if(isnull(initial(subdesign.id)))
+				stack_trace("WARNING: Design with null ID detected. Build path: [initial(subdesign.build_path)]")
+				continue
+			else if(initial(subdesign.id) == DESIGN_ID_IGNORE)
+				continue
+			if(returned[initial(subdesign.id)])
+				stack_trace("WARNING: Design ID clash with ID [initial(subdesign.id)] detected! Path: [path]")
+				errored_datums[subdesign] = initial(subdesign.id)
+				continue
+			subdesign.InitializeMaterials() //Initialize the materials in the design
+			returned[initial(subdesign.id)] = subdesign
 	techweb_designs = returned
 	verify_techweb_designs()
 

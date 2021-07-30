@@ -59,6 +59,8 @@ other types of metals and chemistry for reagents).
 	var/icon_cache
 	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
 	var/search_metadata
+	/// Optional list of designs that the research subsystem should consider adding to the techweb instead of this.
+	var/list/datum/design/subdesigns
 
 /datum/design/error_design
 	name = "ERROR"
