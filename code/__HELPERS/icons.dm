@@ -757,6 +757,7 @@ world
 
 	var/curicon = appearance.icon || deficon
 	var/curstate = appearance.icon_state || defstate
+	var/curdir = (!appearance.dir || appearance.dir == SOUTH) ? defdir : appearance.dir
 
 	var/render_icon = curicon
 
@@ -768,14 +769,7 @@ world
 			else
 				render_icon = FALSE
 
-	var/curdir
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
-
-	//These should use the parent's direction (most likely)
-	if(!appearance.dir || appearance.dir == SOUTH)
-		curdir = defdir
-	else
-		curdir = appearance.dir
 
 	//Try to remove/optimize this section ASAP, CPU hog.
 	//Determines if there's directionals.
