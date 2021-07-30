@@ -31,5 +31,5 @@
 	if(secondary_package.input_value)
 		datalist["data_secondary"] = secondary_package.input_value
 	var/datum/netdata/data = new(datalist)
-	data.receiver_id = target_hid.input_value ? target_hid.input_value : __NETWORK_CIRCUITS
+	data.receiver_id = target_hid.input_value || __NETWORK_CIRCUITS
 	ntnet_send(data)
