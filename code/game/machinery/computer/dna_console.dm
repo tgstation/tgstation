@@ -180,7 +180,7 @@
 	if(istype(I, /obj/item/dnainjector/activator))
 		var/obj/item/dnainjector/activator/A = I
 		if(A.used)
-			to_chat(user,span_notice("Recycled [I]."))
+			to_chat(user,span_notice("Recycled [I.name]."))
 			if(A.research && A.filled)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
