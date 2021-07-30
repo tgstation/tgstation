@@ -61,7 +61,7 @@
 		inhand_icon_state = "reactiveoff"
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	active = !(active)
+	active = !active
 	to_chat(user, span_notice("[src] is now [active ? "active" : "inactive"]."))
 	update_icon_state()
 	add_fingerprint(user)
@@ -325,4 +325,3 @@
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
-
