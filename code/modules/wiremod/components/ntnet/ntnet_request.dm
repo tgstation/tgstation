@@ -1,11 +1,11 @@
 /**
- * # NTNet Request Component
+ * # NTNet Transmitter Component
  *
  * Sends a data package through NTNet
  */
 
 /obj/item/circuit_component/ntnet_send
-	display_name = "NTNet Request"
+	display_name = "NTNet Transmitter"
 	display_desc = "Sends a data package through NTNet when triggered. If target HID is not provided, data will be sent to all circuits in the network."
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
@@ -18,7 +18,7 @@
 
 /obj/item/circuit_component/ntnet_send/Initialize()
 	. = ..()
-	target_hid = add_input_port("Target HID", PORT_TYPE_STRING)
+	target_hid = add_input_port("Target Hardware ID", PORT_TYPE_STRING)
 	data_package = add_input_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_input_port("Secondary Package", PORT_TYPE_ANY)
 

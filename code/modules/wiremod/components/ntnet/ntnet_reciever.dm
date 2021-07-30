@@ -19,15 +19,27 @@
 
 /obj/item/circuit_component/ntnet_receive/Initialize()
 	. = ..()
-	push_hid = add_input_port("Get HID", PORT_TYPE_SIGNAL)
-	hid = add_output_port("HID", PORT_TYPE_STRING)
+	AddComponent(/datum/component/ntnet_interface)
+	push_hid = add_input_port("Get Hardware ID", PORT_TYPE_SIGNAL)
+	hid = add_output_port("Hardware ID", PORT_TYPE_STRING)
 	data_package = add_output_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_output_port("Secondary Package", PORT_TYPE_ANY)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
 
-/obj/item/circuit_component/ntnet_receive/ComponentInitialize()
+/obj/item/circuit_component/ntnet_receive/populate_options()
+	var/static/component_options = list(
+		PORT_TYPE_ANY,
+		PORT_TYPE_STRING,
+		PORT_TYPE_NUMBER,
+		PORT_TYPE_LIST,
+		PORT_TYPE_ATOM,
+	)
+	options = component_options
+
+/obj/item/circuit_component/ntnet_receive/set_option(option)
 	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
+	data_package.set_datatype(current_type)
+	secondary_package.set_datatype(current_type)
 
 /obj/item/circuit_component/ntnet_receive/input_received(datum/port/input/port)
 	. = ..()

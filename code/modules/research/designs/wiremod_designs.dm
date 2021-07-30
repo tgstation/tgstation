@@ -244,7 +244,7 @@
 	build_path = /obj/item/circuit_component/get_hid
 
 /datum/design/component/ntnet_receive
-	name = "Pressure NTNet Receiver"
+	name = "Pressure NTNet Transmitter"
 	id = "comp_ntnet_receive"
 	build_path = /obj/item/circuit_component/ntnet_receive
 

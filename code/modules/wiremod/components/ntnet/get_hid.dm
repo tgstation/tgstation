@@ -5,8 +5,8 @@
  */
 
 /obj/item/circuit_component/get_hid
-	display_name = "HID Request"
-	display_desc = "Outputs HID of target object when triggered."
+	display_name = "Hardware ID Request"
+	display_desc = "Outputs Hardware ID of target object when triggered."
 
 	var/datum/port/input/target_atom
 	var/datum/port/output/result
@@ -14,7 +14,7 @@
 /obj/item/circuit_component/get_hid/Initialize()
 	. = ..()
 	target_atom = add_input_port("Target", PORT_TYPE_ATOM)
-	result = add_output_port("Result", PORT_TYPE_STRING)
+	result = add_output_port("Hardware ID", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/get_hid/input_received(datum/port/input/port)
 	. = ..()
