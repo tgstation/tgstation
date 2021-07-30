@@ -2,14 +2,16 @@
 	var/deploy_time = 5 SECONDS //Default time it takes to deploy the item
 	var/obj/thing_to_be_deployed //What do we spawn when the item is deployed successfully?
 	var/deployed_name //For getting the name of an object for examines later on
+	var/delete_on_use = TRUE //Do we delete the item being used when the object is deployed
 
-/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed)
+/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.deploy_time = deploy_time
 	src.thing_to_be_deployed = thing_to_be_deployed
+	src.delete_on_use = delete_on_use
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/deploy)
@@ -23,7 +25,7 @@
 	if(thing_to_be_deployed) //Tells the player what this item can deploy into
 		examine_list += span_notice("It looks like it can be deployed into a [deployed_name].")
 	else //Also tells the player if you are bad at coding
-		examine_list += span_notice("It appears that you should be able to deploy this, but you can't see how, better report this to coders!")
+		examine_list += span_notice("It appears that you should be able to deploy this, but you can't see how, better report this to Central!")
 
 /datum/component/deployable/proc/deploy(datum/source, mob/user, location, direction) //If there's no user, location and direction are used
 	SIGNAL_HANDLER
@@ -55,3 +57,6 @@
 	deployed_object.max_integrity = deploy_item.max_integrity
 	deployed_object.obj_integrity = deploy_item.obj_integrity
 	deployed_object.update_icon_state()
+
+	if(delete_on_use)
+		qdel(source)
