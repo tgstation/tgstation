@@ -158,7 +158,7 @@ but only permanently removed with the curator's soapstone.
 	var/newcolor = COLOR_SOAPSTONE_BRONZE
 	switch(like_keys.len - dislike_keys.len)
 		if(-INFINITY to 0)
-			newcolor = COLOR_SOAPSTONE_FAIL
+			newcolor = COLOR_SOAPSTONE_IRON
 			name = "[initial(name)]"
 		if(1 to 10)
 			newcolor = COLOR_SOAPSTONE_BRONZE
@@ -170,8 +170,8 @@ but only permanently removed with the curator's soapstone.
 			newcolor = COLOR_SOAPSTONE_GOLD
 			name = "gold [initial(name)]"
 		if(31 to INFINITY)
-			newcolor = COLOR_SOAPSTONE_PLATINUM
-			name = "platinum [initial(name)]"
+			newcolor = COLOR_SOAPSTONE_DIAMOND
+			name = "diamond [initial(name)]"
 
 	add_atom_colour("[newcolor]", FIXED_COLOUR_PRIORITY)
 	set_light_color("[newcolor]")
