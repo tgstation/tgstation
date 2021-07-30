@@ -53,6 +53,9 @@
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
+	// Which techweb node unlocks this component
+	var/techweb_node_id = "basic_circuitry"
+
 /obj/item/circuit_component/Initialize()
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)

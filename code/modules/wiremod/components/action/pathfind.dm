@@ -7,6 +7,7 @@
 	display_name = "Pathfinder"
 	display_desc = "When triggered, the next step to the target's location as an entity. This can be used with the direction component and the drone shell to make it move on its own. The Id Card input port is for considering ID access when pathing, it does not give the shell actual access."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+	techweb_node_id = "movable_shells"
 
 	var/datum/port/input/input_X
 	var/datum/port/input/input_Y
