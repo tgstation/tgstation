@@ -19700,6 +19700,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing)
 "efD" = (
@@ -20984,6 +20985,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "eAF" = (
@@ -21234,11 +21236,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
-"eEK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/siding,
-/turf/open/floor/iron/white,
-/area/science/mixing)
 "eEU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -25897,10 +25894,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
-"ggy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/science/mixing)
 "ggE" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -28649,9 +28642,6 @@
 "hkw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Science Toxins Mix";
@@ -33754,10 +33744,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
-"iYm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/science/mixing)
 "iYn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -34539,8 +34525,10 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "jnH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/scientist,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/science/mixing)
 "jnO" = (
@@ -35368,11 +35356,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/iron,
-/area/science/mixing)
-"jBB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
 /area/science/mixing)
 "jBH" = (
@@ -42045,9 +42028,6 @@
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "lPV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -110276,8 +110256,8 @@ jlM
 lQC
 eAm
 efz
-ggy
-ggy
+hlP
+hlP
 hlP
 nrA
 cyK
@@ -110531,10 +110511,10 @@ hSa
 cyK
 sQG
 lPV
-eEK
+eqN
 swS
-jBB
-iYm
+tUz
+nrI
 jnH
 hkw
 cyK
