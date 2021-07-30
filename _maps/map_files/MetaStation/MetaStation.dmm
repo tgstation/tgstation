@@ -49952,7 +49952,6 @@
 /area/security/office)
 "ooO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "ooR" = (
@@ -54481,7 +54480,9 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/hidden{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "pPb" = (
@@ -55467,7 +55468,9 @@
 /obj/structure/sign/warning/gasmask{
 	pixel_x = 32
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/bridge_pipe/supply/hidden{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "qgI" = (
@@ -61455,11 +61458,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/office)
-"sdE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/science/mixing/chamber)
 "sdF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -111800,7 +111798,7 @@ jmX
 aWD
 uox
 gAo
-sdE
+dsd
 pOT
 dsd
 hnc
