@@ -38,8 +38,8 @@
 
 /obj/item/circuit_component/ntnet_receive/set_option(option)
 	. = ..()
-	data_package.set_datatype(current_type)
-	secondary_package.set_datatype(current_type)
+	data_package.set_datatype(option)
+	secondary_package.set_datatype(option)
 
 /obj/item/circuit_component/ntnet_receive/input_received(datum/port/input/port)
 	. = ..()
