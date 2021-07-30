@@ -53122,6 +53122,7 @@
 /area/engineering/atmos)
 "ppi" = (
 /obj/machinery/door/poddoor/massdriver_toxins,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "ppk" = (
