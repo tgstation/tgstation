@@ -1382,4 +1382,4 @@
 
 /mob/proc/update_name_image()
 	if(name_image)
-		name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")
+		name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]</span>")
