@@ -1,6 +1,6 @@
 /datum/status_effect/freon
 	id = "frozen"
-	duration = 10 SECONDS
+	duration = 100
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/freon
 	var/icon/cube
@@ -49,9 +49,5 @@
 	return ..()
 
 /datum/status_effect/freon/watcher
-	duration = 0.8 SECONDS
-	can_melt = FALSE
-
-/datum/status_effect/freon/freeze_cube
-	duration = 3 SECONDS
+	duration = 8
 	can_melt = FALSE

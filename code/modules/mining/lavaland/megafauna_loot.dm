@@ -349,10 +349,34 @@
 	throwforce = 17
 	armour_penetration = 50
 	var/mob/living/simple_animal/hostile/soulscythe/soul
+	var/possessed = FALSE
+
+/obj/item/soulscythe/Initialize()
+	. = ..()
+	soul = new(src)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
 	. += span_userdanger("This item isnt currently finished if youre seeing it during a testmerge sorry")
+
+/obj/item/soulscythe/attack_self(mob/user, modifiers)
+	if(possessed)
+		return
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		balloon_alert(user, "you can't awaken the scythe!")
+		return
+	balloon_alert(user, "you hold the scythe up...")
+	possessed = TRUE
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/picked_ghost = pick(candidates)
+		soul.ckey = picked_ghost.ckey
+		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
+		soul.update_atom_languages()
+		balloon_alert(user, "the scythe glows up")
+	else
+		balloon_alert(user, "the scythe is dormant!")
+		possessed = FALSE
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
