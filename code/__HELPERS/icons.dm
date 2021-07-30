@@ -712,7 +712,7 @@ world
 /// appearance system (overlays/underlays, etc.) is not available.
 ///
 /// Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
 		for (var/i in 1 to process.len) { \
@@ -720,7 +720,7 @@ world
 			if (!current) { \
 				continue; \
 			} \
-			if (current.plane != FLOAT_PLANE && current.plane != A.plane) { \
+			if (current.plane != FLOAT_PLANE && current.plane != appearance.plane) { \
 				continue; \
 			} \
 			var/current_layer = current.layer; \
@@ -728,7 +728,7 @@ world
 				if (current_layer <= -1000) { \
 					return flat; \
 				} \
-				current_layer = base_layer + A.layer + current_layer / 1000; \
+				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
@@ -742,21 +742,21 @@ world
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
 
-	if(!A || A.alpha <= 0)
+	if(!appearance || appearance.alpha <= 0)
 		return icon(flat_template)
 
 	if(start)
 		if(!defdir)
-			defdir = A.dir
+			defdir = appearance.dir
 		if(!deficon)
-			deficon = A.icon
+			deficon = appearance.icon
 		if(!defstate)
-			defstate = A.icon_state
+			defstate = appearance.icon_state
 		if(!defblend)
-			defblend = A.blend_mode
+			defblend = appearance.blend_mode
 
-	var/curicon = A.icon || deficon
-	var/curstate = A.icon_state || defstate
+	var/curicon = appearance.icon || deficon
+	var/curstate = appearance.icon_state || defstate
 
 	var/render_icon = curicon
 
@@ -772,10 +772,10 @@ world
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
 	//These should use the parent's direction (most likely)
-	if(!A.dir || A.dir == SOUTH)
+	if(!appearance.dir || appearance.dir == SOUTH)
 		curdir = defdir
 	else
-		curdir = A.dir
+		curdir = appearance.dir
 
 	//Try to remove/optimize this section ASAP, CPU hog.
 	//Determines if there's directionals.
@@ -790,23 +790,23 @@ world
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
-	var/curblend = A.blend_mode || defblend
+	var/curblend = appearance.blend_mode || defblend
 
-	if(A.overlays.len || A.underlays.len)
+	if(appearance.overlays.len || appearance.underlays.len)
 		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
 		// Add the atom's icon itself, without pixel_x/y offsets.
 		if(render_icon)
-			copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
-			copy.color = A.color
-			copy.alpha = A.alpha
+			copy = image(icon=curicon, icon_state=curstate, layer=appearance.layer, dir=base_icon_dir)
+			copy.color = appearance.color
+			copy.alpha = appearance.alpha
 			copy.blend_mode = curblend
-			layers[copy] = A.layer
+			layers[copy] = appearance.layer
 
-		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, A.underlays, 0)
-		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, A.overlays, 1)
+		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, appearance.underlays, 0)
+		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, appearance.overlays, 1)
 
 		var/icon/add // Icon of overlay being added
 
@@ -824,7 +824,7 @@ world
 			if(layer_image.alpha == 0)
 				continue
 
-			if(layer_image == copy) // 'I' is an /image based on the object being flattened.
+			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 			else // 'I' is an appearance object.
@@ -860,14 +860,14 @@ world
 			// Blend the overlay into the flattened icon
 			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
 
-		if(A.color)
-			if(islist(A.color))
-				flat.MapColors(arglist(A.color))
+		if(appearance.color)
+			if(islist(appearance.color))
+				flat.MapColors(arglist(appearance.color))
 			else
-				flat.Blend(A.color, ICON_MULTIPLY)
+				flat.Blend(appearance.color, ICON_MULTIPLY)
 
-		if(A.alpha < 255)
-			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
+		if(appearance.alpha < 255)
+			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
 
 		if(no_anim)
 			//Clean up repeated frames
@@ -879,14 +879,14 @@ world
 	else if (render_icon) // There's no overlays.
 		var/icon/final_icon = icon(icon(curicon, curstate, base_icon_dir), "", SOUTH, no_anim ? TRUE : null)
 
-		if (A.alpha < 255)
-			final_icon.Blend(rgb(255,255,255, A.alpha), ICON_MULTIPLY)
+		if (appearance.alpha < 255)
+			final_icon.Blend(rgb(255,255,255, appearance.alpha), ICON_MULTIPLY)
 
-		if (A.color)
-			if (islist(A.color))
-				final_icon.MapColors(arglist(A.color))
+		if (appearance.color)
+			if (islist(appearance.color))
+				final_icon.MapColors(arglist(appearance.color))
 			else
-				final_icon.Blend(A.color, ICON_MULTIPLY)
+				final_icon.Blend(appearance.color, ICON_MULTIPLY)
 
 		return final_icon
 
