@@ -777,6 +777,32 @@
 			carbon_quirk_holder.vomit()
 			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
 
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You are irrationally afraid of something."
+	value = -2
+	medical_record_text = "Patient has an irrational fear of something."
+	hardcore_value = 4 // the phobia is also randomized for hardcore characters.
+	var/phobia
+
+/datum/quirk/phobia/add()
+	if(!phobia && quirk_holder.client?.prefs.phobia)
+		phobia = quirk_holder.client?.prefs.phobia
+
+	if(phobia)
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/post_add()
+	if(!phobia)
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		phobia = human_holder.client.prefs.phobia
+		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
 /datum/quirk/bad_touch
 	name = "Bad Touch"
 	desc = "You don't like hugs. You'd really prefer if people just left you alone."

@@ -109,6 +109,7 @@
 	var/quirk_budget = rand(8, 35)
 
 	all_quirks = list() //empty it out
+	phobia = pick(SStraumas.phobia_types) //sets a random phobia for the phobia quirk.
 
 	var/list/available_hardcore_quirks = SSquirks.hardcore_quirks.Copy()
 
