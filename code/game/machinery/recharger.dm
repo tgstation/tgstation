@@ -13,7 +13,7 @@
 	var/recharge_coeff = 1
 	var/using_power = FALSE //Did we put power into "charging" last process()?
 	///Did we finish recharging the currently inserted item?
-	var/finished_recharging
+	var/finished_recharging = FALSE
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
