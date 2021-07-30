@@ -154,6 +154,32 @@
 /datum/quirk/monochromatic/remove()
 	quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
 
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You are irrationally afraid of something (You can set the phobia type in the preferences)."
+	value = 0
+	medical_record_text = "Patient has an irrational fear of something."
+	hardcore_value = 5 // the phobia is also randomized for hardcore characters.
+	var/phobia
+
+/datum/quirk/phobia/add()
+	if(!phobia && quirk_holder.client?.prefs.phobia)
+		phobia = quirk_holder.client?.prefs.phobia
+
+	if(phobia)
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/post_add()
+	if(!phobia)
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		phobia = human_holder.client.prefs.phobia
+		human_holder.gain_trauma(new /datum/brain_trauma/mild/phobia(phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
 /datum/quirk/item_quirk/needswayfinder
 	name = "Navigationally Challenged"
 	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
