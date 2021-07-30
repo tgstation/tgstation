@@ -53,6 +53,12 @@
 	shell_to_spawn = /obj/machinery/door/airlock/shell
 	screw_delay = 10 SECONDS
 
+/obj/item/shell/backpack
+	name = "backpack shell assembly"
+	icon_state = "setup_back-open-open"
+	shell_to_spawn = /obj/item/backpack_shell
+	screw_delay = 10 SECONDS
+
 /obj/item/shell/bci
 	name = "brain-computer interface assembly"
 	icon_state = "bci-open"

@@ -334,6 +334,19 @@
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 
+/datum/design/backpack_shell
+	name = "Backpack Shell"
+	desc = "A very large shell that can be put on your back. It's pretty heavy but can store a lot of components."
+	id = "backpack_shell"
+	materials = list(
+		/datum/material/glass = 4000,
+		/datum/material/iron = 9000,
+		/datum/material/silver = 500,
+	)
+	build_path = /obj/item/shell/backpack
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
 /datum/design/board/bci_implanter
 	name = "Brain-Computer Interface Manipulation Chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
