@@ -1,5 +1,0 @@
-author: "JustANormalHooman, Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "Biobags can feed reproductive extracts again, and can be fed multiple cubes from a bag with one click"
-  - refactor: "reproductive extracts now have a storage component for the purposes of being fed"
