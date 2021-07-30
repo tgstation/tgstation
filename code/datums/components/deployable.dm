@@ -56,7 +56,7 @@
 
 	//Sets the integrity of the new deployed machine to that of the object it came from
 	deployed_object.max_integrity = deploy_item.max_integrity
-	deployed_object.obj_integrity = deploy_item.obj_integrity
+	deployed_object.update_integrity(deploy_item.get_integrity())
 	deployed_object.update_icon_state()
 
 	if(delete_on_use)
