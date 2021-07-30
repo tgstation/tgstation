@@ -348,25 +348,31 @@
 	force = 20
 	throwforce = 17
 	armour_penetration = 50
+	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/hostile/soulscythe/soul
-	var/possessed = FALSE
+	/// Are we currently grabbing a ghost?
+	var/using = FALSE
+	/// Blood used for abilities
+	var/blood_level = 0
 
 /obj/item/soulscythe/Initialize()
 	. = ..()
 	soul = new(src)
+	soul.scythe = src
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
+	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
 	. += span_userdanger("This item isnt currently finished if youre seeing it during a testmerge sorry")
 
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
-	if(possessed)
+	if(using || soul.ckey)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		balloon_alert(user, "you can't awaken the scythe!")
 		return
 	balloon_alert(user, "you hold the scythe up...")
-	possessed = TRUE
+	using = TRUE
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
@@ -376,7 +382,17 @@
 		balloon_alert(user, "the scythe glows up")
 	else
 		balloon_alert(user, "the scythe is dormant!")
-		possessed = FALSE
+		using = FALSE
+
+/mob/living/simple_animal/hostile/soulscythe
+	name = "soulscythe"
+	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
+	icon = 'icons/mob/lavaland/soulscythe.dmi'
+	icon_state = "soulscythe"
+	base_pixel_x = -16
+	base_pixel_y = -16
+	/// Scythe object we are linked to
+	var/obj/item/soulscythe/scythe
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
