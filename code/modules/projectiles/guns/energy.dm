@@ -178,7 +178,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
-	if (shot.select_name)
+	if (shot.select_name && user)
 		balloon_alert(user, "set to [shot.select_name]")
 	chambered = null
 	recharge_newshot(TRUE)
