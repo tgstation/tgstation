@@ -22,10 +22,7 @@
 /datum/component/deployable/proc/examine(datum/src, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(thing_to_be_deployed) //Tells the player what this item can deploy into
-		examine_list += span_notice("It looks like it can be deployed into a [deployed_name].")
-	else //Also tells the player if you are bad at coding
-		examine_list += span_notice("It appears that you should be able to deploy this, but you can't see how, better report this to Central!")
+	examine_list += span_notice("It looks like it can be deployed into a [deployed_name].")
 
 /datum/component/deployable/proc/deploy_signal_handler(datum/source, mob/user, location, direction)
 	SIGNAL_HANDLER
