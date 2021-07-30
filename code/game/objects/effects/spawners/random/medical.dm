@@ -66,6 +66,18 @@
 		/obj/effect/spawner/xeno_egg_delivery = 1,
 	)
 
+/obj/effect/spawner/random/medical/surgery_tool
+	name = "Surgery tool spawner"
+	loot = list(
+		/obj/item/scalpel,
+		/obj/item/hemostat,
+		/obj/item/retractor,
+		/obj/item/circular_saw,
+		/obj/item/surgicaldrill,
+		/obj/item/cautery,
+		/obj/item/bonesetter,
+	)
+
 /obj/effect/spawner/random/medical/surgery_tool_advanced
 	name = "Advanced surgery tool spawner"
 	loot = list( // Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
