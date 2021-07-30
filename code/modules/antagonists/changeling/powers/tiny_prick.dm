@@ -176,7 +176,13 @@
 	log_combat(user, target, "stung", "extraction sting")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!(changeling.has_dna(target.dna)))
-		changeling.add_new_profile(target)
+		var/important_dna = FALSE
+		for(var/datum/objective/found_objective as anything in user.mind.get_all_objectives())
+			if(found_objective.target && found_objective.target == target.mind)
+				important_dna = TRUE
+				break
+
+		changeling.add_new_profile(target, important_dna)
 	return TRUE
 
 /datum/action/changeling/sting/mute

@@ -81,7 +81,7 @@
 		if(!changeling_datum)
 			changeling_datum = origin.add_antag_datum(/datum/antagonist/changeling/headslug)
 		if(changeling_datum.can_absorb_dna(owner))
-			changeling_datum.add_new_profile(owner)
+			changeling_datum.add_new_profile(owner, TRUE)
 
 		var/datum/action/changeling/humanform/hf = new
 		changeling_datum.purchasedpowers += hf

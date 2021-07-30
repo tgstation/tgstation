@@ -53,7 +53,13 @@
 	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
 
 	if(!changeling.has_dna(target.dna))
-		changeling.add_new_profile(target)
+		var/important_dna = FALSE
+		for(var/datum/objective/found_objective as anything in user.mind.get_all_objectives())
+			if(found_objective.target && found_objective.target == target.mind)
+				important_dna = TRUE
+				break
+
+		changeling.add_new_profile(target, important_dna)
 		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
