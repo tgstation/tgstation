@@ -198,4 +198,4 @@
 /atom/movable/screen/plane_master/mob_names/backdrop(mob/mymob)
 	filters = list()
 	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
-		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+		add_filter("mob_names", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
