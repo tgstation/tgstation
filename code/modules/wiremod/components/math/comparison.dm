@@ -28,13 +28,13 @@
 		if(COMP_COMPARISON_EQUAL, COMP_COMPARISON_NOT_EQUAL)
 			if(current_type != PORT_TYPE_ANY)
 				current_type = PORT_TYPE_ANY
-				input_ports[1].set_datatype(PORT_TYPE_ANY)
-				input_ports[2].set_datatype(PORT_TYPE_ANY)
+				compare_ports[1].set_datatype(PORT_TYPE_ANY)
+				compare_ports[2].set_datatype(PORT_TYPE_ANY)
 		else
 			if(current_type != PORT_TYPE_NUMBER)
 				current_type = PORT_TYPE_NUMBER
-				input_ports[1].set_datatype(PORT_TYPE_NUMBER)
-				input_ports[2].set_datatype(PORT_TYPE_NUMBER)
+				compare_ports[1].set_datatype(PORT_TYPE_NUMBER)
+				compare_ports[2].set_datatype(PORT_TYPE_NUMBER)
 	return ..()
 
 
@@ -43,8 +43,8 @@
 		return FALSE
 
 	// Comparison component only compares the first two ports
-	var/input1 = input_ports[1].input_value
-	var/input2 = input_ports[2].input_value
+	var/input1 = compare_ports[1].input_value
+	var/input2 = compare_ports[2].input_value
 	var/current_option = comparison_option.input_value
 
 	switch(current_option)
