@@ -23,12 +23,12 @@
 	/// Used for examining
 	var/examine_type = DECOMP_EXAM_NORMAL
 
-/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE)
+/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE, semi_preserved_food)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
-	if(mapload)
+	if(mapload || semi_preserved_food)
 		handled = FALSE
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)

@@ -38,6 +38,8 @@
 	var/venue_value
 	///Food that's immune to decomposition.
 	var/preserved_food = FALSE
+	///Food that needs to be picked up in order to decompose.
+	var/semi_preserved_food = FALSE
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -89,4 +91,4 @@
 ///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes)
+		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes, semi_preserved_food)
