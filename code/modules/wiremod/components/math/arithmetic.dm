@@ -16,6 +16,7 @@
 	/// The result from the output
 	var/datum/port/output/output
 
+	var/list/arithmetic_ports
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/arithmetic/populate_options()
@@ -33,7 +34,7 @@
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
-		add_input_port(letter, PORT_TYPE_NUMBER)
+		arithmetic_ports += add_input_port(letter, PORT_TYPE_NUMBER)
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
@@ -42,13 +43,10 @@
 	if(.)
 		return
 
-	var/list/ports = input_ports.Copy()
-	var/datum/port/input/first_port = ports[1]
-	ports -= first_port
-	ports -= trigger_input
+	var/datum/port/input/first_port = arithmetic_ports[1]
 	var/result = first_port.input_value
 
-	for(var/datum/port/input/input_port as anything in ports)
+	for(var/datum/port/input/input_port as anything in arithmetic_ports)
 		var/value = input_port.input_value
 		if(isnull(value))
 			continue
