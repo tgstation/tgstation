@@ -779,7 +779,7 @@
 
 /datum/quirk/phobia
 	name = "Phobia"
-	desc = "You are irrationally afraid of something."
+	desc = "You are irrationally afraid of something (You can set the phobia type in the preferences)."
 	value = -2
 	medical_record_text = "Patient has an irrational fear of something."
 	hardcore_value = 4 // the phobia is also randomized for hardcore characters.
