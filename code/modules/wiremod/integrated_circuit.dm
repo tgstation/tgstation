@@ -35,6 +35,9 @@
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
+	/// List of stored accesses
+	var/stored_access = list()
+
 	/// The current examined component. Used in IntegratedCircuit UI
 	var/datum/weakref/examined_component
 

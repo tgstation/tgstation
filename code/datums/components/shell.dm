@@ -134,11 +134,15 @@
 
 	if(attached_circuit)
 		if(attached_circuit.owner_id && item == attached_circuit.owner_id.resolve())
+			var/obj/item/card/id/card = item
 			set_locked(!locked)
 			source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+			attached_circuit.stored_access = card.GetAccess()
 			return COMPONENT_NO_AFTERATTACK
 
 		if(!attached_circuit.owner_id && istype(item, /obj/item/card/id))
+			var/obj/item/card/id/card = item
+			attached_circuit.stored_access = card.GetAccess()
 			source.balloon_alert(attacker, "owner id set for [item]")
 			attached_circuit.owner_id = WEAKREF(item)
 			return COMPONENT_NO_AFTERATTACK
