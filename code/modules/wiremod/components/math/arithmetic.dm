@@ -32,6 +32,7 @@
 
 /obj/item/circuit_component/arithmetic/Initialize()
 	. = ..()
+	arithmetic_ports = list()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
 		arithmetic_ports += add_input_port(letter, PORT_TYPE_NUMBER)
@@ -43,10 +44,11 @@
 	if(.)
 		return
 
-	var/datum/port/input/first_port = arithmetic_ports[1]
+	var/list/ports = arithmetic_ports.Copy()
+	var/datum/port/input/first_port = popleft(ports)
 	var/result = first_port.input_value
 
-	for(var/datum/port/input/input_port as anything in arithmetic_ports)
+	for(var/datum/port/input/input_port as anything in ports)
 		var/value = input_port.input_value
 		if(isnull(value))
 			continue
