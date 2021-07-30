@@ -34,11 +34,12 @@
 	..()
 
 //Undeploying, for when you want to move your big dakka around
-/obj/machinery/deployable_turret/attackby_secondary(mob/user)
+/obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
 	. = ..()
 	var/obj/undeployed_object
 	if(!ishuman(user))
 		return
+	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
 	if(!do_after(user, undeploy_time))
 		return
@@ -198,8 +199,9 @@
 	anchored = TRUE
 	number_of_shots = 3
 	cooldown_duration = 2 SECONDS
+	rate_of_fire = 2
 	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
-	overheatsound = 'sound/weapons/gun/smh/smgrack'
+	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = FALSE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 

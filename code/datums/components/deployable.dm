@@ -4,12 +4,11 @@
 	var/deployed_name //For getting the name of an object for examines later on
 	var/delete_on_use = TRUE //Do we delete the item being used when the object is deployed
 
-/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use)
+/datum/component/deployable/Initialize(thing_to_be_deployed)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.deploy_time = deploy_time
 	src.thing_to_be_deployed = thing_to_be_deployed
 	src.delete_on_use = delete_on_use
 

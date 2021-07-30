@@ -204,6 +204,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 
+/obj/item/deployable_turret_folded/Initialize()
+	. = ..()
+	AddComponent(/datum/component/deployable, /obj/machinery/deployable_turret/hmg, )
+
 #undef SINGLE
 #undef VERTICAL
 #undef HORIZONTAL
