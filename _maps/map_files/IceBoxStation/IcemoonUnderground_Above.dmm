@@ -2869,8 +2869,10 @@
 /area/mine/laborcamp)
 "nF" = (
 /obj/structure/stairs/west,
-/obj/structure/railing,
 /obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/structure/railing{
 	dir = 1
 	},
 /turf/open/genturf,
