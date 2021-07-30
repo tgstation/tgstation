@@ -31,3 +31,5 @@
 /obj/effect/spawner/lootdrop/space/fancytool/engineonly : /obj/effect/spawner/random/engineering/tool_advanced
 /obj/effect/spawner/lootdrop/space/material : /obj/effect/spawner/random/engineering/material_rare
 /obj/effect/spawner/lootdrop/decorative_material : /obj/effect/spawner/random/decorations/material
+/obj/effect/spawner/lootdrop/maintenance_carpet : /obj/effect/spawner/random/decorations/carpet
+/obj/effect/spawner/lootdrop/decorations_spawner : /obj/effect/spawner/random/decorations/generic

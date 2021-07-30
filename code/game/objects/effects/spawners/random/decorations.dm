@@ -3,7 +3,7 @@
 	desc = "Time for some bling bling."
 
 /obj/effect/spawner/random/decorations/material
-	name = "Decoration material spawner"
+	name = "decoration material spawner"
 	loot = list(
 		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
 		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
@@ -13,4 +13,33 @@
 		/obj/item/stack/tile/pod{amount = 20} = 4,
 		/obj/item/stack/tile/pod/light{amount = 20} = 3,
 		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
+	)
+
+/obj/effect/spawner/random/decorations/carpet
+	name = "carpet spawner"
+	loot = list(
+		/obj/item/stack/tile/carpet{amount = 30} = 35,
+		/obj/item/stack/tile/carpet/black{amount = 30} = 20,
+		/obj/item/stack/tile/carpet/donk/thirty = 15,
+		/obj/item/stack/tile/carpet/stellar/thirty = 15,
+		/obj/item/stack/tile/carpet/executive/thirty = 15,
+	)
+
+/obj/effect/spawner/random/decorations/ornament
+	name = "ornament spawner"
+	loot = list(
+		/obj/item/sign = 10,
+		/obj/item/flashlight/lamp/green = 10,
+		/obj/item/plaque = 5,
+		/obj/item/flashlight/lantern/jade = 5,
+		/obj/item/phone = 5,
+		/obj/item/flashlight/lamp/bananalamp = 3,
+	)
+
+/obj/effect/spawner/random/decorations/generic
+	name = "generic decoration spawner"
+	loot = list(
+		/obj/effect/spawner/random/decorations/ornament = 35,
+		/obj/effect/spawner/random/decorations/carpet = 25,
+		/obj/effect/spawner/random/decorations/material = 25,
 	)
