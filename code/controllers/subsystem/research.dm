@@ -149,17 +149,17 @@ SUBSYSTEM_DEF(research)
 	for(var/path in subtypesof(/datum/design))
 		var/datum/design/design = new path
 		for(var/datum/design/subdesign in (design.subdesigns || list(design)))
-			if(isnull(initial(subdesign.id)))
+			if(isnull(subdesign.id))
 				stack_trace("WARNING: Design with null ID detected. Build path: [initial(subdesign.build_path)]")
 				continue
-			else if(initial(subdesign.id) == DESIGN_ID_IGNORE)
+			else if(subdesign.id == DESIGN_ID_IGNORE)
 				continue
-			if(returned[initial(subdesign.id)])
-				stack_trace("WARNING: Design ID clash with ID [initial(subdesign.id)] detected! Path: [path]")
-				errored_datums[subdesign] = initial(subdesign.id)
+			if(returned[subdesign.id])
+				stack_trace("WARNING: Design ID clash with ID [subdesign.id] detected! Path: [path]")
+				errored_datums[subdesign] = subdesign.id
 				continue
 			subdesign.InitializeMaterials() //Initialize the materials in the design
-			returned[initial(subdesign.id)] = subdesign
+			returned[subdesign.id] = subdesign
 	techweb_designs = returned
 	verify_techweb_designs()
 

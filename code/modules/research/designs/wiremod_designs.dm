@@ -41,14 +41,15 @@
 	. = ..()
 	if(abstract)
 		subdesigns = list()
-		for(var/obj/item/circuit_component/path in subtypesof(/obj/item/circuit_component))
-			var/datum/design/subdesign = new(abstract = FALSE)
-			subdesign.name = initial(path.name)
-			subdesign.id = initial(path.name)
+		for(var/obj/item/circuit_component/path as anything in subtypesof(/obj/item/circuit_component))
+			var/datum/design/component/subdesign = new(abstract = FALSE)
+			subdesign.name = initial(path.display_name)
+			subdesign.id = "comp_[subdesign.name]"
 			subdesign.build_path = path
 			subdesign.desc = initial(path.display_desc)
+			subdesign.unlocked_by_ids += initial(path.techweb_node_id)
 			subdesigns += subdesign
-			SSresearch.techweb_node_by_id(initial(path.techweb_node_id)).design_ids += initial(path.name)
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
