@@ -47,11 +47,11 @@
 	playsound(item, item.hitsound, 30, TRUE, -1)
 	user.do_attack_animation(wall)
 	user.balloon_alert(user, "engraving wall...")
-	if(!do_after(user, 1 SECONDS, target = wall))
+	if(!do_after(user, 5 SECONDS, target = wall))
 		return
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
 	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED))
 	///while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
-	SSpersistence.prison_tattoos += memory_to_engrave.generate_story(STORY_TATTOO)
+	SSpersistence.prison_tattoos_to_save += memory_to_engrave.generate_story(STORY_TATTOO)
 	///REMOVE THE MEMORY ONCE ENGRAVED
