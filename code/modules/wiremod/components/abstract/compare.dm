@@ -19,7 +19,7 @@
 	/// The result from the output
 	var/datum/port/output/result
 
-	var/list/compare_ports = list()
+	var/list/datum/port/input/compare_ports = list()
 
 /obj/item/circuit_component/compare/Initialize()
 	. = ..()
