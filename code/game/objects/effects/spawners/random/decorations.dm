@@ -43,3 +43,34 @@
 		/obj/effect/spawner/random/decorations/carpet = 25,
 		/obj/effect/spawner/random/decorations/material = 25,
 	)
+
+/obj/effect/spawner/random/decorations/statue
+	name = "statue spawner"
+	//icon = 'icons/obj/statue.dmi'
+	//icon_state = "random_statue"
+	loot = list(
+		/obj/structure/statue/bronze/marx = 50,
+		/obj/item/statuebust = 50,
+		/obj/item/statuebust/hippocratic = 50,
+		/obj/structure/statue/sandstone/assistant = 50,
+		/obj/structure/statue/sandstone/venus = 50,
+		/obj/structure/statue/silver/md = 20,
+		/obj/structure/statue/silver/janitor = 20,
+		/obj/structure/statue/silver/sec = 20,
+		/obj/structure/statue/silver/secborg = 20,
+		/obj/structure/statue/silver/medborg = 20,
+		/obj/structure/statue/plasma/scientist = 15,
+		obj/structure/statue/plasma/xeno = 15,
+		/obj/structure/statue/gold/hos = 5,
+		/obj/structure/statue/gold/hop = 5,
+		/obj/structure/statue/gold/cmo = 5,
+		/obj/structure/statue/gold/ce = 5,
+		/obj/structure/statue/gold/rd = 5,
+		/obj/structure/statue/bananium/clown = 1,
+		/obj/structure/statue/elder_atmosian = 1,
+		/obj/structure/statue/uranium/nuke = 1,
+		/obj/structure/statue/uranium/eng = 1,
+		/obj/structure/statue/diamond/captain = 1,
+		/obj/structure/statue/diamond/ai1 = 1,
+		/obj/structure/statue/diamond/ai2 = 1,
+	)
