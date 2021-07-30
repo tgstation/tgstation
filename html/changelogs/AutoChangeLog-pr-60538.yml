@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "All cargo manifest exports should now work as expected. No more gaining money from selling erroneously denied manifests and not gaining/losing money from incorrect manifests."
