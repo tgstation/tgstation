@@ -153,6 +153,9 @@
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 251
 
+///Plane for mob names
+#define MOB_NAME_PLANE 252
+
 ///Debug Atmos Overlays
 #define ATMOS_GROUP_PLANE 450
 

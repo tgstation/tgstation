@@ -45,3 +45,25 @@
 		return
 	user.mob.button_pressed_F12()
 	return TRUE
+
+
+/datum/keybinding/client/show_names
+	hotkey_keys = list("I")
+	name = "show mob names"
+	full_name = "show mob names"
+	description = "Show names of nearby mobs, very cool!"
+	keybind_signal = COMSIG_KB_CLIENT_SHOW_MOB_NAMES_DOWN
+
+/datum/keybinding/client/show_names/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/atom/movable/screen/plane_master/name_planemaster = user.mob.hud_used.plane_masters["[MOB_NAME_PLANE]"]
+	name_planemaster.Show()
+
+/datum/keybinding/client/show_names/up(client/user)
+	var/atom/movable/screen/plane_master/name_planemaster = user.mob.hud_used.plane_masters["[MOB_NAME_PLANE]"]
+	name_planemaster.Hide()
+
+
+

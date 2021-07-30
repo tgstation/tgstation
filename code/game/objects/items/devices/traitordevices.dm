@@ -218,6 +218,7 @@ effective or pretty fucking useless.
 	START_PROCESSING(SSobj, src)
 	old_alpha = user.alpha
 	on = TRUE
+	ADD_TRAIT(user, TRAIT_NAME_STEALTHY, SHADOW_CLOAK_TRAIT)
 
 /obj/item/shadowcloak/proc/Deactivate()
 	to_chat(user, span_notice("You deactivate [src]."))
@@ -225,6 +226,7 @@ effective or pretty fucking useless.
 	if(user)
 		user.alpha = old_alpha
 	on = FALSE
+	REMOVE_TRAIT(user, TRAIT_NAME_STEALTHY, SHADOW_CLOAK_TRAIT)
 	user = null
 
 /obj/item/shadowcloak/dropped(mob/user)

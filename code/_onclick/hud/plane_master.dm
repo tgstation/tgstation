@@ -187,3 +187,15 @@
 	filters = list()
 	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+
+
+/atom/movable/screen/plane_master/mob_names
+	name = "mob name plane master"
+	plane = MOB_NAME_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/mob_names/backdrop(mob/mymob)
+	filters = list()
+	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
+		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))

@@ -13,6 +13,7 @@
 	if(..())
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+	ADD_TRAIT(owner, TRAIT_NAME_STEALTHY, CHAMELEON_TRAIT)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 
@@ -35,4 +36,5 @@
 	if(..())
 		return
 	owner.alpha = 255
+	REMOVE_TRAIT(owner, TRAIT_NAME_STEALTHY, CHAMELEON_TRAIT)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)

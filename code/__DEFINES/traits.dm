@@ -477,6 +477,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INTROVERT "introvert"
 #define TRAIT_ANXIOUS "anxious"
 #define TRAIT_INSANITY "insanity"
+#define TRAIT_NAME_STEALTHY "name_stealthy"
 
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
@@ -621,6 +622,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHRONOSUIT_TRAIT "chronosuit"
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
+#define CHAMELEON_TRAIT "chameleon"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
@@ -628,6 +630,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define VENTCRAWLING_TRAIT "ventcrawling"
 #define SPECIES_FLIGHT_TRAIT "species-flight"
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
+#define SHADOW_CLOAK_TRAIT "shadow-cloak"
+#define STEALTH_ARMOR_TRAIT "stealth-armor"
+#define XENO_SNEAK_TRAIT "xeno-sneak"
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 /// sticky nodrop sounds like a bad soundcloud rapper's name

@@ -292,11 +292,13 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
 	if(!active)
 		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
+		ADD_TRAIT(owner, TRAIT_NAME_STEALTHY, XENO_SNEAK_TRAIT)
 		user.sneaking = 1
 		active = 1
 		to_chat(user, span_noticealien("You blend into the shadows..."))
 	else
 		user.alpha = initial(user.alpha)
+		REMOVE_TRAIT(owner, TRAIT_NAME_STEALTHY, XENO_SNEAK_TRAIT)
 		user.sneaking = 0
 		active = 0
 		to_chat(user, span_noticealien("You reveal yourself!"))

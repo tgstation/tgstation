@@ -266,21 +266,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/list/joined_players = list()
 		for(var/player_ckey in GLOB.joined_player_list)
 			joined_players[player_ckey] = 1
-			
+
 		for(var/joined_player_ckey in (GLOB.directory | joined_players))
 			if (!joined_player_ckey || joined_player_ckey == ckey)
 				continue
-			
+
 			var/datum/preferences/joined_player_preferences = GLOB.preferences_datums[joined_player_ckey]
 			if(!joined_player_preferences)
 				continue //this shouldn't happen.
-				
+
 			var/client/C = GLOB.directory[joined_player_ckey]
 			var/in_round = ""
 			if (joined_players[joined_player_ckey])
 				in_round = " who has played in the current round"
 			var/message_type = "Notice"
-			
+
 			var/matches
 			if(joined_player_preferences.last_ip == address)
 				matches += "IP ([address])"
@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					message_type = "MULTIKEY"
 				matches += "Computer ID ([computer_id])"
 				alert_mob_dupe_login = TRUE
-			
+
 			if(matches)
 				if(C)
 					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [key_name_admin(C)]<b>[in_round]</b>."))
@@ -351,7 +351,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		spawn(0.5 SECONDS) //needs to run during world init, do not convert to add timer
 			alert(mob, dupe_login_message) //players get banned if they don't see this message, do not convert to tgui_alert (or even tg_alert) please.
 			to_chat(mob, span_danger(dupe_login_message))
-			
+
+
+	//for(var/mob/mob_inst as anything in GLOB.mob_list)
+	//	if(mob_inst.name_image) //Might not have generated yet, in which case it'll add itself.
+	//		images += mob_inst.name_image
 
 	connection_time = world.time
 	connection_realtime = world.realtime

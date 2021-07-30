@@ -197,6 +197,7 @@
 	decoy.Goto(owner, decoy.move_to_delay, decoy.minimum_distance)
 	owner.alpha = 0
 	in_stealth = TRUE
+	ADD_TRAIT(owner, TRAIT_NAME_STEALTHY, STEALTH_ARMOR_TRAIT)
 	owner.visible_message(span_danger("[owner] is hit by [attack_text] in the chest!")) //We pretend to be hit, since blocking it would stop the message otherwise
 	addtimer(CALLBACK(src, .proc/end_stealth, owner), stealth_time)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -205,6 +206,8 @@
 /obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth(mob/living/carbon/human/owner)
 	in_stealth = FALSE
 	animate(owner, alpha = initial(owner.alpha), time = animation_time)
+	REMOVE_TRAIT(owner, TRAIT_NAME_STEALTHY, STEALTH_ARMOR_TRAIT)
+
 
 /obj/item/clothing/suit/armor/reactive/stealth/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!isliving(hitby))

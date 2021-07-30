@@ -85,6 +85,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
+	create_name_image()
 
 /**
  * Generate the tag for this mob
@@ -1347,3 +1348,30 @@
 		client.movingmob.client_mobs_in_contents -= src
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
 		client.movingmob = null
+
+
+///Creates an image to show the mob's name on
+/mob/proc/create_name_image()
+
+	name_image = image(loc = src, layer = CHAT_LAYER)
+	name_image.plane = MOB_NAME_PLANE
+	name_image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
+	name_image.pixel_y = -12
+	name_image.maptext_height = 40
+	name_image.maptext_width = 96
+	name_image.maptext_x = (96 - bound_width) * -0.5
+	name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NAME_STEALTHY), .proc/hide_name)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NAME_STEALTHY), .proc/show_name)
+
+	overlays += name_image //gonna cry?
+
+///Hide the mobs name
+/mob/proc/hide_name()
+	name_image.alpha = 0
+
+///Show the mobs name again
+/mob/proc/show_name()
+	name_image.alpha = 255
+

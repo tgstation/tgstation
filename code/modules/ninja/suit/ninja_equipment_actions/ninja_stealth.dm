@@ -22,6 +22,7 @@
 			return
 		stealth = !stealth
 		animate(ninja, alpha = 20,time = 12)
+		ADD_TRAIT(ninja, TRAIT_NAME_STEALTHY, NINJA_SUIT_TRAIT)
 		ninja.visible_message(span_warning("[ninja.name] vanishes into thin air!"), \
 						span_notice("You are now mostly invisible to normal detection."))
 
@@ -42,5 +43,6 @@
 		animate(ninja, alpha = 255, time = 12)
 		ninja.visible_message(span_warning("[ninja.name] appears from thin air!"), \
 						span_notice("You are now visible."))
+		REMOVE_TRAIT(ninja, TRAIT_NAME_STEALTHY, NINJA_SUIT_TRAIT)
 		return TRUE
 	return FALSE
