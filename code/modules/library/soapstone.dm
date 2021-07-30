@@ -154,10 +154,27 @@ but only permanently removed with the curator's soapstone.
 
 /obj/structure/chisel_message/update_icon()
 	. = ..()
-	var/hash = md5(hidden_message)
-	var/newcolor = copytext_char(hash, 1, 7)
-	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
-	set_light_color("#[newcolor]")
+
+	var/newcolor = COLOR_SOAPSTONE_BRONZE
+	switch(like_keys.len - dislike_keys.len)
+		if(-INFINITY to 0)
+			newcolor = COLOR_SOAPSTONE_FAIL
+			name = "[initial(name)]"
+		if(1 to 10)
+			newcolor = COLOR_SOAPSTONE_BRONZE
+			name = "bronze [initial(name)]"
+		if(11 to 20)
+			newcolor = COLOR_SOAPSTONE_SILVER
+			name = "silver [initial(name)]"
+		if(21 to 30)
+			newcolor = COLOR_SOAPSTONE_GOLD
+			name = "gold [initial(name)]"
+		if(31 to INFINITY)
+			newcolor = COLOR_SOAPSTONE_PLATINUM
+			name = "platinum [initial(name)]"
+
+	add_atom_colour("[newcolor]", FIXED_COLOUR_PRIORITY)
+	set_light_color("[newcolor]")
 	set_light(1)
 
 /obj/structure/chisel_message/proc/pack()
@@ -287,4 +304,5 @@ but only permanently removed with the curator's soapstone.
 				qdel(src)
 				return
 
+	update_appearance()
 	persists = like_keys.len - dislike_keys.len > delete_at
