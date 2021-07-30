@@ -453,19 +453,6 @@
 		/obj/item/language_manual/roundstart_species/unlimited = 1
 	)
 
-/// Space loot spawner. Random selecton of a few rarer materials.
-/obj/effect/spawner/lootdrop/space/material
-	lootcount = 3
-	loot = list(
-		/obj/item/stack/sheet/plastic/fifty = 5,
-		/obj/item/stack/sheet/runed_metal/ten = 20,
-		/obj/item/stack/sheet/runed_metal/fifty = 5,
-		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,
-		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
-		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 15,
-		/obj/item/stack/sheet/mineral/gold{amount = 15} = 15,
-	)
-
 /// A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
 /obj/effect/spawner/lootdrop/space/syndiecosmetic
 	lootcount = 2

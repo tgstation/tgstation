@@ -29,3 +29,4 @@
 /obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly : /obj/effect/spawner/random/medical/surgery_tool_rare
 /obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly : /obj/effect/spawner/random/medical/surgery_tool_advanced
 /obj/effect/spawner/lootdrop/space/fancytool/engineonly : /obj/effect/spawner/random/engineering/tool_advanced
+/obj/effect/spawner/lootdrop/space/material : /obj/effect/spawner/random/engineering/material_rare
