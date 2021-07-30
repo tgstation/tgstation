@@ -26,9 +26,11 @@
 	else //Also tells the player if you are bad at coding
 		examine_list += span_notice("It appears that you should be able to deploy this, but you can't see how, better report this to Central!")
 
-/datum/component/deployable/proc/deploy(datum/source, mob/user, location, direction) //If there's no user, location and direction are used
+/datum/component/deployable/proc/deploy(datum/source, mob/user, location, direction)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/finish_deploy, source, user, location, direction)
 
+/datum/component/deployable/proc/finish_deploy(datum/source, mob/user, location, direction) //If there's no user, location and direction are used
 	var/obj/deploy_item = source //I got errors for not using this, so be it
 	var/obj/deployed_object //Used for spawning the deployed object
 	var/turf/deploy_location //Where our deployed_object gets put
