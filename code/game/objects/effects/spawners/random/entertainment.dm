@@ -39,7 +39,8 @@
 /obj/effect/spawner/random/entertainment/coin
 	name = "coin spawner"
 	loot = list(
-		/obj/item/coin/iron = 10,
+		/obj/item/coin/iron = 5,
+		/obj/item/coin/plastic = 5,
 		/obj/item/coin/silver = 3,
 		/obj/item/coin/plasma = 3,
 		/obj/item/coin/uranium = 3,
@@ -48,7 +49,6 @@
 		/obj/item/coin/bananium = 2,
 		/obj/item/coin/adamantine = 2,
 		/obj/item/coin/mythril = 2,
-		/obj/item/coin/plastic = 2,
 		/obj/item/coin/runite = 2,
 		/obj/item/coin/twoheaded = 1,
 		/obj/item/coin/antagtoken = 1,
