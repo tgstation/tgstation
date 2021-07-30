@@ -49345,7 +49345,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "hJb" = (
@@ -53713,13 +53712,13 @@
 /turf/open/floor/iron,
 /area/science/research/abandoned)
 "iPA" = (
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "iPI" = (
@@ -68789,7 +68788,18 @@
 /turf/open/floor/iron,
 /area/commons/toilet/restrooms)
 "mPo" = (
-/obj/machinery/research/explosive_compressor,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/target,
+/obj/item/target/syndicate,
+/obj/item/target/alien,
+/obj/item/target/clown,
+/obj/structure/closet/crate/secure{
+	desc = "A secure crate containing various materials for building a customised test-site.";
+	name = "Test Site Materials Crate";
+	req_access_txt = "8"
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
@@ -88418,21 +88428,10 @@
 /turf/open/space,
 /area/engineering/atmos)
 "rLO" = (
-/obj/item/stack/rods/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/target,
-/obj/item/target/syndicate,
-/obj/item/target/alien,
-/obj/item/target/clown,
-/obj/structure/closet/crate/secure{
-	desc = "A secure crate containing various materials for building a customised test-site.";
-	name = "Test Site Materials Crate";
-	req_access_txt = "8"
-	},
+/obj/machinery/research/explosive_compressor,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 9
+	dir = 6
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
@@ -92278,6 +92277,7 @@
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "sJv" = (
@@ -105181,10 +105181,6 @@
 /obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"weA" = (
-/obj/structure/sign/warning/vacuum,
-/turf/closed/wall,
-/area/science/misc_lab/range)
 "weH" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -107798,6 +107794,10 @@
 /obj/item/paicard,
 /turf/open/floor/iron/grimy,
 /area/commons/vacant_room/office)
+"wSt" = (
+/obj/structure/sign/warning/vacuum,
+/turf/closed/wall/r_wall,
+/area/science/misc_lab/range)
 "wSu" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -140918,7 +140918,7 @@ aad
 saw
 skA
 skA
-saw
+skA
 skA
 saw
 eMn
@@ -141434,7 +141434,7 @@ nXC
 lra
 lHp
 iPA
-weA
+kVu
 rsF
 saw
 dOc
@@ -141693,7 +141693,7 @@ mYu
 rLO
 skA
 hAH
-saw
+wSt
 dOd
 ert
 iKu
