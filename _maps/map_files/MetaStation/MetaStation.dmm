@@ -21236,6 +21236,13 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
+"eEK" = (
+/obj/effect/turf_decal/siding,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/science/mixing)
 "eEU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -110511,7 +110518,7 @@ hSa
 cyK
 sQG
 lPV
-eqN
+eEK
 swS
 tUz
 nrI
