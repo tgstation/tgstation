@@ -22,6 +22,24 @@
 		/obj/item/crowbar/red/caravan,
 	)
 
+/obj/effect/spawner/random/engineering/material_cheap
+	name = "Cheap material spawner"
+	loot = list(
+		/obj/item/stack/sheet/mineral/wood{amount = 30},
+		/obj/item/stack/sheet/cardboard{amount = 30},
+		/obj/item/stack/sheet/mineral/sandstone/thirty,
+	)
+
+/obj/effect/spawner/random/engineering/material
+	name = "Material spawner"
+	loot = list(
+		/obj/item/stack/sheet/iron/fifty = 5,
+		/obj/item/stack/sheet/glass/fifty = 5,
+		/obj/item/stack/rods/fifty = 3,
+		/obj/item/stack/sheet/rglass{amount = 30} = 2,
+	)
+
+
 /obj/effect/spawner/random/engineering/material_rare
 	name = "Rare material spawner"
 	lootcount = 3

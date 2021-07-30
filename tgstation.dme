@@ -1138,6 +1138,7 @@
 #include "code\game\objects\effects\spawners\xeno_egg_delivery.dm"
 #include "code\game\objects\effects\spawners\random\bureaucracy.dm"
 #include "code\game\objects\effects\spawners\random\clothing.dm"
+#include "code\game\objects\effects\spawners\random\engineering.dm"
 #include "code\game\objects\effects\spawners\random\entertainment.dm"
 #include "code\game\objects\effects\spawners\random\food_or_drink.dm"
 #include "code\game\objects\effects\spawners\random\medical.dm"
