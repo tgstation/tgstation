@@ -165,10 +165,10 @@
 		return
 
 	if(ispAI(M))
-		var/mob/living/silicon/pai/Bot = M
-		var/holochassis = pick(Bot.possible_chassis)
+		var/mob/living/silicon/pai/pai = M
+		var/holochassis = pick(pai.possible_chassis)
 		Bot.set_holochassis(holochassis)
-		to_chat(Bot, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
+		to_chat(pai, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
 		return
 
 	M.notransform = TRUE
