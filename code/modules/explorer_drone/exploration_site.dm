@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 /datum/exploration_site/proc/display_name()
 	return revealed ? name : "Anomaly"
 
-/datum/exploration_site/proc/description()
+/datum/exploration_site/proc/display_description()
 	if(!revealed)
 		return "No Data"
 	var/list/descriptions = list(description)
@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	.["ref"] = ref(src)
 	.["name"] = display_name()
 	.["coordinates"] = coordinates
-	.["description"] = description()
+	.["description"] = display_description()
 	.["distance"] = distance
 	.["revealed"] = revealed
 	.["point_scan_complete"] = point_scan_complete
