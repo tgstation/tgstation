@@ -45,27 +45,19 @@
 	/// The power usage whenever this component receives an input
 	var/power_usage_per_input = 1
 
-	/// The current selected option
-	var/current_option
-	/// The options that this component can take on. Limited to strings
-	var/list/options
-
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
+
+/obj/item/circuit_component/proc/populate_options()
+	return
 
 /obj/item/circuit_component/Initialize()
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
 	populate_options()
-	if(length(options))
-		current_option = options[1]
 
 	return INITIALIZE_HINT_LATELOAD
-
-/// Called when the options variable should be set.
-/obj/item/circuit_component/proc/populate_options()
-	return
 
 /obj/item/circuit_component/LateInitialize()
 	. = ..()
@@ -121,17 +113,6 @@
 		port_to_disconnect.disconnect()
 
 /**
- * Sets the option on this component
- *
- * Can only be a value from the options variable
- * Arguments:
- * * option - The option that has been switched to.
- */
-/obj/item/circuit_component/proc/set_option(option)
-	current_option = option
-	TRIGGER_CIRCUIT_COMPONENT(src, null)
-
-/**
  * Adds an input port and returns it
  *
  * Arguments:
@@ -139,8 +120,12 @@
  * * type - The datatype it handles
  * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null)
-	var/datum/port/input/input_port = new(src, name, type, trigger, default)
+/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null, port_type = /datum/port/input, extra_args = null)
+	var/list/arguments = list(src)
+	arguments += args
+	if(extra_args)
+		arguments += extra_args
+	var/datum/port/input/input_port = new port_type(arglist(arguments))
 	input_ports += input_port
 	if(parent)
 		SStgui.update_uis(parent)
@@ -166,7 +151,9 @@
  * * type - The datatype it handles.
  */
 /obj/item/circuit_component/proc/add_output_port(name, type)
-	var/datum/port/output/output_port = new(src, name, type)
+	var/list/arguments = list(src)
+	arguments += args
+	var/datum/port/output/output_port = new(arglist(arguments))
 	output_ports += output_port
 	return output_port
 

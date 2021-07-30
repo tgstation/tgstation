@@ -156,14 +156,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	component_data["rel_x"] = rel_x
 	component_data["rel_y"] = rel_y
 
-	component_data["option"] = current_option
-
 /// Loads data from a list
 /obj/item/circuit_component/proc/load_data_from_list(list/component_data)
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
-
-	set_option(component_data["option"])
 
 /client/proc/load_circuit()
 	set name = "Load Circuit"

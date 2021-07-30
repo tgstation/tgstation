@@ -11,6 +11,8 @@
 	/// The amount of input ports to have
 	var/input_port_amount = 4
 
+	var/datum/port/input/option/arithmetic_option
+
 	/// The result from the output
 	var/datum/port/output/output
 
@@ -25,7 +27,7 @@
 		COMP_ARITHMETIC_MIN,
 		COMP_ARITHMETIC_MAX,
 	)
-	options = component_options
+	arithmetic_option = add_input_port("Arithmetic Option", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
 
 /obj/item/circuit_component/arithmetic/Initialize()
 	. = ..()
@@ -51,7 +53,7 @@
 		if(isnull(value))
 			continue
 
-		switch(current_option)
+		switch(arithmetic_option.input_value)
 			if(COMP_ARITHMETIC_ADD)
 				result += value
 			if(COMP_ARITHMETIC_SUBTRACT)

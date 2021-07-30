@@ -4,6 +4,9 @@
 /// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
 #define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
 
+/// Handles adding option ports more simply
+#define SET_OPTION_LIST(option_list) port_type = /datum/port/input/option, extra_args = list(possible_options = option_list)
+
 // Port defines
 
 #define PORT_MAX_NAME_LENGTH 50
@@ -26,6 +29,8 @@
 #define PORT_TYPE_LIST "list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
+/// Options datatype. Derivative of string.
+#define PORT_TYPE_OPTION "option"
 
 // Other datatypes
 /// Atom datatype
@@ -142,3 +147,8 @@
 #define CIRCUIT_FLAG_UNDUPEABLE (1<<2)
 /// This circuit component does not show in the menu.
 #define CIRCUIT_FLAG_HIDDEN (1<<3)
+
+// Datatype flags
+/// The datatype supports manual inputs
+#define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
+#define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)

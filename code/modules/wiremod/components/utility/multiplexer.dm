@@ -8,6 +8,8 @@
 	display_desc = "A component that allows you to selectively choose which input port provides an output. The first port is the selector and takes a number between 1 and the maximum port amount."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
+	var/datum/port/input/option/multiplexer_options
+
 	/// The port to select from, goes from 1 to input_port_amount
 	var/datum/port/input/input_port
 
@@ -30,11 +32,11 @@
 		PORT_TYPE_LIST,
 		PORT_TYPE_ATOM,
 	)
-	options = component_options
+	multiplexer_options = add_input_port("Multiplexer Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
 
 /obj/item/circuit_component/multiplexer/Initialize()
 	. = ..()
-	current_type = current_option
+	current_type = multiplexer_options.input_value
 	input_port = add_input_port("Selector", PORT_TYPE_NUMBER, default = 1)
 	multiplexer_inputs = list()
 	for(var/port_id in 1 to input_port_amount)
@@ -43,8 +45,8 @@
 
 /obj/item/circuit_component/multiplexer/input_received(datum/port/input/port)
 	. = ..()
-	if(current_type != current_option)
-		current_type = current_option
+	if(current_type != multiplexer_options.input_value)
+		current_type = multiplexer_options.input_value
 		for(var/datum/port/input/input_port as anything in multiplexer_inputs)
 			input_port.set_datatype(current_type)
 		output_port.set_datatype(current_type)
