@@ -51,6 +51,8 @@ other types of metals and chemistry for reagents).
 	var/departmental_flags = ALL
 	/// What techwebs nodes unlock this design. Constructed by SSresearch
 	var/list/datum/techweb_node/unlocked_by = list()
+	/// An optional list of extra techweb node ids that unlock this design.
+	var/list/unlocked_by_ids = list()
 	/// Override for the automatic icon generation used for the research console.
 	var/research_icon
 	/// Override for the automatic icon state generation used for the research console.

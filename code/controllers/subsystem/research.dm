@@ -240,8 +240,10 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/calculate_techweb_nodes()
 	for(var/design_id in techweb_designs)
-		var/datum/design/D = techweb_designs[design_id]
-		D.unlocked_by.Cut()
+		var/datum/design/design = techweb_designs[design_id]
+		design.unlocked_by.Cut()
+		for(var/node_id in design.unlocked_by_ids)
+			design.unlocked_by += techweb_nodes[node_id]
 	for(var/node_id in techweb_nodes)
 		var/datum/techweb_node/node = techweb_nodes[node_id]
 		node.unlock_ids = list()
