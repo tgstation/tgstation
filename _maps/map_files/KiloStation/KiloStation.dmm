@@ -66184,7 +66184,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/maintenance_carpet,
+/obj/effect/spawner/random/decorations/carpet,
 /turf/open/floor/iron,
 /area/security/prison)
 "oiz" = (

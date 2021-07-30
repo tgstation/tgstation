@@ -714,7 +714,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cj" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/material,
+/obj/effect/spawner/random/engineering/material_rare,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ck" = (
