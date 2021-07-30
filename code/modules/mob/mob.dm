@@ -1066,6 +1066,7 @@
 
 	real_name = newname
 	name = newname
+	update_name_image()
 	if(mind)
 		mind.name = newname
 		if(mind.key)
@@ -1355,23 +1356,30 @@
 
 	name_image = image(loc = src, layer = CHAT_LAYER)
 	name_image.plane = MOB_NAME_PLANE
-	name_image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
+	name_image.appearance_flags = APPEARANCE_UI | KEEP_APART
 	name_image.pixel_y = -12
 	name_image.maptext_height = 40
 	name_image.maptext_width = 96
 	name_image.maptext_x = (96 - bound_width) * -0.5
-	name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")
+	update_name_image()
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NAME_STEALTHY), .proc/hide_name)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NAME_STEALTHY), .proc/show_name)
 
-	overlays += name_image //gonna cry?
+	add_overlay(name_image) //gonna cry?
 
 ///Hide the mobs name
 /mob/proc/hide_name()
 	name_image.alpha = 0
+	cut_overlay(name_image)
+	add_overlay(name_image)
 
 ///Show the mobs name again
 /mob/proc/show_name()
 	name_image.alpha = 255
+	cut_overlay(name_image)
+	add_overlay(name_image)
 
+/mob/proc/update_name_image()
+	if(name_image)
+		name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")

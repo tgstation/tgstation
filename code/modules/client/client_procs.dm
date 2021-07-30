@@ -352,11 +352,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			alert(mob, dupe_login_message) //players get banned if they don't see this message, do not convert to tgui_alert (or even tg_alert) please.
 			to_chat(mob, span_danger(dupe_login_message))
 
-
-	//for(var/mob/mob_inst as anything in GLOB.mob_list)
-	//	if(mob_inst.name_image) //Might not have generated yet, in which case it'll add itself.
-	//		images += mob_inst.name_image
-
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
