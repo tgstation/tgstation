@@ -22,6 +22,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		SetupQuirks()
 
 	quirk_blacklist = list(list("Blind","Nearsighted"), \
+							list("Blind", "Monochromacy"), \
 							list("Jolly","Depression","Apathetic","Hypersensitive"), \
 							list("Ageusia","Vegetarian","Deviant Tastes"), \
 							list("Ananas Affinity","Ananas Aversion"), \
