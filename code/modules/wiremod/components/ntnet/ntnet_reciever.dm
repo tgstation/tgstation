@@ -16,7 +16,7 @@
 	var/datum/port/output/hid
 	var/datum/port/output/data_package
 	var/datum/port/output/secondary_package
-	var/datum/port/output/owner_id
+	var/datum/port/input/owner_id
 
 /obj/item/circuit_component/ntnet_receive/Initialize()
 	. = ..()
