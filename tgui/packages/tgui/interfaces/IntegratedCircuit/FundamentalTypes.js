@@ -1,6 +1,5 @@
 import { BasicInput } from './BasicInput';
 import { NumberInput, Button, Stack, Input, Dropdown, Box } from '../../components';
-import { CSS_COLORS } from '../../constants';
 
 export const FUNDAMENTAL_DATA_TYPES = {
   'string': (props, context) => {
