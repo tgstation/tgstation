@@ -40,6 +40,6 @@
 /obj/item/circuit_component/ntnet_recieve/proc/ntnet_receive(datum/source, datum/netdata/data)
 	SIGNAL_HANDLER
 
-	data_package.set_output(data["data"])
-	secondary_package.set_output(data["data_secondary"])
+	data_package.set_output(data.data["data"])
+	secondary_package.set_output(data.data["data_secondary"])
 	trigger_output.set_output(COMPONENT_SIGNAL)

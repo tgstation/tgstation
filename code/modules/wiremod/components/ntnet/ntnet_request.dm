@@ -22,10 +22,6 @@
 	data_package = add_input_port("Data Package", PORT_TYPE_ANY)
 	secondary_package = add_input_port("Secondary Package", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/ntnet_send/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
-
 /obj/item/circuit_component/ntnet_send/input_received(datum/port/input/port)
 	. = ..()
 	if(. || !data_package.input_value)
@@ -36,5 +32,4 @@
 		datalist["data_secondary"] = secondary_package.input_value
 	var/datum/netdata/data = new(datalist)
 	data.receiver_id = target_hid.input_value ? target_hid.input_value : __NETWORK_CIRCUITS
-	data.passkey = parent.stored_access
 	ntnet_send(data)
