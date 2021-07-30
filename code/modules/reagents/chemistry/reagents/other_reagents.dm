@@ -2764,13 +2764,12 @@
 
 /datum/reagent/ants/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
-	if((spilled_ants < 5) || isspaceturf(exposed_turf))
+	if((reac_volume < 10) || isspaceturf(exposed_turf))
 		return
 
 	var/obj/effect/decal/cleanable/ants/pests = locate() in exposed_turf.contents
 	if(!pests)
 		pests = new(exposed_turf)
+	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
 	pests.reagents.add_reagent(/datum/reagent/ants, spilled_ants)
 	pests.update_ant_damage(spilled_ants)
-
