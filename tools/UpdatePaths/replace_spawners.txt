@@ -33,3 +33,6 @@
 /obj/effect/spawner/lootdrop/decorative_material : /obj/effect/spawner/random/decorations/material
 /obj/effect/spawner/lootdrop/maintenance_carpet : /obj/effect/spawner/random/decorations/carpet
 /obj/effect/spawner/lootdrop/decorations_spawner : /obj/effect/spawner/random/decorations/generic
+/obj/effect/spawner/lootdrop/aimodule_harmless : /obj/effect/spawner/random/aimodule/harmless
+/obj/effect/spawner/lootdrop/aimodule_neutral : /obj/effect/spawner/random/aimodule/neutral
+/obj/effect/spawner/lootdrop/aimodule_harmful : /obj/effect/spawner/random/aimodule/harmful
