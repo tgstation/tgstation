@@ -443,14 +443,6 @@
 		/obj/item/crowbar/red/caravan = 1
 	)
 
-/// Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
-/obj/effect/spawner/lootdrop/space/fancytool/engineonly
-	loot = list(
-		/obj/item/wrench/caravan = 1,
-		/obj/item/wirecutters/caravan = 1,
-		/obj/item/screwdriver/caravan = 1,
-		/obj/item/crowbar/red/caravan = 1
-	)
 
 /// Space loot spawner. A single roundstart species language book.
 /obj/effect/spawner/lootdrop/space/languagebook
