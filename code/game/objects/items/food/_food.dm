@@ -88,7 +88,7 @@
 		AddElement(/datum/element/food_trash, trash_type)
 	return
 
-///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose. Set semi_preserved_food to TRUE to only make it decompose when someone picks it up.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_flags = foodtypes, semi_preserved_food)
+		AddComponent(/datum/component/decomposition, mapload, semi_preserved_food, decomp_flags = foodtypes)

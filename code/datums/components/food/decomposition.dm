@@ -23,7 +23,7 @@
 	/// Used for examining
 	var/examine_type = DECOMP_EXAM_NORMAL
 
-/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE, semi_preserved_food)
+/datum/component/decomposition/Initialize(mapload, semi_preserved_food, decomp_flags = NONE)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
