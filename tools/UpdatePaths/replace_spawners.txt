@@ -36,3 +36,12 @@
 /obj/effect/spawner/lootdrop/aimodule_harmless : /obj/effect/spawner/random/aimodule/harmless
 /obj/effect/spawner/lootdrop/aimodule_neutral : /obj/effect/spawner/random/aimodule/neutral
 /obj/effect/spawner/lootdrop/aimodule_harmful : /obj/effect/spawner/random/aimodule/harmful
+/obj/effect/spawner/lootdrop/techstorage/service : /obj/effect/spawner/random/techstorage/service
+/obj/effect/spawner/lootdrop/techstorage/rnd : /obj/effect/spawner/random/techstorage/rnd
+/obj/effect/spawner/lootdrop/techstorage/security : /obj/effect/spawner/random/techstorage/security
+/obj/effect/spawner/lootdrop/techstorage/engineering : /obj/effect/spawner/random/techstorage/engineering
+/obj/effect/spawner/lootdrop/techstorage/tcomms : /obj/effect/spawner/random/techstorage/tcomms
+/obj/effect/spawner/lootdrop/techstorage/medical : /obj/effect/spawner/random/techstorage/medical
+/obj/effect/spawner/lootdrop/techstorage/ai : /obj/effect/spawner/random/techstorage/ai
+/obj/effect/spawner/lootdrop/techstorage/command : /obj/effect/spawner/random/techstorage/command
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure : /obj/effect/spawner/random/techstorage/rnd_secure

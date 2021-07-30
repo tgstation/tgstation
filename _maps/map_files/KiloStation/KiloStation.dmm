@@ -41153,7 +41153,7 @@
 /area/service/library)
 "dfN" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -47017,7 +47017,7 @@
 /area/commons/toilet/restrooms)
 "fJZ" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -49901,7 +49901,7 @@
 /area/service/janitor)
 "hdA" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/status_display/shuttle{
 	pixel_y = -32
@@ -50168,7 +50168,7 @@
 /area/maintenance/disposal/incinerator)
 "hie" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/security,
+/obj/effect/spawner/random/techstorage/security,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -54165,7 +54165,7 @@
 /area/command/gateway)
 "iVk" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/circuit/green{
 	luminosity = 2
@@ -58104,7 +58104,7 @@
 /area/science/mixing)
 "kAY" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -68864,7 +68864,7 @@
 /area/security/prison/safe)
 "plL" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/command,
+/obj/effect/spawner/random/techstorage/command,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -85716,7 +85716,7 @@
 /area/maintenance/disposal/incinerator)
 "wvz" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -88643,7 +88643,7 @@
 /area/maintenance/port/fore)
 "xJf" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},

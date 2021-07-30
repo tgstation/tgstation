@@ -47065,7 +47065,7 @@
 /area/cargo/miningoffice)
 "haV" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -49083,7 +49083,7 @@
 /area/science/robotics/lab)
 "hFp" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -52229,7 +52229,7 @@
 /area/maintenance/department/science)
 "itE" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -57330,7 +57330,7 @@
 /area/science/research/abandoned)
 "jQH" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -61261,7 +61261,7 @@
 /area/command/gateway)
 "kTj" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -66024,7 +66024,7 @@
 /area/command/gateway)
 "mdn" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -83029,7 +83029,7 @@
 /area/service/library/abandoned)
 "qsh" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -89277,7 +89277,7 @@
 /area/command/heads_quarters/captain/private)
 "rWP" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/command,
+/obj/effect/spawner/random/techstorage/command,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -95685,7 +95685,7 @@
 /area/service/lawoffice)
 "tEE" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/security,
+/obj/effect/spawner/random/techstorage/security,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)

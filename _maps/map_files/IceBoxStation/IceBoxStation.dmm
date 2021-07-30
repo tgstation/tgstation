@@ -20912,7 +20912,7 @@
 /area/commons/fitness)
 "cYD" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/security,
+/obj/effect/spawner/random/techstorage/security,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "cYK" = (
@@ -28446,7 +28446,7 @@
 /area/maintenance/fore/secondary)
 "hzs" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "hzM" = (
@@ -34870,7 +34870,7 @@
 /area/science/mixing)
 "lky" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "lkL" = (
@@ -46076,7 +46076,7 @@
 /area/commons/fitness)
 "rwr" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "rxq" = (
@@ -46716,7 +46716,7 @@
 /area/engineering/main)
 "rKu" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
@@ -47085,7 +47085,7 @@
 /area/cargo/office)
 "rWJ" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "rWL" = (
@@ -50861,7 +50861,7 @@
 "ucQ" = (
 /obj/structure/rack,
 /obj/machinery/light/small/directional/west,
-/obj/effect/spawner/lootdrop/techstorage/command,
+/obj/effect/spawner/random/techstorage/command,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "ucZ" = (
@@ -54190,7 +54190,7 @@
 /area/commons/dorms)
 "vUR" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "vUS" = (
@@ -56873,7 +56873,7 @@
 /area/science/research)
 "xun" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "xus" = (

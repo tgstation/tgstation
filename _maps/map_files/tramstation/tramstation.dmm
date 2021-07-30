@@ -14199,7 +14199,7 @@
 "bvF" = (
 /obj/structure/rack,
 /obj/machinery/status_display/ai/directional/north,
-/obj/effect/spawner/lootdrop/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -17987,7 +17987,7 @@
 /area/maintenance/central/secondary)
 "cVe" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -20362,7 +20362,7 @@
 /area/security/processing)
 "dPo" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/security,
+/obj/effect/spawner/random/techstorage/security,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -26710,7 +26710,7 @@
 /area/maintenance/tram/left)
 "grp" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/command,
+/obj/effect/spawner/random/techstorage/command,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -27779,7 +27779,7 @@
 /area/service/lawoffice)
 "gMr" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -38373,7 +38373,7 @@
 /area/cargo/office)
 "kKx" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -41686,7 +41686,7 @@
 /area/ai_monitored/turret_protected/aisat/maint)
 "mau" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
@@ -64068,7 +64068,7 @@
 /area/security/prison)
 "uPC" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
@@ -70314,7 +70314,7 @@
 /area/hallway/secondary/command)
 "xgc" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,

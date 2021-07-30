@@ -21924,7 +21924,7 @@
 /area/engineering/atmos)
 "eOV" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/ai,
+/obj/effect/spawner/random/techstorage/ai,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "ePn" = (
@@ -33638,7 +33638,7 @@
 /area/science/research)
 "iVN" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/command,
+/obj/effect/spawner/random/techstorage/command,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "iVQ" = (
@@ -38100,7 +38100,7 @@
 /area/command/gateway)
 "kxZ" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure,
+/obj/effect/spawner/random/techstorage/rnd_secure,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "kyp" = (
@@ -54607,7 +54607,7 @@
 /area/security/office)
 "pQj" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/tcomms,
+/obj/effect/spawner/random/techstorage/tcomms,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "pQr" = (
@@ -61289,7 +61289,7 @@
 /area/science/storage)
 "saS" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/engineering,
+/obj/effect/spawner/random/techstorage/engineering,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "sbk" = (
@@ -63999,7 +63999,7 @@
 /area/maintenance/starboard/secondary)
 "sUh" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/rnd,
+/obj/effect/spawner/random/techstorage/rnd,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "sUm" = (
@@ -65641,7 +65641,7 @@
 "tua" = (
 /obj/structure/rack,
 /obj/machinery/status_display/ai/directional/north,
-/obj/effect/spawner/lootdrop/techstorage/medical,
+/obj/effect/spawner/random/techstorage/medical,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "tum" = (
@@ -69774,7 +69774,7 @@
 /area/medical/treatment_center)
 "uNx" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/security,
+/obj/effect/spawner/random/techstorage/security,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "uNE" = (
@@ -73289,7 +73289,7 @@
 /area/security/brig)
 "vTe" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/techstorage/service,
+/obj/effect/spawner/random/techstorage/service,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "vTk" = (
