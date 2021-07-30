@@ -4,11 +4,12 @@
 	var/deployed_name //For getting the name of an object for examines later on
 	var/delete_on_use = TRUE //Do we delete the item being used when the object is deployed
 
-/datum/component/deployable/Initialize(thing_to_be_deployed)
+/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.deploy_time = deploy_time
 	src.thing_to_be_deployed = thing_to_be_deployed
 	src.delete_on_use = delete_on_use
 
@@ -26,11 +27,11 @@
 	else //Also tells the player if you are bad at coding
 		examine_list += span_notice("It appears that you should be able to deploy this, but you can't see how, better report this to Central!")
 
-/datum/component/deployable/proc/deploy(datum/source, mob/user, location, direction)
+/datum/component/deployable/proc/deploy_signal_handler(datum/source, mob/user, location, direction)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/finish_deploy, source, user, location, direction)
+	INVOKE_ASYNC(src, .proc/deploy, source, user, location, direction)
 
-/datum/component/deployable/proc/finish_deploy(datum/source, mob/user, location, direction) //If there's no user, location and direction are used
+/datum/component/deployable/proc/deploy(datum/source, mob/user, location, direction) //If there's no user, location and direction are used
 	var/obj/deploy_item = source //I got errors for not using this, so be it
 	var/obj/deployed_object //Used for spawning the deployed object
 	var/turf/deploy_location //Where our deployed_object gets put
@@ -39,20 +40,20 @@
 		if(!ishuman(user))
 			return
 
-		deploy_location = get_step(user, user.dir)
+		deploy_location = get_step(user, user.dir) //Gets spawn location for thing_to_be_deployed if there is a user
 		if(deploy_location.is_blocked_turf(TRUE))
 			user.balloon_alert(user, "insufficient room to deploy here.")
 			return
-		new_direction = user.dir
+		new_direction = user.dir //Gets the direction for thing_to_be_deployed if there is a user
 		user.balloon_alert(user, "deploying...")
 		if(!do_after(user, deploy_time))
 			return
-	else
+	else //If there is for some reason no user, then the location and direction are set here
 		deploy_location = location
 		new_direction = direction
 
-	deployed_object = new thing_to_be_deployed(deploy_location) //Creates thing_to_be_deployed at a location in front of the user
-	deployed_object.setDir(new_direction) //Changes the direction of the deployed object to be that of where the user was facing
+	deployed_object = new thing_to_be_deployed(deploy_location)
+	deployed_object.setDir(new_direction)
 
 	//Sets the integrity of the new deployed machine to that of the object it came from
 	deployed_object.max_integrity = deploy_item.max_integrity

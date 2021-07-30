@@ -206,7 +206,7 @@
 
 /obj/item/deployable_turret_folded/Initialize()
 	. = ..()
-	AddComponent(/datum/component/deployable, /obj/machinery/deployable_turret/hmg, )
+	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, TRUE)
 
 #undef SINGLE
 #undef VERTICAL
