@@ -71,7 +71,7 @@
 	spawn_all_loot = TRUE
 	loot = list(
 		/obj/structure/bed/maint,
-		/obj/effect/spawner/scatter/grime,
+		/obj/effect/spawner/random/trash/grime,
 		/obj/effect/spawner/random/entertainment/drugs,
 	)
 
@@ -79,7 +79,7 @@
 	name = "moisture trap spawner"
 	spawn_all_loot = TRUE
 	loot = list(
-		/obj/effect/spawner/scatter/moisture,
+		/obj/effect/spawner/random/trash/moisture,
 		/obj/structure/moisture_trap,
 	)
 
@@ -97,4 +97,30 @@
 		/obj/effect/decal/cleanable/plastic = 1,
 		/obj/effect/decal/cleanable/glass = 1,
 		/obj/effect/decal/cleanable/ants = 1,
+	)
+
+/obj/effect/spawner/random/trash/grime
+	name = "trash and grime spawner"
+	lootcount = 5
+	scatter_radius = 2
+	loot_table = list( // This spawner will scatter garbage around a dirty site.
+		/obj/effect/spawner/random/trash/garbage = 6,
+		/mob/living/simple_animal/hostile/cockroach = 5,
+		/obj/effect/decal/cleanable/garbage = 4,
+		/obj/effect/decal/cleanable/vomit/old = 3,
+		/obj/effect/spawner/random/trash/cigbutt = 2,
+	)
+
+/obj/effect/spawner/random/trash/moisture
+	name = "water hazard spawner"
+	lootcount = 2
+	scatter_radius = 1
+	loot_table = list( // This spawner will scatter water related items around a moist site.
+		/obj/item/clothing/head/cone = 7,
+		/obj/item/clothing/suit/caution = 3,
+		/mob/living/simple_animal/hostile/retaliate/frog = 2,
+		/obj/item/reagent_containers/glass/rag = 2,
+		/obj/item/reagent_containers/glass/bucket = 2,
+		/obj/effect/decal/cleanable/blood/old = 2,
+		/obj/structure/mopbucket = 2,
 	)
