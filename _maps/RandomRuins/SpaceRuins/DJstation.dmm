@@ -67,7 +67,7 @@
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (

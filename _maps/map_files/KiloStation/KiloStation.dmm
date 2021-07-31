@@ -35511,7 +35511,7 @@
 "csh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},

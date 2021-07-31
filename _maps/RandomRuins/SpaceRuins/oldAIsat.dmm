@@ -879,12 +879,12 @@
 /area/tcommsat/oldaisat)
 "jZ" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron/airless,
 /area/tcommsat/oldaisat)
 "AX" = (
 /obj/effect/decal/cleanable/blood,
-/obj/effect/spawner/lootdrop/space/fancytool,
+/obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/dark/airless,
 /area/tcommsat/oldaisat)
 

@@ -492,7 +492,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "bA" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/languagebook,
+/obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bB" = (
@@ -590,7 +590,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/languagebook,
+/obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bP" = (

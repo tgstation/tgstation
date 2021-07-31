@@ -1043,7 +1043,7 @@
 /area/awaymission/bmpship/fore)
 "ee" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "ef" = (
@@ -1235,7 +1235,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "eS" = (
