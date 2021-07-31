@@ -1,58 +1,67 @@
 
-/obj/machinery/scanner_gate/circuit
+/obj/structure/scanner_gate_shell
 	name = "circuit scanner gate"
+	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
+	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate_black"
-	circuit = /obj/item/circuitboard/machine/scanner_gate/shell
+	var/scanline_timer
 
-/obj/item/circuitboard/machine/scanner_gate/shell
-	name = "Scanner Gate Shell (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/scanner_gate/circuit
-
-/obj/machinery/scanner_gate/circuit/Initialize()
+/obj/structure/scanner_gate_shell/Initialize()
 	. = ..()
+	set_scanline("passive")
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/scanner_gate()
-	), SHELL_CAPACITY_LARGE)
+	), SHELL_CAPACITY_LARGE, SHELL_FLAG_REQUIRE_ANCHOR)
+
+/obj/structure/scanner_gate_shell/wrench_act(mob/living/user, obj/item/tool)
+	set_anchored(!anchored)
+	tool.play_tool_sound(src)
+	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
+	return TRUE
+
+/obj/structure/scanner_gate_shell/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	set_scanline("scanning", 10)
+	SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_TRIGGER, AM)
+
+/obj/structure/scanner_gate_shell/proc/set_scanline(type, duration)
+	cut_overlays()
+	deltimer(scanline_timer)
+	add_overlay(type)
+	if(duration)
+		scanline_timer = addtimer(CALLBACK(src, .proc/set_scanline, "passive"), duration, TIMER_STOPPABLE)
 
 /obj/item/circuit_component/scanner_gate
 	display_name = "Scanner Gate"
-	display_desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
+	display_desc = "A gate able to perform mid-depth scans on any object that pass through it."
 
-	var/datum/port/output/scanned_mob
+	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	///When it triggers and when it does not
-	var/datum/port/output/scan_successfull
-	var/datum/port/output/scan_not_successfull
+	var/datum/port/output/scanned
 
-	var/obj/machinery/scanner_gate/attached_gate
+	var/obj/structure/scanner_gate_shell/attached_gate
 
 /obj/item/circuit_component/scanner_gate/Initialize()
 	. = ..()
-	scanned_mob = add_output_port("Scanned Mob", PORT_TYPE_ATOM)
-	scan_successfull = add_output_port("On Found", PORT_TYPE_SIGNAL)
-	scan_not_successfull = add_output_port("On Not Found", PORT_TYPE_SIGNAL)
+	scanned = add_output_port("Scanned Object", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/scanner_gate/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/machinery/scanner_gate))
+	if(istype(shell, /obj/structure/scanner_gate_shell))
 		attached_gate = shell
 		RegisterSignal(attached_gate, COMSIG_SCANGATE_PASS_TRIGGER, .proc/on_trigger)
-		RegisterSignal(attached_gate, COMSIG_SCANGATE_PASS_NO_TRIGGER, .proc/on_no_trigger)
 
 /obj/item/circuit_component/scanner_gate/unregister_shell(atom/movable/shell)
-	UnregisterSignal(attached_gate, list(COMSIG_SCANGATE_PASS_TRIGGER, COMSIG_SCANGATE_PASS_NO_TRIGGER))
+	UnregisterSignal(attached_gate, COMSIG_SCANGATE_PASS_TRIGGER)
 	attached_gate = null
 	return ..()
 
-/obj/item/circuit_component/scanner_gate/proc/on_trigger(mob/target)
+/obj/item/circuit_component/scanner_gate/proc/on_trigger(datum/source, atom/movable/passed)
 	SIGNAL_HANDLER
-
-	scanned_mob.set_output(target)
-	scan_successfull.set_output(COMPONENT_SIGNAL)
-
-/obj/item/circuit_component/scanner_gate/proc/on_no_trigger(mob/target)
-	SIGNAL_HANDLER
-
-	scanned_mob.set_output(target)
-	scan_not_successfull.set_output(COMPONENT_SIGNAL)
+	scanned.set_output(passed)
+	trigger_output.set_output(COMPONENT_SIGNAL)

@@ -62,4 +62,4 @@
 	name = "scanner gate assembly"
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate_black_open"
-	shell_to_spawn = /obj/machinery/scanner_gate/circuit
+	shell_to_spawn = /obj/structure/scanner_gate_shell
