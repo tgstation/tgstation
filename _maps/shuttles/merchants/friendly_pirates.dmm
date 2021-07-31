@@ -27,19 +27,15 @@
 /area/shuttle/merchant/offlimits)
 "ai" = (
 /obj/structure/closet/crate,
-/obj/structure/fluff{
-	density = 1;
-	desc = "Ha ha ha, you fool!";
-	icon = 'icons/obj/stack_objects.dmi';
-	icon_state = "sheet-silver_2";
-	name = "fool's silver"
-	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/merchant/offlimits)
 "aj" = (
@@ -152,13 +148,6 @@
 /area/shuttle/merchant/offlimits)
 "ba" = (
 /obj/structure/closet/crate,
-/obj/structure/fluff{
-	density = 1;
-	desc = "Ha ha ha, you fool!";
-	icon = 'icons/obj/stack_objects.dmi';
-	icon_state = "sheet-silver_2";
-	name = "fool's silver"
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/merchant/offlimits)
 "bf" = (
@@ -180,14 +169,9 @@
 /area/shuttle/merchant/offlimits)
 "bj" = (
 /obj/structure/closet/crate,
-/obj/structure/fluff{
-	density = 1;
-	desc = "Ha ha ha, you fool!";
-	icon = 'icons/obj/stack_objects.dmi';
-	icon_state = "sheet-gold_3";
-	name = "fool's gold"
-	},
 /obj/effect/turf_decal/stripes/white/line,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/merchant/offlimits)
 "bk" = (
@@ -320,6 +304,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "OFF LIMITS"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/merchant)
 "Yy" = (

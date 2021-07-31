@@ -178,6 +178,22 @@
 			placement = corner
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
+///
+///
+/**
+ * helper that returns all contents inside a map template. this may be pretty expensive, so don't do it often!
+ *
+ * arguments:
+ * * spawning_turf: turf the template was loaded on
+ * * centered: argument fed into get_affected_turfs
+ * returns all contents of a map template, not the turfs though!
+ */
+/datum/map_template/proc/get_affected_contents(turf/spawning_turf, centered = FALSE)
+	var/list/turfs_spawned = get_affected_turfs(spawning_turf, centered)
+	var/list/all_contents = list()
+	for(var/turf/new_turf as anything in turfs_spawned)
+		all_contents += new_turf.contents
+	return all_contents
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
