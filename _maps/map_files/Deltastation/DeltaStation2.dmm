@@ -2611,7 +2611,7 @@
 "apB" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apE" = (
@@ -18433,7 +18433,7 @@
 "cry" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "crA" = (
@@ -30946,7 +30946,7 @@
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -35719,7 +35719,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
 "ebO" = (
@@ -65266,7 +65266,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "lTR" = (
@@ -73047,7 +73047,7 @@
 /turf/open/floor/plating,
 /area/commons/fitness/recreation)
 "nSi" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/machinery/button/door/directional/west{
 	id = "Dorm1";
 	name = "Dormitory Door Lock";
@@ -83458,7 +83458,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "qxX" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "qya" = (
@@ -87759,7 +87759,7 @@
 /turf/open/floor/wood,
 /area/service/abandoned_gambling_den)
 "rCt" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
 /area/service/library/abandoned)
@@ -92970,7 +92970,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "sTA" = (
@@ -104605,7 +104605,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/dark,
 /area/service/abandoned_gambling_den)
 "vWl" = (

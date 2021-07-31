@@ -5804,7 +5804,7 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "TB" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "TC" = (

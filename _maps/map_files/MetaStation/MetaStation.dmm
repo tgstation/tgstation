@@ -1326,7 +1326,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ajg" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -5319,7 +5319,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
@@ -6584,7 +6584,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bce" = (
@@ -10501,7 +10501,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bXC" = (
@@ -11853,7 +11853,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/showroomfloor,
 /area/maintenance/starboard/secondary)
 "ckz" = (
@@ -43617,7 +43617,7 @@
 /area/medical/abandoned)
 "moO" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
 "mpa" = (
@@ -48195,7 +48195,7 @@
 /area/hallway/primary/starboard)
 "nKN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "nLb" = (
@@ -50584,7 +50584,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/commons/toilet/auxiliary)
 "ozE" = (
@@ -54680,7 +54680,7 @@
 /area/commons/fitness/recreation)
 "pQZ" = (
 /obj/item/plant_analyzer,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "pRl" = (
@@ -61685,7 +61685,7 @@
 /area/medical/break_room)
 "sgs" = (
 /obj/structure/chair/stool/directional/east,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "sgA" = (
@@ -75375,7 +75375,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "wHx" = (
@@ -78553,7 +78553,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "xJw" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "xJx" = (

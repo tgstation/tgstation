@@ -23615,7 +23615,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ffU" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
@@ -23853,7 +23853,7 @@
 /area/cargo/storage)
 "fkV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "flc" = (
@@ -24474,7 +24474,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "fyi" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
@@ -28012,7 +28012,7 @@
 /area/service/kitchen/coldroom)
 "gQo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "gQw" = (
@@ -28598,7 +28598,7 @@
 /area/mine/explored)
 "hcD" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "hcG" = (
@@ -34094,7 +34094,7 @@
 /area/medical/medbay/central)
 "jiq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "jiz" = (
@@ -34755,7 +34755,7 @@
 /area/space/nearstation)
 "jwN" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "jxc" = (
@@ -37053,7 +37053,7 @@
 "kni" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "knj" = (
@@ -43533,7 +43533,7 @@
 /area/medical/pharmacy)
 "mOj" = (
 /obj/machinery/light/small/directional/east,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -45427,7 +45427,7 @@
 "nCx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "nDB" = (
@@ -55850,7 +55850,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "rJw" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
