@@ -159,7 +159,7 @@
 		/datum/reagent/consumable/whipped_cream = 10,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/pavlovacream
+	result = /obj/item/food/cake/pavlova
 	subcategory = CAT_CAKE
 
 /datum/crafting_recipe/food/pavlovakorta
@@ -170,7 +170,7 @@
 		/datum/reagent/consumable/korta_milk = 10,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/pavlovakorta
+	result = /obj/item/food/cake/pavlova
 	subcategory = CAT_CAKE
 
 /datum/crafting_recipe/food/bscvcake
