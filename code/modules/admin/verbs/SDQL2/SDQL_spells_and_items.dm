@@ -766,7 +766,7 @@
 
 /datum/give_sdql_spell/proc/rename_list_var(list_name, list_var, new_name)
 	if(!new_name)
-		alert = "You can't give a list an empty string for a name!"
+		alert = "You can't give a list variable an empty string for a name!"
 		return
 	if(list_var == new_name)
 		return
