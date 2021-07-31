@@ -354,37 +354,24 @@
 //This proc draws out the inventory and places the items on it. It uses the standard position.
 /datum/component/storage/proc/standard_orient_objs(rows, cols, list/obj/item/numerical_display_contents)
 	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
+	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 	var/cx = screen_start_x
 	var/cy = screen_start_y
-	if(islist(numerical_display_contents))
-		for(var/type in numerical_display_contents)
-			var/datum/numbered_display/ND = numerical_display_contents[type]
-			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			ND.sample_object.maptext = MAPTEXT("<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>")
-			ND.sample_object.plane = ABOVE_HUD_PLANE
-			cx++
-			if(cx - screen_start_x >= cols)
-				cx = screen_start_x
-				cy++
-				if(cy - screen_start_y >= rows)
-					break
-	else
-		var/atom/real_location = real_location()
-		for(var/obj/O in real_location)
-			if(QDELETED(O))
-				continue
-			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
-			O.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			O.maptext = ""
-			O.plane = ABOVE_HUD_PLANE
-			cx++
-			if(cx - screen_start_x >= cols)
-				cx = screen_start_x
-				cy++
-				if(cy - screen_start_y >= rows)
-					break
-	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
+	for(var/type_or_sample in (numerical_display_contents || real_location()))
+		var/datum/numbered_display/ND = numerical_display_contents?[type_or_sample]
+		var/obj/sample = ND?.sample_object || type_or_sample
+		if(QDELETED(sample))
+			continue
+		sample.mouse_opacity = MOUSE_OPACITY_OPAQUE
+		sample.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
+		sample.maptext = ND ? MAPTEXT("<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>") : ""
+		sample.plane = ABOVE_HUD_PLANE
+		cx++
+		if(cx - screen_start_x >= cols)
+			cx = screen_start_x
+			cy++
+			if(cy - screen_start_y >= rows)
+				return
 
 /datum/component/storage/proc/show_to(mob/M)
 	if(!M.client)

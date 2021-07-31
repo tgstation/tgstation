@@ -4,10 +4,7 @@
 	var/required_clean_types = CLEAN_TYPE_DISEASE
 
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
-	if(islist(_diseases))
-		diseases = _diseases
-	else
-		diseases = list(_diseases)
+	diseases = islist(_diseases) ? _diseases : list(_diseases)
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)

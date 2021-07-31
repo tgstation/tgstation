@@ -1161,17 +1161,7 @@
 	for(var/i in 1 to num_scars)
 		var/datum/scar/scaries = new
 		var/obj/item/bodypart/scar_part = pick(bodyparts)
-
-		var/wound_type
-		if(forced_type)
-			if(islist(forced_type))
-				wound_type = pick(forced_type)
-			else
-				wound_type = forced_type
-		else
-			wound_type = pick(GLOB.global_all_wound_types)
-
-		var/datum/wound/phantom_wound = new wound_type
+		var/datum/wound/phantom_wound = new (pick(forced_type || GLOB.global_all_wound_types))
 		scaries.generate(scar_part, phantom_wound)
 		scaries.fake = TRUE
 		QDEL_NULL(phantom_wound)

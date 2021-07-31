@@ -1009,17 +1009,10 @@
 	log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay, interaction_key = what))
-		if(what && Adjacent(who))
-			if(islist(where))
-				var/list/L = where
-				if(what == who.get_item_for_held_index(L[2]))
-					if(what.doStrip(src, who))
-						who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-						log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-			if(what == who.get_item_by_slot(where))
-				if(what.doStrip(src, who))
-					who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
-					log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
+		if(what && Adjacent(who) && what == (islist(where) ? where[2] : who.get_item_by_slot(where)))
+			if(what.doStrip(src, who))
+				who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
+				log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)

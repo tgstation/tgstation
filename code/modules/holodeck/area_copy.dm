@@ -11,12 +11,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	RETURN_TYPE(original.type)
 	if(!original)
 		return
-	var/atom/O
-
-	if(sameloc)
-		O = new original.type(original.loc)
-	else
-		O = new original.type(newloc)
+	var/atom/O = new original.type(sameloc ? original.loc : newloc)
 
 	if(perfectcopy && O && original)
 		for(var/V in original.vars - GLOB.duplicate_forbidden_vars)

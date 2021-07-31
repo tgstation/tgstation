@@ -521,18 +521,10 @@
  * * /datum/target the target to move the components to
  */
 /datum/proc/TransferComponents(datum/target)
-	var/list/dc = datum_components
-	if(!dc)
-		return
-	var/comps = dc[/datum/component]
-	if(islist(comps))
-		for(var/datum/component/I in comps)
-			if(I.can_transfer)
-				target.TakeComponent(I)
-	else
-		var/datum/component/C = comps
-		if(C.can_transfer)
-			target.TakeComponent(comps)
+	var/comps = datum_components?[/datum/component]
+	for(var/datum/component/component in (islist(comps) ? comps : list(comps)))
+		if(component?.can_transfer)
+			target.TakeComponent(component)
 
 /**
  * Return the object that is the host of any UI's that this component has

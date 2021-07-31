@@ -252,13 +252,10 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			var/obj/effect/holodeck_effect/holo_effect = holo_atom
 			effects += holo_effect
 			spawned -= holo_effect
-			var/atom/holo_effect_product = holo_effect.activate(src)//change name
-			if(istype(holo_effect_product))
-				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
-			if(islist(holo_effect_product))
-				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+			var/spawned_news = holo_effect.activate(src)//change name
+			for(var/atom/spawned_new as anything in (islist(spawned_news) ? spawned_news : list(spawned_news)))
+				spawned += spawned_new // we want to track atoms spawned via holoeffects
+				RegisterSignal(spawned_new, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
 			continue
 
 		if(isobj(holo_atom))
