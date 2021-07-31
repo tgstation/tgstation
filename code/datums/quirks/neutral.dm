@@ -158,7 +158,7 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
