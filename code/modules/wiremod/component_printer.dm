@@ -196,9 +196,7 @@
 			balloon_alert_to_viewers("printed [design["name"]]")
 			materials.mat_container?.use_materials(design["materials"])
 			materials.silo_log(src, "printed", -1, design["name"], design["materials"])
-			var/atom/printed_design = print_module(design)
-			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
-			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
+			print_module(design)
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
@@ -212,9 +210,14 @@
 	return TRUE
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
+	flick("module-fab-print", src)
+	addtimer(CALLBACK(src, .proc/finish_module_print, design), 1.6 SECONDS)
+
+/obj/machinery/module_duplicator/proc/finish_module_print(list/design)
 	var/obj/item/circuit_component/module/module = new(drop_location())
 	module.load_data_from_list(design["dupe_data"])
-	return module
+	module.pixel_x = module.base_pixel_x + rand(-5, 5)
+	module.pixel_y = module.base_pixel_y + rand(-5, 5)
 
 /obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/circuit_component/module))
@@ -251,11 +254,14 @@
 	data["desc"] = "A module that has been loaded in by [user]."
 	data["materials"] = list(/datum/material/glass = total_cost)
 
+	flick("module-fab-scan", src)
+	addtimer(CALLBACK(src, .proc/finish_module_scan, user, data), 1.4 SECONDS)
+
+/obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)
 
 	balloon_alert(user, "module has been saved.")
 	playsound(src, 'sound/machines/ping.ogg', 50)
-
 
 /obj/machinery/module_duplicator/ui_data(mob/user)
 	var/list/data = list()

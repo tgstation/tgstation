@@ -159,7 +159,7 @@
 		source.balloon_alert(attacker, "there is already a circuitboard inside!")
 		return
 
-	if(length(logic_board.attached_components) > capacity)
+	if(length(logic_board.attached_components) - length(unremovable_circuit_components) > capacity)
 		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
