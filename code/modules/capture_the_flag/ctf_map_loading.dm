@@ -9,7 +9,7 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 	if(GLOB.ctf_spawner)
 		qdel(GLOB.ctf_spawner)
 	GLOB.ctf_spawner = src
-	load_map()
+	INVOKE_ASYNC(src, .proc/load_map)
 
 /obj/effect/landmark/ctf/Destroy()
 	if(map_bounds)
