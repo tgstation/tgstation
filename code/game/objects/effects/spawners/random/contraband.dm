@@ -2,6 +2,18 @@
 	name = "contraband loot spawner"
 	desc = "Pstttthhh! Pass it under the table."
 
+/obj/effect/spawner/random/contraband/armory
+	name = "armory loot spawner"
+	loot = list(
+		/obj/item/gun/ballistic/automatic/pistol = 8,
+		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+		/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+		/obj/item/grenade/clusterbuster/teargas = 2,
+		/obj/item/grenade/clusterbuster = 2,
+		/obj/item/gun/ballistic/automatic/pistol/deagle,
+		/obj/item/gun/ballistic/revolver/mateba,
+	)
+
 /obj/effect/spawner/random/contraband/narcotics
 	name = "narcotics loot spawner"
 	loot = list(

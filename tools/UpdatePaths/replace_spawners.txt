@@ -46,3 +46,6 @@
 /obj/effect/spawner/lootdrop/techstorage/command : /obj/effect/spawner/random/techstorage/command
 /obj/effect/spawner/lootdrop/techstorage/rnd_secure : /obj/effect/spawner/random/techstorage/rnd_secure
 /obj/effect/spawner/lootdrop/prison_contraband : /obj/effect/spawner/random/contraband/prison
+/obj/effect/spawner/lootdrop/armory_contraband : /obj/effect/spawner/random/contraband/armory
+/obj/effect/spawner/lootdrop/armory_contraband/metastation : /obj/effect/spawner/random/contraband/armory
+/obj/effect/spawner/lootdrop/armory_contraband/donutstation : /obj/effect/spawner/random/contraband/armory
