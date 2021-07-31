@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/gps
 	display_name = "Internal GPS"
-	display_desc = "A component that returns the xyz co-ordinates of itself if its input port is empty, and of the input if it is not."
+	display_desc = "A component that returns the xyz co-ordinates of itself if its input port is empty, and of the input if it is not. Input target has to be within the line of sight of the shell."
 
 	var/datum/port/input/entity
 
@@ -15,12 +15,6 @@
 	var/datum/port/output/z_pos
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
-
-	var/max_range = 10
-
-/obj/item/circuit_component/gps/get_ui_notices()
-	. = ..()
-	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/gps/Initialize()
 	. = ..()
