@@ -2320,7 +2320,7 @@
 "aiw" = (
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "aix" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -6615,7 +6615,7 @@
 "avN" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "avO" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
@@ -6948,7 +6948,7 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "awO" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -12323,6 +12323,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "aUv" = (
@@ -15763,7 +15764,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "bZi" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
@@ -20120,6 +20121,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "dKk" = (
@@ -21799,6 +21801,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "esv" = (
@@ -23107,7 +23110,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "eVL" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -29002,6 +29005,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/engineering/break_room)
+"hir" = (
+/turf/open/floor/iron,
+/area/science/storage)
 "hiz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30050,6 +30056,9 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/service/bar)
+"hDo" = (
+/turf/closed/wall/r_wall,
+/area/science/storage)
 "hDp" = (
 /obj/item/shovel,
 /obj/item/storage/bag/ore,
@@ -30299,6 +30308,15 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
+"hIv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/science/mixing)
 "hIw" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
@@ -34380,7 +34398,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "joB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -34581,7 +34599,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "jsj" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -35220,6 +35238,10 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"jFU" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/science/storage)
 "jGh" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -37698,7 +37720,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "kxu" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -41559,8 +41581,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "lWe" = (
 /obj/effect/loot_site_spawner,
 /obj/item/relic,
@@ -42216,6 +42239,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"mlx" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/science/storage)
 "mlz" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -50338,6 +50368,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "pwP" = (
@@ -50451,7 +50482,7 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "pzD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50553,8 +50584,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/heavy,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "pCt" = (
 /obj/structure/window/reinforced{
 	pixel_y = 2
@@ -58649,6 +58681,7 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "sOF" = (
@@ -59701,7 +59734,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "tiB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -60298,8 +60331,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "tsF" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/decal/cleanable/dirt,
@@ -61196,6 +61230,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/gateway)
+"tJT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/science/storage)
 "tJX" = (
 /obj/machinery/lapvend,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -61240,7 +61278,7 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "tKy" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -65546,7 +65584,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "vvI" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -70621,6 +70659,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "xmN" = (
@@ -71444,6 +71483,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "xDE" = (
@@ -118738,13 +118778,13 @@ aHI
 veY
 adS
 adS
-mSi
-mSi
-mSi
-mSi
-mSi
-mSi
-mSi
+hDo
+hDo
+hDo
+hDo
+hDo
+hDo
+hDo
 fbR
 wUd
 sOv
@@ -118995,13 +119035,13 @@ jlO
 sct
 adS
 aae
-mSi
+hDo
 jor
 jrY
 pzh
 vvo
-vvo
-mSi
+mlx
+hDo
 fbR
 fKH
 pwI
@@ -119252,13 +119292,13 @@ osD
 exW
 adS
 aae
-mSi
+hDo
 avN
-frL
-hWi
-hWi
+jFU
+hir
+hir
 lVH
-mSi
+hDo
 plm
 iPd
 xmK
@@ -119509,16 +119549,16 @@ adS
 adS
 adS
 aae
-mSi
+hDo
 tiz
-okR
-okR
-okR
+tJT
+tJT
+tJT
 tsp
 pCs
-tls
-tls
-tls
+hIv
+hIv
+hIv
 tls
 vVz
 cbi
@@ -119766,13 +119806,13 @@ aae
 aae
 aae
 aae
-mSi
+hDo
 kxo
 kxo
-hWi
-hWi
+hir
+hir
 aiw
-mSi
+hDo
 okC
 ewK
 ako
@@ -120023,13 +120063,13 @@ aae
 aae
 aae
 aae
-mSi
+hDo
 jor
 kxo
 eVK
 bYW
 awN
-mSi
+hDo
 mSi
 mSi
 mSi
@@ -120280,13 +120320,13 @@ aae
 aae
 aae
 aae
-mSi
+hDo
 jor
 kxo
 tKp
 bYW
 bYW
-mSi
+hDo
 fYH
 fYH
 axo
@@ -120537,13 +120577,13 @@ aae
 aae
 aae
 aae
-mSi
-mSi
-mSi
-mSi
-mSi
-mSi
-mSi
+hDo
+hDo
+hDo
+hDo
+hDo
+hDo
+hDo
 fYH
 fjs
 hWi
