@@ -21,9 +21,6 @@
 	src.required_bake_time = required_bake_time
 	src.positive_result = positive_result
 
-	RegisterSignal(parent, COMSIG_ITEM_BAKED, .proc/OnBake)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
-
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
 	if(!original)
@@ -34,6 +31,14 @@
 		src.required_bake_time = required_bake_time
 	if(positive_result)
 		src.positive_result = positive_result
+
+/datum/component/bakeable/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ITEM_BAKED, .proc/OnBake)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+
+/datum/component/bakeable/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(COMSIG_ITEM_BAKED, COMSIG_PARENT_EXAMINE))
 
 ///Ran every time an item is baked by something
 /datum/component/bakeable/proc/OnBake(datum/source, atom/used_oven, delta_time = 1)

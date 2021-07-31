@@ -26,7 +26,7 @@
 	var/list/eatverbs
 	///How much reagents per bite
 	var/bite_consumption
-	///What you get if you microwave the food, this should be replaced once I fully re-work cooking.
+	///What you get if you microwave the food. Use baking for raw things, use microwaving for already cooked things
 	var/microwaved_type
 	///Type of atom thats spawned after eating this item
 	var/trash_type
