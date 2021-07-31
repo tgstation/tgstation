@@ -19154,7 +19154,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 7";
 	dir = 1;
@@ -22028,7 +22028,7 @@
 /area/engineering/atmos)
 "ewN" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
@@ -23460,7 +23460,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 4";
 	dir = 4;
@@ -29481,7 +29481,7 @@
 /area/maintenance/starboard/secondary)
 "hqm" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -33263,7 +33263,7 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/contraband/armory,
-/obj/effect/spawner/lootdrop/armory_contraband/metastation,
+/obj/effect/spawner/random/contraband/armory,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/machinery/button/door/directional/east{
 	id = "armory";
@@ -36513,7 +36513,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 2";
 	dir = 6;
@@ -38013,7 +38013,7 @@
 "kDG" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
@@ -38433,7 +38433,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/bedsheet/red,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/machinery/camera{
 	c_tag = "Security - Prison Cell 1";
 	dir = 6;
@@ -46136,7 +46136,7 @@
 "nTN" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/storage/box/donkpockets/donkpocketberry,
 /turf/open/floor/plating,
 /area/security/prison)
@@ -47774,7 +47774,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -56550,7 +56550,7 @@
 "rXD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/trash/sosjerky,
 /obj/item/trash/boritos,
 /obj/item/trash/can,

@@ -174,7 +174,7 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/effect/spawner/lootdrop/armory_contraband/metastation,
+/obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aF" = (

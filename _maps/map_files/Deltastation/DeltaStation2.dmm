@@ -5594,7 +5594,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/iron/white,
 /area/security/prison/safe)
 "aNH" = (
@@ -5848,7 +5848,7 @@
 "aPv" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
@@ -46369,8 +46369,8 @@
 /area/service/kitchen)
 "gRM" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/prison_contraband,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -53518,7 +53518,7 @@
 /area/commons/dorms)
 "iMR" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/canvas/nineteen_nineteen,
 /obj/item/canvas/nineteen_nineteen,
 /obj/item/canvas/nineteen_nineteen,
@@ -62424,7 +62424,7 @@
 /area/maintenance/port/aft)
 "lgw" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/toy/figure/syndie,
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
@@ -63201,7 +63201,7 @@
 /obj/structure/closet/crate,
 /obj/item/toy/beach_ball/holoball/dodgeball,
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/instrument/harmonica,
 /obj/item/storage/pill_bottle/dice,
 /obj/item/toy/cards/deck/tarot,
@@ -78924,7 +78924,7 @@
 /area/commons/cryopods)
 "pmV" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/clothing/under/rank/prisoner/skirt,
 /obj/item/clothing/under/rank/prisoner/skirt,
 /obj/structure/cable,
@@ -97579,7 +97579,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/structure/window,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/seeds/tower,
@@ -98706,7 +98706,7 @@
 "urA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/security/prison)

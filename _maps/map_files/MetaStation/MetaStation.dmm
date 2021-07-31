@@ -1030,7 +1030,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
@@ -15248,7 +15248,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "cQx" = (
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/structure/closet/crate,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -18276,7 +18276,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
@@ -21472,7 +21472,7 @@
 /area/service/theater)
 "eIg" = (
 /obj/structure/closet/crate/trashcart,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/trash/chips,
 /obj/item/trash/candy,
 /obj/machinery/firealarm/directional/north,
@@ -24138,7 +24138,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/armory_contraband/metastation,
+/obj/effect/spawner/random/contraband/armory,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
@@ -79086,7 +79086,7 @@
 "xSj" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,

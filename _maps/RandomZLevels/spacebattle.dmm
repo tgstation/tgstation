@@ -2494,7 +2494,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jJ" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (

@@ -37798,7 +37798,7 @@
 	name = "contraband locker";
 	req_access_txt = "3"
 	},
-/obj/effect/spawner/lootdrop/armory_contraband/metastation,
+/obj/effect/spawner/random/contraband/armory,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron/dark,
@@ -44785,7 +44785,7 @@
 "eNG" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
 /obj/item/reagent_containers/glass/bowl,
@@ -49226,7 +49226,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "gOH" = (
@@ -61310,7 +61310,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/iron/white,
 /area/security/prison/safe)
 "lWY" = (
@@ -62870,7 +62870,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
 /obj/item/trash/chips,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/weldingtool/mini,
 /turf/open/floor/iron/grimy,
 /area/security/prison/safe)
@@ -66405,7 +66405,7 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/under/rank/prisoner/skirt,
@@ -66522,7 +66522,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/storage/crayons{
 	pixel_x = -6;
 	pixel_y = 1
@@ -67364,7 +67364,7 @@
 	},
 /obj/machinery/washing_machine,
 /obj/structure/cable,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "oGc" = (
@@ -80492,7 +80492,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -84994,7 +84994,7 @@
 "whz" = (
 /obj/structure/toilet,
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/vault,
 /area/security/prison)
 "wig" = (
@@ -87207,7 +87207,7 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/wheat,
 /obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/random/contraband/prison,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
