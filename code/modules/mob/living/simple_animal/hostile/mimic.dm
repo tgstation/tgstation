@@ -133,8 +133,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	return . - creator
 
 /mob/living/simple_animal/hostile/mimic/copy/wabbajack_act()
-	src.visible_message(span_warning("[src] resists polymorphing into a new creature!"))
-	return
+	visible_message(span_warning("[src] resists polymorphing into a new creature!"))
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/ChangeOwner(mob/owner)
 	if(owner != creator)
