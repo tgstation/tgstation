@@ -284,6 +284,6 @@
 		RemoveElement(/datum/element/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
 		is_caltrop = FALSE
 	ant_volume += spilled_ants
-	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1))
+	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
 	AddElement(/datum/element/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
 	is_caltrop = TRUE
