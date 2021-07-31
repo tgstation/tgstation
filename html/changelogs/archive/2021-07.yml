@@ -972,3 +972,18 @@
   - bugfix: Fixed pAI loudness booster to work when not in holoform
   tralezab code, paxilmaniac sprites:
   - expansion: Added Trash Cannons. Find the recipe in maint!
+2021-07-31:
+  DAKKA-WAAAGH:
+  - rscadd: Casino emergency shuttle
+  Fikou:
+  - bugfix: reactive armor now properly updates its sprite on the mob
+  Watermelon914:
+  - refactor: Refactors the UI code of integrated circuits to be a lot less messy
+      and much more organised and to use much better practices to allow for better
+      features to be added.
+  - qol: Adds dragndrop functionality to integrated circuits so that you no longer
+      have to click to connect ports, you can drag instead.
+  tralezab:
+  - bugfix: rev art now works correctly!
+  wesoda25:
+  - admin: Adds logging for cult reaching red eye and halo milestones
