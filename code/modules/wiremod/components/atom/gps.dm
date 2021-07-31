@@ -16,7 +16,7 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	var/max_range = 20
+	var/max_range = 10
 
 /obj/item/circuit_component/gps/get_ui_notices()
 	. = ..()
@@ -38,17 +38,15 @@
 
 	var/turf/location
 
-	if(isnull(entity.input_value))
+	if(!isnull(entity.input_value))
+		if(isInSight(entity.input_value, parent.shell))
+			location = get_turf(entity.input_value)
+		else
+			location = null
+	else
 		location = get_turf(src)
-	else
-		location = get_turf(entity.input_value)
 
-	if(IN_GIVEN_RANGE(parent.shell, entity.input_value, max_range))
-		x_pos.set_output(location?.x)
-		y_pos.set_output(location?.y)
-		z_pos.set_output(location?.z)
-	else
-		x_pos.set_output(null)
-		y_pos.set_output(null)
-		z_pos.set_output(null)
+	x_pos.set_output(location?.x)
+	y_pos.set_output(location?.y)
+	z_pos.set_output(location?.z)
 
