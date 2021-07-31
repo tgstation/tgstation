@@ -165,6 +165,9 @@
 
 	var/datum/port/output/user_port
 
+	var/datum/port/output/mood
+	var/datum/port/output/mood_trigger
+
 	var/datum/weakref/user
 
 /obj/item/circuit_component/bci_core/Initialize()
@@ -227,6 +230,7 @@
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+	RegisterSignal(owner, COMSIG_ADD_MOOD_EVENT, .proc/on_mood_event)
 
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -259,6 +263,19 @@
 
 	parent.cell.give(shock_damage * 2)
 	to_chat(source, span_notice("You absorb some of the shock into your [parent.name]!"))
+
+/obj/item/circuit_component/bci_core/proc/on_mood_event(datum/source, category, type, ...)
+	if(source != user?.resolve())
+		CRASH("A BCI's user was changed and it didn't notice.")
+	var/datum/mood_event/temp_event
+	var/list/params = args.Copy(4)
+	params.Insert(1, parent)
+	//builds the moodlet text
+	temp_event = new type(arglist(params))
+	var/extracted_text = temp_event.description
+	qdel(temp_event)
+	mood.set_output(extracted_text)
+	mood_trigger.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core/proc/on_examine(datum/source, mob/mob, list/examine_text)
 	SIGNAL_HANDLER
