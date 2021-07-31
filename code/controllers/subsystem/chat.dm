@@ -27,12 +27,7 @@ SUBSYSTEM_DEF(chat)
 			return
 
 /datum/controller/subsystem/chat/proc/queue(target, message)
-	if(islist(target))
-		for(var/_target in target)
-			var/client/client = CLIENT_FROM_VAR(_target)
-			if(client)
-				LAZYADD(payload_by_client[client], list(message))
-		return
-	var/client/client = CLIENT_FROM_VAR(target)
-	if(client)
-		LAZYADD(payload_by_client[client], list(message))
+	for(var/_target in (islist(target) ? target : list(target))
+		var/client/client = CLIENT_FROM_VAR(_target)
+		if(client)
+			LAZYADD(payload_by_client[client], list(message))
