@@ -48,7 +48,7 @@
 
 
 /datum/keybinding/client/show_names
-	hotkey_keys = list("I")
+	hotkey_keys = list("Shift")
 	name = "show mob names"
 	full_name = "show mob names"
 	description = "Show names of nearby mobs, very cool!"

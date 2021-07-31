@@ -1066,7 +1066,7 @@
 
 	real_name = newname
 	name = newname
-	update_name_image()
+	update_appearance(UPDATE_OVERLAYS) // For mob name overlay
 	if(mind)
 		mind.name = newname
 		if(mind.key)
@@ -1353,33 +1353,36 @@
 
 ///Creates an image to show the mob's name on
 /mob/proc/create_name_image()
+	update_appearance(UPDATE_OVERLAYS)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NAME_STEALTHY), .proc/hide_name)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NAME_STEALTHY), .proc/show_name)
+
+///Hide the mobs name
+/mob/proc/hide_name()
+	SIGNAL_HANDLER
+	show_mob_name = FALSE
+	update_appearance(UPDATE_OVERLAYS)
+
+///Show the mobs name again
+/mob/proc/show_name()
+	SIGNAL_HANDLER
+	show_mob_name = TRUE
+	update_appearance(UPDATE_OVERLAYS)
+
+///Show the mob name image if they should
+/mob/update_overlays()
+	. = ..()
+
+	var/mutable_appearance/name_image = mutable_appearance(layer = CHAT_LAYER)
 	name_image = image(loc = src, layer = CHAT_LAYER)
 	name_image.plane = MOB_NAME_PLANE
 	name_image.appearance_flags = APPEARANCE_UI | KEEP_APART
 	name_image.pixel_y = -12
 	name_image.maptext_height = 40
 	name_image.maptext_width = 96
-	name_image.maptext_x = (96 - bound_width) * -0.5
-	update_name_image()
+	name_image.maptext_x = (96 - bound_width) * -0.5 - src.pixel_x
+	name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NAME_STEALTHY), .proc/hide_name)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NAME_STEALTHY), .proc/show_name)
-
-	add_overlay(name_image) //gonna cry?
-
-///Hide the mobs name
-/mob/proc/hide_name()
-	name_image.alpha = 0
-	cut_overlay(name_image)
-	add_overlay(name_image)
-
-///Show the mobs name again
-/mob/proc/show_name()
-	name_image.alpha = 255
-	cut_overlay(name_image)
-	add_overlay(name_image)
-
-/mob/proc/update_name_image()
-	if(name_image)
-		name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")
+	if(show_mob_name)
+		. += name_image

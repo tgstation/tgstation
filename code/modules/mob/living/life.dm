@@ -12,8 +12,9 @@
 /mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
+	var/turf/T = get_turf(src)
+
 	if (client)
-		var/turf/T = get_turf(src)
 		if(!T)
 			move_to_error_room()
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
@@ -73,6 +74,13 @@
 
 	if(machine)
 		machine.check_eye(src)
+
+	var/lums = T.get_lumcount()
+
+	if(lums <= 0.2)
+		ADD_TRAIT(src, TRAIT_NAME_STEALTHY, IN_DARKNESS_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_NAME_STEALTHY, IN_DARKNESS_TRAIT)
 
 	if(stat != DEAD)
 		return 1

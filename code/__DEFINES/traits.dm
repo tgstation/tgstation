@@ -477,6 +477,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INTROVERT "introvert"
 #define TRAIT_ANXIOUS "anxious"
 #define TRAIT_INSANITY "insanity"
+///Hides your name when holding shift. Used for anything that makes you invisible. or more hidden
 #define TRAIT_NAME_STEALTHY "name_stealthy"
 
 ///Trait for dryable items
@@ -622,6 +623,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHRONOSUIT_TRAIT "chronosuit"
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
+#define TACTICAL_COMPONENT_TRAIT "tactical-component"
+#define IN_DARKNESS_TRAIT "in-darkness"
 #define CHAMELEON_TRAIT "chameleon"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"

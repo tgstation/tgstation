@@ -228,6 +228,5 @@
 	/// A mock client, provided by tests and friends
 	var/datum/client_interface/mock_client
 
-
-	///An image that shows the mob's name
-	var/image/name_image
+	///Can people see our name?
+	var/show_mob_name = TRUE
