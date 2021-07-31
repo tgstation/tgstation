@@ -1,5 +1,4 @@
-#define MINOR_INSANITY_PEN 5
-#define MAJOR_INSANITY_PEN 10
+
 
 /datum/component/mood
 	var/mood //Real happiness
@@ -223,12 +222,12 @@
 	var/mob/living/master = parent
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
-			setInsanityEffect(MAJOR_INSANITY_PEN)
+			setInsanityEffect(MOOD_MAJOR_INSANITY)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			setInsanityEffect(MINOR_INSANITY_PEN)
+			setInsanityEffect(MOOD_MINOR_INSANITY)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 5
@@ -424,7 +423,3 @@
 	for(var/addiction_type in affected_carbon.mind.addiction_points)
 		var/datum/addiction/addiction_to_remove = SSaddiction.all_addictions[type]
 		affected_carbon.mind.remove_addiction_points(type, addiction_to_remove.high_sanity_addiction_loss) //If true was returned, we lost the addiction!
-
-#undef MINOR_INSANITY_PEN
-#undef MAJOR_INSANITY_PEN
-

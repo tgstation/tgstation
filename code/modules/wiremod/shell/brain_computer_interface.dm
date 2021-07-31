@@ -272,7 +272,7 @@
 	params.Insert(1, parent)
 	//builds the moodlet text
 	temp_event = new type(arglist(params))
-	var/extracted_text = temp_event.description
+	var/extracted_text = temp_event.raw_description
 	qdel(temp_event)
 	mood.set_output(extracted_text)
 	mood_trigger.set_output(COMPONENT_SIGNAL)
