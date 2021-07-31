@@ -13927,7 +13927,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "brA" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy shutters"
