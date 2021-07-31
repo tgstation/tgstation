@@ -1382,7 +1382,7 @@
 	name_image.maptext_height = 40
 	name_image.maptext_width = 96
 	name_image.maptext_x = (96 - bound_width) * -0.5 - src.pixel_x
-	name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]")
+	name_image.maptext = MAPTEXT("<span style='text-align: center'>[name]</span>")
 
 	if(show_mob_name)
 		. += name_image
