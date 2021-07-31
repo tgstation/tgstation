@@ -94,6 +94,12 @@
 	var/scrambledcodes = FALSE
 	///Boolean of whether the borg is locked down or not
 	var/lockcharge = FALSE
+	//Time this unit was locked, used in calculating if it can be detonated
+	var/lastlocked = 0
+	//Is the unit being unlocked
+	var/isunlocking = FALSE
+	//last time the unit was unlocked, used to calculate cooldown
+	var/lastunlocked = 0
 
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0

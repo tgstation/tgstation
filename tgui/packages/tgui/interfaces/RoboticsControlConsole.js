@@ -70,6 +70,7 @@ const Cyborgs = (props, context) => {
             )}
             <Button.Confirm
               icon={cyborg.locked_down ? 'unlock' : 'lock'}
+              disabled={!cyborg.can_lock&&!cyborg.locked_down}
               color={cyborg.locked_down ? 'good' : 'default'}
               content={cyborg.locked_down ? "Release" : "Lockdown"}
               onClick={() => act('stopbot', {
@@ -77,9 +78,14 @@ const Cyborgs = (props, context) => {
               })} />
             <Button.Confirm
               icon="bomb"
-              content="Detonate"
-              color="bad"
-              onClick={() => act('killbot', {
+              disabled={!cyborg.locked_down&&!cyborg.can_blow}
+              content={!cyborg.can_blow&&cyborg.locked_down
+                ?"Arming up"
+                :"Detonate"}
+              color={cyborg.can_blow ? "bad"
+                :cyborg.locked_down ? "yellow" : "grey"}
+              onClick={() => act(cyborg.can_blow&&cyborg.locked_down
+                ?'killbot' : "", {
                 ref: cyborg.ref,
               })} />
           </>

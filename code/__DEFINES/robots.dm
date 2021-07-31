@@ -57,6 +57,10 @@
 
 #define BORG_LAMP_CD_RESET -1 //special value to reset cyborg's lamp_cooldown
 
+#define BORG_DETONATION_DELAY 60 SECONDS//deciseconds from locking a cyborg before its ready to blow
+#define BORG_UNLOCK_DELAY 30 SECONDS //Time it takes to unlock a cyborg
+#define CONSOLE_LOCK_COOLDOWN 60 SECONDS //cooldown the console has on locking a cyborg
+
 /// Defines for whether or not module slots are broken.
 #define BORG_MODULE_ALL_DISABLED (1<<0)
 #define BORG_MODULE_TWO_DISABLED (1<<1)

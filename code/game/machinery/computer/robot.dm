@@ -47,6 +47,8 @@
 		var/list/cyborg_data = list(
 			name = R.name,
 			locked_down = R.lockcharge,
+			can_blow = R.lastlocked+BORG_DETONATION_DELAY<world.time&&R.lockcharge || issilicon(user),
+			can_lock = R.lastunlocked+BORG_UNLOCK_DELAY<world.time||R.isunlocking||issilicon(user),
 			status = R.stat,
 			charge = R.cell ? round(R.cell.percent()) : null,
 			module = R.model ? "[R.model.name] Model" : "No Model Detected",
@@ -83,12 +85,11 @@
 				if(can_control(usr, R) && !..())
 					var/turf/T = get_turf(R)
 					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R, R.client)] at [ADMIN_VERBOSEJMP(T)]!"))
-					log_game("[key_name(usr)] detonated [key_name(R)]!")
+					log_game("[span_notice("[key_name(usr)] detonated [key_name(R)]!")]")
 					log_combat(usr, R, "detonated cyborg")
-
 					if(R.connected_ai)
 						to_chat(R.connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [R.name]")]<br>")
-					R.self_destruct()
+					R.self_destruct(issilicon(usr))
 			else
 				to_chat(usr, span_danger("Access Denied."))
 		if("stopbot")
@@ -97,11 +98,11 @@
 				if(can_control(usr, R) && !..())
 					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
 					log_game("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
-					log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
-					R.SetLockdown(!R.lockcharge)
-					to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
+					to_chat(usr,!R.lockcharge ? span_alert("Arming up internal detonation charge, please wait [BORG_DETONATION_DELAY/10] seconds") : span_notice("Releasing lockdown, it will take [BORG_UNLOCK_DELAY/10] seconds"))
+					addtimer(CALLBACK(R, /mob/living/silicon/robot/proc/SetLockdown, !R.lockcharge), BORG_UNLOCK_DELAY)
+					to_chat(R, !R.lockcharge ? span_notice("Your lockdown is being lifted!") : span_alert("You have been locked down!"))
 					if(R.connected_ai)
-						to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
+						to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown is being lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 			else
 				to_chat(usr, span_danger("Access Denied."))
 		if("magbot")
