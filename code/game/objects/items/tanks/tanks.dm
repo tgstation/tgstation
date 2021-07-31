@@ -317,9 +317,8 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
-		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-
-		explosion(src, devastation_range = round(range*0.25), heavy_impact_range = round(range*0.5), light_impact_range = round(range), flash_range = round(range*1.5))
+		var/power = air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+		dyn_explosion(src, power, flash_range = 1.5)
 	return ..()
 
 /obj/item/tank/rad_act(strength)

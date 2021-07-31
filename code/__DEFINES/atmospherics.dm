@@ -307,8 +307,8 @@
 #define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
 /// Boom 3x3 base explosion
 #define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
-/// +1 for each SCALE kPa aboe threshold
-#define TANK_FRAGMENT_SCALE (6.*ONE_ATMOSPHERE)
+/// Range scaling constant for tank explosions. (Higher means tank explosions scale slower)
+#define TANK_FRAGMENT_SCALE (42.*ONE_ATMOSPHERE)
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
 #define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
