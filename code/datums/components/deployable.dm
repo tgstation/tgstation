@@ -22,7 +22,7 @@
 /datum/component/deployable/proc/examine(datum/src, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("It looks like it can be deployed into a [deployed_name].")
+	examine_list += span_notice("It looks like it can be deployed into \a [deployed_name].")
 
 /datum/component/deployable/proc/deploy_signal_handler(datum/source, mob/user, location, direction)
 	SIGNAL_HANDLER
