@@ -485,3 +485,6 @@
 	icon_state = "pavlova_slice"
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
 	foodtypes = DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cakeslice/pavlova/nuts
+	foodtypes = NUTS | FRUIT | SUGAR
