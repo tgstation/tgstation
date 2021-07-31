@@ -49,3 +49,4 @@
 /obj/effect/spawner/lootdrop/armory_contraband : /obj/effect/spawner/random/contraband/armory
 /obj/effect/spawner/lootdrop/armory_contraband/metastation : /obj/effect/spawner/random/contraband/armory
 /obj/effect/spawner/lootdrop/armory_contraband/donutstation : /obj/effect/spawner/random/contraband/armory
+/obj/effect/spawner/lootdrop/gross_decal_spawner : /obj/effect/spawner/random/trash/mess

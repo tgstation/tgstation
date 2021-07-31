@@ -11,6 +11,6 @@ obj/effect/spawner/random/structure
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
 		/obj/structure/closet/mini_fridge = 35,
-		/obj/effect/spawner/lootdrop/gross_decal_spawner = 30,
+		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/structure/closet/crate/decorations = 15,
 	)

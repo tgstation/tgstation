@@ -82,3 +82,19 @@
 		/obj/effect/spawner/scatter/moisture,
 		/obj/structure/moisture_trap,
 	)
+
+/obj/effect/spawner/random/trash/mess
+	name = "gross decal spawner"
+	icon_state = "random_trash"
+	loot = list(
+		/obj/effect/decal/cleanable/dirt = 6,
+		/obj/effect/decal/cleanable/garbage = 3,
+		/obj/effect/decal/cleanable/vomit/old = 3,
+		/obj/effect/decal/cleanable/blood/gibs/old = 3,
+		/obj/effect/decal/cleanable/insectguts = 1,
+		/obj/effect/decal/cleanable/greenglow/ecto = 1,
+		/obj/effect/decal/cleanable/wrapping = 1,
+		/obj/effect/decal/cleanable/plastic = 1,
+		/obj/effect/decal/cleanable/glass = 1,
+		/obj/effect/decal/cleanable/ants = 1,
+	)
