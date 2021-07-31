@@ -2361,7 +2361,7 @@
 /obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet,
-/area/hallway/secondary/service)
+/area/service/theater)
 "kg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3737,7 +3737,7 @@
 /obj/structure/table/wood/bar,
 /obj/item/food/pie/cream,
 /turf/open/floor/carpet,
-/area/hallway/secondary/service)
+/area/service/theater)
 "sE" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
