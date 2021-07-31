@@ -53,16 +53,6 @@
 
 /obj/item/circuit_component/mmi/Destroy()
 	remove_current_brain()
-	message = null
-	send = null
-	eject = null
-	north = null
-	east = null
-	south = null
-	west = null
-	attack = null
-	secondary_attack = null
-	clicked_atom = null
 	return ..()
 
 /obj/item/circuit_component/mmi/input_received(datum/port/input/port)

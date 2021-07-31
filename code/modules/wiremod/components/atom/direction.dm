@@ -39,11 +39,6 @@
 	south = add_output_port("South", PORT_TYPE_SIGNAL)
 	west = add_output_port("West", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/direction/Destroy()
-	input_port = null
-	output = null
-	return ..()
-
 /obj/item/circuit_component/direction/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
