@@ -22,6 +22,17 @@
 		/obj/item/crowbar/red/caravan,
 	)
 
+/obj/effect/spawner/random/engineering/tool_rare
+	name = "Rare tool spawner"
+	loot = list(
+		/obj/item/wrench/abductor,
+		/obj/item/wirecutters/abductor,
+		/obj/item/screwdriver/abductor,
+		/obj/item/crowbar/abductor,
+		/obj/item/weldingtool/abductor,
+		/obj/item/multitool/abductor,
+	)
+
 /obj/effect/spawner/random/engineering/material_cheap
 	name = "Cheap material spawner"
 	loot = list(
