@@ -16,6 +16,12 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
+	var/max_range = 20
+
+/obj/item/circuit_component/gps/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+
 /obj/item/circuit_component/gps/Initialize()
 	. = ..()
 
@@ -37,7 +43,12 @@
 	else
 		location = get_turf(entity.input_value)
 
-	x_pos.set_output(location?.x)
-	y_pos.set_output(location?.y)
-	z_pos.set_output(location?.z)
+	if(IN_GIVEN_RANGE(parent.shell, entity.input_value, max_range))
+		x_pos.set_output(location?.x)
+		y_pos.set_output(location?.y)
+		z_pos.set_output(location?.z)
+	else
+		x_pos.set_output(null)
+		y_pos.set_output(null)
+		z_pos.set_output(null)
 
