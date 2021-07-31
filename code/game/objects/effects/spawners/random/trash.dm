@@ -124,3 +124,28 @@
 		/obj/effect/decal/cleanable/blood/old = 2,
 		/obj/structure/mopbucket = 2,
 	)
+
+/obj/effect/spawner/random/graffiti
+	name = "random graffiti spawner"
+	icon = 'icons/effects/crayondecal.dmi'
+	icon_state = "random_graffiti"
+	loot = list(
+		"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
+		"amyjon", "face", "matt", "revolution", "engie", "guy",
+		"end", "dwarf", "uboa", "body", "cyka", "star", "poseur tag",
+		"prolizard", "antilizard", "danger", "firedanger", "electricdanger",
+		"biohazard", "radiation", "safe", "evac", "space", "med", "trade", "shop",
+		"food", "peace", "like", "skull", "nay", "heart", "credit",
+		"smallbrush", "brush", "largebrush", "splatter", "snake", "stickman",
+		"carp", "ghost", "clown", "taser", "disk", "fireaxe", "toolbox",
+		"corgi", "cat", "toilet", "blueprint", "beepsky", "scroll", "bottle",
+		"shotgun", "arrow", "line", "thinline", "shortline", "body", "chevron",
+		"footprint", "clawprint", "pawprint",
+	)
+
+/obj/effect/spawner/random/graffiti/Initialize()
+	. = ..()
+	var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
+	graffiti.add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
+	graffiti.icon_state = pick(loot)
+	return INITIALIZE_HINT_QDEL
