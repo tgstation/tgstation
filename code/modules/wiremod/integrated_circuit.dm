@@ -236,7 +236,7 @@
 				current_data = null
 			var/list/connected_to = list()
 			for(var/datum/port/output/output as anything in port.connected_ports)
-				connected_to += list(REF(output))
+				connected_to += REF(output)
 			component_data["input_ports"] += list(list(
 				"name" = port.name,
 				"type" = port.datatype,
