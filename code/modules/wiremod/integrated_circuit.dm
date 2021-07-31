@@ -321,7 +321,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(!compatible_datatypes(output_port.datatype, input_port.datatype))
+			if(!cast(output_port.datatype, input_port.datatype))
 				return
 			input_port.connect(output_port)
 			. = TRUE
@@ -471,6 +471,51 @@
 			WRITE_FILE(temp_file, convert_to_json())
 			DIRECT_OUTPUT(saver, ftp(temp_file, "[display_name || "circuit"].json"))
 			. = TRUE
+
+
+/**
+ * Returns how to cast a datatype to another.
+ *
+ * Arguments:
+ * * old_type - The datatype to cast from.
+ * * new_type - The datatype to cast to.
+ */
+/obj/item/integrated_circuit/proc/cast(old_type, new_type)
+	if(new_type == PORT_TYPE_ANY)
+		return /proc/identity
+	if(new_type == old_type)
+		return /proc/identity
+	if(new_type == PORT_TYPE_SIGNAL)
+		return /proc/identity
+	switch(old_type)
+		if(PORT_TYPE_ATOM)
+			switch(new_type)
+				if(PORT_TYPE_STRING)
+					return ./proc/atomtostring
+		if(PORT_TYPE_NUMBER)
+			switch(new_type)
+				if(PORT_TYPE_STRING)
+					return ./proc/numbertostring
+		if(PORT_TYPE_STRING)
+			switch(new_type)
+				if(PORT_TYPE_NUMBER)
+					return /proc/text2num
+
+/**
+ * Perhaps the simplest proc. Used for trivial casts.
+ */
+/proc/identity(x)
+	return x
+
+/obj/item/integrated_circuit/proc/atomtostring(atom/object)
+	var/turf/location = get_turf(src)
+	if(object.z != location.z || get_dist(location, object) > 5)
+		return PORT_TYPE_ATOM
+	return "[object]"
+
+/obj/item/integrated_circuit/proc/numbertostring(number)
+	return "[number]"
+
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER

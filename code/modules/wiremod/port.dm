@@ -100,14 +100,15 @@
 	SEND_SIGNAL(src, COMSIG_PORT_SET_TYPE, new_type)
 	var/old_type = datatype
 	datatype = new_type
-	set_value(compatible_datatypes(old_type, new_type) ? value : null)
+	var/proc/cast = connected_component?.parent?.cast(old_type, new_type)
+	set_value(cast ? call(cast)(value) : null)
 	color = datatype_to_color()
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
 
 /datum/port/input/set_datatype(new_type)
 	for(var/datum/port/output/output as anything in connected_ports)
-		if(!compatible_datatypes(output.datatype,new_type))
+		if(!connected_component?.parent?.cast(output.datatype,new_type))
 			disconnect(output)
 	..()
 
@@ -136,29 +137,6 @@
 		value = null
 	else
 		stack_trace("Impossible? [src] should only receive COMSIG_PARENT_QDELETING from an atom currently in the port, not [source].")
-
-/**
- * Determines if a datatype can be cast to another.
- *
- * Arguments:
- * * old_type - The datatype to cast from.
- * * new_type - The datatype to cast to.
- */
-/proc/compatible_datatypes(old_type, new_type)
-	if(new_type == PORT_TYPE_ANY)
-		return TRUE
-	if(new_type == old_type)
-		return TRUE
-
-	switch(old_type)
-		if(PORT_TYPE_NUMBER)
-			// Can easily convert a number to string. Everything else has to use a tostring component
-			return new_type == PORT_TYPE_STRING || new_type == PORT_TYPE_SIGNAL
-		if(PORT_TYPE_SIGNAL)
-			// A signal port is just a number port but distinguishable
-			return new_type == PORT_TYPE_NUMBER
-
-	return FALSE
 
 /datum/port/output
 
@@ -205,5 +183,5 @@
  */
 /datum/port/input/proc/receive_type(datum/port/output/output, new_type)
 	SIGNAL_HANDLER
-	if(!compatible_datatypes(new_type, src.datatype))
+	if(!connected_component?.parent?.cast(new_type, src.datatype))
 		disconnect(output)
