@@ -40,6 +40,14 @@
 	if(opened)
 		. += "[icon_state]_open"
 
+/mob/living/simple_animal/pet/gondola/gondolapod/ex_act(severity)
+	if(!linked_pod)
+		return ..()
+	var/list/ex_vals = linked_pod.explosionSize
+	if(ex_vals[1] + ex_vals[2] + ex_vals[3]) //If the pod is explosive the gondola will be explosion proof also to avoid runtimes.
+		return
+	return ..()
+
 /mob/living/simple_animal/pet/gondola/gondolapod/verb/deliver()
 	set name = "Release Contents"
 	set category = "Gondola"
@@ -74,5 +82,4 @@
 
 /mob/living/simple_animal/pet/gondola/gondolapod/death()
 	qdel(linked_pod) //Will cause the open() proc for the linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
-	qdel(src)
-	..()
+	return ..()
