@@ -29,7 +29,7 @@
 
 	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
 
-	if(do_after(user, 30, target=target))
+	if(do_after(user, 3 SECONDS, target=target))
 		use(1)
 		if(istype(target, /obj/item/clothing/gloves/fingerless))
 			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
