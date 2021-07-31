@@ -430,6 +430,7 @@
 		return
 	quirk = new quirktype()
 	if(quirk.add_to_holder(src))
+		SSblackbox.record_feedback("nested tally", "quirks_added", 1, list("[qname]"))
 		return TRUE
 	qdel(quirk)
 	return FALSE
