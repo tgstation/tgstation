@@ -84,7 +84,7 @@ const Cyborgs = (props, context) => {
                 :"Detonate"}
               color={cyborg.can_blow ? "bad"
                 :cyborg.locked_down ? "yellow" : "grey"}
-              onClick={() => act(cyborg.can_blow&&cyborg.locked_down
+              onClick={() => act(cyborg.can_blow
                 ?'killbot' : "", {
                 ref: cyborg.ref,
               })} />
