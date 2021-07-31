@@ -765,6 +765,9 @@
 			list_vars[list_name][list_var]["value"] = value
 
 /datum/give_sdql_spell/proc/rename_list_var(list_name, list_var, new_name)
+	if(!new_name)
+		alert = "You can't give a list an empty string for a name!"
+		return
 	if(list_var == new_name)
 		return
 	if(list_name in list_vars)
@@ -774,7 +777,9 @@
 			if(new_name in list_vars[list_name])
 				alert = "There is already a variable named [new_name] in [list_name]!"
 			else
+				var/old_val = list_vars[list_name][list_var]
 				list_vars[list_name][ind] = new_name
+				list_vars[list_name][new_name] = old_val
 
 /datum/give_sdql_spell/proc/change_list_var_type(list_name, list_var, var_type)
 	if(list_name in list_vars)

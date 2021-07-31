@@ -472,6 +472,8 @@ const WrapInTooltip = (props, context) => {
         {children}
       </Tooltip>
     );
+  } else {
+    return children;
   }
 };
 
@@ -522,7 +524,6 @@ const SDQLSpellInput = (props, context) => {
     case 'string':
       return (
         <Input
-          width="100%"
           fluid
           value={saved_vars[name] ?? default_value}
           onChange={(e, value) => act('variable', { name, value })}
