@@ -348,6 +348,7 @@
 	force = 20
 	throwforce = 17
 	armour_penetration = 50
+	sharpness = SHARP_EDGED
 	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/hostile/soulscythe/soul
 	/// Are we currently grabbing a ghost?
