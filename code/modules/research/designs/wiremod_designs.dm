@@ -88,11 +88,6 @@
 	id = "comp_not"
 	build_path = /obj/item/circuit_component/not
 
-/datum/design/component/ram
-	name = "RAM Component"
-	id = "comp_ram"
-	build_path = /obj/item/circuit_component/ram
-
 /datum/design/component/random
 	name = "Random Component"
 	id = "comp_random"
