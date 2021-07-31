@@ -51,7 +51,7 @@
 	hotkey_keys = list("Shift")
 	name = "show mob names"
 	full_name = "show mob names"
-	description = "Show names of nearby mobs, very cool!"
+	description = "Show names of nearby mobs."
 	keybind_signal = COMSIG_KB_CLIENT_SHOW_MOB_NAMES_DOWN
 
 /datum/keybinding/client/show_names/down(client/user)
@@ -64,6 +64,5 @@
 /datum/keybinding/client/show_names/up(client/user)
 	var/atom/movable/screen/plane_master/name_planemaster = user.mob.hud_used.plane_masters["[MOB_NAME_PLANE]"]
 	name_planemaster.Hide()
-
 
 
