@@ -64,7 +64,7 @@
  * ```
  */
 /proc/to_chat(
-	target,
+	datum/target,
 	html,
 	type = null,
 	text = null,
@@ -95,4 +95,5 @@
 	if(text) message["text"] = text
 	if(html) message["html"] = html
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
+	SEND_SIGNAL(target, COMSIG_TO_CHAT, message)
 	SSchat.queue(target, message)

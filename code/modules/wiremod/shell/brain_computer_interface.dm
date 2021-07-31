@@ -164,6 +164,8 @@
 	var/datum/port/input/send_message_signal
 
 	var/datum/port/output/user_port
+	var/datum/port/output/thought
+	var/datum/port/output/thought_trigger
 
 	var/datum/weakref/user
 
@@ -174,6 +176,8 @@
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
 
 	user_port = add_output_port("User", PORT_TYPE_ATOM)
+	thought = add_output_port("Thought", PORT_TYPE_STRING)
+	thought_trigger = add_output_port("Thought Trigger", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)
@@ -227,6 +231,13 @@
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+	RegisterSignal(owner, COMSIG_TO_CHAT, .proc/receive_thought)
+
+/obj/item/circuit_component/bci_core/proc/receive_thought(mob/source, message)
+	if(source != user?.resolve())
+		CRASH("A BCI's user was changed and it didn't notice.")
+	thought.set_output(message["html"] || message["text"])
+	thought_trigger.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -238,6 +249,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
+		COMSIG_TO_CHAT,
 	))
 
 /obj/item/circuit_component/bci_core/proc/on_borg_charge(datum/source, amount)
