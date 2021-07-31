@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 					port = port_to_check
 					break
 
-			port.set_input(port_data["stored_value"])
+			port.set_input(port_data["stored_data"])
 
 	var/list/external_objects = general_data["external_objects"]
 	for(var/identifier in external_objects)
