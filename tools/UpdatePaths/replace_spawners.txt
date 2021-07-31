@@ -52,3 +52,7 @@
 /obj/effect/spawner/lootdrop/gross_decal_spawner : /obj/effect/spawner/random/trash/mess
 /obj/effect/spawner/scatter/grime : /obj/effect/spawner/random/trash/grime
 /obj/effect/spawner/scatter/moisture : /obj/effect/spawner/random/trash/moisture
+/obj/effect/spawner/lootdrop/space/fancytech : /obj/effect/spawner/random/exotic/technology
+/obj/effect/spawner/lootdrop/space/languagebook : /obj/effect/spawner/random/exotic/languagebook
+/obj/effect/spawner/lootdrop/space/syndiecosmetic : /obj/effect/spawner/random/exotic/syndie
+/obj/effect/spawner/lootdrop/space/fancytool : /obj/effect/spawner/random/exotic/tool
