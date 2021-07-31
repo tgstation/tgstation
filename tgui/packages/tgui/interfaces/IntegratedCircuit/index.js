@@ -207,15 +207,15 @@ export class IntegratedCircuit extends Component {
         continue;
       }
 
-      for (const port of comp.input_ports) {
-        if (port.connected_to === NULL_REF
-          || selectedPort?.ref === port.ref) continue;
-        const output_port = locations[port.connected_to];
-        connections.push({
-          color: (output_port && output_port.color) || 'blue',
-          from: output_port,
-          to: locations[port.ref],
-        });
+      for (const input of comp.input_ports) {
+        for (const output of input.connected_to) {
+          const output_port = locations[output];
+          connections.push({
+            color: (output_port && output_port.color) || 'blue',
+            from: output_port,
+            to: locations[input.ref],
+          });
+        }
       }
     }
 
