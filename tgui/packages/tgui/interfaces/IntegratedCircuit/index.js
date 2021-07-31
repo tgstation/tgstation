@@ -349,7 +349,7 @@ export class IntegratedCircuit extends Component {
             />
           )}
           {!!menuOpen && (
-            <Layout
+            <Box
               position="absolute"
               bottom={0}
               left={0}
@@ -358,30 +358,24 @@ export class IntegratedCircuit extends Component {
               width="100%"
               backgroundColor="#202020"
             >
-              <Layout.Content
-                style={{
-                  "background-image": "none",
-                }}
-              >
-                <VariableMenu
-                  variables={variables}
-                  types={global_basic_types}
-                  onAddVariable={(name, type, event) => act("add_variable", {
-                    variable_name: name,
-                    variable_datatype: type,
-                  })}
-                  onRemoveVariable={(name, event) => act("remove_variable", {
-                    variable_name: name,
-                  })}
-                  handleAddSetter={(e) => act("add_setter_or_getter", {
-                    is_setter: true,
-                  })}
-                  handleAddGetter={(e) => act("add_setter_or_getter", {
-                    is_setter: false,
-                  })}
-                />
-              </Layout.Content>
-            </Layout>
+              <VariableMenu
+                variables={variables}
+                types={global_basic_types}
+                onAddVariable={(name, type, event) => act("add_variable", {
+                  variable_name: name,
+                  variable_datatype: type,
+                })}
+                onRemoveVariable={(name, event) => act("remove_variable", {
+                  variable_name: name,
+                })}
+                handleAddSetter={(e) => act("add_setter_or_getter", {
+                  is_setter: true,
+                })}
+                handleAddGetter={(e) => act("add_setter_or_getter", {
+                  is_setter: false,
+                })}
+              />
+            </Box>
           )}
         </Window.Content>
       </Window>
