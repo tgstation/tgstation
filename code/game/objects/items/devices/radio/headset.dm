@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	slot_flags = ITEM_SLOT_EARS
 	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
+	listening = TRUE
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
@@ -329,11 +330,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 
 /obj/item/radio/headset/recalculateChannels()
-	..()
+	. = ..()
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
 			if(!(ch_name in src.channels))
-				channels[ch_name] = keyslot2.channels[ch_name]
+				LAZYSET(channels, ch_name, keyslot2.channels[ch_name])
 
 		if(keyslot2.translate_binary)
 			translate_binary = TRUE
@@ -342,8 +343,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		if (keyslot2.independent)
 			independent = TRUE
 
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+		for(var/ch_name in channels)
+			secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/radio/headset/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())

@@ -4,7 +4,7 @@
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
-	canhear_range = 2
+	canhear_range = 4
 	dog_fashion = null
 	unscrewed = FALSE
 
@@ -78,22 +78,18 @@
 	return GLOB.default_state
 
 /obj/item/radio/intercom/can_receive(freq, level)
-	if(!on)
-		return FALSE
-	if(wires.is_cut(WIRE_RX))
+	if(!on || !listening || wires.is_cut(WIRE_RX))
 		return FALSE
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
 			return FALSE
-	if(!listening)
-		return FALSE
+
 	if(freq == FREQ_SYNDICATE)
 		if(!(syndie))
 			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
 	return TRUE
-
 
 /obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(message_mods[RADIO_EXTENSION] == MODE_INTERCOM)
@@ -123,9 +119,9 @@
 	SIGNAL_HANDLER
 	var/area/current_area = get_area(src)
 	if(!current_area)
-		on = FALSE
+		set_on(FALSE)
 	else
-		on = current_area.powered(AREA_USAGE_EQUIP) // set "on" to the equipment power status of our area.
+		set_on(current_area.powered(AREA_USAGE_EQUIP)) // set "on" to the equipment power status of our area.
 	update_appearance()
 
 /obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
