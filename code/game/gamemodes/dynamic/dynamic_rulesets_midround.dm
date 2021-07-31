@@ -874,8 +874,7 @@
 			|| candidate.mind.has_antag_datum(/datum/antagonist/obsessed) \
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \
-			|| !SSjob.GetJob(candidate.mind.assigned_role) \
-			|| (candidate.mind.assigned_role in GLOB.nonhuman_positions) \
+			|| !candidate.mind.assigned_role \
 		)
 			candidates -= candidate
 
