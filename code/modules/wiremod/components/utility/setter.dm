@@ -55,5 +55,4 @@
 	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return TRUE
 
-	var/input_val = input_port.input_value
-	variable.value = input_val
+	variable.set_value(input_port.input_value)

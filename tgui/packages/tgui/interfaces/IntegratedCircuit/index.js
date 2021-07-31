@@ -137,9 +137,11 @@ export class IntegratedCircuit extends Component {
   }
 
   handlePortDrag(event) {
+    const { data } = useBackend(this.context);
+    const { screen_x, screen_y } = data;
     this.setState((state) => ({
-      mouseX: event.clientX - state.backgroundX,
-      mouseY: event.clientY - state.backgroundY,
+      mouseX: event.clientX - (state.backgroundX || screen_x),
+      mouseY: event.clientY - (state.backgroundY || screen_y),
     }));
   }
 

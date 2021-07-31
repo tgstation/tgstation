@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
 	PORT_TYPE_ANY,
+	PORT_TYPE_OPTION,
 ))
 
 /// Loads a circuit based on json data at a location. Can also load usb connections, such as arrest consoles.
@@ -17,6 +18,11 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 
 	if(general_data["display_name"])
 		set_display_name(general_data["display_name"])
+
+	var/list/variable_data = general_data["variables"]
+	for(var/list/variable as anything in variable_data)
+		var/variable_name = variable["name"]
+		circuit_variables[variable_name] = new /datum/circuit_variable(variable_name, variable["datatype"])
 
 	var/list/circuit_data = general_data["components"]
 	var/list/identifiers_to_circuit = list()
@@ -143,6 +149,15 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	general_data["components"] = circuit_data
 	general_data["external_objects"] = external_objects_key
 	general_data["display_name"] = display_name
+
+	var/list/variables = list()
+	for(var/variable_identifier in circuit_variables)
+		var/list/new_data = list()
+		var/datum/circuit_variable/variable = circuit_variables[variable_identifier]
+		new_data["name"] = variable.name
+		new_data["datatype"] = variable.datatype
+		variables += list(new_data)
+	general_data["variables"] = variables
 
 	return json_encode(general_data)
 
