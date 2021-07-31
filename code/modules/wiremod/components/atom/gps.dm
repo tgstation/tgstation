@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/gps
 	display_name = "Internal GPS"
-	display_desc = "A component that returns the xyz co-ordinates of itself if its input port is empty, and of the input if it is not. Input target has to be within the line of sight of the shell."
+	display_desc = "A component that returns the xyz co-ordinates of itself if its input port is empty, and of the input if it is not. Target has to be within the line of sight of the shell."
 
 	var/datum/port/input/entity
 
