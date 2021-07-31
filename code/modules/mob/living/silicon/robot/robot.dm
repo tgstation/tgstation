@@ -425,8 +425,10 @@
 		state = TRUE
 	if(state)
 		throw_alert("locked", /atom/movable/screen/alert/locked)
+		lastlocked = world.time
 	else
 		clear_alert("locked")
+		lastunlocked = world.time
 	set_lockcharge(state)
 
 
