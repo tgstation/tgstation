@@ -318,7 +318,7 @@
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 		var/power = air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-		dyn_explosion(src, power, flash_range = 1.5)
+		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
 
 /obj/item/tank/rad_act(strength)
