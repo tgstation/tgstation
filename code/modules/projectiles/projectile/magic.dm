@@ -154,6 +154,10 @@
 	qdel(src)
 
 /proc/wabbajack(mob/living/M, randomize)
+	if(istype(M, /mob/living/simple_animal/hostile/mimic/copy) || ispAI(M))
+		M.wabbajack_act()
+		return
+
 	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
 	// We then want to restore this original body through the shapeshift holder itself.
 	var/obj/shapeshift_holder/shapeshift = locate() in M
@@ -161,14 +165,7 @@
 		M = shapeshift.stored
 		shapeshift.restore()
 
-	if(!istype(M) || istype(M, /mob/living/simple_animal/hostile/mimic/copy) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
-		return
-
-	if(ispAI(M))
-		var/mob/living/silicon/pai/pai = M
-		var/holochassis = pick(pai.possible_chassis)
-		pai.set_holochassis(holochassis)
-		to_chat(pai, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
+	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
 	M.notransform = TRUE
