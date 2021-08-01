@@ -407,13 +407,6 @@
 	return FALSE
 
 /**
- * NOTE: ITEM PROC, not for mobs!
- * This proc asks an item for special slot equipping priority before attempting to iterate through the slots.
- */
-/obj/item/proc/special_slot_priority(list/slot_priority)
-	return
-
-/**
  * Reset the attached clients perspective (viewpoint)
  *
  * reset_perspective() set eye to common default : mob on turf, loc otherwise

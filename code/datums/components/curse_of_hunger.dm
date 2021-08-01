@@ -31,7 +31,7 @@
 	var/obj/item/cursed_item = parent
 	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-	if(cursed_item.slot_flags)
+	if(isclothing(cursed_item) && cursed_item.slot_flags)
 		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	else
 		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
@@ -83,7 +83,7 @@
 	if(add_dropdel)
 		cursed_item.item_flags |= DROPDEL
 		return
-	if(cursed_item.slot_flags)
+	if(isclothing(cursed_item) && cursed_item.slot_flags)
 		RegisterSignal(cursed_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
 	else
 		RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
@@ -100,6 +100,7 @@
 	var/turf/vomit_turf = get_turf(at_least_item)
 	playsound(vomit_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/vomit(vomit_turf)
+	poison_food_tolerance = FULL_HEALTH
 
 	if(!add_dropdel) //gives a head start for the person to get away from the cursed item before it begins hunting again!
 		addtimer(CALLBACK(src, .proc/seek_new_target), 10 SECONDS)
@@ -112,8 +113,8 @@
 	else if(!isturf(cursed_item.loc))
 		cursed_item.forceMove(get_turf(cursed_item))
 	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
-	var/targetted_slot = cursed_item.slot_flags ? cursed_item.slot_flags[1] : ITEM_SLOT_HANDS
-	cursed_item.AddElement(/datum/element/cursed, targetted_slot)
+	var/target_slot = (isclothing(cursed_item) && cursed_item.slot_flags) ? cursed_item.get_autoequip_slot() : ITEM_SLOT_HANDS
+	cursed_item.AddElement(/datum/element/cursed, target_slot)
 	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
 
 /datum/component/curse_of_hunger/process(delta_time)

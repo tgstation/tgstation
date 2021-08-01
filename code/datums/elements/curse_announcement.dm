@@ -45,6 +45,13 @@
 	announce(cursed_item, grabber)
 
 /datum/element/curse_announcement/proc/announce(obj/item/cursed_item, mob/cursed)
+
+	to_chat(cursed, span_userdanger("[announcement_message]"))
+
+	if(HAS_TRAIT(cursed_item, TRAIT_CURSED_NAME_REVEALED))
+		return
+	ADD_TRAIT(cursed_item, TRAIT_CURSED_NAME_REVEALED, TRAIT_CURSE)
+
 	//this is from rpgloot, remove the quality suffix to format the name correctly
 	var/quality_suffix_text
 	var/datum/component/fantasy/perchance_to_dream = fantasy_component.resolve()
@@ -52,13 +59,13 @@
 		quality_suffix_text = " [perchance_to_dream.quality]"
 		cursed_item.name = replacetext(cursed_item.name, quality_suffix_text,"")
 
-	//modifications to the item so it looks cursed
-	to_chat(cursed, span_userdanger("[announcement_message]"))
-	cursed_item.add_filter("cursed_item", 9, list("type" = "outline", "color" = filter_color, "size" = 1))
-	cursed_item.name = "[cursed_item][new_name]"
 
-	//this is from rpgloot, readd the quality suffix
-	if(quality_suffix_text)
-		cursed_item.name += quality_suffix_text
-	cursed_item.RemoveElement(/datum/element/curse_announcement)
+		//modifications to the item so it looks cursed
+		cursed_item.add_filter("cursed_item", 9, list("type" = "outline", "color" = filter_color, "size" = 1))
+		cursed_item.name = "[cursed_item][new_name]"
+
+		//this is from rpgloot, readd the quality suffix
+		if(quality_suffix_text)
+			cursed_item.name += quality_suffix_text
+		cursed_item.RemoveElement(/datum/element/curse_announcement)
 

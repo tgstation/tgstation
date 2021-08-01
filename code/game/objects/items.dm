@@ -628,6 +628,43 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
+/**
+ * This proc asks an item for special slot equipping priority before attempting to iterate through the slots.
+ * Arguments:
+ * * slot_priority: default list of slots to try and equip to in order. you take out and modify slots that it should conditionally not equip to.
+ */
+/obj/item/proc/special_slot_priority(list/slot_priority)
+	return
+
+/**
+ * This proc returns the best slot an item could equip to, even considering special slot priority
+ */
+/obj/item/proc/get_autoequip_slot()
+	var/list/slot_priority = list(
+		ITEM_SLOT_BACK,
+		ITEM_SLOT_ID,
+		ITEM_SLOT_ICLOTHING,
+		ITEM_SLOT_OCLOTHING,
+		ITEM_SLOT_MASK,
+		ITEM_SLOT_HEAD,
+		ITEM_SLOT_NECK,
+		ITEM_SLOT_FEET,
+		ITEM_SLOT_GLOVES,
+		ITEM_SLOT_EARS,
+		ITEM_SLOT_EYES,
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_SUITSTORE,
+		ITEM_SLOT_LPOCKET,
+		ITEM_SLOT_RPOCKET,
+		ITEM_SLOT_DEX_STORAGE,
+	)
+
+	special_slot_priority(slot_priority)
+
+	for(var/slot in slot_priority)
+		if(slot_flags & slot)
+			return slot
+
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
 	set category = "Object"

@@ -44,12 +44,13 @@
 ///signal called by picking up the pawn, will try to equip to where it should actually be and start the curse
 /datum/ai_controller/cursed/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/try_equipping_to_target_slot, equipper, slot)
+	var/obj/item/item_pawn = pawn
+	var/target_slot = blackboard[BB_TARGET_SLOT]
+	if(slot != target_slot)
+		INVOKE_ASYNC(item_pawn, .proc/try_equipping_to_target_slot, equipper, slot)
 
 /**
- * curse of hunger component; for very hungry items.
- *
- * called when someone grabs the cursed item or the cursed item impacts with a mob it's throwing itself at
+ * try_equipping_to_target_slot is called when someone grabs the cursed item or the cursed item impacts with a mob it's throwing itself at
  * arguments:
  * * curse_victim: whomever we're attaching this to
  * * slot_already_in: the slot the item is already in before this was called, possibly null but at least in hands if picked up

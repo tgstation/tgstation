@@ -69,6 +69,7 @@
 //defines
 ///how far a cursed item will still try to chase a target
 #define CURSED_VIEW_RANGE 7
+///chance of the cursed item teleporting
 #define CURSED_ITEM_TELEPORT_CHANCE 4
 //blackboards
 
