@@ -889,7 +889,7 @@
 
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm"
-	display_desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
+	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
 
 	var/datum/port/input/min_2
 	var/datum/port/input/min_1
@@ -918,23 +918,24 @@
 	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/air_alarm/populate_options()
-	var/static/list/component_options = list(
-		"Pressure",
-		"Temperature"
-	)
+	var/static/list/component_options
+	var/static/list/options_to_key
+
+	if(!component_options)
+		component_options = list(
+			"Pressure",
+			"Temperature"
+		)
+		options_to_key = list(
+			"Pressure" = "pressure",
+			"Temperature" = "temperature"
+		)
+
+		for(var/datum/gas/gas_type as anything in subtypesof(/datum/gas))
+			component_options.Add(gas_type.name)
+			options_to_key[gas_type.name] = gas_type
+
 	options = component_options
-
-	var/static/list/options_to_key = list(
-		"Pressure" = "pressure",
-		"Temperature" = "temperature"
-	)
-
-	for(var/gas_type in subtypesof(/datum/gas))
-		var/datum/gas/new_gas = new gas_type()
-		component_options.Add(new_gas.name)
-		options_to_key[new_gas.name] = gas_type
-		qdel(new_gas)
-
 	options_map = options_to_key
 
 /obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/parent)
@@ -961,11 +962,11 @@
 			gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
 		return
 
-	var/datum/tlv/tlv = connected_alarm.TLV[options_map[current_option]]
-	tlv.min2 = min_2
-	tlv.min1 = min_1
-	tlv.max1 = max_1
-	tlv.max2 = max_2
+	var/datum/tlv/settings = connected_alarm.TLV[options_map[current_option]]
+	settings.min2 = min_2
+	settings.min1 = min_1
+	settings.max1 = max_1
+	settings.max2 = max_2
 
 #undef AALARM_MODE_SCRUBBING
 #undef AALARM_MODE_VENTING
