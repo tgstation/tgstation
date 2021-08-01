@@ -49,11 +49,12 @@
  */
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	if(!isliving(arrived))
+	return
+	/*if(!isliving(arrived))
 		return
 	var/mob/living/victim = arrived
 	if(!(victim.movement_type & FLYING) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
-		callback.Invoke(victim)
+		callback.Invoke(victim)*/
 
 /*
  * Gets called when COMSIG_ITEM_EQUIPPED is sent to parent.
