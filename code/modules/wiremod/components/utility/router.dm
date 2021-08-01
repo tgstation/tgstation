@@ -75,5 +75,5 @@
 
 /obj/item/circuit_component/router/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "Copies the input chosen by \"Input Selector\" to the output."
+	desc = "Copies the input chosen by \"Input Selector\" to the output."
 	output_port_amount = 1
