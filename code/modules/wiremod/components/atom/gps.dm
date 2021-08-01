@@ -33,7 +33,7 @@
 	var/turf/location
 
 	if(!isnull(entity.input_value))
-		if(isInSight(entity.input_value, parent.shell))
+		if(isInSight(entity.input_value, parent.shell) && IN_GIVEN_RANGE(parent.shell, entity.input_value, 7))
 			location = get_turf(entity.input_value)
 		else
 			location = null
