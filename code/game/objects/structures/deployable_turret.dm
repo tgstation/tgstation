@@ -1,4 +1,4 @@
-/////// DEPLOYABLE TURRET (FORMERLY MANNED TURRET) ////////
+/// DEPLOYABLE TURRET (FORMERLY MANNED TURRET)
 //All of this file is five year old shitcode, and I'm too scared to touch more than I have to
 
 /obj/machinery/deployable_turret
@@ -14,18 +14,27 @@
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 2.5
 	var/cooldown = 0
+	/// The projectile that the turret fires
 	var/projectile_type = /obj/projectile/bullet/manned_turret
+	/// Delay between shots in a burst
 	var/rate_of_fire = 1
+	/// Number of shots fired from one click
 	var/number_of_shots = 40
+	/// How long it takes for the gun to allow firing after a burst
 	var/cooldown_duration = 9 SECONDS
 	var/atom/target
 	var/turf/target_turf
 	var/warned = FALSE
 	var/list/calculated_projectile_vars
+	/// Sound to play at the end of a burst
 	var/overheatsound = 'sound/weapons/sear.ogg'
+	/// Sound to play when firing
 	var/firesound = 'sound/weapons/gun/smg/shot.ogg'
+	/// If using a wrench on the turret will start undeploying it
 	var/can_be_undeployed = FALSE
+	/// What gets spawned if the object is undeployed
 	var/obj/spawned_on_undeploy
+	/// How long it takes for a wrench user to undeploy the object
 	var/undeploy_time = 3 SECONDS
 
 /obj/machinery/deployable_turret/Destroy()
@@ -33,20 +42,20 @@
 	target_turf = null
 	..()
 
-//Undeploying, for when you want to move your big dakka around
+/// Undeploying, for when you want to move your big dakka around
 /obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
 	. = ..()
-	var/obj/undeployed_object
+	if(!can_be_undeployed)
+		return
 	if(!ishuman(user))
 		return
 	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
 	if(!do_after(user, undeploy_time))
 		return
-	undeployed_object = new spawned_on_undeploy(src)
+	var/obj/undeployed_object = new spawned_on_undeploy(src)
 	//Keeps the health the same even if you redeploy the gun
-	undeployed_object.max_integrity = src.max_integrity
-	undeployed_object.update_integrity(src.get_integrity())
+	undeployed_object.update_max_integrity(src.max_integrity)
 	qdel(src)
 
 //BUCKLE HOOKS
@@ -103,10 +112,10 @@
 	var/client/controlling_client = controller.client
 	if(controlling_client)
 		var/modifiers = params2list(controlling_client.mouseParams)
-		var/atom/A = controlling_client.mouseObject
-		var/turf/T = get_turf(A)
-		if(istype(T)) //They're hovering over something in the map.
-			direction_track(controller, T)
+		var/atom/target_atom = controlling_client.mouseObject
+		var/turf/target_turf = get_turf(target_atom)
+		if(istype(target_turf)) //They're hovering over something in the map.
+			direction_track(controller, target_turf)
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, modifiers)
 
 /obj/machinery/deployable_turret/proc/direction_track(mob/user, atom/targeted)
@@ -202,7 +211,7 @@
 	rate_of_fire = 2
 	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
-	can_be_undeployed = FALSE
+	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
 /obj/item/gun_control
