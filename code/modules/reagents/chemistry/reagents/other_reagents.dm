@@ -2796,8 +2796,8 @@
 // Making Left-4-Zed Tribal edition
 /datum/chemical_reaction/reactive_compost
 	id = /datum/reagent/reactive_compost
-	results = list(/datum/reagent/reactive_compost = 3)
-	required_reagents = list(/datum/reagent/compost = 1, /datum/reagent/consumable/mutjuice = 1, /datum/reagent/consumable/ethanol/daturatea = 1)
+	results = list(/datum/reagent/reactive_compost = 5)
+	required_reagents = list(/datum/reagent/compost = 4, /datum/reagent/uranium = 1)
 	mix_message = "The compost emits a noxious scent"
 
 //If used on trays
@@ -2818,8 +2818,8 @@
 // Making Enduro Grow Tribal edition
 /datum/chemical_reaction/fortifying_compost
 	id = /datum/reagent/fortifying_compost
-	results = list(/datum/reagent/fortifying_compost = 3)
-	required_reagents = list(/datum/reagent/compost = 1, /datum/reagent/consumable/yuccajuice = 1, /datum/reagent/consumable/tato_juice = 1)
+	results = list(/datum/reagent/fortifying_compost = 2)
+	required_reagents = list(/datum/reagent/compost = 1, /datum/reagent/iron = 1)
 	mix_message = "The compost emits an earthy armora"
 	
 //If used on trays
@@ -2842,7 +2842,7 @@
 /datum/chemical_reaction/alacritous_compost
 	id = /datum/reagent/alacritous_compost
 	results = list(/datum/reagent/alacritous_compost = 3)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/ethanol/pungajuice = 1, /datum/reagent/compost = 1)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/liquidgibs = 1, /datum/reagent/compost = 1)
 	mix_message = "The compost starts smelling like manure"
 
 // If added to tray
@@ -2867,7 +2867,7 @@
 /datum/chemical_reaction/stabilizing_compost
 	id = /datum/reagent/stabilizing_compost
 	results = list(/datum/reagent/stabilizing_compost = 3)
-	required_reagents = list(/datum/reagent/compost = 1, /datum/reagent/consumable/honey = 1, /datum/reagent/consumable/milk = 1)
+	required_reagents = list(/datum/reagent/compost = 1, /datum/reagent/consumable/ethanol/manly_dorf = 1, /datum/reagent/lye = 1) //originally here was milk and honey but these not aviable on lavaland and I have no good ideas
 	mix_message= "A sweet smell comes over the compost"
 	
 // If added to tray
