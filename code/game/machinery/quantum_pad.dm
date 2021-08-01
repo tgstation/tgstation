@@ -199,16 +199,18 @@
 
 /obj/item/circuit_component/quantumpad
 	display_name = "Quantum Pad"
-	display_desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
+	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	var/datum/port/input/target_pad
+	var/datum/port/output/failed
 
 	var/obj/machinery/quantumpad/attached_pad
 
 /obj/item/circuit_component/quantumpad/Initialize()
 	. = ..()
-	target_pad = add_output_port("Target Pad", PORT_TYPE_ATOM)
+	target_pad = add_input_port("Target Pad", PORT_TYPE_ATOM)
+	failed = add_output_port("On Fail", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/quantumpad/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -225,15 +227,19 @@
 		return
 
 	if(!attached_pad.linked_pad || QDELETED(attached_pad.linked_pad))
+		failed.set_output(COMPONENT_SIGNAL)
 		return
 
 	if(world.time < attached_pad.last_teleport + attached_pad.teleport_cooldown)
+		failed.set_output(COMPONENT_SIGNAL)
 		return
 
 	if(attached_pad.teleporting || attached_pad.linked_pad.teleporting)
+		failed.set_output(COMPONENT_SIGNAL)
 		return
 
 	if(attached_pad.linked_pad.machine_stat & NOPOWER)
+		failed.set_output(COMPONENT_SIGNAL)
 		return
 
 	var/obj/machinery/quantumpad/targeted_pad = target_pad.input_value

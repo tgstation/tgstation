@@ -461,10 +461,15 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/circuit_component/conveyor_switch
 	display_name = "Conveyor Switch"
-	display_desc = "Allows to control connected conveyor belts."
+	desc = "Allows to control connected conveyor belts."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
+	var/datum/port/output/direction
 	var/obj/machinery/conveyor_switch/attached_switch
+
+/obj/item/circuit_component/conveyor_switch/Initialize()
+	. = ..()
+	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -484,3 +489,4 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	attached_switch.update_appearance()
 	attached_switch.update_linked_conveyors()
 	attached_switch.update_linked_switches()
+	direction.set_output(attached_switch.position)
