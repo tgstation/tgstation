@@ -23,7 +23,7 @@
 
 /obj/item/circuit_component/bot
 	display_name = "Bot"
-	display_desc = "Triggers when someone interacts with the bot."
+	desc = "Triggers when someone interacts with the bot."
 
 	/// Called when attack_hand is called on the shell.
 	var/datum/port/output/signal
