@@ -344,7 +344,7 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "soulscythe"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x64_righthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	force = 20
 	throwforce = 17
 	armour_penetration = 50
@@ -373,7 +373,7 @@
 		balloon_alert(user, "you can't awaken the scythe!")
 		return
 	balloon_alert(user, "you hold the scythe up...")
-	using = FALSE
+	usable = FALSE
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
@@ -385,7 +385,7 @@
 		add_overlay("soulscythe_gem")
 	else
 		balloon_alert(user, "the scythe is dormant!")
-		using = TRUE
+		usable = TRUE
 
 /mob/living/simple_animal/hostile/soulscythe
 	name = "soulscythe"
