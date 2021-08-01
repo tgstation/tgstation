@@ -280,7 +280,7 @@
 
 /obj/item/reagent_containers/glass/bucket/special_slot_priority(list/slot_priority)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
-		slot_priority.-= ITEM_SLOT_HEAD
+		slot_priority -= ITEM_SLOT_HEAD
 
 /obj/item/pestle
 	name = "pestle"
