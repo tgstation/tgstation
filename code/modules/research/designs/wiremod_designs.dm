@@ -46,7 +46,7 @@
 			subdesign.name = initial(path.display_name)
 			subdesign.id = "comp_[subdesign.name]"
 			subdesign.build_path = path
-			subdesign.desc = initial(path.display_desc)
+			subdesign.desc = initial(path.desc)
 			subdesign.unlocked_by_ids += initial(path.techweb_node_id)
 			subdesigns += subdesign
 

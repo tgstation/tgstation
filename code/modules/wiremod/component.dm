@@ -16,9 +16,6 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
-	/// The description of the component shown on the UI
-	var/display_desc = "A generic component"
-
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 

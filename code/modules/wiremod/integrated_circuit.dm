@@ -7,6 +7,7 @@
  */
 /obj/item/integrated_circuit
 	name = "integrated circuit"
+	desc = "By inserting components and a cell into this, wiring them up, and putting them into a shell, anyone can pretend to be a programmer."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
@@ -266,7 +267,7 @@
 		examined = examined_component.resolve()
 
 	.["examined_name"] = examined?.display_name
-	.["examined_desc"] = examined?.display_desc
+	.["examined_desc"] = examined?.desc
 	.["examined_notices"] = examined?.get_ui_notices()
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y

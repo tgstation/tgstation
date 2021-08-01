@@ -972,3 +972,30 @@
   - bugfix: Fixed pAI loudness booster to work when not in holoform
   tralezab code, paxilmaniac sprites:
   - expansion: Added Trash Cannons. Find the recipe in maint!
+2021-07-31:
+  DAKKA-WAAAGH:
+  - rscadd: Casino emergency shuttle
+  Fikou:
+  - bugfix: reactive armor now properly updates its sprite on the mob
+  Ghommie:
+  - bugfix: Fixed e-bolas being unblockable, and not being able to ensnare flying/floating
+      mobs (though kinda pointless because they ignore the slowdown).
+  - bugfix: fixes being able to mind transfer into someone protected against it by
+      targetting their holoparasite/guardian.
+  - bugfix: All cargo manifest exports should now work as expected. No more gaining
+      money from selling erroneously denied manifests and not gaining/losing money
+      from incorrect manifests.
+  - bugfix: Fixes martial grab combos working while inside objects.
+  SmArtKar:
+  - bugfix: Fixes unremovable components counting towards overall capacity. BCIs are
+      no longer 6 slot instead of 10
+  Watermelon914:
+  - refactor: Refactors the UI code of integrated circuits to be a lot less messy
+      and much more organised and to use much better practices to allow for better
+      features to be added.
+  - qol: Adds dragndrop functionality to integrated circuits so that you no longer
+      have to click to connect ports, you can drag instead.
+  tralezab:
+  - bugfix: rev art now works correctly!
+  wesoda25:
+  - admin: Adds logging for cult reaching red eye and halo milestones
