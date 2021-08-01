@@ -338,6 +338,10 @@
 	icon_grow = "odiouspuffball-grow"
 	icon_dead = "odiouspuffball-dead"
 	plantname = "Odious Puffballs"
+	maturation = 3
+	production = 8
+	potency = 30
+	instability = 65
 	growthstages = 3
 	product = /obj/item/food/grown/mushroom/odious_puffball
 	genes = list(/datum/plant_gene/trait/smoke, /datum/plant_gene/trait/plant_type/fungal_metabolism)
