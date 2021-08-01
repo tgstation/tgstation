@@ -206,3 +206,62 @@
 					found_seed.forceMove(drop_location())
 					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
 				. = TRUE
+
+// Simple extractor, not very similar.
+/obj/structure/legion_extractor
+	name = "seed grinder"
+	desc = "A crude grinding machine repurposed from kitchen appliances. Plants go in, seeds come out."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "sextractor_legion"
+	density = TRUE
+	anchored = TRUE
+
+/obj/structure/legion_extractor/proc/seedify(obj/item/O, t_max, obj/structure/legion_extractor/extractor, mob/living/user)
+	var/t_amount = 0
+	var/list/seeds = list()
+	if(t_max == -1)
+		t_max = rand(1,2) //Slightly worse than the actual thing
+
+	var/seedloc = O.loc
+	if(extractor)
+		seedloc = extractor.loc
+
+	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
+		var/obj/item/reagent_containers/food/snacks/grown/F = O
+		if(F.seed)
+			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
+				return
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = F.seed.Copy()
+				seeds.Add(t_prod)
+				t_prod.forceMove(seedloc)
+				t_amount++
+			qdel(O)
+			return seeds
+
+	else if(istype(O, /obj/item/grown))
+		var/obj/item/grown/F = O
+		if(F.seed)
+			if(user && !user.temporarilyRemoveItemFromInventory(O))
+				return
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = F.seed.Copy()
+				t_prod.forceMove(seedloc)
+				t_amount++
+			qdel(O)
+		return 1
+
+	return 0
+
+/obj/structure/legion_extractor/attackby(obj/item/O, mob/user, params)
+
+	if(default_unfasten_wrench(user, O)) //So we can move them around
+		return
+
+	else if(seedify(O,-1, src, user))
+		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
+		return
+	else if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
+	else
+		return ..()
