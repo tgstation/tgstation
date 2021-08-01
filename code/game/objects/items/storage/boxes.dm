@@ -546,7 +546,7 @@
 	var/newcart = pick( /obj/item/cartridge/engineering,
 						/obj/item/cartridge/security,
 						/obj/item/cartridge/medical,
-						/obj/item/cartridge/signal/toxins,
+						/obj/item/cartridge/signal/ordnance,
 						/obj/item/cartridge/quartermaster)
 	new newcart(src)
 

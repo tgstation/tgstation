@@ -1355,21 +1355,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "cytology"
 
 /area/science/storage
-	name = "Toxins Storage"
-	icon_state = "tox_storage"
+	name = "Ordnance Storage"
+	icon_state = "ord_storage"
 
 /area/science/test_area
-	name = "Toxins Test Area"
-	icon_state = "tox_test"
+	name = "Ordnance Test Area"
+	icon_state = "ord_test"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/science/mixing
-	name = "Toxins Mixing Lab"
-	icon_state = "tox_mix"
+	name = "Ordnance Mixing Lab"
+	icon_state = "ord_mix"
 
 /area/science/mixing/chamber
-	name = "Toxins Mixing Chamber"
-	icon_state = "tox_mix_chamber"
+	name = "Ordnance Mixing Chamber"
+	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/science/genetics
@@ -1378,11 +1378,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/science/misc_lab
 	name = "Testing Lab"
-	icon_state = "tox_misc"
+	icon_state = "ord_misc"
 
 /area/science/misc_lab/range
 	name = "Research Testing Range"
-	icon_state = "tox_range"
+	icon_state = "ord_range"
 
 /area/science/server
 	name = "Research Division Server Room"

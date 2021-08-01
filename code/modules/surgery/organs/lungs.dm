@@ -29,9 +29,9 @@
 	var/safe_nitro_max = 0
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_min = 0
-	///How much breath partial pressure is a safe amount of toxins. 0 means that we are immune to toxins.
-	var/safe_toxins_max = 0.05
+	var/safe_plasma_min = 0
+	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
+	var/safe_plasma_max = 0.05
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
@@ -53,9 +53,9 @@
 	var/co2_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/co2_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/co2_damage_type = OXY
-	var/tox_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
-	var/tox_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
-	var/tox_damage_type = TOX
+	var/plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+	var/plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+	var/plas_damage_type = TOX
 
 	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
@@ -96,8 +96,8 @@
 		breather.failed_last_breath = TRUE
 		if(safe_oxygen_min)
 			breather.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
-		else if(safe_toxins_min)
-			breather.throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
+		else if(safe_plasma_min)
+			breather.throw_alert("not_enough_plas", /atom/movable/screen/alert/not_enough_plas)
 		else if(safe_co2_min)
 			breather.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
 		else if(safe_nitro_min)
@@ -117,7 +117,7 @@
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
-	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
+	var/Plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
 	//Vars for n2o and healium induced euphorias.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
@@ -216,29 +216,29 @@
 	gas_breathed = 0
 
 
-	//-- TOX --//
+	//-- PLASMA --//
 
-	//Too much toxins!
-	if(safe_toxins_max)
-		if(Toxins_pp > safe_toxins_max)
-			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_toxins_max) * 10
-			breather.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			breather.throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
+	//Too much plasma!
+	if(safe_plasma_max)
+		if(Plasma_pp > safe_plasma_max)
+			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plasma_max) * 10
+			breather.apply_damage_type(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type)
+			breather.throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
 		else
-			breather.clear_alert("too_much_tox")
+			breather.clear_alert("too_much_plas")
 
 
-	//Too little toxins!
-	if(safe_toxins_min)
-		if(Toxins_pp < safe_toxins_min)
-			gas_breathed = handle_too_little_breath(breather, Toxins_pp, safe_toxins_min, breath_gases[/datum/gas/plasma][MOLES])
-			breather.throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
+	//Too little plasma!
+	if(safe_plasma_min)
+		if(Plasma_pp < safe_plasma_min)
+			gas_breathed = handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
+			breather.throw_alert("not_enough_plas", /atom/movable/screen/alert/not_enough_plas)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
-			breather.clear_alert("not_enough_tox")
+			breather.clear_alert("not_enough_plas")
 
 	//Exhale
 	breath_gases[/datum/gas/plasma][MOLES] -= gas_breathed
@@ -497,14 +497,14 @@
 	icon_state = "lungs-plasma"
 
 	safe_oxygen_min = 0 //We don't breathe this
-	safe_toxins_min = 16 //We breathe THIS!
-	safe_toxins_max = 0
+	safe_plasma_min = 16 //We breathe THIS!
+	safe_plasma_max = 0
 
 /obj/item/organ/lungs/slime
 	name = "vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
-	safe_toxins_max = 0 //We breathe this to gain POWER.
+	safe_plasma_max = 0 //We breathe this to gain POWER.
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
 	. = ..()
@@ -531,9 +531,9 @@
 
 /obj/item/organ/lungs/cybernetic/tier3
 	name = "upgraded cybernetic lungs"
-	desc = "A more advanced version of the stock cybernetic lungs. Features the ability to filter out lower levels of toxins and carbon dioxide."
+	desc = "A more advanced version of the stock cybernetic lungs. Features the ability to filter out lower levels of plasma and carbon dioxide."
 	icon_state = "lungs-c-u2"
-	safe_toxins_max = 20
+	safe_plasma_max = 20
 	safe_co2_max = 20
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
@@ -590,10 +590,10 @@
 
 	safe_oxygen_min = max(0, oxygen_pp - GAS_TOLERANCE)
 	safe_nitro_min = max(0, nitrogen_pp - GAS_TOLERANCE)
-	safe_toxins_min = max(0, plasma_pp - GAS_TOLERANCE)
+	safe_plasma_min = max(0, plasma_pp - GAS_TOLERANCE)
 
 	// Increase plasma tolerance based on amount in base air
-	safe_toxins_max += plasma_pp
+	safe_plasma_max += plasma_pp
 
 	// CO2 is always a waste gas, so none is required, but ashwalkers
 	// tolerate the base amount plus tolerance*2 (humans tolerate only 10 pp)
