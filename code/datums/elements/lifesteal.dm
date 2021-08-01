@@ -13,7 +13,7 @@
 	else if(ishostile(target))
 		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 	else
-		return COMPONENT_INCOMPATIBLE
+		return ELEMENT_INCOMPATIBLE
 
 	src.flat_heal = flat_heal
 
