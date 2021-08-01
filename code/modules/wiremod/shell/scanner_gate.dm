@@ -1,4 +1,3 @@
-
 /obj/structure/scanner_gate_shell
 	name = "circuit scanner gate"
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
@@ -27,7 +26,7 @@
 /obj/structure/scanner_gate_shell/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	set_scanline("scanning", 10)
-	SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_TRIGGER, AM)
+	SEND_SIGNAL(src, COMSIG_SCANGATE_SHELL_PASS, AM)
 
 /obj/structure/scanner_gate_shell/proc/set_scanline(type, duration)
 	cut_overlays()
@@ -38,7 +37,7 @@
 
 /obj/item/circuit_component/scanner_gate
 	display_name = "Scanner Gate"
-	display_desc = "A gate able to perform mid-depth scans on any object that pass through it."
+	desc = "A gate able to perform mid-depth scans on any object that pass through it."
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
@@ -54,10 +53,10 @@
 	. = ..()
 	if(istype(shell, /obj/structure/scanner_gate_shell))
 		attached_gate = shell
-		RegisterSignal(attached_gate, COMSIG_SCANGATE_PASS_TRIGGER, .proc/on_trigger)
+		RegisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, .proc/on_trigger)
 
 /obj/item/circuit_component/scanner_gate/unregister_shell(atom/movable/shell)
-	UnregisterSignal(attached_gate, COMSIG_SCANGATE_PASS_TRIGGER)
+	UnregisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS)
 	attached_gate = null
 	return ..()
 
