@@ -443,48 +443,10 @@
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
-	/// If there is a ghost possessing the item
-	var/possessed = FALSE
 
-/obj/item/nullrod/scythe/talking/relaymove(mob/living/user, direction)
-	return //stops buckled message spam for the ghost.
-
-/obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
-	if(possessed)
-		return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(user, span_notice("Anomalous otherworldly energies block you from awakening the blade!"))
-		return
-
-	to_chat(user, span_notice("You attempt to wake the spirit of the blade..."))
-
-	possessed = TRUE
-
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
-		S.ckey = C.ckey
-		S.fully_replace_character_name(null, "The spirit of [name]")
-		S.status_flags |= GODMODE
-		S.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		S.update_atom_languages()
-		grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
-
-		if(src && input)
-			name = input
-			S.fully_replace_character_name(null, "The spirit of [input]")
-	else
-		to_chat(user, span_warning("The blade is dormant. Maybe you can try again later."))
-		possessed = FALSE
-
-/obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, span_userdanger("You were destroyed!"))
-		qdel(S)
-	return ..()
+/obj/item/nullrod/scythe/talking/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spirit_holding)
 
 /obj/item/nullrod/scythe/talking/chainsword
 	name = "possessed chainsaw sword"
