@@ -57,3 +57,8 @@
 	if(projectile_piercing == NONE)
 		explosion(target, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE)
 	. = ..()
+
+/obj/projectile/bullet/cannonball/trashball
+	name = "trashball"
+	icon_state = "trashball"
+	damage = 90 //better than the biggest one but no explosion, so kinda just a worse normal cannonball

@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes: 
+  - bugfix: "Clumsily hitting yourself with the classic baton now gives you the message with the appropriate perspective"

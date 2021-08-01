@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "fixed issue where plasmaman clown and mime would die to the filtered plasma, clown and mime masks no longer have filters roundstart"
+  - qol: "filters can be removed with rclick"
