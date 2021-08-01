@@ -43062,7 +43062,7 @@
 "mgc" = (
 /obj/machinery/button/door/incinerator_vent_ordmix{
 	id = "ordaccess";
-	name = Ordnance Access";
+	name = "Ordnance Access";
 	pixel_x = -26;
 	pixel_y = -24
 	},
