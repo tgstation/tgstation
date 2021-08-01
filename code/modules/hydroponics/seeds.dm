@@ -307,7 +307,6 @@
 	if(yield == -1) // Unharvestable shouldn't suddenly turn harvestable
 		return
 
-	// Our plant's max yield
 	var/max_yield = MAX_PLANT_YIELD
 	var/min_yield = 0
 	for(var/datum/plant_gene/trait/trait in genes)
@@ -376,7 +375,6 @@
 	if(yield == -1) // Unharvestable shouldn't suddenly turn harvestable
 		return
 
-	// Our plant's max yield.
 	var/max_yield = MAX_PLANT_YIELD
 	var/min_yield = 0
 	for(var/datum/plant_gene/trait/trait in genes)
