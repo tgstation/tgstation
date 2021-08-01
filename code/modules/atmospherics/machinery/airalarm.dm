@@ -932,7 +932,7 @@
 		)
 
 		for(var/datum/gas/gas_type as anything in subtypesof(/datum/gas))
-			component_options.Add(gas_type.name)
+			component_options.Add(initial(gas_type.name))
 			options_to_key[gas_type.name] = gas_type
 
 	options = component_options
