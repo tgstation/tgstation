@@ -27,6 +27,8 @@ export class InfinitePlane extends Component {
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleZoomIncrease = this.handleZoomIncrease.bind(this);
+    this.handleZoomDecrease = this.handleZoomDecrease.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
 
     this.doOffsetMouse = this.doOffsetMouse.bind(this);
@@ -70,14 +72,46 @@ export class InfinitePlane extends Component {
     });
   }
 
+  handleZoomIncrease(event) {
+    const { onZoomChange } = this.props;
+    const { zoom } = this.state;
+    const newZoomValue = Math.min(zoom+ZOOM_INCREMENT, ZOOM_MAX_VAL);
+    this.setState({
+      zoom: newZoomValue,
+    });
+    if (onZoomChange) {
+      onZoomChange(newZoomValue);
+    }
+  }
+
+  handleZoomDecrease(event) {
+    const { onZoomChange } = this.props;
+    const { zoom } = this.state;
+    const newZoomValue = Math.max(zoom-ZOOM_INCREMENT, ZOOM_MIN_VAL);
+    this.setState({
+      zoom: newZoomValue,
+    });
+
+    if (onZoomChange) {
+      onZoomChange(newZoomValue);
+    }
+  }
+
   handleMouseMove(event) {
+    const { onBackgroundMoved } = this.props;
     if (this.state.mouseDown) {
+      let newX, newY;
       this.setState((state) => {
+        newX = event.clientX - state.lastLeft;
+        newY = event.clientY - state.lastTop;
         return {
-          left: event.clientX - state.lastLeft,
-          top: event.clientY - state.lastTop,
+          left: newX,
+          top: newY,
         };
       });
+      if (onBackgroundMoved) {
+        onBackgroundMoved(newX, newY);
+      }
     }
   }
 
@@ -140,9 +174,7 @@ export class InfinitePlane extends Component {
           <Stack.Item>
             <Button
               icon="minus"
-              onClick={() => this.setState({
-                zoom: Math.max(zoom-ZOOM_INCREMENT, ZOOM_MIN_VAL),
-              })}
+              onClick={this.handleZoomDecrease}
             />
           </Stack.Item>
           <Stack.Item grow={1}>
@@ -157,9 +189,7 @@ export class InfinitePlane extends Component {
           <Stack.Item>
             <Button
               icon="plus"
-              onClick={() => this.setState({
-                zoom: Math.min(zoom+ZOOM_INCREMENT, ZOOM_MAX_VAL),
-              })}
+              onClick={this.handleZoomIncrease}
             />
           </Stack.Item>
         </Stack>

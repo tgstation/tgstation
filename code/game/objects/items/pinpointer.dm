@@ -100,8 +100,6 @@
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(H)
 	if(here && there && (there.z == here.z || (is_station_level(here.z) && is_station_level(there.z)))) // Device and target should be on the same level or different levels of the same station
-		if (H in GLOB.nanite_sensors_list)
-			return TRUE
 		if (istype(H.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = H.w_uniform
 			if(U.has_sensor && (U.sensor_mode >= SENSOR_COORDS || ignore_suit_sensor_level)) // Suit sensors must be on maximum or a contractor pinpointer

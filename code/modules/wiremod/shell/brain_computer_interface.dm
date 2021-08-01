@@ -35,11 +35,11 @@
 
 /obj/item/circuit_component/bci
 	display_name = "Brain-Computer Interface"
-	display_desc = "Used to receive inputs for the brain-computer interface. User is presented with three buttons."
+	desc = "Used to receive inputs for the brain-computer interface. User is presented with three buttons."
 
 /obj/item/circuit_component/bci_action
 	display_name = "BCI Action"
-	display_desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	desc = "Represents an action the user can take when implanted with the brain-computer interface."
 
 	/// The name to use for the button
 	var/datum/port/input/button_name
@@ -61,11 +61,7 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bci_action/Destroy()
-	button_name = null
-	signal = null
-
 	QDEL_NULL(bci_action)
-
 	return ..()
 
 /obj/item/circuit_component/bci_action/populate_options()
@@ -133,13 +129,13 @@
 
 /obj/item/circuit_component/bci_action/proc/update_action()
 	bci_action.name = button_name.input_value
-	bci_action.button_icon_state = "nanite_[replacetextEx(lowertext(current_option), " ", "_")]"
+	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(current_option), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "nanite_power"
+	button_icon_state = "bci_power"
 
 	var/obj/item/circuit_component/bci_action/circuit_component
 
@@ -159,7 +155,7 @@
 
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"
-	display_desc = "Controls the core operations of the BCI."
+	desc = "Controls the core operations of the BCI."
 
 	/// A reference to the action button to look at charge/get info
 	var/datum/action/innate/bci_charge_action/charge_action
@@ -181,14 +177,6 @@
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)
-
-	message = null
-	send_message_signal = null
-
-	user_port = null
-
-	user = null
-
 	return ..()
 
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
@@ -236,6 +224,7 @@
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
 
@@ -246,6 +235,7 @@
 	user = null
 
 	UnregisterSignal(owner, list(
+		COMSIG_PARENT_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
@@ -269,6 +259,21 @@
 
 	parent.cell.give(shock_damage * 2)
 	to_chat(source, span_notice("You absorb some of the shock into your [parent.name]!"))
+
+/obj/item/circuit_component/bci_core/proc/on_examine(datum/source, mob/mob, list/examine_text)
+	SIGNAL_HANDLER
+
+	if (isobserver(mob))
+		examine_text += span_notice("[source.p_they(capitalized = TRUE)] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+
+/obj/item/circuit_component/bci_core/Topic(href, list/href_list)
+	..()
+
+	if (!isobserver(usr))
+		return
+
+	if (href_list["open_bci"])
+		parent.attack_ghost(usr)
 
 /datum/action/innate/bci_charge_action
 	name = "Check BCI Charge"
@@ -317,9 +322,9 @@
 	name = "brain-computer interface manipulation chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
 	circuit = /obj/item/circuitboard/machine/bci_implanter
-	icon = 'icons/obj/machines/nanite_chamber.dmi'
-	icon_state = "nanite_chamber"
-	base_icon_state = "nanite_chamber"
+	icon = 'icons/obj/machines/bci_implanter.dmi'
+	icon_state = "bci_implanter"
+	base_icon_state = "bci_implanter"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE

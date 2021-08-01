@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/soundemitter
 	display_name = "Sound Emitter"
-	display_desc = "A component that emits a sound when it receives an input. The frequency is a multiplier which determines the speed at which the sound is played"
+	desc = "A component that emits a sound when it receives an input. The frequency is a multiplier which determines the speed at which the sound is played"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Volume of the sound when played
@@ -28,11 +28,6 @@
 	. = ..()
 	volume = add_input_port("Volume", PORT_TYPE_NUMBER, default = 35)
 	frequency = add_input_port("Frequency", PORT_TYPE_NUMBER, default = 0)
-
-/obj/item/circuit_component/soundemitter/Destroy()
-	frequency = null
-	volume = null
-	return ..()
 
 /obj/item/circuit_component/soundemitter/populate_options()
 	var/static/component_options = list(

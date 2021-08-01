@@ -138,5 +138,7 @@
 #define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
 /// Creates an output trigger that sends a pulse whenever the component is successfully triggered
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
+/// Prohibits the component from being duplicated via the module duplicator
+#define CIRCUIT_FLAG_UNDUPEABLE (1<<2)
 /// This circuit component does not show in the menu.
-#define CIRCUIT_FLAG_HIDDEN (1<<2)
+#define CIRCUIT_FLAG_HIDDEN (1<<3)

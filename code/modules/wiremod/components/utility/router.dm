@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/router
 	display_name = "Router"
-	display_desc = "Copies the input chosen by \"Input Selector\" to the output chosen by \"Output Selector\"."
+	desc = "Copies the input chosen by \"Input Selector\" to the output chosen by \"Output Selector\"."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Which ports to connect.

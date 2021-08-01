@@ -33,11 +33,11 @@
 /datum/action/innate/dash/proc/Teleport(mob/user, atom/target)
 	if(!IsAvailable())
 		return
-	var/turf/T = get_turf(target)
+	var/turf/target_turf = get_turf(target)
 	if(target in view(user.client.view, user))
 		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
-		user.forceMove(T)
-		playsound(T, dash_sound, 25, TRUE)
+		user.forceMove(target_turf)
+		playsound(target_turf, dash_sound, 25, TRUE)
 		var/obj/spot2 = new phasein(get_turf(user), user.dir)
 		spot1.Beam(spot2,beam_effect,time=2 SECONDS)
 		current_charges--
@@ -49,4 +49,4 @@
 	owner.update_action_buttons_icon()
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, TRUE)
-	to_chat(owner, span_notice("[src] now has [current_charges]/[max_charges] charges."))
+	dashing_item.balloon_alert(owner, "[current_charges]/[max_charges] dash charges")

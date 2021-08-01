@@ -1,5 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "AI can now no longer be pushed even when anchored, only when dead or unanchored can it be pushed (grab a dead core to swap places)"
-  - bugfix: "borgs can now no longer be pushed when in combat mode and alive, you will always swap places with dead borg corpses."

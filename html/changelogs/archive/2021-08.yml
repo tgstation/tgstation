@@ -1,0 +1,6 @@
+2021-08-01:
+  SmArtKar:
+  - imageadd: Added new sprites and animations for module duplicator
+  ma44:
+  - rscadd: Weapon rechargers will now be more noticeable when it has finished recharging
+      something.
