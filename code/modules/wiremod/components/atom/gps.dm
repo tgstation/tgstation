@@ -7,6 +7,7 @@
 	display_name = "Internal GPS"
 	desc = "A component that returns the xyz co-ordinates of itself if its input port is empty, and of the input if it is not. Target has to be within the line of sight of the shell."
 
+	var/datum/port/input/entity
 	/// The result from the output
 	var/datum/port/output/x_pos
 	var/datum/port/output/y_pos
