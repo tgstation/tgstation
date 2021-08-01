@@ -26,7 +26,7 @@
 	src.filter_color = filter_color
 	src.new_name = new_name
 	src.fantasy_component = WEAKREF(fantasy_component)
-	if(cursed_item.slot_equipment_priority) //if it can equip somewhere, only go active when it is actually done
+	if(cursed_item.slot_flags) //if it can equip somewhere, only go active when it is actually done
 		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 	else
 		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)

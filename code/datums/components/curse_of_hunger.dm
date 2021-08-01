@@ -30,9 +30,8 @@
 	. = ..()
 	var/obj/item/cursed_item = parent
 	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	//checking slot_equipment_priority is the better way to decide if it should be an equip-curse (alternative being if it has slot_flags)
-	//because it needs to know where to equip to (and stuff like buckets and cones can be on_pickup curses despite having slots to equip to)
-	if(cursed_item.slot_equipment_priority)
+
+	if(cursed_item.slot_flags)
 		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	else
 		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
@@ -84,7 +83,7 @@
 	if(add_dropdel)
 		cursed_item.item_flags |= DROPDEL
 		return
-	if(cursed_item.slot_equipment_priority)
+	if(cursed_item.slot_flags)
 		RegisterSignal(cursed_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
 	else
 		RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
@@ -113,7 +112,8 @@
 	else if(!isturf(cursed_item.loc))
 		cursed_item.forceMove(get_turf(cursed_item))
 	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
-	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
+	var/targetted_slot = cursed_item.slot_flags ? cursed_item.slot_flags[1] : ITEM_SLOT_HANDS
+	cursed_item.AddElement(/datum/element/cursed, targetted_slot)
 	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
 
 /datum/component/curse_of_hunger/process(delta_time)

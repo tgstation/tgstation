@@ -370,34 +370,49 @@
 /**
  * Auto equip the passed in item the appropriate slot based on equipment priority
  *
- * puts the item "W" into an appropriate slot in a human's inventory
+ * puts the item "equipping" into an appropriate slot in a human's inventory
  *
- * returns 0 if it cannot, 1 if successful
+ * returns FALSE if it cannot, TRUE if successful
  */
-/mob/proc/equip_to_appropriate_slot(obj/item/W, qdel_on_fail = FALSE)
-	if(!istype(W))
+/mob/proc/equip_to_appropriate_slot(obj/item/equipping, qdel_on_fail = FALSE)
+	if(!istype(equipping))
 		return FALSE
-	var/slot_priority = W.slot_equipment_priority
+	var/list/slot_priority = list(
+		ITEM_SLOT_BACK,
+		ITEM_SLOT_ID,
+		ITEM_SLOT_ICLOTHING,
+		ITEM_SLOT_OCLOTHING,
+		ITEM_SLOT_MASK,
+		ITEM_SLOT_HEAD,
+		ITEM_SLOT_NECK,
+		ITEM_SLOT_FEET,
+		ITEM_SLOT_GLOVES,
+		ITEM_SLOT_EARS,
+		ITEM_SLOT_EYES,
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_SUITSTORE,
+		ITEM_SLOT_LPOCKET,
+		ITEM_SLOT_RPOCKET,
+		ITEM_SLOT_DEX_STORAGE,
+	)
 
-	if(!slot_priority)
-		slot_priority = list( \
-			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
-			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
-			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
-			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
-			ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
-			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
-			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
-			ITEM_SLOT_DEX_STORAGE\
-		)
+	equipping.special_slot_priority(slot_priority)
 
 	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, FALSE)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
+		if(equip_to_slot_if_possible(equipping, slot, FALSE, TRUE, TRUE, FALSE, FALSE)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
 			return TRUE
 
 	if(qdel_on_fail)
-		qdel(W)
+		qdel(equipping)
 	return FALSE
+
+/**
+ * NOTE: ITEM PROC, not for mobs!
+ * This proc asks an item for special slot equipping priority before attempting to iterate through the slots.
+ */
+/obj/item/proc/special_slot_priority(list/slot_priority)
+	return
+
 /**
  * Reset the attached clients perspective (viewpoint)
  *

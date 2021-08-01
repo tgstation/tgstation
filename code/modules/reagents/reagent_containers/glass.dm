@@ -288,14 +288,9 @@
 	. = ..()
 	reagents.flags = initial(reagent_flags)
 
-/obj/item/reagent_containers/glass/bucket/equip_to_best_slot(mob/M)
+/obj/item/reagent_containers/glass/bucket/special_slot_priority(list/slot_priority)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
-		var/index = slot_equipment_priority.Find(ITEM_SLOT_HEAD)
-		slot_equipment_priority.Remove(ITEM_SLOT_HEAD)
-		. = ..()
-		slot_equipment_priority.Insert(index, ITEM_SLOT_HEAD)
-		return
-	return ..()
+		slot_priority.-= ITEM_SLOT_HEAD
 
 /obj/item/pestle
 	name = "pestle"
