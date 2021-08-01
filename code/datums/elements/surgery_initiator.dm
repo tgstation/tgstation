@@ -8,7 +8,7 @@
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
 
-/datum/component/surgery_initiator/Detach(datum/source)
+/datum/element/surgery_initiator/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
 	return ..()
 
