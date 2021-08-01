@@ -56,3 +56,15 @@
 
 /obj/item/stack/cannonball/the_big_one/five
 	amount = 5
+
+/obj/item/stack/cannonball/trashball
+	name = "trashballs"
+	singular_name = "trashball"
+	desc = "A clump of tightly packed garbage. It'll work as a cannonball, but it may be unhealthy to actually put this in a real cannon."
+	max_amount = 4
+	icon_state = "trashballs"
+	merge_type = /obj/item/stack/cannonball/trashball
+	projectile_type = /obj/projectile/bullet/cannonball/trashball
+
+/obj/item/stack/cannonball/trashball/four
+	amount = 4

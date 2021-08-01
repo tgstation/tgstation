@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/compare/comparison
 	display_name = "Comparison"
-	display_desc = "A component that compares two objects."
+	desc = "A component that compares two objects."
 
 	input_port_amount = 2
 	var/current_type = PORT_TYPE_ANY

@@ -10614,7 +10614,7 @@
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "bjQ" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/pharmacy)
 "bjR" = (
@@ -37198,7 +37198,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "myc" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/medical/pharmacy)
