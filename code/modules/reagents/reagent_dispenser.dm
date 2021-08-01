@@ -298,3 +298,47 @@
 	icon_state = "fuel_stationary"
 	desc = "A stationary, plumbed, fuel tank."
 	reagent_id = /datum/reagent/fuel
+
+//Compost bins
+
+/obj/structure/reagent_dispensers/compostbin
+	name = "compost bin"
+	desc = "A smelly structure made of wooden slats where refuse is thrown. Dump unwanted seeds and produce in, pull usable compost out."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "compostbin"
+	anchored = TRUE
+	reagent_id = /datum/reagent/compost
+	var/seed_value = 4
+	var/produce_value = 10
+
+/obj/structure/reagent_dispensers/compostbin/attackby(obj/item/W, mob/user, params)
+	if(W.is_refillable())
+		return 0 //so we can refill them via their afterattack.
+	if(reagents.total_volume == tank_volume)
+		to_chat(user,"<span class='warning'>The [src] is filled to capacity!</span>")
+		return
+	if(istype(W, /obj/item/seeds) || istype(W, /obj/item/reagent_containers/food/snacks/grown))
+		if(user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='notice'>You load the [W] into the [src].</span>")
+			playsound(loc, 'sound/effects/blobattack.ogg', 25, 1, -1)
+			process_compost()
+		else
+			to_chat(user, "<span class='warning'>That's not compostable! Try seeds or flowers instead.</span>")
+	else if(istype(W, /obj/item/storage/bag/plants))
+		var/obj/item/storage/bag/plants/PB = W
+		for(var/obj/item/G in PB.contents)// This check can be less than thorough because the bag has already authenticated the contents, hopefully
+			if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
+				to_chat(user, "<span class='info'>You empty the [PB] into the [src].</span>")
+				playsound(loc, 'sound/effects/blobattack.ogg', 25, 1, -1)
+				process_compost()
+
+/obj/structure/reagent_dispensers/compostbin/proc/process_compost()
+	for(var/obj/item/C in contents)
+		if(istype(C, /obj/item/seeds))
+			reagents.add_reagent(/datum/reagent/compost, seed_value)
+			qdel(C)
+		else if(istype(C, /obj/item/reagent_containers/food/snacks/grown))
+			reagents.add_reagent(/datum/reagent/compost, produce_value)
+			qdel(C)
+		else //Not sure how we got here, but there's only one reasonable thing to do.
+			qdel(C)
