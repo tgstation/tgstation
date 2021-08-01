@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/combiner
 	display_name = "Combiner"
-	display_desc = "A component that combines multiple inputs to provide 1 output."
+	desc = "A component that combines multiple inputs to provide 1 output."
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4
