@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/setter
 	display_name = "Variable Setter"
-	display_desc = "A component that sets a variable globally on the circuit."
+	desc = "A component that sets a variable globally on the circuit."
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
@@ -20,7 +20,7 @@
 	var/current_type
 
 /obj/item/circuit_component/setter/populate_options()
-	variable_name = add_input_port("Variable", PORT_TYPE_OPTION, SET_OPTION_LIST(null))
+	variable_name = add_option_port("Variable", null)
 
 /obj/item/circuit_component/setter/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()

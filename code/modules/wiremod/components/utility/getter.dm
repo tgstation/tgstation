@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/getter
 	display_name = "Variable Getter"
-	display_desc = "A component that gets a variable globally on the circuit."
+	desc = "A component that gets a variable globally on the circuit."
 
 	/// Variable name
 	var/datum/port/input/option/variable_name
@@ -16,7 +16,7 @@
 	var/datum/circuit_variable/current_variable
 
 /obj/item/circuit_component/getter/populate_options()
-	variable_name = add_input_port("Variable", PORT_TYPE_OPTION, SET_OPTION_LIST(null))
+	variable_name = add_option_port("Variable", null)
 
 /obj/item/circuit_component/getter/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
