@@ -6,7 +6,7 @@
 
 /obj/item/circuit_component/ntnet_send
 	display_name = "NTNet Transmitter"
-	display_desc = "Sends a data package through NTNet when triggered. If target HID is not provided, data will be sent to all circuits in the network. If Encryption Key is set then transmitted data will be only picked up by receivers with the same Encryption Key."
+	desc = "Sends a data package through NTNet when triggered. If target HID is not provided, data will be sent to all circuits in the network. If Encryption Key is set then transmitted data will be only picked up by receivers with the same Encryption Key."
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
