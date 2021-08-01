@@ -106,9 +106,11 @@
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
+		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
 		the_pad.doteleport(null, FALSE, alternate_log_name = parent.get_creator())
+		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
 	to_chat(user, span_warning("You are too primitive to use this computer!"))
