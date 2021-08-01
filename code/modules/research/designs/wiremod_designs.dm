@@ -257,7 +257,7 @@
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
 /datum/design/component/bci/click_intercept
-	name = "BCI Click Interceptor"
+	name = "BCI Target Interceptor"
 	id = "comp_click_intercept"
 	build_path = /obj/item/circuit_component/click_intercept
 

@@ -6,8 +6,8 @@
  */
 
 /obj/item/circuit_component/click_intercept
-	display_name = "Click Intercept"
-	display_desc = "Requires a BCI shell. A component that when activated will intercept next user's click and output the object that was clicked."
+	display_name = "Target Intercept"
+	desc = "Requires a BCI shell. A component that when activated will intercept next user's click and output the object that was clicked."
 
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
@@ -19,8 +19,8 @@
 /obj/item/circuit_component/click_intercept/Initialize()
 	. = ..()
 	trigger_input = add_input_port("Activate", PORT_TYPE_SIGNAL)
-	trigger_output = add_output_port("Clicked", PORT_TYPE_SIGNAL)
-	clicked_atom = add_output_port("Clicked Object", PORT_TYPE_ATOM)
+	trigger_output = add_output_port("Target", PORT_TYPE_SIGNAL)
+	clicked_atom = add_output_port("Targeted Object", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/click_intercept/register_shell(atom/movable/shell)
 	bci = shell
@@ -60,5 +60,5 @@
 
 /obj/item/circuit_component/click_intercept/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Click Interception Cooldown: [DisplayTimeText(intercept_cooldown)]", "orange", "stopwatch")
+	. += create_ui_notice("Target Interception Cooldown: [DisplayTimeText(intercept_cooldown)]", "orange", "stopwatch")
 	. += create_ui_notice("Only usable in BCI circuits", "orange", "info")
