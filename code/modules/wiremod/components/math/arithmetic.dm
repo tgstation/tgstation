@@ -28,7 +28,7 @@
 		COMP_ARITHMETIC_MIN,
 		COMP_ARITHMETIC_MAX,
 	)
-	arithmetic_option = add_input_port("Arithmetic Option", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
 /obj/item/circuit_component/arithmetic/Initialize()
 	. = ..()

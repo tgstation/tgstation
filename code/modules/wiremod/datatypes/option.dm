@@ -12,9 +12,7 @@
 	datatype_flags = DATATYPE_FLAG_ALLOW_MANUAL_INPUT
 
 /datum/circuit_datatype/option/is_compatible(datum/port/gained_port)
-	if(istype(gained_port, /datum/port/input/option))
-		return TRUE
-	return FALSE
+	return istype(gained_port, /datum/port/input/option)
 
 /datum/circuit_datatype/option/can_receive_from_datatype(datatype_to_check)
 	. = ..()

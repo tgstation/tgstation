@@ -43,7 +43,7 @@
 		COMP_SOUND_WARN,
 		COMP_SOUND_SLOWCLAP,
 	)
-	sound_file = add_input_port("Sound Option", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	sound_file = add_option_port("Sound Option", component_options)
 
 	var/static/options_to_sound = list(
 		COMP_SOUND_BUZZ = 'sound/machines/buzz-sigh.ogg',

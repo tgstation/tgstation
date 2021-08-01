@@ -22,7 +22,7 @@
 		COMP_TEXT_LOWER,
 		COMP_TEXT_UPPER,
 	)
-	textcase_options = add_input_port("Textcase Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	textcase_options = add_option_port("Textcase Options", component_options)
 
 /obj/item/circuit_component/textcase/Initialize()
 	. = ..()

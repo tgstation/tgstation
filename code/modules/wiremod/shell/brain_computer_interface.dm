@@ -105,7 +105,7 @@
 		"Wireless",
 	)
 
-	icon_options = add_input_port("Icon", PORT_TYPE_OPTION, SET_OPTION_LIST(action_options))
+	icon_options = add_option_port("Icon", action_options)
 
 /obj/item/circuit_component/bci_action/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell

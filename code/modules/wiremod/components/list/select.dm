@@ -33,7 +33,7 @@
 		COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
 		COMP_COMPARISON_LESS_THAN_OR_EQUAL,
 	)
-	comparison_options = add_input_port("Comparison Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	comparison_options = add_option_port("Comparison Options", component_options)
 
 /obj/item/circuit_component/select/Initialize()
 	. = ..()

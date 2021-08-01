@@ -25,7 +25,7 @@
 		PORT_TYPE_ATOM,
 		PORT_TYPE_SIGNAL,
 	)
-	combiner_options = add_input_port("Combiner Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	combiner_options = add_option_port("Combiner Options", component_options)
 
 /obj/item/circuit_component/combiner/Initialize()
 	. = ..()

@@ -15,7 +15,7 @@
 		COMP_LOGIC_OR,
 		COMP_LOGIC_XOR,
 	)
-	logic_options = add_input_port("Logic Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	logic_options = add_option_port("Logic Options", component_options)
 
 /obj/item/circuit_component/compare/logic/do_comparisons(list/ports)
 	. = FALSE

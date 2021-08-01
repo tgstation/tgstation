@@ -21,7 +21,7 @@
 		COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
 		COMP_COMPARISON_LESS_THAN_OR_EQUAL,
 	)
-	comparison_option = add_input_port("Comparison Option", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	comparison_option = add_option_port("Comparison Option", component_options)
 
 /obj/item/circuit_component/compare/comparison/input_received(datum/port/input/port)
 	switch(comparison_option.input_value)

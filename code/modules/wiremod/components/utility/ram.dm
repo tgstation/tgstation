@@ -33,7 +33,7 @@
 		PORT_TYPE_ATOM,
 		PORT_TYPE_SIGNAL,
 	)
-	ram_options = add_input_port("RAM Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	ram_options = add_option_port("RAM Options", component_options)
 
 /obj/item/circuit_component/ram/Initialize()
 	. = ..()

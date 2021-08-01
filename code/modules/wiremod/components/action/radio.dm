@@ -25,7 +25,7 @@
 		COMP_RADIO_PUBLIC,
 		COMP_RADIO_PRIVATE,
 	)
-	public_options = add_input_port("Encryption Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	public_options = add_option_port("Encryption Options", component_options)
 
 /obj/item/circuit_component/radio/Initialize()
 	. = ..()

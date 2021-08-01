@@ -19,7 +19,7 @@
 		COMP_TYPECHECK_MOB,
 		COMP_TYPECHECK_HUMAN,
 	)
-	typecheck_options = add_input_port("Typecheck Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	typecheck_options = add_option_port("Typecheck Options", component_options)
 
 /obj/item/circuit_component/compare/typecheck/do_comparisons(list/ports)
 	if(!length(ports))

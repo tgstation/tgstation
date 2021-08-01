@@ -135,7 +135,7 @@
 		COMP_STATE_DISCHARGED,
 		COMP_STATE_NONE,
 	)
-	new_status = add_input_port("Arrest Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	new_status = add_option_port("Arrest Options", component_options)
 
 /obj/item/circuit_component/arrest_console_arrest/Initialize()
 	. = ..()
