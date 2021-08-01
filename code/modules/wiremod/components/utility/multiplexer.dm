@@ -32,7 +32,7 @@
 		PORT_TYPE_LIST,
 		PORT_TYPE_ATOM,
 	)
-	multiplexer_options = add_input_port("Multiplexer Options", PORT_TYPE_OPTION, SET_OPTION_LIST(component_options))
+	multiplexer_options = add_option_port("Multiplexer Options", component_options)
 
 /obj/item/circuit_component/multiplexer/Initialize()
 	. = ..()

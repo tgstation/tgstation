@@ -261,7 +261,7 @@
 				"connected_to" = REF(port.connected_port),
 				"color" = port.color,
 				"current_data" = current_data,
-				"datatype_data" = port.datatype_ui_data(user)
+				"datatype_data" = port.datatype_ui_data(user),
 			))
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
@@ -269,7 +269,7 @@
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port),
-				"color" = port.color
+				"color" = port.color,
 			))
 
 		component_data["name"] = component.display_name

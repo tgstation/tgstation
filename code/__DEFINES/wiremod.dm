@@ -4,9 +4,6 @@
 /// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
 #define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
 
-/// Handles adding option ports more simply
-#define SET_OPTION_LIST(option_list) port_type = /datum/port/input/option, extra_args = list(possible_options = option_list)
-
 // Port defines
 
 #define PORT_MAX_NAME_LENGTH 50

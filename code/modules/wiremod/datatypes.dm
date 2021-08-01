@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
 /**
  * Determines if a port is compatible with this datatype.
  * This WILL throw a runtime if it returns false. This is for sanity checking and it should not return false
- * unless under extraordinary circumstances and failure for people to write proper code.
+ * unless under extraordinary circumstances or people fail to write proper code.
  *
  * Arguments:
  * * port - The port to check if it is compatible.
