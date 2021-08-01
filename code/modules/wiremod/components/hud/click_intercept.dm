@@ -19,7 +19,7 @@
 /obj/item/circuit_component/click_intercept/Initialize()
 	. = ..()
 	trigger_input = add_input_port("Activate", PORT_TYPE_SIGNAL)
-	trigger_output = add_output_port("Target", PORT_TYPE_SIGNAL)
+	trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 	clicked_atom = add_output_port("Targeted Object", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/click_intercept/register_shell(atom/movable/shell)
