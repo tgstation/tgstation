@@ -14,7 +14,6 @@ export const DisplayName = (props, context) => {
   const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'any'];
 
   const hasInput = !isOutput
-    && port.connected_to === NULL_REF
     && InputComponent;
 
   return (
