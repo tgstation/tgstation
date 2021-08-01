@@ -6,6 +6,7 @@
 /obj/item/circuit_component/concat_list
 	display_name = "Concatenate List"
 	desc = "A component that joins up a list with a separator into a single string."
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/list_port

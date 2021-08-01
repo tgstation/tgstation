@@ -6,6 +6,7 @@
 /obj/item/circuit_component/combiner
 	display_name = "Combiner"
 	desc = "A component that combines multiple inputs to provide 1 output."
+	techweb_node_id = "basic_circuitry"
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4

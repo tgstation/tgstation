@@ -6,6 +6,7 @@
 /obj/item/circuit_component/species
 	display_name = "Get Species"
 	desc = "A component that returns the species of its input."
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/input_port

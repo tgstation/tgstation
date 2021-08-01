@@ -6,6 +6,7 @@
 /obj/item/circuit_component/compare/logic
 	display_name = "Logic"
 	desc = "A component with 'and' and 'or' capabilities."
+	techweb_node_id = "basic_circuitry"
 
 /obj/item/circuit_component/compare/logic/populate_options()
 	var/static/component_options = list(

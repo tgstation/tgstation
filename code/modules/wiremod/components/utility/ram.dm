@@ -8,6 +8,7 @@
 /obj/item/circuit_component/ram
 	display_name = "RAM"
 	desc = "A component that retains a variable."
+	techweb_node_id = "basic_circuitry"
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The input to store

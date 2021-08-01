@@ -6,6 +6,7 @@
 /obj/item/circuit_component/clock
 	display_name = "Clock"
 	desc = "A component that repeatedly fires."
+	techweb_node_id = "basic_circuitry"
 
 	/// Whether the clock is on or not
 	var/datum/port/input/on

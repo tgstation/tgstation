@@ -6,6 +6,7 @@
 /obj/item/circuit_component/compare/contains
 	display_name = "String Contains"
 	desc = "Checks if a string contains a word/letter"
+	techweb_node_id = "basic_circuitry"
 
 	input_port_amount = 0
 

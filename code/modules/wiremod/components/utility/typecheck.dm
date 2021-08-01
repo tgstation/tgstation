@@ -6,6 +6,7 @@
 /obj/item/circuit_component/compare/typecheck
 	display_name = "Typecheck"
 	desc = "A component that checks the type of its input."
+	techweb_node_id = "basic_circuitry"
 
 	input_port_amount = 1
 

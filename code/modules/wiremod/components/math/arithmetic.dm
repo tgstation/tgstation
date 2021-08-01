@@ -7,6 +7,7 @@
 /obj/item/circuit_component/arithmetic
 	display_name = "Arithmetic"
 	desc = "General arithmetic component with arithmetic capabilities."
+	techweb_node_id = "basic_circuitry"
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4

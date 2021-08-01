@@ -6,6 +6,7 @@
 /obj/item/circuit_component/pressuresensor
 	display_name = "Pressure Sensor"
 	desc = "Outputs the current pressure of the tile"
+	techweb_node_id = "basic_circuitry"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/split
 	display_name = "Split"
 	desc = "Splits a string by the separator, turning it into a list"
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/input_port

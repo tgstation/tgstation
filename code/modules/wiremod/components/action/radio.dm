@@ -6,6 +6,7 @@
 /obj/item/circuit_component/radio
 	display_name = "Radio"
 	desc = "A component that can listen and send frequencies. If set to private, the component will only receive signals from other components attached to circuitboards with the same owner id."
+	techweb_node_id = "basic_circuitry"
 
 	/// Frequency input
 	var/datum/port/input/freq

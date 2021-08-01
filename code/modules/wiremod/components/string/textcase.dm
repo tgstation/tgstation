@@ -6,6 +6,7 @@
 /obj/item/circuit_component/textcase
 	display_name = "Text Case"
 	desc = "A component that makes its input uppercase or lowercase."
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/input_port

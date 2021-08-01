@@ -6,6 +6,7 @@
 /obj/item/circuit_component/mmi
 	display_name = "Man-Machine Interface"
 	desc = "A component that allows MMI to enter shells to send output signals."
+	techweb_node_id = "basic_circuitry"
 
 	/// The message to send to the MMI in the shell.
 	var/datum/port/input/message

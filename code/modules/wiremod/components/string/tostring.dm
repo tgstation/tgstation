@@ -6,6 +6,7 @@
 /obj/item/circuit_component/tostring
 	display_name = "To String"
 	desc = "A component that converts its input to text."
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/input_port

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/not
 	display_name = "Not"
 	desc = "A component that inverts its input."
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/input_port

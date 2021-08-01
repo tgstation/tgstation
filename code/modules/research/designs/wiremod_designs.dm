@@ -47,7 +47,8 @@
 			subdesign.id = "comp_[subdesign.name]"
 			subdesign.build_path = path
 			subdesign.desc = initial(path.desc)
-			subdesign.unlocked_by_ids += initial(path.techweb_node_id)
+			if(initial(path.techweb_node_id))
+				subdesign.unlocked_by_ids += initial(path.techweb_node_id)
 			subdesigns += subdesign
 
 /datum/design/compact_remote_shell

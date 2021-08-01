@@ -6,6 +6,7 @@
 /obj/item/circuit_component/select
 	display_name = "Select Query"
 	desc = "A component used with USB cables that can perform select queries on a list based on the column name selected. The values are then compared with the comparison input."
+	techweb_node_id = "basic_circuitry"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on

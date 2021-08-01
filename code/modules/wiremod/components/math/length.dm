@@ -6,6 +6,7 @@
 /obj/item/circuit_component/length
 	display_name = "Length"
 	desc = "A component that returns the length of its input."
+	techweb_node_id = "basic_circuitry"
 
 	/// The input port
 	var/datum/port/input/input_port

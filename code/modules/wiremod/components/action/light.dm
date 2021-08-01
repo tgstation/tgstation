@@ -6,6 +6,7 @@
 /obj/item/circuit_component/light
 	display_name = "Light"
 	desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
+	techweb_node_id = "basic_circuitry"
 
 	/// The colours of the light
 	var/datum/port/input/red
