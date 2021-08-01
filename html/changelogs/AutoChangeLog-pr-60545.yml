@@ -1,0 +1,4 @@
+author: "Gurkenglas"
+delete-after: True
+changes: 
+  - qol: "Circuit component descriptions and module names are now visible to the naked eye."
