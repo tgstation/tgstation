@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/index
 	display_name = "Index List"
-	display_desc = "A component that returns the value of a list at a given index."
+	desc = "A component that returns the value of a list at a given index."
 
 	/// The input port
 	var/datum/port/input/list_port

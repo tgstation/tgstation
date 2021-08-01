@@ -7,7 +7,7 @@
  */
 /obj/item/circuit_component/ram
 	display_name = "RAM"
-	display_desc = "A component that retains a variable."
+	desc = "A component that retains a variable."
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The input to store

@@ -38,7 +38,7 @@
 
 /obj/item/circuit_component/money_dispenser
 	display_name = "Money Dispenser"
-	display_desc = "Used to dispense money from the money bot. Money is taken from the internal storage of money."
+	desc = "Used to dispense money from the money bot. Money is taken from the internal storage of money."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The amount of money to dispense
@@ -82,7 +82,7 @@
 /obj/item/circuit_component/money_bot
 	display_name = "Money Bot"
 	var/obj/structure/money_bot/attached_bot
-	display_desc = "Used to receive input signals when money is inserted into the money bot shell and also keep track of the total money in the shell."
+	desc = "Used to receive input signals when money is inserted into the money bot shell and also keep track of the total money in the shell."
 
 	/// Total money in the shell
 	var/datum/port/output/total_money

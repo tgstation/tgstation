@@ -28,7 +28,7 @@
 
 /obj/item/circuit_component/arrest_console_data
 	display_name = "Security Records Data"
-	display_desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
+	desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The records retrieved
@@ -101,7 +101,7 @@
 
 /obj/item/circuit_component/arrest_console_arrest
 	display_name = "Security Records Set Status"
-	display_desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
+	desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The targets to set the status of.

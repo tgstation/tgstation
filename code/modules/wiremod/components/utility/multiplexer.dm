@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "A component that allows you to selectively choose which input port provides an output. The first port is the selector and takes a number between 1 and the maximum port amount."
+	desc = "A component that allows you to selectively choose which input port provides an output. The first port is the selector and takes a number between 1 and the maximum port amount."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The port to select from, goes from 1 to input_port_amount

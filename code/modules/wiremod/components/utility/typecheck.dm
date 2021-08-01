@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/compare/typecheck
 	display_name = "Typecheck"
-	display_desc = "A component that checks the type of its input."
+	desc = "A component that checks the type of its input."
 
 	input_port_amount = 1
 

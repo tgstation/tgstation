@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/light
 	display_name = "Light"
-	display_desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
+	desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
 
 	/// The colours of the light
 	var/datum/port/input/red

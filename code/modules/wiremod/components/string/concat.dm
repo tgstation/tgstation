@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/concat
 	display_name = "Concatenate"
-	display_desc = "A component that combines strings."
+	desc = "A component that combines strings."
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4

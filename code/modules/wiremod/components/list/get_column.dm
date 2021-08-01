@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/get_column
 	display_name = "Get Column"
-	display_desc = "Gets the column of a table and returns it as a regular list."
+	desc = "Gets the column of a table and returns it as a regular list."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on

@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/concat_list
 	display_name = "Concatenate List"
-	display_desc = "A component that joins up a list with a separator into a single string."
+	desc = "A component that joins up a list with a separator into a single string."
 
 	/// The input port
 	var/datum/port/input/list_port
