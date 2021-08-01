@@ -1,4 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes: 
-  - bugfix: "Removes stray coldroom area tile in cryogenics, medbay central tiles under medical and snaking chapel office line on chapel walls on Metastation."

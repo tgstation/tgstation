@@ -41,7 +41,7 @@
 	. = ..()
 	if(build_path)
 		var/obj/item/circuit_component/component_path = build_path
-		desc = initial(component_path.display_desc)
+		desc = initial(component_path.desc)
 
 /datum/design/component/arithmetic
 	name = "Arithmetic Component"

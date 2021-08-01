@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/select
 	display_name = "Select Query"
-	display_desc = "A component used with USB cables that can perform select queries on a list based on the column name selected. The values are then compared with the comparison input."
+	desc = "A component used with USB cables that can perform select queries on a list based on the column name selected. The values are then compared with the comparison input."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on
@@ -40,13 +40,6 @@
 	comparison_input = add_input_port("Comparison Input", PORT_TYPE_ANY)
 
 	filtered_table = add_output_port("Output", PORT_TYPE_TABLE)
-
-/obj/item/circuit_component/select/Destroy()
-	received_table = null
-	column_name = null
-	comparison_input = null
-	filtered_table = null
-	return ..()
 
 /obj/item/circuit_component/select/input_received(datum/port/input/port)
 	. = ..()

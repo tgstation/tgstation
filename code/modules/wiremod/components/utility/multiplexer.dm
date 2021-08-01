@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/multiplexer
 	display_name = "Multiplexer"
-	display_desc = "A component that allows you to selectively choose which input port provides an output. The first port is the selector and takes a number between 1 and the maximum port amount."
+	desc = "A component that allows you to selectively choose which input port provides an output. The first port is the selector and takes a number between 1 and the maximum port amount."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The port to select from, goes from 1 to input_port_amount
@@ -40,13 +40,6 @@
 	for(var/port_id in 1 to input_port_amount)
 		multiplexer_inputs += add_input_port("Port [port_id]", current_type)
 	output_port = add_output_port("Output", current_type)
-
-/obj/item/circuit_component/multiplexer/Destroy()
-	output_port = null
-	multiplexer_inputs.Cut()
-	multiplexer_inputs = null
-	return ..()
-
 
 /obj/item/circuit_component/multiplexer/input_received(datum/port/input/port)
 	. = ..()
