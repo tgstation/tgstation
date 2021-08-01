@@ -243,7 +243,8 @@ SUBSYSTEM_DEF(research)
 		var/datum/design/design = techweb_designs[design_id]
 		design.unlocked_by.Cut()
 		for(var/node_id in design.unlocked_by_ids)
-			design.unlocked_by += techweb_nodes[node_id]
+			techweb_nodes[node_id].design_ids += design_id
+		design.unlocked_by_ids.Cut()
 	for(var/node_id in techweb_nodes)
 		var/datum/techweb_node/node = techweb_nodes[node_id]
 		node.unlock_ids = list()
