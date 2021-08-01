@@ -343,17 +343,17 @@
 	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "soulscythe"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x64_righthand.dmi'
 	force = 20
 	throwforce = 17
 	armour_penetration = 50
 	sharpness = SHARP_EDGED
 	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/hostile/soulscythe/soul
-	/// Are we currently grabbing a ghost?
-	var/using = FALSE
-	/// Blood used for abilities
+	/// Can we grab a ghost?
+	var/usable = FALSE
+	/// Blood level used for abilities
 	var/blood_level = 0
 
 /obj/item/soulscythe/Initialize()
@@ -367,33 +367,53 @@
 	. += span_userdanger("This item isnt currently finished if youre seeing it during a testmerge sorry")
 
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
-	if(using || soul.ckey)
+	if(!usable || soul.ckey)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		balloon_alert(user, "you can't awaken the scythe!")
 		return
 	balloon_alert(user, "you hold the scythe up...")
-	using = TRUE
+	using = FALSE
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
 		soul.ckey = picked_ghost.ckey
 		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
 		soul.update_atom_languages()
+		soul.faction = list("[REF(user)]")
 		balloon_alert(user, "the scythe glows up")
+		add_overlay("soulscythe_gem")
 	else
 		balloon_alert(user, "the scythe is dormant!")
-		using = FALSE
+		using = TRUE
 
 /mob/living/simple_animal/hostile/soulscythe
 	name = "soulscythe"
 	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
 	icon = 'icons/mob/lavaland/soulscythe.dmi'
 	icon_state = "soulscythe"
+	icon_living = "soulscythe"
+	gender = NEUTER
+	mob_biotypes = MOB_SPIRIT
+	maxHealth = 100
+	health = 100
+	healable = 0
+	pixel_x = -16
+	pixel_y = -16
 	base_pixel_x = -16
 	base_pixel_y = -16
 	/// Scythe object we are linked to
 	var/obj/item/soulscythe/scythe
+
+/mob/living/simple_animal/hostile/soulscythe/Initialize(mapload)
+	. = ..()
+	SpinAnimation(15)
+
+/mob/living/simple_animal/hostile/soulscythe/death(gibbed)
+	scythe?.usable = FALSE
+	ghostize(FALSE)
+	..()
+
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
