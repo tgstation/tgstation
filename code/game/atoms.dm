@@ -248,7 +248,6 @@
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
-	ComponentInitialize()
 	InitializeAIController()
 
 	return INITIALIZE_HINT_NORMAL

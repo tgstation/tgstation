@@ -20,9 +20,6 @@
 	make_ridable()
 	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
-
-/obj/vehicle/ridden/wheelchair/ComponentInitialize() //Since it's technically a chair I want it to have chair properties
-	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)

@@ -7,7 +7,7 @@
 	var/datum/mind/target
 	item_flags = NOBLUDGEON
 
-/obj/item/paper/contract/ComponentInitialize()
+/obj/item/paper/contract/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 

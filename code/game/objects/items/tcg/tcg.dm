@@ -415,8 +415,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/tcgcard))
-	STR.max_combined_w_class = 120
-	STR.max_items = 60
+	STR.storage_max_combined_w_class = 120
+	STR.storage_max_items = 60
 
 ///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guarenteed table.
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)

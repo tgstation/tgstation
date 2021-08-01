@@ -342,7 +342,7 @@
 	maxcharge = 50000
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
+/obj/item/stock_parts/cell/infinite/abductor/Initialize(mapload, override_maxcharge)
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
@@ -363,7 +363,7 @@
 	maxcharge = 500
 	rating = 3
 
-/obj/item/stock_parts/cell/emproof/ComponentInitialize()
+/obj/item/stock_parts/cell/emproof/Initialize(mapload, override_maxcharge)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 

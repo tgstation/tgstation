@@ -276,9 +276,6 @@
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	. = ..()
 	reagent_container = new /obj/item/reagent_containers/glass/saline(src)
-
-/obj/machinery/iv_drip/saline/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/iv_drip/saline/eject_beaker()

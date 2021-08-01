@@ -138,7 +138,7 @@
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
-/obj/item/gun/energy/plasmacutter/ComponentInitialize()
+/obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
 	AddElement(/datum/element/update_icon_blocker)
@@ -301,7 +301,7 @@
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/printer/ComponentInitialize()
+/obj/item/gun/energy/printer/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)

@@ -527,7 +527,7 @@
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/meatclown/ComponentInitialize()
+/obj/item/food/meatclown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 30)
 

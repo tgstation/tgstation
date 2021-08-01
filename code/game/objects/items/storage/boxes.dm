@@ -496,7 +496,7 @@
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
+	STR.storage_max_items = 7
 	STR.set_holdable(list(/obj/item/food/monkeycube))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
@@ -516,7 +516,7 @@
 /obj/item/storage/box/gorillacubes/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
+	STR.storage_max_items = 3
 	STR.set_holdable(list(/obj/item/food/monkeycube))
 
 /obj/item/storage/box/gorillacubes/PopulateContents()
@@ -684,7 +684,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/toy/snappop))
-	STR.max_items = 8
+	STR.storage_max_items = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
@@ -707,7 +707,7 @@
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
+	STR.storage_max_items = 10
 	STR.set_holdable(list(/obj/item/match))
 
 /obj/item/storage/box/matches/PopulateContents()
@@ -742,9 +742,9 @@
 /obj/item/storage/box/lights/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 21
+	STR.storage_max_items = 21
 	STR.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
-	STR.max_combined_w_class = 21
+	STR.storage_max_combined_w_class = 21
 	STR.click_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
@@ -1213,7 +1213,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/food/bubblegum))
-	STR.max_items = 4
+	STR.storage_max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)

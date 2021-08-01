@@ -833,13 +833,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/vibro_weapon/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
-/obj/item/vibro_weapon/ComponentInitialize()
-	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
 	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="[base_icon_state]1")
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /// triggered on wield of two handed item
 /obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)

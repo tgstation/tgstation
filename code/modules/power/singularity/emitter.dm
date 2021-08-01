@@ -86,10 +86,8 @@
 	sparks = new
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
-
-/obj/machinery/power/emitter/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
@@ -131,10 +129,6 @@
 	else
 		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
 		. += span_notice("Power consumption at <b>[DisplayPower(active_power_usage)]</b>.")
-
-/obj/machinery/power/emitter/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/power/emitter/proc/can_be_rotated(mob/user, rotation_type)
 	if(!anchored)

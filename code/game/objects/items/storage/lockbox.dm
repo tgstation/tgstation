@@ -16,9 +16,9 @@
 /obj/item/storage/lockbox/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 14
-	STR.max_items = 4
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_combined_w_class = 14
+	STR.storage_max_items = 4
 	STR.locked = TRUE
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
@@ -100,9 +100,9 @@
 /obj/item/storage/lockbox/medal/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_items = 10
-	STR.max_combined_w_class = 20
+	STR.storage_max_w_class = WEIGHT_CLASS_SMALL
+	STR.storage_max_items = 10
+	STR.storage_max_combined_w_class = 20
 	STR.set_holdable(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)

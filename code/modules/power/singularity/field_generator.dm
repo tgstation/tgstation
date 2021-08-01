@@ -63,9 +63,6 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/anchored/Initialize()
 	. = ..()
 	set_anchored(TRUE)
-
-/obj/machinery/field/generator/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()

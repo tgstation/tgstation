@@ -599,12 +599,8 @@
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
-
-/obj/item/storage/crayons/Initialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
-	STR.set_holdable(list(/obj/item/toy/crayon))
+	max_items = 7
+	storage_holdables = list(list(/obj/item/toy/crayon), null)
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)

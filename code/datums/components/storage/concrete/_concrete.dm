@@ -13,8 +13,18 @@
 	var/list/_contents_limbo // Where objects go to live mid transfer
 	var/list/_user_limbo // The last users before the component started moving
 
-/datum/component/storage/concrete/Initialize()
+/datum/component/storage/concrete/Initialize(
+		max_w_class = WEIGHT_CLASS_SMALL,
+		max_combined_w_class = 14,
+		max_items = 7,
+		holdables
+	)
 	. = ..()
+	src.max_w_class = max_w_class
+	src.max_combined_w_class = max_combined_w_class
+	src.max_items = max_items
+	if(holdables[1] || holdables[2])
+		set_holdable(holdables[1], holdables[2])
 	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
 

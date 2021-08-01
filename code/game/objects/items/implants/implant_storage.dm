@@ -26,7 +26,7 @@
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
 			var/datum/component/storage/STR = imp_e.GetComponent(/datum/component/storage)
-			if(!STR || (STR && STR.max_items < max_slot_stacking))
+			if(!STR || (STR && storage_max_items < max_slot_stacking))
 				imp_e.AddComponent(/datum/component/storage/concrete/implant)
 				qdel(src)
 				return TRUE

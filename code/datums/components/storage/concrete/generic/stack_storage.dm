@@ -66,3 +66,7 @@
 		else
 			var/datum/numbered_display/ND = .[I.merge_type]
 			ND.number += I.amount
+
+/datum/component/storage/concrete/stack/ore
+	max_combined_stack_amount = 50
+	allow_quick_empty = TRUE

@@ -86,9 +86,6 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/leaper_bubble/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPER_BUBBLE_TRAIT)
 

@@ -9,9 +9,6 @@
 /obj/item/storage/drone_tools/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-
-/obj/item/storage/drone_tools/ComponentInitialize()
-	. = ..()
 	var/static/list/drone_builtins = list(
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
@@ -20,12 +17,11 @@
 		/obj/item/wirecutters/drone,
 	)
 	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
-	storage_component.max_combined_w_class = 40
-	storage_component.max_w_class = WEIGHT_CLASS_NORMAL
+	storage_component.storage_max_combined_w_class = 40
+	storage_component.storage_max_w_class = WEIGHT_CLASS_NORMAL
 	storage_component.max_items = 5
 	storage_component.rustle_sound = FALSE
 	storage_component.set_holdable(drone_builtins)
-
 
 /obj/item/storage/drone_tools/PopulateContents()
 	var/list/builtintools = list()

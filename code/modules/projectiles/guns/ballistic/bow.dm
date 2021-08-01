@@ -106,9 +106,9 @@
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_TINY
-	storage.max_items = 40
-	storage.max_combined_w_class = 100
+	storage.storage_max_w_class = WEIGHT_CLASS_TINY
+	storage_max_items = 40
+	storage.storage_max_combined_w_class = 100
 	storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/arrow
 		))

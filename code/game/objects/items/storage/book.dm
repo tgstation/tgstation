@@ -13,7 +13,7 @@
 /obj/item/storage/book/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
+	STR.storage_max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, span_notice("The pages of [title] have been cut out!"))

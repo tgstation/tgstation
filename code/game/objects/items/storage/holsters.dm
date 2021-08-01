@@ -19,8 +19,8 @@
 /obj/item/storage/belt/holster/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_items = 1
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
@@ -37,8 +37,8 @@
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_items = 3
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
@@ -108,8 +108,8 @@
 /obj/item/storage/belt/holster/chameleon/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 2
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_items = 2
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
@@ -138,8 +138,8 @@
 /obj/item/storage/belt/holster/nukie/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 2
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.storage_max_items = 2
+	STR.storage_max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.

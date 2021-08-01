@@ -70,7 +70,7 @@
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
 
-/obj/effect/decal/cleanable/oil/Initialize()
+/obj/effect/decal/cleanable/oil/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/fuel/oil, 30)
 
@@ -96,6 +96,8 @@
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
 	beauty = -50
 
-/obj/effect/decal/cleanable/oil/slippery/ComponentInitialize()
+/obj/effect/decal/cleanable/oil/slippery/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))
+	. = ..()
+

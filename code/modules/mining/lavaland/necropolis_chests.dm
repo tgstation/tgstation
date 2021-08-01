@@ -574,9 +574,9 @@
 /obj/item/shared_storage/red/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 15
-	STR.max_items = 21
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_combined_w_class = 15
+	storage_max_items = 21
 	new /obj/item/shared_storage/blue(drop_location(), STR)
 
 /obj/item/shared_storage/blue/Initialize(mapload, datum/component/storage/concrete/master)
@@ -584,9 +584,9 @@
 	if(!istype(master))
 		return INITIALIZE_HINT_QDEL
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 15
-	STR.max_items = 21
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_combined_w_class = 15
+	storage_max_items = 21
 
 //Book of Babel
 
@@ -1180,14 +1180,11 @@
 /obj/item/hierophant_club/Initialize()
 	. = ..()
 	blink = new(src)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/Destroy()
 	. = ..()
 	QDEL_NULL(blink)
-
-/obj/item/hierophant_club/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()

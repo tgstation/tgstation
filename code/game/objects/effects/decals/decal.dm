@@ -5,7 +5,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/turf_loc_check = TRUE
 
-/obj/effect/decal/Initialize()
+/obj/effect/decal/Initialize(mapload)
 	. = ..()
 	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
 		return INITIALIZE_HINT_QDEL
@@ -38,11 +38,8 @@
 
 /obj/effect/turf_decal/Initialize()
 	..()
-	return INITIALIZE_HINT_QDEL
-
-/obj/effect/turf_decal/ComponentInitialize()
-	. = ..()
-	var/turf/T = loc
-	if(!istype(T)) //you know this will happen somehow
+	var/turf/turf_location = loc
+	if(!istype(turf_location)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, alpha, color, null, FALSE, null)
+	turf_location.AddElement(/datum/element/decal, icon, icon_state, dir, null, null, alpha, color, null, FALSE, null)
+	return INITIALIZE_HINT_QDEL

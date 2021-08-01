@@ -316,12 +316,12 @@
 	icon_broken = "medalbox+b"
 	base_icon_state = "medalbox"
 
-/obj/item/storage/lockbox/dueling/ComponentInitialize()
+/obj/item/storage/lockbox/dueling/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_items = 2
-	STR.set_holdable(list(/obj/item/gun/energy/dueling))
+	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
+	storage_component.storage_max_w_class = WEIGHT_CLASS_SMALL
+	storage_component.max_items = 2
+	storage_component.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
 	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))

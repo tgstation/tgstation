@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	update_appearance()
 	AddElement(/datum/element/openspace_item_click_handler)
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
@@ -76,10 +77,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 				user.put_in_hands(new_item)
 	else
 		return ..()
-
-/obj/item/stack/rods/cyborg/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stack/rods/ten
 	amount = 10

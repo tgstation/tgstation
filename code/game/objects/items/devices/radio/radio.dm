@@ -103,9 +103,6 @@
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
-
-/obj/item/radio/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)

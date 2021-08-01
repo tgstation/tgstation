@@ -290,8 +290,12 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 	var/list/stored_items = list()
 	var/list/blacklist = list()
 
-/obj/machinery/smartfridge/black_box/ComponentInitialize()
+/obj/machinery/smartfridge/black_box/Initialize()
 	. = ..()
+	if(GLOB.blackbox != src)
+		return INITIALIZE_HINT_QDEL_FORCE
+	GLOB.blackbox = src
+	ReadMemory()
 	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
@@ -301,13 +305,6 @@ GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 		visible_message(span_boldwarning("[src] ripples as it rejects [O]. The device will not accept items that have been removed from it."))
 		return FALSE
 	return TRUE
-
-/obj/machinery/smartfridge/black_box/Initialize()
-	. = ..()
-	if(GLOB.blackbox != src)
-		return INITIALIZE_HINT_QDEL_FORCE
-	GLOB.blackbox = src
-	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()

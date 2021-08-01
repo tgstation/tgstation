@@ -29,17 +29,14 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	if(!CONFIG_GET(flag/disable_human_mood))
+		AddComponent(/datum/component/mood)
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	randomize_human(src)
 	dna.initialize_dna()
-
-/mob/living/carbon/human/ComponentInitialize()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)

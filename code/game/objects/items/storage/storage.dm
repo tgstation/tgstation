@@ -2,18 +2,26 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	///bool to allow dumping items from the storage instead of
 	var/rummage_if_nodrop = TRUE
+	///max size of objects that will fit, given to the component
+	var/storage_max_w_class = WEIGHT_CLASS_SMALL
+	///max combined sizes of objects that will fit, given to the component
+	var/storage_max_combined_w_class = 14
+	///max number of objects that will fit, given to the component
+	var/storage_max_items = 7
+	///specific items and their subtypes this storage will hold and not hold (if the nulls are replaced with lists)
+	var/list/storage_holdables = list(null, null)
+	///component added to this object, use /concrete subtype please.
 	var/component_type = /datum/component/storage/concrete
 
-/obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/item/storage/get_dumping_location(obj/item/storage/source, mob/user)
 	return src
 
 /obj/item/storage/Initialize()
 	. = ..()
 	PopulateContents()
-
-/obj/item/storage/ComponentInitialize()
-	AddComponent(component_type)
+	AddComponent(component_type, storage_max_w_class, storage_max_combined_w_class, storage_max_items, storage_holdables)
 
 /obj/item/storage/AllowDrop()
 	return FALSE
@@ -40,9 +48,10 @@
 	return ..()
 
 /obj/item/storage/contents_explosion(severity, target)
-//Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
-
+	return
+///Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 /obj/item/storage/proc/PopulateContents()
+	return
 
 /obj/item/storage/proc/emptyStorage()
 	var/datum/component/storage/ST = GetComponent(/datum/component/storage)

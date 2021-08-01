@@ -264,7 +264,8 @@
 	default_unfasten_wrench(user, I)
 	return TRUE
 
-/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
+/obj/structure/reagent_dispensers/plumbed/Initialize()
+	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/structure/reagent_dispensers/plumbed/storage
@@ -272,9 +273,10 @@
 	icon_state = "tank_stationary"
 	reagent_id = null //start empty
 
-/obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
+/obj/structure/reagent_dispensers/plumbed/storage/Initialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
 	. = ..()

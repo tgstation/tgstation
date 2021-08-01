@@ -1,32 +1,17 @@
 /*
+ * Bags, they hold massive amounts of specific items and sometimes auto pickup.
+ *
  * These absorb the functionality of the plant bag, ore satchel, etc.
  * They use the use_to_pickup, quick_gather, and quick_empty functions
  * that were already defined in weapon/storage, but which had been
  * re-implemented in other classes.
  *
- * Contains:
- * Trash Bag
- * Mining Satchel
- * Plant Bag
- * Sheet Snatcher
- * Book Bag
- *      Biowaste Bag
- *
  * -Sayu
  */
-
-//  Generic non-item
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/storage/bag/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.allow_quick_gather = TRUE
-	STR.allow_quick_empty = TRUE
-	STR.display_numerical_stacking = TRUE
-	STR.click_gather = TRUE
+	component_type = /datum/component/storage/concrete/bag
 
 // -----------------------------
 //          Trash bag
@@ -40,15 +25,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	slot_flags = null
-	var/insertable = TRUE
 
-/obj/item/storage/bag/trash/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 30
-	STR.max_items = 30
-	STR.set_holdable(null, list(/obj/item/disk/nuclear))
+
+	storage_max_w_class = WEIGHT_CLASS_SMALL
+	storage_max_combined_w_class = 30
+	storage_max_items = 30
+	storage_holdables = (null, list(/obj/item/disk/nuclear))
+
+	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
@@ -93,12 +77,8 @@
 	icon_state = "bluetrashbag"
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
-
-/obj/item/storage/bag/trash/bluespace/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 60
-	STR.max_items = 60
+	storage_max_combined_w_class = 60
+	storage_max_items = 60
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE
@@ -115,18 +95,15 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
-	component_type = /datum/component/storage/concrete/stack
+
+	component_type = /datum/component/storage/concrete/stack/ore
+	storage_max_w_class = WEIGHT_CLASS_HUGE
+	storage_holdables = list(list(/obj/item/stack/ore), null)
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 
-/obj/item/storage/bag/ore/ComponentInitialize()
-	. = ..()
+/obj/item/storage/bag/ore/Initialize(mapload)
 	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
-	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
-	STR.allow_quick_empty = TRUE
-	STR.set_holdable(list(/obj/item/stack/ore))
-	STR.max_w_class = WEIGHT_CLASS_HUGE
-	STR.max_combined_stack_amount = 50
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
@@ -188,8 +165,8 @@
 /obj/item/storage/bag/ore/holding/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
-	STR.max_items = INFINITY
-	STR.max_combined_w_class = INFINITY
+	STR.storage_max_items = INFINITY
+	STR.storage_max_combined_w_class = INFINITY
 	STR.max_combined_stack_amount = INFINITY
 
 // -----------------------------
@@ -206,9 +183,9 @@
 /obj/item/storage/bag/plants/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 100
-	STR.max_items = 100
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_combined_w_class = 100
+	STR.storage_max_items = 100
 	STR.set_holdable(list(
 		/obj/item/food/grown,
 		/obj/item/seeds,
@@ -291,9 +268,9 @@
 /obj/item/storage/bag/books/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
-	STR.max_items = 7
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	STR.storage_max_combined_w_class = 21
+	STR.storage_max_items = 7
 	STR.display_numerical_stacking = FALSE
 	STR.set_holdable(list(
 		/obj/item/book,
@@ -322,7 +299,7 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
@@ -338,7 +315,7 @@
 		/obj/item/organ,
 		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	STR.insert_preposition = "on"
-	STR.max_items = 7
+	STR.storage_max_items = 7
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -402,8 +379,8 @@
 /obj/item/storage/bag/chemistry/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 200
-	STR.max_items = 50
+	STR.storage_max_combined_w_class = 200
+	STR.storage_max_items = 50
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/pill,
@@ -431,8 +408,8 @@
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 200
-	STR.max_items = 25
+	STR.storage_max_combined_w_class = 200
+	STR.storage_max_items = 25
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/slime_extract,
@@ -466,9 +443,9 @@
 /obj/item/storage/bag/construction/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 100
-	STR.max_items = 50
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.storage_max_combined_w_class = 100
+	STR.storage_max_items = 50
+	STR.storage_max_w_class = WEIGHT_CLASS_SMALL
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/stack/ore/bluespace_crystal,
@@ -491,9 +468,9 @@
 /obj/item/storage/bag/harpoon_quiver/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_TINY
-	STR.max_items = 40
-	STR.max_combined_w_class = 100
+	STR.storage_max_w_class = WEIGHT_CLASS_TINY
+	STR.storage_max_items = 40
+	STR.storage_max_combined_w_class = 100
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/caseless/harpoon
 		))

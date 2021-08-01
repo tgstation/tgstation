@@ -10,26 +10,25 @@
 	custom_price = PAYCHECK_MEDIUM * 10
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
-	var/amount = 30 ///The amount of reagent that is to be dispensed currently
-
-	var/list/dispensable_reagents = list() ///List in which all currently dispensable reagents go
-
-	///If the UI has the pH meter shown
-	var/show_ph = TRUE
-
-/obj/item/storage/portable_chem_mixer/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 200
-	STR.max_items = 50
-	STR.insert_preposition = "in"
-	STR.set_holdable(list(
+	component_type = /datum/component/storage/concrete/portable_chem_mixer
+	storage_max_combined_w_class = 200
+	storage_max_items = 50
+	storage_holdables = list(list(
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/food/drinks/waterbottle,
 		/obj/item/reagent_containers/food/condiment,
-	))
+	), null)
+
+	///Creating an empty slot for a beaker that can be added to dispense into
+	var/obj/item/reagent_containers/beaker = null
+	///The amount of reagent that is to be dispensed currently
+	var/amount = 30
+	///List in which all currently dispensable reagents go
+	var/list/dispensable_reagents = list()
+	///If the UI has the pH meter shown
+	var/show_ph = TRUE
+
 
 /obj/item/storage/portable_chem_mixer/Destroy()
 	QDEL_NULL(beaker)

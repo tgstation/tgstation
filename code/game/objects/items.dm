@@ -231,6 +231,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL //prevent reqdels
@@ -254,12 +256,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		obj_destruction(MELEE)
-
-/obj/item/ComponentInitialize()
-	. = ..()
-
-	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
  *

@@ -25,8 +25,21 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = ITEM_SLOT_EARS
-	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
+
+	var/obj/item/encryptionkey/keyslot2 = null
+	///if true, an earprotection component will be added on initialize
+	var/protects_ears = FALSE
+
+/obj/item/radio/headset/Initialize()
+	. = ..()
+	recalculateChannels()
+	if(protects_ears)
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
+/obj/item/radio/headset/Destroy()
+	QDEL_NULL(keyslot2)
+	return ..()
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
@@ -53,14 +66,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	else
 		. += span_notice("A small screen on the headset flashes, it's too small to read without holding or wearing the headset.")
 
-/obj/item/radio/headset/Initialize()
-	. = ..()
-	recalculateChannels()
-
-/obj/item/radio/headset/Destroy()
-	QDEL_NULL(keyslot2)
-	return ..()
-
 /obj/item/radio/headset/talk_into(mob/living/M, message, channel, list/spans, datum/language/language, list/message_mods)
 	if (!listening)
 		return ITALICS | REDUCE_RANGE
@@ -86,10 +91,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs."
 	icon_state = "syndie_headset"
 	inhand_icon_state = "syndie_headset"
-
-/obj/item/radio/headset/syndicate/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	protects_ears = TRUE
 
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -117,10 +119,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "This is used by your elite security force. Protects ears from flashbangs."
 	icon_state = "sec_headset_alt"
 	inhand_icon_state = "sec_headset_alt"
-
-/obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	protects_ears = TRUE
 
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -184,10 +183,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the boss. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	inhand_icon_state = "com_headset_alt"
-
-/obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	protects_ears = TRUE
 
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -206,10 +202,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	inhand_icon_state = "com_headset_alt"
-
-/obj/item/radio/headset/heads/hos/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	protects_ears = TRUE
 
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -267,10 +260,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "cent_headset_alt"
 	inhand_icon_state = "cent_headset_alt"
 	keyslot = null
-
-/obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	protects_ears = TRUE
 
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver "

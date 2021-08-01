@@ -219,7 +219,7 @@
 	sharpness = SHARP_EDGED
 	var/on = FALSE
 
-/obj/item/pen/edagger/ComponentInitialize()
+/obj/item/pen/edagger/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
 	AddElement(/datum/element/update_icon_updates_onmob)
