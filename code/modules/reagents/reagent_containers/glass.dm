@@ -240,16 +240,6 @@
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 75, ACID = 50) //Weak melee protection, because you can wear it on your head
-	slot_equipment_priority = list( \
-		ITEM_SLOT_BACK, ITEM_SLOT_ID,\
-		ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
-		ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
-		ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
-		ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
-		ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
-		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
-		ITEM_SLOT_DEX_STORAGE
-	)
 
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
