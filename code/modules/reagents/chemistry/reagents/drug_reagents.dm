@@ -590,7 +590,7 @@
 		var/atom/throw_target = get_edge_target_turf(dancer, dancer.dir)
 		dancer.SpinAnimation(12,3)
 		dancer.visible_message(span_notice("[dancer] does an extravagant flip!"), span_nicegreen("You do an extravagant flip!"))
-		dancer.throw_at(throw_target, range = 4, speed = overdosed ? 4 : 1)
+		dancer.throw_at(throw_target, range = 4, speed = overdosed ? 4 : 2)
 
 ///This proc listens to the spin signal and throws the mob every third spin
 /datum/reagent/drug/blastoff/proc/on_spin()
@@ -625,13 +625,14 @@
 	taste_description = "metallic bitterness"
 	color = "#638b9b"
 	overdose_threshold = 25
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.6 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time)
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/L)
 	. = ..()
@@ -667,11 +668,23 @@
 
 ///This proc turns the guy who took the drug invisible by giving him the invisible man trait and updating his body, this changes the sprite of all his organic limbs to a 1 alpha version.
 /datum/reagent/drug/saturnx/proc/turn_man_invisible(mob/living/carbon/invisible_man)
-		ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
-		invisible_man.update_body()
-		invisible_man.update_hair()
-		invisible_man.remove_from_all_data_huds()
-		invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
+	if(!invisible_man.getorganslot(ORGAN_SLOT_LIVER))
+		return
+	if(invisible_man.undergoing_liver_failure())
+		return
+	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
+		return
+
+	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+
+	var/datum/dna/druggy_dna = invisible_man.has_dna()
+	if(druggy_dna?.species)
+		druggy_dna.species.species_traits -= NOBLOODOVERLAY
+
+	invisible_man.update_body()
+	invisible_man.update_hair()
+	invisible_man.remove_from_all_data_huds()
+	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/M)
 	. = ..()
@@ -679,6 +692,11 @@
 		M.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
 		REMOVE_TRAIT(M, TRAIT_INVISIBLE_MAN, name)
 		to_chat(M, span_notice("As you sober up, opacity once again returns to your body meats."))
+
+		var/datum/dna/druggy_dna = M.has_dna()
+		if(druggy_dna?.species)
+			druggy_dna.species.species_traits -= NOBLOODOVERLAY
+
 	M.update_body()
 	M.update_hair()
 	M.sound_environment_override = NONE
