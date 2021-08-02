@@ -404,14 +404,23 @@
 	return TRUE
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 2.5 SECONDS)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
-	if(get_eye_protection() < intensity && (affect_silicon || override_blindness_check || !is_blind()))
-		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
-		return TRUE
-	return FALSE
+	if(get_eye_protection() >= intensity)
+		return FALSE
+	if(is_blind() && !(override_blindness_check || affect_silicon))
+		return FALSE
+
+	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
+	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
+	// and this is apparently at least less likely to trigger issues than a full white/static flash
+	if(client?.prefs?.darkened_flash)
+		type = /atom/movable/screen/fullscreen/flash/black
+
+	overlay_fullscreen("flash", type)
+	addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
+	return TRUE
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()

@@ -16,9 +16,6 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
-	/// The description of the component shown on the UI
-	var/display_desc = "A generic component"
-
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -47,6 +44,9 @@
 
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
+
+	// Defines which shells can accept this component. If set to null then all shells can use it.
+	var/required_shells = null
 
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
@@ -125,13 +125,16 @@
  * * type - The datatype it handles
  * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null, port_type = /datum/port/input, extra_args = null)
+/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null, index = null, port_type = /datum/port/input, extra_args = null)
 	var/list/arguments = list(src)
 	arguments += args
 	if(extra_args)
 		arguments += extra_args
 	var/datum/port/input/input_port = new port_type(arglist(arguments))
-	input_ports += input_port
+	if(index)
+		input_ports.Insert(index, input_port)
+	else
+		input_ports += input_port
 	if(parent)
 		SStgui.update_uis(parent)
 	return input_port
@@ -186,15 +189,25 @@
 	if(!parent?.on)
 		return TRUE
 
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	if(!cell?.use(power_usage_per_input))
-		return TRUE
+	if(!parent.admin_only)
+		if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has set the admin_only variable to TRUE!")
+			return TRUE
+
+		var/obj/item/stock_parts/cell/cell = parent.get_cell()
+		if(!cell?.use(power_usage_per_input))
+			return TRUE
 
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
 
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	if(required_shells && LAZYLEN(required_shells))
+		for(var/shell_type in required_shells)
+			if(istype(added_to, shell_type) || istype(added_to.loc, shell_type))
+				return TRUE
+		return FALSE
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
