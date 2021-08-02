@@ -34,7 +34,7 @@
 /obj/item/melee/energy/Initialize()
 	. = ..()
 	if(can_transform)
-		AddComponent(/datum/component/transforming_weapon, \
+		AddComponent(/datum/component/transforming, \
 			force_on = active_force, \
 			throwforce_on = active_throwforce, \
 			sharpness_on = active_sharpness, \

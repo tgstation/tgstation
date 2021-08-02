@@ -262,7 +262,7 @@
 
 /obj/item/scalpel/advanced/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming_weapon, force_on = force + 1, on_transform_callback = CALLBACK(src, .proc/after_transform))
+	AddComponent(/datum/component/transforming, force_on = force + 1, on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/scalpel/advanced/proc/after_transform(mob/user, activate)
 	if(tool_behaviour == TOOL_SCALPEL)

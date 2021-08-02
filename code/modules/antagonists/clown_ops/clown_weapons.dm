@@ -80,7 +80,7 @@
 
 /obj/item/melee/bananium_sword/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming_weapon, \
+	AddComponent(/datum/component/transforming, \
 		attack_verb_on = list("slips"), \
 		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))

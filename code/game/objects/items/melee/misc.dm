@@ -360,7 +360,7 @@
 
 /obj/item/melee/classic_baton/telescopic/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming_weapon, \
+	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		w_class_on = active_w_class, \
 		attack_verb_on = list("smacks", "strikes", "cracks", "beats"), \
