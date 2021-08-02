@@ -183,9 +183,10 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 15
 
-	var/cooldown_check = 0 // Used interally, you don't want to modify
-
+	/// Used interally, you don't want to modify
+	var/cooldown_check = 0
 	/// Default wait time until can stun again.
 	var/cooldown = (4 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
@@ -196,23 +197,11 @@
 	var/stamina_damage = 55
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
-	/// "On" sound, played when switching between able to stun or not.
-	var/on_sound
 	/// The path of the default sound to play when we stun something.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// Do we animate the "hit" when stunning something?
 	var/stun_animation = TRUE
-	/// Are we on or off?
-	var/on = TRUE
 
-	var/on_icon_state // What is our sprite when turned on
-	var/off_icon_state // What is our sprite when turned off
-	var/on_inhand_icon_state // What is our in-hand sprite when turned on
-	var/force_on // Damage when on - not stunning
-	var/force_off // Damage when off - not stunning
-	var/weight_class_on // What is the new size class when turned on
-
-	wound_bonus = 15
 
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
@@ -269,7 +258,7 @@
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
-	if(!on)
+	if(!force) // MELBERT TODO: Improve this
 		return ..()
 
 	add_fingerprint(user)
@@ -361,74 +350,67 @@
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "telebaton_0"
+	icon_state = "telebaton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	inhand_icon_state = null
+	attack_verb_continuous = list("hits", "pokes")
+	attack_verb_simple = list("hits", "pokes")
+	inhand_icon_state = ""
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 0
-	on = FALSE
-	on_sound = 'sound/weapons/batonextend.ogg'
-
-	on_icon_state = "telebaton_1"
-	off_icon_state = "telebaton_0"
-	on_inhand_icon_state = "nullrod"
-	force_on = 10
-	force_off = 0
-	weight_class_on = WEIGHT_CLASS_BULKY
 	bare_wound_bonus = 5
+	var/on_sound = 'sound/weapons/batonextend.ogg'
+	var/on_inhand_icon_state = "nullrod"
+	var/active_force = 10
+	var/active_w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/melee/classic_baton/telescopic/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming_weapon, \
+		force_on = active_force, \
+		w_class_on = active_w_class, \
+		attack_verb_on = list("smacks", "strikes", "cracks", "beats"), \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/organ/brain/our_brain = human_user.getorgan(/obj/item/organ/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
-	if(!on)
-		src.attack_self(user)
+	if(force < active_force)
+		attack_self(user)
 	else
 		playsound(src, on_sound, 50, TRUE)
 		add_fingerprint(user)
 	sleep(3)
-	if (!QDELETED(H))
-		if(!QDELETED(B))
-			H.internal_organs -= B
-			qdel(B)
-		new /obj/effect/gibspawner/generic(H.drop_location(), H)
+	if (!QDELETED(human_user))
+		if(!QDELETED(our_brain))
+			human_user.internal_organs -= our_brain
+			qdel(our_brain)
+		new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
 		return (BRUTELOSS)
 
-/obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
-	on = !on
+/obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
 	var/list/desc = get_on_description()
 
-	if(on)
+	if(active)
 		to_chat(user, desc["local_on"])
-		icon_state = on_icon_state
 		inhand_icon_state = on_inhand_icon_state
-		w_class = weight_class_on
-		force = force_on
-		attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
-		attack_verb_simple = list("smack", "strike", "crack", "beat")
 	else
 		to_chat(user, desc["local_off"])
-		icon_state = off_icon_state
-		inhand_icon_state = null //no sprite for concealment even when in hand
-		slot_flags = ITEM_SLOT_BELT
-		w_class = WEIGHT_CLASS_SMALL
-		force = force_off
-		attack_verb_continuous = list("hits", "pokes")
-		attack_verb_simple = list("hit", "poke")
+		inhand_icon_state = "" //no sprite for concealment even when in hand
 
-	playsound(src.loc, on_sound, 50, TRUE)
+	playsound(user, on_sound, 50, TRUE)
 	add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "contractor_baton_0"
+	icon_state = "contractor_baton"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
@@ -436,19 +418,15 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 5
-
 	cooldown = 25
 	stamina_damage = 85
 	affect_cyborg = TRUE
-	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
-	on_icon_state = "contractor_baton_1"
-	off_icon_state = "contractor_baton_0"
 	on_inhand_icon_state = "contractor_baton"
-	force_on = 16
-	force_off = 5
-	weight_class_on = WEIGHT_CLASS_NORMAL
+	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	active_force = 16
+	active_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")

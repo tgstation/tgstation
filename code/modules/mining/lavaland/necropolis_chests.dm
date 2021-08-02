@@ -726,72 +726,66 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	icon_state = "cleaving_saw"
-	icon_state_on = "cleaving_saw_open"
 	worn_icon_state = "cleaving_saw"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
+	/// Whether the saw is open or not
+	var/is_open = FALSE
+	/// List of factions we deal bonus damage to
 	var/list/nemesis_factions = list("mining", "boss")
+	/// Amount of damage we deal to the above factions
 	var/faction_bonus_force = 30
-	var/transform_cooldown
+	/// Whether the cleaver is actively AoE swiping something.
 	var/swiping = FALSE
+	/// Amount of bleed stacks gained per hit
 	var/bleed_stacks_per_hit = 3
+	/// Force when the saw is opened.
+	var/open_force = 20
+	/// Throwforce when the saw is opened.
+	var/open_throwforce = 20
 
 /obj/item/melee/cleaving_saw/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming_weapon,
-		force_on = 20
-		throwforce_on = 20,
-		hitsound_on = hitsound,
-		w_class_on = active_w_class,
-		attack_verb_off = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts"),
-		attack_verb_on = list("cleaves", "swipes", "slashes", "chops"),
+	AddComponent(/datum/component/transforming_weapon, \
+		transform_cooldown_time = (CLICK_CD_MELEE * 0.5), \
+		force_on = open_force, \
+		throwforce_on = open_throwforce, \
+		hitsound_on = hitsound, \
+		attack_verb_on = list("cleaves", "swipes", "slashes", "chops"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It is [active ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].\n"+\
+	. += "<span class='notice'>It is [is_open ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].\n"+\
 	"Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.\n"+\
 	"Transforming it immediately after an attack causes the next attack to come out faster.</span>"
 
 /obj/item/melee/cleaving_saw/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	transform_cooldown = 0
-	transform_weapon(user, TRUE)
+	user.visible_message(span_suicide("[user] is [is_open ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	attack_self(user)
 	return BRUTELOSS
 
-// MELBERT TODO
-/obj/item/melee/cleaving_saw/transform_weapon(mob/living/user, supress_message_text)
-	if(transform_cooldown > world.time)
-		return FALSE
-	. = ..()
-	if(.)
-		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+/obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active, give_feedback)
+	is_open = active
+	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
-// MELBERT TODO
-/obj/item/melee/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
-	if(!supress_message_text)
+	if(user && give_feedback)
 		if(active)
 			to_chat(user, span_notice("You open [src]. It will now cleave enemies in a wide arc and deal additional damage to fauna."))
 		else
 			to_chat(user, span_notice("You close [src]. It will now attack rapidly and cause fauna to bleed."))
-	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
 
-// MELBERT TODO
-/obj/item/melee/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, span_warning("You accidentally cut yourself with [src], like a doofus!"))
-		user.take_bodypart_damage(10)
-
-// MELBERT TODO
 /obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	..()
-	if(!active)
+	. = ..()
+	if(!is_open)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
@@ -804,8 +798,8 @@
 		B.add_stacks(bleed_stacks_per_hit)
 
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
-		if(!active)
+	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
+		if(!is_open)
 			faction_bonus_force = 0
 		var/is_nemesis_faction = FALSE
 		for(var/found_faction in target.faction)
@@ -817,7 +811,7 @@
 		. = ..()
 		if(is_nemesis_faction)
 			force -= faction_bonus_force
-		if(!active)
+		if(!is_open)
 			faction_bonus_force = initial(faction_bonus_force)
 	else
 		var/turf/user_turf = get_turf(user)
