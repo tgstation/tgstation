@@ -341,6 +341,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
+	burns_in_oven = TRUE
 
 //Bread Dishes
 
@@ -354,6 +355,7 @@
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	burns_in_oven = TRUE
 
 /obj/item/food/bread/root/Initialize()
 	. = ..()

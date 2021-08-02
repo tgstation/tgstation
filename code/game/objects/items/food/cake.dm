@@ -24,6 +24,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
+	burns_in_oven = TRUE
+
 
 /obj/item/food/cake/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/plain, 5, 30)

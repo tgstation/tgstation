@@ -67,6 +67,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("bun" = 1) // the bun tastes of bun.
 	foodtypes = GRAIN
+	burns_in_oven = TRUE
 
 /obj/item/food/bun/Initialize()
 	. = ..()
@@ -124,3 +125,4 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
+	burns_in_oven = TRUE
