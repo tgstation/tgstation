@@ -18,7 +18,7 @@
 
 /obj/item/circuit_component/bluespace_launchpad
 	display_name = "Bluespace Launchpad Console"
-	display_desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
+	desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
 
 	var/datum/port/input/launchpad_id
 	var/datum/port/input/x_pos
@@ -58,18 +58,6 @@
 	retrieved = add_output_port("Retrieved", PORT_TYPE_SIGNAL)
 	why_fail = add_output_port("Fail reason", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/bluespace_launchpad/Destroy()
-	launchpad_id = null
-	x_pos = null
-	y_pos = null
-	send_trigger = null
-	retrieve_trigger = null
-	sent = null
-	retrieved = null
-	on_fail = null
-	why_fail = null
-	return ..()
 
 /obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -118,9 +106,11 @@
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
 		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
+		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
 		the_pad.doteleport(null, FALSE, alternate_log_name = parent.get_creator())
+		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
 	to_chat(user, span_warning("You are too primitive to use this computer!"))

@@ -12,6 +12,7 @@
 /datum/brain_trauma/hypnosis/New(phrase)
 	if(!phrase)
 		qdel(src)
+		return
 	hypnotic_phrase = phrase
 	try
 		target_phrase = new("(\\b[REGEX_QUOTE(hypnotic_phrase)]\\b)","ig")

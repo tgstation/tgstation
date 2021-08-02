@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/textcase
 	display_name = "Text Case"
-	display_desc = "A component that makes its input uppercase or lowercase."
+	desc = "A component that makes its input uppercase or lowercase."
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -26,11 +26,6 @@
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_STRING)
-
-/obj/item/circuit_component/textcase/Destroy()
-	input_port = null
-	output = null
-	return ..()
 
 /obj/item/circuit_component/textcase/input_received(datum/port/input/port)
 	. = ..()

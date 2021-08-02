@@ -120,7 +120,7 @@
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src
-		if(!Carbon.iscopy && !Carbon.copied)
+		if(!Carbon.copied)
 			to_chat(user, span_notice("Take off the carbon copy first."))
 			return
 	//Origami Master

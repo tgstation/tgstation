@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/radio
 	display_name = "Radio"
-	display_desc = "A component that can listen and send frequencies. If set to private, the component will only receive signals from other components attached to circuitboards with the same owner id."
+	desc = "A component that can listen and send frequencies. If set to private, the component will only receive signals from other components attached to circuitboards with the same owner id."
 
 	/// Frequency input
 	var/datum/port/input/freq
@@ -34,10 +34,7 @@
 	trigger_output = add_output_port("Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/radio/Destroy()
-	freq = null
-	code = null
 	SSradio.remove_object(src, current_freq)
-	radio_connection = null
 	return ..()
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
