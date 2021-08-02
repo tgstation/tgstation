@@ -27,13 +27,12 @@
 /datum/ai_behavior/break_spine
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	action_cooldown = 0.7 SECONDS
-	var/target_key
 	var/give_up_distance = 10
 
-/datum/ai_behavior/break_spine/setup()
-controller.current_movement_target = batman
+/datum/ai_behavior/break_spine/setup(datum/ai_controller/controller, target_key)
+	controller.current_movement_target = controller.blackboard[target_key]
 
-/datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller, target_key)
 	var/mob/living/batman = controller.blackboard[target_key]
 	var/mob/living/big_guy = controller.pawn //he was molded by the darkness
 
