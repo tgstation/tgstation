@@ -931,9 +931,9 @@
 			"Temperature" = "temperature"
 		)
 
-		for(var/datum/gas/gas_type as anything in subtypesof(/datum/gas))
-			component_options.Add(initial(gas_type.name))
-			options_to_key[gas_type.name] = gas_type
+		for(var/gas_id in GLOB.meta_gas_info)
+			component_options.Add(GLOB.meta_gas_info[gas_id][META_GAS_NAME])
+			options_to_key[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
 
 	options = component_options
 	options_map = options_to_key
