@@ -53,8 +53,27 @@
 	if(selected_enemy || !DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
 		return
 
-	if(world.time >= controller.blackboard[BB_MONKEY_NEXT_HUNGRY] && controller.TryFindFood())
-		return
+	if(world.time >= controller.blackboard[BB_MONKEY_NEXT_HUNGRY])
+		var/list/food_candidates = list()
+		for(var/obj/item as anything in living_pawn.held_items)
+			if(!item || !IsEdible(item))
+				continue
+			food_candidates += item
+
+		for(var/obj/item/candidate in oview(2, living_pawn))
+			if(!IsEdible(candidate))
+				continue
+			food_candidates += candidate
+
+		if(length(food_candidates))
+			var/obj/item/best_held = GetBestWeapon(null, living_pawn.held_items)
+			for(var/obj/item/held as anything in living_pawn.held_items)
+				if(!held || held == best_held)
+					continue
+				living_pawn.dropItemToGround(held)
+
+			queue_behavior(/datum/ai_behavior/consume, pick(food_candidates))
+			return
 
 	if(prob(50))
 		var/list/possible_targets = list()

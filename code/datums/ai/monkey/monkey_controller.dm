@@ -150,33 +150,6 @@ have ways of interacting with a specific mob and control it.
 
 	return top_force_item
 
-/datum/ai_controller/monkey/proc/TryFindFood()
-	. = FALSE
-	var/mob/living/living_pawn = pawn
-
-	// Held items
-
-	var/list/food_candidates = list()
-	for(var/obj/item as anything in living_pawn.held_items)
-		if(!item || !IsEdible(item))
-			continue
-		food_candidates += item
-
-	for(var/obj/item/candidate in oview(2, living_pawn))
-		if(!IsEdible(candidate))
-			continue
-		food_candidates += candidate
-
-	if(length(food_candidates))
-		var/obj/item/best_held = GetBestWeapon(null, living_pawn.held_items)
-		for(var/obj/item/held as anything in living_pawn.held_items)
-			if(!held || held == best_held)
-				continue
-			living_pawn.dropItemToGround(held)
-
-		AddBehavior(/datum/ai_behavior/consume, pick(food_candidates))
-		return TRUE
-
 /datum/ai_controller/monkey/proc/IsEdible(obj/item/thing)
 	if(IS_EDIBLE(thing))
 		return TRUE

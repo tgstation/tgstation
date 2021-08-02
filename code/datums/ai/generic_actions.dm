@@ -30,6 +30,8 @@
 	var/target_key
 	var/give_up_distance = 10
 
+/datum/ai_behavior/break_spine/setup()
+controller.current_movement_target = batman
 
 /datum/ai_behavior/break_spine/perform(delta_time, datum/ai_controller/controller)
 	var/mob/living/batman = controller.blackboard[target_key]
