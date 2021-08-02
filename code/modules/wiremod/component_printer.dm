@@ -162,7 +162,7 @@
 		if(!(component in all_circuit_designs))
 			all_circuit_designs[component] = list(
 				"name" = initial(component.display_name),
-				"description" = initial(component.display_desc),
+				"description" = initial(component.desc),
 				"materials" = list(),
 				"categories" = list("Inaccessible"),
 			)
