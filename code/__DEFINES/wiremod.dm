@@ -49,7 +49,7 @@
 // Components
 
 /// The value that is sent whenever a component is simply sending a signal. This can be anything.
-#define COMPONENT_SIGNAL world.time
+#define COMPONENT_SIGNAL (world.time SECONDS)
 
 // Comparison defines
 #define COMP_COMPARISON_EQUAL "="
