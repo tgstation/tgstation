@@ -13,7 +13,7 @@ Version 5.16, 31 July 2021, by Atlanta-Ned
 Added `library_report` table for tracking reported library books and actions taken on them.
 
 ```
-DROP TABLE IF EXISTS `library_report`;
+DROP TABLE IF EXISTS `library_action`;
 CREATE TABLE `library_action` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `book` int(10) unsigned NOT NULL,

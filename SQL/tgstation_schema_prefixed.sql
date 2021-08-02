@@ -263,7 +263,7 @@ CREATE TABLE `SS13_library` (
 -- Table structure for table `library_report`
 --
 
-DROP TABLE IF EXISTS `SS13_library_report`;
+DROP TABLE IF EXISTS `SS13_library_action`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_library_action` (
