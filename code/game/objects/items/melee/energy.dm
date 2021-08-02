@@ -39,6 +39,7 @@
 			throwforce_on = active_throwforce, \
 			hitsound_on = active_hitsound, \
 			w_class_on = active_w_class, \
+			sharpness_on = active_sharpness, \
 			attack_verb_on = active_attack_verbs, \
 			on_transform_callback = CALLBACK(src, .proc/after_transform))
 
@@ -64,13 +65,11 @@
 
 /obj/item/melee/energy/proc/after_transform(mob/user, active)
 	if(active)
-		sharpness = active_sharpness
 		heat = active_heat
 		if(sword_color_icon)
 			icon_state = "[icon_state]_[sword_color_icon]"
 		START_PROCESSING(SSobj, src)
 	else
-		sharpness = initial(sharpness)
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
@@ -124,7 +123,7 @@
 	icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = "swing_hit" //it starts deactivated
+	hitsound = "swing_hit"
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -132,6 +131,7 @@
 	armour_penetration = 35
 	block_chance = 50
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
+
 	active_sharpness = SHARP_EDGED
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -140,7 +140,9 @@
 	return FALSE
 
 /obj/item/melee/energy/sword/cyborg
+	name = "cyborg energy sword"
 	sword_color_icon = "red"
+	/// The cell cost of hitting something.
 	var/hitcost = 50
 
 /obj/item/melee/energy/sword/cyborg/attack(mob/target, mob/living/silicon/robot/user)
@@ -152,12 +154,17 @@
 			return
 		return ..()
 
+/obj/item/melee/energy/sword/cyborg/cyborg_unequip(mob/user)
+	if(force < active_force)
+		return
+	attack_self(user)
+
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
-	hitsound = 'sound/weapons/circsawhit.ogg'
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "esaw_0"
+	icon_state = "esaw"
+	hitsound = 'sound/weapons/circsawhit.ogg'
 	force = 18
 	hitcost = 75 // Costs more than a standard cyborg esword.
 	w_class = WEIGHT_CLASS_NORMAL
@@ -168,11 +175,6 @@
 
 	active_force = 30
 	sword_color_icon = null // Stops icon from breaking when turned on.
-
-/obj/item/melee/energy/sword/cyborg/saw/cyborg_unequip(mob/user)
-	if(force < active_force)
-		return
-	attack_self(user)
 
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return FALSE

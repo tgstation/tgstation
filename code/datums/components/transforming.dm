@@ -1,3 +1,7 @@
+/*
+ * Transforming weapon component. For weapons that swap between states.
+ * For example: Energy swords, cleaving saws, switch blades.
+ */
 /datum/component/transforming_weapon
 	/// Whether the weapon is transformed
 	var/active = FALSE
@@ -9,6 +13,8 @@
 	var/throwforce_on = 20
 	/// Weight class of the weapon when active
 	var/w_class_on = WEIGHT_CLASS_BULKY
+	/// The sharpness of the weapon when active
+	var/sharpness_on = NONE
 	/// Hitsound played when active
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	/// List of attack verbs used when the weapon is enabled
@@ -28,6 +34,7 @@
 		force_on = 30,
 		throwforce_on = 20,
 		w_class_on = WEIGHT_CLASS_BULKY,
+		sharpness_on = NONE,
 		hitsound_on = null,
 		clumsy_check = TRUE,
 		list/attack_verb_on,
@@ -37,11 +44,11 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.start_transformed = start_transformed
 	src.transform_cooldown_time = transform_cooldown_time
 	src.force_on = force_on
 	src.throwforce_on = throwforce_on
 	src.w_class_on = w_class_on
+	src.sharpness_on = sharpness_on
 	src.hitsound_on = hitsound_on
 	if(islist(attack_verb_on))
 		src.attack_verb_on = attack_verb_on
@@ -49,7 +56,7 @@
 	src.on_transform_callback = on_transform_callback
 
 	if(start_transformed)
-		do_transform_weapon(parent)
+		toggle_active(parent)
 
 /datum/component/transforming_weapon/RegisterWithParent()
 	var/obj/item/item_parent = parent
@@ -87,28 +94,30 @@
 		set_inactive(source)
 
 /datum/component/transforming_weapon/proc/set_active(obj/item/source)
-	source.force = force_on + sharpened_bonus
-	source.throwforce = throwforce_on + sharpened_bonus
+	source.force = force_on + (sharpness_on ? sharpened_bonus : 0)
+	source.throwforce = throwforce_on + (sharpness_on ? sharpened_bonus : 0)
 	source.throw_speed = 4
 	if(hitsound_on)
 		source.hitsound = hitsound_on
 	if(attack_verb_on)
 		source.attack_verb_continuous = attack_verb_on
 		source.attack_verb_simple = attack_verb_on
+	source.sharpness = sharpness_on
 	source.icon_state = "[source.icon_state]_on"
 	source.w_class = w_class_on
 	if(source.embedding)
 		source.updateEmbedding()
 
 /datum/component/transforming_weapon/proc/set_inactive(obj/item/source)
-	source.force = initial(source.force) + (source.get_sharpness() ? sharpened_bonus : 0)
-	source.throwforce = initial(source.throwforce) + (source.get_sharpness() ? sharpened_bonus : 0)
+	source.force = initial(source.force) + (initial(source.sharpness) ? sharpened_bonus : 0)
+	source.throwforce = initial(source.throwforce) + (initial(source.sharpness) ? sharpened_bonus : 0)
 	source.throw_speed = initial(source.throw_speed)
 	if(hitsound_on)
 		source.hitsound = initial(source.hitsound)
 	if(attack_verb_on)
 		source.attack_verb_continuous = initial(source.attack_verb_continuous)
 		source.attack_verb_simple = initial(source.attack_verb_simple)
+	source.sharpness = initial(source.sharpness)
 	source.icon_state = initial(source.icon_state)
 	source.w_class = initial(source.w_class)
 	if(source.embedding)

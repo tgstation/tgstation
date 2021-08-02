@@ -375,6 +375,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
+	/// Whether the switchblade starts extended or not.
 	var/start_extended = FALSE
 
 /obj/item/switchblade/Initialize()
@@ -387,15 +388,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		throwforce_on = 23, \
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
-		attack_verb_on = active_attack_verbs, \
+		sharpness_on = SHARP_EDGED, \
 		attack_verb_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/switchblade/proc/after_transform(mob/user, active)
-	if(active)
-		sharpness = SHARP_EDGED
-	else
-		sharpness = NONE
 	playsound(user ? user : loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/switchblade/suicide_act(mob/user)

@@ -754,10 +754,9 @@
 /obj/item/melee/cleaving_saw/Initialize()
 	. = ..()
 	AddComponent(/datum/component/transforming_weapon, \
-		transform_cooldown_time = (CLICK_CD_MELEE * 0.5), \
+		transform_cooldown_time = 1 SECONDS, \
 		force_on = open_force, \
 		throwforce_on = open_throwforce, \
-		hitsound_on = hitsound, \
 		attack_verb_on = list("cleaves", "swipes", "slashes", "chops"), \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
