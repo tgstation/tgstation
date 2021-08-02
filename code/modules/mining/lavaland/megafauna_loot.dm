@@ -364,7 +364,7 @@
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
 	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
-	. += span_userdanger("This item isnt currently finished if youre seeing it during a testmerge sorry")
+	. += span_userdanger("This item isn't currently finished if you're seeing it during a testmerge sorry.")
 
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
 	if(!usable || soul.ckey)
@@ -407,7 +407,7 @@
 
 /mob/living/simple_animal/hostile/soulscythe/Initialize(mapload)
 	. = ..()
-	SpinAnimation(15)
+	SpinAnimation(20)
 
 /mob/living/simple_animal/hostile/soulscythe/death(gibbed)
 	scythe?.usable = FALSE
