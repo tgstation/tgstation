@@ -72,7 +72,9 @@
  * * silent - deletes the component without sending a [COMSIG_COMPONENT_REMOVING] signal
  */
 /datum/component/Destroy(force=FALSE, silent=FALSE)
-	if(!force && parent)
+	if(!parent)
+		return ..()
+	if(!force)
 		_RemoveFromParent()
 	if(!silent)
 		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
