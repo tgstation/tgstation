@@ -226,6 +226,8 @@
 	if(. || !attached_pad)
 		return
 
+	var/obj/machinery/quantumpad/targeted_pad = target_pad.input_value
+
 	if((!attached_pad.linked_pad || QDELETED(attached_pad.linked_pad)) && !(targeted_pad && istype(targeted_pad)))
 		failed.set_output(COMPONENT_SIGNAL)
 		return
@@ -234,7 +236,6 @@
 		failed.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/obj/machinery/quantumpad/targeted_pad = target_pad.input_value
 	if(targeted_pad && istype(targeted_pad))
 		if(attached_pad.teleporting || targeted_pad.teleporting)
 			failed.set_output(COMPONENT_SIGNAL)
