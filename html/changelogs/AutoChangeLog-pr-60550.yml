@@ -1,4 +1,0 @@
-author: "TheSmallBlue"
-delete-after: True
-changes: 
-  - bugfix: "The outputs on the Launchpad USB component now work as they should."

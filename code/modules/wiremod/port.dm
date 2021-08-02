@@ -181,7 +181,7 @@
 	connected_port = port_to_register
 	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
-	if(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE)
+	if(!(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE))
 		set_input(connected_port.output_value)
 
 /**
@@ -231,7 +231,7 @@
 		RegisterSignal(input_value, COMSIG_PARENT_QDELETING, .proc/null_output)
 
 	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
-	if(trigger && send_update)
+	if(connected_component && trigger && send_update)
 		TRIGGER_CIRCUIT_COMPONENT(connected_component, src)
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.

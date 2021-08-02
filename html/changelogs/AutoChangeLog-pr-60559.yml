@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "cannons lost their sprites in the last feature addition for them... now they have those back!"
