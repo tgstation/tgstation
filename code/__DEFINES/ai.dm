@@ -161,3 +161,11 @@
 ///bane ai
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep thats it
+
+
+
+///Basic Mob Keys
+
+
+///Speech & Emotes subtrees
+#define BB_BASIC_MOB_NEXT_EMOTE "BB_next_emote"

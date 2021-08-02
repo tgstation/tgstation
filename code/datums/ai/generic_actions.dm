@@ -246,3 +246,14 @@
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.blackboard[BB_FOLLOW_TARGET] = null
+
+
+
+/datum/ai_behavior/perform_emote
+	var/emote_to_perform_key
+
+/datum/ai_behavior/perform_emote/perform(delta_time, datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn))
+		return
+	living_pawn.manual_emote(controller.blackboard[emote_to_perform_key])
