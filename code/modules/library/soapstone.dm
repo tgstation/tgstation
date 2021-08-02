@@ -159,7 +159,7 @@ but only permanently removed with the curator's soapstone.
 	switch(like_keys.len - dislike_keys.len)
 		if(-INFINITY to -1)
 			newcolor = COLOR_SOAPSTONE_PLASTIC
-		if(1 to 14)
+		if(0 to 14)
 			newcolor = COLOR_SOAPSTONE_IRON
 		if(15 to 29)
 			newcolor = COLOR_SOAPSTONE_BRONZE
@@ -178,7 +178,7 @@ but only permanently removed with the curator's soapstone.
 	switch(like_keys.len - dislike_keys.len)
 		if(-INFINITY to -1)
 			name = "[initial(name)]"
-		if(1 to 14)
+		if(0 to 14)
 			name = "iron [initial(name)]"
 		if(15 to 29)
 			name = "bronze [initial(name)]"
