@@ -62,10 +62,6 @@
 	. = ..()
 	TryCoupling(hit_atom)
 
-/mob/living/simple_animal/hostile/facehugger/CanPass(atom/movable/mover, border_dir)
-	. = ..()
-	TryCoupling(mover)
-
 /mob/living/simple_animal/hostile/facehugger/attack_hand(mob/user)
 	if(stat == DEAD || sterile)
 		var/obj/item/clothing/mask/facehugger_item/hugger_item = BecomeItem()
