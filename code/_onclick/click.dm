@@ -346,7 +346,7 @@
 		ML.pulled(src)
 
 /mob/living/CtrlClick(mob/user)
-	if(!isliving(user) || !Adjacent(user) || user.incapacitated())
+	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
@@ -362,7 +362,7 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 
-	if(!ishuman(user) ||!Adjacent(user) || user.incapacitated())
+	if(!ishuman(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
