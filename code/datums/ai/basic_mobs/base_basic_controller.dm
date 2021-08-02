@@ -3,7 +3,7 @@
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)
 	if(isliving(new_pawn))
-		var/mob/living/living_pawn = pawn
+		var/mob/living/living_pawn = new_pawn
 
 		movement_delay = living_pawn.cached_multiplicative_slowdown
 

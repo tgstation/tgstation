@@ -149,9 +149,9 @@
 		return FALSE
 	else
 		if(user.obj_damage)
-			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, play_soundeffect = TRUE, user.armour_penetration)
+			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, TRUE, user.armour_penetration)
 		else
-			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect = TRUE, user.armour_penetration)
+			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE,TRUE, user.armour_penetration)
 		if(.)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 

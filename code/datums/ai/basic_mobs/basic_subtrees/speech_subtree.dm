@@ -29,7 +29,7 @@
 
 		if(random_number_in_range <= audible_emotes_length)
 			controller.AddBehavior(/datum/ai_behavior/perform_emote, pick(emote_hear))
-		else if(random_number_in_range <= audible_emotes_length + non_audible_emotes_length)
+		else if(random_number_in_range <= (audible_emotes_length + non_audible_emotes_length))
 			controller.AddBehavior(/datum/ai_behavior/perform_emote, pick(emote_see))
 		else
 			controller.AddBehavior(/datum/ai_behavior/perform_speech, pick(speak))

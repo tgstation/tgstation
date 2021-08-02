@@ -25,7 +25,7 @@
 	//loot = list(/obj/effect/decal/cleanable/insectguts) element
 
 	basic_mob_flags = DEL_ON_DEATH | STOP_MOVING_ON_PULL
-	faction = list("neutral")
+	faction = list("hostile")
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
@@ -36,7 +36,7 @@
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/basic/death(gibbed)
+/mob/living/basic/cockroach/death(gibbed)
 	if(GLOB.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
 		return
 	..()

@@ -177,3 +177,14 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+
+/mob/living/basic/update_stat()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
+		if(health <= 0)
+			death()
+		else
+			set_stat(CONSCIOUS)
+	med_hud_set_status()

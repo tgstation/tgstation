@@ -1,5 +1,5 @@
 /datum/ai_behavior/find_potential_targets
-	action_cooldown = 4
+	action_cooldown = 4 SECONDS
 	var/vision_range = 9
 ///Get all the mobs and potential dangerous machines we can see.
 /datum/ai_behavior/find_potential_targets
@@ -25,6 +25,7 @@
 
 ///Select the target from the list of things in our vision
 /datum/ai_behavior/select_target
+	action_cooldown = 2 SECONDS
 
 
 /datum/ai_behavior/select_target/perform(delta_time, datum/ai_controller/controller, target_key, possible_targets_key, targetting_datum_key, hiding_location_key)
