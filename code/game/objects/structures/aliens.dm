@@ -274,7 +274,7 @@
 	integrity_failure = 0.05
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
-	var/obj/item/clothing/mask/facehugger/child
+	var/mob/living/simple_animal/hostile/facehugger/child
 
 /obj/structure/alien/egg/Initialize(mapload)
 	. = ..()
@@ -348,11 +348,10 @@
 		// TECHNICALLY you could put non-facehuggers in the child var
 		if(istype(child))
 			if(kill)
-				child.Die()
+				child.death()
 			else
 				for(var/mob/M in range(1,src))
-					if(CanHug(M))
-						child.Leap(M)
+					if(child.TryCoupling(M))
 						break
 
 /obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -363,20 +362,18 @@
 
 /obj/structure/alien/egg/obj_break(damage_flag)
 	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(status != BURST)
-			Burst(kill=TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1) && status != BURST)
+		Burst(kill=TRUE)
 
-/obj/structure/alien/egg/HasProximity(atom/movable/AM)
-	if(status == GROWN)
-		if(!CanHug(AM))
-			return
+/obj/structure/alien/egg/HasProximity(atom/movable/mover)
+	if(status != GROWN || !iscarbon(mover))
+		return
 
-		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			return
+	var/mob/living/carbon/possible_target = mover
+	if(isalien(possible_target) || (possible_target.stat == CONSCIOUS && possible_target.getorgan(/obj/item/organ/body_egg/alien_embryo)))
+		return
 
-		Burst(kill=FALSE)
+	Burst(kill=FALSE)
 
 /obj/structure/alien/egg/grown
 	status = GROWN
