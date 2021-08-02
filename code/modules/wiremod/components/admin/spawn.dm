@@ -28,13 +28,6 @@
 
 	spawned_atom = add_output_port("Spawned Atom", PORT_TYPE_ATOM)
 
-/obj/item/circuit_component/spawn_atom/Destroy()
-	input_path = null
-	spawn_at = null
-	parameters = null
-	spawned_atom = null
-	return ..()
-
 /obj/item/circuit_component/spawn_atom/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

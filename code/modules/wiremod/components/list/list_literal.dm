@@ -28,11 +28,11 @@
 	return ..()
 
 /obj/item/circuit_component/list_literal/proc/set_list_size(new_size)
-	if(new_size == 0)
+	if(new_size <= 0)
 		for(var/datum/port/input/port in input_ports)
 			if(port != trigger_input)
 				remove_input_port(port)
-		length = new_size
+		length = 0
 		return
 
 	while(length > new_size)

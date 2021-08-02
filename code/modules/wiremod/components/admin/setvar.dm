@@ -24,12 +24,6 @@
 	variable_name = add_input_port("Variable Name", PORT_TYPE_STRING)
 	new_value = add_input_port("New Value", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/set_variable/Destroy()
-	entity = null
-	variable_name = null
-	new_value = null
-	return ..()
-
 /obj/item/circuit_component/set_variable/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

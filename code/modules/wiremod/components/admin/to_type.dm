@@ -19,11 +19,6 @@
 	input_path = add_input_port("Type", PORT_TYPE_STRING)
 	type_output = add_output_port("Typepath", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/to_type/Destroy()
-	input_path = null
-	type_output = null
-	return ..()
-
 /obj/item/circuit_component/to_type/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

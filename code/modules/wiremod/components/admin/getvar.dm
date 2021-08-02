@@ -25,12 +25,6 @@
 
 	output_value = add_output_port("Output Value", PORT_TYPE_ANY)
 
-/obj/item/circuit_component/get_variable/Destroy()
-	entity = null
-	variable_name = null
-	output_value = null
-	return ..()
-
 /obj/item/circuit_component/get_variable/input_received(datum/port/input/port)
 	. = ..()
 	if(.)

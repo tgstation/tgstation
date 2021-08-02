@@ -17,11 +17,11 @@
 	/// Arguments
 	var/datum/port/input/arguments
 
-	/// Output value
+	/// Returns the output from the proccall
 	var/datum/port/output/output_value
 
 /obj/item/circuit_component/proccall/populate_options()
-	var/static/component_options = list(
+	var/static/list/component_options = list(
 		COMP_PROC_OBJECT,
 		COMP_PROC_GLOBAL,
 	)
@@ -35,13 +35,6 @@
 	arguments = add_input_port("Arguments", PORT_TYPE_LIST)
 
 	output_value = add_output_port("Output Value", PORT_TYPE_ANY)
-
-/obj/item/circuit_component/proccall/Destroy()
-	entity = null
-	proc_name = null
-	arguments = null
-	output_value = null
-	return ..()
 
 /obj/item/circuit_component/proccall/input_received(datum/port/input/port)
 	. = ..()
