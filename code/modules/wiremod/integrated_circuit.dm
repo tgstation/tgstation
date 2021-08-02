@@ -33,6 +33,9 @@
 	/// Whether the integrated circuit is locked or not. Handled by the shell.
 	var/locked = FALSE
 
+	/// Whether the integrated circuit is admin only. Disables power usage and allows admin circuits to be attached, at the cost of making it inaccessible to regular users.
+	var/admin_only = FALSE
+
 	/// The ID that is authorized to unlock/lock the shell so that the circuit can/cannot be removed.
 	var/datum/weakref/owner_id
 
@@ -272,7 +275,7 @@
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
 
-	.["is_admin"] = check_rights_for(user.client, R_ADMIN)
+	.["is_admin"] = check_rights_for(user.client, R_VAREDIT)
 
 /obj/item/integrated_circuit/ui_host(mob/user)
 	if(shell)
@@ -283,6 +286,16 @@
 	if(locked)
 		return FALSE
 	return ..()
+
+/obj/item/integrated_circuit/ui_status(mob/user)
+	. = ..()
+	// Extra protection because ui_state will not close the UI if they already have the ui open,
+	// as ui_state is only set during
+	if(admin_only)
+		if(!check_rights_for(user.client, R_VAREDIT))
+			return UI_CLOSE
+		else
+			return UI_INTERACTIVE
 
 /obj/item/integrated_circuit/ui_state(mob/user)
 	if(!shell)
@@ -397,6 +410,14 @@
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
 				if(!istype(marker))
+					var/client/user = usr.client
+					if(!check_rights_for(user, R_VAREDIT))
+						return TRUE
+					var/atom/marked_atom = user.holder.marked_datum
+					if(!marked_atom)
+						return TRUE
+					port.set_input(marked_atom)
+					balloon_alert(usr, "updated [port.name]'s value to marked object.")
 					return TRUE
 				if(!marker.marked_atom)
 					port.set_input(null)
@@ -466,7 +487,7 @@
 			. = TRUE
 		if("save_circuit")
 			var/client/saver = usr.client
-			if(!check_rights_for(saver, R_ADMIN))
+			if(!check_rights_for(saver, R_VAREDIT))
 				return
 			var/temp_file = file("data/CircuitDownloadTempFile")
 			fdel(temp_file)
@@ -503,4 +524,4 @@
 	if(owner_id)
 		id_card = owner_id.resolve()
 
-	return "(Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"
+	return "[src] (Shell: [shell || "*null*"], Inserter: [key_name(inserter, include_link)], Owner ID: [id_card?.name || "*null*"])"

@@ -9,15 +9,6 @@
 
 	input_port_amount = 1
 
-GLOBAL_LIST_INIT(comp_typecheck_options, list(
-	PORT_TYPE_STRING,
-	PORT_TYPE_NUMBER,
-	PORT_TYPE_LIST,
-	PORT_TYPE_ATOM,
-	COMP_TYPECHECK_MOB,
-	COMP_TYPECHECK_HUMAN,
-))
-
 /obj/item/circuit_component/compare/typecheck/populate_options()
 	var/static/component_options = list(
 		PORT_TYPE_STRING,
