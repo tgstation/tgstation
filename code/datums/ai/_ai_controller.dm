@@ -66,7 +66,7 @@ multiple modular subtrees with behaviors
 ///Completely replaces the planning_subtrees with a new set based on argument provided, list provided must contain specifically typepaths
 /datum/ai_controller/proc/replace_planning_subtrees(list/typepaths_of_new_subtrees)
 	planning_subtrees = typepaths_of_new_subtrees
-	init_subtrees()
+		z()
 
 ///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
 /datum/ai_controller/proc/init_subtrees()

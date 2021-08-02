@@ -169,3 +169,7 @@
 
 ///Speech & Emotes subtrees
 #define BB_BASIC_MOB_NEXT_EMOTE "BB_next_emote"
+
+
+///Targetting subtrees
+#define BASIC_MOB_VISION_TARGETS "BB_basic_vision_targets"

@@ -1,55 +1,42 @@
 /datum/ai_planning_subtree/random_speech
-	//The chance of speech occuring each second
-	var/speak_chance = 0
-	///Possible lines of speech the AI can have
-	var/list/speak = list()
-
-/datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	if(DT_PROB(speak_chance))
-		if((emote_hear?.len) || (emote_see?.len))
-			var/length = speak.len
-			if(emote_hear?.len)
-				length += emote_hear.len
-			if(emote_see?.len)
-				length += emote_see.len
-			var/randomValue = rand(1,length)
-			if(randomValue <= speak.len)
-				say(pick(speak), forced = "poly")
-			else
-				randomValue -= speak.len
-				if(emote_see && randomValue <= emote_see.len)
-					manual_emote(pick(emote_see))
-				else
-					manual_emote(pick(emote_hear))
-		else
-			say(pick(speak), forced = "Basic Mob")
-
-/datum/ai_planning_subtree/random_emotes
 	//The chance of an emote occuring each second
-	var/emote_chance = 0
+	var/speech_chance = 0
 	///Hearable emotes
 	var/list/emote_hear = list()
 	///Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
 	var/list/emote_see = list()
+	///Possible lines of speech the AI can have
+	var/list/speak = list()
 
-/datum/ai_planning_subtree/random_emotes/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	if(DT_PROB(emote_chance))
-		var/has_audible_emotes = emote_hear?.len
-		var/has_non_audible_emotes = emote_see?.len
+/datum/ai_planning_subtree/random_speech/New()
+	. = ..()
+	if(speak)
+		speak = string_list(speak)
+	if(emote_hear)
+		emote_hear = string_list(emote_hear)
+	if(emote_see)
+		emote_see = string_list(emote_hear)
 
-		///We have both, pick from one of the two.
-		if(has_audible_emotes && has_non_audible_emotes)
-			var/total_emote_length = emote_hear.len + emote_see.len
-			var/pick = rand(1, total_emote_length)
-			if(pick <= emote_see.len)
-				manual_emote(pick(emote_see))
-			else
-				manual_emote(pick(emote_hear))
+/datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	if(DT_PROB(speech_chance))
+		var/audible_emotes_length = emote_hear?.len
+		var/non_audible_emotes_length = emote_see?.len
+		var/speak_lines_length = speak?.len
 
-		else if(has_audible_emotes)
-			manual_emote(pick(emote_hear))
-		else if(has_non_audible_emotes)
-			manual_emote(pick(emote_see))
+		var/total_choices_length = audible_emotes_length + non_audible_emotes_length + speak_lines_length
+
+		var/random_number_in_range =  rand(1, total_choices_length)
+
+		if(random_number_in_range <= audible_emotes_length)
+			controller.blackboard[BB_BASIC_MOB_NEXT_EMOTE] = pick(emote_hear)
+			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/perform_emote/basic_mob))
+		else if(random_number_in_range <= audible_emotes_length + non_audible_emotes_length)
+			controller.blackboard[BB_BASIC_MOB_NEXT_EMOTE] = pick(emote_see)
+			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/perform_emote/basic_mob))
+		else
+			controller.blackboard[BB_BASIC_MOB_NEXT_EMOTE] = pick(speak)
+			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/perform_speech/basic_mob))
 
 
 
+/datum/ai_planning_subtree/random_speech/cockroach

@@ -12,6 +12,8 @@
 /mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
+	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, delta_time, times_fired)
+
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
