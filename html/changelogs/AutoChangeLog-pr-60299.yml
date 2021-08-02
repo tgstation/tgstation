@@ -1,5 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes: 
-  - bugfix: "Icebox interrogation room is connected to the main power grid again."
-  - bugfix: "Icebox security atmos goes through the atmos maintenance room again rather than just bypassing it."

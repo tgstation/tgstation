@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/split
 	display_name = "Split"
-	display_desc = "Splits a string by the separator, turning it into a list"
+	desc = "Splits a string by the separator, turning it into a list"
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -23,12 +23,6 @@
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_LIST)
-
-/obj/item/circuit_component/split/Destroy()
-	input_port = null
-	separator = null
-	output = null
-	return ..()
 
 /obj/item/circuit_component/split/input_received(datum/port/input/port)
 	. = ..()

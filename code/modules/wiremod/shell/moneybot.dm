@@ -38,7 +38,7 @@
 
 /obj/item/circuit_component/money_dispenser
 	display_name = "Money Dispenser"
-	display_desc = "Used to dispense money from the money bot. Money is taken from the internal storage of money."
+	desc = "Used to dispense money from the money bot. Money is taken from the internal storage of money."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The amount of money to dispense
@@ -79,15 +79,10 @@
 	attached_bot.add_money(-to_dispense)
 	new /obj/item/holochip(drop_location(), to_dispense)
 
-/obj/item/circuit_component/money_dispenser/Destroy()
-	dispense_amount = null
-	attached_bot = null
-	return ..()
-
 /obj/item/circuit_component/money_bot
 	display_name = "Money Bot"
 	var/obj/structure/money_bot/attached_bot
-	display_desc = "Used to receive input signals when money is inserted into the money bot shell and also keep track of the total money in the shell."
+	desc = "Used to receive input signals when money is inserted into the money bot shell and also keep track of the total money in the shell."
 
 	/// Total money in the shell
 	var/datum/port/output/total_money
@@ -117,13 +112,6 @@
 	))
 	total_money.set_output(null)
 	attached_bot = null
-	return ..()
-
-/obj/item/circuit_component/money_bot/Destroy()
-	attached_bot = null
-	total_money = null
-	money_input = null
-	money_trigger = null
 	return ..()
 
 /obj/item/circuit_component/money_bot/proc/handle_money_insert(atom/source, obj/item/item, mob/living/attacker)

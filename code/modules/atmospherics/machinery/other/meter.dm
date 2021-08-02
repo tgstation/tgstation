@@ -2,7 +2,7 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "meterX"
+	icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
@@ -13,6 +13,8 @@
 	var/frequency = 0
 	var/atom/target
 	var/target_layer = PIPING_LAYER_DEFAULT
+	greyscale_config = /datum/greyscale_config/meter
+	greyscale_colors = COLOR_GRAY
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
@@ -59,18 +61,18 @@
 
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
-		icon_state = "meterX"
+		icon_state = "meter"
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
-		icon_state = "meter0"
+		icon_state = "meter"
 		return FALSE
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
-		icon_state = "meterX"
+		icon_state = "meter0"
 		return FALSE
 
 	var/env_pressure = environment.return_pressure()
@@ -87,6 +89,27 @@
 		icon_state = "meter3_[val]"
 	else
 		icon_state = "meter4"
+
+	var/env_temperature = environment.temperature
+	if(env_pressure == 0 || env_temperature == 0)
+		greyscale_colors = COLOR_GRAY
+	else
+		switch(env_temperature)
+			if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+				greyscale_colors = COLOR_RED
+			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+				greyscale_colors = COLOR_ORANGE
+			if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+				greyscale_colors = COLOR_YELLOW
+			if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+				greyscale_colors = COLOR_VIBRANT_LIME
+			if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+				greyscale_colors = COLOR_CYAN
+			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+				greyscale_colors = COLOR_BLUE
+			else
+				greyscale_colors = COLOR_VIOLET
+	set_greyscale(colors=greyscale_colors)
 
 	if(frequency)
 		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)

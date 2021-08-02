@@ -28,7 +28,7 @@
 
 /obj/item/circuit_component/arrest_console_data
 	display_name = "Security Records Data"
-	display_desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
+	desc = "Outputs the security records data, where it can then be filtered with a Select Query component"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The records retrieved
@@ -43,12 +43,6 @@
 	. = ..()
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/arrest_console_data/Destroy()
-	records = null
-	on_fail = null
-	return ..()
-
 
 /obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
 	. = ..()
@@ -107,7 +101,7 @@
 
 /obj/item/circuit_component/arrest_console_arrest
 	display_name = "Security Records Set Status"
-	display_desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
+	desc = "Receives a table to use to set people's arrest status. Table should be from the security records data component. If New Status port isn't set, the status will be decided by the options."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The targets to set the status of.
@@ -149,13 +143,6 @@
 	new_status = add_input_port("New Status", PORT_TYPE_STRING)
 	new_status_set = add_output_port("Set Status", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/arrest_console_arrest/Destroy()
-	targets = null
-	new_status = null
-	new_status_set = null
-	on_fail = null
-	return ..()
 
 /obj/item/circuit_component/arrest_console_arrest/input_received(datum/port/input/port)
 	. = ..()

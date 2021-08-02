@@ -2718,13 +2718,14 @@
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
 
+// [Original ants concept by Keelin on Goon]
 /datum/reagent/ants
 	name = "Ants"
-	description = "A sample of a lost breed of Space Ants (formicidae bastardium tyrannus), they are well-known for ravaging the living shit out of pretty much anything."
+	description = "A genetic crossbreed between ants and termites, their bites land at a 3 on the Schmidt Pain Scale."
 	reagent_state = SOLID
 	color = "#993333"
 	taste_mult = 1.3
-	taste_description = "tiny legs scuttling down the back of your throat."
+	taste_description = "tiny legs scuttling down the back of your throat"
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	glass_name = "glass of ants"
 	glass_desc = "Bottoms up...?"

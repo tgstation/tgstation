@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/combiner
 	display_name = "Combiner"
-	display_desc = "A component that combines multiple inputs to provide 1 output."
+	desc = "A component that combines multiple inputs to provide 1 output."
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4
@@ -32,10 +32,6 @@
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
 		add_input_port(letter, current_option)
 	output_port = add_output_port("Output", current_option)
-
-/obj/item/circuit_component/combiner/Destroy()
-	output_port = null
-	return ..()
 
 /obj/item/circuit_component/combiner/input_received(datum/port/input/port)
 	. = ..()
