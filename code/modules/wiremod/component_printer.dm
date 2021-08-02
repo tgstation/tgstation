@@ -159,12 +159,15 @@
 			)
 
 	for(var/obj/item/circuit_component/component as anything in subtypesof(/obj/item/circuit_component))
+		var/categories = list("Inaccessible")
+		if(initial(component.circuit_flags) & CIRCUIT_FLAG_ADMIN)
+			categories = list("Admin")
 		if(!(component in all_circuit_designs))
 			all_circuit_designs[component] = list(
 				"name" = initial(component.display_name),
 				"description" = initial(component.desc),
 				"materials" = list(),
-				"categories" = list("Inaccessible"),
+				"categories" = categories,
 			)
 
 /obj/machinery/debug_component_printer/ui_interact(mob/user, datum/tgui/ui)
