@@ -33035,12 +33035,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/engineering/atmospherics_engine)
-"jcf" = (
-/obj/structure/ladder,
-/obj/machinery/duct,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/maintenance/port/central)
 "jcs" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/radiation,
@@ -42412,7 +42406,6 @@
 /area/engineering/atmos)
 "mzT" = (
 /obj/machinery/plumbing/synthesizer{
-	dir = 4;
 	reagent_id = /datum/reagent/water
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -47728,6 +47721,7 @@
 "oCA" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "oCJ" = (
@@ -98589,7 +98583,7 @@ wKY
 yiT
 mzT
 oCA
-acg
+aex
 aaB
 aae
 aae
@@ -98844,8 +98838,8 @@ yiT
 uaz
 aBj
 yiT
-xmn
-jcf
+acg
+wKY
 xmn
 aaB
 aae
