@@ -1,0 +1,4 @@
+author: "Gurkenglas"
+delete-after: True
+changes: 
+  - expansion: "Signals now fire a timestamp."
