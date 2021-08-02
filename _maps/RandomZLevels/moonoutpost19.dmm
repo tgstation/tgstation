@@ -58,7 +58,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
@@ -161,7 +161,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /obj/item/clothing/under/rank/security/officer,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/melee/baton/loaded,
@@ -384,7 +384,7 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid{
@@ -1855,7 +1855,7 @@
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -2035,7 +2035,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "et" = (
@@ -2334,7 +2334,7 @@
 "fi" = (
 /obj/structure/closet/crate/freezer,
 /obj/structure/alien/weeds,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /obj/item/xenos_claw,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
@@ -2373,7 +2373,7 @@
 "fp" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger/impregnated,
+/obj/effect/mob_spawn/facehugger,
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "fr" = (
