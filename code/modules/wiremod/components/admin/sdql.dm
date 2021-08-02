@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/sdql_operation
 	display_name = "SDQL Operation"
-	display_desc = "A component that performs an SDQL operation when invoked."
+	desc = "A component that performs an SDQL operation when invoked."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// SDQL Operation to invoke

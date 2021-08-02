@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/spawn_atom
 	display_name = "Spawn Atom"
-	display_desc = "A component that returns the value of a list at a given index."
+	desc = "A component that returns the value of a list at a given index."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// The input path to convert into a typepath

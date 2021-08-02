@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/set_variable
 	display_name = "Set Variable"
-	display_desc = "A component that sets a variable on an object."
+	desc = "A component that sets a variable on an object."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// Entity to set variable of

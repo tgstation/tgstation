@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/proccall
 	display_name = "Proc Call"
-	display_desc = "A component that gets a variable on an object."
+	desc = "A component that gets a variable on an object."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// Entity to proccall on
