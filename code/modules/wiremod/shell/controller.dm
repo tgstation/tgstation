@@ -23,7 +23,7 @@
 
 /obj/item/circuit_component/controller
 	display_name = "Controller"
-	display_desc = "Used to receive inputs from the controller shell. Use the shell in hand to trigger the output signal. Alt-click for the alternate signal. Right click for the extra signal."
+	desc = "Used to receive inputs from the controller shell. Use the shell in hand to trigger the output signal. Alt-click for the alternate signal. Right click for the extra signal."
 
 	/// The three separate buttons that are called in attack_hand on the shell.
 	var/datum/port/output/signal
@@ -35,12 +35,6 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 	alt = add_output_port("Alternate Signal", PORT_TYPE_SIGNAL)
 	right = add_output_port("Extra Signal", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/controller/Destroy()
-	signal = null
-	alt = null
-	right = null
-	return ..()
 
 /obj/item/circuit_component/controller/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)

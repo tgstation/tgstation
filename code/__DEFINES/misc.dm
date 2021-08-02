@@ -180,15 +180,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME 5 MINUTES
 
-//unmagic-strings for types of polls
-#define POLLTYPE_OPTION "OPTION"
-#define POLLTYPE_TEXT "TEXT"
-#define POLLTYPE_RATING "NUMVAL"
-#define POLLTYPE_MULTI "MULTICHOICE"
-#define POLLTYPE_IRV "IRV"
-
-
-
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
@@ -399,6 +390,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
 #define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+#define DUMMY_HUMAN_SLOT_CTF "dummy_ctf_preview_generation"
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
@@ -493,7 +485,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
-#define VOMIT_NANITE 3
 
 //chem grenades defines
 #define GRENADE_EMPTY 1

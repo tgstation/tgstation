@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - bugfix: "ants have a higher tolerance to extreme ph levels when breeding. New ant desc."

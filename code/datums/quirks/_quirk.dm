@@ -85,7 +85,7 @@
 
 	quirk_holder.quirks -= src
 
-	if(!quirk_transfer)
+	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
 
 	if(mob_trait)
