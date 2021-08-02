@@ -657,8 +657,6 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
-		"bci_implanter",
-		"bci_shell",
 		"bot_shell",
 		"door_shell",
 		"controller_shell",
@@ -666,6 +664,22 @@
 		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/bci_shells
+	id = "bci_shells"
+	display_name = "Brain-Computer Interfaces"
+	description = "Grants access to biocompatable shell designs and components."
+	prereq_ids = list("adv_shells")
+	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
+		"comp_bar_overlay",
+		"comp_bci_action",
+		"comp_target_intercept",
+		"comp_counter_overlay",
+		"comp_object_overlay",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
 /datum/techweb_node/movable_shells_tech
 	id = "movable_shells"
