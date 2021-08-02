@@ -59,7 +59,7 @@
 
 //BANANIUM SWORD
 
-/obj/item/melee/transforming/energy/sword/bananium
+/obj/item/melee/bananium_sword
 	name = "bananium sword"
 	desc = "An elegant weapon, for a more civilized age."
 	force = 0
@@ -73,49 +73,49 @@
 	sword_color = "yellow"
 	heat = 0
 	light_color = COLOR_YELLOW
-	var/next_trombone_allowed = 0
+	COOLDOWN_DECLARE(next_trombone_allowed)
 
-/obj/item/melee/transforming/energy/sword/bananium/Initialize()
+/obj/item/melee/bananium_sword/Initialize()
 	. = ..()
 	adjust_slipperiness()
 
 /* Adds or removes a slippery component, depending on whether the sword
  * is active or not.
  */
-/obj/item/melee/transforming/energy/sword/proc/adjust_slipperiness()
+/obj/item/melee/bananium_sword/proc/adjust_slipperiness()
 	if(active)
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	else
 		qdel(GetComponent(/datum/component/slippery))
 
-/obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
+/obj/item/melee/bananium_sword/attack(mob/living/M, mob/living/user)
 	..()
 	if(active)
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, M)
 
-/obj/item/melee/transforming/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
+/obj/item/melee/bananium_sword/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(active)
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 
-/obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
-	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
-		next_trombone_allowed = world.time + 50
+/obj/item/melee/bananium_sword/attackby(obj/item/I, mob/living/user, params)
+	if(COOOLDOWN_FINISHED(src, next_trombone_allowed) && istype(I, /obj/item/melee/bananium_sword))
+		COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
 		to_chat(user, span_warning("You slap the two swords together. Sadly, they do not seem to fit!"))
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 		return TRUE
 	return ..()
 
-/obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
+/obj/item/melee/bananium_sword/transform_weapon(mob/living/user, supress_message_text)
 	. = ..()
 	adjust_slipperiness()
 
-/obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
+/obj/item/melee/bananium_sword/ignition_effect(atom/A, mob/user)
 	return ""
 
-/obj/item/melee/transforming/energy/sword/bananium/suicide_act(mob/user)
+/obj/item/melee/bananium_sword/suicide_act(mob/user)
 	if(!active)
 		transform_weapon(user, TRUE)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
