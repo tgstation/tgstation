@@ -18,6 +18,22 @@
 	. = ..()
 	toggle_id_ctf(null, game_id, automated = TRUE)//only one machine runs the victory proc, start_ctf proc would break the other machine
 
+/obj/machinery/capture_the_flag/medisim/reset_the_arena()
+	var/area/ctf_area = get_area(src)
+	var/static/list/ctf_object_typecache = typecacheof(list(
+				/obj/machinery,
+				/obj/effect/ctf,
+				/obj/item/ctf
+			))
+	for(var/atom/movable/area_movable in ctf_area)
+		if (ismob(area_movable))
+			continue
+		if(isstructure(area_movable))
+			var/obj/structure/ctf_structure = area_movable
+			ctf_structure.repair_damage(ctf_structure.max_integrity - ctf_structure.get_integrity())
+		else if(!is_type_in_typecache(area_movable, ctf_object_typecache))
+			qdel(area_movable)
+
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
 	. = ..()
 	if(!.)
