@@ -6,7 +6,7 @@ import { CharacterPreview } from "./CharacterPreview";
 import { Gender, GENDERS } from "./preferences/gender";
 import { Component, createRef } from "inferno";
 import features from "./preferences/features";
-import { Feature, ValueType } from "./preferences/features/base";
+import { FeatureValueInput } from "./preferences/features/base";
 
 const CLOTHING_CELL_SIZE = 32;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -296,77 +296,6 @@ const NameInput = (props: {
   );
 };
 
-const FeatureValue = (props: {
-  feature: Feature,
-  featureId: string,
-  value: unknown,
-
-  act: typeof sendAct,
-}, context) => {
-  const feature = props.feature;
-
-  const [predictedValue, setPredictedValue] = useLocalState(
-    context,
-    `${props.featureId}_predictedValue`,
-    props.value,
-  );
-
-  const changeValue = (newValue: string) => {
-    setPredictedValue(newValue);
-    createSetPreference(props.act, props.featureId)(newValue);
-  };
-
-  switch (feature.valueType) {
-    case ValueType.Choiced:
-      // MOTHBLOCKS TODO: Sort
-      return (<Dropdown
-        selected={predictedValue}
-        displayText={feature.choices[predictedValue as string]}
-        onSelected={changeValue}
-        width="120px"
-        options={Object.entries(feature.choices).map(([dataValue, label]) => {
-          return {
-            displayText: label,
-            value: dataValue,
-          };
-        })}
-      />);
-    case ValueType.Color:
-      return (
-        <Button onClick={() => {
-          props.act("set_color_preference", {
-            preference: props.featureId,
-          });
-        }}>
-          <Stack align="center" fill>
-            <Stack.Item>
-              <Box style={{
-                background: `#${props.value}`,
-                border: "2px solid white",
-                "box-sizing": "content-box",
-                height: "11px",
-                width: "11px",
-              }} />
-            </Stack.Item>
-
-            <Stack.Item>
-              Change
-            </Stack.Item>
-          </Stack>
-        </Button>
-      );
-    case ValueType.Number:
-      return (<NumberInput
-        onChange={(e, value) => {
-          changeValue(value);
-        }}
-        minValue={feature.minimum}
-        maxValue={feature.maximum}
-        value={predictedValue}
-      />);
-  }
-};
-
 const PreferenceList = (props: {
   act: typeof sendAct,
   preferences: Record<string, unknown>,
@@ -392,7 +321,7 @@ const PreferenceList = (props: {
 
           return (
             <LabeledList.Item key={featureId} label={feature.name}>
-              <FeatureValue
+              <FeatureValueInput
                 act={props.act}
                 feature={feature}
                 featureId={featureId}

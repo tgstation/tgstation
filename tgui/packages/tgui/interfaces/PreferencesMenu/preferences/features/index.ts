@@ -6,9 +6,9 @@
 import { Feature } from "./base";
 
 // while also preventing downstreams from needing to mutate existing files.
-const features: Record<string, Feature> = {};
+const features: Record<string, Feature<unknown>> = {};
 
-const requireFeature = require.context("./", true, /.ts$/);
+const requireFeature = require.context("./", true, /.tsx$/);
 
 for (const key of requireFeature.keys()) {
   if (key === "index" || key === "base") {
@@ -16,7 +16,7 @@ for (const key of requireFeature.keys()) {
   }
 
   for (const [featureKey, feature] of Object.entries(requireFeature(key))) {
-    features[featureKey] = feature as Feature;
+    features[featureKey] = feature as Feature<unknown>;
   }
 }
 

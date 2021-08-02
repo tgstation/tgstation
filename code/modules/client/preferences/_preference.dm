@@ -1,6 +1,9 @@
 /// Preferences that will be put into the 3rd list, and are not contextual.
 #define PREFERENCE_CATEGORY_NON_CONTEXTUAL "non_contextual"
 
+/// Will be put under the game preferences window.
+#define PREFERENCE_CATEGORY_GAME_PREFERENCES "game_preferences"
+
 /// An assoc list list of types to instantiated `/datum/preference` instances
 GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 

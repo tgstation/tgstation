@@ -1,5 +1,6 @@
 /// UI style preference
 /datum/preference/choiced/ui_style
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_identifier = PREFERENCE_PLAYER
 	savefile_key = "UI_style"
 	should_generate_icons = TRUE
@@ -23,3 +24,8 @@
 
 /datum/preference/choiced/ui_style/apply_to_client(client/client, value)
 	client.mob?.hud_used?.update_ui_style(ui_style2icon(value))
+
+// Skip the normal icon sending, since the client contains
+// its own list of values, and thus sending the icon is not necessary.
+/datum/preference/choiced/ui_style/compile_ui_data(mob/user, value)
+	return serialize(value)
