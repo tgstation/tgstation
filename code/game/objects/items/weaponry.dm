@@ -389,11 +389,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		sharpness_on = SHARP_EDGED, \
-		attack_verb_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
-
-/obj/item/switchblade/proc/after_transform(mob/user, active)
-	playsound(user ? user : loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		attack_verb_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"))
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

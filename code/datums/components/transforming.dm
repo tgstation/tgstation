@@ -1,6 +1,8 @@
 /*
  * Transforming weapon component. For weapons that swap between states.
  * For example: Energy swords, cleaving saws, switch blades.
+ *
+ * Values will not update/change on transform if no values are passed in initalize.
  */
 /datum/component/transforming_weapon
 	/// Whether the weapon is transformed
@@ -8,9 +10,9 @@
 	/// Cooldown on transforming this item back and forth
 	var/transform_cooldown_time
 	/// Force of the weapon when active
-	var/force_on = 30
+	var/force_on = 0
 	/// Throwforce of the weapon when active
-	var/throwforce_on = 20
+	var/throwforce_on = 0
 	/// Weight class of the weapon when active
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	/// The sharpness of the weapon when active
@@ -30,12 +32,12 @@
 
 /datum/component/transforming_weapon/Initialize(
 		start_transformed = FALSE,
-		transform_cooldown_time = null,
-		force_on = 30,
-		throwforce_on = 20,
-		w_class_on = WEIGHT_CLASS_BULKY,
-		sharpness_on = NONE,
-		hitsound_on = null,
+		transform_cooldown_time,
+		force_on,
+		throwforce_on,
+		sharpness_on,
+		hitsound_on,
+		w_class_on,
 		clumsy_check = TRUE,
 		list/attack_verb_on,
 		datum/callback/on_transform_callback,
@@ -47,9 +49,9 @@
 	src.transform_cooldown_time = transform_cooldown_time
 	src.force_on = force_on
 	src.throwforce_on = throwforce_on
-	src.w_class_on = w_class_on
 	src.sharpness_on = sharpness_on
 	src.hitsound_on = hitsound_on
+	src.w_class_on = w_class_on
 	if(islist(attack_verb_on))
 		src.attack_verb_on = attack_verb_on
 	src.clumsy_check = clumsy_check
@@ -62,7 +64,7 @@
 	var/obj/item/item_parent = parent
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_transform_weapon)
-	if(item_parent.sharpness)
+	if(item_parent.sharpness || sharpness_on)
 		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
 /datum/component/transforming_weapon/UnregisterFromParent()
@@ -71,7 +73,8 @@
 /datum/component/transforming_weapon/proc/try_transform_weapon(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!COOLDOWN_FINISHED(src, transform_cooldown_time))
+	if(!COOLDOWN_FINISHED(src, transform_cooldown))
+		to_chat(user, span_warning("Wait a bit before trying to use [source] again!"))
 		return
 
 	if(do_transform_weapon(source, user))
@@ -79,12 +82,20 @@
 
 /datum/component/transforming_weapon/proc/do_transform_weapon(obj/item/source, mob/user)
 	toggle_active(source)
-	on_transform_callback?.Invoke(user, active)
+	if(on_transform_callback)
+		on_transform_callback.Invoke(user, active)
+	else
+		default_transform_message(user)
+
 	if(isnum(transform_cooldown_time))
 		COOLDOWN_START(src, transform_cooldown, transform_cooldown_time)
 	if(user)
 		source.add_fingerprint(user)
 	return TRUE
+
+/datum/component/transforming_weapon/proc/default_transform_message(mob/user)
+	balloon_alert(user, "[active ? "enabled" : "disabled"] [src]")
+	playsound(user ? user : parent.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /datum/component/transforming_weapon/proc/toggle_active(obj/item/source)
 	active = !active
@@ -94,34 +105,40 @@
 		set_inactive(source)
 
 /datum/component/transforming_weapon/proc/set_active(obj/item/source)
-	source.force = force_on + (sharpness_on ? sharpened_bonus : 0)
-	source.throwforce = throwforce_on + (sharpness_on ? sharpened_bonus : 0)
-	source.throw_speed = 4
+	if(isnum(force_on))
+		source.force = force_on + (sharpness_on ? sharpened_bonus : 0)
+	if(isnum(throwforce_on))
+		source.throwforce = throwforce_on + (sharpness_on ? sharpened_bonus : 0)
+		source.throw_speed = 4
 	if(hitsound_on)
 		source.hitsound = hitsound_on
 	if(attack_verb_on)
 		source.attack_verb_continuous = attack_verb_on
 		source.attack_verb_simple = attack_verb_on
-	source.sharpness = sharpness_on
+	if(sharpness_on)
+		source.sharpness = sharpness_on
+	if(w_class_on)
+		source.w_class = w_class_on
+
 	source.icon_state = "[source.icon_state]_on"
-	source.w_class = w_class_on
-	if(source.embedding)
-		source.updateEmbedding()
 
 /datum/component/transforming_weapon/proc/set_inactive(obj/item/source)
-	source.force = initial(source.force) + (initial(source.sharpness) ? sharpened_bonus : 0)
-	source.throwforce = initial(source.throwforce) + (initial(source.sharpness) ? sharpened_bonus : 0)
-	source.throw_speed = initial(source.throw_speed)
+	if(isnum(force_on))
+		source.force = initial(source.force) + (initial(source.sharpness) ? sharpened_bonus : 0)
+	if(isnum(throwforce_on))
+		source.throwforce = initial(source.throwforce) + (initial(source.sharpness) ? sharpened_bonus : 0)
+		source.throw_speed = initial(source.throw_speed)
 	if(hitsound_on)
 		source.hitsound = initial(source.hitsound)
 	if(attack_verb_on)
 		source.attack_verb_continuous = initial(source.attack_verb_continuous)
 		source.attack_verb_simple = initial(source.attack_verb_simple)
-	source.sharpness = initial(source.sharpness)
+	if(sharpness_on)
+		source.sharpness = initial(source.sharpness)
+	if(w_class_on)
+		source.w_class = initial(source.w_class)
+
 	source.icon_state = initial(source.icon_state)
-	source.w_class = initial(source.w_class)
-	if(source.embedding)
-		source.disableEmbedding()
 
 /datum/component/transforming_weapon/proc/clumsy_transform_effect(mob/living/user)
 	if(!clumsy_check)
@@ -136,9 +153,11 @@
 		return TRUE
 	return FALSE
 
-/datum/component/transforming_weapon/proc/on_sharpen(datum/source, increment, max)
+/datum/component/transforming_weapon/proc/on_sharpen(obj/item/source, increment, max)
 	SIGNAL_HANDLER
 
+	if(!source.sharpness)
+		return COMPONENT_BLOCK_SHARPEN_BLOCKED
 	if(sharpened_bonus)
 		return COMPONENT_BLOCK_SHARPEN_ALREADY
 	if(force_on + increment > max)

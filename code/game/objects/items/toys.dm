@@ -339,11 +339,7 @@
 
 /obj/item/toy/sword/Initialize()
 	. = ..()
-	AddComponent(/datum/component/transforming_weapon, \
-		force_on = 0, \
-		throwforce_on = 0, \
-		hitsound_on = hitsound, \
-		on_transform_callback = CALLBACK(src, .proc/after_transform))
+	AddComponent(/datum/component/transforming_weapon, on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/toy/sword/proc/after_transform(mob/user, active)
 	if(active)

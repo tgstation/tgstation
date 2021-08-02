@@ -251,7 +251,7 @@
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel_a"
+	icon_state = "e_scalpel"
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.7
@@ -260,21 +260,20 @@
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_EDGED
 
+/obj/item/scalpel/advanced/Initialize()
+	. = ..()
+	AddComponent(/datum/component/transforming_weapon, force_on = force + 1, on_transform_callback = CALLBACK(src, .proc/after_transform))
 
-/obj/item/scalpel/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
+/obj/item/scalpel/advanced/proc/after_transform(mob/user, activate)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
-		balloon_alert(user, "enabled bone-cutting mode")
 		set_light_range(2)
-		force += 1 //we don't want to ruin sharpened stuff
-		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		balloon_alert(user, "disabled bone-cutting mode")
 		set_light_range(1)
-		force -= 1
-		icon_state = "scalpel_a"
+
+	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
+	playsound(user ? user : loc, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()

@@ -213,15 +213,6 @@
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
 
-/// Description for when turning the baton "on".
-/obj/item/melee/classic_baton/proc/get_on_description()
-	. = list()
-
-	.["local_on"] = "<span class ='warning'>You extend the baton.</span>"
-	.["local_off"] = "<span class ='notice'>You collapse the baton.</span>"
-
-	return .
-
 /// Default message for stunning a living, non-cyborg mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
@@ -258,7 +249,7 @@
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
-	if(!force) // MELBERT TODO: Improve this
+	if(!force) // MELBERT TODO: Improve this, contractor batons still work
 		return ..()
 
 	add_fingerprint(user)
@@ -394,15 +385,8 @@
 		return (BRUTELOSS)
 
 /obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
-	var/list/desc = get_on_description()
-
-	if(active)
-		to_chat(user, desc["local_on"])
-		inhand_icon_state = on_inhand_icon_state
-	else
-		to_chat(user, desc["local_off"])
-		inhand_icon_state = "" //no sprite for concealment even when in hand
-
+	inhand_icon_state = active ? on_inhand_icon_state : ""
+	balloon_alert(user, "[active ? "[src] extended" : "[src] collapsed"]")
 	playsound(user ? user : loc, on_sound, 50, TRUE)
 	if(user)
 		add_fingerprint(user)

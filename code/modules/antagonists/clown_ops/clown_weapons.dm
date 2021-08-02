@@ -81,9 +81,6 @@
 /obj/item/melee/bananium_sword/Initialize()
 	. = ..()
 	AddComponent(/datum/component/transforming_weapon, \
-		force_on = 0, \
-		throwforce_on = 0, \
-		hitsound_on = null, \
 		attack_verb_on = list("slips"), \
 		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
@@ -93,7 +90,7 @@
 	if(active)
 		icon_state = "[icon_state]_bananium"
 
-	to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
+	balloon_alert(user, "[src] [active ? "enabled":"disabled"]")
 	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 	adjust_slipperiness()

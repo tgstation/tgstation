@@ -37,9 +37,9 @@
 		AddComponent(/datum/component/transforming_weapon, \
 			force_on = active_force, \
 			throwforce_on = active_throwforce, \
+			sharpness_on = active_sharpness, \
 			hitsound_on = active_hitsound, \
 			w_class_on = active_w_class, \
-			sharpness_on = active_sharpness, \
 			attack_verb_on = active_attack_verbs, \
 			on_transform_callback = CALLBACK(src, .proc/after_transform))
 
@@ -65,15 +65,19 @@
 
 /obj/item/melee/energy/proc/after_transform(mob/user, active)
 	if(active)
+		if(embedding)
+			updateEmbedding()
 		heat = active_heat
 		if(sword_color_icon)
 			icon_state = "[icon_state]_[sword_color_icon]"
 		START_PROCESSING(SSobj, src)
 	else
+		if(embedding)
+			disableEmbedding()
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
-	to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
+	balloon_alert(user, "[src] [active ? "enabled":"disabled"]")
 	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 
