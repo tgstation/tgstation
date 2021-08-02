@@ -256,10 +256,10 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
-/datum/design/component/bci/click_intercept
+/datum/design/component/bci/target_intercept
 	name = "BCI Target Interceptor"
-	id = "comp_click_intercept"
-	build_path = /obj/item/circuit_component/click_intercept
+	id = "comp_target_intercept"
+	build_path = /obj/item/circuit_component/target_intercept
 
 /datum/design/component/bci/counter_overlay
 	name = "Counter Overlay Component"

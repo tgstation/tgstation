@@ -675,7 +675,7 @@
 		"bci_shell",
 		"comp_bar_overlay",
 		"comp_bci_action",
-		"comp_click_intercept",
+		"comp_target_intercept",
 		"comp_counter_overlay",
 		"comp_object_overlay",
 	)

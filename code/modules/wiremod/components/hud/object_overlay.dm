@@ -40,7 +40,7 @@
 /obj/item/circuit_component/object_overlay/Destroy()
 	for(var/active_overlay in active_overlays)
 		QDEL_NULL(active_overlay)
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/object_overlay/populate_options()
 	var/static/component_options = list(

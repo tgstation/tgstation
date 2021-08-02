@@ -99,4 +99,4 @@
 	QDEL_NULL(counter_appearance)
 	for(var/number in numbers)
 		QDEL_NULL(number)
-	. = ..()
+	return ..()
