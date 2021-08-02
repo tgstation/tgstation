@@ -333,7 +333,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bD" = (
-/obj/item/clothing/mask/facehugger/dead,
+/obj/effect/mob_spawn/facehugger,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
