@@ -34,11 +34,8 @@
 */
 /obj/item/organ/external/Initialize(mapload, mob_sprite)
 	. = ..()
-
 	if(mob_sprite)
 		set_sprite(mob_sprite)
-
-	cache_key = generate_icon_cache()
 
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = reciever.get_bodypart(zone)

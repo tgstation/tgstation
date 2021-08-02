@@ -86,10 +86,9 @@
 	var/list/tips = list()
 	var/list/checked_turfs = list()
 	var/list/new_members = list()
-	//if(origin)
-	tips[origin] = NORTH|EAST|SOUTH|WEST
-	new_members[origin] = NONE
-
+	if(origin)
+		tips[origin] = NORTH|EAST|SOUTH|WEST
+		new_members[origin] = NONE
 	while(length(tips))
 		var/atom/focus = tips[length(tips)]
 		var/dirs_to_check = tips[focus]
