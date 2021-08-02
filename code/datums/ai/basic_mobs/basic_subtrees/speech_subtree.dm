@@ -18,7 +18,7 @@
 		emote_see = string_list(emote_hear)
 
 /datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	if(DT_PROB(speech_chance))
+	if(DT_PROB(speech_chance, delta_time))
 		var/audible_emotes_length = emote_hear?.len
 		var/non_audible_emotes_length = emote_see?.len
 		var/speak_lines_length = speak?.len
@@ -28,15 +28,10 @@
 		var/random_number_in_range =  rand(1, total_choices_length)
 
 		if(random_number_in_range <= audible_emotes_length)
-			controller.blackboard[BB_BASIC_MOB_NEXT_EMOTE] = pick(emote_hear)
-			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/perform_emote/basic_mob))
+			controller.AddBehavior(/datum/ai_behavior/perform_emote, pick(emote_hear))
 		else if(random_number_in_range <= audible_emotes_length + non_audible_emotes_length)
-			controller.blackboard[BB_BASIC_MOB_NEXT_EMOTE] = pick(emote_see)
-			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/perform_emote/basic_mob))
+			controller.AddBehavior(/datum/ai_behavior/perform_emote, pick(emote_see))
 		else
-			controller.blackboard[BB_BASIC_MOB_NEXT_EMOTE] = pick(speak)
-			LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/perform_speech/basic_mob))
-
-
+			controller.AddBehavior(/datum/ai_behavior/perform_speech, pick(speak))
 
 /datum/ai_planning_subtree/random_speech/cockroach

@@ -146,6 +146,29 @@
 	if(staminaloss > 0)
 		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
 
+/mob/living/basic/say_mod(input, list/message_mods = list())
+	if(length(speak_emote))
+		verb_say = pick(speak_emote)
+	return ..()
+
+/mob/living/basic/death(gibbed)
+	. = ..()
+	if(del_on_death)
+		qdel(src)
+	else
+		health = 0
+		icon_state = icon_dead
+		if(flip_on_death)
+			transform = transform.Turn(180)
+		set_density(FALSE)
+
+/mob/living/basic/hostile/proc/MeleeAttack(atom/target)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
+		return FALSE //but more importantly return before attack_animal called
+	var/result = target.attack_animal(src)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	return result
+
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value
 	update_simplemob_varspeed()
@@ -155,7 +178,3 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
-/mob/living/basic/say_mod(input, list/message_mods = list())
-	if(length(speak_emote))
-		verb_say = pick(speak_emote)
-	return ..()

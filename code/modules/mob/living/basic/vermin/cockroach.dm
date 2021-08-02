@@ -24,36 +24,36 @@
 
 	//loot = list(/obj/effect/decal/cleanable/insectguts) element
 
-	basic_mob_flags = DEL_ON_DEATH
+	basic_mob_flags = DEL_ON_DEATH | STOP_MOVING_ON_PULL
 	faction = list("neutral")
 
-	// Randomizes hunting intervals, minumum 5 turns
-	var/time_to_hunt = 5
 	stop_automated_movement_when_pulled = 0
 
 
-/mob/living/simple_animal/hostile/cockroach/Initialize()
+/mob/living/basic/cockroach/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddElement(/datum/element/basic_body_temp_sensetive, 270, INFINITY)
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	time_to_hunt = rand(5,10)
+
+/mob/living/basic/death(gibbed)
+	if(GLOB.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
+		return
+	..()
+
+/mob/living/basic/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
+	return FALSE
 
 
-/mob/living/simple_animal/hostile/cockroach/add_cell_sample()
-
-
-/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) // Cockroaches are predators to space ants
-	. = ..()
-	turns_since_scan++
+	/*
 	if(turns_since_scan > time_to_hunt)
 		turns_since_scan = 0
 		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
 		for(var/obj/effect/decal/cleanable/ants/potential_target in view(2, get_turf(src)))
 			if(potential_target.type in target_types)
 				hunt(potential_target)
-				return
+				return*/
 
 
 /obj/projectile/glockroachbullet
@@ -79,13 +79,7 @@
 	ranged = TRUE
 	faction = list("hostile")
 
-/mob/living/simple_animal/hostile/cockroach/death(gibbed)
-	if(GLOB.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
-		return
-	..()
 
-/mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
-	return FALSE
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach
 	name = "hauberoach"
@@ -120,13 +114,8 @@
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
 
-
-
-
-
-
-
 /datum/ai_controller/basic_controller/cockroach
-	blackboard = list(BB_BASIC_MOB_NEXT_SPEECH = null)
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech
-)
+	blackboard = list(BB_TARGETTING_DATUM = new /datum/targetting_datum/basic())
+	planning_subtrees = list(/datum/ai_planning_subtree/random_speech,
+	/datum/ai_planning_subtree/simple_find_target,
+	/datum/ai_planning_subtree/simple_attack_target)
