@@ -10434,7 +10434,8 @@
 /area/science/research)
 "biS" = (
 /obj/machinery/camera{
-	c_tag = "Research Division Access"
+	c_tag = "Research Division Access";
+	network = list("ss13","rd")
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -12364,7 +12365,8 @@
 /area/hallway/primary/central)
 "btA" = (
 /obj/machinery/camera{
-	c_tag = "Research Division West"
+	c_tag = "Research Division West";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -12671,7 +12673,8 @@
 "bvf" = (
 /obj/machinery/camera{
 	c_tag = "Research Division North";
-	dir = 8
+	dir = 8;
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white/side{
 	dir = 9
@@ -12831,9 +12834,9 @@
 /area/medical/medbay/aft)
 "bvB" = (
 /obj/machinery/camera{
-	c_tag = "Genetics Access";
+	c_tag = "Med-Sci Access";
 	dir = 8;
-	network = list("ss13","medbay");
+	network = list("ss13","medbay","rd");
 	pixel_y = -22
 	},
 /turf/open/floor/iron/white,
@@ -15415,7 +15418,7 @@
 "bLc" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
-	name = "Test Chamber Monitor";
+	name = "Xenobio Monitor";
 	network = list("xeno");
 	pixel_x = 26
 	},
@@ -17150,8 +17153,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/computer/camera_advanced/xenobio{
-	dir = 1;
-	networks = list("xeno_pens")
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
@@ -22066,7 +22068,9 @@
 	},
 /obj/machinery/keycard_auth/directional/south,
 /obj/machinery/camera/autoname{
-	dir = 1
+	c_tag = "Research Directors Office";
+	dir = 1;
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
@@ -24322,7 +24326,9 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/autoname{
-	dir = 1
+	c_tag = "Toxins Storage";
+	dir = 1;
+	network = list("ss13","rd")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -24369,7 +24375,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Observation - Starboard Aft";
 	dir = 8;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
@@ -28018,7 +28024,8 @@
 /obj/item/crowbar/large,
 /obj/machinery/camera{
 	c_tag = "Mech Bay";
-	dir = 1
+	dir = 1;
+	network = list("ss13","rd")
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
@@ -30376,7 +30383,8 @@
 "iFt" = (
 /obj/machinery/camera{
 	c_tag = "Toxins Launch Room Access";
-	dir = 1
+	dir = 1;
+	network = list("ss13","rd")
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron,
@@ -39580,7 +39588,7 @@
 "nLm" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Lab Entrance";
-	network = list("ss13","rd")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
@@ -42757,7 +42765,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Observation - Starboard Fore";
 	dir = 8;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
@@ -43279,7 +43287,7 @@
 /area/service/library)
 "pOq" = (
 /obj/machinery/camera{
-	c_tag = "Circuits Lab";
+	c_tag = "Research Division East";
 	dir = 4;
 	network = list("ss13","rd")
 	},
@@ -47983,9 +47991,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "swQ" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	networks = list("xeno_pens")
-	},
+/obj/machinery/computer/camera_advanced/xenobio,
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "swV" = (
@@ -50176,6 +50182,11 @@
 /area/security/office)
 "tJy" = (
 /obj/machinery/component_printer,
+/obj/machinery/camera{
+	c_tag = "Circuits Lab";
+	dir = 4;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -56890,7 +56901,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Observation - Port Fore";
 	dir = 4;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /obj/machinery/light/directional/west,
 /turf/open/openspace,
@@ -58387,7 +58398,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Observation - Port Aft";
 	dir = 4;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
@@ -106852,8 +106863,8 @@ bpE
 bpE
 bpE
 bpE
-boB
-boB
+bhA
+bhA
 pLE
 qSi
 sql
