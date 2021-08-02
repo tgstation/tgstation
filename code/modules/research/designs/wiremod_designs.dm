@@ -253,6 +253,16 @@
 	id = "comp_ntnet_send"
 	build_path = /obj/item/circuit_component/ntnet_send
 
+/datum/design/component/list_literal
+	name = "List Literal Component"
+	id = "comp_list_literal"
+	build_path = /obj/item/circuit_component/list_literal
+
+/datum/design/component/typecast
+	name = "Typecast Component"
+	id = "comp_typecast"
+	build_path = /obj/item/circuit_component/typecast
+
 /datum/design/component/bci
 	category = list("Circuitry", "BCI Components")
 

@@ -139,9 +139,12 @@
  * * type - The datatype it handles
  * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null)
+/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null, index = null)
 	var/datum/port/input/input_port = new(src, name, type, trigger, default)
-	input_ports += input_port
+	if(index)
+		input_ports.Insert(index, input_port)
+	else
+		input_ports += input_port
 	if(parent)
 		SStgui.update_uis(parent)
 	return input_port
@@ -194,9 +197,14 @@
 	if(!parent?.on)
 		return TRUE
 
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	if(!cell?.use(power_usage_per_input))
-		return TRUE
+	if(!parent.admin_only)
+		if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has set the admin_only variable to TRUE!")
+			return TRUE
+
+		var/obj/item/stock_parts/cell/cell = parent.get_cell()
+		if(!cell?.use(power_usage_per_input))
+			return TRUE
 
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
