@@ -348,7 +348,6 @@
 	inhand_icon_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
 /obj/item/clothing/suit/nemes
 	name = "pharoah tunic"
