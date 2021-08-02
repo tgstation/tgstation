@@ -1353,8 +1353,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/hallucination/danger/chasm/show_icon()
-	var/turf/target_loc = get_turf(target)
-	image = image('icons/turf/floors/chasms.dmi', src, "chasms-[target_loc.smoothing_junction]", TURF_LAYER)
+	image = image('icons/turf/floors/chasms.dmi', src, "chasms-0", TURF_LAYER)
 	if(target.client)
 		target.client.images += image
 
