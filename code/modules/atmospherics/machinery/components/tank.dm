@@ -132,7 +132,6 @@
 	air_contents.assert_gas(gastype)
 	air_contents.gases[gastype][MOLES] += moles_to_add
 	air_contents.archive()
-	update_parents()
 
 /obj/machinery/atmospherics/components/tank/process_atmos()
 	if(air_contents.react(src))
