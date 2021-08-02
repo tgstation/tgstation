@@ -76,7 +76,7 @@
 		return
 
 	var/list/new_literal = list()
-	for(var/datum/port/input/input_port as anything in input_ports)
+	for(var/datum/port/input/input_port as anything in (input_ports-trigger_input))
 		// Prevents lists from merging together
 		new_literal += list(input_port.input_value)
 
