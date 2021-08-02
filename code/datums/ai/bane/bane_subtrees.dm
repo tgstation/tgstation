@@ -9,5 +9,5 @@
 			batman = possibly_the_dark_knight
 			break
 	if(batman)
-		queue_behavior(/datum/ai_behavior/break_spine/bane, BB_BANE_BATMAN)
+		controller.queue_behavior(/datum/ai_behavior/break_spine/bane, BB_BANE_BATMAN)
 		return SUBTREE_RETURN_FINISH_PLANNING
