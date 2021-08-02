@@ -772,16 +772,15 @@
 	attack_self(user)
 	return BRUTELOSS
 
-/obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active, give_feedback)
+/obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active)
 	is_open = active
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
-	if(user && give_feedback)
-		if(active)
-			to_chat(user, span_notice("You open [src]. It will now cleave enemies in a wide arc and deal additional damage to fauna."))
-		else
-			to_chat(user, span_notice("You close [src]. It will now attack rapidly and cause fauna to bleed."))
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
+	if(active)
+		to_chat(user, span_notice("You open [src]. It will now cleave enemies in a wide arc and deal additional damage to fauna."))
+	else
+		to_chat(user, span_notice("You close [src]. It will now attack rapidly and cause fauna to bleed."))
+	playsound(user ? user : loc, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
 
 /obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
 	. = ..()
@@ -791,11 +790,11 @@
 /obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
 		return
-	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
-	if(!B)
-		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
+	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(existing_bleed)
+		existing_bleed.add_stacks(bleed_stacks_per_hit)
 	else
-		B.add_stacks(bleed_stacks_per_hit)
+		target.apply_status_effect(STATUS_EFFECT_SAWBLEED, bleed_stacks_per_hit)
 
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))

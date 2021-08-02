@@ -349,11 +349,10 @@
 	if(active)
 		icon_state = "[icon_state]_[saber_color]"
 		to_chat(user, span_notice("You extend the plastic blade with a quick flick of your wrist."))
-		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
+		playsound(user ? user : loc, 'sound/weapons/saberon.ogg', 20, TRUE)
 	else
-		icon_state = initial(icon_state)
 		to_chat(user, span_notice("You push the plastic blade back down into the handle."))
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
+		playsound(user ? user : loc, 'sound/weapons/saberoff.ogg', 20, TRUE)
 
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)

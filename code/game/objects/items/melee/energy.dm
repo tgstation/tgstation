@@ -62,22 +62,20 @@
 /obj/item/melee/energy/process()
 	open_flame()
 
-/obj/item/melee/energy/proc/after_transform(mob/user, active, give_feedback)
+/obj/item/melee/energy/proc/after_transform(mob/user, active)
 	if(active)
 		sharpness = active_sharpness
 		heat = active_heat
 		if(sword_color_icon)
 			icon_state = "[icon_state]_[sword_color_icon]"
 		START_PROCESSING(SSobj, src)
-
 	else
 		sharpness = initial(sharpness)
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
-	if(user && give_feedback)
-		to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
+	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 
 /obj/item/melee/energy/ignition_effect(atom/A, mob/user)

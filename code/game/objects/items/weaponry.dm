@@ -375,48 +375,35 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = FALSE
+	var/start_extended = FALSE
 
 /obj/item/switchblade/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
-	set_extended(extended)
+	AddComponent(/datum/component/transforming_weapon, \
+		start_transformed = start_extended, \
+		force_on = 20, \
+		throwforce_on = 23, \
+		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		attack_verb_on = active_attack_verbs, \
+		attack_verb_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
-/obj/item/switchblade/attack_self(mob/user)
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	set_extended(!extended)
-
-/obj/item/switchblade/update_icon_state()
-	icon_state = "[base_icon_state][extended ? "_ext" : ""]"
-	return ..()
-
-/obj/item/switchblade/proc/set_extended(new_extended)
-	extended = new_extended
-	update_icon_state()
-	if(extended)
-		force = 20
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
+/obj/item/switchblade/proc/after_transform(mob/user, active)
+	if(active)
 		sharpness = SHARP_EDGED
 	else
-		force = 3
-		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		attack_verb_continuous = list("stubs", "pokes")
-		attack_verb_simple = list("stub", "poke")
-		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = NONE
+	playsound(user ? user : loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/switchblade/extended
-	extended = TRUE
+	start_extended = TRUE
 
 /obj/item/phone
 	name = "red phone"

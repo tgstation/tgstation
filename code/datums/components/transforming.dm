@@ -23,6 +23,7 @@
 	COOLDOWN_DECLARE(transform_cooldown)
 
 /datum/component/transforming_weapon/Initialize(
+		start_transformed = FALSE,
 		transform_cooldown_time = null,
 		force_on = 30,
 		throwforce_on = 20,
@@ -36,6 +37,7 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.start_transformed = start_transformed
 	src.transform_cooldown_time = transform_cooldown_time
 	src.force_on = force_on
 	src.throwforce_on = throwforce_on
@@ -45,6 +47,9 @@
 		src.attack_verb_on = attack_verb_on
 	src.clumsy_check = clumsy_check
 	src.on_transform_callback = on_transform_callback
+
+	if(start_transformed)
+		do_transform_weapon(parent)
 
 /datum/component/transforming_weapon/RegisterWithParent()
 	var/obj/item/item_parent = parent
@@ -65,9 +70,9 @@
 	if(do_transform_weapon(source, user))
 		clumsy_transform_effect(user)
 
-/datum/component/transforming_weapon/proc/do_transform_weapon(obj/item/source, mob/user, suppress_message)
+/datum/component/transforming_weapon/proc/do_transform_weapon(obj/item/source, mob/user)
 	toggle_active(source)
-	on_transform_callback?.Invoke(user, active, suppress_message)
+	on_transform_callback?.Invoke(user, active)
 	if(isnum(transform_cooldown_time))
 		COOLDOWN_START(src, transform_cooldown, transform_cooldown_time)
 	if(user)
@@ -84,11 +89,12 @@
 /datum/component/transforming_weapon/proc/set_active(obj/item/source)
 	source.force = force_on + sharpened_bonus
 	source.throwforce = throwforce_on + sharpened_bonus
+	source.throw_speed = 4
 	if(hitsound_on)
 		source.hitsound = hitsound_on
-	source.throw_speed = 4
-	source.attack_verb_continuous = attack_verb_on
-	source.attack_verb_simple = attack_verb_on
+	if(attack_verb_on)
+		source.attack_verb_continuous = attack_verb_on
+		source.attack_verb_simple = attack_verb_on
 	source.icon_state = "[source.icon_state]_on"
 	source.w_class = w_class_on
 	if(source.embedding)
@@ -97,11 +103,12 @@
 /datum/component/transforming_weapon/proc/set_inactive(obj/item/source)
 	source.force = initial(source.force) + (source.get_sharpness() ? sharpened_bonus : 0)
 	source.throwforce = initial(source.throwforce) + (source.get_sharpness() ? sharpened_bonus : 0)
+	source.throw_speed = initial(source.throw_speed)
 	if(hitsound_on)
 		source.hitsound = initial(source.hitsound)
-	source.throw_speed = initial(source.throw_speed)
-	source.attack_verb_continuous = initial(source.attack_verb_continuous)
-	source.attack_verb_simple = initial(source.attack_verb_simple)
+	if(attack_verb_on)
+		source.attack_verb_continuous = initial(source.attack_verb_continuous)
+		source.attack_verb_simple = initial(source.attack_verb_simple)
 	source.icon_state = initial(source.icon_state)
 	source.w_class = initial(source.w_class)
 	if(source.embedding)

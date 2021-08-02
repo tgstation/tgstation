@@ -66,6 +66,8 @@
 	icon = 'icons/obj/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	attack_verb_continuous = list("hits", "taps", "pokes")
+	attack_verb_simple = list("hits", "taps", "pokes")
 	force = 0
 	throwforce = 0
 	hitsound = null
@@ -86,15 +88,15 @@
 		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
-/obj/item/melee/bananium_sword/proc/after_transform(mob/user, active, give_feedback)
+/obj/item/melee/bananium_sword/proc/after_transform(mob/user, active)
 	slipping = active
 	if(active)
 		icon_state = "[icon_state]_bananium"
 
-	if(user && give_feedback)
-		to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
-
+	to_chat(user, span_notice("[src] [active ? "is now active":"can now be concealed"]."))
+	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	set_light_on(active)
+	adjust_slipperiness()
 
 /* Adds or removes a slippery component, depending on whether the sword
  * is active or not.

@@ -403,8 +403,9 @@
 		to_chat(user, desc["local_off"])
 		inhand_icon_state = "" //no sprite for concealment even when in hand
 
-	playsound(user, on_sound, 50, TRUE)
-	add_fingerprint(user)
+	playsound(user ? user : loc, on_sound, 50, TRUE)
+	if(user)
+		add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
 	name = "contractor baton"
