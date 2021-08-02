@@ -61,10 +61,10 @@
 /mob/living/simple_animal/hostile/facehugger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	TryCoupling(hit_atom)
-	
-/mob/living/simple_animal/hostile/facehugger/Crossed(atom/movable/AM)
+
+/mob/living/simple_animal/hostile/facehugger/CanPass(atom/movable/mover, border_dir)
 	. = ..()
-	TryCoupling(AM)
+	TryCoupling(mover)
 
 /mob/living/simple_animal/hostile/facehugger/attack_hand(mob/user)
 	if(stat == DEAD || sterile)
