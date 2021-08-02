@@ -235,7 +235,7 @@
 
 	if(length(required_shells))
 		. += create_ui_notice("Supported Shells:", "green", "notes-medical")
-		for(var/atom/movable/shell in required_shells)
+		for(var/atom/movable/shell as anything in required_shells)
 			. += create_ui_notice(initial(shell.name), "green", "plus-square")
 
 	if(length(input_ports))

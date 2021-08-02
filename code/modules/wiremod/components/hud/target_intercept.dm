@@ -62,4 +62,3 @@
 /obj/item/circuit_component/target_intercept/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Target Interception Cooldown: [DisplayTimeText(intercept_cooldown)]", "orange", "stopwatch")
-	. += create_ui_notice("Only usable in BCI circuits", "orange", "info")
