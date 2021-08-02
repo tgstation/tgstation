@@ -15,7 +15,7 @@
 	var/obj/machinery/vending/vendor_pawn = new_pawn
 	vendor_pawn.tiltable = FALSE  //Not manually tiltable by hitting it anymore. We are now agressively doing it ourselves.
 	vendor_pawn.AddElement(/datum/element/waddling)
-	vendor_pawn.AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, vary = TRUE)
+	vendor_pawn.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, vary = TRUE)
 	vendor_pawn.squish_damage = 15
 	return ..() //Run parent at end
 
@@ -24,7 +24,7 @@
 	vendor_pawn.tiltable = TRUE
 	vendor_pawn.RemoveElement(/datum/element/waddling)
 	vendor_pawn.squish_damage = initial(vendor_pawn.squish_damage)
-	qdel(vendor_pawn.GetComponent(/datum/component/footstep))
+	RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, vary = TRUE)
 	return ..() //Run parent at end
 
 /datum/ai_controller/vending_machine/SelectBehaviors(delta_time)

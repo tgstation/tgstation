@@ -16,9 +16,6 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
-	/// The description of the component shown on the UI
-	var/display_desc = "A generic component"
-
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -52,6 +49,9 @@
 
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
+
+	// Defines which shells can accept this component. If set to null then all shells can use it.
+	var/required_shells = null
 
 /obj/item/circuit_component/Initialize()
 	. = ..()
@@ -211,6 +211,11 @@
 
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	if(required_shells && LAZYLEN(required_shells))
+		for(var/shell_type in required_shells)
+			if(istype(added_to, shell_type) || istype(added_to.loc, shell_type))
+				return TRUE
+		return FALSE
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
