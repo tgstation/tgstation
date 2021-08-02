@@ -75,7 +75,11 @@ export const PreferencesMenu = (props, context) => {
   }
 
   return (
-    <Window title="Character Preferences" width={920} height={770} scrollable>
+    <Window title={
+      CHARACTER_PREFERENCE_PAGES.has(currentPage)
+        ? "Character Preferences"
+        : "Game Preferences"
+    } width={920} height={770} scrollable>
       <Window.Content>
         <Stack vertical fill>
           {CHARACTER_PREFERENCE_PAGES.has(currentPage) && (
