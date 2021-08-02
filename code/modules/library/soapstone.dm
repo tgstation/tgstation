@@ -155,27 +155,40 @@ but only permanently removed with the curator's soapstone.
 /obj/structure/chisel_message/update_icon()
 	. = ..()
 
-	var/newcolor = COLOR_SOAPSTONE_BRONZE
+	var/newcolor = COLOR_SOAPSTONE_IRON
 	switch(like_keys.len - dislike_keys.len)
-		if(-INFINITY to 0)
+		if(-INFINITY to -1)
+			newcolor = COLOR_SOAPSTONE_PLASTIC
+		if(1 to 14)
 			newcolor = COLOR_SOAPSTONE_IRON
-			name = "[initial(name)]"
-		if(1 to 10)
+		if(15 to 29)
 			newcolor = COLOR_SOAPSTONE_BRONZE
-			name = "bronze [initial(name)]"
-		if(11 to 20)
+		if(30 to 44)
 			newcolor = COLOR_SOAPSTONE_SILVER
-			name = "silver [initial(name)]"
-		if(21 to 30)
+		if(45 to 59)
 			newcolor = COLOR_SOAPSTONE_GOLD
-			name = "gold [initial(name)]"
-		if(31 to INFINITY)
+		if(60 to INFINITY)
 			newcolor = COLOR_SOAPSTONE_DIAMOND
-			name = "diamond [initial(name)]"
 
 	add_atom_colour("[newcolor]", FIXED_COLOUR_PRIORITY)
 	set_light_color("[newcolor]")
 	set_light(1)
+
+/obj/structure/chisel_message/update_name()
+	switch(like_keys.len - dislike_keys.len)
+		if(-INFINITY to -1)
+			name = "[initial(name)]"
+		if(1 to 14)
+			name = "iron [initial(name)]"
+		if(15 to 29)
+			name = "bronze [initial(name)]"
+		if(30 to 44)
+			name = "silver [initial(name)]"
+		if(45 to 59)
+			name = "gold [initial(name)]"
+		if(60 to INFINITY)
+			name = "diamond [initial(name)]"
+	return ..()
 
 /obj/structure/chisel_message/proc/pack()
 	var/list/data = list()

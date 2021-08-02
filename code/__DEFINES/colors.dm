@@ -76,7 +76,8 @@
 #define COLOR_ORANGE_BROWN "#a9734f"
 
 //Color defines used by the soapstone (based on readability against grey tiles)
-#define COLOR_SOAPSTONE_IRON "#b2b2b2"
+#define COLOR_SOAPSTONE_PLASTIC "#b2b2b2"
+#define COLOR_SOAPSTONE_IRON "#a19d94"
 #define COLOR_SOAPSTONE_BRONZE "#FE8001"
 #define COLOR_SOAPSTONE_SILVER "#FFFFFF"
 #define COLOR_SOAPSTONE_GOLD "#FFD900"
