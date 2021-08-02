@@ -27,8 +27,7 @@
 	basic_mob_flags = DEL_ON_DEATH | STOP_MOVING_ON_PULL
 	faction = list("neutral")
 
-	stop_automated_movement_when_pulled = 0
-
+	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
 /mob/living/basic/cockroach/Initialize()
 	. = ..()
@@ -65,7 +64,8 @@
 	desc = "A... 0.9mm bullet casing? What?"
 	projectile_type = /obj/projectile/glockroachbullet
 
-/mob/living/simple_animal/hostile/cockroach/glockroach
+/*
+/mob/living/basic/cockroach/glockroach
 	name = "glockroach"
 	desc = "HOLY SHIT, THAT COCKROACH HAS A GUN!"
 	icon_state = "glockroach"
@@ -78,10 +78,9 @@
 	casingtype = /obj/item/ammo_casing/glockroach
 	ranged = TRUE
 	faction = list("hostile")
+*/
 
-
-
-/mob/living/simple_animal/hostile/cockroach/hauberoach
+/mob/living/basic/cockroach/hauberoach
 	name = "hauberoach"
 	desc = "Is that cockroach wearing a tiny yet immaculate replica 19th century Prussian spiked helmet? ...Is that a bad thing?"
 	icon_state = "hauberoach"
@@ -95,17 +94,14 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
-	squish_chance = 0 // manual squish if relevant
 
-/mob/living/simple_animal/hostile/cockroach/hauberoach/Initialize()
+/mob/living/basic/cockroach/hauberoach/Initialize()
 	. = ..()
 	AddElement(/datum/element/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
-
-/mob/living/simple_animal/hostile/cockroach/hauberoach/make_squashable()
-	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
+	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
-/mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
+/mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
@@ -116,6 +112,15 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(BB_TARGETTING_DATUM = new /datum/targetting_datum/basic())
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech,
+	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/cockroach,
 	/datum/ai_planning_subtree/simple_find_target,
 	/datum/ai_planning_subtree/simple_attack_target)
+
+
+/datum/ai_controller/basic_controller/cockroach/PerformIdleBehavior(delta_time)
+	. = ..()
+	var/mob/living/living_pawn = pawn
+
+	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
+		var/move_dir = pick(GLOB.alldirs)
+		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)

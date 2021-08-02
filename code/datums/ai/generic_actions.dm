@@ -257,7 +257,7 @@
 	if(!istype(living_pawn))
 		return
 	living_pawn.manual_emote(controller.blackboard[emote_to_perform_key])
-
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/perform_speech
 	var/speech_to_say_key
@@ -267,5 +267,6 @@
 	if(!istype(living_pawn))
 		return
 	living_pawn.say(controller.blackboard[speech_to_say_key], forced = "AI Controller")
+	finish_action(controller, TRUE)
 
 

@@ -1,8 +1,8 @@
 /datum/ai_behavior/basic_melee_attack
+	action_cooldown = 0.4
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
-	controller.
 	controller.current_movement_target =  controller.blackboard[hiding_location_key] || controller.blackboard[target_key] //Hiding location is priority
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
@@ -17,22 +17,18 @@
 		finish_action(controller, FALSE)
 		return
 
-	var/turf/T = get_turf(src)
+	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
 
-	var/target_distance = get_dist(basic_mob, target)
-
-	var/hiding_target = targetting_datum.find_hidden_mobs(basic_mob, target) //They're still hidden!
-
-	if(hiding_target && hiding_target != controller.blackboard[hiding_location_key]) //But not in the same place!
-		controller.blackboard[hiding_location_key] = hiding_target
+	controller.blackboard[hiding_location_key] = hiding_target
 
 	if(hiding_target) //Slap it!
-		MeleeAttack(hiding_target)
+		basic_mob.melee_attack(hiding_target)
 	else
-		MeleeAttack(target)
+		basic_mob.melee_attack(target)
+	finish_action(controller, TRUE)
 
 
-/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded)
+/datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
 	. = ..()
 	if(!succeeded)
 		controller.blackboard[target_key] = null

@@ -50,7 +50,7 @@
 
 /mob/living/basic/adjustStaminaLoss(amount, updating_health = FALSE, forced = FALSE)
 	if(forced)
-		staminaloss = max(0, min(max_staminaloss, staminaloss + amount))
+		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + amount))
 	else
-		staminaloss = max(0, min(max_staminaloss, staminaloss + (amount * damage_coeff[STAMINA])))
+		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + (amount * damage_coeff[STAMINA])))
 	update_stamina()

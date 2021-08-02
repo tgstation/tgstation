@@ -116,7 +116,7 @@
 	var/deathmessage = ""
 
 	///Played when someone punches the creature.
-	/// var/attacked_sound = "punch" This should be an element
+	var/attacked_sound = "punch" //This should be an element
 
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
@@ -153,7 +153,7 @@
 
 /mob/living/basic/death(gibbed)
 	. = ..()
-	if(del_on_death)
+	if(basic_mob_flags & DEL_ON_DEATH)
 		qdel(src)
 	else
 		health = 0
@@ -162,7 +162,8 @@
 			transform = transform.Turn(180)
 		set_density(FALSE)
 
-/mob/living/basic/hostile/proc/MeleeAttack(atom/target)
+/mob/living/basic/proc/melee_attack(atom/target)
+	src.face_atom(target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	var/result = target.attack_animal(src)

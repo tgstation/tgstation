@@ -116,6 +116,8 @@
 	#define EXAMINE_POSITION_BEFORE (1<<1)
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED (1<<0)
+//from base of atom/attack_basic_mob(): (/mob/user)
+#define COMSIG_ATOM_ATTACK_BASIC_MOB "attack_basic_mob"
 
 ///from base of [/atom/proc/update_appearance]: (updates)
 #define COMSIG_ATOM_UPDATE_APPEARANCE "atom_update_appearance"

@@ -62,4 +62,4 @@
 		gave_alert = TRUE
 
 	if(!gave_alert)
-		clear_alert("temp")
+		basic_mob.clear_alert("temp")

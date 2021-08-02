@@ -35,3 +35,5 @@
 			controller.AddBehavior(/datum/ai_behavior/perform_speech, pick(speak))
 
 /datum/ai_planning_subtree/random_speech/cockroach
+	speech_chance = 5
+	emote_hear = list("chitters")
