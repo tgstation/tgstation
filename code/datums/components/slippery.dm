@@ -42,14 +42,14 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Slip)
 
-/datum/component/slippery/InheritComponent(datum/component/slippery/C, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
-	if(C)
-		knockdown = C.knockdown_time
-		lube_flags = C.lube_flags
-		callback = C.callback
-		paralyze = C.paralyze_time
-		force_drop = C.force_drop_items
-		slot_whitelist = C.slot_whitelist
+/datum/component/slippery/InheritComponent(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
+	if(component)
+		knockdown = component.knockdown_time
+		lube_flags = component.lube_flags
+		callback = component.callback
+		paralyze = component.paralyze_time
+		force_drop = component.force_drop_items
+		slot_whitelist = component.slot_whitelist
 
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
