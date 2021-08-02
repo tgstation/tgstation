@@ -1,4 +1,4 @@
-//Note for this file: All the raw pastries should not have microwave results, use baking instead. All cooked products should not use baking, use a microwave.
+//Note for this file: All the raw pastries should not have microwave results, use baking instead. All cooked products can use baking, but should also support a microwave.
 
 /obj/item/food/dough
 	name = "dough"
@@ -40,6 +40,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
+	burns_in_oven = TRUE
 
 /obj/item/food/pizzabread/Initialize()
 	. = ..()
