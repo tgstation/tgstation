@@ -120,7 +120,7 @@
 			//Go all in
 			qdel(creation, force = TRUE)
 			//This will hold a ref to the last thing we process unless we set it to null
-			//Yes byond is fucking sin
+			//Yes byond is fucking sinful
 			creation = null
 
 		//There's a lot of stuff that either spawns stuff in on create, or removes stuff on destroy. Let's cut it all out so things are easier to deal with
