@@ -91,6 +91,7 @@
 
 /obj/item/food/pizza/meat/raw/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/meat, rand(70 SECONDS, 90 SECONDS), TRUE, TRUE)
+
 /obj/item/food/pizzaslice/meat
 	name = "meatpizza slice"
 	desc = "A nutritious slice of meatpizza."
