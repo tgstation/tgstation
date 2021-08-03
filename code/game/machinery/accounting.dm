@@ -29,6 +29,7 @@
 		RegisterSignal(inserted_id, COMSIG_PARENT_QDELETING, .proc/remove_card)
 		var/datum/bank_account/bank_account = new /datum/bank_account(inserted_id.registered_name)
 		inserted_id.registered_account = bank_account
+		bank_account.account_job = new /datum/job/unassigned()
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 		update_appearance()
 		return
