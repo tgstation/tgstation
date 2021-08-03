@@ -85,7 +85,7 @@
 	if(on_transform_callback)
 		on_transform_callback.Invoke(user, active)
 	else
-		default_transform_message(user)
+		default_transform_message(source, user)
 
 	if(isnum(transform_cooldown_time))
 		COOLDOWN_START(src, transform_cooldown, transform_cooldown_time)
@@ -93,9 +93,9 @@
 		source.add_fingerprint(user)
 	return TRUE
 
-/datum/component/transforming/proc/default_transform_message(mob/user)
-	balloon_alert(user, "[active ? "enabled" : "disabled"] [src]")
-	playsound(user ? user : parent.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+/datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
+	source.balloon_alert(user, "[active ? "enabled" : "disabled"] [src]")
+	playsound(user ? user : source.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /datum/component/transforming/proc/toggle_active(obj/item/source)
 	active = !active

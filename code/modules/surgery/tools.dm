@@ -264,7 +264,7 @@
 	. = ..()
 	AddComponent(/datum/component/transforming, force_on = force + 1, on_transform_callback = CALLBACK(src, .proc/after_transform))
 
-/obj/item/scalpel/advanced/proc/after_transform(mob/user, activate)
+/obj/item/scalpel/advanced/proc/after_transform(mob/user, active)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
 		set_light_range(2)
