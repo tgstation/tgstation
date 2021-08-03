@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Cultists can once again draw runes in lavaland mining station"

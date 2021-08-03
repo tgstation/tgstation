@@ -1,0 +1,92 @@
+2021-08-01:
+  SmArtKar:
+  - imageadd: Added new sprites and animations for module duplicator
+  ma44:
+  - rscadd: Weapon rechargers will now be more noticeable when it has finished recharging
+      something.
+2021-08-02:
+  Ghilker:
+  - bugfix: fixed issue where plasmaman clown and mime would die to the filtered plasma,
+      clown and mime masks no longer have filters roundstart
+  - qol: filters can be removed with rclick
+  Ghommie:
+  - bugfix: Fixed copies of stamped papers sharing the same `stamps` list.
+  - rscadd: People with the phobia of falling are now afraid of open space turfs.
+  Gurkenglas:
+  - qol: Circuit component descriptions and module names are now visible to the naked
+      eye.
+  InsaneRed:
+  - qol: Metastation's toxins has been reworked a bit to fit better with thermomachinery
+      and better piping
+  Jackraxxus:
+  - bugfix: The wisdom cow no longer spawns in space.
+  NamelessFairy:
+  - bugfix: Adds a missing wall to delta maint
+  Nari Harimoto:
+  - bugfix: Tram's RD telescreen can now view their dept cameras again
+  - bugfix: Delta and Meta RD offices now have a RD telescreen again
+  - bugfix: Delta science maint room no longer has a stray minisat camera
+  - bugfix: icebox science cameras now properly named and networked
+  - bugfix: removed stray purple tiles on walls in delta, removed a science camera
+      from a maintence room on delta, made it proper maint area
+  - bugfix: icebox xenobio slime consoles no longer have a unique network for them,
+      you may now use cerulean blueprints to use the slime consoles anywhere on the
+      station again
+  - bugfix: delta toxins room added its missing air alarm for the room itself, moved
+      the APC, removed a redundant second APC, toxins mix lab and toxins launch room
+      now share an APC and air alarm
+  - bugfix: trams toxins storage room now uses its correct area, added an APC to power
+      the room
+  Ryll/Shaps:
+  - qol: Adds a new preference for photosensitive players in the OOC preferences menu
+      to replace the bright white flash from things like flashes/flashbangs with a
+      solid black screen.
+  SmArtKar:
+  - qol: Servers now have USB ports
+  TheSmallBlue:
+  - bugfix: The outputs on the Launchpad USB component now work as they should.
+  TiviPlus:
+  - bugfix: riding offsets actually work now
+  Wayland-Smithy:
+  - qol: Improved the COMMS_KEY config documentation.
+  maxymax13:
+  - spellcheck: You no longer "accidently" shoot yourself spinning a gun
+  tf-4:
+  - bugfix: Clumsily hitting yourself with the classic baton now gives you the message
+      with the appropriate perspective
+  tralezab:
+  - bugfix: cannons lost their sprites in the last feature addition for them... now
+      they have those back!
+2021-08-03:
+  Fikou, sprites from /vg/:
+  - expansion: reinforced rock for mapping use
+  Ghommie:
+  - expansion: Picked up bees and mice can now fit in boxes.
+  Gurkenglas:
+  - expansion: Signals now fire a timestamp.
+  JohnFulpWillard:
+  - bugfix: Cultists using Twisted Construction on a Cyborg will no longer spawn 2
+      constructs.
+  KittyNoodle:
+  - bugfix: ethereal hair will now change with ethereal color without an external
+      update
+  SmArtKar:
+  - expansion: You can make BCI overlay and click interceptor circutry now!
+  - balance: BCI now has it's own research node.
+  - bugfix: You no longer can remove BCI core and actions from BCIs and insert them
+      into other circutry.
+  Thunder12345:
+  - code_imp: Removes (almost) all misc files from the clothing module
+  Watermelon914:
+  - admin: Adds admin components that allow admins to set variables, get variables,
+      call procs and execute sdql via circuits. To enable these components to function,
+      an admin needs to enable the admin_only variable on a circuit.
+  - qol: Adds more entity information to shell outputs to allow circuits to identify
+      who used the shell.
+  - expansion: Adds list literals.
+  - bugfix: CTF will no longer delete objects on CTF maps that shouldn't be deleted
+      and it'll also successfully regenerate the map once a CTF round ends.
+  - bugfix: Fixed phantom slipping caused by synthesized banana peels.
+  - bugfix: Fixed the metabolism unit test randomly failing because of neurowhine
+  carshalash:
+  - bugfix: Eggs now work when cracked into glasses

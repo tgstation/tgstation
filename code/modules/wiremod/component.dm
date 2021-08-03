@@ -16,9 +16,6 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
-	/// The description of the component shown on the UI
-	var/display_desc = "A generic component"
-
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
@@ -52,6 +49,9 @@
 
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
+
+	// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
+	var/required_shells = null
 
 /obj/item/circuit_component/Initialize()
 	. = ..()
@@ -139,9 +139,12 @@
  * * type - The datatype it handles
  * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null)
+/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null, index = null)
 	var/datum/port/input/input_port = new(src, name, type, trigger, default)
-	input_ports += input_port
+	if(index)
+		input_ports.Insert(index, input_port)
+	else
+		input_ports += input_port
 	if(parent)
 		SStgui.update_uis(parent)
 	return input_port
@@ -194,9 +197,14 @@
 	if(!parent?.on)
 		return TRUE
 
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	if(!cell?.use(power_usage_per_input))
-		return TRUE
+	if(!parent.admin_only)
+		if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has set the admin_only variable to TRUE!")
+			return TRUE
+
+		var/obj/item/stock_parts/cell/cell = parent.get_cell()
+		if(!cell?.use(power_usage_per_input))
+			return TRUE
 
 	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE
@@ -225,6 +233,10 @@
 	if(!removable)
 		. += create_ui_notice("Unremovable", "red", "lock")
 
+	if(length(required_shells))
+		. += create_ui_notice("Supported Shells:", "green", "notes-medical")
+		for(var/atom/movable/shell as anything in required_shells)
+			. += create_ui_notice(initial(shell.name), "green", "plus-square")
 
 	if(length(input_ports))
 		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")

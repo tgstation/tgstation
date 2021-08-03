@@ -240,6 +240,9 @@
 /obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/air_alarm,
+	))
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -883,6 +886,87 @@
 			I.take_damage(I.max_integrity * 0.5, sound_effect=FALSE)
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
+
+/obj/item/circuit_component/air_alarm
+	display_name = "Air Alarm"
+	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
+
+	var/datum/port/input/min_2
+	var/datum/port/input/min_1
+	var/datum/port/input/max_1
+	var/datum/port/input/max_2
+
+	var/datum/port/input/request_data
+
+	var/datum/port/output/pressure
+	var/datum/port/output/temperature
+	var/datum/port/output/gas_amount
+
+	var/obj/machinery/airalarm/connected_alarm
+	var/list/options_map
+
+/obj/item/circuit_component/air_alarm/Initialize()
+	. = ..()
+	min_2 = add_input_port("Min 2", PORT_TYPE_NUMBER)
+	min_1 = add_input_port("Min 1", PORT_TYPE_NUMBER)
+	max_1 = add_input_port("Max 1", PORT_TYPE_NUMBER)
+	max_2 = add_input_port("Max 2", PORT_TYPE_NUMBER)
+	request_data = add_input_port("Request Atmosphere Data", PORT_TYPE_SIGNAL)
+
+	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
+	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
+	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/air_alarm/populate_options()
+	var/static/list/component_options
+	var/static/list/options_to_key
+
+	if(!component_options)
+		component_options = list(
+			"Pressure",
+			"Temperature"
+		)
+		options_to_key = list(
+			"Pressure" = "pressure",
+			"Temperature" = "temperature"
+		)
+
+		for(var/gas_id in GLOB.meta_gas_info)
+			component_options.Add(GLOB.meta_gas_info[gas_id][META_GAS_NAME])
+			options_to_key[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
+
+	options = component_options
+	options_map = options_to_key
+
+/obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/airalarm))
+		connected_alarm = parent
+
+/obj/item/circuit_component/air_alarm/unregister_usb_parent(atom/movable/parent)
+	connected_alarm = null
+	return ..()
+
+/obj/item/circuit_component/air_alarm/input_received(datum/port/input/port)
+	. = ..()
+
+	if(. || !connected_alarm || connected_alarm.locked)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(request_data, port))
+		var/turf/alarm_turf = get_turf(connected_alarm)
+		var/datum/gas_mixture/environment = alarm_turf.return_air()
+		pressure.set_output(round(environment.return_pressure()))
+		temperature.set_output(round(environment.temperature))
+		if(ispath(options_map[current_option]))
+			gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
+		return
+
+	var/datum/tlv/settings = connected_alarm.TLV[options_map[current_option]]
+	settings.min2 = min_2
+	settings.min1 = min_1
+	settings.max1 = max_1
+	settings.max2 = max_2
 
 #undef AALARM_MODE_SCRUBBING
 #undef AALARM_MODE_VENTING
