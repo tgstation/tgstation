@@ -48,7 +48,9 @@
 
 /datum/component/connect_loc_behalf/proc/handle_tracked_qdel()
 	SIGNAL_HANDLER
-	qdel(src)
+	// We don't qdel ourself here because it's likely something is holding a reference to us.
+	// We can get cleaned up when whatever is holding a reference to us gets deleted.
+	unregister_signals()
 
 /datum/component/connect_loc_behalf/proc/update_signals()
 	unregister_signals()

@@ -41,10 +41,9 @@
 		src.slot_whitelist = slot_whitelist
 	if(ismovable(parent))
 		connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
-
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		if(isitem(parent))
+			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Slip)
 
@@ -119,7 +118,7 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
-	if(holder)
+	if(holder_connect_loc_behalf)
 		QDEL_NULL(holder_connect_loc_behalf)
 		holder = null
 
@@ -138,7 +137,7 @@
 
 /datum/component/slippery/UnregisterFromParent()
 	. = ..()
-	if(holder)
+	if(holder_connect_loc_behalf)
 		QDEL_NULL(holder_connect_loc_behalf)
 	QDEL_NULL(connect_loc_behalf)
 
