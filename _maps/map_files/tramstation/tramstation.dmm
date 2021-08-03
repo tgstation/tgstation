@@ -29286,6 +29286,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-right"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "hmM" = (
@@ -32166,6 +32169,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "ixK" = (
@@ -41215,6 +41221,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "lOl" = (
@@ -45976,6 +45985,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-right"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "nPQ" = (
@@ -46782,6 +46794,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-left"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "ohf" = (
@@ -54145,6 +54160,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-right"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "raw" = (
@@ -55813,6 +55831,20 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
+"rHC" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge Access";
+	req_access_txt = "19"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-right"
+	},
+/turf/open/floor/iron/dark,
+/area/command/bridge)
 "rHD" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -60040,6 +60072,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycleId = "bridge-left"
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -172210,7 +172245,7 @@ ydp
 cun
 vGu
 vGu
-lOg
+rHC
 hmH
 vGu
 fsN
