@@ -834,3 +834,86 @@
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
+
+///Cultural sodas
+
+///Soda bottle doesn't mean anything yet, I plan on adding a bottle cap function to the bottles.
+
+///Humans love spaceraid///
+/obj/item/reagent_containers/food/drinks/soda_bottle/space_raid
+	name = "Spaceraid"
+	desc = "A legendary sports drink that traces it's roots to an American football game of the Terra Raiders and the Cottonball Shocks. Non-Humans still dispute the Raiders victory."
+	icon_state = "space_raid"
+	base_icon_state = "space_raid"
+	list_reagents = list(/datum/reagent/consumable/space_raid = 35)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_bottle/space_raid/update_icon_state()
+	. = ..()
+	if(!reagents.total_volume)
+		icon_state = "space_raid_empty"
+
+///Lizards love Rattsi///
+/obj/item/reagent_containers/food/drinks/soda_bottle/rattsi
+	name = "Rattsi"
+	desc = "A health tonic turned soft drink derived from carefully prepared rodents. It's immortality popular with Lizardpeople"
+	icon_state = "rattsi"
+	list_reagents = list(/datum/reagent/consumable/rattsi = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_bottle/rattsi/update_icon_state()
+	. = ..()
+	if(!reagents.total_volume)
+		icon_state = "rattsi_empty"
+
+///Felinids love Spring Nya///
+/obj/item/reagent_containers/food/drinks/soda_bottle/spring_nya
+	name = "Spring Nya"
+	desc = "A concoction of carbonated milk and sugar that is really popular among cat-people in Space Japan"
+	icon_state = "spring_nya"
+	list_reagents = list(/datum/reagent/consumable/spring_nya = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_bottle/spring_nya/update_icon_state()
+	. = ..()
+	if(!reagents.total_volume)
+		icon_state = "spring_nya_empty"
+
+///Moths love Fuzznet///
+/obj/item/reagent_containers/food/drinks/soda_bottle/fuzznet
+	name = "Fuzznet"
+	desc = "A type of tea created from cotton plants. It's the staple drink of celebrations and festivals in Moth cultures"
+	icon_state = "fuzznet"
+	list_reagents = list(/datum/reagent/consumable/fuzznet = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_bottle/fuzznet/update_icon_state()
+	. = ..()
+	if(!reagents.total_volume)
+		icon_state = "fuzznet_empty"
+
+///Plasmamen love Plazz///
+/obj/item/reagent_containers/food/drinks/soda_bottle/plazz
+	name = "Plazz"
+	desc = "A heady beverage made primarily out of plasma, it’s said that Plasmamen drink concerning amounts of Plazz"
+	icon_state = "plazz"
+	list_reagents = list(/datum/reagent/consumable/plazz = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_bottle/plazz/update_icon_state()
+	. = ..()
+	if(!reagents.total_volume)
+		icon_state = "plazz_empty"
+
+///Ethereals love Electro///
+/obj/item/reagent_containers/food/drinks/soda_bottle/electro
+	name = "Electro"
+	desc = "A glow in the dark juice drink that had quenched and invigorated ethereals for generations"
+	icon_state = "electro"
+	list_reagents = list(/datum/reagent/consumable/electro = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_bottle/electro/update_icon_state()
+	. = ..()
+	if(!reagents.total_volume)
+		icon_state = "electro_empty"

@@ -249,3 +249,35 @@
 	description = "<span class='nicegreen'>This taste seems oddly nostalgic...</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
+
+//cultural sodas
+
+/datum/mood_event/space_raid
+	description = "<span class='nicegreen'>I feel like a champion running back drinking this! GO TERRA!</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/rattsi
+	description = "<span class='nicegreen'>mmmm, the delicious taste of Tizira in a bottle.</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/spring_nya
+	description = "<span class='nicegreen'>Nya restored! I'm ready for more cat-related antics!</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/fuzznet
+	description = "<span class='nicegreen'>I feel more settled down than I usually am</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/electro
+	description = "<span class='nicegreen'>I just drank some... Electro, very nice.</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/plazz
+	description = "<span class='nicegreen'>This taste is a triumph to the Plasmapeople!</span>\n"
+	mood_change = 3
+	timeout = 3 MINUTES

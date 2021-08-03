@@ -1,6 +1,6 @@
 
 /obj/machinery/vending/cola
-	name = "\improper Robust Softdrinks"
+	name = "\improper Robust Softdrinks" //adds limited cultural sodas to soda machines in general
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
 	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
@@ -14,13 +14,19 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
 					/obj/item/reagent_containers/food/drinks/waterbottle = 10,
-					/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3)
+					/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/rattsi = 3,
+		            /obj/item/reagent_containers/food/drinks/soda_bottle/space_raid = 3,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/spring_nya = 3,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/electro = 3,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/plazz = 3,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/fuzznet = 3,)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
 		              /obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
 		           /obj/item/reagent_containers/food/drinks/soda_cans/air = 1,
 		           /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1,
-		           /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1)
+		           /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,)
 	refill_canister = /obj/item/vending_refill/cola
 	default_price = PAYCHECK_ASSISTANT * 0.7
 	extra_price = PAYCHECK_MEDIUM
@@ -93,4 +99,21 @@
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
 	light_mask = "shamblers-light-mask"
+	light_color = COLOR_MOSTLY_PURE_PINK
+
+//Cultural Sodas unique vending machine
+
+/obj/machinery/vending/cola/exoticdrink
+	name = "\improper Exotic Drink Vendor"
+	desc = "A bizarre soda machine manufactured in Space Japan, it's got everything!"
+	icon_state = "exoticdrink"
+	products = list(/obj/item/reagent_containers/food/drinks/soda_bottle/rattsi = 10,
+		            /obj/item/reagent_containers/food/drinks/soda_bottle/space_raid = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/spring_nya = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/electro = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/plazz = 10,
+					/obj/item/reagent_containers/food/drinks/soda_bottle/fuzznet = 10,)
+	product_slogans = "Drinks from across the galaxy!"
+	product_ads = "Exotic drinks! Your one stop shop for refreshment that is literally out of this world!"
+	light_mask = "red_cola-light-mask"
 	light_color = COLOR_MOSTLY_PURE_PINK
