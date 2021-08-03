@@ -308,6 +308,9 @@
 	show_controls(user)
 
 /mob/living/simple_animal/bot/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	unlock_with_id(user)

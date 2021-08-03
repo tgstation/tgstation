@@ -43,7 +43,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7 //wireless control range
+	interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
