@@ -2,6 +2,9 @@
 	var/list/datum/disease/diseases //make sure these are the static, non-processing versions!
 	var/expire_time
 	var/required_clean_types = CLEAN_TYPE_DISEASE
+	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
+	var/datum/component/connect_loc_behalf
+
 
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
 	if(islist(_diseases))
@@ -18,7 +21,7 @@
 	var/static/list/disease_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
 	)
-	AddElement(/datum/element/connect_loc_behalf, parent, disease_connections)
+	connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)

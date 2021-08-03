@@ -8,13 +8,16 @@
 		COMSIG_ATOM_ENTERED = .proc/join_swarm
 	)
 
+	/// The connect_loc_behalf component for handling movement behaviour onto a turf.
+	var/datum/component/connect_loc_behalf
+
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
-	AddElement(/datum/element/connect_loc_behalf, parent, swarming_loc_connections)
+	connect_loc_behalf = AddComponent(/datum/component/connect_loc_behalf, parent, swarming_loc_connections)
 
 /datum/component/swarming/Destroy()
 	for(var/other in swarm_members)
