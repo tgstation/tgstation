@@ -12,6 +12,8 @@
 	var/datum/port/input/option/bar_overlay_options
 	var/datum/port/input/bar_number
 
+	var/overlay_limit = 10
+
 /obj/item/circuit_component/object_overlay/bar/Initialize()
 	. = ..()
 	bar_number = add_input_port("Number", PORT_TYPE_NUMBER)
@@ -25,7 +27,7 @@
 	options_map = component_options_bar
 
 /obj/item/circuit_component/object_overlay/bar/show_to_owner(atom/target_atom, mob/living/owner)
-	if(LAZYLEN(active_overlays) >= BAR_OVERLAY_LIMIT)
+	if(LAZYLEN(active_overlays) >= overlay_limit)
 		return
 
 	var/current_option = bar_overlay_options.input_value

@@ -117,7 +117,6 @@
 #define COMP_PROC_OBJECT "Object"
 
 // Bar overlay component
-#define BAR_OVERLAY_LIMIT 10
 #define COMP_BAR_OVERLAY_VERTICAL "Vertical"
 #define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
 
