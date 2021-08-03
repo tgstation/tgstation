@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Cultists using Twisted Construction on a Cyborg will no longer spawn 2 constructs."

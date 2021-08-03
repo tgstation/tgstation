@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "Fixed rad collectors ignoring letting anyone (un)lock them with their ID."

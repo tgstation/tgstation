@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug preventing the Plexagon HR Core app from de-prioritising jobs when 5 or more jobs were prioritised."

@@ -50,8 +50,8 @@
 
 // Components
 
-/// The value that is sent whenever a component is simply sending a signal. This can be anything.
-#define COMPONENT_SIGNAL 1
+/// The value that is sent whenever a component is simply sending a signal. This can be anything, and is currently the seconds since roundstart.
+#define COMPONENT_SIGNAL (world.time / (1 SECONDS))
 
 // Comparison defines
 #define COMP_COMPARISON_EQUAL "="
@@ -117,7 +117,6 @@
 #define COMP_PROC_OBJECT "Object"
 
 // Bar overlay component
-#define BAR_OVERLAY_LIMIT 10
 #define COMP_BAR_OVERLAY_VERTICAL "Vertical"
 #define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
 

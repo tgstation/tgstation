@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - bugfix: "Anti-tider mister is no longer invinsible inhand"
