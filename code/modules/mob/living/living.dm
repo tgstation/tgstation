@@ -1174,8 +1174,9 @@
 	// We then want to restore this original body through the shapeshift holder itself.
 	var/obj/shapeshift_holder/shapeshift = locate() in src
 	if(shapeshift)
-		src = shapeshift.stored
 		shapeshift.restore()
+		if(shapeshift.stored != src) // To reduce the risk of an infinite loop.
+			return shapeshift.stored.wabbajack(randomize)
 
 	if(!istype(src) || stat == DEAD || notransform || (GODMODE & status_flags))
 		return
