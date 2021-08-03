@@ -35,6 +35,8 @@
 		// Prevents appear as the individual component if there is a shell.
 		if(shell)
 			shell.say(message.input_value)
+			shell.log_talk(message.input_value, LOG_SAY, tag="circuit speech")
 		else
 			say(message.input_value)
+			log_talk(message.input_value, LOG_SAY, tag="circuit speech")
 		TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SPEECH, speech_cooldown)
