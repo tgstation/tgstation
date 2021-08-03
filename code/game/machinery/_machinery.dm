@@ -370,6 +370,11 @@
 		if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN) && !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
+		if(iscyborg(user))
+			var/mob/living/silicon/robot/cyborg = user
+			if(!cyborg.can_interact_with(src))
+				return FALSE //cyborgs dont get unlimited range
+
 		return TRUE //silicons don't care about petty mortal concerns like needing to be next to a machine to use it
 
 	if(living_user.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
