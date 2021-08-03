@@ -145,6 +145,7 @@
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "syndicate"
 	strip_delay = 60
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/mask/gas/clown_hat
