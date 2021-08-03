@@ -106,7 +106,9 @@
  * Polymorphs the pai into a random holoform
  */
 /mob/living/silicon/pai/wabbajack()
-	var/holochassis = pick(possible_chassis)
+	if(length(possible_chassis) < 2)
+		return
+	var/holochassis = pick(possible_chassis - chassis)
 	set_holochassis(holochassis)
 	to_chat(src, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
 
