@@ -8,12 +8,8 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
+	storage_max_items = 1
 	var/title = "book"
-
-/obj/item/storage/book/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, span_notice("The pages of [title] have been cut out!"))

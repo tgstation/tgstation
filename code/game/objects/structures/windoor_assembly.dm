@@ -318,7 +318,7 @@
 
 
 
-/obj/structure/windoor_assembly/ComponentInitialize()
+/obj/structure/windoor_assembly/Initialize(mapload)
 	. = ..()
 	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS
 	AddComponent(/datum/component/simple_rotation, rotation_flags, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))

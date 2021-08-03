@@ -567,26 +567,16 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = INDESTRUCTIBLE
 
-/obj/item/shared_storage/red
-	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
-
-/obj/item/shared_storage/red/Initialize()
+/obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
-	STR.storage_max_combined_w_class = 15
-	storage_max_items = 21
-	new /obj/item/shared_storage/blue(drop_location(), STR)
+	var/datum/component/storage/storage_master = AddComponent(/datum/component/storage/concrete, WEIGHT_CLASS_NORMAL, 15, 21)
+	new /obj/item/shared_storage/blue(drop_location(), storage_master)
 
 /obj/item/shared_storage/blue/Initialize(mapload, datum/component/storage/concrete/master)
 	. = ..()
 	if(!istype(master))
 		return INITIALIZE_HINT_QDEL
-	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
-	STR.storage_max_combined_w_class = 15
-	storage_max_items = 21
+	AddComponent(/datum/component/storage, master)
 
 //Book of Babel
 

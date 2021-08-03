@@ -33,7 +33,7 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
-/obj/item/assembly/flash/ComponentInitialize()
+/obj/item/assembly/flash/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

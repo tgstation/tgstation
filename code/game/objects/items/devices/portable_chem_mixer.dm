@@ -10,7 +10,6 @@
 	custom_price = PAYCHECK_MEDIUM * 10
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-	component_type = /datum/component/storage/concrete/portable_chem_mixer
 	storage_max_combined_w_class = 200
 	storage_max_items = 50
 	storage_holdables = list(list(

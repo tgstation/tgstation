@@ -70,3 +70,10 @@
 /datum/component/storage/concrete/stack/ore
 	max_combined_stack_amount = 50
 	allow_quick_empty = TRUE
+
+/datum/component/storage/concrete/stack/sheetsnatcher
+	allow_quick_empty = TRUE
+	max_combined_stack_amount = 300
+
+/datum/component/storage/concrete/stack/sheetsnatcher/borg
+	max_combined_stack_amount = 500

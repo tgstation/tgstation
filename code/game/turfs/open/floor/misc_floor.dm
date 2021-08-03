@@ -208,7 +208,7 @@
 	. = ..()
 	color = null
 
-/turf/open/floor/plating/rust/ComponentInitialize()
+/turf/open/floor/plating/rust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rust)
 

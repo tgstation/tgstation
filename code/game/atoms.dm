@@ -266,10 +266,6 @@
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
 
-/// Put your [AddComponent] calls here
-/atom/proc/ComponentInitialize()
-	return
-
 /**
  * Top level of the destroy chain for most atoms
  *

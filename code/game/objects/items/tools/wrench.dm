@@ -89,7 +89,7 @@
 	toolspeed = null
 	var/on = FALSE
 
-/obj/item/wrench/combat/ComponentInitialize()
+/obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

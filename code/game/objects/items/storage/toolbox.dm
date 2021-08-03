@@ -157,7 +157,7 @@
 	throwforce = 18
 	material_flags = NONE
 
-/obj/item/storage/toolbox/syndicate/ComponentInitialize()
+/obj/item/storage/toolbox/syndicate/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.silent = TRUE
@@ -194,12 +194,8 @@
 	inhand_icon_state = "artistic_toolbox"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
-
-/obj/item/storage/toolbox/artistic/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_combined_w_class = 20
-	STR.storage_max_items = 10
+	storage_max_combined_w_class = 20
+	storage_max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
@@ -253,11 +249,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	has_latches = FALSE
 
-/obj/item/storage/toolbox/infiltrator/ComponentInitialize()
+/obj/item/storage/toolbox/infiltrator/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_items = 10
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_items = 10
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,

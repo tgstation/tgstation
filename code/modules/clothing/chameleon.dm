@@ -659,7 +659,7 @@
 	chameleon_action.chameleon_name = "Belt"
 	chameleon_action.initialize_disguises()
 
-/obj/item/storage/belt/chameleon/ComponentInitialize()
+/obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.silent = TRUE

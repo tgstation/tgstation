@@ -60,12 +60,12 @@
 	inhand_icon_state = "firstaid"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
-/obj/item/storage/firstaid/medical/ComponentInitialize()
+/obj/item/storage/firstaid/medical/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	STR.storage_max_items = 12
-	STR.storage_max_combined_w_class = 24
+	storage_max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
+	storage_max_items = 12
+	storage_max_combined_w_class = 24
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -274,10 +274,7 @@
 	icon_state = "bezerk"
 	damagetype_healed = "all"
 
-/obj/item/storage/firstaid/tactical/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
@@ -333,7 +330,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/pill_bottle/ComponentInitialize()
+/obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
@@ -543,11 +540,11 @@
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
-/obj/item/storage/organbox/ComponentInitialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
-	STR.storage_max_combined_w_class = 21
+	storage_max_w_class = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
+	storage_max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,

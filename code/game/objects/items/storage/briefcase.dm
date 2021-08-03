@@ -14,13 +14,12 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
-	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
 
-/obj/item/storage/briefcase/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
-	STR.storage_max_combined_w_class = 21
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_combined_w_class = 21
+
+	//path of the folder spawned in populatecontents
+	var/folder_path = /obj/item/folder
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)

@@ -12,6 +12,12 @@
 // -----------------------------
 /obj/item/storage/secure
 	name = "secstorage"
+	w_class = WEIGHT_CLASS_NORMAL
+	desc = "This shouldn't exist. If it does, create an issue report."
+
+	storage_max_w_class = WEIGHT_CLASS_SMALL
+	storage_max_combined_w_class = 14
+
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_opened = "secure0"
@@ -22,14 +28,6 @@
 	var/l_hacking = FALSE
 	var/open = FALSE
 	var/can_hack_open = TRUE
-	w_class = WEIGHT_CLASS_NORMAL
-	desc = "This shouldn't exist. If it does, create an issue report."
-
-/obj/item/storage/secure/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_SMALL
-	STR.storage_max_combined_w_class = 14
 
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
@@ -134,15 +132,12 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 
+	storage_max_combined_w_class = 21
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
+
 /obj/item/storage/secure/briefcase/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
-
-/obj/item/storage/secure/briefcase/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_combined_w_class = 21
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/secure/briefcase/syndie
@@ -150,8 +145,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i = 0, i < STR.storage_max_items - 2, i++)
+	for(var/i = 0, i < storage_max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
 
@@ -187,11 +181,11 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/item/storage/secure/safe/ComponentInitialize()
+/obj/item/storage/secure/safe/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
-	STR.storage_max_w_class = 8 //??
+	storage_max_w_class = 8 //??
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)

@@ -63,7 +63,7 @@
 	inhand_icon_state = "rapid"
 	transfer_prints = TRUE
 
-/obj/item/clothing/gloves/rapid/ComponentInitialize()
+/obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 

@@ -464,7 +464,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
-/obj/item/melee/baton/abductor/ComponentInitialize()
+/obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
@@ -671,7 +671,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 	make_syndie()
 
-/obj/item/radio/headset/abductor/ComponentInitialize()
+/obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 

@@ -13,7 +13,7 @@
 	if(always_noslip)
 		clothing_flags |= NOSLIP
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/ComponentInitialize()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 100 * MINERAL_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, allowed_items=/obj/item/stack)

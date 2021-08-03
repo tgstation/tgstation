@@ -16,11 +16,11 @@
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
-/obj/item/storage/belt/holster/ComponentInitialize()
+/obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_items = 1
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_items = 1
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
@@ -34,11 +34,11 @@
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
 
-/obj/item/storage/belt/holster/detective/ComponentInitialize()
+/obj/item/storage/belt/holster/detective/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_items = 3
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_items = 3
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
@@ -90,7 +90,7 @@
 	chameleon_action.chameleon_name = "Belt"
 	chameleon_action.initialize_disguises()
 
-/obj/item/storage/belt/holster/chameleon/ComponentInitialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.silent = TRUE
@@ -105,11 +105,11 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/storage/belt/holster/chameleon/ComponentInitialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_items = 2
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_items = 2
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
@@ -135,11 +135,11 @@
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/holster/nukie/ComponentInitialize()
+/obj/item/storage/belt/holster/nukie/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_items = 2
-	STR.storage_max_w_class = WEIGHT_CLASS_BULKY
+	storage_max_items = 2
+	storage_max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.

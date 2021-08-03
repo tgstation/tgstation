@@ -24,7 +24,7 @@
 	wound_bonus = -15
 	bare_wound_bonus = 15
 
-/obj/item/spear/ComponentInitialize()
+/obj/item/spear/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
@@ -65,7 +65,7 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	set_explosive(new /obj/item/grenade/iedcasing/spawned()) //For admin-spawned explosive lances
 
-/obj/item/spear/explosive/ComponentInitialize()
+/obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
 
@@ -144,7 +144,7 @@
 	attack_verb_simple = list("gore")
 	force=15
 
-/obj/item/spear/grey_tide/ComponentInitialize()
+/obj/item/spear/grey_tide/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_wielded="[icon_prefix]1")
 
@@ -176,6 +176,6 @@
 	throwforce = 22
 	armour_penetration = 15 //Enhanced armor piercing
 
-/obj/item/spear/bonespear/ComponentInitialize()
+/obj/item/spear/bonespear/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="[icon_prefix]1")

@@ -50,7 +50,7 @@
 	. = ..()
 	create_reagents(10)
 
-/obj/item/toy/waterballoon/ComponentInitialize()
+/obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

@@ -267,18 +267,15 @@
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/mail/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.storage_max_w_class = WEIGHT_CLASS_NORMAL
-	storage.storage_max_combined_w_class = 42
-	storage.storage_max_items = 21
-	storage.display_numerical_stacking = FALSE
-	storage.set_holdable(list(
+	component_type = /datum/component/storage/concrete/mail
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_combined_w_class = 42
+	storage_max_items = 21
+	storage_holdables = list(list(
 		/obj/item/mail,
 		/obj/item/small_delivery,
-		/obj/item/paper
-	))
+		/obj/item/paper,
+	), null)
 
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"

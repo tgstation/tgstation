@@ -75,9 +75,6 @@
 /obj/item/extinguisher/Initialize()
 	. = ..()
 	refill()
-
-/obj/item/extinguisher/ComponentInitialize()
-	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 

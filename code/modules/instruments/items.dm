@@ -86,7 +86,7 @@
 	custom_price = PAYCHECK_ASSISTANT * 2.5
 	instrument_range = 1
 
-/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+/obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_SONG_START, .proc/start_playing)

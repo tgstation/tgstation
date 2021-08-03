@@ -83,7 +83,7 @@
 	. = ..()
 	color = null
 
-/turf/closed/wall/rust/ComponentInitialize()
+/turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rust)
 
@@ -96,7 +96,7 @@
 	. = ..()
 	color = null
 
-/turf/closed/wall/r_wall/ComponentInitialize()
+/turf/closed/wall/r_wall/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rust)
 

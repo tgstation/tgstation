@@ -49,7 +49,7 @@
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
 
-/obj/item/weldingtool/ComponentInitialize()
+/obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddElement(/datum/element/tool_flash, light_range)

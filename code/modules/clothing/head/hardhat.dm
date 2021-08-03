@@ -21,7 +21,7 @@
 	var/on = FALSE
 
 
-/obj/item/clothing/head/hardhat/ComponentInitialize()
+/obj/item/clothing/head/hardhat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

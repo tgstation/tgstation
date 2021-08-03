@@ -35,9 +35,15 @@
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/dualsaber/ComponentInitialize()
+/obj/item/dualsaber/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=force, force_wielded=two_hand_force, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+	AddComponent(\
+		/datum/component/two_handed,\
+		force_unwielded = force,\
+		force_wielded = two_hand_force,\
+		wieldsound = 'sound/weapons/saberon.ogg',\
+		unwieldsound = 'sound/weapons/saberoff.ogg'\
+	)
 
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.

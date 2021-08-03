@@ -21,12 +21,12 @@
 	. = ..()
 	update_appearance()
 
-/obj/item/storage/cans/ComponentInitialize()
+/obj/item/storage/cans/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_SMALL
-	STR.storage_max_combined_w_class = 12
-	STR.storage_max_items = 6
+	storage_max_w_class = WEIGHT_CLASS_SMALL
+	storage_max_combined_w_class = 12
+	storage_max_items = 6
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food/drinks/soda_cans,
 		/obj/item/reagent_containers/food/drinks/beer,

@@ -26,7 +26,7 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddElement(/datum/element/kneejerk)
 
-/obj/item/singularityhammer/ComponentInitialize()
+/obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
 
@@ -106,7 +106,7 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
-/obj/item/mjollnir/ComponentInitialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound="sparks")
 

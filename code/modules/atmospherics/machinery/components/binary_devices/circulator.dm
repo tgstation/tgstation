@@ -25,7 +25,7 @@
 /obj/machinery/atmospherics/components/binary/circulator/cold
 	mode = CIRCULATOR_COLD
 
-/obj/machinery/atmospherics/components/binary/circulator/ComponentInitialize()
+/obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 

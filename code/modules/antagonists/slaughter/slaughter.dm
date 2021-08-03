@@ -156,7 +156,7 @@
 	icon_state = "demon_heart-on"
 	decay_factor = 0
 
-/obj/item/organ/heart/demon/ComponentInitialize()
+/obj/item/organ/heart/demon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 

@@ -18,7 +18,7 @@
 	else
 		return ..()
 
-/obj/structure/ore_box/ComponentInitialize()
+/obj/structure/ore_box/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 

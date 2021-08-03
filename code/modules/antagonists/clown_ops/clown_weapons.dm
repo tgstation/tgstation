@@ -203,7 +203,7 @@
 		to_chat(loc, span_danger("[src] begins to beep."))
 	bomb.arm_grenade(loc, null, FALSE)
 
-/obj/item/grown/bananapeel/bombanana/ComponentInitialize()
+/obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
 

@@ -227,7 +227,7 @@
 	max_integrity = 300
 	light_range = 2
 
-/obj/structure/mineral_door/uranium/ComponentInitialize()
+/obj/structure/mineral_door/uranium/Initialize(mapload)
 	return
 
 /obj/structure/mineral_door/sandstone
@@ -352,7 +352,7 @@
 
 	return ..()
 
-/obj/structure/mineral_door/paperframe/ComponentInitialize()
+/obj/structure/mineral_door/paperframe/Initialize(mapload)
 	return
 
 /obj/structure/mineral_door/paperframe/Destroy()

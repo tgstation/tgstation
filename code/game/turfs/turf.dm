@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
-	ComponentInitialize()
+	Initialize(mapload)
 
 	return INITIALIZE_HINT_NORMAL
 

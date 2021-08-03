@@ -37,7 +37,7 @@
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
 
-/obj/item/organ/heart/nightmare/ComponentInitialize()
+/obj/item/organ/heart/nightmare/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 

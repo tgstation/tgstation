@@ -397,7 +397,7 @@
 	icon_state = "1"
 	color = rgb(0,0,255)
 
-/obj/structure/ladder/unbreakable/rune/ComponentInitialize()
+/obj/structure/ladder/unbreakable/rune/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 

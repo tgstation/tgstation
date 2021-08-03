@@ -26,6 +26,11 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	icon_state = "drone"
 	w_class = WEIGHT_CLASS_BULKY
 
+
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_items = EXODRONE_CARGO_SLOTS
+	storage_holdables = list(null, list(GLOB.blacklisted_cargo_types))
+
 	/// Current drone status, see code\__DEFINES\adventure.dm
 	var/drone_status = EXODRONE_IDLE
 	/// Are we currently controlled by remote terminal, blocks other terminals from interacting with this drone.
@@ -70,11 +75,6 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	else
 		name_counter[name] = 1
 	GLOB.exodrones += src
-	/// Cargo storage
-	var/datum/component/storage/storage = AddComponent(/datum/component/storage/concrete)
-	storage.cant_hold = GLOB.blacklisted_cargo_types
-	storage.storage_max_w_class = WEIGHT_CLASS_NORMAL
-	storage.storage_max_items = EXODRONE_CARGO_SLOTS
 
 /obj/item/exodrone/Destroy()
 	. = ..()
@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /// Resizes storage component depending on slots used by tools.
 /obj/item/exodrone/proc/update_storage_size()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage/concrete)
-	storage.storage_max_items = EXODRONE_CARGO_SLOTS - length(tools)
+	storage.max_items = EXODRONE_CARGO_SLOTS - length(tools)
 
 /// Builds ui data for drone storage.
 /obj/item/exodrone/proc/get_cargo_data()

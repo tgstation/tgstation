@@ -75,7 +75,7 @@
 	produce_spores()
 	..()
 
-/obj/structure/blob/special/core/ComponentInitialize()
+/obj/structure/blob/special/core/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 

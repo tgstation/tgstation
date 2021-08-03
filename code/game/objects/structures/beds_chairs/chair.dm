@@ -29,7 +29,7 @@
 	if(prob(0.2))
 		name = "tactical [name]"
 
-/obj/structure/chair/ComponentInitialize()
+/obj/structure/chair/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 

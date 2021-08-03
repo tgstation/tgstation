@@ -18,7 +18,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/photo))
-	STR.storage_max_combined_w_class = 42
+	storage_max_combined_w_class = 42
 	storage_max_items = 21
 	LAZYADD(SSpersistence.photo_albums, src)
 

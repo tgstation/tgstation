@@ -13,12 +13,12 @@
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
 
-/obj/item/storage/lockbox/ComponentInitialize()
+/obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_NORMAL
-	STR.storage_max_combined_w_class = 14
-	STR.storage_max_items = 4
+	storage_max_w_class = WEIGHT_CLASS_NORMAL
+	storage_max_combined_w_class = 14
+	storage_max_items = 4
 	STR.locked = TRUE
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
@@ -97,12 +97,12 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 
-/obj/item/storage/lockbox/medal/ComponentInitialize()
+/obj/item/storage/lockbox/medal/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.storage_max_w_class = WEIGHT_CLASS_SMALL
-	STR.storage_max_items = 10
-	STR.storage_max_combined_w_class = 20
+	storage_max_w_class = WEIGHT_CLASS_SMALL
+	storage_max_items = 10
+	storage_max_combined_w_class = 20
 	STR.set_holdable(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)

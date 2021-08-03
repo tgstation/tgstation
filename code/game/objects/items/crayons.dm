@@ -599,7 +599,7 @@
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
-	max_items = 7
+	storage_max_items = 7
 	storage_holdables = list(list(/obj/item/toy/crayon), null)
 
 /obj/item/storage/crayons/PopulateContents()

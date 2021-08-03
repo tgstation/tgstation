@@ -521,7 +521,7 @@
 
 //LightToggle
 
-/obj/item/clothing/head/helmet/ComponentInitialize()
+/obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 

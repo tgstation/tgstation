@@ -11,10 +11,10 @@
 	var/list/combined_access
 	var/cached_flat_icon
 
-/obj/item/storage/wallet/ComponentInitialize()
+/obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
-	STR.storage_max_items = 4
+	storage_max_items = 4
 	STR.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
