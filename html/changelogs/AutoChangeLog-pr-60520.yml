@@ -1,0 +1,8 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - rscadd: "Makes Icebox Service Multi-Z through retroaction."
+  - rscadd: "The first Multi-Z kitchen on /tgstation/"
+  - bugfix: "Tosses out the non Multi-Z aspects of the previous service"
+  - qol: "You can now use stairs to visit the various areas of Icebox Service"
+  - bugfix: "This should force ruin spawns out and away from the center of the station. Next step is to actually add icebox ruins that are small but help force that spawn condition."
