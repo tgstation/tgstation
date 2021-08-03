@@ -144,7 +144,7 @@
 
 /obj/projectile/magic/change/on_hit(atom/change)
 	. = ..()
-	if(ismob(change) && isliving(change))
+	if(isliving(change))
 		var/mob/living/M = change
 		if(M.anti_magic_check())
 			M.visible_message(span_warning("[src] fizzles on contact with [M]!"))
