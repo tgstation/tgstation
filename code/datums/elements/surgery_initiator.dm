@@ -1,43 +1,26 @@
-/**
- *
- * Allows parent (obj) to initiate surgeries.
- *
- */
-/datum/component/surgery_initiator
-	dupe_mode = COMPONENT_DUPE_UNIQUE
-	///allows for post-selection manipulation of parent
-	var/datum/callback/after_select_cb
+/// Allows an item to  be used to initiate surgeries.
+/datum/element/surgery_initiator
+	element_flags = ELEMENT_DETACH
 
-/datum/component/surgery_initiator/Initialize(_after_select_cb)
+/datum/element/surgery_initiator/Attach(datum/target)
 	. = ..()
-	if(!isitem(parent))
-		return COMPONENT_INCOMPATIBLE
-	after_select_cb = _after_select_cb
+	if(!isitem(target))
+		return ELEMENT_INCOMPATIBLE
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
 
-/datum/component/surgery_initiator/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
-
-/datum/component/surgery_initiator/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
-
-/datum/component/surgery_initiator/Destroy()
-	if(after_select_cb)
-		QDEL_NULL(after_select_cb)
+/datum/element/surgery_initiator/Detach(datum/source)
+	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
 	return ..()
 
-	/**
-	  *
-	  * Does the surgery initiation.
-	  *
-	  */
-/datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
+/// Does the surgery initiation.
+/datum/element/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
 	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, source, target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/surgery_initiator/proc/do_initiate_surgery_moment(datum/source, atom/target, mob/user)
+/datum/element/surgery_initiator/proc/do_initiate_surgery_moment(datum/source, atom/target, mob/user)
 	var/mob/living/livingtarget = target
 	var/mob/living/carbon/carbontarget
 	var/obj/item/bodypart/affecting
@@ -83,7 +66,7 @@
 			return
 
 		var/pick_your_surgery = input("Begin which procedure?", "Surgery", null, null) as null|anything in sortList(available_surgeries)
-		if(pick_your_surgery && user?.Adjacent(livingtarget) && (parent in user))
+		if(pick_your_surgery && user?.Adjacent(livingtarget) && (source in user))
 			var/datum/surgery/surgeryinstance_notonmob = available_surgeries[pick_your_surgery]
 
 			for(var/i_three in livingtarget.surgeries)
@@ -108,23 +91,18 @@
 
 			if(surgeryinstance_notonmob.ignore_clothes || get_location_accessible(livingtarget, selected_zone))
 				var/datum/surgery/procedure = new surgeryinstance_notonmob.type(livingtarget, selected_zone, affecting)
-				user.visible_message(span_notice("[user] drapes [parent] over [livingtarget]'s [parse_zone(selected_zone)] to prepare for surgery."), \
-					span_notice("You drape [parent] over [livingtarget]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name]."))
+				user.visible_message(span_notice("[user] drapes [source] over [livingtarget]'s [parse_zone(selected_zone)] to prepare for surgery."), \
+					span_notice("You drape [source] over [livingtarget]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name]."))
 
 				log_combat(user, livingtarget, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
-				after_select_cb?.Invoke()
 			else
 				to_chat(user, span_warning("You need to expose [livingtarget]'s [parse_zone(selected_zone)] first!"))
 
 	else if(!current_surgery.step_in_progress)
-		attempt_cancel_surgery(current_surgery, parent, livingtarget, user)
+		attempt_cancel_surgery(current_surgery, source, livingtarget, user)
 
-		/**
-		  *
-		  * Does the surgery de-initiation.
-		  *
-		  */
-/datum/component/surgery_initiator/proc/attempt_cancel_surgery(datum/surgery/the_surgery, obj/item/the_item, mob/living/the_patient, mob/user)
+/// Does the surgery de-initiation.
+/datum/element/surgery_initiator/proc/attempt_cancel_surgery(datum/surgery/the_surgery, obj/item/the_item, mob/living/the_patient, mob/user)
 	var/selected_zone = user.zone_selected
 
 	if(the_surgery.status == 1)

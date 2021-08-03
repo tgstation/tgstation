@@ -66,7 +66,7 @@
 // /datum signals
 /// when a component is added to a datum: (/datum/component)
 #define COMSIG_COMPONENT_ADDED "component_added"
-/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
+/// before a component is removed from a datum because of ClearFromParent: (/datum/component)
 #define COMSIG_COMPONENT_REMOVING "component_removing"
 /// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
@@ -185,6 +185,10 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
+///from base of atom/relaymove(): (mob/living/user, direction)
+#define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
+	///prevents the "you cannot move while buckled! message"
+	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
 
 ///from [/datum/controller/subsystem/explosions/proc/explode]: (/list(/atom, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke))
 #define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -514,7 +518,7 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
-#define COMSIG_MOB_APPLY_DAMGE "mob_apply_damage"
+#define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
@@ -851,6 +855,11 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
+
+///from /obj/item/storage/book/bible/afterattack(): (mob/user, proximity)
+#define COMSIG_BIBLE_SMACKED "bible_smacked"
+	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
+	#define COMSIG_END_BIBLE_CHAIN (1<<0)
 
 ///Closets
 ///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
@@ -1365,4 +1374,3 @@
 
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
 #define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
-

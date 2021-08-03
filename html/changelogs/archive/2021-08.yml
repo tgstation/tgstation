@@ -57,3 +57,36 @@
   tralezab:
   - bugfix: cannons lost their sprites in the last feature addition for them... now
       they have those back!
+2021-08-03:
+  Fikou, sprites from /vg/:
+  - expansion: reinforced rock for mapping use
+  Ghommie:
+  - expansion: Picked up bees and mice can now fit in boxes.
+  Gurkenglas:
+  - expansion: Signals now fire a timestamp.
+  JohnFulpWillard:
+  - bugfix: Cultists using Twisted Construction on a Cyborg will no longer spawn 2
+      constructs.
+  KittyNoodle:
+  - bugfix: ethereal hair will now change with ethereal color without an external
+      update
+  SmArtKar:
+  - expansion: You can make BCI overlay and click interceptor circutry now!
+  - balance: BCI now has it's own research node.
+  - bugfix: You no longer can remove BCI core and actions from BCIs and insert them
+      into other circutry.
+  Thunder12345:
+  - code_imp: Removes (almost) all misc files from the clothing module
+  Watermelon914:
+  - admin: Adds admin components that allow admins to set variables, get variables,
+      call procs and execute sdql via circuits. To enable these components to function,
+      an admin needs to enable the admin_only variable on a circuit.
+  - qol: Adds more entity information to shell outputs to allow circuits to identify
+      who used the shell.
+  - expansion: Adds list literals.
+  - bugfix: CTF will no longer delete objects on CTF maps that shouldn't be deleted
+      and it'll also successfully regenerate the map once a CTF round ends.
+  - bugfix: Fixed phantom slipping caused by synthesized banana peels.
+  - bugfix: Fixed the metabolism unit test randomly failing because of neurowhine
+  carshalash:
+  - bugfix: Eggs now work when cracked into glasses
