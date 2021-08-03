@@ -99,7 +99,10 @@
 					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
 					log_game("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
 					to_chat(usr,!R.lockcharge ? span_alert("Arming up internal detonation charge, please wait [BORG_DETONATION_DELAY/10] seconds") : span_notice("Releasing lockdown, it will take [BORG_UNLOCK_DELAY/10] seconds"))
-					addtimer(CALLBACK(R, /mob/living/silicon/robot/proc/SetLockdown, !R.lockcharge), BORG_UNLOCK_DELAY)
+					if(R.lockcharge)
+						addtimer(CALLBACK(R, /mob/living/silicon/robot/proc/SetLockdown, FALSE), BORG_UNLOCK_DELAY)
+					else
+						R.SetLockdown(TRUE)
 					to_chat(R, R.lockcharge ? span_notice("Your lockdown is being lifted!") : span_alert("You have been locked down!"))
 					if(R.connected_ai)
 						to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown is being lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
