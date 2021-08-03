@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - refactor: "refactored spirit possession used in the possessed blade into a component. now ANYTHING could be possessed if you so desire!"

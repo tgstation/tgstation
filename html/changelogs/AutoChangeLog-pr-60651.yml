@@ -1,0 +1,4 @@
+author: "Greniza"
+delete-after: True
+changes: 
+  - bugfix: "The pip count, layout, and orientation of standard D6s has been brought in line with a standard casino D6."

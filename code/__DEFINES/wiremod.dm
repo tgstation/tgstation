@@ -48,8 +48,8 @@
 
 // Components
 
-/// The value that is sent whenever a component is simply sending a signal. This can be anything.
-#define COMPONENT_SIGNAL 1
+/// The value that is sent whenever a component is simply sending a signal. This can be anything, and is currently the seconds since roundstart.
+#define COMPONENT_SIGNAL (world.time / (1 SECONDS))
 
 // Comparison defines
 #define COMP_COMPARISON_EQUAL "="
@@ -110,6 +110,10 @@
 
 #define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
 
+// Proccall component
+#define COMP_PROC_GLOBAL "Global"
+#define COMP_PROC_OBJECT "Object"
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -140,5 +144,7 @@
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
 /// Prohibits the component from being duplicated via the module duplicator
 #define CIRCUIT_FLAG_UNDUPEABLE (1<<2)
+/// Marks a circuit component as admin only. Admins will only be able to link/unlink with these circuit components.
+#define CIRCUIT_FLAG_ADMIN (1<<3)
 /// This circuit component does not show in the menu.
-#define CIRCUIT_FLAG_HIDDEN (1<<3)
+#define CIRCUIT_FLAG_HIDDEN (1<<4)

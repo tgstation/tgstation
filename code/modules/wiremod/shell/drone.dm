@@ -27,7 +27,7 @@
 
 /obj/item/circuit_component/bot_circuit
 	display_name = "Drone"
-	display_desc = "Used to send movement output signals to the drone shell."
+	desc = "Used to send movement output signals to the drone shell."
 
 	/// The inputs to allow for the drone to move
 	var/datum/port/input/north

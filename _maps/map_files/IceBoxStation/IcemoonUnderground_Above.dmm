@@ -1568,7 +1568,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens - Starboard Aft";
 	dir = 8;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -1846,7 +1846,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens - Port Aft";
 	dir = 4;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -2447,7 +2447,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Hall - Fore";
 	dir = 6;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
@@ -4414,7 +4414,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens - Starboard Fore";
 	dir = 8;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -4722,7 +4722,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens - Starboard Mid";
 	dir = 8;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -4776,7 +4776,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens - Port Mid";
 	dir = 4;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -4988,7 +4988,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens - Port Fore";
 	dir = 4;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -5013,7 +5013,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Kill Chamber";
 	dir = 4;
-	network = list("ss13","rd","xeno_pens")
+	network = list("ss13","rd","xeno")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10

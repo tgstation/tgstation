@@ -972,10 +972,10 @@
  *
  * You can buckle on mobs if you're next to them since most are dense
  */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE, ignore_self = FALSE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(M.buckled)
 		return FALSE
-	return ..(M, force, check_loc, buckle_mob_flags, ignore_self = TRUE)
+	return ..(M, force, check_loc, buckle_mob_flags)
 
 ///Call back post buckle to a mob to offset your visual height
 /mob/post_buckle_mob(mob/living/M)
