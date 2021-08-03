@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - admin: "adds list getter and text2num to sdql wrappers"

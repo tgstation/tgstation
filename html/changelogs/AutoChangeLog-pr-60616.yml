@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "fixes soulstones granting themselves every language... instead of the spirit inside. lol."
