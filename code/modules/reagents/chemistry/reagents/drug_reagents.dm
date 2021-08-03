@@ -588,9 +588,9 @@
 	if(flip_count >= BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE) //Do a super flip
 		flip_count = 0
 		var/atom/throw_target = get_edge_target_turf(dancer, dancer.dir)
-		dancer.SpinAnimation(12,3)
+		dancer.SpinAnimation(speed = 3, loops = 3)
 		dancer.visible_message(span_notice("[dancer] does an extravagant flip!"), span_nicegreen("You do an extravagant flip!"))
-		dancer.throw_at(throw_target, range = 4, speed = overdosed ? 4 : 2)
+		dancer.throw_at(throw_target, range = 6, speed = overdosed ? 4 : 1)
 
 ///This proc listens to the spin signal and throws the mob every third spin
 /datum/reagent/drug/blastoff/proc/on_spin()

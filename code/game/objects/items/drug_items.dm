@@ -32,6 +32,7 @@
 	desc = "A small ampoule. The liquid inside appears to be boiling violently.\nYou suspect it contains bLasSToFF; the drug thought to be the cause of the infamous Luna nightclub mass casualty incident."
 	icon = 'icons/obj/drugs.dmi'
 	icon_state = "blastoff_ampoule"
+	base_icon_state = "blastoff_ampoule"
 	volume = 20
 	reagent_flags = TRANSPARENT
 	spillable = FALSE
@@ -40,18 +41,19 @@
 /obj/item/reagent_containers/glass/blastoff_ampoule/update_icon_state()
 	. = ..()
 	if(!reagents.total_volume)
-		icon_state = "blastoff_empty"
+		icon_state = "[base_icon_state]_empty"
 	else if(spillable)
-		icon_state = "blastoff_open"
+		icon_state = "[base_icon_state]_open"
 	else
-		icon_state = "blastoff_ampoule"
+		icon_state = base_icon_state
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/attack_self(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
-		reagent_flags = OPENCONTAINER
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !spillable)
+		reagent_flags |= OPENCONTAINER
 		spillable = TRUE
 		playsound(src, 'sound/items/ampoule_snap.ogg', 40)
 		update_appearance()
+		return
 	. = ..()
 
 /obj/item/reagent_containers/glass/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
