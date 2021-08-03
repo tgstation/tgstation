@@ -260,7 +260,7 @@
 	var/mob/living/carbon/target_collateral_carbon
 	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
-	for(var/obj/every_single_thing in target_shove_turf.contents)
+	for(var/atom/movable/every_single_thing as anything in target_shove_turf.contents)
 		SEND_SIGNAL(every_single_thing, COMSIG_CARBON_DISARM_COLLIDE, src, target)
 	//Thank you based whoneedsspace
 	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
@@ -274,8 +274,6 @@
 	else
 		target.Move(target_shove_turf, shove_dir)
 		if(get_turf(target) == target_oldturf)
-			target_table = locate(/obj/structure/table) in target_shove_turf.contents
-			target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
 			shove_blocked = TRUE
 
 	if(target.IsKnockdown() && !target.IsParalyzed())
