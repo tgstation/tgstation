@@ -12,17 +12,12 @@
 
 	var/atom/signal_atom
 
-	var/static/amount = 0
-
 /datum/component/connect_loc_behalf/Initialize(atom/movable/tracked, list/connections)
 	. = ..()
 	if (!istype(tracked))
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
 	src.tracked = tracked
-
-	amount++
-	message_admins(amount)
 
 /datum/component/connect_loc_behalf/CheckDupeComponent(datum/component/component, atom/movable/tracked, list/connections)
 	if(src.tracked != tracked)
@@ -49,7 +44,6 @@
 		COMSIG_PARENT_QDELETING,
 	))
 
-	amount--
 	tracked = null
 
 /datum/component/connect_loc_behalf/proc/handle_tracked_qdel()
