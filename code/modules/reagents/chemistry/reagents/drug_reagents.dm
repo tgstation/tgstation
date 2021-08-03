@@ -679,7 +679,7 @@
 
 	var/datum/dna/druggy_dna = invisible_man.has_dna()
 	if(druggy_dna?.species)
-		druggy_dna.species.species_traits -= NOBLOODOVERLAY
+		druggy_dna.species.species_traits += NOBLOODOVERLAY
 
 	invisible_man.update_body()
 	invisible_man.update_hair()
