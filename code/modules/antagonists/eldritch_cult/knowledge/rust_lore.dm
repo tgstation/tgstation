@@ -86,6 +86,7 @@
 	REMOVE_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
+	. = ..()
 	var/turf/our_turf = get_turf(user)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY) || !isliving(user))
 		return
