@@ -61,7 +61,9 @@ export const FUNDAMENTAL_DATA_TYPES = {
       <Dropdown
         className="Datatype__Option"
         color={"transparent"}
-        options={extraData}
+        options={typeof extraData === 'object'
+          ? Object.keys(extraData)
+          : extraData}
         onSelected={setValue}
         displayText={value}
         noscroll
