@@ -72,8 +72,9 @@
 	options_map = options_to_icons
 
 /obj/item/circuit_component/object_overlay/register_shell(atom/movable/shell)
-	bci = shell
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	if(istype(shell, /obj/item/organ/cyberimp/bci))
+		bci = shell
+		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/object_overlay/unregister_shell(atom/movable/shell)
 	bci = null

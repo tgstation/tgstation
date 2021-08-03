@@ -50,7 +50,7 @@
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
-	// Defines which shells can accept this component. If set to null then all shells can use it.
+	// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
 	var/required_shells = null
 
 /obj/item/circuit_component/Initialize()
@@ -211,11 +211,6 @@
 
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
-	if(required_shells && LAZYLEN(required_shells))
-		for(var/shell_type in required_shells)
-			if(istype(added_to, shell_type) || istype(added_to.loc, shell_type))
-				return TRUE
-		return FALSE
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
@@ -238,6 +233,10 @@
 	if(!removable)
 		. += create_ui_notice("Unremovable", "red", "lock")
 
+	if(length(required_shells))
+		. += create_ui_notice("Supported Shells:", "green", "notes-medical")
+		for(var/atom/movable/shell as anything in required_shells)
+			. += create_ui_notice(initial(shell.name), "green", "plus-square")
 
 	if(length(input_ports))
 		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
