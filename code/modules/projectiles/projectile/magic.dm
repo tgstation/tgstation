@@ -144,13 +144,13 @@
 
 /obj/projectile/magic/change/on_hit(atom/change)
 	. = ..()
-	if(ismob(change))
-		var/mob/M = change
+	if(ismob(change) && isliving(change))
+		var/mob/living/M = change
 		if(M.anti_magic_check())
 			M.visible_message(span_warning("[src] fizzles on contact with [M]!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
-		M.wabbajack() //change)
+		M.wabbajack()
 	qdel(src)
 
 /obj/projectile/magic/animate
