@@ -10,7 +10,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 -----------------------------------------------------
 Version 5.16, 31 July 2021, by Atlanta-Ned
-Added `library_report` table for tracking reported library books and actions taken on them.
+Added `library_action` table for tracking reported library books and actions taken on them.
 
 ```
 DROP TABLE IF EXISTS `library_action`;
