@@ -260,7 +260,7 @@ CREATE TABLE `SS13_library` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `library_report`
+-- Table structure for table `SS13_library_action`
 --
 
 DROP TABLE IF EXISTS `SS13_library_action`;
