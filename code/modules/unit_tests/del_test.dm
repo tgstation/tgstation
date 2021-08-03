@@ -94,18 +94,13 @@
 	ignore += typesof(/obj/structure/alien/resin/flower_bud)
 	//Needs a linked mecha
 	ignore += typesof(/obj/effect/skyfall_landingzone)
-
-	var/list/ignore_cache = list()
-	for(var/type in ignore)
-		ignore_cache[type] = TRUE
+	//Leads to errors as a consequence of the logic behind moving back to a tile that's moving you somewhere else
+	ignore += typesof(/obj/effect/mapping_helpers/component_injector/areabound)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)
 
-	for(var/type_path in typesof(/atom/movable, /turf)) //No areas please
-		log_world(type_path)
-		if(ignore_cache[type_path])
-			continue
+	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
 		if(ispath(type_path, /turf))
 			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
 			//We change it back to prevent pain, please don't ask
