@@ -577,6 +577,7 @@
 #include "code\datums\components\spawner.dm"
 #include "code\datums\components\spill.dm"
 #include "code\datums\components\spinny.dm"
+#include "code\datums\components\spirit_holding.dm"
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"
 #include "code\datums\components\stationstuck.dm"
