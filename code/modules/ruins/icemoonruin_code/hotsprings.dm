@@ -29,7 +29,7 @@
 	var/random_choice = pick("Mob", "Appearance")
 	switch(random_choice)
 		if("Mob")
-			L.wabbajack("animal")
+			L = L.wabbajack("animal")
 		if("Appearance")
 			var/mob/living/carbon/human/H = L.wabbajack("humanoid")
 			randomize_human(H)

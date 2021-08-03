@@ -1188,7 +1188,7 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_ABSTRACT
 
-	var/list/contents = src.contents.Copy()
+	var/list/item_contents = list()
 
 	if(iscyborg(src))
 		var/mob/living/silicon/robot/Robot = src
@@ -1199,9 +1199,11 @@
 			qdel(Robot.mmi)
 		Robot.notify_ai(NEW_BORG)
 	else
-		for(var/obj/item/W in contents)
-			if(!dropItemToGround(W))
-				qdel(W)
+		for(var/obj/item/item in src)
+			if(!dropItemToGround(item))
+				qdel(item)
+				continue
+			item_contents += item
 
 	var/mob/living/new_mob
 
@@ -1212,11 +1214,13 @@
 			new_mob = new /mob/living/carbon/human/species/monkey(loc)
 
 		if("robot")
-			var/robot = pick(200;/mob/living/silicon/robot,
-							/mob/living/silicon/robot/model/syndicate,
-							/mob/living/silicon/robot/model/syndicate/medical,
-							/mob/living/silicon/robot/model/syndicate/saboteur,
-							200;/mob/living/simple_animal/drone/polymorphed)
+			var/robot = pick(
+				200 ; /mob/living/silicon/robot,
+				/mob/living/silicon/robot/model/syndicate,
+				/mob/living/silicon/robot/model/syndicate/medical,
+				/mob/living/silicon/robot/model/syndicate/saboteur,
+				200 ; /mob/living/simple_animal/drone/polymorphed,
+			)
 			new_mob = new robot(loc)
 			if(issilicon(new_mob))
 				new_mob.gender = gender
@@ -1226,54 +1230,62 @@
 				Robot.lawupdate = FALSE
 				Robot.connected_ai = null
 				Robot.mmi.transfer_identity(src) //Does not transfer key/client.
-				Robot.clear_inherent_laws(0)
-				Robot.clear_zeroth_law(0)
+				Robot.clear_inherent_laws(announce = FALSE)
+				Robot.clear_zeroth_law(announce = FALSE)
 
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(loc)
 
 		if("xeno")
-			var/Xe
+			var/xeno_type
 			if(ckey)
-				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
+				xeno_type = pick(
+					/mob/living/carbon/alien/humanoid/hunter,
+					/mob/living/carbon/alien/humanoid/sentinel,
+				)
 			else
-				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
-			new_mob = new Xe(loc)
+				xeno_type = pick(
+					/mob/living/carbon/alien/humanoid/hunter,
+					/mob/living/simple_animal/hostile/alien/sentinel,
+				)
+			new_mob = new xeno_type(loc)
 
 		if("animal")
-			var/path = pick(/mob/living/simple_animal/hostile/carp,
-							/mob/living/simple_animal/hostile/bear,
-							/mob/living/simple_animal/hostile/mushroom,
-							/mob/living/simple_animal/hostile/statue,
-							/mob/living/simple_animal/hostile/retaliate/bat,
-							/mob/living/simple_animal/hostile/retaliate/goat,
-							/mob/living/simple_animal/hostile/killertomato,
-							/mob/living/simple_animal/hostile/giant_spider,
-							/mob/living/simple_animal/hostile/giant_spider/hunter,
-							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-							/mob/living/simple_animal/hostile/carp/ranged,
-							/mob/living/simple_animal/hostile/carp/ranged/chaos,
-							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
-							/mob/living/simple_animal/hostile/morph,
-							/mob/living/simple_animal/hostile/stickman,
-							/mob/living/simple_animal/hostile/stickman/dog,
-							/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-							/mob/living/simple_animal/hostile/gorilla,
-							/mob/living/simple_animal/parrot,
-							/mob/living/simple_animal/pet/dog/corgi,
-							/mob/living/simple_animal/crab,
-							/mob/living/simple_animal/pet/dog/pug,
-							/mob/living/simple_animal/pet/cat,
-							/mob/living/simple_animal/mouse,
-							/mob/living/simple_animal/chicken,
-							/mob/living/simple_animal/cow,
-							/mob/living/simple_animal/hostile/lizard,
-							/mob/living/simple_animal/pet/fox,
-							/mob/living/simple_animal/butterfly,
-							/mob/living/simple_animal/pet/cat/cak,
-							/mob/living/simple_animal/chick)
+			var/path = pick(
+				/mob/living/simple_animal/hostile/carp,
+				/mob/living/simple_animal/hostile/bear,
+				/mob/living/simple_animal/hostile/mushroom,
+				/mob/living/simple_animal/hostile/statue,
+				/mob/living/simple_animal/hostile/retaliate/bat,
+				/mob/living/simple_animal/hostile/retaliate/goat,
+				/mob/living/simple_animal/hostile/killertomato,
+				/mob/living/simple_animal/hostile/giant_spider,
+				/mob/living/simple_animal/hostile/giant_spider/hunter,
+				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+				/mob/living/simple_animal/hostile/carp/ranged,
+				/mob/living/simple_animal/hostile/carp/ranged/chaos,
+				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+				/mob/living/simple_animal/hostile/headcrab,
+				/mob/living/simple_animal/hostile/morph,
+				/mob/living/simple_animal/hostile/stickman,
+				/mob/living/simple_animal/hostile/stickman/dog,
+				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+				/mob/living/simple_animal/hostile/gorilla,
+				/mob/living/simple_animal/parrot,
+				/mob/living/simple_animal/pet/dog/corgi,
+				/mob/living/simple_animal/crab,
+				/mob/living/simple_animal/pet/dog/pug,
+				/mob/living/simple_animal/pet/cat,
+				/mob/living/simple_animal/mouse,
+				/mob/living/simple_animal/chicken,
+				/mob/living/simple_animal/cow,
+				/mob/living/simple_animal/hostile/lizard,
+				/mob/living/simple_animal/pet/fox,
+				/mob/living/simple_animal/butterfly,
+				/mob/living/simple_animal/pet/cat/cak,
+				/mob/living/simple_animal/chick,
+			)
 			new_mob = new path(loc)
 
 		if("humanoid")
@@ -1301,8 +1313,8 @@
 		return
 
 	// Some forms can still wear some items
-	for(var/obj/item/W in contents)
-		new_mob.equip_to_appropriate_slot(W)
+	for(var/obj/item/item as anything in item_contents)
+		new_mob.equip_to_appropriate_slot(item)
 
 	log_message("became [new_mob.name]([new_mob.type])", LOG_ATTACK, color="orange")
 	new_mob.set_combat_mode(TRUE)
@@ -1315,8 +1327,8 @@
 
 	transfer_observers_to(new_mob)
 
+	. = new_mob
 	qdel(src)
-	return new_mob
 
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
