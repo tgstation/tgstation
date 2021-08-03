@@ -1178,7 +1178,7 @@
 		if(shapeshift.stored != src) // To reduce the risk of an infinite loop.
 			return shapeshift.stored.wabbajack(randomize)
 
-	if(!istype(src) || stat == DEAD || notransform || (GODMODE & status_flags))
+	if(stat == DEAD || notransform || (GODMODE & status_flags))
 		return
 
 	notransform = TRUE
