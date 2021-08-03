@@ -24,20 +24,14 @@
 
 	///Environmental info, this could become an element? Might lower the amount of mobs we're going through as a lot of mobs dont care about environment.
 
-	///Atmos checks
+	///Atmos checks THESE SHOULD BE ELEMENTIZED
 	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	///Leaving something at 0 means it's off - has no maximum.
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 1
 
-
-	///var/stop_automated_movement = 0
-	///Does the mob wander around when idle?
-	///var/wander = 1
-	///When set to 1 this stops the animal from moving when someone is pulling it.
-
-	///Verbs used for speaking e.g. "Says" or "Chitters"
+	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
 
 
@@ -54,7 +48,6 @@
 	var/response_harm_continuous = "hits"
 	///Harm-intent verb in present simple tense.
 	var/response_harm_simple = "hit"
-
 
 	///Basic mob's own attacks verbs,
 	///Attacking verb in present continuous tense.
@@ -99,7 +92,7 @@
 	///What kind of objects this mob can smash.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE
 
-	///Defines how fast the basic mob can move.
+	///Defines how fast the basic mob can move. This is a multiplier
 	var/speed = 1
 
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
@@ -135,7 +128,7 @@
 	if(!loc)
 		stack_trace("Basic mob being instantiated in nullspace")
 
-	update_simplemob_varspeed()
+	update_basic_mob_varspeed()
 
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
@@ -172,10 +165,11 @@
 
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value
-	update_simplemob_varspeed()
+	update_basic_mob_varspeed()
 
-/mob/living/basic/proc/update_simplemob_varspeed()
+/mob/living/basic/proc/update_basic_mob_varspeed()
 	if(speed == 0)
 		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
+	SEND_SIGNAL(src, POST_BASIC_MOB_UPDATE_VARSPEED)
 

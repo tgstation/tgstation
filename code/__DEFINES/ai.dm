@@ -24,10 +24,16 @@
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
+///AI flags
+#define STOP_MOVING_WHEN_PULLED (1<<0)
+
 ///Subtree defines
 
 ///This subtree should cancel any further planning, (Including from other subtrees)
 #define SUBTREE_RETURN_FINISH_PLANNING 1
+
+//Generic BB keys
+#define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 
 // Monkey AI controller blackboard keys
 

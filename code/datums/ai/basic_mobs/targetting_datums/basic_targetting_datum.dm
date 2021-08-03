@@ -34,6 +34,8 @@
 		var/faction_check = basic_mob.faction_check_mob(L)
 		if(faction_check || L.stat)
 			return FALSE
+
+
 		return TRUE
 
 	if(ismecha(the_target)) //Targetting vs mechas

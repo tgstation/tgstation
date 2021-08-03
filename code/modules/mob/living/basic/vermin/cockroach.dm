@@ -8,7 +8,7 @@
 	mob_size = MOB_SIZE_TINY
 	health = 1
 	maxHealth = 1
-	speed = 0.35
+	speed = 1.25
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 
@@ -22,9 +22,9 @@
 	response_harm_simple = "splat"
 	speak_emote = list("chitters")
 
-	//loot = list(/obj/effect/decal/cleanable/insectguts) element
+	//loot = list(/obj/effect/decal/cleanable/insectguts) Armhulen is making an element for this
 
-	basic_mob_flags = DEL_ON_DEATH | STOP_MOVING_ON_PULL
+	basic_mob_flags = DEL_ON_DEATH
 	faction = list("hostile")
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
@@ -45,7 +45,7 @@
 	return FALSE
 
 
-	/*
+	/* this needs to become a subtree for cockroaches
 	if(turns_since_scan > time_to_hunt)
 		turns_since_scan = 0
 		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
@@ -53,6 +53,21 @@
 			if(potential_target.type in target_types)
 				hunt(potential_target)
 				return*/
+
+/datum/ai_controller/basic_controller/cockroach
+	blackboard = list(BB_TARGETTING_DATUM = new /datum/targetting_datum/basic())
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/cockroach)
+
+
+/datum/ai_controller/basic_controller/cockroach/PerformIdleBehavior(delta_time)
+	. = ..()
+	var/mob/living/living_pawn = pawn
+
+	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
+		var/move_dir = pick(GLOB.alldirs)
+		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 
 
 /obj/projectile/glockroachbullet
@@ -64,21 +79,34 @@
 	desc = "A... 0.9mm bullet casing? What?"
 	projectile_type = /obj/projectile/glockroachbullet
 
-/*
+
 /mob/living/basic/cockroach/glockroach
 	name = "glockroach"
 	desc = "HOLY SHIT, THAT COCKROACH HAS A GUN!"
 	icon_state = "glockroach"
-	melee_damage_lower = 5
-	melee_damage_upper = 5
-	obj_damage = 20
+	melee_damage_lower = 2.5
+	melee_damage_upper = 10
+	obj_damage = 10
 	gold_core_spawnable = HOSTILE_SPAWN
-	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
-	projectiletype = /obj/projectile/glockroachbullet
-	casingtype = /obj/item/ammo_casing/glockroach
-	ranged = TRUE
 	faction = list("hostile")
-*/
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
+
+/mob/living/basic/cockroach/glockroach/Initialize()
+	. = ..()
+	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
+
+/datum/ai_controller/basic_controller/cockroach/glockroach
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
+	)
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
+	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
+
+/datum/ai_behavior/basic_ranged_attack/glockroach //Slightly slower, as this is being made in feature freeze ;)
+	action_cooldown = 1 SECONDS
 
 /mob/living/basic/cockroach/hauberoach
 	name = "hauberoach"
@@ -86,14 +114,15 @@
 	icon_state = "hauberoach"
 	attack_verb_continuous = "rams its spike into"
 	attack_verb_simple = "ram your spike into"
-	melee_damage_lower = 5
-	melee_damage_upper = 20
-	obj_damage = 20
+	melee_damage_lower = 2.5
+	melee_damage_upper = 10
+	obj_damage = 10
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
 
 /mob/living/basic/cockroach/hauberoach/Initialize()
 	. = ..()
@@ -109,18 +138,15 @@
 		return TRUE
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
+/datum/ai_controller/basic_controller/cockroach/hauberoach
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
+	)
 
-/datum/ai_controller/basic_controller/cockroach
-	blackboard = list(BB_TARGETTING_DATUM = new /datum/targetting_datum/basic())
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/cockroach,
-	/datum/ai_planning_subtree/simple_find_target,
-	/datum/ai_planning_subtree/simple_attack_target)
+/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/hauberoach
 
-
-/datum/ai_controller/basic_controller/cockroach/PerformIdleBehavior(delta_time)
-	. = ..()
-	var/mob/living/living_pawn = pawn
-
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
+/datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
+	action_cooldown = 1 SECONDS

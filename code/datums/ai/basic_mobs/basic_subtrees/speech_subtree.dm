@@ -15,7 +15,7 @@
 	if(emote_hear)
 		emote_hear = string_list(emote_hear)
 	if(emote_see)
-		emote_see = string_list(emote_hear)
+		emote_see = string_list(emote_see)
 
 /datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	if(DT_PROB(speech_chance, delta_time))

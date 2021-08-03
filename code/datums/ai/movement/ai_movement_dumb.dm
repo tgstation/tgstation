@@ -13,6 +13,9 @@
 
 		var/can_move = TRUE
 
+		if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)
+			can_move = FALSE
+
 		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
 			can_move = FALSE
 

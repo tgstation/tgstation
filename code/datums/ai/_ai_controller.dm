@@ -141,8 +141,6 @@ multiple modular subtrees with behaviors
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
 
-		if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
-			continue
 
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
@@ -151,8 +149,11 @@ multiple modular subtrees with behaviors
 
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT && current_movement_target) //Might need to move closer
 			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
-				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.else
+				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
 					ai_movement.stop_moving_towards(src)
+
+				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
+					continue
 				ProcessBehavior(action_delta_time, current_behavior)
 				return
 
@@ -160,9 +161,13 @@ multiple modular subtrees with behaviors
 				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
 
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
+				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
+					continue
 				ProcessBehavior(action_delta_time, current_behavior)
 				return
 		else //No movement required
+			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
+				continue
 			ProcessBehavior(action_delta_time, current_behavior)
 			return
 
