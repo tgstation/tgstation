@@ -1169,6 +1169,7 @@
 	stop_pulling()
 	. = ..()
 
+// Used in polymorph code to shapeshift mobs into other creatures
 /mob/living/proc/wabbajack(randomize)
 	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
 	// We then want to restore this original body through the shapeshift holder itself.
