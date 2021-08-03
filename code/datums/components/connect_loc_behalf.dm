@@ -5,6 +5,8 @@
 /datum/component/connect_loc_behalf
 	dupe_mode = COMPONENT_DUPE_SELECTIVE
 
+	datum_flags = DF_SIGNAL_VERBOSE
+
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
 
@@ -23,7 +25,7 @@
 	if(src.tracked != tracked)
 		return
 
-	// Not equivalent. Checks if they are the same list or not via shallow copy.
+	// Not equivalent. Checks if they are not the same list via shallow copy.
 	if(src.connections ~! connections)
 		return
 
@@ -33,7 +35,7 @@
 /datum/component/connect_loc_behalf/RegisterWithParent()
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
+	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
 	update_signals()
 
@@ -61,18 +63,23 @@
 	signal_atom = tracked.loc
 
 	for (var/signal in connections)
-		parent.RegisterSignal(signal_atom, signal, connections[signal])
+		RegisterSignal(signal_atom, signal, .proc/handle_signal)
 
 /datum/component/connect_loc_behalf/proc/unregister_signals()
 	if(isnull(signal_atom))
 		return
 
 	for (var/signal in connections)
-		parent.UnregisterSignal(signal_atom, signal)
+		UnregisterSignal(signal_atom, signal)
 
 	signal_atom = null
 
-/datum/component/connect_loc_behalf/proc/on_moved(atom/movable/tracked, atom/old_loc)
+/datum/component/connect_loc_behalf/proc/handle_signal(sigtype, datum/source, ...)
+	SIGNAL_HANDLER
+	var/list/arguments = args.Copy(2)
+	return call(parent, connections[sigtype])(arglist(arguments))
+
+/datum/component/connect_loc_behalf/proc/on_moved(sigtype, atom/movable/tracked, atom/old_loc)
 	SIGNAL_HANDLER
 	update_signals()
 

@@ -313,9 +313,11 @@
  */
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
+	var/list/verbose_arguments = arguments.Copy()
+	verbose_arguments.Insert(1, sigtype)
 	if(!length(target))
 		var/datum/listening_datum = target
-		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(listening_datum.datum_flags & DF_SIGNAL_VERBOSE? verbose_arguments : arguments))
 	. = NONE
 	// This exists so that even if one of the signal receivers unregisters the signal,
 	// all the objects that are receiving the signal get the signal this final time.
@@ -324,7 +326,7 @@
 	for(var/datum/listening_datum as anything in target)
 		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
 	for(var/datum/listening_datum as anything in queued_calls)
-		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
+		. |= call(listening_datum, queued_calls[listening_datum])(arglist(listening_datum.datum_flags & DF_SIGNAL_VERBOSE? verbose_arguments : arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
