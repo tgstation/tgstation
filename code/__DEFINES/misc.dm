@@ -547,7 +547,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_TARGET_LOC_CHANGE (1<<1)
 #define IGNORE_HELD_ITEM (1<<2)
 #define IGNORE_INCAPACITATED (1<<3)
-///Used to prevent important slowdowns from being abused by drugs like kroncaine
+///Used to prevent important slowdowns from being abused by drugs like kronkaine
 #define IGNORE_SLOWDOWNS (1<<4)
 
 // Skillchip categories

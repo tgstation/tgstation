@@ -716,8 +716,8 @@
 		M.emote("laugh")
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
-/datum/reagent/drug/kroncaine
-	name = "kroncaine"
+/datum/reagent/drug/kronkaine
+	name = "kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"
@@ -728,17 +728,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 20)
 
-/datum/reagent/drug/kroncaine/on_mob_metabolize(mob/living/L)
+/datum/reagent/drug/kronkaine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+	L.add_actionspeed_modifier(/datum/actionspeed_modifier/kronkaine)
 	L.sound_environment_override = SOUND_ENVIRONMENT_HANGAR
 
-/datum/reagent/drug/kroncaine/on_mob_end_metabolize(mob/living/L)
-	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kroncaine)
+/datum/reagent/drug/kronkaine/on_mob_end_metabolize(mob/living/L)
+	L.remove_actionspeed_modifier(/datum/actionspeed_modifier/kronkaine)
 	L.sound_environment_override = NONE
 	. = ..()
 
-/datum/reagent/drug/kroncaine/on_transfer(atom/A, methods, trans_volume)
+/datum/reagent/drug/kronkaine/on_transfer(atom/A, methods, trans_volume)
 	. = ..()
 	if(!iscarbon(A))
 		return
@@ -746,7 +746,7 @@
 	druggo.adjustStaminaLoss(-4 * trans_volume, 0)
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
-/datum/reagent/drug/kroncaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
@@ -760,7 +760,7 @@
 			M.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
 			break
 
-/datum/reagent/drug/kroncaine/overdose_process(mob/living/M, delta_time, times_fired)
+/datum/reagent/drug/kronkaine/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time)
 	M.Jitter(10 * REM * delta_time)

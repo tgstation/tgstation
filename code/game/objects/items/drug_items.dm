@@ -21,7 +21,7 @@
 	name = "moon rock"
 	desc = "A small hard lump of kronkaine freebase.\nIt is said the average kronkaine addict causes as much criminal damage as four cat burglars, two arsonists and one rabid pit bull terrier combined."
 	icon_state = "moon_rock1"
-	food_reagents = list(/datum/reagent/drug/kroncaine = 10)
+	food_reagents = list(/datum/reagent/drug/kronkaine = 10)
 
 /obj/item/food/drug/moon_rock/Initialize()
 	. = ..()
@@ -29,7 +29,7 @@
 
 /obj/item/reagent_containers/glass/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name
-	desc = "A small ampoule. The liquid inside appears to be boiling violently.\nYou suspect it contains bLasSToFF; the drug thought to be the cause of the infamous Luna nightclub mass casuality incident."
+	desc = "A small ampoule. The liquid inside appears to be boiling violently.\nYou suspect it contains bLasSToFF; the drug thought to be the cause of the infamous Luna nightclub mass casualty incident."
 	icon = 'icons/obj/drugs.dmi'
 	icon_state = "blastoff_ampoule"
 	volume = 20

@@ -2775,7 +2775,7 @@
 	. = ..()
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
 
-//The main feedstock for kroncaine production, also a shitty stamina healer.
+//The main feedstock for kronkaine production, also a shitty stamina healer.
 /datum/reagent/kronkus_extract
 	name = "kronkus extract"
 	description = "A frothy extract made from fermented kronkus vine pulp.\nHighly bitter due to the presence of a variety of kronkamines."
