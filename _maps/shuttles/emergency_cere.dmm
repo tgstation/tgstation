@@ -1129,9 +1129,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cz" = (
-/obj/effect/spawner/randomarcade{
-	dir = 4
-	},
+/obj/effect/spawner/random/machinery/arcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

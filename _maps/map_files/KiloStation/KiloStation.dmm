@@ -2822,7 +2822,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/brig)
 "aiS" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -4504,7 +4504,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -6929,7 +6929,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "auj" = (
@@ -23319,7 +23319,7 @@
 	},
 /area/maintenance/starboard/aft)
 "bFl" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -23968,7 +23968,7 @@
 /turf/open/floor/iron/dark,
 /area/hallway/primary/aft)
 "bHA" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -24168,7 +24168,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/starboard)
@@ -26015,7 +26015,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/hallway/primary/starboard)
 "bQH" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -27285,7 +27285,7 @@
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "bUi" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
@@ -42540,9 +42540,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/randomarcade{
-	dir = 4
-	},
+/obj/effect/spawner/random/machinery/arcade,
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "dPF" = (
@@ -43356,7 +43354,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /turf/open/floor/iron/dark,
 /area/science/research)
 "ekD" = (
@@ -47600,7 +47598,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "fXW" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/machinery/arcade,
 /turf/open/floor/iron/grimy,
 /area/security/prison)
 "fYs" = (
@@ -58823,7 +58821,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "kQb" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -61650,9 +61648,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/security_unit/directional/west,
-/obj/effect/spawner/randomarcade{
-	dir = 4
-	},
+/obj/effect/spawner/random/machinery/arcade,
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "mbU" = (
@@ -64355,7 +64351,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/aft)
@@ -69856,7 +69852,7 @@
 /area/engineering/atmos)
 "pEk" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -70975,7 +70971,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = -32
@@ -77220,7 +77216,7 @@
 /turf/open/floor/plating/airless,
 /area/solars/starboard/fore)
 "sTI" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -78220,7 +78216,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
@@ -82189,7 +82185,7 @@
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "uZh" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/machinery/snackvend,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -86502,7 +86498,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/machinery/colavend,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/port)

@@ -650,10 +650,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "mf" = (
-/obj/effect/spawner/randomarcade{
-	dir = 4;
-	resistance_flags = 64
-	},
+/obj/effect/spawner/random/machinery/arcade,
 /turf/open/floor/wood,
 /area/ctf)
 "mj" = (
@@ -3726,9 +3723,9 @@ BH
 td
 Bh
 mf
-yi
 mf
-yi
+mf
+mf
 QC
 oq
 mB
@@ -3878,9 +3875,9 @@ BH
 td
 Bh
 mf
-yi
 mf
-yi
+mf
+mf
 QC
 Lr
 Ad

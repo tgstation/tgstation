@@ -14658,7 +14658,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "UV" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/machinery/arcade,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Vc" = (

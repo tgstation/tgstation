@@ -1647,7 +1647,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
 "gz" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/machinery/arcade,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "gA" = (
