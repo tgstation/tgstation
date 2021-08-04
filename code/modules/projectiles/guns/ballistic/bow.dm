@@ -93,25 +93,18 @@
 	speed = 1
 	range = 25
 
-
-
 /obj/item/storage/bag/quiver
 	name = "quiver"
 	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
 	icon_state = "quiver"
 	inhand_icon_state = "quiver"
 	worn_icon_state = "harpoon_quiver"
-	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
-/obj/item/storage/bag/quiver/Initialize(mapload)
-	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.storage_max_w_class = WEIGHT_CLASS_TINY
+	storage_max_w_class = WEIGHT_CLASS_TINY
 	storage_max_items = 40
-	storage.storage_max_combined_w_class = 100
-	storage.set_holdable(list(
-		/obj/item/ammo_casing/caseless/arrow
-		))
+	storage_max_combined_w_class = 100
+	storage_holdables = list(list(/obj/item/ammo_casing/caseless/arrow), null)
+	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
 /obj/item/storage/bag/quiver/PopulateContents()
 	. = ..()

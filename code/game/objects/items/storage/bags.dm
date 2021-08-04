@@ -161,9 +161,10 @@
 	name = "mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
+
+	component_type = /datum/component/storage/concrete/bag/holding
 	storage_max_items = INFINITY
 	storage_max_combined_w_class = INFINITY
-	max_combined_stack_amount = INFINITY
 
 // -----------------------------
 //          Plant bag
