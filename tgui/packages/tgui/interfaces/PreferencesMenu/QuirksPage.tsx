@@ -50,13 +50,16 @@ const QuirkList = (props: {
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = "PreferencesMenu__Quirks__QuirkList__quirk";
 
-        const child2 = (
+        const child = (
           <Stack.Item
             className={className}
             key={quirkKey}
             onClick={() => props.onClick(quirkKey, quirk)}
             style={{
               "margin-top": 0,
+              // MOTHBLOCKS TODO: IE bug. Without this the text
+              // doesn't decide the height
+              "min-height": "100px",
             }}
           >
             <Stack fill>
@@ -76,6 +79,9 @@ const QuirkList = (props: {
 
               <Stack.Item grow style={{
                 "margin-left": 0,
+
+                // Fixes an IE bug for text overflowing in Flex boxes
+                "min-width": "0%",
               }}>
                 <Stack vertical fill>
                   <Stack.Item
@@ -112,31 +118,21 @@ const QuirkList = (props: {
           </Stack.Item>
         );
 
-        const child = (
-          <Stack.Item
-          >
-            <Box>
-              lorem ipsum blab
-              ba
-              lablabbakjaoijboijaoijrgjoi9er98u t4u98u98m5498u geu98fuoidgf uiod
-              gfoiuf dgoiugfd uoioiu dgfuoifd guoig  ouifdguoi
-            </Box>
-          </Stack.Item>
-        );
+        return child;
 
-        if (quirk.failTooltip) {
-          return (
-            <Tooltip
-              content={quirk.failTooltip}
-              key={quirkKey}
-              position="top"
-            >
-              {child}
-            </Tooltip>
-          );
-        } else {
-          return child;
-        }
+        // if (quirk.failTooltip) {
+        //   return (
+        //     <Tooltip
+        //       content={quirk.failTooltip}
+        //       key={quirkKey}
+        //       position="top"
+        //     >
+        //       {child}
+        //     </Tooltip>
+        //   );
+        // } else {
+        //   return child;
+        // }
       })}
     </Stack>
   );

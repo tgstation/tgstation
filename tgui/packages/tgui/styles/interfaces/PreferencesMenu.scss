@@ -141,6 +141,7 @@ $department_map: (
     &__QuirkList {
       background-color: colors.$light-grey;
       height: calc(100vh - 170px);
+      min-height: 100%;
       overflow-y: auto;
 
       &__quirk {
@@ -149,30 +150,30 @@ $department_map: (
         color: #111;
         transition: background-color 0.1s ease-in;
 
-        // $quality_map: (
-        //   "positive": colors.$green,
-        //   "neutral": colors.$white,
-        //   "negative": colors.$red,
-        // );
+        $quality_map: (
+          "positive": colors.$green,
+          "neutral": colors.$white,
+          "negative": colors.$red,
+        );
 
-        // @each $quality, $color-value in $quality_map {
-        //   &--#{$quality} {
-        //     background-color: $color-value;
-        //     transition: background-color 0.1s ease-in;
-        //   }
-        // }
+        @each $quality, $color-value in $quality_map {
+          &--#{$quality} {
+            background-color: $color-value;
+            transition: background-color 0.1s ease-in;
+          }
+        }
 
-        // &:hover {
-        //   background-color: colors.$grey;
-        //   transition: background-color 0.1s ease-out;
+        &:hover {
+          background-color: colors.$grey;
+          transition: background-color 0.1s ease-out;
 
-        //   @each $quality, $color-value in $quality_map {
-        //     .PreferencesMenu__Quirks__QuirkList__quirk--#{$quality} {
-        //       background-color: color.scale($color-value, $lightness: -25%);
-        //       transition: background-color 0.1s ease-out;
-        //     }
-        //   }
-        // }
+          @each $quality, $color-value in $quality_map {
+            .PreferencesMenu__Quirks__QuirkList__quirk--#{$quality} {
+              background-color: color.scale($color-value, $lightness: -25%);
+              transition: background-color 0.1s ease-out;
+            }
+          }
+        }
       }
     }
   }
