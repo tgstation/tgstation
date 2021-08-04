@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Dead Cyborgs are thrown back into their body when turned into a Cultist construct."
