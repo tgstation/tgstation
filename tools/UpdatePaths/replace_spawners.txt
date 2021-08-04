@@ -56,3 +56,6 @@
 /obj/effect/spawner/lootdrop/space/languagebook : /obj/effect/spawner/random/exotic/languagebook
 /obj/effect/spawner/lootdrop/space/syndiecosmetic : /obj/effect/spawner/random/exotic/syndie
 /obj/effect/spawner/lootdrop/space/fancytool : /obj/effect/spawner/random/exotic/tool
+/obj/effect/spawner/randomarcade : /obj/effect/spawner/random/machinery/arcade
+/obj/effect/spawner/randomsnackvend : /obj/effect/spawner/random/machinery/snackvend
+/obj/effect/spawner/randomcolavend : /obj/effect/spawner/random/machinery/colavend
