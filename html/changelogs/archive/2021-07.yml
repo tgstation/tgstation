@@ -872,3 +872,130 @@
   timothymtorres, SomeoneYouProbablyKnow:
   - expansion: Added a referee costume to autodrope and costume spawners
   - imageadd: Added referee costume
+2021-07-29:
+  EuSouAFazer:
+  - bugfix: Removed the duplicate QM stamp on Icebox
+  Fikou:
+  - admin: default instakill rifle doesnt delete itself
+  Ghilker:
+  - bugfix: HFR now properly take damage when overfilled with fuel
+  Ghommie:
+  - bugfix: Fixes ridden skateboards crashing back-to-back when bumping a dense atom
+      while another is behind them.
+  Greniza:
+  - bugfix: prisoner transport bags can now be cinched properly
+  - bugfix: syndicate prisoner transport bags now expel the expected amount of gas
+      due to an occupant's exhale
+  - spellcheck: makes cinching a PTB have proper pronouns according to an onlooker
+  Improvedname:
+  - balance: Construction bags fit once more in your pockets
+  Itseasytosee:
+  - qol: ghosts will no longer get fake virus alerts
+  Melbert:
+  - bugfix: Some things that wouldn't dispense themselves from smartfridges now will
+      properly give themselves up. Some examples include Roses, Nettles / Deathnettles,
+      and Salad of Edens.
+  - bugfix: The mapped sprite for GAGS Lizard Plushes works, now. Mappers rejoice.
+  - admin: Tray planted kudzu will now log in investigate -> botany instead of its
+      own file.
+  Mey-Ha-Zah, Fikou:
+  - imageadd: new sprites for the ash walker egg
+  Mothblocks:
+  - rscdel: Nanites have been removed.
+  Shroopy:
+  - bugfix: robots now work properly
+  Thunder12345:
+  - code_imp: Removes all misc files/folders from the projectiles module
+  Wallem:
+  - bugfix: Flowers now have a Natrual Insecticide gene which protects them from decomposition
+      upon harvest.
+  Watermelon914:
+  - expansion: Adds the module duplicator that allows people to duplicate their module
+      components so that they don't have to recreate the entire code again.
+  - admin: Added the ability to save/load integrated circuits.
+  - bugfix: Fixed carps being given orders without a friend via radial menu.
+  - bugfix: Fixed sentient carps being unridable because of the ai datum.
+  - bugfix: Fixed the launchpad usb connection not working with null x/y offset inputs.
+  itseasytosee:
+  - soundadd: There are now sounds for adjusting the pressure on a pneumatic cannon.
+  - qol: attacking disembodied brains now has animations and sounds.
+  - bugfix: constructs examine text color matches the rest of their theme.
+  - qol: Your gun will now actually spin around in your hand while gun-spinning
+  - bugfix: Certain non-magic ranged weapons will no longer "appear to have a magic
+      crystal installed"
+  - qol: Adds some on examine instructions for constructing a turret
+  tf-4:
+  - qol: dash items like the ninja katana now give a balloon alert instead of a chat
+      message
+  - bugfix: Meta medbay now has all its areas set correctly
+  timothymtorres:
+  - bugfix: Fixed spectral instruments spawn probability
+2021-07-30:
+  AlinaStarkova:
+  - bugfix: Deltastations chapel disposals chute no longer chucks trash into departures
+  EuSouAFazer:
+  - bugfix: Changed the computer in Kilo's mining office.
+  - bugfix: A small issue on the tiling in the mining dock.
+  Fikou:
+  - qol: tcg flippers no longer have the scaling element
+  - qol: ski shoes arent as limiting anymore
+  Ghommie:
+  - bugfix: Icebox and Tram chemistry smartfridges are now preloaded.
+  - expansion: Monkeys can now retaliate against xenomorph and animal attacks.
+  IndieanaJones:
+  - refactor: Revenant, Sentient Disease, Space Pirates, and Obsessed have been registered
+      into dynamic mode.
+  InvalidArgument3:
+  - rscadd: Exosuit-mounted kinetic accelerator equipment. Unlocked through Mining
+      Technology.
+  JustANormalHooman, Nari Harimoto:
+  - bugfix: Biobags can feed reproductive extracts again, and can be fed multiple
+      cubes from a bag with one click
+  - refactor: reproductive extracts now have a storage component for the purposes
+      of being fed
+  LemonInTheDark:
+  - rscadd: Getting hit point blank by an explosion will shake your screen a good
+      bit more then before
+  - qol: '"Shakes" from explosions or hitting things really hard will look a bit smoother
+      now'
+  Mothblocks:
+  - qol: Ghosts can now examine BCIs inside hosts.
+  Thunder12345:
+  - code_imp: Removes the misc ID trims file.
+  Watermelon914:
+  - code_imp: Removes some unnecessary code bloat from the circuit component files.
+  godspeedfunnyman:
+  - bugfix: Adds APC electronics and replaces uranium with plasma in donut whiteship
+  timothymtorres:
+  - bugfix: Fixed gas meters showing error icons before round starts and right before
+      they are created
+  - bugfix: Fixed pAI loudness booster to work when not in holoform
+  tralezab code, paxilmaniac sprites:
+  - expansion: Added Trash Cannons. Find the recipe in maint!
+2021-07-31:
+  DAKKA-WAAAGH:
+  - rscadd: Casino emergency shuttle
+  Fikou:
+  - bugfix: reactive armor now properly updates its sprite on the mob
+  Ghommie:
+  - bugfix: Fixed e-bolas being unblockable, and not being able to ensnare flying/floating
+      mobs (though kinda pointless because they ignore the slowdown).
+  - bugfix: fixes being able to mind transfer into someone protected against it by
+      targetting their holoparasite/guardian.
+  - bugfix: All cargo manifest exports should now work as expected. No more gaining
+      money from selling erroneously denied manifests and not gaining/losing money
+      from incorrect manifests.
+  - bugfix: Fixes martial grab combos working while inside objects.
+  SmArtKar:
+  - bugfix: Fixes unremovable components counting towards overall capacity. BCIs are
+      no longer 6 slot instead of 10
+  Watermelon914:
+  - refactor: Refactors the UI code of integrated circuits to be a lot less messy
+      and much more organised and to use much better practices to allow for better
+      features to be added.
+  - qol: Adds dragndrop functionality to integrated circuits so that you no longer
+      have to click to connect ports, you can drag instead.
+  tralezab:
+  - bugfix: rev art now works correctly!
+  wesoda25:
+  - admin: Adds logging for cult reaching red eye and halo milestones

@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/pressuresensor
 	display_name = "Pressure Sensor"
-	display_desc = "Outputs the current pressure of the tile"
+	desc = "Outputs the current pressure of the tile"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
@@ -15,10 +15,6 @@
 /obj/item/circuit_component/pressuresensor/Initialize()
 	. = ..()
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
-
-/obj/item/circuit_component/tempsensor/Destroy()
-	result = null
-	return ..()
 
 /obj/item/circuit_component/pressuresensor/input_received(datum/port/input/port)
 	. = ..()

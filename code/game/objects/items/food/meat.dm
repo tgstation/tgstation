@@ -1256,9 +1256,9 @@
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/beef_wellington/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington/slice, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 30)
 
-/obj/item/food/beef_wellington/slice
+/obj/item/food/beef_wellington_slice
 	name = "beef wellington slice"
 	desc = "A slice of beef wellington, topped with a rich gravy. Simply delicious."
 	icon_state = "beef_wellington_slice"

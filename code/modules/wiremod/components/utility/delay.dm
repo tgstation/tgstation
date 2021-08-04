@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/delay
 	display_name = "Delay"
-	display_desc = "A component that delays a signal by a specified duration."
+	desc = "A component that delays a signal by a specified duration."
 
 	/// Amount to delay by
 	var/datum/port/input/delay_amount
@@ -21,12 +21,6 @@
 	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL)
 
 	output = add_output_port("Result", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/delay/Destroy()
-	output = null
-	trigger = null
-	delay_amount = null
-	return ..()
 
 /obj/item/circuit_component/delay/input_received(datum/port/input/port)
 	. = ..()

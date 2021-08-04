@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - admin: "default instakill rifle doesnt delete itself"

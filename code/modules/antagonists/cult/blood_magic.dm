@@ -623,6 +623,7 @@
 					return
 			else
 				uses--
+				candidate.undeploy()
 				to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!"))
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))

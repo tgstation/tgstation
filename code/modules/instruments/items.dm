@@ -40,7 +40,7 @@
 	ui_interact(user)
 
 /obj/item/instrument/ui_interact(mob/living/user)
-	if(!isliving(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(!isliving(user) || user.stat != CONSCIOUS || (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !ispAI(user)))
 		return
 
 	user.set_machine(src)
@@ -181,7 +181,7 @@
 
 /obj/item/instrument/trumpet/spectral/Initialize()
 	. = ..()
-	AddComponent(/datum/component/spooky)
+	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/En4.mid', 100,1,-1)
@@ -205,7 +205,7 @@
 
 /obj/item/instrument/saxophone/spectral/Initialize()
 	. = ..()
-	AddComponent(/datum/component/spooky)
+	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/saxophone/En4.mid', 100,1,-1)
@@ -229,7 +229,7 @@
 
 /obj/item/instrument/trombone/spectral/Initialize()
 	. = ..()
-	AddComponent(/datum/component/spooky)
+	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/Cn4.mid', 100,1,-1)

@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 15
+#define DB_MINOR_VERSION 16
 
 
 //! ## Timing subsystem
@@ -170,6 +170,7 @@
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
+#define FIRE_PRIORITY_NPC_ACTIONS 22
 #define FIRE_PRIORITY_PROCESS 25
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
