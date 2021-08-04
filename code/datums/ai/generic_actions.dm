@@ -250,23 +250,21 @@
 
 
 /datum/ai_behavior/perform_emote
-	var/emote_to_perform_key
 
-/datum/ai_behavior/perform_emote/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/perform_emote/perform(delta_time, datum/ai_controller/controller, emote)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
-	living_pawn.manual_emote(controller.blackboard[emote_to_perform_key])
+	living_pawn.manual_emote(emote)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/perform_speech
-	var/speech_to_say_key
 
-/datum/ai_behavior/perform_speech/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/perform_speech/perform(delta_time, datum/ai_controller/controller, speech)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
-	living_pawn.say(controller.blackboard[speech_to_say_key], forced = "AI Controller")
+	living_pawn.say(speech, forced = "AI Controller")
 	finish_action(controller, TRUE)
 
 
