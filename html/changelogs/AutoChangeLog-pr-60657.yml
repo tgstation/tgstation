@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "The chasm hallucination now visibly indicates the turfs it's effecting again."
