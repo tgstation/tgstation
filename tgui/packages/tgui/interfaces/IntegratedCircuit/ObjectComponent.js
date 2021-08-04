@@ -95,8 +95,6 @@ export class ObjectComponent extends Component {
       y,
       index,
       color = 'blue',
-      options,
-      option,
       removable,
       locations,
       onPortUpdated,
@@ -142,21 +140,6 @@ export class ObjectComponent extends Component {
             <Stack.Item grow={1} unselectable="on">
               {name}
             </Stack.Item>
-            {!!options && (
-              <Stack.Item>
-                <Dropdown
-                  color={color}
-                  nochevron
-                  over
-                  options={options}
-                  displayText={option}
-                  noscroll
-                  onSelected={(selected) => act('set_component_option', {
-                    component_id: index,
-                    option: selected,
-                  })} />
-              </Stack.Item>
-            )}
             <Stack.Item>
               <Button
                 color="transparent"

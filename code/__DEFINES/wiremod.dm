@@ -26,6 +26,8 @@
 #define PORT_TYPE_LIST "list"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
+/// Options datatype. Derivative of string.
+#define PORT_TYPE_OPTION "option"
 
 // Other datatypes
 /// Atom datatype
@@ -114,6 +116,10 @@
 #define COMP_PROC_GLOBAL "Global"
 #define COMP_PROC_OBJECT "Object"
 
+// Bar overlay component
+#define COMP_BAR_OVERLAY_VERTICAL "Vertical"
+#define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
+
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
@@ -148,3 +154,9 @@
 #define CIRCUIT_FLAG_ADMIN (1<<3)
 /// This circuit component does not show in the menu.
 #define CIRCUIT_FLAG_HIDDEN (1<<4)
+
+// Datatype flags
+/// The datatype supports manual inputs
+#define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
+/// The datatype won't update the value when it is connected to the port
+#define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)

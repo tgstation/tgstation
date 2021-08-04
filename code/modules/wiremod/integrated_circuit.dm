@@ -245,6 +245,7 @@
 				"connected_to" = REF(port.connected_port),
 				"color" = port.color,
 				"current_data" = current_data,
+				"datatype_data" = port.datatype_ui_data(user),
 			))
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
@@ -252,14 +253,12 @@
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port),
-				"color" = port.color
+				"color" = port.color,
 			))
 
 		component_data["name"] = component.display_name
 		component_data["x"] = component.rel_x
 		component_data["y"] = component.rel_y
-		component_data["option"] = component.current_option
-		component_data["options"] = component.options
 		component_data["removable"] = component.removable
 		.["components"] += list(component_data)
 
@@ -332,7 +331,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(input_port.datatype != PORT_TYPE_ANY && !output_port.compatible_datatype(input_port.datatype))
+			if(!input_port.can_receive_from_datatype(output_port.datatype))
 				return
 
 			input_port.register_output_port(output_port)
@@ -378,16 +377,6 @@
 			component.rel_x = min(max(-COMPONENT_MAX_POS, text2num(params["rel_x"])), COMPONENT_MAX_POS)
 			component.rel_y = min(max(-COMPONENT_MAX_POS, text2num(params["rel_y"])), COMPONENT_MAX_POS)
 			. = TRUE
-		if("set_component_option")
-			var/component_id = text2num(params["component_id"])
-			if(!WITHIN_RANGE(component_id, attached_components))
-				return
-			var/obj/item/circuit_component/component = attached_components[component_id]
-			var/option = params["option"]
-			if(!(option in component.options))
-				return
-			component.set_option(option)
-			. = TRUE
 		if("set_component_input")
 			var/component_id = text2num(params["component_id"])
 			var/port_id = text2num(params["port_id"])
@@ -427,17 +416,10 @@
 				port.set_input(marker.marked_atom)
 				return TRUE
 
-			var/user_input = params["input"]
-			switch(port.datatype)
-				if(PORT_TYPE_NUMBER)
-					port.set_input(text2num(user_input))
-				if(PORT_TYPE_ANY)
-					port.set_input(text2num(user_input) || user_input)
-				if(PORT_TYPE_STRING)
-					port.set_input(user_input)
-				if(PORT_TYPE_SIGNAL)
-					balloon_alert(usr, "triggered [port.name]")
-					port.set_input(COMPONENT_SIGNAL)
+			var/user_input = port.handle_manual_input(usr, params["input"])
+			if(isnull(user_input))
+				return TRUE
+			port.set_input(user_input)
 			. = TRUE
 		if("get_component_value")
 			var/component_id = text2num(params["component_id"])

@@ -5,8 +5,10 @@
  */
 /obj/item/circuit_component/proccall
 	display_name = "Proc Call"
-	desc = "A component that gets a variable on an object."
+	desc = "A component that calls a proc on an object."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
+
+	var/datum/port/input/option/proccall_options
 
 	/// Entity to proccall on
 	var/datum/port/input/entity
@@ -26,7 +28,7 @@
 		COMP_PROC_GLOBAL,
 	)
 
-	options = component_options
+	proccall_options = add_option_port("Proccall Options", component_options)
 
 /obj/item/circuit_component/proccall/Initialize()
 	. = ..()
@@ -42,7 +44,7 @@
 		return
 
 	var/called_on
-	if(current_option == COMP_PROC_OBJECT)
+	if(proccall_options.input_value == COMP_PROC_OBJECT)
 		called_on = entity.input_value
 	else
 		called_on = GLOBAL_PROC
