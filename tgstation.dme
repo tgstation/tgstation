@@ -2033,6 +2033,8 @@
 #include "code\modules\client\preferences\species.dm"
 #include "code\modules\client\preferences\ui_style.dm"
 #include "code\modules\client\preferences\uplink_location.dm"
+#include "code\modules\client\preferences\middleware\_middleware.dm"
+#include "code\modules\client\preferences\middleware\quirks.dm"
 #include "code\modules\client\verbs\etips.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"

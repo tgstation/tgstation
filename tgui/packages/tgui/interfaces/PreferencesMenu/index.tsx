@@ -9,6 +9,7 @@ import { GamePreferencesPage } from "./GamePreferencesPage";
 import { JobsPage } from "./JobsPage";
 import { MainPage } from "./MainPage";
 import { SpeciesPage } from "./SpeciesPage";
+import { QuirksPage } from "./QuirksPage";
 
 enum Page {
   Antags,
@@ -16,6 +17,7 @@ enum Page {
   Jobs,
   Main,
   Species,
+  Quirks,
 }
 
 const CHARACTER_PREFERENCE_PAGES = new Set([
@@ -23,6 +25,7 @@ const CHARACTER_PREFERENCE_PAGES = new Set([
   Page.Jobs,
   Page.Main,
   Page.Species,
+  Page.Quirks,
 ]);
 
 const CharacterProfiles = (props: {
@@ -50,7 +53,7 @@ const CharacterProfiles = (props: {
 
 export const PreferencesMenu = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
-  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Game);
+  const [currentPage, setCurrentPage] = useLocalState(context, "currentPage", Page.Quirks);
 
   let page;
 
@@ -69,6 +72,9 @@ export const PreferencesMenu = (props, context) => {
       break;
     case Page.Species:
       page = <SpeciesPage />;
+      break;
+    case Page.Quirks:
+      page = <QuirksPage />;
       break;
     default:
       exhaustiveCheck(currentPage);

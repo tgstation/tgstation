@@ -17,6 +17,8 @@
 	var/processing_quirk = FALSE
 	/// When making an abstract quirk (in OOP terms), don't forget to set this var to the type path for that abstract quirk.
 	var/abstract_parent_type = /datum/quirk
+	/// The icon to show in the preferences menu
+	var/icon/icon = icon('icons/testing/greyscale_error.dmi')
 
 /datum/quirk/Destroy()
 	if(quirk_holder)

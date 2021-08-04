@@ -154,12 +154,18 @@ GLOBAL_VAR(preferences_species_data)
 	/// Cached list of generated preferences (return value of [`/datum/preference/get_choices`]).
 	var/list/generated_preference_values = list()
 
+	/// A list of instantiated middleware
+	var/list/datum/preference_middleware/middleware = list()
+
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
 	return ..()
 
 /datum/preferences/New(client/C)
 	parent = C
+
+	for (var/middleware_type in subtypesof(/datum/preference_middleware))
+		middleware += new middleware_type(src)
 
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		custom_names[custom_name_id] = get_default_name(custom_name_id)
@@ -183,7 +189,6 @@ GLOBAL_VAR(preferences_species_data)
 		save_preferences()
 	save_character() //let's save this new random character so it doesn't keep generating new ones.
 	menuoptions = list()
-	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
@@ -227,8 +232,10 @@ GLOBAL_VAR(preferences_species_data)
 
 	data["active_name"] = read_preference(/datum/preference/name/real_name)
 
-	// MOTHBLOCKS TODO: If there is ever more than this, add a /datum/preference_middleware type
 	data["name_to_use"] = "real_name" // MOTHBLOCKS TODO: Change to AI name, clown name, etc depending on circumstances
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		data += preference_middleware.get_ui_data(user)
 
 	return data
 
@@ -237,26 +244,37 @@ GLOBAL_VAR(preferences_species_data)
 		// If we do this in GLOBAL_VAR_INIT, the species list is not created yet.
 		GLOB.preferences_species_data = generate_preferences_species_data()
 
+	var/list/data = list()
+	data["generated_preference_values"] = generated_preference_values
+	data["overflow_role"] = SSjob.overflow_role
+
+	// MOTHBLOCKS TODO: Move this over to a json asset
+	data["species"] = GLOB.preferences_species_data
+
 	var/list/selected_antags = list()
 
 	for (var/antag in be_special)
 		selected_antags += serialize_antag_name(antag)
 
-	return list(
-		"generated_preference_values" = generated_preference_values,
-		"overflow_role" = SSjob.overflow_role,
-		"species" = GLOB.preferences_species_data,
+	// MOTHBLOCKS TODO: Only send when needed, just like generated_preference_values
+	// MOTHBLOCKS TODO: Send banned/not old enough antags
+	data["selected_antags"] = selected_antags
 
-		// MOTHBLOCKS TODO: Only send when needed, just like generated_preference_values
-		// MOTHBLOCKS TODO: Send banned/not old enough antags
-		"selected_antags" = selected_antags,
-	)
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		data += preference_middleware.get_ui_static_data(user)
+
+	return data
 
 /datum/preferences/ui_assets(mob/user)
-	return list(
+	var/list/assets = list(
 		get_asset_datum(/datum/asset/spritesheet/antagonists),
 		get_asset_datum(/datum/asset/spritesheet/preferences),
 	)
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		assets += preference_middleware.get_ui_assets()
+
+	return assets
 
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -363,7 +381,14 @@ GLOBAL_VAR(preferences_species_data)
 			else
 				be_special -= antags
 
-	return TRUE
+			return TRUE
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		var/delegation = preference_middleware.action_delegations[action]
+		if (!isnull(delegation))
+			return call(preference_middleware, delegation)(params, usr)
+
+	return FALSE
 
 /datum/preferences/ui_close(mob/user)
 	save_preferences()
