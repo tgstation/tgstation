@@ -68,3 +68,21 @@
 		/obj/item/clothing/under/syndicate/rus_army,
 		/obj/item/clothing/under/syndicate/bloodred/sleepytime,
 	)
+
+/obj/effect/spawner/random/clothing/gloves
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "random_gloves"
+	loot = list(
+		/obj/item/clothing/gloves/color/orange,
+		/obj/item/clothing/gloves/color/red,
+		/obj/item/clothing/gloves/color/blue,
+		/obj/item/clothing/gloves/color/purple,
+		/obj/item/clothing/gloves/color/green,
+		/obj/item/clothing/gloves/color/grey,
+		/obj/item/clothing/gloves/color/light_brown,
+		/obj/item/clothing/gloves/color/brown,
+		/obj/item/clothing/gloves/color/white,
+		/obj/item/clothing/gloves/color/rainbow,
+	)

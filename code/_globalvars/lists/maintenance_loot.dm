@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/suit/toggle/labcoat = 1,
 		/obj/item/clothing/under/color/grey = 1,
 		/obj/item/clothing/gloves/color/fyellow = 1,
-		/obj/effect/spawner/lootdrop/gloves = 1,
+		/obj/effect/spawner/random/clothing/gloves = 1,
 		/obj/item/storage/wallet/random = 1,
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,

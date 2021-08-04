@@ -69,3 +69,4 @@
 /obj/effect/spawner/lootdrop/maintenance/six : /obj/effect/spawner/random/maintenance/six
 /obj/effect/spawner/lootdrop/maintenance/seven : /obj/effect/spawner/random/maintenance/seven
 /obj/effect/spawner/lootdrop/maintenance/eight : /obj/effect/spawner/random/maintenance/eight
+/obj/effect/spawner/lootdrop/gloves : /obj/effect/spawner/random/clothing/gloves
