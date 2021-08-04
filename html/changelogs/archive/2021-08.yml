@@ -57,3 +57,103 @@
   tralezab:
   - bugfix: cannons lost their sprites in the last feature addition for them... now
       they have those back!
+2021-08-03:
+  Fikou, sprites from /vg/:
+  - expansion: reinforced rock for mapping use
+  Ghommie:
+  - expansion: Picked up bees and mice can now fit in boxes.
+  Gurkenglas:
+  - expansion: Signals now fire a timestamp.
+  JohnFulpWillard:
+  - bugfix: Cultists using Twisted Construction on a Cyborg will no longer spawn 2
+      constructs.
+  KittyNoodle:
+  - bugfix: ethereal hair will now change with ethereal color without an external
+      update
+  SmArtKar:
+  - expansion: You can make BCI overlay and click interceptor circutry now!
+  - balance: BCI now has it's own research node.
+  - bugfix: You no longer can remove BCI core and actions from BCIs and insert them
+      into other circutry.
+  Thunder12345:
+  - code_imp: Removes (almost) all misc files from the clothing module
+  Watermelon914:
+  - admin: Adds admin components that allow admins to set variables, get variables,
+      call procs and execute sdql via circuits. To enable these components to function,
+      an admin needs to enable the admin_only variable on a circuit.
+  - qol: Adds more entity information to shell outputs to allow circuits to identify
+      who used the shell.
+  - expansion: Adds list literals.
+  - bugfix: CTF will no longer delete objects on CTF maps that shouldn't be deleted
+      and it'll also successfully regenerate the map once a CTF round ends.
+  - bugfix: Fixed phantom slipping caused by synthesized banana peels.
+  - bugfix: Fixed the metabolism unit test randomly failing because of neurowhine
+  carshalash:
+  - bugfix: Eggs now work when cracked into glasses
+2021-08-04:
+  Fikou:
+  - admin: adds list getter and text2num to sdql wrappers
+  Greniza:
+  - bugfix: The pip count, layout, and orientation of standard D6s has been brought
+      in line with a standard casino D6.
+  Gurkenglas:
+  - expansion: The multiplexer component, now router, also demultiplexes across multiple
+      outputs. Also, the indices now wrap instead of clamp.
+  Improvedname:
+  - bugfix: Anti-tider mister is no longer invinsible inhand
+  InsaneRed:
+  - bugfix: Cultists can once again draw runes in lavaland mining station
+  JohnFulpWillard:
+  - bugfix: Using Twisted Construction on an AI shell no longer ghosts the AI
+  MMMiracles:
+  - rscadd: Tramstation's service wing has been revamped!
+  - rscadd: The Kitchen and Hydroponics has been redesigned entirely with small adjustments
+      to the bar.
+  - rscadd: A larger dining area as well as a Kitchen area with underground freezer.
+  - rscadd: Better department layout in general for Hydroponics while keeping the
+      dedicated beekeeper room.
+  - rscadd: A dedicated service room to hold the various ordering/request consoles
+      between the ktichen/bar/hydro.
+  - rscadd: The stairs leading to the bar have been made very accessible from the
+      tram dock, being right beside the kitchen entrance. The lower segment of the
+      bar has been redesigned the better fit this change.
+  Mothblocks:
+  - bugfix: Fixed medical HUDs not showing the defib icon.
+  SmArtKar:
+  - expansion: You can control air alarms using USB now
+  - bugfix: Phazon microtool arrays no longer have an error sprite
+  TemporalOroboros:
+  - bugfix: Fixed rad collectors ignoring letting anyone (un)lock them with their
+      ID.
+  - bugfix: Beef wellingtons cannot be sliced to produce beef wellington slices that
+      can be sliced to produce beef wellington slices that can be sliced to produce
+      beef wellington slices...
+  Timberpoes:
+  - bugfix: Fixed a bug preventing the Plexagon HR Core app from de-prioritising jobs
+      when 5 or more jobs were prioritised.
+  Triiodine:
+  - bugfix: NT engineers have repaired a malfunctioning external airlock set at Kilostation
+      disposals. It should cycle properly now.
+  Watermelon914:
+  - bugfix: Vehicles can now be buckled to again.
+  - code_imp: Improves BCI code by removing an easily bypassable `add_to` check for
+      circuit components and implementing proper typechecking in the addable BCI components
+  - bugfix: Fixed the UI notices about the supported types not showing up on all BCI
+      components
+  Zytolg:
+  - rscadd: Makes Icebox Service Multi-Z through retroaction.
+  - rscadd: The first Multi-Z kitchen on /tgstation/
+  - bugfix: Tosses out the non Multi-Z aspects of the previous service
+  - qol: You can now use stairs to visit the various areas of Icebox Service
+  - bugfix: This should force ruin spawns out and away from the center of the station.
+      Next step is to actually add icebox ruins that are small but help force that
+      spawn condition.
+  interestingusernam3:
+  - bugfix: Being clumsy no longer protects you from grenades sticking to your hands.
+  tralezab:
+  - code_imp: Pavlova has better code :)
+  - spellcheck: Pavlova has a different description now
+  - bugfix: fixes soulstones granting themselves every language... instead of the
+      spirit inside. lol.
+  - refactor: refactored spirit possession used in the possessed blade into a component.
+      now ANYTHING could be possessed if you so desire!

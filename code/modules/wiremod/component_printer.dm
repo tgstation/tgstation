@@ -133,6 +133,84 @@
 		/obj/item/reagent_containers/glass/beaker = 2,
 	)
 
+/obj/machinery/debug_component_printer
+	name = "debug component printer"
+	desc = "Produces components for the creation of integrated circuits."
+	icon = 'icons/obj/wiremod_fab.dmi'
+	icon_state = "fab-idle"
+
+	/// All of the possible circuit designs stored by this debug printer
+	var/list/all_circuit_designs
+
+	density = TRUE
+
+/obj/machinery/debug_component_printer/Initialize()
+	. = ..()
+	all_circuit_designs = list()
+
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(id)
+		if((design.build_type & COMPONENT_PRINTER) && design.build_path)
+			all_circuit_designs[design.build_path] = list(
+				"name" = design.name,
+				"description" = design.desc,
+				"materials" = design.materials,
+				"categories" = design.category
+			)
+
+	for(var/obj/item/circuit_component/component as anything in subtypesof(/obj/item/circuit_component))
+		var/categories = list("Inaccessible")
+		if(initial(component.circuit_flags) & CIRCUIT_FLAG_ADMIN)
+			categories = list("Admin")
+		if(!(component in all_circuit_designs))
+			all_circuit_designs[component] = list(
+				"name" = initial(component.display_name),
+				"description" = initial(component.desc),
+				"materials" = list(),
+				"categories" = categories,
+			)
+
+/obj/machinery/debug_component_printer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ComponentPrinter", name)
+		ui.open()
+
+/obj/machinery/debug_component_printer/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+	)
+
+/obj/machinery/debug_component_printer/ui_act(action, list/params)
+	. = ..()
+	if (.)
+		return
+
+	switch (action)
+		if ("print")
+			var/build_path = text2path(params["designId"])
+			if (!build_path)
+				return TRUE
+
+			var/list/design = all_circuit_designs[build_path]
+			if(!design)
+				return TRUE
+
+			balloon_alert_to_viewers("printed [design["name"]]")
+			var/atom/printed_design = new build_path(drop_location())
+			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
+			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
+
+	return TRUE
+
+/obj/machinery/debug_component_printer/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["materials"] = list()
+	data["designs"] = all_circuit_designs
+
+	return data
+
 /// Module duplicator, allows you to save and recreate module components.
 /obj/machinery/module_duplicator
 	name = "module duplicator"

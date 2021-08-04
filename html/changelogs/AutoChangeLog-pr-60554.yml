@@ -1,0 +1,7 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - expansion: "hmg turret making use of newly fixed manned turret code, and the deployable component"
+  - bugfix: "manned turret projectiles now actually go towards where you aim"
+  - soundadd: "new heavy machinegun sound from tgmc"
+  - code_imp: "deployable component, for deploying things from other things"

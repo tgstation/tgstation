@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "List literal components no longer append their output with garbage data."

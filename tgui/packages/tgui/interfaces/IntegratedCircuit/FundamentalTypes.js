@@ -1,5 +1,5 @@
 import { BasicInput } from './BasicInput';
-import { NumberInput, Button, Stack, Input } from '../../components';
+import { NumberInput, Button, Stack, Input, Dropdown, Box } from '../../components';
 
 export const FUNDAMENTAL_DATA_TYPES = {
   'string': (props, context) => {
@@ -10,6 +10,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
           placeholder={name}
           value={value}
           onChange={(e, val) => setValue(val)}
+          width="96px"
         />
       </BasicInput>
     );
@@ -32,7 +33,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
     );
   },
   'entity': (props, context) => {
-    const { name, setValue, color } = props;
+    const { name, setValue } = props;
     return (
       <Button
         content={name}
@@ -51,6 +52,21 @@ export const FUNDAMENTAL_DATA_TYPES = {
         color="transparent"
         compact
         onClick={() => setValue()}
+      />
+    );
+  },
+  'option': (props, context) => {
+    const { value, setValue, extraData } = props;
+    return (
+      <Dropdown
+        className="Datatype__Option"
+        color={"transparent"}
+        options={typeof extraData === 'object'
+          ? Object.keys(extraData)
+          : extraData}
+        onSelected={setValue}
+        displayText={value}
+        noscroll
       />
     );
   },
@@ -75,10 +91,17 @@ export const FUNDAMENTAL_DATA_TYPES = {
               placeholder={name}
               value={value}
               onChange={(e, val) => setValue(val)}
+              width="64px"
             />
           </Stack.Item>
         </Stack>
       </BasicInput>
     );
+  },
+};
+
+export const DATATYPE_DISPLAY_HANDLERS = {
+  'option': (port) => {
+    return port.name.toLowerCase();
   },
 };
