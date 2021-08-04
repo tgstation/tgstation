@@ -55,7 +55,7 @@
 		return
 	var/obj/undeployed_object = new spawned_on_undeploy(src)
 	//Keeps the health the same even if you redeploy the gun
-	undeployed_object.modify_max_integrity(src.max_integrity)
+	undeployed_object.modify_max_integrity(max_integrity)
 	qdel(src)
 
 //BUCKLE HOOKS

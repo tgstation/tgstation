@@ -43,7 +43,6 @@
 	INVOKE_ASYNC(src, .proc/deploy, source, user, location, direction)
 
 /datum/component/deployable/proc/deploy(obj/source, mob/user, location, direction) //If there's no user, location and direction are used
-	var/obj/deploy_item = source //I got errors for not using this, so be it
 	var/obj/deployed_object //Used for spawning the deployed object
 	var/turf/deploy_location //Where our deployed_object gets put
 	var/new_direction //What direction do we want our deployed object in
@@ -68,7 +67,7 @@
 	deployed_object.setDir(new_direction)
 
 	//Sets the integrity of the new deployed machine to that of the object it came from
-	deployed_object.modify_max_integrity(deploy_item.max_integrity)
+	deployed_object.modify_max_integrity(source.max_integrity)
 	deployed_object.update_icon_state()
 
 	if(delete_on_use)
