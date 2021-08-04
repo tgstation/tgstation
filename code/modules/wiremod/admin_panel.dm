@@ -38,8 +38,23 @@
 		return FALSE
 
 	switch (action)
+		if ("duplicate_circuit")
+			if (alert(usr, "This will spawn the new circuit at where you are, are you sure?", "Confirm", "Yes", "No") != "Yes")
+				return FALSE
+
+			var/list/errors = list()
+
+			var/obj/item/integrated_circuit/loaded/new_circuit = new(usr.drop_location())
+			new_circuit.load_circuit_data(circuit.convert_to_json(), errors)
+
+			if (length(errors))
+				to_chat(usr, span_warning("Somehow, duplicating the circuit failed:"))
+				for (var/error in errors)
+					to_chat(usr, span_warning(error))
 		if ("follow_circuit")
 			usr.client?.admin_follow(circuit)
+		if ("save_circuit")
+			circuit.attempt_save_to(usr.client)
 		if ("vv_circuit")
 			usr.client?.debug_variables(circuit)
 		if ("open_circuit")
