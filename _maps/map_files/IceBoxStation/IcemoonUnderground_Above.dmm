@@ -2533,6 +2533,10 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/fore)
+"lm" = (
+/obj/machinery/power/apc/auto_name/north,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/bar)
 "lo" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 24
@@ -2804,6 +2808,15 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/mechbay)
+"nb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "nh" = (
 /obj/structure/closet/crate,
 /obj/structure/cable,
@@ -4483,7 +4496,7 @@
 /area/mine/laborcamp)
 "wY" = (
 /obj/machinery/door/airlock{
-	name = "Hydroponics Backroom";
+	name = "Hydroponics Maintenance";
 	req_access_txt = "35"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4744,6 +4757,7 @@
 	},
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/iron/half{
 	dir = 1
 	},
@@ -4961,6 +4975,9 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "AB" = (
@@ -5594,6 +5611,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "Ei" = (
@@ -6164,6 +6184,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
+"Hq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "Hv" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -7293,6 +7320,15 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/carpet,
 /area/service/theater)
+"Oj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "Ol" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
@@ -7306,6 +7342,9 @@
 "Oq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "Os" = (
@@ -7638,7 +7677,7 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "Qd" = (
-/obj/structure/beebox/premade,
+/obj/structure/beebox,
 /turf/open/floor/grass,
 /area/service/hydroponics)
 "Qh" = (
@@ -7977,6 +8016,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/service/bar)
 "SE" = (
@@ -8727,6 +8769,22 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"Wr" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/closet/crate{
+	name = "Le Caisee D'abeille"
+	},
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/hooded/bee_costume,
+/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/hooded/bee_hood,
+/obj/item/queen_bee,
+/obj/item/melee/flyswatter,
+/turf/open/floor/grass,
+/area/service/hydroponics)
 "Wt" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine,
@@ -43377,7 +43435,7 @@ mF
 nJ
 Iw
 eO
-xz
+Wr
 Ql
 OM
 EN
@@ -45693,7 +45751,7 @@ DQ
 Yd
 Ba
 ts
-BR
+lm
 xR
 BR
 ig
@@ -49282,10 +49340,10 @@ TV
 Ks
 rQ
 rQ
-rQ
-rQ
-rQ
-rQ
+nb
+Hq
+Hq
+Oj
 rQ
 rQ
 rQ
