@@ -8,32 +8,41 @@
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
 
-
-	////////THIS SECTION COULD BE ITS OWN ELEMENT
-	///Icon to use
-	var/icon_living = ""
-	///Icon when the animal is dead. Don't use animated icons for this.
-	var/icon_dead = ""
-	///We only try to show a gibbing animation if this exists.
-	var/icon_gib = null
-	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
-	var/flip_on_death = FALSE
-
-	////ALL IN THIS SECTION SHOULD BE BASIC MOB FLAGS
 	var/basic_mob_flags = NONE
 
-	///Environmental info, this could become an element? Might lower the amount of mobs we're going through as a lot of mobs dont care about environment.
+	///Defines how fast the basic mob can move. This is a multiplier
+	var/speed = 1
+	///How much stamina the mob recovers per second
+	var/stamina_recovery = 5
 
-	///Atmos checks THESE SHOULD BE ELEMENTIZED
-	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
-	///Leaving something at 0 means it's off - has no maximum.
-	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	///This damage is taken when atmos doesn't fit all the requirements above.
-	var/unsuitable_atmos_damage = 1
+	///how much damage this basic mob does to objects, if any.
+	var/obj_damage = 0
+	///How much armour they ignore, as a flat reduction from the targets armour value.
+	var/armour_penetration = 0
+	///Damage type of a simple mob's melee attack, should it do damage.
+	var/melee_damage_type = BRUTE
+	///How much wounding power it has
+	var/wound_bonus = CANT_WOUND
+	///How much bare wounding power it has
+	var/bare_wound_bonus = 0
+	///If the attacks from this are sharp
+	var/sharpness = NONE
+
+	/// Sound played when the critter attacks.
+	var/attack_sound
+	/// Override for the visual attack effect shown on 'do_attack_animation()'.
+	var/attack_vis_effect
+	///Played when someone punches the creature.
+	var/attacked_sound = "punch" //This should be an element
+
+	///What kind of objects this mob can smash.
+	var/environment_smash = ENVIRONMENT_SMASH_NONE
+
+	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
+	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
-
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
@@ -59,60 +68,32 @@
 	///Attacking, but without damage, verb in present simple tense.
 	var/friendly_verb_simple = "nuzzle"
 
-	///Minimum force required to deal any damage to the mob.
-	var/force_threshold = 0
-	///How much stamina the mob recovers per second
-	var/stamina_recovery = 5
-	///Healable by medical stacks? Defaults to yes.
-	var/healable = TRUE
+	////////THIS SECTION COULD BE ITS OWN ELEMENT
+	///Icon to use
+	var/icon_living = ""
+	///Icon when the animal is dead. Don't use animated icons for this.
+	var/icon_dead = ""
+	///We only try to show a gibbing animation if this exists.
+	var/icon_gib = null
+	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
+	var/flip_on_death = FALSE
 
 
-	///how much damage this basic mob does to objects, if any.
-	var/obj_damage = 0
-	///How much armour they ignore, as a flat reduction from the targets armour value.
-	var/armour_penetration = 0
-	///Damage type of a simple mob's melee attack, should it do damage.
-	var/melee_damage_type = BRUTE
-	///How much wounding power it has
-	var/wound_bonus = CANT_WOUND
-	///How much bare wounding power it has
-	var/bare_wound_bonus = 0
-	///If the attacks from this are sharp
-	var/sharpness = NONE
+	///Environmental info, this could become an element? Might lower the amount of mobs we're going through as a lot of mobs dont care about environment.
 
-
-	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-
-	/// Sound played when the critter attacks.
-	var/attack_sound
-	/// Override for the visual attack effect shown on 'do_attack_animation()'.
-	var/attack_vis_effect
-
-	///What kind of objects this mob can smash.
-	var/environment_smash = ENVIRONMENT_SMASH_NONE
-
-	///Defines how fast the basic mob can move. This is a multiplier
-	var/speed = 1
+	///Atmos checks THESE SHOULD BE ELEMENTIZED
+	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
+	///Leaving something at 0 means it's off - has no maximum.
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	///This damage is taken when atmos doesn't fit all the requirements above.
+	var/unsuitable_atmos_damage = 1
 
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
-
-
-	///Sentience type, for slime potions. Future element perhaps?
+	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
 	var/sentience_type = SENTIENCE_ORGANIC
 
-	///List of things spawned at mob's loc when it dies. This should be an element.
-	var/list/loot = list()
 
-	///Message when the mob dies
-	var/deathmessage = ""
-
-	///Played when someone punches the creature.
-	var/attacked_sound = "punch" //This should be an element
-
-	///What kind of footstep this mob should have. Null if it shouldn't have any.
-	var/footstep_type
 
 
 
@@ -159,7 +140,7 @@
 	src.face_atom(target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
-	var/result = target.attack_animal(src)
+	var/result = target.attack_basic_mob(src)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
 

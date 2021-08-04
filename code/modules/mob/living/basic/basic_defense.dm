@@ -124,13 +124,9 @@
 	else
 		temp_damage *= damage_coeff[damagetype]
 
-	if(temp_damage >= 0 && temp_damage <= force_threshold)
-		visible_message(span_warning("[src] looks unharmed!"))
-		return FALSE
-	else
-		if(actuallydamage)
-			apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
-		return TRUE
+	if(actuallydamage)
+		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
+	return TRUE
 
 /mob/living/basic/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	apply_damage(Proj.damage, Proj.damage_type)
