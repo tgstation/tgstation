@@ -618,6 +618,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/cooking_oil = 2) //Meat has fats that a food processor can process into cooking oil
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
+	//As we don't want meat slabs (Which would otherwise gain reagents when obtaining their materials) to have their chemicals overwritten, we apply this material flag.
+	material_flags = MATERIAL_NO_EFFECTS
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
 	var/slab_color = "#FF0000"
 
