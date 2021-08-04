@@ -471,6 +471,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
+/obj/item/circuit_component/conveyor_switch/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Conveyor direction 0 means that it is stopped, 1 means that it is active and -1 means that it is working in reverse mode", "orange", "info")
+
 /obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/parent)
 	. = ..()
 	if(istype(parent, /obj/machinery/conveyor_switch))
