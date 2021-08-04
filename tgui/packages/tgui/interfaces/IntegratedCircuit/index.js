@@ -238,16 +238,20 @@ export class IntegratedCircuit extends Component {
       <Window
         width={600}
         height={600}
-        buttons={
-          <Box width="160px" position="absolute" top="5px" height="22px">
+        buttons={(
+          <Box
+            width="160px"
+            position="absolute"
+            top="5px"
+            height="22px"
+          >
             <Stack>
               <Stack.Item grow>
                 <Input
                   fluid
                   placeholder="Circuit Name"
                   value={display_name}
-                  onChange={(e, value) =>
-                    act('set_display_name', { display_name: value })}
+                  onChange={(e, value) => act("set_display_name", { display_name: value })}
                 />
               </Stack.Item>
               {!!is_admin && (
@@ -256,14 +260,15 @@ export class IntegratedCircuit extends Component {
                     position="absolute"
                     top={0}
                     color="transparent"
-                    onClick={() => act('save_circuit')}
+                    onClick={() => act("save_circuit")}
                     icon="save"
                   />
                 </Stack.Item>
               )}
             </Stack>
           </Box>
-        }>
+        )}
+      >
         <Window.Content
           style={{
             'background-image': 'none',

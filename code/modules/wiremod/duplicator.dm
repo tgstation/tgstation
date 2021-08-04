@@ -4,6 +4,7 @@
 GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
+	PORT_TYPE_LIST,
 	PORT_TYPE_ANY,
 ))
 
@@ -17,6 +18,8 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 
 	if(general_data["display_name"])
 		set_display_name(general_data["display_name"])
+
+	admin_only = general_data["admin_only"]
 
 	var/list/circuit_data = general_data["components"]
 	var/list/identifiers_to_circuit = list()
@@ -143,6 +146,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	general_data["components"] = circuit_data
 	general_data["external_objects"] = external_objects_key
 	general_data["display_name"] = display_name
+	general_data["admin_only"] = admin_only
 
 	return json_encode(general_data)
 
@@ -169,7 +173,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	set name = "Load Circuit"
 	set category = "Admin.Fun"
 
-	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
+	if(!check_rights(R_VAREDIT))
 		return
 
 	var/list/errors = list()

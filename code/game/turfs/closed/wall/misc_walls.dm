@@ -110,3 +110,19 @@
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
+
+/turf/closed/wall/rock
+	name = "reinforced rock"
+	desc = "It has metal struts that need to be welded away before it can be mined."
+	icon = 'icons/turf/walls/reinforced_rock.dmi'
+	icon_state = "porous_rock-0"
+	base_icon_state = "porous_rock"
+	sheet_amount = 1
+	hardness = 50
+	girder_type = null
+	decon_type = /turf/closed/mineral/asteroid
+
+/turf/closed/wall/rock/porous
+	name = "reinforced porous rock"
+	desc = "This rock is filled with pockets of breathable air. It has metal struts to protect it from mining."
+	decon_type = /turf/closed/mineral/asteroid/porous

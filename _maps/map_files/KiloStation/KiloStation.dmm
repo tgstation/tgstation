@@ -34080,10 +34080,22 @@
 	},
 /area/hallway/secondary/entry)
 "cna" = (
-/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/disposal)
 "cnc" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/stripes/corner{
@@ -34110,13 +34122,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cnf" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/grille,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
 "cni" = (
 /obj/structure/sign/warning/securearea,
@@ -34583,8 +34590,13 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cpb" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plating/airless,
 /area/maintenance/disposal)
 "cpd" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -39201,9 +39213,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -39227,20 +39236,20 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/brig)
 "cHz" = (
-/obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating/airless,
 /area/maintenance/disposal)
 "cHD" = (
-/obj/effect/turf_decal/stripes/end,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -39271,12 +39280,16 @@
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "cHH" = (
+/obj/structure/cable,
 /obj/machinery/door/airlock/external{
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating/airless,
 /area/maintenance/disposal)
 "cHN" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -48241,6 +48254,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"gny" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "gnH" = (
 /obj/structure/sign/poster/official/wtf_is_co2,
 /turf/closed/wall,
@@ -48931,6 +48949,11 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
+"gGi" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/grille/broken,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "gGl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 9
@@ -52593,6 +52616,10 @@
 	dir = 4
 	},
 /area/hallway/primary/fore)
+"ioN" = (
+/obj/item/radio/intercom/directional/east,
+/turf/closed/wall,
+/area/maintenance/disposal)
 "ipr" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -54986,6 +55013,12 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
+"jpa" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/maintenance/disposal)
 "jpf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -64714,16 +64747,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/item/radio/intercom/directional/east,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/mop,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -64972,7 +64995,6 @@
 /obj/structure/closet,
 /obj/item/stack/package_wrap,
 /obj/item/storage/bag/trash,
-/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "nIo" = (
@@ -73290,10 +73312,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/emcloset/anchored,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal)
 "rfl" = (
@@ -80544,6 +80566,17 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
+"ujJ" = (
+/obj/machinery/door/airlock/external{
+	name = "External Airlock";
+	req_access_txt = "13"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/maintenance/disposal)
 "ujR" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -80809,19 +80842,12 @@
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "upB" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/airalarm/directional/east,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "upD" = (
@@ -81943,6 +81969,10 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"uQs" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/rust,
+/area/maintenance/disposal)
 "uQC" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/lootdrop/cigbutt,
@@ -128713,11 +128743,11 @@ cLk
 cnd
 cpb
 cHz
+jpa
+uQs
 cnd
-cnd
-cmU
-aeu
-aeu
+cnu
+gGi
 aaa
 aaa
 aaa
@@ -128973,8 +129003,8 @@ upB
 cHD
 cHH
 cna
-aeU
-ciQ
+ujJ
+gny
 aeU
 aaa
 aaa
@@ -129225,12 +129255,12 @@ pTm
 cGq
 qQz
 ckU
+cnd
+cnd
+ioN
 cnu
 cnd
 cnu
-cnu
-cmU
-cmU
 cnf
 aeU
 aeU
