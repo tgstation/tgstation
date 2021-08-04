@@ -101,7 +101,7 @@
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/lootdrop/maintenance(src)
+		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize()
 	. = ..()

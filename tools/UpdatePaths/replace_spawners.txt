@@ -61,3 +61,11 @@
 /obj/effect/spawner/randomcolavend : /obj/effect/spawner/random/machinery/colavend
 /obj/effect/spawner/lootdrop/arcade_boards : /obj/effect/spawner/random/techstorage/arcade_boards
 /obj/effect/spawner/lootdrop/crate_spawner : /obj/effect/spawner/random/structure/crate_abandoned
+/obj/effect/spawner/lootdrop/maintenance : /obj/effect/spawner/random/maintenance
+/obj/effect/spawner/lootdrop/maintenance/two : /obj/effect/spawner/random/maintenance/two
+/obj/effect/spawner/lootdrop/maintenance/three : /obj/effect/spawner/random/maintenance/three
+/obj/effect/spawner/lootdrop/maintenance/four : /obj/effect/spawner/random/maintenance/four
+/obj/effect/spawner/lootdrop/maintenance/five : /obj/effect/spawner/random/maintenance/five
+/obj/effect/spawner/lootdrop/maintenance/six : /obj/effect/spawner/random/maintenance/six
+/obj/effect/spawner/lootdrop/maintenance/seven : /obj/effect/spawner/random/maintenance/seven
+/obj/effect/spawner/lootdrop/maintenance/eight : /obj/effect/spawner/random/maintenance/eight
