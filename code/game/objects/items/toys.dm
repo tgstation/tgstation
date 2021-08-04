@@ -341,6 +341,11 @@
 	. = ..()
 	AddComponent(/datum/component/transforming, on_transform_callback = CALLBACK(src, .proc/after_transform))
 
+/*
+ * Callback for the transforming component.
+ *
+ * Updates our icon to have the correct color, and give some feedback.
+ */
 /obj/item/toy/sword/proc/after_transform(mob/user, active)
 	if(active)
 		icon_state = "[icon_state]_[saber_color]"

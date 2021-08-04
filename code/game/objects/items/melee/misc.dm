@@ -384,8 +384,13 @@
 		new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
 		return (BRUTELOSS)
 
+/*
+ * Callback for the transforming component.
+ *
+ * Gives feedback to the user and makes it show up inhand.
+ */
 /obj/item/melee/classic_baton/telescopic/proc/after_transform(mob/user, active)
-	inhand_icon_state = active ? on_inhand_icon_state : ""
+	inhand_icon_state = active ? on_inhand_icon_state : "" // When inactive, there is no inhand icon_state.
 	balloon_alert(user, "[active ? "[src] extended" : "[src] collapsed"]")
 	playsound(user ? user : loc, on_sound, 50, TRUE)
 	if(user)

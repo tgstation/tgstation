@@ -264,6 +264,11 @@
 	. = ..()
 	AddComponent(/datum/component/transforming, force_on = force + 1, on_transform_callback = CALLBACK(src, .proc/after_transform))
 
+/*
+ * Callback for the transforming component.
+ *
+ * Toggles between saw and scalpel and updates the light / gives feedback to the user.
+ */
 /obj/item/scalpel/advanced/proc/after_transform(mob/user, active)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW

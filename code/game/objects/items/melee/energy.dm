@@ -12,8 +12,6 @@
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
-	/// Whether the sword can sheathe/transform.
-	var/can_transform = TRUE
 	/// Force while active.
 	var/active_force = 30
 	/// Throwforce while active.
@@ -33,23 +31,26 @@
 
 /obj/item/melee/energy/Initialize()
 	. = ..()
-	if(can_transform)
-		AddComponent(/datum/component/transforming, \
-			force_on = active_force, \
-			throwforce_on = active_throwforce, \
-			sharpness_on = active_sharpness, \
-			hitsound_on = active_hitsound, \
-			w_class_on = active_w_class, \
-			attack_verb_on = active_attack_verbs, \
-			on_transform_callback = CALLBACK(src, .proc/after_transform))
-
+	make_transformable()
 	if(sharpness || active_sharpness)
-		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
-	START_PROCESSING(SSobj, src)
+		AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = hitsound)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/*
+ * Gives our item the transforming component, passing in our various vars.
+ */
+/obj/item/melee/energy/proc/make_transformable()
+	AddComponent(/datum/component/transforming, \
+		force_on = active_force, \
+		throwforce_on = active_throwforce, \
+		sharpness_on = active_sharpness, \
+		hitsound_on = active_hitsound, \
+		w_class_on = active_w_class, \
+		attack_verb_on = active_attack_verbs, \
+		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
 /obj/item/melee/energy/suicide_act(mob/user)
 	if(force < active_force)
@@ -63,6 +64,29 @@
 /obj/item/melee/energy/process()
 	open_flame()
 
+/obj/item/melee/energy/ignition_effect(atom/A, mob/user)
+	if(!heat)
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.wear_mask)
+			in_mouth = ", barely missing [C.p_their()] nose"
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.")
+	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	add_fingerprint(user)
+
+/*
+ * Callback for the transforming component.
+ *
+ * Updates our icon to have the correct color,
+ * updates the amount of heat our item gives out,
+ * enables / disables embedding, and
+ * starts / stops processing.
+ *
+ * Also gives feedback to the user and activates or deactives the glow.
+ */
 /obj/item/melee/energy/proc/after_transform(mob/user, active)
 	if(active)
 		if(embedding)
@@ -81,19 +105,7 @@
 	playsound(user ? user : loc, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 
-/obj/item/melee/energy/ignition_effect(atom/A, mob/user)
-	if(!heat)
-		return ""
-
-	var/in_mouth = ""
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.wear_mask)
-			in_mouth = ", barely missing [C.p_their()] nose"
-	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.")
-	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
-	add_fingerprint(user)
-
+/// Energy axe - extremely strong.
 /obj/item/melee/energy/axe
 	name = "energy axe"
 	desc = "An energized battle axe."
@@ -121,6 +133,7 @@
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|FIRELOSS)
 
+/// Energy swords.
 /obj/item/melee/energy/sword
 	name = "energy sword"
 	desc = "May the force be within you."
@@ -150,13 +163,15 @@
 	var/hitcost = 50
 
 /obj/item/melee/energy/sword/cyborg/attack(mob/target, mob/living/silicon/robot/user)
-	if(user.cell)
-		var/obj/item/stock_parts/cell/our_cell = user.cell
-		if(force >= active_force && !(our_cell.use(hitcost)))
-			attack_self(user)
-			to_chat(user, span_notice("It's out of charge!"))
-			return
-		return ..()
+	if(!user.cell)
+		return
+
+	var/obj/item/stock_parts/cell/our_cell = user.cell
+	if(force >= active_force && !(our_cell.use(hitcost)))
+		attack_self(user)
+		to_chat(user, span_notice("It's out of charge!"))
+		return
+	return ..()
 
 /obj/item/melee/energy/sword/cyborg/cyborg_unequip(mob/user)
 	if(force < active_force)
@@ -240,6 +255,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	light_color = COLOR_RED
 
+/// Energy blades, which are effectively perma-extended energy swords
 /obj/item/melee/energy/blade
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
@@ -248,7 +264,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 30
-	can_transform = FALSE
 	throwforce = 1 // Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
@@ -264,10 +279,14 @@
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/melee/energy/blade/Destroy()
 	QDEL_NULL(spark_system)
 	return ..()
+
+/obj/item/melee/energy/blade/make_transformable()
+	return FALSE
 
 /obj/item/melee/energy/blade/hardlight
 	name = "hardlight blade"

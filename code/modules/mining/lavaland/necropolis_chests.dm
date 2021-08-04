@@ -770,6 +770,11 @@
 	attack_self(user)
 	return BRUTELOSS
 
+/*
+ * Callback for the transforming component.
+ *
+ * Gives feedback and makes the nextmove after transforming much quicker.
+ */
 /obj/item/melee/cleaving_saw/proc/after_transform(mob/user, active)
 	is_open = active
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)

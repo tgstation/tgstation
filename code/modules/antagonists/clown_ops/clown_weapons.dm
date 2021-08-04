@@ -85,6 +85,11 @@
 		clumsy_check = FALSE, \
 		on_transform_callback = CALLBACK(src, .proc/after_transform))
 
+/*
+ * Callback for the transforming component.
+ *
+ * Makes it slippery or unslippery, gives feedback, and updates the icon / makes it glow.
+ */
 /obj/item/melee/bananium_sword/proc/after_transform(mob/user, active)
 	slipping = active
 	if(active)
