@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Phazon microtool arrays no longer have an error sprite"
