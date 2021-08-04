@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - refactor: "Refactors datatype code completely for integrated circuits."
+  - refactor: "Options have been moved to their own input port with their own special type known as the \"Option\" type."
