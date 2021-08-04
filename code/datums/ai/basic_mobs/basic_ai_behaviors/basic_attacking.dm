@@ -1,6 +1,6 @@
 
 /datum/ai_behavior/can_still_attack_target
-	action_cooldown = 4 SECONDS
+	action_cooldown = 6 SECONDS
 
 /datum/ai_behavior/can_still_attack_target/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
@@ -12,7 +12,6 @@
 		finish_action(controller, TRUE, target_key)
 		controller.CancelActions() //Abort!
 		return
-	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/can_still_attack_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

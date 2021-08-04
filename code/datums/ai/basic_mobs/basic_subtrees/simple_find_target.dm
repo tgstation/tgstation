@@ -1,6 +1,7 @@
 /datum/ai_planning_subtree/simple_find_target
 
 /datum/ai_planning_subtree/simple_find_target/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	. = ..()
 	if(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 		return
 	controller.AddBehavior(/datum/ai_behavior/find_potential_targets, BB_BASIC_MOB_VISION_TARGETS)

@@ -45,17 +45,12 @@
 	return FALSE
 
 
-	/* this needs to become a subtree for cockroaches
-	if(turns_since_scan > time_to_hunt)
-		turns_since_scan = 0
-		var/list/target_types = list(/obj/effect/decal/cleanable/ants)
-		for(var/obj/effect/decal/cleanable/ants/potential_target in view(2, get_turf(src)))
-			if(potential_target.type in target_types)
-				hunt(potential_target)
-				return*/
-
 /datum/ai_controller/basic_controller/cockroach
-	blackboard = list(BB_TARGETTING_DATUM = new /datum/targetting_datum/basic())
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_HUNTING_TARGET_TYPES = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)
+	)
+
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/cockroach)

@@ -168,7 +168,9 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep thats it
 
-
+///Hunting BB keys
+#define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+#define BB_HUNTING_TARGET_TYPES "BB_hunting_target_types"
 
 ///Basic Mob Keys
 
