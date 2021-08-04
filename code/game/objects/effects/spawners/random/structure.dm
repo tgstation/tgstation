@@ -14,3 +14,9 @@ obj/effect/spawner/random/structure
 		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/structure/closet/crate/decorations = 15,
 	)
+
+/obj/effect/spawner/random/structure/crate_abandoned
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "loot_site"
+	spawn_loot_chance = 20
+	loot = list(/obj/structure/closet/crate/secure/loot)

@@ -12,6 +12,12 @@
 		/obj/item/disk/nuclear/fake/obvious = 1,
 	)
 
+/obj/effect/spawner/random/techstorage/arcade_boards
+	name = "arcade board spawner"
+	spawn_all_loot = FALSE
+	lootcount = 1
+	loot = list(subtypesof(/obj/item/circuitboard/computer/arcade))
+
 /obj/effect/spawner/random/techstorage/service
 	name = "service circuit board spawner"
 	loot = list(

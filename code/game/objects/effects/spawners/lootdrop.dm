@@ -67,15 +67,6 @@
 
 	return scatter_locations
 
-/obj/effect/spawner/lootdrop/arcade_boards
-	name = "arcade board spawner"
-	lootdoubles = FALSE
-	loot = list()
-
-/obj/effect/spawner/lootdrop/arcade_boards/Initialize(mapload)
-	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
-	return ..()
-
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
@@ -153,15 +144,6 @@
 /obj/effect/spawner/lootdrop/maintenance/eight
 	name = "8 x maintenance loot spawner"
 	lootcount = 8
-
-/obj/effect/spawner/lootdrop/crate_spawner
-	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
-	lootdoubles = FALSE
-
-	loot = list(
-				/obj/structure/closet/crate/secure/loot = 20,
-				"" = 80
-				)
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
