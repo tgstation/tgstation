@@ -2987,6 +2987,17 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"akN" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard)
 "akO" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/decal/cleanable/dirt,
@@ -3621,6 +3632,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "amZ" = (
@@ -3726,6 +3738,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "anu" = (
@@ -8474,6 +8489,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "aCc" = (
@@ -8991,6 +9009,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "aDN" = (
@@ -10455,6 +10474,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "aIF" = (
@@ -10856,6 +10878,9 @@
 	req_one_access_txt = "12"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "aLA" = (
@@ -13031,6 +13056,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Construction Zone"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "bad" = (
@@ -13781,6 +13807,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "bnU" = (
@@ -13816,6 +13845,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "boR" = (
@@ -13934,6 +13966,9 @@
 	req_access_txt = "10; 13"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "brA" = (
@@ -14321,6 +14356,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "byf" = (
@@ -17678,6 +17714,16 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"cPN" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard)
 "cQd" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/white,
@@ -18845,6 +18891,9 @@
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "doA" = (
@@ -19485,6 +19534,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/brig)
+"dzZ" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/tram/mid)
 "dAd" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -20799,6 +20857,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Mining Dock Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "dYV" = (
@@ -21254,6 +21315,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/engineering/atmospherics_engine)
 "eiv" = (
@@ -22497,6 +22561,16 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
+"eHg" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_one_access_txt = "10;24"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "eHq" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -22568,6 +22642,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
+"eIy" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 4"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "eJf" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/north,
@@ -23216,6 +23297,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "eWv" = (
@@ -23378,6 +23460,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "fay" = (
@@ -23943,6 +24028,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -25270,6 +25358,9 @@
 /obj/machinery/door/airlock/hatch,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "fNi" = (
@@ -27825,6 +27916,9 @@
 	req_access_txt = "61"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "gML" = (
@@ -29505,6 +29599,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "hqm" = (
@@ -30129,6 +30224,7 @@
 	name = "Xenobiology Lab External Airlock";
 	req_access_txt = "55"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "hFk" = (
@@ -30554,6 +30650,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/engineering/main)
 "hLv" = (
@@ -30956,6 +31055,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "hVT" = (
@@ -40238,6 +40340,14 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"lur" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/tram/mid)
 "luM" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -41418,6 +41528,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "lSJ" = (
@@ -41661,6 +41774,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/engineering/main)
 "lYB" = (
@@ -41940,6 +42056,9 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "mhs" = (
@@ -43446,6 +43565,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "mLj" = (
@@ -43767,6 +43889,15 @@
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit)
+"mRl" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "mRn" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
@@ -48375,6 +48506,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "oKI" = (
@@ -48455,6 +48589,9 @@
 "oLT" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "oMa" = (
@@ -48582,6 +48719,9 @@
 	req_access_txt = "48"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "oPN" = (
@@ -49417,6 +49557,9 @@
 "peB" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 3"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -50358,6 +50501,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint)
 "pwE" = (
@@ -50389,6 +50535,9 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Telecommunications";
 	req_access_txt = "61"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -50720,6 +50869,9 @@
 	req_access_txt = "48"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "pDT" = (
@@ -51463,6 +51615,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "pSk" = (
@@ -51538,6 +51693,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "pSS" = (
@@ -53792,6 +53948,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint)
 "qRI" = (
@@ -54320,6 +54479,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "rdi" = (
@@ -54944,6 +55104,9 @@
 /obj/machinery/door/airlock/hatch,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "rpv" = (
@@ -56467,6 +56630,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 4"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "rUx" = (
@@ -56578,6 +56744,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Common Mining Dock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "rXr" = (
@@ -56658,6 +56827,31 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat_interior)
+"rYg" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Hydroponics";
+	req_access_txt = "35"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/service/hydroponics)
 "rYj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -57397,6 +57591,9 @@
 	id_tag = "xeno_airlock_interior";
 	name = "Xenobiology Lab Internal Airlock";
 	req_access_txt = "55"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
@@ -58323,6 +58520,9 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "sEA" = (
@@ -59446,6 +59646,7 @@
 	req_one_access_txt = "47"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "teW" = (
@@ -59800,6 +60001,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/engineering/main)
 "tjh" = (
@@ -61666,6 +61870,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/science/lab)
 "tQM" = (
@@ -62011,6 +62218,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"tWC" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Server Room";
+	req_access_txt = "61"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron/dark,
+/area/tcommsat/computer)
 "tWP" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -63230,6 +63446,13 @@
 "utS" = (
 /turf/open/floor/iron,
 /area/science/misc_lab)
+"uuo" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 3"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "uus" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -63601,6 +63824,9 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "uGd" = (
@@ -64166,6 +64392,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/freezer,
 /area/medical/coldroom)
 "uQE" = (
@@ -64177,6 +64406,9 @@
 	req_access_txt = "47"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "uQV" = (
@@ -64246,6 +64478,9 @@
 "uSn" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "uSA" = (
@@ -64412,6 +64647,15 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"uWD" = (
+/obj/machinery/door/airlock/external{
+	name = "Common Mining Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
 "uWS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -64585,6 +64829,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "uZq" = (
@@ -67081,6 +67328,9 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "vXT" = (
@@ -68825,6 +69075,9 @@
 "wCC" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "wCM" = (
@@ -69061,6 +69314,9 @@
 	req_access_txt = "11"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "wHl" = (
@@ -69448,6 +69704,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -70291,6 +70550,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/lab)
 "xfs" = (
@@ -71048,6 +71310,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
@@ -72162,6 +72427,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -72328,6 +72596,9 @@
 /obj/machinery/door/airlock/hatch,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "xRS" = (
@@ -100296,7 +100567,7 @@ qeq
 tYP
 pcR
 tnM
-gMB
+tWC
 rVq
 gMB
 kbj
@@ -103903,7 +104174,7 @@ vQw
 vaG
 nUU
 xvl
-dox
+eHg
 mYF
 dox
 mYF
@@ -110026,7 +110297,7 @@ aBM
 aBM
 aHH
 bkV
-xRP
+dzZ
 wve
 laZ
 jUx
@@ -110034,7 +110305,7 @@ jUx
 jUx
 iLD
 mri
-oLT
+lur
 gcW
 aHH
 oJR
@@ -111013,7 +111284,7 @@ rQC
 rwz
 nOP
 csq
-boL
+cPN
 csq
 boL
 qsc
@@ -112039,7 +112310,7 @@ aBM
 aBM
 aBM
 knV
-bry
+akN
 knV
 aBM
 oza
@@ -150395,7 +150666,7 @@ aYr
 awZ
 fKy
 okd
-rUd
+eIy
 aVR
 rUd
 eJP
@@ -152194,7 +152465,7 @@ aYr
 awZ
 fKy
 okd
-peB
+uuo
 aVR
 peB
 aYr
@@ -152957,7 +153228,7 @@ aMZ
 aMZ
 aqD
 awZ
-lSz
+mRl
 awZ
 arv
 aMZ
@@ -161922,7 +162193,7 @@ adl
 adM
 amK
 aMp
-fmg
+rYg
 aMp
 amK
 aak
@@ -186631,7 +186902,7 @@ qze
 qze
 aBM
 mYq
-rXp
+uWD
 mYq
 aBM
 aBM
