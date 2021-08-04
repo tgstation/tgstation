@@ -47,13 +47,15 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_HUNTING_TARGET_TYPES = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/cockroach)
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/cockroach,
+		/datum/ai_planning_subtree/find_and_hunt_target
+)
 
 
 /datum/ai_controller/basic_controller/cockroach/PerformIdleBehavior(delta_time)
@@ -94,7 +96,8 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
+		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
+		/datum/ai_planning_subtree/find_and_hunt_target
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
@@ -137,7 +140,8 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
+		/datum/ai_planning_subtree/find_and_hunt_target
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach

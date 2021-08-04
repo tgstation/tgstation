@@ -7,7 +7,7 @@
 		return
 	controller.AddBehavior(/datum/ai_behavior/can_still_attack_target, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM)
 	controller.AddBehavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-
+	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
 
 //If you give this to something without the element you are a dumbass.
 /datum/ai_planning_subtree/basic_ranged_attack_subtree
@@ -19,8 +19,7 @@
 		return
 	controller.AddBehavior(/datum/ai_behavior/can_still_attack_target, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM)
 	controller.AddBehavior(ranged_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-
-
+	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
 
 
 

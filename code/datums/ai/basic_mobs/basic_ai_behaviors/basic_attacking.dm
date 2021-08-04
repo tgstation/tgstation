@@ -1,6 +1,6 @@
 
 /datum/ai_behavior/can_still_attack_target
-	action_cooldown = 6 SECONDS
+	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/can_still_attack_target/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
