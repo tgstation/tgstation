@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - expansion: "Conveyor switch and quantum pad can now be connected through USB cables"
