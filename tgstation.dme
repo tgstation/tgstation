@@ -3683,6 +3683,7 @@
 #include "code\modules\vending\toys.dm"
 #include "code\modules\vending\wardrobes.dm"
 #include "code\modules\vending\youtool.dm"
+#include "code\modules\wiremod\admin_panel.dm"
 #include "code\modules\wiremod\component.dm"
 #include "code\modules\wiremod\component_printer.dm"
 #include "code\modules\wiremod\datatypes.dm"
