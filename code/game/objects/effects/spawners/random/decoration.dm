@@ -79,4 +79,12 @@
 	name = "random colored glowstick"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "random_glowstick"
-	loot = typesof(/obj/item/flashlight/glowstick)
+	loot = (
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
