@@ -12,7 +12,7 @@
 
 	var/atom/movable/tracked
 
-	var/atom/signal_atom
+	var/atom/tracked_loc
 
 /datum/component/connect_loc_behalf/Initialize(atom/movable/tracked, list/connections)
 	. = ..()
@@ -23,18 +23,16 @@
 
 /datum/component/connect_loc_behalf/CheckDupeComponent(datum/component/component, atom/movable/tracked, list/connections)
 	if(src.tracked != tracked)
-		return
+		return FALSE
 
-	// Not equivalent. Checks if they are not the same list via shallow copy.
-	if(src.connections ~! connections)
-		return
+	// Not equivalent. Checks if they are not the same list via shallow comparison.
+	if(!compare_list(src.connections, connections))
+		return FALSE
 
 	return TRUE
 
 
 /datum/component/connect_loc_behalf/RegisterWithParent()
-	src.connections = connections
-
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
 	update_signals()
@@ -60,19 +58,19 @@
 	if(isnull(tracked.loc))
 		return
 
-	signal_atom = tracked.loc
+	tracked_loc = tracked.loc
 
 	for (var/signal in connections)
-		RegisterSignal(signal_atom, signal, .proc/handle_signal)
+		RegisterSignal(tracked_loc, signal, .proc/handle_signal)
 
 /datum/component/connect_loc_behalf/proc/unregister_signals()
-	if(isnull(signal_atom))
+	if(isnull(tracked_loc))
 		return
 
 	for (var/signal in connections)
-		UnregisterSignal(signal_atom, signal)
+		UnregisterSignal(tracked_loc, signal)
 
-	signal_atom = null
+	tracked_loc = null
 
 /datum/component/connect_loc_behalf/proc/handle_signal(sigtype, datum/source, ...)
 	SIGNAL_HANDLER
