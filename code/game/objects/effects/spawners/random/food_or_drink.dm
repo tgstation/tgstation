@@ -144,3 +144,12 @@
 		/obj/item/pizzabox/mushroom = 3,
 		/obj/item/pizzabox/bomb/armed = 1,
 	)
+
+/obj/effect/spawner/random/food_or_drink/seed_vault
+	name = "seed vault seeds"
+	loot = list(
+		/obj/item/seeds/gatfruit = 10,
+		/obj/item/seeds/cherry/bomb = 10,
+		/obj/item/seeds/berry/glow = 10,
+		/obj/item/seeds/sunflower/moonflower = 8,
+	)

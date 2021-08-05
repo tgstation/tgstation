@@ -11,19 +11,6 @@
 	blueprints[1] = A
 	blueprints[2] = H
 
-//lavaland_surface_seed_vault.dmm
-//Seed Vault
-
-/obj/effect/spawner/lootdrop/seed_vault
-	name = "seed vault seeds"
-	lootcount = 1
-
-	loot = list(/obj/item/seeds/gatfruit = 10,
-				/obj/item/seeds/cherry/bomb = 10,
-				/obj/item/seeds/berry/glow = 10,
-				/obj/item/seeds/sunflower/moonflower = 8
-				)
-
 //Free Golems
 
 /obj/item/disk/design_disk/golem_shell
