@@ -116,14 +116,13 @@ SUBSYSTEM_DEF(throwing)
 	var/atom/movable/actual_target = initial_target?.resolve()
 
 	if(dist_travelled) //to catch sneaky things moving on our tile while we slept
-		for(var/thing in get_turf(thrownthing))
-			var/atom/movable/in_the_way = thing
-			if (in_the_way == thrownthing || (in_the_way == thrower && !ismob(thrownthing)))
+		for(var/atom/movable/obstacle as anything in get_turf(thrownthing))
+			if (obstacle == thrownthing || (obstacle == thrower && !ismob(thrownthing)))
 				continue
-			if(in_the_way.pass_flags_self & LETPASSTHROW)
+			if(obstacle.pass_flags_self & LETPASSTHROW)
 				continue
-			if (in_the_way == actual_target || (in_the_way.density && !(in_the_way.flags_1 & ON_BORDER_1)))
-				finalize(TRUE, in_the_way)
+			if (obstacle == actual_target || (obstacle.density && !(obstacle.flags_1 & ON_BORDER_1)))
+				finalize(TRUE, obstacle)
 				return
 
 	var/atom/step
@@ -173,11 +172,10 @@ SUBSYSTEM_DEF(throwing)
 		return
 	thrownthing.throwing = null
 	if (!hit)
-		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
-			var/atom/A = thing
-			if (A == target)
+		for (var/atom/movable/obstacle as anything in get_turf(thrownthing)) //looking for our target on the turf we land on.
+			if (obstacle == target)
 				hit = TRUE
-				thrownthing.throw_impact(A, src)
+				thrownthing.throw_impact(obstacle, src)
 				if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
 					return //deletion should already be handled by on_thrownthing_qdel()
 				break
