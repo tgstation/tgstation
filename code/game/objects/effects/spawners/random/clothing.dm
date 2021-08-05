@@ -4,12 +4,8 @@
 
 /obj/effect/spawner/random/clothing/costume
 	name = "random costume spawner"
-
-/obj/effect/spawner/random/clothing/costume/Initialize()
+	loot_subtype_path = /obj/effect/spawner/costume
 	loot = list()
-	for(var/path in subtypesof(/obj/effect/spawner/costume))
-		loot[path] = TRUE
-	. = ..()
 
 /obj/effect/spawner/random/clothing/beret_or_rabbitears
 	name = "beret or rabbit ears spawner"

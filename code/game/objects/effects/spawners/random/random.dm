@@ -4,13 +4,16 @@
 	layer = OBJ_LAYER
 	anchored = TRUE // Stops persistent lootdrop spawns from being shoved into lockers
 	var/list/loot //a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	var/list/loot_type_path //the subtypes AND type to combine with the loot list
+	var/list/loot_subtype_path // the subtypes (this excludes the provided path) to combine with the loot list
 	var/lootcount = 1 //how many items will be spawned
 	var/lootdoubles = TRUE //if the same item can be spawned twice
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 	var/spawn_on_init = TRUE	// Whether the spawner should immediately spawn loot and cleanup on Initialize()
 	var/spawn_all_loot = FALSE // Whether the spawner should spawn all the loot in the list
 	var/spawn_loot_chance = 100 // The chance for the spawner to create loot (ignores lootcount)
-	var/spawn_scatter_radius = 0	//determines how big of a range (in tiles) we should scatter things in.
+	var/spawn_scatter_radius = 0 //determines how big of a range (in tiles) we should scatter things in.
+	var/hacked = FALSE //whether it hacks the vendor on spawn (only used by vending machines for mapedits)
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -31,6 +34,12 @@
 		lootcount = INFINITY
 		lootdoubles = FALSE
 
+	if(loot_type_path)
+		loot += typesof(loot_type_path)
+
+	if(loot_subtype_path)
+		loot += subtypesof(loot_subtype_path)
+
 	if(loot?.len)
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
@@ -45,6 +54,11 @@
 					spawn_loc = pick_n_take(spawn_locations)
 
 				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
+				spawned_loot.setDir(dir)
+
+				if (hacked && istype(spawned_loot, /obj/machinery/vending))
+					var/obj/machinery/vending/vending = spawned_loot
+					vending.extended_inventory = hacked
 
 				if (!fan_out_items)
 					if (pixel_x != 0)
