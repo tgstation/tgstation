@@ -376,6 +376,18 @@
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 
+/datum/design/scanner_gate_shell
+	name = "Scanner Gate Shell"
+	desc = "A scanner gate shell that performs mid-depth scans on people when they pass through it."
+	id = "scanner_gate_shell"
+	materials = list(
+		/datum/material/glass = 4000,
+		/datum/material/iron = 12000,
+	)
+	build_path = /obj/item/shell/scanner_gate
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
 /datum/design/board/bci_implanter
 	name = "Brain-Computer Interface Manipulation Chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
