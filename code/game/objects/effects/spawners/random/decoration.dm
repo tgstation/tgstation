@@ -74,3 +74,9 @@
 		/obj/structure/statue/diamond/ai1 = 1,
 		/obj/structure/statue/diamond/ai2 = 1,
 	)
+
+/obj/effect/spawner/random/decoration/glowstick
+	name = "random colored glowstick"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "random_glowstick"
+	loot = typesof(/obj/item/flashlight/glowstick)

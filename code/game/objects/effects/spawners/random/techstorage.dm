@@ -16,7 +16,7 @@
 	name = "arcade board spawner"
 	spawn_all_loot = FALSE
 	lootcount = 1
-	loot = list(subtypesof(/obj/item/circuitboard/computer/arcade))
+	loot = subtypesof(/obj/item/circuitboard/computer/arcade)
 
 /obj/effect/spawner/random/techstorage/service
 	name = "service circuit board spawner"

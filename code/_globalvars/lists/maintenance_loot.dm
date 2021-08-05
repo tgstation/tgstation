@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 
 		//light sources
 		/obj/item/flashlight = 1,
-		/obj/effect/spawner/lootdrop/glowstick = 1,
+		/obj/effect/spawner/random/decoration/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,

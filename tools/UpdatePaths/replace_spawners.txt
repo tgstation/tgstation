@@ -70,3 +70,5 @@
 /obj/effect/spawner/lootdrop/maintenance/seven : /obj/effect/spawner/random/maintenance/seven
 /obj/effect/spawner/lootdrop/maintenance/eight : /obj/effect/spawner/random/maintenance/eight
 /obj/effect/spawner/lootdrop/gloves : /obj/effect/spawner/random/clothing/gloves
+/obj/effect/spawner/lootdrop/glowstick : /obj/effect/spawner/random/decoration/glowstick
+/obj/effect/spawner/lootdrop/lizardboots : /obj/effect/spawner/random/clothing/lizardboots

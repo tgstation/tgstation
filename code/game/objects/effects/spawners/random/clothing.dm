@@ -86,3 +86,13 @@
 		/obj/item/clothing/gloves/color/white,
 		/obj/item/clothing/gloves/color/rainbow,
 	)
+
+/obj/effect/spawner/random/clothing/lizardboots
+	name = "random lizard boot quality"
+	desc = "Which ever gets picked, the lizard race loses"
+	icon = 'icons/obj/clothing/shoes.dmi'
+	icon_state = "lizardboots_green"
+	loot = list(
+		/obj/item/clothing/shoes/cowboy/lizard = 7,
+		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1
+	)
