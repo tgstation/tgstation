@@ -494,7 +494,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne/attack_self(mob/user)
 	if(spillable)
 		return ..()
-	to_chat(user, span_notice("You fiddle with the cork of [src]."))
+	balloon_alert(user, "fiddling with cork...")
 	if(do_after(user, 1 SECONDS, src))
 		return pop_cork(user)
 
@@ -507,7 +507,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/champagne/proc/pop_cork(mob/user)
 	user.visible_message(span_danger("[user] loosens the cork of [src] causing it to pop out of the bottle with great force."), \
-				span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
+		span_nicegreen("You elegantly loosen the cork of [src] causing it to pop out of the bottle with great force."))
 	reagents.flags |= OPENCONTAINER
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
