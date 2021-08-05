@@ -5,13 +5,14 @@
  * Requires a BCI shell.
  */
 
-#define BAR_OVERLAY_LIMIT 10
-
 /obj/item/circuit_component/object_overlay/bar
 	display_name = "Bar Overlay"
 	desc = "Requires a BCI shell. A component that shows a bar overlay ontop of an object from a range of 0 to 100."
 
+	var/datum/port/input/option/bar_overlay_options
 	var/datum/port/input/bar_number
+
+	var/overlay_limit = 10
 
 /obj/item/circuit_component/object_overlay/bar/Initialize()
 	. = ..()
@@ -19,28 +20,25 @@
 
 /obj/item/circuit_component/object_overlay/bar/populate_options()
 	var/static/component_options_bar = list(
-		"Vertical",
-		"Horizontal"
+		COMP_BAR_OVERLAY_VERTICAL = "barvert",
+		COMP_BAR_OVERLAY_HORIZONTAL = "barhoriz"
 	)
-	options = component_options_bar
-
-	var/static/options_to_icons_bar = list(
-		"Vertical" = "barvert",
-		"Horizontal" = "barhoriz"
-	)
-	options_map = options_to_icons_bar
+	bar_overlay_options = add_option_port("Bar Overlay Options", component_options_bar)
+	options_map = component_options_bar
 
 /obj/item/circuit_component/object_overlay/bar/show_to_owner(atom/target_atom, mob/living/owner)
-	if(LAZYLEN(active_overlays) >= BAR_OVERLAY_LIMIT)
+	if(LAZYLEN(active_overlays) >= overlay_limit)
 		return
+
+	var/current_option = bar_overlay_options.input_value
 
 	if(active_overlays[target_atom])
 		QDEL_NULL(active_overlays[target_atom])
 
 	var/number_clear = clamp(bar_number.input_value, 0, 100)
-	if(current_option == "Horizontal")
+	if(current_option == COMP_BAR_OVERLAY_HORIZONTAL)
 		number_clear = round(number_clear / 6.25) * 6.25
-	else if(current_option == "Vertical")
+	else if(current_option == COMP_BAR_OVERLAY_VERTICAL)
 		number_clear = round(number_clear / 10) * 10
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = "[options_map[current_option]][number_clear]", layer = RIPPLE_LAYER)
 
@@ -56,5 +54,3 @@
 		cool_overlay,
 		owner,
 	))
-
-#undef BAR_OVERLAY_LIMIT

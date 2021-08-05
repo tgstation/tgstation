@@ -223,6 +223,7 @@
 		"comp_radio",
 		"comp_ram",
 		"comp_random",
+		"comp_router",
 		"comp_select_query",
 		"comp_self",
 		"comp_soundemitter",
