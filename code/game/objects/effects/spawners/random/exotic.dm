@@ -36,8 +36,6 @@ obj/effect/spawner/random/exotic
 		/obj/effect/spawner/random/entertainment/cigarette_pack = 1,
 	)
 
-// the antag_gear spawners are used in the snowdin awaymission
-
 /obj/effect/spawner/random/exotic/antag_gear_weak
 	name = "weak antag gear "
 	loot = list(
