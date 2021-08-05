@@ -351,10 +351,11 @@
 	throwforce = 17
 	armour_penetration = 50
 	sharpness = SHARP_EDGED
+	layer = MOB_LAYER
 	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/soulscythe/soul
-	/// Can we grab a ghost?
-	var/usable = TRUE
+	/// Are we grabbing a spirit?
+	var/using = FALSE
 	/// Blood level used for abilities
 	var/blood_level = 0
 	/// Cooldown between moves
@@ -370,14 +371,30 @@
 	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
 	. += span_userdanger("This item isn't currently finished if you're seeing it during a testmerge sorry.")
 
+/obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
+	if(soul.ckey && !soul.faction_check_mob(user))
+		balloon_alert(user, "you can't pick it up!")
+		return
+	return ..()
+
+/obj/item/soulscythe/pickup(mob/user)
+	. = ..()
+	if(soul.ckey)
+		animate() //stop spinnage
+
+/obj/item/soulscythe/dropped(mob/user, silent)
+	. = ..()
+	if(soul.ckey)
+		SpinAnimation(15) //resume spinnage
+
 /obj/item/soulscythe/attack_self(mob/user, modifiers)
-	if(!usable || soul.ckey)
+	if(using || soul.ckey)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		balloon_alert(user, "you can't awaken the scythe!")
 		return
+	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
-	usable = FALSE
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
@@ -387,9 +404,10 @@
 		soul.faction = list("[REF(user)]")
 		balloon_alert(user, "the scythe glows up")
 		add_overlay("soulscythe_gem")
+		density = TRUE
 	else
 		balloon_alert(user, "the scythe is dormant!")
-		usable = TRUE
+	using = FALSE
 
 /obj/item/soulscythe/relaymove(mob/living/user, direction)
 	if(!COOLDOWN_FINISHED(src, move_cooldown))
@@ -399,15 +417,15 @@
 		COOLDOWN_START(src, move_cooldown, 1 SECONDS)
 		return
 	if(pixel_x != base_pixel_x || pixel_y != base_pixel_y)
-		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
+		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y, flags = ANIMATION_PARALLEL)
 	Move(get_step(src, direction), direction)
-	COOLDOWN_START(src, move_cooldown, 0.1 SECONDS)
+	COOLDOWN_START(src, move_cooldown, (direction in GLOB.cardinals) ? 0.1 SECONDS : 0.2 SECONDS)
 
 /obj/item/soulscythe/proc/on_resist(mob/living/user)
-	if(!COOLDOWN_FINISHED(src, move_cooldown) || isturf(loc))
+	if(isturf(loc))
 		return
 	balloon_alert(user, "you resist...")
-	if(!do_after(user, 5 SECONDS, target = src))
+	if(!do_after(user, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
 		balloon_alert(user, "interrupted!")
 		return
 	balloon_alert(user, "you break out")
@@ -420,6 +438,7 @@
 	name = "mysterious spirit"
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
+	faction = list()
 
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
