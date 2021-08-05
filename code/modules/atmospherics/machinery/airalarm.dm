@@ -341,7 +341,6 @@
 				return
 			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
 			if(!isnull(value) && !..())
-				var/io = 123
 				if(value < 0)
 					tlv.vars[name] = -1
 				else
