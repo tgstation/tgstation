@@ -351,7 +351,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
 			continue
 
-		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
+		var/mob/living/carbon/human/original_human = ending_human.mind.original_character.resolve()
 
 		if(!original_human)
 			continue

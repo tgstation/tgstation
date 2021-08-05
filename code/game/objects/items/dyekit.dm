@@ -33,7 +33,7 @@
 
 	human_target.grad_style = new_grad_style
 	human_target.grad_color = sanitize_hexcolor(new_grad_color)
-	to_chat(human_target, "<span class='notice'>You start applying the hair dye...</span>")
+	to_chat(human_target, span_notice("You start applying the hair dye..."))
 	if(!do_after(usr, 3 SECONDS, target))
 		return
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)

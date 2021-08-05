@@ -22,6 +22,8 @@
 	icon = 'icons/mecha/coop_mech.dmi'
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
+	//does not include mmi compatibility
+	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
 	movedelay = 3
 	dir_in = 2 //Facing South.
 	max_integrity = 450 //really tanky, like damn
@@ -98,23 +100,23 @@
 	skyfall_charge_level++
 	switch(skyfall_charge_level)
 		if(1)
-			visible_message("<span class='warning'>[src] clicks and whirrs for a moment, with a low hum emerging from the legs.</span>")
+			visible_message(span_warning("[src] clicks and whirrs for a moment, with a low hum emerging from the legs."))
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 		if(2)
-			visible_message("<span class='warning'>[src] begins to shake, the sounds of electricity growing louder.</span>")
+			visible_message(span_warning("[src] begins to shake, the sounds of electricity growing louder."))
 			Shake(5, 5, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 		if(3)
-			visible_message("<span class='warning'>[src] assumes a pose as it rattles violently.</span>")
+			visible_message(span_warning("[src] assumes a pose as it rattles violently."))
 			Shake(7, 7, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			spark_system.start()
 			update_icon_state()
 		if(4)
-			visible_message("<span class='warning'>[src] sparks and shutters as it finalizes preparation.</span>")
+			visible_message(span_warning("[src] sparks and shutters as it finalizes preparation."))
 			playsound(src, 'sound/mecha/skyfall_power_up.ogg', 50, TRUE)
 			Shake(10, 10, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			spark_system.start()
 		if(SKYFALL_CHARGELEVEL_LAUNCH)
-			visible_message("<span class='danger'>[src] leaps into the air!</span>")
+			visible_message(span_danger("[src] leaps into the air!"))
 			playsound(src, 'sound/weapons/gun/general/rocket_launch.ogg', 50, TRUE)
 	if(skyfall_charge_level != SKYFALL_CHARGELEVEL_LAUNCH)
 		INVOKE_ASYNC(src, .proc/skyfall_charge_loop, pilot)
@@ -163,7 +165,7 @@
  * * pilot: mob that activated the skyfall ability
  */
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/land(mob/living/pilot)
-	visible_message("<span class='danger'>[src] lands from above!</span>")
+	visible_message(span_danger("[src] lands from above!"))
 	playsound(src, 'sound/effects/explosion1.ogg', 50, 1)
 	resistance_flags &= ~INDESTRUCTIBLE
 	mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
@@ -185,7 +187,7 @@
 			crushed_wall.ScrapeAway()
 		if(isobj(thing))
 			var/obj/crushed_object = thing
-			if(crushed_object == src)
+			if(crushed_object == src || crushed_object.loc == src)
 				continue
 			crushed_object.take_damage(150) //same as a hulk punch, makes sense to me
 		if(isliving(thing))
@@ -193,13 +195,13 @@
 			if(crushed_victim in occupants)
 				continue
 			if(crushed_victim in landed_on)
-				to_chat(crushed_victim, "<span class='userdanger'>[src] crashes down on you from above!</span>")
+				to_chat(crushed_victim, span_userdanger("[src] crashes down on you from above!"))
 				if(crushed_victim.stat != CONSCIOUS)
 					crushed_victim.gib(FALSE, FALSE, FALSE)
 				else
 					crushed_victim.adjustBruteLoss(80)
 			else
-				to_chat(crushed_victim, "<span class='userdanger'>The tremors from [src] landing sends you flying!</span>")
+				to_chat(crushed_victim, span_userdanger("The tremors from [src] landing sends you flying!"))
 				var/fly_away_direction = get_dir(src, crushed_victim)
 				crushed_victim.throw_at(get_edge_target_turf(crushed_victim, fly_away_direction), 4, 3)
 				crushed_victim.adjustBruteLoss(15)
@@ -307,11 +309,11 @@
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/savannah_mecha = chassis
 	if(savannah_mecha.phasing)
-		to_chat(owner, "<span class='warning'>You're already airborne!</span>")
+		to_chat(owner, span_warning("You're already airborne!"))
 		return
 	if(!COOLDOWN_FINISHED(savannah_mecha, skyfall_cooldown))
 		var/timeleft = COOLDOWN_TIMELEFT(savannah_mecha, skyfall_cooldown)
-		to_chat(owner, "<span class='warning'>You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall.</span>")
+		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
 		return
 	if(savannah_mecha.skyfall_charge_level)
 		savannah_mecha.abort_skyfall(owner)
@@ -337,7 +339,7 @@
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/ivanov_mecha = chassis
 	if(!COOLDOWN_FINISHED(ivanov_mecha, strike_cooldown))
 		var/timeleft = COOLDOWN_TIMELEFT(ivanov_mecha, strike_cooldown)
-		to_chat(owner, "<span class='warning'>You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike.</span>")
+		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike."))
 		return
 	if(ivanov_mecha.aiming_ivanov)
 		ivanov_mecha.end_missile_targeting(owner)

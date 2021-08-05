@@ -10,7 +10,8 @@
 	var/id
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
-	var/turf/target
+	///Weakref to the target atom we're pointed at currently
+	var/datum/weakref/target_ref
 
 /obj/machinery/computer/teleporter/Initialize()
 	. = ..()
@@ -40,6 +41,11 @@
 		ui.open()
 
 /obj/machinery/computer/teleporter/ui_data(mob/user)
+	var/atom/target
+	if(target_ref)
+		target = target_ref.resolve()
+	if(!target)
+		target_ref = null
 	var/list/data = list()
 	data["power_station"] = power_station ? TRUE : FALSE
 	data["teleporter_hub"] = power_station?.teleporter_hub ? TRUE : FALSE
@@ -80,7 +86,7 @@
 			set_target(usr)
 			. = TRUE
 		if("calibrate")
-			if(!target)
+			if(!target_ref)
 				say("Error: No target set to calibrate to.")
 				return
 			if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
@@ -91,13 +97,14 @@
 			calibrating = TRUE
 			power_station.update_appearance()
 			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
-			. = TRUE
+			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
-	if (target == new_target)
+	var/datum/weakref/new_target_ref = WEAKREF(new_target)
+	if (target_ref == new_target_ref)
 		return
 	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, new_target)
-	target = new_target
+	target_ref = new_target_ref
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
 	calibrating = FALSE
@@ -147,8 +154,8 @@
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in sortList(L)
 		set_teleport_target(L[desc])
-		var/turf/T = get_turf(target)
-		log_game("[key_name(user)] has set the teleporter target to [target] at [AREACOORD(T)]")
+		var/turf/T = get_turf(L[desc])
+		log_game("[key_name(user)] has set the teleporter target to [L[desc]] at [AREACOORD(T)]")
 
 	else
 		var/list/S = power_station.linked_stations
@@ -157,7 +164,7 @@
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 		if(!L.len)
-			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
+			to_chat(user, span_alert("No active connected stations located."))
 			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in sortList(L)
 		var/obj/machinery/teleport/station/target_station = L[desc]

@@ -151,6 +151,32 @@
 	result = /obj/item/food/cake/bscc
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/pavlovacream
+	name = "Pavlova with cream"
+	reqs = list(
+		/datum/reagent/consumable/eggwhite = 12,
+		/datum/reagent/consumable/sugar = 15,
+		/datum/reagent/consumable/whipped_cream = 10,
+		/obj/item/food/grown/berries = 5
+	)
+	result = /obj/item/food/cake/pavlova
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/pavlovakorta
+	name = "Pavlova with korta cream"
+	reqs = list(
+		/datum/reagent/consumable/eggwhite = 12,
+		/datum/reagent/consumable/sugar = 15,
+		/datum/reagent/consumable/korta_milk = 10,
+		/obj/item/food/grown/berries = 5
+	)
+	result = /obj/item/food/cake/pavlova
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/pavlovakorta/on_craft_completion(mob/user, obj/item/food/cake/pavlova/result)
+	result.foodtypes = NUTS | FRUIT | SUGAR
+	result.AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova/nuts, 5, 30)
+
 /datum/crafting_recipe/food/bscvcake
 	name = "blackberry and strawberry vanilla cake"
 	reqs = list(

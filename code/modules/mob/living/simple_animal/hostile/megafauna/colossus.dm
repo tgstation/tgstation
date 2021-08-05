@@ -107,7 +107,7 @@
 
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
-			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
 		ranged_cooldown = world.time + 30
 		telegraph()
 		dir_shots(GLOB.alldirs)
@@ -150,11 +150,11 @@
 	icon_state = "eva_attack"
 	if(health < maxHealth/3)
 		return double_spiral()
-	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+	visible_message(span_colossus("\"<b>Judgement.</b>\""))
 	return spiral_shoot()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+	visible_message(span_colossus("\"<b>Die.</b>\""))
 
 	SLEEP_CHECK_DEATH(10)
 	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
@@ -225,7 +225,7 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	visible_message(span_colossus("[src] disintegrates [L]!"))
 	L.dust()
 
 /obj/effect/temp_visual/at_shield
@@ -272,10 +272,9 @@
 		else
 			SSexplosions.medturf += target
 
-
-
+//There can only ever be one blackbox, and we want to know if there already is one when we spawn
+GLOBAL_DATUM(blackbox, /obj/machinery/smartfridge/black_box)
 //Black Box
-
 /obj/machinery/smartfridge/black_box
 	name = "black box"
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
@@ -299,17 +298,15 @@
 	if(!istype(O))
 		return FALSE
 	if(blacklist[O])
-		visible_message("<span class='boldwarning'>[src] ripples as it rejects [O]. The device will not accept items that have been removed from it.</span>")
+		visible_message(span_boldwarning("[src] ripples as it rejects [O]. The device will not accept items that have been removed from it."))
 		return FALSE
 	return TRUE
 
 /obj/machinery/smartfridge/black_box/Initialize()
 	. = ..()
-	var/static/obj/machinery/smartfridge/black_box/current
-	if(current && current != src)
-		qdel(src, force=TRUE)
-		return
-	current = src
+	if(GLOB.blackbox != src)
+		return INITIALIZE_HINT_QDEL_FORCE
+	GLOB.blackbox = src
 	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
@@ -354,6 +351,8 @@
 
 /obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
 	if(force)
+		if(GLOB.blackbox == src)
+			GLOB.blackbox = null
 		for(var/thing in src)
 			qdel(thing)
 		return ..()
@@ -403,7 +402,6 @@
 	use_power = NO_POWER_USE
 	anchored = FALSE
 	density = TRUE
-	flags_1 = HEAR_1
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
 
@@ -417,6 +415,7 @@
 	. = ..()
 	if(!activation_method)
 		activation_method = pick(possible_methods)
+	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
@@ -475,13 +474,12 @@
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
 	if(..() && ishuman(user) && !(user in affected_targets))
-		var/mob/living/carbon/human/H = user
-		for(var/obj/item/W in H)
-			H.dropItemToGround(W)
-		var/datum/job/clown/C = new /datum/job/clown()
-		C.equip(H)
-		qdel(C)
-		affected_targets.Add(H)
+		var/mob/living/carbon/human/new_clown = user
+		for(var/obj/item/to_strip in new_clown)
+			new_clown.dropItemToGround(to_strip)
+		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
+		affected_targets.Add(new_clown)
+
 
 /obj/machinery/anomalous_crystal/theme_warp //Warps the area you're in to look like a new one
 	observer_desc = "This crystal warps the area around it to a theme."
@@ -693,35 +691,12 @@
 		if(L.stat != DEAD)
 			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
-			visible_message("<span class='notice'>[src] mends the wounds of [target].</span>","<span class='notice'>You mend the wounds of [target].</span>")
+			visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))
 
 /mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()
 	if(.)
 		death()
-
-
-/obj/machinery/anomalous_crystal/refresher //Deletes and recreates a copy of the item, "refreshing" it.
-	observer_desc = "This crystal \"refreshes\" items that it affects, rendering them as new."
-	activation_method = ACTIVATE_TOUCH
-	cooldown_add = 50
-	activation_sound = 'sound/magic/timeparadox2.ogg'
-	var/static/list/banned_items_typecache = typecacheof(list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/projectile, /obj/item/spellbook))
-
-/obj/machinery/anomalous_crystal/refresher/ActivationReaction(mob/user, method)
-	if(..())
-		var/list/L = list()
-		var/turf/T = get_step(src, dir)
-		new /obj/effect/temp_visual/emp/pulse(T)
-		for(var/i in T)
-			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
-				var/obj/item/W = i
-				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.item_flags & ABSTRACT))
-					L += W
-		if(L.len)
-			var/obj/item/CHOSEN = pick(L)
-			new CHOSEN.type(T)
-			qdel(CHOSEN)
 
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
@@ -745,6 +720,7 @@
 	name = "quantum entanglement stasis warp field"
 	desc = "You can hardly comprehend this thing... which is why you can't see it."
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
+	enable_door_overlay = FALSE //For obvious reasons
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
@@ -763,9 +739,9 @@
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/closet/stasis/Entered(atom/A)
-	if(isliving(A) && holder_animal)
-		var/mob/living/L = A
+/obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(isliving(arrived) && holder_animal)
+		var/mob/living/L = arrived
 		L.notransform = 1
 		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags |= GODMODE

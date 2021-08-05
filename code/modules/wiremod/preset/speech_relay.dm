@@ -18,5 +18,3 @@
 	speech.rel_y = 200
 
 	speech.message.register_output_port(hear.message_port)
-	speech.trigger.register_output_port(hear.trigger_port)
-

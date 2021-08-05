@@ -1965,7 +1965,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "eb" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,

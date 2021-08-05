@@ -66,8 +66,8 @@
 	if(stat == DEAD || choking) // plapatin I swear to god
 		return FALSE
 	if(suffocator.has_material_type(/datum/material/plastic)) // dumb goose'll swallow food or drink with plastic in it
-		visible_message("<span class='danger'>[src] hungrily gobbles up \the [suffocator]! </span>")
-		visible_message("<span class='boldwarning'>[src] is choking on \the [suffocator]! </span>")
+		visible_message(span_danger("[src] hungrily gobbles up \the [suffocator]! "))
+		visible_message(span_boldwarning("[src] is choking on \the [suffocator]! "))
 		suffocator.forceMove(src)
 		choke(suffocator)
 		choking = TRUE
@@ -107,7 +107,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/examine(user)
 	. = ..()
-	. += "<span class='notice'>Somehow, it still looks hungry.</span>"
+	. += span_notice("Somehow, it still looks hungry.")
 
 /mob/living/simple_animal/hostile/retaliate/goose/attackby(obj/item/O, mob/user)
 	. = ..()
@@ -120,11 +120,11 @@
 		return FALSE
 	if (contents.len > GOOSE_SATIATED)
 		if(message_cooldown < world.time)
-			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
 	if (tasty.foodtype & GROSS)
-		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
+		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
 		vomitCoefficient += 3
@@ -132,7 +132,7 @@
 		return TRUE
 	else
 		if(message_cooldown < world.time)
-			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+			visible_message(span_notice("[src] refuses to eat \the [tasty]."))
 			message_cooldown = world.time + 5 SECONDS
 			return FALSE
 
@@ -145,7 +145,7 @@
 	if(stat == DEAD || choking)
 		return
 	if(prob(25))
-		visible_message("<span class='warning'>[src] is gagging on \the [plastic]!</span>")
+		visible_message(span_warning("[src] is gagging on \the [plastic]!"))
 		manual_emote("gags!")
 		addtimer(CALLBACK(src, .proc/vomit), 300)
 	else

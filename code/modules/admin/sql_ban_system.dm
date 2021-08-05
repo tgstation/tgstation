@@ -110,7 +110,8 @@
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	if(usr.client.prefs.tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
+	var/tgui_fancy = usr.client.prefs.tgui_fancy
+	if(tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
 		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
@@ -195,6 +196,7 @@
 		</div>
 	</div>
 	"}
+
 	if(edit_id)
 		output += {"<label class='inputlabel checkbox'>Mirror edits to matching bans
 		<input type='checkbox' id='mirroredit' name='mirroredit' value='1'>
@@ -232,48 +234,41 @@
 				banned_from += query_get_banned_roles.item[1]
 			qdel(query_get_banned_roles)
 		var/break_counter = 0
-		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_dep\")'" : ""]>Command</label><div class='content'>"
-		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
-		//for simplicity this also includes the captain even though it doesn't do anything
-		for(var/job in GLOB.command_positions)
-			if(break_counter > 0 && (break_counter % 3 == 0))
-				output += "<br>"
-			output += {"<label class='inputlabel checkbox'>[job]
-						<input type='checkbox' id='[job]_com' name='[job]' class='Command' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_dep\")'" : ""]>
-						<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
-			"}
-			break_counter++
-		output += "</div></div>"
-		//standard departments all have identical handling
-		var/list/job_lists = list("Security" = GLOB.security_positions,
-							"Engineering" = GLOB.engineering_positions,
-							"Medical" = GLOB.medical_positions,
-							"Science" = GLOB.science_positions,
-							"Supply" = GLOB.supply_positions)
-		for(var/department in job_lists)
-			//the first element is the department head so they need the same javascript call as above
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
-			output += {"<label class='inputlabel checkbox'>[job_lists[department][1]]
-						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_com\")'" : ""]>
-						<div class='inputbox[(job_lists[department][1] in banned_from) ? " banned" : ""]'></div></label>
-			"}
-			break_counter = 1
-			for(var/job in job_lists[department] - job_lists[department][1]) //skip the first element since it's already been done
-				if(break_counter % 3 == 0)
+		output += "<div class='row'>"
+
+		for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+			var/label_class = department.label_class
+			var/department_name = department.department_name
+			output += "<div class='column'><label class='rolegroup [label_class]'>[department_name]</label><div class='content'>"
+			for(var/datum/job/job_datum as anything in department.department_jobs)
+				if(break_counter > 0 && (break_counter % 3 == 0))
 					output += "<br>"
-				output += {"<label class='inputlabel checkbox'>[job]
-							<input type='checkbox' name='[job]' class='[department]' value='1'>
-							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
-				"}
 				break_counter++
+				var/job_name = job_datum.title
+				if(length(job_datum.departments_list) > 1) //This job is in multiple departments, so we need to check all the boxes.
+					// Clicking this will also toggle all the other boxes, minus this one.
+					var/department_index = job_datum.departments_list.Find(department.type)
+					if(!department_index)
+						stack_trace("Failed to find a department index for [department.type] in the departments_list of [job_datum.type]")
+					output += {"<label class='inputlabel checkbox'>[job_name]
+						<input type='checkbox' id='[job_name]_[department_index]' name='[job_name]' class='[label_class]' value='1'[tgui_fancy ? " onClick='toggle_other_checkboxes(this, \"[length(job_datum.departments_list)]\", \"[department_index]\")'" : ""]>
+						<div class='inputbox[(job_name in banned_from) ? " banned" : ""]'></div></label>
+						"}
+				else
+					output += {"<label class='inputlabel checkbox'>[job_name]
+							<input type='checkbox' name='[job_name]' class='[label_class]' value='1'>
+							<div class='inputbox[(job_name in banned_from) ? " banned" : ""]'></div></label>
+							"}
 			output += "</div></div>"
-		//departments/groups that don't have command staff would throw a javascript error since there's no corresponding reference for toggle_head()
-		var/list/headless_job_lists = list("Silicon" = GLOB.nonhuman_positions,
-										"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"))
-		for(var/department in headless_job_lists)
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			break_counter = 0
-			for(var/job in headless_job_lists[department])
+
+		var/list/other_job_lists = list(
+			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"),
+			)
+		for(var/department in other_job_lists)
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[department]</label><div class='content'>"
+			break_counter = 0
+			for(var/job in other_job_lists[department])
 				if(break_counter > 0 && (break_counter % 3 == 0))
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
@@ -283,8 +278,8 @@
 				break_counter++
 			output += "</div></div>"
 		var/list/long_job_lists = list(
-			"Service" = GLOB.service_positions,
 			"Ghost and Other Roles" = list(
+				ROLE_PAI,
 				ROLE_BRAINWASHED,
 				ROLE_DEATHSQUAD,
 				ROLE_DRONE,
@@ -317,7 +312,7 @@
 			),
 		)
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))
@@ -330,14 +325,15 @@
 			output += "</div></div>"
 		output += "</div>"
 	output += "</form>"
-	panel.set_content(jointext(output, ""))
+	panel.set_content(output.Join())
 	panel.open()
+
 
 /datum/admins/proc/ban_parse_href(list/href_list)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/list/error_state = list()
 	var/player_key
@@ -443,7 +439,7 @@
 			else
 				error_state += "No ban type was selected."
 	if(error_state.len)
-		to_chat(usr, "<span class='danger'>Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]"), confidential = TRUE)
 		return
 	if(edit_id)
 		edit_ban(edit_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
@@ -454,7 +450,7 @@
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/player_ckey = ckey(player_key)
 	if(player_ckey)
@@ -501,7 +497,7 @@
 			if(R_EVERYTHING && !(R_EVERYTHING & rank.can_edit_rights)) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 				max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 			if(adminban_count >= max_adminbans)
-				to_chat(usr, "<span class='danger'>You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!</span>", confidential = TRUE)
+				to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
 				qdel(query_check_adminban_count)
 				return
 		qdel(query_check_adminban_count)
@@ -567,7 +563,7 @@
 	var/is_admin = FALSE
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>", confidential = TRUE)
+		to_chat(C, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
 		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
 			is_admin = TRUE
 		if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
@@ -577,7 +573,7 @@
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
-			to_chat(i, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>", confidential = TRUE)
+			to_chat(i, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
 			if(GLOB.admin_datums[i.ckey] || GLOB.deadmins[i.ckey])
 				is_admin = TRUE
 			if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
@@ -587,7 +583,7 @@
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/datum/browser/unban_panel = new(usr, "unbanpanel", "Unbanning Panel", 850, 600)
 	unban_panel.add_stylesheet("unbanpanelcss", 'html/admin/unbanpanel.css')
@@ -729,7 +725,7 @@
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	if(tgui_alert(usr, "Please confirm unban of [target] from [role].", "Unban confirmation", list("Yes", "No")) == "No")
@@ -754,18 +750,18 @@
 	var/client/C = GLOB.directory[player_key]
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your key.</span>", confidential = TRUE)
+		to_chat(C, span_boldannounce("[usr.client.key] has removed a ban from [role] for your key."), confidential = TRUE)
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
-			to_chat(i, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your IP or CID.</span>", confidential = TRUE)
+			to_chat(i, span_boldannounce("[usr.client.key] has removed a ban from [role] for your IP or CID."), confidential = TRUE)
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
 /datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/player_ckey = ckey(player_key)
 	var/bantime
@@ -818,7 +814,7 @@
 			if(R_EVERYTHING && !(R_EVERYTHING & rank.can_edit_rights)) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 				max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 			if(adminban_count >= max_adminbans)
-				to_chat(usr, "<span class='danger'>You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!</span>", confidential = TRUE)
+				to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
 				qdel(query_check_adminban_count)
 				return
 		qdel(query_check_adminban_count)
@@ -886,18 +882,18 @@
 	var/client/C = GLOB.directory[old_key]
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, "<span class='boldannounce'>[usr.client.key] has edited the [changes_keys_text] of a ban for your key.</span>", confidential = TRUE)
+		to_chat(C, span_boldannounce("[usr.client.key] has edited the [changes_keys_text] of a ban for your key."), confidential = TRUE)
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == old_ip || i.computer_id == old_cid)
 			build_ban_cache(i)
-			to_chat(i, "<span class='boldannounce'>[usr.client.key] has edited the [changes_keys_text] of a ban for your IP or CID.</span>", confidential = TRUE)
+			to_chat(i, span_boldannounce("[usr.client.key] has edited the [changes_keys_text] of a ban for your IP or CID."), confidential = TRUE)
 	unban_panel(player_key, null, null, null, page)
 
 /datum/admins/proc/ban_log(ban_id)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/datum/db_query/query_get_ban_edits = SSdbcore.NewQuery({"
 		SELECT edits FROM [format_table_name("ban")] WHERE id = :ban_id

@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/concat
 	display_name = "Concatenate"
+	desc = "A component that combines strings."
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4
@@ -20,10 +21,6 @@
 		add_input_port(letter, PORT_TYPE_STRING)
 
 	output = add_output_port("Output", PORT_TYPE_STRING)
-
-/obj/item/circuit_component/concat/Destroy()
-	output = null
-	return ..()
 
 /obj/item/circuit_component/concat/input_received(datum/port/input/port)
 	. = ..()

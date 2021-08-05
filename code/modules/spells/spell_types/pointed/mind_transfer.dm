@@ -19,29 +19,29 @@
 /obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user, silent = FALSE)
 	if(!targets.len)
 		if(!silent)
-			to_chat(user, "<span class='warning'>No mind found!</span>")
+			to_chat(user, span_warning("No mind found!"))
 		return FALSE
 	if(targets.len > 1)
 		if(!silent)
-			to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
+			to_chat(user, span_warning("Too many minds! You're not a hive damnit!"))
 		return FALSE
 	if(!can_target(targets[1], user, silent))
 		return FALSE
 
 	var/mob/living/victim = targets[1] //The target of the spell whos body will be transferred to.
-	var/datum/mind/VM = victim.mind
-	if(victim.anti_magic_check(TRUE, FALSE) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
-		if(!silent)
-			to_chat(user, "<span class='warning'>[victim.p_their(TRUE)] mind is resisting your spell!</span>")
-		return FALSE
 	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
 		var/mob/living/simple_animal/hostile/guardian/stand = victim
 		if(stand.summoner)
 			victim = stand.summoner
+	var/datum/mind/VM = victim.mind
+	if(victim.anti_magic_check(TRUE, FALSE) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
+		if(!silent)
+			to_chat(user, span_warning("[victim.p_their(TRUE)] mind is resisting your spell!"))
+		return FALSE
 
 	//You should not be able to enter one of the most powerful side-antags as a fucking wizard.
 	if(istype(victim,/mob/living/simple_animal/hostile/imp/slaughter))
-		to_chat(user, "<span class='warning'>The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime.</span>")
+		to_chat(user, span_warning("The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime."))
 		return
 
 	//MIND TRANSFER BEGIN
@@ -67,11 +67,11 @@
 		return FALSE
 	if(!isliving(target))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You can only swap minds with living beings!</span>")
+			to_chat(user, span_warning("You can only swap minds with living beings!"))
 		return FALSE
 	if(user == target)
 		if(!silent)
-			to_chat(user, "<span class='warning'>You can't swap minds with yourself!</span>")
+			to_chat(user, span_warning("You can't swap minds with yourself!"))
 		return FALSE
 
 	var/mob/living/victim = target
@@ -79,25 +79,25 @@
 
 	if(ismegafauna(victim))
 		if(!silent)
-			to_chat(user, "<span class='warning'>This creature is too powerful to control!</span>")
+			to_chat(user, span_warning("This creature is too powerful to control!"))
 		return FALSE
 	if(victim.stat == DEAD)
 		if(!silent)
-			to_chat(user, "<span class='warning'>You don't particularly want to be dead!</span>")
+			to_chat(user, span_warning("You don't particularly want to be dead!"))
 		return FALSE
 	if(!victim.key || !victim.mind)
 		if(!silent)
-			to_chat(user, "<span class='warning'>[t_He] appear[victim.p_s()] to be catatonic! Not even magic can affect [victim.p_their()] vacant mind.</span>")
+			to_chat(user, span_warning("[t_He] appear[victim.p_s()] to be catatonic! Not even magic can affect [victim.p_their()] vacant mind."))
 		return FALSE
 	if(user.suiciding)
 		if(!silent)
-			to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")
+			to_chat(user, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
 		return FALSE
 	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
 		var/mob/living/simple_animal/hostile/guardian/stand = victim
 		if(stand.summoner)
 			if(stand.summoner == user)
 				if(!silent)
-					to_chat(user, "<span class='warning'>Swapping minds with your own guardian would just put you back into your own head!</span>")
+					to_chat(user, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
 				return FALSE
 	return TRUE

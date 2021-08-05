@@ -2,6 +2,7 @@
 	name = "Survivalist"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	suicide_cry = "FOR MYSELF!!"
 	var/greet_message = ""
 
 /datum/antagonist/survivalist/proc/forge_objectives()
@@ -33,7 +34,7 @@
 
 /datum/antagonist/survivalist/magic/greet()
 	..()
-	to_chat(owner, "<span class='notice'>As a wonderful magician, you should remember that spellbooks don't mean anything if they are used up.</span>")
+	to_chat(owner, span_notice("As a wonderful magician, you should remember that spellbooks don't mean anything if they are used up."))
 
 /datum/antagonist/survivalist/magic/forge_objectives()
 	var/datum/objective/steal_five_of_type/summon_magic/magic = new

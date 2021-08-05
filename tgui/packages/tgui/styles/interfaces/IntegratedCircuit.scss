@@ -3,6 +3,15 @@
 
 $bg-map: colors.$bg-map !default;
 
+.CircuitInfo__Examined {
+  background-color:rgba(0, 0, 0, 1);
+  padding: 8px;
+  border-radius: 5px;
+
+  user-select: none;
+  pointer-events: none;
+}
+
 .ObjectComponent__Titlebar {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -33,4 +42,13 @@ $bg-map: colors.$bg-map !default;
   .color-stroke-#{$color-name} {
     stroke: $color-value !important;
   }
+}
+
+$border-color: #88bfff !default;
+$border-radius: base.$border-radius !default;
+
+.Datatype__Option {
+  border: base.em(1px) solid $border-color;
+  border: base.em(1px) solid rgba($border-color, 0.75);
+  border-radius: $border-radius;
 }

@@ -364,7 +364,7 @@
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/security/head_of_security/formal,
 					/obj/item/clothing/suit/security/hos,
-					/obj/item/clothing/head/beret/sec/navyhos)
+					/obj/item/clothing/head/hos/beret/navyhos)
 	crate_name = "security clothing crate"
 
 /datum/supply_pack/security/stingpack
@@ -995,10 +995,10 @@
 					/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
-					/obj/item/hfr_box/body,
-					/obj/item/hfr_box/body,
-					/obj/item/hfr_box/body,
-					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body/fuel_input,
+					/obj/item/hfr_box/body/moderator_input,
+					/obj/item/hfr_box/body/waste_output,
+					/obj/item/hfr_box/body/interface,
 					/obj/item/hfr_box/core)
 	crate_name = "HFR crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
@@ -1590,6 +1590,40 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty,
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
+
+/datum/supply_pack/service/carpet_neon
+	name = "Simple Neon Carpet Crate"
+	desc = "Simple rubbery mats with phosphorescent lining. Contains 120 tiles each of 13 color variants. Limited edition release."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+	)
+	crate_name = "neon carpet crate"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"

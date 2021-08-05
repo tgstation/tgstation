@@ -8,7 +8,7 @@
 	belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -44,7 +44,7 @@
 	)
 
 /obj/item/screwdriver/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/Initialize()
@@ -98,9 +98,9 @@
 
 /obj/item/screwdriver/power/suicide_act(mob/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
-		user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
 	return(BRUTELOSS)
 
@@ -108,11 +108,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
-		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
+		balloon_alert(user, "attached bolt bit")
 		icon_state = "drill_bolt"
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
+		balloon_alert(user, "attached screw bit")
 		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg

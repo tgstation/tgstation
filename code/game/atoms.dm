@@ -51,9 +51,9 @@
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
 
-	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays.
 	var/list/managed_vis_overlays
-	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc
+	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
@@ -83,7 +83,7 @@
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
 	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
-	var/list/custom_materials
+	var/list/datum/material/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
@@ -132,6 +132,9 @@
 	var/greyscale_config
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
+
+	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
+	var/list/datum/merger/mergers
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
@@ -290,7 +293,7 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(managed_overlays)
+	LAZYNULL(managed_overlays)
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
@@ -315,19 +318,19 @@
 	P.set_angle(new_angle_s)
 	return TRUE
 
-///Can the mover object pass this atom, while heading for the target turf
-/atom/proc/CanPass(atom/movable/mover, turf/target)
+/// Whether the mover object can avoid being blocked by this atom, while arriving from (or leaving through) the border_dir.
+/atom/proc/CanPass(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
 	if(mover.movement_type & PHASING)
 		return TRUE
-	. = CanAllowThrough(mover, target)
+	. = CanAllowThrough(mover, border_dir)
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
 	if(!mover.generic_canpass)
-		return mover.CanPassThrough(src, target, .)
+		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
 /// Returns true or false to allow the mover to move through src
-/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+/atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)
 	if(mover.pass_flags & pass_flags_self)
@@ -452,7 +455,6 @@
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	qdel(giver)
 	return null
 
 ///Remove air from this atom
@@ -630,8 +632,8 @@
 					for(var/datum/reagent/R in reagents.reagent_list)
 						. += "[round(R.volume, 0.01)] units of [R.name]"
 					if(reagents.is_reacting)
-						. += "<span class='warning'>It is currently reacting!</span>"
-					. += "<span class='notice'>The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.</span>"
+						. += span_warning("It is currently reacting!")
+					. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
@@ -641,9 +643,9 @@
 				. += "Nothing."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				. += "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
+				. += span_notice("It has [reagents.total_volume] unit\s left.")
 			else
-				. += "<span class='danger'>It's empty.</span>"
+				. += span_danger("It's empty.")
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 /**
@@ -658,7 +660,7 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
 	if(!LAZYLEN(.)) // lol ..length
-		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
+		return list(span_notice("<i>You examine [src] closer, but find nothing of interest...</i>"))
 
 /**
  * Updates the appearence of the icon
@@ -706,12 +708,15 @@
 		if(LAZYLEN(managed_vis_overlays))
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
-		var/list/new_overlays = update_overlays()
+		var/list/new_overlays = update_overlays(updates)
 		if(managed_overlays)
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if (length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
@@ -748,6 +753,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(greyscale_colors && greyscale_config)
 		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
+		return
+	update_atom_colour()
+	QUEUE_SMOOTH(src)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
@@ -756,9 +765,11 @@
  * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
  */
 /atom/proc/relaymove(mob/living/user, direction)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
+		return
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
-		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
+		to_chat(user, span_warning("You can't move while buckled to [src]!"))
 	return
 
 /**
@@ -980,7 +991,7 @@
 	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	progress.end_progress()
-	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can.</span>")
+	to_chat(user, span_notice("You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can."))
 	STR.orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.active_storage) //refresh the HUD to show the transfered contents
@@ -1148,7 +1159,7 @@
 				set_light_color(var_value)
 			. =  TRUE
 		if(NAMEOF(src, light_on))
-			set_smoothed_icon_state(var_value)
+			set_light_on(var_value)
 			. =  TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)
@@ -1227,7 +1238,7 @@
 						else
 							valid_id = TRUE
 						if(!valid_id)
-							to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
+							to_chat(usr, span_warning("A reagent with that ID doesn't exist!"))
 				if("Choose from a list")
 					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in sortList(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
 				if("I'm feeling lucky")
@@ -1237,7 +1248,7 @@
 				if(amount)
 					reagents.add_reagent(chosen_id, amount)
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
-					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to [src]</span>")
+					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
 	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
 		usr.client.cmd_admin_explosion(src)
@@ -1272,8 +1283,8 @@
 				if(!isnull(x) && !isnull(y))
 					transform = M.Scale(x,y)
 			if("Translate")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = input(usr, "Choose x mod (negative = left, positive = right)","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod (negative = down, positive = up)","Transform Mod") as null|num
 				if(!isnull(x) && !isnull(y))
 					transform = M.Translate(x,y)
 			if("Rotate")
@@ -1312,20 +1323,20 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_ENTERED]
  */
-/atom/Entered(atom/movable/AM, atom/oldLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
-	SEND_SIGNAL(AM, COMSIG_ATOM_ENTERING, src, oldLoc)
+/atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
+	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, old_loc, old_locs)
 
 /**
  * An atom is attempting to exit this atom's contents
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
  */
-/atom/Exit(atom/movable/AM, atom/newLoc)
+/atom/Exit(atom/movable/leaving, direction)
 	// Don't call `..()` here, otherwise `Uncross()` gets called.
 	// See the doc comment on `Uncross()` to learn why this is bad.
 
-	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, leaving, direction) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
 
 	return TRUE
@@ -1335,8 +1346,8 @@
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXITED]
  */
-/atom/Exited(atom/movable/AM, atom/newLoc)
-	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
+/atom/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
 
 ///Return atom temperature
 /atom/proc/return_temperature()
@@ -1425,7 +1436,7 @@
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/I, list/chosen_option)
-	to_chat(user, "<span class='notice'>You start working on [src].</span>")
+	to_chat(user, span_notice("You start working on [src]."))
 	if(I.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
@@ -1440,7 +1451,7 @@
 				created_atom.pixel_y += rand(-8,8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
-			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")
+			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src]."))
 			created_atoms.Add(created_atom)
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, I, created_atoms)
 		UsedforProcessing(user, I, chosen_option)
@@ -1476,7 +1487,7 @@
 /atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
 	if(!istype(I, /obj/item/multitool))
 		if(user && !silent)
-			to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
+			to_chat(user, span_warning("[I] has no data buffer!"))
 		return FALSE
 	return TRUE
 
@@ -1698,9 +1709,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
@@ -1845,6 +1854,16 @@
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
+
+///Setter for the `density` variable to append behavior related to its changing.
+/atom/proc/set_density(new_value)
+	SHOULD_CALL_PARENT(TRUE)
+	if(density == new_value)
+		return
+	. = density
+	density = new_value
+
+
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
 	if(base_pixel_x == new_value)
@@ -1919,7 +1938,7 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	return
+	AddElement(/datum/element/rust)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -1956,14 +1975,25 @@
 		return
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
-	if(href_list["statpanel_item_shiftclick"])
-		paramslist[SHIFT_CLICK] = "1"
-	if(href_list["statpanel_item_ctrlclick"])
-		paramslist[CTRL_CLICK] = "1"
-	if(href_list["statpanel_item_altclick"])
-		paramslist[ALT_CLICK] = "1"
+
 	if(href_list["statpanel_item_click"])
-		// first of all make sure we valid
+		switch(href_list["statpanel_item_click"])
+			if("left")
+				paramslist[LEFT_CLICK] = "1"
+			if("right")
+				paramslist[RIGHT_CLICK] = "1"
+			if("middle")
+				paramslist[MIDDLE_CLICK] = "1"
+			else
+				return
+
+		if(href_list["statpanel_item_shiftclick"])
+			paramslist[SHIFT_CLICK] = "1"
+		if(href_list["statpanel_item_ctrlclick"])
+			paramslist[CTRL_CLICK] = "1"
+		if(href_list["statpanel_item_altclick"])
+			paramslist[ALT_CLICK] = "1"
+
 		var/mouseparams = list2params(paramslist)
 		usr_client.Click(src, loc, null, mouseparams)
 		return TRUE
@@ -2025,7 +2055,19 @@
 	// Statusbar
 	status_bar_set_text(usr, name)
 	// Screentips
-	if(!usr?.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
-		usr.hud_used.screentip_text.maptext = ""
-	else
-		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+	if(usr?.hud_used)
+		if(!usr.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+			usr.hud_used.screentip_text.maptext = ""
+		else
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+
+/// Gets a merger datum representing the connected blob of objects in the allowed_types argument
+/atom/proc/GetMergeGroup(id, list/allowed_types)
+	RETURN_TYPE(/datum/merger)
+	var/datum/merger/candidate
+	if(mergers)
+		candidate = mergers[id]
+	if(!candidate)
+		new /datum/merger(id, allowed_types, src)
+		candidate = mergers[id]
+	return candidate

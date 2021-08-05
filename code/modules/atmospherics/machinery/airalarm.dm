@@ -85,7 +85,7 @@
 
 	var/list/TLV = list( // Breathable air.
 		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min2, min1, max1, max2
-		"temperature" = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
+		"temperature" = new/datum/tlv(BODYTEMP_COLD_WARNING_1, BODYTEMP_COLD_WARNING_1+10, BODYTEMP_HEAT_WARNING_1-27, BODYTEMP_HEAT_WARNING_1),
 		/datum/gas/oxygen = new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen = new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide = new/datum/tlv(-1, -1, 5, 10),
@@ -240,16 +240,19 @@
 /obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/air_alarm,
+	))
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
 		if(AIRALARM_BUILD_NO_CIRCUIT)
-			. += "<span class='notice'>It is missing air alarm electronics.</span>"
+			. += span_notice("It is missing air alarm electronics.")
 		if(AIRALARM_BUILD_NO_WIRES)
-			. += "<span class='notice'>It is missing wiring.</span>"
+			. += span_notice("It is missing wiring.")
 		if(AIRALARM_BUILD_COMPLETE)
-			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
+			. += span_notice("Alt-click to [locked ? "unlock" : "lock"] the interface.")
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
@@ -740,12 +743,12 @@
 /obj/machinery/airalarm/crowbar_act(mob/living/user, obj/item/tool)
 	if(buildstage != AIRALARM_BUILD_NO_WIRES)
 		return
-	user.visible_message("<span class='notice'>[user.name] removes the electronics from [name].</span>", \
-						"<span class='notice'>You start prying out the circuit...</span>")
+	user.visible_message(span_notice("[user.name] removes the electronics from [name]."), \
+						span_notice("You start prying out the circuit..."))
 	tool.play_tool_sound(src)
 	if (tool.use_tool(src, user, 20))
 		if (buildstage == AIRALARM_BUILD_NO_WIRES)
-			to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
+			to_chat(user, span_notice("You remove the air alarm electronics."))
 			new /obj/item/electronics/airalarm(drop_location())
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			buildstage = AIRALARM_BUILD_NO_CIRCUIT
@@ -757,7 +760,7 @@
 		return
 	tool.play_tool_sound(src)
 	panel_open = !panel_open
-	to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
+	to_chat(user, span_notice("The wires have been [panel_open ? "exposed" : "unexposed"]."))
 	update_appearance()
 	return TRUE
 
@@ -765,7 +768,7 @@
 	if(!(buildstage == AIRALARM_BUILD_COMPLETE && panel_open && wires.is_all_cut()))
 		return
 	tool.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You cut the final wires.</span>")
+	to_chat(user, span_notice("You cut the final wires."))
 	var/obj/item/stack/cable_coil/cables = new(drop_location(), 5)
 	user.put_in_hands(cables)
 	buildstage = AIRALARM_BUILD_NO_WIRES
@@ -775,7 +778,7 @@
 /obj/machinery/airalarm/wrench_act(mob/living/user, obj/item/tool)
 	if(buildstage != AIRALARM_BUILD_NO_CIRCUIT)
 		return
-	to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
+	to_chat(user, span_notice("You detach \the [src] from the wall."))
 	tool.play_tool_sound(src)
 	var/obj/item/wallframe/airalarm/alarm_frame = new(drop_location())
 	user.put_in_hands(alarm_frame)
@@ -796,14 +799,14 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
+					to_chat(user, span_warning("You need five lengths of cable to wire the air alarm!"))
 					return
-				user.visible_message("<span class='notice'>[user.name] wires the air alarm.</span>", \
-									"<span class='notice'>You start wiring the air alarm...</span>")
+				user.visible_message(span_notice("[user.name] wires the air alarm."), \
+									span_notice("You start wiring the air alarm..."))
 				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == AIRALARM_BUILD_NO_WIRES)
 						cable.use(5)
-						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
+						to_chat(user, span_notice("You wire the air alarm."))
 						wires.repair()
 						aidisabled = 0
 						locked = FALSE
@@ -816,7 +819,7 @@
 		if(AIRALARM_BUILD_NO_CIRCUIT)
 			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
-					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
+					to_chat(user, span_notice("You insert the circuit."))
 					buildstage = AIRALARM_BUILD_NO_WIRES
 					update_appearance()
 					qdel(W)
@@ -826,8 +829,8 @@
 				var/obj/item/electroadaptive_pseudocircuit/P = W
 				if(!P.adapt_circuit(user, 25))
 					return
-				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
-				"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
+				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+				span_notice("You adapt an air alarm circuit and slot it into the assembly."))
 				buildstage = AIRALARM_BUILD_NO_WIRES
 				update_appearance()
 				return
@@ -842,8 +845,8 @@
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
-			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
-			"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
+			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+			span_notice("You adapt an air alarm circuit and slot it into the assembly."))
 			buildstage = AIRALARM_BUILD_NO_WIRES
 			update_appearance()
 			return TRUE
@@ -858,21 +861,21 @@
 
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
 	if(machine_stat & (NOPOWER|BROKEN))
-		to_chat(user, "<span class='warning'>It does nothing!</span>")
+		to_chat(user, span_warning("It does nothing!"))
 	else
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
+			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the air alarm interface."))
 			updateUsrDialog()
 		else
-			to_chat(user, "<span class='danger'>Access denied.</span>")
+			to_chat(user, span_danger("Access denied."))
 	return
 
 /obj/machinery/airalarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
+	visible_message(span_warning("Sparks fly out of [src]!"), span_notice("You emag [src], disabling its safeties."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
@@ -883,6 +886,85 @@
 			I.take_damage(I.max_integrity * 0.5, sound_effect=FALSE)
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
+
+/obj/item/circuit_component/air_alarm
+	display_name = "Air Alarm"
+	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
+
+	var/datum/port/input/option/air_alarm_options
+
+	var/datum/port/input/min_2
+	var/datum/port/input/min_1
+	var/datum/port/input/max_1
+	var/datum/port/input/max_2
+
+	var/datum/port/input/request_data
+
+	var/datum/port/output/pressure
+	var/datum/port/output/temperature
+	var/datum/port/output/gas_amount
+
+	var/obj/machinery/airalarm/connected_alarm
+	var/list/options_map
+
+/obj/item/circuit_component/air_alarm/Initialize()
+	. = ..()
+	min_2 = add_input_port("Min 2", PORT_TYPE_NUMBER)
+	min_1 = add_input_port("Min 1", PORT_TYPE_NUMBER)
+	max_1 = add_input_port("Max 1", PORT_TYPE_NUMBER)
+	max_2 = add_input_port("Max 2", PORT_TYPE_NUMBER)
+	request_data = add_input_port("Request Atmosphere Data", PORT_TYPE_SIGNAL)
+
+	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
+	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
+	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/air_alarm/populate_options()
+	var/static/list/component_options
+
+	if(!component_options)
+		component_options = list(
+			"Pressure" = "pressure",
+			"Temperature" = "temperature"
+		)
+
+		for(var/gas_id in GLOB.meta_gas_info)
+			component_options[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
+
+	air_alarm_options = add_option_port("Air Alarm Options", component_options)
+	options_map = component_options
+
+/obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/airalarm))
+		connected_alarm = parent
+
+/obj/item/circuit_component/air_alarm/unregister_usb_parent(atom/movable/parent)
+	connected_alarm = null
+	return ..()
+
+/obj/item/circuit_component/air_alarm/input_received(datum/port/input/port)
+	. = ..()
+
+	if(. || !connected_alarm || connected_alarm.locked)
+		return
+
+	var/current_option = air_alarm_options.input_value
+
+	if(COMPONENT_TRIGGERED_BY(request_data, port))
+		var/turf/alarm_turf = get_turf(connected_alarm)
+		var/datum/gas_mixture/environment = alarm_turf.return_air()
+		pressure.set_output(round(environment.return_pressure()))
+		temperature.set_output(round(environment.temperature))
+		if(ispath(options_map[current_option]))
+			gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
+		return
+
+	var/datum/tlv/settings = connected_alarm.TLV[options_map[current_option]]
+	settings.min2 = min_2
+	settings.min1 = min_1
+	settings.max1 = max_1
+	settings.max2 = max_2
 
 #undef AALARM_MODE_SCRUBBING
 #undef AALARM_MODE_VENTING

@@ -200,8 +200,8 @@
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
-	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
-	to_chat(owner, "<span class='notice'>You press [vehicle_entered_target]'s horn.</span>")
+	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
+	to_chat(owner, span_notice("You press [vehicle_entered_target]'s horn."))
 	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
 		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
 		return
@@ -213,9 +213,10 @@
 	button_icon_state = "car_headlights"
 
 /datum/action/vehicle/sealed/headlights/Trigger()
-	to_chat(owner, "<span class='notice'>You flip the switch for the vehicle's headlights.</span>")
+	to_chat(owner, span_notice("You flip the switch for the vehicle's headlights."))
 	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
 	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
+	vehicle_entered_target.update_appearance()
 	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
@@ -224,7 +225,7 @@
 	button_icon_state = "car_dump"
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger()
-	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] starts dumping the people inside of it.</span>")
+	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] starts dumping the people inside of it."))
 	vehicle_entered_target.dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 
 
@@ -294,7 +295,7 @@
 			vehicle.unbuckle_mob(rider)
 			rider.throw_at(landing_turf, 2, 2)
 			rider.Paralyze(40)
-			vehicle.visible_message("<span class='danger'>[rider] misses the landing and falls on [rider.p_their()] face!</span>")
+			vehicle.visible_message(span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
 		else
 			rider.spin(4, 1)
 			animate(rider, pixel_y = -6, time = 4)
@@ -311,3 +312,40 @@
 			vehicle.grinding = TRUE
 			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
 			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+
+//VIM ACTION DATUMS
+
+/datum/action/vehicle/sealed/climb_out/vim
+	name = "Eject From Mech"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "mech_eject"
+
+/datum/action/vehicle/sealed/noise
+	var/sound_path = 'sound/items/carhorn.ogg'
+	var/sound_message = "makes a sound."
+
+/datum/action/vehicle/sealed/noise/Trigger()
+	var/obj/vehicle/sealed/car/vim/vim_mecha = vehicle_entered_target
+	if(!COOLDOWN_FINISHED(vim_mecha, sound_cooldown))
+		vim_mecha.balloon_alert(owner, "on cooldown!")
+		return
+	COOLDOWN_START(vim_mecha, sound_cooldown, VIM_SOUND_COOLDOWN)
+	vehicle_entered_target.visible_message(span_notice("[vehicle_entered_target] [sound_message]"))
+	playsound(vim_mecha, sound_path, 75)
+
+/datum/action/vehicle/sealed/noise/chime
+	name = "Chime!"
+	desc = "Affirmative!"
+	button_icon_state = "vim_chime"
+	sound_path = 'sound/machines/chime.ogg'
+	sound_message = "chimes!"
+
+/datum/action/vehicle/sealed/noise/buzz
+	name = "Buzz."
+	desc = "Negative!"
+	button_icon_state = "vim_buzz"
+	sound_path = 'sound/machines/buzz-sigh.ogg'
+	sound_message = "buzzes."
+
+/datum/action/vehicle/sealed/headlights/vim
+	button_icon_state = "vim_headlights"

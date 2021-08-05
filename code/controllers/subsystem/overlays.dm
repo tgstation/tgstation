@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(overlays)
 	stringbro.icon = icon
 	stringbro.icon_state = iconstate
 	return stringbro.appearance
-	
+
 /proc/icon2appearance(icon)
 	var/static/image/iconbro = new()
 	iconbro.icon = icon
@@ -79,6 +79,14 @@ SUBSYSTEM_DEF(overlays)
 		if(!overlay)
 			continue
 		if (istext(overlay))
+#ifdef UNIT_TESTS
+			// This is too expensive to run normally but running it during CI is a good test
+			var/list/icon_states_available = icon_states(icon)
+			if(!(overlay in icon_states_available))
+				var/icon_file = "[icon]" || "Unknown Generated Icon"
+				stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [overlay].")
+				continue
+#endif
 			new_overlays += iconstate2appearance(icon, overlay)
 		else if(isicon(overlay))
 			new_overlays += icon2appearance(overlay)

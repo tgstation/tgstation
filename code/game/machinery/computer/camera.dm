@@ -252,6 +252,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	icon_keyboard = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -316,7 +317,7 @@
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
-	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
+	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
 
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"

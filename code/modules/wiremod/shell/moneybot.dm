@@ -38,16 +38,21 @@
 
 /obj/item/circuit_component/money_dispenser
 	display_name = "Money Dispenser"
+	desc = "Used to dispense money from the money bot. Money is taken from the internal storage of money."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The amount of money to dispense
 	var/datum/port/input/dispense_amount
+
+	/// Outputs a signal when it fails to output any money.
+	var/datum/port/output/on_fail
 
 	var/obj/structure/money_bot/attached_bot
 
 /obj/item/circuit_component/money_dispenser/Initialize()
 	. = ..()
 	dispense_amount = add_input_port("Amount", PORT_TYPE_NUMBER)
+	on_fail = add_output_port("On Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_dispenser/register_shell(atom/movable/shell)
 	. = ..()
@@ -67,17 +72,17 @@
 		return
 
 	var/to_dispense = clamp(dispense_amount.input_value, 0, attached_bot.stored_money)
+	if(!to_dispense)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
 	attached_bot.add_money(-to_dispense)
 	new /obj/item/holochip(drop_location(), to_dispense)
-
-/obj/item/circuit_component/money_dispenser/Destroy()
-	dispense_amount = null
-	attached_bot = null
-	return ..()
 
 /obj/item/circuit_component/money_bot
 	display_name = "Money Bot"
 	var/obj/structure/money_bot/attached_bot
+	desc = "Used to receive input signals when money is inserted into the money bot shell and also keep track of the total money in the shell."
 
 	/// Total money in the shell
 	var/datum/port/output/total_money
@@ -85,11 +90,14 @@
 	var/datum/port/output/money_input
 	/// Trigger for when money is inputted into the shell
 	var/datum/port/output/money_trigger
+	/// The person who input the money
+	var/datum/port/output/entity
 
 /obj/item/circuit_component/money_bot/Initialize()
 	. = ..()
 	total_money = add_output_port("Total Money", PORT_TYPE_NUMBER)
 	money_input = add_output_port("Last Input Money", PORT_TYPE_NUMBER)
+	entity = add_output_port("User", PORT_TYPE_ATOM)
 	money_trigger = add_output_port("Money Input", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_bot/register_shell(atom/movable/shell)
@@ -109,13 +117,6 @@
 	attached_bot = null
 	return ..()
 
-/obj/item/circuit_component/money_bot/Destroy()
-	attached_bot = null
-	total_money = null
-	money_input = null
-	money_trigger = null
-	return ..()
-
 /obj/item/circuit_component/money_bot/proc/handle_money_insert(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
 	if(!attached_bot || !iscash(item))
@@ -129,6 +130,7 @@
 	attached_bot.add_money(amount_to_insert)
 	balloon_alert(attacker, "inserted [amount_to_insert] credits.")
 	money_input.set_output(amount_to_insert)
+	entity.set_output(attacker)
 	money_trigger.set_output(COMPONENT_SIGNAL)
 	qdel(item)
 

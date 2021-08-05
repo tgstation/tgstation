@@ -1,5 +1,35 @@
 // A very special plant, deserving it's own file.
 
+// Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
+/obj/item/seeds/cabbage
+	name = "pack of cabbage seeds"
+	desc = "These seeds grow into cabbages."
+	icon_state = "seed-cabbage"
+	species = "cabbage"
+	plantname = "Cabbages"
+	product = /obj/item/food/grown/cabbage
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	instability = 10
+	growthstages = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	mutatelist = list(/obj/item/seeds/replicapod)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	seed_flags = null
+
+/obj/item/food/grown/cabbage
+	seed = /obj/item/seeds/cabbage
+	name = "cabbage"
+	desc = "Ewwwwwwwwww. Cabbage."
+	icon_state = "cabbage"
+	foodtypes = VEGETABLES
+	wine_power = 20
+
+///The actual replica pods themselves!
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
@@ -61,10 +91,10 @@
 		quirks = B.data["quirks"]
 		sampleDNA = B.data["blood_DNA"]
 		contains_sample = TRUE
-		visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
 		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 	else
-		visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+		visible_message(span_warning("The [src] rejects the sample!"))
 	return NONE
 
 /// Handles reagents being deleted from these seeds.

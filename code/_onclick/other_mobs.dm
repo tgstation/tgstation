@@ -23,10 +23,10 @@
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
 		if(check_arm?.bodypart_disabled)
-			to_chat(src, "<span class='warning'>Your [check_arm.name] is in no condition to be used.</span>")
+			to_chat(src, span_warning("Your [check_arm.name] is in no condition to be used."))
 			return
 
-		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
+		to_chat(src, span_notice("You look at your arm and sigh."))
 		return
 
 	// Special glove functions:
@@ -60,7 +60,9 @@
 
 /// When the user uses their hand on an item while holding right-click
 /// Returns a SECONDARY_ATTACK_* value.
-/atom/proc/attack_hand_secondary(mob/user, modifiers)
+/atom/proc/attack_hand_secondary(mob/user, list/modifiers)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND_SECONDARY, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 //Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
@@ -75,7 +77,7 @@
 	if(!user.can_interact_with(src))
 		return FALSE
 	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !ISADVANCEDTOOLUSER(user))
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED) && user.incapacitated((interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED), !(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB)))
 		return FALSE

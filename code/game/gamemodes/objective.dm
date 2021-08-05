@@ -19,6 +19,11 @@ GLOBAL_LIST_EMPTY(objectives)
 	if(text)
 		explanation_text = text
 
+//Apparently objectives can be qdel'd. Learn a new thing every day
+/datum/objective/Destroy()
+	GLOB.objectives -= src
+	return ..()
+
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
 	. = (team?.members) ? team.members.Copy() : list()
 	if(owner)
@@ -145,31 +150,6 @@ GLOBAL_LIST_EMPTY(objectives)
 	update_explanation_text()
 	return target
 
-/datum/objective/proc/find_target_by_role(role, role_type=FALSE,invert=FALSE)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
-	var/list/datum/mind/owners = get_owners()
-	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(!(possible_target in owners) && ishuman(possible_target.current))
-			var/is_role = FALSE
-			if(role_type)
-				if(possible_target.special_role == role)
-					is_role = TRUE
-			else
-				if(possible_target.assigned_role == role)
-					is_role = TRUE
-
-			if(invert)
-				if(is_role)
-					continue
-				possible_targets += possible_target
-				break
-			else if(is_role)
-				possible_targets += possible_target
-				break
-	if(length(possible_targets))
-		target = pick(possible_targets)
-	update_explanation_text()
-	return target
 
 /datum/objective/proc/update_explanation_text()
 	if(team_explanation_text && LAZYLEN(get_owners()) > 1)
@@ -190,10 +170,6 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/target_role_type=FALSE
 	martyr_compatible = TRUE
 
-/datum/objective/assassinate/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
 
 /datum/objective/assassinate/check_completion()
 	return completed || (!considered_alive(target) || considered_afk(target) || considered_exiled(target))
@@ -201,7 +177,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -221,10 +197,6 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/target_role_type=FALSE
 	martyr_compatible = 1
 
-/datum/objective/mutiny/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
 
 /datum/objective/mutiny/check_completion()
 	if(!target || !considered_alive(target) || considered_afk(target) || considered_exiled(target))
@@ -235,7 +207,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -244,17 +216,13 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/target_role_type=FALSE
 	martyr_compatible = TRUE
 
-/datum/objective/maroon/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
 
 /datum/objective/maroon/check_completion()
 	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role], from escaping alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -265,10 +233,6 @@ GLOBAL_LIST_EMPTY(objectives)
 	name = "debrain"
 	var/target_role_type=0
 
-/datum/objective/debrain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
 
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
@@ -288,7 +252,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -301,11 +265,6 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/target_role_type = FALSE
 	var/human_check = TRUE
 
-/datum/objective/protect/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
-	return target
 
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/brain/brain_target
@@ -317,7 +276,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -333,10 +292,6 @@ GLOBAL_LIST_EMPTY(objectives)
 	martyr_compatible = TRUE //why not?
 	var/target_role_type
 
-/datum/objective/jailbreak/find_target_by_role(role, role_type, invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	return ..()
 
 /datum/objective/jailbreak/check_completion()
 	return completed || (considered_escaped(target))
@@ -344,7 +299,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/jailbreak/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] escapes alive and out of custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] escapes alive and out of custody."
 	else
 		explanation_text = "Free Objective"
 
@@ -360,7 +315,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/jailbreak/detain/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] is delivered to nanotrasen alive and in custody."
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role] is delivered to nanotrasen alive and in custody."
 	else
 		explanation_text = "Free Objective"
 
@@ -434,7 +389,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	for(var/mob/living/player in GLOB.player_list)
 		if((get_area(player) in SSshuttle.emergency.shuttle_areas) && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
-			if(H.dna.species.id != "human")
+			if(H.dna.species.id != SPECIES_HUMAN)
 				return FALSE
 	return TRUE
 
@@ -480,7 +435,7 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target?.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]"
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role.title]"
 		var/mob/living/carbon/human/H
 		if(ishuman(target.current))
 			H = target.current
@@ -592,7 +547,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
 				continue
 			for(var/datum/mind/M in owners)
-				if(M.current.mind.assigned_role in possible_item.excludefromjob)
+				if(M.current.mind.assigned_role.title in possible_item.excludefromjob)
 					continue check_items
 			approved_targets += possible_item
 	if (length(approved_targets))
@@ -883,7 +838,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sortNames(possible_targets)
 		target = new_target.mind
 	else
-		to_chat(admin, "<span class='boldwarning'>No active AIs with minds.</span>")
+		to_chat(admin, span_boldwarning("No active AIs with minds."))
 	update_explanation_text()
 
 /datum/objective/destroy/internal

@@ -30,9 +30,6 @@
 	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
 	rarity = 20
 
-
-
-
 /obj/item/grown/log
 	seed = /obj/item/seeds/tower
 	name = "tower-cap log"
@@ -56,7 +53,7 @@
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
-		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", MSG_VISUAL)
+		user.show_message(span_notice("You make [plank_name] out of \the [src]!"), MSG_VISUAL)
 		var/seed_modifier = 0
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
@@ -66,13 +63,13 @@
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
 				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		if(plank.amount > old_plank_amount)
-			to_chat(user, "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>")
+			to_chat(user, span_notice("You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."))
 		qdel(src)
 
 	if(CheckAccepted(W))
 		var/obj/item/food/grown/leaf = W
 		if(HAS_TRAIT(leaf, TRAIT_DRIED))
-			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
+			user.show_message(span_notice("You wrap \the [W] around the log, turning it into a torch!"))
 			var/obj/item/flashlight/flare/torch/T = new /obj/item/flashlight/flare/torch(user.loc)
 			usr.dropItemToGround(W)
 			usr.put_in_active_hand(T)
@@ -80,7 +77,7 @@
 			qdel(src)
 			return
 		else
-			to_chat(usr, "<span class='warning'>You must dry this first!</span>")
+			to_chat(usr, span_warning("You must dry this first!"))
 	else
 		return ..()
 
@@ -101,35 +98,6 @@
 	plank_name = "rods"
 
 /obj/item/grown/log/steel/CheckAccepted(obj/item/I)
-	return FALSE
-
-/obj/item/seeds/bamboo
-	name = "pack of bamboo seeds"
-	desc = "A plant known for its flexible and resistant logs."
-	icon_state = "seed-bamboo"
-	species = "bamboo"
-	plantname = "Bamboo"
-	product = /obj/item/grown/log/bamboo
-	lifespan = 80
-	endurance = 70
-	maturation = 15
-	production = 2
-	yield = 5
-	potency = 50
-	growthstages = 2
-	growing_icon = 'icons/obj/hydroponics/growing.dmi'
-	icon_dead = "bamboo-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
-
-/obj/item/grown/log/bamboo
-	seed = /obj/item/seeds/bamboo
-	name = "bamboo log"
-	desc = "A long and resistant bamboo log."
-	icon_state = "bamboo"
-	plank_type = /obj/item/stack/sheet/mineral/bamboo
-	plank_name = "bamboo sticks"
-
-/obj/item/grown/log/bamboo/CheckAccepted(obj/item/I)
 	return FALSE
 
 /obj/structure/punji_sticks
@@ -179,7 +147,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -190,14 +158,14 @@
 				R.use(1)
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
-				to_chat(user, "<span class='notice'>You add a rod to \the [src].</span>")
+				to_chat(user, span_notice("You add a rod to \the [src]."))
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
 				R.use(1)
 				grill = TRUE
-				to_chat(user, "<span class='notice'>You add a grill to \the [src].</span>")
+				to_chat(user, span_notice("You add a grill to \the [src]."))
 				add_overlay("bonfire_grill")
 			else
 				return ..()
@@ -223,7 +191,7 @@
 	if(.)
 		return
 	if(burning)
-		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!</span>")
+		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
 		for(var/obj/item/grown/log/L in contents)

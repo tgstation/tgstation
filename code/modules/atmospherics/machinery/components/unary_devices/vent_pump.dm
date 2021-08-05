@@ -259,13 +259,13 @@
 	..()
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
-	to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
+	to_chat(user, span_notice("You begin welding the vent..."))
 	if(I.use_tool(src, user, 20, volume=50))
 		if(!welded)
-			user.visible_message("<span class='notice'>[user] welds the vent shut.</span>", "<span class='notice'>You weld the vent shut.</span>", "<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] welds the vent shut."), span_notice("You weld the vent shut."), span_hear("You hear welding."))
 			welded = TRUE
 		else
-			user.visible_message("<span class='notice'>[user] unwelded the vent.</span>", "<span class='notice'>You unweld the vent.</span>", "<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
 			welded = FALSE
 		update_appearance()
 		pipe_vision_img = image(src, loc, dir = dir)
@@ -277,7 +277,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
@@ -292,7 +292,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
-	user.visible_message("<span class='warning'>[user] furiously claws at [src]!</span>", "<span class='notice'>You manage to clear away the stuff blocking the vent.</span>", "<span class='hear'>You hear loud scraping noises.</span>")
+	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
 	update_appearance()
 	pipe_vision_img = image(src, loc, dir = dir)
@@ -485,7 +485,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
 	frequency = FREQ_ATMOS_STORAGE
 	on = TRUE
-	icon_state = "vent_map_siphon_on-2"
+	icon_state = "vent_map_siphon_on-3"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
 	name = "air mix tank output inlet"

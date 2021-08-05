@@ -1038,7 +1038,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter3)
 "jH" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

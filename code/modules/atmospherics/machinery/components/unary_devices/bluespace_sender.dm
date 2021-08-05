@@ -106,7 +106,7 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
 	multitool.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [item]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [item]'s buffer."))
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/ui_interact(mob/user, datum/tgui/ui)

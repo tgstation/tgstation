@@ -544,6 +544,32 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/trash_cannon
+	name = "Trash Cannon"
+	always_available = FALSE
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
+	result = /obj/structure/cannon/trash
+	reqs = list(
+		/obj/item/melee/skateboard/improvised = 1,
+		/obj/item/tank/internals/oxygen/red = 1,
+		/datum/reagent/drug/maint/tar = 15,
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/storage/toolbox = 1,
+	)
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/trashball
+	name = "Trashball"
+	always_available = FALSE
+	result = /obj/item/stack/cannonball/trashball
+	reqs = list(
+		/obj/item/stack/sheet = 5,
+		/datum/reagent/consumable/space_cola = 10,
+	)
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/chainsaw
@@ -1001,7 +1027,7 @@
 	if(!aicard.AI)
 		return TRUE
 
-	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	to_chat(user, span_boldwarning("You can't craft an intelliTater with an AI in the card!"))
 	return FALSE
 
 /datum/crafting_recipe/aispook
@@ -1288,7 +1314,7 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
-	
+
 /**
  * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
  */

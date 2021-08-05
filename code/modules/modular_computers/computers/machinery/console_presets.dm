@@ -26,8 +26,6 @@
 /obj/machinery/modular_computer/console/preset/proc/install_programs()
 	return
 
-
-
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/console/preset/engineering
 	console_department = "Engineering"
@@ -45,6 +43,7 @@
 	console_department = "Research"
 	name = "research director's console"
 	desc = "A stationary computer. This one comes preloaded with research programs."
+	_has_second_id_slot = TRUE
 	_has_ai = TRUE
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()

@@ -22,6 +22,8 @@
 	var/active = FALSE
 	///Check if fusion has started
 	var/fusion_started = FALSE
+	///Check if the machine is cracked open
+	var/cracked = FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/Initialize()
 	. = ..()
@@ -29,7 +31,7 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
+	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
 /obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, params)
 	if(!fusion_started)
@@ -41,6 +43,17 @@
 		return
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
+	if(!cracked)
+		return FALSE
+	if(user.combat_mode)
+		return FALSE
+	balloon_alert(user, "You start repairing the crack...")
+	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))
+		balloon_alert(user, "You repaired the crack.")
+		cracked = FALSE
+		update_appearance()
+
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
 	if(.)
@@ -49,7 +62,8 @@
 		if(node)
 			node.disconnect(src)
 			nodes[1] = null
-			nullifyPipenet(parents[1])
+			if(parents[1])
+				nullifyPipenet(parents[1])
 		atmosinit()
 		node = nodes[1]
 		if(node)
@@ -66,6 +80,14 @@
 		return ..()
 	icon_state = icon_state_off
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/update_overlays()
+	. = ..()
+	if(!cracked)
+		return
+	var/image/crack = image(icon, icon_state = "crack")
+	crack.dir = dir
+	. += crack
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
@@ -115,7 +137,7 @@
 
 /obj/machinery/hypertorus/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
+	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
 /obj/machinery/hypertorus/attackby(obj/item/I, mob/user, params)
 	if(!fusion_started)
@@ -158,7 +180,7 @@
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
-		to_chat(user, "<span class='notice'>Check all parts and then try again.</span>")
+		to_chat(user, span_notice("Check all parts and then try again."))
 		return TRUE
 	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
 	connected_core = centre
@@ -173,7 +195,7 @@
 			ui = new(user, src, "Hypertorus", name)
 			ui.open()
 	else
-		to_chat(user, "<span class='notice'>Activate the machine first by using a multitool on the interface.</span>")
+		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
 
 /obj/machinery/hypertorus/interface/ui_static_data()
 	var/data = list()
@@ -277,6 +299,8 @@
 		var/list/gas = GLOB.meta_gas_info[path]
 		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(connected_core.filter_type))))
 
+	data["cooling_volume"] = connected_core.airs[1].volume
+
 	return data
 
 /obj/machinery/hypertorus/interface/ui_act(action, params)
@@ -358,6 +382,13 @@
 			connected_core.linked_moderator.update_parents()
 			investigate_log("was set to recipe [fuel_mix ? fuel_mix : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
+		if("cooling_volume")
+			var/cooling_volume = params["cooling_volume"]
+			if(text2num(cooling_volume) != null)
+				cooling_volume = text2num(cooling_volume)
+				. = TRUE
+			if(.)
+				connected_core.airs[1].volume = clamp(cooling_volume, 50, 2000)
 
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"

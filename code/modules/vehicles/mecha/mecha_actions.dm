@@ -130,7 +130,7 @@
 	if(!(user in occupants) || !user.canUseTopic(src))
 		return
 	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
-		to_chat(user, "<span class='warning'>You're in the wrong seat to control movement.</span>")
+		to_chat(user, span_warning("You're in the wrong seat to control movement."))
 		return
 
 	toggle_strafe()

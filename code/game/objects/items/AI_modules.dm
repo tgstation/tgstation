@@ -42,7 +42,7 @@ AI MODULES
 //The proc other things should be calling
 /obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
 	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
-		to_chat(user, "<span class='warning'>ERROR: No laws found on board.</span>")
+		to_chat(user, span_warning("ERROR: No laws found on board."))
 		return
 
 	var/overflow = FALSE
@@ -54,30 +54,45 @@ AI MODULES
 				if(mylaw != "")
 					tot_laws++
 		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			to_chat(user, "<span class='alert'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws.</span>")
+			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
 			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
+			log_game("[ADMIN_LOOKUP(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUP(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			overflow = TRUE
 
 	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
 	if(law_datum.owner)
-		to_chat(user, "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>")
+		to_chat(user, span_notice("Upload complete. [law_datum.owner]'s laws have been modified."))
 		law_datum.owner.law_change_counter++
 	else
-		to_chat(user, "<span class='notice'>Upload complete.</span>")
+		to_chat(user, span_notice("Upload complete."))
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
-	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
-	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]) from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""]")
-	message_admins("[ADMIN_LOOKUPFLW(user)] used [src.name] on [ADMIN_LOOKUPFLW(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""]")
+
+	//affected cyborgs are cyborgs linked to the AI with lawsync enabled
+	var/affected_cyborgs = list()
+	var/list/borg_txt = list()
+	var/list/borg_flw = list()
+	if(isAI(law_datum.owner))
+		var/mob/living/silicon/ai/owner = law_datum.owner
+		for(var/mob/living/silicon/robot/owned_borg as anything in owner.connected_robots)
+			if(owned_borg.connected_ai && owned_borg.lawupdate)
+				affected_cyborgs += owned_borg
+				borg_flw += "[ADMIN_LOOKUPFLW(owned_borg)], "
+				borg_txt += "[ADMIN_LOOKUP(owned_borg)], "
+
+	borg_txt = borg_txt.Join()
+	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
+	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]) from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""] , [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] used [src.name] on [ADMIN_LOOKUPFLW(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""] , [length(affected_cyborgs) ? ", impacting synced borgs [borg_flw.Join()]" : ""]")
 	if(law_datum.owner)
-		deadchat_broadcast("<b> changed <span class='name'>[ainame]</span>'s laws at [get_area_name(user, TRUE)].</b>", "<span class='name'>[user]</span>", follow_target=user, message_type=DEADCHAT_LAWCHANGE)
+		deadchat_broadcast("<b> changed [span_name("[ainame]")]'s laws at [get_area_name(user, TRUE)].</b>", span_name("[user]"), follow_target=user, message_type=DEADCHAT_LAWCHANGE)
 
 //The proc that actually changes the silicon's laws.
 /obj/item/ai_module/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
 	if(law_datum.owner)
-		to_chat(law_datum.owner, "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name].</span>")
+		to_chat(law_datum.owner, span_userdanger("[sender] has uploaded a change to the laws you must follow using a [name]."))
 
 
 /******************** Modules ********************/
@@ -117,7 +132,7 @@ AI MODULES
 			to_chat(law_datum.owner, "It would be in your best interest to play along with [sender.real_name] that:")
 			for(var/failedlaw in laws)
 				to_chat(law_datum.owner, "[failedlaw]")
-			return 1
+			return TRUE
 
 	for(var/templaw in laws)
 		if(law_datum.owner)
@@ -163,7 +178,7 @@ AI MODULES
 
 /obj/item/ai_module/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
+		to_chat(user, span_alert("No name detected on module, please enter one."))
 		return 0
 	..()
 
@@ -189,8 +204,8 @@ AI MODULES
 
 /obj/item/ai_module/zeroth/onehuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
-		return 0
+		to_chat(user, span_alert("No name detected on module, please enter one."))
+		return FALSE
 	..()
 
 /obj/item/ai_module/zeroth/onehuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
@@ -244,7 +259,7 @@ AI MODULES
 	if(!targName)
 		return
 	if(CHAT_FILTER_CHECK(targName))
-		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>") // AI LAW 2 SAY U W U WITHOUT THE SPACES
+		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY U W U WITHOUT THE SPACES
 		return
 	laws[1] = targName
 	..()
@@ -255,7 +270,7 @@ AI MODULES
 
 /obj/item/ai_module/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
-		to_chat(user, "<span class='alert'>No law detected on module, please create one.</span>")
+		to_chat(user, span_alert("No law detected on module, please create one."))
 		return 0
 	..()
 
@@ -273,15 +288,15 @@ AI MODULES
 	if(lawpos == null)
 		return
 	if(lawpos <= 0)
-		to_chat(user, "<span class='warning'>Error: The law number of [lawpos] is invalid.</span>")
+		to_chat(user, span_warning("Error: The law number of [lawpos] is invalid."))
 		lawpos = 1
 		return
-	to_chat(user, "<span class='notice'>Law [lawpos] selected.</span>")
+	to_chat(user, span_notice("Law [lawpos] selected."))
 	..()
 
 /obj/item/ai_module/remove/install(datum/ai_laws/law_datum, mob/user)
 	if(lawpos > (law_datum.get_law_amount(list(LAW_INHERENT = 1, LAW_SUPPLIED = 1))))
-		to_chat(user, "<span class='warning'>There is no law [lawpos] to delete!</span>")
+		to_chat(user, span_warning("There is no law [lawpos] to delete!"))
 		return
 	..()
 
@@ -451,7 +466,7 @@ AI MODULES
 	if(!targName)
 		return
 	if(CHAT_FILTER_CHECK(targName))
-		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
+		to_chat(user, span_warning("Error: Law contains invalid text."))
 		return
 	laws[1] = targName
 	..()
@@ -473,7 +488,7 @@ AI MODULES
 	if(!targName)
 		return
 	if(CHAT_FILTER_CHECK(targName)) // not even the syndicate can uwu
-		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
+		to_chat(user, span_warning("Error: Law contains invalid text."))
 		return
 	laws[1] = targName
 	..()
@@ -481,7 +496,7 @@ AI MODULES
 /obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 // ..()    //We don't want this module reporting to the AI who dun it. --NEO
 	if(law_datum.owner)
-		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
+		to_chat(law_datum.owner, span_warning("BZZZZT"))
 		if(!overflow)
 			law_datum.owner.add_hacked_law(laws[1])
 		else
@@ -505,7 +520,7 @@ AI MODULES
 /obj/item/ai_module/toy_ai/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	//..()
 	if(law_datum.owner)
-		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
+		to_chat(law_datum.owner, span_warning("BZZZZT"))
 		if(!overflow)
 			law_datum.owner.add_ion_law(laws[1])
 		else
@@ -519,9 +534,9 @@ AI MODULES
 
 /obj/item/ai_module/toy_ai/attack_self(mob/user)
 	laws[1] = generate_ion_law()
-	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
+	to_chat(user, span_notice("You press the button on [src]."))
 	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
-	src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(loc))] [laws[1]]</span>")
+	src.loc.visible_message(span_warning("[icon2html(src, viewers(loc))] [laws[1]]"))
 
 /******************** Mother Drone  ******************/
 

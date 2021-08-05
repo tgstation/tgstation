@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/light
 	display_name = "Light"
+	desc = "A component that emits a light of a specific brightness and colour. Requires a shell."
 
 	/// The colours of the light
 	var/datum/port/input/red
@@ -21,6 +22,10 @@
 	var/min_lightness = 0.4
 	var/shell_light_color
 
+/obj/item/circuit_component/light/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Maximum Brightness: [max_power]", "orange", "lightbulb")
+
 /obj/item/circuit_component/light/Initialize()
 	. = ..()
 	red = add_input_port("Red", PORT_TYPE_NUMBER)
@@ -29,15 +34,6 @@
 	brightness = add_input_port("Brightness", PORT_TYPE_NUMBER)
 
 	on = add_input_port("On", PORT_TYPE_NUMBER)
-
-
-/obj/item/circuit_component/light/Destroy()
-	red = null
-	green = null
-	blue = null
-	brightness = null
-	on = null
-	return ..()
 
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()

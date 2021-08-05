@@ -84,6 +84,11 @@
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
 
+/obj/item/clothing/suit/space/space_ninja/Destroy()
+	QDEL_NULL(spark_system)
+	QDEL_NULL(cell)
+	return ..()
+
 // seal the cell in the ninja outfit
 /obj/item/clothing/suit/space/space_ninja/toggle_spacesuit_cell(mob/user)
 	return
@@ -115,10 +120,10 @@
 		toggle_on_off()
 		return TRUE
 	if(!s_initialized)
-		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline. Please activate suit.</span>")
+		to_chat(user, span_warning("<b>ERROR</b>: suit offline. Please activate suit."))
 		return FALSE
 	if(s_coold > 0)
-		to_chat(user, "<span class='warning'><b>ERROR</b>: suit is on cooldown.</span>")
+		to_chat(user, span_warning("<b>ERROR</b>: suit is on cooldown."))
 		return FALSE
 	if(IS_NINJA_SUIT_STATUS(action))
 		ninjastatus()
@@ -187,17 +192,17 @@
 	if(!istype(ninja))
 		return FALSE
 	if(!IS_SPACE_NINJA(ninja))
-		to_chat(ninja, "<span class='danger'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</span>")
+		to_chat(ninja, span_danger("<B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."))
 		ninja.gib()
 		return FALSE
 	if(!istype(ninja.head, /obj/item/clothing/head/helmet/space/space_ninja))
-		to_chat(ninja, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
+		to_chat(ninja, "[span_userdanger("ERROR")]: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 		return FALSE
 	if(!istype(ninja.shoes, /obj/item/clothing/shoes/space_ninja))
-		to_chat(ninja, "<span class='userdanger'>ERROR</span>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
+		to_chat(ninja, "[span_userdanger("ERROR")]: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 		return FALSE
 	if(!istype(ninja.gloves, /obj/item/clothing/gloves/space_ninja))
-		to_chat(ninja, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
+		to_chat(ninja, "[span_userdanger("ERROR")]: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 		return FALSE
 	affecting = ninja
 	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)

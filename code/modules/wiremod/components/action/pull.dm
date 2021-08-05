@@ -5,6 +5,7 @@
  */
 /obj/item/circuit_component/pull
 	display_name = "Start Pulling"
+	desc = "A component that can force the shell to pull entities. Only works for drone shells."
 
 	/// Frequency input
 	var/datum/port/input/target
@@ -13,10 +14,6 @@
 /obj/item/circuit_component/pull/Initialize()
 	. = ..()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
-
-/obj/item/circuit_component/pull/Destroy()
-	target = null
-	return ..()
 
 /obj/item/circuit_component/pull/input_received(datum/port/input/port)
 	. = ..()

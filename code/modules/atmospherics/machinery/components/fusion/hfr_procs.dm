@@ -60,16 +60,19 @@
 			if(linked_input && linked_input != object)
 				. =  FALSE
 			linked_input = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
 				. =  FALSE
 			linked_output = object
+			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
 				. =  FALSE
 			linked_moderator = object
+			machine_parts |= object
 
 	if(!linked_interface || !linked_input || !linked_moderator || !linked_output || corners.len != 4)
 		. = FALSE
@@ -82,9 +85,9 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
-		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
+		to_chat(user, span_notice("You already activated the machine."))
 		return
-	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
+	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
 	update_appearance()
 	linked_interface.active = TRUE
@@ -103,7 +106,7 @@
 		corner.active = TRUE
 		corner.update_appearance()
 		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
-	soundloop = new(list(src), TRUE)
+	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
 /**
@@ -337,3 +340,22 @@
 			local.assume_air(remove)
 		loc.assume_air(moderator_internal)
 	qdel(src)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
+	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
+		if(part.cracked)
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
+	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
+	part.cracked = TRUE
+	part.update_appearance()
+	return part
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/spill_gases(obj/origin, datum/gas_mixture/target_mix, ratio)
+	var/datum/gas_mixture/remove_mixture = target_mix.remove_ratio(ratio)
+	var/turf/origin_turf = origin.loc
+	if(!origin_turf)
+		return
+	origin_turf.assume_air(remove_mixture)

@@ -117,7 +117,7 @@
 
 ///Attack proc. Gives legion some movespeed buffs and switches the AI to melee. At lower sizes, this also throws the skull at the player.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
-	visible_message("<span class='warning'><b>[src] charges!</b></span>")
+	visible_message(span_warning("<b>[src] charges!</b>"))
 	SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	ranged = FALSE
 	retreat_distance = 0
@@ -234,7 +234,7 @@
 			pixel_y = 0
 			maxHealth = 200
 	adjustHealth(0) //Make the health HUD look correct.
-	visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
+	visible_message(span_boldannounce("This is getting out of hands. Now there are three of them!"))
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 		L.setVarsAfterSplit(src)
@@ -275,13 +275,13 @@
 
 /obj/item/staff/storm/attack_self(mob/user)
 	if(storm_nextuse > world.time)
-		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
+		to_chat(user, span_warning("The staff is still recharging!"))
 		return
 
 	var/area/user_area = get_area(user)
 	var/turf/user_turf = get_turf(user)
 	if(!user_area || !user_turf || (user_area.type in excluded_areas))
-		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
+		to_chat(user, span_warning("Something is preventing you from using the staff here."))
 		return
 	var/datum/weather/A
 	for(var/V in SSweather.processing)
@@ -293,10 +293,10 @@
 	if(A)
 		if(A.stage != END_STAGE)
 			if(A.stage == WIND_DOWN_STAGE)
-				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
+				to_chat(user, span_warning("The storm is already ending! It would be a waste to use the staff now."))
 				return
-			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
-			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
+			span_notice("You hold [src] skyward, dispelling the storm!"))
 			playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 			A.wind_down()
 			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
@@ -311,8 +311,8 @@
 		A.telegraph_duration = storm_telegraph_duration
 		A.end_duration = storm_duration
 
-	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
-	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	user.visible_message(span_warning("[user] holds [src] skywards as red lightning crackles into the sky!"), \
+	span_notice("You hold [src] skyward, calling down a terrible storm!"))
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	A.telegraph()
 	storm_nextuse = world.time + staff_cooldown

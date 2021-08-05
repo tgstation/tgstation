@@ -3,8 +3,8 @@
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target.check_block())
-		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
-					"<span class='userdanger'>You block the attack!</span>")
+		target.visible_message(span_danger("[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!"),
+					span_userdanger("You block the attack!"))
 		user.Stun(40)
 		return TRUE
 
@@ -30,7 +30,7 @@
 	custom_materials = list(/datum/material/iron = 1000)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
 /obj/item/melee/synthetic_arm_blade
@@ -95,7 +95,7 @@
 		playsound(B, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
 	var/i = 0
 	ADD_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 	if(iscarbon(user))
@@ -167,7 +167,7 @@
 		H.reagents.add_reagent(/datum/reagent/toxin, 4)
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(get_turf(src), hitsound, 75, TRUE, -1)
 	return TOXLOSS
 
@@ -186,15 +186,24 @@
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
-	var/cooldown = 40 // Default wait time until can stun again.
-	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
-	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
-	var/stamina_damage = 55 // Do we deal stamina damage.
-	var/affect_silicon = FALSE // Does it stun silicons.
-	var/on_sound // "On" sound, played when switching between able to stun or not.
-	var/on_stun_sound = 'sound/effects/woodhit.ogg' // Default path to sound for when we stun.
-	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
-	var/on = TRUE // Are we on or off.
+	/// Default wait time until can stun again.
+	var/cooldown = (4 SECONDS)
+	/// The length of the knockdown applied to a struck living, non-cyborg mob.
+	var/knockdown_time = (1.5 SECONDS)
+	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
+	var/stun_time_cyborg = (5 SECONDS)
+	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
+	var/stamina_damage = 55
+	/// Can we stun cyborgs?
+	var/affect_cyborg = FALSE
+	/// "On" sound, played when switching between able to stun or not.
+	var/on_sound
+	/// The path of the default sound to play when we stun something.
+	var/on_stun_sound = 'sound/effects/woodhit.ogg'
+	/// Do we animate the "hit" when stunning something?
+	var/stun_animation = TRUE
+	/// Are we on or off?
+	var/on = TRUE
 
 	var/on_icon_state // What is our sprite when turned on
 	var/off_icon_state // What is our sprite when turned off
@@ -209,13 +218,13 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only <span class='warning'>[round(100 / stamina_damage, 0.1)] hit\s!</span>"
+		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[round(100 / stamina_damage, 0.1)] hit\s!")]"
 
-// Description for trying to stun when still on cooldown.
+/// Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
 
-// Description for when turning their baton "on"
+/// Description for when turning the baton "on".
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
@@ -224,7 +233,7 @@
 
 	return .
 
-// Default message for stunning mob.
+/// Default message for stunning a living, non-cyborg mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
@@ -233,21 +242,30 @@
 
 	return .
 
-// Default message for stunning a silicon.
-/obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
+/// Default message for stunning a cyborg.
+/obj/item/melee/classic_baton/proc/get_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
-	.["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
+	.["visible"] = span_danger("[user] pulses [target]'s sensors with the baton!")
+	.["local"] = span_danger("You pulse [target]'s sensors with the baton!")
 
 	return .
 
-// Are we applying any special effects when we stun to carbon
-/obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+/// Default message for trying to stun a cyborg with a baton that can't stun cyborgs.
+/obj/item/melee/classic_baton/proc/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
+	. = list()
+
+	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
+	.["local"] = "<span class='userdanger'>[target] tries to... knock you down with [src]?</span>" //look at the top of his head!
+
+	return .
+
+/// Contains any special effects that we apply to living, non-cyborg mobs we stun. Does not include applying a knockdown, dealing stamina damage, etc.
+/obj/item/melee/classic_baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	return
 
-// Are we applying any special effects when we stun to silicon
-/obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
+/// Contains any special effects that we apply to cyborgs we stun. Does not include flashing the cyborg's screen, hardstunning them, etc.
+/obj/item/melee/classic_baton/proc/additional_effects_cyborg(mob/living/target, mob/living/user)
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
@@ -256,37 +274,27 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='userdanger'>You hit yourself over the head!</span>")
+		user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
 
-		user.Paralyze(knockdown_time_carbon * force)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
-
-		additional_effects_carbon(user) // user is the target here
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
-		else
-			user.take_bodypart_damage(2*force)
-		return
-	if(iscyborg(target))
-		// We don't stun if we're on harm.
-		if (!user.combat_mode)
-			if (affect_silicon)
-				var/list/desc = get_silicon_stun_description(target, user)
-
-				target.flash_act(affect_silicon = TRUE)
-				target.Paralyze(stun_time_silicon)
-				additional_effects_silicon(target, user)
-
-				user.visible_message(desc["visible"], desc["local"])
+		if(iscyborg(user))
+			if(affect_cyborg)
+				user.flash_act(affect_silicon = TRUE)
+				user.Paralyze(stun_time_cyborg * force)
+				additional_effects_cyborg(user, user) // user is the target here
 				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
-
-				if (stun_animation)
-					user.do_attack_animation(target)
 			else
-				..()
+				playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 		else
-			..()
+			user.Paralyze(knockdown_time * force)
+			user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+			additional_effects_non_cyborg(user, user) // user is the target here
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+
+		user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+
+		log_combat(user, target, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
+		if(stun_animation)
+			user.do_attack_animation(user)
 		return
 	if(!isliving(target))
 		return
@@ -309,23 +317,35 @@
 
 	var/list/desc = get_stun_description(target, user)
 
-	if (stun_animation)
-		user.do_attack_animation(target)
+	if(iscyborg(target))
+		if(affect_cyborg)
+			desc = get_cyborg_stun_description(target, user)
 
-	playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
-	target.Knockdown(knockdown_time_carbon)
-	target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-	additional_effects_carbon(target, user)
+			target.flash_act(affect_silicon = TRUE)
+			target.Paralyze(stun_time_cyborg)
+			additional_effects_cyborg(target, user)
 
-	log_combat(user, target, "stunned", src)
-	add_fingerprint(user)
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+		else
+			desc = get_unga_dunga_cyborg_stun_description(target, user)
+
+			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
+	else
+		target.Knockdown(knockdown_time)
+		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		additional_effects_non_cyborg(target, user)
+
+		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 
 	target.visible_message(desc["visible"], desc["local"])
+	log_combat(user, target, "stun attacked", src)
+	if(stun_animation)
+		user.do_attack_animation(target)
 
 	if(!iscarbon(user))
 		target.LAssailant = null
 	else
-		target.LAssailant = user
+		target.LAssailant = WEAKREF(user)
 	cooldown_check = world.time + cooldown
 	return
 
@@ -365,7 +385,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 
-	user.visible_message("<span class='suicide'>[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind.</span>")
+	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(!on)
 		src.attack_self(user)
 	else
@@ -419,7 +439,7 @@
 
 	cooldown = 25
 	stamina_damage = 85
-	affect_silicon = TRUE
+	affect_cyborg = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
@@ -431,9 +451,9 @@
 	weight_class_on = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
-	return "<span class='danger'>The baton is still charging!</span>"
+	return span_danger("The baton is still charging!")
 
-/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
+/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
 	target.stuttering += 20
 
@@ -459,7 +479,7 @@
 	qdel(shard.countdown)
 	shard.countdown = null
 	START_PROCESSING(SSobj, src)
-	visible_message("<span class='warning'>[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
+	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
 
 /obj/item/melee/supermatter_sword/process()
 	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
@@ -494,25 +514,25 @@
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(
-		"<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",
-		"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>"
+		span_danger("The blast wave smacks into [src] and rapidly flashes to ash."),
+		span_hear("You hear a loud crack as you are washed with a wave of heat.")
 	)
 	consume_everything()
 
 /obj/item/melee/supermatter_sword/acid_act()
-	visible_message("<span class='danger'>The acid smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	visible_message(span_danger("The acid smacks into [src] and rapidly flashes to ash."),\
+	span_hear("You hear a loud crack as you are washed with a wave of heat."))
 	consume_everything()
 	return TRUE
 
 /obj/item/melee/supermatter_sword/bullet_act(obj/projectile/P)
-	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	visible_message(span_danger("[P] smacks into [src] and rapidly flashes to ash."),\
+	span_hear("You hear a loud crack as you are washed with a wave of heat."))
 	consume_everything(P)
 	return BULLET_ACT_HIT
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
+	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))
 	user.dropItemToGround(src, TRUE)
 	shard.Bumped(user)
 
@@ -530,8 +550,8 @@
 	if(newT.type == oldtype)
 		return
 	playsound(T, 'sound/effects/supermatter.ogg', 50, TRUE)
-	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	T.visible_message(span_danger("[T] smacks into [src] and rapidly flashes to ash."),\
+	span_hear("You hear a loud crack as you are washed with a wave of heat."))
 	shard.Consume()
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
@@ -557,7 +577,7 @@
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
 		H.drop_all_held_items()
-		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+		H.visible_message(span_danger("[user] disarms [H]!"), span_userdanger("[user] disarmed you!"))
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
@@ -587,7 +607,7 @@
 		extend(user)
 	else
 		if (held_sausage)
-			to_chat(user, "<span class='warning'>You can't retract [src] while [held_sausage] is attached!</span>")
+			to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
 			return
 		retract(user)
 
@@ -598,15 +618,15 @@
 	..()
 	if (istype(target, /obj/item/food/sausage))
 		if (!on)
-			to_chat(user, "<span class='warning'>You must extend [src] to attach anything to it!</span>")
+			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
-			to_chat(user, "<span class='warning'>[held_sausage] is already attached to [src]!</span>")
+			to_chat(user, span_warning("[held_sausage] is already attached to [src]!"))
 			return
 		if (user.transferItemToLoc(target, src))
 			held_sausage = target
 		else
-			to_chat(user, "<span class='warning'>[target] doesn't seem to want to get on [src]!</span>")
+			to_chat(user, span_warning("[target] doesn't seem to want to get on [src]!"))
 	update_appearance()
 
 /obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
@@ -622,13 +642,13 @@
 		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)
-	to_chat(user, "<span class='warning'>You extend [src].</span>")
+	to_chat(user, span_warning("You extend [src]."))
 	icon_state = "roastingstick_1"
 	inhand_icon_state = "nullrod"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/roastingstick/proc/retract(user)
-	to_chat(user, "<span class='notice'>You collapse [src].</span>")
+	to_chat(user, span_notice("You collapse [src]."))
 	icon_state = "roastingstick_0"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
@@ -644,14 +664,14 @@
 		return
 	if (is_type_in_typecache(target, ovens))
 		if (held_sausage?.roasted)
-			to_chat("<span class='warning'>Your [held_sausage] has already been cooked!</span>")
+			to_chat(span_warning("Your [held_sausage] has already been cooked!"))
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
-			to_chat(user, "<span class='notice'>You send [held_sausage] towards [target].</span>")
+			to_chat(user, span_notice("You send [held_sausage] towards [target]."))
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 			beam = user.Beam(target,icon_state="rped_upgrade", time = 10 SECONDS)
 		else if (user.Adjacent(target))
-			to_chat(user, "<span class='notice'>You extend [src] towards [target].</span>")
+			to_chat(user, span_notice("You extend [src] towards [target]."))
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		else
 			return
@@ -662,7 +682,7 @@
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	to_chat(user, "<span class='notice'>You finish roasting [held_sausage].</span>")
+	to_chat(user, span_notice("You finish roasting [held_sausage]."))
 	playsound(src,'sound/items/welder2.ogg',50,TRUE)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"

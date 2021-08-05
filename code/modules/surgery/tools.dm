@@ -58,7 +58,7 @@
 	toolspeed = 1
 
 /obj/item/cautery/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>[user] touches the end of [src] to \the [A], igniting it with a puff of smoke.</span>"
+	. = span_notice("[user] touches the end of [src] to \the [A], igniting it with a puff of smoke.")
 
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
@@ -80,11 +80,11 @@
 	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CAUTERY)
 		tool_behaviour = TOOL_DRILL
-		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
+		balloon_alert(user, "lenses set to drill")
 		icon_state = "surgicaldrill_a"
 	else
 		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
+		balloon_alert(user, "lenses set to mend")
 		icon_state = "cautery_a"
 
 /obj/item/cautery/advanced/examine()
@@ -117,7 +117,7 @@
 	AddElement(/datum/element/eyestab)
 
 /obj/item/surgicaldrill/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	addtimer(CALLBACK(user, /mob/living/carbon.proc/gib, null, null, TRUE, TRUE), 25)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
@@ -152,7 +152,7 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
-	wound_bonus = 15
+	wound_bonus = 10
 	bare_wound_bonus = 15
 
 /obj/item/scalpel/Initialize()
@@ -165,7 +165,7 @@
 	toolspeed = 0.5
 
 /obj/item/scalpel/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 
@@ -218,7 +218,7 @@
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator, null)
+	AddElement(/datum/element/surgery_initiator)
 
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
@@ -234,13 +234,13 @@
 	if(!proximity)
 		return
 	if(istype(O, /obj/item/disk/surgery))
-		to_chat(user, "<span class='notice'>You load the surgery protocol from [O] into [src].</span>")
+		to_chat(user, span_notice("You load the surgery protocol from [O] into [src]."))
 		var/obj/item/disk/surgery/D = O
 		if(do_after(user, 10, target = O))
 			advanced_surgeries |= D.surgeries
 		return TRUE
 	if(istype(O, /obj/machinery/computer/operating))
-		to_chat(user, "<span class='notice'>You copy surgery protocols from [O] into [src].</span>")
+		to_chat(user, span_notice("You copy surgery protocols from [O] into [src]."))
 		var/obj/machinery/computer/operating/OC = O
 		if(do_after(user, 10, target = O))
 			advanced_surgeries |= OC.advanced_surgeries
@@ -265,13 +265,13 @@
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
-		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
+		balloon_alert(user, "enabled bone-cutting mode")
 		set_light_range(2)
 		force += 1 //we don't want to ruin sharpened stuff
 		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
+		balloon_alert(user, "disabled bone-cutting mode")
 		set_light_range(1)
 		force -= 1
 		icon_state = "scalpel_a"
@@ -291,11 +291,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_RETRACTOR)
 		tool_behaviour = TOOL_HEMOSTAT
-		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in hemostat mode.</span>")
+		balloon_alert(user, "gears set to clamp")
 		icon_state = "hemostat_a"
 	else
 		tool_behaviour = TOOL_RETRACTOR
-		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
+		balloon_alert(user, "gears set to retract")
 		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine()
@@ -331,7 +331,7 @@
 	var/mob/living/carbon/patient = M
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
-		to_chat(user, "<span class='warning'>The patient's limbs look too sturdy to amputate.</span>")
+		to_chat(user, span_warning("The patient's limbs look too sturdy to amputate."))
 		return
 
 	var/candidate_name
@@ -341,20 +341,20 @@
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
 		tail_snip_candidate = patient.getorganslot(ORGAN_SLOT_TAIL)
 		if(!tail_snip_candidate)
-			to_chat(user, "<span class='warning'>[patient] does not have a tail.</span>")
+			to_chat(user, span_warning("[patient] does not have a tail."))
 			return
 		candidate_name = tail_snip_candidate.name
 
 	else
 		limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
 		if(!limb_snip_candidate)
-			to_chat(user, "<span class='warning'>[patient] is already missing that limb, what more do you want?</span>")
+			to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
 			return
 		candidate_name = limb_snip_candidate.name
 
 	var/amputation_speed_mod = 1
 
-	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
+	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [candidate_name]."), span_userdanger("[user] begins to secure [src] around your [candidate_name]!"))
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
@@ -368,10 +368,10 @@
 			tail_snip_candidate.forceMove(get_turf(patient))
 		else
 			limb_snip_candidate.dismember()
-		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
+		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
 
 /obj/item/shears/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.bodyparts)
 		if(thing.body_part == CHEST)

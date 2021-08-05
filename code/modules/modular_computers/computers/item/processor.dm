@@ -57,4 +57,4 @@
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext)
 		return
 	playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	machinery_computer.visible_message("<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+	machinery_computer.visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
