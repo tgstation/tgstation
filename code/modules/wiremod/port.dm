@@ -224,6 +224,8 @@
  * * port_to_register - The port to connect the input port to
  */
 /datum/port/input/proc/set_input(new_value, send_update = TRUE)
+	if(QDELETED(src)) //Pain
+		return
 	if(isatom(input_value))
 		UnregisterSignal(input_value, COMSIG_PARENT_QDELETING)
 	input_value = convert_value(new_value)
