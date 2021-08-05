@@ -123,6 +123,8 @@ Here are some simple guidelines that you should stick to when making a new spawn
 
 ### If ALL the items have the same chance, we should not set a weighted value to the item
 
+Do not put `/obj/item/ = 1` unless other items have different spawn chances
+
 Good:
 
 ```dm
@@ -165,6 +167,8 @@ Bad:
 
 ### Sort the list from highest probability to lowest
 
+Sort from top to bottom.  The rarest items for your spawner should be at the bottom of the list.
+
 Good:
 
 ```dm
@@ -199,6 +203,8 @@ Bad:
 
 ### Always put the `loot` list at the bottom of your spawner
 
+This is just to keep things organized.
+
 Good:
 
 ```dm
@@ -231,6 +237,8 @@ Bad:
 
 ### Always put a comma at the last item in the `loot` list
 
+This will make it easier for people to add items to your spawner later without getting frustrating code errors.
+
 Good:
 
 ```dm
@@ -256,6 +264,8 @@ Bad:
 ```
 
 ### Keep the same tab formatting for the `loot` list (unless there is only one item)
+
+Again, this is just good code organization.  If there is only one item, then encase that item in `loot = list(item)`
 
 Good:
 
@@ -302,6 +312,8 @@ Also Bad:
 ```
 
 ### Try to keep the total combined weight of your `loot` list to sane values (Aim for 5, 10, 20, 50, or 100)
+
+This makes the math probability easier for people to calculate.  (this is recommended, but not always possible)
 
 Good:
 
