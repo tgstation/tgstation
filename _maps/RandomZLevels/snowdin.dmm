@@ -2128,7 +2128,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "gf" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/antag_gear_strong,
+/obj/effect/spawner/random/exotic/antag_gear_strong,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -7278,7 +7278,7 @@
 /area/awaymission/snowdin/outside)
 "ts" = (
 /obj/structure/closet/crate/wooden,
-/obj/effect/spawner/lootdrop/snowdin/antag_gear_strong,
+/obj/effect/spawner/random/exotic/antag_gear_strong,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tt" = (
