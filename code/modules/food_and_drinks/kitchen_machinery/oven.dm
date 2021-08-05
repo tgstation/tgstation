@@ -23,7 +23,7 @@
 /obj/machinery/oven/Initialize()
 	. = ..()
 	oven_loop = new(src)
-	add_tray_to_oven(new /obj/item/plate/oven_tray()) //Start with a tray
+	add_tray_to_oven(new /obj/item/plate/oven_tray(src)) //Start with a tray
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
@@ -88,7 +88,7 @@
 	used_tray = oven_tray
 
 	if(!open)
-		used_tray.vis_flags |= VIS_HIDE
+		oven_tray.vis_flags |= VIS_HIDE
 	vis_contents += oven_tray
 	oven_tray.flags_1 |= IS_ONTOP_1
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
